@@ -3,9 +3,9 @@
 namespace Pumukit\OpencastBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\SchemaBundle\Services\FactoryService;
-use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\SeriesEventDispatcherService;
 
 class SeriesImportService

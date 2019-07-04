@@ -2,17 +2,17 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
-use Pumukit\SchemaBundle\Document\EmbeddedEvent;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\EmbeddedEvent;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class EmbeddedEventSessionService
 {
+    const DEFAULT_COLOR = '#ffffff';
     private $dm;
     private $collection;
     private $defaultPoster;
     private $defaultThumbnail;
-    const DEFAULT_COLOR = '#ffffff';
     private $validColors = [
         'aliceblue',
         'antiquewhite',
@@ -601,6 +601,7 @@ class EmbeddedEventSessionService
      * Get first thumbnail.
      *
      * @param array pics
+     * @param mixed $pics
      *
      * @return string
      */
@@ -664,9 +665,9 @@ class EmbeddedEventSessionService
      *
      * @param $color
      *
-     * @return string
-     *
      * @throws \Exception
+     *
+     * @return string
      */
     public function validateHtmlColor($color)
     {
@@ -679,6 +680,7 @@ class EmbeddedEventSessionService
         preg_match('/^[a-f0-9]{3}$/i', $color)) {
             return '#'.$color;
         }
+
         throw new \Exception('Invalid text color: must be a hexadecimal number or a color name.');
     }
 
@@ -756,9 +758,9 @@ class EmbeddedEventSessionService
                 }
                 if ($start) {
                     return $dateStartSession;
-                } else {
-                    return $dateEndsSession;
                 }
+
+                return $dateEndsSession;
             }
 
             return $date->toDateTime();
@@ -782,9 +784,11 @@ class EmbeddedEventSessionService
         foreach ($sessions as $session) {
             if ($session->getStart() < $now && $session->getEnds() > $now) {
                 return $start ? $session->getStart() : $session->getEnds();
-            } elseif ($session->getStart() > $now) {
+            }
+            if ($session->getStart() > $now) {
                 return $start ? $session->getStart() : $session->getEnds();
-            } elseif ($session->getStart() < $now) {
+            }
+            if ($session->getStart() < $now) {
                 $date = $start ? $session->getStart() : $session->getEnds();
             }
         }
@@ -798,7 +802,7 @@ class EmbeddedEventSessionService
     /**
      * Find future events.
      *
-     * @param string|null $multimediaObjectId
+     * @param null|string $multimediaObjectId
      * @param int         $limit
      *
      * @return array
@@ -818,6 +822,7 @@ class EmbeddedEventSessionService
                     $startDate = $embeddedSession['start']->toDateTime();
                     if ($startDate > $now) {
                         $orderSession = $this->addElementWithSessionSec($orderSession, $element, $embeddedSession['start']->sec);
+
                         break;
                     }
                 }
@@ -838,7 +843,7 @@ class EmbeddedEventSessionService
     /**
      * Count future events.
      *
-     * @param string|null $multimediaObjectId
+     * @param null|string $multimediaObjectId
      *
      * @return array
      */
@@ -900,6 +905,89 @@ class EmbeddedEventSessionService
     }
 
     /**
+     * Find next live events.
+     *
+     * @param null|string $multimediaObjectId
+     * @param int         $limit
+     *
+     * @return array
+     */
+    public function findNextLiveEvents($multimediaObjectId = null, $limit = 0)
+    {
+        $pipeline = $this->getNextLiveEventsPipeline($multimediaObjectId);
+        $result = $this->collection->aggregate($pipeline, ['cursor' => []])->toArray();
+        $orderSession = [];
+        $now = new \DateTime('now');
+        foreach ($result as $key => $element) {
+            foreach ($element['data'] as $eventData) {
+                usort($eventData['event']['embeddedEventSession'], function ($a, $b) {
+                    return $a['start'] >= $b['start'];
+                });
+                foreach ($eventData['event']['embeddedEventSession'] as $embeddedSession) {
+                    $startDate = $embeddedSession['start']->toDateTime();
+                    if ($startDate > $now) {
+                        $orderSession = $this->addElementWithSessionSec($orderSession, $element, $embeddedSession['start']->sec);
+
+                        break;
+                    }
+                }
+            }
+        }
+        ksort($orderSession);
+        $output = [];
+        foreach (array_values($orderSession) as $key => $session) {
+            if (0 !== $limit && $key >= $limit) {
+                break;
+            }
+            $output[$key] = $session;
+        }
+
+        return $output;
+    }
+
+    /**
+     * Is live broadcasting.
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     *
+     * @return bool
+     */
+    public function isLiveBroadcasting()
+    {
+        static $isLiveBroadcasting = null;
+
+        if (null !== $isLiveBroadcasting) {
+            return $isLiveBroadcasting;
+        }
+
+        $events = $this->findCurrentSessions();
+
+        $isLiveBroadcasting = count($events) > 0;
+
+        return $isLiveBroadcasting;
+    }
+
+    /**
+     * Add element with session sec.
+     *
+     * @param array $orderSession
+     * @param array $element
+     * @param int   $indexSec
+     *
+     * @return array
+     */
+    protected function addElementWithSessionSec($orderSession, $element, $indexSec)
+    {
+        $index = 0;
+        while (isset($orderSession[$indexSec + $index])) {
+            ++$index;
+        }
+        $orderSession[$indexSec + $index] = $element;
+
+        return $orderSession;
+    }
+
+    /**
      * Init pipeline.
      *
      * @param bool $all true to not filter by display
@@ -956,6 +1044,7 @@ class EmbeddedEventSessionService
      * End pipeline.
      *
      * @param array pipeline
+     * @param mixed $pipeline
      */
     private function endPipeline(&$pipeline)
     {
@@ -983,6 +1072,7 @@ class EmbeddedEventSessionService
      * Get future events pipeline.
      *
      * @param string MultimediaObjectId
+     * @param mixed $multimediaObjectId
      *
      * @return array
      */
@@ -1044,6 +1134,7 @@ class EmbeddedEventSessionService
      * Get multimedia object pics.
      *
      * @param string eventId
+     * @param mixed $eventId
      *
      * @return array
      */
@@ -1086,6 +1177,7 @@ class EmbeddedEventSessionService
      * @deprecated: Use getPicPoster
      *
      * @param array
+     * @param mixed $pics
      *
      * @return string
      */
@@ -1123,6 +1215,7 @@ class EmbeddedEventSessionService
      * Get multimedia object properties.
      *
      * @param string eventId
+     * @param mixed $eventId
      *
      * @return array
      */
@@ -1160,49 +1253,10 @@ class EmbeddedEventSessionService
     }
 
     /**
-     * Find next live events.
-     *
-     * @param string|null $multimediaObjectId
-     * @param int         $limit
-     *
-     * @return array
-     */
-    public function findNextLiveEvents($multimediaObjectId = null, $limit = 0)
-    {
-        $pipeline = $this->getNextLiveEventsPipeline($multimediaObjectId);
-        $result = $this->collection->aggregate($pipeline, ['cursor' => []])->toArray();
-        $orderSession = [];
-        $now = new \DateTime('now');
-        foreach ($result as $key => $element) {
-            foreach ($element['data'] as $eventData) {
-                usort($eventData['event']['embeddedEventSession'], function ($a, $b) {
-                    return $a['start'] >= $b['start'];
-                });
-                foreach ($eventData['event']['embeddedEventSession'] as $embeddedSession) {
-                    $startDate = $embeddedSession['start']->toDateTime();
-                    if ($startDate > $now) {
-                        $orderSession = $this->addElementWithSessionSec($orderSession, $element, $embeddedSession['start']->sec);
-                        break;
-                    }
-                }
-            }
-        }
-        ksort($orderSession);
-        $output = [];
-        foreach (array_values($orderSession) as $key => $session) {
-            if (0 !== $limit && $key >= $limit) {
-                break;
-            }
-            $output[$key] = $session;
-        }
-
-        return $output;
-    }
-
-    /**
      * Get next live events pipeline.
      *
      * @param string multimediaObjectId
+     * @param mixed $multimediaObjectId
      *
      * @return array
      */
@@ -1263,47 +1317,5 @@ class EmbeddedEventSessionService
         ];
 
         return $pipeline;
-    }
-
-    /**
-     * Add element with session sec.
-     *
-     * @param array $orderSession
-     * @param array $element
-     * @param int   $indexSec
-     *
-     * @return array
-     */
-    protected function addElementWithSessionSec($orderSession, $element, $indexSec)
-    {
-        $index = 0;
-        while (isset($orderSession[$indexSec + $index])) {
-            ++$index;
-        }
-        $orderSession[$indexSec + $index] = $element;
-
-        return $orderSession;
-    }
-
-    /**
-     * Is live broadcasting.
-     *
-     * @return bool
-     *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     */
-    public function isLiveBroadcasting()
-    {
-        static $isLiveBroadcasting = null;
-
-        if (null !== $isLiveBroadcasting) {
-            return $isLiveBroadcasting;
-        }
-
-        $events = $this->findCurrentSessions();
-
-        $isLiveBroadcasting = count($events) > 0;
-
-        return $isLiveBroadcasting;
     }
 }

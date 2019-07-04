@@ -2,9 +2,13 @@
 
 namespace Pumukit\SchemaBundle\Tests\Document;
 
-use Pumukit\SchemaBundle\Document\Pic;
 use PHPUnit\Framework\TestCase;
+use Pumukit\SchemaBundle\Document\Pic;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class PicTest extends TestCase
 {
     public function testGetterAndSetter()

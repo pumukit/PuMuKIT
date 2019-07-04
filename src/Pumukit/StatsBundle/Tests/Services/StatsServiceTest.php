@@ -2,14 +2,18 @@
 
 namespace Pumukit\StatsBundle\Tests\Services;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Track;
-use Pumukit\StatsBundle\Services\StatsService;
 use Pumukit\StatsBundle\Document\ViewsLog;
-use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\StatsBundle\Services\StatsService;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class StatsServiceTest extends WebTestCase
 {
     private $dm;
@@ -25,98 +29,30 @@ class StatsServiceTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()
             ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
-            ->getRepository('PumukitStatsBundle:ViewsLog');
+            ->getRepository('PumukitStatsBundle:ViewsLog')
+        ;
         $this->factoryService = static::$kernel->getContainer()
-            ->get('pumukitschema.factory');
+            ->get('pumukitschema.factory')
+        ;
         $this->viewsService = static::$kernel->getContainer()
-            ->get('pumukit_stats.stats');
+            ->get('pumukit_stats.stats')
+        ;
 
         $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog')
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsAggregation')
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Series::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Tag::class)
-            ->remove([]);
-    }
-
-    private function logView($when, MultimediaObject $multimediaObject, Track $track = null)
-    {
-        $log = new ViewsLog('/', '8.8.8.8', 'test', '', $multimediaObject->getId(), $multimediaObject->getSeries()->getId(), null);
-        $log->setDate($when);
-        $multimediaObject->incNumview();
-        $this->dm->persist($log);
-        $this->dm->persist($multimediaObject);
-        $this->dm->flush();
-
-        return $log;
-    }
-
-    private function initContext()
-    {
-        $series = $this->factoryService->createSeries();
-        $list = [];
-        $list[1] = $this->factoryService->createMultimediaObject($series);
-        $list[2] = $this->factoryService->createMultimediaObject($series);
-        $list[3] = $this->factoryService->createMultimediaObject($series);
-        $list[4] = $this->factoryService->createMultimediaObject($series);
-        $list[5] = $this->factoryService->createMultimediaObject($series);
-
-        foreach ($list as $i => $mm) {
-            $mm->setStatus(MultimediaObject::STATUS_PUBLISHED);
-            $this->dm->persist($mm);
-        }
-        $this->dm->flush();
-
-        $this->logView(new \DateTime('now'), $list[1]);
-        $this->logView(new \DateTime('now'), $list[3]);
-        $this->logView(new \DateTime('now'), $list[3]);
-        $this->logView(new \DateTime('now'), $list[3]);
-        $this->logView(new \DateTime('now'), $list[2]);
-        $this->logView(new \DateTime('now'), $list[2]);
-
-        $this->logView(new \DateTime('-10 days'), $list[4]);
-        $this->logView(new \DateTime('-10 days'), $list[4]);
-        $this->logView(new \DateTime('-10 days'), $list[4]);
-        $this->logView(new \DateTime('-10 days'), $list[4]);
-
-        $this->logView(new \DateTime('-20 days'), $list[5]);
-        $this->logView(new \DateTime('-20 days'), $list[5]);
-        $this->logView(new \DateTime('-20 days'), $list[5]);
-        $this->logView(new \DateTime('-20 days'), $list[5]);
-        $this->logView(new \DateTime('-20 days'), $list[5]);
-
-        $this->viewsService->aggregateViewsLog();
-
-        $list[1]->setTitle('OTHER MMOBJ');
-
-        return $list;
-    }
-
-    private function initTags($list)
-    {
-        $globalTag = new Tag();
-        $globalTag->setCod('tv');
-        $this->dm->persist($globalTag);
-
-        $tags = [];
-        foreach ($list as $i => $mm) {
-            $tag = new Tag();
-            $tag->setCod($i);
-            $this->dm->persist($tag);
-            $tags[$i] = $tag;
-        }
-        $this->dm->flush();
-
-        foreach ($list as $i => $mm) {
-            $mm->addTag($globalTag);
-            $mm->addTag($tags[$i]);
-            $this->dm->persist($mm);
-        }
-        $this->dm->flush();
+            ->remove([])
+        ;
     }
 
     public function tearDown()
@@ -259,5 +195,81 @@ class StatsServiceTest extends WebTestCase
         $this->assertEquals(0, $mostViewed[3]['num_viewed']);
         $this->assertEquals(0, $mostViewed[4]['num_viewed']);
         $this->assertEquals(5, $total);
+    }
+
+    private function logView($when, MultimediaObject $multimediaObject, Track $track = null)
+    {
+        $log = new ViewsLog('/', '8.8.8.8', 'test', '', $multimediaObject->getId(), $multimediaObject->getSeries()->getId(), null);
+        $log->setDate($when);
+        $multimediaObject->incNumview();
+        $this->dm->persist($log);
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        return $log;
+    }
+
+    private function initContext()
+    {
+        $series = $this->factoryService->createSeries();
+        $list = [];
+        $list[1] = $this->factoryService->createMultimediaObject($series);
+        $list[2] = $this->factoryService->createMultimediaObject($series);
+        $list[3] = $this->factoryService->createMultimediaObject($series);
+        $list[4] = $this->factoryService->createMultimediaObject($series);
+        $list[5] = $this->factoryService->createMultimediaObject($series);
+
+        foreach ($list as $i => $mm) {
+            $mm->setStatus(MultimediaObject::STATUS_PUBLISHED);
+            $this->dm->persist($mm);
+        }
+        $this->dm->flush();
+
+        $this->logView(new \DateTime('now'), $list[1]);
+        $this->logView(new \DateTime('now'), $list[3]);
+        $this->logView(new \DateTime('now'), $list[3]);
+        $this->logView(new \DateTime('now'), $list[3]);
+        $this->logView(new \DateTime('now'), $list[2]);
+        $this->logView(new \DateTime('now'), $list[2]);
+
+        $this->logView(new \DateTime('-10 days'), $list[4]);
+        $this->logView(new \DateTime('-10 days'), $list[4]);
+        $this->logView(new \DateTime('-10 days'), $list[4]);
+        $this->logView(new \DateTime('-10 days'), $list[4]);
+
+        $this->logView(new \DateTime('-20 days'), $list[5]);
+        $this->logView(new \DateTime('-20 days'), $list[5]);
+        $this->logView(new \DateTime('-20 days'), $list[5]);
+        $this->logView(new \DateTime('-20 days'), $list[5]);
+        $this->logView(new \DateTime('-20 days'), $list[5]);
+
+        $this->viewsService->aggregateViewsLog();
+
+        $list[1]->setTitle('OTHER MMOBJ');
+
+        return $list;
+    }
+
+    private function initTags($list)
+    {
+        $globalTag = new Tag();
+        $globalTag->setCod('tv');
+        $this->dm->persist($globalTag);
+
+        $tags = [];
+        foreach ($list as $i => $mm) {
+            $tag = new Tag();
+            $tag->setCod($i);
+            $this->dm->persist($tag);
+            $tags[$i] = $tag;
+        }
+        $this->dm->flush();
+
+        foreach ($list as $i => $mm) {
+            $mm->addTag($globalTag);
+            $mm->addTag($tags[$i]);
+            $this->dm->persist($mm);
+        }
+        $this->dm->flush();
     }
 }

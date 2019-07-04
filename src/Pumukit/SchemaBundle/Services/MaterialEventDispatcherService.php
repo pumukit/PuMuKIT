@@ -2,12 +2,12 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
+use Pumukit\SchemaBundle\Document\Material;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Event\MaterialEvent;
+use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Pumukit\SchemaBundle\Event\SchemaEvents;
-use Pumukit\SchemaBundle\Event\MaterialEvent;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Material;
 
 class MaterialEventDispatcherService
 {

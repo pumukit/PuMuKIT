@@ -2,9 +2,13 @@
 
 namespace Pumukit\OaiBundle\Tests\Utils;
 
-use Pumukit\OaiBundle\Utils\ResumptionToken;
 use PHPUnit\Framework\TestCase;
+use Pumukit\OaiBundle\Utils\ResumptionToken;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class ResumptionTokenTest extends TestCase
 {
     public function testConstructAndGetter()

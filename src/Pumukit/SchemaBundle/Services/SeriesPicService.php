@@ -2,13 +2,13 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
-use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\Pic;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Symfony\Component\Finder\Finder;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Pic;
+use Pumukit\SchemaBundle\Document\Series;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class SeriesPicService
 {
@@ -53,6 +53,8 @@ class SeriesPicService
 
     /**
      * Get pics from series or multimedia object.
+     *
+     * @param mixed $series
      */
     public function getRecommendedPics($series)
     {
@@ -61,6 +63,10 @@ class SeriesPicService
 
     /**
      * Set a pic from an url into the series.
+     *
+     * @param mixed $picUrl
+     * @param mixed $isBanner
+     * @param mixed $bannerTargetUrl
      */
     public function addPicUrl(Series $series, $picUrl, $isBanner = false, $bannerTargetUrl = '')
     {
@@ -82,6 +88,9 @@ class SeriesPicService
 
     /**
      * Set a pic from an url into the series.
+     *
+     * @param mixed $isBanner
+     * @param mixed $bannerTargetUrl
      */
     public function addPicFile(Series $series, UploadedFile $picFile, $isBanner = false, $bannerTargetUrl = '')
     {
@@ -114,6 +123,8 @@ class SeriesPicService
 
     /**
      * Remove Pic from Series.
+     *
+     * @param mixed $picId
      */
     public function removePicFromSeries(Series $series, $picId)
     {
@@ -143,6 +154,7 @@ class SeriesPicService
     private function deleteFileOnDisk($path, $series)
     {
         $dirname = pathinfo($path, PATHINFO_DIRNAME);
+
         try {
             $deleted = unlink($path);
             if (!$deleted) {

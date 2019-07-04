@@ -7,7 +7,7 @@ namespace Pumukit\BasePlayerBundle\Services;
  */
 class IntroService
 {
-    private $intro = null;
+    private $intro;
 
     public function __construct($intro)
     {
@@ -19,7 +19,7 @@ class IntroService
      *
      * @param mixed $introParameter request parameter null|'false'|'true'
      *
-     * @return string|null
+     * @return null|string
      */
     public function getIntro($introParameter = null)
     {
@@ -41,10 +41,11 @@ class IntroService
      * Returns the intro url if introParameter is null or 'true' and not exist an introProperty.
      * Returns the intro property if it is a string and introParameter is null or 'true'.
      *
-     * @param mixed $introPropoerty multimedia object property null|false|'url'
-     * @param mixed $introParameter request parameter null|string('false'|'true')
+     * @param mixed      $introPropoerty multimedia object property null|false|'url'
+     * @param mixed      $introParameter request parameter null|string('false'|'true')
+     * @param null|mixed $introProperty
      *
-     * @return bool|null
+     * @return null|bool
      */
     public function getIntroForMultimediaObject($introProperty = null, $introParameter = null)
     {

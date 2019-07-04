@@ -2,13 +2,13 @@
 
 namespace Pumukit\EncoderBundle\Services;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
 use Symfony\Component\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Series;
 
 class PicService
 {
@@ -35,17 +35,17 @@ class PicService
     }
 
     /**
-     * @param string|null $id
-     * @param string|null $size
-     * @param string|null $path
-     * @param string|null $extension
-     * @param string|null $tags
-     * @param string|null $exists
-     * @param string|null $type
-     *
-     * @return \Doctrine\MongoDB\Iterator|mixed|null
+     * @param null|string $id
+     * @param null|string $size
+     * @param null|string $path
+     * @param null|string $extension
+     * @param null|string $tags
+     * @param null|string $exists
+     * @param null|string $type
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     *
+     * @return null|\Doctrine\MongoDB\Iterator|mixed
      */
     public function findPicsByOptions($id = null, $size = null, $path = null, $extension = null, $tags = null, $exists = null, $type = null)
     {
@@ -191,9 +191,9 @@ class PicService
      * @param $exists
      * @param $type
      *
-     * @return array
-     *
      * @throws \Exception
+     *
+     * @return array
      */
     public function formatInputs($id, $size, $path, $extension, $tags, $exists, $type)
     {
@@ -226,9 +226,9 @@ class PicService
      * @param array $params
      * @param bool  $no_replace
      *
-     * @return array
-     *
      * @throws \Exception
+     *
+     * @return array
      */
     public function convertImage($data, array $params, $no_replace = false)
     {
@@ -248,6 +248,7 @@ class PicService
 
             if (!$multimediaObject) {
                 $output[] = 'Multimedia Object not found by path '.$pic['path'];
+
                 continue;
             }
 
@@ -261,6 +262,7 @@ class PicService
                     $output[] = 'Create new image - Multimedia object '.$multimediaObject->getId().' and image path '.$picPath;
                 } catch (\Exception $exception) {
                     $output[] = 'Create new image - Multimedia object '.$multimediaObject->getId().' error trying to add new pic';
+
                     continue;
                 }
             } else {
@@ -269,6 +271,7 @@ class PicService
                         $this->updateOriginalImage($multimediaObject, $picPath, $pic);
                     } catch (\Exception $exception) {
                         $output[] = 'Override - Multimedia object '.$multimediaObject->getId().' error trying to update original image '.$picPath;
+
                         continue;
                     }
                     $output[] = 'Override - Updated path for multimedia object '.$picPath;
@@ -448,6 +451,7 @@ class PicService
         foreach ($multimediaObject->getPics() as $mmsPic) {
             if ($mmsPic->getPath() === $pic['path']) {
                 $mmsPic->setHide(true);
+
                 break;
             }
         }
@@ -474,6 +478,7 @@ class PicService
                 $mmsPic->setHeight($height);
                 $mmsPic->setMimeType(\image_type_to_mime_type($type));
                 $mmsPic->addTag('overrided');
+
                 break;
             }
         }

@@ -16,12 +16,14 @@ class PersonRepository extends DocumentRepository
     public function findByRoleCodAndEmail($roleCode, $email)
     {
         $people = $this->createQueryBuilder()
-          ->field('email')->equals($email)
-          ->getQuery()
-          ->execute();
+            ->field('email')->equals($email)
+            ->getQuery()
+            ->execute()
+        ;
 
         $mmobjRepo = $this->getDocumentManager()
-          ->getRepository(MultimediaObject::class);
+            ->getRepository(MultimediaObject::class)
+        ;
         foreach ($people as $person) {
             $mms = $mmobjRepo->findByPersonIdWithRoleCod($person->getId(), $roleCode);
             if ($mms->count() > 0) {

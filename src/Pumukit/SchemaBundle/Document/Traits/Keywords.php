@@ -30,7 +30,7 @@ trait Keywords
      * use setKeywords instead
      *
      * @param string      $keyword
-     * @param string|null $locale
+     * @param null|string $locale
      */
     public function setKeyword($keyword, $locale = null)
     {
@@ -47,7 +47,7 @@ trait Keywords
      * @deprecated in version 2.3
      * use getKeywords instead
      *
-     * @param string|null $locale
+     * @param null|string $locale
      *
      * @return string
      */
@@ -97,8 +97,8 @@ trait Keywords
     /**
      * Contains keyword.
      *
-     *
-     * @param string|null $locale
+     * @param null|string $locale
+     * @param mixed       $keyword
      *
      * @return bool TRUE if this multimedia_object contained the keyword, FALSE otherwise
      */
@@ -115,7 +115,7 @@ trait Keywords
      * Add keyword.
      *
      * @param string      $keyword
-     * @param string|null $locale
+     * @param null|string $locale
      *
      * @return bool Always TRUE
      */
@@ -138,7 +138,7 @@ trait Keywords
      * Remove keyword.
      *
      * @param string      $keyword
-     * @param string|null $locale
+     * @param null|string $locale
      *
      * @return bool TRUE if object contains the keyword
      */
@@ -167,7 +167,7 @@ trait Keywords
      * Set keywords.
      *
      * @param array       $keyword
-     * @param string|null $locale
+     * @param null|string $locale
      */
     public function setKeywords(array $keywords, $locale = null)
     {
@@ -180,7 +180,7 @@ trait Keywords
     /**
      * Get keyword.
      *
-     * @param string|null $locale
+     * @param null|string $locale
      *
      * @return array
      */

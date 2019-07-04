@@ -2,14 +2,18 @@
 
 namespace Pumukit\StatsBundle\Tests\EventListener;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpFoundation\Request;
-use Pumukit\SchemaBundle\Document\Track;
-use Pumukit\StatsBundle\EventListener\Log;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\StatsBundle\EventListener\Log;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class LogTest extends WebTestCase
 {
     private $dm;
@@ -25,18 +29,24 @@ class LogTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()
             ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
-            ->getRepository('PumukitStatsBundle:ViewsLog');
+            ->getRepository('PumukitStatsBundle:ViewsLog')
+        ;
         $this->factoryService = static::$kernel->getContainer()
-            ->get('pumukitschema.factory');
+            ->get('pumukitschema.factory')
+        ;
         $this->tokenStorage = static::$kernel->getContainer()
-          ->get('security.token_storage');
+            ->get('security.token_storage')
+        ;
 
         $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog')
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Series::class)
-            ->remove([]);
+            ->remove([])
+        ;
     }
 
     public function tearDown()
@@ -47,6 +57,26 @@ class LogTest extends WebTestCase
         $this->tokenStorage = null;
         gc_collect_cycles();
         parent::tearDown();
+    }
+
+    public function testonMultimediaObjectViewed()
+    {
+        $requestStack = $this->createMockRequestStack();
+        $service = new Log($this->dm, $requestStack, $this->tokenStorage);
+
+        $event = $this->createEvent();
+        $service->onMultimediaObjectViewed($event);
+        $this->assertEquals(1, count($this->repo->findAll()));
+    }
+
+    public function testonMultimediaObjectWithoutTrackViewed()
+    {
+        $requestStack = $this->createMockRequestStack();
+        $service = new Log($this->dm, $requestStack, $this->tokenStorage);
+
+        $event = $this->createEvent(false);
+        $service->onMultimediaObjectViewed($event);
+        $this->assertEquals(1, count($this->repo->findAll()));
     }
 
     private function createMockRequestStack()
@@ -73,25 +103,5 @@ class LogTest extends WebTestCase
         }
 
         return new ViewedEvent($multimediaObject, $track);
-    }
-
-    public function testonMultimediaObjectViewed()
-    {
-        $requestStack = $this->createMockRequestStack();
-        $service = new Log($this->dm, $requestStack, $this->tokenStorage);
-
-        $event = $this->createEvent();
-        $service->onMultimediaObjectViewed($event);
-        $this->assertEquals(1, count($this->repo->findAll()));
-    }
-
-    public function testonMultimediaObjectWithoutTrackViewed()
-    {
-        $requestStack = $this->createMockRequestStack();
-        $service = new Log($this->dm, $requestStack, $this->tokenStorage);
-
-        $event = $this->createEvent(false);
-        $service->onMultimediaObjectViewed($event);
-        $this->assertEquals(1, count($this->repo->findAll()));
     }
 }

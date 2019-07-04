@@ -3,12 +3,12 @@
 namespace Pumukit\EncoderBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Symfony\Component\Process\Process;
-use Symfony\Component\Filesystem\Filesystem;
-use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
+use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Process\Process;
 
 class PicExtractorService
 {
@@ -204,7 +204,7 @@ class PicExtractorService
      * @param MultimediaObject $multimediaObject
      * @param string           $picUrl
      *
-     * @return Pic|null
+     * @return null|Pic
      */
     private function getPicByUrl(MultimediaObject $multimediaObject, $picUrl)
     {

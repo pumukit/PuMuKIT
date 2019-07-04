@@ -2,12 +2,16 @@
 
 namespace Pumukit\EncoderBundle\Tests\EventListener;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\Track;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class RemoveListenerTest extends WebTestCase
 {
     private $dm;
@@ -37,11 +41,14 @@ class RemoveListenerTest extends WebTestCase
         $this->resourcesDir = realpath(__DIR__.'/../Resources');
 
         $this->dm->getDocumentCollection(MultimediaObject::class)
-          ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Series::class)
-          ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Job::class)
-          ->remove([]);
+            ->remove([])
+        ;
         $this->dm->flush();
     }
 

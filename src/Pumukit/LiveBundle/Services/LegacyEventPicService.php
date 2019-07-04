@@ -2,12 +2,12 @@
 
 namespace Pumukit\LiveBundle\Services;
 
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Symfony\Component\Finder\Finder;
-use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\LiveBundle\Document\Event;
+use Pumukit\SchemaBundle\Document\Pic;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class LegacyEventPicService
 {
@@ -29,6 +29,8 @@ class LegacyEventPicService
 
     /**
      * Set a pic from an url into the event.
+     *
+     * @param mixed $picUrl
      */
     public function addPicUrl(Event $event, $picUrl)
     {
@@ -90,6 +92,7 @@ class LegacyEventPicService
     private function deleteFileOnDisk($path, $event)
     {
         $dirname = pathinfo($path, PATHINFO_DIRNAME);
+
         try {
             $deleted = unlink($path);
             if (!$deleted) {

@@ -2,9 +2,13 @@
 
 namespace Pumukit\OpencastBundle\Tests\Services;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\User;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class ClientServiceTest extends WebTestCase
 {
     private $dm;
@@ -54,7 +58,7 @@ class ClientServiceTest extends WebTestCase
     public function testGetMediaPackages()
     {
         $this->markTestSkipped(
-          'Integration test.'
+            'Integration test.'
         );
 
         $media = $this->clientService->getMediaPackages(0, 0, 0);

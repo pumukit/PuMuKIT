@@ -42,8 +42,8 @@ class LinkService
 
         if ($this->linkTagToSearch) {
             return $this->generator->generate('pumukit_webtv_search_multimediaobjects', $parameters, UrlGeneratorInterface::ABSOLUTE_PATH);
-        } else {
-            return $this->generator->generate('pumukit_webtv_bytag_multimediaobjects', $parameters, UrlGeneratorInterface::ABSOLUTE_PATH);
         }
+
+        return $this->generator->generate('pumukit_webtv_bytag_multimediaobjects', $parameters, UrlGeneratorInterface::ABSOLUTE_PATH);
     }
 }

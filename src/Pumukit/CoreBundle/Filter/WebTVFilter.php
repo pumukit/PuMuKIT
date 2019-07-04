@@ -25,8 +25,6 @@ class WebTVFilter extends BsonFilter
         if (Series::class === $targetDocument->reflClass->name) {
             return $this->getSeriesCriteria();
         }
-
-        return;
     }
 
     /**
@@ -76,11 +74,9 @@ class WebTVFilter extends BsonFilter
      */
     protected function getSeriesCriteria()
     {
-        $criteria = [
+        return [
             'hide' => false,
         ];
-
-        return $criteria;
     }
 
     /**

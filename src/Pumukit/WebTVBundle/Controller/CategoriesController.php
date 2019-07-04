@@ -2,14 +2,14 @@
 
 namespace Pumukit\WebTVBundle\Controller;
 
+use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Tag;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+//Used on countMmobjsInTags TODO Move to service
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-//Used on countMmobjsInTags TODO Move to service
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
-use Pumukit\SchemaBundle\Document\Tag;
 
 /**
  * Class CategoriesController.
@@ -19,6 +19,8 @@ class CategoriesController extends Controller implements WebTVControllerInterfac
     /**
      * @Route("/categories/{sort}", defaults={"sort" = "date"}, requirements={"sort" = "alphabetically|date|tags"}, name="pumukit_webtv_categories_index")
      * @Template("PumukitWebTVBundle:Categories:template.html.twig")
+     *
+     * @param mixed $sort
      */
     public function indexAction($sort, Request $request)
     {
@@ -29,7 +31,8 @@ class CategoriesController extends Controller implements WebTVControllerInterfac
 
         $groundsRoot = $this->getDoctrine()
             ->getRepository(Tag::class)
-            ->findOneByCod($parentCod);
+            ->findOneByCod($parentCod)
+        ;
 
         if (!isset($groundsRoot)) {
             throw $this->createNotFoundException(
@@ -43,7 +46,8 @@ class CategoriesController extends Controller implements WebTVControllerInterfac
         $allGrounds = [];
         $tagsTree = $this->getDoctrine()
             ->getRepository(Tag::class)
-            ->getTree($groundsRoot);
+            ->getTree($groundsRoot)
+        ;
 
         //Create array structure
         //TODO Move this logic to a service.
@@ -195,10 +199,10 @@ class CategoriesController extends Controller implements WebTVControllerInterfac
         if (null !== $provider) {
             $qb = $qb->field('tags.cod')->equals($provider);
         }
-        $qb = $qb->count()
-            ->getQuery()
-            ->execute();
 
-        return $qb;
+        return $qb->count()
+            ->getQuery()
+            ->execute()
+        ;
     }
 }

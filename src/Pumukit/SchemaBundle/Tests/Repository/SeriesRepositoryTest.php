@@ -2,17 +2,21 @@
 
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
+use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Person;
+use Pumukit\SchemaBundle\Document\Pic;
+use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\Tag;
-use Pumukit\SchemaBundle\Document\Role;
-use Pumukit\SchemaBundle\Document\Person;
-use Pumukit\SchemaBundle\Document\Pic;
-use Pumukit\SchemaBundle\Document\Group;
-use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class SeriesRepositoryTest extends WebTestCase
 {
     private $dm;
@@ -31,19 +35,26 @@ class SeriesRepositoryTest extends WebTestCase
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
 
         $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Role::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Person::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Series::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Tag::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Group::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->flush();
     }
 

@@ -2,13 +2,17 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
-use Pumukit\SchemaBundle\Document\User;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\User;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class PersonServiceTest extends WebTestCase
 {
     private $dm;
@@ -24,17 +28,22 @@ class PersonServiceTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
-          ->get('doctrine_mongodb')->getManager();
+            ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
-          ->getRepository(Person::class);
+            ->getRepository(Person::class)
+        ;
         $this->roleRepo = $this->dm
-          ->getRepository(Role::class);
+            ->getRepository(Role::class)
+        ;
         $this->repoMmobj = $this->dm
-          ->getRepository(MultimediaObject::class);
+            ->getRepository(MultimediaObject::class)
+        ;
         $this->personService = static::$kernel->getContainer()
-          ->get('pumukitschema.person');
+            ->get('pumukitschema.person')
+        ;
         $this->factoryService = static::$kernel->getContainer()
-          ->get('pumukitschema.factory');
+            ->get('pumukitschema.factory')
+        ;
 
         $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
         $this->dm->getDocumentCollection(Person::class)->remove([]);

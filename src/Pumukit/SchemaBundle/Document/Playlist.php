@@ -2,9 +2,9 @@
 
 namespace Pumukit\SchemaBundle\Document;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use JMS\Serializer\Annotation as Serializer;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Pumukit\SchemaBundle\Document\Playlist.
@@ -62,6 +62,7 @@ class Playlist
      * Removes all references to the multimedia objects with the given id.
      *
      * @param MultimediaObject $multimedia_object
+     * @param mixed            $mmobjId
      */
     public function removeAllMultimediaObjectsById($mmobjId)
     {
@@ -155,7 +156,8 @@ class Playlist
         $mmobjIds = array_map(
             function ($m) {
                 return new \MongoId($m->getId());
-            }, $this->multimedia_objects->toArray()
+            },
+            $this->multimedia_objects->toArray()
         );
 
         return $mmobjIds;
@@ -163,6 +165,9 @@ class Playlist
 
     /**
      * Move multimedia_objects.
+     *
+     * @param mixed $posStart
+     * @param mixed $posEnd
      *
      * @return ArrayCollection
      */

@@ -3,13 +3,13 @@
 namespace Pumukit\CoreBundle\Command;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Finder\Finder;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Series;
 
 /**
  * Class DeleteOrphanFilesCommand.
@@ -30,7 +30,8 @@ class DeleteOrphanFilesCommand extends ContainerAwareCommand
             ->setDescription('Pumukit delete orphan files on folders')
             ->addOption('path', null, InputOption::VALUE_REQUIRED, 'Path to check', null)
             ->addOption('delete', null, InputOption::VALUE_NONE, 'Delete files and folders')
-            ->setHelp(<<<'EOT'
+            ->setHelp(
+                <<<'EOT'
 
             Pumukit delete orphan files on specific path. This command shows if the path's file exists on:
 
@@ -50,7 +51,8 @@ class DeleteOrphanFilesCommand extends ContainerAwareCommand
                     php app/console pumukit:files:delete:orphan --path="/var/www/html/pumukit2/web/uploads/material" --delete
 
 EOT
-            );
+            )
+        ;
     }
 
     /**
@@ -71,9 +73,9 @@ EOT
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return int|void|null
-     *
      * @throws \Exception
+     *
+     * @return null|int|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -168,6 +170,7 @@ EOT
     private function isEmptyDirectory(OutputInterface $output, $directoryPath)
     {
         $dirName = pathinfo($directoryPath, PATHINFO_DIRNAME);
+
         try {
             if (realpath($dirName)) {
                 if (rmdir(realpath($dirName))) {

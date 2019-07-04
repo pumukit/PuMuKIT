@@ -2,9 +2,9 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Link;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\Link;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class LinkService
 {

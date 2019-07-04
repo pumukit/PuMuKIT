@@ -2,18 +2,22 @@
 
 namespace Pumukit\SchemaBundle\Tests\EventListener;
 
+use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\EventListener\PermissionProfileListener;
+use Pumukit\SchemaBundle\Security\Permission;
+use Pumukit\SchemaBundle\Services\PermissionProfileEventDispatcherService;
+use Pumukit\SchemaBundle\Services\PermissionProfileService;
+use Pumukit\SchemaBundle\Services\PermissionService;
+use Pumukit\SchemaBundle\Services\UserEventDispatcherService;
+use Pumukit\SchemaBundle\Services\UserService;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Pumukit\SchemaBundle\Document\User;
-use Pumukit\SchemaBundle\Document\PermissionProfile;
-use Pumukit\SchemaBundle\Security\Permission;
-use Pumukit\SchemaBundle\Services\UserService;
-use Pumukit\SchemaBundle\Services\UserEventDispatcherService;
-use Pumukit\SchemaBundle\Services\PermissionService;
-use Pumukit\SchemaBundle\Services\PermissionProfileService;
-use Pumukit\SchemaBundle\Services\PermissionProfileEventDispatcherService;
-use Pumukit\SchemaBundle\EventListener\PermissionProfileListener;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class PermissionProfileListenerTest extends WebTestCase
 {
     private $dm;
@@ -38,27 +42,33 @@ class PermissionProfileListenerTest extends WebTestCase
         $permissionProfileDispatcher = new PermissionProfileEventDispatcherService($dispatcher);
         $permissionService = new PermissionService($this->dm);
         $this->permissionProfileService = new PermissionProfileService(
-            $this->dm, $permissionProfileDispatcher,
+            $this->dm,
+            $permissionProfileDispatcher,
             $permissionService
         );
 
         $personalScopeDeleteOwners = false;
 
         $this->userService = new UserService(
-            $this->dm, $userDispatcher,
-            $permissionService, $this->permissionProfileService,
+            $this->dm,
+            $userDispatcher,
+            $permissionService,
+            $this->permissionProfileService,
             $personalScopeDeleteOwners
         );
         $this->logger = static::$kernel->getContainer()
-            ->get('logger');
+            ->get('logger')
+        ;
 
         $this->listener = new PermissionProfileListener($this->dm, $this->userService, $this->logger);
         $dispatcher->addListener('permissionprofile.update', [$this->listener, 'postUpdate']);
 
         $this->dm->getDocumentCollection(PermissionProfile::class)
-          ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(User::class)
-          ->remove([]);
+            ->remove([])
+        ;
         $this->dm->flush();
     }
 

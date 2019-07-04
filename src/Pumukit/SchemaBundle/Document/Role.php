@@ -207,7 +207,7 @@ class Role
      * Set name.
      *
      * @param string      $name
-     * @param string|null $locale
+     * @param null|string $locale
      */
     public function setName($name, $locale = null)
     {
@@ -220,7 +220,7 @@ class Role
     /**
      * Get name.
      *
-     * @param string|null $locale
+     * @param null|string $locale
      *
      * @return string
      */
@@ -260,7 +260,7 @@ class Role
      * Set text.
      *
      * @param string      $text
-     * @param string|null $locale
+     * @param null|string $locale
      */
     public function setText($text, $locale = null)
     {
@@ -273,7 +273,7 @@ class Role
     /**
      * Get text.
      *
-     * @param string|null $locale
+     * @param null|string $locale
      *
      * @return string
      */
@@ -355,6 +355,8 @@ class Role
 
     /**
      * Set number_people_in_multimedia_object.
+     *
+     * @param mixed $number_people_in_multimedia_object
      */
     public function setNumberPeopleInMultimediaObject($number_people_in_multimedia_object)
     {

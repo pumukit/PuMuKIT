@@ -2,16 +2,16 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Pumukit\NewAdminBundle\Form\Type\PersonType;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Person;
+use Pumukit\SchemaBundle\Document\Role;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Pumukit\SchemaBundle\Document\Person;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Role;
-use Pumukit\NewAdminBundle\Form\Type\PersonType;
 
 class PersonController extends AdminController implements NewAdminControllerInterface
 {
@@ -67,15 +67,14 @@ class PersonController extends AdminController implements NewAdminControllerInte
                 }
 
                 return $this->redirect($this->generateUrl('pumukitnewadmin_person_list'));
-            } else {
-                $errors = $this->get('validator')->validate($person);
-                $textStatus = '';
-                foreach ($errors as $error) {
-                    $textStatus .= $error->getPropertyPath().' value '.$error->getInvalidValue().': '.$error->getMessage().'. ';
-                }
-
-                return new Response($textStatus, 409);
             }
+            $errors = $this->get('validator')->validate($person);
+            $textStatus = '';
+            foreach ($errors as $error) {
+                $textStatus .= $error->getPropertyPath().' value '.$error->getInvalidValue().': '.$error->getMessage().'. ';
+            }
+
+            return new Response($textStatus, 409);
         }
 
         return [
@@ -109,15 +108,14 @@ class PersonController extends AdminController implements NewAdminControllerInte
                 }
 
                 return $this->redirect($this->generateUrl('pumukitnewadmin_person_list'));
-            } else {
-                $errors = $this->get('validator')->validate($person);
-                $textStatus = '';
-                foreach ($errors as $error) {
-                    $textStatus .= $error->getPropertyPath().' value '.$error->getInvalidValue().': '.$error->getMessage().'. ';
-                }
-
-                return new Response($textStatus, 409);
             }
+            $errors = $this->get('validator')->validate($person);
+            $textStatus = '';
+            foreach ($errors as $error) {
+                $textStatus .= $error->getPropertyPath().' value '.$error->getInvalidValue().': '.$error->getMessage().'. ';
+            }
+
+            return new Response($textStatus, 409);
         }
 
         return [
@@ -192,6 +190,7 @@ class PersonController extends AdminController implements NewAdminControllerInte
 
         $owner = $request->get('owner', false);
         $personService = $this->get('pumukitschema.person');
+
         try {
             $personalScopeRole = $personService->getPersonalScopeRole();
         } catch (\Exception $e) {
@@ -258,14 +257,16 @@ class PersonController extends AdminController implements NewAdminControllerInte
                 $twigTemplate = 'PumukitNewAdminBundle:Person:listrelation.html.twig';
             }
 
-            return $this->render($twigTemplate,
-                                 [
-                                     'people' => $multimediaObject->getPeopleByRole($role, true),
-                                     'role' => $role,
-                                     'personal_scope_role_code' => $personalScopeRoleCode,
-                                     'mm' => $multimediaObject,
-                                     'template' => $template,
-                                 ]);
+            return $this->render(
+                $twigTemplate,
+                [
+                    'people' => $multimediaObject->getPeopleByRole($role, true),
+                    'role' => $role,
+                    'personal_scope_role_code' => $personalScopeRoleCode,
+                    'mm' => $multimediaObject,
+                    'template' => $template,
+                ]
+            );
         }
 
         $template = $multimediaObject->isPrototype() ? '_template' : '';
@@ -320,23 +321,24 @@ class PersonController extends AdminController implements NewAdminControllerInte
                     $twigTemplate = 'PumukitNewAdminBundle:Person:listrelation.html.twig';
                 }
 
-                return $this->render($twigTemplate,
-                                     [
-                                         'people' => $multimediaObject->getPeopleByRole($role, true),
-                                         'role' => $role,
-                                         'personal_scope_role_code' => $personalScopeRoleCode,
-                                         'mm' => $multimediaObject,
-                                         'template' => $template,
-                                     ]);
-            } else {
-                $errors = $this->get('validator')->validate($person);
-                $textStatus = '';
-                foreach ($errors as $error) {
-                    $textStatus .= $error->getPropertyPath().' value '.$error->getInvalidValue().': '.$error->getMessage().'. ';
-                }
-
-                return new Response($textStatus, 409);
+                return $this->render(
+                    $twigTemplate,
+                    [
+                        'people' => $multimediaObject->getPeopleByRole($role, true),
+                        'role' => $role,
+                        'personal_scope_role_code' => $personalScopeRoleCode,
+                        'mm' => $multimediaObject,
+                        'template' => $template,
+                    ]
+                );
             }
+            $errors = $this->get('validator')->validate($person);
+            $textStatus = '';
+            foreach ($errors as $error) {
+                $textStatus .= $error->getPropertyPath().' value '.$error->getInvalidValue().': '.$error->getMessage().'. ';
+            }
+
+            return new Response($textStatus, 409);
         }
 
         $template = $multimediaObject->isPrototype() ? '_template' : '';
@@ -366,6 +368,7 @@ class PersonController extends AdminController implements NewAdminControllerInte
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
         $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
+
         try {
             $multimediaObject = $personService->createRelationPerson($person, $role, $multimediaObject);
             //$message = sprintf($this->getContext()->getI18N()->__("Persona asociada correctamente a la plantilla con el rol \"%s\"."), $this->role->getName());
@@ -386,14 +389,16 @@ class PersonController extends AdminController implements NewAdminControllerInte
             $twigTemplate = 'PumukitNewAdminBundle:Person:listrelation.html.twig';
         }
 
-        return $this->render($twigTemplate,
-                             [
-                                 'people' => $multimediaObject->getPeopleByRole($role, true),
-                                 'role' => $role,
-                                 'personal_scope_role_code' => $personalScopeRoleCode,
-                                 'mm' => $multimediaObject,
-                                 'template' => $template,
-                             ]);
+        return $this->render(
+            $twigTemplate,
+            [
+                'people' => $multimediaObject->getPeopleByRole($role, true),
+                'role' => $role,
+                'personal_scope_role_code' => $personalScopeRoleCode,
+                'mm' => $multimediaObject,
+                'template' => $template,
+            ]
+        );
     }
 
     /**
@@ -455,14 +460,16 @@ class PersonController extends AdminController implements NewAdminControllerInte
             $twigTemplate = 'PumukitNewAdminBundle:Person:listrelation.html.twig';
         }
 
-        return $this->render($twigTemplate,
-                             [
-                                 'people' => $multimediaObject->getPeopleByRole($role, true),
-                                 'role' => $role,
-                                 'personal_scope_role_code' => $personalScopeRoleCode,
-                                 'mm' => $multimediaObject,
-                                 'template' => $template,
-                             ]);
+        return $this->render(
+            $twigTemplate,
+            [
+                'people' => $multimediaObject->getPeopleByRole($role, true),
+                'role' => $role,
+                'personal_scope_role_code' => $personalScopeRoleCode,
+                'mm' => $multimediaObject,
+                'template' => $template,
+            ]
+        );
     }
 
     /**
@@ -493,14 +500,16 @@ class PersonController extends AdminController implements NewAdminControllerInte
             $twigTemplate = 'PumukitNewAdminBundle:Person:listrelation.html.twig';
         }
 
-        return $this->render($twigTemplate,
-                             [
-                                 'people' => $multimediaObject->getPeopleByRole($role, true),
-                                 'role' => $role,
-                                 'personal_scope_role_code' => $personalScopeRoleCode,
-                                 'mm' => $multimediaObject,
-                                 'template' => $template,
-                             ]);
+        return $this->render(
+            $twigTemplate,
+            [
+                'people' => $multimediaObject->getPeopleByRole($role, true),
+                'role' => $role,
+                'personal_scope_role_code' => $personalScopeRoleCode,
+                'mm' => $multimediaObject,
+                'template' => $template,
+            ]
+        );
     }
 
     /**
@@ -519,6 +528,7 @@ class PersonController extends AdminController implements NewAdminControllerInte
             $this->denyAccessUnlessGranted('ROLE_MODIFY_OWNER');
         }
         $owner = $request->get('owner', false);
+
         try {
             $person = $personService->findPersonById($request->get('id'));
             $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
@@ -537,14 +547,16 @@ class PersonController extends AdminController implements NewAdminControllerInte
             $twigTemplate = 'PumukitNewAdminBundle:Person:listrelation.html.twig';
         }
 
-        return $this->render($twigTemplate,
-                             [
-                                 'people' => $multimediaObject->getPeopleByRole($role, true),
-                                 'role' => $role,
-                                 'personal_scope_role_code' => $personalScopeRoleCode,
-                                 'mm' => $multimediaObject,
-                                 'template' => $template,
-                             ]);
+        return $this->render(
+            $twigTemplate,
+            [
+                'people' => $multimediaObject->getPeopleByRole($role, true),
+                'role' => $role,
+                'personal_scope_role_code' => $personalScopeRoleCode,
+                'mm' => $multimediaObject,
+                'template' => $template,
+            ]
+        );
     }
 
     /**
@@ -558,6 +570,7 @@ class PersonController extends AdminController implements NewAdminControllerInte
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
         $translator = $this->get('translator');
+
         try {
             if (0 === $personService->countMultimediaObjectsWithPerson($person)) {
                 $personService->deletePerson($person);
@@ -599,6 +612,7 @@ class PersonController extends AdminController implements NewAdminControllerInte
 
         foreach ($ids as $id) {
             $person = $this->find($id);
+
             try {
                 $personService->deletePerson($person);
             } catch (\Exception $e) {
@@ -614,6 +628,9 @@ class PersonController extends AdminController implements NewAdminControllerInte
 
     /**
      * Gets the criteria values.
+     *
+     * @param mixed $criteria
+     * @param mixed $locale
      */
     public function getCriteria($criteria, $locale = 'en')
     {
@@ -656,6 +673,8 @@ class PersonController extends AdminController implements NewAdminControllerInte
 
     /**
      * Get sorting for person.
+     *
+     * @param null|mixed $session_namespace
      */
     public function getSorting(Request $request = null, $session_namespace = null)
     {
@@ -674,6 +693,9 @@ class PersonController extends AdminController implements NewAdminControllerInte
 
     /**
      * Gets the list of resources according to a criteria.
+     *
+     * @param mixed      $criteria
+     * @param null|mixed $selectedPersonId
      */
     public function getResources(Request $request, $criteria, $selectedPersonId = null)
     {
@@ -706,7 +728,8 @@ class PersonController extends AdminController implements NewAdminControllerInte
         $resources
             ->setMaxPerPage($maxPerPage)
             ->setNormalizeOutOfRangePages(true)
-            ->setCurrentPage($page);
+            ->setCurrentPage($page)
+        ;
 
         return $resources;
     }

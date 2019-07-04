@@ -2,8 +2,8 @@
 
 namespace Pumukit\SchemaBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
 use Pumukit\SchemaBundle\Document\Series;
+use Symfony\Component\EventDispatcher\Event;
 
 class SeriesEvent extends Event
 {

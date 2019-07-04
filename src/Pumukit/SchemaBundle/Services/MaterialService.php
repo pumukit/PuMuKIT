@@ -2,12 +2,12 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Material;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\Material;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class MaterialService
 {
@@ -103,9 +103,9 @@ class MaterialService
      * @param UploadedFile     $materialFile
      * @param                  $formData
      *
-     * @return MultimediaObject
-     *
      * @throws \Exception
+     *
+     * @return MultimediaObject
      */
     public function addMaterialFile(MultimediaObject $multimediaObject, UploadedFile $materialFile, $formData)
     {
@@ -142,9 +142,9 @@ class MaterialService
      * @param MultimediaObject $multimediaObject
      * @param                  $materialId
      *
-     * @return MultimediaObject
-     *
      * @throws \Exception
+     *
+     * @return MultimediaObject
      */
     public function removeMaterialFromMultimediaObject(MultimediaObject $multimediaObject, $materialId)
     {
@@ -252,6 +252,7 @@ class MaterialService
     private function deleteFileOnDisk($path)
     {
         $dirname = pathinfo($path, PATHINFO_DIRNAME);
+
         try {
             $deleted = unlink($path);
             if (!$deleted) {

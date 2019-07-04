@@ -3,13 +3,13 @@
 namespace Pumukit\NewAdminBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Pumukit\SchemaBundle\Services\PersonService;
+use Pumukit\NewAdminBundle\Controller\NewAdminControllerInterface;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\User;
-use Pumukit\NewAdminBundle\Controller\NewAdminControllerInterface;
+use Pumukit\SchemaBundle\Services\PersonService;
+use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class FilterListener
 {
@@ -86,7 +86,7 @@ class FilterListener
      * Query in MongoDB:
      * {"people":{"$elemMatch":{"people._id":{"$id":"___MongoID_of_Person___"},"cod":"___Role_cod___"}}}
      *
-     * @param Person|null $person
+     * @param null|Person $person
      *
      * @return array $people
      */

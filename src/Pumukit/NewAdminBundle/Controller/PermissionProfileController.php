@@ -2,14 +2,14 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Pumukit\NewAdminBundle\Form\Type\PermissionProfileType;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Security\Permission;
-use Pumukit\NewAdminBundle\Form\Type\PermissionProfileType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_PERMISSION_PROFILES')")
@@ -139,7 +139,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
     /**
      * Overwrite to get form with translations.
      *
-     * @param object|null $permissionProfile
+     * @param null|object $permissionProfile
      * @param string      $locale
      *
      * @return \Symfony\Component\Form\Form|\Symfony\Component\Form\FormInterface
@@ -148,9 +148,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
     {
         $translator = $this->get('translator');
 
-        $form = $this->createForm(PermissionProfileType::class, $permissionProfile, ['translator' => $translator, 'locale' => $locale]);
-
-        return $form;
+        return $this->createForm(PermissionProfileType::class, $permissionProfile, ['translator' => $translator, 'locale' => $locale]);
     }
 
     /**
@@ -219,6 +217,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
             if (null === $permissionProfile) {
                 continue;
             }
+
             try {
                 $permissionProfile = $permissionProfileService->setScope($permissionProfile, $p['scope'], false);
                 $permissionProfileService->batchUpdate($permissionProfile, $p['permissions'], false);
@@ -232,12 +231,50 @@ class PermissionProfileController extends AdminController implements NewAdminCon
     }
 
     /**
+     * Gets the list of resources according to a criteria.
+     *
+     * Override to get 9 resources per page
+     *
+     * @param mixed $criteria
+     */
+    public function getResources(Request $request, $criteria)
+    {
+        $sorting = $this->getSorting();
+        if (!isset($sorting['rank'])) {
+            $sorting['rank'] = 1;
+        }
+        $session = $this->get('session');
+        $session_namespace = 'admin/permissionprofile';
+
+        $resources = $this->createPager($criteria, $sorting);
+
+        if ($request->get('page', null)) {
+            $session->set($session_namespace.'/page', $request->get('page', 1));
+        }
+
+        if ($request->get('paginate', null)) {
+            $session->set($session_namespace.'/paginate', $request->get('paginate', 9));
+        }
+
+        $resources
+            ->setMaxPerPage($session->get($session_namespace.'/paginate', 9))
+            ->setNormalizeOutOfRangePages(true)
+            ->setCurrentPage($session->get($session_namespace.'/page', 1))
+        ;
+
+        return $resources;
+    }
+
+    /**
      * Returns an array with all permissions and there newly set (if any) permissions and scope.
      *
      * returns $permissionProfiles = array(
      *             'PROFILE_NAME' => array('PERM1', 'PERM2', 'PERM3', ...),
      *             (...) ,
      *         );
+     *
+     * @param mixed $checkedPermissions
+     * @param mixed $selectedScopes
      */
     private function buildPermissionProfiles($checkedPermissions, $selectedScopes)
     {
@@ -299,38 +336,6 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         }
 
         return true;
-    }
-
-    /**
-     * Gets the list of resources according to a criteria.
-     *
-     * Override to get 9 resources per page
-     */
-    public function getResources(Request $request, $criteria)
-    {
-        $sorting = $this->getSorting();
-        if (!isset($sorting['rank'])) {
-            $sorting['rank'] = 1;
-        }
-        $session = $this->get('session');
-        $session_namespace = 'admin/permissionprofile';
-
-        $resources = $this->createPager($criteria, $sorting);
-
-        if ($request->get('page', null)) {
-            $session->set($session_namespace.'/page', $request->get('page', 1));
-        }
-
-        if ($request->get('paginate', null)) {
-            $session->set($session_namespace.'/paginate', $request->get('paginate', 9));
-        }
-
-        $resources
-            ->setMaxPerPage($session->get($session_namespace.'/paginate', 9))
-            ->setNormalizeOutOfRangePages(true)
-            ->setCurrentPage($session->get($session_namespace.'/page', 1));
-
-        return $resources;
     }
 
     private function getPermissions()

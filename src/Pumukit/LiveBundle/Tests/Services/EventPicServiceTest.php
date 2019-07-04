@@ -2,12 +2,16 @@
 
 namespace Pumukit\LiveBundle\Tests\Services;
 
+use Pumukit\LiveBundle\Document\Event;
+use Pumukit\LiveBundle\Document\Live;
+use Pumukit\LiveBundle\Services\LegacyEventPicService;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Pumukit\LiveBundle\Services\LegacyEventPicService;
-use Pumukit\LiveBundle\Document\Live;
-use Pumukit\LiveBundle\Document\Event;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class EventPicServiceTest extends WebTestCase
 {
     private $dm;

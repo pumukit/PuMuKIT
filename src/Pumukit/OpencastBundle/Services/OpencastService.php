@@ -4,17 +4,17 @@ namespace Pumukit\OpencastBundle\Services;
 
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\ProfileService;
-use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 
 class OpencastService
 {
     private $sbsConfiguration;
-    private $sbsProfileName = null;
+    private $sbsProfileName;
     private $generateSbs = false;
     private $useFlavour = false;
-    private $sbsFlavour = null;
+    private $sbsFlavour;
     private $urlPathMapping;
     private $jobService;
     private $profileService;
@@ -32,24 +32,6 @@ class OpencastService
         $this->defaultVars = $defaultVars;
         $this->errorIfFileNotExist = $errorIfFileNotExist;
         $this->initSbsConfiguration();
-    }
-
-    private function initSbsConfiguration()
-    {
-        if ($this->sbsConfiguration) {
-            if (isset($this->sbsConfiguration['generate_sbs'])) {
-                $this->generateSbs = $this->sbsConfiguration['generate_sbs'];
-            }
-            if (isset($this->sbsConfiguration['profile'])) {
-                $this->sbsProfileName = $this->sbsConfiguration['profile'];
-            }
-            if (isset($this->sbsConfiguration['use_flavour'])) {
-                $this->useFlavour = $this->sbsConfiguration['use_flavour'];
-            }
-            if (isset($this->sbsConfiguration['flavour'])) {
-                $this->sbsFlavour = $this->sbsConfiguration['flavour'];
-            }
-        }
     }
 
     /**
@@ -71,6 +53,7 @@ class OpencastService
             foreach ($multimediaObject->getTracksWithTag($this->sbsFlavour) as $track) {
                 if (!$track->isOnlyAudio()) {
                     $flavourTrack = $track;
+
                     break;
                 }
             }
@@ -112,6 +95,103 @@ class OpencastService
     }
 
     /**
+     * Generate SBS Track.
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param array            $opencastUrls
+     * @rettun boolean
+     */
+    public function generateSbsTrack(MultimediaObject $multimediaObject, $opencastUrls = [])
+    {
+        if (!$this->generateSbs) {
+            return false;
+        }
+
+        if (!$this->sbsProfileName) {
+            return false;
+        }
+
+        $tracks = $multimediaObject->getTracks();
+        if (!$tracks) {
+            return false;
+        }
+
+        $track = $tracks[0];
+        $path = $this->getPath($track->getUrl());
+
+        $language = $multimediaObject->getProperty('opencastlanguage') ? strtolower($multimediaObject->getProperty('opencastlanguage')) : \Locale::getDefault();
+
+        $vars = $this->defaultVars;
+        if ($opencastUrls) {
+            $vars += ['ocurls' => $opencastUrls];
+        }
+
+        return $this->jobService->addJob($path, $this->sbsProfileName, 2, $multimediaObject, $language, [], $vars);
+    }
+
+    /**
+     * @param $mediaPackage
+     *
+     * @return null|string
+     */
+    public function getMediaPackageThumbnail($mediaPackage)
+    {
+        if (!isset($mediaPackage['attachments']['attachment'])) {
+            return null;
+        }
+
+        $attachments = $mediaPackage['attachments']['attachment'];
+        if (isset($attachments['id'])) {
+            $attachments = [$attachments];
+        }
+
+        foreach ($attachments as $attachment) {
+            if (!isset($attachment['type'])) {
+                continue;
+            }
+
+            if (!in_array(
+                $attachment['type'],
+                [
+                    'presenter/search+preview',
+                    'presentation/search+preview',
+                    'presenter/player+preview',
+                    'presentation/player+preview',
+                ]
+            )
+            ) {
+                continue;
+            }
+
+            if (!isset($attachment['url'])) {
+                continue;
+            }
+
+            return $attachment['url'];
+        }
+
+        return null;
+    }
+
+    private function initSbsConfiguration()
+    {
+        if ($this->sbsConfiguration) {
+            if (isset($this->sbsConfiguration['generate_sbs'])) {
+                $this->generateSbs = $this->sbsConfiguration['generate_sbs'];
+            }
+            if (isset($this->sbsConfiguration['profile'])) {
+                $this->sbsProfileName = $this->sbsConfiguration['profile'];
+            }
+            if (isset($this->sbsConfiguration['use_flavour'])) {
+                $this->useFlavour = $this->sbsConfiguration['use_flavour'];
+            }
+            if (isset($this->sbsConfiguration['flavour'])) {
+                $this->sbsFlavour = $this->sbsConfiguration['flavour'];
+            }
+        }
+    }
+
+    /**
      * @param $url
      *
      * @return string
@@ -150,41 +230,6 @@ class OpencastService
         return $url;
     }
 
-    /**
-     * Generate SBS Track.
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param array            $opencastUrls
-     * @rettun boolean
-     */
-    public function generateSbsTrack(MultimediaObject $multimediaObject, $opencastUrls = [])
-    {
-        if (!$this->generateSbs) {
-            return false;
-        }
-
-        if (!$this->sbsProfileName) {
-            return false;
-        }
-
-        $tracks = $multimediaObject->getTracks();
-        if (!$tracks) {
-            return false;
-        }
-
-        $track = $tracks[0];
-        $path = $this->getPath($track->getUrl());
-
-        $language = $multimediaObject->getProperty('opencastlanguage') ? strtolower($multimediaObject->getProperty('opencastlanguage')) : \Locale::getDefault();
-
-        $vars = $this->defaultVars;
-        if ($opencastUrls) {
-            $vars += ['ocurls' => $opencastUrls];
-        }
-
-        return $this->jobService->addJob($path, $this->sbsProfileName, 2, $multimediaObject, $language, [], $vars);
-    }
-
     private function useTrackAsSbs(MultimediaObject $multimediaObject, Track $track)
     {
         if (!$this->sbsProfileName) {
@@ -209,48 +254,5 @@ class OpencastService
         $multimediaObject = $this->multimediaObjectService->updateMultimediaObject($multimediaObject);
 
         return true;
-    }
-
-    /**
-     * @param $mediaPackage
-     *
-     * @return string|null
-     */
-    public function getMediaPackageThumbnail($mediaPackage)
-    {
-        if (!isset($mediaPackage['attachments']['attachment'])) {
-            return null;
-        }
-
-        $attachments = $mediaPackage['attachments']['attachment'];
-        if (isset($attachments['id'])) {
-            $attachments = [$attachments];
-        }
-
-        foreach ($attachments as $attachment) {
-            if (!isset($attachment['type'])) {
-                continue;
-            }
-
-            if (!in_array(
-                $attachment['type'],
-                [
-                    'presenter/search+preview',
-                    'presentation/search+preview',
-                    'presenter/player+preview',
-                    'presentation/player+preview',
-                ])
-            ) {
-                continue;
-            }
-
-            if (!isset($attachment['url'])) {
-                continue;
-            }
-
-            return $attachment['url'];
-        }
-
-        return null;
     }
 }

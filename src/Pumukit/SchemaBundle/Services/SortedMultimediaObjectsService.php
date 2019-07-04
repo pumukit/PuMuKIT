@@ -3,8 +3,8 @@
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 
 /**
  * Service to get the multimedia objects of a series sorted.
@@ -39,7 +39,8 @@ class SortedMultimediaObjectsService
                 ->field('rank')->set($rank++)
                 ->field('_id')->equals($mm->getId())
                 ->getQuery()
-                ->execute();
+                ->execute()
+            ;
         }
     }
 }

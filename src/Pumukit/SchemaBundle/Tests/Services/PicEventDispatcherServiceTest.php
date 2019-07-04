@@ -2,13 +2,17 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
-use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Event\PicEvent;
+use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Services\PicEventDispatcherService;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class PicEventDispatcherServiceTest extends WebTestCase
 {
     const EMPTY_TITLE = 'EMTPY TITLE';
@@ -23,7 +27,8 @@ class PicEventDispatcherServiceTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dispatcher = static::$kernel->getContainer()
-          ->get('event_dispatcher');
+            ->get('event_dispatcher')
+        ;
 
         MockUpPicListener::$called = false;
         MockUpPicListener::$title = self::EMPTY_TITLE;

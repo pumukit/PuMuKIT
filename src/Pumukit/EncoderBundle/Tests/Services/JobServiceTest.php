@@ -2,15 +2,19 @@
 
 namespace Pumukit\EncoderBundle\Tests\Services;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\EncoderBundle\Services\CpuService;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\ProfileService;
-use Pumukit\EncoderBundle\Services\CpuService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class JobServiceTest extends WebTestCase
 {
     private $dm;
@@ -46,15 +50,26 @@ class JobServiceTest extends WebTestCase
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
         $cpuService = new CpuService($this->getDemoCpus(), $this->dm);
         $dispatcher = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')
-                    ->getMock();
+            ->getMock()
+        ;
         $inspectionService = $this->getMockBuilder('Pumukit\InspectionBundle\Services\InspectionServiceInterface')
-                           ->getMock();
+            ->getMock()
+        ;
         $inspectionService->expects($this->any())->method('getDuration')->will($this->returnValue(5));
         $this->resourcesDir = realpath(__DIR__.'/../Resources').'/';
-        $this->jobService = new JobService($this->dm, $profileService, $cpuService,
-                                           $inspectionService, $dispatcher, $this->logger,
-                                           $this->trackService, $this->tokenStorage, $this->propService,
-                                           'test', null);
+        $this->jobService = new JobService(
+            $this->dm,
+            $profileService,
+            $cpuService,
+            $inspectionService,
+            $dispatcher,
+            $this->logger,
+            $this->trackService,
+            $this->tokenStorage,
+            $this->propService,
+            'test',
+            null
+        );
     }
 
     public function tearDown()
@@ -91,9 +106,9 @@ class JobServiceTest extends WebTestCase
             $priority = 2;
             $language = 'en';
             $description = [
-                                 'en' => 'local track description',
-                                 'es' => 'descripción del archivo local',
-                                 ];
+                'en' => 'local track description',
+                'es' => 'descripción del archivo local',
+            ];
 
             $multimediaObject = $this->jobService->createTrackFromLocalHardDrive($multimediaObject, $file, $profile, $priority, $language, $description);
 
@@ -120,9 +135,9 @@ class JobServiceTest extends WebTestCase
             $priority = 2;
             $language = 'en';
             $description = [
-                                 'en' => 'track description inbox',
-                                 'es' => 'descripción del archivo inbox',
-                                 ];
+                'en' => 'track description inbox',
+                'es' => 'descripción del archivo inbox',
+            ];
 
             $multimediaObject = $this->jobService->createTrackFromInboxOnServer($multimediaObject, $filePath, $profile, $priority, $language, $description);
 
@@ -352,7 +367,7 @@ class JobServiceTest extends WebTestCase
             $job->setPriority($priority);
         }
         $datetime = new \DateTime('now');
-        $datetime->modify("+$timeadd hour");
+        $datetime->modify("+{$timeadd} hour");
         $job->setTimeini($datetime);
         $this->dm->persist($job);
         $this->dm->flush();
@@ -362,85 +377,81 @@ class JobServiceTest extends WebTestCase
 
     private function getDemoCpus()
     {
-        $cpus = [
-                      'CPU_LOCAL' => [
-                                           'id' => 1,
-                                           'host' => '127.0.0.1',
-                                           'max' => 1,
-                                           'number' => 1,
-                                           'type' => CpuService::TYPE_LINUX,
-                                           'user' => 'transco1',
-                                           'password' => 'PUMUKIT',
-                                           'description' => 'Pumukit transcoder',
-                                           ],
-                      'CPU_REMOTE' => [
-                                            'id' => 2,
-                                            'host' => '192.168.5.123',
-                                            'max' => 2,
-                                            'number' => 1,
-                                            'type' => CpuService::TYPE_LINUX,
-                                            'user' => 'transco2',
-                                            'password' => 'PUMUKIT',
-                                            'description' => 'Pumukit transcoder',
-                                            ],
-                      ];
-
-        return $cpus;
+        return [
+            'CPU_LOCAL' => [
+                'id' => 1,
+                'host' => '127.0.0.1',
+                'max' => 1,
+                'number' => 1,
+                'type' => CpuService::TYPE_LINUX,
+                'user' => 'transco1',
+                'password' => 'PUMUKIT',
+                'description' => 'Pumukit transcoder',
+            ],
+            'CPU_REMOTE' => [
+                'id' => 2,
+                'host' => '192.168.5.123',
+                'max' => 2,
+                'number' => 1,
+                'type' => CpuService::TYPE_LINUX,
+                'user' => 'transco2',
+                'password' => 'PUMUKIT',
+                'description' => 'Pumukit transcoder',
+            ],
+        ];
     }
 
     private function getDemoProfiles()
     {
-        $profiles = [
-                          'MASTER_COPY' => [
-                                                 'display' => false,
-                                                 'wizard' => true,
-                                                 'master' => true,
-                                                 'resolution_hor' => 0,
-                                                 'resolution_ver' => 0,
-                                                 'framerate' => '0',
-                                                 'channels' => 1,
-                                                 'audio' => false,
-                                                 'bat' => 'cp "{{input}}" "{{output}}"',
-                                                 'streamserver' => [
-                                                                         'type' => ProfileService::STREAMSERVER_STORE,
-                                                                         'host' => '127.0.0.1',
-                                                                         'name' => 'Localmaster',
-                                                                         'description' => 'Local masters server',
-                                                                         'dir_out' => __DIR__.'/../Resources/dir_out',                                                         ],
-                                                 'app' => 'cp',
-                                                 'rel_duration_size' => 1,
-                                                 'rel_duration_trans' => 1,
-                                                 ],
-                          'MASTER_VIDEO_H264' => [
-                                                       'display' => false,
-                                                       'wizard' => true,
-                                                       'master' => true,
-                                                       'format' => 'mp4',
-                                                       'codec' => 'h264',
-                                                       'mime_type' => 'video/x-mp4',
-                                                       'extension' => 'mp4',
-                                                       'resolution_hor' => 0,
-                                                       'resolution_ver' => 0,
-                                                       'bitrate' => '1 Mbps',
-                                                       'framerate' => '25/1',
-                                                       'channels' => 1,
-                                                       'audio' => false,
-                                                       'bat' => 'ffmpeg -y -i "{{input}}" -acodec aac -vcodec libx264 -preset slow -crf 15 -threads 0 "{{output}}"',
-                                                       'streamserver' => [
-                                                                               'type' => ProfileService::STREAMSERVER_STORE,
-                                                                               'host' => '192.168.5.125',
-                                                                               'name' => 'Download',
-                                                                               'description' => 'Download server',
-                                                                               'dir_out' => __DIR__.'/../Resources/dir_out',
-                                                                               'url_out' => 'http://localhost:8000/downloads/',
-                                                                               ],
-                                                       'app' => 'ffmpeg',
-                                                       'rel_duration_size' => 1,
-                                                       'rel_duration_trans' => 1,
-                                                       ],
-                          ];
-
-        return $profiles;
+        return [
+            'MASTER_COPY' => [
+                'display' => false,
+                'wizard' => true,
+                'master' => true,
+                'resolution_hor' => 0,
+                'resolution_ver' => 0,
+                'framerate' => '0',
+                'channels' => 1,
+                'audio' => false,
+                'bat' => 'cp "{{input}}" "{{output}}"',
+                'streamserver' => [
+                    'type' => ProfileService::STREAMSERVER_STORE,
+                    'host' => '127.0.0.1',
+                    'name' => 'Localmaster',
+                    'description' => 'Local masters server',
+                    'dir_out' => __DIR__.'/../Resources/dir_out',                                                         ],
+                'app' => 'cp',
+                'rel_duration_size' => 1,
+                'rel_duration_trans' => 1,
+            ],
+            'MASTER_VIDEO_H264' => [
+                'display' => false,
+                'wizard' => true,
+                'master' => true,
+                'format' => 'mp4',
+                'codec' => 'h264',
+                'mime_type' => 'video/x-mp4',
+                'extension' => 'mp4',
+                'resolution_hor' => 0,
+                'resolution_ver' => 0,
+                'bitrate' => '1 Mbps',
+                'framerate' => '25/1',
+                'channels' => 1,
+                'audio' => false,
+                'bat' => 'ffmpeg -y -i "{{input}}" -acodec aac -vcodec libx264 -preset slow -crf 15 -threads 0 "{{output}}"',
+                'streamserver' => [
+                    'type' => ProfileService::STREAMSERVER_STORE,
+                    'host' => '192.168.5.125',
+                    'name' => 'Download',
+                    'description' => 'Download server',
+                    'dir_out' => __DIR__.'/../Resources/dir_out',
+                    'url_out' => 'http://localhost:8000/downloads/',
+                ],
+                'app' => 'ffmpeg',
+                'rel_duration_size' => 1,
+                'rel_duration_trans' => 1,
+            ],
+        ];
     }
 
     private function deleteCreatedFiles()

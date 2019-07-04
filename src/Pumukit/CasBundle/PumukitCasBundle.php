@@ -2,9 +2,9 @@
 
 namespace Pumukit\CasBundle;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Pumukit\CasBundle\DependencyInjection\Security\Factory\PumukitFactory;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class PumukitCasBundle extends Bundle
 {

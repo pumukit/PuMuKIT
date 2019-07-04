@@ -2,9 +2,13 @@
 
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Role;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class RoleRepositoryTest extends WebTestCase
 {
     private $dm;
@@ -18,7 +22,8 @@ class RoleRepositoryTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()
             ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
-            ->getRepository(Role::class);
+            ->getRepository(Role::class)
+        ;
 
         //DELETE DATABASE
         $this->dm->getDocumentCollection(Role::class)->remove([]);
@@ -119,9 +124,9 @@ class RoleRepositoryTest extends WebTestCase
         $rand = rand();
 
         $cod = $rand;
-        $xml = "<xml contenido del xml $rand />";
-        $name = "rolename$rand";
-        $text = "text is $rand";
+        $xml = "<xml contenido del xml {$rand} />";
+        $name = "rolename{$rand}";
+        $text = "text is {$rand}";
 
         $role = new Role();
         $role->setCod($cod);

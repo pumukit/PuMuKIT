@@ -102,8 +102,6 @@ class SearchUtils
     {
         $regexString = implode($regexString, self::$glue);
 
-        $regexString = '/('.$regexString.')/i';
-
-        return $regexString;
+        return '/('.$regexString.')/i';
     }
 }

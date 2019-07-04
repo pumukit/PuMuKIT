@@ -2,9 +2,9 @@
 
 namespace Pumukit\StatsBundle\Command;
 
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
 class PumukitAggregateCommand extends ContainerAwareCommand
 {
@@ -13,7 +13,8 @@ class PumukitAggregateCommand extends ContainerAwareCommand
         $this
             ->setName('pumukit:stats:aggregate')
             ->setDescription('Aggregate ViewsLog collections in ViewsAggregation')
-            ->setHelp(<<<'EOT'
+            ->setHelp(
+                <<<'EOT'
 Aggregate ViewsLog collections in ViewsAggregation to improve the performance of generating stats.
 
 
@@ -62,7 +63,8 @@ Examples:
 <info>php app/console pumukit:stats:aggregate</info>
 
 EOT
-          );
+          )
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

@@ -2,9 +2,9 @@
 
 namespace Pumukit\InspectionBundle\Services;
 
+use Psr\Log\LoggerInterface;
 use Pumukit\SchemaBundle\Document\Track;
 use Symfony\Component\Process\Process;
-use Psr\Log\LoggerInterface;
 
 class InspectionFfprobeService implements InspectionServiceInterface
 {
@@ -83,11 +83,12 @@ class InspectionFfprobeService implements InspectionServiceInterface
                         $track->setWidth((int) ($stream->width));
                         $track->setHeight((int) ($stream->height));
                         $only_audio = false;
-                        break;
 
+                        break;
                     case 'audio':
                         $track->setAcodec((string) $stream->codec_name);
                         $track->setChannels((int) ($stream->channels));
+
                         break;
                 }
             }
@@ -120,6 +121,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
             if ($this->logger) {
                 $this->logger->error($message);
             }
+
             throw new \RuntimeException($message);
         }
 

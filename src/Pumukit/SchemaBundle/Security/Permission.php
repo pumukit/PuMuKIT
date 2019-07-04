@@ -41,6 +41,10 @@ class Permission
     const DISABLED_TRACK_PROFILES = 'ROLE_DISABLED_WIZARD_TRACK_PROFILES';
     const DISABLED_TRACK_PRIORITY = 'ROLE_DISABLED_WIZARD_TRACK_PRIORITY';
 
+    const PREFIX_ROLE_TAG_DEFAULT = 'ROLE_TAG_DEFAULT_';
+
+    const PREFIX_ROLE_TAG_DISABLE = 'ROLE_TAG_DISABLE_';
+
     public static $permissionDescription = [
         self::ACCESS_DASHBOARD => [
             'description' => 'Access Dashboard',
@@ -275,8 +279,6 @@ class Permission
         ],
     ];
 
-    const PREFIX_ROLE_TAG_DEFAULT = 'ROLE_TAG_DEFAULT_';
-
     public static function isRoleTagDefault($role)
     {
         return 0 === strpos($role, self::PREFIX_ROLE_TAG_DEFAULT);
@@ -295,8 +297,6 @@ class Permission
     {
         return self::PREFIX_ROLE_TAG_DEFAULT.strtoupper($cod);
     }
-
-    const PREFIX_ROLE_TAG_DISABLE = 'ROLE_TAG_DISABLE_';
 
     public static function isRoleTagDisable($role)
     {

@@ -2,9 +2,13 @@
 
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\SeriesType;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class SeriesTypeRepositoryTest extends WebTestCase
 {
     private $dm;
@@ -19,12 +23,15 @@ class SeriesTypeRepositoryTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()
             ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
-            ->getRepository('PumukitSchemaBundle:SeriesType');
+            ->getRepository('PumukitSchemaBundle:SeriesType')
+        ;
         $this->factoryService = static::$kernel->getContainer()
-            ->get('pumukitschema.factory');
+            ->get('pumukitschema.factory')
+        ;
 
         $this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->flush();
     }
 

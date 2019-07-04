@@ -23,7 +23,7 @@ class PersonalFilter extends WebTVFilter
         $criteria = [];
         $criteria_portal = parent::getMultimediaObjectCriteria();
         $criteria_backoffice = [];
-        if (isset($this->parameters['people']) && isset($this->parameters['groups'])) {
+        if (isset($this->parameters['people'], $this->parameters['groups'])) {
             $criteria_backoffice['$or'] = [
                 ['people' => $this->parameters['people']],
                 ['groups' => $this->parameters['groups']],
@@ -59,8 +59,8 @@ class PersonalFilter extends WebTVFilter
      * Query in MongoDB:
      * db.Series.find({ "_id": { "$in": [ ObjectId("__id_1__"), ObjectId("__id_2__")... ] } });.
      *
-     * @param string|null $personId
-     * @param string|null $roleCode
+     * @param null|string $personId
+     * @param null|string $roleCode
      * @param array       $groups
      *
      * @return array

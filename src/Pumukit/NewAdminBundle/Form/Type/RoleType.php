@@ -2,13 +2,13 @@
 
 namespace Pumukit\NewAdminBundle\Form\Type;
 
+use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
+use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
-use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
 
 class RoleType extends AbstractType
 {
@@ -42,7 +42,7 @@ class RoleType extends AbstractType
                 TextType::class,
                 [
                     'attr' => [
-                        'pattern' => "^\w*$",
+                        'pattern' => '^\\w*$',
                         'oninvalid' => "setCustomValidity('The code can not have blank spaces neither special characters')",
                         'oninput' => "setCustomValidity('')",
                     ],
@@ -73,7 +73,8 @@ class RoleType extends AbstractType
                     'attr' => ['style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Text', [], null, $this->locale)],
                     'label' => $this->translator->trans('Text', [], null, $this->locale),
                 ]
-            );
+            )
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -2,9 +2,13 @@
 
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Group;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class GroupRepositoryTest extends WebTestCase
 {
     private $dm;
@@ -20,7 +24,8 @@ class GroupRepositoryTest extends WebTestCase
 
         //DELETE DATABASE
         $this->dm->getDocumentCollection(Group::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->flush();
     }
 

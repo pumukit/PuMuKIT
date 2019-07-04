@@ -2,10 +2,14 @@
 
 namespace Pumukit\EncoderBundle\Tests\Services;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class MultimediaObjectPropertyJobServiceTest extends WebTestCase
 {
     private $dm;

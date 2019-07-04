@@ -3,11 +3,11 @@
 namespace Pumukit\SchemaBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\SchemaBundle\Document\Group;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class RemoveListener
@@ -40,11 +40,13 @@ class RemoveListener
 
             if (0 !== $executingJobs->count()) {
                 throw new \Exception(
-                    $this->translator->trans('Can not delete Multimedia Object with id %videoId%. It has %jobsCount% jobs executing.',
+                    $this->translator->trans(
+                        'Can not delete Multimedia Object with id %videoId%. It has %jobsCount% jobs executing.',
                         [
                             '%videoId%' => $document->getId(),
                             '%jobsCount%' => $executingJobs->count(),
-                        ])
+                        ]
+                    )
                 );
             }
             $mmsService = $this->container->get('pumukitschema.multimedia_object');
@@ -91,7 +93,8 @@ class RemoveListener
             $multimediaObjects = $mmobjRepo->createQueryBuilder()
                 ->field('embeddedBroadcast.groups')->in([new \MongoId($document->getId())])
                 ->getQuery()
-                ->execute();
+                ->execute()
+            ;
             foreach ($multimediaObjects as $multimediaObject) {
                 $embBroadcastService->deleteGroup($document, $multimediaObject, false);
             }

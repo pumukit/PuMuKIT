@@ -2,15 +2,19 @@
 
 namespace Pumukit\SchemaBundle\Tests\EventListener;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\SchemaBundle\EventListener\MultimediaObjectListener;
 use Pumukit\SchemaBundle\Services\MultimediaObjectEventDispatcherService;
 use Pumukit\SchemaBundle\Services\TrackService;
-use Pumukit\EncoderBundle\Services\ProfileService;
-use Pumukit\SchemaBundle\EventListener\MultimediaObjectListener;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class MultimediaObjectListenerTest extends WebTestCase
 {
     private $dm;
@@ -34,16 +38,18 @@ class MultimediaObjectListenerTest extends WebTestCase
         $this->mmRepo = $this->dm->getRepository(MultimediaObject::class);
 
         $dispatcher = new EventDispatcher();
-        /* $mmDispatcher = new MultimediaObjectEventDispatcherService($dispatcher); */
+        // $mmDispatcher = new MultimediaObjectEventDispatcherService($dispatcher);
         $this->listener = new MultimediaObjectListener($this->dm);
         $dispatcher->addListener('multimediaobject.update', [$this->listener, 'postUpdate']);
         $this->trackDispatcher = static::$kernel->getContainer()
-          ->get('pumukitschema.track_dispatcher');
+            ->get('pumukitschema.track_dispatcher')
+        ;
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
         $this->trackService = new TrackService($this->dm, $this->trackDispatcher, $profileService, null, true);
 
         $this->dm->getDocumentCollection(MultimediaObject::class)
-          ->remove([]);
+            ->remove([])
+        ;
         $this->dm->flush();
     }
 
@@ -120,7 +126,7 @@ class MultimediaObjectListenerTest extends WebTestCase
 
     private function getDemoProfiles()
     {
-        $profiles = [
+        return [
             'MASTER_COPY' => [
                 'display' => false,
                 'wizard' => true,
@@ -170,7 +176,5 @@ class MultimediaObjectListenerTest extends WebTestCase
                 'rel_duration_trans' => 1,
             ],
         ];
-
-        return $profiles;
     }
 }

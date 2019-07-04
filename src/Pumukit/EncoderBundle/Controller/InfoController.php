@@ -2,17 +2,17 @@
 
 namespace Pumukit\EncoderBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/admin/encoder")
@@ -106,15 +106,6 @@ class InfoController extends Controller
         ];
     }
 
-    private function createPager($objects, $page, $limit = 5)
-    {
-        $adapter = new DoctrineODMMongoDBAdapter($objects);
-        $pagerfanta = new Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage($limit)->setNormalizeOutOfRangePages(true)->setCurrentPage($page);
-
-        return $pagerfanta;
-    }
-
     /**
      * @Route("/job/{id}", methods="GET", name="pumukit_encoder_job")
      * @Template
@@ -122,6 +113,7 @@ class InfoController extends Controller
     public function infoJobAction(Job $job, Request $request)
     {
         $deletedMultimediaObject = false;
+
         try {
             $command = $this->get('pumukitencoder.job')->renderBat($job);
         } catch (\Exception $e) {
@@ -181,5 +173,14 @@ class InfoController extends Controller
     public function multimediaObjectAction(MultimediaObject $multimediaObject, Request $request)
     {
         return $this->redirect($this->generateUrl('pumukitnewadmin_mms_shortener', ['id' => $multimediaObject->getId()]));
+    }
+
+    private function createPager($objects, $page, $limit = 5)
+    {
+        $adapter = new DoctrineODMMongoDBAdapter($objects);
+        $pagerfanta = new Pagerfanta($adapter);
+        $pagerfanta->setMaxPerPage($limit)->setNormalizeOutOfRangePages(true)->setCurrentPage($page);
+
+        return $pagerfanta;
     }
 }

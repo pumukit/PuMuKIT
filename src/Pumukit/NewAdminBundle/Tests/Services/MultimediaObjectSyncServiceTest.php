@@ -3,12 +3,16 @@
 namespace Pumukit\NewAdminBundle\Tests\Services;
 
 use Pumukit\SchemaBundle\Document\Group;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Tag;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class MultimediaObjectSyncServiceTest extends WebTestCase
 {
     private $dm;
@@ -72,14 +76,14 @@ class MultimediaObjectSyncServiceTest extends WebTestCase
         $multimediaObject->setProperty('subseriestitle', $i18nSubseries);
         $multimediaObject->setProperty('subseries', true);
 
-        /* Add group */
+        // Add group
         $group = new Group();
         $group->setKey('key');
         $group->setName('name');
         $this->dm->persist($group);
         $multimediaObject->addGroup($group);
 
-        /* Add person with role */
+        // Add person with role
         $person = new Person();
         $person->setName('person test');
         $person->setEmail('person@mail.com');
@@ -104,7 +108,7 @@ class MultimediaObjectSyncServiceTest extends WebTestCase
         $multimediaObject->addPersonWithRole($person, $role);
         $multimediaObject->addPersonWithRole($person, $roleAuthor);
 
-        /* Add publishing decision */
+        // Add publishing decision
         $tag = new Tag();
         $tag->setCod('PUBDECISIONS');
         $tag->setMetatag(true);
@@ -120,7 +124,7 @@ class MultimediaObjectSyncServiceTest extends WebTestCase
         $tag2->setParent($tag);
         $this->dm->persist($tag2);
 
-        /* Add unesco tag */
+        // Add unesco tag
         $tagUNESCO = new Tag();
         $tagUNESCO->setCod('UNESCO');
         $tagUNESCO->setMetatag(true);
@@ -151,20 +155,20 @@ class MultimediaObjectSyncServiceTest extends WebTestCase
         $syncFieldTag = 'metadata_tag_'.$tag3->getId();
         $syncFieldRole = 'metadata_role_'.$roleAuthor->getId();
         $syncFields = [
-              'metadata_comments_all' => 'on',
-              'metadata_copyright_all' => 'on',
-              'metadata_description_all' => 'on',
-              'metadata_groups_all' => 'on',
-              'metadata_headline_all' => 'on',
-              'metadata_keywords_all' => 'on',
-              'metadata_license_all' => 'on',
-              'metadata_owners_all' => 'on',
-              'metadata_publicdate_all' => 'on',
-              'metadata_publishingdecisions_all' => 'on',
-              'metadata_recorddate_all' => 'on',
-              'metadata_subseries_all' => 'on',
-                $syncFieldTag => 'on',
-                $syncFieldRole => 'on',
+            'metadata_comments_all' => 'on',
+            'metadata_copyright_all' => 'on',
+            'metadata_description_all' => 'on',
+            'metadata_groups_all' => 'on',
+            'metadata_headline_all' => 'on',
+            'metadata_keywords_all' => 'on',
+            'metadata_license_all' => 'on',
+            'metadata_owners_all' => 'on',
+            'metadata_publicdate_all' => 'on',
+            'metadata_publishingdecisions_all' => 'on',
+            'metadata_recorddate_all' => 'on',
+            'metadata_subseries_all' => 'on',
+            $syncFieldTag => 'on',
+            $syncFieldRole => 'on',
         ];
 
         $this->syncService->syncMetadata([$multimediaObject2], $multimediaObject, $syncFields);

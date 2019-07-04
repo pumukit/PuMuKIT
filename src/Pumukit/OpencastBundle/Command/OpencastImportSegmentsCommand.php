@@ -2,13 +2,13 @@
 
 namespace Pumukit\OpencastBundle\Command;
 
+use Pumukit\OpencastBundle\Services\ClientService;
 use Pumukit\SchemaBundle\Document\EmbeddedSegment;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Pumukit\OpencastBundle\Services\ClientService;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * Class OpencastImportSegmentsCommand.
@@ -36,7 +36,8 @@ class OpencastImportSegmentsCommand extends ContainerAwareCommand
             ->addOption('host', null, InputOption::VALUE_REQUIRED, 'Path to selected tracks from PMK using regex')
             ->addOption('id', null, InputOption::VALUE_OPTIONAL, 'ID of multimedia object to import')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
-            ->setHelp(<<<'EOT'
+            ->setHelp(
+                <<<'EOT'
 
             Important:
 
@@ -59,7 +60,8 @@ class OpencastImportSegmentsCommand extends ContainerAwareCommand
             <comment>php app/console pumukit:opencast:import:segments --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --id="5bcd806ebf435c25008b4581" --force</comment>
 
 EOT
-            );
+            )
+        ;
     }
 
     /**
@@ -101,9 +103,9 @@ EOT
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return int|void|null
-     *
      * @throws \Exception
+     *
+     * @return null|int|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -154,7 +156,7 @@ EOT
     private function getMultimediaObjects()
     {
         $criteria = [
-            'properties.opencasturl' => new \MongoRegex("/$this->host/i"),
+            'properties.opencasturl' => new \MongoRegex("/{$this->host}/i"),
         ];
 
         if ($this->force) {
@@ -165,9 +167,7 @@ EOT
             $criteria['_id'] = new \MongoId($this->id);
         }
 
-        $multimediaObjects = $this->dm->getRepository(MultimediaObject::class)->findBy($criteria);
-
-        return $multimediaObjects;
+        return $this->dm->getRepository(MultimediaObject::class)->findBy($criteria);
     }
 
     /**
@@ -188,7 +188,7 @@ EOT
             $mediaPackage = $this->clientService->getFullMediaPackage($multimediaObject->getProperty('opencast'));
 
             $segments = 0;
-            if (isset($mediaPackage['segments']) && isset($mediaPackage['segments']['segment'])) {
+            if (isset($mediaPackage['segments'], $mediaPackage['segments']['segment'])) {
                 if (!isset($mediaPackage['segments']['segment'][0])) {
                     $segments = [$mediaPackage['segments']['segment']];
                 } else {

@@ -2,11 +2,15 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Services\PermissionProfileService;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class PermissionProfileServiceTest extends WebTestCase
 {
     private $dm;
@@ -21,15 +25,19 @@ class PermissionProfileServiceTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
-          ->get('doctrine_mongodb')->getManager();
+            ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
-          ->getRepository(PermissionProfile::class);
+            ->getRepository(PermissionProfile::class)
+        ;
         $this->permissionProfileService = static::$kernel->getContainer()
-          ->get('pumukitschema.permissionprofile');
+            ->get('pumukitschema.permissionprofile')
+        ;
         $this->dispatcher = static::$kernel->getContainer()
-          ->get('pumukitschema.permissionprofile_dispatcher');
+            ->get('pumukitschema.permissionprofile_dispatcher')
+        ;
         $this->permissionService = static::$kernel->getContainer()
-          ->get('pumukitschema.permission');
+            ->get('pumukitschema.permission')
+        ;
 
         $this->dm->getDocumentCollection(PermissionProfile::class)->remove([]);
         $this->dm->flush();
@@ -90,9 +98,9 @@ class PermissionProfileServiceTest extends WebTestCase
     public function testAddPermission()
     {
         $permissions = [
-                            Permission::ACCESS_DASHBOARD,
-                            Permission::ACCESS_MULTIMEDIA_SERIES,
-                            ];
+            Permission::ACCESS_DASHBOARD,
+            Permission::ACCESS_MULTIMEDIA_SERIES,
+        ];
 
         $permissionProfile = new PermissionProfile();
         $permissionProfile->setName('test');
@@ -109,16 +117,16 @@ class PermissionProfileServiceTest extends WebTestCase
         $this->permissionProfileService->addPermission($permissionProfile, Permission::ACCESS_ROLES);
 
         $newPermissions = [
-                               Permission::ACCESS_DASHBOARD,
-                               Permission::ACCESS_MULTIMEDIA_SERIES,
-                               Permission::ACCESS_ROLES,
-                               ];
+            Permission::ACCESS_DASHBOARD,
+            Permission::ACCESS_MULTIMEDIA_SERIES,
+            Permission::ACCESS_ROLES,
+        ];
 
         $falsePermissions = [
-                                 Permission::ACCESS_DASHBOARD,
-                                 Permission::ACCESS_MULTIMEDIA_SERIES,
-                                 Permission::ACCESS_LIVE_EVENTS,
-                                 ];
+            Permission::ACCESS_DASHBOARD,
+            Permission::ACCESS_MULTIMEDIA_SERIES,
+            Permission::ACCESS_LIVE_EVENTS,
+        ];
 
         $this->assertEquals($newPermissions, $permissionProfile->getPermissions());
         $this->assertNotEquals($falsePermissions, $permissionProfile->getPermissions());
@@ -127,9 +135,9 @@ class PermissionProfileServiceTest extends WebTestCase
     public function testRemovePermission()
     {
         $permissions = [
-                            Permission::ACCESS_DASHBOARD,
-                            Permission::ACCESS_MULTIMEDIA_SERIES,
-                            ];
+            Permission::ACCESS_DASHBOARD,
+            Permission::ACCESS_MULTIMEDIA_SERIES,
+        ];
 
         $permissionProfile = new PermissionProfile();
         $permissionProfile->setName('test');

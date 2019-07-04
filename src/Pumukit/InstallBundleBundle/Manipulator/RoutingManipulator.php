@@ -30,10 +30,11 @@ class RoutingManipulator extends Manipulator
      * @param string $prefix
      * @param string $path
      * @param bool   $appendToEnd
-     *
-     * @return bool true if it worked, false otherwise
+     * @param mixed  $type
      *
      * @throws \RuntimeException If bundle is already imported
+     *
+     * @return bool true if it worked, false otherwise
      */
     public function addResource($bundle, $format, $prefix = '/', $type = '', $path = 'routing', $appendToEnd = false)
     {

@@ -3,11 +3,11 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Pagerfanta\Pagerfanta;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Utils\Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Pumukit\SchemaBundle\Utils\Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
-use Pumukit\SchemaBundle\Document\Series;
 
 class ResourceController extends Controller
 {
@@ -22,13 +22,6 @@ class ResourceController extends Controller
     public function getPluralResourceName()
     {
         return static::$resourceName.'s';
-    }
-
-    private function getRedirectRoute($routeName = 'index')
-    {
-        $resourceName = $this->getResourceName();
-
-        return 'pumukitnewadmin_'.$resourceName.'_'.$routeName;
     }
 
     public function redirectToIndex()
@@ -46,21 +39,6 @@ class ResourceController extends Controller
     public function getSorting(Request $request = null, $session_namespace = null)
     {
         return [];
-    }
-
-    protected function createPager($criteria, $sorting)
-    {
-        $repo = $this->getRepository();
-
-        $queryBuilder = $repo->createQueryBuilder();
-
-        $queryBuilder->setQueryArray($criteria);
-        $queryBuilder->sort($sorting);
-
-        $adapter = new DoctrineODMMongoDBAdapter($queryBuilder);
-        $pagerfanta = new Pagerfanta($adapter);
-
-        return $pagerfanta;
     }
 
     public function findOr404(Request $request, array $criteria = [])
@@ -102,5 +80,26 @@ class ResourceController extends Controller
     {
         //trace of remove "sylius/resource-bundle" version 0.12.
         throw new \LogicException('createNew method should be overide in the final Controller.');
+    }
+
+    protected function createPager($criteria, $sorting)
+    {
+        $repo = $this->getRepository();
+
+        $queryBuilder = $repo->createQueryBuilder();
+
+        $queryBuilder->setQueryArray($criteria);
+        $queryBuilder->sort($sorting);
+
+        $adapter = new DoctrineODMMongoDBAdapter($queryBuilder);
+
+        return new Pagerfanta($adapter);
+    }
+
+    private function getRedirectRoute($routeName = 'index')
+    {
+        $resourceName = $this->getResourceName();
+
+        return 'pumukitnewadmin_'.$resourceName.'_'.$routeName;
     }
 }

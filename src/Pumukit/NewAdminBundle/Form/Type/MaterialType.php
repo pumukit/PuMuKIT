@@ -2,13 +2,13 @@
 
 namespace Pumukit\NewAdminBundle\Form\Type;
 
+use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
+use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
-use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 
 class MaterialType extends AbstractType
 {
@@ -74,7 +74,8 @@ class MaterialType extends AbstractType
                     ),
                     'label' => $this->translator->trans('Type'),
                 ]
-            );
+            )
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

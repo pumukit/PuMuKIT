@@ -2,9 +2,13 @@
 
 namespace Pumukit\SchemaBundle\Tests\Document;
 
-use Pumukit\SchemaBundle\Document\SeriesType;
 use PHPUnit\Framework\TestCase;
+use Pumukit\SchemaBundle\Document\SeriesType;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class SeriesTypeTest extends TestCase
 {
     public function testGetterAndSetter()

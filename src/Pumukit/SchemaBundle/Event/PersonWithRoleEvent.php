@@ -4,10 +4,10 @@ namespace Pumukit\SchemaBundle\Event;
 
 use Pumukit\SchemaBundle\Document\EmbeddedPerson;
 use Pumukit\SchemaBundle\Document\EmbeddedRole;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
 use Symfony\Component\EventDispatcher\Event;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class PersonWithRoleEvent extends Event
 {
@@ -28,8 +28,8 @@ class PersonWithRoleEvent extends Event
 
     /**
      * @param MultimediaObject      $multimediaObject
-     * @param Person|EmbeddedPerson $person
-     * @param Role|EmbeddedRole     $role
+     * @param EmbeddedPerson|Person $person
+     * @param EmbeddedRole|Role     $role
      */
     public function __construct(MultimediaObject $multimediaObject, $person, $role)
     {

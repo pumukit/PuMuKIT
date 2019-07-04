@@ -72,6 +72,14 @@ class PermissionProfile
     private $rank;
 
     /**
+     * To String.
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+    /**
      * Get id.
      *
      * @return string
@@ -300,14 +308,6 @@ class PermissionProfile
     public function isNone()
     {
         return self::SCOPE_NONE === $this->getScope();
-    }
-
-    /**
-     * To String.
-     */
-    public function __toString()
-    {
-        return $this->getName();
     }
 
     /**

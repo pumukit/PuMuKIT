@@ -3,8 +3,8 @@
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Tag;
 
 class TagService
 {
@@ -26,9 +26,9 @@ class TagService
      * @param string           $tagId
      * @param bool             $executeFlush
      *
-     * @return array[Tag] addded tags
-     *
      *@throws \Exception
+     *
+     * @return array[Tag] addded tags
      */
     public function addTagToMultimediaObject(MultimediaObject $mmobj, $tagId, $executeFlush = true)
     {
@@ -47,9 +47,9 @@ class TagService
      * @param string           $tagCod
      * @param bool             $executeFlush
      *
-     * @return array[Tag] addded tags
-     *
      * @throws \Exception
+     *
+     * @return array[Tag] addded tags
      */
     public function addTagByCodToMultimediaObject(MultimediaObject $mmobj, $tagCod, $executeFlush = true)
     {
@@ -106,9 +106,9 @@ class TagService
      * @param string           $tagId
      * @param bool             $executeFlush
      *
-     * @return array[Tag] removed tags
-     *
      * @throws \Exception
+     *
+     * @return array[Tag] removed tags
      */
     public function removeTagFromMultimediaObject(MultimediaObject $mmobj, $tagId, $executeFlush = true)
     {
@@ -164,9 +164,9 @@ class TagService
      * @param string           $tagId
      * @param bool             $executeFlush
      *
-     * @return array[Tag] removed tags
-     *
      * @throws \Exception
+     *
+     * @return array[Tag] removed tags
      */
     public function removeOneTagFromMultimediaObject(MultimediaObject $mmobj, $tagId, $executeFlush = true)
     {
@@ -235,7 +235,8 @@ class TagService
             ->field('tags.$.slug')->set($tag->getSlug())
             ->field('tags.$.path')->set($tag->getPath())
             ->field('tags.$.level')->set($tag->getLevel())
-            ->getQuery();
+            ->getQuery()
+        ;
         $query->execute();
 
         $this->dm->flush();
@@ -265,9 +266,9 @@ class TagService
      *
      * @param Tag $tag
      *
-     * @return bool
-     *
      * @throws \Exception
+     *
+     * @return bool
      */
     public function deleteTag(Tag $tag)
     {
@@ -279,7 +280,8 @@ class TagService
                 ->update()
                 ->multiple(true)
                 ->field('tags')->pull($qb->expr()->field('_id')->equals($tag->getId()))
-                ->getQuery();
+                ->getQuery()
+            ;
             $query->execute();
 
             $this->dm->remove($tag);
@@ -363,6 +365,7 @@ class TagService
      * @param array[MultimediaObject] $mmobjs
      * @param array[string]           $newTags
      * @param array[string]           $parentTags
+     * @param mixed                   $executeFlush
      */
     public function syncTags(MultimediaObject $mmobj, array $newTags, Tag $parentTag, $executeFlush = true)
     {

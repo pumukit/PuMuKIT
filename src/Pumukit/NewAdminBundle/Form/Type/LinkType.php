@@ -2,11 +2,11 @@
 
 namespace Pumukit\NewAdminBundle\Form\Type;
 
+use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
 
 class LinkType extends AbstractType
 {
@@ -40,7 +40,8 @@ class LinkType extends AbstractType
                     ],
                     'label' => $this->translator->trans('URL', [], null, $this->locale),
                 ]
-            );
+            )
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

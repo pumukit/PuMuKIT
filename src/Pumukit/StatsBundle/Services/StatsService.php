@@ -113,7 +113,7 @@ class StatsService
             $multimediaObject = $this->repo->find($element['_id']);
             if ($multimediaObject) {
                 $mostViewed[] = ['mmobj' => $multimediaObject,
-                                      'num_viewed' => $element['numView'],
+                    'num_viewed' => $element['numView'],
                 ];
             }
         }
@@ -126,7 +126,7 @@ class StatsService
                     $multimediaObject = $this->repo->find($mmobjIds[$i - $totalInAggegation]);
                     if ($multimediaObject) {
                         $mostViewed[] = ['mmobj' => $multimediaObject,
-                                              'num_viewed' => 0,
+                            'num_viewed' => 0,
                         ];
                     }
                 }
@@ -136,7 +136,7 @@ class StatsService
                         $multimediaObject = $this->repo->find($element);
                         if ($multimediaObject) {
                             $mostViewed[] = ['mmobj' => $multimediaObject,
-                                                  'num_viewed' => 0,
+                                'num_viewed' => 0,
                             ];
                             if (count($mostViewed) == $options['limit']) {
                                 break;
@@ -182,7 +182,7 @@ class StatsService
             $series = $this->repoSeries->find($element['_id']);
             if ($series) {
                 $mostViewed[] = ['series' => $series,
-                                      'num_viewed' => $element['numView'],
+                    'num_viewed' => $element['numView'],
                 ];
             }
         }
@@ -195,7 +195,7 @@ class StatsService
                     $series = $this->repoSeries->find($seriesIds[$i - $totalInAggegation]);
                     if ($series) {
                         $mostViewed[] = ['series' => $series,
-                                              'num_viewed' => 0,
+                            'num_viewed' => 0,
                         ];
                     }
                 }
@@ -205,7 +205,7 @@ class StatsService
                         $series = $this->repoSeries->find($element);
                         if ($series) {
                             $mostViewed[] = ['series' => $series,
-                                                  'num_viewed' => 0,
+                                'num_viewed' => 0,
                             ];
                             if (count($mostViewed) == $options['limit']) {
                                 break;
@@ -248,6 +248,9 @@ class StatsService
 
     /**
      * Returns an aggregation pipeline array with all necessary data to form a num_views array grouped by hour/day/...
+     *
+     * @param mixed $options
+     * @param mixed $matchExtra
      */
     public function getGroupedByAggrPipeline($options = [], $matchExtra = [])
     {
@@ -278,122 +281,13 @@ class StatsService
     }
 
     /**
-     * Returns the pipe with a match.
-     */
-    private function aggrPipeAddMatch(\DateTime $fromDate = null, \DateTime $toDate = null, $matchExtra = [], $pipeline = [])
-    {
-        //$filterMath = $this->dm->getFilterCollection()->getFilterCriteria($this->repo->getClassMetadata());
-
-        $date = [];
-        if ($fromDate) {
-            $fromMongoDate = new \MongoDate($fromDate->format('U'), $fromDate->format('u'));
-            $date['$gte'] = $fromMongoDate;
-        }
-        if ($toDate) {
-            $toMongoDate = new \MongoDate($toDate->format('U'), $toDate->format('u'));
-            $date['$lte'] = $toMongoDate;
-        }
-        if (count($date) > 0) {
-            $date = ['date' => $date];
-        }
-
-        if (count($matchExtra) > 0 || count($date) > 0) {
-            //$pipeline[] = array('$match' => array_merge($filterMath, $matchExtra, $date));
-            $pipeline[] = ['$match' => array_merge($matchExtra, $date)];
-        }
-
-        return $pipeline;
-    }
-
-    /**
-     * Returns the pipe with a group by date range.
-     * It inserts a '$project' before the group to properly get an 'id' to sort with.
-     */
-    private function aggrPipeAddProjectGroupDate($pipeline, $groupBy)
-    {
-        $mongoProjectDate = $this->getMongoProjectDateArray($groupBy);
-        if ('$numView' == $this->sumValue) {
-            $pipeline[] = ['$project' => ['numView' => '$numView', 'date' => $mongoProjectDate]];
-        } else {
-            $pipeline[] = ['$project' => ['date' => $mongoProjectDate]];
-        }
-        $pipeline[] = ['$group' => ['_id' => '$date',
-                                              'numView' => ['$sum' => $this->sumValue], ],
-        ];
-
-        return $pipeline;
-    }
-
-    /**
-     * Returns an array for a mongo $project pipeline to create a date-formatted string with just the required fields.
-     * It is used for grouping results in date ranges (hour/day/month/year).
-     */
-    private function getMongoProjectDateArray($groupBy, $dateField = '$date')
-    {
-        $formats = [
-            'hour' => '%Y-%m-%dT%HH',
-            'day' => '%Y-%m-%d',
-            'month' => '%Y-%m',
-            'year' => '%Y',
-        ];
-
-        $format = $groupBy && isset($formats[$groupBy]) ? $formats[$groupBy] : $formats['month'];
-
-        return [
-            '$dateToString' => [
-                'format' => $format,
-                'date' => $dateField,
-                // New in MongoDB version 3.6
-                //'timezone' => date_default_timezone_get(),
-        ], ];
-    }
-
-    /**
-     * Returns an array of MongoIds as results from the criteria.
-     */
-    private function getMmobjIdsWithCriteria($criteria)
-    {
-        $qb = $this->repo->createStandardQueryBuilder();
-        if ($criteria) {
-            $qb->addAnd($criteria);
-        }
-
-        return $qb->distinct('_id')->getQuery()->execute()->toArray();
-    }
-
-    private function getSeriesIdsWithCriteria($criteria)
-    {
-        $qb = $this->repoSeries->createQueryBuilder();
-        if ($criteria) {
-            $qb->addAnd($criteria);
-        }
-
-        return $qb->distinct('_id')->getQuery()->execute()->toArray();
-    }
-
-    /**
-     * Parses the options array to add all default options (if not added);.
-     */
-    private function parseOptions(array $options = [])
-    {
-        $options['group_by'] = $options['group_by'] ?? 'month';
-        $options['limit'] = $options['limit'] ?? 100;
-        $options['sort'] = $options['sort'] ?? -1;
-        $options['page'] = $options['page'] ?? 0;
-        $options['from_date'] = $options['from_date'] ?? null;
-        $options['to_date'] = $options['to_date'] ?? null;
-        $options['criteria_series'] = $options['criteria_series'] ?? [];
-        $options['criteria_mmobj'] = $options['criteria_mmobj'] ?? [];
-
-        return $options;
-    }
-
-    /**
      * Returns a 'paged' result of the aggregation array.
      *
      * @param aggregation The aggregation array to be paged
      * @param page The page to be returned
      * @param limit The number of elements to be returned
+     * @param mixed $page
+     * @param mixed $limit
      *
      * @return array aggregation
      */
@@ -446,5 +340,127 @@ class StatsService
         ];
 
         $viewsLogColl->aggregate($pipeline, ['cursor' => [], 'allowDiskUse' => true]);
+    }
+
+    /**
+     * Returns the pipe with a match.
+     *
+     * @param mixed $matchExtra
+     * @param mixed $pipeline
+     */
+    private function aggrPipeAddMatch(\DateTime $fromDate = null, \DateTime $toDate = null, $matchExtra = [], $pipeline = [])
+    {
+        //$filterMath = $this->dm->getFilterCollection()->getFilterCriteria($this->repo->getClassMetadata());
+
+        $date = [];
+        if ($fromDate) {
+            $fromMongoDate = new \MongoDate($fromDate->format('U'), $fromDate->format('u'));
+            $date['$gte'] = $fromMongoDate;
+        }
+        if ($toDate) {
+            $toMongoDate = new \MongoDate($toDate->format('U'), $toDate->format('u'));
+            $date['$lte'] = $toMongoDate;
+        }
+        if (count($date) > 0) {
+            $date = ['date' => $date];
+        }
+
+        if (count($matchExtra) > 0 || count($date) > 0) {
+            //$pipeline[] = array('$match' => array_merge($filterMath, $matchExtra, $date));
+            $pipeline[] = ['$match' => array_merge($matchExtra, $date)];
+        }
+
+        return $pipeline;
+    }
+
+    /**
+     * Returns the pipe with a group by date range.
+     * It inserts a '$project' before the group to properly get an 'id' to sort with.
+     *
+     * @param mixed $pipeline
+     * @param mixed $groupBy
+     */
+    private function aggrPipeAddProjectGroupDate($pipeline, $groupBy)
+    {
+        $mongoProjectDate = $this->getMongoProjectDateArray($groupBy);
+        if ('$numView' == $this->sumValue) {
+            $pipeline[] = ['$project' => ['numView' => '$numView', 'date' => $mongoProjectDate]];
+        } else {
+            $pipeline[] = ['$project' => ['date' => $mongoProjectDate]];
+        }
+        $pipeline[] = ['$group' => ['_id' => '$date',
+            'numView' => ['$sum' => $this->sumValue], ],
+        ];
+
+        return $pipeline;
+    }
+
+    /**
+     * Returns an array for a mongo $project pipeline to create a date-formatted string with just the required fields.
+     * It is used for grouping results in date ranges (hour/day/month/year).
+     *
+     * @param mixed $groupBy
+     * @param mixed $dateField
+     */
+    private function getMongoProjectDateArray($groupBy, $dateField = '$date')
+    {
+        $formats = [
+            'hour' => '%Y-%m-%dT%HH',
+            'day' => '%Y-%m-%d',
+            'month' => '%Y-%m',
+            'year' => '%Y',
+        ];
+
+        $format = $groupBy && isset($formats[$groupBy]) ? $formats[$groupBy] : $formats['month'];
+
+        return [
+            '$dateToString' => [
+                'format' => $format,
+                'date' => $dateField,
+                // New in MongoDB version 3.6
+                //'timezone' => date_default_timezone_get(),
+            ], ];
+    }
+
+    /**
+     * Returns an array of MongoIds as results from the criteria.
+     *
+     * @param mixed $criteria
+     */
+    private function getMmobjIdsWithCriteria($criteria)
+    {
+        $qb = $this->repo->createStandardQueryBuilder();
+        if ($criteria) {
+            $qb->addAnd($criteria);
+        }
+
+        return $qb->distinct('_id')->getQuery()->execute()->toArray();
+    }
+
+    private function getSeriesIdsWithCriteria($criteria)
+    {
+        $qb = $this->repoSeries->createQueryBuilder();
+        if ($criteria) {
+            $qb->addAnd($criteria);
+        }
+
+        return $qb->distinct('_id')->getQuery()->execute()->toArray();
+    }
+
+    /**
+     * Parses the options array to add all default options (if not added);.
+     */
+    private function parseOptions(array $options = [])
+    {
+        $options['group_by'] = $options['group_by'] ?? 'month';
+        $options['limit'] = $options['limit'] ?? 100;
+        $options['sort'] = $options['sort'] ?? -1;
+        $options['page'] = $options['page'] ?? 0;
+        $options['from_date'] = $options['from_date'] ?? null;
+        $options['to_date'] = $options['to_date'] ?? null;
+        $options['criteria_series'] = $options['criteria_series'] ?? [];
+        $options['criteria_mmobj'] = $options['criteria_mmobj'] ?? [];
+
+        return $options;
     }
 }

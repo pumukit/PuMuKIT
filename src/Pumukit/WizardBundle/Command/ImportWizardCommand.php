@@ -6,14 +6,14 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\InspectionBundle\Services\InspectionServiceInterface;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\User;
 use Pumukit\WizardBundle\Services\WizardService;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Finder\Finder;
-use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\User;
 
 /**
  * Class ImportWizardCommand.
@@ -80,7 +80,8 @@ php app/console pumukit:wizard:import %user% %path% %inbox-depth% %series% %stat
 </info>
 
 EOT
-            );
+            )
+        ;
     }
 
     /**
@@ -114,9 +115,9 @@ EOT
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return int|void|null
-     *
      * @throws \Exception
+     *
+     * @return null|int|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -152,6 +153,7 @@ EOT
 
         foreach ($finder as $file) {
             $filePath = $file->getRealpath();
+
             try {
                 $this->inspectionService->getDuration($filePath);
             } catch (\Exception $e) {
@@ -179,6 +181,7 @@ EOT
                 } catch (\Exception $e) {
                     if (!strpos($e->getMessage(), 'Unknown error')) {
                         $this->wizardService->removeInvalidMultimediaObject($multimediaObject, $series);
+
                         throw $e;
                     }
                 }

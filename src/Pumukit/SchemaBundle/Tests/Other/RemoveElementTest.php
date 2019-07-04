@@ -2,12 +2,16 @@
 
 namespace Pumukit\SchemaBundle\Tests\Other;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class RemoveElementTest extends WebTestCase
 {
     private $dm;
@@ -31,29 +35,40 @@ class RemoveElementTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()
             ->get('doctrine_mongodb')->getManager();
         $this->mmRepo = $this->dm
-            ->getRepository(MultimediaObject::class);
+            ->getRepository(MultimediaObject::class)
+        ;
         $this->userRepo = $this->dm
-            ->getRepository(User::class);
+            ->getRepository(User::class)
+        ;
         $this->groupRepo = $this->dm
-            ->getRepository(Group::class);
+            ->getRepository(Group::class)
+        ;
         $this->factoryService = static::$kernel->getContainer()
-            ->get('pumukitschema.factory');
+            ->get('pumukitschema.factory')
+        ;
         $this->mmService = static::$kernel->getContainer()
-            ->get('pumukitschema.multimedia_object');
+            ->get('pumukitschema.multimedia_object')
+        ;
         $this->userService = static::$kernel->getContainer()
-            ->get('pumukitschema.user');
+            ->get('pumukitschema.user')
+        ;
         $this->ebService = static::$kernel->getContainer()
-            ->get('pumukitschema.embeddedbroadcast');
+            ->get('pumukitschema.embeddedbroadcast')
+        ;
         $this->groupService = static::$kernel->getContainer()
-            ->get('pumukitschema.group');
+            ->get('pumukitschema.group')
+        ;
 
         //DELETE DATABASE
         $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Group::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(User::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->flush();
     }
 

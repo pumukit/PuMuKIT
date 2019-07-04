@@ -2,10 +2,14 @@
 
 namespace Pumukit\EncoderBundle\Tests\Services;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\CpuService;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class CpuServiceTest extends WebTestCase
 {
     private $dm;
@@ -99,7 +103,7 @@ class CpuServiceTest extends WebTestCase
 
     private function getDemoCpus()
     {
-        $cpus = [
+        return [
             'CPU_WEBM' => [
                 'host' => '127.0.0.1',
                 'max' => 1,
@@ -110,35 +114,33 @@ class CpuServiceTest extends WebTestCase
                 'description' => 'Pumukit transcoder',
                 'profiles' => ['master_webm', 'video_webm'],
             ],
-                      'CPU_LOCAL' => [
-                                           'host' => '127.0.0.1',
-                                           'max' => 1,
-                                           'number' => 1,
-                                           'type' => CpuService::TYPE_LINUX,
-                                           'user' => 'transco1',
-                                           'password' => 'PUMUKIT',
-                                           'description' => 'Pumukit transcoder',
-                                           ],
-                      'CPU_REMOTE' => [
-                                            'host' => '192.168.5.123',
-                                            'max' => 2,
-                                            'number' => 1,
-                                            'type' => CpuService::TYPE_LINUX,
-                                            'user' => 'transco2',
-                                            'password' => 'PUMUKIT',
-                                            'description' => 'Pumukit transcoder',
-                                            ],
-                      'CPU_CLOUD' => [
-                                            'host' => '192.168.5.124',
-                                            'max' => 1,
-                                            'number' => 1,
-                                            'type' => CpuService::TYPE_LINUX,
-                                            'user' => 'transco2',
-                                            'password' => 'PUMUKIT',
-                                            'description' => 'Pumukit transcoder',
-                                            ],
+            'CPU_LOCAL' => [
+                'host' => '127.0.0.1',
+                'max' => 1,
+                'number' => 1,
+                'type' => CpuService::TYPE_LINUX,
+                'user' => 'transco1',
+                'password' => 'PUMUKIT',
+                'description' => 'Pumukit transcoder',
+            ],
+            'CPU_REMOTE' => [
+                'host' => '192.168.5.123',
+                'max' => 2,
+                'number' => 1,
+                'type' => CpuService::TYPE_LINUX,
+                'user' => 'transco2',
+                'password' => 'PUMUKIT',
+                'description' => 'Pumukit transcoder',
+            ],
+            'CPU_CLOUD' => [
+                'host' => '192.168.5.124',
+                'max' => 1,
+                'number' => 1,
+                'type' => CpuService::TYPE_LINUX,
+                'user' => 'transco2',
+                'password' => 'PUMUKIT',
+                'description' => 'Pumukit transcoder',
+            ],
         ];
-
-        return $cpus;
     }
 }

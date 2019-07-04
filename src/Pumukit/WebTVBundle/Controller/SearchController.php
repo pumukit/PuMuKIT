@@ -3,18 +3,18 @@
 namespace Pumukit\WebTVBundle\Controller;
 
 use Doctrine\ODM\MongoDB\Query\Builder;
+use Pagerfanta\Pagerfanta;
+use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\WebTVBundle\Services\SearchService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Pagerfanta\Pagerfanta;
-use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Tag;
-use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 
 /**
  * Class SearchController.
@@ -27,10 +27,10 @@ class SearchController extends Controller implements WebTVControllerInterface
      *
      * @param Request $request
      *
-     * @return array
-     *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      * @throws \MongoException
+     *
+     * @return array
      */
     public function seriesAction(Request $request)
     {
@@ -84,13 +84,13 @@ class SearchController extends Controller implements WebTVControllerInterface
      * @Template("PumukitWebTVBundle:Search:template.html.twig")
      *
      * @param Request  $request
-     * @param Tag|null $blockedTag
+     * @param null|Tag $blockedTag
      * @param bool     $useTagAsGeneral
-     *
-     * @return array
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      * @throws \MongoException
+     *
+     * @return array
      */
     public function multimediaObjectsAction(Request $request, Tag $blockedTag = null, $useTagAsGeneral = false)
     {
@@ -157,9 +157,9 @@ class SearchController extends Controller implements WebTVControllerInterface
      * @param $objects
      * @param $page
      *
-     * @return mixed|Pagerfanta
-     *
      * @throws \Exception
+     *
+     * @return mixed|Pagerfanta
      */
     protected function createPager($objects, $page)
     {

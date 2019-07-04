@@ -2,25 +2,29 @@
 
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\Track;
-use Pumukit\SchemaBundle\Document\Pic;
-use Pumukit\SchemaBundle\Document\Material;
-use Pumukit\SchemaBundle\Document\Link;
-use Pumukit\SchemaBundle\Document\Person;
+use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\EmbeddedPerson;
 use Pumukit\SchemaBundle\Document\EmbeddedRole;
 use Pumukit\SchemaBundle\Document\EmbeddedTag;
-use Pumukit\SchemaBundle\Document\Role;
-use Pumukit\SchemaBundle\Document\SeriesType;
-use Pumukit\SchemaBundle\Document\Broadcast;
-use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
-use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Group;
+use Pumukit\SchemaBundle\Document\Link;
+use Pumukit\SchemaBundle\Document\Material;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Person;
+use Pumukit\SchemaBundle\Document\Pic;
+use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\SeriesType;
+use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\User;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class MultimediaObjectRepositoryTest extends WebTestCase
 {
     private $dm;
@@ -39,35 +43,49 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()
             ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
-            ->getRepository(MultimediaObject::class);
+            ->getRepository(MultimediaObject::class)
+        ;
         $this->factoryService = static::$kernel->getContainer()
-            ->get('pumukitschema.factory');
+            ->get('pumukitschema.factory')
+        ;
         $this->mmsPicService = static::$kernel->getContainer()
-            ->get('pumukitschema.mmspic');
+            ->get('pumukitschema.mmspic')
+        ;
         $this->tagService = static::$kernel->getContainer()
-            ->get('pumukitschema.tag');
+            ->get('pumukitschema.tag')
+        ;
         $this->groupRepo = $this->dm
-            ->getRepository(Group::class);
+            ->getRepository(Group::class)
+        ;
 
         //DELETE DATABASE
         $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Role::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Person::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Series::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Broadcast::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Tag::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Group::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(User::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->flush();
     }
 
@@ -576,32 +594,42 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->flush();
 
         $peopleDirector = $mm->getPeopleByRole($roleDirector);
-        $this->assertEquals([$personKate->getId(), $personLucy->getId()],
-                            [$peopleDirector[0]->getId(), $peopleDirector[1]->getId()]);
+        $this->assertEquals(
+            [$personKate->getId(), $personLucy->getId()],
+            [$peopleDirector[0]->getId(), $peopleDirector[1]->getId()]
+        );
 
         $mm->downPersonWithRole($personKate, $roleDirector);
         $this->dm->persist($mm);
         $peopleDirector = $mm->getPeopleByRole($roleDirector);
-        $this->assertEquals([$personLucy->getId(), $personKate->getId()],
-                            [$peopleDirector[0]->getId(), $peopleDirector[1]->getId()]);
+        $this->assertEquals(
+            [$personLucy->getId(), $personKate->getId()],
+            [$peopleDirector[0]->getId(), $peopleDirector[1]->getId()]
+        );
 
         $mm->upPersonWithRole($personKate, $roleDirector);
         $this->dm->persist($mm);
         $peopleDirector = $mm->getPeopleByRole($roleDirector);
-        $this->assertEquals([$personKate->getId(), $personLucy->getId()],
-                            [$peopleDirector[0]->getId(), $peopleDirector[1]->getId()]);
+        $this->assertEquals(
+            [$personKate->getId(), $personLucy->getId()],
+            [$peopleDirector[0]->getId(), $peopleDirector[1]->getId()]
+        );
 
         $mm->upPersonWithRole($personLucy, $roleDirector);
         $this->dm->persist($mm);
         $peopleDirector = $mm->getPeopleByRole($roleDirector);
-        $this->assertEquals([$personLucy->getId(), $personKate->getId()],
-                            [$peopleDirector[0]->getId(), $peopleDirector[1]->getId()]);
+        $this->assertEquals(
+            [$personLucy->getId(), $personKate->getId()],
+            [$peopleDirector[0]->getId(), $peopleDirector[1]->getId()]
+        );
 
         $mm->downPersonWithRole($personLucy, $roleDirector);
         $this->dm->persist($mm);
         $peopleDirector = $mm->getPeopleByRole($roleDirector);
-        $this->assertEquals([$personKate->getId(), $personLucy->getId()],
-                            [$peopleDirector[0]->getId(), $peopleDirector[1]->getId()]);
+        $this->assertEquals(
+            [$personKate->getId(), $personLucy->getId()],
+            [$peopleDirector[0]->getId(), $peopleDirector[1]->getId()]
+        );
 
         $this->assertEquals(3, count($mm->getAllEmbeddedPeopleByPerson($personKate)));
         $this->assertEquals(1, count($mm->getAllEmbeddedPeopleByPerson($personLucy)));
@@ -918,11 +946,11 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(4, count($this->repo->findWithoutPrototype($series)));
 
         $mmArray = [
-             $mmNew->getId() => $mmNew,
-             $mmHide->getId() => $mmHide,
-             $mmBloq->getId() => $mmBloq,
-             $mmPublished->getId() => $mmPublished,
-             ];
+            $mmNew->getId() => $mmNew,
+            $mmHide->getId() => $mmHide,
+            $mmBloq->getId() => $mmBloq,
+            $mmPublished->getId() => $mmPublished,
+        ];
         $this->assertEquals($mmArray, $this->repo->findWithoutPrototype($series)->toArray());
     }
 

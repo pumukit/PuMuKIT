@@ -47,6 +47,14 @@ class EmbeddedEventSession
     private $notes;
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getId();
+    }
+
+    /**
      * @return int
      */
     public function getId()
@@ -124,13 +132,5 @@ class EmbeddedEventSession
     public function setNotes($notes)
     {
         $this->notes = $notes;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getId();
     }
 }

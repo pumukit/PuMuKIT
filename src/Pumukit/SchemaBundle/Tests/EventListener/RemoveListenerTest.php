@@ -2,15 +2,19 @@
 
 namespace Pumukit\SchemaBundle\Tests\EventListener;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Pumukit\SchemaBundle\Document\Group;
-use Pumukit\SchemaBundle\Document\User;
-use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\ProfileService;
-use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
+use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\User;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class RemoveListenerTest extends WebTestCase
 {
     private $dm;
@@ -37,19 +41,24 @@ class RemoveListenerTest extends WebTestCase
         $this->repoUser = $this->dm->getRepository(User::class);
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->embeddedBroadcastService = static::$kernel->getContainer()
-            ->get('pumukitschema.embeddedbroadcast');
+            ->get('pumukitschema.embeddedbroadcast')
+        ;
         $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
 
         $this->resourcesDir = realpath(__DIR__.'/../Resources');
 
         $this->dm->getDocumentCollection(MultimediaObject::class)
-          ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Series::class)
-          ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Group::class)
-          ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Job::class)
-          ->remove([]);
+            ->remove([])
+        ;
         $this->dm->flush();
     }
 
@@ -310,7 +319,7 @@ class RemoveListenerTest extends WebTestCase
 
     private function getDemoProfiles()
     {
-        $profiles = [
+        return [
             'MASTER_COPY' => [
                 'display' => false,
                 'wizard' => true,
@@ -360,7 +369,5 @@ class RemoveListenerTest extends WebTestCase
                 'rel_duration_trans' => 1,
             ],
         ];
-
-        return $profiles;
     }
 }

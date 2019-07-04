@@ -2,13 +2,17 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\SchemaBundle\Document\Group;
+use Pumukit\SchemaBundle\Event\GroupEvent;
+use Pumukit\SchemaBundle\Event\SchemaEvents;
+use Pumukit\SchemaBundle\Services\GroupEventDispatcherService;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Pumukit\SchemaBundle\Document\Group;
-use Pumukit\SchemaBundle\Event\SchemaEvents;
-use Pumukit\SchemaBundle\Event\GroupEvent;
-use Pumukit\SchemaBundle\Services\GroupEventDispatcherService;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class GroupEventDispatcherServiceTest extends WebTestCase
 {
     const EMPTY_NAME = 'EMTPY_NAME';
@@ -23,7 +27,8 @@ class GroupEventDispatcherServiceTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
-          ->get('doctrine_mongodb.odm.document_manager');
+            ->get('doctrine_mongodb.odm.document_manager')
+        ;
         $this->dispatcher = new EventDispatcher();
 
         $this->dm->getDocumentCollection(Group::class)->remove([]);

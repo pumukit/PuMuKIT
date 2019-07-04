@@ -24,7 +24,7 @@ class AdminFilter extends BsonFilter
     private function getMultimediaObjectCriteria()
     {
         $criteria = [];
-        if (isset($this->parameters['people']) && isset($this->parameters['groups'])) {
+        if (isset($this->parameters['people'], $this->parameters['groups'])) {
             $criteria['$or'] = [
                 ['people' => $this->parameters['people']],
                 ['groups' => $this->parameters['groups']],
@@ -37,7 +37,7 @@ class AdminFilter extends BsonFilter
     private function getSeriesCriteria()
     {
         $criteria = [];
-        if (isset($this->parameters['person_id']) && isset($this->parameters['role_code']) && isset($this->parameters['series_groups'])) {
+        if (isset($this->parameters['person_id'], $this->parameters['role_code'], $this->parameters['series_groups'])) {
             $criteria['_id'] = $this->getSeriesMongoQuery($this->parameters['person_id'], $this->parameters['role_code'], $this->parameters['series_groups']);
         }
 
@@ -52,8 +52,8 @@ class AdminFilter extends BsonFilter
      * Query in MongoDB:
      * db.Series.find({ "_id": { "$in": [ ObjectId("__id_1__"), ObjectId("__id_2__")... ] } });
      *
-     * @param string|null $personId
-     * @param string|null $roleCode
+     * @param null|string $personId
+     * @param null|string $roleCode
      * @param array       $groups
      *
      * @return array

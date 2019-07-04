@@ -2,9 +2,9 @@
 
 namespace Pumukit\NewAdminBundle\EventListener;
 
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ExceptionListener
 {

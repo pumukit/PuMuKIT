@@ -2,12 +2,12 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Pumukit\SchemaBundle\Event\SchemaEvents;
-use Pumukit\SchemaBundle\Event\PicEvent;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
+use Pumukit\SchemaBundle\Event\PicEvent;
+use Pumukit\SchemaBundle\Event\SchemaEvents;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class PicEventDispatcherService
 {

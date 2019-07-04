@@ -3,12 +3,12 @@
 namespace Pumukit\SchemaBundle\Command;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Pumukit\SchemaBundle\Document\Series;
 
 class NumericalIDCommand extends ContainerAwareCommand
 {
@@ -24,13 +24,15 @@ class NumericalIDCommand extends ContainerAwareCommand
             ->setDescription('Generate and update numerical ID on series and Multimedia Object.')
             ->addOption('step', 'S', InputOption::VALUE_REQUIRED, 'Step of command. See help for more info', -99)
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter force the execution of this action')
-            ->setHelp(<<<EOT
+            ->setHelp(
+                <<<'EOT'
             
             Example:
             
             php app/console pumukit:update:numerical:id --step=generate
 EOT
-            );
+            )
+        ;
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output)
@@ -50,6 +52,7 @@ EOT
         switch ($this->step) {
             case 'generate':
                 $this->generateNewNumericalID();
+
                 break;
             default:
                 $output->writeln(' ***** Please select an valid step');
@@ -123,18 +126,14 @@ EOT
     {
         $criteria = $this->createCriteria($criteria, $withPumukit1Id);
 
-        $multimediaObjects = $this->dm->getRepository(MultimediaObject::class)->findBy($criteria);
-
-        return $multimediaObjects;
+        return $this->dm->getRepository(MultimediaObject::class)->findBy($criteria);
     }
 
     private function getSeries($criteria, $withPumukit1Id = false)
     {
         $criteria = $this->createCriteria($criteria, $withPumukit1Id);
 
-        $series = $this->dm->getRepository(Series::class)->findBy($criteria);
-
-        return $series;
+        return $this->dm->getRepository(Series::class)->findBy($criteria);
     }
 
     private function createCriteria($criteria, $withPumukit1Id)
@@ -153,7 +152,8 @@ EOT
                 ->field('numerical_id')->exists(true)
                 ->sort(['numerical_id' => -1])
                 ->getQuery()
-                ->getSingleResult();
+                ->getSingleResult()
+            ;
 
             $lastNumericalID = $series->getNumericalID();
         } else {
@@ -161,7 +161,8 @@ EOT
                 ->field('numerical_id')->exists(true)
                 ->sort(['numerical_id' => -1])
                 ->getQuery()
-                ->getSingleResult();
+                ->getSingleResult()
+            ;
 
             $lastNumericalID = $multimediaObject->getNumericalID();
         }

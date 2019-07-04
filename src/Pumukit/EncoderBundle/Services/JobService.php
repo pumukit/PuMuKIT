@@ -3,23 +3,23 @@
 namespace Pumukit\EncoderBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Psr\Log\LoggerInterface;
+use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\EncoderBundle\Event\EncoderEvents;
+use Pumukit\EncoderBundle\Event\JobEvent;
+use Pumukit\EncoderBundle\Executor\ExecutorException;
+use Pumukit\EncoderBundle\Executor\LocalExecutor;
+use Pumukit\EncoderBundle\Executor\RemoteHTTPExecutor;
+use Pumukit\InspectionBundle\Services\InspectionServiceInterface;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\SchemaBundle\Services\TrackService;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
-use Symfony\Component\Process\ProcessBuilder;
-use Psr\Log\LoggerInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Pumukit\EncoderBundle\Document\Job;
-use Pumukit\EncoderBundle\Event\JobEvent;
-use Pumukit\EncoderBundle\Event\EncoderEvents;
-use Pumukit\EncoderBundle\Executor\LocalExecutor;
-use Pumukit\EncoderBundle\Executor\RemoteHTTPExecutor;
-use Pumukit\EncoderBundle\Executor\ExecutorException;
-use Pumukit\SchemaBundle\Services\TrackService;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Track;
-use Pumukit\InspectionBundle\Services\InspectionServiceInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Process\ProcessBuilder;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class JobService
 {
@@ -42,11 +42,22 @@ class JobService
     private $binPath;
     private $deleteInboxFiles;
 
-    public function __construct(DocumentManager $documentManager, ProfileService $profileService, CpuService $cpuService,
-                                InspectionServiceInterface $inspectionService, EventDispatcherInterface $dispatcher, LoggerInterface $logger,
-                                TrackService $trackService, TokenStorage $tokenStorage, MultimediaObjectPropertyJobService $propService, $binPath,
-                                $environment = 'dev', $tmpPath = null, $inboxPath = null, $deleteInboxFiles = false)
-    {
+    public function __construct(
+        DocumentManager $documentManager,
+        ProfileService $profileService,
+        CpuService $cpuService,
+        InspectionServiceInterface $inspectionService,
+        EventDispatcherInterface $dispatcher,
+        LoggerInterface $logger,
+        TrackService $trackService,
+        TokenStorage $tokenStorage,
+        MultimediaObjectPropertyJobService $propService,
+        $binPath,
+        $environment = 'dev',
+        $tmpPath = null,
+        $inboxPath = null,
+        $deleteInboxFiles = false
+    ) {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository(Job::class);
         $this->profileService = $profileService;
@@ -77,9 +88,9 @@ class JobService
      * @param int              $duration
      * @param int              $flags
      *
-     * @return MultimediaObject
-     *
      * @throws \Exception
+     *
+     * @return MultimediaObject
      */
     public function createTrackFromLocalHardDrive(MultimediaObject $multimediaObject, UploadedFile $trackFile, $profile, $priority, $language, $description, $initVars = [], $duration = 0, $flags = 0)
     {
@@ -111,9 +122,9 @@ class JobService
      * @param int              $duration
      * @param int              $flags
      *
-     * @return MultimediaObject
-     *
      * @throws \Exception
+     *
+     * @return MultimediaObject
      */
     public function createTrackFromInboxOnServer(MultimediaObject $multimediaObject, $trackUrl, $profile, $priority, $language, $description, $initVars = [], $duration = 0, $flags = 0)
     {
@@ -133,7 +144,7 @@ class JobService
      * @param string           $profile
      * @param int              $priority
      * @param MultimediaObject $multimediaObject
-     * @param string|null      $language
+     * @param null|string      $language
      * @param array            $description
      * @param array            $initVars
      *
@@ -158,9 +169,9 @@ class JobService
      * @param int              $duration         Only necesary in JobService::ADD_JOB_NOT_CHECKS
      * @param int              $flags            A bit field of constants to customize the job creation: JobService::ADD_JOB_UNIQUE, JobService::ADD_JOB_NOT_CHECKS
      *
-     * @return Job
-     *
      * @throws \Exception
+     *
+     * @return Job
      */
     public function addJob($pathFile, $profileName, $priority, MultimediaObject $multimediaObject, $language = null, $description = [], $initVars = [], $duration = 0, $flags = 0)
     {
@@ -174,11 +185,13 @@ class JobService
 
         if (null === $profile = $this->profileService->getProfile($profileName)) {
             $this->logger->error('[addJob] Can not find given profile with name "'.$profileName);
+
             throw new \Exception("Can't find given profile with name ".$profileName);
         }
 
         if (null === $multimediaObject) {
             $this->logger->error('[addJob] Given null multimedia object');
+
             throw new \Exception('Given null multimedia object');
         }
 
@@ -187,6 +200,7 @@ class JobService
         if ($checkduration && !(self::ADD_JOB_NOT_CHECKS & $flags)) {
             if (!is_file($pathFile)) {
                 $this->logger->error('[addJob] FileNotFoundException: Could not find file "'.$pathFile);
+
                 throw new FileNotFoundException($pathFile);
             }
             $this->logger->info('Not doing duration checks on job with profile'.$profileName);
@@ -195,11 +209,13 @@ class JobService
                 $duration = $this->inspectionService->getDuration($pathFile);
             } catch (\Exception $e) {
                 $this->logger->error('[addJob] InspectionService getDuration error message: '.$e->getMessage());
+
                 throw new \Exception($e->getMessage());
             }
 
             if (0 == $duration) {
                 $this->logger->error('[addJob] File duration is zero');
+
                 throw new \Exception('File duration is zero');
             }
         }
@@ -255,6 +271,7 @@ class JobService
 
         if (null === $job) {
             $this->logger->error('[pauseJob] Can not find job with id '.$id);
+
             throw new \Exception("Can't find job with id ".$id);
         }
         $this->changeStatus($job, Job::STATUS_WAITING, Job::STATUS_PAUSED);
@@ -275,6 +292,7 @@ class JobService
 
         if (null === $job) {
             $this->logger->error('[resumeJob] Can not find job with id '.$id);
+
             throw new \Exception("Can't find job with id ".$id);
         }
         $this->changeStatus($job, Job::STATUS_PAUSED, Job::STATUS_WAITING);
@@ -295,10 +313,12 @@ class JobService
 
         if (null === $job) {
             $this->logger->error('[cancelJob] Can not find job with id '.$id);
+
             throw new \Exception("Can't find job with id ".$id);
         }
         if ((Job::STATUS_WAITING !== $job->getStatus()) && (Job::STATUS_PAUSED !== $job->getStatus())) {
             $this->logger->error('[cancelJob] Trying to cancel job "'.$id.'" that is not paused or waiting');
+
             throw new \Exception('Trying to cancel job '.$id.' that is not paused or waiting');
         }
         $this->dm->remove($job);
@@ -316,27 +336,17 @@ class JobService
 
         if (null === $job) {
             $this->logger->error('[deleteJob] Can not find job with id '.$id);
+
             throw new \Exception("Can't find job with id ".$id);
         }
         if (Job::STATUS_EXECUTING === $job->getStatus()) {
             $msg = sprintf('[deleteJob] Trying to delete job "%s" that has executing status. Given status is %s', $id, $job->getStatus());
             $this->logger->error($msg);
+
             throw new \Exception($msg);
         }
         $this->dm->remove($job);
         $this->dm->flush();
-    }
-
-    /**
-     * @param Job $job
-     */
-    private function deleteTempFiles(Job $job)
-    {
-        if (false !== strpos($job->getPathIni(), $this->tmpPath)) {
-            unlink($job->getPathIni());
-        } elseif ($this->deleteInboxFiles && false !== strpos($job->getPathIni(), $this->inboxPath)) {
-            unlink($job->getPathIni());
-        }
     }
 
     /**
@@ -351,6 +361,7 @@ class JobService
 
         if (null === $job) {
             $this->logger->error('[updateJobPriority] Can not find job with id '.$id);
+
             throw new \Exception("Can't find job with id ".$id);
         }
 
@@ -377,6 +388,8 @@ class JobService
 
     /**
      * Get all jobs status.
+     *
+     * @param mixed $owner
      *
      * @return array
      */
@@ -406,7 +419,7 @@ class JobService
     /**
      * Exec next job.
      *
-     * @return mixed|null
+     * @return null|mixed
      */
     public function executeNextJob()
     {
@@ -479,7 +492,7 @@ class JobService
 
         $command = $process->getCommandLine();
         $this->logger->info('[executeInBackground] CommandLine '.$command);
-        shell_exec("nohup $command 1> /dev/null 2> /dev/null & echo $!");
+        shell_exec("nohup {$command} 1> /dev/null 2> /dev/null & echo $!");
 
         //$process->disableOutput();
         //$process->start();
@@ -571,10 +584,12 @@ class JobService
      * @param $profile
      * @param $duration_in
      * @param $duration_end
-     *
-     * @return bool
+     * @param mixed $durationIn
+     * @param mixed $durationEnd
      *
      * @throws \Exception
+     *
+     * @return bool
      */
     public function searchError($profile, $durationIn, $durationEnd)
     {
@@ -599,9 +614,9 @@ class JobService
      *
      * @param Job $job
      *
-     * @return string commandLine
-     *
      * @throws \Exception
+     *
+     * @return string commandLine
      */
     public function renderBat(Job $job)
     {
@@ -647,22 +662,6 @@ class JobService
     }
 
     /**
-     * Change status of a given job.
-     *
-     * @param Job $job
-     * @param     $actualStatus
-     * @param     $newStatus
-     */
-    private function changeStatus(Job $job, $actualStatus, $newStatus)
-    {
-        if ($actualStatus === $job->getStatus()) {
-            $job->setStatus($newStatus);
-            $this->dm->persist($job);
-            $this->dm->flush();
-        }
-    }
-
-    /**
      * Set path end auto.
      *
      * @param $job
@@ -673,16 +672,19 @@ class JobService
     {
         if (!file_exists($job->getPathIni())) {
             $this->logger->error('[setPathEndAndExtensions] Error input file does not exist when setting the path_end');
+
             throw new \Exception('Error input file does not exist when setting the path_end');
         }
 
         if (!$job->getMmId()) {
             $this->logger->error('[setPathEndAndExtensions] Error getting multimedia object to set path_end.');
+
             throw new \Exception('Error getting multimedia object to set path_end.');
         }
 
         if (!$job->getProfile()) {
             $this->logger->error('[setPathEndAndExtensions] Error with profile name to set path_end.');
+
             throw new \Exception('Error with profile name to set path_end.');
         }
 
@@ -701,30 +703,11 @@ class JobService
     }
 
     /**
-     * @param array $profile
-     * @param       $dir
-     * @param       $file
-     * @param       $extension
-     *
-     * @return string
-     */
-    private function getPathEnd(array $profile, $dir, $file, $extension)
-    {
-        $finalExtension = $profile['extension'] ?? $extension;
-
-        $tempDir = $profile['streamserver']['dir_out'].'/'.$dir;
-
-        $this->mkdir($tempDir);
-
-        return realpath($tempDir).'/'.$file.'.'.$finalExtension;
-    }
-
-    /**
      * @param $job
      *
-     * @return Track
-     *
      * @throws \Exception
+     *
+     * @return Track
      */
     public function createTrackWithJob($job)
     {
@@ -737,21 +720,23 @@ class JobService
      * @param string           $pathFile
      * @param string           $profileName
      * @param MultimediaObject $multimediaObject
-     * @param string|null      $language
+     * @param null|string      $language
      * @param array            $description
      *
-     * @return Track
-     *
      * @throws \Exception
+     *
+     * @return Track
      */
     public function createTrackWithFile($pathFile, $profileName, MultimediaObject $multimediaObject, $language = null, $description = [])
     {
         $profile = $this->profileService->getProfile($profileName);
 
-        $pathEnd = $this->getPathEnd($profile,
-                                     $multimediaObject->getSeries()->getId(),
-                                     pathinfo($pathFile, PATHINFO_FILENAME),
-                                     pathinfo($pathFile, PATHINFO_EXTENSION));
+        $pathEnd = $this->getPathEnd(
+            $profile,
+            $multimediaObject->getSeries()->getId(),
+            pathinfo($pathFile, PATHINFO_FILENAME),
+            pathinfo($pathFile, PATHINFO_EXTENSION)
+        );
 
         if (!copy($pathFile, $pathEnd)) {
             throw new \Exception('Error to copy file');
@@ -764,8 +749,9 @@ class JobService
      * @param MultimediaObject $multimediaObject
      * @param string           $pathEnd
      * @param string           $profileName
-     * @param string|null      $language
+     * @param null|string      $language
      * @param array            $description
+     * @param null|mixed       $pathFile
      *
      * @return Track
      */
@@ -844,9 +830,9 @@ class JobService
      *
      * @param $job
      *
-     * @return bool
-     *
      * @throws \Exception
+     *
+     * @return bool
      */
     public function retryJob($job)
     {
@@ -875,6 +861,53 @@ class JobService
     }
 
     /**
+     * @param Job $job
+     */
+    private function deleteTempFiles(Job $job)
+    {
+        if (false !== strpos($job->getPathIni(), $this->tmpPath)) {
+            unlink($job->getPathIni());
+        } elseif ($this->deleteInboxFiles && false !== strpos($job->getPathIni(), $this->inboxPath)) {
+            unlink($job->getPathIni());
+        }
+    }
+
+    /**
+     * Change status of a given job.
+     *
+     * @param Job $job
+     * @param     $actualStatus
+     * @param     $newStatus
+     */
+    private function changeStatus(Job $job, $actualStatus, $newStatus)
+    {
+        if ($actualStatus === $job->getStatus()) {
+            $job->setStatus($newStatus);
+            $this->dm->persist($job);
+            $this->dm->flush();
+        }
+    }
+
+    /**
+     * @param array $profile
+     * @param       $dir
+     * @param       $file
+     * @param       $extension
+     *
+     * @return string
+     */
+    private function getPathEnd(array $profile, $dir, $file, $extension)
+    {
+        $finalExtension = $profile['extension'] ?? $extension;
+
+        $tempDir = $profile['streamserver']['dir_out'].'/'.$dir;
+
+        $this->mkdir($tempDir);
+
+        return realpath($tempDir).'/'.$file.'.'.$finalExtension;
+    }
+
+    /**
      * @param $cpu
      *
      * @return LocalExecutor|RemoteHTTPExecutor
@@ -882,17 +915,16 @@ class JobService
     private function getExecutor($cpu)
     {
         $localhost = ['localhost', '127.0.0.1'];
-        $executor = (in_array($cpu['host'], $localhost)) ? new LocalExecutor() : new RemoteHTTPExecutor();
 
-        return $executor;
+        return (in_array($cpu['host'], $localhost)) ? new LocalExecutor() : new RemoteHTTPExecutor();
     }
 
     /**
      * @param $job
      *
-     * @return mixed|null
-     *
      * @throws \Exception
+     *
+     * @return null|mixed
      */
     private function getProfile($job)
     {
@@ -901,6 +933,7 @@ class JobService
         if (!$profile) {
             $errorMsg = sprintf('[createTrackWithJob] Profile %s not found when the job %s creates the track', $job->getProfile(), $job->getId());
             $this->logger->error($errorMsg);
+
             throw new \Exception($errorMsg);
         }
 
@@ -910,9 +943,9 @@ class JobService
     /**
      * @param $job
      *
-     * @return mixed
-     *
      * @throws \Exception
+     *
+     * @return mixed
      */
     private function getMultimediaObject($job)
     {
@@ -921,6 +954,7 @@ class JobService
         if (!$multimediaObject) {
             $errorMsg = sprintf('[createTrackWithJob] Multimedia object %s not found when the job %s creates the track', $job->getMmId(), $job->getId());
             $this->logger->error($errorMsg);
+
             throw new \Exception($errorMsg);
         }
 
@@ -932,7 +966,7 @@ class JobService
      *
      * @param bool       $success
      * @param Job        $job
-     * @param Track|null $track
+     * @param null|Track $track
      *
      * @throws \Exception
      */
@@ -976,7 +1010,7 @@ class JobService
      *
      * Gets the email of the user who executed the job, if no session get the user info from other jobs of the same mm.
      *
-     * @param Job|null $job
+     * @param null|Job $job
      */
     private function getUserEmail(Job $job = null)
     {

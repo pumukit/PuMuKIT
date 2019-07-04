@@ -3,9 +3,9 @@
 namespace Pumukit\NewAdminBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
 use Pumukit\SchemaBundle\Utils\Search\SearchUtils;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class SeriesSearchService
 {
@@ -123,7 +123,7 @@ class SeriesSearchService
         if ((false !== strpos($text, '*')) && (false === strpos($text, ' '))) {
             $text = str_replace('*', '.*', $text);
             $text = SearchUtils::scapeTildes($text);
-            $mRegex = new \MongoRegex("/$text/i");
+            $mRegex = new \MongoRegex("/{$text}/i");
             $base[] = [('title.'.$locale) => $mRegex];
             $base[] = ['people.people.name' => $mRegex];
         } else {

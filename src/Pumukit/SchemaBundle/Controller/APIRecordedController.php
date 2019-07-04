@@ -2,10 +2,10 @@
 
 namespace Pumukit\SchemaBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
  * @Route("/api/media")
@@ -106,6 +106,30 @@ class APIRecordedController extends Controller
         return new Response($data);
     }
 
+    /**
+     * @Route("/mmobj/stats.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     *
+     * TODO: add criteria??? (see processRequestData)
+     */
+    public function globalStatsAction(Request $request)
+    {
+        $serializer = $this->get('jms_serializer');
+        $recordsService = $this->get('pumukitschema.stats');
+
+        $groupBy = $request->get('group_by') ?: 'month';
+
+        $stats = $recordsService->getGlobalStats($groupBy);
+
+        $stats = [
+            'group_by' => $groupBy,
+            'stats' => $stats,
+        ];
+
+        $data = $serializer->serialize($stats, $request->getRequestFormat());
+
+        return new Response($data);
+    }
+
     protected function processRequestData(Request $request)
     {
         $MAX_LIMIT = 500;
@@ -143,29 +167,5 @@ class APIRecordedController extends Controller
         }
 
         return [$criteria, $sort, $fromDate, $toDate, $limit, $page];
-    }
-
-    /**
-     * @Route("/mmobj/stats.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
-     *
-     * TODO: add criteria??? (see processRequestData)
-     */
-    public function globalStatsAction(Request $request)
-    {
-        $serializer = $this->get('jms_serializer');
-        $recordsService = $this->get('pumukitschema.stats');
-
-        $groupBy = $request->get('group_by') ?: 'month';
-
-        $stats = $recordsService->getGlobalStats($groupBy);
-
-        $stats = [
-            'group_by' => $groupBy,
-            'stats' => $stats,
-        ];
-
-        $data = $serializer->serialize($stats, $request->getRequestFormat());
-
-        return new Response($data);
     }
 }

@@ -2,11 +2,11 @@
 
 namespace Pumukit\EncoderBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * @Route("/admin/encoder")
@@ -45,6 +45,9 @@ class CPUsController extends Controller
 
     /**
      * @Route("/cpu/maintenance/{activateMaintenance}/{cpuName}", name="pumukit_encoder_cpu_maintenance_switch", requirements={"activateMaintenance": "activate|deactivate"})
+     *
+     * @param mixed $activateMaintenance
+     * @param mixed $cpuName
      */
     public function switchMaintenanceAction(Request $request, $activateMaintenance, $cpuName)
     {
@@ -52,17 +55,19 @@ class CPUsController extends Controller
         $jobService = $this->get('pumukitencoder.job');
         $cpu = $cpuService->getCpuByName($cpuName);
         if (!$cpu) {
-            throw $this->createNotFoundException("The CPU with the name $cpuName does not exist");
+            throw $this->createNotFoundException("The CPU with the name {$cpuName} does not exist");
         }
         switch ($activateMaintenance) {
         case 'activate':
             $cpuService->activateMaintenance($cpuName);
+
             break;
         case 'deactivate':
             $cpuService->deactivateMaintenance($cpuName);
             for ($i = 0; $i < $cpu['max']; ++$i) {
                 $jobService->executeNextJob();
             }
+
             break;
         }
 

@@ -2,12 +2,12 @@
 
 namespace Pumukit\WebTVBundle\Controller;
 
+use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
-use Pumukit\SchemaBundle\Document\Series;
 
 /**
  * Class LegacyController.
@@ -98,13 +98,13 @@ class LegacyController extends Controller implements WebTVControllerInterface
                 ['secret' => $multimediaObject->getSecret()],
                 Response::HTTP_MOVED_PERMANENTLY
             );
-        } else {
-            return $this->redirectToRoute(
-                'pumukit_webtv_multimediaobject_index',
-                ['id' => $multimediaObject->getId()],
-                Response::HTTP_MOVED_PERMANENTLY
-            );
         }
+
+        return $this->redirectToRoute(
+            'pumukit_webtv_multimediaobject_index',
+            ['id' => $multimediaObject->getId()],
+            Response::HTTP_MOVED_PERMANENTLY
+            );
     }
 
     /**
@@ -135,9 +135,9 @@ class LegacyController extends Controller implements WebTVControllerInterface
 
         if ($multimediaObject->isHidden()) {
             return $this->redirectToRoute('pumukit_webtv_multimediaobject_magiciframe', ['secret' => $multimediaObject->getSecret()], Response::HTTP_MOVED_PERMANENTLY);
-        } else {
-            return $this->redirectToRoute('pumukit_webtv_multimediaobject_iframe', ['id' => $multimediaObject->getId()], Response::HTTP_MOVED_PERMANENTLY);
         }
+
+        return $this->redirectToRoute('pumukit_webtv_multimediaobject_iframe', ['id' => $multimediaObject->getId()], Response::HTTP_MOVED_PERMANENTLY);
     }
 
     /**
@@ -158,7 +158,7 @@ class LegacyController extends Controller implements WebTVControllerInterface
         $mmobjRepo = $dm->getRepository(MultimediaObject::class);
 
         $multimediaObject = $mmobjRepo->createQueryBuilder()
-            ->field('tracks.tags')->equals(new \MongoRegex("/\bpumukit1id:".$pumukit1id."\b/i"))
+            ->field('tracks.tags')->equals(new \MongoRegex('/\\bpumukit1id:'.$pumukit1id.'\\b/i'))
             ->getQuery()->getSingleResult();
 
         if (!$multimediaObject) {

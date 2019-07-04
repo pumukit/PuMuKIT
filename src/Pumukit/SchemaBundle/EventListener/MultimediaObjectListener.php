@@ -2,9 +2,9 @@
 
 namespace Pumukit\SchemaBundle\EventListener;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
-use Doctrine\ODM\MongoDB\DocumentManager;
 
 class MultimediaObjectListener
 {
@@ -13,21 +13,6 @@ class MultimediaObjectListener
     public function __construct(DocumentManager $dm)
     {
         $this->dm = $dm;
-    }
-
-    private function getTracksType($tracks)
-    {
-        if (0 === count($tracks)) {
-            return MultimediaObject::TYPE_UNKNOWN;
-        }
-
-        foreach ($tracks as $track) {
-            if (!$track->isOnlyAudio()) {
-                return MultimediaObject::TYPE_VIDEO;
-            }
-        }
-
-        return MultimediaObject::TYPE_AUDIO;
     }
 
     /**
@@ -93,5 +78,20 @@ class MultimediaObjectListener
         }
         $multimediaObject->setTextIndex($textIndex);
         $multimediaObject->setSecondaryTextIndex($secondaryTextIndex);
+    }
+
+    private function getTracksType($tracks)
+    {
+        if (0 === count($tracks)) {
+            return MultimediaObject::TYPE_UNKNOWN;
+        }
+
+        foreach ($tracks as $track) {
+            if (!$track->isOnlyAudio()) {
+                return MultimediaObject::TYPE_VIDEO;
+            }
+        }
+
+        return MultimediaObject::TYPE_AUDIO;
     }
 }

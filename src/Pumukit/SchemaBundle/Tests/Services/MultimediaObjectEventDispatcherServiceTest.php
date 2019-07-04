@@ -2,12 +2,16 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
+use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Services\MultimediaObjectEventDispatcherService;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class MultimediaObjectEventDispatcherServiceTest extends WebTestCase
 {
     const EMPTY_TITLE = 'EMTPY TITLE';
@@ -21,7 +25,8 @@ class MultimediaObjectEventDispatcherServiceTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dispatcher = static::$kernel->getContainer()
-          ->get('event_dispatcher');
+            ->get('event_dispatcher')
+        ;
 
         MockUpMultimediaObjectListener::$called = false;
         MockUpMultimediaObjectListener::$title = self::EMPTY_TITLE;

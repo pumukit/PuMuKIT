@@ -2,21 +2,21 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\NewAdminBundle\Form\Type\TrackType;
 use Pumukit\NewAdminBundle\Form\Type\TrackUpdateType;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Security\Permission;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
@@ -111,13 +111,14 @@ class TrackController extends Controller implements NewAdminControllerInterface
             return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', ['reload_links' => true, 'id' => $multimediaObject->getId()]));
         }
 
-        return $this->render('PumukitNewAdminBundle:Track:update.html.twig',
-                             [
-                                 'track' => $track,
-                                 'form' => $form->createView(),
-                                 'mmId' => $multimediaObject->getId(),
-                                 'profiles' => $profiles,
-                             ]
+        return $this->render(
+            'PumukitNewAdminBundle:Track:update.html.twig',
+            [
+                'track' => $track,
+                'form' => $form->createView(),
+                'mmId' => $multimediaObject->getId(),
+                'profiles' => $profiles,
+            ]
         );
     }
 
@@ -342,6 +343,8 @@ class TrackController extends Controller implements NewAdminControllerInterface
 
     /**
      * Get data in array or default values.
+     *
+     * @param mixed $formData
      */
     private function getArrayData($formData)
     {

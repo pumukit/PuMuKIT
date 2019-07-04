@@ -3,10 +3,10 @@
 namespace Pumukit\NewAdminBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Knp\Menu\ItemInterface as KnpItemInterface;
 use Pumukit\SchemaBundle\Security\Permission;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
@@ -358,7 +358,7 @@ class Builder implements ContainerAwareInterface
     /**
      * @param KnpItemInterface      $menu
      * @param ItemInterface         $item
-     * @param KnpItemInterface|null $tools
+     * @param null|KnpItemInterface $tools
      */
     protected function addDynamicToolMenu(KnpItemInterface $menu, ItemInterface $item, $tools)
     {

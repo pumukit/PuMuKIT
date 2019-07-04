@@ -21,27 +21,27 @@ class ChapterMarkService
     /**
      * @param MultimediaObject $multimediaObject
      *
-     * @return array
-     *
      * @throws \MongoException
+     *
+     * @return array
      */
     public function getChapterMarks(MultimediaObject $multimediaObject)
     {
         //Get editor chapters for the editor template.
         //Once the chapter marks player plugin is created, this part won't be needed.
         $marks = $this->documentManager
-                      ->getRepository(Annotation::class)
-                      ->createQueryBuilder()
-                      ->field('type')->equals('paella/marks')
-                      ->field('multimediaObject')->equals(new \MongoId($multimediaObject->getId()))
-                      ->getQuery()->getSingleResult();
+            ->getRepository(Annotation::class)
+            ->createQueryBuilder()
+            ->field('type')->equals('paella/marks')
+            ->field('multimediaObject')->equals(new \MongoId($multimediaObject->getId()))
+            ->getQuery()->getSingleResult();
 
         $trimming = $this->documentManager
-                         ->getRepository(Annotation::class)
-                         ->createQueryBuilder()
-                         ->field('type')->equals('paella/trimming')
-                         ->field('multimediaObject')->equals(new \MongoId($multimediaObject->getId()))
-                         ->getQuery()->getSingleResult();
+            ->getRepository(Annotation::class)
+            ->createQueryBuilder()
+            ->field('type')->equals('paella/trimming')
+            ->field('multimediaObject')->equals(new \MongoId($multimediaObject->getId()))
+            ->getQuery()->getSingleResult();
 
         $editorChapters = [];
 

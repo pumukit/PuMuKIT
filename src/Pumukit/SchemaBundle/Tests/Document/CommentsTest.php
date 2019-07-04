@@ -2,9 +2,13 @@
 
 namespace Pumukit\SchemaBundle\Tests\Document;
 
-use Pumukit\SchemaBundle\Document\Comments;
 use PHPUnit\Framework\TestCase;
+use Pumukit\SchemaBundle\Document\Comments;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class CommentsTest extends TestCase
 {
     public function testGetterAndSetter()

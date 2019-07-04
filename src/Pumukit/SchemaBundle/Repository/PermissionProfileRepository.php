@@ -28,7 +28,8 @@ class PermissionProfileRepository extends DocumentRepository
             ->field('default')->set(!$default)
             ->field('default')->equals($default)
             ->getQuery()
-            ->execute();
+            ->execute()
+        ;
     }
 
     /**
@@ -52,14 +53,16 @@ class PermissionProfileRepository extends DocumentRepository
                 ->field('permissions')->size($size)
                 ->count()
                 ->getQuery()
-                ->execute();
+                ->execute()
+            ;
         } while ($size <= $totalPermissions);
 
         if ($count > 0) {
             return $this->createQueryBuilder()
                 ->field('permissions')->size($size)
                 ->getQuery()
-                ->getSingleResult();
+                ->getSingleResult()
+            ;
         }
 
         return null;

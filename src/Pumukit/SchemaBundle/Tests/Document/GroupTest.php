@@ -2,9 +2,13 @@
 
 namespace Pumukit\SchemaBundle\Tests\Document;
 
-use Pumukit\SchemaBundle\Document\Group;
 use PHPUnit\Framework\TestCase;
+use Pumukit\SchemaBundle\Document\Group;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class GroupTest extends TestCase
 {
     public function testSetterAndGetter()

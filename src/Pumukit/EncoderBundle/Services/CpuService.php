@@ -3,19 +3,18 @@
 namespace Pumukit\EncoderBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Document\CpuStatus;
+use Pumukit\EncoderBundle\Document\Job;
 
 class CpuService
 {
+    const TYPE_LINUX = 'linux';
+    const TYPE_WINDOWS = 'windows';
+    const TYPE_GSTREAMER = 'gstreamer';
     private $dm;
     private $cpus;
     private $jobRepo;
     private $cpuRepo;
-
-    const TYPE_LINUX = 'linux';
-    const TYPE_WINDOWS = 'windows';
-    const TYPE_GSTREAMER = 'gstreamer';
 
     /**
      * Constructor.
@@ -30,6 +29,8 @@ class CpuService
 
     /**
      * Get available free cpus.
+     *
+     * @param null|mixed $profile
      */
     public function getFreeCpu($profile = null)
     {
@@ -57,6 +58,7 @@ class CpuService
      * Get Cpu by name.
      *
      * @param string the cpu name (case sensitive)
+     * @param mixed $name
      */
     public function getCpuByName($name)
     {
@@ -79,31 +81,13 @@ class CpuService
      * Is active.
      *
      * Returns true if given cpu is active
+     *
+     * @param mixed $cpu
+     * @param mixed $cmd
      */
     public function isActive($cpu, $cmd = '')
     {
         return true;
-    }
-
-    private function getOptimalCpuName($freeCpus = [])
-    {
-        $optimalCpu = null;
-        foreach ($freeCpus as $cpu) {
-            if (!$optimalCpu) {
-                $optimalCpu = $cpu;
-                continue;
-            }
-            if (($cpu['jobs'] / $cpu['max']) < ($optimalCpu['jobs'] / $optimalCpu['max'])) {
-                $optimalCpu = $cpu;
-            } elseif ((0 === $cpu['jobs']) && (0 === $optimalCpu['jobs']) && ($cpu['max'] > $optimalCpu['max'])) {
-                $optimalCpu = $cpu;
-            }
-        }
-        if (isset($optimalCpu['name'])) {
-            return $optimalCpu['name'];
-        }
-
-        return null;
     }
 
     public function activateMaintenance($cpuName, $flush = true)
@@ -139,21 +123,9 @@ class CpuService
         $cpuStatus = $this->cpuRepo->findOneBy(['name' => $cpuName]);
         if ($cpuStatus && CpuStatus::STATUS_MAINTENANCE == $cpuStatus->getStatus()) {
             return true;
-        } else {
-            return false;
-        }
-    }
-
-    private function getRunningJobs($cpuName, $allRunningJobs)
-    {
-        $jobs = 0;
-        foreach ($allRunningJobs as $job) {
-            if ($cpuName === $job->getCpu()) {
-                ++$jobs;
-            }
         }
 
-        return $jobs;
+        return false;
     }
 
     public function isCompatible($cpu, $profile)
@@ -169,5 +141,39 @@ class CpuService
         }, $cpus);
 
         return $cpuNames;
+    }
+
+    private function getOptimalCpuName($freeCpus = [])
+    {
+        $optimalCpu = null;
+        foreach ($freeCpus as $cpu) {
+            if (!$optimalCpu) {
+                $optimalCpu = $cpu;
+
+                continue;
+            }
+            if (($cpu['jobs'] / $cpu['max']) < ($optimalCpu['jobs'] / $optimalCpu['max'])) {
+                $optimalCpu = $cpu;
+            } elseif ((0 === $cpu['jobs']) && (0 === $optimalCpu['jobs']) && ($cpu['max'] > $optimalCpu['max'])) {
+                $optimalCpu = $cpu;
+            }
+        }
+        if (isset($optimalCpu['name'])) {
+            return $optimalCpu['name'];
+        }
+
+        return null;
+    }
+
+    private function getRunningJobs($cpuName, $allRunningJobs)
+    {
+        $jobs = 0;
+        foreach ($allRunningJobs as $job) {
+            if ($cpuName === $job->getCpu()) {
+                ++$jobs;
+            }
+        }
+
+        return $jobs;
     }
 }

@@ -2,11 +2,11 @@
 
 namespace Pumukit\NewAdminBundle\Form\Type;
 
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class MultimediaObjectPubType extends AbstractType
 {
@@ -32,7 +32,8 @@ class MultimediaObjectPubType extends AbstractType
                     'attr' => ['aria-label' => $this->translator->trans('Status', [], null, $this->locale)],
                     'label' => $this->translator->trans('Status', [], null, $this->locale),
                 ]
-            );
+            )
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

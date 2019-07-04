@@ -60,6 +60,14 @@ class EmbeddedSegment
     private $preview;
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getText();
+    }
+
+    /**
      * @return int
      */
     public function getId()
@@ -185,13 +193,5 @@ class EmbeddedSegment
     public function setPreview($preview)
     {
         $this->preview = $preview;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getText();
     }
 }

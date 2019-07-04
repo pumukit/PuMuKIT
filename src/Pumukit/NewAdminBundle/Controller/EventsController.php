@@ -4,26 +4,26 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
-use Pumukit\SchemaBundle\Document\EmbeddedEvent;
-use Pumukit\SchemaBundle\Document\EmbeddedSocial;
-use Pumukit\SchemaBundle\Document\PermissionProfile;
-use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\EmbeddedEventSession;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\LiveBundle\Document\Live;
 use Pumukit\NewAdminBundle\Form\Type\EmbeddedEventSessionType;
-use Pumukit\NewAdminBundle\Form\Type\SeriesType;
 use Pumukit\NewAdminBundle\Form\Type\EventsType;
+use Pumukit\NewAdminBundle\Form\Type\SeriesType;
+use Pumukit\SchemaBundle\Document\EmbeddedEvent;
+use Pumukit\SchemaBundle\Document\EmbeddedEventSession;
+use Pumukit\SchemaBundle\Document\EmbeddedSocial;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\Tag;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Pumukit\SchemaBundle\Document\Role;
-use Pumukit\SchemaBundle\Document\Tag;
-use Pumukit\LiveBundle\Document\Live;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_LIVE_EVENTS')")
@@ -75,9 +75,10 @@ class EventsController extends Controller implements NewAdminControllerInterface
     /**
      * @param Request $request
      *
+     * @throws \Exception
+     *
      * @return RedirectResponse
      *
-     * @throws \Exception
      * @Route("create/", name="pumukit_new_admin_live_event_create")
      */
     public function createEventAction(Request $request)
@@ -117,7 +118,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
             }
         }
 
-        /* Create default event */
+        // Create default event
         $event = new EmbeddedEvent();
         $event->setDate(new \DateTime());
 
@@ -144,7 +145,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
      * List events.
      *
      * @param Request     $request
-     * @param string|null $type
+     * @param null|string $type
      *
      * @return array
      *
@@ -243,12 +244,14 @@ class EventsController extends Controller implements NewAdminControllerInterface
             foreach ($mms->getCurrentPageResults() as $result) {
                 if ($session->get('admin/live/event/id') == $result->getId()) {
                     $resetCache = false;
+
                     break;
                 }
             }
             if ($resetCache) {
                 foreach ($mms->getCurrentPageResults() as $result) {
                     $session->set('admin/live/event/id', $result->getId());
+
                     break;
                 }
             }
@@ -323,21 +326,26 @@ class EventsController extends Controller implements NewAdminControllerInterface
     {
         $translator = $this->container->get('translator');
         $message = '';
+
         try {
             switch ($type) {
             case 'clone':
                 $message = $this->cloneEvent($multimediaObject);
+
                 break;
             case 'delete':
                 $message = $this->deleteEvent($multimediaObject);
                 $this->container->get('session')->set('admin/live/event/id', null);
+
                 break;
             case 'deleteAll':
                 $message = $this->deleteEventAndSeries($multimediaObject);
                 $this->container->get('session')->set('admin/live/event/id', null);
+
                 break;
             default:
                 $message = 'Option not allowed';
+
                 break;
             }
         } catch (\Exception $e) {
@@ -348,11 +356,11 @@ class EventsController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @return JsonResponse
      * @Route("delete/selected/", name="pumukit_new_admin_live_event_delete_selected")
      *
      * @param Request $request
      *
+     * @return JsonResponse
      * @return JsonResponse
      */
     public function deleteSelectedEventsAction(Request $request)
@@ -368,119 +376,6 @@ class EventsController extends Controller implements NewAdminControllerInterface
         }
 
         return new JsonResponse([]);
-    }
-
-    /**
-     * clone Event and series.
-     *
-     * @param MultimediaObject $multimediaObject
-     *
-     * @return string
-     *
-     * @throws \Exception
-     */
-    private function cloneEvent(MultimediaObject $multimediaObject)
-    {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
-        $factoryService = $this->container->get('pumukitschema.factory');
-
-        $cloneMultimediaObject = $factoryService->cloneMultimediaObject($multimediaObject);
-        $cloneMultimediaObject->setType(MultimediaObject::TYPE_LIVE);
-
-        $dm->persist($cloneMultimediaObject);
-
-        $series = $multimediaObject->getSeries();
-        $cloneSeries = clone $series;
-        $dm->persist($cloneSeries);
-
-        $cloneMultimediaObject->setSeries($cloneSeries);
-
-        $event = new EmbeddedEvent();
-        $event->setDate(new \DateTime());
-        $event->setI18nName($multimediaObject->getEmbeddedEvent()->getI18nName());
-        $event->setI18nDescription($multimediaObject->getEmbeddedEvent()->getI18nDescription());
-        $event->setPlace($multimediaObject->getEmbeddedEvent()->getPlace());
-        $event->setDuration($multimediaObject->getEmbeddedEvent()->getDuration());
-        $event->setDisplay($multimediaObject->getEmbeddedEvent()->isDisplay());
-        $event->setLive($multimediaObject->getEmbeddedEvent()->getLive());
-        $event->setUrl($multimediaObject->getEmbeddedEvent()->getUrl());
-        $event->setCreateSerial(false);
-        $dm->persist($event);
-
-        $cloneMultimediaObject->setEmbeddedEvent($event);
-        $dm->persist($cloneMultimediaObject);
-        $dm->flush();
-
-        $message = 'Cloned event successfully';
-
-        return $message;
-    }
-
-    /**
-     * Delete event and multimediaObject.
-     *
-     * @param MultimediaObject $multimediaObject
-     *
-     * @return string
-     */
-    private function deleteEvent(MultimediaObject $multimediaObject)
-    {
-        $factoryService = $this->container->get('pumukitschema.factory');
-        $factoryService->deleteMultimediaObject($multimediaObject);
-
-        $message = 'Deleted event successfully';
-
-        return $message;
-    }
-
-    /**
-     * Delete event, multimediaObject and series if serie have just one multimediaObject.
-     *
-     * @param MultimediaObject $multimediaObject
-     *
-     * @return string
-     *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     */
-    private function deleteEventAndSeries(MultimediaObject $multimediaObject)
-    {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
-        $aggregate = $dm->getDocumentCollection(MultimediaObject::class);
-        $user = $this->getUser();
-        $pipeline = [];
-        $pipeline[] = ['$match' => ['series' => new \MongoId($multimediaObject->getSeries()->getId())]];
-        $ownerKey = $this->container->getParameter('pumukitschema.personal_scope_role_code');
-        if ($user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
-            $pipeline[] = ['$match' => ['people.people.email' => ['$ne' => $user->getEmail()]]];
-            $pipeline[] = ['$match' => ['people.cod' => $ownerKey]];
-        }
-        $pipeline[] = [
-            '$group' => [
-                '_id' => ['id' => '$_id'],
-            ],
-        ];
-        $mmObjsNotOwner = $aggregate->aggregate($pipeline, ['cursor' => []])->toArray();
-
-        $factoryService = $this->container->get('pumukitschema.factory');
-        $translator = $this->container->get('translator');
-
-        if (0 !== count($mmObjsNotOwner) && $user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
-            throw new \Exception($translator->trans('Error: Series have another owners on others events'));
-        } else {
-            $series = $multimediaObject->getSeries();
-            $seriesRepo = $dm->getRepository(Series::class);
-            $count = $seriesRepo->countMultimediaObjects($series);
-            if (1 === $count) {
-                $factoryService->deleteMultimediaObject($multimediaObject);
-                $factoryService->deleteSeries($series);
-            } else {
-                throw new \Exception($translator->trans('Error: Series have some events'));
-            }
-        }
-
-        $message = 'Delete event and series successfully';
-
-        return $message;
     }
 
     /**
@@ -512,9 +407,9 @@ class EventsController extends Controller implements NewAdminControllerInterface
      * @param Request          $request
      * @param MultimediaObject $multimediaObject
      *
-     * @return array|jsonResponse
-     *
      * @throws \Exception
+     *
+     * @return array|jsonResponse
      */
     public function eventAction(Request $request, MultimediaObject $multimediaObject)
     {
@@ -783,9 +678,9 @@ class EventsController extends Controller implements NewAdminControllerInterface
      * @param $multimediaObject
      * @param $session_id
      *
-     * @return JsonResponse
-     *
      * @throws \Exception
+     *
+     * @return JsonResponse
      */
     public function sessionCloneAction($multimediaObject, $session_id)
     {
@@ -823,9 +718,9 @@ class EventsController extends Controller implements NewAdminControllerInterface
      * @param $multimediaObject
      * @param bool $session_id
      *
-     * @return array
-     *
      * @throws \Exception
+     *
+     * @return array
      */
     public function modalSessionAction(Request $request, $multimediaObject, $session_id = false)
     {
@@ -915,10 +810,12 @@ class EventsController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @return array
-     *
      * @Route("change/series/{multimediaObject}", name="pumukitnewadmin_live_event_change_series")
      * @Template("PumukitNewAdminBundle:LiveEvent:changeSeries.html.twig")
+     *
+     * @param null|mixed $multimediaObject
+     *
+     * @return array
      */
     public function seriesChangeModalAction($multimediaObject = null)
     {
@@ -974,65 +871,15 @@ class EventsController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @param $multimediaObjects
-     * @param $sortType
-     *
-     * @return array
-     */
-    private function reorderMultimediaObjectsByNextNearSession($multimediaObjects, $sortType)
-    {
-        $date = new \DateTime();
-
-        usort($multimediaObjects, function ($a, $b) use ($sortType, $date) {
-            $validSessionA = null;
-            foreach ($a->getEmbeddedEvent()->getEmbeddedEventSession() as $sessionA) {
-                if ($sessionA->getStart() > $date || ($sessionA->getStart() <= $date && $sessionA->getEnds() > $date)) {
-                    $validSessionA = $sessionA->getStart()->getTimestamp();
-                    break;
-                }
-            }
-            $validSessionB = null;
-            foreach ($b->getEmbeddedEvent()->getEmbeddedEventSession() as $sessionB) {
-                if ($sessionB->getStart() > $date || ($sessionB->getStart() <= $date && $sessionB->getEnds() > $date)) {
-                    $validSessionB = $sessionB->getStart()->getTimestamp();
-                    break;
-                }
-            }
-
-            if (!$validSessionA && !$validSessionB) {
-                return 0;
-            }
-
-            if (!$validSessionA && $validSessionB) {
-                return 1;
-            }
-
-            if ($validSessionA && !$validSessionB) {
-                return -1;
-            }
-
-            if ($validSessionA && $validSessionB) {
-                if ('desc' == $sortType) {
-                    return ($validSessionA < $validSessionB) ? 1 : -1;
-                } else {
-                    return ($validSessionA < $validSessionB) ? -1 : 1;
-                }
-            }
-        });
-
-        return $multimediaObjects;
-    }
-
-    /**
      * @Route("autocomplete/series/with/event/data/{id}", name="pumukit_new_admin_autocomplete_series_with_event_data")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
      *
      * @param Request          $request
      * @param MultimediaObject $multimediaObject
      *
-     * @return JsonResponse
-     *
      * @throws \Exception
+     *
+     * @return JsonResponse
      */
     public function autocompleteSeriesWithEventDataAction(Request $request, MultimediaObject $multimediaObject)
     {
@@ -1055,5 +902,163 @@ class EventsController extends Controller implements NewAdminControllerInterface
         $this->get('pumukitschema.series_dispatcher')->dispatchUpdate($series);
 
         return new JsonResponse(['success']);
+    }
+
+    /**
+     * clone Event and series.
+     *
+     * @param MultimediaObject $multimediaObject
+     *
+     * @throws \Exception
+     *
+     * @return string
+     */
+    private function cloneEvent(MultimediaObject $multimediaObject)
+    {
+        $dm = $this->container->get('doctrine_mongodb')->getManager();
+        $factoryService = $this->container->get('pumukitschema.factory');
+
+        $cloneMultimediaObject = $factoryService->cloneMultimediaObject($multimediaObject);
+        $cloneMultimediaObject->setType(MultimediaObject::TYPE_LIVE);
+
+        $dm->persist($cloneMultimediaObject);
+
+        $series = $multimediaObject->getSeries();
+        $cloneSeries = clone $series;
+        $dm->persist($cloneSeries);
+
+        $cloneMultimediaObject->setSeries($cloneSeries);
+
+        $event = new EmbeddedEvent();
+        $event->setDate(new \DateTime());
+        $event->setI18nName($multimediaObject->getEmbeddedEvent()->getI18nName());
+        $event->setI18nDescription($multimediaObject->getEmbeddedEvent()->getI18nDescription());
+        $event->setPlace($multimediaObject->getEmbeddedEvent()->getPlace());
+        $event->setDuration($multimediaObject->getEmbeddedEvent()->getDuration());
+        $event->setDisplay($multimediaObject->getEmbeddedEvent()->isDisplay());
+        $event->setLive($multimediaObject->getEmbeddedEvent()->getLive());
+        $event->setUrl($multimediaObject->getEmbeddedEvent()->getUrl());
+        $event->setCreateSerial(false);
+        $dm->persist($event);
+
+        $cloneMultimediaObject->setEmbeddedEvent($event);
+        $dm->persist($cloneMultimediaObject);
+        $dm->flush();
+
+        return 'Cloned event successfully';
+    }
+
+    /**
+     * Delete event and multimediaObject.
+     *
+     * @param MultimediaObject $multimediaObject
+     *
+     * @return string
+     */
+    private function deleteEvent(MultimediaObject $multimediaObject)
+    {
+        $factoryService = $this->container->get('pumukitschema.factory');
+        $factoryService->deleteMultimediaObject($multimediaObject);
+
+        return 'Deleted event successfully';
+    }
+
+    /**
+     * Delete event, multimediaObject and series if serie have just one multimediaObject.
+     *
+     * @param MultimediaObject $multimediaObject
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     *
+     * @return string
+     */
+    private function deleteEventAndSeries(MultimediaObject $multimediaObject)
+    {
+        $dm = $this->container->get('doctrine_mongodb')->getManager();
+        $aggregate = $dm->getDocumentCollection(MultimediaObject::class);
+        $user = $this->getUser();
+        $pipeline = [];
+        $pipeline[] = ['$match' => ['series' => new \MongoId($multimediaObject->getSeries()->getId())]];
+        $ownerKey = $this->container->getParameter('pumukitschema.personal_scope_role_code');
+        if ($user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
+            $pipeline[] = ['$match' => ['people.people.email' => ['$ne' => $user->getEmail()]]];
+            $pipeline[] = ['$match' => ['people.cod' => $ownerKey]];
+        }
+        $pipeline[] = [
+            '$group' => [
+                '_id' => ['id' => '$_id'],
+            ],
+        ];
+        $mmObjsNotOwner = $aggregate->aggregate($pipeline, ['cursor' => []])->toArray();
+
+        $factoryService = $this->container->get('pumukitschema.factory');
+        $translator = $this->container->get('translator');
+
+        if (0 !== count($mmObjsNotOwner) && $user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
+            throw new \Exception($translator->trans('Error: Series have another owners on others events'));
+        }
+        $series = $multimediaObject->getSeries();
+        $seriesRepo = $dm->getRepository(Series::class);
+        $count = $seriesRepo->countMultimediaObjects($series);
+        if (1 === $count) {
+            $factoryService->deleteMultimediaObject($multimediaObject);
+            $factoryService->deleteSeries($series);
+        } else {
+            throw new \Exception($translator->trans('Error: Series have some events'));
+        }
+
+        return 'Delete event and series successfully';
+    }
+
+    /**
+     * @param $multimediaObjects
+     * @param $sortType
+     *
+     * @return array
+     */
+    private function reorderMultimediaObjectsByNextNearSession($multimediaObjects, $sortType)
+    {
+        $date = new \DateTime();
+
+        usort($multimediaObjects, function ($a, $b) use ($sortType, $date) {
+            $validSessionA = null;
+            foreach ($a->getEmbeddedEvent()->getEmbeddedEventSession() as $sessionA) {
+                if ($sessionA->getStart() > $date || ($sessionA->getStart() <= $date && $sessionA->getEnds() > $date)) {
+                    $validSessionA = $sessionA->getStart()->getTimestamp();
+
+                    break;
+                }
+            }
+            $validSessionB = null;
+            foreach ($b->getEmbeddedEvent()->getEmbeddedEventSession() as $sessionB) {
+                if ($sessionB->getStart() > $date || ($sessionB->getStart() <= $date && $sessionB->getEnds() > $date)) {
+                    $validSessionB = $sessionB->getStart()->getTimestamp();
+
+                    break;
+                }
+            }
+
+            if (!$validSessionA && !$validSessionB) {
+                return 0;
+            }
+
+            if (!$validSessionA && $validSessionB) {
+                return 1;
+            }
+
+            if ($validSessionA && !$validSessionB) {
+                return -1;
+            }
+
+            if ($validSessionA && $validSessionB) {
+                if ('desc' == $sortType) {
+                    return ($validSessionA < $validSessionB) ? 1 : -1;
+                }
+
+                return ($validSessionA < $validSessionB) ? -1 : 1;
+            }
+        });
+
+        return $multimediaObjects;
     }
 }

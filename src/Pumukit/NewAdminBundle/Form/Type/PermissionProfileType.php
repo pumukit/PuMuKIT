@@ -25,7 +25,8 @@ class PermissionProfileType extends AbstractType
                     'attr' => ['aria-label' => $this->translator->trans('Name', [], null, $this->locale)],
                     'label' => $this->translator->trans('Name', [], null, $this->locale),
                 ]
-            );
+            )
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

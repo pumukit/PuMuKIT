@@ -6,9 +6,9 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
 use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\EncoderBundle\Services\PicExtractorService;
-use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
 
 class PicExtractorListener
 {
@@ -66,9 +66,9 @@ class PicExtractorListener
                 if ($multimediaObject->isOnlyAudio() || $track->isOnlyAudio()) {
                     //return $this->addDefaultAudioPic($multimediaObject, $track);
                     return false;
-                } else {
-                    return $this->generatePicFromVideo($multimediaObject, $track);
                 }
+
+                return $this->generatePicFromVideo($multimediaObject, $track);
             } catch (\Exception $e) {
                 $this->logger->error(__CLASS__.'['.__FUNCTION__.'] '
                                     .'There was an error in extracting a pic for MultimediaObject "'

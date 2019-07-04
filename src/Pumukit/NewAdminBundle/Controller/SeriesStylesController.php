@@ -2,18 +2,17 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\SeriesStyle;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Pumukit\SchemaBundle\Document\Series;
 
 /**
  * Class SeriesStylesController.
- *
  *
  * @Route ("/series/styles")
  * @Security("is_granted('ROLE_ACCESS_SERIES_STYLE')")
@@ -125,12 +124,12 @@ class SeriesStylesController extends Controller
                 $session->set('seriesstyle/id', '');
 
                 return new JsonResponse(['success', 'msg' => $translator->trans('Successfully deleted series style')]);
-            } else {
-                return new JsonResponse(['error', 'msg' => $translator->trans('There are series with this series style')]);
             }
-        } else {
-            return new JsonResponse(['error', 'msg' => $translator->trans("Series style $style->getId() doesn't exists")]);
+
+            return new JsonResponse(['error', 'msg' => $translator->trans('There are series with this series style')]);
         }
+
+        return new JsonResponse(['error', 'msg' => $translator->trans("Series style {$style->getId}() doesn't exists")]);
     }
 
     /**

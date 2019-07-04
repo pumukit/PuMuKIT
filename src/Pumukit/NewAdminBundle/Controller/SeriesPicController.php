@@ -2,13 +2,13 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\Series;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
@@ -87,6 +87,7 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
     public function uploadAction(Series $series, Request $request)
     {
         $isBanner = false;
+
         try {
             if (0 === $request->files->count() && 0 === $request->request->count()) {
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
@@ -128,7 +129,8 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
         $picId = $request->get('id');
 
         $repo = $this->get('doctrine_mongodb')
-              ->getRepository(Series::class);
+            ->getRepository(Series::class)
+        ;
 
         if (!$series = $repo->findByPicId($picId)) {
             throw $this->createNotFoundException('Requested series does not exist');
@@ -151,7 +153,8 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
         $picId = $request->get('id');
 
         $repo = $this->get('doctrine_mongodb')
-              ->getRepository(Series::class);
+            ->getRepository(Series::class)
+        ;
 
         if (!$series = $repo->findByPicId($picId)) {
             throw $this->createNotFoundException('Requested series does not exist');
@@ -178,7 +181,8 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
         $picId = $request->get('id');
 
         $repo = $this->get('doctrine_mongodb')
-              ->getRepository(Series::class);
+            ->getRepository(Series::class)
+        ;
 
         if (!$series = $repo->findByPicId($picId)) {
             throw $this->createNotFoundException('Requested series does not exist');
@@ -259,7 +263,8 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
         $pics
             ->setMaxPerPage($limit)
             ->setNormalizeOutOfRangePages(true)
-            ->setCurrentPage($page);
+            ->setCurrentPage($page)
+        ;
 
         return $pics;
     }

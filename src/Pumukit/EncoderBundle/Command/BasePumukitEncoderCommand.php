@@ -2,8 +2,8 @@
 
 namespace Pumukit\EncoderBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Pumukit\EncoderBundle\Document\Job;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
 abstract class BasePumukitEncoderCommand extends ContainerAwareCommand
 {

@@ -2,11 +2,15 @@
 
 namespace Pumukit\SchemaBundle\Tests\Other;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\Track;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class MultimediaObjectMaxDirationTest extends WebTestCase
 {
     private $dm;
@@ -25,9 +29,11 @@ class MultimediaObjectMaxDirationTest extends WebTestCase
 
         //DELETE DATABASE
         $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Series::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->flush();
     }
 

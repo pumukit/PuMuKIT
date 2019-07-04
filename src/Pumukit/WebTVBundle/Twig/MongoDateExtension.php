@@ -22,9 +22,9 @@ class MongoDateExtension extends \Twig_Extension
     /**
      * @param \MongoDate $mongoDate
      *
-     * @return \DateTime
-     *
      * @throws \Exception
+     *
+     * @return \DateTime
      */
     public function convertMongoDateFilter(\MongoDate $mongoDate)
     {

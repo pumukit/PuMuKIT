@@ -3,8 +3,8 @@
 namespace Pumukit\LiveBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
-use Pumukit\LiveBundle\Document\Live;
 use Pumukit\LiveBundle\Document\Event;
+use Pumukit\LiveBundle\Document\Live;
 
 /**
  * EventRepository.
@@ -44,6 +44,9 @@ class EventRepository extends DocumentRepository
 
     /**
      * Find event in a month.
+     *
+     * @param mixed $month
+     * @param mixed $year
      */
     public function findInMonth($month, $year)
     {
@@ -98,13 +101,13 @@ class EventRepository extends DocumentRepository
     }
 
     /**
-     * @param int|null       $limit
-     * @param \DateTime|null $date
-     * @param Live|null      $live  Find only events of a live channel
-     *
-     * @return mixed
+     * @param null|int       $limit
+     * @param null|\DateTime $date
+     * @param null|Live      $live  Find only events of a live channel
      *
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function findFutureAndNotFinished($limit = null, $date = null, Live $live = null)
     {
@@ -126,7 +129,8 @@ class EventRepository extends DocumentRepository
             ->field('display')->equals(true)
             ->field('date')->gte($startDay)
             ->field('date')->lte($finishDay)
-            ->sort('date', 1);
+            ->sort('date', 1)
+        ;
 
         if ($live) {
             $currentDayEventsQB->field('live')->references($live);
@@ -147,7 +151,8 @@ class EventRepository extends DocumentRepository
         $qb = $this->createQueryBuilder()
             ->field('display')->equals(true)
             ->field('date')->gte($currentDatetime)
-            ->sort('date', 1);
+            ->sort('date', 1)
+        ;
 
         if ($live) {
             $qb->field('live')->references($live);
@@ -163,8 +168,8 @@ class EventRepository extends DocumentRepository
     /**
      * Find one by hours event.
      *
-     * @param string|null    $hours
-     * @param \DateTime|null $date
+     * @param null|string    $hours
+     * @param null|\DateTime $date
      *
      * @throws \Exception
      */

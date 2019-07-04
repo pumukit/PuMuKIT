@@ -2,11 +2,11 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
-use Pumukit\SchemaBundle\Document\Group;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Symfony\Component\Translation\TranslatorInterface;
-use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\User;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class GroupService
 {
@@ -39,9 +39,9 @@ class GroupService
      *
      * @param Group $group
      *
-     * @return Group
-     *
      * @throws \Exception
+     *
+     * @return Group
      */
     public function create(Group $group)
     {
@@ -70,9 +70,9 @@ class GroupService
      * @param Group $group
      * @param bool  $executeFlush
      *
-     * @return Group
-     *
      * @throws \Exception
+     *
+     * @return Group
      */
     public function update(Group $group, $executeFlush = true)
     {
@@ -127,6 +127,7 @@ class GroupService
      * Can be deleted.
      *
      * @param Group $group
+     * @param mixed $checkOrigin
      *
      * @return bool
      */
@@ -161,9 +162,8 @@ class GroupService
         $message = '';
         if (!$group->isLocal()) {
             $enMessage = 'Group cannot be deleted because the Group is external. Contact your directory server administrator. You can delete relations with MultimediaObjects if any.';
-            $message = $this->translator->trans($enMessage, [], null, $locale);
 
-            return $message;
+            return $this->translator->trans($enMessage, [], null, $locale);
         }
         $users = $this->countUsersInGroup($group);
         $admin = $this->countAdminMultimediaObjectsInGroup($group);
@@ -291,7 +291,8 @@ class GroupService
             ->field('groups')->equals($group->getId())
             ->count()
             ->getQuery()
-            ->execute();
+            ->execute()
+        ;
     }
 
     /**
@@ -316,7 +317,8 @@ class GroupService
         }
 
         return $qb->getQuery()
-            ->execute();
+            ->execute()
+        ;
     }
 
     /**

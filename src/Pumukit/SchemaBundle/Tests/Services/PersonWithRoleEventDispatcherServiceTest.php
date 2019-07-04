@@ -2,14 +2,18 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
-use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Event\PersonWithRoleEvent;
+use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Services\PersonWithRoleEventDispatcherService;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class PersonWithRoleEventDispatcherServiceTest extends WebTestCase
 {
     const EMPTY_TITLE = 'EMTPY TITLE';
@@ -25,7 +29,8 @@ class PersonWithRoleEventDispatcherServiceTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dispatcher = static::$kernel->getContainer()
-          ->get('event_dispatcher');
+            ->get('event_dispatcher')
+        ;
 
         MockUpPersonWithRoleListener::$called = false;
         MockUpPersonWithRoleListener::$title = self::EMPTY_TITLE;

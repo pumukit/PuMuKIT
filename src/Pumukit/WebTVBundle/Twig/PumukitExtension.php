@@ -2,17 +2,17 @@
 
 namespace Pumukit\WebTVBundle\Twig;
 
-use Pumukit\SchemaBundle\Document\EmbeddedTag;
-use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Services\MultimediaObjectDurationService;
-use Symfony\Component\Routing\RequestContext;
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
+use Pumukit\SchemaBundle\Document\EmbeddedTag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Services\CaptionService;
+use Pumukit\SchemaBundle\Services\MultimediaObjectDurationService;
 use Pumukit\SchemaBundle\Services\PicService;
 use Pumukit\WebTVBundle\Services\LinkService;
-use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\SchemaBundle\Document\Tag;
+use Symfony\Component\Routing\RequestContext;
 
 /**
  * Class PumukitExtension.
@@ -104,7 +104,7 @@ class PumukitExtension extends \Twig_Extension
     }
 
     /**
-     * @param Series|MultimediaObject $object   Object to get the url (using $object->getPics())
+     * @param MultimediaObject|Series $object   Object to get the url (using $object->getPics())
      * @param bool                    $absolute return absolute path
      * @param bool                    $hd       return HD image
      *
@@ -130,7 +130,7 @@ class PumukitExtension extends \Twig_Extension
      *
      * @param $embeddedTags
      *
-     * @return EmbeddedTag|null
+     * @return null|EmbeddedTag
      */
     public function getPrecinct($embeddedTags)
     {
@@ -150,7 +150,7 @@ class PumukitExtension extends \Twig_Extension
      *
      * @param $multimediaObjects
      *
-     * @return EmbeddedTag|bool
+     * @return bool|EmbeddedTag
      */
     public function getPrecinctOfSeries($multimediaObjects)
     {
@@ -184,13 +184,11 @@ class PumukitExtension extends \Twig_Extension
      *
      * @param MultimediaObject $multimediaObject
      *
-     * @return EmbeddedTag|null
+     * @return null|EmbeddedTag
      */
     public function getPrecinctOfMultimediaObject($multimediaObject)
     {
-        $precinctTag = $this->getPrecinct($multimediaObject->getTags());
-
-        return $precinctTag;
+        return $this->getPrecinct($multimediaObject->getTags());
     }
 
     /**
@@ -273,9 +271,9 @@ class PumukitExtension extends \Twig_Extension
             }
 
             return $aux;
-        } else {
-            return "0''";
         }
+
+        return "0''";
     }
 
     /**
@@ -357,9 +355,9 @@ class PumukitExtension extends \Twig_Extension
      *
      * @param $event
      *
-     * @return string|\DateTime
-     *
      * @throws \Exception
+     *
+     * @return \DateTime|string
      */
     public function getNextEventSession($event)
     {
@@ -373,6 +371,7 @@ class PumukitExtension extends \Twig_Extension
                 $now->add(new \DateInterval('PT'.$session['duration'].'S'));
                 if ($now < $session['start']) {
                     $firstSession = $session['start'];
+
                     break;
                 }
             }
@@ -386,9 +385,9 @@ class PumukitExtension extends \Twig_Extension
      *
      * @param $multimediaObject
      *
-     * @return object
-     *
      * @throws \Exception
+     *
+     * @return object
      */
     public function getLiveEventSession(MultimediaObject $multimediaObject)
     {
@@ -401,10 +400,12 @@ class PumukitExtension extends \Twig_Extension
                 $sessionEnd->add(new \DateInterval('PT'.$session->getDuration().'S'));
                 if ($now < $sessionEnd) {
                     $sessionData = $session;
+
                     break;
                 }
             } elseif ($now < $session->getStart()) {
                 $sessionData = $session;
+
                 break;
             }
         }

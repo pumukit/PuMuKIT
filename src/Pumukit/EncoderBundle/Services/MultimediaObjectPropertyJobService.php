@@ -58,19 +58,21 @@ class MultimediaObjectPropertyJobService
             ->field('properties.'.$key)->push($value)
             ->field('_id')->equals($multimediaObject->getId())
             ->getQuery()
-            ->execute();
+            ->execute()
+        ;
     }
 
     private function delPropertyInArray(MultimediaObject $multimediaObject, $key, $value)
     {
         //Try to delete all the property if is the last job in this state.
         $out = $this->dm->createQueryBuilder(MultimediaObject::class)
-             ->update()
-             ->field('properties.'.$key)->unsetField()
-             ->field('_id')->equals($multimediaObject->getId())
-             ->field('properties.'.$key)->equals([$value])
-             ->getQuery()
-             ->execute();
+            ->update()
+            ->field('properties.'.$key)->unsetField()
+            ->field('_id')->equals($multimediaObject->getId())
+            ->field('properties.'.$key)->equals([$value])
+            ->getQuery()
+            ->execute()
+        ;
 
         if ((isset($out['nModified']) && 1 == $out['nModified']) || (isset($out['n']) && 1 == $out['n'])) {
             return true;
@@ -78,12 +80,13 @@ class MultimediaObjectPropertyJobService
 
         // If not delete job from the property
         $out = $this->dm->createQueryBuilder(MultimediaObject::class)
-             ->update()
-             ->field('properties.'.$key)->pull($value)
-             ->field('_id')->equals($multimediaObject->getId())
-             ->field('properties.'.$key)->equals($value)
-             ->getQuery()
-             ->execute();
+            ->update()
+            ->field('properties.'.$key)->pull($value)
+            ->field('_id')->equals($multimediaObject->getId())
+            ->field('properties.'.$key)->equals($value)
+            ->getQuery()
+            ->execute()
+        ;
 
         if ((isset($out['nModified']) && 1 == $out['nModified']) || (isset($out['n']) && 1 == $out['n'])) {
             return true;

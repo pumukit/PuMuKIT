@@ -2,15 +2,15 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Pumukit\SchemaBundle\Document\Group;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\User;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Pumukit\SchemaBundle\Document\Group;
-use Pumukit\SchemaBundle\Document\User;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_GROUPS')")
@@ -32,10 +32,11 @@ class GroupController extends AdminController implements NewAdminControllerInter
 
         $dm = $this->get('doctrine_mongodb')->getManager();
         $origins = $dm
-                 ->createQueryBuilder(Group::class)
-                 ->distinct('origin')
-                 ->getQuery()
-                 ->execute();
+            ->createQueryBuilder(Group::class)
+            ->distinct('origin')
+            ->getQuery()
+            ->execute()
+        ;
 
         return ['groups' => $groups, 'origins' => $origins->toArray()];
     }
@@ -60,7 +61,7 @@ class GroupController extends AdminController implements NewAdminControllerInter
      *
      * @param Request $request
      *
-     * @return JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @return JsonResponse|Response|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
     {
@@ -81,16 +82,18 @@ class GroupController extends AdminController implements NewAdminControllerInter
                 }
 
                 return $this->redirect($this->generateUrl('pumukitnewadmin_group_list'));
-            } else {
-                return new JsonResponse(['Form not valid'], Response::HTTP_BAD_REQUEST);
             }
+
+            return new JsonResponse(['Form not valid'], Response::HTTP_BAD_REQUEST);
         }
 
-        return $this->render('PumukitNewAdminBundle:Group:create.html.twig',
-                             [
-                                 'group' => $group,
-                                 'form' => $form->createView(),
-                             ]);
+        return $this->render(
+            'PumukitNewAdminBundle:Group:create.html.twig',
+            [
+                'group' => $group,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -101,7 +104,7 @@ class GroupController extends AdminController implements NewAdminControllerInter
      *
      * @param Request $request
      *
-     * @return JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @return JsonResponse|Response|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(Request $request)
     {
@@ -122,11 +125,13 @@ class GroupController extends AdminController implements NewAdminControllerInter
             return $this->redirect($this->generateUrl('pumukitnewadmin_group_list'));
         }
 
-        return $this->render('PumukitNewAdminBundle:Group:update.html.twig',
-                             [
-                                 'group' => $group,
-                                 'form' => $form->createView(),
-                             ]);
+        return $this->render(
+            'PumukitNewAdminBundle:Group:update.html.twig',
+            [
+                'group' => $group,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -138,6 +143,7 @@ class GroupController extends AdminController implements NewAdminControllerInter
     {
         $groupService = $this->get('pumukitschema.group');
         $group = $groupService->findById($request->get('id'));
+
         try {
             $groupService->delete($group);
         } catch (\Exception $e) {
@@ -164,6 +170,7 @@ class GroupController extends AdminController implements NewAdminControllerInter
         $notDeleted = [];
         foreach ($ids as $id) {
             $group = $groupService->findById($id);
+
             try {
                 $groupService->delete($group);
             } catch (\Exception $e) {
@@ -200,6 +207,8 @@ class GroupController extends AdminController implements NewAdminControllerInter
 
     /**
      * Gets the list of resources according to a criteria.
+     *
+     * @param mixed $criteria
      */
     public function getResources(Request $request, $criteria)
     {
@@ -220,7 +229,8 @@ class GroupController extends AdminController implements NewAdminControllerInter
         $resources
             ->setMaxPerPage($session->get($sessionNamespace.'/paginate', 10))
             ->setNormalizeOutOfRangePages(true)
-            ->setCurrentPage($session->get($sessionNamespace.'/page', 1));
+            ->setCurrentPage($session->get($sessionNamespace.'/page', 1))
+        ;
 
         return $resources;
     }
@@ -228,7 +238,8 @@ class GroupController extends AdminController implements NewAdminControllerInter
     /**
      * Get sorting for group.
      *
-     * @param Request $request
+     * @param Request    $request
+     * @param null|mixed $session_namespace
      *
      * @return array
      */
@@ -296,9 +307,9 @@ class GroupController extends AdminController implements NewAdminControllerInter
      * @param Group   $group
      * @param Request $request
      *
-     * @return array
-     *
      * @throws \Exception
+     *
+     * @return array
      */
     public function dataResourcesAction(Group $group, Request $request)
     {

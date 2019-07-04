@@ -2,10 +2,10 @@
 
 namespace Pumukit\EncoderBundle\Command;
 
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
 class PumukitListPicsCommand extends ContainerAwareCommand
 {
@@ -32,7 +32,8 @@ class PumukitListPicsCommand extends ContainerAwareCommand
             ->addOption('type', null, InputOption::VALUE_OPTIONAL, 'Type can be series or mmobj', 'mm')
             ->addOption('size', null, InputOption::VALUE_OPTIONAL, 'List pics greater than selected size in KB.')
             ->addOption('exists', null, InputOption::VALUE_OPTIONAL, 'List exists or not exists file pics.')
-            ->setHelp(<<<'EOT'
+            ->setHelp(
+                <<<'EOT'
             
 Command to get all pics like selected filters. The predefined filter is that the pics must have "path" attribute.
 
@@ -58,7 +59,8 @@ php app/console pumukit:pics:list --tags="master" --size=10000
 php app/console pumukit:pics:list --path="/mnt/storage/" --size=10000
 
 EOT
-            );
+            )
+        ;
     }
 
     /**
@@ -83,9 +85,9 @@ EOT
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return bool|int|null
-     *
      * @throws \Exception
+     *
+     * @return null|bool|int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

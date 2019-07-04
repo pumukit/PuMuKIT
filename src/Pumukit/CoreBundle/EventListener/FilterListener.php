@@ -3,11 +3,11 @@
 namespace Pumukit\CoreBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\CoreBundle\Controller\AdminControllerInterface;
+use Pumukit\CoreBundle\Controller\PersonalControllerInterface;
+use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\CoreBundle\Services\FilterService;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Pumukit\CoreBundle\Controller\AdminControllerInterface;
-use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
-use Pumukit\CoreBundle\Controller\PersonalControllerInterface;
 
 /**
  * Class FilterListener.

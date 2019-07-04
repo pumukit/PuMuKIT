@@ -2,17 +2,21 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Pumukit\SchemaBundle\Services\PicService;
-use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\Pic;
-use Pumukit\SchemaBundle\Document\Track;
-use Pumukit\SchemaBundle\Services\TrackService;
-use Pumukit\SchemaBundle\EventListener\MultimediaObjectListener;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Pic;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\SchemaBundle\EventListener\MultimediaObjectListener;
+use Pumukit\SchemaBundle\Services\PicService;
+use Pumukit\SchemaBundle\Services\TrackService;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class PicServiceTest extends WebTestCase
 {
     private $dm;
@@ -53,7 +57,8 @@ class PicServiceTest extends WebTestCase
         $this->listener = new MultimediaObjectListener($this->dm);
         $dispatcher->addListener('multimediaobject.update', [$this->listener, 'postUpdate']);
         $this->trackDispatcher = static::$kernel->getContainer()
-          ->get('pumukitschema.track_dispatcher');
+            ->get('pumukitschema.track_dispatcher')
+        ;
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
         $this->trackService = new TrackService($this->dm, $this->trackDispatcher, $profileService, null, true);
     }
@@ -282,7 +287,7 @@ class PicServiceTest extends WebTestCase
 
     private function getDemoProfiles()
     {
-        $profiles = [
+        return [
             'MASTER_COPY' => [
                 'display' => false,
                 'wizard' => true,
@@ -332,7 +337,5 @@ class PicServiceTest extends WebTestCase
                 'rel_duration_trans' => 1,
             ],
         ];
-
-        return $profiles;
     }
 }

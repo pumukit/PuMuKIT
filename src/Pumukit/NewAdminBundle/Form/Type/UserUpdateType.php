@@ -4,13 +4,13 @@ namespace Pumukit\NewAdminBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserUpdateType extends AbstractType
@@ -70,7 +70,8 @@ class UserUpdateType extends AbstractType
                     'attr' => ['aria-label' => $this->translator->trans('Permission Profile', [], null, $this->locale)],
                     'label' => $this->translator->trans('Permission Profile', [], null, $this->locale),
                 ]
-            );
+            )
+        ;
 
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,

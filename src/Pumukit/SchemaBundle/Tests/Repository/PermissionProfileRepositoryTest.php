@@ -2,11 +2,15 @@
 
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Services\PermissionService;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class PermissionProfileRepositoryTest extends WebTestCase
 {
     private $dm;
@@ -22,7 +26,8 @@ class PermissionProfileRepositoryTest extends WebTestCase
         $this->repo = $this->dm->getRepository(PermissionProfile::class);
 
         $this->dm->getDocumentCollection(PermissionProfile::class)
-            ->remove([]);
+            ->remove([])
+        ;
     }
 
     public function tearDown()
@@ -101,11 +106,11 @@ class PermissionProfileRepositoryTest extends WebTestCase
     public function testFindDefaultCandidate()
     {
         $externalPermissions = [
-                                     [
-                                           'role' => 'ROLE_ONE',
-                                           'description' => 'Access One',
-                                           ],
-                                     ];
+            [
+                'role' => 'ROLE_ONE',
+                'description' => 'Access One',
+            ],
+        ];
         $permissionService = new PermissionService($this->dm, $externalPermissions);
         $totalPermissions = count($permissionService->getAllPermissions());
 

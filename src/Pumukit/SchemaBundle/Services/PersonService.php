@@ -2,13 +2,13 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
-use Pumukit\SchemaBundle\Document\Person;
-use Pumukit\SchemaBundle\Document\EmbeddedPerson;
-use Pumukit\SchemaBundle\Document\Role;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\User;
-use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\EmbeddedPerson;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Person;
+use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Utils\Search\SearchUtils;
 
 class PersonService
@@ -157,7 +157,8 @@ class PersonService
             ->field('people.$.display')->set($role->getDisplay())
             ->field('people.$.name')->set($role->getI18nName())
             ->field('people.$.text')->set($role->getI18nText())
-            ->getQuery();
+            ->getQuery()
+        ;
         $query->execute();
 
         $this->dm->flush();
@@ -201,6 +202,8 @@ class PersonService
      * @param Person           $person
      * @param Role             $role
      * @param MultimediaObject $multimediaObject
+     * @param mixed            $flush
+     * @param mixed            $dispatch
      *
      * @return MultimediaObject
      */
@@ -252,7 +255,8 @@ class PersonService
         }
 
         return $qb->getQuery()
-            ->execute();
+            ->execute()
+        ;
     }
 
     /**
@@ -320,6 +324,8 @@ class PersonService
 
     /**
      * Delete Person.
+     *
+     * @param mixed $deleteFromUser
      */
     public function deletePerson(Person $person, $deleteFromUser = false)
     {
@@ -400,9 +406,9 @@ class PersonService
      * in the logged in User
      * It there is none, it creates it
      *
-     * @param User|null $loggedInUser
+     * @param null|User $loggedInUser
      *
-     * @return Person|null
+     * @return null|Person
      */
     public function getPersonFromLoggedInUser(User $loggedInUser = null)
     {
@@ -425,7 +431,7 @@ class PersonService
      * to add the User as Person
      * to MultimediaObject
      *
-     * @return Role|null
+     * @return null|Role
      */
     public function getPersonalScopeRole()
     {
@@ -456,6 +462,33 @@ class PersonService
     }
 
     /**
+     * Get all roles.
+     */
+    public function getRoles()
+    {
+        $criteria = [];
+        $sort = ['rank' => 1];
+
+        return $this->repoRole->findBy($criteria, $sort);
+    }
+
+    /**
+     * Remove User from Person.
+     *
+     * @param User   $user
+     * @param Person $person
+     * @param bool   $executeFlush
+     */
+    public function removeUserFromPerson(User $user, Person $person, $executeFlush = true)
+    {
+        $person->setUser(null);
+        $this->dm->persist($person);
+        if ($executeFlush) {
+            $this->dm->flush();
+        }
+    }
+
+    /**
      * Create from User.
      *
      * @param User $user
@@ -483,33 +516,6 @@ class PersonService
         $this->dm->flush();
 
         return $person;
-    }
-
-    /**
-     * Get all roles.
-     */
-    public function getRoles()
-    {
-        $criteria = [];
-        $sort = ['rank' => 1];
-
-        return $this->repoRole->findBy($criteria, $sort);
-    }
-
-    /**
-     * Remove User from Person.
-     *
-     * @param User   $user
-     * @param Person $person
-     * @param bool   $executeFlush
-     */
-    public function removeUserFromPerson(User $user, Person $person, $executeFlush = true)
-    {
-        $person->setUser(null);
-        $this->dm->persist($person);
-        if ($executeFlush) {
-            $this->dm->flush();
-        }
     }
 
     /**

@@ -2,21 +2,25 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Pumukit\SchemaBundle\Document\User;
-use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
-use Pumukit\SchemaBundle\Security\Permission;
-use Pumukit\SchemaBundle\Services\UserService;
-use Pumukit\SchemaBundle\Services\UserEventDispatcherService;
-use Pumukit\SchemaBundle\Services\PermissionService;
-use Pumukit\SchemaBundle\Services\PermissionProfileService;
-use Pumukit\SchemaBundle\Services\PermissionProfileEventDispatcherService;
+use Pumukit\SchemaBundle\Document\Person;
+use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\EventListener\PermissionProfileListener;
+use Pumukit\SchemaBundle\Security\Permission;
+use Pumukit\SchemaBundle\Services\PermissionProfileEventDispatcherService;
+use Pumukit\SchemaBundle\Services\PermissionProfileService;
+use Pumukit\SchemaBundle\Services\PermissionService;
+use Pumukit\SchemaBundle\Services\UserEventDispatcherService;
+use Pumukit\SchemaBundle\Services\UserService;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class UserServiceTest extends WebTestCase
 {
     private $dm;
@@ -39,17 +43,21 @@ class UserServiceTest extends WebTestCase
         $permissionProfileDispatcher = new PermissionProfileEventDispatcherService($dispatcher);
         $permissionService = new PermissionService($this->dm);
         $permissionProfileService = new PermissionProfileService(
-            $this->dm, $permissionProfileDispatcher,
+            $this->dm,
+            $permissionProfileDispatcher,
             $permissionService
         );
         $this->logger = static::$kernel->getContainer()
-            ->get('logger');
+            ->get('logger')
+        ;
 
         $personalScopeDeleteOwners = false;
 
         $this->userService = new UserService(
-            $this->dm, $userDispatcher,
-            $permissionService, $permissionProfileService,
+            $this->dm,
+            $userDispatcher,
+            $permissionService,
+            $permissionProfileService,
             $personalScopeDeleteOwners
         );
 

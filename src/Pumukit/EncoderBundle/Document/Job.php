@@ -368,7 +368,7 @@ class Job
      * Set name.
      *
      * @param $name
-     * @param string|null $locale
+     * @param null|string $locale
      */
     public function setName($name, $locale = null)
     {
@@ -381,7 +381,7 @@ class Job
     /**
      * Get name.
      *
-     * @param string|null $locale
+     * @param null|string $locale
      *
      * @return string
      */
@@ -421,7 +421,7 @@ class Job
      * Set description.
      *
      * @param $description
-     * @param string|null $locale
+     * @param null|string $locale
      */
     public function setDescription($description, $locale = null)
     {
@@ -434,7 +434,7 @@ class Job
     /**
      * Get description.
      *
-     * @param string|null $locale
+     * @param null|string $locale
      *
      * @return string
      */
@@ -483,7 +483,7 @@ class Job
     /**
      * Get timeini.
      *
-     * @param string|null $format
+     * @param null|string $format
      *
      * @return \DateTime|string
      */
@@ -509,6 +509,8 @@ class Job
     /**
      * Get timestart.
      *
+     * @param null|mixed $format
+     *
      * @return \DateTime|string
      */
     public function getTimestart($format = null)
@@ -532,6 +534,8 @@ class Job
 
     /**
      * Get timeend.
+     *
+     * @param null|mixed $format
      *
      * @return \DateTime|string
      */

@@ -91,6 +91,9 @@ class StatsService
     /**
      * Returns an array for a mongo $project pipeline to create a date-formatted string with just the required fields.
      * It is used for grouping results in date ranges (hour/day/month/year).
+     *
+     * @param mixed $groupBy
+     * @param mixed $dateField
      */
     private function getMongoProjectDateArray($groupBy, $dateField = '$date')
     {
@@ -112,6 +115,7 @@ class StatsService
             // no break
         case 'year':
             $mongoProjectDate[] = ['$substr' => [$dateField, 0, 4]];
+
             break;
         }
 
@@ -120,6 +124,17 @@ class StatsService
 
     /**
      * Returns an aggregation of objects grouped by date.
+     *
+     * @param mixed      $dmColl
+     * @param mixed      $mongoGroup
+     * @param mixed      $dateName
+     * @param null|mixed $fromDate
+     * @param null|mixed $toDate
+     * @param mixed      $limit
+     * @param mixed      $page
+     * @param mixed      $criteria
+     * @param mixed      $sort
+     * @param mixed      $groupBy
      */
     private function getAggrRecordedGroupedBy($dmColl, $mongoGroup, $dateName = 'record_date', $fromDate = null, $toDate = null, $limit = 100, $page = 0, $criteria = [], $sort = -1, $groupBy = 'month')
     {
@@ -140,7 +155,8 @@ class StatsService
 
         $pipeline[] = ['$match' => array_merge(
             $matchExtra,
-            [$dateName => ['$gte' => $fromMongoDate, '$lte' => $toMongoDate]]),
+            [$dateName => ['$gte' => $fromMongoDate, '$lte' => $toMongoDate]]
+        ),
         ];
         $mongoProjectDate = $this->getMongoProjectDateArray($groupBy, '$'.$dateName);
         $pipeline[] = ['$project' => ['date' => $mongoProjectDate, 'duration' => '$duration']];
@@ -148,18 +164,18 @@ class StatsService
         $pipeline[] = ['$sort' => ['_id' => $sort]];
         $pipeline[] = ['$skip' => $page * $limit];
         $pipeline[] = ['$limit' => $limit];
-        $aggregation = $dmColl->aggregate($pipeline, ['cursor' => []]);
 
-        return $aggregation;
+        return $dmColl->aggregate($pipeline, ['cursor' => []]);
     }
 
     /**
      * Returns an array of MongoIds as results from the criteria.
+     *
+     * @param mixed $criteria
+     * @param mixed $repo
      */
     private function getIdsWithCriteria($criteria, $repo)
     {
-        $mmobjIds = $repo->createQueryBuilder()->addAnd($criteria)->distinct('_id')->getQuery()->execute()->toArray();
-
-        return $mmobjIds;
+        return $repo->createQueryBuilder()->addAnd($criteria)->distinct('_id')->getQuery()->execute()->toArray();
     }
 }

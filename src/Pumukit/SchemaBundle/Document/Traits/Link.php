@@ -3,8 +3,8 @@
 namespace Pumukit\SchemaBundle\Document\Traits;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Pumukit\SchemaBundle\Document\Link as DocumentLink;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Pumukit\SchemaBundle\Document\Link as DocumentLink;
 
 trait Link
 {
@@ -98,32 +98,6 @@ trait Link
     }
 
     /**
-     * Reorder link by id.
-     *
-     * @param string $linkId
-     * @param bool   $up
-     */
-    private function reorderLinkById($linkId, $up = true)
-    {
-        $snapshot = array_values($this->links->toArray());
-        $this->links->clear();
-
-        $out = [];
-        foreach ($snapshot as $key => $link) {
-            if ($link->getId() === $linkId) {
-                $out[($key * 10) + ($up ? -11 : 11)] = $link;
-            } else {
-                $out[$key * 10] = $link;
-            }
-        }
-
-        ksort($out);
-        foreach ($out as $link) {
-            $this->links->add($link);
-        }
-    }
-
-    /**
      * Contains link.
      *
      * @param DocumentLink $link
@@ -140,7 +114,7 @@ trait Link
      *
      * @param $linkId
      *
-     * @return DocumentLink|null
+     * @return null|DocumentLink
      */
     public function getLinkById($linkId)
     {
@@ -178,7 +152,7 @@ trait Link
      *
      * @param string $tag
      *
-     * @return DocumentLink|null
+     * @return null|DocumentLink
      */
     public function getLinkWithTag($tag)
     {
@@ -216,7 +190,7 @@ trait Link
      *
      * @param array $tags
      *
-     * @return DocumentLink|null
+     * @return null|DocumentLink
      */
     public function getLinkWithAllTags(array $tags)
     {
@@ -254,7 +228,7 @@ trait Link
      *
      * @param array $tags
      *
-     * @return DocumentLink|null
+     * @return null|DocumentLink
      */
     public function getLinkWithAnyTag(array $tags)
     {
@@ -299,5 +273,31 @@ trait Link
         }
 
         return $r;
+    }
+
+    /**
+     * Reorder link by id.
+     *
+     * @param string $linkId
+     * @param bool   $up
+     */
+    private function reorderLinkById($linkId, $up = true)
+    {
+        $snapshot = array_values($this->links->toArray());
+        $this->links->clear();
+
+        $out = [];
+        foreach ($snapshot as $key => $link) {
+            if ($link->getId() === $linkId) {
+                $out[($key * 10) + ($up ? -11 : 11)] = $link;
+            } else {
+                $out[$key * 10] = $link;
+            }
+        }
+
+        ksort($out);
+        foreach ($out as $link) {
+            $this->links->add($link);
+        }
     }
 }

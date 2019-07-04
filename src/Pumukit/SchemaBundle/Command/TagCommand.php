@@ -2,12 +2,12 @@
 
 namespace Pumukit\SchemaBundle\Command;
 
+use Pumukit\SchemaBundle\Document\Tag;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Pumukit\SchemaBundle\Document\Tag;
 
 class TagCommand extends ContainerAwareCommand
 {
@@ -26,13 +26,15 @@ class TagCommand extends ContainerAwareCommand
                 new InputArgument('tag', InputArgument::REQUIRED, 'The tag'),
                 new InputOption('display', null, InputOption::VALUE_NONE, 'Use to set the display field of a tag to true, set to false by default'),
             ])
-            ->setHelp(<<<'EOT'
+            ->setHelp(
+                <<<'EOT'
 The <info>pumukit:tag:update</info> command set the display field of a tag to true/false.
 
   <info>php app/console pumukit:tag:update PUDEPD1</info>
   <info>php app/console pumukit:tag:update --display PUDENEW</info>
 EOT
-            );
+            )
+        ;
     }
 
     /**

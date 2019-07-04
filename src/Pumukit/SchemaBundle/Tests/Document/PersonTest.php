@@ -2,9 +2,13 @@
 
 namespace Pumukit\SchemaBundle\Tests\Document;
 
-use Pumukit\SchemaBundle\Document\Person;
 use PHPUnit\Framework\TestCase;
+use Pumukit\SchemaBundle\Document\Person;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class PersonTest extends TestCase
 {
     public function testGetterAndSetter()

@@ -26,6 +26,7 @@ class LiveService
                     $live->getSourceName(),
                     $live->getSourceName()
                 );
+
                 break;
             default:
                 $hls = sprintf(
@@ -33,6 +34,7 @@ class LiveService
                     str_replace(['rtmp://', 'rtmpt://'], '//', $live->getUrl()),
                     $live->getSourceName()
                 );
+
                 break;
         }
 

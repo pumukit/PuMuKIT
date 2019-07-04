@@ -2,15 +2,15 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Pumukit\SchemaBundle\Event\SchemaEvents;
-use Pumukit\SchemaBundle\Event\PersonWithRoleEvent;
 use Pumukit\SchemaBundle\Document\EmbeddedPerson;
-use Pumukit\SchemaBundle\Document\Person;
-use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\EmbeddedRole;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Person;
+use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Event\PersonWithRoleEvent;
+use Pumukit\SchemaBundle\Event\SchemaEvents;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class PersonWithRoleEventDispatcherService
 {
@@ -37,8 +37,8 @@ class PersonWithRoleEventDispatcherService
      * the multimedia object and the personwithrole
      *
      * @param MultimediaObject      $multimediaObject
-     * @param Person|embeddedPerson $person
-     * @param Role|EmbeddedRole     $role
+     * @param embeddedPerson|Person $person
+     * @param EmbeddedRole|Role     $role
      */
     public function dispatchCreate(MultimediaObject $multimediaObject, $person, $role)
     {
@@ -54,8 +54,8 @@ class PersonWithRoleEventDispatcherService
      * the multimedia object and the personwithrole
      *
      * @param MultimediaObject      $multimediaObject
-     * @param Person|EmbeddedPerson $person
-     * @param Role|EmbeddedRole     $role
+     * @param EmbeddedPerson|Person $person
+     * @param EmbeddedRole|Role     $role
      */
     public function dispatchUpdate(MultimediaObject $multimediaObject, $person, $role)
     {
@@ -71,8 +71,8 @@ class PersonWithRoleEventDispatcherService
      * the multimedia object and the personwithrole
      *
      * @param MultimediaObject      $multimediaObject
-     * @param Person|EmbeddedPerson $person
-     * @param Role|EmbeddedRole     $role
+     * @param EmbeddedPerson|Person $person
+     * @param EmbeddedRole|Role     $role
      */
     public function dispatchDelete(MultimediaObject $multimediaObject, $person, $role)
     {

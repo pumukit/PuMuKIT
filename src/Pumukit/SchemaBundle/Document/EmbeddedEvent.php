@@ -3,8 +3,8 @@
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Pumukit\LiveBundle\Document\Live as DocumentLive;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Pumukit\LiveBundle\Document\Live as DocumentLive;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -129,6 +129,14 @@ class EmbeddedEvent
     }
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+    /**
      * @return int
      */
     public function getId()
@@ -140,7 +148,7 @@ class EmbeddedEvent
      * Set name.
      *
      * @param string      $name
-     * @param string|null $locale
+     * @param null|string $locale
      */
     public function setName($name, $locale = null)
     {
@@ -153,7 +161,7 @@ class EmbeddedEvent
     /**
      * Get name.
      *
-     * @param string|null $locale
+     * @param null|string $locale
      *
      * @return string
      */
@@ -190,7 +198,7 @@ class EmbeddedEvent
     }
 
     /**
-     * @param string|null $locale
+     * @param null|string $locale
      *
      * @return string
      */
@@ -436,7 +444,8 @@ class EmbeddedEvent
     /**
      * Set already held message.
      *
-     * @param string $message
+     * @param string     $message
+     * @param null|mixed $locale
      */
     public function setAlreadyHeldMessage($message, $locale = null)
     {
@@ -448,6 +457,8 @@ class EmbeddedEvent
 
     /**
      * Get Already Held Message.
+     *
+     * @param null|mixed $locale
      *
      * @return string
      */
@@ -486,7 +497,8 @@ class EmbeddedEvent
     /**
      * Set Not Yet held message.
      *
-     * @param string $message
+     * @param string     $message
+     * @param null|mixed $locale
      */
     public function setNotYetHeldMessage($message, $locale = null)
     {
@@ -498,6 +510,8 @@ class EmbeddedEvent
 
     /**
      * Get Not Yet Held Message.
+     *
+     * @param null|mixed $locale
      *
      * @return string
      */
@@ -581,13 +595,5 @@ class EmbeddedEvent
     public function getLocale()
     {
         return $this->locale;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getName();
     }
 }

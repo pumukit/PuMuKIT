@@ -2,17 +2,20 @@
 
 namespace Pumukit\WorkflowBundle\Tests\EventListener;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
-use Pumukit\SchemaBundle\Services\TrackService;
 use Pumukit\SchemaBundle\EventListener\MultimediaObjectListener;
+use Pumukit\SchemaBundle\Services\TrackService;
 use Pumukit\WorkflowBundle\EventListener\JobGeneratorListener;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * @IgnoreAnnotation("dataProvider")
+ *
+ * @internal
+ * @coversNothing
  */
 class JobGeneratorListenerTest extends WebTestCase
 {
@@ -33,23 +36,26 @@ class JobGeneratorListenerTest extends WebTestCase
 
         $streamserver = ['dir_out' => sys_get_temp_dir()];
         $testProfiles = ['video' => ['target' => 'TAGA TAGC', 'resolution_hor' => 0, 'resolution_ver' => 0, 'audio' => false, 'streamserver' => $streamserver],
-                              'video2' => ['target' => 'TAGB*, TAGC', 'resolution_hor' => 0, 'resolution_ver' => 0, 'audio' => false, 'streamserver' => $streamserver],
-                              'videoSD' => ['target' => 'TAGP, TAGFP*', 'resolution_hor' => 640, 'resolution_ver' => 480, 'audio' => false, 'streamserver' => $streamserver],
-                              'videoHD' => ['target' => 'TAGP, TAGFP*', 'resolution_hor' => 1920, 'resolution_ver' => 1024, 'audio' => false, 'streamserver' => $streamserver],
-                              'audio' => ['target' => 'TAGA TAGC', 'resolution_hor' => 0, 'resolution_ver' => 0, 'audio' => true, 'streamserver' => $streamserver],
-                              'audio2' => ['target' => 'TAGB*, TAGC', 'resolution_hor' => 0, 'resolution_ver' => 0, 'audio' => true, 'streamserver' => $streamserver], ];
+            'video2' => ['target' => 'TAGB*, TAGC', 'resolution_hor' => 0, 'resolution_ver' => 0, 'audio' => false, 'streamserver' => $streamserver],
+            'videoSD' => ['target' => 'TAGP, TAGFP*', 'resolution_hor' => 640, 'resolution_ver' => 480, 'audio' => false, 'streamserver' => $streamserver],
+            'videoHD' => ['target' => 'TAGP, TAGFP*', 'resolution_hor' => 1920, 'resolution_ver' => 1024, 'audio' => false, 'streamserver' => $streamserver],
+            'audio' => ['target' => 'TAGA TAGC', 'resolution_hor' => 0, 'resolution_ver' => 0, 'audio' => true, 'streamserver' => $streamserver],
+            'audio2' => ['target' => 'TAGB*, TAGC', 'resolution_hor' => 0, 'resolution_ver' => 0, 'audio' => true, 'streamserver' => $streamserver], ];
         $profileService = new ProfileService($testProfiles, $this->dm);
 
         $jobService = $this->getMockBuilder('Pumukit\EncoderBundle\Services\JobService')
-                          ->disableOriginalConstructor()
-                          ->getMock();
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
         $jobService->expects($this->any())
-                   ->method('addUniqueJob')
-                   ->will($this->returnArgument(1));
+            ->method('addUniqueJob')
+            ->will($this->returnArgument(1))
+        ;
 
         $logger = $this->getMockBuilder('Psr\Log\LoggerInterface')
-                       ->disableOriginalConstructor()
-                       ->getMock();
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
 
         $this->jobGeneratorListener = new JobGeneratorListener($this->dm, $jobService, $profileService, $this->logger);
 
@@ -57,7 +63,8 @@ class JobGeneratorListenerTest extends WebTestCase
         $this->listener = new MultimediaObjectListener($this->dm);
         $dispatcher->addListener('multimediaobject.update', [$this->listener, 'postUpdate']);
         $this->trackDispatcher = static::$kernel->getContainer()
-          ->get('pumukitschema.track_dispatcher');
+            ->get('pumukitschema.track_dispatcher')
+        ;
         $profileService = new ProfileService($testProfiles, $this->dm);
         $this->trackService = new TrackService($this->dm, $this->trackDispatcher, $profileService, null, true);
     }
@@ -163,16 +170,16 @@ class JobGeneratorListenerTest extends WebTestCase
         $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', [$mmobj, 'TAGC']);
         $this->assertEquals(['audio', 'audio2'], $jobs);
 
-        /* #15818: See commented text in JobGeneratorListener, function generateJobs */
-        /* $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGB')); */
-        /* $this->assertEquals(array('audio2'), $jobs); //generate a video2 from an audio has no sense. */
+        // #15818: See commented text in JobGeneratorListener, function generateJobs
+        // $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGB'));
+        // $this->assertEquals(array('audio2'), $jobs); //generate a video2 from an audio has no sense.
 
         $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', [$mmobj, 'TAGP']);
         $this->assertEquals([], $jobs); //generate a video from an audio has no sense.
 
-        /* #15818: See commented text in JobGeneratorListener, function generateJobs */
-        /* $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGFP')); */
-        /* $this->assertEquals(array(), $jobs);  //generate a video from an audio has no sense. */
+        // #15818: See commented text in JobGeneratorListener, function generateJobs
+        // $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGFP'));
+        // $this->assertEquals(array(), $jobs);  //generate a video from an audio has no sense.
     }
 
     public function testNotGenerateJobsForPublishedVideo()

@@ -2,11 +2,11 @@
 
 namespace Pumukit\NewAdminBundle\Twig;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\NewAdminBundle\Services\TagCatalogueService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Translation\TranslatorInterface;
-use Doctrine\ODM\MongoDB\DocumentManager;
 
 /**
  * Class CatalogueExtension.
@@ -58,9 +58,7 @@ class CatalogueExtension extends \Twig_Extension
      */
     public function getAllCustomFields()
     {
-        $allFields = $this->tagCatalogueService->getAllCustomListFields();
-
-        return $allFields;
+        return $this->tagCatalogueService->getAllCustomListFields();
     }
 
     /**
@@ -68,14 +66,12 @@ class CatalogueExtension extends \Twig_Extension
      * @param SessionInterface $session
      * @param                  $field
      *
-     * @return string
-     *
      * @throws \Exception
+     *
+     * @return string
      */
     public function renderObjectField(MultimediaObject $object, SessionInterface $session, $field)
     {
-        $render = $this->tagCatalogueService->renderField($object, $session, $field);
-
-        return $render;
+        return $this->tagCatalogueService->renderField($object, $session, $field);
     }
 }

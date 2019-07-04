@@ -73,7 +73,7 @@ class MultimediaObjectSyncService
      */
     public function getMultimediaObjectsToSync(MultimediaObject $multimediaObject)
     {
-        $multimediaObjects = $this->dm->getRepository(MultimediaObject::class)->findBy(
+        return $this->dm->getRepository(MultimediaObject::class)->findBy(
             [
                 'status' => ['$ne' => MultimediaObject::STATUS_PROTOTYPE],
                 'type' => ['$ne' => MultimediaObject::TYPE_LIVE],
@@ -81,8 +81,6 @@ class MultimediaObjectSyncService
                 '_id' => ['$ne' => new \MongoId($multimediaObject->getId())],
             ]
         );
-
-        return $multimediaObjects;
     }
 
     /**

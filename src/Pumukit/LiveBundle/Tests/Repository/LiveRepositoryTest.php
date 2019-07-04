@@ -2,9 +2,13 @@
 
 namespace Pumukit\LiveBundle\Tests\Repository;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\LiveBundle\Document\Live;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class LiveRepositoryTest extends WebTestCase
 {
     private $dm;

@@ -2,16 +2,16 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\NewAdminBundle\Form\Type\TagType;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Tag;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_TAGS')")
@@ -96,7 +96,7 @@ class PlaceController extends Controller implements NewAdminControllerInterface
 
     /**
      * @param Request     $request
-     * @param string|null $id
+     * @param null|string $id
      *
      * @return array|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
@@ -143,9 +143,9 @@ class PlaceController extends Controller implements NewAdminControllerInterface
      * @param Request $request
      * @param Tag     $tag
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @throws \Exception
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @Route("/delete/{id}", name="pumukitnewadmin_places_delete")
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"id": "id"}})

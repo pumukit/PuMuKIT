@@ -25,7 +25,8 @@ class GroupRepository extends DocumentRepository
         return $this->createQueryBuilder()
             ->field('_id')->notIn($ids)
             ->getQuery()
-            ->execute();
+            ->execute()
+        ;
     }
 
     /**
@@ -45,6 +46,7 @@ class GroupRepository extends DocumentRepository
             ->field('_id')->in($total)
             ->field('_id')->notIn($ids)
             ->getQuery()
-            ->execute();
+            ->execute()
+        ;
     }
 }

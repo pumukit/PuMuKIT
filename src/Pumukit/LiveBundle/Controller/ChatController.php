@@ -9,8 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/chat")
@@ -90,9 +90,9 @@ class ChatController extends Controller
      * @param MultimediaObject $multimediaObject
      * @param Request          $request
      *
-     * @return JsonResponse
-     *
      * @throws \Exception
+     *
+     * @return JsonResponse
      */
     public function postAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -122,9 +122,9 @@ class ChatController extends Controller
      * @param Live    $live
      * @param Request $request
      *
-     * @return JsonResponse
-     *
      * @throws \Exception
+     *
+     * @return JsonResponse
      */
     public function postBasicAction(Live $live, Request $request)
     {

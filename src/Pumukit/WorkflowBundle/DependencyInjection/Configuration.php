@@ -21,16 +21,17 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('pumukit_workflow');
 
         $rootNode
-          ->children()
+            ->children()
             ->booleanNode('auto_extract_pic')
-              ->defaultTrue()
-              ->info('Extract thumbnail automatically')
+            ->defaultTrue()
+            ->info('Extract thumbnail automatically')
             ->end()
             ->scalarNode('auto_extract_pic_percentage')
-                ->defaultValue('50%')
-                ->info('Extract thumbnail automatically on this percentage')
+            ->defaultValue('50%')
+            ->info('Extract thumbnail automatically on this percentage')
             ->end()
-          ->end();
+            ->end()
+        ;
 
         return $treeBuilder;
     }

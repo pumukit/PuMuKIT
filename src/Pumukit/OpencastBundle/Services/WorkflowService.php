@@ -66,6 +66,7 @@ class WorkflowService
      * with given mediapackage id.
      *
      * @param string $id
+     * @param mixed  $workflowName
      *
      * @return array
      */

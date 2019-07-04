@@ -2,11 +2,11 @@
 
 namespace Pumukit\WizardBundle\Services;
 
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
-use Pumukit\WizardBundle\Event\WizardEvents;
 use Pumukit\WizardBundle\Event\FormEvent;
+use Pumukit\WizardBundle\Event\WizardEvents;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class FormEventDispatcherService
 {

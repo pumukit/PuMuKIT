@@ -3,8 +3,8 @@
 namespace Pumukit\SchemaBundle\Document\Traits;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Pumukit\SchemaBundle\Document\Material as DocumentMaterial;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Pumukit\SchemaBundle\Document\Material as DocumentMaterial;
 
 trait Material
 {
@@ -88,32 +88,6 @@ trait Material
     }
 
     /**
-     * Reorder material by id.
-     *
-     * @param string $materialId
-     * @param bool   $up
-     */
-    private function reorderMaterialById($materialId, $up = true)
-    {
-        $snapshot = array_values($this->materials->toArray());
-        $this->materials->clear();
-
-        $out = [];
-        foreach ($snapshot as $key => $material) {
-            if ($material->getId() === $materialId) {
-                $out[($key * 10) + ($up ? -11 : 11)] = $material;
-            } else {
-                $out[$key * 10] = $material;
-            }
-        }
-
-        ksort($out);
-        foreach ($out as $material) {
-            $this->materials->add($material);
-        }
-    }
-
-    /**
      * Contains material.
      *
      * @param DocumentMaterial $material
@@ -140,7 +114,7 @@ trait Material
      *
      * @param $materialId
      *
-     * @return DocumentMaterial|null
+     * @return null|DocumentMaterial
      */
     public function getMaterialById($materialId)
     {
@@ -178,7 +152,7 @@ trait Material
      *
      * @param string $tag
      *
-     * @return DocumentMaterial|null
+     * @return null|DocumentMaterial
      */
     public function getMaterialWithTag($tag)
     {
@@ -216,7 +190,7 @@ trait Material
      *
      * @param array $tags
      *
-     * @return DocumentMaterial|null
+     * @return null|DocumentMaterial
      */
     public function getMaterialWithAllTags(array $tags)
     {
@@ -254,7 +228,7 @@ trait Material
      *
      * @param array $tags
      *
-     * @return DocumentMaterial|null
+     * @return null|DocumentMaterial
      */
     public function getMaterialWithAnyTag(array $tags)
     {
@@ -299,5 +273,31 @@ trait Material
         }
 
         return $r;
+    }
+
+    /**
+     * Reorder material by id.
+     *
+     * @param string $materialId
+     * @param bool   $up
+     */
+    private function reorderMaterialById($materialId, $up = true)
+    {
+        $snapshot = array_values($this->materials->toArray());
+        $this->materials->clear();
+
+        $out = [];
+        foreach ($snapshot as $key => $material) {
+            if ($material->getId() === $materialId) {
+                $out[($key * 10) + ($up ? -11 : 11)] = $material;
+            } else {
+                $out[$key * 10] = $material;
+            }
+        }
+
+        ksort($out);
+        foreach ($out as $material) {
+            $this->materials->add($material);
+        }
     }
 }

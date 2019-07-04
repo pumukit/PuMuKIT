@@ -18,10 +18,20 @@ class Link extends Element
     private $name = ['en' => ''];
 
     /**
+     * To string.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getUrl();
+    }
+
+    /**
      * Set name.
      *
      * @param string      $name
-     * @param string|null $locale
+     * @param null|string $locale
      */
     public function setName($name, $locale = null)
     {
@@ -34,7 +44,7 @@ class Link extends Element
     /**
      * Get name.
      *
-     * @param string|null $locale
+     * @param null|string $locale
      *
      * @return string
      */
@@ -68,15 +78,5 @@ class Link extends Element
     public function getI18nName()
     {
         return $this->name;
-    }
-
-    /**
-     * To string.
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getUrl();
     }
 }

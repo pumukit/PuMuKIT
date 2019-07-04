@@ -2,14 +2,14 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Pumukit\NewAdminBundle\Form\Type\MaterialType;
+use Pumukit\SchemaBundle\Document\Material;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Pumukit\SchemaBundle\Document\Material;
-use Pumukit\NewAdminBundle\Form\Type\MaterialType;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
@@ -55,12 +55,14 @@ class MaterialController extends Controller implements NewAdminControllerInterfa
             return $this->redirect($this->generateUrl('pumukitnewadmin_material_list', ['id' => $multimediaObject->getId()]));
         }
 
-        return $this->render('PumukitNewAdminBundle:Material:update.html.twig',
-                             [
-                                 'material' => $material,
-                                 'form' => $form->createView(),
-                                 'mmId' => $multimediaObject->getId(),
-                             ]);
+        return $this->render(
+            'PumukitNewAdminBundle:Material:update.html.twig',
+            [
+                'material' => $material,
+                'form' => $form->createView(),
+                'mmId' => $multimediaObject->getId(),
+            ]
+        );
     }
 
     /**
@@ -72,6 +74,7 @@ class MaterialController extends Controller implements NewAdminControllerInterfa
         $formData = $request->get('pumukitnewadmin_material', []);
 
         $materialService = $this->get('pumukitschema.material');
+
         try {
             if (0 === $request->files->count() && 0 === $request->request->count()) {
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');

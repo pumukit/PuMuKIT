@@ -14,11 +14,12 @@ class FilterListener
     private $pubChannelTag;
     private $displayTrackTag;
 
-    public function __construct(DocumentManager $documentManager,
-                                $listOnlyPublishedObjects = true,
-                                $pubChannelTag = 'PUCHWEBTV',
-                                $displayTrackTag = 'display')
-    {
+    public function __construct(
+        DocumentManager $documentManager,
+        $listOnlyPublishedObjects = true,
+        $pubChannelTag = 'PUCHWEBTV',
+        $displayTrackTag = 'display'
+    ) {
         $this->dm = $documentManager;
         $this->listOnlyPublishedObjects = $listOnlyPublishedObjects;
         $this->pubChannelTag = $pubChannelTag;
@@ -29,7 +30,7 @@ class FilterListener
     {
         $req = $event->getRequest();
         if (HttpKernelInterface::MASTER_REQUEST === $event->getRequestType() &&
-            "Pumukit\OaiBundle" === substr($req->attributes->get('_controller'), 0, 17)) {
+            'Pumukit\\OaiBundle' === substr($req->attributes->get('_controller'), 0, 17)) {
             $filter = $this->dm->getFilterCollection()->enable('frontend');
             $filter->setParameter('pub_channel_tag', $this->pubChannelTag);
             $filter->setParameter('display_track_tag', $this->displayTrackTag);

@@ -2,9 +2,13 @@
 
 namespace Pumukit\EncoderBundle\Tests\Repository;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\EncoderBundle\Document\Job;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class JobRepositoryTest extends WebTestCase
 {
     private $dm;

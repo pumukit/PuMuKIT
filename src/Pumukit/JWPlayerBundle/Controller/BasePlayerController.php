@@ -2,13 +2,13 @@
 
 namespace Pumukit\JWPlayerBundle\Controller;
 
+use Pumukit\BasePlayerBundle\Controller\BasePlayerController as BasePlayerControllero;
+use Pumukit\CoreBundle\Controller\PersonalControllerInterface;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Pumukit\CoreBundle\Controller\PersonalControllerInterface;
-use Pumukit\BasePlayerBundle\Controller\BasePlayerController as BasePlayerControllero;
 
 class BasePlayerController extends BasePlayerControllero implements PersonalControllerInterface
 {
@@ -58,7 +58,8 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
             if ($mmobjService->hasPlayableResource($multimediaObject) && $multimediaObject->isPublicEmbeddedBroadcast()) {
                 return $this->redirect($this->generateUrl('pumukit_videoplayer_index', ['id' => $multimediaObject->getId()]));
             }
-        } elseif ((MultimediaObject::STATUS_PUBLISHED != $multimediaObject->getStatus()
+        } elseif ((
+            MultimediaObject::STATUS_PUBLISHED != $multimediaObject->getStatus()
                  && MultimediaObject::STATUS_HIDDEN != $multimediaObject->getStatus()
                  ) || !$multimediaObject->containsTagWithCod('PUCHWEBTV')) {
             return $this->render('PumukitWebTVBundle:Index:404notfound.html.twig');

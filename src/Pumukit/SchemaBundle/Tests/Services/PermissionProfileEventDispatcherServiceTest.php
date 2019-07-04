@@ -2,13 +2,17 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Pumukit\SchemaBundle\Event\PermissionProfileEvent;
+use Pumukit\SchemaBundle\Event\SchemaEvents;
+use Pumukit\SchemaBundle\Services\PermissionProfileEventDispatcherService;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Pumukit\SchemaBundle\Document\PermissionProfile;
-use Pumukit\SchemaBundle\Event\SchemaEvents;
-use Pumukit\SchemaBundle\Event\PermissionProfileEvent;
-use Pumukit\SchemaBundle\Services\PermissionProfileEventDispatcherService;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class PermissionProfileEventDispatcherServiceTest extends WebTestCase
 {
     const EMPTY_NAME = 'EMTPY_NAME';
@@ -23,7 +27,8 @@ class PermissionProfileEventDispatcherServiceTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
-          ->get('doctrine_mongodb.odm.document_manager');
+            ->get('doctrine_mongodb.odm.document_manager')
+        ;
         $this->dispatcher = new EventDispatcher();
 
         $this->dm->getDocumentCollection(PermissionProfile::class)->remove([]);

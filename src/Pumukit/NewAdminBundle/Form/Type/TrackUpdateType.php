@@ -2,18 +2,18 @@
 
 namespace Pumukit\NewAdminBundle\Form\Type;
 
+use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
+use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
+use Pumukit\NewAdminBundle\Form\Type\Other\TrackdurationType;
+use Pumukit\NewAdminBundle\Form\Type\Other\TrackresolutionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Pumukit\NewAdminBundle\Form\Type\Other\TrackresolutionType;
-use Pumukit\NewAdminBundle\Form\Type\Other\TrackdurationType;
-use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
-use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 
 class TrackUpdateType extends AbstractType
 {
@@ -113,7 +113,8 @@ class TrackUpdateType extends AbstractType
                     'attr' => ['aria-label' => $this->translator->trans('URL', [], null, $this->locale)],
                     'label' => $this->translator->trans('URL', [], null, $this->locale),
                 ]
-            );
+            )
+        ;
 
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,

@@ -2,9 +2,9 @@
 
 namespace Pumukit\EncoderBundle\EventListener;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Pumukit\SchemaBundle\Event\TrackEvent;
 use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\SchemaBundle\Event\TrackEvent;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class RemoveListener
 {

@@ -106,6 +106,14 @@ class EmbeddedPerson
     }
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+    /**
      * Get id.
      *
      * @return string
@@ -199,7 +207,7 @@ class EmbeddedPerson
      * Set honorific.
      *
      * @param string      $honorific
-     * @param string|null $locale
+     * @param null|string $locale
      */
     public function setHonorific($honorific, $locale = null)
     {
@@ -212,7 +220,7 @@ class EmbeddedPerson
     /**
      * Get honorific.
      *
-     * @param string|null $locale
+     * @param null|string $locale
      *
      * @return string
      */
@@ -248,7 +256,7 @@ class EmbeddedPerson
      * Set firm.
      *
      * @param string      $firm
-     * @param string|null $locale
+     * @param null|string $locale
      */
     public function setFirm($firm, $locale = null)
     {
@@ -261,7 +269,7 @@ class EmbeddedPerson
     /**
      * Get firm.
      *
-     * @param string|null $locale
+     * @param null|string $locale
      *
      * @return string
      */
@@ -297,7 +305,7 @@ class EmbeddedPerson
      * Set post.
      *
      * @param string      $post
-     * @param string|null $locale
+     * @param null|string $locale
      */
     public function setPost($post, $locale = null)
     {
@@ -310,7 +318,7 @@ class EmbeddedPerson
     /**
      * Get post.
      *
-     * @param string|null $locale
+     * @param null|string $locale
      *
      * @return string
      */
@@ -346,7 +354,7 @@ class EmbeddedPerson
      * Set bio.
      *
      * @param string      $bio
-     * @param string|null $locale
+     * @param null|string $locale
      */
     public function setBio($bio, $locale = null)
     {
@@ -359,7 +367,7 @@ class EmbeddedPerson
     /**
      * Get bio.
      *
-     * @param string|null $locale
+     * @param null|string $locale
      *
      * @return string
      */
@@ -456,13 +464,5 @@ class EmbeddedPerson
         });
 
         return implode(', ', $aux);
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getName();
     }
 }

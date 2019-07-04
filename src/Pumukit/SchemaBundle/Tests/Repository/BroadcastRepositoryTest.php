@@ -2,12 +2,15 @@
 
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @deprecated in version 2.3
+ *
+ * @internal
+ * @coversNothing
  */
 class BroadcastRepositoryTest extends WebTestCase
 {
@@ -20,14 +23,17 @@ class BroadcastRepositoryTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
-        ->get('doctrine_mongodb')->getManager();
+            ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
-        ->getRepository(Broadcast::class);
+            ->getRepository(Broadcast::class)
+        ;
 
         $this->dm->getDocumentCollection(MultimediaObject::class)
-        ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Broadcast::class)
-        ->remove([]);
+            ->remove([])
+        ;
         $this->dm->flush();
     }
 

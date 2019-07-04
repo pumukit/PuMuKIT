@@ -3,8 +3,8 @@
 namespace Pumukit\SchemaBundle\Document\Traits;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Pumukit\SchemaBundle\Document\Pic as DocumentPic;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Pumukit\SchemaBundle\Document\Pic as DocumentPic;
 
 trait Pic
 {
@@ -88,32 +88,6 @@ trait Pic
     }
 
     /**
-     * Reorder pic by id.
-     *
-     * @param string $picId
-     * @param bool   $up
-     */
-    private function reorderPicById($picId, $up = true)
-    {
-        $snapshot = array_values($this->pics->toArray());
-        $this->pics->clear();
-
-        $out = [];
-        foreach ($snapshot as $key => $pic) {
-            if ($pic->getId() === $picId) {
-                $out[($key * 10) + ($up ? -11 : 11)] = $pic;
-            } else {
-                $out[$key * 10] = $pic;
-            }
-        }
-
-        ksort($out);
-        foreach ($out as $pic) {
-            $this->pics->add($pic);
-        }
-    }
-
-    /**
      * Contains pic.
      *
      * @param DocumentPic $pic
@@ -150,7 +124,7 @@ trait Pic
      *
      * @param $picId
      *
-     * @return DocumentPic|null
+     * @return null|DocumentPic
      */
     public function getPicById($picId)
     {
@@ -177,6 +151,7 @@ trait Pic
         foreach ($this->pics as $pic) {
             if (null !== $pic->getUrl()) {
                 $url = $pic->getUrl();
+
                 break;
             }
         }
@@ -209,7 +184,7 @@ trait Pic
      *
      * @param string $tag
      *
-     * @return DocumentPic|null
+     * @return null|DocumentPic
      */
     public function getPicWithTag($tag)
     {
@@ -247,7 +222,7 @@ trait Pic
      *
      * @param array $tags
      *
-     * @return DocumentPic|null
+     * @return null|DocumentPic
      */
     public function getPicWithAllTags(array $tags)
     {
@@ -285,7 +260,7 @@ trait Pic
      *
      * @param array $tags
      *
-     * @return DocumentPic|null
+     * @return null|DocumentPic
      */
     public function getPicWithAnyTag(array $tags)
     {
@@ -330,5 +305,31 @@ trait Pic
         }
 
         return $r;
+    }
+
+    /**
+     * Reorder pic by id.
+     *
+     * @param string $picId
+     * @param bool   $up
+     */
+    private function reorderPicById($picId, $up = true)
+    {
+        $snapshot = array_values($this->pics->toArray());
+        $this->pics->clear();
+
+        $out = [];
+        foreach ($snapshot as $key => $pic) {
+            if ($pic->getId() === $picId) {
+                $out[($key * 10) + ($up ? -11 : 11)] = $pic;
+            } else {
+                $out[$key * 10] = $pic;
+            }
+        }
+
+        ksort($out);
+        foreach ($out as $pic) {
+            $this->pics->add($pic);
+        }
     }
 }

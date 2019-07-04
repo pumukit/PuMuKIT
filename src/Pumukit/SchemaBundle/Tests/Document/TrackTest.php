@@ -2,9 +2,13 @@
 
 namespace Pumukit\SchemaBundle\Tests\Document;
 
-use Pumukit\SchemaBundle\Document\Track;
 use PHPUnit\Framework\TestCase;
+use Pumukit\SchemaBundle\Document\Track;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class TrackTest extends TestCase
 {
     public function testGetterAndSetter()

@@ -2,12 +2,12 @@
 
 namespace Pumukit\NewAdminBundle\Form\Type;
 
+use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
+use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nAdvanceType;
+use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
-use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
-use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nAdvanceType;
 
 class PlaylistType extends AbstractType
 {
@@ -45,7 +45,8 @@ class PlaylistType extends AbstractType
                     'attr' => ['aria-label' => $this->translator->trans('Keywords', [], null, $this->locale)],
                     'label' => $this->translator->trans('Keywords', [], null, $this->locale),
                 ]
-            );
+            )
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

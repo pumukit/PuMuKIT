@@ -2,19 +2,19 @@
 
 namespace Pumukit\NewAdminBundle\Form\Type;
 
+use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
+use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nAdvanceType;
+use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
+use Pumukit\NewAdminBundle\Form\Type\Other\Html5dateType;
+use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Pumukit\NewAdminBundle\Form\Type\Other\Html5dateType;
-use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
-use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
-use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nAdvanceType;
-use Pumukit\SchemaBundle\Document\Series;
 
 class SeriesType extends AbstractType
 {
@@ -202,7 +202,8 @@ class SeriesType extends AbstractType
                     'required' => true,
                     'label' => $this->translator->trans('Sorting', [], null, $this->locale),
                 ]
-            );
+            )
+        ;
 
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,

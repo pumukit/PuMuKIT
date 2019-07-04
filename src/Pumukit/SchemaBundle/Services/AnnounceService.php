@@ -3,8 +3,8 @@
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 
 class AnnounceService
 {
@@ -26,56 +26,6 @@ class AnnounceService
             //Get recently added mmobjs
             $sortKey = $useRecordDate ? 'record_date' : 'public_date';
             $return = $this->mmobjRepo->findStandardBy([], [$sortKey => -1], $limit, 0);
-        }
-
-        return $return;
-    }
-
-    /**
-     * Returns the last series/mmobjs with the pudenew tag.
-     */
-    protected function getLastMmobjsWithSeries($limit = 3, $useRecordDate = false)
-    {
-        $mmobjCriteria = ['tags.cod' => 'PUDENEW'];
-        $seriesCriteria = ['announce' => true];
-
-        $sortKey = $useRecordDate ? 'record_date' : 'public_date';
-        $lastMms = $this->mmobjRepo->findStandardBy($mmobjCriteria, [$sortKey => -1], $limit, 0);
-        $lastSeries = $this->seriesRepo->findBy($seriesCriteria, ['public_date' => -1], $limit, 0);
-
-        $z = 0;
-        foreach ($lastSeries as $series) {
-            $isValidSeries = $this->mmobjRepo->findStandardBy(['series' => $series->getId()]);
-            if (count($isValidSeries) <= 0) {
-                unset($lastSeries[$z]);
-            }
-            ++$z;
-        }
-
-        $return = [];
-        $i = 0;
-        $iMms = 0;
-        $iSeries = 0;
-
-        while ($i++ < $limit) {
-            if ((!isset($lastMms[$iMms])) && (!isset($lastSeries[$iSeries]))) {
-                break;
-            }
-            if (!isset($lastMms[$iMms])) {
-                $return[] = $lastSeries[$iSeries++];
-            } elseif (!isset($lastSeries[$iSeries])) {
-                $return[] = $lastMms[$iMms++];
-            } else {
-                $auxMms = $lastMms[$iMms];
-                $auxSeries = $lastSeries[$iSeries];
-                if ($auxMms->getPublicDate() > $auxSeries->getPublicDate()) {
-                    $return[] = $auxMms;
-                    ++$iMms;
-                } else {
-                    $return[] = $auxSeries;
-                    ++$iSeries;
-                }
-            }
         }
 
         return $return;
@@ -132,6 +82,10 @@ class AnnounceService
      * An optional parameter can be added to either use PUDENEW or not.
      * If it can't find any objects, returns an empty array.
      *
+     * @param mixed $date
+     * @param mixed $withPudenewTag
+     * @param mixed $useRecordDate
+     *
      * @return array
      */
     public function getNextLatestUploads($date, $withPudenewTag = true, $useRecordDate = false)
@@ -168,5 +122,58 @@ class AnnounceService
         }
 
         return [$dateEnd, $last];
+    }
+
+    /**
+     * Returns the last series/mmobjs with the pudenew tag.
+     *
+     * @param mixed $limit
+     * @param mixed $useRecordDate
+     */
+    protected function getLastMmobjsWithSeries($limit = 3, $useRecordDate = false)
+    {
+        $mmobjCriteria = ['tags.cod' => 'PUDENEW'];
+        $seriesCriteria = ['announce' => true];
+
+        $sortKey = $useRecordDate ? 'record_date' : 'public_date';
+        $lastMms = $this->mmobjRepo->findStandardBy($mmobjCriteria, [$sortKey => -1], $limit, 0);
+        $lastSeries = $this->seriesRepo->findBy($seriesCriteria, ['public_date' => -1], $limit, 0);
+
+        $z = 0;
+        foreach ($lastSeries as $series) {
+            $isValidSeries = $this->mmobjRepo->findStandardBy(['series' => $series->getId()]);
+            if (count($isValidSeries) <= 0) {
+                unset($lastSeries[$z]);
+            }
+            ++$z;
+        }
+
+        $return = [];
+        $i = 0;
+        $iMms = 0;
+        $iSeries = 0;
+
+        while ($i++ < $limit) {
+            if ((!isset($lastMms[$iMms])) && (!isset($lastSeries[$iSeries]))) {
+                break;
+            }
+            if (!isset($lastMms[$iMms])) {
+                $return[] = $lastSeries[$iSeries++];
+            } elseif (!isset($lastSeries[$iSeries])) {
+                $return[] = $lastMms[$iMms++];
+            } else {
+                $auxMms = $lastMms[$iMms];
+                $auxSeries = $lastSeries[$iSeries];
+                if ($auxMms->getPublicDate() > $auxSeries->getPublicDate()) {
+                    $return[] = $auxMms;
+                    ++$iMms;
+                } else {
+                    $return[] = $auxSeries;
+                    ++$iSeries;
+                }
+            }
+        }
+
+        return $return;
     }
 }

@@ -2,14 +2,14 @@
 
 namespace Pumukit\SchemaBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Pumukit\LiveBundle\Document\Live;
 use Pumukit\NewAdminBundle\Controller\NewAdminControllerInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\LiveBundle\Document\Live;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/api/media")
@@ -30,9 +30,10 @@ class APIController extends Controller implements NewAdminControllerInterface
         $totalMmobjs = $mmRepo->count();
         $totalHours = round($mmRepo->countDuration() / 3600, 2);
         $totalLiveChannels = $liveRepo->createQueryBuilder()
-                                      ->count()
-                                      ->getQuery()
-                                      ->execute();
+            ->count()
+            ->getQuery()
+            ->execute()
+        ;
 
         $counts = [
             'series' => $totalSeries,
@@ -57,6 +58,7 @@ class APIController extends Controller implements NewAdminControllerInterface
         $limit = $request->get('limit');
         $page = $request->get('page');
         $skip = $request->get('skip');
+
         try {
             $criteria = $this->getMultimediaObjectCriteria($request->get('criteria'), $request->get('criteriajson'));
         } catch (\Exception $e) {
@@ -91,8 +93,9 @@ class APIController extends Controller implements NewAdminControllerInterface
 
         $qb_mmobjs = clone $qb;
         $qb_mmobjs = $qb_mmobjs->limit($limit)
-                               ->skip($skip)
-                               ->sort($sort);
+            ->skip($skip)
+            ->sort($sort)
+        ;
 
         $total = $qb->count()->getQuery()->execute();
         $mmobjs = $qb_mmobjs->getQuery()->execute()->toArray();
@@ -151,8 +154,9 @@ class APIController extends Controller implements NewAdminControllerInterface
 
         $qb_series = clone $qb;
         $qb_series = $qb_series->limit($limit)
-                               ->skip($skip)
-                               ->sort($sort);
+            ->skip($skip)
+            ->sort($sort)
+        ;
 
         $total = $qb->count()->getQuery()->execute();
         $series = $qb_series->getQuery()->execute()->toArray();
@@ -203,7 +207,8 @@ class APIController extends Controller implements NewAdminControllerInterface
 
         $qb_series = clone $qb;
         $qb_series = $qb_series->limit($limit)
-                               ->sort($sort);
+            ->sort($sort)
+        ;
 
         $qb_live = clone $qb;
 
@@ -240,6 +245,9 @@ class APIController extends Controller implements NewAdminControllerInterface
      * Custom case for multimediaobject croteria. For Backward Compatibility (BC).
      *
      * @see APIController::getCriteria
+     *
+     * @param mixed $row
+     * @param mixed $json
      */
     private function getMultimediaObjectCriteria($row, $json)
     {

@@ -46,7 +46,8 @@ class ContactType extends AbstractType
                     'attr' => ['class' => 'form-control'],
                     'required' => true,
                 ]
-            );
+            )
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
