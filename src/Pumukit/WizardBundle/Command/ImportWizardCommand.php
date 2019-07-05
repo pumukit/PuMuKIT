@@ -99,7 +99,7 @@ EOT
         $this->profileService = $this->getContainer()->get('pumukitencoder.profile');
         $this->inspectionService = $this->getContainer()->get('pumukit.inspection');
         $this->defaultLanguage = $this->getContainer()->getParameter('locale');
-        $this->factoryService = $this->get('pumukitschema.factory');
+        $this->factoryService = $this->getContainer()->get('pumukitschema.factory');
 
         $this->user = $this->dm->getRepository('PumukitSchemaBundle:User')->findOneBy([
             '_id' => $input->getArgument('user'),
