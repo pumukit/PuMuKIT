@@ -23,7 +23,6 @@ class PumukitNewAdminExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('pumukit_new_admin.disable_broadcast_creation', $config['disable_broadcast_creation']);
         $container->setParameter('pumukit_new_admin.licenses', $config['licenses']);
         $container->setParameter('pumukit_new_admin.multimedia_object_label', $config['multimedia_object_label']);
         $container->setParameter('pumukit_new_admin.show_menu_place_and_precinct', $config['show_menu_place_and_precinct']);

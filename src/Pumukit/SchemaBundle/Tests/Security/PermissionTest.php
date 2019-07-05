@@ -84,13 +84,6 @@ class PermissionTest extends TestCase
                 PermissionProfile::SCOPE_PERSONAL => [],
             ],
         ];
-        $accessBroadcasts = [
-            'description' => 'Access Broadcasts',
-            'dependencies' => [
-                PermissionProfile::SCOPE_GLOBAL => [],
-                PermissionProfile::SCOPE_PERSONAL => [],
-            ],
-        ];
         $accessSeriesTypes = [
             'description' => 'Access Series Types',
             'dependencies' => [

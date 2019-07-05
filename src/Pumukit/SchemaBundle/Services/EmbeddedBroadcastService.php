@@ -28,7 +28,7 @@ class EmbeddedBroadcastService
      *
      * @param mixed $disabledBroadcast
      */
-    public function __construct(DocumentManager $documentManager, MultimediaObjectService $mmsService, MultimediaObjectEventDispatcherService $dispatcher, AuthorizationCheckerInterface $authorizationChecker, EngineInterface $templating, RouterInterface $router, $disabledBroadcast)
+    public function __construct(DocumentManager $documentManager, MultimediaObjectService $mmsService, MultimediaObjectEventDispatcherService $dispatcher, AuthorizationCheckerInterface $authorizationChecker, EngineInterface $templating, RouterInterface $router)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository(MultimediaObject::class);
@@ -37,7 +37,6 @@ class EmbeddedBroadcastService
         $this->authorizationChecker = $authorizationChecker;
         $this->templating = $templating;
         $this->router = $router;
-        $this->disabledBroadcast = $disabledBroadcast;
     }
 
     /**
@@ -141,23 +140,9 @@ class EmbeddedBroadcastService
     public function getAllTypes($live = false)
     {
         if ($live) {
-            if ($this->disabledBroadcast) {
-                return [
-                    EmbeddedBroadcast::TYPE_PUBLIC => EmbeddedBroadcast::NAME_PUBLIC,
-                ];
-            }
-
             return [
                 EmbeddedBroadcast::TYPE_PUBLIC => EmbeddedBroadcast::NAME_PUBLIC,
                 EmbeddedBroadcast::TYPE_PASSWORD => EmbeddedBroadcast::NAME_PASSWORD,
-            ];
-        }
-
-        if ($this->disabledBroadcast) {
-            return [
-                EmbeddedBroadcast::TYPE_PUBLIC => EmbeddedBroadcast::NAME_PUBLIC,
-                EmbeddedBroadcast::TYPE_LOGIN => EmbeddedBroadcast::NAME_LOGIN,
-                EmbeddedBroadcast::TYPE_GROUPS => EmbeddedBroadcast::NAME_GROUPS,
             ];
         }
 

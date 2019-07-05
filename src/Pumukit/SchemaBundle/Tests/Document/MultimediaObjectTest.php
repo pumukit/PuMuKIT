@@ -3,7 +3,6 @@
 namespace Pumukit\SchemaBundle\Tests\Document;
 
 use PHPUnit\Framework\TestCase;
-use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\Link;
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -48,13 +47,6 @@ class MultimediaObjectTest extends TestCase
         $tag3->setCod('tag3');
         $mm_tags = [$tag1, $tag2, $tag3];
 
-        $broadcast = new Broadcast();
-        $broadcast->setName('Private');
-        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PRI);
-        $broadcast->setPasswd('password');
-        $broadcast->setDefaultSel(true);
-        $broadcast->setDescription('Private broadcast');
-
         $mm = new MultimediaObject();
         $this->assertInstanceOf('DateTime', $mm->getPropertyAsDateTime('created'));
         $mm->setRank($rank);
@@ -68,7 +60,6 @@ class MultimediaObjectTest extends TestCase
         $mm->addTag($tag1);
         $mm->addTag($tag2);
         $mm->addTag($tag3);
-        $mm->setBroadcast($broadcast);
         $mm->setNumview($numview);
         $mm->setLocale($locale);
         $mm->setLine2($line2);
@@ -85,7 +76,6 @@ class MultimediaObjectTest extends TestCase
         $this->assertEquals($subtitle, $mm->getSubtitle());
         $this->assertEquals($description, $mm->getDescription());
         $this->assertEquals(count($mm_tags), count($mm->getTags()));
-        $this->assertEquals($broadcast, $mm->getBroadcast());
         $this->assertEquals($numview, $mm->getNumview());
         $this->assertEquals($locale, $mm->getLocale());
         $this->assertEquals($line2, $mm->getLine2());

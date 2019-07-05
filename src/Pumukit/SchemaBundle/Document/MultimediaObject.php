@@ -103,16 +103,6 @@ class MultimediaObject
     private $seriesTitle = ['en' => ''];
 
     /**
-     * @var Broadcast|null
-     *
-     * @deprecated in version 2.3
-     * use EmbeddedBroadcast instead
-     * @MongoDB\ReferenceOne(targetDocument="Broadcast", inversedBy="multimedia_object", storeAs="id", cascade={"persist"})
-     */
-    private $broadcast;
-
-    /**
-     * @var EmbeddedBroadcast|null
      * @MongoDB\EmbedOne(targetDocument="EmbeddedBroadcast")
      */
     private $embeddedBroadcast;
@@ -949,48 +939,6 @@ class MultimediaObject
         }
 
         return $this->seriesTitle[$locale];
-    }
-
-    /**
-     * Set broadcast.
-     *
-     * @deprecated in version 2.3
-     *
-     * @param Broadcast $broadcast
-     */
-    public function setBroadcast(Broadcast $broadcast)
-    {
-        if (($this->broadcast instanceof Broadcast) && (self::STATUS_PROTOTYPE != $this->status)) {
-            $this->broadcast->decreaseNumberMultimediaObjects();
-        }
-        $this->broadcast = $broadcast;
-        if (self::STATUS_PROTOTYPE != $this->status) {
-            $broadcast->increaseNumberMultimediaObjects();
-        }
-    }
-
-    /**
-     * Get broadcast.
-     *
-     * @deprecated in version 2.3
-     *
-     * @return Broadcast
-     */
-    public function getBroadcast()
-    {
-        return $this->broadcast;
-    }
-
-    /**
-     * Get broadcast.
-     *
-     * @deprecated in version 2.3
-     *
-     * @return bool Broadcast
-     */
-    public function isPublicBroadcast()
-    {
-        return (bool) (!$this->broadcast || Broadcast::BROADCAST_TYPE_PUB == $this->broadcast->getBroadcastTypeId());
     }
 
     /**
