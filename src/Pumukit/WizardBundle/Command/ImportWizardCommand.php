@@ -6,6 +6,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\InspectionBundle\Services\InspectionServiceInterface;
+use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\WizardBundle\Services\WizardService;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -54,6 +55,11 @@ class ImportWizardCommand extends ContainerAwareCommand
     private $priority;
     private $language;
 
+    /**
+     * @var FactoryService
+     */
+    private $factoryService;
+
     protected function configure()
     {
         $this
@@ -93,6 +99,7 @@ EOT
         $this->profileService = $this->getContainer()->get('pumukitencoder.profile');
         $this->inspectionService = $this->getContainer()->get('pumukit.inspection');
         $this->defaultLanguage = $this->getContainer()->getParameter('locale');
+        $this->factoryService = $this->get('pumukitschema.factory');
 
         $this->user = $this->dm->getRepository('PumukitSchemaBundle:User')->findOneBy([
             '_id' => $input->getArgument('user'),
@@ -176,7 +183,7 @@ EOT
                     );
                 } catch (\Exception $e) {
                     if (!strpos($e->getMessage(), 'Unknown error')) {
-                        $this->wizardService->removeInvalidMultimediaObject($multimediaObject, $series);
+                        $this->factoryService->deleteMultimediaObject($multimediaObject);
                         throw $e;
                     }
                 }

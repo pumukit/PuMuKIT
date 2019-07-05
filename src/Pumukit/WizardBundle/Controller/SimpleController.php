@@ -86,8 +86,15 @@ class SimpleController extends Controller
             $multimediaObject->setDuration($duration);
 
             $jobService->createTrackFromLocalHardDrive(
-                $multimediaObject, $file, $profile, $priority, $language, $description,
-                array(), $duration, JobService::ADD_JOB_NOT_CHECKS
+                $multimediaObject,
+                $file,
+                $profile,
+                $priority,
+                $language,
+                $description,
+                array(),
+                $duration,
+                JobService::ADD_JOB_NOT_CHECKS
             );
         } catch (\Exception $e) {
             throw $e;
@@ -209,8 +216,15 @@ class SimpleController extends Controller
             $multimediaObject = $this->setExternalProperties($multimediaObject, $externalData);
 
             $jobService->createTrackFromLocalHardDrive(
-                $multimediaObject, $file, $profile, $priority, $language, $description,
-                array(), $duration, JobService::ADD_JOB_NOT_CHECKS
+                $multimediaObject,
+                $file,
+                $profile,
+                $priority,
+                $language,
+                $description,
+                array(),
+                $duration,
+                JobService::ADD_JOB_NOT_CHECKS
             );
 
             $formDispatcher = $this->get('pumukit_wizard.form_dispatcher');
