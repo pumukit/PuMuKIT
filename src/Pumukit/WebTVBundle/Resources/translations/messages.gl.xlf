@@ -719,9 +719,9 @@
         <source>Private</source>
         <target state="needs-translation">Private</target>
       </trans-unit>
-      <trans-unit id="Ewpvcv4" resname="Advance search">
-        <source>Advance search</source>
-        <target state="needs-translation">Advance search</target>
+      <trans-unit id="Ewpvcv4" resname="Advanced search">
+        <source>Advanced search</source>
+        <target state="needs-translation">Advanced search</target>
       </trans-unit>
     </body>
   </file>
