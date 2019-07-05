@@ -3,6 +3,8 @@ FROM teltek/pumukit-base
 
 # default build for production
 ARG APP_ENV=prod
+ARG PHP_MEMORY_LIMIT=512M
+
 
 # copy the code into the docker
 COPY --chown=www-data:www-data . ./
@@ -24,4 +26,3 @@ RUN chmod +x /wait
 
 ENTRYPOINT ["docker-entrypoint"]
 CMD ["php-fpm"]
-
