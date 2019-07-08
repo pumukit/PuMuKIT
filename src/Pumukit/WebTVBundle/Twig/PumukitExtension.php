@@ -120,7 +120,7 @@ class PumukitExtension extends \Twig_Extension
      * @param      $object
      * @param bool $absolute
      *
-     * @return string|null
+     * @return null|string
      */
     public function getDynamicPic($object, $absolute = false)
     {
