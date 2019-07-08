@@ -3,12 +3,12 @@
 namespace Pumukit\EncoderBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\SchemaBundle\Document\Pic;
-use Symfony\Component\Process\Process;
-use Symfony\Component\Filesystem\Filesystem;
-use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Pic;
+use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Process\Process;
 
 class DynamicPicExtractorService
 {
@@ -56,9 +56,9 @@ class DynamicPicExtractorService
      * @param MultimediaObject $multimediaObject
      * @param Track            $track
      *
-     * @return bool
-     *
      * @throws \Exception
+     *
+     * @return bool
      */
     public function extract(MultimediaObject $multimediaObject, Track $track)
     {
@@ -133,7 +133,7 @@ class DynamicPicExtractorService
      * @param MultimediaObject $multimediaObject
      * @param string           $fileUrl
      *
-     * @return mixed|null
+     * @return null|mixed
      */
     private function checkFileExists(MultimediaObject $multimediaObject, $fileUrl)
     {

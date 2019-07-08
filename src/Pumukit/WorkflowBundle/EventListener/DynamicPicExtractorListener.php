@@ -65,9 +65,9 @@ class DynamicPicExtractorListener
      * @param MultimediaObject $multimediaObject
      * @param Track            $track
      *
-     * @return bool
-     *
      * @throws \Exception
+     *
+     * @return bool
      */
     public function generateDynamicPic(MultimediaObject $multimediaObject, Track $track)
     {
@@ -82,15 +82,16 @@ class DynamicPicExtractorListener
      * @param MultimediaObject $multimediaObject
      * @param Track            $track
      *
-     * @return bool
-     *
      * @throws \Exception
+     *
+     * @return bool
      */
     private function generateDynamicPicFromTrack(MultimediaObject $multimediaObject, Track $track)
     {
         $outputMessage = $this->dynamicPicExtractorService->extract($multimediaObject, $track);
         if (!$outputMessage) {
             $message = $outputMessage.". MultimediaObject '".$multimediaObject->getId()."' with track '".$track->getId()."'";
+
             throw new \Exception($message);
         }
 
