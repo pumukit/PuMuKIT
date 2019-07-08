@@ -1,6 +1,7 @@
 <?php
+$path_src = (false !== getenv('ROOT_SRC')) ? getenv('ROOT_SRC') : 'src';
 $finder = PhpCsFixer\Finder::create()
-    ->in(__DIR__.'/src')
+    ->in(__DIR__.'/'.$path_src)
 ;
 return PhpCsFixer\Config::create()
     ->setRules([
