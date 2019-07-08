@@ -21,7 +21,6 @@ class PermissionTest extends TestCase
         $this->assertTrue(array_key_exists(Permission::ACCESS_JOBS, Permission::$permissionDescription));
         $this->assertTrue(array_key_exists(Permission::ACCESS_PEOPLE, Permission::$permissionDescription));
         $this->assertTrue(array_key_exists(Permission::ACCESS_TAGS, Permission::$permissionDescription));
-        $this->assertTrue(array_key_exists(Permission::ACCESS_BROADCASTS, Permission::$permissionDescription));
         $this->assertTrue(array_key_exists(Permission::ACCESS_SERIES_TYPES, Permission::$permissionDescription));
         $this->assertTrue(array_key_exists(Permission::ACCESS_ADMIN_USERS, Permission::$permissionDescription));
         $this->assertTrue(array_key_exists(Permission::ACCESS_GROUPS, Permission::$permissionDescription));
