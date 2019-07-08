@@ -14,6 +14,7 @@
             <tag name="kernel.event_listener" event="job.success" method="onJobSuccess" />
             <tag name="kernel.event_listener" event="multimediaobject.update" method="onMultimediaobjectUpdate" />
         </service>
+
         <service id="pumukit_workflow.pic_extractor_listener" class="Pumukit\WorkflowBundle\EventListener\PicExtractorListener">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="pumukitschema.mmspic" />
@@ -24,6 +25,16 @@
             <argument>%pumukit_workflow.auto_extract_pic_percentage%</argument>
             <tag name="kernel.event_listener" event="job.success" method="onJobSuccess" />
         </service>
+
+        <service id="pumukit_workflow.dynamic_pic_extractor_listener" class="Pumukit\WorkflowBundle\EventListener\DynamicPicExtractorListener">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument type="service" id="pumukit_encoder.dynamic_pic_extractor" />
+            <argument type="service" id="logger"/>
+            <argument>%pumukit_workflow.dynamic_pic_extract%</argument>
+            <argument>%pumukit_workflow.dynamic_pic_extract_track_tag_allowed%</argument>
+            <tag name="kernel.event_listener" event="job.success" method="onJobSuccess" />
+        </service>
+
     </services>
 
 </container>

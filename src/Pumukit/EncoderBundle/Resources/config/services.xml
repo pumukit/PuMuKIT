@@ -6,6 +6,7 @@
 
     <parameters>
         <parameter key="pumukit.picextractor.command">ffmpeg -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"</parameter>
+        <parameter key="pumukit.dynamicpicextractor.command">ffmpeg -i "{{input}}" -ss 00:00:05 -t 3 -quality 80 -r 10 -s 768x432 "{{output}}"</parameter>
     </parameters>
 
     <services>
@@ -60,6 +61,14 @@
         <service id="pumukitencoder.remove" class="Pumukit\EncoderBundle\EventListener\RemoveListener">
             <argument type="service" id="service_container" />
             <tag name="kernel.event_listener" event="track.delete" method="postTrackRemove"/>
+        </service>
+
+        <service id="pumukit_encoder.dynamic_pic_extractor" class="Pumukit\EncoderBundle\Services\DynamicPicExtractorService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument type="service" id="pumukitschema.mmspic"/>
+            <argument>%pumukit.uploads_dir%/pic</argument>
+            <argument>%pumukit.uploads_url%/pic</argument>
+            <argument>%pumukit.dynamicpicextractor.command%</argument>
         </service>
     </services>
 

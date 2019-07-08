@@ -7,8 +7,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
  * This is the class that validates and merges configuration from your app/config files.
- *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
+ * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}.
  */
 class Configuration implements ConfigurationInterface
 {
@@ -19,7 +18,6 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('pumukit_workflow');
-
         $rootNode
             ->children()
             ->booleanNode('auto_extract_pic')
@@ -28,6 +26,14 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->scalarNode('auto_extract_pic_percentage')
             ->defaultValue('50%')
+            ->info('Extract thumbnail automatically on this percentage')
+            ->end()
+            ->booleanNode('dynamic_pic_extract')
+            ->defaultTrue()
+            ->info('Extract dynamic pic thumbnail automatically')
+            ->end()
+            ->scalarNode('dynamic_pic_extract_track_tag_allowed')
+            ->defaultValue('master')
             ->info('Extract thumbnail automatically on this percentage')
             ->end()
             ->end()
