@@ -189,7 +189,6 @@ class PermissionTest extends TestCase
         $this->assertEquals($accessJobs, Permission::$permissionDescription[Permission::ACCESS_JOBS]);
         $this->assertEquals($accessPeople, Permission::$permissionDescription[Permission::ACCESS_PEOPLE]);
         $this->assertEquals($accessTags, Permission::$permissionDescription[Permission::ACCESS_TAGS]);
-        $this->assertEquals($accessBroadcasts, Permission::$permissionDescription[Permission::ACCESS_BROADCASTS]);
         $this->assertEquals($accessSeriesTypes, Permission::$permissionDescription[Permission::ACCESS_SERIES_TYPES]);
         $this->assertEquals($accessAdminUsers, Permission::$permissionDescription[Permission::ACCESS_ADMIN_USERS]);
         $this->assertEquals($accessGroups, Permission::$permissionDescription[Permission::ACCESS_GROUPS]);
