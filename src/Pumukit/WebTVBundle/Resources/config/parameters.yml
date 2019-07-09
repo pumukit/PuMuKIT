@@ -57,4 +57,4 @@ parameters:
 
   live_block.objects_by_col: 3
   limit_objs_live_block: 3
-  wall_block.wall_tag: 'WALL'
+  wall_block.wall_tag: 'PUDEWALL'
