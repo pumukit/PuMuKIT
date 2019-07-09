@@ -47,8 +47,6 @@ EOT
         $output->writeln('Please run the operation with --force to execute.');
 
         return -1;
-
-        return 0;
     }
 
     protected function executeTags(InputInterface $input, OutputInterface $output)
