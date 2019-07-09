@@ -343,11 +343,11 @@ class Annotation
     }
 
     /**
-     * Get isPrivate.
+     * is Private.
      *
      * @return bool $isPrivate
      */
-    public function getPrivate()
+    public function isPrivate()
     {
         return $this->is_private;
     }
