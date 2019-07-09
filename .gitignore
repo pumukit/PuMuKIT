@@ -29,3 +29,4 @@
 .idea_modules/
 \#*\#
 TAGS
+.php_cs.cache
