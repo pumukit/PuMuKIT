@@ -166,7 +166,6 @@ class PlaylistController extends CollectionController
             ->getRepository(MultimediaObject::class)
         ;
 
-        //        $this->get('doctrine_mongodb.odm.document_manager')->clear();
         $playlist = $seriesRepo->find($this->get('session')->get('admin/playlist/id'));
         if (!$playlist) {
             $this->get('session')->remove('admin/playlist/id');

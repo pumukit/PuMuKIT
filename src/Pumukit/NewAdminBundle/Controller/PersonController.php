@@ -371,11 +371,7 @@ class PersonController extends AdminController implements NewAdminControllerInte
 
         try {
             $multimediaObject = $personService->createRelationPerson($person, $role, $multimediaObject);
-            //$message = sprintf($this->getContext()->getI18N()->__("Persona asociada correctamente a la plantilla con el rol \"%s\"."), $this->role->getName());
-            //$msg_alert = array('info', $message);
         } catch (\Exception $e) {
-            //$message = sprintf($this->getContext()->getI18N()->__("Persona ya asociada a la plantilla con el rol \"%s\"."), $this->role->getName());
-            //$this->msg_alert = array('error', $message);
         }
 
         $template = '';

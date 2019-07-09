@@ -339,9 +339,6 @@ class OaiController extends Controller
                 break;
         }
 
-        //$XMLiden->addAttribute('xsi:type', 'dcterms:URI');
-        //$XMLiden->addAttribute('id', 'uid');
-
         if ($this->container->getParameter('pumukitoai.use_dc_thumbnail')) {
             $thumbnail = $this->get('pumukitschema.pic')->getFirstUrlPic($object, true);
             $XMLoai_dc->addChild('dc:thumbnail', $thumbnail, 'http://purl.org/dc/elements/1.1/');

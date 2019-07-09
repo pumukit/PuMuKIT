@@ -89,14 +89,15 @@ class MultimediaObjectVoter extends Voter
             }
         }
 
-        // OUT OF SCOPE: Share URL and password is as easy as share only the URL.
         /*
-        if (EmbeddedBroadcast::TYPE_PASSWORD === $embeddedBroadcast->getType()) {
-            $password = $this->requestStack->getMasterRequest()->get('broadcast_password');
-            if ($password != $embeddedBroadcast->getPassword()) {
-                return false;
-            }
-        }*/
+         * NOTE: (OUT OF SCOPE) Share URL and password is as easy as share only the URL.
+         *      if (EmbeddedBroadcast::TYPE_PASSWORD === $embeddedBroadcast->getType()) {
+         *          $password = $this->requestStack->getMasterRequest()->get('broadcast_password');
+         *          if ($password != $embeddedBroadcast->getPassword()) {
+         *              return false;
+         *          }
+         *      }
+        */
 
         // Public play
         if ($this->mmobjService->isHidden($multimediaObject, 'PUCHWEBTV') || $this->mmobjService->isHidden($multimediaObject, 'PUCHPODCAST')) {

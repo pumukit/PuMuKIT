@@ -82,13 +82,6 @@ EOT
         $locale = $this->getContainer()->getParameter('locale');
 
         $path = $input->getArgument('file');
-        /*
-        $inboxPath = realpath($this->getContainer()->getParameter('pumukit.inbox'));
-        if (strpos($path, $inboxPath) !== 0) {
-            $output->writeln('<error>Path file ('.$path.') in not in the inbox ('.$inboxPath.')</error>');
-            return false;
-        }
-        */
 
         // hotfix to work with FTP
         if ((false !== ($pos = strpos($path, '.filepart'))) || (false !== ($pos = strpos($path, '.part')))) {

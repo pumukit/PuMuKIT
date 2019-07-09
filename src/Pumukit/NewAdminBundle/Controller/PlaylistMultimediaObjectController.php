@@ -264,7 +264,6 @@ class PlaylistMultimediaObjectController extends Controller
         }
 
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        //$mmobjRepo = $dm->getRepository(MultimediaObject::class);
         $mms = $playlist->getPlaylist()->getMultimediaObjects();
         foreach ($mmobjIds as $pos => $id) {
             if (isset($mms[$pos]) && $mms[$pos]->getId() == $id) {

@@ -23,12 +23,6 @@ class InboxController extends Controller implements NewAdminControllerInterface
         $dir = $request->query->get('dir', '');
         $type = $request->query->get('type', 'file');
 
-        /*
-          if(0 !== strpos($dir, $baseDir)) {
-          throw $this->createAccessDeniedException();
-          }
-        */
-
         $finder = new Finder();
 
         $res = [];

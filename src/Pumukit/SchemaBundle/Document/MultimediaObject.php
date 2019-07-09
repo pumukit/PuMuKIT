@@ -2059,8 +2059,6 @@ class MultimediaObject
 
         $seconds = $this->getDuration() % 60;
 
-        //if ($seconds < 10 ) $minutes = '0' . $seconds;
-
         return [
             'minutes' => $minutes,
             'seconds' => $seconds,

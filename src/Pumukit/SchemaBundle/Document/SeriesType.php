@@ -2,7 +2,6 @@
 
 namespace Pumukit\SchemaBundle\Document;
 
-//use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use JMS\Serializer\Annotation as Serializer;

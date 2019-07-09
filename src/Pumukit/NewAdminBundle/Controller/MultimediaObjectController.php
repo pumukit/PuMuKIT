@@ -187,14 +187,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             throw new \Exception('Not found any role.');
         }
 
-        /*$sessionId = $this->get('session')->get('admin/series/id', null);
-          $series = $factoryService->findSeriesById($request->get('seriesId'), $sessionId);
-
-          if (null === $series) {
-          throw new \Exception('Series with id '.$request->get('seriesId').' or with session id '.$sessionId.' not found.');
-          }
-          $this->get('session')->set('admin/series/id', $series->getId());*/
-
         $parentTags = $factoryService->getParentTags();
 
         $resource = $this->findOr404($request);
