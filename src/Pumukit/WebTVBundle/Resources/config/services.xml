@@ -52,7 +52,7 @@
             <argument>%pumukit_new_admin.advance_live_event%</argument>
         </service>
 
-        <service id="pumukit_web_tv.list_service" class="Pumukit\WebTVBundle\Services\ListService">
+        <service id="pumukit_web_tv.categories_service" class="Pumukit\WebTVBundle\Services\ListService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager" />
             <argument type="service" id="pumukitschema.eventsession" />
             <argument>%pumukit_new_admin.advance_live_event%</argument>
@@ -63,6 +63,14 @@
             <argument type="service" id="doctrine_mongodb.odm.document_manager" />
             <argument>%search.parent_tag.cod%</argument>
             <argument>%search.parent_tag_2.cod%</argument>
+        </service>
+
+        <service id="pumukit_web_tv.categories_service" class="Pumukit\WebTVBundle\Services\CategoriesService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager" />
+            <argument type="service" id="pumukit_web_tv.link_service" />
+            <argument type="service" id="translator" />
+            <argument>%categories_tag_cod%</argument>
+            <argument>%categories.list_general_tags%</argument>
         </service>
 
         <service id="pumukit_web_tv.pagination_service" class="Pumukit\WebTVBundle\Services\PaginationService">
