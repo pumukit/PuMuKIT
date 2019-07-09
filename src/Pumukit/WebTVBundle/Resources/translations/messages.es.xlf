@@ -707,15 +707,15 @@
       </trans-unit>
       <trans-unit id="926pIe3" resname="Wall">
         <source>Wall</source>
-        <target state="needs-translation">Wall</target>
+        <target state="translated">En portada</target>
       </trans-unit>
       <trans-unit id="xj62cgx" resname="Private">
         <source>Private</source>
-        <target state="needs-translation">Private</target>
+        <target state="translated">Privado</target>
       </trans-unit>
       <trans-unit id="Ewpvcv4" resname="Advanced search">
         <source>Advanced search</source>
-        <target state="needs-translation">Advanced search</target>
+        <target state="translated">Búsqueda avanzada</target>
       </trans-unit>
     </body>
   </file>
