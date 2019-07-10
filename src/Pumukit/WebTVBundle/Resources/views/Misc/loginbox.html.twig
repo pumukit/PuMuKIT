@@ -2,12 +2,12 @@
     {% if not is_granted('ROLE_SHOW_GLOBAL_MENU') %}
         <span class="glyphicon glyphicon-user"></span> {{ app.user.fullname ?: app.user.username }}
         {% if is_granted('ROLE_SCOPE_GLOBAL') %}
-            <a href="{{ url('pumukit_newadmin_index') }}" type="button" class="gotobackoffice-button btn btn-xs btn-default" title="{% trans %}Go to back-office{% endtrans %}">
+            <a href="{{ url('pumukit_newadmin_index') }}" type="button" class="qa-go-to-backoffice-button gotobackoffice-button btn btn-xs btn-default" title="{% trans %}Go to back-office{% endtrans %}">
                 <span class="glyphicon glyphicon-briefcase"></span>
                 {% trans %}Go to back-office{% endtrans %}
             </a>
         {% elseif is_granted('ROLE_SCOPE_PERSONAL') %}
-            <a href="{{ url('pumukit_newadmin_index') }}" type="button" class="gotobackofficevideos-button btn btn-xs btn-default" title="{% trans %}Manage my videos{% endtrans %}">
+            <a href="{{ url('pumukit_newadmin_index') }}" type="button" class="qa-go-to-backoffice-button gotobackofficevideos-button btn btn-xs btn-default" title="{% trans %}Manage my videos{% endtrans %}">
                 <span class="glyphicon glyphicon-briefcase"></span>
                 {% trans %}Manage my videos{% endtrans %}
             </a>

@@ -12,12 +12,12 @@
         {% trans %}Share this video{% endtrans %}
     </div>
     <div class="panel-body">
-        <div class="col-md-4 col-md-offset-2 text-center block_facebook">
+        <div class="qa-player-share-facebook col-md-4 col-md-offset-2 text-center block_facebook">
             <a href="http://www.facebook.com/sharer.php?u={{ url }}" title="{% trans %}Share on Facebook{% endtrans %}">
                 <i class="fa fa-facebook-f fa-2x"></i>
             </a>
         </div>
-        <div class="col-md-4 text-center block_twitter">
+        <div class="qa-player-share-twitter col-md-4 text-center block_twitter">
             <a href="https://twitter.com/intent/tweet?text={{ url }}" title="{% trans %}Share on Twitter{% endtrans %}">
                 <i class="fa fa-twitter fa-2x"></i>
             </a>
@@ -25,13 +25,13 @@
     </div>
     <ul class="list-group">
         <li class="list-group-item list-group-item-pmk">
-            <div class="share_url">
+            <div class="qa-player-share-url share_url">
                 <span>{% trans %} URL: {% endtrans %}</span>
                 <input type="text" value="{{ url }}" aria-label="share-url" onclick="this.select()" style="width: 70%; border: 1px solid #ccc; float:right; padding: 0; margin: 0;" readonly="readonly" />
             </div>
         </li>
         <li class="list-group-item list-group-item-pmk">
-            <div class="share_url share_iframe">
+            <div class="qa-player-share-iframe share_url share_iframe">
                 <span>{% trans %} IFRAME: {% endtrans %}</span>
                 {% set trackid = (track.id is defined)?track.id:null %}
                 {% set iframe_value %}{% spaceless %}

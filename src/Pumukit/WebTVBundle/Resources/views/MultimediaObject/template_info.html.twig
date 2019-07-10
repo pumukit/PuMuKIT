@@ -3,13 +3,13 @@
 </div>
 
 <div class="row">
-    <div class="col-xs-12 text-right">
+    <div class="qa-player-recording-date col-xs-12 text-right">
         {% trans %}Recording date{% endtrans %}: {{ multimediaObject.getRecordDate()|localizeddate('medium','none',app.request.getLocale()) }}
     </div>
 </div>
 
 <div class="row">
-    <div class="col-xs-12 text-right">
+    <div class="qa-player-viewed col-xs-12 text-right">
         {% trans %}Viewed{% endtrans %}: {{ multimediaObject.getNumview() }}
         {% if multimediaObject.getNumview() > 1 %}
             {% trans %} times {% endtrans %}
@@ -22,16 +22,16 @@
 {% include "PumukitWebTVBundle:Misc:chapter_marks.html.twig" %}
 
 <div class="row">
-    <div class="col-xs-12 video-subtitle">
+    <div class="qa-player-subtitle col-xs-12 video-subtitle">
         {% if multimediaObject.getSubtitle() %}
             <h3> {{ multimediaObject.getSubtitle() }} </h3>
         {% endif %}
 
-        <p class="description">
+        <p class="qa-player-description description">
             {{ multimediaObject.getDescription()|nl2br }}
         </p>
 
-        <div class="text-left video-license">
+        <div class="qa-player-license text-left video-license">
             {% if multimediaObject.getLicense() is not empty %}
                 {% trans %}License{% endtrans %}: {{ multimediaObject.getLicense() }}
             {% endif %}
@@ -39,14 +39,14 @@
 
         {% if not multimediaObject.getSeries().isHide() %}
             {% if isMagicRoute and fullMagicUrl %}        
-                <div class="video-series">
+                <div class="qa-player-series video-series">
                     {% trans %}i18n.one.Series{% endtrans %}:
                     <a href="{{ path('pumukit_webtv_series_magicindex', {secret: multimediaObject.getSeries().getSecret() }) }}">
                         {{ multimediaObject.getSeriesTitle()|default('') }}
                     </a>
                 </div>
             {% else %}
-                <div class="video-series">
+                <div class="qa-player-series video-series">
                     {% trans %}i18n.one.Series{% endtrans %}:
                     <a href="{{ path('pumukit_webtv_series_index', {id: multimediaObject.getSeries().getId() }) }}">
                         {{ multimediaObject.getSeriesTitle()|default('') }}
@@ -71,7 +71,7 @@
 
                 {% for track in multimediaObject.getTracks() if track.allowDownload() and not track.getHide() and showDownloads %}
                     {% set none_attach = false %}
-                    <div class="tracks">
+                    <div class="qa-player-tracks tracks">
                         <span class="glyphicon glyphicon-facetime-video"></span>
                         <a class="video-tracks" download href="{{ track_url(track) }}?forcedl=1">
                             {% if track.isOnlyAudio() %}
@@ -86,7 +86,7 @@
 
                 {% for material in multimediaObject.getMaterials() if not material.getHide() and showDownloads  %}
                     {% set none_attach = false %}
-                    <div class="material">
+                    <div class="qa-player-material material">
                         <span class="glyphicon glyphicon-paperclip"></span>
                         <a href="{{ material.getUrl() }}">{{ material.getName() }}</a>
                     </div>
@@ -94,7 +94,7 @@
 
                 {% for link in multimediaObject.getLinks() if showDownloads %}
                     {% set none_attach = false %}
-                    <div class="link">
+                    <div class="qa-player-link link">
                         <a target="_blank" href="{{ link.getUrl() }}">
                             <span class="glyphicon glyphicon-globe"></span>
                             {{ link.getName() }}

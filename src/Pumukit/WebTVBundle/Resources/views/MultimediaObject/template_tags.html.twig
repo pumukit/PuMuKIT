@@ -1,4 +1,4 @@
-<div class="col-xs-12 tags-info-pmk">
+<div class="qa-player-tags col-xs-12 tags-info-pmk">
     {% for tag in multimediaObject.tags if tag.display and not tag.metatag and not tag.isDescendantOfByCod('PUBCHANNELS') %}
         <span class="label label-default label-pmk">
             <a href="{{ path_to_tag(tag.cod) }}">

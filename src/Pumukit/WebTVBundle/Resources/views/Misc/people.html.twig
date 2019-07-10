@@ -1,10 +1,10 @@
 {% set roles = sort_roles(object, true) %}
 {% if roles %}
-    <div class="persons">
+    <div class="qa-player-roles persons">
         {% for role in roles %}
             {% for person in role.people %}
                 <div>
-                    <div class="person">
+                    <div class="qa-player-role-{{ role.getCod() }} person">
                         {{ role.getText() }}
                         {% if person.getWeb() is not empty %}
                             <a href="{{ person.getWeb() }}">{{ person.getHName() }}</a>
