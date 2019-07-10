@@ -22,9 +22,9 @@
 {% include "PumukitWebTVBundle:Misc:chapter_marks.html.twig" %}
 
 <div class="row">
-    <div class="qa-player-subtitle col-xs-12 video-subtitle">
+    <div class="col-xs-12 video-subtitle">
         {% if multimediaObject.getSubtitle() %}
-            <h3> {{ multimediaObject.getSubtitle() }} </h3>
+            <h3 class="qa-player-subtitle"> {{ multimediaObject.getSubtitle() }} </h3>
         {% endif %}
 
         <p class="qa-player-description description">
