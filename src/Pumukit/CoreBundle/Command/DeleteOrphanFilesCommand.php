@@ -67,6 +67,7 @@ EOT
         $this->input = $input;
 
         $this->path = $this->input->getOption('path');
+        $this->delete = $this->input->getOption('delete');
     }
 
     /**
