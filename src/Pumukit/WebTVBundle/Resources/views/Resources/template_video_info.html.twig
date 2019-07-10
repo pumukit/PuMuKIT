@@ -11,7 +11,7 @@
                 {% if show_video_broadcast_unify is defined and show_video_broadcast_unify and broadcastType != 'public' %}
                     {{ "Private"|trans }}
                 {% else %}
-                    {{ broadcastType|capitalize }}
+                    {{ broadcastType|capitalize|trans }}
                 {% endif %}
             </span>
         </div>
