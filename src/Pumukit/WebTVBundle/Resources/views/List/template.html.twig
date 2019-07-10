@@ -1,8 +1,8 @@
 {% extends 'PumukitWebTVBundle::layout.html.twig' %}
 
 {% block javascripts %}
+    {{ parent() }}
     {% if scroll_list %}
-        {{ parent() }}
         <script src="{{ asset('bundles/pumukitwebtv/js/announces_ajax.js') }}" type="text/javascript"></script>
     {% endif %}
 {% endblock %}
