@@ -40,7 +40,7 @@ class SeriesPicService
      */
     public function getTargetPath(Series $series)
     {
-        return $this->targetPath.'/'.$series->getId();
+        return $this->targetPath.'/series/'.$series->getId();
     }
 
     /**
@@ -48,7 +48,7 @@ class SeriesPicService
      */
     public function getTargetUrl(Series $series)
     {
-        return $this->targetUrl.'/'.$series->getId();
+        return $this->targetUrl.'/series/'.$series->getId();
     }
 
     /**
