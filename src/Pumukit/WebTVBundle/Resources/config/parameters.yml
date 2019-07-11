@@ -45,6 +45,7 @@ parameters:
   hightlight.objects_by_col: 3
   recentlyadded.objects_by_col: 4
   mostviewed.objects_by_col: 4
+  bytagblock.objects_by_col: 6
   limit_objs_mostviewed:     4                            # Mostviewed limit.     (Default 3)
   limit_objs_recentlyadded:  4                            # Recentlyadded limit.    (Default 3)
   limit_objs_hightlight: 3                                # HightLight limit.    (Default 3)
@@ -58,3 +59,4 @@ parameters:
   live_block.objects_by_col: 3
   limit_objs_live_block: 3
   wall_block.wall_tag: 'PUDEWALL'
+
