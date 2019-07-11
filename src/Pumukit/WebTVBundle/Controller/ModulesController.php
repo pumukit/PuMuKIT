@@ -216,8 +216,9 @@ class ModulesController extends Controller implements WebTVControllerInterface
      * @param int     $cols
      * @param bool    $sort
      *
-     * @return array
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     *
+     * @return array
      */
     public function categoriesAction(Request $request, $title, $class, $categories, $cols = 6, $sort = true)
     {
@@ -227,14 +228,15 @@ class ModulesController extends Controller implements WebTVControllerInterface
 
         $dm = $this->get('doctrine.odm.mongodb.document_manager');
 
-        if($sort) {
+        if ($sort) {
             if (is_array($categories)) {
                 $tags = $dm->createQueryBuilder(Tag::class)
-                           ->field('cod')->in($categories)
-                           ->field('display')->equals(true)
-                           ->sort('title.'.$request->getLocale(), 1)
-                           ->getQuery()
-                           ->execute();
+                    ->field('cod')->in($categories)
+                    ->field('display')->equals(true)
+                    ->sort('title.'.$request->getLocale(), 1)
+                    ->getQuery()
+                    ->execute()
+                ;
             } else {
                 $tag = $dm->getRepository(Tag::class)->findOneBy(
                     [
