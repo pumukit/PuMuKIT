@@ -239,6 +239,14 @@ class ListService
             throw new \Exception('Tag code not found');
         }
 
+        $tag = $this->documentManager->getRepository(Tag::class)->findOneBy([
+            'cod' => $tagCod,
+        ]);
+
+        if (!$tag) {
+            throw new \Exception('Tag code not exist');
+        }
+
         return $this->documentManager->getRepository(MultimediaObject::class)->findOneBy([
             'tags.cod' => $tagCod,
         ]);
