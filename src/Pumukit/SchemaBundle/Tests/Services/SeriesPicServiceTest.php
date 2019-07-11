@@ -163,7 +163,7 @@ class SeriesPicServiceTest extends WebTestCase
             $pic = $series->getPics()[0];
             $this->assertTrue($series->containsPic($pic));
 
-            $uploadedPic = '/uploads/pic/'.$series->getId().DIRECTORY_SEPARATOR.$picFile->getClientOriginalName();
+            $uploadedPic = '/uploads/pic/series/'.$series->getId().DIRECTORY_SEPARATOR.$picFile->getClientOriginalName();
             $this->assertEquals($uploadedPic, $pic->getUrl());
         }
 
