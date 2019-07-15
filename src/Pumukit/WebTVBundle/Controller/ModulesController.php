@@ -214,10 +214,13 @@ class ModulesController extends Controller implements WebTVControllerInterface
      * @param         $class
      * @param         $categories
      * @param int     $cols
+     * @param bool    $sort
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
      * @return array
      */
-    public function categoriesAction(Request $request, $title, $class, $categories, $cols = 6)
+    public function categoriesAction(Request $request, $title, $class, $categories, $cols = 6, $sort = true)
     {
         if (!$categories) {
             throw new NotFoundHttpException('Categories not found');
@@ -225,24 +228,31 @@ class ModulesController extends Controller implements WebTVControllerInterface
 
         $dm = $this->get('doctrine.odm.mongodb.document_manager');
 
-        if (is_array($categories)) {
-            $tags = $dm->createQueryBuilder(Tag::class)
-                ->field('cod')->in($categories)
-                ->field('display')->equals(true)
-                ->sort('title.'.$request->getLocale(), 1)
-                ->getQuery()
-                ->execute()
-            ;
-        } else {
-            $tag = $dm->getRepository(Tag::class)->findOneBy([
-                'cod' => $categories,
-            ]);
-
-            if (!$tag) {
-                throw new NotFoundHttpException('Category not found');
+        if ($sort) {
+            if (is_array($categories)) {
+                $tags = $dm->createQueryBuilder(Tag::class)
+                    ->field('cod')->in($categories)
+                    ->field('display')->equals(true)
+                    ->sort('title.'.$request->getLocale(), 1)
+                    ->getQuery()
+                    ->execute()
+                ;
+            } else {
+                $tag = $dm->getRepository(Tag::class)->findOneBy(
+                    [
+                        'cod' => $categories,
+                    ]
+                );
+                if (!$tag) {
+                    throw new NotFoundHttpException('Category not found');
+                }
+                $tags = $tag->getChildren();
             }
-
-            $tags = $tag->getChildren();
+        } else {
+            $tags = [];
+            foreach ($categories as $categoryCod) {
+                $tags[] = $dm->getRepository(Tag::class)->findOneBy(['cod' => $categoryCod, 'display' => true]);
+            }
         }
 
         return [
