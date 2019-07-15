@@ -421,6 +421,26 @@ class ModulesController extends Controller implements WebTVControllerInterface
     }
 
     /**
+     * @Template("PumukitWebTVBundle:Modules:widget_player.html.twig")
+     *
+     * @param $tagCod
+     *
+     * @throws \Exception
+     *
+     * @return array
+     */
+    public function embedVideoBlockAction($tagCod)
+    {
+        $listService = $this->get('pumukit_web_tv.list_service');
+        $object = $listService->getEmbedVideoBlock($tagCod);
+
+        return [
+            'object' => $object,
+            'autostart' => false,
+        ];
+    }
+
+    /**
      * @throws \Exception
      *
      * @return array

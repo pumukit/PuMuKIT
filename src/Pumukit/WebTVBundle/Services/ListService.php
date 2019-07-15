@@ -227,6 +227,32 @@ class ListService
     }
 
     /**
+     * @param null $tagCod
+     *
+     * @throws \Exception
+     *
+     * @return null|object|Tag
+     */
+    public function getEmbedVideoBlock($tagCod = null)
+    {
+        if (!$tagCod) {
+            throw new \Exception('Tag code not found');
+        }
+
+        $tag = $this->documentManager->getRepository(Tag::class)->findOneBy([
+            'cod' => $tagCod,
+        ]);
+
+        if (!$tag) {
+            throw new \Exception('Tag code not exist');
+        }
+
+        return $this->documentManager->getRepository(MultimediaObject::class)->findOneBy([
+            'tags.cod' => $tagCod,
+        ]);
+    }
+
+    /**
      * @param Builder   $qb
      * @param \DateTime $dateStart
      * @param \DateTime $dateEnd
