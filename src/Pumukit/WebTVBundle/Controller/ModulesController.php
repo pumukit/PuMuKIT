@@ -391,6 +391,36 @@ class ModulesController extends Controller implements WebTVControllerInterface
     }
 
     /**
+     * @Template("PumukitWebTVBundle:Modules:widget_media.html.twig")
+     *
+     * @param $tagCod
+     * @param $title
+     *
+     * @throws \Exception
+     *
+     * @return array
+     */
+    public function byTagBlockAction($tagCod, $title)
+    {
+        $translator = $this->get('translator');
+        $title = $translator->trans($title);
+
+        $listService = $this->get('pumukit_web_tv.list_service');
+        $limit = $this->container->getParameter('bytagblock.objects_by_col');
+        $objects = $listService->getVideosByTag($tagCod, $limit);
+
+        return [
+            'objects' => $objects,
+            'objectByCol' => $limit,
+            'title' => $title,
+            'class' => 'by-tag-block',
+            'show_info' => true,
+            'show_more' => false,
+            'show_more_path' => false,
+        ];
+    }
+
+    /**
      * @throws \Exception
      *
      * @return array
