@@ -104,6 +104,7 @@ class SearchController extends Controller implements WebTVControllerInterface
         $searchLanguages = $this->get('pumukit_web_tv.search_service')->getLanguages();
         $searchYears = $this->get('pumukit_web_tv.search_service')->getYears(SearchService::MULTIMEDIA_OBJECT);
         $numberCols = $this->container->getParameter('columns_objs_search');
+        $licenses = $this->container->getParameter('pumukit_new_admin.licenses');
 
         // Generate QueryBuilder search
         $searchFound = $request->query->get('search');
@@ -143,6 +144,7 @@ class SearchController extends Controller implements WebTVControllerInterface
             'parent_tag_optional' => $parentTagOptional,
             'tags_found' => $tagsFound,
             'objectByCol' => $numberCols,
+            'licenses' => $licenses,
             'languages' => $searchLanguages,
             'blocked_tag' => $blockedTag,
             'search_years' => $searchYears,
