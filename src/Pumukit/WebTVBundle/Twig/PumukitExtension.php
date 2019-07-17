@@ -434,8 +434,9 @@ class PumukitExtension extends AbstractExtension
     /**
      * @param Series $series
      *
-     * @return int
      * @throws \MongoException
+     *
+     * @return int
      */
     public function getMMobjsFromSerie(Series $series)
     {
