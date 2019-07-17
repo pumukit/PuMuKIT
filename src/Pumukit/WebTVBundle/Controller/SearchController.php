@@ -115,6 +115,7 @@ class SearchController extends Controller implements WebTVControllerInterface
         $endFound = $request->query->get('end');
         $yearFound = $request->query->get('year');
         $languageFound = $request->query->get('language');
+        $license = $request->query->get('license');
 
         $request = $this->container->get('request_stack')->getCurrentRequest();
         $queryBuilder = $this->createMultimediaObjectQueryBuilder();
@@ -124,6 +125,8 @@ class SearchController extends Controller implements WebTVControllerInterface
         $queryBuilder = $this->get('pumukit_web_tv.search_service')->addDateQueryBuilder($queryBuilder, $startFound, $endFound, $yearFound);
         $queryBuilder = $this->get('pumukit_web_tv.search_service')->addLanguageQueryBuilder($queryBuilder, $languageFound);
         $queryBuilder = $this->get('pumukit_web_tv.search_service')->addTagsQueryBuilder($queryBuilder, $tagsFound, $blockedTag, $useTagAsGeneral);
+        $queryBuilder = $this->get('pumukit_web_tv.search_service')->addLicenseQueryBuilder($queryBuilder, $license);
+
         if ('' == $searchFound) {
             $queryBuilder = $queryBuilder->sort('record_date', 'desc');
         } else {
