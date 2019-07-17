@@ -13,6 +13,9 @@
     </parameters>
 
     <services>
+
+        <defaults public="true" />
+
         <service id="form.type.texti18n" class="Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType">
             <argument>%pumukit.locales%</argument>
             <argument>%pumukit_new_admin.metadata_translators%</argument>

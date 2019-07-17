@@ -5,6 +5,9 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+
+        <defaults public="true" />
+
         <service id="pumukit_podcast.filter" class="Pumukit\PodcastBundle\EventListener\FilterListener">
             <argument type="service" id="doctrine_mongodb.odm.document_manager" />
             <tag name="kernel.event_listener" event="kernel.request" />

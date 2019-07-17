@@ -1,21 +1,23 @@
 <?xml version="1.0" ?>
 
 <container xmlns="http://symfony.com/schema/dic/services"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
+    <services>
 
-  <services>
-    <service id="pumukit_template.routefound" class="Pumukit\TemplateBundle\EventListener\RouteFoundHttpListener">
-      <argument type="service" id="doctrine_mongodb.odm.document_manager" />
-      <argument type="service" id="http_kernel" />
-      <argument type="service" id="request_stack" />
-      <argument type="service" id="pumukitschema.schema.locale" />
-      <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" />
-    </service>
+        <defaults public="true"/>
 
-    <service id="pumukit_template.menu" class="Pumukit\TemplateBundle\Services\MenuService">
-      <tag name="pumukitnewadmin.menuitem" />
-    </service>
-  </services>
+        <service id="pumukit_template.routefound" class="Pumukit\TemplateBundle\EventListener\RouteFoundHttpListener">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument type="service" id="http_kernel"/>
+            <argument type="service" id="request_stack"/>
+            <argument type="service" id="pumukitschema.schema.locale"/>
+            <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException"/>
+        </service>
+
+        <service id="pumukit_template.menu" class="Pumukit\TemplateBundle\Services\MenuService">
+            <tag name="pumukitnewadmin.menuitem"/>
+        </service>
+    </services>
 </container>

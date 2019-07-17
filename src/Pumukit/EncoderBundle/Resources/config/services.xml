@@ -10,6 +10,9 @@
     </parameters>
 
     <services>
+
+        <defaults public="true" />
+
         <service id="pumukitencoder.cpu" class="Pumukit\EncoderBundle\Services\CpuService">
             <argument>%pumukitencode.cpulist%</argument>
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
