@@ -169,13 +169,13 @@ class Series
 
     /**
      * @var array
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $textindex = [];
 
     /**
      * @var array
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $secondarytextindex = [];
 
