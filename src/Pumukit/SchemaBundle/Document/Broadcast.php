@@ -37,9 +37,7 @@ class Broadcast
 
     /**
      * @var int
-     *
-     * @MongoDB\Field(type="int")
-     * @MongoDB\Increment
+     * @MongoDB\Field(type="increment")
      */
     private $number_multimedia_objects = 0;
 

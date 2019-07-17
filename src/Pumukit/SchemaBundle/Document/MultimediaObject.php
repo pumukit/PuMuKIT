@@ -229,8 +229,7 @@ class MultimediaObject
 
     /**
      * @var int
-     * @MongoDB\Field(type="int")
-     * @MongoDB\Increment
+     * @MongoDB\Field(type="increment")
      */
     private $numview = 0;
 
