@@ -42,17 +42,17 @@ class User extends BaseUser
     /**
      * @var ArrayCollection
      *
-     * @MongoDB\ReferenceMany(targetDocument="Group", simple=true, sort={"key":1}, strategy="setArray")
+     * @MongoDB\ReferenceMany(targetDocument="Group", storeAs="id", sort={"key":1}, strategy="setArray")
      */
     protected $groups;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="PermissionProfile", simple=true, cascade={"persist"})
+     * @MongoDB\ReferenceOne(targetDocument="PermissionProfile", storeAs="id", cascade={"persist"})
      */
     private $permissionProfile;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="Person", inversedBy="user", simple=true, cascade={"persist"})
+     * @MongoDB\ReferenceOne(targetDocument="Person", inversedBy="user", storeAs="id", cascade={"persist"})
      */
     private $person;
 

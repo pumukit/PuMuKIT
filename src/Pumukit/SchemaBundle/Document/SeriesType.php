@@ -44,7 +44,7 @@ class SeriesType
     /**
      * @var ArrayCollection
      *
-     * @MongoDB\ReferenceMany(targetDocument="Series", mappedBy="series_type", simple=true, orphanRemoval=false)
+     * @MongoDB\ReferenceMany(targetDocument="Series", mappedBy="series_type", storeAs="id", orphanRemoval=false)
      * @Serializer\Exclude
      */
     private $series;

@@ -30,7 +30,7 @@ class Broadcast
     /**
      * @var ArrayCollection
      *
-     * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="broadcast", simple=true, orphanRemoval=false)
+     * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="broadcast", storeAs="id", orphanRemoval=false)
      * @Serializer\Exclude
      */
     private $multimedia_objects;
