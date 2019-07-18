@@ -38,5 +38,4 @@ class TwigTemplateLoaderService extends BaseFilesystemLoader
     {
         return str_replace($this->baseNamespace.':', $this->currentNamespace.':', $name);
     }
-
 }
