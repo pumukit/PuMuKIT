@@ -20,7 +20,6 @@
         "doctrine/mongodb-odm-bundle": "~3",
         "twig/twig": "~2.0",
         "twig/extensions": "~1.0",
-        "symfony/assetic-bundle": "~2.3",
         "symfony/swiftmailer-bundle": "^2.6.4",
         "symfony/monolog-bundle": "^3.1.0",
         "sensio/distribution-bundle": "^5.0.19",

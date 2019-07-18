@@ -4,11 +4,14 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-  <services>
-    <service id="pumukit_opencast.series_sync" class="Pumukit\OpencastBundle\Services\SeriesSyncService">
-      <argument type="service" id="doctrine_mongodb.odm.document_manager" />
-      <argument type="service" id="pumukit_opencast.client" />
-      <argument type="service" id="logger" />
-    </service>
-  </services>
+    <services>
+
+        <defaults public="true"/>
+
+        <service id="pumukit_opencast.series_sync" class="Pumukit\OpencastBundle\Services\SeriesSyncService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument type="service" id="pumukit_opencast.client"/>
+            <argument type="service" id="logger"/>
+        </service>
+    </services>
 </container>

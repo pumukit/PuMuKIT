@@ -3,14 +3,17 @@
 <container xmlns="http://symfony.com/schema/dic/services"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-  <parameters>
-    <parameter key="pumukit.inspection.command">ffprobe -v quiet -print_format json -show_format -show_streams "{{file}}"</parameter>
-  </parameters>
+    <parameters>
+        <parameter key="pumukit.inspection.command">ffprobe -v quiet -print_format json -show_format -show_streams "{{file}}"</parameter>
+    </parameters>
 
-  <services>
-    <service id="pumukit.inspection" class="Pumukit\InspectionBundle\Services\InspectionFfprobeService">
-      <argument>%pumukit.inspection.command%</argument>
-      <argument type="service" id="logger"/>
-    </service>
-  </services>
+    <services>
+
+        <defaults public="true"/>
+
+        <service id="pumukit.inspection" class="Pumukit\InspectionBundle\Services\InspectionFfprobeService">
+            <argument>%pumukit.inspection.command%</argument>
+            <argument type="service" id="logger"/>
+        </service>
+    </services>
 </container>

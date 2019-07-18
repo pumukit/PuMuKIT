@@ -1,41 +1,44 @@
 <?xml version="1.0" ?>
 
 <container xmlns="http://symfony.com/schema/dic/services"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-      <service id="pumukit_notification.sender" class="Pumukit\NotificationBundle\Services\SenderService">
-        <argument type="service" id="mailer" />
-        <argument type="service" id="templating" />
-        <argument type="service" id="translator" />
-        <argument type="service" id="doctrine_mongodb.odm.document_manager" />
-        <argument>%pumukit_notification.enable%</argument>
-        <argument>%pumukit_notification.sender_email%</argument>
-        <argument>%pumukit_notification.sender_name%</argument>
-        <argument>%pumukit_notification.enable_multi_lang%</argument>
-        <argument>%pumukit.locales%</argument>
-        <argument>%pumukit_notification.subject_success_trans%</argument>
-        <argument>%pumukit_notification.subject_fails_trans%</argument>
-        <argument>%pumukit_notification.admin_email%</argument>
-        <argument>%pumukit_notification.notificate_errors_to_admin%</argument>
-        <argument>%pumukit_notification.platform_name%</argument>
-        <argument>%kernel.environment%</argument>
-      </service>
-      <service id="pumukit_notification.listener" class="Pumukit\NotificationBundle\Services\JobNotificationService">
-        <argument type="service" id="doctrine_mongodb.odm.document_manager" />
-        <argument type="service" id="pumukit_notification.sender"/>
-        <argument type="service" id="pumukitencoder.job"/>
-        <argument type="service" id="translator" />
-        <argument type="service" id="router" />
-        <argument>%pumukit_notification.enable%</argument>
-        <argument>%kernel.environment%</argument>
-        <argument>%pumukit_notification.template%</argument>
-        <argument>%pumukit_notification.subject_success%</argument>
-        <argument>%pumukit_notification.subject_fails%</argument>
-        <argument>%pumukit_notification.subject_success_trans%</argument>
-        <argument>%pumukit_notification.subject_fails_trans%</argument>
-        <tag name="kernel.event_listener" event="job.success" method="onJobSuccess" />
-        <tag name="kernel.event_listener" event="job.error" method="onJobError" />
-      </service>
+
+        <defaults public="true"/>
+
+        <service id="pumukit_notification.sender" class="Pumukit\NotificationBundle\Services\SenderService">
+            <argument type="service" id="mailer"/>
+            <argument type="service" id="templating"/>
+            <argument type="service" id="translator"/>
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument>%pumukit_notification.enable%</argument>
+            <argument>%pumukit_notification.sender_email%</argument>
+            <argument>%pumukit_notification.sender_name%</argument>
+            <argument>%pumukit_notification.enable_multi_lang%</argument>
+            <argument>%pumukit.locales%</argument>
+            <argument>%pumukit_notification.subject_success_trans%</argument>
+            <argument>%pumukit_notification.subject_fails_trans%</argument>
+            <argument>%pumukit_notification.admin_email%</argument>
+            <argument>%pumukit_notification.notificate_errors_to_admin%</argument>
+            <argument>%pumukit_notification.platform_name%</argument>
+            <argument>%kernel.environment%</argument>
+        </service>
+        <service id="pumukit_notification.listener" class="Pumukit\NotificationBundle\Services\JobNotificationService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument type="service" id="pumukit_notification.sender"/>
+            <argument type="service" id="pumukitencoder.job"/>
+            <argument type="service" id="translator"/>
+            <argument type="service" id="router"/>
+            <argument>%pumukit_notification.enable%</argument>
+            <argument>%kernel.environment%</argument>
+            <argument>%pumukit_notification.template%</argument>
+            <argument>%pumukit_notification.subject_success%</argument>
+            <argument>%pumukit_notification.subject_fails%</argument>
+            <argument>%pumukit_notification.subject_success_trans%</argument>
+            <argument>%pumukit_notification.subject_fails_trans%</argument>
+            <tag name="kernel.event_listener" event="job.success" method="onJobSuccess"/>
+            <tag name="kernel.event_listener" event="job.error" method="onJobError"/>
+        </service>
     </services>
 </container>

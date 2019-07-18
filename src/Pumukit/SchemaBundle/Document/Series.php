@@ -85,12 +85,12 @@ class Series
     private $sorting = self::SORT_MANUAL;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="SeriesType", inversedBy="series", simple=true, cascade={"persist"})
+     * @MongoDB\ReferenceOne(targetDocument="SeriesType", inversedBy="series", storeAs="id", cascade={"persist"})
      */
     private $series_type;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="SeriesStyle", inversedBy="series", simple=true, cascade={"persist"})
+     * @MongoDB\ReferenceOne(targetDocument="SeriesStyle", inversedBy="series", storeAs="id", cascade={"persist"})
      */
     private $series_style;
 
@@ -169,13 +169,13 @@ class Series
 
     /**
      * @var array
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $textindex = [];
 
     /**
      * @var array
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $secondarytextindex = [];
 

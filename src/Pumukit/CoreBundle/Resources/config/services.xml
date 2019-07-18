@@ -6,6 +6,8 @@
 
     <services>
 
+        <defaults public="true" />
+
         <service id="twig.extension.intl" class="Twig_Extensions_Extension_Intl">
             <tag name="twig.extension"/>
         </service>

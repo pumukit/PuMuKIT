@@ -34,9 +34,7 @@ class Role
 
     /**
      * @var int
-     *
-     * @MongoDB\Field(type="int")
-     * @MongoDB\Increment
+     * @MongoDB\Field(type="increment")
      */
     private $number_people_in_multimedia_object = 0;
 

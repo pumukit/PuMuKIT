@@ -15,6 +15,7 @@ security:
             http_basic:
                 provider: fos_userbundle
                 realm: "secure-api"
+            logout_on_user_change: true
         main:
             pattern: ^/
             context: pumukit
@@ -23,13 +24,15 @@ security:
                 csrf_token_generator: security.csrf.token_manager
             logout:       true
             anonymous:    true
-
+            logout_on_user_change: true
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+            logout_on_user_change: true
 
         default:
             anonymous: ~
+            logout_on_user_change: true
 
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }

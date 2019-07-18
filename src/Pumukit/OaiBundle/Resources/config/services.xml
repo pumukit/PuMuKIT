@@ -5,6 +5,9 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+
+        <defaults public="true" />
+
         <service id="pumukitoai.filter" class="Pumukit\OaiBundle\EventListener\FilterListener">
           <argument type="service" id="doctrine_mongodb.odm.document_manager" />
           <argument>%pumukitoai.list_only_published_objects%</argument>
