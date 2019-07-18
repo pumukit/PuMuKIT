@@ -204,6 +204,7 @@ class DefaultController extends Controller
             'mobile_device' => $mobileDevice,
             'isIE' => $isIE,
             'versionIE' => $versionIE,
+            'showDownloads' => true,
         ];
     }
 
