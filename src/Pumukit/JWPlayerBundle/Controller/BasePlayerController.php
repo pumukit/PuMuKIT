@@ -34,7 +34,9 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
         }
 
         if ($url = $multimediaObject->getProperty('externalplayer')) {
-            return $this->redirect($url);
+            if (!$track) {
+                return $this->redirect($url);
+            }
         }
 
         return [
