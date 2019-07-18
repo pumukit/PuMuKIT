@@ -60,6 +60,17 @@ class TrackUrlService
     }
 
     /**
+     * @param MultimediaObject $multimediaObject
+     */
+    public function increseViewOnLoadExternalPlayer(MultimediaObject $multimediaObject)
+    {
+        if ($multimediaObject->getProperty('externalplayer')) {
+            $multimediaObject->incNumview();
+            $this->dm->flush();
+        }
+    }
+
+    /**
      * @param Track $track
      * @param $timestamp
      * @param $secret
@@ -73,16 +84,5 @@ class TrackUrlService
         $path = parse_url($url, PHP_URL_PATH);
 
         return str_replace('=', '', strtr(base64_encode(md5("{$timestamp}{$path}{$ip} {$secret}", true)), '+/', '-_'));
-    }
-
-    /**
-     * @param MultimediaObject $multimediaObject
-     */
-    public function increseViewOnLoadExternalPlayer(MultimediaObject $multimediaObject)
-    {
-        if($multimediaObject->getProperty('externalplayer')) {
-            $multimediaObject->incNumview();
-            $this->dm->flush();
-        }
     }
 }
