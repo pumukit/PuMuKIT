@@ -3,10 +3,10 @@
 namespace Pumukit\BaseLivePlayerBundle\Twig;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\SchemaBundle\Document\Event;
-use Pumukit\SchemaBundle\Document\Live;
 use Pumukit\BaseLivePlayerBundle\Services\LiveService;
 use Pumukit\SchemaBundle\Document\EmbeddedEvent;
+use Pumukit\SchemaBundle\Document\Event;
+use Pumukit\SchemaBundle\Document\Live;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 use Twig\Extension\AbstractExtension;
@@ -18,9 +18,7 @@ class LiveTwigExtension extends AbstractExtension
      * @var DocumentManager
      */
     private $dm;
-    /***
-     * @var LiveService
-     */
+    // @var LiveService
     private $liveService;
     /**
      * @var EmbeddedEventSessionService
@@ -70,10 +68,11 @@ class LiveTwigExtension extends AbstractExtension
      * Get future and not finished event.
      *
      * @param null      $limit
-     * @param Live|null $live
+     * @param null|Live $live
+     *
+     * @throws \Exception
      *
      * @return mixed
-     * @throws \Exception
      */
     public function getFutureAndNotFinishedEvent($limit = null, Live $live = null)
     {

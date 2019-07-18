@@ -3,7 +3,6 @@
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use Pumukit\SchemaBundle\Document\Pic;
 
 /**
  * Pumukit\SchemaBundle\Document\Event.

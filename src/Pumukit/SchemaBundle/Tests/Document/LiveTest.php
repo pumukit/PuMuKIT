@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\LiveBundle\Tests\Document;
+namespace Pumukit\SchemaBundle\Tests\Document;
 
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\Live;

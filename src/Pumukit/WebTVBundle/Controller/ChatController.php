@@ -51,7 +51,7 @@ class ChatController extends Controller
     }
 
     /**
-     * @ParamConverter("live", class="PumukitLiveBundle:Live", options={"id" = "id"})
+     * @ParamConverter("live", class="PumukitSchemaBundle:Live", options={"id" = "id"})
      * @Route("/basic/show/{id}", name="pumukit_live_chat_basic_show")
      * @Template("PumukitWebTVBundle:Chat:basicLiveShow.html.twig")
      *
@@ -116,7 +116,7 @@ class ChatController extends Controller
     }
 
     /**
-     * @ParamConverter("live", class="PumukitLiveBundle:Live", options={"id" = "id"})
+     * @ParamConverter("live", class="PumukitSchemaBundle:Live", options={"id" = "id"})
      * @Route("/basic/post/{id}", name="pumukit_live_chat_basic_post")
      *
      * @param Live    $live
@@ -173,7 +173,7 @@ class ChatController extends Controller
     }
 
     /**
-     * @ParamConverter("live", class="PumukitLiveBundle:Live", options={"id" = "id"})
+     * @ParamConverter("live", class="PumukitSchemaBundle:Live", options={"id" = "id"})
      * @Route("/basic/list/{id}", name="pumukit_live_chat_basic_list")
      * @Template("PumukitWebTVBundle:Chat:list.html.twig")
      *

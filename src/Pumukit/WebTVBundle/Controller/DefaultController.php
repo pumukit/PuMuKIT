@@ -2,8 +2,8 @@
 
 namespace Pumukit\WebTVBundle\Controller;
 
-use Pumukit\SchemaBundle\Document\Live;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
+use Pumukit\SchemaBundle\Document\Live;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\WebTVBundle\Form\Type\ContactType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -110,7 +110,7 @@ class DefaultController extends Controller
     public function iframeEventAction(MultimediaObject $multimediaObject, Request $request, $iframe = true)
     {
         if (embeddedBroadcast::TYPE_PASSWORD === $multimediaObject->getEmbeddedBroadcast()->getType() && $multimediaObject->getEmbeddedBroadcast()->getPassword() !== $request->get('broadcast_password')) {
-            return $this->render($iframe ? 'PumukitLiveBundle:Live/Basic:iframepassword.html.twig' : 'PumukitLiveBundle:Live/Basic:indexpassword.html.twig', [
+            return $this->render($iframe ? 'PumukitBaseLivePlayerBundle:Live/Basic:iframepassword.html.twig' : 'PumukitBaseLivePlayerBundle:Live/Basic:indexpassword.html.twig', [
                 'live' => $multimediaObject->getEmbeddedEvent(),
                 'invalid_password' => (bool) ($request->get('broadcast_password')),
             ]);
@@ -305,7 +305,7 @@ class DefaultController extends Controller
     protected function doLive(Live $live, Request $request, $iframe = true)
     {
         if ($live->getPasswd() && $live->getPasswd() !== $request->get('broadcast_password')) {
-            return $this->render($iframe ? 'PumukitLiveBundle:Live/Basic:iframepassword.html.twig' : 'PumukitLiveBundle:Live/Basic:indexpassword.html.twig', [
+            return $this->render($iframe ? 'PumukitBaseLivePlayerBundle:Live/Basic:iframepassword.html.twig' : 'PumukitBaseLivePlayerBundle:Live/Basic:indexpassword.html.twig', [
                 'live' => $live,
                 'invalid_password' => (bool) ($request->get('broadcast_password')),
             ]);

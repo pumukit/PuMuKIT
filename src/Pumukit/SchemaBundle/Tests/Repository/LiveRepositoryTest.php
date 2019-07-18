@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\LiveBundle\Tests\Repository;
+namespace Pumukit\SchemaBundle\Tests\Repository;
 
 use Pumukit\SchemaBundle\Document\Live;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
