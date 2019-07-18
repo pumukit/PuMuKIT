@@ -2,9 +2,9 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
-use Pumukit\SchemaBundle\Services\LegacyEventPicService;
 use Pumukit\SchemaBundle\Document\Event;
 use Pumukit\SchemaBundle\Document\Live;
+use Pumukit\SchemaBundle\Services\LegacyEventPicService;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
