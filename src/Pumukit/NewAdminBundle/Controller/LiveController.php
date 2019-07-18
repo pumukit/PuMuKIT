@@ -2,7 +2,7 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Pumukit\LiveBundle\Document\Live;
+use Pumukit\SchemaBundle\Document\Live;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;

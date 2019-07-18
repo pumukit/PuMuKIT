@@ -1,8 +1,0 @@
-var text = '{{ event.getAlreadyHeldMessage()|default('The event has already been held'|trans)|raw }}';
-background = image + style + text + finalText;
-$("#directo-{{ id }}").html(background);
-
-var date = new Date();
-$('#warning').countdown(date.setMinutes(date.getMinutes() + 1)).on('finish.countdown', function () {
-    location.reload();
-});

@@ -4,7 +4,7 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
-use Pumukit\LiveBundle\Document\Live;
+use Pumukit\SchemaBundle\Document\Live;
 use Pumukit\NewAdminBundle\Form\Type\EmbeddedEventSessionType;
 use Pumukit\NewAdminBundle\Form\Type\EventsType;
 use Pumukit\NewAdminBundle\Form\Type\SeriesType;

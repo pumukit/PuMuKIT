@@ -2,7 +2,7 @@
 
 namespace Pumukit\NewAdminBundle\Form\Type;
 
-use Pumukit\LiveBundle\Document\Live;
+use Pumukit\SchemaBundle\Document\Live;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
 use Symfony\Component\Form\AbstractType;
@@ -112,7 +112,7 @@ class LiveType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Pumukit\LiveBundle\Document\Live',
+                'data_class' => 'Pumukit\SchemaBundle\Document\Live',
             ]
         );
 

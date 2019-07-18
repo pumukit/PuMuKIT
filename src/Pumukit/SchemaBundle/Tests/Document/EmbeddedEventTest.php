@@ -4,7 +4,7 @@ namespace Pumukit\SchemaBundle\Tests\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
-use Pumukit\LiveBundle\Document\Live;
+use Pumukit\SchemaBundle\Document\Live;
 use Pumukit\SchemaBundle\Document\EmbeddedEvent;
 
 /**

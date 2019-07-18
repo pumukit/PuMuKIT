@@ -95,10 +95,6 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->end()
             ->end()
-            ->scalarNode('event_default_poster')
-            ->defaultValue('/bundles/pumukitwebtv/images/live_screen.jpg')
-            ->info('Event default poster image path')
-            ->end()
             ->end()
             ->end()
         ;

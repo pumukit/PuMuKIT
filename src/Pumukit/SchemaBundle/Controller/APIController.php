@@ -2,7 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Controller;
 
-use Pumukit\LiveBundle\Document\Live;
+use Pumukit\SchemaBundle\Document\Live;
 use Pumukit\NewAdminBundle\Controller\NewAdminControllerInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
