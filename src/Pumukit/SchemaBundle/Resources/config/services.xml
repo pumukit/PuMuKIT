@@ -16,7 +16,7 @@
         <!-- See #5826 -->
         <service id="doctrine" alias="doctrine_mongodb" />
 
-        <service id="pumukitlive.legacyeventpic" class="Pumukit\Schema\Services\LegacyEventPicService">
+        <service id="pumukitlive.legacyeventpic" class="Pumukit\SchemaBundle\Services\LegacyEventPicService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument>%pumukit.uploads_dir%/pic</argument>
             <argument>%pumukit.uploads_url%/pic</argument>
