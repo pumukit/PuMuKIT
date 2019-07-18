@@ -33,6 +33,7 @@ class BasePlayerExtension extends \Twig_Extension
         return [
             new \Twig_SimpleFunction('track_url', [$this, 'generateTrackFileUrl']),
             new \Twig_SimpleFunction('direct_track_url', [$this, 'generateDirectTrackFileUrl']),
+            new \Twig_SimpleFunction('increase_view_on_external_video', [$this, 'increaseViewOnExternalVideo']),
         ];
     }
 
@@ -75,5 +76,13 @@ class BasePlayerExtension extends \Twig_Extension
     public function getFirstPublicTrackFilter(MultimediaObject $mmobj)
     {
         return $mmobj->getDisplayTrack();
+    }
+
+    /**
+     * @param MultimediaObject $multimediaObject
+     */
+    public function increaseViewOnExternalVideo(MultimediaObject $multimediaObject)
+    {
+        $this->trackService->increseViewOnLoadExternalPlayer($multimediaObject);
     }
 }

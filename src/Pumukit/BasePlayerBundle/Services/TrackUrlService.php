@@ -3,6 +3,7 @@
 namespace Pumukit\BasePlayerBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -72,5 +73,16 @@ class TrackUrlService
         $path = parse_url($url, PHP_URL_PATH);
 
         return str_replace('=', '', strtr(base64_encode(md5("{$timestamp}{$path}{$ip} {$secret}", true)), '+/', '-_'));
+    }
+
+    /**
+     * @param MultimediaObject $multimediaObject
+     */
+    public function increseViewOnLoadExternalPlayer(MultimediaObject $multimediaObject)
+    {
+        if($multimediaObject->getProperty('externalplayer')) {
+            $multimediaObject->incNumview();
+            $this->dm->flush();
+        }
     }
 }
