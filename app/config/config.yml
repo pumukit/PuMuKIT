@@ -45,6 +45,7 @@ framework:
     trusted_hosts:   ~
     session:
         # handler_id set to null will use default session handler from php.ini
+        name: pumukit
         handler_id:  ~
     fragments:       ~
     http_method_override: true
