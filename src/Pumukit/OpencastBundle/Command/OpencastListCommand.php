@@ -44,7 +44,7 @@ EOT
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         $this->clientService = $this->getContainer()->get('pumukit_opencast.client');
-        $this->dm = $this->getContainer()->get('doctrine.odm.mongodb.document_manager');
+        $this->dm = $this->getContainer()->get('doctrine_mongodb.odm.document_manager');
     }
 
     /**
