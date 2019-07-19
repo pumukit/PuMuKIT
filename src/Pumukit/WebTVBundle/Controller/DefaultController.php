@@ -36,7 +36,7 @@ class DefaultController extends Controller
      * @param Request $request
      *
      * @Route("/live/iframe/{id}", name="pumukit_live_iframe_id")
-     * @Template("PumukitWebTVBundle:Live/Basic:iframe.html.twig")
+     * @Template("PumukitWebTVBundle:Live/Basic:template_iframe.html.twig")
      *
      * @return array|\Symfony\Component\HttpFoundation\Response
      */
@@ -46,14 +46,16 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param MultimediaObject $multimediaObject
-     * @param Request          $request
-     *
-     * @return array|\Symfony\Component\HttpFoundation\Response
-     *
      * @Route("/live/event/{id}", name="pumukit_live_event_id")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
      * @Template("PumukitWebTVBundle:Live/Advance:template.html.twig")
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param Request          $request
+     *
+     * @throws \MongoException
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function indexEventAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -97,20 +99,22 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/live/event/iframe/{id}", name="pumukit_live_event_iframe_id")
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
+     * @Template("PumukitWebTVBundle:Live/Advance:iframe.html.twig")
+     *
      * @param MultimediaObject $multimediaObject
      * @param Request          $request
      * @param bool             $iframe
      *
-     * @return array|\Symfony\Component\HttpFoundation\Response
+     * @throws \MongoException
      *
-     * @Route("/live/event/iframe/{id}", name="pumukit_live_event_iframe_id")
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
-     * @Template("PumukitWebTVBundle:Live/Advance:iframe.html.twig")
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function iframeEventAction(MultimediaObject $multimediaObject, Request $request, $iframe = true)
     {
         if (embeddedBroadcast::TYPE_PASSWORD === $multimediaObject->getEmbeddedBroadcast()->getType() && $multimediaObject->getEmbeddedBroadcast()->getPassword() !== $request->get('broadcast_password')) {
-            return $this->render($iframe ? 'PumukitBaseLivePlayerBundle:Live/Basic:iframepassword.html.twig' : 'PumukitBaseLivePlayerBundle:Live/Basic:indexpassword.html.twig', [
+            return $this->render($iframe ? 'PumukitWebTVBundle:Live/Basic:template_iframe_password.html.twig' : 'PumukitWebTVBundle:Live/Basic:template_password.html.twig', [
                 'live' => $multimediaObject->getEmbeddedEvent(),
                 'invalid_password' => (bool) ($request->get('broadcast_password')),
             ]);
@@ -214,7 +218,7 @@ class DefaultController extends Controller
      * @return array
      *
      * @Route("/live", name="pumukit_live")
-     * @Template("PumukitWebTVBundle:Live/Basic:index.html.twig")
+     * @Template("PumukitWebTVBundle:Live/Basic:template.html.twig")
      */
     public function defaultAction(Request $request)
     {
@@ -231,10 +235,10 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param Live $live
-     *
      * @Route("/live/playlist/{id}", name="pumukit_live_playlist_id", defaults={"_format": "xml"})
      * @Template("PumukitWebTVBundle:Live/Basic:playlist.xml.twig")
+     *
+     * @param Live $live
      *
      * @return array
      */
@@ -257,13 +261,13 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param Request          $request
-     * @param MultimediaObject $multimediaObject
-     *
-     * @return JsonResponse
-     *
      * @Route("/event/contact/{id}", name="pumukit_webtv_contact_event")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
+     *
+     * @param         $multimediaObject
+     * @param Request $request
+     *
+     * @return JsonResponse
      */
     public function contactAction($multimediaObject, Request $request)
     {
@@ -303,10 +307,17 @@ class DefaultController extends Controller
         ]);
     }
 
+    /**
+     * @param Live    $live
+     * @param Request $request
+     * @param bool    $iframe
+     *
+     * @return array|\Symfony\Component\HttpFoundation\Response
+     */
     protected function doLive(Live $live, Request $request, $iframe = true)
     {
         if ($live->getPasswd() && $live->getPasswd() !== $request->get('broadcast_password')) {
-            return $this->render($iframe ? 'PumukitBaseLivePlayerBundle:Live/Basic:iframepassword.html.twig' : 'PumukitBaseLivePlayerBundle:Live/Basic:indexpassword.html.twig', [
+            return $this->render($iframe ? 'PumukitWebTVBundle:Live/Basic:template_iframe_password.html.twig' : 'PumukitWebTVBundle:Live/Basic:template_password.html.twig', [
                 'live' => $live,
                 'invalid_password' => (bool) ($request->get('broadcast_password')),
             ]);
@@ -325,6 +336,11 @@ class DefaultController extends Controller
         ];
     }
 
+    /**
+     * @param       $title
+     * @param       $routeName
+     * @param array $routeParameters
+     */
     protected function updateBreadcrumbs($title, $routeName, array $routeParameters = [])
     {
         $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
@@ -333,6 +349,8 @@ class DefaultController extends Controller
 
     /**
      * @param $seriesId
+     *
+     * @throws \MongoException
      *
      * @return mixed
      */
