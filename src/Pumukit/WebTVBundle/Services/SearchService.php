@@ -289,4 +289,19 @@ class SearchService
 
         return $queryBuilder->field('_id')->in($validSeries);
     }
+
+    /**
+     * @param Builder $queryBuilder
+     * @param string  $license
+     *
+     * @return Builder
+     */
+    public function addLicenseQueryBuilder(Builder $queryBuilder, $license)
+    {
+        if ('' === $license) {
+            return $queryBuilder;
+        }
+
+        return $queryBuilder->field('license')->equals($license);
+    }
 }
