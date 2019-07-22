@@ -17,7 +17,7 @@
         <div id="directo-{{ id }}" style="width:100%; margin: 0 auto; position: relative;"></div>
     </div>
 
-    {% if advance_live_events is defined and advance_live_events|default(true) %}
+    {% if advance_live_events is defined and advance_live_events %}
         <div id="countdownClock" hidden></div>
     {% endif %}
 {% endif %}
