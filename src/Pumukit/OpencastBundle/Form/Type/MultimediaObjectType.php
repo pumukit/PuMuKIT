@@ -10,21 +10,17 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Translation\TranslatorInterface;
 
 class MultimediaObjectType extends AbstractType
 {
     private $translator;
     private $locale;
 
-    public function __construct(TranslatorInterface $translator, $locale = 'en')
-    {
-        $this->translator = $translator;
-        $this->locale = $locale;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->translator = $options['translator'];
+        $this->locale = $options['locale'];
+
         $invertText = $this->translator->trans('Invert', [], null, $this->locale).' (CAMERA-SCREEN)';
 
         $builder
@@ -88,6 +84,9 @@ class MultimediaObjectType extends AbstractType
                 'data_class' => 'Pumukit\SchemaBundle\Document\MultimediaObject',
             ]
         );
+
+        $resolver->setRequired('translator');
+        $resolver->setRequired('locale');
     }
 
     public function getBlockPrefix()
