@@ -108,12 +108,12 @@ class SeriesPlaylistService
     /**
      * Returns a query builder for the mmobjs of a series playlist embed document.
      *
-     * @param ArrayCollection $playlistMmobjIds List of MongoIds to find
-     * @param array           $criteria         (optional) The criteria to filter the mmobj with. In case personalized requirements are needed
+     * @param array|ArrayCollection $playlistMmobjIds List of MongoIds to find
+     * @param array                 $criteria         (optional) The criteria to filter the mmobj with. In case personalized requirements are needed
      *
      * @return \Doctrine\MongoDB\Query\Builder
      */
-    protected function createQueryPlaylistMmobjs(ArrayCollection $playlistMmobjIds, $criteria = [])
+    protected function createQueryPlaylistMmobjs($playlistMmobjIds, $criteria = [])
     {
         $qb = $this->mmobjRepo->createQueryBuilder()->field('id')->in($playlistMmobjIds);
         if ($criteria) {
