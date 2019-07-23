@@ -188,6 +188,7 @@ EOT
                 } catch (\Exception $e) {
                     if (!strpos($e->getMessage(), 'Unknown error')) {
                         $this->factoryService->deleteMultimediaObject($multimediaObject);
+
                         throw $e;
                     }
                 }
