@@ -23,7 +23,7 @@ class TrackFileController extends Controller
      * @Route("/trackfile/{id}.{ext}", name="pumukit_trackfile_index")
      * @Route("/trackfile/{id}", name="pumukit_trackfile_index_no_ext")
      *
-     * @param         $id
+     * @param string  $id
      * @param Request $request
      *
      * @throws \Exception
@@ -59,7 +59,7 @@ class TrackFileController extends Controller
             $timestamp = time() + $this->container->getParameter('pumukitplayer.secure_duration');
             $hash = $this->getHash($track, $timestamp, $secret, $request->getClientIp());
 
-            return $this->redirect($track->getUrl()."?md5={$hash}&expires={$timestamp}&".http_build_query($request->query->all(), null, '&'));
+            return $this->redirect($track->getUrl()."?md5={$hash}&expires={$timestamp}&".http_build_query($request->query->all(), '', '&'));
         }
 
         if ($request->query->all()) {
@@ -73,7 +73,7 @@ class TrackFileController extends Controller
      * @Route("/trackplayed/{id}", name="pumukit_trackplayed_index")
      *
      * @param Request $request
-     * @param $id
+     * @param string  $id
      *
      * @throws \Exception
      *
@@ -101,10 +101,10 @@ class TrackFileController extends Controller
     }
 
     /**
-     * @param Track $track
-     * @param $timestamp
-     * @param $secret
-     * @param $ip
+     * @param Track     $track
+     * @param float|int $timestamp
+     * @param string    $secret
+     * @param string    $ip
      *
      * @return mixed
      */
@@ -158,7 +158,7 @@ class TrackFileController extends Controller
     }
 
     /**
-     * @param $id
+     * @param string $id
      *
      * @throws \Exception
      *

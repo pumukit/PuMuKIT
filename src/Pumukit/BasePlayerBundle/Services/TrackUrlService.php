@@ -4,6 +4,7 @@ namespace Pumukit\BasePlayerBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\Track;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class TrackUrlService
@@ -43,26 +44,26 @@ class TrackUrlService
     }
 
     /**
-     * @param Track $track
-     * @param $request
+     * @param Track   $track
+     * @param Request $request
      *
      * @throws \Exception
      *
      * @return string
      */
-    public function generateDirectTrackFileUrl(Track $track, $request)
+    public function generateDirectTrackFileUrl(Track $track, Request $request)
     {
         $timestamp = time() + $this->secureDuration;
         $hash = $this->getHash($track, $timestamp, $this->secret, $request->getClientIp());
 
-        return $track->getUrl()."?md5={$hash}&expires={$timestamp}&".http_build_query($request->query->all(), null, '&');
+        return $track->getUrl()."?md5={$hash}&expires={$timestamp}&".http_build_query($request->query->all(), '', '&');
     }
 
     /**
-     * @param Track $track
-     * @param $timestamp
-     * @param $secret
-     * @param $ip
+     * @param Track     $track
+     * @param float|int $timestamp
+     * @param string    $secret
+     * @param string    $ip
      *
      * @return mixed
      */

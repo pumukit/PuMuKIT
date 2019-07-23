@@ -41,6 +41,7 @@ script:
     - php bin/php-cs-fixer fix src --dry-run -v
     - php bin/phpstan analyse -l 1 src
     - php bin/phpstan analyse -l 5 src/Pumukit/CoreBundle/
+    - php bin/phpstan analyse -l 5 src/Pumukit/BasePlayerBundle/
     - php bin/phpunit -c app
     - php bin/console doctrine:mongodb:schema:create
     - php bin/console pumukit:init:repo all --force
