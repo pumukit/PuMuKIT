@@ -227,12 +227,14 @@ class FactoryService
 
         $mm = $this->addLoggedInUserAsPerson($mm, $loggedInUser);
         // Add other owners in case of exists
-        foreach ($prototype->getRoles() as $embeddedRole) {
-            if ($this->personService->getPersonalScopeRoleCode() === $embeddedRole->getCod()) {
-                $role = $this->dm->getRepository('PumukitSchemaBundle:Role')->findOneBy(array('cod' => $this->personService->getPersonalScopeRoleCode()));
-                foreach ($embeddedRole->getPeople() as $embeddedPerson) {
-                    $person = $this->dm->getRepository('PumukitSchemaBundle:Person')->findOneBy(array('_id' => $embeddedPerson->getId()));
-                    $mm = $this->personService->createRelationPerson($person, $role, $mm);
+        if (null !== $prototype) {
+            foreach ($prototype->getRoles() as $embeddedRole) {
+                if ($this->personService->getPersonalScopeRoleCode() === $embeddedRole->getCod()) {
+                    $role = $this->dm->getRepository('PumukitSchemaBundle:Role')->findOneBy(array('cod' => $this->personService->getPersonalScopeRoleCode()));
+                    foreach ($embeddedRole->getPeople() as $embeddedPerson) {
+                        $person = $this->dm->getRepository('PumukitSchemaBundle:Person')->findOneBy(array('_id' => $embeddedPerson->getId()));
+                        $mm = $this->personService->createRelationPerson($person, $role, $mm);
+                    }
                 }
             }
         }
