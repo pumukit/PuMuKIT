@@ -1,52 +1,61 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
-{% if mmtemplate %}
-<div>
-  <div role="tabpanel">
-    <!-- actualizar vistaPrevia -->
-    <ul id="templateTab" class="nav nav-tabs nav-tabs-pumukit" role="tablist">
-      {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %}
-      <li class="active">
-        <a href="#pubMmTemplate" aria-controls="pubMm" role="tab" data-toggle="tab">{% trans %}Publication{% endtrans %}</a>
-      </li>
-      {% endif %}
-      <li{% if not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %} class="active"{% endif %}>
-        <a href="#metaMmTemplate" aria-controls="metaMmTemplate" role="tab" data-toggle="tab">{% trans %}Basic Metadata{% endtrans %}</a>
-      </li>
-      <li>
-        <a href="#tagMmTemplate" aria-controls="tagMmTemplate" role="tab" data-toggle="tab">{% trans %}Tags{% endtrans %}</a>
-      </li>
-      <li>
-        <a href="#groupMmTemplate" aria-controls="groupMmTemplate" role="tab" data-toggle="tab">{% trans %}Owners & Groups{% endtrans %}</a>
-      </li>
-      <li>
-        <a href="#personMmTemplate" aria-controls="personMmTemplate" role="tab" data-toggle="tab">{% trans %}People{% endtrans %}</a>
-      </li>
-    </ul>
-    <div class="tab-content">
-      {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %}
-      <div id="pubMmTemplate" role="tabpanel" class="tab-pane active">
-        {% include 'PumukitNewAdminBundle:MultimediaObjectTemplate:updatepub.html.twig' with {'mm': mmtemplate, 'template': '_template'} %}
-      </div>
-      {% endif %}
-      <div id="metaMmTemplate" role="tabpanel" class="tab-pane{% if not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %} active{% endif %}">
-        {% include 'PumukitNewAdminBundle:MultimediaObjectTemplate:updatemeta.html.twig' with {'mm': mmtemplate} %}
-      </div>
-      
-      <div id="tagMmTemplate" role="tabpanel" class="tab-pane">
-        {% include 'PumukitNewAdminBundle:MultimediaObject:updatetag.html.twig' with {'mm': mmtemplate, 'parent_tags': parent_tags, 'template': true} %}
-      </div>
+    {% if mmtemplate %}
+        <div>
+            <div role="tabpanel">
+                <ul id="templateTab" class="nav nav-tabs nav-tabs-pumukit" role="tablist">
+                    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %}
+                        <li class="active">
+                            <a href="#pubMmTemplate" aria-controls="pubMm" role="tab" data-toggle="tab">
+                                {% trans %}Publication{% endtrans %}
+                            </a>
+                        </li>
+                    {% endif %}
+                    <li{% if not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %} class="active"{% endif %}>
+                        <a href="#metaMmTemplate" aria-controls="metaMmTemplate" role="tab" data-toggle="tab">
+                            {% trans %}Basic Metadata{% endtrans %}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#tagMmTemplate" aria-controls="tagMmTemplate" role="tab" data-toggle="tab">
+                            {% trans %}Tags{% endtrans %}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#groupMmTemplate" aria-controls="groupMmTemplate" role="tab" data-toggle="tab">
+                            {% trans %}Owners & Groups{% endtrans %}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#personMmTemplate" aria-controls="personMmTemplate" role="tab" data-toggle="tab">
+                            {% trans %}People{% endtrans %}
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %}
+                        <div id="pubMmTemplate" role="tabpanel" class="tab-pane active">
+                            {% include 'PumukitNewAdminBundle:MultimediaObjectTemplate:updatepub.html.twig' with {'mm': mmtemplate, 'template': '_template'} %}
+                        </div>
+                    {% endif %}
+                    <div id="metaMmTemplate" role="tabpanel" class="tab-pane{% if not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %} active{% endif %}">
+                        {% include 'PumukitNewAdminBundle:MultimediaObjectTemplate:updatemeta.html.twig' with {'mm': mmtemplate} %}
+                    </div>
 
-      <div id="groupMmTemplate" role="tabpanel" class="tab-pane">
-        {% include 'PumukitNewAdminBundle:MultimediaObject:updategroup.html.twig' with {'mm': mmtemplate, 'personal_scope_role': personal_scope_role} %}
-      </div>
-      
-      <div id="personMmTemplate" role="tabpanel" class="tab-pane">
-        {% include 'PumukitNewAdminBundle:MultimediaObject:updateperson.html.twig' with {'mm': mmtemplate, 'roles': roles} %}
-      </div>
-    </div>
-  </div>
-</div>
-{% endif %}
+                    <div id="tagMmTemplate" role="tabpanel" class="tab-pane">
+                        {% include 'PumukitNewAdminBundle:MultimediaObject:updatetag.html.twig' with {'mm': mmtemplate, 'parent_tags': parent_tags, 'template': true} %}
+                    </div>
+
+                    <div id="groupMmTemplate" role="tabpanel" class="tab-pane">
+                        {% include 'PumukitNewAdminBundle:MultimediaObject:updategroup.html.twig' with {'mm': mmtemplate, 'personal_scope_role': personal_scope_role} %}
+                    </div>
+
+                    <div id="personMmTemplate" role="tabpanel" class="tab-pane">
+                        {% include 'PumukitNewAdminBundle:MultimediaObject:updateperson.html.twig' with {'mm': mmtemplate, 'roles': roles} %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 {% else %}
-  {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
 {% endif %}
