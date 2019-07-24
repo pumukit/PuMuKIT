@@ -68,10 +68,6 @@ pumukitnewadmin_collection:
     resource: "@PumukitNewAdminBundle/Resources/config/routes/collection.yml"
     prefix: /admin/collection
 
-pumukitnewadmin_mmtemplate:
-    resource: "@PumukitNewAdminBundle/Resources/config/routes/mmtemplate.yml"
-    prefix: /admin/mmtemplate
-
 pumukitnewadmin_mms:
     resource: "@PumukitNewAdminBundle/Resources/config/routes/mms.yml"
     prefix: /admin/mms

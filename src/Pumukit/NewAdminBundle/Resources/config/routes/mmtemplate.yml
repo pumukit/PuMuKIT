@@ -1,5 +1,0 @@
-pumukitnewadmin_mmtemplate_update_meta:
-    path: /{id}/update/meta
-    methods: [POST]
-    defaults:
-        _controller: PumukitNewAdminBundle:MultimediaObjectTemplate:updatemeta
