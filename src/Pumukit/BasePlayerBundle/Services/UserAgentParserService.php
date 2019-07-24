@@ -12,8 +12,7 @@ class UserAgentParserService
      * Returns true if the userAgent belongs to an 'old' browser.
      * This function is used in PuMuKIT ONLY for the player opencast template (to show a warning if it's 'old'. This can be better solved using a script to check for feature support).
      *
-     * @param string
-     * @param mixed $userAgent
+     * @param string $userAgent
      *
      * @return bool
      */
@@ -34,8 +33,7 @@ class UserAgentParserService
      *
      * Only works for MSIE, Opera, Firefox, Safari and Chrome. Add more strings if needed.
      *
-     * @param string
-     * @param mixed $userAgent
+     * @param string $userAgent
      *
      * @return string
      */
@@ -65,12 +63,10 @@ class UserAgentParserService
      * Returns a string with the browser's version.
      * It needs a string from the 'getWebExplorer' function to work propertly.
      *
-     * @param string
-     * @param string
-     * @param mixed $userAgent
-     * @param mixed $webExplorer
+     * @param string $userAgent
+     * @param string $webExplorer
      *
-     * @return string
+     * @return null|float
      */
     public function getVersion($userAgent, $webExplorer)
     {

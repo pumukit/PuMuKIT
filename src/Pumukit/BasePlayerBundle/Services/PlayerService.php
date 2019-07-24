@@ -51,7 +51,7 @@ class PlayerService
     }
 
     /**
-     * @param $url
+     * @param string $url
      *
      * @return mixed
      */
