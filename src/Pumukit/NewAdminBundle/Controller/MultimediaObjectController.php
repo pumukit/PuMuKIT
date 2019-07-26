@@ -839,6 +839,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $dm->persist($series);
         $dm->flush();
 
+        $this->get('pumukitschema.multimediaobject_dispatcher')->dispatchUpdate($multimediaObject);
+
         $this->get('session')->remove('admin/mms/cut');
 
         $this->get('pumukitschema.sorted_multimedia_object')->reorder($series);
