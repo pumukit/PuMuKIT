@@ -405,7 +405,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         } else {
             $formMeta = $this->createForm(MultimediaObjectMetaType::class, $resource, ['translator' => $translator, 'locale' => $locale]);
         }
-
         $options = [
             'not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS),
             'translator' => $translator,
@@ -420,7 +419,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $notChangePubChannel = !$this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
 
         $isPrototype = $resource->isPrototype();
-
         $method = $request->getMethod();
         if (in_array($method, ['POST', 'PUT', 'PATCH'])) {
             $formPub->handleRequest($request);
@@ -430,17 +428,16 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                     $resource = $this->updateTags($request->get('pub_channels', null), 'PUCH', $resource);
                 }
 
+                if($isPrototype) {
+                    $resource->setStatus(MultimediaObject::STATUS_PROTOTYPE);
+                }
+
                 $event = new PublicationSubmitEvent($resource, $request);
                 $this->get('event_dispatcher')->dispatch(BackofficeEvents::PUBLICATION_SUBMIT, $event);
-
 
                 $resource = $this->updateTags($request->get('pub_decisions', null), 'PUDE', $resource);
 
                 $this->update($resource);
-
-                if($isPrototype) {
-                    $resource->setStatus(MultimediaObject::STATUS_PROTOTYPE);
-                }
 
                 $this->dispatchUpdate($resource);
                 $this->get('pumukitschema.sorted_multimedia_object')->reorder($series);
