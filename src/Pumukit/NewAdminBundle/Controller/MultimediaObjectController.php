@@ -1364,7 +1364,10 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $syncService = $this->container->get('pumukitnewadmin.multimedia_object_sync');
 
         $tags = $dm->getRepository(Tag::class)->findBy(
-            ['metatag' => true, 'display' => true, 'properties.hide_in_tag_group' => ['$exists' => false]],
+            [
+                'metatag' => true,
+                'display' => true
+            ],
             ['cod' => 1]
         );
         if (!$tags) {
