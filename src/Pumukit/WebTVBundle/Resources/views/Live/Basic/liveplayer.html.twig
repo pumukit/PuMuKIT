@@ -1,25 +1,7 @@
 {% set id = random() %}
 
-<div id="jwplayererror-{{ id }}" style="width:100%; margin: 0px auto; color:red;"></div>
-{% if isIE and versionIE < 9.0 %}
-    <div style="width:100%; margin: 0px auto; color:red;">
-        {% trans %}
-        JWPlayer does not support your browser version{% endtrans %} {{ isIE }}.
-        {% trans %}Please use 9.0 or higher version or use another browser.{% endtrans %}</div>
-{% else %}
-    <div>
-        <div id="showFlashMessage-{{ id }}" style="background: red; padding: 10px; font-size: 1.5em; font-weight: bold; border: 5px #990000 solid; margin-bottom: 10px; color: #222222; width: {{ width is defined ? width : '100%' }}" hidden>
-            <img alt="obsolete browser" src="{{ asset('bundles/pumukitlive/images/obsolete.png') }}"></img>
-            <span>
-                {% trans %}
-                The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.
-                {% endtrans %}
-                <a target="_blank" style="color: white; text-decoration: underline; padding: 10px;" href="https://get.adobe.com/flashplayer/">https://get.adobe.com/flashplayer/</a>
-            </span>
-        </div>
-        <div id="directo-{{ id }}" style="width:100%; margin: 0px auto;"></div>
-    </div>
-{% endif %}
+{% include "PumukitBaseLivePlayerBundle::player.html.twig" with {'advance_live_events' : false } %}
+
 <script type="text/javascript">
-    {% include "PumukitLiveBundle:Default:player.js.twig" %}
+    {% include "PumukitBaseLivePlayerBundle:Default:player.js.twig" %}
 </script>

@@ -33,7 +33,7 @@ pumukitwizard:
     resource: "@PumukitWizardBundle/Resources/config/routing.yml"
 
 pumukit_live:
-    resource: "@PumukitLiveBundle/Controller/"
+    resource: "@PumukitBaseLivePlayerBundle/Controller/"
     type:     annotation
     prefix:   /
 

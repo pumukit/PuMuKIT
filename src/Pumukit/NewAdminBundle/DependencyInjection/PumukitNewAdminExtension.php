@@ -26,15 +26,10 @@ class PumukitNewAdminExtension extends Extension
         $container->setParameter('pumukit_new_admin.disable_broadcast_creation', $config['disable_broadcast_creation']);
         $container->setParameter('pumukit_new_admin.licenses', $config['licenses']);
         $container->setParameter('pumukit_new_admin.multimedia_object_label', $config['multimedia_object_label']);
-        $container->setParameter('pumukit_new_admin.advance_live_event', $config['advance_live_event']);
         $container->setParameter('pumukit_new_admin.show_menu_place_and_precinct', $config['show_menu_place_and_precinct']);
-        $container->setParameter('pumukit_new_admin.advance_live_event_create_default_pic', $config['advance_live_event_create_default_pic']);
-        $container->setParameter('pumukit_new_admin.advance_live_event_autocomplete_series', $config['advance_live_event_autocomplete_series']);
-        $container->setParameter('pumukit_new_admin.advance_live_event_create_serie_pic', $config['advance_live_event_create_serie_pic']);
         $container->setParameter('pumukit_new_admin.show_naked_pub_tab', $config['show_naked_pub_tab']);
         $container->setParameter('pumukit_new_admin.base_catalogue_tag', $config['base_catalogue_tag']);
         $container->setParameter('pumukit_new_admin.metadata_translators', []);
-        $container->setParameter('liveevent_contact_and_share', $config['liveevent_contact_and_share']);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');

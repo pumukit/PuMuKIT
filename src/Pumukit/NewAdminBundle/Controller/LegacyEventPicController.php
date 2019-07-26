@@ -2,7 +2,7 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Pumukit\LiveBundle\Document\Event;
+use Pumukit\SchemaBundle\Document\Event;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

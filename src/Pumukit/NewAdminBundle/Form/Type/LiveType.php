@@ -2,9 +2,9 @@
 
 namespace Pumukit\NewAdminBundle\Form\Type;
 
-use Pumukit\LiveBundle\Document\Live;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
+use Pumukit\SchemaBundle\Document\Live;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -112,7 +112,7 @@ class LiveType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Pumukit\LiveBundle\Document\Live',
+                'data_class' => 'Pumukit\SchemaBundle\Document\Live',
             ]
         );
 
