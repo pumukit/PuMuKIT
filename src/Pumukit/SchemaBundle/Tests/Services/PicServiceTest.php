@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Services\TrackService;
+use Pumukit\SchemaBundle\Services\TextIndexService;
 use Pumukit\SchemaBundle\EventListener\MultimediaObjectListener;
 use Pumukit\EncoderBundle\Services\ProfileService;
 
@@ -49,7 +50,7 @@ class PicServiceTest extends WebTestCase
         $this->picService = new PicService($this->context, $this->webDir, $this->defaultSeriesPic, $this->defaultPlaylistPic, $this->defaultVideoPic, $this->defaultAudioHDPic, $this->defaultAudioSDPic);
 
         $dispatcher = new EventDispatcher();
-        $this->listener = new MultimediaObjectListener($this->dm);
+        $this->listener = new MultimediaObjectListener($this->dm, new TextIndexService());
         $dispatcher->addListener('multimediaobject.update', array($this->listener, 'postUpdate'));
         $this->trackDispatcher = static::$kernel->getContainer()
           ->get('pumukitschema.track_dispatcher');
