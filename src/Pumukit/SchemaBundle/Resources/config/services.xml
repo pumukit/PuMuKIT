@@ -36,11 +36,13 @@
 
         <service id="pumukitschema.schema.series" class="Pumukit\SchemaBundle\EventListener\SeriesListener">
             <argument type="service" id="doctrine_mongodb.odm.document_manager" />
+            <argument type="service" id="pumukitschema.text_index" />
             <tag name="kernel.event_listener" event="series.update" method="postUpdate" />
         </service>
 
         <service id="pumukitschema.schema.multimediaobject" class="Pumukit\SchemaBundle\EventListener\MultimediaObjectListener">
             <argument type="service" id="doctrine_mongodb.odm.document_manager" />
+            <argument type="service" id="pumukitschema.text_index" />
             <tag name="kernel.event_listener" event="multimediaobject.update" method="postUpdate" />
             <tag name="kernel.event_listener" event="track.create" method="postUpdate" />
             <tag name="kernel.event_listener" event="track.update" method="postUpdate" />
@@ -64,6 +66,7 @@
             <argument>%pumukit.locales%</argument>
             <argument type="expression">parameter('pumukitschema.default_copyright') ? parameter('pumukitschema.default_copyright') : parameter('pumukit.info')['title']</argument>
             <argument>%pumukitschema.default_license%</argument>
+            <argument type="service" id="pumukitschema.text_index" />
         </service>
 
         <service id="pumukitschema.seriespic" class="Pumukit\SchemaBundle\Services\SeriesPicService">
@@ -235,6 +238,8 @@
         <service id="pumukitschema.stats" class="Pumukit\SchemaBundle\Services\StatsService">
           <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
+
+        <service id="pumukitschema.text_index" class="Pumukit\SchemaBundle\Services\TextIndexService" />
 
         <service id="security.role_hierarchy" class="%security.role_hierarchy.class%" public="false">
             <argument>%security.role_hierarchy.roles%</argument>

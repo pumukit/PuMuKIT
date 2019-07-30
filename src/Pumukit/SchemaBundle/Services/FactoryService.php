@@ -29,8 +29,9 @@ class FactoryService
     private $defaultCopyright;
     private $defaultLicense;
     private $addUserAsPerson;
+    private $textIndexService;
 
-    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, UserService $userService, EmbeddedBroadcastService $embeddedBroadcastService, SeriesService $seriesService, MultimediaObjectEventDispatcherService $mmsDispatcher, SeriesEventDispatcherService $seriesDispatcher, TranslatorInterface $translator, $addUserAsPerson = true, array $locales = array(), $defaultCopyright = '', $defaultLicense = '')
+    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, UserService $userService, EmbeddedBroadcastService $embeddedBroadcastService, SeriesService $seriesService, MultimediaObjectEventDispatcherService $mmsDispatcher, SeriesEventDispatcherService $seriesDispatcher, TranslatorInterface $translator, $addUserAsPerson = true, array $locales = array(), $defaultCopyright = '', $defaultLicense = '', TextIndexService $textIndexService = null)
     {
         $this->dm = $documentManager;
         $this->tagService = $tagService;
@@ -45,6 +46,7 @@ class FactoryService
         $this->defaultCopyright = $defaultCopyright;
         $this->defaultLicense = $defaultLicense;
         $this->addUserAsPerson = $addUserAsPerson;
+        $this->textIndexService = $textIndexService;
     }
 
     /**
@@ -529,6 +531,8 @@ class FactoryService
             $newSeries->addPic($clonedThumb);
         }
 
+        $this->textIndexService->updateSeriesObjectTextIndex($newSeries);
+
         $this->dm->flush();
 
         $this->generateNumericalIDSeries($newSeries);
@@ -570,8 +574,7 @@ class FactoryService
         $new->setCopyright($src->getCopyright());
         $new->setLicense($src->getLicense());
         $new->setNumview(0);
-        $new->setTextIndex($src->getTextIndex());
-        $new->setSecondaryTextIndex($src->getSecondaryTextIndex());
+
         // NOTE: #7408 Specify which properties are clonable
         $new->setProperty('subseries', $src->getProperty('subseries'));
         $new->setProperty('subseriestitle', $src->getProperty('subseriestitle'));
@@ -622,6 +625,8 @@ class FactoryService
             $clonedAnnot->setMultimediaObject($new->getId());
             $this->dm->persist($clonedAnnot);
         }
+
+        $this->textIndexService->updateMultimediaObjectTextIndex($new);
 
         $this->dm->flush();
 
