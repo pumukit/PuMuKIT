@@ -4,13 +4,13 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
-use Pumukit\LiveBundle\Document\Live;
 use Pumukit\NewAdminBundle\Form\Type\EmbeddedEventSessionType;
 use Pumukit\NewAdminBundle\Form\Type\EventsType;
 use Pumukit\NewAdminBundle\Form\Type\SeriesType;
 use Pumukit\SchemaBundle\Document\EmbeddedEvent;
 use Pumukit\SchemaBundle\Document\EmbeddedEventSession;
 use Pumukit\SchemaBundle\Document\EmbeddedSocial;
+use Pumukit\SchemaBundle\Document\Live;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Role;

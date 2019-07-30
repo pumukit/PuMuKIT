@@ -16,7 +16,7 @@ class Playlist
     /**
      * @var ArrayCollection
      *
-     * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", simple=true, strategy="setArray")
+     * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", storeAs="id", strategy="setArray")
      * @Serializer\Exclude
      */
     private $multimedia_objects;

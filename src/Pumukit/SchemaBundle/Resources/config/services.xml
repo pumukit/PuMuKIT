@@ -10,8 +10,18 @@
     </parameters>
 
     <services>
+
+        <defaults public="true" />
+
         <!-- See #5826 -->
         <service id="doctrine" alias="doctrine_mongodb" />
+
+        <service id="pumukitlive.legacyeventpic" class="Pumukit\SchemaBundle\Services\LegacyEventPicService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument>%pumukit.uploads_dir%/pic</argument>
+            <argument>%pumukit.uploads_url%/pic</argument>
+            <argument>%pumukit.delete_on_disk%</argument>
+        </service>
 
         <service id="pumukitschema.schema.locale" class="Pumukit\SchemaBundle\EventListener\LocaleListener">
             <argument type="service" id="request_stack" />

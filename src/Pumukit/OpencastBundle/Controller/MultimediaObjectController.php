@@ -49,7 +49,7 @@ class MultimediaObjectController extends Controller
     {
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $form = $this->createForm(new MultimediaObjectType($translator, $locale), $multimediaObject);
+        $form = $this->createForm(MultimediaObjectType::class, $multimediaObject, ['translator' => $translator, 'locale' => $locale]);
         if ($request->isMethod('PUT') || $request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {

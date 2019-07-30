@@ -4,13 +4,16 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-  <services>
-    <service id="pumukit_opencast.series_listener" class="Pumukit\OpencastBundle\EventListener\SeriesListener">
-      <argument type="service" id="pumukit_opencast.series_sync" />
-      <argument type="service" id="logger" />
-      <tag name="kernel.event_listener" event="series.update" method="onSeriesSync" />
-      <tag name="kernel.event_listener" event="series.create" method="onSeriesSync" />
-      <tag name="kernel.event_listener" event="series.delete" method="onSeriesSync" />
-    </service>
-  </services>
+    <services>
+
+        <defaults public="true"/>
+
+        <service id="pumukit_opencast.series_listener" class="Pumukit\OpencastBundle\EventListener\SeriesListener">
+            <argument type="service" id="pumukit_opencast.series_sync"/>
+            <argument type="service" id="logger"/>
+            <tag name="kernel.event_listener" event="series.update" method="onSeriesSync"/>
+            <tag name="kernel.event_listener" event="series.create" method="onSeriesSync"/>
+            <tag name="kernel.event_listener" event="series.delete" method="onSeriesSync"/>
+        </service>
+    </services>
 </container>

@@ -86,7 +86,7 @@ class MultimediaObject
     private $secret;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="Series", simple=true, inversedBy="multimedia_object", cascade={"persist"})
+     * @MongoDB\ReferenceOne(targetDocument="Series", storeAs="id", inversedBy="multimedia_object", cascade={"persist"})
      * @Gedmo\SortableGroup
      * @MongoDB\Index
      */
@@ -106,7 +106,7 @@ class MultimediaObject
      *
      * @deprecated in version 2.3
      * use EmbeddedBroadcast instead
-     * @MongoDB\ReferenceOne(targetDocument="Broadcast", inversedBy="multimedia_object", simple=true, cascade={"persist"})
+     * @MongoDB\ReferenceOne(targetDocument="Broadcast", inversedBy="multimedia_object", storeAs="id", cascade={"persist"})
      */
     private $broadcast;
 
@@ -148,7 +148,7 @@ class MultimediaObject
 
     /**
      * @var ArrayCollection
-     * @MongoDB\ReferenceMany(targetDocument="Group", simple=true, sort={"key":1}, strategy="setArray")
+     * @MongoDB\ReferenceMany(targetDocument="Group", storeAs="id", sort={"key":1}, strategy="setArray")
      */
     private $groups;
 
@@ -229,8 +229,7 @@ class MultimediaObject
 
     /**
      * @var int
-     * @MongoDB\Field(type="int")
-     * @MongoDB\Increment
+     * @MongoDB\Field(type="increment")
      */
     private $numview = 0;
 
@@ -242,13 +241,13 @@ class MultimediaObject
 
     /**
      * @var array
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $textindex = [];
 
     /**
      * @var array
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $secondarytextindex = [];
 

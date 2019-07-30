@@ -97,7 +97,7 @@ class Configuration implements ConfigurationInterface
             ->info('Command line to execute transcodification of track. Available variables: {{ input }}, {{ output }}, {{ tmpfile1 }}, {{ tmpfile2 }}, ... {{ tmpfile9 }}.')->end()
             ->scalarNode('file_cfg')->info('Configuration file')->end()
             ->arrayNode('streamserver')
-            ->isRequired()->cannotBeEmpty()
+            ->isRequired()
             ->children()
             ->scalarNode('name')->isRequired()->cannotBeEmpty()
             ->info('Name of the streamserver')->end()

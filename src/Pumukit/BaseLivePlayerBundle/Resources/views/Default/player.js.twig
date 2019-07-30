@@ -1,0 +1,53 @@
+document.addEventListener('DOMContentLoaded', function () {
+    var isMobile = "{{ mobile_device ? 'yes':'no' }}";
+    var hasFlash = false;
+    try {
+        hasFlash = Boolean(new ActiveXObject('ShockwaveFlash.ShockwaveFlash'));
+    } catch (exception) {
+        hasFlash = ('undefined' != typeof navigator.mimeTypes['application/x-shockwave-flash']);
+    }
+    if ((hasFlash && ('no' === isMobile)) || ('yes' === isMobile)) {
+        {% if height is defined %}
+        var height = "{{ height }}";
+        {% endif %}
+    } else {
+        {% if height is defined %}
+        var height = "{{ height * 0.75 }}";
+        {% endif %}
+        document.getElementById('showFlashMessage-{{ id }}').style.display = 'table';
+    }
+    var livePlayerInstance = jwplayer("directo-{{ id }}").setup({
+        {% if live is defined and live %}
+        {% if live.broadcasting %}
+        {% if mobile_device %}
+        file: "{{ generate_hls_url(live) }}",
+        {% else %}
+        file: "{{ live.url }}/{{ live.sourcename }}",
+        {% endif %}
+        {% else %}
+        playlist: "{{ path('pumukit_live_playlist_id', { 'id': live.id }) }}",
+        {% endif %}
+        {% endif %}
+        {% if isIE and versionIE == 10 %}
+        autostart: 'true',
+        {% else %}
+        autostart: true,
+        {% endif %}
+        width: "{{ width is defined ? width : '100%' }}",
+        {% if height is defined %}
+        height: height,
+        {% endif %}
+        {% if controlbar is defined %}
+        controlbar: "{{ controlbar }}",
+        {% endif %}
+        {% if stretching is defined %}
+        stretching: "{{ stretching }}",
+        {% endif %}
+        {% if aspectratio is defined %}
+        aspectratio: "{{ aspectratio }}",
+        {% endif %}
+        logo: {hide: true},
+        analytics: {enabled: false},
+        androidhls: true
+    });
+});

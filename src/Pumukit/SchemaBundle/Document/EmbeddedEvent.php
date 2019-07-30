@@ -4,7 +4,7 @@ namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use Pumukit\LiveBundle\Document\Live as DocumentLive;
+use Pumukit\SchemaBundle\Document\Live as DocumentLive;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -82,7 +82,7 @@ class EmbeddedEvent
 
     /**
      * @var DocumentLive
-     * @MongoDB\ReferenceOne(targetDocument="Pumukit\LiveBundle\Document\Live", cascade={"persist"})
+     * @MongoDB\ReferenceOne(targetDocument="Pumukit\SchemaBundle\Document\Live", cascade={"persist"})
      */
     private $live;
 

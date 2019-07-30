@@ -2,7 +2,7 @@
 
 namespace Pumukit\BasePlayerBundle\Services;
 
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\BasePlayerBundle\Utils\CountableAppendIterator;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -10,7 +10,11 @@ use Pumukit\SchemaBundle\Document\Series;
 
 class SeriesPlaylistService
 {
+    /**
+     * @var DocumentManager
+     */
     private $dm;
+
     private $mmobjRepo;
 
     public function __construct(DocumentManager $dm)
@@ -104,8 +108,8 @@ class SeriesPlaylistService
     /**
      * Returns a query builder for the mmobjs of a series playlist embed document.
      *
-     * @param array $playlistMmobjIds List of MongoIds to find
-     * @param array $criteria         (optional) The criteria to filter the mmobj with. In case personalized requirements are needed
+     * @param array|ArrayCollection $playlistMmobjIds List of MongoIds to find
+     * @param array                 $criteria         (optional) The criteria to filter the mmobj with. In case personalized requirements are needed
      *
      * @return \Doctrine\MongoDB\Query\Builder
      */

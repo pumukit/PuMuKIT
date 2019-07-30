@@ -4,17 +4,22 @@ namespace Pumukit\WebTVBundle\Twig;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\Routing\RequestContext;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * Class BootstrapExtension.
  */
-class BootstrapExtension extends \Twig_Extension
+class BootstrapExtension extends AbstractExtension
 {
     /**
      * @var RequestContext
      */
     protected $context;
 
+    /**
+     * @var DocumentManager
+     */
     private $dm;
 
     /**
@@ -35,9 +40,9 @@ class BootstrapExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('col_calculator', [$this, 'getCols']),
-            new \Twig_SimpleFunction('add_clear_fix_md', [$this, 'getClearFixMediumDevices']),
-            new \Twig_SimpleFunction('add_clear_fix_sm', [$this, 'getClearFixSmallDevices']),
+            new TwigFunction('col_calculator', [$this, 'getCols']),
+            new TwigFunction('add_clear_fix_md', [$this, 'getClearFixMediumDevices']),
+            new TwigFunction('add_clear_fix_sm', [$this, 'getClearFixSmallDevices']),
         ];
     }
 

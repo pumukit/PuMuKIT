@@ -59,7 +59,8 @@ Optional:
       - `flavour` is the name of the flavour of an Opencast track to be used as side by side track in PuMuKIT. Default value: composition/delivery.
    - `error_if_file_not_exist` throw an error if the track file doesn't exist or it is not accessible using the url mapping info. Default value: true.
    - `sync_series_with_opencast` If true, the PuMuKIT series will be syncronized against Opencast. Default value: false
-   - `url_mappging` is a list of url-path mappging used to generate the side by side video. Mandatory if `generate_sbs` is set to true.
+   - `url_mapping` is a list of url-path mapping used to generate the side by side video. Mandatory if `generate_sbs` is set to true.
+
       - `url` is the internal URL of the Opencast installation, used by Opencast to locate services running on the instance and for inter-node communication in distributed setups involving more than one Opencast node (org.opencastproject.server.url).
       - `path` is the directory where the system will store its processed files (including temporary files). This directory should be persistent between reboots (i.e., not /tmp) (org.opencastproject.storage.dir).
 

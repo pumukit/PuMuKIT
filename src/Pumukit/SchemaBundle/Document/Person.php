@@ -87,7 +87,7 @@ class Person
     protected $locale = 'en';
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="User", inversedBy="person", simple=true, cascade={"persist"})
+     * @MongoDB\ReferenceOne(targetDocument="User", inversedBy="person", storeAs="id", cascade={"persist"})
      */
     private $user;
 

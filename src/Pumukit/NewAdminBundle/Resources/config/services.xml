@@ -9,10 +9,13 @@
         <parameter key="pumukit.warning_on_unpublished">false</parameter>
         <parameter key="pumukit.show_dashboard_tab">true</parameter>
         <parameter key="pumukit.show_mms_list_all_menu">false</parameter>
-        <parameter key="pumukit.inbox_depth">true</parameter>
+        <parameter key="pumukit.inbox_depth">false</parameter>
     </parameters>
 
     <services>
+
+        <defaults public="true" />
+
         <service id="form.type.texti18n" class="Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType">
             <argument>%pumukit.locales%</argument>
             <argument>%pumukit_new_admin.metadata_translators%</argument>

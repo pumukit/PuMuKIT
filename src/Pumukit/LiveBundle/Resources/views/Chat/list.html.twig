@@ -1,9 +1,0 @@
-<div id="chatDiv">
-  {% for message in messages %}
-  <div class="chatRow {{ loop.index is odd ? 'odd-row' : 'even-row' }}">
-    <div class="chatText"><strong>{{ message.author }}:</strong> {{ message.message }}</div>
-    <div class="chatTime">{{ message.insertDate|localizeddate('medium','medium',app.request.getLocale()) }}</div>
-  </div>
-  {% endfor %}
-</div>
-<div id="chat-list-error" class="chat-list-error"></div>

@@ -2,7 +2,7 @@
 {% set hide_slidebar = true %}
 {% block javascripts %}
     {{ parent() }}
-    {% include('PumukitLiveBundle:Default:js.html.twig') %}
+    {% include('PumukitBaseLivePlayerBundle:Default:js.html.twig') %}
 {% endblock%}
 
 {% block title %}{{ parent() }} - {{ live.name }}{% endblock %}
@@ -23,7 +23,7 @@
                 </div>
                 {% if chat %}
                     <div class="col-xs-12 col-md-6">
-                        {{ render(controller('PumukitLiveBundle:Chat:showBasic', {'id': live.id })) }}
+                        {{ render(controller('PumukitWebTVBundle:Chat:showBasic', {'id': live.id })) }}
                     </div>
                 {% endif %}
             </div>

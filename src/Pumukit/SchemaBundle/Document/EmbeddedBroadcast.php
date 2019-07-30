@@ -54,7 +54,7 @@ class EmbeddedBroadcast
     /**
      * @var ArrayCollection
      *
-     * @MongoDB\ReferenceMany(targetDocument="Group", simple=true, sort={"key":1}, strategy="setArray")
+     * @MongoDB\ReferenceMany(targetDocument="Group", storeAs="id", sort={"key":1}, strategy="setArray")
      */
     private $groups;
 

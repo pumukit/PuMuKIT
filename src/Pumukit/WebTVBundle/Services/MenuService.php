@@ -3,8 +3,8 @@
 namespace Pumukit\WebTVBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\LiveBundle\Document\Event;
-use Pumukit\LiveBundle\Document\Live;
+use Pumukit\SchemaBundle\Document\Event;
+use Pumukit\SchemaBundle\Document\Live;
 use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 
 /**
