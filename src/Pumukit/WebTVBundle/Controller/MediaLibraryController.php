@@ -31,7 +31,7 @@ class MediaLibraryController extends Controller implements WebTVControllerInterf
         $templateTitle = $this->get('translator')->trans($templateTitle);
         $this->get('pumukit_web_tv.breadcrumbs')->addList($templateTitle, 'pumukit_webtv_medialibrary_index', ['sort' => $sort]);
 
-        $dm = $this->get('doctrine.odm.mongodb.document_manager');
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $array_tags = $this->container->getParameter('pumukit_web_tv.media_library.filter_tags');
         $tagRepository = $dm->getRepository(Tag::class);
         $selectionTags = $tagRepository->findBy(['cod' => ['$in' => $array_tags]]);

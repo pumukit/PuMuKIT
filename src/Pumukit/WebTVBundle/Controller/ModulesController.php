@@ -226,7 +226,7 @@ class ModulesController extends Controller implements WebTVControllerInterface
             throw new NotFoundHttpException('Categories not found');
         }
 
-        $dm = $this->get('doctrine.odm.mongodb.document_manager');
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
 
         if ($sort) {
             if (is_array($categories)) {
