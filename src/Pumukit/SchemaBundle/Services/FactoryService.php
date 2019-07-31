@@ -531,7 +531,7 @@ class FactoryService
             $newSeries->addPic($clonedThumb);
         }
 
-        $this->textIndexService->updateSeriesObjectTextIndex($newSeries);
+        $this->textIndexService->updateSeriesTextIndex($newSeries);
 
         $this->dm->flush();
 
