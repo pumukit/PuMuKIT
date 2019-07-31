@@ -33,7 +33,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
             return $this->redirect($track->getUrl());
         }
 
-        if ($url = $multimediaObject->getProperty('externalplayer')) {
+        if (!$track && null !== $url = $multimediaObject->getProperty('externalplayer')) {
             return $this->redirect($url);
         }
 
@@ -80,7 +80,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
             return $this->redirect($track->getUrl());
         }
 
-        if ($url = $multimediaObject->getProperty('externalplayer')) {
+        if (!$track && null !== $url = $multimediaObject->getProperty('externalplayer')) {
             return $this->redirect($url);
         }
 

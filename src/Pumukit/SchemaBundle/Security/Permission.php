@@ -40,6 +40,7 @@ class Permission
     const ACCESS_SERIES_STYLE = 'ROLE_ACCESS_SERIES_STYLE';
     const DISABLED_TRACK_PROFILES = 'ROLE_DISABLED_WIZARD_TRACK_PROFILES';
     const DISABLED_TRACK_PRIORITY = 'ROLE_DISABLED_WIZARD_TRACK_PRIORITY';
+    const ADD_EXTERNAL_PLAYER = 'ROLE_ADD_EXTERNAL_PLAYER';
 
     const PREFIX_ROLE_TAG_DEFAULT = 'ROLE_TAG_DEFAULT_';
 
@@ -272,6 +273,13 @@ class Permission
         ],
         self::DISABLED_TRACK_PROFILES => [
             'description' => 'Disabled track profiles on wizard',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::ADD_EXTERNAL_PLAYER => [
+            'description' => 'Add an external player (iframe) into a multimedia object',
             'dependencies' => [
                 PermissionProfile::SCOPE_GLOBAL => [],
                 PermissionProfile::SCOPE_PERSONAL => [],

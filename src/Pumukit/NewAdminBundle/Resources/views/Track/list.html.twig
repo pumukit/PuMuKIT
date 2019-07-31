@@ -174,7 +174,7 @@
                         <a class="button_new_master" data-toggle="modal" data-backdrop="static" data-target="#myModal" href="{{ path('pumukitnewadmin_track_create', {'id': mm.id}) }}">{% trans %}New master{% endtrans %}...</a>
                     </td>
                 </tr>
-                {% if mm.tracks|length == 0 and is_granted('ROLE_SUPER_ADMIN') %}
+                {% if is_granted('ROLE_ADD_EXTERNAL_PLAYER') %}
                     <tr>
                         <td>
                             <ul>
@@ -200,23 +200,23 @@
                             <i class="mdi-editor-mode-edit"></i>
                         </a>
                     </td>
-                    {% if is_granted('ROLE_SUPER_ADMIN') %}
-                        <td>
-                            <a href="#" title="{% trans %}Delete{% endtrans %}" onclick="window.submit_delete_external_video('{{ mm.id }}'); return false;">
-                                <i class="mdi-content-clear"></i>
-                            </a>
-                        </td>
-                    {% endif %}
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
+                    <td>
+                        <a href="#" title="{% trans %}Delete{% endtrans %}" onclick="window.submit_delete_external_video('{{ mm.id }}'); return false;">
+                            <i class="mdi-content-clear"></i>
+                        </a>
+                    </td>
                     <td>&nbsp;</td>
                     <td colspan="8">
                         <strong>{% trans %}External video{% endtrans %}: </strong> {{ mm.properties['externalplayer'] }}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="12">
+                        <ul>
+                            <li>
+                                <a class="button_new_master" data-toggle="modal" data-backdrop="static" data-target="#myModal" href="{{ path('pumukitnewadmin_track_create', {'id': mm.id}) }}">{% trans %}New master{% endtrans %}...</a>
+                            </li>
+                        </ul>
                     </td>
                 </tr>
             {% endif %}
@@ -266,4 +266,3 @@
         </script>
     {% endif %}
 {% endif %}
-
