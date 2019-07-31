@@ -2,6 +2,8 @@
 
 namespace Pumukit\WebTVBundle\Controller;
 
+use Pumukit\BasePlayerBundle\Event\BasePlayerEvents;
+use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -44,6 +46,11 @@ class MultimediaObjectController extends Controller implements WebTVControllerIn
 
                 return $this->redirect($url);
             }
+        }
+
+        if (!$track && $multimediaObject->getProperty('externalplayer')) {
+            $event = new ViewedEvent($multimediaObject);
+            $this->get('event_dispatcher')->dispatch(BasePlayerEvents::MULTIMEDIAOBJECT_VIEW, $event);
         }
 
         $this->updateBreadcrumbs($multimediaObject);

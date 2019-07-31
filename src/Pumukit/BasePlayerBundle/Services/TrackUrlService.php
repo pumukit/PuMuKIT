@@ -3,7 +3,6 @@
 namespace Pumukit\BasePlayerBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -58,17 +57,6 @@ class TrackUrlService
         $hash = $this->getHash($track, $timestamp, $this->secret, $request->getClientIp());
 
         return $track->getUrl()."?md5={$hash}&expires={$timestamp}&".http_build_query($request->query->all(), '', '&');
-    }
-
-    /**
-     * @param MultimediaObject $multimediaObject
-     */
-    public function increseViewOnLoadExternalPlayer(MultimediaObject $multimediaObject)
-    {
-        if ($multimediaObject->getProperty('externalplayer')) {
-            $multimediaObject->incNumview();
-            $this->dm->flush();
-        }
     }
 
     /**
