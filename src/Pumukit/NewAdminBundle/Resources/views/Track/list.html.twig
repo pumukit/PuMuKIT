@@ -174,18 +174,20 @@
                         <a class="button_new_master" data-toggle="modal" data-backdrop="static" data-target="#myModal" href="{{ path('pumukitnewadmin_track_create', {'id': mm.id}) }}">{% trans %}New master{% endtrans %}...</a>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <ul>
-                            <li></li>
-                        </ul>
-                    </td>
-                    <td colspan="11">
-                        <a class="button_new_external_video" href="{{ path('pumukitnewadmin_mms_listexternalproperties', {'id': mm.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
-                            {% trans %}New video external{% endtrans %}...
-                        </a>
-                    </td>
-                </tr>
+                {% if is_granted('ROLE_ADD_EXTERNAL_PLAYER') %}
+                    <tr>
+                        <td>
+                            <ul>
+                                <li></li>
+                            </ul>
+                        </td>
+                        <td colspan="11">
+                            <a class="button_new_external_video" href="{{ path('pumukitnewadmin_mms_listexternalproperties', {'id': mm.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+                                {% trans %}New video external{% endtrans %}...
+                            </a>
+                        </td>
+                    </tr>
+                {% endif %}
             {% else %}
                 <tr>
                     <td>
@@ -264,4 +266,3 @@
         </script>
     {% endif %}
 {% endif %}
-
