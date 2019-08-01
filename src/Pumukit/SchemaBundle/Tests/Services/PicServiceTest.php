@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\EventListener\MultimediaObjectListener;
 use Pumukit\SchemaBundle\Services\PicService;
+use Pumukit\SchemaBundle\Services\TextIndexService;
 use Pumukit\SchemaBundle\Services\TrackService;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -54,7 +55,7 @@ class PicServiceTest extends WebTestCase
         $this->picService = new PicService($this->context, $this->webDir, $this->defaultSeriesPic, $this->defaultPlaylistPic, $this->defaultVideoPic, $this->defaultAudioHDPic, $this->defaultAudioSDPic);
 
         $dispatcher = new EventDispatcher();
-        $this->listener = new MultimediaObjectListener($this->dm);
+        $this->listener = new MultimediaObjectListener($this->dm, new TextIndexService());
         $dispatcher->addListener('multimediaobject.update', [$this->listener, 'postUpdate']);
         $this->trackDispatcher = static::$kernel->getContainer()
             ->get('pumukitschema.track_dispatcher')

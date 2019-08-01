@@ -7,6 +7,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\EventListener\MultimediaObjectListener;
 use Pumukit\SchemaBundle\Services\MultimediaObjectEventDispatcherService;
+use Pumukit\SchemaBundle\Services\TextIndexService;
 use Pumukit\SchemaBundle\Services\TrackService;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -39,7 +40,7 @@ class MultimediaObjectListenerTest extends WebTestCase
 
         $dispatcher = new EventDispatcher();
         // $mmDispatcher = new MultimediaObjectEventDispatcherService($dispatcher);
-        $this->listener = new MultimediaObjectListener($this->dm);
+        $this->listener = new MultimediaObjectListener($this->dm, new TextIndexService());
         $dispatcher->addListener('multimediaobject.update', [$this->listener, 'postUpdate']);
         $this->trackDispatcher = static::$kernel->getContainer()
             ->get('pumukitschema.track_dispatcher')

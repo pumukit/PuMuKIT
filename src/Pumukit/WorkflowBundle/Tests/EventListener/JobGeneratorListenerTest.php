@@ -6,6 +6,7 @@ use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\EventListener\MultimediaObjectListener;
+use Pumukit\SchemaBundle\Services\TextIndexService;
 use Pumukit\SchemaBundle\Services\TrackService;
 use Pumukit\WorkflowBundle\EventListener\JobGeneratorListener;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -60,7 +61,7 @@ class JobGeneratorListenerTest extends WebTestCase
         $this->jobGeneratorListener = new JobGeneratorListener($this->dm, $jobService, $profileService, $this->logger);
 
         $dispatcher = new EventDispatcher();
-        $this->listener = new MultimediaObjectListener($this->dm);
+        $this->listener = new MultimediaObjectListener($this->dm, new TextIndexService());
         $dispatcher->addListener('multimediaobject.update', [$this->listener, 'postUpdate']);
         $this->trackDispatcher = static::$kernel->getContainer()
             ->get('pumukitschema.track_dispatcher')
