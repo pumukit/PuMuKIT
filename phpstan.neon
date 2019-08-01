@@ -9,3 +9,6 @@ parameters:
         objectManagerLoader: doc/object-manager.php
     ignoreErrors:
     - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\).#'
+    - '#PHPDoc tag @param has invalid value.#'
+    excludes_analyse:
+        - src/Pumukit/TemplateBundle/EventListener/RouteFoundHttpListener.php

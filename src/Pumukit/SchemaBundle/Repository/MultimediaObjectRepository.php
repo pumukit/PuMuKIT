@@ -963,7 +963,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * Creates a query builder with all multimedia objects having status different than PROTOTYPE.
      * These are the multimedia objects we need to show in series.
      *
-     * @return \Doctrine\MongoDB\Query\Builder
+     * @return \Doctrine\ODM\MongoDB\Query\Builder
      */
     public function createStandardQueryBuilder()
     {

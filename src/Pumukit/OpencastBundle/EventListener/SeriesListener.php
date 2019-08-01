@@ -45,6 +45,6 @@ class SeriesListener
 
             break;
         }
-        $this->logger->addDebug('Synced Series "'.$series->getId().'" on the Opencast Server.');
+        $this->logger->debug('Synced Series "'.$series->getId().'" on the Opencast Server.');
     }
 }

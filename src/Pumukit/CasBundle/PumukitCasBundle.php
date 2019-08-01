@@ -15,6 +15,7 @@ class PumukitCasBundle extends Bundle
     {
         parent::build($container);
 
+        /** @var \Symfony\Bundle\SecurityBundle\DependencyInjection\SecurityExtension */
         $extension = $container->getExtension('security');
         $extension->addSecurityListenerFactory(new PumukitFactory());
     }

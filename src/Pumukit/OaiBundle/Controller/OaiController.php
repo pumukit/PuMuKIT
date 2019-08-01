@@ -256,8 +256,10 @@ class OaiController extends Controller
         $XMLlistSets = new SimpleXMLExtended('<ListSets></ListSets>');
         foreach ($allSeries as $series) {
             $XMLset = $XMLlistSets->addChild('set');
+            /** @var SimpleXMLExtended */
             $XMLsetSpec = $XMLset->addChild('setSpec');
             $XMLsetSpec->addCDATA($series->getId());
+            /** @var SimpleXMLExtended */
             $XMLsetName = $XMLset->addChild('setName');
             $XMLsetName->addCDATA($series->getTitle());
         }
@@ -279,9 +281,11 @@ class OaiController extends Controller
     private function genObjectHeader($XMLlist, $object)
     {
         $XMLheader = $XMLlist->addChild('header');
+        /** @var SimpleXMLExtended */
         $XMLidentifier = $XMLheader->addChild('identifier');
         $XMLidentifier->addCDATA($object->getId());
         $XMLheader->addChild('datestamp', $object->getPublicDate()->format('Y-m-d'));
+        /** @var SimpleXMLExtended */
         $XMLsetSpec = $XMLheader->addChild('setSpec');
         $XMLsetSpec->addCDATA($object->getSeries()->getId());
 
@@ -293,8 +297,10 @@ class OaiController extends Controller
         $XMLmetadata = $XMLlist->addChild('metadata');
 
         $XMLoai_dc = new SimpleXMLExtended('<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd"></oai_dc:dc>');
+        /** @var SimpleXMLExtended */
         $XMLtitle = $XMLoai_dc->addChild('dc:title', null, 'http://purl.org/dc/elements/1.1/');
         $XMLtitle->addCDATA($object->getTitle());
+        /** @var SimpleXMLExtended */
         $XMLdescription = $XMLoai_dc->addChild('dc:description', null, 'http://purl.org/dc/elements/1.1/');
         $XMLdescription->addCDATA($object->getDescription());
         $XMLoai_dc->addChild('dc:date', $object->getPublicDate()->format('Y-m-d'), 'http://purl.org/dc/elements/1.1/');
@@ -352,6 +358,7 @@ class OaiController extends Controller
             $XMLoai_dc->addChild('dc:format', $track->getMimeType(), 'http://purl.org/dc/elements/1.1/');
         }
         foreach ($object->getTags() as $tag) {
+            /** @var SimpleXMLExtended */
             $XMLsubject = $XMLoai_dc->addChild('dc:subject', null, 'http://purl.org/dc/elements/1.1/');
             switch ($this->container->getParameter('pumukitoai.dc_subject_format')) {
                 case 'e-ciencia':
@@ -393,15 +400,18 @@ class OaiController extends Controller
         }
 
         if ($this->container->getParameter('pumukitoai.use_copyright_as_dc_publisher')) {
+            /** @var SimpleXMLExtended */
             $XMLpublisher = $XMLoai_dc->addChild('dc:publisher', null, 'http://purl.org/dc/elements/1.1/');
             $XMLpublisher->addCDATA($object->getCopyright());
         } else {
+            /** @var SimpleXMLExtended */
             $XMLpublisher = $XMLoai_dc->addChild('dc:publisher', null, 'http://purl.org/dc/elements/1.1/');
             $XMLpublisher->addCDATA('');
         }
 
         $people = $object->getPeopleByRoleCod($this->container->getParameter('pumukitoai.role_for_dc_creator'), true);
         foreach ($people as $person) {
+            /** @var SimpleXMLExtended */
             $XMLcreator = $XMLoai_dc->addChild('dc:creator', null, 'http://purl.org/dc/elements/1.1/');
             $XMLcreator->addCDATA($person->getName());
         }
@@ -414,9 +424,11 @@ class OaiController extends Controller
         }
 
         if ($this->container->getParameter('pumukitoai.use_license_as_dc_rights')) {
+            /** @var SimpleXMLExtended */
             $XMLrights = $XMLoai_dc->addChild('dc:rights', null, 'http://purl.org/dc/elements/1.1/');
             $XMLrights->addCDATA($object->getLicense());
         } else {
+            /** @var SimpleXMLExtended */
             $XMLrights = $XMLoai_dc->addChild('dc:rights', null, 'http://purl.org/dc/elements/1.1/');
             $XMLrights->addCDATA($object->getCopyright());
         }

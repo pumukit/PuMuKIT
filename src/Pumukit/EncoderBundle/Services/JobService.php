@@ -13,6 +13,7 @@ use Pumukit\EncoderBundle\Executor\RemoteHTTPExecutor;
 use Pumukit\InspectionBundle\Services\InspectionServiceInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\TrackService;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -1015,7 +1016,7 @@ class JobService
     private function getUserEmail(Job $job = null)
     {
         if (null !== $token = $this->tokenStorage->getToken()) {
-            if (is_object($user = $token->getUser())) {
+            if (($user = $token->getUser()) instanceof User) {
                 return $user->getEmail();
             }
         }
