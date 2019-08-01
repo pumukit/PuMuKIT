@@ -4,6 +4,7 @@ includes:
 
 parameters:
     reportUnmatchedIgnoredErrors: false
+    inferPrivatePropertyTypeFromConstructor: true
     doctrine:
         objectManagerLoader: doc/object-manager.php
     ignoreErrors:
