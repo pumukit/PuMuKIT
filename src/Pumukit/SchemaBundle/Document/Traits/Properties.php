@@ -79,8 +79,8 @@ trait Properties
     /**
      * Set property.
      *
-     * @param string   $key
-     * @param DateTime $value
+     * @param string    $key
+     * @param \DateTime $value
      */
     public function setPropertyAsDateTime($key, \DateTime $value)
     {

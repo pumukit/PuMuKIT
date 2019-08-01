@@ -76,8 +76,7 @@ class EmbeddedSocial
     /**
      * Set twitter hashtag.
      *
-     * @param string $twitter
-     * @param mixed  $twitterHashtag
+     * @param mixed $twitterHashtag
      */
     public function setTwitterHashtag($twitterHashtag)
     {

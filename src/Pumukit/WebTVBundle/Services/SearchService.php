@@ -209,7 +209,7 @@ class SearchService
     {
         if (null !== $yearFound && '' !== $yearFound) {
             $start = \DateTime::createFromFormat('d/m/Y:H:i:s', sprintf('01/01/%s:00:00:00', $yearFound));
-            $end = \DateTime::createFromFormat('d/m/Y:H:i:s', sprintf('01/01/%s:00:00:00', ($yearFound) + 1));
+            $end = \DateTime::createFromFormat('d/m/Y:H:i:s', sprintf('01/01/%s:00:00:00', (int) $yearFound + 1));
             $queryBuilder->field($dateField)->gte($start);
             $queryBuilder->field($dateField)->lt($end);
         } else {

@@ -93,10 +93,6 @@ class CrudController extends Controller
 
     /**
      * Creates a form to delete a a entity.
-     *
-     * @param A $a The a entity
-     *
-     * @return \Symfony\Component\Form\Form The form
      */
     private function createDeleteForm(PumukitTemplate $a)
     {

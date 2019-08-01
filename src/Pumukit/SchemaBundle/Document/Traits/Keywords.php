@@ -166,7 +166,7 @@ trait Keywords
     /**
      * Set keywords.
      *
-     * @param array       $keyword
+     * @param array       $keywords
      * @param null|string $locale
      */
     public function setKeywords(array $keywords, $locale = null)

@@ -50,6 +50,7 @@ class CategoriesService
         }
 
         $allGrounds = [];
+        /** @var Tag[] */
         $tagsTree = $this->documentManager
             ->getRepository(Tag::class)
             ->getTree($groundsRoot)

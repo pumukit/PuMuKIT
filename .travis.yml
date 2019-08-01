@@ -39,7 +39,7 @@ script:
     - php bin/console lint:twig app
     - ./bin/travis_checks/check_var_dumps
     - php bin/php-cs-fixer fix src --dry-run -v
-    - php bin/phpstan analyse -l 1 src
+    - php bin/phpstan analyse -l 2 src
     - php bin/phpstan analyse -l 5 src/Pumukit/CoreBundle/
     - php bin/phpstan analyse -l 5 src/Pumukit/BasePlayerBundle/
     - php bin/phpunit -c app

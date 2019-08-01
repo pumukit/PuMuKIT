@@ -78,16 +78,28 @@ class InspectionFfprobeService implements InspectionServiceInterface
             if (isset($stream->codec_type)) {
                 switch ((string) $stream->codec_type) {
                     case 'video':
-                        $track->setVcodec((string) $stream->codec_name);
-                        $track->setFramerate((string) $stream->avg_frame_rate);
-                        $track->setWidth((int) ($stream->width));
-                        $track->setHeight((int) ($stream->height));
+                        if (isset($stream->codec_name)) {
+                            $track->setVcodec((string) $stream->codec_name);
+                        }
+                        if (isset($stream->avg_frame_rate)) {
+                            $track->setFramerate((string) $stream->avg_frame_rate);
+                        }
+                        if (isset($stream->width)) {
+                            $track->setWidth((int) ($stream->width));
+                        }
+                        if (isset($stream->height)) {
+                            $track->setHeight((int) ($stream->height));
+                        }
                         $only_audio = false;
 
                         break;
                     case 'audio':
-                        $track->setAcodec((string) $stream->codec_name);
-                        $track->setChannels((int) ($stream->channels));
+                        if (isset($stream->codec_name)) {
+                            $track->setAcodec((string) $stream->codec_name);
+                        }
+                        if (isset($stream->channels)) {
+                            $track->setChannels((int) ($stream->channels));
+                        }
 
                         break;
                 }
@@ -100,7 +112,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
     {
         if (null !== $json->streams) {
             foreach ($json->streams as $stream) {
-                if ((isset($stream->codec_type)) && ('audio' == $stream->codec_type || 'video' == $stream->codec_type) && ('ansi' != $stream->codec_name)) {
+                if ((isset($stream->codec_type, $stream->codec_name)) && ('audio' == $stream->codec_type || 'video' == $stream->codec_type) && ('ansi' != $stream->codec_name)) {
                     return true;
                 }
             }

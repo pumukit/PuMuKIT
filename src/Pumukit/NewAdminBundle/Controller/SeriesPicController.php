@@ -249,9 +249,9 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
     /**
      * Get paginated pics.
      *
-     * @param array $urlPics
-     * @param int   $limit
-     * @param int   $page
+     * @param \Doctrine\Common\Collections\Collection $urlPics
+     * @param int                                     $limit
+     * @param int                                     $page
      *
      * @return Pagerfanta
      */

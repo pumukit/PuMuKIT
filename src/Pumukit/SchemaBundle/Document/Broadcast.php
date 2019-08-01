@@ -224,7 +224,6 @@ class Broadcast
     /**
      * Set default_sel.
      *
-     * @param bool  $defatul_sel
      * @param mixed $default_sel
      */
     public function setDefaultSel($default_sel)

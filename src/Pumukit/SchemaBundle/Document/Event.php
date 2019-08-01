@@ -354,8 +354,6 @@ class Event
 
     /**
      * Remove pic.
-     *
-     * @param Pic $pic
      */
     public function removePic()
     {

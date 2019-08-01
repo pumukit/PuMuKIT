@@ -268,7 +268,7 @@ class EmbeddedBroadcastService
      * @param User             $user
      * @param string           $password
      *
-     * @return
+     * @return bool|Response
      */
     public function canUserPlayMultimediaObject(MultimediaObject $multimediaObject, User $user = null, $password = null)
     {

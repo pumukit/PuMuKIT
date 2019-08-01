@@ -202,7 +202,6 @@ class PermissionProfileService
      * Updates all permissions for a given permissionProfile.
      *
      * @param PermissionProfile $permissionProfile
-     * @param bool              $dispatchCreate
      * @param mixed             $permissionsList
      * @param mixed             $executeFlush
      */

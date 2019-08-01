@@ -458,8 +458,7 @@ class EmbeddedTag
     /**
      * Returns true if given node cod is descendant of tag.
      *
-     * @param EmbeddedTag|Tag $tag
-     * @param mixed           $tagCod
+     * @param mixed $tagCod
      *
      * @return bool
      */
@@ -476,9 +475,8 @@ class EmbeddedTag
     }
 
     /**
-     * @param ArrayCollection $embeddedTags
-     * @param EmbeddedTag|Tag $tag
      * @param mixed           $embedTags
+     * @param EmbeddedTag|Tag $tag
      *
      * @return EmbeddedTag
      */

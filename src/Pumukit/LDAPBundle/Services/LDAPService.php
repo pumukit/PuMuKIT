@@ -68,7 +68,7 @@ class LDAPService
      *
      * @return bool true if user exists, false otherwise
      */
-    public function isUser($user = false, $pass = '')
+    public function isUser($user = '', $pass = '')
     {
         if ('' === $pass) {
             return false;

@@ -4,6 +4,7 @@ namespace Pumukit\StatsBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
+use Pumukit\SchemaBundle\Document\User;
 use Pumukit\StatsBundle\Document\ViewsLog;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
@@ -43,7 +44,7 @@ class Log
     private function getUser()
     {
         if (null !== $token = $this->tokenStorage->getToken()) {
-            if (is_object($user = $token->getUser())) {
+            if (($user = $token->getUser()) instanceof User) {
                 return $user->getUsername();
             }
         }

@@ -53,7 +53,7 @@ class Comments
     /**
      * Set date.
      *
-     * @param @MongoDB\Field(type="date") $date
+     * @param \DateTime $date
      *
      * @return Comments
      */
@@ -67,7 +67,7 @@ class Comments
     /**
      * Get date.
      *
-     * @return @MongoDB\Field(type="date")
+     * @return \DateTime
      */
     public function getDate()
     {
