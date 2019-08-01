@@ -110,6 +110,8 @@ window.submit_delete_mms = function(id)
                     $('#edit_mm').html('');
                 }
                 success(message)
+            } else if (XMLHttpRequest.status == 404) {
+                window.location.href = "{{ path('pumukitnewadmin_series_index')|raw }}";
             } else {
                 no_success(XMLHttpRequest['statusText'] + ': ' + responseText);
             }

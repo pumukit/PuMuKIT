@@ -818,6 +818,10 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $sessionId = $this->get('session')->get('admin/series/id', null);
         $series = $factoryService->findSeriesById($seriesId, $sessionId);
 
+        if (!$series) {
+            throw $this->createNotFoundException('Page not found!');
+        }
+
         $mms = $this->getListMultimediaObjects($series, $request->get('newMmId', null));
 
         $update_session = true;
