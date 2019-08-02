@@ -257,6 +257,10 @@ class PumukitExtension extends \Twig_Extension
      */
     public function getDurationString($duration)
     {
+        if (null === $duration) {
+            return '';
+        }
+
         if ($duration > 0) {
             $min = floor($duration / 60);
             $seg = $duration % 60;

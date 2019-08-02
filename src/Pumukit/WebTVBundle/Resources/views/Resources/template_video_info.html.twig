@@ -5,8 +5,10 @@
     </h5>
 {% endif %}
 <p>
-    {% trans %}Duration{% endtrans %}:
-    {{ mmobj_duration(object) | duration_string }}
+    {% set duration = mmobj_duration(object) %}
+    {% if duration%}
+        {% trans %}Duration{% endtrans %}:{{ duration | duration_string }}
+    {% endif %}
 </p>
 <p>
     {% trans %}Viewed{% endtrans %}: <span class="numView">{{ object.getNumview() }}</span>
