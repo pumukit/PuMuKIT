@@ -78,9 +78,9 @@ class TrackService
         $this->dm->flush();
 
         if ($this->forceDeleteOnDisk && $trackPath && $isNotOpencast) {
-            $mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
-            $otherTracks = $mmobjRepo->findBy(['tracks.path' => $trackPath]);
-            if (0 == count($otherTracks)) {
+            $countOtherTracks = $this->countMultimediaObjectWithTrack($trackPath);
+
+            if (0 == $countOtherTracks) {
                 $this->deleteFileOnDisk($trackPath);
             }
         }
@@ -146,5 +146,22 @@ class TrackService
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
+    }
+
+    private function countMultimediaObjectWithTrack($trackPath)
+    {
+        $enableFilter = false;
+        if ($this->dm->getFilterCollection()->isEnabled('backoffice')) {
+            $enableFilter = true;
+            $filter = $this->dm->getFilterCollection()->disable('backoffice');
+        }
+
+        $mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
+        $otherTracks = $mmobjRepo->findBy(['tracks.path' => $trackPath]);
+        if ($enableFilter) {
+            $filter = $this->dm->getFilterCollection()->enable('backoffice');
+        }
+
+        return count($otherTracks);
     }
 }

@@ -332,42 +332,34 @@ class Builder implements ContainerAwareInterface
     {
         $showImporterTab = $this->container->hasParameter('pumukit_opencast.show_importer_tab') && $this->container->getParameter('pumukit_opencast.show_importer_tab');
         $tools = null;
-        if ($showImporterTab && $this->authorizationChecker->isGranted('ROLE_ACCESS_IMPORTER')) {
+
+        if (($showImporterTab && $this->authorizationChecker->isGranted('ROLE_ACCESS_IMPORTER')) || $this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_STYLE) || (0 !== count($this->container->get('pumukitnewadmin.menu')->items()))) {
             $options = ['attributes' => ['class' => 'menu_tools']];
             $tools = $menu->addChild('Tools', $options);
+        }
 
+        if ($showImporterTab && $this->authorizationChecker->isGranted('ROLE_ACCESS_IMPORTER')) {
             $options = ['route' => 'pumukitopencast', 'attributes' => ['class' => 'menu_tools_opencast']];
             $tools->addChild('OC-Importer', $options);
         }
 
         if ($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_STYLE)) {
-            if (!$tools) {
-                $options = ['attributes' => ['class' => 'menu_tools']];
-                $tools = $menu->addChild('Tools', $options);
-            }
-
             $options = ['route' => 'pumukit_newadmin_series_styles', 'attributes' => ['class' => 'menu_series_styles']];
             $tools->addChild('Series style', $options);
         }
 
         foreach ($this->container->get('pumukitnewadmin.menu')->items() as $item) {
-            $this->addDynamicToolMenu($menu, $item, $tools);
+            $this->addDynamicToolMenu($item, $tools);
         }
     }
 
     /**
-     * @param KnpItemInterface      $menu
      * @param ItemInterface         $item
      * @param null|KnpItemInterface $tools
      */
-    protected function addDynamicToolMenu(KnpItemInterface $menu, ItemInterface $item, $tools)
+    protected function addDynamicToolMenu(ItemInterface $item, $tools)
     {
         if ($this->authorizationChecker->isGranted($item->getAccessRole())) {
-            if (!$tools) {
-                $options = ['attributes' => ['class' => 'menu_tools']];
-                $tools = $menu->addChild('Tools', $options);
-            }
-
             $class = 'menu_tools_'.strtolower(str_replace(' ', '_', $item->getName()));
             $options = ['route' => $item->getUri(), 'attributes' => ['class' => $class]];
             $tools->addChild($item->getName(), $options);

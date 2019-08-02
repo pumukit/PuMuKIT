@@ -41,7 +41,7 @@
         </div>
     {% endif %}
 
-    {% if show_video_duration is defined and show_video_duration %}
+    {% if show_video_duration is defined and show_video_duration and mmobj_duration(object) %}
         <div class="col-xs-12 video-duration">
             {% trans %}Duration{% endtrans %}:
             {{ mmobj_duration(object) | duration_string }}

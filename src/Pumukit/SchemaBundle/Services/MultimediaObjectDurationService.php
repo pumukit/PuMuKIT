@@ -14,8 +14,15 @@ class MultimediaObjectDurationService
         $this->dm = $documentManager;
     }
 
-    public function getMmobjDuration(MultimediaObject $mmobj)
+    /**
+     * Get video duration, null if duration is unknow (externalplayer).
+     */
+    public function getMmobjDuration(MultimediaObject $mmobj): ?int
     {
+        if (0 === $mmobj->getDuration() && $mmobj->getProperty('externalplayer')) {
+            return null;
+        }
+
         return $mmobj->getDuration();
     }
 }

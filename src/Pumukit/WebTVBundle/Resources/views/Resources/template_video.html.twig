@@ -16,7 +16,7 @@
                          data-static-pic="{{ object|first_url_pic(true) }}"
                     />
 
-                    {% if show_inside_video_duration|default(true) %}
+                    {% if show_inside_video_duration|default(true) and mmobj_duration(object) %}
                         <span class="inside-video-duration">{{ mmobj_duration(object) | duration_string }}</span>
                     {% endif %}
                 </div>
