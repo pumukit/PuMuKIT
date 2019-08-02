@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
+use Pumukit\SchemaBundle\Document\Role;
 
 /**
  * RoleRepository.
@@ -12,6 +13,11 @@ use Doctrine\ODM\MongoDB\DocumentRepository;
  */
 class RoleRepository extends DocumentRepository
 {
+    public function findOneByCod(string $cod): ?Role
+    {
+        return $this->findOneBy(['cod' => $cod]);
+    }
+
     /**
      * Find all roles in the repository order by rank.
      *

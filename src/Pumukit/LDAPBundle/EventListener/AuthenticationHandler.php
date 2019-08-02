@@ -4,6 +4,7 @@ namespace Pumukit\LDAPBundle\EventListener;
 
 use Pumukit\LDAPBundle\Services\LDAPService;
 use Pumukit\LDAPBundle\Services\LDAPUserService;
+use Pumukit\SchemaBundle\Document\User;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -33,7 +34,12 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
-        $username = strtolower($token->getUser()->getUsername());
+        $user = $token->getUser();
+        if (!$user instanceof User) {
+            throw new \RuntimeException('Error, token is not an instanceof User.');
+        }
+
+        $username = strtolower($user->getUsername());
 
         $info = $this->ldapService->getInfoFrom(self::LDAP_ID_KEY, $username);
         if (!isset($info) || !$info) {

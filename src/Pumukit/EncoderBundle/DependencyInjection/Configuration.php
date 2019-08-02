@@ -38,11 +38,10 @@ class Configuration implements ConfigurationInterface
         $node
             ->children()
             ->booleanNode('delete_inbox_files')
-            ->defaultValue(false)
             ->info('Delete imported inbox files')
+            ->defaultValue(false)
             ->end()
-            ->end()
-        ;
+            ;
     }
 
     /**
@@ -176,18 +175,19 @@ class Configuration implements ConfigurationInterface
      */
     public function addThumbnailSection(ArrayNodeDefinition $node)
     {
-        $node
+        /** @var \Symfony\Component\Config\Definition\Builder\NodeBuilder */
+        $aux = $node
             ->children()
             ->arrayNode('thumbnail')
             ->canBeUnset()
             ->children()
-            ->integerNode('width')->defaultValue(304)
-            ->info('Width resolution of thumbnail')->end()
-            ->integerNode('height')->defaultValue(242)
+        ;
+
+        $aux->integerNode('width')->defaultValue(304)
+            ->info('Width resolution of thumbnail')->end();
+
+        $aux->integerNode('height')->defaultValue(242)
             ->info('Height resolution of thumbnail')->end()
-            ->end()
-            ->end()
-            ->end()
         ;
     }
 

@@ -8,6 +8,7 @@ use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Pumukit\SchemaBundle\Services\SpecialTranslationService;
@@ -228,8 +229,7 @@ class PumukitAdminExtension extends \Twig_Extension
     /**
      * Get status text.
      *
-     * @param int|MultimediaObject $status
-     * @param mixed                $param
+     * @param mixed $param
      *
      * @return string
      */
@@ -264,11 +264,11 @@ class PumukitAdminExtension extends \Twig_Extension
     /**
      * Get series icon.
      *
-     * @param string $series
+     * @param Series $series
      *
      * @return string
      */
-    public function getSeriesIcon($series)
+    public function getSeriesIcon(Series $series)
     {
         [$mmobjsPublished, $mmobjsHidden, $mmobjsBlocked] = $this->countMmobjsByStatus($series);
 

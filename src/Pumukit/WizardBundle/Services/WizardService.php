@@ -246,17 +246,6 @@ class WizardService
     }
 
     /**
-     * @param MultimediaObject $multimediaObject
-     * @param Series           $series
-     */
-    public function removeInvalidMultimediaObject(MultimediaObject $multimediaObject, Series $series)
-    {
-        $series->removeMultimediaObject($multimediaObject);
-        $this->dm->remove($multimediaObject);
-        $this->dm->flush();
-    }
-
-    /**
      * @param string $key
      *
      * @return string

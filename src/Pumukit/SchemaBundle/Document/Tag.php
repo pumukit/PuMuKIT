@@ -578,8 +578,7 @@ class Tag
     /**
      * Returns true if given node cod is descendant of tag.
      *
-     * @param EmbeddedTag|Tag $tag
-     * @param mixed           $tagCod
+     * @param mixed $tagCod
      *
      * @return bool
      */

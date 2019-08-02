@@ -4,6 +4,7 @@ namespace Pumukit\SchemaBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Person;
 
 /**
  * PersonRepository.
@@ -13,6 +14,11 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
  */
 class PersonRepository extends DocumentRepository
 {
+    public function findOneByEmail(string $email): ?Person
+    {
+        return $this->findOneBy(['email' => $email]);
+    }
+
     public function findByRoleCodAndEmail($roleCode, $email)
     {
         $people = $this->createQueryBuilder()

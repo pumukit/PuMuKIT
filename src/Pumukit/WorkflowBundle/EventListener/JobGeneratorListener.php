@@ -74,14 +74,6 @@ class JobGeneratorListener
         }
     }
 
-    /**
-     * @param MultimediaObject $multimediaObject
-     * @param                  $pubChannelCod
-     *
-     * @throws \Exception
-     *
-     * @return array
-     */
     private function generateJobs(MultimediaObject $multimediaObject, $pubChannelCod)
     {
         $jobs = [];

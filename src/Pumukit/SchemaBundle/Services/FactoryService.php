@@ -715,6 +715,7 @@ class FactoryService
             $this->dm->getFilterCollection()->disable($enableFilter);
         }
 
+        /** @var MultimediaObject */
         $multimediaObject = $this->dm->getRepository(MultimediaObject::class)->createQueryBuilder()
             ->field('numerical_id')->exists(true)
             ->sort(['numerical_id' => -1])
@@ -750,6 +751,7 @@ class FactoryService
             $this->dm->getFilterCollection()->disable($enableFilter);
         }
 
+        /** @var Series */
         $series = $this->dm->getRepository(Series::class)->createQueryBuilder()
             ->field('numerical_id')->exists(true)
             ->sort(['numerical_id' => -1])

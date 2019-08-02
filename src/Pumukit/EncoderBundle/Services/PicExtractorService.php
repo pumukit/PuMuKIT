@@ -173,16 +173,8 @@ class PicExtractorService
      * Complete pic metadata.
      *
      * Pic service addPicUrl doesn't add the path
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param string           $picUrl
-     * @param string           $picPath
-     * @param int              $width
-     * @param int              $height
-     *
-     * @return MultimediaObject $multimediaObject
      */
-    private function completePicMetadata(MultimediaObject $multimediaObject, Pic $pic, $picPath = '', $width = 0, $height = 0, array $tags = [])
+    private function completePicMetadata(MultimediaObject $multimediaObject, Pic $pic, string $picPath = '', int $width = 0, int $height = 0, array $tags = []): Multimediaobject
     {
         $pic->setPath($picPath);
         $pic->setWidth($width);
