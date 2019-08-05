@@ -281,8 +281,8 @@ class APIController extends Controller implements NewAdminControllerInterface
      *
      * JSON criteria has priority over row criteria.
      *
-     * @param string|array $row
-     * @param string $json
+     * @param array|string $row
+     * @param string       $json
      *
      * @return array
      */

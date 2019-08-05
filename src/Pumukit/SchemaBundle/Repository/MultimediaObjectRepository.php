@@ -1776,8 +1776,8 @@ class MultimediaObjectRepository extends DocumentRepository
      * Add limit (and page) to Query Builder.
      *
      * @param Builder $qb
-     * @param int $limit
-     * @param int $page
+     * @param int     $limit
+     * @param int     $page
      *
      * @return mixed
      */
@@ -1794,7 +1794,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * Add sort to Query Builder.
      *
      * @param Builder $qb
-     * @param array $sort
+     * @param array   $sort
      *
      * @return mixed
      */
@@ -1811,9 +1811,9 @@ class MultimediaObjectRepository extends DocumentRepository
      * Add sort and limit (and page) to Query Builder.
      *
      * @param Builder $qb
-     * @param array $sort
-     * @param int   $limit
-     * @param int   $page
+     * @param array   $sort
+     * @param int     $limit
+     * @param int     $page
      *
      * @return mixed
      */

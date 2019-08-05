@@ -112,7 +112,7 @@ trait Link
     /**
      * Get link by id.
      *
-     * @param string|\MongoId $linkId
+     * @param \MongoId|string $linkId
      *
      * @return null|DocumentLink
      */

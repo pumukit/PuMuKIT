@@ -64,9 +64,9 @@ class EventRepository extends DocumentRepository
     /**
      * Find current events.
      *
-     * @param int|null $limit
-     * @param int $marginBefore
-     * @param int $marginAfter
+     * @param null|int $limit
+     * @param int      $marginBefore
+     * @param int      $marginAfter
      *
      * @return array of Events
      */

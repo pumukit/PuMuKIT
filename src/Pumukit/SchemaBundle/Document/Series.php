@@ -276,7 +276,6 @@ class Series
      * Set type.
      *
      * @param int $type
-     *
      */
     public function setType($type)
     {
@@ -319,7 +318,6 @@ class Series
      * Set sorting type.
      *
      * @param int $sorting
-     *
      */
     public function setSorting($sorting)
     {

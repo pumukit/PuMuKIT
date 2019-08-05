@@ -1129,7 +1129,7 @@ class MultimediaObject
      * Add tag.
      * The original string tag logic used array_unique to avoid tag duplication.
      *
-     * @param Tag|EmbeddedTag $tag
+     * @param EmbeddedTag|Tag $tag
      *
      * @return bool
      */
@@ -1370,7 +1370,7 @@ class MultimediaObject
     /**
      * Get track by id.
      *
-     * @param string|\MongoId $trackId
+     * @param \MongoId|string $trackId
      *
      * @return null|Track
      */

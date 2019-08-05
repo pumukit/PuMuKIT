@@ -122,7 +122,7 @@ trait Pic
     /**
      * Get pic by id.
      *
-     * @param string|\MongoId $picId
+     * @param \MongoId|string $picId
      *
      * @return null|DocumentPic
      */
