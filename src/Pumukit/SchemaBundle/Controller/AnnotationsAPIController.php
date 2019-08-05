@@ -230,7 +230,7 @@ class AnnotationsAPIController extends Controller
 
         $annonRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Annotation');
         $annonQB = $annonRepo->createQueryBuilder();
-        $annonQB->field('multimedia_object')->equals(new \MongoId($multimediaobject->getId()));
+        $annonQB->field('multimediaObject')->equals(new \MongoId($multimediaobject->getId()));
         $annonQB->remove()->getQuery()->execute();
 
         $response = $serializer->serialize(array('status' => 'ok'), 'xml');
