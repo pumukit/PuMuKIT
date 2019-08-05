@@ -388,7 +388,7 @@ class Live
     /**
      * Set name.
      *
-     * @param             $name
+     * @param string      $name
      * @param null|string $locale
      */
     public function setName($name, $locale = null)
@@ -540,8 +540,7 @@ class Live
     /**
      * Set Resolution.
      *
-     * @param array
-     * @param mixed $resolution
+     * @param array $resolution
      */
     public function setResolution($resolution)
     {

@@ -75,8 +75,8 @@ class MaterialService
      * Set a material from an url into the multimediaObject.
      *
      * @param MultimediaObject $multimediaObject
-     * @param                  $url
-     * @param                  $formData
+     * @param string           $url
+     * @param array            $formData
      *
      * @return MultimediaObject
      */
@@ -101,7 +101,7 @@ class MaterialService
      *
      * @param MultimediaObject $multimediaObject
      * @param UploadedFile     $materialFile
-     * @param                  $formData
+     * @param array            $formData
      *
      * @throws \Exception
      *
@@ -140,7 +140,7 @@ class MaterialService
      * Remove Material from Multimedia Object.
      *
      * @param MultimediaObject $multimediaObject
-     * @param                  $materialId
+     * @param \MongoId|string  $materialId
      *
      * @throws \Exception
      *
@@ -172,7 +172,7 @@ class MaterialService
      * Up Material in Multimedia Object.
      *
      * @param MultimediaObject $multimediaObject
-     * @param                  $materialId
+     * @param \MongoId|string  $materialId
      *
      * @return MultimediaObject
      */
@@ -189,7 +189,7 @@ class MaterialService
      * Down Material in Multimedia Object.
      *
      * @param MultimediaObject $multimediaObject
-     * @param                  $materialId
+     * @param \MongoId|string  $materialId
      *
      * @return MultimediaObject
      */
@@ -222,7 +222,7 @@ class MaterialService
      * Save form data of Material.
      *
      * @param Material $material
-     * @param          $formData
+     * @param array    $formData
      *
      * @return Material
      */
@@ -245,7 +245,7 @@ class MaterialService
     }
 
     /**
-     * @param $path
+     * @param string $path
      *
      * @throws \Exception
      */

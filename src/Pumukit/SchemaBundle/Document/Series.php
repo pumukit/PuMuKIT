@@ -275,15 +275,8 @@ class Series
     /**
      * Set type.
      *
-     * @param mixed $type
+     * @param int $type
      *
-     * @return int
-     */
-
-    /**
-     * @param $type
-     *
-     * @return int
      */
     public function setType($type)
     {
@@ -325,9 +318,8 @@ class Series
     /**
      * Set sorting type.
      *
-     * @param $sorting
+     * @param int $sorting
      *
-     * @return int
      */
     public function setSorting($sorting)
     {

@@ -549,8 +549,8 @@ class UserService
     /**
      * Is logged in the person to be removed from owner of a multimedia object.
      *
-     * @param User $loggedInUser
-     * @param      $personId
+     * @param User            $loggedInUser
+     * @param \MongoId|string $personId
      *
      * @throws \Doctrine\ODM\MongoDB\LockException
      * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException

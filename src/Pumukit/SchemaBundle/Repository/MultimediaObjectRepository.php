@@ -2,8 +2,8 @@
 
 namespace Pumukit\SchemaBundle\Repository;
 
-use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ODM\MongoDB\DocumentRepository;
+use Doctrine\ODM\MongoDB\Query\Builder;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
@@ -96,7 +96,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find multimedia objects by pic id.
      *
-     * @param $picId
+     * @param string $picId
      *
      * @return null|array|object
      */
@@ -111,7 +111,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find multimedia objects by person id.
      *
-     * @param $personId
+     * @param string $personId
      *
      * @return mixed
      */
@@ -126,7 +126,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find multimedia objects by role code.
      *
-     * @param $roleCode
+     * @param string $roleCode
      *
      * @return mixed
      */
@@ -142,7 +142,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find multimedia objects by role id.
      *
-     * @param $roleId
+     * @param string $roleId
      *
      * @return mixed
      */
@@ -158,7 +158,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find multimedia objects by track id.
      *
-     * @param $trackId
+     * @param string $trackId
      *
      * @return null|array|object
      */
@@ -176,13 +176,13 @@ class MultimediaObjectRepository extends DocumentRepository
      * find multimedia objects by person id
      * with given role.
      *
-     * @param $personId
-     * @param $roleCod
-     * @param array $sort
-     * @param int   $limit
-     * @param int   $page
+     * @param string $personId
+     * @param string $roleCod
+     * @param array  $sort
+     * @param int    $limit
+     * @param int    $page
      *
-     * @return \Doctrine\ODM\MongoDB\Query\Builder|mixed
+     * @return Builder
      */
     public function createBuilderByPersonIdWithRoleCod($personId, $roleCod, $sort = [], $limit = 0, $page = 0)
     {
@@ -197,11 +197,11 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find multimedia objects by person id with given role.
      *
-     * @param       $personId
-     * @param       $roleCod
-     * @param array $sort
-     * @param int   $limit
-     * @param int   $page
+     * @param string $personId
+     * @param string $roleCod
+     * @param array  $sort
+     * @param int    $limit
+     * @param int    $page
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
@@ -218,9 +218,9 @@ class MultimediaObjectRepository extends DocumentRepository
      * Find multimedia objects by person id
      * with given role in given series.
      *
-     * @param $series
-     * @param $personId
-     * @param $roleCod
+     * @param Series $series
+     * @param string $personId
+     * @param string $roleCod
      *
      * @return mixed
      */
@@ -235,7 +235,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find people in multimedia objects with given role.
      *
-     * @param $roleCode
+     * @param string $roleCode
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
@@ -282,8 +282,8 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find person in multimedia objects with given role and given email.
      *
-     * @param $roleCode
-     * @param $email
+     * @param string $roleCode
+     * @param string $email
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
@@ -338,7 +338,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find series by person id.
      *
-     * @param $personId
+     * @param string $personId
      *
      * @return mixed
      */
@@ -355,9 +355,9 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Search series using text index.
      *
-     * @param $text
-     * @param int $limit
-     * @param int $page
+     * @param string $text
+     * @param int    $limit
+     * @param int    $page
      *
      * @return mixed
      */
@@ -376,7 +376,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Search series using text index or the _id.
      *
-     * @param $text
+     * @param string $text
      * @param int    $limit
      * @param int    $page
      * @param string $locale
@@ -411,8 +411,8 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find series by person id and role code.
      *
-     * @param $personId
-     * @param $roleCod
+     * @param string $personId
+     * @param string $roleCod
      *
      * @return mixed
      */
@@ -433,9 +433,9 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find by person id and role code or groups query builder.
      *
-     * @param $personId
-     * @param $roleCod
-     * @param $groups
+     * @param string $personId
+     * @param string $roleCod
+     * @param array  $groups
      *
      * @return \Doctrine\ODM\MongoDB\Query\Builder
      */
@@ -455,9 +455,9 @@ class MultimediaObjectRepository extends DocumentRepository
      * and role code or groups
      * query.
      *
-     * @param $personId
-     * @param $roleCod
-     * @param $groups
+     * @param string $personId
+     * @param string $roleCod
+     * @param array  $groups
      *
      * @return \Doctrine\ODM\MongoDB\Query\Query
      */
@@ -471,9 +471,9 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find by person id and role code or groups.
      *
-     * @param $personId
-     * @param $roleCod
-     * @param $groups
+     * @param string $personId
+     * @param string $roleCod
+     * @param array  $groups
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
@@ -489,9 +489,9 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find series by person id and role code or groups.
      *
-     * @param $personId
-     * @param $roleCod
-     * @param $groups
+     * @param string $personId
+     * @param string $roleCod
+     * @param array  $groups
      *
      * @return mixed
      */
@@ -616,7 +616,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find multimedia objects with any tag.
      *
-     * @param $tags
+     * @param array $tags
      * @param array $sort
      * @param int   $limit
      * @param int   $page
@@ -636,7 +636,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find multimedia objects with all tags.
      *
-     * @param $tags
+     * @param array $tags
      * @param array $sort
      * @param int   $limit
      * @param int   $page
@@ -656,7 +656,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find one multimedia object with all tags.
      *
-     * @param $tags
+     * @param array $tags
      *
      * @return null|array|object
      */
@@ -702,7 +702,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find multimedia objects without all tags.
      *
-     * @param $tags
+     * @param array $tags
      * @param array $sort
      * @param int   $limit
      * @param int   $page
@@ -751,7 +751,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find series with any tag.
      *
-     * @param $tags
+     * @param array $tags
      *
      * @return mixed
      */
@@ -765,7 +765,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find series with all tags.
      *
-     * @param $tags
+     * @param array $tags
      *
      * @return mixed
      */
@@ -779,7 +779,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find one series with all tags.
      *
-     * @param $tags
+     * @param array $tags
      *
      * @return null|array|object
      */
@@ -848,8 +848,8 @@ class MultimediaObjectRepository extends DocumentRepository
      * Find by series, tag code and status. Not needed (Using findBySeries and filter).
      *
      * @param Series $series
-     * @param $tagCod
-     * @param array $status
+     * @param string $tagCod
+     * @param array  $status
      *
      * @return mixed
      */
@@ -895,7 +895,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find by embedded broadcast type query builder.
      *
-     * @param $type
+     * @param string $type
      *
      * @return \Doctrine\MongoDB\Query\Builder
      */
@@ -907,7 +907,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find by embedded broadcast type query.
      *
-     * @param $type
+     * @param string $type
      *
      * @return \Doctrine\MongoDB\Query\Query
      */
@@ -919,7 +919,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find by embedded broadcast type.
      *
-     * @param $type
+     * @param string $type
      *
      * @return mixed
      */
@@ -1064,7 +1064,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Count number of standard (not prototype) multimedia objects in a Series.
      *
-     * @param $series
+     * @param Series $series
      *
      * @return mixed
      */
@@ -1076,7 +1076,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find by tag query builder.
      *
-     * @param $tag
+     * @param Tag $tag
      *
      * @return \Doctrine\MongoDB\Query\Builder
      */
@@ -1088,7 +1088,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find by tag query.
      *
-     * @param $tag
+     * @param Tag   $tag
      * @param array $sort
      *
      * @return mixed
@@ -1104,7 +1104,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find by tag code.
      *
-     * @param $tag
+     * @param Tag   $tag
      * @param array $sort
      *
      * @return mixed
@@ -1117,7 +1117,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find all by tag query builder.
      *
-     * @param $tag
+     * @param Tag $tag
      *
      * @return \Doctrine\MongoDB\Query\Builder
      */
@@ -1129,7 +1129,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find all by tag query.
      *
-     * @param $tag
+     * @param Tag   $tag
      * @param array $sort
      *
      * @return mixed
@@ -1145,7 +1145,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find all by tag.
      *
-     * @param $tag
+     * @param Tag   $tag
      * @param array $sort
      *
      * @return mixed
@@ -1332,11 +1332,11 @@ class MultimediaObjectRepository extends DocumentRepository
      * Count number of all multimedia objects in a Series
      * (including prototype).
      *
-     * @param $series
+     * @param Series $series
      *
      * @return mixed
      */
-    public function countInSeriesWithPrototype($series)
+    public function countInSeriesWithPrototype(Series $series)
     {
         return $this->createQueryBuilder()->field('series')->references($series)->count()->getQuery()->execute();
     }
@@ -1449,7 +1449,7 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
-     * @param $groups
+     * @param mixed $groups
      *
      * @return array
      */
@@ -1494,7 +1494,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @deprecated
      * Use findNextSessions of EmbeddedEventSessionService
      *
-     * @param $multimediaObjectId
+     * @param string $multimediaObjectId
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
@@ -1758,11 +1758,11 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Get mongo ids.
      *
-     * @param $documents
+     * @param array $documents
      *
      * @return array
      */
-    private function getMongoIds($documents)
+    private function getMongoIds(array $documents)
     {
         $mongoIds = [];
         foreach ($documents as $document) {
@@ -1775,7 +1775,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Add limit (and page) to Query Builder.
      *
-     * @param $qb
+     * @param Builder $qb
      * @param int $limit
      * @param int $page
      *
@@ -1793,7 +1793,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Add sort to Query Builder.
      *
-     * @param $qb
+     * @param Builder $qb
      * @param array $sort
      *
      * @return mixed
@@ -1810,7 +1810,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Add sort and limit (and page) to Query Builder.
      *
-     * @param $qb
+     * @param Builder $qb
      * @param array $sort
      * @param int   $limit
      * @param int   $page

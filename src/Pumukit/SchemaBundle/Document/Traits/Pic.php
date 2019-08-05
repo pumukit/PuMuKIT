@@ -122,7 +122,7 @@ trait Pic
     /**
      * Get pic by id.
      *
-     * @param $picId
+     * @param string|\MongoId $picId
      *
      * @return null|DocumentPic
      */
@@ -141,7 +141,7 @@ trait Pic
      * @deprecated: Use PicService, function getFirstUrlPic($object, $absolute, $hd)
      * Get first pic url
      *
-     * @param $default string url returned if series without pics
+     * @param string $default: url returned if series without pics
      *
      * @return string
      */

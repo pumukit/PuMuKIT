@@ -320,7 +320,7 @@ class EmbeddedBroadcastService
     /**
      * Delete all embedded broadcasts from group.
      *
-     * @param Group
+     * @param Group $group
      */
     public function deleteAllFromGroup(Group $group)
     {

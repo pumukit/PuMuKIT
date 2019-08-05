@@ -396,7 +396,7 @@ class MultimediaObject
     /**
      * Set type.
      *
-     * @param $type
+     * @param int $type
      */
     public function setType($type)
     {
@@ -414,7 +414,7 @@ class MultimediaObject
     }
 
     /**
-     * @param $type
+     * @param int $type
      *
      * @return string
      */
@@ -444,7 +444,7 @@ class MultimediaObject
     }
 
     /**
-     * @param $status
+     * @param int $status
      *
      * @return string
      */
@@ -1129,7 +1129,7 @@ class MultimediaObject
      * Add tag.
      * The original string tag logic used array_unique to avoid tag duplication.
      *
-     * @param $tag Tag|EmbeddedTag
+     * @param Tag|EmbeddedTag $tag
      *
      * @return bool
      */
@@ -1370,7 +1370,7 @@ class MultimediaObject
     /**
      * Get track by id.
      *
-     * @param $trackId
+     * @param string|\MongoId $trackId
      *
      * @return null|Track
      */
@@ -1940,8 +1940,7 @@ class MultimediaObject
     /**
      * Get embedded role.
      *
-     * @param EmbeddedRole|Role
-     * @param mixed $role
+     * @param EmbeddedRole|Role $role
      *
      * @return bool|EmbeddedRole EmbeddedRole if found, FALSE otherwise
      */
@@ -2067,8 +2066,7 @@ class MultimediaObject
     /**
      * Set duration in minutes and seconds.
      *
-     * @param array
-     * @param mixed $durationInMinutesAndSeconds
+     * @param array $durationInMinutesAndSeconds
      */
     public function setDurationInMinutesAndSeconds($durationInMinutesAndSeconds)
     {

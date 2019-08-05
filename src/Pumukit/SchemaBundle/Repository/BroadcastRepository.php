@@ -45,7 +45,7 @@ class BroadcastRepository extends DocumentRepository
     /**
      * Find distinct ids by broadcast type id.
      *
-     * @param $broadcastTypeId
+     * @param mixed $broadcastTypeId
      *
      * @return mixed
      */

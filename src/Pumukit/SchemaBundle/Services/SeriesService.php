@@ -26,8 +26,7 @@ class SeriesService
     /**
      * Resets the magic url for a given series. Returns the secret id.
      *
-     * @param Series
-     * @param mixed $series
+     * @param Series $series
      *
      * @return string
      */

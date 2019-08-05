@@ -309,8 +309,8 @@ class TagService
      * Reset the tags of an array of MultimediaObjects.
      * Deleting all the tag of MultimediaObjects and setting the parameter tags.
      *
-     * @param array[MultimediaObject] $mmobjs
-     * @param array[Tag]              $tags
+     * @param MultimediaObject[] $mmobjs
+     * @param Tag[]              $tags
      */
     public function resetTags(array $mmobjs, array $tags)
     {
@@ -340,9 +340,9 @@ class TagService
     /**
      * Reset the descendent tags of an array of MultimediaObjects and set the target.
      *
-     * @param array[MultimediaObject] $mmobjs
-     * @param array[Tag]              $newTags
-     * @param array[Tag]              $parentTags
+     * @param MultimediaObject[] $mmobjs
+     * @param Tag[]              $newTags
+     * @param Tag[]              $parentTags
      */
     public function syncTagsForCollections(array $mmobjs, array $newTags, array $parentTags)
     {
@@ -362,10 +362,10 @@ class TagService
     /**
      * Reset the descendent tags of an array of MultimediaObjects and set the target.
      *
-     * @param array[MultimediaObject] $mmobjs
-     * @param array[string]           $newTags
-     * @param array[string]           $parentTags
-     * @param mixed                   $executeFlush
+     * @param MultimediaObject $mmobj
+     * @param Tag[]            $newTags
+     * @param Tag              $parentTag
+     * @param bool             $executeFlush
      */
     public function syncTags(MultimediaObject $mmobj, array $newTags, Tag $parentTag, $executeFlush = true)
     {

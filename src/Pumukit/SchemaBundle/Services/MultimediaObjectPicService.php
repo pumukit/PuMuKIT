@@ -59,13 +59,13 @@ class MultimediaObjectPicService
     /**
      * Get pics from series or multimedia object.
      *
-     * @param $series
+     * @param MultimediaObject $multimediaObject
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
      * @return mixed
      */
-    public function getRecommendedPics($series)
+    public function getRecommendedPics($multimediaObject)
     {
         return $this->repo->findDistinctUrlPics();
     }
@@ -74,7 +74,7 @@ class MultimediaObjectPicService
      * Set a pic from an url into the multimediaObject.
      *
      * @param MultimediaObject $multimediaObject
-     * @param                  $picUrl
+     * @param string           $picUrl
      * @param bool             $flush
      * @param bool             $isEventPoster
      *
@@ -143,7 +143,7 @@ class MultimediaObjectPicService
      * Set a pic from a memory string.
      *
      * @param MultimediaObject $multimediaObject
-     * @param                  $pic
+     * @param string           $pic
      * @param string           $format
      *
      * @return MultimediaObject
@@ -184,7 +184,7 @@ class MultimediaObjectPicService
      * Remove Pic from Multimedia Object.
      *
      * @param MultimediaObject $multimediaObject
-     * @param                  $picId
+     * @param \MongoId|string  $picId
      *
      * @throws \Exception
      *
@@ -212,8 +212,8 @@ class MultimediaObjectPicService
     }
 
     /**
-     * @param $path
-     * @param $multimediaObject
+     * @param string           $path
+     * @param Multimediaobject $multimediaObject
      *
      * @throws \Exception
      */

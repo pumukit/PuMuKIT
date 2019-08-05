@@ -267,9 +267,9 @@ class PicService
     }
 
     /**
-     * @param      $object
-     * @param bool $absolute
-     * @param bool $hd
+     * @param object $object
+     * @param bool   $absolute
+     * @param bool   $hd
      *
      * @return null|string
      */
@@ -297,8 +297,8 @@ class PicService
     }
 
     /**
-     * @param      $object
-     * @param bool $absolute
+     * @param object $object
+     * @param bool   $absolute
      *
      * @return null|string
      */

@@ -160,8 +160,8 @@ class EmbeddedEventSessionService
      * EmbeddedEventSessionService constructor.
      *
      * @param DocumentManager $documentManager
-     * @param                 $defaultPoster
-     * @param                 $defaultThumbnail
+     * @param string          $defaultPoster
+     * @param string          $defaultThumbnail
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
@@ -440,12 +440,12 @@ class EmbeddedEventSessionService
     /**
      * Get sessions to show on menu of WebTV.
      *
-     * @param     $criteria
-     * @param int $limit
+     * @param array $criteria
+     * @param int   $limit
      *
      * @return array
      */
-    public function findEventsMenu($criteria = [], $limit = 0)
+    public function findEventsMenu(array $criteria = [], $limit = 0)
     {
         $todayStarts = mktime(00, 00, 00, date('m'), date('d'), date('Y'));
 
@@ -600,8 +600,7 @@ class EmbeddedEventSessionService
     /**
      * Get first thumbnail.
      *
-     * @param array pics
-     * @param mixed $pics
+     * @param array $pics
      *
      * @return string
      */
@@ -663,7 +662,7 @@ class EmbeddedEventSessionService
     /**
      * Validate HTML Color.
      *
-     * @param $color
+     * @param string $color
      *
      * @throws \Exception
      *
@@ -732,8 +731,8 @@ class EmbeddedEventSessionService
     /**
      * Get future session date.
      *
-     * @param      $event
-     * @param bool $start
+     * @param array $event
+     * @param bool  $start
      *
      * @return string
      */
@@ -1043,8 +1042,7 @@ class EmbeddedEventSessionService
     /**
      * End pipeline.
      *
-     * @param array pipeline
-     * @param mixed $pipeline
+     * @param array $pipeline
      */
     private function endPipeline(&$pipeline)
     {
@@ -1071,8 +1069,7 @@ class EmbeddedEventSessionService
     /**
      * Get future events pipeline.
      *
-     * @param string MultimediaObjectId
-     * @param mixed $multimediaObjectId
+     * @param \MongoId|string $multimediaObjectId
      *
      * @return array
      */
@@ -1133,8 +1130,7 @@ class EmbeddedEventSessionService
     /**
      * Get multimedia object pics.
      *
-     * @param string eventId
-     * @param mixed $eventId
+     * @param \MongoId|string $eventId
      *
      * @return array
      */
@@ -1176,12 +1172,11 @@ class EmbeddedEventSessionService
      *
      * @deprecated: Use getPicPoster
      *
-     * @param array
-     * @param mixed $pics
+     * @param array $pics
      *
      * @return string
      */
-    private function getPoster($pics)
+    private function getPoster(array $pics)
     {
         foreach ($pics as $pic) {
             if (isset($pic['tags'])) {
@@ -1214,8 +1209,7 @@ class EmbeddedEventSessionService
     /**
      * Get multimedia object properties.
      *
-     * @param string eventId
-     * @param mixed $eventId
+     * @param \MongoId|string $eventId
      *
      * @return array
      */
@@ -1255,8 +1249,7 @@ class EmbeddedEventSessionService
     /**
      * Get next live events pipeline.
      *
-     * @param string multimediaObjectId
-     * @param mixed $multimediaObjectId
+     * @param \MongoId|string $multimediaObjectId
      *
      * @return array
      */

@@ -215,7 +215,7 @@ class EmbeddedEvent
     }
 
     /**
-     * @param        $description
+     * @param string $description
      * @param string $locale
      */
     public function setDescription($description, $locale = null)
@@ -381,7 +381,7 @@ class EmbeddedEvent
     }
 
     /**
-     * @param $embeddedEventSession
+     * @param EmbeddedEventSession $embeddedEventSession
      *
      * @return mixed
      */
@@ -391,7 +391,7 @@ class EmbeddedEvent
     }
 
     /**
-     * @param $embeddedEventSession
+     * @param EmbeddedEventSession $embeddedEventSession
      *
      * @return bool
      */

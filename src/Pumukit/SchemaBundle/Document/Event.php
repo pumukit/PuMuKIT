@@ -331,8 +331,7 @@ class Event
     /**
      * Get Schedule.
      *
-     * @param array
-     * @param mixed $schedule
+     * @param array $schedule
      */
     public function setSchedule($schedule)
     {

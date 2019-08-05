@@ -47,7 +47,7 @@ class SearchUtils
     private static $filterSizeStopWords = 2;
 
     /**
-     * @param $string
+     * @param string $string
      *
      * @return \MongoRegex
      */
@@ -68,7 +68,7 @@ class SearchUtils
     }
 
     /**
-     * @param $element
+     * @param string $element
      *
      * @return bool
      */
@@ -82,9 +82,9 @@ class SearchUtils
     }
 
     /**
-     * @param $element
+     * @param string $element
      *
-     * @return mixed
+     * @return string
      */
     public static function scapeTildes($element)
     {
@@ -94,7 +94,7 @@ class SearchUtils
     }
 
     /**
-     * @param $regexString
+     * @param array $regexString
      *
      * @return string
      */

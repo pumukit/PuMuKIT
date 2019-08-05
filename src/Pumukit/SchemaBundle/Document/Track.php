@@ -461,8 +461,7 @@ class Track extends Element
     /**
      * Set Resolution.
      *
-     * @param array
-     * @param mixed $resolution
+     * @param array $resolution
      */
     public function setResolution($resolution)
     {
@@ -499,8 +498,7 @@ class Track extends Element
     /**
      * Set duration in minutes and seconds.
      *
-     * @param array
-     * @param mixed $durationInMinutesAndSeconds
+     * @param array $durationInMinutesAndSeconds
      */
     public function setDurationInMinutesAndSeconds($durationInMinutesAndSeconds)
     {

@@ -17,9 +17,6 @@ class MultimediaObjectListener
         $this->textIndexService = $textIndexService;
     }
 
-    /**
-     * @param $event
-     */
     public function postUpdate($event)
     {
         $multimediaObject = $event->getMultimediaObject();
@@ -28,9 +25,6 @@ class MultimediaObjectListener
         $this->dm->flush();
     }
 
-    /**
-     * @param $multimediaObject
-     */
     public function updateType(MultimediaObject $multimediaObject)
     {
         if ($multimediaObject->isLive()) {

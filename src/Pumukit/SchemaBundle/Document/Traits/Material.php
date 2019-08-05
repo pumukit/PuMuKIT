@@ -112,7 +112,7 @@ trait Material
     /**
      * Get material by id.
      *
-     * @param $materialId
+     * @param string|\MongoId $materialId
      *
      * @return null|DocumentMaterial
      */

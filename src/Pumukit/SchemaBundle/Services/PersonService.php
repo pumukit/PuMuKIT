@@ -344,7 +344,7 @@ class PersonService
     /**
      * Batch delete person.
      *
-     * @param Person
+     * @param Person $person
      */
     public function batchDeletePerson(Person $person)
     {
