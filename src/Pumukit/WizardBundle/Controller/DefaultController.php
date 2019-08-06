@@ -21,10 +21,6 @@ class DefaultController extends Controller
     const SERIES_LIMIT = 30;
 
     /**
-     * @param Request $request
-     *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @Template("PumukitWizardBundle:Default:license.html.twig")
      */
     public function licenseAction(Request $request)
@@ -57,10 +53,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param Request $request
-     *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @Template("PumukitWizardBundle:Default:series.html.twig")
      */
     public function seriesAction(Request $request)
@@ -103,12 +95,9 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param         $id
-     * @param Request $request
-     *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @Template("PumukitWizardBundle:Default:type.html.twig")
+     *
+     * @param mixed $id
      */
     public function typeAction($id, Request $request)
     {
@@ -163,11 +152,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     *
-     * Option action
+     * Option action.
      */
     public function optionAction(Request $request)
     {
@@ -187,10 +172,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param Request $request
-     *
-     * @return array
-     *
      * @Template("PumukitWizardBundle:Default:multimediaobject.html.twig")
      */
     public function multimediaobjectAction(Request $request)
@@ -260,10 +241,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param Request $request
-     *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @Template("PumukitWizardBundle:Default:track.html.twig")
      */
     public function trackAction(Request $request)
@@ -328,12 +305,6 @@ class DefaultController extends Controller
 
     /**
      * Upload action.
-     *
-     * @param Request $request
-     *
-     * @throws \Exception
-     *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @Template("PumukitWizardBundle:Default:upload.html.twig")
      */
@@ -556,10 +527,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param Request $request
-     *
-     * @return array
-     *
      * @Template("PumukitWizardBundle:Default:end.html.twig")
      */
     public function endAction(Request $request)
@@ -589,10 +556,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param Request $request
-     *
-     * @return array
-     *
      * @Template("PumukitWizardBundle:Default:error.html.twig")
      */
     public function errorAction(Request $request)
@@ -614,10 +577,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param Request $request
-     *
-     * @return array
-     *
      * @Template("PumukitWizardBundle:Default:steps.html.twig")
      */
     public function stepsAction(Request $request)
@@ -641,13 +600,11 @@ class DefaultController extends Controller
     /**
      * Get key data.
      *
-     * @param       $key
-     * @param       $formData
-     * @param array $default
+     * @param mixed $key
      *
      * @return array
      */
-    private function getKeyData($key, $formData, $default = [])
+    private function getKeyData($key, array $formData, array $default = [])
     {
         return array_key_exists($key, $formData) ? $formData[$key] : $default;
     }
@@ -698,8 +655,8 @@ class DefaultController extends Controller
     /**
      * Create Multimedia Object.
      *
-     * @param $mmData
-     * @param $series
+     * @param array  $mmData
+     * @param Series $series
      *
      * @return mixed|MultimediaObject|void
      */
@@ -722,7 +679,7 @@ class DefaultController extends Controller
      * Add Tag to Multimedia Object by Code.
      *
      * @param MultimediaObject $multimediaObject
-     * @param                  $tagCode
+     * @param string           $tagCode
      *
      * @return array
      */
@@ -749,9 +706,9 @@ class DefaultController extends Controller
     /**
      * Set data.
      *
-     * @param $resource
-     * @param $resourceData
-     * @param $keys
+     * @param object $resource
+     * @param array  $resourceData
+     * @param array  $keys
      *
      * @return mixed
      */
@@ -836,7 +793,7 @@ class DefaultController extends Controller
     /**
      * Find Series in Repository.
      *
-     * @param $id
+     * @param \MongoId|string $id
      *
      * @return mixed
      */
@@ -852,7 +809,7 @@ class DefaultController extends Controller
     /**
      * Complete Form with Series metadata.
      *
-     * @param        $formData
+     * @param array  $formData
      * @param Series $series
      *
      * @return array

@@ -75,9 +75,9 @@ class WizardService
      * @param JobService                    $jobService
      * @param AuthorizationCheckerInterface $authorizationChecker
      * @param TagService                    $tagService
-     * @param                               $basePath
-     * @param                               $locales
-     * @param null                          $inboxDepth
+     * @param string                        $basePath
+     * @param array                         $locales
+     * @param null|bool                     $inboxDepth
      */
     public function __construct(
         DocumentManager $documentManager,
@@ -104,10 +104,10 @@ class WizardService
     }
 
     /**
-     * @param User  $user
-     * @param       $files
-     * @param       $seriesData
-     * @param array $options
+     * @param User   $user
+     * @param string $files
+     * @param array  $seriesData
+     * @param array  $options
      *
      * @throws \Exception
      *
@@ -186,9 +186,9 @@ class WizardService
     }
 
     /**
-     * @param       $key
-     * @param array $formData
-     * @param array $default
+     * @param string $key
+     * @param array  $formData
+     * @param array  $default
      *
      * @return mixed
      */
@@ -222,9 +222,9 @@ class WizardService
     }
 
     /**
-     * @param $resource
-     * @param $resourceData
-     * @param $keys
+     * @param object $resource
+     * @param array  $resourceData
+     * @param array  $keys
      *
      * @return mixed
      */
@@ -266,7 +266,7 @@ class WizardService
 
     /**
      * @param MultimediaObject $multimediaObject
-     * @param                  $tagCode
+     * @param string           $tagCode
      * @param User             $user
      *
      * @throws \Exception
@@ -290,9 +290,9 @@ class WizardService
     }
 
     /**
-     * @param $mmData
-     * @param $series
-     * @param $user
+     * @param array  $mmData
+     * @param Series $series
+     * @param User   $user
      *
      * @throws \Exception
      *
@@ -343,16 +343,16 @@ class WizardService
     }
 
     /**
-     * @param User $user
-     * @param      $selectedPath
-     * @param      $inboxDepth
-     * @param      $series
-     * @param      $status
-     * @param      $pubChannel
-     * @param      $profile
-     * @param      $priority
-     * @param      $language
-     * @param      $description
+     * @param User   $user
+     * @param string $selectedPath
+     * @param string $inboxDepth
+     * @param string $series
+     * @param string $status
+     * @param string $pubChannel
+     * @param string $profile
+     * @param string $priority
+     * @param string $language
+     * @param string $description
      *
      * @return mixed
      */
@@ -375,7 +375,7 @@ class WizardService
     }
 
     /**
-     * @param $pubChannels
+     * @param array $pubChannels
      *
      * @return string
      */
@@ -390,9 +390,9 @@ class WizardService
     }
 
     /**
-     * @param $aCommandArguments
-     * @param $sOption
-     * @param $sValue
+     * @param array  $aCommandArguments
+     * @param string $sOption
+     * @param string $sValue
      *
      * @return mixed
      */
