@@ -97,7 +97,7 @@ class ClientService
      *
      * @throws \Exception
      *
-     * @return null|mixed
+     * @return null|string
      */
     public function getAdminUrl()
     {
@@ -145,9 +145,9 @@ class ClientService
      *
      * Gets all the media packages from the Opencast server accordion to input parameters
      *
-     * @param $query
-     * @param $limit
-     * @param $offset
+     * @param string $query
+     * @param int    $limit
+     * @param int    $offset
      *
      * @throws \Exception
      *
@@ -183,7 +183,7 @@ class ClientService
     /**
      * Get media package from given id.
      *
-     * @param $id
+     * @param string $id
      *
      * @throws \Exception
      *
@@ -211,7 +211,7 @@ class ClientService
     /**
      * Get full media package from given id.
      *
-     * @param $id
+     * @param string $id
      *
      * @throws \Exception
      *
@@ -237,11 +237,11 @@ class ClientService
     }
 
     /**
-     * @param $id
+     * @param string $id
      *
      * @throws \Exception
      *
-     * @return null|mixed
+     * @return null|array
      */
     public function getMasterMediaPackage($id)
     {
@@ -267,11 +267,11 @@ class ClientService
     }
 
     /**
-     * @param $id
+     * @param string $id
      *
      * @throws \Exception
      *
-     * @return null|mixed
+     * @return null|array
      */
     public function getMediaPackageFromWorkflow($id)
     {
@@ -292,11 +292,11 @@ class ClientService
     }
 
     /**
-     * @param $id
+     * @param string $id
      *
      * @throws \Exception
      *
-     * @return null|mixed
+     * @return null|array
      */
     public function getMediaPackageFromAssets($id)
     {
@@ -311,7 +311,7 @@ class ClientService
     /**
      * Get media package from archive with given id.
      *
-     * @param $id
+     * @param string $id
      *
      * @throws \Exception
      *
@@ -606,7 +606,7 @@ class ClientService
      * the Opencast series does not exist, it creates a new Opencast series and updates
      * the Opencast id on the PuMuKIT series.
      *
-     * @param $series
+     * @param Series $series
      *
      * @throws \Exception
      *
@@ -651,7 +651,7 @@ class ClientService
      * Creates an Opencast series and associates it to the PuMuKIT series.
      * The Opencast series metadata is taken from the PuMuKIT series.
      *
-     * @param $series
+     * @param Series $series
      *
      * @throws \Exception
      *
@@ -693,7 +693,7 @@ class ClientService
      *
      * Deletes the Opencast series metadata associated to the PuMuKIT series.
      *
-     * @param $series
+     * @param Series $series
      *
      * @throws \Exception
      *
@@ -715,7 +715,7 @@ class ClientService
     }
 
     /**
-     * @param $url
+     * @param string $url
      *
      * @throws \Exception
      *
@@ -786,7 +786,7 @@ class ClientService
      *
      * Makes a given request (path) GET or POST  to the Opencast server using or not the admin url
      *
-     * @param        $path
+     * @param string $path
      * @param array  $params
      * @param string $method
      * @param bool   $useAdminUrl
@@ -902,7 +902,7 @@ class ClientService
      *
      * @throws \Exception
      *
-     * @return null|mixed
+     * @return null|array
      */
     private function decodeXML($xmlString = [])
     {
