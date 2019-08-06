@@ -107,8 +107,7 @@ class ProfileService
     /**
      * Get given profile.
      *
-     * @param string the profile name (case sensitive)
-     * @param mixed $profile
+     * @param string $profile the profile name (case sensitive)
      */
     public function getProfile($profile)
     {

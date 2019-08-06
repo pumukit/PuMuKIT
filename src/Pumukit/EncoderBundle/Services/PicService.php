@@ -154,8 +154,8 @@ class PicService
     }
 
     /**
-     * @param $data
-     * @param $size
+     * @param array  $data
+     * @param string $size
      *
      * @return array $data
      */
@@ -183,13 +183,13 @@ class PicService
     }
 
     /**
-     * @param $id
-     * @param $size
-     * @param $path
-     * @param $extension
-     * @param $tags
-     * @param $exists
-     * @param $type
+     * @param string $id
+     * @param string $size
+     * @param string $path
+     * @param string $extension
+     * @param string $tags
+     * @param string $exists
+     * @param string $type
      *
      * @throws \Exception
      *
@@ -222,7 +222,7 @@ class PicService
     }
 
     /**
-     * @param       $data
+     * @param array $data
      * @param array $params
      * @param bool  $no_replace
      *
@@ -287,7 +287,7 @@ class PicService
     }
 
     /**
-     * @param $extension
+     * @param string $extension
      *
      * @return array
      */
@@ -309,7 +309,7 @@ class PicService
     }
 
     /**
-     * @param $path
+     * @param string $path
      *
      * @return bool
      */
@@ -319,7 +319,7 @@ class PicService
     }
 
     /**
-     * @param $tags
+     * @param string $tags
      *
      * @return array
      */
@@ -341,10 +341,10 @@ class PicService
     }
 
     /**
-     * @param $pic
-     * @param $params
-     * @param $no_replace
-     * @param $ext
+     * @param array  $pic
+     * @param array  $params
+     * @param bool   $no_replace
+     * @param string $ext
      *
      * @return mixed|string
      */
@@ -379,10 +379,10 @@ class PicService
     }
 
     /**
-     * @param $width
-     * @param $height
-     * @param $originalWidth
-     * @param $originalHeight
+     * @param int $width
+     * @param int $height
+     * @param int $originalWidth
+     * @param int $originalHeight
      *
      * @return array
      */
@@ -410,13 +410,6 @@ class PicService
         return [$width, $height];
     }
 
-    /**
-     * @param $multimediaObject
-     * @param $picPath
-     * @param $pic
-     *
-     * @return Pic
-     */
     private function generateNewPic($multimediaObject, $picPath, $pic)
     {
         $url = $this->mmsPicService->getTargetUrl($multimediaObject);
@@ -442,10 +435,6 @@ class PicService
         return $newPic;
     }
 
-    /**
-     * @param $multimediaObject
-     * @param $pic
-     */
     private function hideOriginalImage($multimediaObject, $pic)
     {
         foreach ($multimediaObject->getPics() as $mmsPic) {
@@ -457,11 +446,6 @@ class PicService
         }
     }
 
-    /**
-     * @param $multimediaObject
-     * @param $picPath
-     * @param $pic
-     */
     private function updateOriginalImage($multimediaObject, $picPath, $pic)
     {
         $url = $this->mmsPicService->getTargetUrl($multimediaObject);

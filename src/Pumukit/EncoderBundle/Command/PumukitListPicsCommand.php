@@ -34,7 +34,7 @@ class PumukitListPicsCommand extends ContainerAwareCommand
             ->addOption('exists', null, InputOption::VALUE_OPTIONAL, 'List exists or not exists file pics.')
             ->setHelp(
                 <<<'EOT'
-            
+
 Command to get all pics like selected filters. The predefined filter is that the pics must have "path" attribute.
 
 Id example: --id="5b4dd4c22bb478607d8b456b"
@@ -47,7 +47,7 @@ Exists:
       If you don't defined this option, the command will return all images
       Example:
               --exists="1" or --exists="0" or --exists="true" or --exists="false" ..
-                   
+
 Example commands:
 
 php app/console pumukit:pics:list --id="5b4dd4c22bb478607d8b456b" --exists=true --type="mm"
@@ -150,7 +150,7 @@ EOT
     }
 
     /**
-     * @param $data
+     * @param array $data
      *
      * @return bool
      */
