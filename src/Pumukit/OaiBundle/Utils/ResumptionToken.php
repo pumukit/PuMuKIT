@@ -122,8 +122,7 @@ class ResumptionToken
     /**
      * Factory method to create a new ResumptionToken from a token.
      *
-     * @param token string
-     * @param mixed $token
+     * @param string $token
      *
      * @return ResumptionToken
      */

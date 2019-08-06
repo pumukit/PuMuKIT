@@ -71,7 +71,7 @@ class OpencastService
      *
      * @param string $url
      *
-     * @return string
+     * @return null|string
      */
     public function getPath($url)
     {

@@ -27,9 +27,9 @@ class OpencastListCommand extends ContainerAwareCommand
             ->setDescription('List imported or not mediapackages on PuMuKIT')
             ->setHelp(
                 <<<'EOT'
-            
+
             Show not imported mediaPackages on PuMuKIT
-            
+
             Example:
             php app/console pumukit:opencast:list
 EOT

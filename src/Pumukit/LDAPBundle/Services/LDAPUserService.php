@@ -50,12 +50,12 @@ class LDAPUserService
     }
 
     /**
-     * @param $info
-     * @param $username
+     * @param array       $info
+     * @param null|string $username
      *
      * @throws \Exception
      *
-     * @return mixed|object|User
+     * @return User
      */
     public function createUser($info, $username)
     {
@@ -84,9 +84,9 @@ class LDAPUserService
     }
 
     /**
-     * @param $info
+     * @param array $info
      *
-     * @return mixed
+     * @return string
      */
     public function getEmail($info)
     {
@@ -98,10 +98,10 @@ class LDAPUserService
     }
 
     /**
-     * @param $info
-     * @param $username
+     * @param array  $info
+     * @param string $username
      *
-     * @return object|User
+     * @return User
      */
     protected function newUser($info, $username)
     {
@@ -185,8 +185,8 @@ class LDAPUserService
     }
 
     /**
-     * @param $info
-     * @param $user
+     * @param array $info
+     * @param User  $user
      *
      * @throws \Exception
      */
@@ -225,8 +225,8 @@ class LDAPUserService
     }
 
     /**
-     * @param $info
-     * @param $user
+     * @param array $info
+     * @param User  $user
      *
      * @return mixed
      */
@@ -291,8 +291,8 @@ class LDAPUserService
     }
 
     /**
-     * @param $info
-     * @param $user
+     * @param array $info
+     * @param User  $user
      *
      * @throws \Exception
      *
@@ -314,8 +314,8 @@ class LDAPUserService
     }
 
     /**
-     * @param $info
-     * @param $username
+     * @param array  $info
+     * @param string $username
      *
      * @return bool
      */
@@ -325,8 +325,8 @@ class LDAPUserService
     }
 
     /**
-     * @param $info
-     * @param $username
+     * @param array  $info
+     * @param string $username
      *
      * @return bool
      */
@@ -336,8 +336,8 @@ class LDAPUserService
     }
 
     /**
-     * @param $info
-     * @param $username
+     * @param array  $info
+     * @param string $username
      *
      * @return bool
      */
@@ -347,8 +347,8 @@ class LDAPUserService
     }
 
     /**
-     * @param $info
-     * @param $username
+     * @param array  $info
+     * @param string $username
      *
      * @return bool
      */
@@ -358,8 +358,8 @@ class LDAPUserService
     }
 
     /**
-     * @param $info
-     * @param $username
+     * @param array  $info
+     * @param string $username
      *
      * @return bool
      */

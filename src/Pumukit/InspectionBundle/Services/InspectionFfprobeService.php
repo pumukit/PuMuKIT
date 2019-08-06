@@ -21,7 +21,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
      * Gets file duration in s.
      * Check "mediainfo -f file" output.
      *
-     * @param $file
+     * @param string $file
      *
      * @return int $duration file duration in s rounded up
      */
