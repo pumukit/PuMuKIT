@@ -1246,7 +1246,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
      * Gets the list of resources according to a criteria.
      *
      * @param Request $request
-     * @param $criteria
+     * @param mixed   $criteria
      *
      * @return Pagerfanta
      */

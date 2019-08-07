@@ -278,7 +278,7 @@ class UserController extends AdminController implements NewAdminControllerInterf
     /**
      * Gets the criteria values.
      *
-     * @param $criteria
+     * @param array $criteria
      *
      * @return array
      */

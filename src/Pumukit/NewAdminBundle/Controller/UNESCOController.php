@@ -2,6 +2,7 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\Query\Builder;
 use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType;
@@ -468,8 +469,8 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @param $tagCod
-     * @param $multimediaObjectId
+     * @param string $tagCod
+     * @param string $multimediaObjectId
      *
      * @throws \Exception
      *
@@ -503,8 +504,8 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @param $tagCod
-     * @param $multimediaObjectId
+     * @param string $tagCod
+     * @param string $multimediaObjectId
      *
      * @return JsonResponse
      * @Route("/add/tag/{multimediaObjectId}/{tagCod}", name="pumukitnewadmin_unesco_add_tag")
@@ -576,7 +577,7 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @param $multimediaObjectId
+     * @param string $multimediaObjectId
      *
      * @return JsonResponse
      * @Route("/delete/mms/{multimediaObjectId}", name="pumukitnewadmin_unesco_delete")
@@ -604,7 +605,7 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @param $multimediaObjectId
+     * @param string $multimediaObjectId
      *
      * @return JsonResponse
      * @Route("/clone/mms/{multimediaObjectId}", name="pumukitnewadmin_unesco_clone")
@@ -675,8 +676,8 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @param      $criteria
-     * @param null $tag
+     * @param mixed $criteria
+     * @param null  $tag
      *
      * @throws \Exception
      *
@@ -728,8 +729,8 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @param $query
-     * @param $criteria
+     * @param Builder $query
+     * @param array   $criteria
      *
      * @return mixed
      */
@@ -837,9 +838,9 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @param $query
-     * @param $key
-     * @param $field
+     * @param Builder $query
+     * @param string  $key
+     * @param string  $field
      *
      * @return mixed
      */
@@ -863,7 +864,7 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
             }
         } elseif ('year' === $key) {
             $start = \DateTime::createFromFormat('d/m/Y:H:i:s', sprintf('01/01/%s:00:00:01', $field));
-            $end = \DateTime::createFromFormat('d/m/Y:H:i:s', sprintf('01/01/%s:00:00:01', ($field) + 1));
+            $end = \DateTime::createFromFormat('d/m/Y:H:i:s', sprintf('01/01/%s:00:00:01', ((int) $field) + 1));
             $query->field('record_date')->gte($start);
             $query->field('record_date')->lt($end);
         }

@@ -91,7 +91,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
     }
 
     /**
-     * @param $id
+     * @param string $id
      *
      * @throws \Exception
      *
@@ -429,7 +429,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
     /**
      * Gets the criteria values.
      *
-     * @param $criteria
+     * @param mixed $criteria
      *
      * @return array
      */
@@ -736,7 +736,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
     /**
      * Modify Multimedia Objects status.
      *
-     * @param $values
+     * @param array $values
      */
     private function modifyMultimediaObjectsStatus($values)
     {
@@ -781,7 +781,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
      * Used in AdminController to
      * reorder series when sort is multimedia_objects.
      *
-     * @param $resources
+     * @param array $resources
      *
      * @return array $series
      */

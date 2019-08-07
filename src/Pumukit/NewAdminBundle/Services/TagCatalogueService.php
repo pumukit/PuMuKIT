@@ -47,8 +47,8 @@ class TagCatalogueService
      * @param DocumentManager     $documentManager
      * @param TranslatorInterface $translator
      * @param RouterInterface     $router
-     * @param                     $configuredTag
-     * @param                     $locales
+     * @param string              $configuredTag
+     * @param array               $locales
      */
     public function __construct(DocumentManager $documentManager, TranslatorInterface $translator, RouterInterface $router, $configuredTag, $locales)
     {
@@ -84,9 +84,9 @@ class TagCatalogueService
 
     /**
      * @param SessionInterface $session
-     * @param                  $all
+     * @param bool             $all
      */
-    public function resetSessionCriteria(SessionInterface $session, $all = true)
+    public function resetSessionCriteria(SessionInterface $session, bool $all = true)
     {
         if ($all) {
             $session->remove('UNESCO/criteria');
@@ -235,7 +235,7 @@ class TagCatalogueService
     /**
      * @param MultimediaObject $object
      * @param SessionInterface $session
-     * @param                  $field
+     * @param string           $field
      *
      * @throws \Exception
      *
@@ -518,7 +518,7 @@ class TagCatalogueService
 
     /**
      * @param MultimediaObject $object
-     * @param                  $field
+     * @param string           $field
      *
      * @return string
      */
@@ -656,7 +656,7 @@ class TagCatalogueService
     /**
      * @param MultimediaObject $object
      * @param SessionInterface $session
-     * @param                  $key
+     * @param string           $key
      *
      * @return string
      */
@@ -697,7 +697,7 @@ class TagCatalogueService
 
     /**
      * @param MultimediaObject $object
-     * @param                  $field
+     * @param string           $field
      *
      * @return string
      */

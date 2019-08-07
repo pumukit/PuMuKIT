@@ -193,7 +193,7 @@ class LegacyEventController extends AdminController implements NewAdminControlle
     /**
      * Gets the criteria values.
      *
-     * @param $criteria
+     * @param mixed $criteria
      *
      * @return array
      */

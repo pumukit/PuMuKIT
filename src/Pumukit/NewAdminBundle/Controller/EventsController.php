@@ -313,7 +313,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
     /**
      * Event options .
      *
-     * @param                  $type
+     * @param string           $type
      * @param MultimediaObject $multimediaObject
      *
      * @return JsonResponse
@@ -631,7 +631,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
      * @Route("list/session/{id}", name="pumukit_new_admin_live_event_session_list")
      * @Template("PumukitNewAdminBundle:LiveEvent:sessionlist.html.twig")
      *
-     * @param $id
+     * @param string $id
      *
      * @return array
      */
@@ -648,8 +648,8 @@ class EventsController extends Controller implements NewAdminControllerInterface
      * @Route("delete/session/{multimediaObject}/{session_id}", name="pumukit_new_admin_live_event_session_delete")
      * @Template("PumukitNewAdminBundle:LiveEvent:sessionlist.html.twig")
      *
-     * @param $multimediaObject
-     * @param $session_id
+     * @param string $multimediaObject
+     * @param string $session_id
      *
      * @return JsonResponse
      */
@@ -675,8 +675,8 @@ class EventsController extends Controller implements NewAdminControllerInterface
      * @Route("clone/session/{multimediaObject}/{session_id}", name="pumukit_new_admin_live_event_clone_session")
      * @Template("PumukitNewAdminBundle:LiveEvent:sessionlist.html.twig")
      *
-     * @param $multimediaObject
-     * @param $session_id
+     * @param string $multimediaObject
+     * @param string $session_id
      *
      * @throws \Exception
      *
@@ -715,8 +715,8 @@ class EventsController extends Controller implements NewAdminControllerInterface
      * @Template("PumukitNewAdminBundle:LiveEvent:updatesessionmodal.html.twig")
      *
      * @param Request $request
-     * @param $multimediaObject
-     * @param bool $session_id
+     * @param string  $multimediaObject
+     * @param bool    $session_id
      *
      * @throws \Exception
      *
@@ -1011,8 +1011,8 @@ class EventsController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @param $multimediaObjects
-     * @param $sortType
+     * @param array  $multimediaObjects
+     * @param string $sortType
      *
      * @return array
      */

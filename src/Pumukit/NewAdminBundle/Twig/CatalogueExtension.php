@@ -64,7 +64,7 @@ class CatalogueExtension extends \Twig_Extension
     /**
      * @param MultimediaObject $object
      * @param SessionInterface $session
-     * @param                  $field
+     * @param string           $field
      *
      * @throws \Exception
      *
