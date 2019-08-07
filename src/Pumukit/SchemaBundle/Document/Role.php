@@ -24,7 +24,7 @@ class Role
     private $cod = '0';
 
     /**
-     * @var int|null
+     * @var null|int
      *
      * @MongoDB\Field(type="int")
      * @MongoDB\Index

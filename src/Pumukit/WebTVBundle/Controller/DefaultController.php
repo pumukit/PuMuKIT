@@ -264,12 +264,12 @@ class DefaultController extends Controller
      * @Route("/event/contact/{id}", name="pumukit_webtv_contact_event")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
      *
-     * @param         $multimediaObject
-     * @param Request $request
+     * @param MultimediaObject $multimediaObject
+     * @param Request          $request
      *
      * @return JsonResponse
      */
-    public function contactAction($multimediaObject, Request $request)
+    public function contactAction(MultimediaObject $multimediaObject, Request $request)
     {
         $translator = $this->get('translator');
         if ('POST' == $request->getMethod() && $this->checkCaptcha($request->request->get('g-recaptcha-response'), $request->getClientIp())) {
@@ -337,9 +337,9 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param       $title
-     * @param       $routeName
-     * @param array $routeParameters
+     * @param string $title
+     * @param string $routeName
+     * @param array  $routeParameters
      */
     protected function updateBreadcrumbs($title, $routeName, array $routeParameters = [])
     {
@@ -348,11 +348,11 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param $seriesId
+     * @param string $seriesId
      *
      * @throws \MongoException
      *
-     * @return mixed
+     * @return \Doctrine\ODM\MongoDB\Query\Builder
      */
     private function getMultimediaObjects($seriesId)
     {

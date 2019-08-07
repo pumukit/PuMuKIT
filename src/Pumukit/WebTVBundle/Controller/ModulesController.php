@@ -209,12 +209,12 @@ class ModulesController extends Controller implements WebTVControllerInterface
     /**
      * @Template("PumukitWebTVBundle:Modules:widget_categories.html.twig")
      *
-     * @param Request $request
-     * @param         $title
-     * @param         $class
-     * @param         $categories
-     * @param int     $cols
-     * @param bool    $sort
+     * @param Request  $request
+     * @param string   $title
+     * @param string   $class
+     * @param string[] $categories
+     * @param int      $cols
+     * @param bool     $sort
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
@@ -393,8 +393,8 @@ class ModulesController extends Controller implements WebTVControllerInterface
     /**
      * @Template("PumukitWebTVBundle:Modules:widget_media.html.twig")
      *
-     * @param $tagCod
-     * @param $title
+     * @param string $tagCod
+     * @param string $title
      *
      * @throws \Exception
      *
@@ -423,7 +423,7 @@ class ModulesController extends Controller implements WebTVControllerInterface
     /**
      * @Template("PumukitWebTVBundle:Modules:widget_player.html.twig")
      *
-     * @param $tagCod
+     * @param string $tagCod
      *
      * @throws \Exception
      *

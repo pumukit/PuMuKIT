@@ -47,7 +47,7 @@ class BootstrapExtension extends AbstractExtension
     }
 
     /**
-     * @param $objectsByCol
+     * @param array $objectsByCol
      *
      * @return mixed
      */
@@ -70,8 +70,8 @@ class BootstrapExtension extends AbstractExtension
     }
 
     /**
-     * @param $loopIndex
-     * @param $objectsByCol
+     * @param int   $loopIndex
+     * @param array $objectsByCol
      *
      * @return bool
      */
@@ -98,8 +98,8 @@ class BootstrapExtension extends AbstractExtension
     }
 
     /**
-     * @param $loopIndex
-     * @param $objectsByCol
+     * @param int   $loopIndex
+     * @param array $objectsByCol
      *
      * @return bool
      */

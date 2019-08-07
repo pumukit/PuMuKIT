@@ -121,9 +121,9 @@ class EventController extends Controller implements WebTVControllerInterface
     }
 
     /**
-     * @param       $title
-     * @param       $routeName
-     * @param array $routeParameters
+     * @param string $title
+     * @param string $routeName
+     * @param array  $routeParameters
      */
     private function updateBreadcrumbs($title, $routeName, array $routeParameters = [])
     {
@@ -132,8 +132,8 @@ class EventController extends Controller implements WebTVControllerInterface
     }
 
     /**
-     * @param $eventsNow
-     * @param $eventsToday
+     * @param array $eventsNow
+     * @param array $eventsToday
      *
      * @return array
      */
