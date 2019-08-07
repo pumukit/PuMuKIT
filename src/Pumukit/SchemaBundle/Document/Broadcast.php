@@ -21,7 +21,7 @@ class Broadcast
     const BROADCAST_TYPE_COR = 'corporative';
 
     /**
-     * @var int
+     * @var null|\MongoId|string
      *
      * @MongoDB\Id
      */
@@ -71,7 +71,7 @@ class Broadcast
     private $default_sel = false;
 
     /**
-     * @var string
+     * @var array<string, string>
      *
      * @MongoDB\Field(type="raw")
      */
@@ -98,7 +98,7 @@ class Broadcast
     /**
      * Get id.
      *
-     * @return int
+     * @return null|\MongoId|string
      */
     public function getId()
     {

@@ -21,14 +21,14 @@ class SeriesType
     private $id;
 
     /**
-     * @var string
+     * @var array<string, string>
      *
      * @MongoDB\Field(type="raw")
      */
     private $name = ['en' => ''];
 
     /**
-     * @var string
+     * @var array<string, string>
      *
      * @MongoDB\Field(type="raw")
      */
@@ -39,7 +39,7 @@ class SeriesType
      *
      * @MongoDB\Field(type="string")
      */
-    private $cod = 0;
+    private $cod = '0';
 
     /**
      * @var ArrayCollection

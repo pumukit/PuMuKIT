@@ -12,7 +12,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 class Annotation
 {
     /**
-     * @var int
+     * @var null|\MongoId|string
      *
      * @MongoDB\Id
      */

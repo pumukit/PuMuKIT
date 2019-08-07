@@ -14,7 +14,7 @@ class Element
     use Traits\Properties;
 
     /**
-     * @var int
+     * @var null|\MongoId|string
      *
      * @MongoDB\Id
      */
@@ -69,7 +69,7 @@ class Element
     private $hide = false;
 
     /**
-     * @var string
+     * @var array<string, string>
      *
      * @MongoDB\Field(type="raw")
      */
@@ -106,7 +106,7 @@ class Element
     /**
      * Get id.
      *
-     * @return int
+     * @return null|\MongoId|string
      */
     public function getId()
     {

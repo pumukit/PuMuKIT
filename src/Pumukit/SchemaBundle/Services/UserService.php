@@ -297,7 +297,7 @@ class UserService
      *
      * @param array $userRoles
      *
-     * @return string $userScope
+     * @return null|string $userScope
      */
     public function getUserScope($userRoles = [])
     {

@@ -7,7 +7,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 trait Keywords
 {
     /**
-     * @var string
+     * @var array
      *
      * @deprecated in version 2.3
      * use keywords instead
@@ -125,11 +125,12 @@ trait Keywords
             $locale = $this->locale;
         }
 
-        if (!isset($this->keyword[$locale])) {
-            return [$locale => $keyword];
+        if (!isset($this->keywords[$locale])) {
+            $this->keywords[$locale] = [];
         }
 
-        $this->keyword[$locale] = $keyword;
+        $this->keywords[$locale][] = $keyword;
+        $this->keyword[$locale] = implode(',', $this->keywords[$locale]);
 
         return true;
     }

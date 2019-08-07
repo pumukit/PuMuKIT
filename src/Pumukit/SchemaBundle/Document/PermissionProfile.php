@@ -240,7 +240,7 @@ class PermissionProfile
     /**
      * Set scope.
      *
-     * @param int $scope
+     * @param string $scope
      */
     public function setScope($scope)
     {
@@ -250,7 +250,7 @@ class PermissionProfile
     /**
      * Get scope.
      *
-     * @return int
+     * @return string
      */
     public function getScope()
     {

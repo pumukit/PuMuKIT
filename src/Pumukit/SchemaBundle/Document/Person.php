@@ -15,7 +15,7 @@ class Person
     use Traits\Properties;
 
     /**
-     * @var string
+     * @var null|string
      *
      * @MongoDB\Id
      */
@@ -52,28 +52,28 @@ class Person
     protected $phone;
 
     /**
-     * @var string
+     * @var array<string, string>
      *
      * @MongoDB\Field(type="raw")
      */
     protected $honorific = ['en' => ''];
 
     /**
-     * @var string
+     * @var array<string, string>
      *
      * @MongoDB\Field(type="raw")
      */
     protected $firm = ['en' => ''];
 
     /**
-     * @var string
+     * @var array<string, string>
      *
      * @MongoDB\Field(type="raw")
      */
     protected $post = ['en' => ''];
 
     /**
-     * @var string
+     * @var array<string, string>
      *
      * @MongoDB\Field(type="raw")
      */

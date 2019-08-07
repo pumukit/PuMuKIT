@@ -85,7 +85,7 @@ class PermissionProfileService
      * Set as default user permission
      * the one with less permissions
      *
-     * @return PermissionProfile
+     * @return null|PermissionProfile
      */
     public function setDefaultPermissionProfile()
     {
@@ -93,7 +93,7 @@ class PermissionProfileService
         $default = $this->repo->findDefaultCandidate($totalPermissions);
 
         if (null === $default) {
-            return false;
+            return null;
         }
 
         $default->setDefault(true);

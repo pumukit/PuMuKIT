@@ -78,7 +78,7 @@ class Pic extends Element
     /**
      * Get time from a tag with time_XXX format.
      *
-     * @return integer, default 0
+     * @return integer|float, default 0
      */
     public function getTime()
     {

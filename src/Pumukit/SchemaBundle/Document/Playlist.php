@@ -148,7 +148,7 @@ class Playlist
     /**
      * Get the mongo id list of multimedia objects.
      *
-     * @return ArrayCollection
+     * @return array
      */
     public function getMultimediaObjectsIdList()
     {
@@ -165,10 +165,10 @@ class Playlist
     /**
      * Move multimedia_objects.
      *
-     * @param mixed $posStart
-     * @param mixed $posEnd
+     * @param int $posStart
+     * @param int $posEnd
      *
-     * @return ArrayCollection
+     * @return bool
      */
     public function moveMultimediaObject($posStart, $posEnd)
     {
@@ -197,5 +197,7 @@ class Playlist
             }
         }
         $this->multimedia_objects->set($posEnd, $tempObject);
+
+        return true;
     }
 }
