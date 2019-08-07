@@ -283,11 +283,9 @@ class StatsService
     /**
      * Returns a 'paged' result of the aggregation array.
      *
-     * @param aggregation The aggregation array to be paged
-     * @param page The page to be returned
-     * @param limit The number of elements to be returned
-     * @param mixed $page
-     * @param mixed $limit
+     * @param array $aggregation The aggregation array to be paged
+     * @param int   $page        The page to be returned
+     * @param int   $limit       The number of elements to be returned
      *
      * @return array aggregation
      */

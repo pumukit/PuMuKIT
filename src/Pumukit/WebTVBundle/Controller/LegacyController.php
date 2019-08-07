@@ -27,7 +27,7 @@ class LegacyController extends Controller implements WebTVControllerInterface
      * - {_locale} matches the current locale
      * - {pumukit1id} matches series.properties("pumukit1id")
      *
-     * @param $pumukit1id
+     * @param string $pumukit1id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -75,7 +75,7 @@ class LegacyController extends Controller implements WebTVControllerInterface
      * - {_locale} matches current locale
      * - {pumukit1id} matches multimediaObject.properties("pumukit1id")
      *
-     * @param $pumukit1id
+     * @param string $pumukit1id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -116,7 +116,7 @@ class LegacyController extends Controller implements WebTVControllerInterface
      * - {_locale} matches the current locale
      * - {pumukit1id} matches multimediaObject.properties("pumukit1id")
      *
-     * @param $pumukit1id
+     * @param string $pumukit1id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -148,7 +148,7 @@ class LegacyController extends Controller implements WebTVControllerInterface
      * - {_locale} matches the current locale
      * - {pumukit1id} matches the tag "pumukit1id:{pumukit1id}" in track.getTags()
      *
-     * @param $pumukit1id
+     * @param string $pumukit1id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -173,7 +173,7 @@ class LegacyController extends Controller implements WebTVControllerInterface
      * Parameters:
      * - {hash} matches series.properties("pumukit1magic")
      *
-     * @param $hash
+     * @param string $hash
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */

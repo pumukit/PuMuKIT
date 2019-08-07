@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Pumukit\SchemaBundle\Document\Live as DocumentLive;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -21,13 +22,13 @@ class EmbeddedEvent
     private $id;
 
     /**
-     * @var string
+     * @var array<string, string>
      * @MongoDB\Field(type="raw")
      */
     private $name;
 
     /**
-     * @var string
+     * @var array<string, string>
      * @MongoDB\Field(type="raw")
      */
     private $description;
@@ -95,13 +96,13 @@ class EmbeddedEvent
     private $url;
 
     /**
-     * @var string
+     * @var array<string, string>
      * @MongoDB\Field(type="raw")
      */
     private $alreadyHeldMessage = ['en' => ''];
 
     /**
-     * @var string
+     * @var array<string, string>
      * @MongoDB\Field(type="raw")
      */
     private $notYetHeldMessage = ['en' => ''];
@@ -360,7 +361,7 @@ class EmbeddedEvent
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
     public function getEmbeddedEventSession()
     {

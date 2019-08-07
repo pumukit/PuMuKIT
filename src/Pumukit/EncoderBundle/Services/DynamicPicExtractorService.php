@@ -36,9 +36,9 @@ class DynamicPicExtractorService
      *
      * @param DocumentManager            $documentManager
      * @param MultimediaObjectPicService $mmsPicService
-     * @param                            $targetPath
-     * @param                            $targetUrl
-     * @param                            $command
+     * @param string                     $targetPath
+     * @param string                     $targetUrl
+     * @param string                     $command
      */
     public function __construct(DocumentManager $documentManager, MultimediaObjectPicService $mmsPicService, $targetPath, $targetUrl, $command)
     {
@@ -101,7 +101,7 @@ class DynamicPicExtractorService
     }
 
     /**
-     * @param $absCurrentDir
+     * @param string $absCurrentDir
      *
      * @return mixed
      */
@@ -117,7 +117,7 @@ class DynamicPicExtractorService
     }
 
     /**
-     * @param $commandLine
+     * @param string $commandLine
      */
     private function executeProcess($commandLine)
     {

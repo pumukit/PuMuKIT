@@ -308,7 +308,7 @@ class MultimediaObjectSyncService
     /**
      * @param MultimediaObject $multimediaObject
      * @param MultimediaObject $originData
-     * @param $tagId
+     * @param string           $tagId
      */
     public function syncTags(MultimediaObject $multimediaObject, MultimediaObject $originData, $tagId)
     {
@@ -336,7 +336,7 @@ class MultimediaObjectSyncService
     /**
      * @param MultimediaObject $multimediaObject
      * @param MultimediaObject $originData
-     * @param $roleId
+     * @param string           $roleId
      */
     public function syncRoles(MultimediaObject $multimediaObject, MultimediaObject $originData, $roleId)
     {

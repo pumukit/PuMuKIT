@@ -57,8 +57,7 @@ class CpuService
     /**
      * Get Cpu by name.
      *
-     * @param string the cpu name (case sensitive)
-     * @param mixed $name
+     * @param string $name the cpu name (case sensitive)
      */
     public function getCpuByName($name)
     {

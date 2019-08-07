@@ -9,7 +9,7 @@ interface InspectionServiceInterface
     /**
      * Gets file duration in s.
      *
-     * @param $file
+     * @param string $file
      *
      * @return int $duration file duration in s rounded up
      */

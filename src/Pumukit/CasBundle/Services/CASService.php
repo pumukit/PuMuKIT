@@ -18,10 +18,10 @@ class CASService
     /**
      * CASService constructor.
      *
-     * @param        $casUrl
-     * @param        $casPort
-     * @param        $casUri
-     * @param        $casAllowedIpClients
+     * @param string $casUrl
+     * @param string $casPort
+     * @param string $casUri
+     * @param string $casAllowedIpClients
      * @param string $env
      * @param null   $cacheDir
      */
@@ -72,7 +72,7 @@ class CASService
     }
 
     /**
-     * @param $url
+     * @param string $url
      */
     public function setFixedServiceURL($url)
     {

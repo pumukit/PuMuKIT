@@ -19,14 +19,14 @@ class EmbeddedTag
     private $id;
 
     /**
-     * @var string
+     * @var array<string, string>
      *
      * @MongoDB\Field(type="raw")
      */
     private $title = ['en' => ''];
 
     /**
-     * @var string
+     * @var array<string, string>
      *
      * @MongoDB\Field(type="raw")
      */
@@ -170,7 +170,7 @@ class EmbeddedTag
     /**
      * Get i18n title.
      *
-     * @return string
+     * @return array
      */
     public function getI18nTitle()
     {
@@ -233,7 +233,7 @@ class EmbeddedTag
     /**
      * Get i18n description.
      *
-     * @return string
+     * @return array
      */
     public function getI18nDescription()
     {
@@ -245,7 +245,7 @@ class EmbeddedTag
      *
      * @param string $slug
      *
-     * @return Tag
+     * @return string
      */
     public function setSlug($slug)
     {

@@ -246,7 +246,7 @@ class SimpleController extends Controller
     /**
      * Create Multimedia Object.
      *
-     * @param        $title
+     * @param string $title
      * @param Series $series
      *
      * @return MultimediaObject
@@ -266,7 +266,7 @@ class SimpleController extends Controller
     /**
      * Create Multimedia Object.
      *
-     * @param        $i18nTitle
+     * @param array  $i18nTitle
      * @param Series $series
      *
      * @return MultimediaObject
@@ -286,7 +286,7 @@ class SimpleController extends Controller
     /**
      * Get Series from id.
      *
-     * @param $seriesId
+     * @param \MongoId|string $seriesId
      *
      * @return mixed
      */
@@ -301,7 +301,7 @@ class SimpleController extends Controller
     /**
      * Get Series by external data.
      *
-     * @param $externalData
+     * @param array $externalData
      *
      * @return null|object
      */
@@ -318,7 +318,7 @@ class SimpleController extends Controller
     }
 
     /**
-     * @param $externalData
+     * @param array $externalData
      *
      * @return Series
      */
@@ -335,7 +335,7 @@ class SimpleController extends Controller
     }
 
     /**
-     * @param $title
+     * @param string $title
      *
      * @return array
      */
@@ -351,7 +351,7 @@ class SimpleController extends Controller
 
     /**
      * @param MultimediaObject $multimediaObject
-     * @param                  $externalData
+     * @param array            $externalData
      *
      * @return MultimediaObject
      */

@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Document\Traits;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Pumukit\SchemaBundle\Document\Material as DocumentMaterial;
 
@@ -25,7 +26,7 @@ trait Material
     */
 
     /**
-     * @var ArrayCollection
+     * @var Collection
      * @MongoDB\EmbedMany(targetDocument="Material")
      */
     private $materials;
@@ -102,7 +103,7 @@ trait Material
     /**
      * Get materials.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
     public function getMaterials()
     {

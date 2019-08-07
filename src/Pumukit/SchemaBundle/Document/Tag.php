@@ -33,21 +33,21 @@ class Tag
     private $number_multimedia_objects = 0;
 
     /**
-     * @var string
+     * @var array<string, string>
      *
      * @MongoDB\Field(type="raw")
      */
     private $title = ['en' => ''];
 
     /**
-     * @var string
+     * @var array<string, string>
      *
      * @MongoDB\Field(type="raw")
      */
     private $label = ['en' => ''];
 
     /**
-     * @var string
+     * @var array<string, string>
      *
      * @MongoDB\Field(type="raw")
      */

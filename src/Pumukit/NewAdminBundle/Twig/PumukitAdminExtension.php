@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Pumukit\SchemaBundle\Services\SpecialTranslationService;
@@ -105,7 +106,7 @@ class PumukitAdminExtension extends \Twig_Extension
     /**
      * Get profile.
      *
-     * @param $tags
+     * @param array $tags
      *
      * @return bool|string
      */
@@ -325,7 +326,7 @@ class PumukitAdminExtension extends \Twig_Extension
     /**
      * Get track profile width resolution.
      *
-     * @param $tags
+     * @param array $tags
      *
      * @return string
      */
@@ -343,7 +344,7 @@ class PumukitAdminExtension extends \Twig_Extension
     /**
      * Get track profile height resolution.
      *
-     * @param  $tags
+     * @param array $tags
      *
      * @return string
      */
@@ -362,11 +363,11 @@ class PumukitAdminExtension extends \Twig_Extension
      * Get announce icon of Series
      * and MultimediaObjects inside of it.
      *
-     * @param $series
+     * @param Series $series
      *
      * @return string $icon
      */
-    public function getSeriesAnnounceIcon($series)
+    public function getSeriesAnnounceIcon(Series $series)
     {
         $icon = 'mdi-action-done pumukit-transparent';
 
@@ -381,11 +382,11 @@ class PumukitAdminExtension extends \Twig_Extension
      * Get announce text of Series
      * and MultimediaObjects inside of it.
      *
-     * @param $series
+     * @param Series $series
      *
      * @return string $text
      */
-    public function getSeriesAnnounceText($series)
+    public function getSeriesAnnounceText(Series $series)
     {
         $text = '';
 
@@ -400,11 +401,11 @@ class PumukitAdminExtension extends \Twig_Extension
      * Get announce icon of Multimedia Objects in Series
      * and MultimediaObjects inside of it.
      *
-     * @param $series
+     * @param Series $series
      *
      * @return string $icon
      */
-    public function getMmsAnnounceIcon($series)
+    public function getMmsAnnounceIcon(Series $series)
     {
         $icon = 'mdi-action-done pumukit-transparent';
 
@@ -421,11 +422,11 @@ class PumukitAdminExtension extends \Twig_Extension
      * Get announce text of Multimedia Objects in Series
      * and MultimediaObjects inside of it.
      *
-     * @param $series
+     * @param Series $series
      *
      * @return string $text
      */
-    public function getMmsAnnounceText($series)
+    public function getMmsAnnounceText(Series $series)
     {
         $text = '';
 
@@ -466,11 +467,11 @@ class PumukitAdminExtension extends \Twig_Extension
     /**
      * Count Multimedia Objects.
      *
-     * @param $series
+     * @param Series $series
      *
      * @return int
      */
-    public function countMultimediaObjects($series)
+    public function countMultimediaObjects(Series $series)
     {
         return $this->dm->getRepository(MultimediaObject::class)->countInSeries($series);
     }
@@ -528,7 +529,7 @@ class PumukitAdminExtension extends \Twig_Extension
     /**
      * Returns a boolean is user is owner.
      *
-     * @param                  $user
+     * @param User             $user
      * @param MultimediaObject $mmobj
      *
      * @return bool
@@ -581,11 +582,11 @@ class PumukitAdminExtension extends \Twig_Extension
     /**
      * Returns session that are reproducing now or the next session to reproduce it.
      *
-     * @param $multimediaObject
+     * @param Multimediaobject $multimediaObject
      *
      * @return bool|mixed
      */
-    public function getNextEventSession($multimediaObject)
+    public function getNextEventSession(Multimediaobject $multimediaObject)
     {
         if ($multimediaObject) {
             $now = new \DateTime();
@@ -622,12 +623,12 @@ class PumukitAdminExtension extends \Twig_Extension
     }
 
     /**
-     * @param $multimediaObject
-     * @param bool $display
+     * @param Multimediaobject $multimediaObject
+     * @param bool             $display
      *
      * @return array
      */
-    public function getSortRoles($multimediaObject, $display = true)
+    public function getSortRoles(Multimediaobject $multimediaObject, $display = true)
     {
         static $rolesCached = [];
 
@@ -652,7 +653,7 @@ class PumukitAdminExtension extends \Twig_Extension
     /**
      * Get profile.
      *
-     * @param $tags
+     * @param array $tags
      *
      * @return string
      */
@@ -669,7 +670,7 @@ class PumukitAdminExtension extends \Twig_Extension
         return $profile;
     }
 
-    private function countMmobjsByStatus($series)
+    private function countMmobjsByStatus(Series $series)
     {
         if (isset($this->countMmobjsByStatus[$series->getId()])) {
             return $this->countMmobjsByStatus[$series->getId()];

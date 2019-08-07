@@ -98,7 +98,7 @@ class SeriesStylesController extends Controller
     }
 
     /**
-     * @param $id
+     * @param string $id
      *
      * @return JsonResponse
      *
@@ -133,7 +133,7 @@ class SeriesStylesController extends Controller
     }
 
     /**
-     * @param $id
+     * @param string $id
      *
      * @return array
      *

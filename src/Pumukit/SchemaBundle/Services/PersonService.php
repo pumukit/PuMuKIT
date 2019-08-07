@@ -172,7 +172,7 @@ class PersonService
      * @param Person $person
      * @param int    $limit  Number of series, all by default
      *
-     * @return array
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function findSeriesWithPerson(Person $person, $limit = 0)
     {
@@ -302,7 +302,7 @@ class PersonService
      * @param Role             $role
      * @param MultimediaObject $multimediaObject
      *
-     * @return bool TRUE if this multimedia_object contained the specified person_in_multimedia_object, FALSE otherwise
+     * @return MultimediaObject $multimediaObject
      */
     public function deleteRelation(Person $person, Role $role, MultimediaObject $multimediaObject)
     {
@@ -369,7 +369,7 @@ class PersonService
      *
      * @param Person $person
      *
-     * @return array
+     * @return int
      */
     public function countMultimediaObjectsWithPerson($person)
     {
@@ -454,7 +454,7 @@ class PersonService
      * to add the User as Person
      * to MultimediaObject
      *
-     * @return Role
+     * @return string
      */
     public function getPersonalScopeRoleCode()
     {

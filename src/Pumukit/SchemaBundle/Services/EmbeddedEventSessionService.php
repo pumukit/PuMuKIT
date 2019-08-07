@@ -844,7 +844,7 @@ class EmbeddedEventSessionService
      *
      * @param null|string $multimediaObjectId
      *
-     * @return array
+     * @return int
      */
     public function countFutureEvents($multimediaObjectId = null)
     {

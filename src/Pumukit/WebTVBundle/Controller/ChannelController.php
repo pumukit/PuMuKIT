@@ -17,7 +17,7 @@ class ChannelController extends Controller implements WebTVControllerInterface
      * @Route("/series/channel/{channelNumber}.html", name="pumukit_webtv_channel_series")
      * @Template("PumukitWebTVBundle:Channel:template.html.twig")
      *
-     * @param $channelNumber
+     * @param string $channelNumber
      *
      * @return array
      */

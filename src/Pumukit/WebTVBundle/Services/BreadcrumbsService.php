@@ -6,6 +6,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class BreadcrumbsService.
@@ -24,13 +25,13 @@ class BreadcrumbsService
     /**
      * BreadcrumbsService constructor.
      *
-     * @param RouterInterface  $router
-     * @param SessionInterface $session
-     * @param                  $translator
-     * @param string           $allTitle
-     * @param string           $allRoute
-     * @param string           $homeTitle
-     * @param null             $parentWeb
+     * @param RouterInterface     $router
+     * @param SessionInterface    $session
+     * @param TranslatorInterface $translator
+     * @param string              $allTitle
+     * @param string              $allRoute
+     * @param string              $homeTitle
+     * @param null                $parentWeb
      */
     public function __construct(
         RouterInterface $router,
@@ -82,10 +83,10 @@ class BreadcrumbsService
     }
 
     /**
-     * @param       $title
-     * @param       $routeName
-     * @param array $routeParameters
-     * @param bool  $forceTranslation
+     * @param string $title
+     * @param string $routeName
+     * @param array  $routeParameters
+     * @param bool   $forceTranslation
      */
     public function addList($title, $routeName, array $routeParameters = [], $forceTranslation = false)
     {
@@ -137,9 +138,9 @@ class BreadcrumbsService
     }
 
     /**
-     * @param       $title
-     * @param       $routeName
-     * @param array $routeParameters
+     * @param string $title
+     * @param string $routeName
+     * @param array  $routeParameters
      */
     public function add($title, $routeName, array $routeParameters = [])
     {
@@ -158,7 +159,7 @@ class BreadcrumbsService
     }
 
     /**
-     * @param $title
+     * @param string $title
      */
     public function setTitle($title)
     {

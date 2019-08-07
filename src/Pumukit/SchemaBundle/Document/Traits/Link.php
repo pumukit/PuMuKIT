@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Document\Traits;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Pumukit\SchemaBundle\Document\Link as DocumentLink;
 
@@ -25,7 +26,7 @@ trait Link
     */
 
     /**
-     * @var ArrayCollection
+     * @var Collection
      * @MongoDB\EmbedMany(targetDocument="Link")
      */
     private $links;
@@ -38,7 +39,7 @@ trait Link
     /**
      * Get links.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
     public function getLinks()
     {

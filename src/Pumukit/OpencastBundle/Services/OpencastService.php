@@ -71,7 +71,7 @@ class OpencastService
      *
      * @param string $url
      *
-     * @return string
+     * @return null|string
      */
     public function getPath($url)
     {
@@ -130,7 +130,7 @@ class OpencastService
     }
 
     /**
-     * @param $mediaPackage
+     * @param array $mediaPackage
      *
      * @return null|string
      */
@@ -192,7 +192,7 @@ class OpencastService
     }
 
     /**
-     * @param $url
+     * @param string $url
      *
      * @return string
      */

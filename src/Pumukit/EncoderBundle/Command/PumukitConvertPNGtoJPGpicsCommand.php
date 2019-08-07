@@ -26,14 +26,14 @@ class PumukitConvertPNGtoJPGpicsCommand extends ContainerAwareCommand
             ->addArgument('delete', InputArgument::OPTIONAL, 'Delete png files ( true or false')
             ->setHelp(
                 <<<'EOT'
-                ***** Command options ***** 
-                
-                php app/console pumukit:regenerate:pics false 
-                
+                ***** Command options *****
+
+                php app/console pumukit:regenerate:pics false
+
                 ** Use before command to not delete png pics
-                
+
                 php app/console pumukit:regenerate:pics true
-                
+
                 ** Use before command to delete pics
 
 EOT
@@ -88,7 +88,7 @@ EOT
     }
 
     /**
-     * @param $multimediaObjects
+     * @param Multimediaobject[] $multimediaObjects
      *
      * @throws \Exception
      */

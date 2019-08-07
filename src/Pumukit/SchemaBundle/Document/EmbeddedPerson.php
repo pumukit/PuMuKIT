@@ -53,28 +53,28 @@ class EmbeddedPerson
     protected $phone;
 
     /**
-     * @var string
+     * @var array<string, string>
      *
      * @MongoDB\Field(type="raw")
      */
     protected $honorific = ['en' => ''];
 
     /**
-     * @var string
+     * @var array<string, string>
      *
      * @MongoDB\Field(type="raw")
      */
     protected $firm = ['en' => ''];
 
     /**
-     * @var string
+     * @var array<string, string>
      *
      * @MongoDB\Field(type="raw")
      */
     protected $post = ['en' => ''];
 
     /**
-     * @var string
+     * @var array<string, string>
      *
      * @MongoDB\Field(type="raw")
      */

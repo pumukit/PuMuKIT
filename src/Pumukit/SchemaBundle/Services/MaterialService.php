@@ -207,7 +207,7 @@ class MaterialService
      *
      * @param MultimediaObject $multimediaObject
      *
-     * @return array
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCaptions(MultimediaObject $multimediaObject)
     {

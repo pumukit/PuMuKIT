@@ -2,7 +2,6 @@
 
 namespace Pumukit\SchemaBundle\Document;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use JMS\Serializer\Annotation as Serializer;
 
@@ -95,7 +94,7 @@ class Series
     private $series_style;
 
     /**
-     * @var ArrayCollection
+     * @var Playlist
      * @MongoDB\EmbedOne(targetDocument="Playlist")
      * @Serializer\Exclude
      */
@@ -126,19 +125,19 @@ class Series
     private $public_date;
 
     /**
-     * @var string
+     * @var array<string, string>
      * @MongoDB\Field(type="raw")
      */
     private $title = ['en' => ''];
 
     /**
-     * @var string
+     * @var array<string, string>
      * @MongoDB\Field(type="raw")
      */
     private $subtitle = ['en' => ''];
 
     /**
-     * @var string
+     * @var array<string, string>
      * @MongoDB\Field(type="raw")
      */
     private $description = ['en' => ''];
@@ -150,19 +149,19 @@ class Series
     private $comments;
 
     /**
-     * @var string
+     * @var array<string, string>
      * @MongoDB\Field(type="raw")
      */
     private $header = ['en' => ''];
 
     /**
-     * @var string
+     * @var array<string, string>
      * @MongoDB\Field(type="raw")
      */
     private $footer = ['en' => ''];
 
     /**
-     * @var string
+     * @var array<string, string>
      * @MongoDB\Field(type="raw")
      */
     private $line2 = ['en' => ''];
@@ -731,7 +730,7 @@ class Series
     /**
      * Get i18n header.
      *
-     * @return string
+     * @return array
      */
     public function getI18nHeader()
     {
@@ -784,7 +783,7 @@ class Series
     /**
      * Get i18n footer.
      *
-     * @return string
+     * @return array
      */
     public function getI18nFooter()
     {
@@ -885,7 +884,7 @@ class Series
     /**
      * Get i18n line2.
      *
-     * @return string
+     * @return array
      */
     public function getI18nLine2()
     {

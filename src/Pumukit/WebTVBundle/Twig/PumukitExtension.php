@@ -57,13 +57,13 @@ class PumukitExtension extends AbstractExtension
     /**
      * PumukitExtension constructor.
      *
-     * @param DocumentManager $documentManager
-     * @param RequestContext  $context
-     * @param                 $defaultPic
-     * @param CaptionService  $captionService
-     * @param PicService      $picService
-     * @param LinkService     $linkService
-     * @param                 $mmobjDurationService
+     * @param DocumentManager                 $documentManager
+     * @param RequestContext                  $context
+     * @param string                          $defaultPic
+     * @param CaptionService                  $captionService
+     * @param PicService                      $picService
+     * @param LinkService                     $linkService
+     * @param MultimediaObjectDurationService $mmobjDurationService
      */
     public function __construct(DocumentManager $documentManager, RequestContext $context, $defaultPic, CaptionService $captionService, PicService $picService, LinkService $linkService, MultimediaObjectDurationService $mmobjDurationService)
     {
@@ -123,8 +123,8 @@ class PumukitExtension extends AbstractExtension
     }
 
     /**
-     * @param      $object
-     * @param bool $absolute
+     * @param mixed $object
+     * @param bool  $absolute
      *
      * @return null|string
      */
@@ -146,7 +146,7 @@ class PumukitExtension extends AbstractExtension
     /**
      * Get precinct.
      *
-     * @param $embeddedTags
+     * @param array $embeddedTags
      *
      * @return null|EmbeddedTag
      */
@@ -166,7 +166,7 @@ class PumukitExtension extends AbstractExtension
     /**
      * Get precinct of Series.
      *
-     * @param $multimediaObjects
+     * @param array $multimediaObjects
      *
      * @return bool|EmbeddedTag
      */
@@ -375,7 +375,7 @@ class PumukitExtension extends AbstractExtension
     /**
      * Get next event session without sessions that reproducing now.
      *
-     * @param $event
+     * @param array $event
      *
      * @throws \Exception
      *
@@ -405,7 +405,7 @@ class PumukitExtension extends AbstractExtension
     /**
      * Get next live event session.
      *
-     * @param $multimediaObject
+     * @param MultimediaObject $multimediaObject
      *
      * @throws \Exception
      *

@@ -2,6 +2,7 @@
 
 namespace Pumukit\NewAdminBundle\Services;
 
+use Doctrine\ODM\MongoDB\Query\Builder;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
 use Pumukit\SchemaBundle\Utils\Search\SearchUtils;
@@ -9,12 +10,12 @@ use Pumukit\SchemaBundle\Utils\Search\SearchUtils;
 class MultimediaObjectSearchService
 {
     /**
-     * @param $reqCriteria
-     * @param $locale
+     * @param array  $reqCriteria
+     * @param string $locale
      *
      * @return array
      */
-    public function processMMOCriteria($reqCriteria, $locale = 'en')
+    public function processMMOCriteria(array $reqCriteria, string $locale = 'en')
     {
         $new_criteria = ['status' => ['$ne' => MultimediaObject::STATUS_PROTOTYPE]];
         $bAnnounce = '';
@@ -123,9 +124,9 @@ class MultimediaObjectSearchService
     }
 
     /**
-     * @param $text
-     * @param $queryBuilder
-     * @param $locale
+     * @param string  $text
+     * @param Builder $queryBuilder
+     * @param string  $locale
      */
     public function completeSearchQueryBuilder($text, $queryBuilder, $locale = 'en')
     {
@@ -144,12 +145,7 @@ class MultimediaObjectSearchService
         }
     }
 
-    /**
-     * @param $value
-     *
-     * @return array
-     */
-    private function processDates($value)
+    private function processDates(array $value)
     {
         $criteria = [];
         $date_from = null;
@@ -173,14 +169,7 @@ class MultimediaObjectSearchService
         return $criteria;
     }
 
-    /**
-     * @param       $text
-     * @param array $base
-     * @param       $locale
-     *
-     * @return array
-     */
-    private function getSearchCriteria($text, array $base = [], $locale = 'en')
+    private function getSearchCriteria(string $text, array $base = [], string $locale = 'en')
     {
         $text = trim($text);
         if ((false !== strpos($text, '*')) && (false === strpos($text, ' '))) {

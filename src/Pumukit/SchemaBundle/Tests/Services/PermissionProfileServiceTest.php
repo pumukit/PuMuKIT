@@ -227,7 +227,7 @@ class PermissionProfileServiceTest extends WebTestCase
 
     public function testSetDefaultPermissionProfile()
     {
-        $this->assertFalse($this->permissionProfileService->setDefaultPermissionProfile());
+        $this->assertNull($this->permissionProfileService->setDefaultPermissionProfile());
 
         $permissions1 = [Permission::ACCESS_DASHBOARD];
         $permissionProfile1 = new PermissionProfile();

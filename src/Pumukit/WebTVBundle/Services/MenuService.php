@@ -27,7 +27,7 @@ class MenuService
      *
      * @param DocumentManager             $documentManager
      * @param EmbeddedEventSessionService $eventSessionService
-     * @param                             $advanceEvents
+     * @param Event[]                     $advanceEvents
      */
     public function __construct(DocumentManager $documentManager, EmbeddedEventSessionService $eventSessionService, $advanceEvents)
     {

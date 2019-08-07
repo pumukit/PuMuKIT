@@ -131,8 +131,8 @@ class OaiController extends Controller
         if ($cursor < $count) {
             $XMLresumptionToken = $XMLlist->addChild('resumptionToken', $next->encode());
             $XMLresumptionToken->addAttribute('expirationDate', '2222-06-01T23:20:00Z');
-            $XMLresumptionToken->addAttribute('completeListSize', $count);
-            $XMLresumptionToken->addAttribute('cursor', $cursor < $count ? $cursor : $count);
+            $XMLresumptionToken->addAttribute('completeListSize', (string) $count);
+            $XMLresumptionToken->addAttribute('cursor', $cursor < $count ? (string) $cursor : (string) $count);
         }
 
         return $this->genResponse($XMLrequest, $XMLlist);
@@ -271,8 +271,8 @@ class OaiController extends Controller
         if ($cursor < $count) {
             $XMLresumptionToken = $XMLlistSets->addChild('resumptionToken', $next->encode());
             $XMLresumptionToken->addAttribute('expirationDate', '2222-06-01T23:20:00Z');
-            $XMLresumptionToken->addAttribute('completeListSize', $count);
-            $XMLresumptionToken->addAttribute('cursor', $cursor < $count ? $cursor : $count);
+            $XMLresumptionToken->addAttribute('completeListSize', (string) $count);
+            $XMLresumptionToken->addAttribute('cursor', $cursor < $count ? (string) $cursor : (string) $count);
         }
 
         return $this->genResponse($XMLrequest, $XMLlistSets);
@@ -298,10 +298,10 @@ class OaiController extends Controller
 
         $XMLoai_dc = new SimpleXMLExtended('<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd"></oai_dc:dc>');
         /** @var SimpleXMLExtended */
-        $XMLtitle = $XMLoai_dc->addChild('dc:title', null, 'http://purl.org/dc/elements/1.1/');
+        $XMLtitle = $XMLoai_dc->addChild('dc:title', '', 'http://purl.org/dc/elements/1.1/');
         $XMLtitle->addCDATA($object->getTitle());
         /** @var SimpleXMLExtended */
-        $XMLdescription = $XMLoai_dc->addChild('dc:description', null, 'http://purl.org/dc/elements/1.1/');
+        $XMLdescription = $XMLoai_dc->addChild('dc:description', '', 'http://purl.org/dc/elements/1.1/');
         $XMLdescription->addCDATA($object->getDescription());
         $XMLoai_dc->addChild('dc:date', $object->getPublicDate()->format('Y-m-d'), 'http://purl.org/dc/elements/1.1/');
 
@@ -359,7 +359,7 @@ class OaiController extends Controller
         }
         foreach ($object->getTags() as $tag) {
             /** @var SimpleXMLExtended */
-            $XMLsubject = $XMLoai_dc->addChild('dc:subject', null, 'http://purl.org/dc/elements/1.1/');
+            $XMLsubject = $XMLoai_dc->addChild('dc:subject', '', 'http://purl.org/dc/elements/1.1/');
             switch ($this->container->getParameter('pumukitoai.dc_subject_format')) {
                 case 'e-ciencia':
                     $cod = $tag->getCod();
@@ -401,18 +401,18 @@ class OaiController extends Controller
 
         if ($this->container->getParameter('pumukitoai.use_copyright_as_dc_publisher')) {
             /** @var SimpleXMLExtended */
-            $XMLpublisher = $XMLoai_dc->addChild('dc:publisher', null, 'http://purl.org/dc/elements/1.1/');
+            $XMLpublisher = $XMLoai_dc->addChild('dc:publisher', '', 'http://purl.org/dc/elements/1.1/');
             $XMLpublisher->addCDATA($object->getCopyright());
         } else {
             /** @var SimpleXMLExtended */
-            $XMLpublisher = $XMLoai_dc->addChild('dc:publisher', null, 'http://purl.org/dc/elements/1.1/');
+            $XMLpublisher = $XMLoai_dc->addChild('dc:publisher', '', 'http://purl.org/dc/elements/1.1/');
             $XMLpublisher->addCDATA('');
         }
 
         $people = $object->getPeopleByRoleCod($this->container->getParameter('pumukitoai.role_for_dc_creator'), true);
         foreach ($people as $person) {
             /** @var SimpleXMLExtended */
-            $XMLcreator = $XMLoai_dc->addChild('dc:creator', null, 'http://purl.org/dc/elements/1.1/');
+            $XMLcreator = $XMLoai_dc->addChild('dc:creator', '', 'http://purl.org/dc/elements/1.1/');
             $XMLcreator->addCDATA($person->getName());
         }
 
@@ -425,11 +425,11 @@ class OaiController extends Controller
 
         if ($this->container->getParameter('pumukitoai.use_license_as_dc_rights')) {
             /** @var SimpleXMLExtended */
-            $XMLrights = $XMLoai_dc->addChild('dc:rights', null, 'http://purl.org/dc/elements/1.1/');
+            $XMLrights = $XMLoai_dc->addChild('dc:rights', '', 'http://purl.org/dc/elements/1.1/');
             $XMLrights->addCDATA($object->getLicense());
         } else {
             /** @var SimpleXMLExtended */
-            $XMLrights = $XMLoai_dc->addChild('dc:rights', null, 'http://purl.org/dc/elements/1.1/');
+            $XMLrights = $XMLoai_dc->addChild('dc:rights', '', 'http://purl.org/dc/elements/1.1/');
             $XMLrights->addCDATA($object->getCopyright());
         }
 

@@ -170,12 +170,12 @@ class SenderService
     /**
      * Send notification.
      *
-     * @param $emailTo
-     * @param $subject
-     * @param $template
-     * @param array $parameters
-     * @param bool  $error
-     * @param bool  $transConfigSubject
+     * @param string $emailTo
+     * @param string $subject
+     * @param string $template
+     * @param array  $parameters
+     * @param bool   $error
+     * @param bool   $transConfigSubject
      *
      * @return bool
      */
@@ -215,13 +215,13 @@ class SenderService
     /**
      * Get message to send.
      *
-     * @param $message
-     * @param $email
-     * @param $subject
-     * @param $template
-     * @param $parameters
-     * @param $error
-     * @param $transConfigSubject
+     * @param object $message
+     * @param string $email
+     * @param string $subject
+     * @param string $template
+     * @param array  $parameters
+     * @param bool   $error
+     * @param bool   $transConfigSubject
      *
      * @return mixed
      */
@@ -350,12 +350,12 @@ class SenderService
     /**
      * Create the email and send.
      *
-     * @param $emailTo
-     * @param $subject
-     * @param $template
-     * @param $parameters
-     * @param $error
-     * @param $transConfigSubject
+     * @param array|string $emailTo
+     * @param string       $subject
+     * @param string       $template
+     * @param array        $parameters
+     * @param bool         $error
+     * @param bool         $transConfigSubject
      *
      * @return mixed
      */

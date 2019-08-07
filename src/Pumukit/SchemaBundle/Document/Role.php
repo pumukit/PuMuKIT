@@ -24,7 +24,7 @@ class Role
     private $cod = '0';
 
     /**
-     * @var int
+     * @var null|int
      *
      * @MongoDB\Field(type="int")
      * @MongoDB\Index
@@ -63,14 +63,14 @@ class Role
     private $readOnly = false;
 
     /**
-     * @var string
+     * @var array<string, string>
      *
      * @MongoDB\Field(type="raw")
      */
     private $name = ['en' => ''];
 
     /**
-     * @var string
+     * @var array<string, string>
      *
      * @MongoDB\Field(type="raw")
      */
@@ -84,7 +84,7 @@ class Role
     /**
      * Get id.
      *
-     * @return int
+     * @return null|\MongoId|string
      */
     public function getId()
     {

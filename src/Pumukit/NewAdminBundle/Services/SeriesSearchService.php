@@ -22,7 +22,7 @@ class SeriesSearchService
     }
 
     /**
-     * @param        $reqCriteria
+     * @param array  $reqCriteria
      * @param bool   $searchInObjects
      * @param string $locale
      *
@@ -81,12 +81,7 @@ class SeriesSearchService
         return $new_criteria;
     }
 
-    /**
-     * @param $value
-     *
-     * @return array
-     */
-    private function processDates($value)
+    private function processDates(array $value)
     {
         $criteria = [];
         $date_from = null;
@@ -110,14 +105,7 @@ class SeriesSearchService
         return $criteria;
     }
 
-    /**
-     * @param       $text
-     * @param array $base
-     * @param       $locale
-     *
-     * @return array
-     */
-    private function getSearchCriteria($text, array $base = [], $locale = 'en')
+    private function getSearchCriteria(string $text, array $base = [], string $locale = 'en')
     {
         $text = trim($text);
         if ((false !== strpos($text, '*')) && (false === strpos($text, ' '))) {

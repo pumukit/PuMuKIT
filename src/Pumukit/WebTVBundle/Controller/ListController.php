@@ -349,9 +349,9 @@ class ListController extends Controller implements WebTVControllerInterface
     }
 
     /**
-     * @param       $title
-     * @param       $routeName
-     * @param array $routeParameters
+     * @param string $title
+     * @param string $routeName
+     * @param array  $routeParameters
      */
     private function updateBreadcrumbs($title, $routeName, array $routeParameters = [])
     {
@@ -360,9 +360,9 @@ class ListController extends Controller implements WebTVControllerInterface
     }
 
     /**
-     * @param     $objects
-     * @param     $page
-     * @param int $limit
+     * @param array $objects
+     * @param int   $page
+     * @param int   $limit
      *
      * @throws \Exception
      *

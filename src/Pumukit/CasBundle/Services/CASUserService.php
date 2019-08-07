@@ -40,13 +40,13 @@ class CASUserService
      * @param PermissionProfileService $permissionProfileService
      * @param GroupService             $groupService
      * @param DocumentManager          $documentManager
-     * @param                          $casIdKey
-     * @param                          $casCnKey
-     * @param                          $casMailKey
-     * @param                          $casGivenNameKey
-     * @param                          $casSurnameKey
-     * @param                          $casGroupKey
-     * @param                          $casOriginKey
+     * @param string                   $casIdKey
+     * @param string                   $casCnKey
+     * @param string                   $casMailKey
+     * @param string                   $casGivenNameKey
+     * @param string                   $casSurnameKey
+     * @param string                   $casGroupKey
+     * @param string                   $casOriginKey
      */
     public function __construct(UserService $userService, PersonService $personService, CASService $casService, PermissionProfileService $permissionProfileService, GroupService $groupService, DocumentManager $documentManager, $casIdKey, $casCnKey, $casMailKey, $casGivenNameKey, $casSurnameKey, $casGroupKey, $casOriginKey)
     {
@@ -67,7 +67,7 @@ class CASUserService
     }
 
     /**
-     * @param $userName
+     * @param string $userName
      *
      * @throws \Exception
      *
@@ -141,8 +141,8 @@ class CASUserService
     }
 
     /**
-     * @param $userName
-     * @param $attributes
+     * @param string $userName
+     * @param array  $attributes
      *
      * @return string
      */
@@ -152,7 +152,7 @@ class CASUserService
     }
 
     /**
-     * @param $attributes
+     * @param array $attributes
      *
      * @return string
      */
@@ -167,7 +167,7 @@ class CASUserService
     }
 
     /**
-     * @param $attributes
+     * @param array $attributes
      *
      * @return string
      */
@@ -195,8 +195,8 @@ class CASUserService
     }
 
     /**
-     * @param $attributes
-     * @param $user
+     * @param array $attributes
+     * @param User  $user
      *
      * @throws \Exception
      */
@@ -214,7 +214,7 @@ class CASUserService
     }
 
     /**
-     * @param $key
+     * @param string $key
      *
      * @throws \Exception
      *

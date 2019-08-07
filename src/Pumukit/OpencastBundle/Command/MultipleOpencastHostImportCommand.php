@@ -38,33 +38,33 @@ class MultipleOpencastHostImportCommand extends ContainerAwareCommand
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
             ->setHelp(
                 <<<'EOT'
-            
+
             Important:
-            
+
             Before executing the command add Opencast URL MAPPING configuration with OC data you will access.
-            
+
             ---------------
-            
+
             Command to import all tracks from Opencast to PuMuKIT defining Opencast configuration
-            
+
             <info> ** Example ( check and list ):</info>
-            
+
             * Tracks without master
             <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es"</comment>
             <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --id="5bcd806ebf435c25008b4581"</comment>
-            
+
             * Tracks master
             <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --master</comment>
             <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --master --id="5bcd806ebf435c25008b4581"</comment>
-            
+
             This example will be check the connection with these Opencast and list all multimedia objects from PuMuKIT find by regex host.
-            
+
             <info> ** Example ( <error>execute</error> ):</info>
-            
+
             * Import tracks no master
             <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --force</comment>
             <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --id="5bcd806ebf435c25008b4581" --force</comment>
-            
+
             * Import tracks master
             <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --master --force</comment>
             <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --master --id="5bcd806ebf435c25008b4581" --force</comment>
@@ -188,7 +188,7 @@ EOT
      * @param OutputInterface       $output
      * @param ClientService         $clientService
      * @param OpencastImportService $opencastImportService
-     * @param                       $multimediaObjects
+     * @param array                 $multimediaObjects
      *
      * @throws \Exception
      */
@@ -222,7 +222,7 @@ EOT
      * @param OutputInterface       $output
      * @param ClientService         $clientService
      * @param OpencastImportService $opencastImportService
-     * @param                       $multimediaObjects
+     * @param array                 $multimediaObjects
      *
      * @throws \Exception
      */
@@ -257,7 +257,7 @@ EOT
      * @param ClientService         $clientService
      * @param OpencastImportService $opencastImportService
      * @param MultimediaObject      $multimediaObject
-     * @param                       $master
+     * @param bool                  $master
      *
      * @throws \Exception
      */
@@ -283,8 +283,8 @@ EOT
      * @param OutputInterface       $output
      * @param OpencastImportService $opencastImportService
      * @param ClientService         $clientService
-     * @param                       $multimediaObjects
-     * @param                       $master
+     * @param array                 $multimediaObjects
+     * @param bool                  $master
      *
      * @throws \Exception
      */
@@ -318,7 +318,7 @@ EOT
      * @param OutputInterface       $output
      * @param OpencastImportService $opencastImportService
      * @param MultimediaObject      $multimediaObject
-     * @param                       $mediaPackage
+     * @param array                 $mediaPackage
      */
     private function showMessage(OutputInterface $output, OpencastImportService $opencastImportService, MultimediaObject $multimediaObject, $mediaPackage)
     {

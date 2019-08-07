@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Document\Traits;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Pumukit\SchemaBundle\Document\Pic as DocumentPic;
 
@@ -25,7 +26,7 @@ trait Pic
     */
 
     /**
-     * @var ArrayCollection
+     * @var Collection
      * @MongoDB\EmbedMany(targetDocument="Pic")
      */
     private $pics;
@@ -102,7 +103,7 @@ trait Pic
     /**
      * Get pics.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
     public function getPics()
     {

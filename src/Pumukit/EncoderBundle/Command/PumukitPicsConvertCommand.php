@@ -47,17 +47,17 @@ class PumukitPicsConvertCommand extends ContainerAwareCommand
             ->addOption('no_replace', null, InputOption::VALUE_NONE, 'Replace original image or not')
             ->setHelp(
                 <<<'EOT'
-        
+
 Command to get all pics like selected filters and create new images with low size. The predefined filter is that the pics must have "path" attribute.
 
-Filters: 
+Filters:
 
 Id example: --id="5b4dd4c22bb478607d8b456b"
 Path example: --path="/mnt/storage/" ...
 Extension examples: --extension=".jpg" or --extension="jpg" or --extension=".jpg,.png" or --extension="jpg,png". Can be all myme_types...
 Tags examples: --tags="pumukit" or --tags="pumukit,auto,frame_0" ...
 Size examples: --size=1 or --size=10 or --size=100 ...
-                   
+
 Example commands to set filters:
 
 php app/console pumukit:pics:convert --id="5b4dd4c22bb478607d8b456b" --exists=true --type="mm"
@@ -71,14 +71,14 @@ php app/console pumukit:pics:convert --path="/mnt/storage/" --size=10000
 Create image options:
 
 --convert
---convert_ext="jpg"  ( Doesnt work, ever convert to JPG ) 
---convert_size="10000" ( Doesnt work ) 
+--convert_ext="jpg"  ( Doesnt work, ever convert to JPG )
+--convert_size="10000" ( Doesnt work )
 --convert_quality=100
 --convert_max_width=1920
 --convert_max_height=1080
---no_replace 
+--no_replace
 
-Examples: 
+Examples:
 
 php app/console pumukit:pics:convert --path="/var/www/html/pumukit2/web/uploads/pic/5b4f4af72bb478f9048b457d/" --type="mm" --convert
 php app/console pumukit:pics:convert --path="/var/www/html/pumukit2/web/uploads/pic/5b4f4af72bb478f9048b457d/" --type="mm" --convert --no_replace
@@ -201,7 +201,7 @@ EOT
     }
 
     /**
-     * @param $data
+     * @param array $data
      *
      * @return bool
      */
@@ -225,7 +225,7 @@ EOT
     }
 
     /**
-     * @param $data
+     * @param array $data
      */
     private function showOutput($data)
     {

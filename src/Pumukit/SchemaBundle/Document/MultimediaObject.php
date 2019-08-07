@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -57,7 +58,7 @@ class MultimediaObject
     ];
 
     /**
-     * @var int
+     * @var null|\MongoId|string
      * @MongoDB\Id
      */
     private $id;
@@ -96,7 +97,7 @@ class MultimediaObject
      * NOTE: This field is for MongoDB Search Index purposes.
      *       Do not use this field and do not create setter and/or getter.
      *
-     * @var string
+     * @var array<string, string>
      * @MongoDB\Field(type="raw")
      */
     private $seriesTitle = ['en' => ''];
@@ -123,7 +124,7 @@ class MultimediaObject
     private $embeddedEvent;
 
     /**
-     * @var ArrayCollection
+     * @var Collection
      * @MongoDB\EmbedMany(targetDocument="EmbeddedSegment")
      */
     private $embeddedSegments;
@@ -135,19 +136,19 @@ class MultimediaObject
     private $embeddedSocial;
 
     /**
-     * @var ArrayCollection
+     * @var Collection
      * @MongoDB\EmbedMany(targetDocument="EmbeddedTag")
      */
     private $tags;
 
     /**
-     * @var ArrayCollection
+     * @var Collection
      * @MongoDB\EmbedMany(targetDocument="Track")
      */
     private $tracks;
 
     /**
-     * @var ArrayCollection
+     * @var Collection
      * @MongoDB\ReferenceMany(targetDocument="Group", storeAs="id", sort={"key":1}, strategy="setArray")
      */
     private $groups;
@@ -180,13 +181,13 @@ class MultimediaObject
     private $public_date;
 
     /**
-     * @var array
+     * @var array<string, string>
      * @MongoDB\Field(type="raw")
      */
     private $title = ['en' => ''];
 
     /**
-     * @var string
+     * @var array<string, string>
      * @MongoDB\Field(type="raw")
      */
     private $subtitle = ['en' => ''];
@@ -294,7 +295,7 @@ class MultimediaObject
     /**
      * Get id.
      *
-     * @return string
+     * @return null|\MongoId|string
      */
     public function getId()
     {
@@ -632,7 +633,7 @@ class MultimediaObject
     /**
      * Get I18n subtitle.
      *
-     * @return string
+     * @return array
      */
     public function getI18nSubtitle()
     {
@@ -1108,7 +1109,7 @@ class MultimediaObject
     /**
      * Get tags.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
     public function getTags()
     {

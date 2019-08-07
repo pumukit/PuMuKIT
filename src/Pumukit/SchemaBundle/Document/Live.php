@@ -23,7 +23,7 @@ class Live
     protected static $instances = [];
 
     /**
-     * @var int
+     * @var null|\MongoId|string
      * @MongoDB\Id
      */
     private $id;
@@ -43,7 +43,7 @@ class Live
     private $passwd;
 
     /**
-     * @var int
+     * @var string
      * @MongoDB\Field(type="string")
      */
     private $live_type = self::LIVE_TYPE_WOWZA;
@@ -61,7 +61,7 @@ class Live
     private $height = 576;
 
     /**
-     * @var string
+     * @var array
      * @MongoDB\Field(type="raw")
      */
     private $qualities;
@@ -104,14 +104,14 @@ class Live
     private $debug = false;
 
     /**
-     * @var string
+     * @var array<string, string>
      * @MongoDB\Field(type="raw")
      * @Assert\NotBlank()
      */
     private $name = ['en' => ''];
 
     /**
-     * @var string
+     * @var array<string, string>
      * @MongoDB\Field(type="raw")
      */
     private $description = ['en' => ''];
@@ -129,7 +129,7 @@ class Live
     /**
      * Get id.
      *
-     * @return int
+     * @return null|\MongoId|string
      */
     public function getId()
     {
@@ -252,7 +252,7 @@ class Live
     /**
      * Set qualities.
      *
-     * @param string $qualities
+     * @param array $qualities
      */
     public function setQualities($qualities)
     {
@@ -262,7 +262,7 @@ class Live
     /**
      * Get qualities.
      *
-     * @return string
+     * @return array
      */
     public function getQualities()
     {
@@ -431,7 +431,7 @@ class Live
     /**
      * Get i18n name.
      *
-     * @return string
+     * @return array
      */
     public function getI18nName()
     {
@@ -484,7 +484,7 @@ class Live
     /**
      * Get I18n description.
      *
-     * @return string
+     * @return array
      */
     public function getI18nDescription()
     {

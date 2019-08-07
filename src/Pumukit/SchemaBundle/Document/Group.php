@@ -16,7 +16,7 @@ class Group implements GroupInterface
     const ORIGIN_LOCAL = 'local';
 
     /**
-     * @var string
+     * @var null|\MongoId|string
      *
      * @MongoDB\Id(strategy="auto")
      */
@@ -92,7 +92,7 @@ class Group implements GroupInterface
     /**
      * Get id.
      *
-     * @return string
+     * @return null|\MongoId|string
      */
     public function getId()
     {
@@ -192,7 +192,7 @@ class Group implements GroupInterface
     /**
      * Get createdAt.
      *
-     * @return string
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -202,7 +202,7 @@ class Group implements GroupInterface
     /**
      * Set updatedAt.
      *
-     * @param string $updatedAt
+     * @param \DateTime $updatedAt
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -212,7 +212,7 @@ class Group implements GroupInterface
     /**
      * Get updatedAt.
      *
-     * @return string
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
