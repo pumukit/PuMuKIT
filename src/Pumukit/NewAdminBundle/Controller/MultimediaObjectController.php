@@ -193,7 +193,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $resource = $this->findOr404($request);
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        if($resource->isPrototype()) {
+        if ($resource->isPrototype()) {
             $formMeta = $this->createForm(MultimediaObjectTemplateMetaType::class, $resource, ['translator' => $translator, 'locale' => $locale]);
         } else {
             $formMeta = $this->createForm(MultimediaObjectMetaType::class, $resource, ['translator' => $translator, 'locale' => $locale]);
@@ -327,7 +327,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $this->get('session')->set('admin/mms/id', $resource->getId());
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        if($resource->isPrototype()) {
+        if ($resource->isPrototype()) {
             $formMeta = $this->createForm(MultimediaObjectTemplateMetaType::class, $resource, ['translator' => $translator, 'locale' => $locale]);
         } else {
             $formMeta = $this->createForm(MultimediaObjectMetaType::class, $resource, ['translator' => $translator, 'locale' => $locale]);
@@ -400,7 +400,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        if($resource->isPrototype()) {
+        if ($resource->isPrototype()) {
             $formMeta = $this->createForm(MultimediaObjectTemplateMetaType::class, $resource, ['translator' => $translator, 'locale' => $locale]);
         } else {
             $formMeta = $this->createForm(MultimediaObjectMetaType::class, $resource, ['translator' => $translator, 'locale' => $locale]);
@@ -428,7 +428,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                     $resource = $this->updateTags($request->get('pub_channels', null), 'PUCH', $resource);
                 }
 
-                if($isPrototype) {
+                if ($isPrototype) {
                     $resource->setStatus(MultimediaObject::STATUS_PROTOTYPE);
                 }
 
@@ -1367,7 +1367,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $tags = $dm->getRepository(Tag::class)->findBy(
             [
                 'metatag' => true,
-                'display' => true
+                'display' => true,
             ],
             ['cod' => 1]
         );
