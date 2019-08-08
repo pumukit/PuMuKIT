@@ -601,10 +601,12 @@ class DefaultController extends Controller
      * Get key data.
      *
      * @param mixed $key
+     * @param array $formData
+     * @param mixed $default
      *
      * @return array
      */
-    private function getKeyData($key, array $formData, array $default = [])
+    private function getKeyData($key, array $formData, $default = [])
     {
         return array_key_exists($key, $formData) ? $formData[$key] : $default;
     }
