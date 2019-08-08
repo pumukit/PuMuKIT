@@ -803,8 +803,14 @@ class ClientService
         if ('GET' == $method) {
             if (200 != $output['status']) {
                 $this->logger->error(__CLASS__.'['.__FUNCTION__.'](line '.__LINE__
-                                      .') Error ('.$output['status'].') Processing Request : '.$requestUrl.'.');
-                throw new \Exception(sprintf('Error %s Processing Request (%s)', $output['status'], $requestUrl), 1);
+                                     .') Error '.$output['error'].' Status '.$output['status'].' Processing Request : '.$requestUrl.'.');
+
+                throw new \Exception(sprintf(
+                    'Error %s Status %s Processing Request (%s)',
+                    $output['error'],
+                    $output['status'],
+                    $requestUrl
+                ), 1);
             }
         }
 
