@@ -1,42 +1,44 @@
 {% if mm is defined %}
-    <div class="well">
-        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 
-            {#
-            <div style="text-align:right;">
-              <a href="#" onclick="$('#edit_series').innerHTML=''; return false"><i class="mdi-navigation-close"/></a>
-            </div>
-            #}
+    {% set is_prototype = mm.isPrototype() %}
 
+    <div class="well {% if is_prototype %}prototype_well{% endif %}">
+        {% if not is_prototype %}
             <div id="links_mm_{{ mm.id }}">
                 {{ render(url('pumukitnewadmin_mms_links', {'id': mm.id})) }}
             </div>
+        {% endif %}
 
-            <div role="tabpanel">
-                <ul id="menuTab" class="nav nav-tabs" role="tablist">
-                    {% if not is_naked() and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %}
-                        <li class="{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %}active{% endif %} task_publication">
-                            <a href="#pubMm" aria-controls="pubMm" role="tab" data-toggle="tab">{% trans %}Publication{% endtrans %}</a>
-                        </li>
-                    {% elseif show_simple_pub_tab %}
-                        <li>
-                            <a href="#pubMm" aria-controls="pubMm" role="tab" data-toggle="tab" class="publication">{% trans %}Publication{% endtrans %}</a>
-                        </li>
-                    {% endif %}
-                    <li class="{% if is_naked() or not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %}active{% endif %} task_metadata">
-                        <a href="#metaMm" aria-controls="metaMm" role="tab" data-toggle="tab">{% trans %}Basic Metadata{% endtrans %}</a>
+        <div role="tabpanel">
+            <ul id="menuTab" class="nav nav-tabs" role="tablist">
+
+                {% if not is_naked() and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %}
+                    <li class="{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %}active{% endif %} task_publication">
+                        <a href="#pubMm" aria-controls="pubMm" role="tab" data-toggle="tab">{% trans %}Publication{% endtrans %}</a>
                     </li>
-                    {% if not is_naked() %}
-                        <li>
-                            <a href="#tagMm" aria-controls="tagMm" role="tab" data-toggle="tab" class="task_tags">{% trans %}Tags{% endtrans %}</a>
-                        </li>
-                        <li>
-                            <a href="#groupMm" aria-controls="groupMm" role="tab" data-toggle="tab" class="task_owners_and_groups">{% trans %}Owners & Groups{% endtrans %}</a>
-                        </li>
-                    {% endif %}
+                {% elseif show_simple_pub_tab %}
                     <li>
-                        <a href="#personMm" aria-controls="personMm" role="tab" data-toggle="tab" class="task_people">{% trans %}People{% endtrans %}</a>
+                        <a href="#pubMm" aria-controls="pubMm" role="tab" data-toggle="tab" class="publication">{% trans %}Publication{% endtrans %}</a>
                     </li>
+                {% endif %}
+
+                <li class="{% if is_naked() or not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %}active{% endif %} task_metadata">
+                    <a href="#metaMm" aria-controls="metaMm" role="tab" data-toggle="tab">{% trans %}Basic Metadata{% endtrans %}</a>
+                </li>
+
+                {% if not is_naked() %}
+                    <li>
+                        <a href="#tagMm" aria-controls="tagMm" role="tab" data-toggle="tab" class="task_tags">{% trans %}Tags{% endtrans %}</a>
+                    </li>
+                    <li>
+                        <a href="#groupMm" aria-controls="groupMm" role="tab" data-toggle="tab" class="task_owners_and_groups">{% trans %}Owners & Groups{% endtrans %}</a>
+                    </li>
+                {% endif %}
+
+                <li>
+                    <a href="#personMm" aria-controls="personMm" role="tab" data-toggle="tab" class="task_people">{% trans %}People{% endtrans %}</a>
+                </li>
+                {% if not is_prototype %}
                     <li>
                         <a href="#mediaMm" aria-controls="mediaMm" role="tab" data-toggle="tab" class="task_media_attachments">{% trans %}Multimedia{% endtrans %}</a>
                     </li>
@@ -45,62 +47,54 @@
                             <a href="#editorMm" aria-controls="editorMm" role="tab" data-toggle="tab" class="task_media_editor">{% trans %}Media Edition{% endtrans %}</a>
                         </li>
                     {% endif %}
+
                     <li class="pull-right">
                         <a title="{% trans %}Select metadata to sync on all multimedia objects of this series{% endtrans %}" href="{{ path('pumukitnewadmin_mms_sync_metadata', {'id': mm.id}) }}" class="button_sync_metadata" data-toggle="modal" data-backdrop="static" data-target="#myModal" style="color:white;text-decoration: none;">
                             {% trans %}Sync{% endtrans %}
                         </a>
                     </li>
-                    {#<li>
-                      <a href="#socialMm" aria-controls="socialMm" role="tab" data-toggle="tab">{% trans %}Social{% endtrans %}</a>
-                    </li>#}
-                </ul>
+                {% endif %}
+            </ul>
 
-                <div class="tab-content">
-                    {% if not is_naked() and  is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %}
-                        <div id="pubMm" role="tabpanel" class="tab-pane{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %} active{% endif %}">
-                            {% include 'PumukitNewAdminBundle:MultimediaObject:updatepub.html.twig' with {'mm': mm, 'pub_channels': pub_channels, 'pub_decisions': pub_decisions} %}
-                        </div>
-                    {% elseif show_simple_pub_tab %}
-                        <div id="pubMm" role="tabpanel" class="tab-pane">
-                            {% include 'PumukitNewAdminBundle:MultimediaObject:updatepubsimple.html.twig' with {'mm': mm, 'pub_channels': pub_channels, 'pub_decisions': pub_decisions} %}
-                        </div>
-                    {% endif %}
-
-                    <div id="metaMm" role="tabpanel" class="tab-pane{% if is_naked() or not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %} active{% endif %}">
-                        {% include 'PumukitNewAdminBundle:MultimediaObject:updatemeta.html.twig' with {'mm': mm} %}
+            <div class="tab-content">
+                {% if not is_naked() and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %}
+                    <div id="pubMm" role="tabpanel" class="tab-pane{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %} active{% endif %}">
+                        {% include 'PumukitNewAdminBundle:MultimediaObject:updatepub.html.twig' with {'mm': mm, 'pub_channels': pub_channels, 'pub_decisions': pub_decisions} %}
                     </div>
-
-                    {% if not is_naked() %}
-                        <div id="tagMm" role="tabpanel" class="tab-pane">
-                            {% include 'PumukitNewAdminBundle:MultimediaObject:updatetag.html.twig' with {'mm': mm, 'parent_tags': parent_tags, 'template': false} %}
-                        </div>
-                    {% endif %}
-
-                    {% if not is_naked() %}
-                        <div id="groupMm" role="tabpanel" class="tab-pane">
-                            {% include 'PumukitNewAdminBundle:MultimediaObject:updategroup.html.twig' with {'mm': mm, 'personal_scope_role': personal_scope_role} %}
-                        </div>
-                    {% endif %}
-
-                    <div id="personMm" role="tabpanel" class="tab-pane">
-                        {% include 'PumukitNewAdminBundle:MultimediaObject:updateperson.html.twig' with {'mm': mm, 'roles': roles} %}
+                {% elseif show_simple_pub_tab %}
+                    <div id="pubMm" role="tabpanel" class="tab-pane">
+                        {% include 'PumukitNewAdminBundle:MultimediaObject:updatepubsimple.html.twig' with {'mm': mm, 'pub_channels': pub_channels, 'pub_decisions': pub_decisions} %}
                     </div>
+                {% endif %}
 
-                    <div id="mediaMm" role="tabpanel" class="tab-pane">
-                        {% include 'PumukitNewAdminBundle:MultimediaObject:updatemedia.html.twig' with {'mm': mm, 'jobs': jobs} %}
-                    </div>
-                    {% if active_editor %}
-                        <div id="editorMm" role="tabpanel" class="tab-pane">
-                            {% include 'PumukitNewAdminBundle:MultimediaObject:editor.html.twig' with {'mm': mm, 'jobs': jobs} %}
-                        </div>
-                    {% endif %}
-                    {#<div id="socialMm" role="tabpanel" class="tab-pane">
-                        {% include 'PumukitNewAdminBundle:MultimediaObject:updatesocial.html.twig' with {'mm': mm} %}
-                    </div>#}
+                <div id="metaMm" role="tabpanel" class="tab-pane{% if is_naked() or not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %} active{% endif %}">
+                    {% include 'PumukitNewAdminBundle:MultimediaObject:updatemeta.html.twig' with {'mm': mm} %}
                 </div>
+
+                {% if not is_naked() %}
+                    <div id="tagMm" role="tabpanel" class="tab-pane">
+                        {% include 'PumukitNewAdminBundle:MultimediaObject:updatetag.html.twig' with {'mm': mm, 'parent_tags': parent_tags, 'template': false} %}
+                    </div>
+
+                    <div id="groupMm" role="tabpanel" class="tab-pane">
+                        {% include 'PumukitNewAdminBundle:MultimediaObject:updategroup.html.twig' with {'mm': mm, 'personal_scope_role': personal_scope_role} %}
+                    </div>
+                {% endif %}
+
+                <div id="personMm" role="tabpanel" class="tab-pane">
+                    {% include 'PumukitNewAdminBundle:MultimediaObject:updateperson.html.twig' with {'mm': mm, 'roles': roles} %}
+                </div>
+
+                <div id="mediaMm" role="tabpanel" class="tab-pane">
+                    {% include 'PumukitNewAdminBundle:MultimediaObject:updatemedia.html.twig' with {'mm': mm, 'jobs': jobs} %}
+                </div>
+
+                {% if active_editor %}
+                    <div id="editorMm" role="tabpanel" class="tab-pane">
+                        {% include 'PumukitNewAdminBundle:MultimediaObject:editor.html.twig' with {'mm': mm, 'jobs': jobs} %}
+                    </div>
+                {% endif %}
             </div>
-        {% else %}
-            {% trans %}You don't have enough permissions to access this content.{% endtrans %}
-        {% endif %}
+        </div>
     </div>
 {% endif %}

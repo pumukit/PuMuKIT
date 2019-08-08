@@ -75,7 +75,6 @@ class MultimediaObjectSyncService
     {
         return $this->dm->getRepository(MultimediaObject::class)->findBy(
             [
-                'status' => ['$ne' => MultimediaObject::STATUS_PROTOTYPE],
                 'type' => ['$ne' => MultimediaObject::TYPE_LIVE],
                 'series' => new \MongoId($multimediaObject->getSeries()->getId()),
                 '_id' => ['$ne' => new \MongoId($multimediaObject->getId())],

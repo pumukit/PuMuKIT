@@ -8,6 +8,7 @@ use Pumukit\NewAdminBundle\Event\BackofficeEvents;
 use Pumukit\NewAdminBundle\Event\PublicationSubmitEvent;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectPubType;
+use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectTemplateMetaType;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\EmbeddedSocial;
 use Pumukit\SchemaBundle\Document\Group;
@@ -192,12 +193,17 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $resource = $this->findOr404($request);
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $formMeta = $this->createForm(MultimediaObjectMetaType::class, $resource, ['translator' => $translator, 'locale' => $locale]);
+        if($resource->isPrototype()) {
+            $formMeta = $this->createForm(MultimediaObjectTemplateMetaType::class, $resource, ['translator' => $translator, 'locale' => $locale]);
+        } else {
+            $formMeta = $this->createForm(MultimediaObjectMetaType::class, $resource, ['translator' => $translator, 'locale' => $locale]);
+        }
         $options = [
             'not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS),
             'translator' => $translator,
             'locale' => $locale,
         ];
+
         $formPub = $this->createForm(MultimediaObjectPubType::class, $resource, $options);
 
         //If the 'pudenew' tag is not being used, set the display to 'false'.
@@ -321,7 +327,11 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $this->get('session')->set('admin/mms/id', $resource->getId());
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $formMeta = $this->createForm(MultimediaObjectMetaType::class, $resource, ['translator' => $translator, 'locale' => $locale]);
+        if($resource->isPrototype()) {
+            $formMeta = $this->createForm(MultimediaObjectTemplateMetaType::class, $resource, ['translator' => $translator, 'locale' => $locale]);
+        } else {
+            $formMeta = $this->createForm(MultimediaObjectMetaType::class, $resource, ['translator' => $translator, 'locale' => $locale]);
+        }
         $options = [
             'not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS),
             'translator' => $translator,
@@ -390,12 +400,17 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $formMeta = $this->createForm(MultimediaObjectMetaType::class, $resource, ['translator' => $translator, 'locale' => $locale]);
+        if($resource->isPrototype()) {
+            $formMeta = $this->createForm(MultimediaObjectTemplateMetaType::class, $resource, ['translator' => $translator, 'locale' => $locale]);
+        } else {
+            $formMeta = $this->createForm(MultimediaObjectMetaType::class, $resource, ['translator' => $translator, 'locale' => $locale]);
+        }
         $options = [
             'not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS),
             'translator' => $translator,
             'locale' => $locale,
         ];
+
         $formPub = $this->createForm(MultimediaObjectPubType::class, $resource, $options);
 
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
@@ -403,6 +418,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $notChangePubChannel = !$this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
 
+        $isPrototype = $resource->isPrototype();
         $method = $request->getMethod();
         if (in_array($method, ['POST', 'PUT', 'PATCH'])) {
             $formPub->handleRequest($request);
@@ -410,6 +426,10 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             if ($formPub->isSubmitted() && $formPub->isValid()) {
                 if (!$notChangePubChannel) {
                     $resource = $this->updateTags($request->get('pub_channels', null), 'PUCH', $resource);
+                }
+
+                if($isPrototype) {
+                    $resource->setStatus(MultimediaObject::STATUS_PROTOTYPE);
                 }
 
                 $event = new PublicationSubmitEvent($resource, $request);
@@ -812,7 +832,10 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             }
 
             $dm->persist($multimediaObject);
+
+            $this->get('pumukitschema.multimediaobject_dispatcher')->dispatchUpdate($multimediaObject);
         }
+
         $dm->persist($series);
         $dm->flush();
 
@@ -1342,7 +1365,10 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $syncService = $this->container->get('pumukitnewadmin.multimedia_object_sync');
 
         $tags = $dm->getRepository(Tag::class)->findBy(
-            ['metatag' => true, 'display' => true, 'properties.hide_in_tag_group' => ['$exists' => false]],
+            [
+                'metatag' => true,
+                'display' => true
+            ],
             ['cod' => 1]
         );
         if (!$tags) {

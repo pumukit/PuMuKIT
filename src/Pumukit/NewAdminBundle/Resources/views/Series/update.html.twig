@@ -26,7 +26,7 @@
                     </div>
                     {% if mmtemplate %}
                         <div id="editTemplate" role="tabpanel" class="tab-pane">
-                            {% include 'PumukitNewAdminBundle:MultimediaObjectTemplate:edit.html.twig' %}
+                            {{ render(url('pumukitnewadmin_mms_edit', {'id': mmtemplate.getId(), 'seriesId': series.id })) }}
                         </div>
                     {% endif %}
                 </div>
