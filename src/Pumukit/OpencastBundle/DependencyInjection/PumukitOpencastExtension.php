@@ -28,25 +28,8 @@ class PumukitOpencastExtension extends Extension
         $container->setParameter('pumukit_opencast.show_importer_tab', $config['show_importer_tab']);
 
         if (isset($config['host']) && $config['host']) {
-            if (!filter_var($config['host'], FILTER_VALIDATE_URL)) {
-                throw new InvalidConfigurationException(sprintf(
-                    'The parameter "pumukit_opencast.host" is not a valid url: "%s" ',
-                    $config['host']
-                ));
-            }
-
             $env = $container->getParameter('kernel.environment');
-
-            if ('dev' !== $env) {
-                foreach ($config['url_mapping'] as $m) {
-                    if (!realpath($m['path'])) {
-                        throw new \RuntimeException(sprintf(
-                            'The "%s" directory does not exist. Check "pumukit_opencast.url_mapping".',
-                            $m['path']
-                    ));
-                    }
-                }
-            }
+            $this->validateOpencatConfiguration($config['host'], $config['url_mapping'], $env);
 
             $container
                 ->register('pumukit_opencast.client', 'Pumukit\\OpencastBundle\\Services\\ClientService')
@@ -160,6 +143,33 @@ class PumukitOpencastExtension extends Extension
         if ($config['sync_series_with_opencast']) {
             $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
             $loader->load('serieslistener.xml');
+        }
+    }
+
+    private function validateOpencatConfiguration(string $host, array $urlMapping, string $env)
+    {
+        // Note: %env(SECRET)% is env_SECRET_%rand% in the DependencyInjection Extension.
+        $isHostEnvVar = 0 === strpos($host, 'env_');
+
+        if (!$isHostEnvVar && !filter_var($host, FILTER_VALIDATE_URL)) {
+            throw new InvalidConfigurationException(sprintf(
+                'The parameter "pumukit_opencast.host" is not a valid url: "%s" ',
+                $host
+            ));
+        }
+
+        if ('dev' !== $env) {
+            foreach ($urlMapping as $m) {
+                $path = $m['path'];
+                $isPathEnvVar = 0 === strpos($path, 'env_');
+
+                if (!$isPathEnvVar && !realpath($path)) {
+                    throw new \RuntimeException(sprintf(
+                        'The "%s" directory does not exist. Check "pumukit_opencast.url_mapping".',
+                        $path
+                    ));
+                }
+            }
         }
     }
 }
