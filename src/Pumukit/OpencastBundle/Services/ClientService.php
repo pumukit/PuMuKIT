@@ -806,7 +806,7 @@ class ClientService
                                      .') Error '.$output['error'].' Status '.$output['status'].' Processing Request : '.$requestUrl.'.');
 
                 throw new \Exception(sprintf(
-                    'Error %s Status %s Processing Request (%s)',
+                    'Error "%s", Status %s, Processing Request "%s"',
                     $output['error'],
                     $output['status'],
                     $requestUrl
