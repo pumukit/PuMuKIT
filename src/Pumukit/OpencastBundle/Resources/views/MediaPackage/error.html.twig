@@ -25,8 +25,8 @@
                 <div class="panel-body">
                     {% trans %}Execute on the server{% endtrans %}:
                     <pre>
-$ curl -v --digest -u %USER%:%PASSWORD% \
--H "X-Requested-Auth: Digest" -H "X-Opencast-Matterhorn-Authorization: true" \
+$ curl -m {{ constant('Pumukit\\OpencastBundle\\Services\\ClientService::HTTP_TIMEOUT') }} --connect-timeout {{ constant(''Pumukit\\OpencastBundle\\Services\\ClientService::HTTP_CONNECTTIMEOUT') }} -v --digest -u %USER%:%PASSWORD% \
+                        -H "X-Requested-Auth: Digest" -H "X-Opencast-Matterhorn-Authorization: true" \
                         {{ admin_url }}/search/episode.json?limit=1&offset=0
                     </pre>
                     {% trans %}where{% endtrans %}:

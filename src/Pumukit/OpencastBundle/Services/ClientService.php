@@ -13,6 +13,9 @@ use Pumukit\SchemaBundle\Security\RoleHierarchy;
  */
 class ClientService
 {
+    const HTTP_CONNECTTIMEOUT = 1;
+    const HTTP_TIMEOUT = 10;
+
     private $url;
     private $user;
     private $passwd;
@@ -780,8 +783,8 @@ class ClientService
 
         curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($request, CURLOPT_FOLLOWLOCATION, false);
-        curl_setopt($request, CURLOPT_CONNECTTIMEOUT, 1);
-        curl_setopt($request, CURLOPT_TIMEOUT, 10);
+        curl_setopt($request, CURLOPT_CONNECTTIMEOUT, self::HTTP_CONNECTTIMEOUT);
+        curl_setopt($request, CURLOPT_TIMEOUT, self::HTTP_TIMEOUT);
 
         if ($this->insecure) {
             curl_setopt($request, CURLOPT_SSL_VERIFYPEER, false);
