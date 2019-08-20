@@ -47,7 +47,7 @@ class WizardService
     private $jobService;
 
     /**
-     * @var AuthorizationChecker
+     * @var AuthorizationCheckerInterface
      */
     private $authorizationChecker;
 
@@ -296,22 +296,18 @@ class WizardService
      *
      * @throws \Exception
      *
-     * @return null|mixed|MultimediaObject
+     * @return MultimediaObject
      */
-    public function createMultimediaObject($mmData, $series, $user)
+    public function createMultimediaObject(array $mmData, Series $series, User $user)
     {
-        if ($series) {
-            $multimediaObject = $this->factoryService->createMultimediaObject($series, true, $user);
+        $multimediaObject = $this->factoryService->createMultimediaObject($series, true, $user);
 
-            if ($mmData) {
-                $keys = ['i18n_title', 'i18n_subtitle', 'i18n_description', 'i18n_line2'];
-                $multimediaObject = $this->setData($multimediaObject, $mmData, $keys);
-            }
-
-            return $multimediaObject;
+        if ($mmData) {
+            $keys = ['i18n_title', 'i18n_subtitle', 'i18n_description', 'i18n_line2'];
+            $multimediaObject = $this->setData($multimediaObject, $mmData, $keys);
         }
 
-        return null;
+        return $multimediaObject;
     }
 
     /**
@@ -325,10 +321,6 @@ class WizardService
         $console = $this->basePath.'app/console';
 
         $builder->add('php')->add($console);
-
-        if (false) {
-            $builder->add('--verbose');
-        }
 
         $builder->add('pumukit:wizard:import');
         foreach ($aCommandArguments as $argument) {
@@ -345,10 +337,10 @@ class WizardService
     /**
      * @param User   $user
      * @param string $selectedPath
-     * @param string $inboxDepth
+     * @param int    $inboxDepth
      * @param string $series
      * @param string $status
-     * @param string $pubChannel
+     * @param array  $pubChannel
      * @param string $profile
      * @param string $priority
      * @param string $language
@@ -356,12 +348,12 @@ class WizardService
      *
      * @return mixed
      */
-    public function uploadFiles($user, $selectedPath, $inboxDepth, $series, $status, $pubChannel, $profile, $priority, $language, $description)
+    public function uploadFiles($user, $selectedPath, int $inboxDepth, $series, $status, array $pubChannel, $profile, $priority, $language, $description)
     {
         $aCommandArguments = [];
         $aCommandArguments = $this->createCommandArguments($aCommandArguments, '--user', $user);
         $aCommandArguments = $this->createCommandArguments($aCommandArguments, '--path', $selectedPath);
-        $aCommandArguments = $this->createCommandArguments($aCommandArguments, '--inbox-depth', $inboxDepth);
+        $aCommandArguments = $this->createCommandArguments($aCommandArguments, '--inbox-depth', (string) $inboxDepth);
         $aCommandArguments = $this->createCommandArguments($aCommandArguments, '--series', $series);
         $aCommandArguments = $this->createCommandArguments($aCommandArguments, '--status', $status);
 

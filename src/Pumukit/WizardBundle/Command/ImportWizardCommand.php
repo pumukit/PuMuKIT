@@ -2,14 +2,9 @@
 
 namespace Pumukit\WizardBundle\Command;
 
-use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\EncoderBundle\Services\JobService;
-use Pumukit\EncoderBundle\Services\ProfileService;
-use Pumukit\InspectionBundle\Services\InspectionServiceInterface;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;
-use Pumukit\SchemaBundle\Services\FactoryService;
-use Pumukit\WizardBundle\Services\WizardService;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -21,31 +16,11 @@ use Symfony\Component\Finder\Finder;
  */
 class ImportWizardCommand extends ContainerAwareCommand
 {
-    /**
-     * @var DocumentManager
-     */
     private $dm;
-
-    /**
-     * @var JobService
-     */
     private $jobService;
-
-    /**
-     * @var ProfileService
-     */
     private $profileService;
-
-    /**
-     * @var InspectionServiceInterface
-     */
     private $inspectionService;
-
-    /**
-     * @var WizardService
-     */
     private $wizardService;
-
     private $defaultLanguage;
     private $user;
     private $path;
@@ -56,10 +31,6 @@ class ImportWizardCommand extends ContainerAwareCommand
     private $profile;
     private $priority;
     private $language;
-
-    /**
-     * @var FactoryService
-     */
     private $factoryService;
 
     protected function configure()
@@ -70,12 +41,12 @@ class ImportWizardCommand extends ContainerAwareCommand
             ->addArgument('user', InputArgument::REQUIRED, 'user')
             ->addArgument('path', InputArgument::REQUIRED, 'path')
             ->addArgument('inbox-depth', InputArgument::REQUIRED, 'inbox-depth')
-            ->addArgument('series', null, InputArgument::REQUIRED, 'series')
-            ->addArgument('status', null, InputArgument::REQUIRED, 'status')
-            ->addArgument('channels', null, InputArgument::REQUIRED, 'channels')
-            ->addArgument('profile', null, InputArgument::REQUIRED, 'profile')
-            ->addArgument('priority', null, InputArgument::REQUIRED, 'priority')
-            ->addArgument('language', null, InputArgument::REQUIRED, 'language')
+            ->addArgument('series', InputArgument::REQUIRED, 'series')
+            ->addArgument('status', InputArgument::REQUIRED, 'status')
+            ->addArgument('channels', InputArgument::REQUIRED, 'channels')
+            ->addArgument('profile', InputArgument::REQUIRED, 'profile')
+            ->addArgument('priority', InputArgument::REQUIRED, 'priority')
+            ->addArgument('language', InputArgument::REQUIRED, 'language')
             ->setHelp(
                 <<<'EOT'
 This command import generate job to import files from wizard

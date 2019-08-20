@@ -192,13 +192,8 @@ class DefaultController extends Controller
                 $formData = $this->completeFormWithSeries($formData, $series);
             }
         } elseif ($newSeries && isset($formData['series']['id'])) {
-            $id = null;
             $formData['series']['id'] = null;
             $formData['series']['reuse']['id'] = null;
-            $series = $this->findSeriesById($id);
-            if ($series) {
-                $formData = $this->completeFormWithSeries($formData, $series);
-            }
         }
         $licenseService = $this->get('pumukit_wizard.license');
         $licenseEnabledAndAccepted = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
@@ -604,7 +599,7 @@ class DefaultController extends Controller
      * @param array $formData
      * @param mixed $default
      *
-     * @return array
+     * @return mixed
      */
     private function getKeyData($key, array $formData, $default = [])
     {
@@ -662,19 +657,17 @@ class DefaultController extends Controller
      *
      * @return mixed|MultimediaObject|void
      */
-    private function createMultimediaObject($mmData, $series)
+    private function createMultimediaObject(array $mmData, Series $series)
     {
-        if ($series) {
-            $factoryService = $this->get('pumukitschema.factory');
-            $multimediaObject = $factoryService->createMultimediaObject($series, true, $this->getUser());
+        $factoryService = $this->get('pumukitschema.factory');
+        $multimediaObject = $factoryService->createMultimediaObject($series, true, $this->getUser());
 
-            if ($mmData) {
-                $keys = ['i18n_title', 'i18n_subtitle', 'i18n_description', 'i18n_line2'];
-                $multimediaObject = $this->setData($multimediaObject, $mmData, $keys);
-            }
-
-            return $multimediaObject;
+        if ($mmData) {
+            $keys = ['i18n_title', 'i18n_subtitle', 'i18n_description', 'i18n_line2'];
+            $multimediaObject = $this->setData($multimediaObject, $mmData, $keys);
         }
+
+        return $multimediaObject;
     }
 
     /**
