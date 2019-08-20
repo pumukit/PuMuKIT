@@ -511,7 +511,7 @@ EOT
         curl_setopt($ch, CURLOPT_NOPROGRESS, false);
         curl_setopt($ch, CURLOPT_PROGRESSFUNCTION, function ($c, $downloadSize, $downloaded, $uploadSize, $uploaded) use ($progress) {
             $percentage = ($downloaded > 0 && $downloadSize > 0 ? round($downloaded / $downloadSize, 2) : 0.0);
-            $progress->setProgress($percentage * 100);
+            $progress->setProgress((int) ($percentage * 100));
         });
         curl_exec($ch);
         $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
