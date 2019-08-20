@@ -17,7 +17,7 @@ class Tag
     use Traits\Properties;
 
     /**
-     * @var int
+     * @var null|\MongoId|string
      *
      * @MongoDB\Id
      */
@@ -163,7 +163,7 @@ class Tag
     /**
      * Get id.
      *
-     * @return int
+     * @return null|\MongoId|string
      */
     public function getId()
     {
