@@ -1,4 +1,0 @@
-pumukit_podcast_bundle:
-    resource: "@PumukitOaiBundle/Controller/"
-    type:     annotation
-    prefix:   /
