@@ -1,8 +1,0 @@
-{% if ldap_connected and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
-<button type="button" class="btn btn-primary btn-raised" data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
-        id="ldap_person_listautocomplete" href="#"
-        onclick="var route = '{{ path('pumukit_ldap_person_listautocomplete', {'mmId': mm.id, 'roleId': role.id})|raw }}';
-                 $('#ldap_person_listautocomplete').attr('href', encodeURI(route)); return true;">
-  {% trans %}New from LDAP{% endtrans %}
-</button>
-{% endif %}
