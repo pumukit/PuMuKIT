@@ -15,11 +15,11 @@
       </trans-unit>
       <trans-unit id="s8XJFie" resname="EVENT">
         <source>EVENT</source>
-        <target state="translated">ÉVÉNEMENT</target>
+        <target state="needs-translation">EVENT</target>
       </trans-unit>
       <trans-unit id="BohT_Se" resname="PLACE">
         <source>PLACE</source>
-        <target state="translated">LIEU</target>
+        <target state="needs-translation">PLACE</target>
       </trans-unit>
       <trans-unit id="F.mgpRK" resname="DATE">
         <source>DATE</source>
@@ -27,19 +27,19 @@
       </trans-unit>
       <trans-unit id="WIhnXZm" resname="TIME">
         <source>TIME</source>
-        <target state="translated">HEURE</target>
+        <target state="needs-translation">TIME</target>
       </trans-unit>
       <trans-unit id="MKOwLL7" resname="No title">
         <source>No title</source>
-        <target state="translated">Sans titre</target>
+        <target state="needs-translation">No title</target>
       </trans-unit>
       <trans-unit id="Th9Jqci" resname="Event">
         <source>Event</source>
-        <target state="translated">Événement</target>
+        <target state="needs-translation">Event</target>
       </trans-unit>
       <trans-unit id="6UY9zPB" resname="Place">
         <source>Place</source>
-        <target state="translated">Lieu</target>
+        <target state="needs-translation">Place</target>
       </trans-unit>
       <trans-unit id="mcQKtAW" resname="Date">
         <source>Date</source>
@@ -47,7 +47,7 @@
       </trans-unit>
       <trans-unit id="M7k0ds9" resname="Time">
         <source>Time</source>
-        <target state="translated">Heure</target>
+        <target state="needs-translation">Time</target>
       </trans-unit>
       <trans-unit id="VXRvY92" resname="JWPlayer does not support your browser version">
         <source>JWPlayer does not support your browser version</source>
@@ -63,11 +63,11 @@
       </trans-unit>
       <trans-unit id="Xypi4__" resname="The event has not been held yet">
         <source>The event has not been held yet</source>
-        <target state="translated">L'événement n'a pas encore commencé</target>
+        <target state="needs-translation">The event has not been held yet</target>
       </trans-unit>
       <trans-unit id="i7YNXXs" resname="The event has already been held">
         <source>The event has already been held</source>
-        <target state="translated">L'évènement a déjà eu lieu</target>
+        <target state="needs-translation">The event has already been held</target>
       </trans-unit>
       <trans-unit id="tkrAXxf" resname="Live">
         <source>Live</source>
