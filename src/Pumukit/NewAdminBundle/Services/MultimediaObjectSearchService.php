@@ -79,7 +79,7 @@ class MultimediaObjectSearchService
             if (!empty($aStatus)) {
                 $aStatus = array_map('intval', $aStatus);
                 if (!isset($new_criteria['status'])) {
-                    array_push($new_criteria, ['status' => ['$in' => $aStatus]]);
+                    $new_criteria['status'] = ['$in' => $aStatus];
                 } else {
                     $new_criteria['status'] += ['$in' => $aStatus];
                 }
