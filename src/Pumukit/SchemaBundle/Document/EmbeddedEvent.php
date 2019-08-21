@@ -3,7 +3,6 @@
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Pumukit\SchemaBundle\Document\Live as DocumentLive;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -361,7 +360,7 @@ class EmbeddedEvent
     }
 
     /**
-     * @return Collection
+     * @return array
      */
     public function getEmbeddedEventSession()
     {

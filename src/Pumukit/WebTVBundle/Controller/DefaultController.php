@@ -370,7 +370,7 @@ class DefaultController extends Controller
      * @param string $response $request->request->get('g-recaptcha-response')
      * @param string $remoteip optional $request->getClientIp()
      *
-     * @return jsonResponse | boolean
+     * @return mixed
      */
     private function checkCaptcha($response, $remoteip = '')
     {
@@ -396,7 +396,7 @@ class DefaultController extends Controller
      *
      * @param array $data
      *
-     * @return array response
+     * @return bool|string
      */
     private function recaptchaHttpPost($data)
     {

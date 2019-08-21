@@ -14,7 +14,7 @@ class ViewsLog
     use Traits\Properties;
 
     /**
-     * @var int
+     * @var string
      *
      * @MongoDB\Id
      */
@@ -246,7 +246,7 @@ class ViewsLog
     /**
      * Get multimediaObject.
      *
-     * @return int $multimediaObject
+     * @return string $multimediaObject
      */
     public function getMultimediaObject()
     {
@@ -256,7 +256,7 @@ class ViewsLog
     /**
      * Set series.
      *
-     * @param int $series
+     * @param string $series
      *
      * @return self
      */
@@ -270,7 +270,7 @@ class ViewsLog
     /**
      * Get series.
      *
-     * @return int $series
+     * @return string $series
      */
     public function getSeries()
     {

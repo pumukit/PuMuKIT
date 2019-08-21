@@ -1673,7 +1673,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $userInOwners = false;
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $personRepo = $dm->getRepository(Person::class);
-        foreach ($multimediaObject->getProperty('owners') as $owner) {
+        foreach ((array) $multimediaObject->getProperty('owners') as $owner) {
             $person = $personRepo->find($owner);
             if ($person) {
                 if ($loggedInUser === $person->getUser()) {

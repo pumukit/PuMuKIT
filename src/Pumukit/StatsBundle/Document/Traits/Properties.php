@@ -7,7 +7,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 trait Properties
 {
     /**
-     * @var string
+     * @var string[]
      *
      * @MongoDB\Field(type="raw")
      */

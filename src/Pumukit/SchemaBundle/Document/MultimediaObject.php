@@ -1008,7 +1008,7 @@ class MultimediaObject
     }
 
     /**
-     * @return ArrayCollection
+     * @return array|Collection
      */
     public function getEmbeddedSegments()
     {
@@ -1016,9 +1016,9 @@ class MultimediaObject
     }
 
     /**
-     * @param array $embeddedSegments
+     * @param array|Collection $embeddedSegments
      */
-    public function setEmbeddedSegments(array $embeddedSegments)
+    public function setEmbeddedSegments($embeddedSegments)
     {
         $this->embeddedSegments = $embeddedSegments;
     }
@@ -1119,9 +1119,9 @@ class MultimediaObject
     /**
      * Set tags.
      *
-     * @param array $tags
+     * @param mixed $tags
      */
-    public function setTags(array $tags)
+    public function setTags($tags)
     {
         $this->tags = $tags;
     }
@@ -1361,7 +1361,7 @@ class MultimediaObject
     /**
      * Get tracks.
      *
-     * @return ArrayCollection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTracks()
     {
@@ -2026,7 +2026,7 @@ class MultimediaObject
     /**
      * Get groups.
      *
-     * @return ArrayCollection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getGroups()
     {

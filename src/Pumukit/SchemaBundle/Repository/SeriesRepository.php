@@ -117,7 +117,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @param array $tags
      *
-     * @return null|Series
+     * @return null|array|object|Series
      */
     public function findOneWithAllTags($tags)
     {

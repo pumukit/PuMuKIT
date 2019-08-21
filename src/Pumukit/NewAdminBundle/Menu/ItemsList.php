@@ -4,6 +4,9 @@ namespace Pumukit\NewAdminBundle\Menu;
 
 class ItemsList
 {
+    /**
+     * @var array
+     */
     private $items;
 
     public function __construct()

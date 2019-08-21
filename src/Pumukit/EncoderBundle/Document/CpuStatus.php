@@ -58,7 +58,7 @@ class CpuStatus
      *
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
     }
@@ -76,9 +76,9 @@ class CpuStatus
     /**
      * Set status.
      *
-     * @param string $status
+     * @param int $status
      */
-    public function setStatus($status)
+    public function setStatus(int $status)
     {
         $this->status = $status;
     }
@@ -86,7 +86,7 @@ class CpuStatus
     /**
      * Get status.
      *
-     * @return string
+     * @return int
      */
     public function getStatus()
     {
