@@ -55,115 +55,115 @@
       </trans-unit>
       <trans-unit id="e9X3KLs" resname="Please use 9.0 or higher version or use another browser.">
         <source>Please use 9.0 or higher version or use another browser.</source>
-        <target state="needs-translation">Please use 9.0 or higher version or use another browser.</target>
+        <target state="translated">Por favor, emplee la versión 9.0 o superior o use otro navegador.</target>
       </trans-unit>
       <trans-unit id="wlNtjtj" resname="The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.">
         <source>The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</source>
-        <target state="needs-translation">The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</target>
+        <target state="translated">Es necesario instalar el plugin Flash. JWPlayer necesita al menos la versión 10.1.82.76 de Flash para reproducir.</target>
       </trans-unit>
       <trans-unit id="Xypi4__" resname="The event has not been held yet">
         <source>The event has not been held yet</source>
-        <target state="needs-translation">The event has not been held yet</target>
+        <target state="translated">El evento aún no se ha celebrado</target>
       </trans-unit>
       <trans-unit id="i7YNXXs" resname="The event has already been held">
         <source>The event has already been held</source>
-        <target state="needs-translation">The event has already been held</target>
+        <target state="translated">El evento ya se ha celebrado</target>
       </trans-unit>
       <trans-unit id="tkrAXxf" resname="Live">
         <source>Live</source>
-        <target state="needs-translation">Live</target>
+        <target state="translated">Directos</target>
       </trans-unit>
       <trans-unit id="OxlkZOz" resname="Private Video">
         <source>Private Video</source>
-        <target state="needs-translation">Private Video</target>
+        <target state="translated">Vídeo privado</target>
       </trans-unit>
       <trans-unit id="BcxKeUd" resname="This video is private with restricted access">
         <source>This video is private with restricted access</source>
-        <target state="needs-translation">This video is private with restricted access</target>
+        <target state="translated">Este vídeo es privado con acceso restringido</target>
       </trans-unit>
       <trans-unit id="hrl4QaS" resname="Enter a valid password to watch it">
         <source>Enter a valid password to watch it</source>
-        <target state="needs-translation">Enter a valid password to watch it</target>
+        <target state="translated">Introduzca una contraseña válida para verlo</target>
       </trans-unit>
       <trans-unit id="AmXL6i2" resname="Introduce a password">
         <source>Introduce a password</source>
-        <target state="needs-translation">Introduce a password</target>
+        <target state="translated">Introduce la contraseña</target>
       </trans-unit>
       <trans-unit id="DyCJYAX" resname="Password is not valid">
         <source>Password is not valid</source>
-        <target state="needs-translation">Password is not valid</target>
+        <target state="translated">Contraseña no válida</target>
       </trans-unit>
       <trans-unit id="Le1KPuZ" resname="Log In">
         <source>Log In</source>
-        <target state="needs-translation">Log In</target>
+        <target state="translated">Iniciar sesión</target>
       </trans-unit>
       <trans-unit id="8aBdu0t" resname="Enter pass">
         <source>Enter pass</source>
-        <target state="needs-translation">Enter pass</target>
+        <target state="translated">Introduce la contraseña</target>
       </trans-unit>
       <trans-unit id="7tKy0KB" resname="New contact from live event">
         <source>New contact from live event</source>
-        <target state="needs-translation">New contact from live event</target>
+        <target state="translated">Nuevo contacto desde directo</target>
       </trans-unit>
       <trans-unit id="q1EATp1" resname="days">
         <source>days</source>
-        <target state="needs-translation">days</target>
+        <target state="translated">días</target>
       </trans-unit>
       <trans-unit id="R70pB1_" resname="Content">
         <source>Content</source>
-        <target state="needs-translation">Content</target>
+        <target state="translated">Contenido</target>
       </trans-unit>
       <trans-unit id="ZYNLahi" resname="Obsolete browser">
         <source>Obsolete browser</source>
-        <target state="needs-translation">Obsolete browser</target>
+        <target state="translated">Navegador obsoleto</target>
       </trans-unit>
       <trans-unit id="F_V94dr" resname="Iframe">
         <source>Iframe</source>
-        <target state="needs-translation">Iframe</target>
+        <target state="translated">Iframe</target>
       </trans-unit>
       <trans-unit id="2SnrnwG" resname="Media Thumbnail">
         <source>Media Thumbnail</source>
-        <target state="needs-translation">Media Thumbnail</target>
+        <target state="translated">Miniatura</target>
       </trans-unit>
       <trans-unit id="70fBjSz" resname="There aren't events at this moment">
         <source>There aren't events at this moment</source>
-        <target state="needs-translation">There aren't events at this moment</target>
+        <target state="translated">No hay eventos en este momento</target>
       </trans-unit>
       <trans-unit id="kxQCXu4" resname="email send">
         <source>email send</source>
-        <target state="needs-translation">email send</target>
+        <target state="translated">email enviado</target>
       </trans-unit>
       <trans-unit id="TPzY.dq" resname="please verify form data">
         <source>please verify form data</source>
-        <target state="needs-translation">please verify form data</target>
+        <target state="translated">por favor, revisa los datos del formulario</target>
       </trans-unit>
       <trans-unit id="nCmGYqT" resname="Event chat">
         <source>Event chat</source>
-        <target state="needs-translation">Event chat</target>
+        <target state="translated">Chat del evento</target>
       </trans-unit>
       <trans-unit id="3NHVIj9" resname="Name">
         <source>Name</source>
-        <target state="needs-translation">Name</target>
+        <target state="translated">Nombre</target>
       </trans-unit>
       <trans-unit id="lhXIE3s" resname="Name cannot be empty">
         <source>Name cannot be empty</source>
-        <target state="needs-translation">Name cannot be empty</target>
+        <target state="translated">El nombre no puede estar vacío</target>
       </trans-unit>
       <trans-unit id="L3dmip3" resname="Message">
         <source>Message</source>
-        <target state="needs-translation">Message</target>
+        <target state="translated">Mensaje</target>
       </trans-unit>
       <trans-unit id="pCwHVEo" resname="Sorry but there was an error">
         <source>Sorry but there was an error</source>
-        <target state="needs-translation">Sorry but there was an error</target>
+        <target state="translated">Lo sentimos, pero hubo un error</target>
       </trans-unit>
       <trans-unit id="NvvDhQX" resname="Chat icon">
         <source>Chat icon</source>
-        <target state="needs-translation">Chat icon</target>
+        <target state="translated">Icono de chat</target>
       </trans-unit>
       <trans-unit id="HHzHKHy" resname="Live chat">
         <source>Live chat</source>
-        <target state="needs-translation">Live chat</target>
+        <target state="translated">Chat en vivo</target>
       </trans-unit>
     </body>
   </file>
