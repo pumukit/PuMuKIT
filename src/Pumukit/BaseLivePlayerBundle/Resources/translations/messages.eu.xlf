@@ -7,59 +7,59 @@
     <body>
       <trans-unit id="RoN3Re7" resname="Current live event">
         <source>Current live event</source>
-        <target state="translated">Momentuko zuzeneko emanaldia</target>
+        <target state="needs-translation">Current live event</target>
       </trans-unit>
       <trans-unit id="QcHoioP" resname="Next live event">
         <source>Next live event</source>
-        <target state="translated">Hurrengo zuzenezko emanaldia</target>
+        <target state="needs-translation">Next live event</target>
       </trans-unit>
       <trans-unit id="s8XJFie" resname="EVENT">
         <source>EVENT</source>
-        <target state="translated">EMANALDIA</target>
+        <target state="needs-translation">EVENT</target>
       </trans-unit>
       <trans-unit id="BohT_Se" resname="PLACE">
         <source>PLACE</source>
-        <target state="translated">TOKIA</target>
+        <target state="needs-translation">PLACE</target>
       </trans-unit>
       <trans-unit id="F.mgpRK" resname="DATE">
         <source>DATE</source>
-        <target state="translated">DATA</target>
+        <target state="needs-translation">DATE</target>
       </trans-unit>
       <trans-unit id="WIhnXZm" resname="TIME">
         <source>TIME</source>
-        <target state="translated">ORDUA</target>
+        <target state="needs-translation">TIME</target>
       </trans-unit>
       <trans-unit id="MKOwLL7" resname="No title">
         <source>No title</source>
-        <target state="translated">Izenbururik gabe</target>
+        <target state="needs-translation">No title</target>
       </trans-unit>
       <trans-unit id="Th9Jqci" resname="Event">
         <source>Event</source>
-        <target xml:lang="eu" state="translated">Emanaldia</target>
+        <target state="needs-translation">Event</target>
       </trans-unit>
       <trans-unit id="6UY9zPB" resname="Place">
         <source>Place</source>
-        <target state="translated">Tokia</target>
+        <target state="needs-translation">Place</target>
       </trans-unit>
       <trans-unit id="mcQKtAW" resname="Date">
         <source>Date</source>
-        <target state="translated">Data</target>
+        <target state="needs-translation">Date</target>
       </trans-unit>
       <trans-unit id="M7k0ds9" resname="Time">
         <source>Time</source>
-        <target state="translated">Ordua</target>
+        <target state="needs-translation">Time</target>
       </trans-unit>
       <trans-unit id="VXRvY92" resname="JWPlayer does not support your browser version">
         <source>JWPlayer does not support your browser version</source>
-        <target state="translated">JWPlayer no es compatible con la versión de su navegador</target>
+        <target state="needs-translation">JWPlayer does not support your browser version</target>
       </trans-unit>
       <trans-unit id="e9X3KLs" resname="Please use 9.0 or higher version or use another browser.">
         <source>Please use 9.0 or higher version or use another browser.</source>
-        <target state="translated">Mesedez erabili ezazu 9.0 bertsioa edo erabili beste nabigatzaile bat.</target>
+        <target state="needs-translation">Please use 9.0 or higher version or use another browser.</target>
       </trans-unit>
       <trans-unit id="wlNtjtj" resname="The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.">
         <source>The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</source>
-        <target state="translated">Es necesario instalar el plugin Flash. JWPlayer necesita al menos la versión 10.1.82.76 de Flash para reproducir.</target>
+        <target state="needs-translation">The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</target>
       </trans-unit>
       <trans-unit id="Xypi4__" resname="The event has not been held yet">
         <source>The event has not been held yet</source>
