@@ -14,7 +14,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 class ViewsAggregation
 {
     /**
-     * @var int
+     * @var string
      *
      * @MongoDB\Id
      */
@@ -109,7 +109,7 @@ class ViewsAggregation
     /**
      * Get multimediaObject.
      *
-     * @return int $multimediaObject
+     * @return string $multimediaObject
      */
     public function getMultimediaObject()
     {
@@ -119,7 +119,7 @@ class ViewsAggregation
     /**
      * Set series.
      *
-     * @param int $series
+     * @param string $series
      *
      * @return self
      */
@@ -133,7 +133,7 @@ class ViewsAggregation
     /**
      * Get series.
      *
-     * @return int $series
+     * @return string $series
      */
     public function getSeries()
     {
@@ -143,7 +143,7 @@ class ViewsAggregation
     /**
      * Set numView.
      *
-     * @param string $numView
+     * @param int $numView
      *
      * @return self
      */
@@ -157,7 +157,7 @@ class ViewsAggregation
     /**
      * Get numView.
      *
-     * @return string $numView
+     * @return int $numView
      */
     public function getNumViews()
     {

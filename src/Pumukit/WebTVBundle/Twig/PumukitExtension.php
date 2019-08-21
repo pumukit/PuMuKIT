@@ -315,7 +315,7 @@ class PumukitExtension extends AbstractExtension
      *
      * @param MultimediaObject $multimediaObject
      *
-     * @return array
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCaptions(MultimediaObject $multimediaObject)
     {
@@ -329,7 +329,7 @@ class PumukitExtension extends AbstractExtension
      * @param bool             $isHTML5          default=false
      * @param bool             $isDownloadable   default=false
      *
-     * @return array
+     * @return string
      */
     public function getIframeUrl($multimediaObject, $isHTML5 = false, $isDownloadable = false)
     {

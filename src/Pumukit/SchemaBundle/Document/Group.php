@@ -16,8 +16,6 @@ class Group implements GroupInterface
     const ORIGIN_LOCAL = 'local';
 
     /**
-     * @var null|\MongoId|string
-     *
      * @MongoDB\Id(strategy="auto")
      */
     protected $id;
@@ -91,8 +89,6 @@ class Group implements GroupInterface
 
     /**
      * Get id.
-     *
-     * @return null|\MongoId|string
      */
     public function getId()
     {

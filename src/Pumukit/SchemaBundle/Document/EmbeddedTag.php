@@ -12,8 +12,6 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 class EmbeddedTag
 {
     /**
-     * @var int
-     *
      * @MongoDB\Id
      */
     private $id;
@@ -126,8 +124,6 @@ class EmbeddedTag
 
     /**
      * Get id.
-     *
-     * @return int
      */
     public function getId()
     {

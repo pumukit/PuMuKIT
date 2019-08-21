@@ -38,7 +38,7 @@ class PicService
      * @param null|string $id
      * @param null|string $size
      * @param null|string $path
-     * @param null|string $extension
+     * @param null|array  $extension
      * @param null|string $tags
      * @param null|string $exists
      * @param null|string $type
@@ -127,7 +127,7 @@ class PicService
     }
 
     /**
-     * @param string $data
+     * @param array  $data
      * @param string $exists
      *
      * @return array $data
