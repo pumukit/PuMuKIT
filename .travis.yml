@@ -46,7 +46,6 @@ script:
     - php bin/phpstan analyse -l 5 src/Pumukit/ExampleDataBundle/
     - php bin/phpstan analyse -l 5 src/Pumukit/InspectionBundle/
     - php bin/phpstan analyse -l 5 src/Pumukit/JWPlayerBundle/
-    - php bin/phpstan analyse -l 5 src/Pumukit/LDAPBundle/
     - php bin/phpstan analyse -l 5 src/Pumukit/OaiBundle/
     - php bin/phpstan analyse -l 5 src/Pumukit/WizardBundle/
     - php bin/phpunit -c app
