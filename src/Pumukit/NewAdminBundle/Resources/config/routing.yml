@@ -1,7 +1,7 @@
 pumukit_new_admin_parent:
     resource: "../../Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /admin
 
 pumukit_new_admin:
     resource: "@PumukitNewAdminBundle/Controller/"
