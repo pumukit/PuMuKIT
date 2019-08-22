@@ -2,7 +2,9 @@
 
 namespace Pumukit\JWPlayerBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\BasePlayerBundle\Controller\BasePlaylistController;
+use Pumukit\BasePlayerBundle\Services\SeriesPlaylistService;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
@@ -19,8 +21,11 @@ class PlaylistController extends BasePlaylistController
      */
     public function indexAction(Series $series, Request $request)
     {
+        /** @var SeriesPlaylistService */
         $playlistService = $this->get('pumukit_baseplayer.seriesplaylist');
-        $dm = $this->get('doctrine_mongodb')->getManager();
+        /** @var DocumentManager */
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+
         if (!$series->isPlaylist()) {
             $criteria = [
                 'type' => ['$ne' => MultimediaObject::TYPE_LIVE],

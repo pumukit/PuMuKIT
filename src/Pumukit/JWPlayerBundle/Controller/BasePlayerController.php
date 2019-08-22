@@ -3,8 +3,11 @@
 namespace Pumukit\JWPlayerBundle\Controller;
 
 use Pumukit\BasePlayerBundle\Controller\BasePlayerController as BasePlayerControllero;
+use Pumukit\BasePlayerBundle\Services\IntroService;
 use Pumukit\CoreBundle\Controller\PersonalControllerInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
+use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +21,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
      */
     public function indexAction(MultimediaObject $multimediaObject, Request $request)
     {
+        /** @var EmbeddedBroadcastService */
         $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
         $password = $request->get('broadcast_password');
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $this->getUser(), $password);
@@ -37,9 +41,12 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
             return $this->redirect($url);
         }
 
+        /** @var IntroService */
+        $basePlayerIntroService = $this->get('pumukit_baseplayer.intro');
+
         return [
             'autostart' => $request->query->get('autostart', 'false'),
-            'intro' => $this->get('pumukit_baseplayer.intro')->getIntroForMultimediaObject($request->query->get('intro'), $multimediaObject->getProperty('intro')),
+            'intro' => $basePlayerIntroService->getIntroForMultimediaObject($request->query->get('intro'), $multimediaObject->getProperty('intro')),
             'multimediaObject' => $multimediaObject,
             'object' => $multimediaObject,
             'when_dispatch_view_event' => $this->container->getParameter('pumukitplayer.when_dispatch_view_event'),
@@ -53,6 +60,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
      */
     public function magicAction(MultimediaObject $multimediaObject, Request $request)
     {
+        /** @var MultimediaObjectService */
         $mmobjService = $this->get('pumukitschema.multimedia_object');
         if ($mmobjService->isPublished($multimediaObject, 'PUCHWEBTV')) {
             if ($mmobjService->hasPlayableResource($multimediaObject) && $multimediaObject->isPublicEmbeddedBroadcast()) {
@@ -65,7 +73,9 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
             return $this->render('PumukitWebTVBundle:Index:404notfound.html.twig');
         }
 
+        /** @var EmbeddedBroadcastService */
         $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
+
         $password = $request->get('broadcast_password');
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $this->getUser(), $password);
         if ($response instanceof Response) {
@@ -84,9 +94,12 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
             return $this->redirect($url);
         }
 
+        /** @var IntroService */
+        $basePlayerIntroService = $this->get('pumukit_baseplayer.intro');
+
         return [
             'autostart' => $request->query->get('autostart', 'false'),
-            'intro' => $this->get('pumukit_baseplayer.intro')->getIntroForMultimediaObject($request->query->get('intro'), $multimediaObject->getProperty('intro')),
+            'intro' => $basePlayerIntroService->getIntroForMultimediaObject($request->query->get('intro'), $multimediaObject->getProperty('intro')),
             'multimediaObject' => $multimediaObject,
             'object' => $multimediaObject,
             'when_dispatch_view_event' => $this->container->getParameter('pumukitplayer.when_dispatch_view_event'),
