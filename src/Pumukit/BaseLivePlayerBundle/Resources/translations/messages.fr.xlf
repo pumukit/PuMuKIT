@@ -15,11 +15,11 @@
       </trans-unit>
       <trans-unit id="s8XJFie" resname="EVENT">
         <source>EVENT</source>
-        <target state="needs-translation">EVENT</target>
+        <target state="translated">ÉVÉNEMENT</target>
       </trans-unit>
       <trans-unit id="BohT_Se" resname="PLACE">
         <source>PLACE</source>
-        <target state="needs-translation">PLACE</target>
+        <target state="translated">LIEU</target>
       </trans-unit>
       <trans-unit id="F.mgpRK" resname="DATE">
         <source>DATE</source>
@@ -27,11 +27,11 @@
       </trans-unit>
       <trans-unit id="WIhnXZm" resname="TIME">
         <source>TIME</source>
-        <target state="needs-translation">TIME</target>
+        <target state="translated">HEURE</target>
       </trans-unit>
       <trans-unit id="MKOwLL7" resname="No title">
         <source>No title</source>
-        <target state="needs-translation">No title</target>
+        <target state="translated">Sans titre</target>
       </trans-unit>
       <trans-unit id="Th9Jqci" resname="Event">
         <source>Event</source>
