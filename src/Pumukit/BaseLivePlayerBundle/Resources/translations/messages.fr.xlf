@@ -35,11 +35,11 @@
       </trans-unit>
       <trans-unit id="Th9Jqci" resname="Event">
         <source>Event</source>
-        <target state="needs-translation">Event</target>
+        <target state="translated">Événement</target>
       </trans-unit>
       <trans-unit id="6UY9zPB" resname="Place">
         <source>Place</source>
-        <target state="needs-translation">Place</target>
+        <target state="translated">Lieu</target>
       </trans-unit>
       <trans-unit id="mcQKtAW" resname="Date">
         <source>Date</source>
@@ -63,11 +63,11 @@
       </trans-unit>
       <trans-unit id="Xypi4__" resname="The event has not been held yet">
         <source>The event has not been held yet</source>
-        <target state="needs-translation">The event has not been held yet</target>
+        <target state="translated">L'événement n'a pas encore commencé</target>
       </trans-unit>
       <trans-unit id="i7YNXXs" resname="The event has already been held">
         <source>The event has already been held</source>
-        <target state="needs-translation">The event has already been held</target>
+        <target state="translated">L'évènement a déjà eu lieu</target>
       </trans-unit>
       <trans-unit id="tkrAXxf" resname="Live">
         <source>Live</source>
