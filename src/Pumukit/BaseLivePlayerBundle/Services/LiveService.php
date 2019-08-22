@@ -8,14 +8,9 @@ class LiveService
 {
     /**
      * Generate HLS URL from RTMP url.
-     * Original twig template:
-     *    {{ live.url|replace({'rtmp://':'http://', 'rtmpt://': 'http://'}) }}/{{ live.sourcename }}/playlist.m3u8.
-     *
-     * @param Live $live
-     *
-     * @return string
+     * Original twig template: {{ live.url|replace({'rtmp://':'http://', 'rtmpt://': 'http://'}) }}/{{ live.sourcename }}/playlist.m3u8.
      */
-    public function generateHlsUrl(Live $live)
+    public function generateHlsUrl(Live $live): string
     {
         switch ($live->getLiveType()) {
             case Live::LIVE_TYPE_AMS:
