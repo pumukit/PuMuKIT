@@ -588,28 +588,26 @@ class PumukitAdminExtension extends \Twig_Extension
      */
     public function getNextEventSession(Multimediaobject $multimediaObject)
     {
-        if ($multimediaObject) {
-            $now = new \DateTime();
-            $now = $now->getTimestamp();
-            $aSessions = [];
-            $event = $multimediaObject->getEmbeddedEvent();
-            foreach ($event->getEmbeddedEventSession() as $session) {
-                $sessionStart = clone $session->getStart();
-                $sessionEnds = $sessionStart->add(new \DateInterval('PT'.$session->getDuration().'S'));
-                if ($session->getStart()->getTimestamp() > $now) {
-                    $aSessions[$session->getStart()->getTimestamp()][] = $session;
-                } elseif (($session->getStart()->getTimestamp() < $now) && ($sessionEnds->getTimestamp() > $now)) {
-                    $aSessions[$session->getStart()->getTimestamp()][] = $session;
-                }
+        $now = new \DateTime();
+        $now = $now->getTimestamp();
+        $aSessions = [];
+        $event = $multimediaObject->getEmbeddedEvent();
+        foreach ($event->getEmbeddedEventSession() as $session) {
+            $sessionStart = clone $session->getStart();
+            $sessionEnds = $sessionStart->add(new \DateInterval('PT'.$session->getDuration().'S'));
+            if ($session->getStart()->getTimestamp() > $now) {
+                $aSessions[$session->getStart()->getTimestamp()][] = $session;
+            } elseif (($session->getStart()->getTimestamp() < $now) && ($sessionEnds->getTimestamp() > $now)) {
+                $aSessions[$session->getStart()->getTimestamp()][] = $session;
             }
-            if (!empty($aSessions)) {
-                ksort($aSessions);
-
-                return array_shift($aSessions);
-            }
-
-            return false;
         }
+        if (!empty($aSessions)) {
+            ksort($aSessions);
+
+            return array_shift($aSessions);
+        }
+
+        return false;
     }
 
     /**

@@ -114,7 +114,7 @@ EOT
         $finder = new Finder();
         $finder->files()->in(__DIR__.'/'.$this->tagsPath);
         $file = $input->getArgument('file');
-        if ((0 == strcmp($file, '')) && (!$finder)) {
+        if ((0 == strcmp($file, ''))) {
             $output->writeln("<error>Tags: There's no data to initialize</error>");
 
             return -1;
@@ -140,7 +140,7 @@ EOT
         $finder = new Finder();
         $finder->files()->in(__DIR__.'/'.$this->rolesPath);
         $file = $input->getArgument('file');
-        if ((0 == strcmp($file, '')) && (!$finder)) {
+        if ((0 == strcmp($file, ''))) {
             $output->writeln("<error>Roles: There's no data to initialize</error>");
 
             return -1;
@@ -162,7 +162,7 @@ EOT
         $finder = new Finder();
         $finder->files()->in(__DIR__.'/'.$this->permissionProfilesPath);
         $file = $input->getArgument('file');
-        if ((0 == strcmp($file, '')) && (!$finder)) {
+        if ((0 == strcmp($file, ''))) {
             $output->writeln("<error>PermissionProfiles: There's no data to initialize</error>");
 
             return -1;

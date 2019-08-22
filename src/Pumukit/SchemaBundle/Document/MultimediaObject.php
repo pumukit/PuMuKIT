@@ -103,7 +103,7 @@ class MultimediaObject
     private $seriesTitle = ['en' => ''];
 
     /**
-     * @var Broadcast
+     * @var null|Broadcast
      *
      * @deprecated in version 2.3
      * use EmbeddedBroadcast instead
@@ -112,7 +112,7 @@ class MultimediaObject
     private $broadcast;
 
     /**
-     * @var EmbeddedBroadcast
+     * @var null|EmbeddedBroadcast
      * @MongoDB\EmbedOne(targetDocument="EmbeddedBroadcast")
      */
     private $embeddedBroadcast;
@@ -1097,7 +1097,7 @@ class MultimediaObject
     /**
      * Get embedded social.
      *
-     * @return EmbeddedSocial
+     * @return null|EmbeddedSocial
      */
     public function getEmbeddedSocial()
     {
@@ -1361,7 +1361,7 @@ class MultimediaObject
     /**
      * Get tracks.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return null|\Doctrine\Common\Collections\Collection
      */
     public function getTracks()
     {

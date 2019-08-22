@@ -372,11 +372,7 @@ class UserService
      */
     public function hasGlobalScope(User $user)
     {
-        if ($permissionProfile = $user->getPermissionProfile()) {
-            return $permissionProfile->isGlobal();
-        }
-
-        return false;
+        return $user->getPermissionProfile()->isGlobal();
     }
 
     /**
@@ -391,11 +387,7 @@ class UserService
      */
     public function hasPersonalScope(User $user)
     {
-        if ($permissionProfile = $user->getPermissionProfile()) {
-            return $permissionProfile->isPersonal();
-        }
-
-        return false;
+        return $user->getPermissionProfile()->isPersonal();
     }
 
     /**
@@ -410,11 +402,7 @@ class UserService
      */
     public function hasNoneScope(User $user)
     {
-        if ($permissionProfile = $user->getPermissionProfile()) {
-            return $permissionProfile->isNone();
-        }
-
-        return false;
+        return $user->getPermissionProfile()->isNone();
     }
 
     /**

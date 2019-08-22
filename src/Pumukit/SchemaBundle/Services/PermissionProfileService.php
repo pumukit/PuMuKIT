@@ -225,7 +225,7 @@ class PermissionProfileService
     /**
      * Get Default.
      *
-     * @return PermissionProfile
+     * @return null|PermissionProfile
      */
     public function getDefault()
     {

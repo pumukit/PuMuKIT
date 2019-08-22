@@ -83,7 +83,7 @@ class PumukitExtension extends AbstractExtension
     {
         return [
             new TwigFilter('first_url_pic', [$this, 'getFirstUrlPicFilter']),
-            new TwigFilter('precinct_fulltitle', [$this, 'getPrecinctFulltitle']),
+            new TwigFilter('precinct_fulltitle', [$this, 'getPrecinctFullTitle']),
             new TwigFilter('duration_minutes_seconds', [$this, 'getDurationInMinutesSeconds']),
             new TwigFilter('duration_string', [$this, 'getDurationString']),
             new TwigFilter('first_dynamic_pic', [$this, 'getDynamicPic']),
@@ -216,33 +216,30 @@ class PumukitExtension extends AbstractExtension
      *
      * @return string
      */
-    public function getPrecinctFulltitle($precinctEmbeddedTag)
+    public function getPrecinctFullTitle($precinctEmbeddedTag): string
     {
-        $fulltitle = '';
+        $fullTitle = '';
 
-        if ($precinctEmbeddedTag) {
-            $tagRepo = $this->dm->getRepository(Tag::class);
-            $precinctTag = $tagRepo->findOneBy(['cod' => $precinctEmbeddedTag->getCod()]);
-            if ($precinctTag) {
-                if ($precinctTag->getTitle()) {
-                    $fulltitle = $precinctTag->getTitle();
-                }
-                $placeTag = $precinctTag->getParent();
-                if ($placeTag) {
-                    if ($placeTag->getTitle()) {
-                        if ($fulltitle) {
-                            $fulltitle .= ', '.$placeTag->getTitle();
-                        } else {
-                            $fulltitle = $placeTag->getTitle();
-                        }
+        $precinctTag = $this->dm->getRepository(Tag::class)->findOneBy(['cod' => $precinctEmbeddedTag->getCod()]);
+        if ($precinctTag) {
+            if ($precinctTag->getTitle()) {
+                $fullTitle = $precinctTag->getTitle();
+            }
+            $placeTag = $precinctTag->getParent();
+            if ($placeTag) {
+                if ($placeTag->getTitle()) {
+                    if ($fullTitle) {
+                        $fullTitle .= ', '.$placeTag->getTitle();
+                    } else {
+                        $fullTitle = $placeTag->getTitle();
                     }
                 }
-            } elseif ($precinctEmbeddedTag->getTitle()) {
-                $fulltitle = $precinctEmbeddedTag->getTitle();
             }
+        } elseif ($precinctEmbeddedTag->getTitle()) {
+            $fullTitle = $precinctEmbeddedTag->getTitle();
         }
 
-        return $fulltitle;
+        return $fullTitle;
     }
 
     /**
@@ -265,16 +262,11 @@ class PumukitExtension extends AbstractExtension
     }
 
     /**
-     * Get duration as uninternationalized string
-     * The format is type 78'12''.
-     *
-     * @param int $duration
-     *
-     * @return string
+     * Get duration as not internationalized string. The format is type 78'12''.
      */
-    public function getDurationString($duration)
+    public function getDurationString(int $duration): string
     {
-        if (null === $duration) {
+        if (!$duration) {
             return '';
         }
 
