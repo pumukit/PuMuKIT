@@ -16,7 +16,7 @@ trait Properties
     /**
      * Get properties, null if none.
      *
-     * @return string
+     * @return array
      */
     public function getProperties()
     {
