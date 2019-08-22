@@ -227,7 +227,7 @@ class ListService
     }
 
     /**
-     * @param null $tagCod
+     * @param null|string $tagCod
      *
      * @throws \Exception
      *

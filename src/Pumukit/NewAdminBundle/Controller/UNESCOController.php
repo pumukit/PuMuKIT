@@ -676,8 +676,8 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @param mixed $criteria
-     * @param null  $tag
+     * @param mixed       $criteria
+     * @param null|string $tag
      *
      * @throws \Exception
      *

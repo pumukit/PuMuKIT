@@ -9,8 +9,11 @@ class RemoteHTTPExecutor
         if (!function_exists('curl_init')) {
             throw new ExecutorException('Curl is required to execute remote commands.');
         }
-
-        if (false === $curl = curl_init()) {
+        /**
+         * @var bool|resource
+         */
+        $curl = curl_init();
+        if (false === $curl) {
             throw new ExecutorException('Unable to create a new curl handle.');
         }
 

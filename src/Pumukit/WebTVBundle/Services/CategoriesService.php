@@ -62,7 +62,7 @@ class CategoriesService
             $keys = explode('|', $path);
             $ref = &$tagsArray;
             foreach ($keys as $key) {
-                if (!array_key_exists($key, $ref)) {
+                if (!isset($ref[$key])) {
                     $ref[$key] = [];
                 }
                 $ref = &$ref[$key];
@@ -161,7 +161,7 @@ class CategoriesService
     }
 
     /**
-     * @param null $provider
+     * @param null|string $provider
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
@@ -197,12 +197,12 @@ class CategoriesService
     }
 
     /**
-     * @param Tag  $tag
-     * @param null $provider
+     * @param Tag         $tag
+     * @param null|string $provider
      *
      * @return mixed
      */
-    private function countGeneralMmobjsInTag(Tag $tag, $provider = null)
+    private function countGeneralMmobjsInTag(Tag $tag, string $provider = null)
     {
         $repo = $this->documentManager->getRepository(MultimediaObject::class);
         $qb = $repo->createBuilderWithGeneralTag($tag);

@@ -40,8 +40,6 @@ class User extends BaseUser
     protected $origin = self::ORIGIN_LOCAL;
 
     /**
-     * @var ArrayCollection
-     *
      * @MongoDB\ReferenceMany(targetDocument="Group", storeAs="id", sort={"key":1}, strategy="setArray")
      */
     protected $groups;
@@ -78,7 +76,7 @@ class User extends BaseUser
     /**
      * Get permission profile.
      *
-     * @return PermissionProfile $permissionProfile
+     * @return null|PermissionProfile $permissionProfile
      */
     public function getPermissionProfile()
     {
@@ -98,7 +96,7 @@ class User extends BaseUser
     /**
      * Get person.
      *
-     * @return Person
+     * @return null|Person
      */
     public function getPerson()
     {

@@ -82,9 +82,6 @@ class JobNotificationService
     {
         if ($this->enable) {
             $job = $event->getJob();
-            if (!$job) {
-                return false;
-            }
 
             $track = $event->getTrack();
             if (!$error && ($track->isMaster() && !$track->containsTag('display'))) {

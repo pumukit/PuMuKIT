@@ -64,11 +64,11 @@ class PicExtractorService
      *
      * @param MultimediaObject $multimediaObject
      * @param Track            $track
-     * @param int              $numframe
+     * @param null|int         $numframe
      *
      * @return string $message
      */
-    public function extractPic(MultimediaObject $multimediaObject, Track $track, $numframe)
+    public function extractPic(MultimediaObject $multimediaObject, Track $track, $numframe = null)
     {
         if (!file_exists($track->getPath())) {
             return 'Error in data autocomplete of multimedia object.';
@@ -158,7 +158,7 @@ class PicExtractorService
      *
      * @param Track $track
      *
-     * @return float aspect ratio
+     * @return float|int aspect ratio
      */
     private function getAspect(Track $track)
     {

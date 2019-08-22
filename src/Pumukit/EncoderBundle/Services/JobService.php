@@ -190,12 +190,6 @@ class JobService
             throw new \Exception("Can't find given profile with name ".$profileName);
         }
 
-        if (null === $multimediaObject) {
-            $this->logger->error('[addJob] Given null multimedia object');
-
-            throw new \Exception('Given null multimedia object');
-        }
-
         $checkduration = !(isset($profile['nocheckduration']) && $profile['nocheckduration']);
 
         if ($checkduration && !(self::ADD_JOB_NOT_CHECKS & $flags)) {
@@ -479,10 +473,6 @@ class JobService
             ->add($console)
             ->add(sprintf('--env=%s', $this->environment))
             ;
-
-        if (false) {
-            $pb->add('--verbose');
-        }
 
         $pb
             ->add('pumukit:encoder:job')

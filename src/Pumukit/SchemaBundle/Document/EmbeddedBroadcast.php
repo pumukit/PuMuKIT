@@ -196,7 +196,7 @@ class EmbeddedBroadcast
     /**
      * Get groups.
      *
-     * @return ArrayCollection
+     * @return null|ArrayCollection
      */
     public function getGroups()
     {

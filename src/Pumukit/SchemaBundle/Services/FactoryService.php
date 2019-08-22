@@ -242,8 +242,8 @@ class FactoryService
     /**
      * Get series by id.
      *
-     * @param string $id
-     * @param string $sessionId
+     * @param null|string $id
+     * @param null|string $sessionId
      *
      * @throws \Doctrine\ODM\MongoDB\LockException
      * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
@@ -303,7 +303,7 @@ class FactoryService
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
-     * @return object MultimediaObject
+     * @return null|object
      */
     public function getMultimediaObjectPrototype(Series $series = null)
     {
@@ -668,12 +668,10 @@ class FactoryService
         }
 
         // Create roles except Owners because $this->personService->getPersonalScopeRoleCode() !== $embeddedRole->getCod()
-        if ($prototype) {
-            foreach ($prototype->getRoles() as $embeddedRole) {
-                if ($this->personService->getPersonalScopeRoleCode() !== $embeddedRole->getCod()) {
-                    foreach ($embeddedRole->getPeople() as $embeddedPerson) {
-                        $new->addPersonWithRole($embeddedPerson, $embeddedRole);
-                    }
+        foreach ($prototype->getRoles() as $embeddedRole) {
+            if ($this->personService->getPersonalScopeRoleCode() !== $embeddedRole->getCod()) {
+                foreach ($embeddedRole->getPeople() as $embeddedPerson) {
+                    $new->addPersonWithRole($embeddedPerson, $embeddedRole);
                 }
             }
         }
@@ -715,7 +713,7 @@ class FactoryService
             $this->dm->getFilterCollection()->disable($enableFilter);
         }
 
-        /** @var MultimediaObject */
+        /** @var null|MultimediaObject */
         $multimediaObject = $this->dm->getRepository(MultimediaObject::class)->createQueryBuilder()
             ->field('numerical_id')->exists(true)
             ->sort(['numerical_id' => -1])
@@ -751,7 +749,7 @@ class FactoryService
             $this->dm->getFilterCollection()->disable($enableFilter);
         }
 
-        /** @var Series */
+        /** @var null|Series */
         $series = $this->dm->getRepository(Series::class)->createQueryBuilder()
             ->field('numerical_id')->exists(true)
             ->sort(['numerical_id' => -1])

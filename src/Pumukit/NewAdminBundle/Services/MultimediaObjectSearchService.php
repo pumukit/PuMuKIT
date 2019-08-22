@@ -62,16 +62,16 @@ class MultimediaObjectSearchService
         $new_criteria['type'] = ['$ne' => MultimediaObject::TYPE_LIVE];
 
         if ('' !== $bAnnounce) {
-            if (('' !== $bChannel) && $bChannel && $bAnnounce) {
+            if (('' !== $bChannel) && $bAnnounce) {
                 $new_criteria += ['$and' => [['tags.cod' => $sChannelValue], ['tags.cod' => 'PUDENEW']]];
-            } elseif (('' !== $bChannel) && $bChannel) {
+            } elseif (('' !== $bChannel)) {
                 $new_criteria += ['$and' => [['tags.cod' => $sChannelValue]]];
             } elseif ($bAnnounce) {
                 $new_criteria += ['$and' => [['tags.cod' => 'PUDENEW']]];
             } elseif (!$bAnnounce) {
                 $new_criteria += ['$and' => [['tags.cod' => ['$nin' => ['PUDENEW']]]]];
             }
-        } elseif (('' !== $bChannel) && $bChannel) {
+        } elseif (('' !== $bChannel)) {
             $new_criteria += ['$and' => [['tags.cod' => $sChannelValue]]];
         }
 

@@ -141,10 +141,6 @@ class MultimediaObjectVoter extends Voter
     // Related to EmbeddedBroadcastService::isUserRelatedToMultimediaObject
     protected function isUserRelatedToBroadcast(EmbeddedBroadcast $broadcast, User $user)
     {
-        if (!$user) {
-            return false;
-        }
-
         $userGroups = $user->getGroups()->toArray();
         $playGroups = $broadcast->getGroups()->toArray();
 
