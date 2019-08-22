@@ -39,7 +39,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
 
         $duration = 0;
         if (isset($json->format->duration)) {
-            $duration = ceil((float) ($json->format->duration));
+            $duration = (int) ceil((float) ($json->format->duration));
         }
 
         return $duration;
@@ -66,12 +66,18 @@ class InspectionFfprobeService implements InspectionServiceInterface
                 "nor audio tracks\n".$track->getPath());
         }
 
-        $track->setMimetype(mime_content_type($track->getPath()));
+        $mime_type = mime_content_type($track->getPath());
+
+        if (!$mime_type) {
+            $mime_type = '';
+        }
+
+        $track->setMimetype($mime_type);
         $bitrate = isset($json->format->bit_rate) ? (int) ($json->format->bit_rate) : 0;
         $track->setBitrate($bitrate);
-        $duration = ceil((float) ($json->format->duration));
+        $duration = (int) ceil((float) ($json->format->duration));
         $track->setDuration($duration);
-        $size = isset($json->format->size) ? (string) $json->format->size : 0;
+        $size = isset($json->format->size) ? (int) $json->format->size : 0;
         $track->setSize($size);
 
         foreach ($json->streams as $stream) {
