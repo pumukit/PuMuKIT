@@ -153,7 +153,7 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('user')
             ->info('Specifies the user to log in as on the remote encoder host')->end()
             ->scalarNode('password')
-            ->info('Specifies the user to log in as on the remote encoder host')->end()
+            ->info('Specifies the password to log in as on the remote encoder host')->end()
             ->scalarNode('description')->defaultValue('')
             ->info('Encoder host description')->end()
             ->arrayNode('profiles')
@@ -183,10 +183,10 @@ class Configuration implements ConfigurationInterface
             ->children()
         ;
 
-        $aux->integerNode('width')->defaultValue(304)
+        $aux->integerNode('width')->defaultValue(768)
             ->info('Width resolution of thumbnail')->end();
 
-        $aux->integerNode('height')->defaultValue(242)
+        $aux->integerNode('height')->defaultValue(432)
             ->info('Height resolution of thumbnail')->end()
         ;
     }
