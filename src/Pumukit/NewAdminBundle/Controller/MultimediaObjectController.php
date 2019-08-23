@@ -280,7 +280,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
 
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneById(new \MongoId($request->request->get('id')));
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new \MongoId($request->request->get('id'))]);
         $method = $request->getMethod();
         if (in_array($method, ['POST', 'PUT', 'PATCH'])) {
             $social = $multimediaObject->getEmbeddedSocial();
@@ -576,7 +576,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $lang = $request->getLocale();
         $mmId = $request->get('mmId');
 
-        $parent = $repo->findOneById($request->get('parent'));
+        $parent = $repo->findOneBy(['_id' => $request->get('parent')]);
         $parent_path = str_replace('|', '\\|', $parent->getPath());
 
         $qb = $dm->createQueryBuilder(Tag::class);
@@ -926,7 +926,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $repo = $dm->getRepository(Tag::class);
 
         $mmId = $request->get('mmId');
-        $parent = $repo->findOneById(''.$request->get('parentId'));
+        $parent = $repo->findOneBy(['_id' => $request->get('parentId')]);
 
         return $this->render(
             'PumukitNewAdminBundle:MultimediaObject:listtagsajax.html.twig',
@@ -1333,7 +1333,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     public function updatePropertyAction(Request $request)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneById(new \MongoId($request->get('id')));
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new \MongoId($request->get('id'))]);
         $method = $request->getMethod();
         if (in_array($method, ['POST'])) {
             $multimediaObject->setProperty('paellalayout', $request->get('paellalayout'));

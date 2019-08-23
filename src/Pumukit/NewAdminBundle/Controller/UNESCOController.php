@@ -484,9 +484,7 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
         $tagService = $this->container->get('pumukitschema.tag');
         $translator = $this->get('translator');
 
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneById(
-            new \MongoId($multimediaObjectId)
-        );
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new \MongoId($multimediaObjectId)]);
 
         $tag = $dm->getRepository(Tag::class)->findOneByCod($tagCod);
         $tagConfigured = $this->getConfiguredTag();
@@ -515,9 +513,7 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
         $dm = $this->container->get('doctrine_mongodb')->getManager();
         $tagService = $this->container->get('pumukitschema.tag');
 
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneById(
-            new \MongoId($multimediaObjectId)
-        );
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new \MongoId($multimediaObjectId)]);
 
         $tag = $dm->getRepository(Tag::class)->findOneByCod($tagCod);
         if ($multimediaObject->containsTag($tag)) {
@@ -593,7 +589,7 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
         $translator = $this->get('translator');
         $factoryService = $this->get('pumukitschema.factory');
 
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneById(new \MongoId($multimediaObjectId));
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new \MongoId($multimediaObjectId)]);
 
         try {
             $factoryService->deleteMultimediaObject($multimediaObject);
@@ -616,7 +612,7 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
         $translator = $this->get('translator');
         $factoryService = $this->get('pumukitschema.factory');
 
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneById(new \MongoId($multimediaObjectId));
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new \MongoId($multimediaObjectId)]);
 
         try {
             $factoryService->cloneMultimediaObject($multimediaObject);
