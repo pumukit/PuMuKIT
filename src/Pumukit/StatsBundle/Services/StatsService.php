@@ -5,6 +5,7 @@ namespace Pumukit\StatsBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\StatsBundle\Document\ViewsLog;
 
 class StatsService
 {
@@ -303,7 +304,7 @@ class StatsService
      */
     public function aggregateViewsLog()
     {
-        $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog');
+        $viewsLogColl = $this->dm->getDocumentCollection(ViewsLog::class);
 
         $pipeline = [
             [

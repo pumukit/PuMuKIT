@@ -6,6 +6,7 @@ use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\StatsBundle\Document\ViewsLog;
 use Pumukit\StatsBundle\EventListener\Log;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +30,7 @@ class LogTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()
             ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
-            ->getRepository('PumukitStatsBundle:ViewsLog')
+            ->getRepository(ViewsLog::class)
         ;
         $this->factoryService = static::$kernel->getContainer()
             ->get('pumukitschema.factory')
@@ -38,7 +39,7 @@ class LogTest extends WebTestCase
             ->get('security.token_storage')
         ;
 
-        $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog')
+        $this->dm->getDocumentCollection(ViewsLog::class)
             ->remove([])
         ;
         $this->dm->getDocumentCollection(MultimediaObject::class)

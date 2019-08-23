@@ -221,7 +221,7 @@ class AnnotationsAPIController extends Controller
     {
         $serializer = $this->get('jms_serializer');
 
-        $annonRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Annotation');
+        $annonRepo = $this->get('doctrine_mongodb')->getRepository(Annotation::class);
         $annonQB = $annonRepo->createQueryBuilder();
         $annonQB->field('multimediaObject')->equals(new \MongoId($multimediaobject->getId()));
         $annonQB->remove()->getQuery()->execute();

@@ -6,6 +6,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\StatsBundle\Document\ViewsAggregation;
 use Pumukit\StatsBundle\Document\ViewsLog;
 use Pumukit\StatsBundle\Services\StatsService;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -29,7 +30,7 @@ class StatsServiceTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()
             ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
-            ->getRepository('PumukitStatsBundle:ViewsLog')
+            ->getRepository(ViewsLog::class)
         ;
         $this->factoryService = static::$kernel->getContainer()
             ->get('pumukitschema.factory')
@@ -38,10 +39,10 @@ class StatsServiceTest extends WebTestCase
             ->get('pumukit_stats.stats')
         ;
 
-        $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog')
+        $this->dm->getDocumentCollection(ViewsLog::class)
             ->remove([])
         ;
-        $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsAggregation')
+        $this->dm->getDocumentCollection(ViewsAggregation::class)
             ->remove([])
         ;
         $this->dm->getDocumentCollection(MultimediaObject::class)

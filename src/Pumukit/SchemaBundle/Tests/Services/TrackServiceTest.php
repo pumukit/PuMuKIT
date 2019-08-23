@@ -7,6 +7,7 @@ use Pumukit\EncoderBundle\Services\CpuService;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Services\TrackService;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -56,7 +57,7 @@ class TrackServiceTest extends WebTestCase
         $this->dm->getDocumentCollection(MultimediaObject::class)
             ->remove([])
         ;
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')
+        $this->dm->getDocumentCollection(SeriesType::class)
             ->remove([])
         ;
         $this->dm->getDocumentCollection(Series::class)
