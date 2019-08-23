@@ -44,7 +44,7 @@ script:
     - php bin/phpstan analyse -l 5 src/Pumukit/BasePlayerBundle/
     - php bin/phpstan analyse -l 5 src/Pumukit/CoreBundle/
     - php bin/phpstan analyse -l 7 src/Pumukit/InspectionBundle/
-    - php bin/phpstan analyse -l 5 src/Pumukit/JWPlayerBundle/
+    - php bin/phpstan analyse -l 7 src/Pumukit/JWPlayerBundle/
     - php bin/phpstan analyse -l 5 src/Pumukit/WizardBundle/
     - php bin/phpunit -c app
     - php bin/console doctrine:mongodb:schema:create
