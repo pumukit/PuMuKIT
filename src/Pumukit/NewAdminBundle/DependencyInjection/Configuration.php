@@ -45,7 +45,7 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->scalarNode('base_catalogue_tag')
             ->defaultValue(null)
-            ->info('Name of the tag to use on catalogue')
+            ->info('Code of the tag to use on catalogue')
             ->end()
             ->end()
         ;

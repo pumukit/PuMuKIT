@@ -27,7 +27,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
             ->booleanNode('use_aggregation')
-            ->defaultFalse('on_load')
+            ->defaultFalse()
             ->info('Use ViewsAggregation instead ViewsLog for generate stats (See PumukitAggregateCommand).')
             ->end()
             ->end()
