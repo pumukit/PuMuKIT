@@ -5,6 +5,7 @@ namespace Pumukit\SchemaBundle\Tests\Services;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\Tag;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -48,7 +49,7 @@ class AnnounceServiceTest extends WebTestCase
         $this->dm->getDocumentCollection(MultimediaObject::class)
             ->remove([])
         ;
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')
+        $this->dm->getDocumentCollection(SeriesType::class)
             ->remove([])
         ;
         $this->dm->getDocumentCollection(Series::class)

@@ -46,7 +46,7 @@ class SeriesRepositoryTest extends WebTestCase
         $this->dm->getDocumentCollection(Series::class)
             ->remove([])
         ;
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')
+        $this->dm->getDocumentCollection(SeriesType::class)
             ->remove([])
         ;
         $this->dm->getDocumentCollection(Tag::class)

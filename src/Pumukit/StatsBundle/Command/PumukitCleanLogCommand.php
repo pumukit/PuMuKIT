@@ -2,6 +2,7 @@
 
 namespace Pumukit\StatsBundle\Command;
 
+use Pumukit\StatsBundle\Document\ViewsLog;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -62,7 +63,7 @@ EOT
 
     private function execRemoveQuery($userAgent)
     {
-        $qb = $this->dm->createQueryBuilder('PumukitStatsBundle:ViewsLog')
+        $qb = $this->dm->createQueryBuilder(ViewsLog::class)
             ->remove()
             ->multiple(true)
             ->field('userAgent')->equals($userAgent);

@@ -3,6 +3,9 @@
 namespace Pumukit\WebTVBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\Tag;
 
 class ChannelService
 {
@@ -36,9 +39,9 @@ class ChannelService
     {
         $this->dm = $dm;
         $this->translatorService = $translatorService;
-        $this->repoTags = $this->dm->getRepository('PumukitSchemaBundle:Tag');
-        $this->repoSeries = $this->dm->getRepository('PumukitSchemaBundle:Series');
-        $this->repoMmobjs = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->repoTags = $this->dm->getRepository(Tag::class);
+        $this->repoSeries = $this->dm->getRepository(Series::class);
+        $this->repoMmobjs = $this->dm->getRepository(MultimediaObject::class);
     }
 
     public function getChannelTitle($channelNumber)

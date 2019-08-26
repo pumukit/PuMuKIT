@@ -48,7 +48,7 @@ class FactoryServiceTest extends WebTestCase
         $this->dm->getDocumentCollection(MultimediaObject::class)
             ->remove([])
         ;
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')
+        $this->dm->getDocumentCollection(SeriesType::class)
             ->remove([])
         ;
         $this->dm->getDocumentCollection(Series::class)

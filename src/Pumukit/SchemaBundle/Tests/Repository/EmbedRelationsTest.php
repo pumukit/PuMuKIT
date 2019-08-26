@@ -5,6 +5,7 @@ namespace Pumukit\SchemaBundle\Tests\Repository;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\Tag;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -47,7 +48,7 @@ class EmbedRelationsTest extends WebTestCase
         $this->dm->getDocumentCollection(Series::class)
             ->remove([])
         ;
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')
+        $this->dm->getDocumentCollection(SeriesType::class)
             ->remove([])
         ;
         $this->dm->flush();

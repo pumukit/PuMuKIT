@@ -23,13 +23,13 @@ class SeriesTypeRepositoryTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()
             ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
-            ->getRepository('PumukitSchemaBundle:SeriesType')
+            ->getRepository(SeriesType::class)
         ;
         $this->factoryService = static::$kernel->getContainer()
             ->get('pumukitschema.factory')
         ;
 
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')
+        $this->dm->getDocumentCollection(SeriesType::class)
             ->remove([])
         ;
         $this->dm->flush();

@@ -6,6 +6,8 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\Annotation;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Person;
+use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\Tag;
@@ -200,9 +202,9 @@ class FactoryService
         if (null !== $prototype) {
             foreach ($prototype->getRoles() as $embeddedRole) {
                 if ($this->personService->getPersonalScopeRoleCode() === $embeddedRole->getCod()) {
-                    $role = $this->dm->getRepository('PumukitSchemaBundle:Role')->findOneBy(['cod' => $this->personService->getPersonalScopeRoleCode()]);
+                    $role = $this->dm->getRepository(Role::class)->findOneBy(['cod' => $this->personService->getPersonalScopeRoleCode()]);
                     foreach ($embeddedRole->getPeople() as $embeddedPerson) {
-                        $person = $this->dm->getRepository('PumukitSchemaBundle:Person')->findOneBy(['_id' => $embeddedPerson->getId()]);
+                        $person = $this->dm->getRepository(Person::class)->findOneBy(['_id' => $embeddedPerson->getId()]);
                         $mm = $this->personService->createRelationPerson($person, $role, $mm);
                     }
                 }
