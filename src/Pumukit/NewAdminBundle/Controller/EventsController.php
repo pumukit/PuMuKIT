@@ -639,7 +639,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
 
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneById(new \MongoId($id));
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new \MongoId($id)]);
 
         return ['multimediaObject' => $multimediaObject];
     }
@@ -657,9 +657,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
 
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneById(
-            new \MongoId($multimediaObject)
-        );
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new \MongoId($multimediaObject)]);
         foreach ($multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession() as $session) {
             if ($session->getId() == $session_id) {
                 $multimediaObject->getEmbeddedEvent()->removeEmbeddedEventSession($session);
@@ -686,9 +684,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
 
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneById(
-            new \MongoId($multimediaObject)
-        );
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new \MongoId($multimediaObject)]);
         foreach ($multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession() as $session) {
             if ($session->getId() == $session_id) {
                 $newSession = new EmbeddedEventSession();
@@ -731,9 +727,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
 
         $form = $this->createForm(EmbeddedEventSessionType::class, null, ['translator' => $translator, 'locale' => $locale]);
 
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneById(
-            new \MongoId($multimediaObject)
-        );
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new \MongoId($multimediaObject)]);
 
         if (!$session_id) {
             return ['form' => $form->createView(), 'multimediaObject' => $multimediaObject];
