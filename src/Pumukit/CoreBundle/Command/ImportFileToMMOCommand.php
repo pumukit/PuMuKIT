@@ -2,6 +2,7 @@
 
 namespace Pumukit\CoreBundle\Command;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -11,7 +12,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ImportFileToMMOCommand extends ContainerAwareCommand
 {
-    private $dm;
     private $mmobjRepo;
     private $jobService;
     private $profileService;
@@ -45,8 +45,9 @@ EOT
 
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
+        /** @var DocumentManager */
+        $dm = $this->getContainer()->get('doctrine_mongodb.odm.document_manager');
+        $this->mmobjRepo = $dm->getRepository(MultimediaObject::class);
         $this->jobService = $this->getContainer()->get('pumukitencoder.job');
         $this->profileService = $this->getContainer()->get('pumukitencoder.profile');
         $this->inspectionService = $this->getContainer()->get('pumukit.inspection');
@@ -58,8 +59,11 @@ EOT
         $output->writeln('<info> ***** Add track to multimedia object ***** </info>');
 
         $filePath = $input->getArgument('file');
-        if (!is_file($filePath)) {
+        if (is_string($filePath) && !is_file($filePath)) {
             throw new \Exception('Path is not a file: '.$filePath);
+        }
+        if (!is_string($filePath)) {
+            throw new \Exception('Argument file must be an string');
         }
 
         try {
@@ -72,8 +76,13 @@ EOT
             throw new \Exception('The file is not a valid video or audio file (duration is zero)');
         }
 
+        $multimediaObjectId = $input->getArgument('object');
+        if (!is_string($multimediaObjectId)) {
+            throw new \Exception('Error on object argument. This argument must be string');
+        }
+
         $multimediaObject = $this->mmobjRepo->findOneBy(
-            ['id' => new \MongoId($input->getArgument('object'))]
+            ['id' => new \MongoId($multimediaObjectId)]
         );
 
         $profile = ($input->hasOption('profile')) ? $input->getOption('profile') : $this->profileService->getDefaultMasterProfile();

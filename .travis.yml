@@ -42,7 +42,7 @@ script:
     - php bin/phpstan analyse -l 4 src
     - php bin/phpstan analyse -l 7 src/Pumukit/BaseLivePlayerBundle/
     - php bin/phpstan analyse -l 5 src/Pumukit/BasePlayerBundle/
-    - php bin/phpstan analyse -l 5 src/Pumukit/CoreBundle/
+    - php bin/phpstan analyse -l 7 src/Pumukit/CoreBundle/
     - php bin/phpstan analyse -l 7 src/Pumukit/InspectionBundle/
     - php bin/phpstan analyse -l 7 src/Pumukit/JWPlayerBundle/
     - php bin/phpstan analyse -l 5 src/Pumukit/WizardBundle/

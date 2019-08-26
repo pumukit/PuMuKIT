@@ -4,7 +4,9 @@ namespace Pumukit\CoreBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Class AuthController.
@@ -14,8 +16,9 @@ class AuthController extends Controller implements WebTVControllerInterface
     /**
      * @Route("/auth", name="pumukit_auth")
      */
-    public function changeAction(Request $request)
+    public function changeAction(Request $request): RedirectResponse
     {
+        /** @var SessionInterface */
         $session = $this->get('session');
 
         if (!$session->has('target_path')) {

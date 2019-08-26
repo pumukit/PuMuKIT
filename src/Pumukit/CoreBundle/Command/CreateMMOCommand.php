@@ -3,6 +3,8 @@
 namespace Pumukit\CoreBundle\Command;
 
 use Assetic\Exception\Exception;
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -13,7 +15,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CreateMMOCommand extends ContainerAwareCommand
 {
-    private $dm;
     private $seriesRepo;
     private $jobService;
     private $inspectionService;
@@ -55,8 +56,9 @@ EOT
 
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->seriesRepo = $this->dm->getRepository(Series::class);
+        /** @var DocumentManager */
+        $dm = $this->getContainer()->get('doctrine_mongodb.odm.document_manager');
+        $this->seriesRepo = $dm->getRepository(Series::class);
         $this->jobService = $this->getContainer()->get('pumukitencoder.job');
         $this->inspectionService = $this->getContainer()->get('pumukit.inspection');
         $this->factoryService = $this->getContainer()->get('pumukitschema.factory');
@@ -69,6 +71,10 @@ EOT
         $status = null;
         if ($input->getOption('status')) {
             $statusText = $input->getOption('status');
+            if (!is_string($statusText)) {
+                throw new \Exception('Status option must be an string');
+            }
+
             if (!array_key_exists($statusText, $this->validStatuses)) {
                 throw new \Exception('The status  ('.$statusText.') is not a valid. Use \'published\', \'blocked\' or \'hidden\'');
             }
@@ -82,6 +88,9 @@ EOT
         $locale = $this->getContainer()->getParameter('locale');
 
         $path = $input->getArgument('file');
+        if (!is_string($path)) {
+            throw new \Exception('File argument must be string');
+        }
 
         // hotfix to work with FTP
         if ((false !== ($pos = strpos($path, '.filepart'))) || (false !== ($pos = strpos($path, '.part')))) {
@@ -145,6 +154,9 @@ EOT
             return $this->getContainer()->getParameter('pumukit_wizard.simple_default_master_profile');
         }
 
-        return $this->getContainer()->get('pumukitencoder.profile')->getDefaultMasterProfile();
+        /** @var ProfileService */
+        $profileService = $this->getContainer()->get('pumukitencoder.profile');
+
+        return $profileService->getDefaultMasterProfile();
     }
 }
