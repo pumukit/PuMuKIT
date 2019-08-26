@@ -4,7 +4,11 @@ namespace Pumukit\CoreBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Routing\Router;
 
 /**
  * Class LocaleController.
@@ -13,16 +17,17 @@ class LocaleController extends Controller implements WebTVControllerInterface
 {
     /**
      * @Route("/locale/{locale}", name="pumukit_locale")
-     *
-     * @param string  $locale
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function changeAction($locale, Request $request)
+    public function changeAction(Request $request, string $locale): RedirectResponse
     {
-        $this->get('session')->set('_locale', $locale);
-        $this->get('router.request_context')->setParameter('_locale', $locale);
+        /** @var SessionInterface */
+        $session = $this->get('session');
+        $session->set('_locale', $locale);
+
+        /** @var RequestContext */
+        $requestContext = $this->get('router.request_context');
+        $requestContext->setParameter('_locale', $locale);
+
         $request->setLocale($locale);
 
         $referer = $request->headers->get('referer');
@@ -31,11 +36,22 @@ class LocaleController extends Controller implements WebTVControllerInterface
         }
 
         $paseReferer = parse_url($referer);
+
+        if (!is_array($paseReferer)) {
+            return $this->redirect('/');
+        }
+
+        if (!isset($paseReferer['path'])) {
+            return $this->redirect('/');
+        }
+
         $refererPath = $paseReferer['path'];
         $lastPath = str_replace($request->getBaseUrl(), '', $refererPath);
 
         try {
-            $route = $this->get('router')->getMatcher()->match($lastPath);
+            /** @var Router */
+            $router = $this->get('router');
+            $route = $router->getMatcher()->match($lastPath);
         } catch (\Exception $e) {
             return $this->redirect('/');
         }

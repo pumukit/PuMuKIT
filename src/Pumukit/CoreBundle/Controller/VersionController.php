@@ -6,53 +6,72 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class VersionController extends Controller implements AdminControllerInterface
 {
     /**
      * @Route("/admin/versions", name="pumukit_stats_versions")
-     * @Template
+     * @Template("PumukitCoreBundle:Version:index.html.twig")
+     *
+     * @throws \Exception
      */
-    public function indexAction(Request $request)
+    public function indexAction(): array
     {
-        $composerLockFile = realpath($this->container->getParameter('kernel.root_dir').'/../composer.lock');
-        if (!$composerLockFile) {
-            throw new \Exception('Error reading composer.lock');
-        }
+        $composerLockFile = $this->getComposerLockPath();
 
-        $composerLock = json_decode(file_get_contents($composerLockFile));
+        $composerLock = $this->getContentFromFile($composerLockFile);
 
         $pumukit = [];
         $other = [];
         foreach ($composerLock->packages as $package) {
-            if ((false !== strpos($package->name, '/pmk2-')) || false !== strpos(strtolower($package->name), 'pumukit') || (isset($package->keywords) && in_array('pumukit', $package->keywords))) {
+            if (false !== strpos(strtolower($package->name), 'pumukit') || (isset($package->keywords) && in_array('pumukit', $package->keywords))) {
                 $pumukit[] = $package;
             } else {
                 $other[] = $package;
             }
         }
 
-        return ['pumukitPackages' => $pumukit, 'otherPackages' => $other];
+        return [
+            'pumukitPackages' => $pumukit,
+            'otherPackages' => $other,
+        ];
     }
 
     /**
      * @Route("/admin/versions/info.json")
+     *
+     * @throws \Exception
      */
-    public function infoAction(Request $request)
+    public function infoAction(): Response
+    {
+        $composerLockFile = $this->getComposerLockPath();
+
+        $composerLock = $this->getContentFromFile($composerLockFile);
+
+        return new Response($composerLock, 200, ['Content-Type' => 'application/json']);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    private function getComposerLockPath(): string
     {
         $composerLockFile = realpath($this->container->getParameter('kernel.root_dir').'/../composer.lock');
         if (!$composerLockFile) {
             throw new \Exception('Error reading composer.lock');
         }
 
-        $composerLock = file_get_contents($composerLockFile);
+        return $composerLockFile;
+    }
 
+    private function getContentFromFile(string $composerLockFile)
+    {
+        $composerLock = file_get_contents($composerLockFile);
         if (false === $composerLock) {
             return new JsonResponse(['error' => 'Error reading composer lock file'], 500);
         }
 
-        return new Response($composerLock, 200, ['Content-Type' => 'application/json']);
+        return json_decode($composerLock);
     }
 }

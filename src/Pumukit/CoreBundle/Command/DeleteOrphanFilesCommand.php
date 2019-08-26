@@ -173,8 +173,9 @@ EOT
         $dirName = pathinfo($directoryPath, PATHINFO_DIRNAME);
 
         try {
-            if (realpath($dirName)) {
-                if (rmdir(realpath($dirName))) {
+            $path = realpath($dirName);
+            if ($path) {
+                if (rmdir($path)) {
                     $output->writeln('Deleted empty directory '.$directoryPath);
                 }
             }

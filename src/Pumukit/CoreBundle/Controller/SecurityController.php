@@ -2,6 +2,7 @@
 
 namespace Pumukit\CoreBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -32,6 +33,7 @@ class SecurityController extends Controller
             return ['access' => false, 'multimediaObject' => null];
         }
 
+        /** @var DocumentManager */
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $multimediaObject = $dm->find(MultimediaObject::class, $id);
 

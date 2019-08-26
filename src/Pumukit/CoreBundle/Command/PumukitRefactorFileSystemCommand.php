@@ -236,6 +236,9 @@ EOT
             $path = $elem->getPath();
             if (!isset($path) && false !== stripos($elem->getUrl(), '/uploads/pic/')) {
                 $path = realpath($this->getContainer()->getParameter('kernel.root_dir').'/../web'.$elem->getUrl());
+                if (!$path) {
+                    throw new \Exception('Error reading: '.$this->getContainer()->getParameter('kernel.root_dir').'/../web'.$elem->getUrl());
+                }
                 $checkFile = $this->checkFileExists($path);
                 if ($checkFile && $this->force) {
                     $message = 'Adding path '.$path.' form pic with ID - '.$elem->getId();
@@ -284,10 +287,10 @@ EOT
                     }
 
                     $replaceString = '/pic/series/'.$seriesID.'/video/';
-                    $newPath = str_replace('/pic/', $replaceString, $pic['path']);
-                    $newPath = str_replace(' ', '_', $newPath);
-                    $newUrl = str_replace('/pic/', $replaceString, $pic['url']);
-                    $newUrl = str_replace(' ', '_', $newUrl);
+                    $newPath = str_replace('/pic/', $replaceString, (string) $pic['path']);
+                    $newPath = str_replace(' ', '_', (string) $newPath);
+                    $newUrl = str_replace('/pic/', $replaceString, (string) $pic['url']);
+                    $newUrl = str_replace(' ', '_', (string) $newUrl);
 
                     if ($this->checkFileExists($pic['path'])) {
                         try {
@@ -346,10 +349,10 @@ EOT
                     }
 
                     $replaceString = '/material/series/'.$seriesID.'/video/';
-                    $newPath = str_replace('/material/', $replaceString, $material['path']);
-                    $newPath = str_replace(' ', '_', $newPath);
-                    $newUrl = str_replace('/material/', $replaceString, $material['url']);
-                    $newUrl = str_replace(' ', '_', $newUrl);
+                    $newPath = str_replace('/material/', $replaceString, (string) $material['path']);
+                    $newPath = str_replace(' ', '_', (string) $newPath);
+                    $newUrl = str_replace('/material/', $replaceString, (string) $material['url']);
+                    $newUrl = str_replace(' ', '_', (string) $newUrl);
 
                     if ($this->checkFileExists($material['path'])) {
                         try {
@@ -563,6 +566,7 @@ EOT
      */
     private function updateMultimediaObjectPic(DocumentManager $documentManager, $multimediaObjectId, $oldPath, $newPath, $newUrl)
     {
+        /** @var MultimediaObject */
         $multimediaObject = $documentManager->getRepository(MultimediaObject::class)->findOneBy(
             ['_id' => new \MongoId($multimediaObjectId)]
         );
@@ -584,8 +588,9 @@ EOT
      * @param string          $newPath
      * @param string          $newUrl
      */
-    private function updateMultimediaObjectMaterial(DocumentManager $documentManager, $multimediaObjectId, $oldPath, $newPath, $newUrl)
+    private function updateMultimediaObjectMaterial(DocumentManager $documentManager, string $multimediaObjectId, string $oldPath, string $newPath, string $newUrl)
     {
+        /** @var MultimediaObject */
         $multimediaObject = $documentManager->getRepository(MultimediaObject::class)->findOneBy(
             ['_id' => new \MongoId($multimediaObjectId)]
         );

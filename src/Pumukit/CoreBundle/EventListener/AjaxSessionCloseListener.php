@@ -2,6 +2,7 @@
 
 namespace Pumukit\CoreBundle\EventListener;
 
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
@@ -25,6 +26,7 @@ class AjaxSessionCloseListener
             return;
         }
 
+        /** @var SessionInterface */
         $session = $request->getSession();
         $session->save();
     }

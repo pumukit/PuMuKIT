@@ -3,6 +3,7 @@
 namespace Pumukit\CoreBundle\EventListener;
 
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Event\ConsoleExceptionEvent;
 
 /**
@@ -19,6 +20,7 @@ class ConsoleExceptionListener
 
     public function onConsoleException(ConsoleExceptionEvent $event)
     {
+        /** @var Command */
         $command = $event->getCommand();
         $exception = $event->getException();
 
