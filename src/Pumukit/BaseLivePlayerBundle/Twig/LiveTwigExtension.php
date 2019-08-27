@@ -14,20 +14,12 @@ use Twig\TwigFunction;
 
 class LiveTwigExtension extends AbstractExtension
 {
-    /**
-     * @var DocumentManager
-     */
     private $dm;
-    // @var LiveService
     private $liveService;
-    /**
-     * @var EmbeddedEventSessionService
-     */
     private $eventsService;
-
     private $eventDefaultPic;
 
-    public function __construct(DocumentManager $documentManager, LiveService $liveService, EmbeddedEventSessionService $eventsService, $eventDefaultPic)
+    public function __construct(DocumentManager $documentManager, LiveService $liveService, EmbeddedEventSessionService $eventsService, string $eventDefaultPic)
     {
         $this->dm = $documentManager;
         $this->liveService = $liveService;
@@ -35,7 +27,7 @@ class LiveTwigExtension extends AbstractExtension
         $this->eventDefaultPic = $eventDefaultPic;
     }
 
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('generate_hls_url', [$this, 'genHlsUrl']),
@@ -59,7 +51,7 @@ class LiveTwigExtension extends AbstractExtension
      *
      * @return string
      */
-    public function genHlsUrl(Live $live)
+    public function genHlsUrl(Live $live): string
     {
         return $this->liveService->generateHlsUrl($live);
     }
@@ -88,7 +80,7 @@ class LiveTwigExtension extends AbstractExtension
      *
      * @return string
      */
-    public function getEventPoster(EmbeddedEvent $event)
+    public function getEventPoster(EmbeddedEvent $event): string
     {
         return $this->eventsService->getEventPoster($event);
     }
@@ -100,7 +92,7 @@ class LiveTwigExtension extends AbstractExtension
      *
      * @return string
      */
-    public function getPosterPic(MultimediaObject $multimediaObject)
+    public function getPosterPic(MultimediaObject $multimediaObject): string
     {
         return $this->eventsService->getEventPicPoster($multimediaObject);
     }
@@ -112,7 +104,7 @@ class LiveTwigExtension extends AbstractExtension
      *
      * @return string
      */
-    public function getPosterTextColor(EmbeddedEvent $event)
+    public function getPosterTextColor(EmbeddedEvent $event): string
     {
         return $this->eventsService->getPosterTextColor($event);
     }
@@ -124,7 +116,7 @@ class LiveTwigExtension extends AbstractExtension
      *
      * @return string
      */
-    public function getPosterPicTextColor(MultimediaObject $multimediaObject)
+    public function getPosterPicTextColor(MultimediaObject $multimediaObject): string
     {
         return $this->eventsService->getPicPosterTextColor($multimediaObject);
     }
@@ -136,7 +128,7 @@ class LiveTwigExtension extends AbstractExtension
      *
      * @return string
      */
-    public function getEventThumbnail($event)
+    public function getEventThumbnail($event): string
     {
         if (!is_array($event)) {
             return $this->eventsService->getEventThumbnail($event);
@@ -145,10 +137,7 @@ class LiveTwigExtension extends AbstractExtension
         return $this->eventsService->getEventThumbnailByEventId($event['event']['_id']);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getEventDefaultPic()
+    public function getEventDefaultPic(): string
     {
         return $this->eventDefaultPic;
     }
