@@ -1,8 +1,8 @@
 {% block body %}
     {% autoescape false %}
 
-    {% set primary_color = '#ed6d00' %}
-    {% set font_color = '#ffffff' %}
+    {% set primary_color = pumukit_info.primary_color %}
+    {% set font_color = pumukit_info.font_color %}
 
     {% set default_contrast_background = default_contrast_background | default("#c05800") %}
     {% set default_light_background = default_light_background | default("#767676") %}
@@ -84,12 +84,12 @@
     }
 
     .btn-pmk {
-        background-color: #ed6d00;
+        background-color: {{ primary_color|raw }};
         color: #ffffff;
     }
 
     .panel-pmk>.panel-heading {
-        background-color: #ed6d00;
+        background-color: {{ primary_color|raw }};
         color: #ffffff;
         font-weight: bold;
     }
@@ -133,15 +133,15 @@
     }
 
     .label-pmk {
-        background-color: #ed6d00;
+        background-color: {{ primary_color|raw }};
         margin-left:3px;
     }
 
-    {% include 'PumukitWebTVBundle:Css:template_video.css.twig'%}
+    {% include 'PumukitWebTVBundle:Css:template_video.css.twig' %}
     {% include 'PumukitWebTVBundle:Css:template_series.css.twig' %}
     {% include 'PumukitWebTVBundle:Css:template_stats.css.twig' %}
     {% include 'PumukitWebTVBundle:Css:template_header.css.twig' %}
-    {% include 'PumukitWebTVBundle:Css:template_horizontal_menu.css.twig'%}
+    {% include 'PumukitWebTVBundle:Css:template_horizontal_menu.css.twig' %}
     {% include 'PumukitWebTVBundle:Css:template_footer.css.twig' %}
     {% include 'PumukitWebTVBundle:Css:template_breadcrumb.css.twig' %}
     {% include 'PumukitWebTVBundle:Css:template_search_box.css.twig' %}
