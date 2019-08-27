@@ -18,9 +18,9 @@ class PumukitInitRepoCommand extends ContainerAwareCommand
     private $tagsRepo;
     private $pmk2_allLocales;
 
-    private $tagsPath = '../Resources/data/tags/';
-    private $rolesPath = '../Resources/data/roles/';
-    private $permissionProfilesPath = '../Resources/data/permissionprofiles/';
+    private $tagsPath = 'Resources/data/tags/';
+    private $rolesPath = 'Resources/data/roles/';
+    private $permissionProfilesPath = 'Resources/data/permissionprofiles/';
 
     private $allPermissions;
     private $tagRequiredFields = ['cod', 'tree_parent_cod', 'metatag', 'display', 'name_en'];
@@ -112,7 +112,7 @@ EOT
     protected function executeTags(InputInterface $input, OutputInterface $output, $force = true)
     {
         $finder = new Finder();
-        $finder->files()->in(__DIR__.'/'.$this->tagsPath);
+        $finder->files()->in($this->getContainer()->get('kernel')->locateResource('@PumukitSchemaBundle/'.$this->tagsPath));
         $file = $input->getArgument('file');
 
         if ((0 === strcmp($file, '')) && 0 === $finder->count()) {
@@ -139,7 +139,7 @@ EOT
     protected function executeRoles(InputInterface $input, OutputInterface $output)
     {
         $finder = new Finder();
-        $finder->files()->in(__DIR__.'/'.$this->rolesPath);
+        $finder->files()->in($this->getContainer()->get('kernel')->locateResource('@PumukitSchemaBundle/'.$this->rolesPath));
         $file = $input->getArgument('file');
         if ((0 === strcmp($file, '')) && 0 === $finder->count()) {
             $output->writeln("<error>Roles: There's no data to initialize</error>");
@@ -161,7 +161,8 @@ EOT
     protected function executePermissionProfiles(InputInterface $input, OutputInterface $output)
     {
         $finder = new Finder();
-        $finder->files()->in(__DIR__.'/'.$this->permissionProfilesPath);
+
+        $finder->files()->in($this->getContainer()->get('kernel')->locateResource('@PumukitSchemaBundle/'.$this->permissionProfilesPath));
         $file = $input->getArgument('file');
         if ((0 === strcmp($file, '')) && 0 === $finder->count()) {
             $output->writeln("<error>PermissionProfiles: There's no data to initialize</error>");
