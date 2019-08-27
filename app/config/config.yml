@@ -19,6 +19,8 @@ parameters:
         keywords:            "%env(PUMUKIT_KEYWORDS)%"
         email:               "%env(PUMUKIT_EMAIL)%"
         logo:                "%env(PUMUKIT_LOGO)%"
+        primary_color:       "%env(PUMUKIT_PRIMARY_COLOR)%"
+        font_color:          "%env(PUMUKIT_FONT_COLOR)%"
     pumukit.locales:         "%env(json:PUMUKIT_LOCALES)%"
     pumukit.uploads_dir:     "%env(PUMUKIT_UPLOADS_DIR)%"
     pumukit.uploads_url:     "%env(PUMUKIT_UPLOADS_URL)%"
