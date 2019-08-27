@@ -29,10 +29,6 @@ class PicExtractorListenerTest extends WebTestCase
     private $factoryService;
     private $profileService;
     private $mmsPicService;
-    /**
-     * @var PicExtractorService
-     */
-    private $picExtractorService;
     private $autoExtractPic = true;
 
     public function setUp()
@@ -46,8 +42,6 @@ class PicExtractorListenerTest extends WebTestCase
         $this->videoPath = realpath(__DIR__.'/../Resources/data/track.mp4');
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->profileService = static::$kernel->getContainer()->get('pumukitencoder.profile');
-        $this->mmsPicService = static::$kernel->getContainer()->get('pumukitschema.mmspic');
-        $this->picExtractorService = static::$kernel->getContainer()->get('pumukitencoder.picextractor');
 
         $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
         $this->dm->getDocumentCollection(Series::class)->remove([]);
@@ -75,13 +69,10 @@ class PicExtractorListenerTest extends WebTestCase
     public function tearDown(): void
     {
         $this->dm->close();
-        $this->dm = null;
         $this->repo = null;
         $this->logger = null;
         $this->videoPath = null;
         $this->factoryService = null;
-        $this->mmsPicService = null;
-        $this->picExtractorService = null;
         $this->picExtractorListener = null;
         gc_collect_cycles();
         parent::tearDown();
