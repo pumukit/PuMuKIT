@@ -39,9 +39,10 @@
         <fieldset>
             <legend hidden>{% trans %}Update publication{% endtrans %}</legend>
             <div class="col-md-7">
-                {% if not mm.isPrototype %}
-                    {{ form_row(form_pub['status']) }}
-                {% endif %}
+                <div class="form-group">
+                    {{ form_label(form_pub['status'],{},  {'label_attr': {'class': 'update_pub_status_label' }}) }}
+                    {{ form_widget(form_pub['status'], {'attr': {'class' : 'update_pub_status'}}) }}
+                </div>
 
                 <div class="form-group" id="pumukitnewadmin_mms_pub_channel" {{ (mm.getStatus() == 1)?'style="background-color: #f2f2f2"':'' }}>
                     <label for="pub" class="control-label">{% trans %}Publication Channels{% endtrans %}</label>
@@ -69,6 +70,7 @@
                         </div>
                     {% endif %}
                 {% endfor %}
+
                 {{ form_rest(form_pub) }}
             </div>
         </fieldset>
