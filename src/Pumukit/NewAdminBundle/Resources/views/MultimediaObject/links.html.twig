@@ -54,7 +54,11 @@
                             </span>
                         </div>
                         {% if is_published and is_playable and mm.getProperty('externalplayer')%}
-                            {% set video_url = url('pumukit_webtv_multimediaobject_index', {id: mm.id, 'track_id': mm.getDisplayTrack().getId() }) %}
+                            {% if mm.getDisplayTrack() %}
+                                {% set video_url = url('pumukit_webtv_multimediaobject_index', {id: mm.id, 'track_id': mm.getDisplayTrack().getId() }) %}
+                            {% else %}
+                                {% set video_url = url('pumukit_webtv_multimediaobject_index', {id: mm.id }) %}
+                            {% endif %}
                             <label for="inputROUrl" class="col-xs-2 control-label hidden-naked">Broadcast:</label>
                             <div class="col-xs-10 input-group hidden-naked">
                                 <input type="text" class="form-control" id="inputROUrl" readonly onclick="select()" value="{{ video_url }}">
