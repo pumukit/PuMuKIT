@@ -3,7 +3,7 @@ language: php
 dist: trusty
 
 php:
-  - 7.2
+  - "7.2"
 
 env:
   - MONGO_VERSION=stable
@@ -32,33 +32,29 @@ before_script:
 
 
 script:
-    - find src -type f -name "*.php" -print0 | xargs -0 -n1 -P8 php -l
-    - php bin/console lint:yaml src
-    - php bin/console lint:yaml app
-    - php bin/console lint:twig src
-    - php bin/console lint:twig app
-    - ./bin/travis_checks/check_var_dumps
-    - php bin/php-cs-fixer fix src --dry-run -v
-    - php bin/phpstan analyse -l 4 src
-    - php bin/phpstan analyse -l 7 src/Pumukit/BaseLivePlayerBundle/
-    - php bin/phpstan analyse -l 5 src/Pumukit/BasePlayerBundle/
-    - php bin/phpstan analyse -l 7 src/Pumukit/CoreBundle/
-    - php bin/phpstan analyse -l 7 src/Pumukit/InspectionBundle/
-    - php bin/phpstan analyse -l 7 src/Pumukit/JWPlayerBundle/
-    - php bin/phpstan analyse -l 5 src/Pumukit/WizardBundle/
-    - php bin/phpunit -c app
-    - php bin/console doctrine:mongodb:schema:create
-    - php bin/console pumukit:init:repo all --force
-#    - php bin/console pumukit:init:example  --force
-    - php bin/console server:start
-    - pa11y -c .pa11y.json http://localhost:8000/
-    - pa11y -c .pa11y.json http://localhost:8000/series/channel/1.html
-    - pa11y -c .pa11y.json http://localhost:8000/latestuploads
-    - pa11y -c .pa11y.json http://localhost:8000/searchmultimediaobjects
-    - pa11y -c .pa11y.json http://localhost:8000/searchseries
-#    - pa11y -c .pa11y.json http://localhost:8000/live/595b77640fd60c42008b4567
-    - pa11y -c .pa11y.json http://localhost:8000/mediateca
-    - pa11y -c .pa11y.json http://localhost:8000/categories
-#    -  pa11y -c .pa11y.json http://localhost:8000/video/59269ab79833a041008b4576
-#    -  pa11y -c .pa11y.json http://localhost:8000/series/5925a5519833a043008b456c
-    - php bin/console server:stop
+  - find src -type f -name "*.php" -print0 | xargs -0 -n1 -P8 php -l
+  - php bin/console lint:yaml src
+  - php bin/console lint:yaml app
+  - php bin/console lint:twig src
+  - php bin/console lint:twig app
+  - ./bin/travis_checks/check_var_dumps
+  - php bin/php-cs-fixer fix src --dry-run -v
+  - php bin/phpstan analyse -l 4 src
+  - php bin/phpstan analyse -l 7 src/Pumukit/BaseLivePlayerBundle/
+  - php bin/phpstan analyse -l 5 src/Pumukit/BasePlayerBundle/
+  - php bin/phpstan analyse -l 7 src/Pumukit/CoreBundle/
+  - php bin/phpstan analyse -l 7 src/Pumukit/InspectionBundle/
+  - php bin/phpstan analyse -l 7 src/Pumukit/JWPlayerBundle/
+  - php bin/phpstan analyse -l 5 src/Pumukit/WizardBundle/
+  - php bin/phpunit -c app
+  - php bin/console doctrine:mongodb:schema:create
+  - php bin/console pumukit:init:repo all --force
+  - php bin/console server:start
+  - pa11y -c .pa11y.json http://localhost:8000/
+  - pa11y -c .pa11y.json http://localhost:8000/series/channel/1.html
+  - pa11y -c .pa11y.json http://localhost:8000/latestuploads
+  - pa11y -c .pa11y.json http://localhost:8000/searchmultimediaobjects
+  - pa11y -c .pa11y.json http://localhost:8000/searchseries
+  - pa11y -c .pa11y.json http://localhost:8000/mediateca
+  - pa11y -c .pa11y.json http://localhost:8000/categories
+  - php bin/console server:stop
