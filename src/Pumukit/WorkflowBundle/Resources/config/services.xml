@@ -17,7 +17,6 @@
 
         <service id="pumukit_workflow.pic_extractor_listener" class="Pumukit\WorkflowBundle\EventListener\PicExtractorListener">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
-            <argument type="service" id="pumukitschema.mmspic" />
             <argument type="service" id="pumukitencoder.picextractor" />
             <argument type="service" id="logger"/>
             <argument type="service" id="pumukitencoder.profile"/>

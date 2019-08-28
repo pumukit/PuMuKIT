@@ -2,10 +2,13 @@
 
 namespace Pumukit\WorkflowBundle\Tests\EventListener;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\EncoderBundle\Services\PicExtractorService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
 use Pumukit\WorkflowBundle\EventListener\PicExtractorListener;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -15,14 +18,17 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class PicExtractorListenerTest extends WebTestCase
 {
+    /**
+     * @var DocumentManager
+     */
     private $dm;
     private $repo;
     private $logger;
     private $picExtractorListener;
     private $videoPath;
     private $factoryService;
+    private $profileService;
     private $mmsPicService;
-    private $picExtractorService;
     private $autoExtractPic = true;
 
     public function setUp()
@@ -35,196 +41,103 @@ class PicExtractorListenerTest extends WebTestCase
         $this->logger = static::$kernel->getContainer()->get('logger');
         $this->videoPath = realpath(__DIR__.'/../Resources/data/track.mp4');
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
-        $this->mmsPicService = static::$kernel->getContainer()->get('pumukitschema.mmspic');
-        $this->picExtractorService = static::$kernel->getContainer()->get('pumukitencoder.picextractor');
+        $this->profileService = static::$kernel->getContainer()->get('pumukitencoder.profile');
 
-        $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(Series::class)
-            ->remove([])
-        ;
-        $mmsPicService = $this->getMockBuilder('Pumukit\SchemaBundle\Services\MultimediaObjectPicService')
+        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
+        $this->dm->getDocumentCollection(Series::class)->remove([]);
+
+        $mmsPicService = $this->getMockBuilder(MultimediaObjectPicService::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;
-        $mmsPicService->expects($this->any())
+        $mmsPicService
             ->method('addPicFile')
-            ->will($this->returnValue('multimedia object'))
+            ->willReturn('multimedia object')
         ;
-        $picExtractorService = $this->getMockBuilder('Pumukit\EncoderBundle\Services\PicExtractorService')
+
+        $picExtractorService = $this->getMockBuilder(PicExtractorService::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;
-        $picExtractorService->expects($this->any())
+        $picExtractorService
             ->method('extractPic')
-            ->will($this->returnValue('success'))
+            ->willReturn('success')
         ;
-        $this->picExtractorListener = new PicExtractorListener($this->dm, $mmsPicService, $picExtractorService, $this->logger, $this->autoExtractPic);
+        $this->picExtractorListener = new PicExtractorListener($this->dm, $picExtractorService, $this->logger, $this->profileService, $this->autoExtractPic);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->dm->close();
-        $this->dm = null;
         $this->repo = null;
         $this->logger = null;
         $this->videoPath = null;
         $this->factoryService = null;
-        $this->mmsPicService = null;
-        $this->picExtractorService = null;
         $this->picExtractorListener = null;
         gc_collect_cycles();
         parent::tearDown();
     }
 
-    public function testGeneratePicFromVideo()
+    public function testGeneratePicFromVideo(): void
     {
-        $series = $this->factoryService->createSeries();
-        $mm = $this->factoryService->createMultimediaObject($series);
-
-        $track = new Track();
-        $track->addTag('master');
-        $track->setPath($this->videoPath);
-        $track->setOnlyAudio(false);
-        $track->setWidth(640);
-        $track->setHeight(480);
-
-        $mm->addTrack($track);
-
-        $this->dm->persist($mm);
-        $this->dm->flush();
-
-        $this->assertTrue($mm->getPics()->isEmpty());
-        $this->assertEquals(0, count($mm->getPics()->toArray()));
-        $this->assertTrue($this->invokeMethod($this->picExtractorListener, 'generatePic', [$mm, $track]));
-
-        $pic = new Pic();
-        $mm->addPic($pic);
-
-        $this->dm->persist($mm);
-        $this->dm->flush();
-
-        $this->assertFalse($mm->getPics()->isEmpty());
-        $this->assertEquals(1, count($mm->getPics()->toArray()));
-        $this->assertFalse($this->invokeMethod($this->picExtractorListener, 'generatePic', [$mm, $track]));
+        $this->generatePicFromFile();
     }
 
-    public function testAddDefaultAudioPic()
+    public function testAddDefaultAudioPic(): void
     {
         $this->markTestSkipped('S');
 
-        $series = $this->factoryService->createSeries();
-        $mm = $this->factoryService->createMultimediaObject($series);
-
-        $track = new Track();
-        $track->addTag('master');
-        $track->setPath($this->videoPath);
-        $track->setOnlyAudio(true);
-        $track->setWidth(640);
-        $track->setHeight(480);
-
-        $mm->addTrack($track);
-
-        $this->dm->persist($mm);
-        $this->dm->flush();
-
-        $this->assertTrue($mm->getPics()->isEmpty());
-        $this->assertEquals(0, count($mm->getPics()->toArray()));
-
-        $this->assertTrue($this->invokeMethod($this->picExtractorListener, 'generatePic', [$mm, $track]));
-
-        $pic = new Pic();
-        $mm->addPic($pic);
-
-        $this->dm->persist($mm);
-        $this->dm->flush();
-
-        $this->assertFalse($mm->getPics()->isEmpty());
-        $this->assertEquals(1, count($mm->getPics()->toArray()));
-        $this->assertFalse($this->invokeMethod($this->picExtractorListener, 'generatePic', [$mm, $track]));
+        $this->generatePicFromFile(true);
     }
 
-    public function testPicExtractorVideoError()
+    public function testPicExtractorVideoError(): void
     {
-        $mmsPicService = $this->getMockBuilder('Pumukit\SchemaBundle\Services\MultimediaObjectPicService')
+        $mmsPicService = $this->getMockBuilder(MultimediaObjectPicService::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;
-        $mmsPicService->expects($this->any())
+        $mmsPicService
             ->method('addPicFile')
-            ->will($this->returnValue('multimedia object'))
+            ->willReturn('multimedia object')
         ;
-        $picExtractorService = $this->getMockBuilder('Pumukit\EncoderBundle\Services\PicExtractorService')
+
+        $picExtractorService = $this->getMockBuilder(PicExtractorService::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;
-        $picExtractorService->expects($this->any())
+        $picExtractorService
             ->method('extractPic')
-            ->will($this->returnValue('Error'))
+            ->willReturn('Error')
         ;
-        $picExtractorListener = new PicExtractorListener($this->dm, $mmsPicService, $picExtractorService, $this->logger, $this->autoExtractPic);
+        $picExtractorListener = new PicExtractorListener($this->dm, $picExtractorService, $this->logger, $this->profileService, $this->autoExtractPic);
 
-        $series = $this->factoryService->createSeries();
-        $mm = $this->factoryService->createMultimediaObject($series);
-
-        $track = new Track();
-        $track->addTag('master');
-        $track->setPath($this->videoPath);
-        $track->setOnlyAudio(false);
-        $track->setWidth(640);
-        $track->setHeight(480);
-
-        $mm->addTrack($track);
-
-        $this->dm->persist($mm);
-        $this->dm->flush();
-
-        $this->assertTrue($mm->getPics()->isEmpty());
-        $this->assertEquals(0, count($mm->getPics()->toArray()));
-        $this->assertFalse($this->invokeMethod($picExtractorListener, 'generatePic', [$mm, $track]));
+        $this->generatePicFromFileError($picExtractorListener);
     }
 
-    public function testPicExtractorAudioError()
+    public function testPicExtractorAudioError(): void
     {
         $this->markTestSkipped('S');
 
-        $mmsPicService = $this->getMockBuilder('Pumukit\SchemaBundle\Services\MultimediaObjectPicService')
+        $mmsPicService = $this->getMockBuilder(MultimediaObjectPicService::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;
-        $mmsPicService->expects($this->any())
+        $mmsPicService
             ->method('addPicFile')
-            ->will($this->returnValue(null))
+            ->willReturn(null)
         ;
-        $picExtractorService = $this->getMockBuilder('Pumukit\EncoderBundle\Services\PicExtractorService')
+        $picExtractorService = $this->getMockBuilder(PicExtractorService::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;
-        $picExtractorService->expects($this->any())
+        $picExtractorService
             ->method('extractPic')
-            ->will($this->returnValue('success'))
+            ->willReturn('success')
         ;
-        $picExtractorListener = new PicExtractorListener($this->dm, $mmsPicService, $picExtractorService, $this->logger, $this->autoExtractPic);
 
-        $series = $this->factoryService->createSeries();
-        $mm = $this->factoryService->createMultimediaObject($series);
+        $picExtractorListener = new PicExtractorListener($this->dm, $picExtractorService, $this->logger, $this->profileService, $this->autoExtractPic);
 
-        $track = new Track();
-        $track->addTag('master');
-        $track->setPath($this->videoPath);
-        $track->setOnlyAudio(true);
-        $track->setWidth(640);
-        $track->setHeight(480);
-
-        $mm->addTrack($track);
-
-        $this->dm->persist($mm);
-        $this->dm->flush();
-
-        $this->assertTrue($mm->getPics()->isEmpty());
-        $this->assertEquals(0, count($mm->getPics()->toArray()));
-        $this->assertFalse($this->invokeMethod($picExtractorListener, 'generatePic', [$mm, $track]));
+        $this->generatePicFromFileError($picExtractorListener, true);
     }
 
     private function invokeMethod(&$object, $methodName, array $parameters = [])
@@ -234,5 +147,56 @@ class PicExtractorListenerTest extends WebTestCase
         $method->setAccessible(true);
 
         return $method->invokeArgs($object, $parameters);
+    }
+
+    private function generatePicFromFile(bool $isAudio = false): void
+    {
+        [$mm, $track] = $this->createMultimediaObjectAndTrack($isAudio);
+
+        $this->assertTrue($mm->getPics()->isEmpty());
+        $this->assertCount(0, $mm->getPics()->toArray());
+        $this->assertTrue($this->invokeMethod($this->picExtractorListener, 'generatePic', [$mm, $track]));
+
+        $pic = new Pic();
+        $mm->addPic($pic);
+
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $this->assertFalse($mm->getPics()->isEmpty());
+        $this->assertCount(1, $mm->getPics()->toArray());
+        $this->assertFalse($this->invokeMethod($this->picExtractorListener, 'generatePic', [$mm, $track]));
+    }
+
+    private function generatePicFromFileError(PicExtractorListener $picExtractorListener, bool $isAudio = false): void
+    {
+        [$mm, $track] = $this->createMultimediaObjectAndTrack($isAudio);
+
+        $this->assertTrue($mm->getPics()->isEmpty());
+        $this->assertCount(0, $mm->getPics()->toArray());
+        $this->assertFalse($this->invokeMethod($picExtractorListener, 'generatePic', [$mm, $track]));
+    }
+
+    private function createMultimediaObjectAndTrack(bool $isAudio): array
+    {
+        $series = $this->factoryService->createSeries();
+        $mm = $this->factoryService->createMultimediaObject($series);
+
+        $track = new Track();
+        $track->addTag('master');
+        $track->setPath($this->videoPath);
+        $track->setOnlyAudio($isAudio);
+        $track->setWidth(640);
+        $track->setHeight(480);
+
+        $mm->addTrack($track);
+
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        return [
+            $mm,
+            $track,
+        ];
     }
 }
