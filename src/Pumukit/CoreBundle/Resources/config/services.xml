@@ -39,5 +39,11 @@
             <argument>%pumukitschema.enable_add_user_as_person%</argument>
         </service>
 
+        <service id="pumukitcore.import_mapping_data" class="Pumukit\CoreBundle\Services\ImportMappingDataService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument type="service" id="pumukitschema.tag"/>
+            <argument type="service" id="pumukitschema.person"/>
+        </service>
+
     </services>
 </container>
