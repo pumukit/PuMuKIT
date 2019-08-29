@@ -96,6 +96,10 @@ class ImportMappingDataService
                         $value = new \DateTime($value);
                     }
                     $multimediaObject->{$method}($value);
+                } elseif ('properties' === $key) {
+                    foreach ($value as $propertyKey => $propertyValue) {
+                        $multimediaObject->{$method}($propertyKey, $propertyValue);
+                    }
                 } else {
                     foreach ($body[$key] as $lang => $data) {
                         $multimediaObject->{$method}($data, $lang);
