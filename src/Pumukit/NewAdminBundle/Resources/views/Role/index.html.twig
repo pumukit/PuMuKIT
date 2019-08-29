@@ -25,9 +25,9 @@
                         </div>
                         <div class="col-xs-8 text-right">
                             {% if is_granted('ROLE_SUPER_ADMIN') %}
-                                <a href="{{ path('pumukitnewadmin_role_export') }}" class="btn btn-primary" download>{% trans %}Export{% endtrans %}</a>
+                                <a href="{{ path('pumukitnewadmin_role_export') }}" class="qa-roles-export btn btn-primary" download>{% trans %}Export{% endtrans %}</a>
                             {% endif %}
-                            <a href="{{ path('pumukitnewadmin_role_create') }}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
+                            <a href="{{ path('pumukitnewadmin_role_create') }}" class="qa-roles-create btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
                         </div>
                     </div>
                 </div>
