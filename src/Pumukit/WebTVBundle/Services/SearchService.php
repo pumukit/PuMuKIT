@@ -298,7 +298,7 @@ class SearchService
      */
     public function addLicenseQueryBuilder(Builder $queryBuilder, $license)
     {
-        if ('' === $license) {
+        if ('' === $license || !$license) {
             return $queryBuilder;
         }
 
