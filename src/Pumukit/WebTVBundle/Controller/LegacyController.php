@@ -104,7 +104,7 @@ class LegacyController extends Controller implements WebTVControllerInterface
             'pumukit_webtv_multimediaobject_index',
             ['id' => $multimediaObject->getId()],
             Response::HTTP_MOVED_PERMANENTLY
-            );
+        );
     }
 
     /**

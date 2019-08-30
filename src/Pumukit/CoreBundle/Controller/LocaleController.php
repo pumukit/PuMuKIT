@@ -51,7 +51,7 @@ class LocaleController extends Controller implements WebTVControllerInterface
         try {
             /** @var Router */
             $router = $this->get('router');
-            $route = $router->getMatcher()->match($lastPath);
+            $route = $router->match($lastPath);
         } catch (\Exception $e) {
             return $this->redirect('/');
         }

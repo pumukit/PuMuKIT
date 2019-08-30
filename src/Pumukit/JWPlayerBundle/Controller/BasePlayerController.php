@@ -6,6 +6,7 @@ use Pumukit\BasePlayerBundle\Controller\BasePlayerController as BasePlayerContro
 use Pumukit\BasePlayerBundle\Services\IntroService;
 use Pumukit\CoreBundle\Controller\PersonalControllerInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -24,7 +25,9 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
         /** @var EmbeddedBroadcastService */
         $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
         $password = $request->get('broadcast_password');
-        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $this->getUser(), $password);
+        /** @var null|User $user */
+        $user = $this->getUser();
+        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $user, $password);
         if ($response instanceof Response) {
             return $response;
         }
@@ -69,7 +72,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
         } elseif ((
             MultimediaObject::STATUS_PUBLISHED != $multimediaObject->getStatus()
                  && MultimediaObject::STATUS_HIDDEN != $multimediaObject->getStatus()
-                 ) || !$multimediaObject->containsTagWithCod('PUCHWEBTV')) {
+        ) || !$multimediaObject->containsTagWithCod('PUCHWEBTV')) {
             return $this->render('PumukitWebTVBundle:Index:404notfound.html.twig');
         }
 
@@ -77,7 +80,9 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
         $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
 
         $password = $request->get('broadcast_password');
-        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $this->getUser(), $password);
+        /** @var null|User $user */
+        $user = $this->getUser();
+        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $user, $password);
         if ($response instanceof Response) {
             return $response;
         }
