@@ -11,6 +11,7 @@ use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,32 +23,22 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
      */
     public function indexAction(MultimediaObject $multimediaObject, Request $request)
     {
-        /** @var EmbeddedBroadcastService */
-        $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
-        $password = $request->get('broadcast_password');
-        /** @var null|User $user */
-        $user = $this->getUser();
-        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $user, $password);
-        if ($response instanceof Response) {
+        if ($response = $this->validateAccess($request, $multimediaObject)) {
             return $response;
         }
-        $track = $request->query->has('track_id') ?
-            $multimediaObject->getTrackById($request->query->get('track_id')) :
-            $multimediaObject->getDisplayTrack();
-        if ($track && $track->containsTag('download')) {
-            return $this->redirect($track->getUrl());
+
+        $track = $this->checkMultimediaObjectTracks($request, $multimediaObject);
+        if ($track instanceof RedirectResponse) {
+            return $track;
         }
-        if (!$track && null !== $url = $multimediaObject->getProperty('externalplayer')) {
-            return $this->redirect($url);
-        }
-        /** @var IntroService */
-        $basePlayerIntroService = $this->get('pumukit_baseplayer.intro');
+
+        [$autoStart, $intro, $whenDispatchViewEvent] = $this->getPlayerParameters($request, $multimediaObject);
 
         return [
-            'autostart' => $request->query->get('autostart', 'false'),
-            'intro' => $basePlayerIntroService->getIntroForMultimediaObject($request->query->get('intro'), $multimediaObject->getProperty('intro')),
+            'autostart' => $autoStart,
+            'intro' => $intro,
             'object' => $multimediaObject,
-            'when_dispatch_view_event' => $this->container->getParameter('pumukitplayer.when_dispatch_view_event'),
+            'when_dispatch_view_event' => $whenDispatchViewEvent,
             'track' => $track,
         ];
     }
@@ -64,42 +55,68 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
             if ($mmobjService->hasPlayableResource($multimediaObject) && $multimediaObject->isPublicEmbeddedBroadcast()) {
                 return $this->redirect($this->generateUrl('pumukit_videoplayer_index', ['id' => $multimediaObject->getId()]));
             }
-        } elseif ((
-            MultimediaObject::STATUS_PUBLISHED != $multimediaObject->getStatus()
-                && MultimediaObject::STATUS_HIDDEN != $multimediaObject->getStatus()
-            )
-            || !$multimediaObject->containsTagWithCod('PUCHWEBTV')
-        ) {
+        } elseif ((!in_array($multimediaObject->getStatus(), [MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDDEN], true)) || !$multimediaObject->containsTagWithCod('PUCHWEBTV')) {
             return $this->render('PumukitWebTVBundle:Index:404notfound.html.twig');
         }
+
+        if ($response = $this->validateAccess($request, $multimediaObject)) {
+            return $response;
+        }
+
+        $track = $this->checkMultimediaObjectTracks($request, $multimediaObject);
+        if ($track instanceof RedirectResponse) {
+            return $track;
+        }
+
+        [$autoStart, $intro, $whenDispatchViewEvent] = $this->getPlayerParameters($request, $multimediaObject);
+
+        return [
+            'autostart' => $autoStart,
+            'intro' => $intro,
+            'object' => $multimediaObject,
+            'when_dispatch_view_event' => $whenDispatchViewEvent,
+            'track' => $track,
+            'magic_url' => true,
+        ];
+    }
+
+    private function validateAccess(Request $request, MultimediaObject $multimediaObject)
+    {
         /** @var EmbeddedBroadcastService */
         $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
         $password = $request->get('broadcast_password');
-        /** @var null|User $user */
+        /** @var User */
         $user = $this->getUser();
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $user, $password);
         if ($response instanceof Response) {
             return $response;
         }
-        $track = $request->query->has('track_id') ?
-            $multimediaObject->getTrackById($request->query->get('track_id')) :
-            $multimediaObject->getDisplayTrack();
+
+        return false;
+    }
+
+    private function checkMultimediaObjectTracks(Request $request, MultimediaObject $multimediaObject)
+    {
+        $track = $request->query->has('track_id') ? $multimediaObject->getTrackById($request->query->get('track_id')) : $multimediaObject->getDisplayTrack();
         if ($track && $track->containsTag('download')) {
             return $this->redirect($track->getUrl());
         }
         if (!$track && null !== $url = $multimediaObject->getProperty('externalplayer')) {
             return $this->redirect($url);
         }
+
+        return $track;
+    }
+
+    private function getPlayerParameters(Request $request, MultimediaObject $multimediaObject): array
+    {
         /** @var IntroService */
         $basePlayerIntroService = $this->get('pumukit_baseplayer.intro');
 
         return [
             'autostart' => $request->query->get('autostart', 'false'),
             'intro' => $basePlayerIntroService->getIntroForMultimediaObject($request->query->get('intro'), $multimediaObject->getProperty('intro')),
-            'object' => $multimediaObject,
             'when_dispatch_view_event' => $this->container->getParameter('pumukitplayer.when_dispatch_view_event'),
-            'track' => $track,
-            'magic_url' => true,
         ];
     }
 }
