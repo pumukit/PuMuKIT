@@ -72,7 +72,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
         } elseif ((
             MultimediaObject::STATUS_PUBLISHED != $multimediaObject->getStatus()
                  && MultimediaObject::STATUS_HIDDEN != $multimediaObject->getStatus()
-                 ) || !$multimediaObject->containsTagWithCod('PUCHWEBTV')) {
+        ) || !$multimediaObject->containsTagWithCod('PUCHWEBTV')) {
             return $this->render('PumukitWebTVBundle:Index:404notfound.html.twig');
         }
 

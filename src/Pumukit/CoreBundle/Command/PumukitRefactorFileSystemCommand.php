@@ -72,7 +72,7 @@ class PumukitRefactorFileSystemCommand extends ContainerAwareCommand
                     php app/console pumukit:files:refactor:path --pics --materials --force
 
 EOT
-        )
+            )
         ;
     }
 

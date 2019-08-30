@@ -23,7 +23,7 @@ class PumukitEncoderExecuteCommand extends ContainerAwareCommand
 The --force parameter ...
 
 EOT
-          )
+            )
         ;
     }
 

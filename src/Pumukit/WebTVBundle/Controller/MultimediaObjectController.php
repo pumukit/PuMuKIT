@@ -106,7 +106,7 @@ class MultimediaObjectController extends Controller implements WebTVControllerIn
         } elseif ((
             MultimediaObject::STATUS_PUBLISHED != $multimediaObject->getStatus()
                 && MultimediaObject::STATUS_HIDDEN != $multimediaObject->getStatus()
-            )
+        )
             || !$multimediaObject->containsTagWithCod('PUCHWEBTV')) {
             return $this->render('PumukitWebTVBundle:Index:404notfound.html.twig');
         }

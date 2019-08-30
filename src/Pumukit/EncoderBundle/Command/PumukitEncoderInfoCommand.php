@@ -23,7 +23,7 @@ class PumukitEncoderInfoCommand extends BasePumukitEncoderCommand
             ->setHelp(
                 <<<'EOT'
 EOT
-          )
+            )
         ;
     }
 

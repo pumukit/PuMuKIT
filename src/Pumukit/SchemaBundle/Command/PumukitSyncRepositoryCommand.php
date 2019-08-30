@@ -28,7 +28,7 @@ Denormalize the database is necessary to increase the performance of the app. Th
  * Sync number of multimedia object in tags (tags.number_multimedia_objects).
 
 EOT
-          )
+            )
         ;
     }
 

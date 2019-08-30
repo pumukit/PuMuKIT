@@ -63,7 +63,7 @@ Examples:
 <info>php app/console pumukit:stats:aggregate</info>
 
 EOT
-          )
+            )
         ;
     }
 

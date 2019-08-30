@@ -29,7 +29,7 @@ Examples:
 <info>php app/console pumukit:stats:clean --from 'monday this week - 1 week'</info>
 
 EOT
-          )
+            )
         ;
     }
 
