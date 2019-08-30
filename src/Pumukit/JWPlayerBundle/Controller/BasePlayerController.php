@@ -85,7 +85,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
         /** @var EmbeddedBroadcastService */
         $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
         $password = $request->get('broadcast_password');
-        /** @var User */
+        /** @var null|User */
         $user = $this->getUser();
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $user, $password);
         if ($response instanceof Response) {
