@@ -31,19 +31,15 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
         if ($response instanceof Response) {
             return $response;
         }
-
         $track = $request->query->has('track_id') ?
-               $multimediaObject->getTrackById($request->query->get('track_id')) :
-               $multimediaObject->getDisplayTrack();
-
+            $multimediaObject->getTrackById($request->query->get('track_id')) :
+            $multimediaObject->getDisplayTrack();
         if ($track && $track->containsTag('download')) {
             return $this->redirect($track->getUrl());
         }
-
         if (!$track && null !== $url = $multimediaObject->getProperty('externalplayer')) {
             return $this->redirect($url);
         }
-
         /** @var IntroService */
         $basePlayerIntroService = $this->get('pumukit_baseplayer.intro');
 
@@ -70,14 +66,14 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
             }
         } elseif ((
             MultimediaObject::STATUS_PUBLISHED != $multimediaObject->getStatus()
-                 && MultimediaObject::STATUS_HIDDEN != $multimediaObject->getStatus()
-        ) || !$multimediaObject->containsTagWithCod('PUCHWEBTV')) {
+                && MultimediaObject::STATUS_HIDDEN != $multimediaObject->getStatus()
+            )
+            || !$multimediaObject->containsTagWithCod('PUCHWEBTV')
+        ) {
             return $this->render('PumukitWebTVBundle:Index:404notfound.html.twig');
         }
-
         /** @var EmbeddedBroadcastService */
         $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
-
         $password = $request->get('broadcast_password');
         /** @var null|User $user */
         $user = $this->getUser();
@@ -85,19 +81,15 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
         if ($response instanceof Response) {
             return $response;
         }
-
         $track = $request->query->has('track_id') ?
-               $multimediaObject->getTrackById($request->query->get('track_id')) :
-               $multimediaObject->getDisplayTrack();
-
+            $multimediaObject->getTrackById($request->query->get('track_id')) :
+            $multimediaObject->getDisplayTrack();
         if ($track && $track->containsTag('download')) {
             return $this->redirect($track->getUrl());
         }
-
         if (!$track && null !== $url = $multimediaObject->getProperty('externalplayer')) {
             return $this->redirect($url);
         }
-
         /** @var IntroService */
         $basePlayerIntroService = $this->get('pumukit_baseplayer.intro');
 
