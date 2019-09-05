@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\TagRepository")
  * @Gedmo\Tree(type="materializedPath", activateLocking=false)
  */
-class Tag
+class Tag implements TagInterface
 {
     use Traits\Properties;
 

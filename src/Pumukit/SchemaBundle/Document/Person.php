@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\PersonRepository")
  */
-class Person
+class Person implements PersonInterface
 {
     use Traits\Properties;
 

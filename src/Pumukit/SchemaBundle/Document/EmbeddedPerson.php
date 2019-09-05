@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @MongoDB\EmbeddedDocument()
  */
-class EmbeddedPerson
+class EmbeddedPerson implements PersonInterface
 {
     use Traits\Properties;
 
