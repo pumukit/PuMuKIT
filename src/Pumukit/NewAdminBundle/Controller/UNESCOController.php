@@ -436,6 +436,7 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
         $type = [
             MultimediaObject::TYPE_VIDEO => $translator->trans('Video'),
             MultimediaObject::TYPE_AUDIO => $translator->trans('Audio'),
+            MultimediaObject::TYPE_EXTERNAL => $translator->trans('External player'),
         ];
 
         $genreParent = $dm->getRepository(Tag::class)->findOneByCod('GENRE');
