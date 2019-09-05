@@ -37,7 +37,9 @@
         "teltek/pumukit-stats-ui-bundle": "2.0.*",
         "alcaeus/mongo-php-adapter": "@stable",
         "ext-json": "*",
-        "ext-fileinfo": "*"
+        "ext-fileinfo": "*",
+        "ext-sysvsem": "*",
+        "ext-gd": "*"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
