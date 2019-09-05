@@ -26,7 +26,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
             throw new \BadMethodCallException('The file '.$file.' does not exist');
         }
 
-        $json = json_decode($this->getMediaInfo($file), true);
+        $json = json_decode($this->getMediaInfo($file), false);
         if (!$this->jsonHasMediaContent($json)) {
             throw new \InvalidArgumentException('This file has no accessible video '.
                 "nor audio tracks\n".$file);
@@ -50,7 +50,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
             throw new \BadMethodCallException('Input track has no path defined');
         }
 
-        $json = json_decode($this->getMediaInfo($track->getPath()), true);
+        $json = json_decode($this->getMediaInfo($track->getPath()), false);
         if (!$this->jsonHasMediaContent($json)) {
             throw new \InvalidArgumentException('This file has no accesible video '.
                 "nor audio tracks\n".$track->getPath());
