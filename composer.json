@@ -35,7 +35,9 @@
         "suncat/mobile-detect-bundle": "1.1.*",
         "vipx/bot-detect-bundle": "^4.0",
         "teltek/pumukit-stats-ui-bundle": "2.0.*",
-        "alcaeus/mongo-php-adapter": "@stable"
+        "alcaeus/mongo-php-adapter": "@stable",
+        "ext-json": "*",
+        "ext-fileinfo": "*"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
