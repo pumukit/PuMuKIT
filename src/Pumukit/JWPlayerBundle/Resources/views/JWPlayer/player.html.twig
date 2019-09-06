@@ -16,6 +16,7 @@
           ],
         {% endif %}
     {% endset %}
+      {% dump(absolute_url(intro)) %}
     <video id="player1" controls></video>
     <script type="text/javascript">
      jwplayer("player1").setup({

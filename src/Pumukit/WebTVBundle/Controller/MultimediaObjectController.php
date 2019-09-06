@@ -4,6 +4,7 @@ namespace Pumukit\WebTVBundle\Controller;
 
 use Pumukit\BasePlayerBundle\Event\BasePlayerEvents;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
+use Pumukit\BasePlayerBundle\Services\IntroService;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -57,12 +58,12 @@ class MultimediaObjectController extends Controller implements WebTVControllerIn
 
         $editorChapters = $this->get('pumukit_web_tv.chapter_marks_service')->getChapterMarks($multimediaObject);
 
+        /** @var IntroService */
+        $basePlayerIntroService = $this->get('pumukit_baseplayer.intro');
+
         return [
             'autostart' => $request->query->get('autostart', 'true'),
-            'intro' => $this->get('pumukit_baseplayer.intro')->getIntroForMultimediaObject(
-                $request->query->get('intro'),
-                $multimediaObject->getProperty('intro')
-            ),
+            'intro' => $basePlayerIntroService->getVideoIntroduction($multimediaObject),
             'multimediaObject' => $multimediaObject,
             'track' => $track,
             'editor_chapters' => $editorChapters,
