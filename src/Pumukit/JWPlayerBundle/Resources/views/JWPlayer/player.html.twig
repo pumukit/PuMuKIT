@@ -1,64 +1,64 @@
 {% extends 'PumukitJWPlayerBundle:JWPlayer:index.html.twig' %}
 
 {% block body_base %}
-  {% if track %}
-    {% set captions = captions(multimediaObject) %}
-    {% set captions_block %}
-        {% if captions is not empty %}
-          tracks: [
-          {% for caption in captions %}
-            {
-            file: "{{ absolute_url(caption.url) }}",
-            label: "{{ caption.language|language_name }}",
-            kind: "captions"
-            },
-          {% endfor %}
-          ],
-        {% endif %}
-    {% endset %}
-      {% dump(absolute_url(intro)) %}
-    <video id="player1" controls></video>
-    <script type="text/javascript">
-     jwplayer("player1").setup({
-         {% if intro %}
-         playlist: [{
-             file: "{{ absolute_url(intro) }}",
-             {% if 'true' != autostart %}
-                 image: "{{ multimediaObject|first_url_pic(true) }}",
-             {% endif %}
-         },{
-             file: "{{ absolute_url(track_url(track)) }}",
-             {{ captions_block }}
-             {% if ('true' != autostart) or track.isOnlyAudio() %}
-                 image: "{{ multimediaObject|first_url_pic(true) }}",
-             {% endif %}
-         }],
-         {% else %}
-             file: "{{ absolute_url(track_url(track)) }}",
-             {{ captions_block }}
-             {% if (('true' != autostart) or track.isOnlyAudio()) %}
-                 image: "{{ multimediaObject|first_url_pic(true) }}",
-             {% endif %}
-         {% endif %}
-         startparam: "start",
-         autostart: {{ autostart|default("true") }},
-         repeat: "false",
-         width: '100%',
-         aspectratio: '16:9',
-         logo: { hide: true }
-     });
-     {% if 'on_play' == when_dispatch_view_event %}
-     jwplayer("player1").onPlay(function(e){
-       if (!window.notifyVideoPlayedReq) {
-         window.notifyVideoPlayedReq = new XMLHttpRequest();
-         window.notifyVideoPlayedReq.open('POST', '{{ path('pumukit_trackplayed_index', {id: track.id}) }}', true);
-         window.notifyVideoPlayedReq.send();
-       }
-     });
-     {% endif %}
-    </script>
-  {% else %}
-    <div style="color: white;
+    {% if track %}
+        {% set captions = captions(multimediaObject) %}
+        {% set captions_block %}
+            {% if captions is not empty %}
+                tracks: [
+                {% for caption in captions %}
+                    {
+                    file: "{{ absolute_url(caption.url) }}",
+                    label: "{{ caption.language|language_name }}",
+                    kind: "captions"
+                    },
+                {% endfor %}
+                ],
+            {% endif %}
+        {% endset %}
+
+        <video id="player1" controls></video>
+        <script type="text/javascript">
+            jwplayer("player1").setup({
+                {% if intro %}
+                playlist: [{
+                    file: "{{ absolute_url(intro) }}",
+                    {% if 'true' != autostart %}
+                    image: "{{ multimediaObject|first_url_pic(true) }}",
+                    {% endif %}
+                }, {
+                    file: "{{ absolute_url(track_url(track)) }}",
+                    {{ captions_block }}
+                    {% if ('true' != autostart) or track.isOnlyAudio() %}
+                    image: "{{ multimediaObject|first_url_pic(true) }}",
+                    {% endif %}
+                }],
+                {% else %}
+                file: "{{ absolute_url(track_url(track)) }}",
+                {{ captions_block }}
+                {% if (('true' != autostart) or track.isOnlyAudio()) %}
+                image: "{{ multimediaObject|first_url_pic(true) }}",
+                {% endif %}
+                {% endif %}
+                startparam: "start",
+                autostart: {{ autostart|default("true") }},
+                repeat: "false",
+                width: '100%',
+                aspectratio: '16:9',
+                logo: {hide: true}
+            });
+            {% if 'on_play' == when_dispatch_view_event %}
+            jwplayer("player1").onPlay(function (e) {
+                if (!window.notifyVideoPlayedReq) {
+                    window.notifyVideoPlayedReq = new XMLHttpRequest();
+                    window.notifyVideoPlayedReq.open('POST', '{{ path('pumukit_trackplayed_index', {id: track.id}) }}', true);
+                    window.notifyVideoPlayedReq.send();
+                }
+            });
+            {% endif %}
+        </script>
+    {% else %}
+        <div style="color: white;
                 background: black;
                 width: 100%;
                 height: 100%;
@@ -66,15 +66,15 @@
                 vertical-align: middle;
                 display: table-cell;
                 "
-         id="player1"
-         >
-      No track.
-    </div>
-  {% endif %}
-  <script type="text/javascript">
-     window.onresize = function() {
-         document.getElementById('player1').style.width = window.document.documentElement.clientWidth + 'px';
-         document.getElementById('player1').style.height = window.document.documentElement.clientHeight + 'px';
-     }
-  </script>
+             id="player1"
+        >
+            No track.
+        </div>
+    {% endif %}
+    <script type="text/javascript">
+        window.onresize = function () {
+            document.getElementById('player1').style.width = window.document.documentElement.clientWidth + 'px';
+            document.getElementById('player1').style.height = window.document.documentElement.clientHeight + 'px';
+        }
+    </script>
 {% endblock %}
