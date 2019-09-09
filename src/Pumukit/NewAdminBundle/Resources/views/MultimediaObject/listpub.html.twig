@@ -3,8 +3,7 @@
         {% set status = mm.containsTag(pub) %}
         {% set disabled = ((not pub.getDisplay()) or (pub_type == 'channels' and not_change_pub_channel) or (is_granted('ROLE_TAG_DISABLE_' ~ pub.cod|upper))) %}
 
-        {% set notExternal = ((mm.getProperty('externalplayer') is not defined) or (mm.getProperty('externalplayer') is empty)) %}
-        {% if notExternal or (not notExternal and not pub.getProperty('hide_in_tag_group')) %}
+        {% if not pub.getProperty('hide_in_tag_group') %}
             <div class="checkbox {{ disabled ? 'pmk_disabled_checkbox' : '' }}" style="display:table-row">
                 <label{{ disabled ? ' style="color: #767676;"' : '' }}>
                     <input type="checkbox"
