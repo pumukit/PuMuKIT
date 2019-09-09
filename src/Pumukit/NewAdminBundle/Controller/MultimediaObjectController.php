@@ -1116,7 +1116,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     /**
      * List the external player properties of a multimedia object in a modal.
      *
-     * @Security("is_granted('ROLE_SUPER_ADMIN')")
+     * @Security("is_granted('ROLE_ADD_EXTERNAL_PLAYER')")
      * @Template
      */
     public function listExternalPlayerAction(MultimediaObject $multimediaObject, Request $request)
