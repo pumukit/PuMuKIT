@@ -445,6 +445,10 @@ class OpencastImportService
         $track->setUrl($url);
         $track->setPath($this->opencastService->getPath($url));
 
+        if ($track->getPath()) {
+            $this->inspectionService->autocompleteTrack($track);
+        }
+
         return true;
     }
 
