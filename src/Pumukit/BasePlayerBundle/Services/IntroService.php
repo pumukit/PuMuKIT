@@ -23,10 +23,6 @@ class IntroService
 
         $urlIntroduction = $multimediaObject->getIntroductionVideo();
 
-        if ($activateIntroFromRequest && $this->globalUrlIntroduction && !$urlIntroduction) {
-            return $this->globalUrlIntroduction;
-        }
-
         if ($urlIntroduction && filter_var($urlIntroduction, FILTER_VALIDATE_URL)) {
             return $urlIntroduction;
         }
