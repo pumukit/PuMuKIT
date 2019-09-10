@@ -13,15 +13,17 @@ class IntroService
         $this->globalUrlIntroduction = $globalUrlIntroduction;
     }
 
-    public function getVideoIntroduction(MultimediaObject $multimediaObject, bool $activateIntroFromRequest = true): ?string
+    public function getVideoIntroduction(MultimediaObject $multimediaObject, $activateIntroFromRequest = true): ?string
     {
+        $activateIntroFromRequest = false === filter_var($activateIntroFromRequest, FILTER_VALIDATE_BOOLEAN);
+
         if (!$activateIntroFromRequest) {
             return null;
         }
 
         $urlIntroduction = $multimediaObject->getIntroductionVideo();
 
-        if($activateIntroFromRequest && $this->globalUrlIntroduction && !$urlIntroduction) {
+        if ($activateIntroFromRequest && $this->globalUrlIntroduction && !$urlIntroduction) {
             return $this->globalUrlIntroduction;
         }
 
