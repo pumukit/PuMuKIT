@@ -232,7 +232,8 @@ class WizardService
     {
         foreach ($keys as $key) {
             $value = $this->getKeyData($key, $resourceData);
-            if ($value) {
+            $filterValue = array_filter($value);
+            if (0 !== count($filterValue)) {
                 $upperField = $this->getUpperFieldName($key);
                 $setField = 'set'.$upperField;
                 $resource->{$setField}($value);
