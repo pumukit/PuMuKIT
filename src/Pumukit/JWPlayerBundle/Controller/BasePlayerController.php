@@ -49,7 +49,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
 
         return [
             'autostart' => $request->query->get('autostart', 'false'),
-            'intro' => $basePlayerIntroService->getVideoIntroduction($multimediaObject),
+            'intro' => $basePlayerIntroService->getVideoIntroduction($multimediaObject, $request->query->getBoolean('intro')),
             'multimediaObject' => $multimediaObject,
             'object' => $multimediaObject,
             'when_dispatch_view_event' => $this->container->getParameter('pumukitplayer.when_dispatch_view_event'),
@@ -104,7 +104,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
 
         return [
             'autostart' => $request->query->get('autostart', 'false'),
-            'intro' => $basePlayerIntroService->getVideoIntroduction($multimediaObject),
+            'intro' => $basePlayerIntroService->getVideoIntroduction($multimediaObject, $request->query->getBoolean('intro')),
             'multimediaObject' => $multimediaObject,
             'object' => $multimediaObject,
             'when_dispatch_view_event' => $this->container->getParameter('pumukitplayer.when_dispatch_view_event'),
