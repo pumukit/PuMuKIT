@@ -220,6 +220,12 @@ class MultimediaObject
      * @var string
      * @MongoDB\Field(type="string")
      */
+    private $introductionVideo;
+
+    /**
+     * @var string
+     * @MongoDB\Field(type="string")
+     */
     private $license;
 
     /**
@@ -784,6 +790,16 @@ class MultimediaObject
     public function getCopyright()
     {
         return $this->copyright;
+    }
+
+    public function getIntroductionVideo(): ?string
+    {
+        return $this->introductionVideo;
+    }
+
+    public function setIntroductionVideo(string $introductionVideo): void
+    {
+        $this->introductionVideo = $introductionVideo;
     }
 
     /**

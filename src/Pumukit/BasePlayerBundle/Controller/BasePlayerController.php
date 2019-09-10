@@ -22,32 +22,9 @@ abstract class BasePlayerController extends Controller
      */
     abstract public function magicAction(MultimediaObject $multimediaObject, Request $request);
 
-    protected function dispatchViewEvent(MultimediaObject $multimediaObject, Track $track = null)
+    protected function dispatchViewEvent(MultimediaObject $multimediaObject, Track $track = null): void
     {
         $event = new ViewedEvent($multimediaObject, $track);
         $this->get('event_dispatcher')->dispatch(BasePlayerEvents::MULTIMEDIAOBJECT_VIEW, $event);
-    }
-
-    /**
-     * @deprecated Will be removed in version 2.5.x
-     *             Use lines in this function instead
-     */
-    protected function testBroadcast(MultimediaObject $multimediaObject, Request $request)
-    {
-        $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
-        $password = $request->get('broadcast_password');
-
-        return $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $this->getUser(), $password);
-    }
-
-    /**
-     * @deprecated Will be removed in version 2.5.x
-     *             Use lines in this function instead
-     *
-     * @param mixed $queryIntro
-     */
-    protected function getIntro($queryIntro = false)
-    {
-        return $this->get('pumukit_baseplayer.intro')->getIntro($queryIntro);
     }
 }
