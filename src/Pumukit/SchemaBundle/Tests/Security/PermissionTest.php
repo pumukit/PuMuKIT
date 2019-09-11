@@ -21,7 +21,6 @@ class PermissionTest extends TestCase
         $this->assertTrue(array_key_exists(Permission::ACCESS_JOBS, Permission::$permissionDescription));
         $this->assertTrue(array_key_exists(Permission::ACCESS_PEOPLE, Permission::$permissionDescription));
         $this->assertTrue(array_key_exists(Permission::ACCESS_TAGS, Permission::$permissionDescription));
-        $this->assertTrue(array_key_exists(Permission::ACCESS_BROADCASTS, Permission::$permissionDescription));
         $this->assertTrue(array_key_exists(Permission::ACCESS_SERIES_TYPES, Permission::$permissionDescription));
         $this->assertTrue(array_key_exists(Permission::ACCESS_ADMIN_USERS, Permission::$permissionDescription));
         $this->assertTrue(array_key_exists(Permission::ACCESS_GROUPS, Permission::$permissionDescription));
@@ -79,13 +78,6 @@ class PermissionTest extends TestCase
         ];
         $accessTags = [
             'description' => 'Access Tags',
-            'dependencies' => [
-                PermissionProfile::SCOPE_GLOBAL => [],
-                PermissionProfile::SCOPE_PERSONAL => [],
-            ],
-        ];
-        $accessBroadcasts = [
-            'description' => 'Access Broadcasts',
             'dependencies' => [
                 PermissionProfile::SCOPE_GLOBAL => [],
                 PermissionProfile::SCOPE_PERSONAL => [],
@@ -197,7 +189,6 @@ class PermissionTest extends TestCase
         $this->assertEquals($accessJobs, Permission::$permissionDescription[Permission::ACCESS_JOBS]);
         $this->assertEquals($accessPeople, Permission::$permissionDescription[Permission::ACCESS_PEOPLE]);
         $this->assertEquals($accessTags, Permission::$permissionDescription[Permission::ACCESS_TAGS]);
-        $this->assertEquals($accessBroadcasts, Permission::$permissionDescription[Permission::ACCESS_BROADCASTS]);
         $this->assertEquals($accessSeriesTypes, Permission::$permissionDescription[Permission::ACCESS_SERIES_TYPES]);
         $this->assertEquals($accessAdminUsers, Permission::$permissionDescription[Permission::ACCESS_ADMIN_USERS]);
         $this->assertEquals($accessGroups, Permission::$permissionDescription[Permission::ACCESS_GROUPS]);

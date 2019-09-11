@@ -2,7 +2,6 @@
 
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
-use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\EmbeddedPerson;
 use Pumukit\SchemaBundle\Document\EmbeddedRole;
@@ -74,9 +73,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->getDocumentCollection(SeriesType::class)
             ->remove([])
         ;
-        $this->dm->getDocumentCollection(Broadcast::class)
-            ->remove([])
-        ;
         $this->dm->getDocumentCollection(Tag::class)
             ->remove([])
         ;
@@ -116,7 +112,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $subtitle = 'Subtitle paragraph';
         $description = 'Description text';
         $duration = 300;
-        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
 
         $mmobj = new MultimediaObject();
         //$mmobj->setRank($rank);
@@ -127,21 +122,11 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $mmobj->setSubtitle($subtitle);
         $mmobj->setDescription($description);
         $mmobj->setDuration($duration);
-        $mmobj->setBroadcast($broadcast);
 
         $this->dm->persist($mmobj);
         $this->dm->flush();
 
         $this->assertEquals(1, count($this->repo->findAll()));
-
-        $this->assertEquals($broadcast, $mmobj->getBroadcast());
-
-        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
-        $mmobj->setBroadcast($broadcast);
-        $this->dm->persist($mmobj);
-        $this->dm->flush();
-
-        $this->assertEquals($broadcast, $mmobj->getBroadcast());
 
         $t1 = new Track();
         $t1->setTags(['master']);
@@ -199,12 +184,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
     public function testCreateMultimediaObjectAndFindByCriteria()
     {
-        $broadcast = new Broadcast();
-        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
-        $broadcast->setDefaultSel(true);
-        $this->dm->persist($broadcast);
-        $this->dm->flush();
-
         $series_type = $this->createSeriesType('Medieval Fantasy Sitcom');
 
         $series_main = $this->createSeries("Stark's growing pains");
@@ -806,40 +785,8 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(1, count($this->repo->findBySeriesByTagCodAndStatus($series1, 'tag2')));
     }
 
-    public function testFindByBroadcast()
-    {
-        $broadcast1 = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
-        $broadcast2 = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
-
-        $mm1 = new MultimediaObject();
-        $mm1->setTitle('mm1');
-        $mm1->setBroadcast($broadcast1);
-
-        $mm2 = new MultimediaObject();
-        $mm2->setTitle('mm1');
-        $mm2->setBroadcast($broadcast1);
-
-        $mm3 = new MultimediaObject();
-        $mm3->setTitle('mm1');
-        $mm3->setBroadcast($broadcast2);
-
-        $this->dm->persist($mm1);
-        $this->dm->persist($mm2);
-        $this->dm->persist($mm3);
-        $this->dm->flush();
-
-        $this->assertEquals(2, count($this->repo->findByBroadcast($broadcast1)));
-        $this->assertEquals(1, count($this->repo->findByBroadcast($broadcast2)));
-    }
-
     public function testFindWithStatus()
     {
-        $broadcast = new Broadcast();
-        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
-        $broadcast->setDefaultSel(true);
-        $this->dm->persist($broadcast);
-        $this->dm->flush();
-
         $series = $this->createSeries('Serie prueba status');
 
         $mmNew = $this->createMultimediaObjectAssignedToSeries('Status new', $series);
@@ -882,12 +829,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
     public function testFindPrototype()
     {
-        $broadcast = new Broadcast();
-        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
-        $broadcast->setDefaultSel(true);
-        $this->dm->persist($broadcast);
-        $this->dm->flush();
-
         $series = $this->createSeries('Serie prueba status');
 
         $mmNew = $this->createMultimediaObjectAssignedToSeries('Status new', $series);
@@ -917,12 +858,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
     public function testFindWithoutPrototype()
     {
-        $broadcast = new Broadcast();
-        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
-        $broadcast->setDefaultSel(true);
-        $this->dm->persist($broadcast);
-        $this->dm->flush();
-
         $series = $this->createSeries('Serie prueba status');
 
         $mmNew = $this->createMultimediaObjectAssignedToSeries('Status new', $series);
@@ -1162,7 +1097,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($tag3);
         $this->dm->flush();
 
-        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
         $series1 = $this->createSeries('Series 1');
         $mm11 = $this->factoryService->createMultimediaObject($series1);
         $mm12 = $this->factoryService->createMultimediaObject($series1);
@@ -1454,7 +1388,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($tag3);
         $this->dm->flush();
 
-        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
         $series1 = $this->createSeries('Series 1');
         $mm11 = $this->factoryService->createMultimediaObject($series1);
         $mm12 = $this->factoryService->createMultimediaObject($series1);
@@ -1565,8 +1498,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($pic5);
         $this->dm->flush();
 
-        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
-
         $series1 = $this->createSeries('Series 1');
         $series2 = $this->createSeries('Series 2');
 
@@ -1632,7 +1563,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
     public function testFindOrderedBy()
     {
-        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
         $series = $this->createSeries('Series');
         $mm1 = $this->factoryService->createMultimediaObject($series);
         $mm2 = $this->factoryService->createMultimediaObject($series);
@@ -1705,7 +1635,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertTrue($tag2->isChildOf($tag1));
         $this->assertFalse($tag1->isChildOf($tag2));
 
-        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
         $series = $this->createSeries('Series');
         $multimediaObject = $this->factoryService->createMultimediaObject($series);
         $tagAdded = $this->tagService->addTagToMultimediaObject($multimediaObject, $tag3->getId());
@@ -1848,8 +1777,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
     public function testFindRelatedMultimediaObjects()
     {
-        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
-
         $tagUNESCO = new Tag();
         $tagUNESCO->setCod('UNESCO');
         $tag1 = new Tag();
@@ -2281,12 +2208,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($user8);
         $this->dm->flush();
 
-        $broadcast = new Broadcast();
-        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
-        $broadcast->setDefaultSel(true);
-        $this->dm->persist($broadcast);
-        $this->dm->flush();
-
         $series1 = $this->createSeries('Series 1');
         $series2 = $this->createSeries('Series 2');
         $series3 = $this->createSeries('Series 3');
@@ -2601,12 +2522,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $name2 = 'Group 2';
         $group2 = $this->createGroup($key2, $name2);
 
-        $broadcast = new Broadcast();
-        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
-        $broadcast->setDefaultSel(true);
-        $this->dm->persist($broadcast);
-        $this->dm->flush();
-
         $series = $this->createSeries('Series');
 
         $this->dm->persist($series);
@@ -2650,12 +2565,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $key2 = 'Group2';
         $name2 = 'Group 2';
         $group2 = $this->createGroup($key2, $name2);
-
-        $broadcast = new Broadcast();
-        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
-        $broadcast->setDefaultSel(true);
-        $this->dm->persist($broadcast);
-        $this->dm->flush();
 
         $series = $this->createSeries('Series');
 
@@ -2713,12 +2622,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $name2 = 'Group 2';
         $group2 = $this->createGroup($key2, $name2);
 
-        $broadcast = new Broadcast();
-        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
-        $broadcast->setDefaultSel(true);
-        $this->dm->persist($broadcast);
-        $this->dm->flush();
-
         $series = $this->createSeries('Series');
 
         $this->dm->persist($series);
@@ -2748,12 +2651,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $key2 = 'Group2';
         $name2 = 'Group 2';
         $group2 = $this->createGroup($key2, $name2);
-
-        $broadcast = new Broadcast();
-        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
-        $broadcast->setDefaultSel(true);
-        $this->dm->persist($broadcast);
-        $this->dm->flush();
 
         $series = $this->createSeries('Series');
 
@@ -3285,25 +3182,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->flush();
 
         return $series_type;
-    }
-
-    private function createBroadcast($broadcastTypeId)
-    {
-        $broadcast = new Broadcast();
-        $broadcast->setName(ucfirst($broadcastTypeId));
-        $broadcast->setBroadcastTypeId($broadcastTypeId);
-        $broadcast->setPasswd('password');
-        if (0 === strcmp(Broadcast::BROADCAST_TYPE_PRI, $broadcastTypeId)) {
-            $broadcast->setDefaultSel(true);
-        } else {
-            $broadcast->setDefaultSel(false);
-        }
-        $broadcast->setDescription(ucfirst($broadcastTypeId).' broadcast');
-
-        $this->dm->persist($broadcast);
-        $this->dm->flush();
-
-        return $broadcast;
     }
 
     private function createGroup($key = 'Group1', $name = 'Group 1')

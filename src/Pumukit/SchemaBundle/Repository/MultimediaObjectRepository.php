@@ -867,20 +867,6 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
-     * Find by broadcast.
-     *
-     * @param Broadcast $broadcast
-     *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     *
-     * @return mixed
-     */
-    public function findByBroadcast(Broadcast $broadcast)
-    {
-        return $this->createQueryBuilder()->field('broadcast')->references($broadcast)->getQuery()->execute();
-    }
-
-    /**
      * Find by embedded broadcast.
      *
      * @param EmbeddedBroadcast $embeddedBroadcast
