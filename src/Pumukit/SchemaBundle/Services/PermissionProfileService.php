@@ -85,7 +85,7 @@ class PermissionProfileService
      * Set as default user permission
      * the one with less permissions
      *
-     * @return null|PermissionProfile
+     * @return PermissionProfile|null
      */
     public function setDefaultPermissionProfile()
     {
@@ -225,7 +225,7 @@ class PermissionProfileService
     /**
      * Get Default.
      *
-     * @return null|PermissionProfile
+     * @return PermissionProfile|null
      */
     public function getDefault()
     {

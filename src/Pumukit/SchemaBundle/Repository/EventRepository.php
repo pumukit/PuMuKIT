@@ -64,7 +64,7 @@ class EventRepository extends DocumentRepository
     /**
      * Find current events.
      *
-     * @param null|int $limit
+     * @param int|null $limit
      * @param int      $marginBefore
      * @param int      $marginAfter
      *
@@ -101,9 +101,9 @@ class EventRepository extends DocumentRepository
     }
 
     /**
-     * @param null|int       $limit
-     * @param null|\DateTime $date
-     * @param null|Live      $live  Find only events of a live channel
+     * @param int|null       $limit
+     * @param \DateTime|null $date
+     * @param Live|null      $live  Find only events of a live channel
      *
      * @throws \Exception
      *
@@ -168,8 +168,8 @@ class EventRepository extends DocumentRepository
     /**
      * Find one by hours event.
      *
-     * @param null|string    $hours
-     * @param null|\DateTime $date
+     * @param string|null    $hours
+     * @param \DateTime|null $date
      *
      * @throws \Exception
      */

@@ -128,8 +128,8 @@ class StatsService
      * @param mixed      $dmColl
      * @param mixed      $mongoGroup
      * @param mixed      $dateName
-     * @param null|mixed $fromDate
-     * @param null|mixed $toDate
+     * @param mixed|null $fromDate
+     * @param mixed|null $toDate
      * @param mixed      $limit
      * @param mixed      $page
      * @param mixed      $criteria

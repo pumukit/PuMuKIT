@@ -139,7 +139,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
     /**
      * Overwrite to get form with translations.
      *
-     * @param null|object $permissionProfile
+     * @param object|null $permissionProfile
      * @param string      $locale
      *
      * @return \Symfony\Component\Form\Form|\Symfony\Component\Form\FormInterface
@@ -342,10 +342,6 @@ class PermissionProfileController extends AdminController implements NewAdminCon
     {
         $permissionService = $this->get('pumukitschema.permission');
         $permissions = $permissionService->getAllPermissions();
-
-        if ($this->container->getParameter('pumukit_new_admin.disable_broadcast_creation')) {
-            unset($permissions[Permission::ACCESS_BROADCASTS]);
-        }
 
         if (!$this->container->hasParameter('pumukit.use_series_channels') || !$this->container->getParameter('pumukit.use_series_channels')) {
             unset($permissions[Permission::ACCESS_SERIES_TYPES]);

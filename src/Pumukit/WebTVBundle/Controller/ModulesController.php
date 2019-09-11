@@ -317,7 +317,7 @@ class ModulesController extends Controller implements WebTVControllerInterface
      *
      * @throws \Exception
      *
-     * @return null|Response
+     * @return Response|null
      */
     public function legacyMenuAction()
     {

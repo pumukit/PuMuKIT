@@ -367,8 +367,8 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param null|string $response $request->request->get('g-recaptcha-response')
-     * @param null|string $remoteip optional $request->getClientIp()
+     * @param string|null $response $request->request->get('g-recaptcha-response')
+     * @param string|null $remoteip optional $request->getClientIp()
      *
      * @return mixed
      */

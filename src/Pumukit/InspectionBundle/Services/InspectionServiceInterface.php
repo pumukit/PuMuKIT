@@ -8,20 +8,12 @@ interface InspectionServiceInterface
 {
     /**
      * Gets file duration in s.
-     *
-     * @param string $file
-     *
-     * @return int $duration file duration in s rounded up
      */
-    public function getDuration($file);
+    public function getDuration(string $file): int;
 
     /**
      * Completes track information from a given path.
-     *
-     * The information is: mimetype, bitrate, duration, size, acodec, vcodec,
-     * framerate, channels, width, height
-     *
-     * @param Track $track
+     * The information is: mime_type, bitrate, duration, size, acodec, vcodec, framerate, channels, width, height.
      */
-    public function autocompleteTrack(Track $track);
+    public function autocompleteTrack(Track $track): Track;
 }

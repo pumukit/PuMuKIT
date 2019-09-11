@@ -29,9 +29,9 @@ class ProfileService
      * Get available profiles
      * See #7482.
      *
-     * @param null|bool $display if not null used to filter
-     * @param null|bool $wizard  if not null used to filter
-     * @param null|bool $master  if not null used to filter
+     * @param bool|null $display if not null used to filter
+     * @param bool|null $wizard  if not null used to filter
+     * @param bool|null $master  if not null used to filter
      *
      * @return array filtered profiles
      */

@@ -14,8 +14,6 @@ class Permission
     const ACCESS_PEOPLE = 'ROLE_ACCESS_PEOPLE';
     const SHOW_PEOPLE_MENU = 'ROLE_SHOW_PEOPLE_MENU';
     const ACCESS_TAGS = 'ROLE_ACCESS_TAGS';
-    // @deprecated in version 2.3
-    const ACCESS_BROADCASTS = 'ROLE_ACCESS_BROADCASTS';
     const ACCESS_SERIES_TYPES = 'ROLE_ACCESS_SERIES_TYPES';
     const ACCESS_ADMIN_USERS = 'ROLE_ACCESS_ADMIN_USERS';
     const ACCESS_PERMISSION_PROFILES = 'ROLE_ACCESS_PERMISSION_PROFILES';
@@ -98,13 +96,6 @@ class Permission
         ],
         self::ACCESS_TAGS => [
             'description' => 'Access Tags',
-            'dependencies' => [
-                PermissionProfile::SCOPE_GLOBAL => [],
-                PermissionProfile::SCOPE_PERSONAL => [],
-            ],
-        ],
-        self::ACCESS_BROADCASTS => [
-            'description' => 'Access Broadcasts',
             'dependencies' => [
                 PermissionProfile::SCOPE_GLOBAL => [],
                 PermissionProfile::SCOPE_PERSONAL => [],

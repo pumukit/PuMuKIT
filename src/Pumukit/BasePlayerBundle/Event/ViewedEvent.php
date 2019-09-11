@@ -19,7 +19,7 @@ class ViewedEvent extends Event
     protected $multimediaObject;
 
     /**
-     * @param null|Track       $track
+     * @param Track|null       $track
      * @param MultimediaObject $multimediaObject
      */
     public function __construct(MultimediaObject $multimediaObject, Track $track = null)
@@ -29,7 +29,7 @@ class ViewedEvent extends Event
     }
 
     /**
-     * @return null|Track
+     * @return Track|null
      */
     public function getTrack()
     {

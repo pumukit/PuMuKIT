@@ -225,7 +225,7 @@ class PlaylistController extends CollectionController
     /**
      * Gets the sorting values from the request and initialize session vars accordingly if necessary.
      *
-     * @param null|mixed $session_namespace
+     * @param mixed|null $session_namespace
      */
     private function getSorting(Request $request = null, $session_namespace = null)
     {

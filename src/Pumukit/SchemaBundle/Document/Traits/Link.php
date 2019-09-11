@@ -115,7 +115,7 @@ trait Link
      *
      * @param \MongoId|string $linkId
      *
-     * @return null|DocumentLink
+     * @return DocumentLink|null
      */
     public function getLinkById($linkId)
     {
@@ -153,7 +153,7 @@ trait Link
      *
      * @param string $tag
      *
-     * @return null|DocumentLink
+     * @return DocumentLink|null
      */
     public function getLinkWithTag($tag)
     {
@@ -191,7 +191,7 @@ trait Link
      *
      * @param array $tags
      *
-     * @return null|DocumentLink
+     * @return DocumentLink|null
      */
     public function getLinkWithAllTags(array $tags)
     {
@@ -229,7 +229,7 @@ trait Link
      *
      * @param array $tags
      *
-     * @return null|DocumentLink
+     * @return DocumentLink|null
      */
     public function getLinkWithAnyTag(array $tags)
     {

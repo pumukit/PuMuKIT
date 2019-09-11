@@ -126,7 +126,7 @@ class PumukitExtension extends AbstractExtension
      * @param mixed $object
      * @param bool  $absolute
      *
-     * @return null|string
+     * @return string|null
      */
     public function getDynamicPic($object, $absolute = false)
     {
@@ -148,7 +148,7 @@ class PumukitExtension extends AbstractExtension
      *
      * @param array $embeddedTags
      *
-     * @return null|EmbeddedTag
+     * @return EmbeddedTag|null
      */
     public function getPrecinct($embeddedTags)
     {
@@ -202,7 +202,7 @@ class PumukitExtension extends AbstractExtension
      *
      * @param MultimediaObject $multimediaObject
      *
-     * @return null|EmbeddedTag
+     * @return EmbeddedTag|null
      */
     public function getPrecinctOfMultimediaObject($multimediaObject)
     {

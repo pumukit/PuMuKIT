@@ -12,6 +12,10 @@ return PhpCsFixer\Config::create()
         'modernize_types_casting' => true,
         'ternary_to_null_coalescing' => true,
         'combine_nested_dirname' => true,
+        'phpdoc_types_order' => [
+            'null_adjustment' => 'always_last',
+            'sort_algorithm' => 'none',
+        ],
     ])
     ->setFinder($finder)
     ->setRiskyAllowed(true)

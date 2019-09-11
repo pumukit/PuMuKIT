@@ -64,7 +64,7 @@ class PicExtractorService
      *
      * @param MultimediaObject $multimediaObject
      * @param Track            $track
-     * @param null|int         $numframe
+     * @param int|null         $numframe
      *
      * @return string $message
      */
@@ -97,7 +97,7 @@ class PicExtractorService
      * @param Track            $track
      * @param int              $frame            numero del frame donde se realiza la captura
      *
-     * @return null|bool
+     * @return bool|null
      */
     private function createPic(MultimediaObject $multimediaObject, Track $track, $frame = 25)
     {
@@ -196,7 +196,7 @@ class PicExtractorService
      * @param MultimediaObject $multimediaObject
      * @param string           $picUrl
      *
-     * @return null|Pic
+     * @return Pic|null
      */
     private function getPicByUrl(MultimediaObject $multimediaObject, $picUrl)
     {

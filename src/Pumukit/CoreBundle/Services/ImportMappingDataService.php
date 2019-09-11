@@ -32,6 +32,7 @@ class ImportMappingDataService
         'keywords' => 'setKeywords',
         'properties' => 'setProperty',
         'numview' => 'setNumView',
+        'type' => 'setType',
     ];
 
     // NOTE: Convert all values to \DateTime
@@ -48,6 +49,16 @@ class ImportMappingDataService
         'role' => 'processRoles',
         'tags' => 'processTags',
         'externalplayer' => 'processExternalPlayer',
+    ];
+
+    private $validateValuesField = [
+        'type' => [
+            MultimediaObject::TYPE_UNKNOWN,
+            MultimediaObject::TYPE_VIDEO,
+            MultimediaObject::TYPE_AUDIO,
+            MultimediaObject::TYPE_EXTERNAL,
+            MultimediaObject::TYPE_LIVE,
+        ],
     ];
 
     public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService)
@@ -95,6 +106,11 @@ class ImportMappingDataService
                     if (array_key_exists($key, $this->mappingDataToDateTime) && is_string($value)) {
                         $value = new \DateTime($value);
                     }
+
+                    if (array_key_exists($key, $this->validateValuesField) && !in_array($value, $this->validateValuesField[$key], true)) {
+                        throw new \Exception("{$key} haven't got a valid value");
+                    }
+
                     $multimediaObject->{$method}($value);
                 } elseif ('properties' === $key) {
                     foreach ($value as $propertyKey => $propertyValue) {

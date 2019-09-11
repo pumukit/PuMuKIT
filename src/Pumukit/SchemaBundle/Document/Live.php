@@ -23,7 +23,7 @@ class Live
     protected static $instances = [];
 
     /**
-     * @var null|\MongoId|string
+     * @var \MongoId|string|null
      * @MongoDB\Id
      */
     private $id;
@@ -129,7 +129,7 @@ class Live
     /**
      * Get id.
      *
-     * @return null|\MongoId|string
+     * @return \MongoId|string|null
      */
     public function getId()
     {
@@ -389,7 +389,7 @@ class Live
      * Set name.
      *
      * @param string      $name
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setName($name, $locale = null)
     {
@@ -402,7 +402,7 @@ class Live
     /**
      * Get name.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */
@@ -442,7 +442,7 @@ class Live
      * Set description.
      *
      * @param string      $description
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setDescription($description, $locale = null)
     {
@@ -455,7 +455,7 @@ class Live
     /**
      * Get description.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */

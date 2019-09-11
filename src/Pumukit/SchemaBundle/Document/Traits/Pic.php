@@ -125,7 +125,7 @@ trait Pic
      *
      * @param \MongoId|string $picId
      *
-     * @return null|DocumentPic
+     * @return DocumentPic|null
      */
     public function getPicById($picId)
     {
@@ -185,7 +185,7 @@ trait Pic
      *
      * @param string $tag
      *
-     * @return null|DocumentPic
+     * @return DocumentPic|null
      */
     public function getPicWithTag($tag)
     {
@@ -223,7 +223,7 @@ trait Pic
      *
      * @param array $tags
      *
-     * @return null|DocumentPic
+     * @return DocumentPic|null
      */
     public function getPicWithAllTags(array $tags)
     {
@@ -261,7 +261,7 @@ trait Pic
      *
      * @param array $tags
      *
-     * @return null|DocumentPic
+     * @return DocumentPic|null
      */
     public function getPicWithAnyTag(array $tags)
     {
