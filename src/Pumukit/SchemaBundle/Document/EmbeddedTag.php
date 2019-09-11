@@ -40,7 +40,7 @@ class EmbeddedTag implements TagInterface
     /**
      * @MongoDB\Field(type="boolean")
      */
-    private $metaTag = false;
+    private $metatag = false;
 
     /**
      * @MongoDB\Field(type="boolean")
@@ -182,12 +182,12 @@ class EmbeddedTag implements TagInterface
 
     public function setMetatag(bool $metaTag): void
     {
-        $this->metaTag = $metaTag;
+        $this->metatag = $metaTag;
     }
 
     public function getMetatag(): bool
     {
-        return $this->metaTag;
+        return $this->metatag;
     }
 
     public function setDisplay(bool $display): void
