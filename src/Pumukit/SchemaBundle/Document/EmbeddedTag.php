@@ -80,7 +80,7 @@ class EmbeddedTag implements TagInterface
             $this->setI18nDescription($tag->getI18nDescription());
             $this->slug = $tag->getSlug();
             $this->cod = $tag->getCod();
-            $this->metaTag = $tag->getMetatag();
+            $this->metatag = $tag->getMetatag();
             $this->display = $tag->isDisplay();
             $this->locale = $tag->getLocale();
             $this->created = $tag->getCreated();
