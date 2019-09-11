@@ -12,24 +12,11 @@ class LiveService
      */
     public function generateHlsUrl(Live $live): string
     {
-        switch ($live->getLiveType()) {
-            case Live::LIVE_TYPE_AMS:
-                $hls = sprintf(
-                    '%s/%s/%s.m3u8',
-                    str_replace(['rtmp://', 'rtmpt://'], '//', $live->getUrl()),
-                    $live->getSourceName(),
-                    $live->getSourceName()
-                );
-
-                break;
-            default:
-                $hls = sprintf(
-                    '%s/%s/playlist.m3u8',
-                    str_replace(['rtmp://', 'rtmpt://'], '//', $live->getUrl()),
-                    $live->getSourceName()
-                );
-
-                break;
+        $sourceName = $live->getSourceName();
+        if (Live::LIVE_TYPE_AMS === $live->getLiveType()) {
+            $hls = sprintf('%s/%s/%s.m3u8', str_replace(['rtmp://', 'rtmpt://'], '//', $live->getUrl()), $sourceName, $sourceName);
+        } else {
+            $hls = sprintf('%s/%s/playlist.m3u8', str_replace(['rtmp://', 'rtmpt://'], '//', $live->getUrl()), $sourceName);
         }
 
         return $hls;

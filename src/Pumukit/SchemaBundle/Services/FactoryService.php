@@ -64,8 +64,8 @@ class FactoryService
     /**
      * Wrapper for createCollection. Creates a TYPE_SERIES collection.
      *
-     * @param null|User  $loggedInUser
-     * @param null|array $title
+     * @param User|null  $loggedInUser
+     * @param array|null $title
      *
      * @throws \Exception
      *
@@ -79,8 +79,8 @@ class FactoryService
     /**
      * Wrapper for createColletion. Creates a TYPE_PLAYLIST collection.
      *
-     * @param null|User  $loggedInUser
-     * @param null|array $title
+     * @param User|null  $loggedInUser
+     * @param array|null $title
      *
      * @throws \Exception
      *
@@ -95,8 +95,8 @@ class FactoryService
      * Internal method to create a new collection (series or playlist) with default values. Not emit events.
      *
      * @param int        $collectionType
-     * @param null|User  $loggedInUser
-     * @param null|array $title
+     * @param User|null  $loggedInUser
+     * @param array|null $title
      *
      * @throws \Exception
      *
@@ -135,8 +135,8 @@ class FactoryService
      * Create a new collection (series or playlist) with default values.
      *
      * @param int        $collectionType
-     * @param null|User  $loggedInUser
-     * @param null|array $title
+     * @param User|null  $loggedInUser
+     * @param array|null $title
      *
      * @throws \Exception
      *
@@ -244,13 +244,13 @@ class FactoryService
     /**
      * Get series by id.
      *
-     * @param null|string $id
-     * @param null|string $sessionId
+     * @param string|null $id
+     * @param string|null $sessionId
      *
      * @throws \Doctrine\ODM\MongoDB\LockException
      * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      *
-     * @return null|object Series
+     * @return object|null Series
      */
     public function findSeriesById($id, $sessionId = null)
     {
@@ -305,7 +305,7 @@ class FactoryService
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
-     * @return null|object
+     * @return object|null
      */
     public function getMultimediaObjectPrototype(Series $series = null)
     {
@@ -463,7 +463,7 @@ class FactoryService
      * Clone a multimedia object.
      *
      * @param MultimediaObject $src
-     * @param null|Series      $series
+     * @param Series|null      $series
      *
      * @throws \Exception
      *
@@ -687,7 +687,7 @@ class FactoryService
 
     /**
      * @param MultimediaObject $multimediaObject
-     * @param null|User        $loggedInUser
+     * @param User|null        $loggedInUser
      *
      * @throws \Exception
      *
@@ -715,7 +715,7 @@ class FactoryService
             $this->dm->getFilterCollection()->disable($enableFilter);
         }
 
-        /** @var null|MultimediaObject */
+        /** @var MultimediaObject|null */
         $multimediaObject = $this->dm->getRepository(MultimediaObject::class)->createQueryBuilder()
             ->field('numerical_id')->exists(true)
             ->sort(['numerical_id' => -1])
@@ -751,7 +751,7 @@ class FactoryService
             $this->dm->getFilterCollection()->disable($enableFilter);
         }
 
-        /** @var null|Series */
+        /** @var Series|null */
         $series = $this->dm->getRepository(Series::class)->createQueryBuilder()
             ->field('numerical_id')->exists(true)
             ->sort(['numerical_id' => -1])

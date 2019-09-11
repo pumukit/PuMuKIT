@@ -239,7 +239,7 @@ class GroupController extends AdminController implements NewAdminControllerInter
      * Get sorting for group.
      *
      * @param Request    $request
-     * @param null|mixed $session_namespace
+     * @param mixed|null $session_namespace
      *
      * @return array
      */

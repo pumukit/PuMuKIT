@@ -406,9 +406,9 @@ class PersonService
      * in the logged in User
      * It there is none, it creates it
      *
-     * @param null|User $loggedInUser
+     * @param User|null $loggedInUser
      *
-     * @return null|Person
+     * @return Person|null
      */
     public function getPersonFromLoggedInUser(User $loggedInUser = null)
     {
@@ -431,7 +431,7 @@ class PersonService
      * to add the User as Person
      * to MultimediaObject
      *
-     * @return null|Role
+     * @return Role|null
      */
     public function getPersonalScopeRole()
     {

@@ -17,7 +17,7 @@ class Tag
     use Traits\Properties;
 
     /**
-     * @var null|\MongoId|string
+     * @var \MongoId|string|null
      *
      * @MongoDB\Id
      */
@@ -163,7 +163,7 @@ class Tag
     /**
      * Get id.
      *
-     * @return null|\MongoId|string
+     * @return \MongoId|string|null
      */
     public function getId()
     {
@@ -174,7 +174,7 @@ class Tag
      * Set title.
      *
      * @param string      $title
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setTitle($title, $locale = null)
     {
@@ -187,7 +187,7 @@ class Tag
     /**
      * Get title.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */
@@ -207,7 +207,7 @@ class Tag
      * Set label.
      *
      * @param string      $label
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setLabel($label, $locale = null)
     {
@@ -220,7 +220,7 @@ class Tag
     /**
      * Get label.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */
@@ -260,7 +260,7 @@ class Tag
      * Set description.
      *
      * @param string      $description
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setDescription($description, $locale = null)
     {
@@ -273,7 +273,7 @@ class Tag
     /**
      * Get description.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */

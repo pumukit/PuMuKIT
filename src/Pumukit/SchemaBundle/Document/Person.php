@@ -15,7 +15,7 @@ class Person
     use Traits\Properties;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @MongoDB\Id
      */
@@ -205,7 +205,7 @@ class Person
      * Set honorific.
      *
      * @param string      $honorific
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setHonorific($honorific, $locale = null)
     {
@@ -218,7 +218,7 @@ class Person
     /**
      * Get honorific.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */
@@ -254,7 +254,7 @@ class Person
      * Set firm.
      *
      * @param string      $firm
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setFirm($firm, $locale = null)
     {
@@ -267,7 +267,7 @@ class Person
     /**
      * Get firm.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */
@@ -303,7 +303,7 @@ class Person
      * Set post.
      *
      * @param string      $post
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setPost($post, $locale = null)
     {
@@ -316,7 +316,7 @@ class Person
     /**
      * Get post.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */
@@ -352,7 +352,7 @@ class Person
      * Set bio.
      *
      * @param string      $bio
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setBio($bio, $locale = null)
     {
@@ -365,7 +365,7 @@ class Person
     /**
      * Get bio.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */

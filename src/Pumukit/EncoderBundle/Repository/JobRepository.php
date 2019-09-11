@@ -47,7 +47,7 @@ class JobRepository extends DocumentRepository
      * Find all jobs with given status.
      *
      * @param mixed      $sort
-     * @param null|mixed $owner
+     * @param mixed|null $owner
      */
     public function findWithStatusAndOwner(array $status, $sort = [], $owner = null)
     {
@@ -61,7 +61,7 @@ class JobRepository extends DocumentRepository
      * Find all jobs with given status.
      *
      * @param mixed      $sort
-     * @param null|mixed $owner
+     * @param mixed|null $owner
      */
     public function createQueryWithStatusAndOwner(array $status, $sort = [], $owner = null)
     {

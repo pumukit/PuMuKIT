@@ -281,7 +281,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
     /**
      * Overwrite to get form with translations.
      *
-     * @param null|string $resource
+     * @param string|null $resource
      * @param string      $locale
      *
      * @return \Symfony\Component\Form\Form|\Symfony\Component\Form\FormInterface

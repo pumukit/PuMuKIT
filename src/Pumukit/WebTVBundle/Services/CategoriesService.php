@@ -161,7 +161,7 @@ class CategoriesService
     }
 
     /**
-     * @param null|string $provider
+     * @param string|null $provider
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
@@ -198,7 +198,7 @@ class CategoriesService
 
     /**
      * @param Tag         $tag
-     * @param null|string $provider
+     * @param string|null $provider
      *
      * @return mixed
      */

@@ -23,7 +23,13 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
      */
     public function indexAction(MultimediaObject $multimediaObject, Request $request)
     {
-        if ($response = $this->validateAccess($request, $multimediaObject)) {
+        /** @var EmbeddedBroadcastService */
+        $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
+        $password = $request->get('broadcast_password');
+        /** @var User|null $user */
+        $user = $this->getUser();
+        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $user, $password);
+        if ($response instanceof Response) {
             return $response;
         }
 
@@ -35,8 +41,9 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
         [$autoStart, $intro, $whenDispatchViewEvent] = $this->getPlayerParameters($request, $multimediaObject);
 
         return [
-            'autostart' => $autoStart,
-            'intro' => $intro,
+            'autostart' => $request->query->get('autostart', 'false'),
+            'intro' => $basePlayerIntroService->getVideoIntroduction($multimediaObject, $request->query->getBoolean('intro')),
+            'multimediaObject' => $multimediaObject,
             'object' => $multimediaObject,
             'when_dispatch_view_event' => $whenDispatchViewEvent,
             'track' => $track,
@@ -85,7 +92,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
         /** @var EmbeddedBroadcastService */
         $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
         $password = $request->get('broadcast_password');
-        /** @var null|User */
+        /** @var User|null $user */
         $user = $this->getUser();
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $user, $password);
         if ($response instanceof Response) {
@@ -115,7 +122,9 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
 
         return [
             'autostart' => $request->query->get('autostart', 'false'),
-            'intro' => $basePlayerIntroService->getIntroForMultimediaObject($request->query->get('intro'), $multimediaObject->getProperty('intro')),
+            'intro' => $basePlayerIntroService->getVideoIntroduction($multimediaObject, $request->query->getBoolean('intro')),
+            'multimediaObject' => $multimediaObject,
+            'object' => $multimediaObject,
             'when_dispatch_view_event' => $this->container->getParameter('pumukitplayer.when_dispatch_view_event'),
         ];
     }

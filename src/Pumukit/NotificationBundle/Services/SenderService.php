@@ -301,7 +301,7 @@ class SenderService
      *
      * @param mixed $locale
      *
-     * @return null|string
+     * @return string|null
      */
     public function getSubjectTransWithLocale(array $subjectArray = [], $locale = 'en')
     {

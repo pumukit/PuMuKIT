@@ -12,7 +12,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 class EmbeddedEventSession
 {
     /**
-     * @var null|\MongoId|string
+     * @var \MongoId|string|null
      *
      * @MongoDB\Id
      */
@@ -55,7 +55,7 @@ class EmbeddedEventSession
     }
 
     /**
-     * @return null|\MongoId|string
+     * @return \MongoId|string|null
      */
     public function getId()
     {

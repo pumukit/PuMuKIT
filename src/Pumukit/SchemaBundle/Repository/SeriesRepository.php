@@ -61,7 +61,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @param EmbeddedTag|Tag $tag
      *
-     * @return null|array|object
+     * @return array|object|null
      */
     public function findOneWithTag($tag)
     {
@@ -117,7 +117,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @param array $tags
      *
-     * @return null|array|object|Series
+     * @return array|object|Series|null
      */
     public function findOneWithAllTags($tags)
     {
@@ -152,7 +152,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @param EmbeddedTag|Tag $tag
      *
-     * @return null|array|object
+     * @return array|object|null
      */
     public function findOneWithoutTag($tag)
     {
@@ -187,7 +187,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @param string $picId
      *
-     * @return null|array|object
+     * @return array|object|null
      */
     public function findByPicId($picId)
     {
@@ -403,7 +403,7 @@ class SeriesRepository extends DocumentRepository
      * @param string $propertyName
      * @param string $propertyValue
      *
-     * @return null|array|object
+     * @return array|object|null
      */
     public function findOneBySeriesProperty($propertyName, $propertyValue)
     {

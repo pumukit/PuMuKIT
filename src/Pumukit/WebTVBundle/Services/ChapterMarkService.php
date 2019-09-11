@@ -29,7 +29,7 @@ class ChapterMarkService
     {
         //Get editor chapters for the editor template.
         //Once the chapter marks player plugin is created, this part won't be needed.
-        /** @var null|Annotation */
+        /** @var Annotation|null */
         $marks = $this->documentManager
             ->getRepository(Annotation::class)
             ->createQueryBuilder()
@@ -37,7 +37,7 @@ class ChapterMarkService
             ->field('multimediaObject')->equals(new \MongoId($multimediaObject->getId()))
             ->getQuery()->getSingleResult();
 
-        /** @var null|Annotation */
+        /** @var Annotation|null */
         $trimming = $this->documentManager
             ->getRepository(Annotation::class)
             ->createQueryBuilder()

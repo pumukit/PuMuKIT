@@ -58,7 +58,7 @@ class MultimediaObject
     ];
 
     /**
-     * @var null|\MongoId|string
+     * @var \MongoId|string|null
      * @MongoDB\Id
      */
     private $id;
@@ -103,16 +103,6 @@ class MultimediaObject
     private $seriesTitle = ['en' => ''];
 
     /**
-     * @var null|Broadcast
-     *
-     * @deprecated in version 2.3
-     * use EmbeddedBroadcast instead
-     * @MongoDB\ReferenceOne(targetDocument="Broadcast", inversedBy="multimedia_object", storeAs="id", cascade={"persist"})
-     */
-    private $broadcast;
-
-    /**
-     * @var null|EmbeddedBroadcast
      * @MongoDB\EmbedOne(targetDocument="EmbeddedBroadcast")
      */
     private $embeddedBroadcast;
@@ -220,6 +210,12 @@ class MultimediaObject
      * @var string
      * @MongoDB\Field(type="string")
      */
+    private $introductionVideo;
+
+    /**
+     * @var string
+     * @MongoDB\Field(type="string")
+     */
     private $license;
 
     /**
@@ -295,7 +291,7 @@ class MultimediaObject
     /**
      * Get id.
      *
-     * @return null|\MongoId|string
+     * @return \MongoId|string|null
      */
     public function getId()
     {
@@ -538,7 +534,7 @@ class MultimediaObject
      * Set title.
      *
      * @param string      $title
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setTitle($title, $locale = null)
     {
@@ -551,7 +547,7 @@ class MultimediaObject
     /**
      * Get title.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */
@@ -591,7 +587,7 @@ class MultimediaObject
      * Set subtitle.
      *
      * @param string      $subtitle
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setSubtitle($subtitle, $locale = null)
     {
@@ -604,7 +600,7 @@ class MultimediaObject
     /**
      * Get subtitle.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */
@@ -644,7 +640,7 @@ class MultimediaObject
      * Set description.
      *
      * @param string      $description
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setDescription($description, $locale = null)
     {
@@ -657,7 +653,7 @@ class MultimediaObject
     /**
      * Get description.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */
@@ -717,7 +713,7 @@ class MultimediaObject
      * Set line2.
      *
      * @param string      $line2
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setLine2($line2, $locale = null)
     {
@@ -730,7 +726,7 @@ class MultimediaObject
     /**
      * Get line2.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */
@@ -784,6 +780,16 @@ class MultimediaObject
     public function getCopyright()
     {
         return $this->copyright;
+    }
+
+    public function getIntroductionVideo(): ?string
+    {
+        return $this->introductionVideo;
+    }
+
+    public function setIntroductionVideo(string $introductionVideo): void
+    {
+        $this->introductionVideo = $introductionVideo;
     }
 
     /**
@@ -919,7 +925,7 @@ class MultimediaObject
     /**
      * Get series title, only for performace use.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */
@@ -933,48 +939,6 @@ class MultimediaObject
         }
 
         return $this->seriesTitle[$locale];
-    }
-
-    /**
-     * Set broadcast.
-     *
-     * @deprecated in version 2.3
-     *
-     * @param Broadcast $broadcast
-     */
-    public function setBroadcast(Broadcast $broadcast)
-    {
-        if (($this->broadcast instanceof Broadcast) && (self::STATUS_PROTOTYPE != $this->status)) {
-            $this->broadcast->decreaseNumberMultimediaObjects();
-        }
-        $this->broadcast = $broadcast;
-        if (self::STATUS_PROTOTYPE != $this->status) {
-            $broadcast->increaseNumberMultimediaObjects();
-        }
-    }
-
-    /**
-     * Get broadcast.
-     *
-     * @deprecated in version 2.3
-     *
-     * @return Broadcast
-     */
-    public function getBroadcast()
-    {
-        return $this->broadcast;
-    }
-
-    /**
-     * Get broadcast.
-     *
-     * @deprecated in version 2.3
-     *
-     * @return bool Broadcast
-     */
-    public function isPublicBroadcast()
-    {
-        return (bool) (!$this->broadcast || Broadcast::BROADCAST_TYPE_PUB == $this->broadcast->getBroadcastTypeId());
     }
 
     /**
@@ -1067,7 +1031,7 @@ class MultimediaObject
     /**
      * Get embeddedBroadcast.
      *
-     * @return null|EmbeddedBroadcast
+     * @return EmbeddedBroadcast|null
      */
     public function getEmbeddedBroadcast()
     {
@@ -1097,7 +1061,7 @@ class MultimediaObject
     /**
      * Get embedded social.
      *
-     * @return null|EmbeddedSocial
+     * @return EmbeddedSocial|null
      */
     public function getEmbeddedSocial()
     {
@@ -1361,7 +1325,7 @@ class MultimediaObject
     /**
      * Get tracks.
      *
-     * @return null|\Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection|null
      */
     public function getTracks()
     {
@@ -1373,7 +1337,7 @@ class MultimediaObject
      *
      * @param \MongoId|string $trackId
      *
-     * @return null|Track
+     * @return Track|null
      */
     public function getTrackById($trackId)
     {
@@ -1411,7 +1375,7 @@ class MultimediaObject
      *
      * @param string $tag
      *
-     * @return null|Track
+     * @return Track|null
      */
     public function getTrackWithTag($tag)
     {
@@ -1449,7 +1413,7 @@ class MultimediaObject
      *
      * @param array $tags
      *
-     * @return null|Track
+     * @return Track|null
      */
     public function getTrackWithAllTags(array $tags)
     {
@@ -1487,7 +1451,7 @@ class MultimediaObject
      *
      * @param array $tags
      *
-     * @return null|Track
+     * @return Track|null
      */
     public function getTrackWithAnyTag(array $tags)
     {
@@ -1525,7 +1489,7 @@ class MultimediaObject
      *
      * @param bool $any to get only tagged tracks
      *
-     * @return null|Track
+     * @return Track|null
      */
     public function getMaster($any = true)
     {
@@ -1549,7 +1513,7 @@ class MultimediaObject
     /**
      * Get audio/video track with tag display. Get an audio track if the object is an audio.
      *
-     * @return null|Track
+     * @return Track|null
      */
     public function getDisplayTrack()
     {
@@ -1603,7 +1567,7 @@ class MultimediaObject
      * @param array $not_all_tags
      * @param bool  $all
      *
-     * @return null|Track
+     * @return Track|null
      */
     public function getFilteredTrackWithTags(array $any_tags = [], array $all_tags = [], array $not_any_tags = [], array $not_all_tags = [], $all = true)
     {

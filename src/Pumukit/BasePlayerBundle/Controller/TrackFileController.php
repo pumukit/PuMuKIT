@@ -149,7 +149,7 @@ class TrackFileController extends Controller
 
     /**
      * @param MultimediaObject $multimediaObject
-     * @param null|Track       $track
+     * @param Track|null       $track
      */
     protected function dispatchViewEvent(MultimediaObject $multimediaObject, Track $track = null)
     {

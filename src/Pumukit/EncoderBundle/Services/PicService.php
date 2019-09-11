@@ -35,17 +35,17 @@ class PicService
     }
 
     /**
-     * @param null|string $id
-     * @param null|string $size
-     * @param null|string $path
-     * @param null|array  $extension
-     * @param null|string $tags
-     * @param null|string $exists
-     * @param null|string $type
+     * @param string|null $id
+     * @param string|null $size
+     * @param string|null $path
+     * @param array|null  $extension
+     * @param string|null $tags
+     * @param string|null $exists
+     * @param string|null $type
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
-     * @return null|\Doctrine\MongoDB\Iterator|mixed
+     * @return \Doctrine\MongoDB\Iterator|mixed|null
      */
     public function findPicsByOptions($id = null, $size = null, $path = null, $extension = null, $tags = null, $exists = null, $type = null)
     {

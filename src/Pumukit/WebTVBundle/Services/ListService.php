@@ -227,11 +227,11 @@ class ListService
     }
 
     /**
-     * @param null|string $tagCod
+     * @param string|null $tagCod
      *
      * @throws \Exception
      *
-     * @return null|object|Tag
+     * @return object|Tag|null
      */
     public function getEmbedVideoBlock($tagCod = null)
     {

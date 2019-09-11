@@ -144,7 +144,7 @@ class FilterService
 
     /**
      * @param BsonFilter $filter
-     * @param null|User  $user
+     * @param User|null  $user
      *
      * @throws \MongoException
      */
@@ -206,7 +206,7 @@ class FilterService
     }
 
     /**
-     * @return null|User
+     * @return User|null
      */
     public function checkUserActivateFilter()
     {
@@ -231,7 +231,7 @@ class FilterService
      * Query in MongoDB:
      * {"people":{"$elemMatch":{"people._id":{"$id":"___MongoID_of_Person___"},"cod":"___Role_cod___"}}}
      *
-     * @param null|Person $person
+     * @param Person|null $person
      *
      * @throws \MongoException
      *
@@ -274,7 +274,7 @@ class FilterService
     /**
      * Get logged in user.
      *
-     * @return null|User
+     * @return User|null
      */
     private function getLoggedInUser()
     {

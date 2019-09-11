@@ -37,7 +37,7 @@ class Material extends Element
      * Set name.
      *
      * @param string      $name
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setName($name, $locale = null)
     {
@@ -50,7 +50,7 @@ class Material extends Element
     /**
      * Get name.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */

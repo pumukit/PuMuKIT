@@ -22,10 +22,6 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-            ->booleanNode('disable_broadcast_creation')
-            ->defaultTrue()
-            ->info('Disable the creation of new Broadcasts')
-            ->end()
             ->booleanNode('show_menu_place_and_precinct')
             ->defaultFalse()
             ->info('Show separated menu places and precinct')

@@ -12,7 +12,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 class Event
 {
     /**
-     * @var null|\MongoId|string
+     * @var \MongoId|string|null
      *
      * @MongoDB\Id
      */
@@ -75,7 +75,7 @@ class Event
     private $create_serial = true;
 
     /**
-     * @var null|Pic
+     * @var Pic|null
      *
      * @MongoDB\EmbedOne(targetDocument="Pumukit\SchemaBundle\Document\Pic")
      */
@@ -97,7 +97,7 @@ class Event
     /**
      * Get id.
      *
-     * @return null|\MongoId|string
+     * @return \MongoId|string|null
      */
     public function getId()
     {
@@ -148,7 +148,7 @@ class Event
      * Set description.
      *
      * @param string     $description
-     * @param null|mixed $locale
+     * @param mixed|null $locale
      */
     public function setDescription($description, $locale = null)
     {
@@ -161,7 +161,7 @@ class Event
     /**
      * Get description.
      *
-     * @param null|mixed $locale
+     * @param mixed|null $locale
      *
      * @return string
      */

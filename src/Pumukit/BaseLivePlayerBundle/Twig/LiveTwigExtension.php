@@ -60,7 +60,7 @@ class LiveTwigExtension extends AbstractExtension
      * Get future and not finished event.
      *
      * @param null      $limit
-     * @param null|Live $live
+     * @param Live|null $live
      *
      * @throws \Exception
      *

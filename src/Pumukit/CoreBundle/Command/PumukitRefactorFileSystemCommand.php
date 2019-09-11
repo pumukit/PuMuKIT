@@ -100,7 +100,7 @@ EOT
      *
      * @throws \Exception
      *
-     * @return null|int|void
+     * @return int|void|null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -608,7 +608,7 @@ EOT
     /**
      * @param OutputInterface $output
      * @param bool            $haveChanges
-     * @param null|string     $oldDirName
+     * @param string|null     $oldDirName
      *
      * @return bool
      */

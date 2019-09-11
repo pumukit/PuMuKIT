@@ -303,7 +303,7 @@ class SimpleController extends Controller
      *
      * @param array $externalData
      *
-     * @return null|object
+     * @return object|null
      */
     private function getSeriesByExternalData($externalData)
     {
@@ -370,7 +370,7 @@ class SimpleController extends Controller
     }
 
     /**
-     * @return null|mixed
+     * @return mixed|null
      */
     private function getDefaultMasterProfile()
     {

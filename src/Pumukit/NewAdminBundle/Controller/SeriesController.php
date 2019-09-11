@@ -471,7 +471,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
 
     /**
      * @param Request    $request
-     * @param null|mixed $session_namespace
+     * @param mixed|null $session_namespace
      *
      * @return array
      */
@@ -504,7 +504,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
      *
      * @param Request       $request
      * @param array         $criteria
-     * @param null|\MongoId $selectedSeriesId
+     * @param \MongoId|null $selectedSeriesId
      *
      * @return array|mixed|Pagerfanta
      */

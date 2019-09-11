@@ -16,6 +16,7 @@
                 ],
             {% endif %}
         {% endset %}
+
         <video id="player1" controls></video>
         <script type="text/javascript">
             jwplayer("player1").setup({
@@ -63,8 +64,11 @@
                 height: 100%;
                 text-align: center;
                 vertical-align: middle;
-                display: table-cell;
-                " id="player1">No track.</div>
+                display: table-cell;"
+             id="player1"
+        >
+            No track.
+        </div>
     {% endif %}
     <script type="text/javascript">
         window.onresize = function () {

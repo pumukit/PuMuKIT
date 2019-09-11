@@ -297,7 +297,7 @@ class UserService
      *
      * @param array $userRoles
      *
-     * @return null|string $userScope
+     * @return string|null $userScope
      */
     public function getUserScope($userRoles = [])
     {
@@ -520,8 +520,8 @@ class UserService
      * Is User last relation.
      *
      * @param User        $loggedInUser
-     * @param null|string $mmId
-     * @param null|string $personId
+     * @param string|null $mmId
+     * @param string|null $personId
      * @param array       $owners
      * @param array       $addGroups
      *
@@ -613,8 +613,8 @@ class UserService
      * User has group in common with given groups array.
      *
      * @param User        $loggedInUser
-     * @param null|string $mmId
-     * @param null|string $personId
+     * @param string|null $mmId
+     * @param string|null $personId
      * @param array       $groups
      *
      * @throws \Doctrine\ODM\MongoDB\LockException

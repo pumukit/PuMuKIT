@@ -47,7 +47,7 @@ class LicenseService
      * Is license enabled and accepted.
      *
      * @param array      $formData
-     * @param null|mixed $locale
+     * @param mixed|null $locale
      *
      * @return bool Returns FALSE if not enabled and not accepted, TRUE otherwise
      */
@@ -67,7 +67,7 @@ class LicenseService
     /**
      * Get license content file.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @throws \Exception
      *

@@ -24,7 +24,7 @@ class Role
     private $cod = '0';
 
     /**
-     * @var null|int
+     * @var int|null
      *
      * @MongoDB\Field(type="int")
      * @MongoDB\Index
@@ -84,7 +84,7 @@ class Role
     /**
      * Get id.
      *
-     * @return null|\MongoId|string
+     * @return \MongoId|string|null
      */
     public function getId()
     {
@@ -205,7 +205,7 @@ class Role
      * Set name.
      *
      * @param string      $name
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setName($name, $locale = null)
     {
@@ -218,7 +218,7 @@ class Role
     /**
      * Get name.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */
@@ -258,7 +258,7 @@ class Role
      * Set text.
      *
      * @param string      $text
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setText($text, $locale = null)
     {
@@ -271,7 +271,7 @@ class Role
     /**
      * Get text.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */

@@ -10,7 +10,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 class Message
 {
     /**
-     * @var null|\MongoId|string id
+     * @var \MongoId|string|null id
      *
      * @MongoDB\Id
      */

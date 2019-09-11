@@ -86,7 +86,7 @@ class FilterListener
      * Query in MongoDB:
      * {"people":{"$elemMatch":{"people._id":{"$id":"___MongoID_of_Person___"},"cod":"___Role_cod___"}}}
      *
-     * @param null|Person $person
+     * @param Person|null $person
      *
      * @return array $people
      */

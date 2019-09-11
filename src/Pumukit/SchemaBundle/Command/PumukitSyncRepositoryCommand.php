@@ -3,7 +3,6 @@
 namespace Pumukit\SchemaBundle\Command;
 
 use Pumukit\EncoderBundle\Document\Job;
-use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Tag;
@@ -39,7 +38,6 @@ EOT
         $this->mmRepo = $this->dm->getRepository(MultimediaObject::class);
 
         $this->syncTags($input, $output);
-        $this->syncNumberMultimediaObjectsOnBroadcast($input, $output);
         $this->syncNumberPeopleInMultimediaObjectsOnRoles($input, $output);
         $this->syncJobsInMultimediaObjectsProperties($input, $output);
     }
@@ -174,25 +172,6 @@ EOT
             $output->writeln(sprintf('%s: %d mmobj and %d children', $tag->getCod(), $countMms, $numOfChildren));
             $tag->setNumberMultimediaObjects($countMms);
             $tag->setNumberOfChildren($numOfChildren);
-        }
-        $this->dm->flush();
-    }
-
-    /**
-     * @deprecated in version 2.3
-     */
-    private function syncNumberMultimediaObjectsOnBroadcast(InputInterface $input, OutputInterface $output)
-    {
-        $broadcastRepo = $this->getContainer()->get('doctrine_mongodb')->getRepository(Broadcast::class);
-
-        $output->writeln(' ');
-
-        $broadcasts = $broadcastRepo->findAll();
-        foreach ($broadcasts as $broadcast) {
-            $mms = $this->mmRepo->findByBroadcast($broadcast);
-            $output->writeln($broadcast->getName().': '.count($mms));
-            $broadcast->setNumberMultimediaObjects(count($mms));
-            $this->dm->persist($broadcast);
         }
         $this->dm->flush();
     }

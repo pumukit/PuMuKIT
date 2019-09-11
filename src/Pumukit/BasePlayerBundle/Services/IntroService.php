@@ -2,67 +2,35 @@
 
 namespace Pumukit\BasePlayerBundle\Services;
 
-/**
- * Wrapper around the pumukit.intro parameter.
- */
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+
 class IntroService
 {
-    private $intro;
+    private $globalUrlIntroduction;
 
-    public function __construct($intro)
+    public function __construct($globalUrlIntroduction)
     {
-        $this->intro = $intro;
+        $this->globalUrlIntroduction = $globalUrlIntroduction;
     }
 
-    /**
-     * Returns the intro url if introParameter is null or 'true'.
-     *
-     * @param mixed $introParameter request parameter null|'false'|'true'
-     *
-     * @return bool|string
-     */
-    public function getIntro($introParameter = null)
+    public function getVideoIntroduction(MultimediaObject $multimediaObject, $activateIntroFromRequest = true): ?string
     {
-        $hasIntro = (bool) $this->intro;
+        $activateIntroFromRequest = false === filter_var($activateIntroFromRequest, FILTER_VALIDATE_BOOLEAN);
 
-        $showIntro = true;
-        if (null !== $introParameter && false === filter_var($introParameter, FILTER_VALIDATE_BOOLEAN)) {
-            $showIntro = false;
+        if (!$activateIntroFromRequest) {
+            return null;
         }
 
-        if ($hasIntro && $showIntro) {
-            return $this->intro;
+        $urlIntroduction = $multimediaObject->getIntroductionVideo();
+
+        if ($urlIntroduction && filter_var($urlIntroduction, FILTER_VALIDATE_URL)) {
+            return $urlIntroduction;
         }
 
-        return false;
-    }
-
-    /**
-     * Returns the intro url if introParameter is null or 'true' and not exist an introProperty.
-     * Returns the intro property if it is a string and introParameter is null or 'true'.
-     *
-     * @param mixed $introProperty  multimedia object property null|false|'url'
-     * @param mixed $introParameter request parameter null|string('false'|'true')
-     *
-     * @return null|bool
-     */
-    public function getIntroForMultimediaObject($introProperty = null, $introParameter = null)
-    {
-        $showIntro = true;
-        if (null !== $introParameter && false === filter_var($introParameter, FILTER_VALIDATE_BOOLEAN)) {
-            $showIntro = false;
+        if (!$this->globalUrlIntroduction) {
+            return null;
         }
 
-        $hasIntro = (bool) $this->intro;
-        if ($hasIntro && $showIntro && null === $introProperty) {
-            return $this->intro;
-        }
-
-        $hasCustomIntro = (bool) $introProperty;
-        if ($hasCustomIntro && $showIntro) {
-            return $introProperty;
-        }
-
-        return false;
+        return $this->globalUrlIntroduction;
     }
 }

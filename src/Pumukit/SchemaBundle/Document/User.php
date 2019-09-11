@@ -76,7 +76,7 @@ class User extends BaseUser
     /**
      * Get permission profile.
      *
-     * @return null|PermissionProfile $permissionProfile
+     * @return PermissionProfile|null $permissionProfile
      */
     public function getPermissionProfile()
     {
@@ -96,7 +96,7 @@ class User extends BaseUser
     /**
      * Get person.
      *
-     * @return null|Person
+     * @return Person|null
      */
     public function getPerson()
     {
