@@ -259,28 +259,28 @@ class EmbeddedTag implements TagInterface
 
     public function isDescendantOf(TagInterface $tag): bool
     {
-        if ($tag->getCod() == $this->getCod()) {
+        if ($tag->getCod() === $this->getCod()) {
             return false;
         }
 
-        return substr($this->getPath(), 0, strlen($tag->getPath())) === $tag->getPath();
+        return 0 === strpos($this->getPath(), $tag->getPath());
     }
 
     public function equalsOrDescendantOf(TagInterface $tag): bool
     {
-        return substr($this->getPath(), 0, strlen($tag->getPath())) === $tag->getPath();
+        return 0 === strpos($this->getPath(), $tag->getPath());
     }
 
     public function isDescendantOfByCod(string $tagCod): bool
     {
-        if ($tagCod == $this->getCod()) {
+        if ($tagCod === $this->getCod()) {
             return false;
         }
         if (0 === strpos($this->getPath(), sprintf('%s|', $tagCod))) {
             return true;
         }
 
-        return false === strpos($this->getPath(), sprintf('|%s|', $tagCod)) ? false : true;
+        return false !== strpos($this->getPath(), sprintf('|%s|', $tagCod));
     }
 
     public static function getEmbeddedTag($embedTags, $tag): EmbeddedTag
