@@ -18,49 +18,39 @@ class InspectionFfprobeService implements InspectionServiceInterface
     }
 
     /**
-     * Gets file duration in s.
-     * Check "mediainfo -f file" output.
-     *
-     * @param string $file
-     *
-     * @return int $duration file duration in s rounded up
+     * Gets file duration in s. Check "mediainfo -f file" output.
      */
-    public function getDuration($file)
+    public function getDuration(string $file): int
     {
         if (!file_exists($file)) {
             throw new \BadMethodCallException('The file '.$file.' does not exist');
         }
 
-        $json = json_decode($this->getMediaInfo($file));
+        $json = json_decode($this->getMediaInfo($file), false);
         if (!$this->jsonHasMediaContent($json)) {
-            throw new \InvalidArgumentException('This file has no accesible video '.
+            throw new \InvalidArgumentException('This file has no accessible video '.
                 "nor audio tracks\n".$file);
         }
 
         $duration = 0;
         if (isset($json->format->duration)) {
-            $duration = (int) ceil((float) ($json->format->duration));
+            $duration = (int) ceil((float) $json->format->duration);
         }
 
         return $duration;
     }
 
-    // Check the desired codec names (MPEG Audio/MPEG-1 Audio layer 3; AAC / Advanced Audio Codec / ...)
-    // Now we choose FORMAT.
-
     /**
      * Completes track information from a given path using mediainfo.
-     *
-     * @param Track $track
      */
-    public function autocompleteTrack(Track $track)
+    public function autocompleteTrack(Track $track): Track
     {
         $only_audio = true; //initialized true until video track is found.
         if (!$track->getPath()) {
             throw new \BadMethodCallException('Input track has no path defined');
         }
 
-        $json = json_decode($this->getMediaInfo($track->getPath()));
+        $json = json_decode($this->getMediaInfo($track->getPath()), false);
         if (!$this->jsonHasMediaContent($json)) {
             throw new \InvalidArgumentException('This file has no accesible video '.
                 "nor audio tracks\n".$track->getPath());
@@ -73,9 +63,9 @@ class InspectionFfprobeService implements InspectionServiceInterface
         }
 
         $track->setMimetype($mime_type);
-        $bitrate = isset($json->format->bit_rate) ? (int) ($json->format->bit_rate) : 0;
+        $bitrate = isset($json->format->bit_rate) ? (int) $json->format->bit_rate : 0;
         $track->setBitrate($bitrate);
-        $duration = (int) ceil((float) ($json->format->duration));
+        $duration = (int) ceil((float) $json->format->duration);
         $track->setDuration($duration);
         $size = isset($json->format->size) ? (int) $json->format->size : 0;
         $track->setSize($size);
@@ -91,10 +81,10 @@ class InspectionFfprobeService implements InspectionServiceInterface
                             $track->setFramerate((string) $stream->avg_frame_rate);
                         }
                         if (isset($stream->width)) {
-                            $track->setWidth((int) ($stream->width));
+                            $track->setWidth((int) $stream->width);
                         }
                         if (isset($stream->height)) {
-                            $track->setHeight((int) ($stream->height));
+                            $track->setHeight((int) $stream->height);
                         }
                         $only_audio = false;
 
@@ -104,7 +94,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
                             $track->setAcodec((string) $stream->codec_name);
                         }
                         if (isset($stream->channels)) {
-                            $track->setChannels((int) ($stream->channels));
+                            $track->setChannels((int) $stream->channels);
                         }
 
                         break;
@@ -112,13 +102,15 @@ class InspectionFfprobeService implements InspectionServiceInterface
             }
             $track->setOnlyAudio($only_audio);
         }
+
+        return $track;
     }
 
-    private function jsonHasMediaContent($json)
+    private function jsonHasMediaContent($json): bool
     {
         if (null !== $json->streams) {
             foreach ($json->streams as $stream) {
-                if ((isset($stream->codec_type, $stream->codec_name)) && ('audio' == $stream->codec_type || 'video' == $stream->codec_type) && ('ansi' != $stream->codec_name)) {
+                if (isset($stream->codec_type, $stream->codec_name) && ('audio' === $stream->codec_type || 'video' === $stream->codec_type) && ('ansi' !== $stream->codec_name)) {
                     return true;
                 }
             }
@@ -127,7 +119,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
         return false;
     }
 
-    private function getMediaInfo($file)
+    private function getMediaInfo(string $file): string
     {
         $command = str_replace('{{file}}', $file, $this->command);
         $process = new Process($command);

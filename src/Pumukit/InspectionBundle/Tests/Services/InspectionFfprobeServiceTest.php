@@ -46,7 +46,7 @@ class InspectionFfprobeServiceTest extends TestCase
     /**
      * @expectedException \BadMethodCallException
      */
-    public function testGetDurationFileNotExists()
+    public function testGetDurationFileNotExists(): void
     {
         $is = new InspectionFfprobeService();
         $is->getDuration('http://trololo.com');
@@ -55,7 +55,7 @@ class InspectionFfprobeServiceTest extends TestCase
     /**
      * @expectedException \InvalidArgumentException
      */
-    public function testGetDurationFileWithoutMultimediaContent()
+    public function testGetDurationFileWithoutMultimediaContent(): void
     {
         $is = new InspectionFfprobeService();
         $is->getDuration($this->wrong_file_textfile);
@@ -65,7 +65,7 @@ class InspectionFfprobeServiceTest extends TestCase
         $is->getDuration($this->wrong_file_subtitle);
     }
 
-    public function testGetDuration()
+    public function testGetDuration(): void
     {
         $file1 = $this->resources_dir.'AUDIO.mp3';
         $file2 = $this->resources_dir.'CAMERA.mp4';
@@ -77,7 +77,7 @@ class InspectionFfprobeServiceTest extends TestCase
     /**
      * @expectedException \BadMethodCallException
      */
-    public function testAutocompleteTrackWithoutPath()
+    public function testAutocompleteTrackWithoutPath(): void
     {
         $empty_track = new Track();
         $is = new InspectionFfprobeService();
@@ -87,7 +87,7 @@ class InspectionFfprobeServiceTest extends TestCase
     /**
      * @expectedException \InvalidArgumentException
      */
-    public function testAutocompleteTrackFileWithoutMultimediaContent()
+    public function testAutocompleteTrackFileWithoutMultimediaContent(): void
     {
         $wrong_track = new Track();
         $is = new InspectionFfprobeService();
@@ -95,7 +95,7 @@ class InspectionFfprobeServiceTest extends TestCase
         $is->autocompleteTrack($wrong_track);
     }
 
-    public function testAutocompleteTrackOnlyAudio()
+    public function testAutocompleteTrackOnlyAudio(): void
     {
         $file = $this->resources_dir.'AUDIO.mp3';
         $track = new Track();
@@ -124,7 +124,7 @@ class InspectionFfprobeServiceTest extends TestCase
         $this->assertTrue($track->getOnlyAudio());
     }
 
-    public function testAutocompleteTrackWithAudioAndVideo()
+    public function testAutocompleteTrackWithAudioAndVideo(): void
     {
         $file1 = $this->resources_dir.'CAMERA.mp4';
         $file2 = $this->resources_dir.'SCREEN.mp4';
