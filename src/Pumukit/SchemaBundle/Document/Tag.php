@@ -7,8 +7,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Pumukit\SchemaBundle\Document\Tag.
- *
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\TagRepository")
  * @Gedmo\Tree(type="materializedPath", activateLocking=false)
  */
@@ -17,52 +15,36 @@ class Tag implements TagInterface
     use Traits\Properties;
 
     /**
-     * @var null|\MongoId|string
-     *
      * @MongoDB\Id
      */
     private $id;
 
     /**
-     * Number of Multimedia Object with this tag. Only for cache purposes.
-     *
-     * @var int
-     *
      * @MongoDB\Field(type="increment")
      */
     private $number_multimedia_objects = 0;
 
     /**
-     * @var array<string, string>
-     *
      * @MongoDB\Field(type="raw")
      */
     private $title = ['en' => ''];
 
     /**
-     * @var array<string, string>
-     *
      * @MongoDB\Field(type="raw")
      */
     private $label = ['en' => ''];
 
     /**
-     * @var array<string, string>
-     *
      * @MongoDB\Field(type="raw")
      */
     private $description = ['en' => ''];
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $slug;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      * @MongoDB\UniqueIndex(order="asc")
      * @Assert\Regex("/^\w*$/")
@@ -71,37 +53,26 @@ class Tag implements TagInterface
     private $cod = '';
 
     /**
-     * @var bool
-     *
      * @MongoDB\Field(type="boolean")
      */
-    private $metatag = false;
+    private $metaTag = false;
 
     /**
-     * @var bool
-     *
      * @MongoDB\Field(type="boolean")
      */
     private $display = false;
 
     /**
-     * Used locale to override Translation listener`s locale
-     * this is not a mapped field of entity metadata, just a simple property.
-     *
-     * @var string
+     * Used locale to override Translation listener`s locale this is not a mapped field of entity metadata, just a simple property.
      */
     private $locale = 'en';
 
     /**
-     * @var \DateTime
-     *
      * @MongoDB\Field(type="date")
      */
     private $created;
 
     /**
-     * @var \DateTime
-     *
      * @MongoDB\Field(type="date")
      */
     private $updated;
@@ -120,8 +91,6 @@ class Tag implements TagInterface
 
     /**
      * Number of children. Only for cache purposes.
-     *
-     * @var int
      *
      * @MongoDB\Field(type="increment")
      */
@@ -150,33 +119,17 @@ class Tag implements TagInterface
         $this->children = [];
     }
 
-    /**
-     * to string.
-     *
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getTitle();
     }
 
-    /**
-     * Get id.
-     *
-     * @return null|\MongoId|string
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set title.
-     *
-     * @param string      $title
-     * @param null|string $locale
-     */
-    public function setTitle($title, $locale = null)
+    public function setTitle(string $title, string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -184,14 +137,7 @@ class Tag implements TagInterface
         $this->title[$locale] = $title;
     }
 
-    /**
-     * Get title.
-     *
-     * @param null|string $locale
-     *
-     * @return string
-     */
-    public function getTitle($locale = null)
+    public function getTitle(string $locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -203,13 +149,7 @@ class Tag implements TagInterface
         return $this->title[$locale];
     }
 
-    /**
-     * Set label.
-     *
-     * @param string      $label
-     * @param null|string $locale
-     */
-    public function setLabel($label, $locale = null)
+    public function setLabel(string $label, string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -217,14 +157,7 @@ class Tag implements TagInterface
         $this->label[$locale] = $label;
     }
 
-    /**
-     * Get label.
-     *
-     * @param null|string $locale
-     *
-     * @return string
-     */
-    public function getLabel($locale = null)
+    public function getLabel(string $locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -236,33 +169,17 @@ class Tag implements TagInterface
         return $this->label[$locale];
     }
 
-    /**
-     * Get i18n title.
-     *
-     * @return array
-     */
-    public function getI18nTitle()
+    public function getI18nTitle(): array
     {
         return $this->title;
     }
 
-    /**
-     * Set i18n title.
-     *
-     * @param array $title
-     */
-    public function setI18nTitle(array $title)
+    public function setI18nTitle(array $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * Set description.
-     *
-     * @param string      $description
-     * @param null|string $locale
-     */
-    public function setDescription($description, $locale = null)
+    public function setDescription(string $description, string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -270,14 +187,7 @@ class Tag implements TagInterface
         $this->description[$locale] = $description;
     }
 
-    /**
-     * Get description.
-     *
-     * @param null|string $locale
-     *
-     * @return string
-     */
-    public function getDescription($locale = null)
+    public function getDescription(string $locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -289,166 +199,85 @@ class Tag implements TagInterface
         return $this->description[$locale];
     }
 
-    /**
-     * Set i18n description.
-     *
-     * @param array $description
-     */
-    public function setI18nDescription(array $description)
+    public function setI18nDescription(array $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * Get i18n description.
-     *
-     * @return array
-     */
-    public function getI18nDescription()
+    public function getI18nDescription(): array
     {
         return $this->description;
     }
 
-    /**
-     * Set slug.
-     *
-     * @param string $slug
-     *
-     * @return Tag
-     */
-    public function setSlug($slug)
+    public function setSlug(string $slug): void
     {
         $this->slug = $slug;
-
-        return $this;
     }
 
-    /**
-     * Get slug.
-     *
-     * @return string
-     */
-    public function getSlug()
+    public function getSlug(): string
     {
         return $this->slug;
     }
 
-    /**
-     * Set cod.
-     *
-     * @param string $cod
-     */
-    public function setCod($cod)
+    public function setCod(string $cod): void
     {
         $this->cod = $cod;
     }
 
-    /**
-     * Get cod.
-     *
-     * @return string
-     */
-    public function getCod()
+    public function getCod(): string
     {
         return $this->cod;
     }
 
-    /**
-     * Set metatag.
-     *
-     * @param bool $metatag
-     */
-    public function setMetatag($metatag)
+    public function setMetatag(bool $metaTag): void
     {
-        $this->metatag = $metatag;
+        $this->metaTag = $metaTag;
     }
 
-    /**
-     * Get metatag.
-     *
-     * @return bool
-     */
-    public function getMetatag()
+    public function getMetatag(): bool
     {
-        return $this->metatag;
+        return $this->metaTag;
     }
 
-    /**
-     * Set display.
-     *
-     * @param bool $display
-     */
-    public function setDisplay($display)
+    public function setDisplay(bool $display): void
     {
         $this->display = $display;
     }
 
-    /**
-     * Get display.
-     *
-     * @return bool
-     */
-    public function getDisplay()
+    public function getDisplay(): bool
     {
         return $this->display;
     }
 
-    /**
-     * Set created.
-     *
-     * @param \DateTime $created
-     */
-    public function setCreated($created)
+    public function isDisplay(): bool
+    {
+        return $this->display;
+    }
+
+    public function setCreated(\DateTime $created): void
     {
         $this->created = $created;
     }
 
-    /**
-     * Get created.
-     *
-     * @return \DateTime
-     */
-    public function getCreated()
+    public function getCreated(): \DateTime
     {
         return $this->created;
     }
 
-    /**
-     * Set updated.
-     *
-     * @param \DateTime $updated
-     */
-    public function setUpdated($updated)
+    public function setUpdated(\DateTime $updated): void
     {
         $this->updated = $updated;
     }
 
-    /**
-     * Get updated.
-     *
-     * @return \DateTime
-     */
-    public function getUpdated()
+    public function getUpdated(): \DateTime
     {
         return $this->updated;
     }
 
     /**
      * Set translatable locale.
-     *
-     * @param string $locale
      */
-    public function setLocale($locale)
-    {
-        $this->locale = $locale;
-    }
-
-    /**
-     * Get locale.
-     *
-     * @return string
-     */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
@@ -456,7 +285,7 @@ class Tag implements TagInterface
     /**
      * Increase number_multimedia_objects.
      */
-    public function increaseNumberMultimediaObjects()
+    public function increaseNumberMultimediaObjects(): void
     {
         ++$this->number_multimedia_objects;
     }
@@ -464,15 +293,12 @@ class Tag implements TagInterface
     /**
      * Decrease number_multimedia_objects.
      */
-    public function decreaseNumberMultimediaObjects()
+    public function decreaseNumberMultimediaObjects(): void
     {
         --$this->number_multimedia_objects;
     }
 
-    /**
-     * Get number_multimedia_objects.
-     */
-    public function getNumberMultimediaObjects()
+    public function getNumberMultimediaObjects(): string
     {
         return $this->number_multimedia_objects;
     }
@@ -482,14 +308,15 @@ class Tag implements TagInterface
      *
      * @param mixed $count
      */
-    public function setNumberMultimediaObjects($count)
+    public function setNumberMultimediaObjects($count): string
     {
         return $this->number_multimedia_objects = $count;
     }
 
-    public function setParent(Tag $parent = null)
+    public function setParent(Tag $parent = null): void
     {
         $this->parent = $parent;
+
         $parent->addChild($this);
     }
 
@@ -498,27 +325,27 @@ class Tag implements TagInterface
         return $this->parent;
     }
 
-    public function getChildren()
+    public function getChildren(): array
     {
         return $this->children;
     }
 
-    public function getNumberOfChildren()
+    public function getNumberOfChildren(): int
     {
         return $this->number_children;
     }
 
-    public function setNumberOfChildren($count)
+    public function setNumberOfChildren($count): void
     {
         $this->number_children = $count;
     }
 
-    public function getLevel()
+    public function getLevel(): string
     {
         return $this->level;
     }
 
-    public function getPath()
+    public function getPath(): string
     {
         return $this->path;
     }
@@ -528,14 +355,7 @@ class Tag implements TagInterface
         return $this->lockTime;
     }
 
-    /**
-     * Returns true if given node is children of tag.
-     *
-     * @param EmbeddedTag|Tag $tag
-     *
-     * @return bool
-     */
-    public function isChildOf($tag)
+    public function isChildOf(TagInterface $tag): bool
     {
         if ($this->isDescendantOf($tag)) {
             $suffixPath = substr($this->getPath(), strlen($tag->getPath()), strlen($this->getPath()));
@@ -547,44 +367,23 @@ class Tag implements TagInterface
         return false;
     }
 
-    /**
-     * Returns true if given node is descendant of tag.
-     *
-     * @param EmbeddedTag|Tag $tag
-     *
-     * @return bool
-     */
-    public function isDescendantOf($tag)
+    public function isDescendantOf(TagInterface $tag): bool
     {
-        if ($tag == $this) {
+        if ($tag === $this) {
             return false;
         }
 
         return substr($this->getPath(), 0, strlen($tag->getPath())) === $tag->getPath();
     }
 
-    /**
-     * Returns true if given node is descendant of tag or the same.
-     *
-     * @param EmbeddedTag|Tag $tag
-     *
-     * @return bool
-     */
-    public function equalsOrDescendantOf($tag)
+    public function equalsOrDescendantOf(TagInterface $tag): bool
     {
         return substr($this->getPath(), 0, strlen($tag->getPath())) === $tag->getPath();
     }
 
-    /**
-     * Returns true if given node cod is descendant of tag.
-     *
-     * @param mixed $tagCod
-     *
-     * @return bool
-     */
-    public function isDescendantOfByCod($tagCod)
+    public function isDescendantOfByCod(string $tagCod): bool
     {
-        if ($tagCod == $this->getCod()) {
+        if ($tagCod === $this->getCod()) {
             return false;
         }
         if (0 === strpos($this->getPath(), sprintf('%s|', $tagCod))) {
@@ -594,15 +393,12 @@ class Tag implements TagInterface
         return false === strpos($this->getPath(), sprintf('|%s|', $tagCod)) ? false : true;
     }
 
-    /**
-     * Returns true if the tag is a PUB tag (that appears in the Pub tab in the back-office).
-     */
-    public function isPubTag()
+    public function isPubTag(): bool
     {
         return $this->isDescendantOfByCod('PUBCHANNELS') || $this->isDescendantOfByCod('PUBDECISIONS');
     }
 
-    private function addChild(Tag $tag)
+    private function addChild(TagInterface $tag): TagInterface
     {
         ++$this->number_children;
 
