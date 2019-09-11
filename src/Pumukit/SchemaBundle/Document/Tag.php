@@ -279,6 +279,11 @@ class Tag implements TagInterface
     /**
      * Set translatable locale.
      */
+    public function setLocale(string $locale): void
+    {
+        $this->locale = $locale;
+    }
+
     public function getLocale(): string
     {
         return $this->locale;
