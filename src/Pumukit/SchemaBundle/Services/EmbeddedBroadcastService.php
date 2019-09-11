@@ -23,11 +23,6 @@ class EmbeddedBroadcastService
     private $router;
     private $templating;
 
-    /**
-     * Constructor.
-     *
-     * @param mixed $disabledBroadcast
-     */
     public function __construct(DocumentManager $documentManager, MultimediaObjectService $mmsService, MultimediaObjectEventDispatcherService $dispatcher, AuthorizationCheckerInterface $authorizationChecker, EngineInterface $templating, RouterInterface $router)
     {
         $this->dm = $documentManager;
