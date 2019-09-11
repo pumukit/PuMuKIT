@@ -59,6 +59,9 @@ class Person implements PersonInterface
      */
     protected $bio = ['en' => ''];
 
+    /**
+     * Used locale to override Translation listener`s locale this is not a mapped field of entity metadata, just a simple property.
+     */
     protected $locale = 'en';
 
     /**

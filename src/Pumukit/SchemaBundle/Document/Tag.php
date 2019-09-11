@@ -20,6 +20,8 @@ class Tag implements TagInterface
     private $id;
 
     /**
+     * Number of Multimedia Object with this tag. Only for cache purposes.
+     *
      * @MongoDB\Field(type="increment")
      */
     private $number_multimedia_objects = 0;
@@ -398,7 +400,7 @@ class Tag implements TagInterface
         return $this->isDescendantOfByCod('PUBCHANNELS') || $this->isDescendantOfByCod('PUBDECISIONS');
     }
 
-    private function addChild(TagInterface $tag): TagInterface
+    private function addChild(self $tag): TagInterface
     {
         ++$this->number_children;
 
