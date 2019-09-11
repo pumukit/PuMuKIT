@@ -10,9 +10,9 @@ parameters:
     env(PUMUKIT_SECRET): ThisTokenIsNotSoSecretChangeIt
     env(PUMUKIT_TITLE): UPumukitTV
     env(PUMUKIT_DESCRIPTION): 'Pumukit University TV Website'
-    env(PUMUKIT_KEYWORDS): 'webtv, Tv, Pumukit University, uvigo, uvigotv, pumukit'
+    env(PUMUKIT_KEYWORDS): 'webtv, Tv, Pumukit University, pumukit'
     env(PUMUKIT_EMAIL): tv@pumukit.tv
-    env(PUMUKIT_LOGO): /bundles/pumukitwebtv/images/webtv/logo80px.png
+    env(PUMUKIT_LOGO): /bundles/pumukitwebtv/images/webtv/pumukit_logo.png
     env(PUMUKIT_LOCALES): '["en", "es"]'
     env(PUMUKIT_UPLOADS_DIR): '%kernel.root_dir%/../web/uploads'
     env(PUMUKIT_UPLOADS_URL): /uploads
