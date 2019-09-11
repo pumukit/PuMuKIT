@@ -327,7 +327,7 @@ class Tag implements TagInterface
         return $this->parent;
     }
 
-    public function getChildren(): array
+    public function getChildren()
     {
         return $this->children;
     }
