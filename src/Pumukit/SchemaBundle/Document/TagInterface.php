@@ -10,23 +10,23 @@ interface TagInterface
 
     public function setTitle(string $title, string $locale = null): void;
 
-    public function getI18nTitle(): array;
+    public function getI18nTitle(): ?array;
 
     public function setI18nTitle(array $title): void;
 
-    public function getDescription(string $locale = null): string;
+    public function getDescription(string $locale = null): ?string;
 
     public function setDescription(string $description, string $locale = null): void;
 
     public function setI18nDescription(array $description): void;
 
-    public function getI18nDescription(): array;
+    public function getI18nDescription(): ?array;
 
     public function getCod(): string;
 
     public function setCod(string $code): void;
 
-    public function getMetaTag(): bool;
+    public function getMetaTag(): ?bool;
 
     public function setMetaTag(bool $metaTag): void;
 
@@ -34,9 +34,9 @@ interface TagInterface
 
     public function isDisplay(): bool;
 
-    public function getPath(): string;
+    public function getPath(): ?string;
 
-    public function getLevel(): string;
+    public function getLevel(): ?string;
 
     public function isChildOf(TagInterface $tag): bool;
 

@@ -1924,10 +1924,10 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals($postI18n, $embeddedPerson->getI18nPost());
         $this->assertEquals($bioI18n, $embeddedPerson->getI18nBio());
 
-        $honorific = null;
-        $firm = null;
-        $post = null;
-        $bio = null;
+        $honorific = '';
+        $firm = '';
+        $post = '';
+        $bio = '';
 
         $embeddedPerson->setHonorific($honorific);
         $embeddedPerson->setFirm($firm);

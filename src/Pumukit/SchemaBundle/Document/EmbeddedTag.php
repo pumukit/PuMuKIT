@@ -138,7 +138,7 @@ class EmbeddedTag implements TagInterface
         $this->description[$locale] = $description;
     }
 
-    public function getDescription(string $locale = null): string
+    public function getDescription(string $locale = null): ?string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -155,7 +155,7 @@ class EmbeddedTag implements TagInterface
         $this->description = $description;
     }
 
-    public function getI18nDescription(): array
+    public function getI18nDescription(): ?array
     {
         return $this->description;
     }
@@ -165,7 +165,7 @@ class EmbeddedTag implements TagInterface
         $this->slug = $slug;
     }
 
-    public function getSlug(): string
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
@@ -185,7 +185,7 @@ class EmbeddedTag implements TagInterface
         $this->metatag = $metaTag;
     }
 
-    public function getMetatag(): bool
+    public function getMetatag(): ?bool
     {
         return $this->metatag;
     }
@@ -210,7 +210,7 @@ class EmbeddedTag implements TagInterface
         $this->created = $created;
     }
 
-    public function getCreated(): \DateTime
+    public function getCreated(): ?\DateTime
     {
         return $this->created;
     }
@@ -220,7 +220,7 @@ class EmbeddedTag implements TagInterface
         $this->updated = $updated;
     }
 
-    public function getUpdated(): \DateTime
+    public function getUpdated(): ?\DateTime
     {
         return $this->updated;
     }
@@ -230,17 +230,17 @@ class EmbeddedTag implements TagInterface
         $this->locale = $locale;
     }
 
-    public function getLocale(): string
+    public function getLocale(): ?string
     {
         return $this->locale;
     }
 
-    public function getLevel(): string
+    public function getLevel(): ?string
     {
         return $this->level;
     }
 
-    public function getPath(): string
+    public function getPath(): ?string
     {
         return $this->path;
     }

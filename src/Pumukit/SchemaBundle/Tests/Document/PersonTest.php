@@ -73,10 +73,10 @@ class PersonTest extends TestCase
         $this->assertEquals($i18nPost, $person->getI18nPost());
         $this->assertEquals($i18nBio, $person->getI18nBio());
 
-        $honorific = null;
-        $firm = null;
-        $post = null;
-        $bio = null;
+        $honorific = '';
+        $firm = '';
+        $post = '';
+        $bio = '';
 
         $person->setHonorific($honorific);
         $person->setFirm($firm);

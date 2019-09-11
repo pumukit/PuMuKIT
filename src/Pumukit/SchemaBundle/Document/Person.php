@@ -20,24 +20,24 @@ class Person implements PersonInterface
     /**
      * @MongoDB\Field(type="string")
      */
-    protected $name;
+    protected $name = '';
 
     /**
      * @MongoDB\Field(type="string")
      * @Assert\Email
      */
-    protected $email;
+    protected $email = '';
 
     /**
      * @MongoDB\Field(type="string")
      * //@Assert\Url('http', 'https', 'ftp')
      */
-    protected $web;
+    protected $web = '';
 
     /**
      * @MongoDB\Field(type="string")
      */
-    protected $phone;
+    protected $phone = '';
 
     /**
      * @MongoDB\Field(type="raw")
@@ -84,7 +84,7 @@ class Person implements PersonInterface
         $this->user = $user;
     }
 
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }
@@ -104,7 +104,7 @@ class Person implements PersonInterface
         $this->email = $email;
     }
 
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -114,7 +114,7 @@ class Person implements PersonInterface
         $this->web = $web;
     }
 
-    public function getWeb(): string
+    public function getWeb(): ?string
     {
         return $this->web;
     }
@@ -124,7 +124,7 @@ class Person implements PersonInterface
         $this->phone = $phone;
     }
 
-    public function getPhone(): string
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
@@ -137,7 +137,7 @@ class Person implements PersonInterface
         $this->honorific[$locale] = $honorific;
     }
 
-    public function getHonorific(string $locale = null): string
+    public function getHonorific(string $locale = null): ?string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -167,7 +167,7 @@ class Person implements PersonInterface
         $this->firm[$locale] = $firm;
     }
 
-    public function getFirm(string $locale = null): string
+    public function getFirm(string $locale = null): ?string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -197,7 +197,7 @@ class Person implements PersonInterface
         $this->post[$locale] = $post;
     }
 
-    public function getPost(string $locale = null): string
+    public function getPost(string $locale = null): ?string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -227,7 +227,7 @@ class Person implements PersonInterface
         $this->bio[$locale] = $bio;
     }
 
-    public function getBio(string $locale = null): string
+    public function getBio(string $locale = null): ?string
     {
         if (null === $locale) {
             $locale = $this->locale;

@@ -10,21 +10,21 @@ interface PersonInterface
 
     public function setName(string $name): void;
 
-    public function getEmail(): string;
+    public function getEmail(): ?string;
 
     public function setEmail(string $email): void;
 
     public function setWeb(string $web): void;
 
-    public function getWeb(): string;
+    public function getWeb(): ?string;
 
     public function setPhone(string $phone): void;
 
-    public function getPhone(): string;
+    public function getPhone(): ?string;
 
     public function setHonorific(string $honorific, string $locale = null): void;
 
-    public function getHonorific(string $locale = null): string;
+    public function getHonorific(string $locale = null): ?string;
 
     public function setI18nHonorific(array $honorific): void;
 
@@ -32,7 +32,7 @@ interface PersonInterface
 
     public function setFirm(string $firm, string $locale = null): void;
 
-    public function getFirm(string $locale = null): string;
+    public function getFirm(string $locale = null): ?string;
 
     public function setI18nFirm(array $firm): void;
 
@@ -40,7 +40,7 @@ interface PersonInterface
 
     public function setPost(string $post, string $locale = null): void;
 
-    public function getPost(string $locale = null): string;
+    public function getPost(string $locale = null): ?string;
 
     public function setI18nPost(array $post): void;
 
@@ -48,7 +48,7 @@ interface PersonInterface
 
     public function setBio(string $bio, string $locale = null): void;
 
-    public function getBio(string $locale = null): string;
+    public function getBio(string $locale = null): ?string;
 
     public function setI18nBio(array $bio): void;
 

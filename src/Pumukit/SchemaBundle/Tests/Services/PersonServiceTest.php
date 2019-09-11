@@ -179,15 +179,15 @@ class PersonServiceTest extends WebTestCase
         $this->dm->persist($mm3);
         $this->dm->flush();
 
-        $this->assertNull($this->personService->findPersonById($personJohn->getId())->getEmail());
-        $this->assertNull($this->personService->findPersonById($personBob->getId())->getEmail());
-        $this->assertNull($mm1->getPersonWithRole($personJohn, $roleActor)->getEmail());
-        $this->assertNull($mm1->getPersonWithRole($personJohn, $rolePresenter)->getEmail());
-        $this->assertNull($mm1->getPersonWithRole($personBob, $roleActor)->getEmail());
-        $this->assertNull($mm2->getPersonWithRole($personJohn, $roleActor)->getEmail());
-        $this->assertNull($mm2->getPersonWithRole($personBob, $rolePresenter)->getEmail());
-        $this->assertNull($mm2->getPersonWithRole($personJohn, $rolePresenter)->getEmail());
-        $this->assertNull($mm3->getPersonWithRole($personJohn, $roleActor)->getEmail());
+        $this->assertEquals($this->personService->findPersonById($personJohn->getId())->getEmail(), '');
+        $this->assertEquals($this->personService->findPersonById($personBob->getId())->getEmail(), '');
+        $this->assertEquals($mm1->getPersonWithRole($personJohn, $roleActor)->getEmail(), '');
+        $this->assertEquals($mm1->getPersonWithRole($personJohn, $rolePresenter)->getEmail(), '');
+        $this->assertEquals($mm1->getPersonWithRole($personBob, $roleActor)->getEmail(), '');
+        $this->assertEquals($mm2->getPersonWithRole($personJohn, $roleActor)->getEmail(), '');
+        $this->assertEquals($mm2->getPersonWithRole($personBob, $rolePresenter)->getEmail(), '');
+        $this->assertEquals($mm2->getPersonWithRole($personJohn, $rolePresenter)->getEmail(), '');
+        $this->assertEquals($mm3->getPersonWithRole($personJohn, $roleActor)->getEmail(), '');
 
         $emailJohn = 'johnsmith@mail.com';
         $personJohn->setEmail($emailJohn);
@@ -195,12 +195,12 @@ class PersonServiceTest extends WebTestCase
         $personJohn = $this->personService->updatePerson($personJohn);
 
         $this->assertEquals($emailJohn, $this->personService->findPersonById($personJohn->getId())->getEmail());
-        $this->assertNull($this->personService->findPersonById($personBob->getId())->getEmail());
+        $this->assertEquals($this->personService->findPersonById($personBob->getId())->getEmail(), '');
         $this->assertEquals($emailJohn, $mm1->getPersonWithRole($personJohn, $roleActor)->getEmail());
         $this->assertEquals($emailJohn, $mm1->getPersonWithRole($personJohn, $rolePresenter)->getEmail());
-        $this->assertNull($mm1->getPersonWithRole($personBob, $roleActor)->getEmail());
+        $this->assertEquals($mm1->getPersonWithRole($personBob, $roleActor)->getEmail(), '');
         $this->assertEquals($emailJohn, $mm2->getPersonWithRole($personJohn, $roleActor)->getEmail());
-        $this->assertNull($mm2->getPersonWithRole($personBob, $rolePresenter)->getEmail());
+        $this->assertEquals($mm2->getPersonWithRole($personBob, $rolePresenter)->getEmail(), '');
         $this->assertEquals($emailJohn, $mm2->getPersonWithRole($personJohn, $rolePresenter)->getEmail());
         $this->assertEquals($emailJohn, $mm3->getPersonWithRole($personJohn, $roleActor)->getEmail());
 

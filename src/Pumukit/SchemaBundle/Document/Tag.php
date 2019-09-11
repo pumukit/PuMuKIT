@@ -159,7 +159,7 @@ class Tag implements TagInterface
         $this->label[$locale] = $label;
     }
 
-    public function getLabel(string $locale = null): string
+    public function getLabel(string $locale = null): ?string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -171,7 +171,7 @@ class Tag implements TagInterface
         return $this->label[$locale];
     }
 
-    public function getI18nTitle(): array
+    public function getI18nTitle(): ?array
     {
         return $this->title;
     }
@@ -189,7 +189,7 @@ class Tag implements TagInterface
         $this->description[$locale] = $description;
     }
 
-    public function getDescription(string $locale = null): string
+    public function getDescription(string $locale = null): ?string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -206,7 +206,7 @@ class Tag implements TagInterface
         $this->description = $description;
     }
 
-    public function getI18nDescription(): array
+    public function getI18nDescription(): ?array
     {
         return $this->description;
     }
@@ -216,7 +216,7 @@ class Tag implements TagInterface
         $this->slug = $slug;
     }
 
-    public function getSlug(): string
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
@@ -236,7 +236,7 @@ class Tag implements TagInterface
         $this->metatag = $metaTag;
     }
 
-    public function getMetatag(): bool
+    public function getMetatag(): ?bool
     {
         return $this->metatag;
     }
@@ -261,7 +261,7 @@ class Tag implements TagInterface
         $this->created = $created;
     }
 
-    public function getCreated(): \DateTime
+    public function getCreated(): ?\DateTime
     {
         return $this->created;
     }
@@ -271,7 +271,7 @@ class Tag implements TagInterface
         $this->updated = $updated;
     }
 
-    public function getUpdated(): \DateTime
+    public function getUpdated(): ?\DateTime
     {
         return $this->updated;
     }
@@ -284,7 +284,7 @@ class Tag implements TagInterface
         $this->locale = $locale;
     }
 
-    public function getLocale(): string
+    public function getLocale(): ?string
     {
         return $this->locale;
     }
@@ -305,19 +305,14 @@ class Tag implements TagInterface
         --$this->number_multimedia_objects;
     }
 
-    public function getNumberMultimediaObjects(): string
+    public function getNumberMultimediaObjects(): ?string
     {
         return $this->number_multimedia_objects;
     }
 
-    /**
-     * Set number_multimedia_objects.
-     *
-     * @param mixed $count
-     */
-    public function setNumberMultimediaObjects($count): string
+    public function setNumberMultimediaObjects($count): void
     {
-        return $this->number_multimedia_objects = $count;
+        $this->number_multimedia_objects = $count;
     }
 
     public function setParent(Tag $parent = null): void
@@ -337,7 +332,7 @@ class Tag implements TagInterface
         return $this->children;
     }
 
-    public function getNumberOfChildren(): int
+    public function getNumberOfChildren(): ?int
     {
         return $this->number_children;
     }
@@ -347,12 +342,12 @@ class Tag implements TagInterface
         $this->number_children = $count;
     }
 
-    public function getLevel(): string
+    public function getLevel(): ?string
     {
         return $this->level;
     }
 
-    public function getPath(): string
+    public function getPath(): ?string
     {
         return $this->path;
     }
