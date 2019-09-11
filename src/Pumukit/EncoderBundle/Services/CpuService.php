@@ -30,7 +30,7 @@ class CpuService
     /**
      * Get available free cpus.
      *
-     * @param null|mixed $profile
+     * @param mixed|null $profile
      */
     public function getFreeCpu($profile = null)
     {

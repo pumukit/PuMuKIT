@@ -96,7 +96,7 @@ class PlaceController extends Controller implements NewAdminControllerInterface
 
     /**
      * @param Request     $request
-     * @param null|string $id
+     * @param string|null $id
      *
      * @return array|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *

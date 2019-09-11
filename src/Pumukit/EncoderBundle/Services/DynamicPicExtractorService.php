@@ -133,7 +133,7 @@ class DynamicPicExtractorService
      * @param MultimediaObject $multimediaObject
      * @param string           $fileUrl
      *
-     * @return null|mixed
+     * @return mixed|null
      */
     private function checkFileExists(MultimediaObject $multimediaObject, $fileUrl)
     {

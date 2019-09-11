@@ -351,7 +351,7 @@ class Builder implements ContainerAwareInterface
 
     /**
      * @param ItemInterface         $item
-     * @param null|KnpItemInterface $tools
+     * @param KnpItemInterface|null $tools
      */
     protected function addDynamicToolMenu(ItemInterface $item, $tools)
     {

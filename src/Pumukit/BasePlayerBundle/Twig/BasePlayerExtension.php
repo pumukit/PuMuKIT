@@ -78,7 +78,7 @@ class BasePlayerExtension extends \Twig_Extension
     /**
      * @param MultimediaObject $multimediaObject
      *
-     * @return null|\Pumukit\SchemaBundle\Document\Track
+     * @return \Pumukit\SchemaBundle\Document\Track|null
      */
     public function getFirstPublicTrackFilter(MultimediaObject $multimediaObject)
     {

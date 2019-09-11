@@ -77,7 +77,7 @@ class WizardService
      * @param TagService                    $tagService
      * @param string                        $basePath
      * @param array                         $locales
-     * @param null|bool                     $inboxDepth
+     * @param bool|null                     $inboxDepth
      */
     public function __construct(
         DocumentManager $documentManager,
@@ -111,7 +111,7 @@ class WizardService
      *
      * @throws \Exception
      *
-     * @return null|mixed|object|Series
+     * @return mixed|object|Series|null
      */
     public function uploadMultipleFiles($user, $files, $seriesData, $options = [])
     {
@@ -144,7 +144,7 @@ class WizardService
      *
      * @throws \Exception
      *
-     * @return null|mixed|object|Series
+     * @return mixed|object|Series|null
      */
     public function getSeries(array $seriesData = [])
     {
@@ -165,7 +165,7 @@ class WizardService
      *
      * @throws \Exception
      *
-     * @return null|mixed|Series
+     * @return mixed|Series|null
      */
     public function createSeries(array $seriesData = [])
     {

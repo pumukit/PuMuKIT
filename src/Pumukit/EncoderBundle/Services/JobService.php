@@ -145,7 +145,7 @@ class JobService
      * @param string           $profile
      * @param int              $priority
      * @param MultimediaObject $multimediaObject
-     * @param null|string      $language
+     * @param string|null      $language
      * @param array            $description
      * @param array            $initVars
      *
@@ -414,7 +414,7 @@ class JobService
     /**
      * Exec next job.
      *
-     * @return null|mixed
+     * @return mixed|null
      */
     public function executeNextJob()
     {
@@ -709,7 +709,7 @@ class JobService
      * @param string           $pathFile
      * @param string           $profileName
      * @param MultimediaObject $multimediaObject
-     * @param null|string      $language
+     * @param string|null      $language
      * @param array            $description
      *
      * @throws \Exception
@@ -738,9 +738,9 @@ class JobService
      * @param MultimediaObject $multimediaObject
      * @param string           $pathEnd
      * @param string           $profileName
-     * @param null|string      $language
+     * @param string|null      $language
      * @param array            $description
-     * @param null|mixed       $pathFile
+     * @param mixed|null       $pathFile
      *
      * @return Track
      */
@@ -913,7 +913,7 @@ class JobService
      *
      * @throws \Exception
      *
-     * @return null|mixed
+     * @return mixed|null
      */
     private function getProfile(Job $job)
     {
@@ -955,7 +955,7 @@ class JobService
      *
      * @param bool       $success
      * @param Job        $job
-     * @param null|Track $track
+     * @param Track|null $track
      *
      * @throws \Exception
      */
@@ -999,7 +999,7 @@ class JobService
      *
      * Gets the email of the user who executed the job, if no session get the user info from other jobs of the same mm.
      *
-     * @param null|Job $job
+     * @param Job|null $job
      */
     private function getUserEmail(Job $job = null)
     {

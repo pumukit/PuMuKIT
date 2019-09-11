@@ -43,7 +43,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @param Series $series
      *
-     * @return null|array|object
+     * @return array|object|null
      */
     public function findPrototype(Series $series)
     {
@@ -98,7 +98,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @param string $picId
      *
-     * @return null|array|object
+     * @return array|object|null
      */
     public function findByPicId($picId)
     {
@@ -160,7 +160,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @param string $trackId
      *
-     * @return null|array|object
+     * @return array|object|null
      */
     public function findOneByTrackId($trackId)
     {
@@ -606,7 +606,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @param Tag $tag
      *
-     * @return null|array|object
+     * @return array|object|null
      */
     public function findOneWithTag(Tag $tag)
     {
@@ -658,7 +658,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @param array $tags
      *
-     * @return null|array|object
+     * @return array|object|null
      */
     public function findOneWithAllTags($tags)
     {
@@ -692,7 +692,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @param Tag $tag
      *
-     * @return null|array|object
+     * @return array|object|null
      */
     public function findOneWithoutTag(Tag $tag)
     {
@@ -741,7 +741,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @param Tag $tag
      *
-     * @return null|array|object
+     * @return array|object|null
      */
     public function findOneSeriesFieldWithTag(Tag $tag)
     {
@@ -781,7 +781,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @param array $tags
      *
-     * @return null|array|object
+     * @return array|object|null
      */
     public function findOneSeriesFieldWithAllTags($tags)
     {
@@ -977,8 +977,8 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @param array    $criteria Query criteria
      * @param array    $sort     Sort array for Cursor::sort()
-     * @param null|int $limit    Limit for Cursor::limit()
-     * @param null|int $skip     Skip for Cursor::skip()
+     * @param int|null $limit    Limit for Cursor::limit()
+     * @param int|null $skip     Skip for Cursor::skip()
      *
      * @return array
      */
@@ -996,7 +996,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @throws \Doctrine\ODM\MongoDB\LockException
      *
-     * @return null|object
+     * @return object|null
      */
     public function findStandardOneBy(array $criteria)
     {
@@ -1574,7 +1574,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @deprecated
      * Use findCurrentSessions of EmbeddedEventSessionService
      *
-     * @param null|\MongoId|string $multimediaObjectId
+     * @param \MongoId|string|null $multimediaObjectId
      * @param int                  $limit
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException

@@ -509,7 +509,7 @@ class Series
      * Set title.
      *
      * @param string      $title
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setTitle($title, $locale = null)
     {
@@ -522,7 +522,7 @@ class Series
     /**
      * Get title.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */
@@ -562,7 +562,7 @@ class Series
      * Set subtitle.
      *
      * @param string      $subtitle
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setSubtitle($subtitle, $locale = null)
     {
@@ -575,7 +575,7 @@ class Series
     /**
      * Get subtitle.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */
@@ -615,7 +615,7 @@ class Series
      * Set description.
      *
      * @param string      $description
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setDescription($description, $locale = null)
     {
@@ -628,7 +628,7 @@ class Series
     /**
      * Get description.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */
@@ -688,7 +688,7 @@ class Series
      * Set header.
      *
      * @param string      $header
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setHeader($header, $locale = null)
     {
@@ -701,7 +701,7 @@ class Series
     /**
      * Get header.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */
@@ -741,7 +741,7 @@ class Series
      * Set footer.
      *
      * @param string      $footer
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setFooter($footer, $locale = null)
     {
@@ -754,7 +754,7 @@ class Series
     /**
      * Get footer.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */
@@ -842,7 +842,7 @@ class Series
      * Set line2.
      *
      * @param string      $line2
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setLine2($line2, $locale = null)
     {
@@ -855,7 +855,7 @@ class Series
     /**
      * Get line2.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */

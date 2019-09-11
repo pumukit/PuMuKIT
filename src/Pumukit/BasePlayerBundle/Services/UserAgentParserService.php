@@ -66,7 +66,7 @@ class UserAgentParserService
      * @param string $userAgent
      * @param string $webExplorer
      *
-     * @return null|float
+     * @return float|null
      */
     public function getVersion($userAgent, $webExplorer)
     {

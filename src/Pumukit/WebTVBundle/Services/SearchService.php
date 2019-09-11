@@ -45,7 +45,7 @@ class SearchService
     /**
      * @throws \Exception
      *
-     * @return null|object|Tag
+     * @return object|Tag|null
      */
     public function getParentTag()
     {
@@ -63,7 +63,7 @@ class SearchService
     }
 
     /**
-     * @return null|object|Tag
+     * @return object|Tag|null
      */
     public function getOptionalParentTag()
     {
@@ -244,8 +244,8 @@ class SearchService
 
     /**
      * @param Builder    $queryBuilder
-     * @param null|array $tagsFound
-     * @param null|Tag   $blockedTag
+     * @param array|null $tagsFound
+     * @param Tag|null   $blockedTag
      * @param bool       $useTagAsGeneral
      *
      * @throws \MongoException

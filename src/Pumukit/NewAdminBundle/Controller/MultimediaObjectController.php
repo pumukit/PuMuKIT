@@ -1454,7 +1454,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
      * Get the view list of multimedia objects
      * belonging to a series.
      *
-     * @param null|mixed $newMultimediaObjectId
+     * @param mixed|null $newMultimediaObjectId
      */
     protected function getListMultimediaObjects(Series $series, $newMultimediaObjectId = null)
     {

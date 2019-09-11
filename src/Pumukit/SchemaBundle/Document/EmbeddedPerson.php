@@ -207,7 +207,7 @@ class EmbeddedPerson
      * Set honorific.
      *
      * @param string      $honorific
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setHonorific($honorific, $locale = null)
     {
@@ -220,7 +220,7 @@ class EmbeddedPerson
     /**
      * Get honorific.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */
@@ -256,7 +256,7 @@ class EmbeddedPerson
      * Set firm.
      *
      * @param string      $firm
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setFirm($firm, $locale = null)
     {
@@ -269,7 +269,7 @@ class EmbeddedPerson
     /**
      * Get firm.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */
@@ -305,7 +305,7 @@ class EmbeddedPerson
      * Set post.
      *
      * @param string      $post
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setPost($post, $locale = null)
     {
@@ -318,7 +318,7 @@ class EmbeddedPerson
     /**
      * Get post.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */
@@ -354,7 +354,7 @@ class EmbeddedPerson
      * Set bio.
      *
      * @param string      $bio
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setBio($bio, $locale = null)
     {
@@ -367,7 +367,7 @@ class EmbeddedPerson
     /**
      * Get bio.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */

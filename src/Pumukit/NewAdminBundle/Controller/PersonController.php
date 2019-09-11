@@ -670,7 +670,7 @@ class PersonController extends AdminController implements NewAdminControllerInte
     /**
      * Get sorting for person.
      *
-     * @param null|mixed $session_namespace
+     * @param mixed|null $session_namespace
      */
     public function getSorting(Request $request = null, $session_namespace = null)
     {
@@ -691,7 +691,7 @@ class PersonController extends AdminController implements NewAdminControllerInte
      * Gets the list of resources according to a criteria.
      *
      * @param mixed      $criteria
-     * @param null|mixed $selectedPersonId
+     * @param mixed|null $selectedPersonId
      */
     public function getResources(Request $request, $criteria, $selectedPersonId = null)
     {

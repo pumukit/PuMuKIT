@@ -520,7 +520,7 @@ class Track extends Element
     /**
      * Return the profiles used to generate the track.
      *
-     * @return null|string
+     * @return string|null
      */
     public function getProfileName()
     {

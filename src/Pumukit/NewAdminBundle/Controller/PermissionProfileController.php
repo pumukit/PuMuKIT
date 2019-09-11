@@ -139,7 +139,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
     /**
      * Overwrite to get form with translations.
      *
-     * @param null|object $permissionProfile
+     * @param object|null $permissionProfile
      * @param string      $locale
      *
      * @return \Symfony\Component\Form\Form|\Symfony\Component\Form\FormInterface

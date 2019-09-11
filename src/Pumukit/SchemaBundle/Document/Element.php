@@ -14,7 +14,7 @@ class Element
     use Traits\Properties;
 
     /**
-     * @var null|\MongoId|string
+     * @var \MongoId|string|null
      *
      * @MongoDB\Id
      */
@@ -106,7 +106,7 @@ class Element
     /**
      * Get id.
      *
-     * @return null|\MongoId|string
+     * @return \MongoId|string|null
      */
     public function getId()
     {
@@ -335,7 +335,7 @@ class Element
      * Set description.
      *
      * @param string      $description
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setDescription($description, $locale = null)
     {
@@ -348,7 +348,7 @@ class Element
     /**
      * Get description.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */

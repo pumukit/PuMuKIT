@@ -21,7 +21,7 @@ class Broadcast
     const BROADCAST_TYPE_COR = 'corporative';
 
     /**
-     * @var null|\MongoId|string
+     * @var \MongoId|string|null
      *
      * @MongoDB\Id
      */
@@ -98,7 +98,7 @@ class Broadcast
     /**
      * Get id.
      *
-     * @return null|\MongoId|string
+     * @return \MongoId|string|null
      */
     public function getId()
     {
@@ -245,7 +245,7 @@ class Broadcast
      * Set description.
      *
      * @param string      $description
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setDescription($description, $locale = null)
     {
@@ -258,7 +258,7 @@ class Broadcast
     /**
      * Get description.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */

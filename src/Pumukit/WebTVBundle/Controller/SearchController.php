@@ -84,7 +84,7 @@ class SearchController extends Controller implements WebTVControllerInterface
      * @Template("PumukitWebTVBundle:Search:template.html.twig")
      *
      * @param Request  $request
-     * @param null|Tag $blockedTag
+     * @param Tag|null $blockedTag
      * @param bool     $useTagAsGeneral
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException

@@ -86,7 +86,7 @@ class SeriesType
      * Set name.
      *
      * @param string      $name
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setName($name, $locale = null)
     {
@@ -99,7 +99,7 @@ class SeriesType
     /**
      * Get name.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */
@@ -139,7 +139,7 @@ class SeriesType
      * Set description.
      *
      * @param string      $description
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setDescription($description, $locale = null)
     {
@@ -152,7 +152,7 @@ class SeriesType
     /**
      * Get description.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */

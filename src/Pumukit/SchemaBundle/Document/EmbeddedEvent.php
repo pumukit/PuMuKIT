@@ -148,7 +148,7 @@ class EmbeddedEvent
      * Set name.
      *
      * @param string      $name
-     * @param null|string $locale
+     * @param string|null $locale
      */
     public function setName($name, $locale = null)
     {
@@ -161,7 +161,7 @@ class EmbeddedEvent
     /**
      * Get name.
      *
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */
@@ -198,7 +198,7 @@ class EmbeddedEvent
     }
 
     /**
-     * @param null|string $locale
+     * @param string|null $locale
      *
      * @return string
      */
@@ -445,7 +445,7 @@ class EmbeddedEvent
      * Set already held message.
      *
      * @param string     $message
-     * @param null|mixed $locale
+     * @param mixed|null $locale
      */
     public function setAlreadyHeldMessage($message, $locale = null)
     {
@@ -458,7 +458,7 @@ class EmbeddedEvent
     /**
      * Get Already Held Message.
      *
-     * @param null|mixed $locale
+     * @param mixed|null $locale
      *
      * @return string
      */
@@ -498,7 +498,7 @@ class EmbeddedEvent
      * Set Not Yet held message.
      *
      * @param string     $message
-     * @param null|mixed $locale
+     * @param mixed|null $locale
      */
     public function setNotYetHeldMessage($message, $locale = null)
     {
@@ -511,7 +511,7 @@ class EmbeddedEvent
     /**
      * Get Not Yet Held Message.
      *
-     * @param null|mixed $locale
+     * @param mixed|null $locale
      *
      * @return string
      */

@@ -145,7 +145,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
      * List events.
      *
      * @param Request     $request
-     * @param null|string $type
+     * @param string|null $type
      *
      * @return array
      *
@@ -807,7 +807,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
      * @Route("change/series/{multimediaObject}", name="pumukitnewadmin_live_event_change_series")
      * @Template("PumukitNewAdminBundle:LiveEvent:changeSeries.html.twig")
      *
-     * @param null|mixed $multimediaObject
+     * @param mixed|null $multimediaObject
      *
      * @return array
      */

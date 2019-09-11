@@ -52,8 +52,8 @@ class AdminFilter extends BsonFilter
      * Query in MongoDB:
      * db.Series.find({ "_id": { "$in": [ ObjectId("__id_1__"), ObjectId("__id_2__")... ] } });
      *
-     * @param null|string $personId
-     * @param null|string $roleCode
+     * @param string|null $personId
+     * @param string|null $roleCode
      * @param array       $groups
      *
      * @return array
