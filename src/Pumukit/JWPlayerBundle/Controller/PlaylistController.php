@@ -25,7 +25,6 @@ class PlaylistController extends BasePlaylistController
         $playlistService = $this->get('pumukit_baseplayer.seriesplaylist');
         /** @var DocumentManager */
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-
         if (!$series->isPlaylist()) {
             $criteria = [
                 'type' => ['$ne' => MultimediaObject::TYPE_LIVE],

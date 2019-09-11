@@ -2,7 +2,7 @@
 
 {% block body_base %}
     {% if track %}
-        {% set captions = captions(multimediaObject) %}
+        {% set captions = captions(object) %}
         {% set captions_block %}
             {% if captions is not empty %}
                 tracks: [
@@ -24,20 +24,20 @@
                 playlist: [{
                     file: "{{ absolute_url(intro) }}",
                     {% if 'true' != autostart %}
-                    image: "{{ multimediaObject|first_url_pic(true) }}",
+                    image: "{{ object|first_url_pic(true) }}",
                     {% endif %}
                 }, {
                     file: "{{ absolute_url(track_url(track)) }}",
                     {{ captions_block }}
                     {% if ('true' != autostart) or track.isOnlyAudio() %}
-                    image: "{{ multimediaObject|first_url_pic(true) }}",
+                    image: "{{ object|first_url_pic(true) }}",
                     {% endif %}
                 }],
                 {% else %}
                 file: "{{ absolute_url(track_url(track)) }}",
                 {{ captions_block }}
                 {% if (('true' != autostart) or track.isOnlyAudio()) %}
-                image: "{{ multimediaObject|first_url_pic(true) }}",
+                image: "{{ object|first_url_pic(true) }}",
                 {% endif %}
                 {% endif %}
                 startparam: "start",
@@ -64,8 +64,7 @@
                 height: 100%;
                 text-align: center;
                 vertical-align: middle;
-                display: table-cell;
-                "
+                display: table-cell;"
              id="player1"
         >
             No track.
