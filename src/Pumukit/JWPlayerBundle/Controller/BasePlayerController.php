@@ -42,7 +42,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
 
         return [
             'autostart' => $request->query->get('autostart', 'false'),
-            'intro' => $basePlayerIntroService->getVideoIntroduction($multimediaObject, $request->query->getBoolean('intro')),
+            'intro' => $intro,
             'multimediaObject' => $multimediaObject,
             'object' => $multimediaObject,
             'when_dispatch_view_event' => $whenDispatchViewEvent,
