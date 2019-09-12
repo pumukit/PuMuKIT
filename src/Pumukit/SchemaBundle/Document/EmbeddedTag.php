@@ -5,12 +5,12 @@ namespace Pumukit\SchemaBundle\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * Pumukit\SchemaBundle\Document\Tag.
- *
  * @MongoDB\EmbeddedDocument()
  */
 class EmbeddedTag implements TagInterface
 {
+    use Traits\Tag;
+
     /**
      * @MongoDB\Id
      */
@@ -245,44 +245,6 @@ class EmbeddedTag implements TagInterface
         return $this->path;
     }
 
-    public function isChildOf(TagInterface $tag): bool
-    {
-        if ($this->isDescendantOf($tag)) {
-            $suffixPath = substr($this->getPath(), strlen($tag->getPath()), strlen($this->getPath()));
-            if (1 === substr_count($suffixPath, '|')) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public function isDescendantOf(TagInterface $tag): bool
-    {
-        if ($tag->getCod() === $this->getCod()) {
-            return false;
-        }
-
-        return 0 === strpos($this->getPath(), $tag->getPath());
-    }
-
-    public function equalsOrDescendantOf(TagInterface $tag): bool
-    {
-        return 0 === strpos($this->getPath(), $tag->getPath());
-    }
-
-    public function isDescendantOfByCod(string $tagCod): bool
-    {
-        if ($tagCod === $this->getCod()) {
-            return false;
-        }
-        if (0 === strpos($this->getPath(), sprintf('%s|', $tagCod))) {
-            return true;
-        }
-
-        return false !== strpos($this->getPath(), sprintf('|%s|', $tagCod));
-    }
-
     public static function getEmbeddedTag($embedTags, $tag): EmbeddedTag
     {
         if ($tag instanceof self) {
@@ -294,10 +256,5 @@ class EmbeddedTag implements TagInterface
         }
 
         throw new \InvalidArgumentException('Only Tag or EmbeddedTag are allowed.');
-    }
-
-    public function isPubTag(): bool
-    {
-        return $this->isDescendantOfByCod('PUBCHANNELS') || $this->isDescendantOfByCod('PUBDECISIONS');
     }
 }

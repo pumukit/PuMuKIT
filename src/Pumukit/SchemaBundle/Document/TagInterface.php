@@ -37,14 +37,4 @@ interface TagInterface
     public function getPath(): ?string;
 
     public function getLevel(): ?string;
-
-    public function isChildOf(TagInterface $tag): bool;
-
-    public function isDescendantOf(TagInterface $tag): bool;
-
-    public function equalsOrDescendantOf(TagInterface $tag): bool;
-
-    public function isDescendantOfByCod(string $tagCod): bool;
-
-    public function isPubTag(): bool;
 }
