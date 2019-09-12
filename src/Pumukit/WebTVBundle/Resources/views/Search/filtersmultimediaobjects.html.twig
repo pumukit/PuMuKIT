@@ -74,6 +74,9 @@
             <option value="audio" {% if app.request.query.get('type') == "audio" %} selected="selected" {% endif %}>
                 {% trans %}Audio{% endtrans %}
             </option>
+            <option value="external" {% if app.request.query.get('type') == "external" %} selected="selected" {% endif %}>
+                {% trans %}External player{% endtrans %}
+            </option>
         </select>
     </div>
     <div class="form-group col-sm-6 col-md-4 col-lg-3">
