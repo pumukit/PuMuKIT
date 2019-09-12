@@ -130,10 +130,24 @@ class SearchService
      */
     public function addTypeQueryBuilder(Builder $queryBuilder, $typeFound)
     {
-        if ('' != $typeFound) {
-            $queryBuilder->field('type')->equals(
-                ('audio' == $typeFound) ? Multimediaobject::TYPE_AUDIO : Multimediaobject::TYPE_VIDEO
-            );
+        $type = '';
+        switch ($typeFound) {
+            case 'audio':
+                $type = MultimediaObject::TYPE_AUDIO;
+
+                break;
+            case 'video':
+                $type = MultimediaObject::TYPE_VIDEO;
+
+                break;
+            case 'external':
+                $type = MultimediaObject::TYPE_EXTERNAL;
+
+                break;
+            default:
+        }
+        if ('' !== $type) {
+            $queryBuilder->field('type')->equals($type);
         }
 
         return $queryBuilder;
