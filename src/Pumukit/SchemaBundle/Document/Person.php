@@ -72,7 +72,7 @@ class Person implements PersonInterface
     public function __toString(): string
     {
         if ($this->getName()) {
-            return $this->getName();
+            return $this->getName() ?? '';
         }
 
         return '';
@@ -83,7 +83,7 @@ class Person implements PersonInterface
         return $this->id;
     }
 
-    public function setUser(User $user = null): void
+    public function setUser(?User $user): void
     {
         $this->user = $user;
     }
@@ -93,7 +93,7 @@ class Person implements PersonInterface
         return $this->user;
     }
 
-    public function setName(string $name = null): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
@@ -103,7 +103,7 @@ class Person implements PersonInterface
         return $this->name;
     }
 
-    public function setEmail(string $email = null): void
+    public function setEmail(?string $email): void
     {
         $this->email = $email;
     }
@@ -113,7 +113,7 @@ class Person implements PersonInterface
         return $this->email;
     }
 
-    public function setWeb(string $web = null): void
+    public function setWeb(?string $web): void
     {
         $this->web = $web;
     }
@@ -123,7 +123,7 @@ class Person implements PersonInterface
         return $this->web;
     }
 
-    public function setPhone(string $phone = null): void
+    public function setPhone(?string $phone): void
     {
         $this->phone = $phone;
     }
@@ -133,7 +133,7 @@ class Person implements PersonInterface
         return $this->phone;
     }
 
-    public function setHonorific(string $honorific = null, string $locale = null): void
+    public function setHonorific(?string $honorific, string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -163,7 +163,7 @@ class Person implements PersonInterface
         return $this->honorific;
     }
 
-    public function setFirm(string $firm = null, string $locale = null): void
+    public function setFirm(?string $firm, string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -193,7 +193,7 @@ class Person implements PersonInterface
         return $this->firm;
     }
 
-    public function setPost(string $post = null, string $locale = null): void
+    public function setPost(?string $post, string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -223,7 +223,7 @@ class Person implements PersonInterface
         return $this->post;
     }
 
-    public function setBio(string $bio = null, string $locale = null): void
+    public function setBio(?string $bio, string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
