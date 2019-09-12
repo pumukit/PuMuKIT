@@ -20,25 +20,25 @@ class EmbeddedPerson implements PersonInterface
     /**
      * @MongoDB\Field(type="string")
      */
-    protected $name = '';
+    protected $name;
 
     /**
      * @MongoDB\Field(type="string")
      * @Assert\Email
      * //@Assert\NotEmpty
      */
-    protected $email = '';
+    protected $email;
 
     /**
      * @MongoDB\Field(type="string")
      * //@Assert\Url('http', 'https', 'ftp')
      */
-    protected $web = '';
+    protected $web;
 
     /**
      * @MongoDB\Field(type="string")
      */
-    protected $phone = '';
+    protected $phone;
 
     /**
      * @MongoDB\Field(type="raw")
@@ -82,7 +82,11 @@ class EmbeddedPerson implements PersonInterface
 
     public function __toString(): string
     {
-        return $this->getName();
+        if ($this->getName()) {
+            return $this->getName();
+        }
+
+        return '';
     }
 
     public function getId()
@@ -90,17 +94,17 @@ class EmbeddedPerson implements PersonInterface
         return $this->id;
     }
 
-    public function setName(string $name): void
+    public function setName(string $name = null): void
     {
         $this->name = $name;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setEmail(string $email): void
+    public function setEmail(string $email = null): void
     {
         $this->email = $email;
     }
@@ -110,7 +114,7 @@ class EmbeddedPerson implements PersonInterface
         return $this->email;
     }
 
-    public function setWeb(string $web): void
+    public function setWeb(string $web = null): void
     {
         $this->web = $web;
     }
@@ -120,7 +124,7 @@ class EmbeddedPerson implements PersonInterface
         return $this->web;
     }
 
-    public function setPhone(string $phone): void
+    public function setPhone(string $phone = null): void
     {
         $this->phone = $phone;
     }
@@ -130,7 +134,7 @@ class EmbeddedPerson implements PersonInterface
         return $this->phone;
     }
 
-    public function setHonorific(string $honorific, string $locale = null): void
+    public function setHonorific(string $honorific = null, string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -160,7 +164,7 @@ class EmbeddedPerson implements PersonInterface
         return $this->honorific;
     }
 
-    public function setFirm(string $firm, string $locale = null): void
+    public function setFirm(string $firm = null, string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -190,7 +194,7 @@ class EmbeddedPerson implements PersonInterface
         return $this->firm;
     }
 
-    public function setPost(string $post, string $locale = null): void
+    public function setPost(string $post = null, string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -220,7 +224,7 @@ class EmbeddedPerson implements PersonInterface
         return $this->post;
     }
 
-    public function setBio(string $bio, string $locale = null): void
+    public function setBio(string $bio = null, string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
