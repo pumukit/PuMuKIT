@@ -1133,10 +1133,12 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
-            $dm = $dm = $this->get('doctrine_mongodb.odm.document_manager');
+            $dm = $this->get('doctrine_mongodb.odm.document_manager');
             $data['url'] = urldecode($data['url']);
             $multimediaObject->setProperty('externalplayer', $data['url']);
             $dm->flush();
+
+            $this->get('pumukitschema.multimediaobject_dispatcher')->dispatchUpdate($multimediaObject);
 
             return $this->forward('PumukitNewAdminBundle:Track:list', ['multimediaObject' => $multimediaObject]);
         }
@@ -1147,13 +1149,15 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     /**
      * List the external player properties of a multimedia object in a modal.
      *
-     * @Security("is_granted('ROLE_SUPER_ADMIN')")
+     * @Security("is_granted('ROLE_ADD_EXTERNAL_PLAYER')")
      */
     public function deleteExternalPropertyAction(MultimediaObject $multimediaObject)
     {
-        $dm = $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $multimediaObject->setProperty('externalplayer', '');
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $multimediaObject->removeProperty('externalplayer');
         $dm->flush();
+
+        $this->get('pumukitschema.multimediaobject_dispatcher')->dispatchUpdate($multimediaObject);
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]));
     }
