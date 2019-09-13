@@ -6,83 +6,61 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Pumukit\SchemaBundle\Document\Person.
- *
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\PersonRepository")
  */
-class Person
+class Person implements PersonInterface
 {
     use Traits\Properties;
 
     /**
-     * @var string|null
-     *
      * @MongoDB\Id
      */
     protected $id;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     protected $name;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      * @Assert\Email
      */
     protected $email;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      * //@Assert\Url('http', 'https', 'ftp')
      */
     protected $web;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     protected $phone;
 
     /**
-     * @var array<string, string>
-     *
      * @MongoDB\Field(type="raw")
      */
     protected $honorific = ['en' => ''];
 
     /**
-     * @var array<string, string>
-     *
      * @MongoDB\Field(type="raw")
      */
     protected $firm = ['en' => ''];
 
     /**
-     * @var array<string, string>
-     *
      * @MongoDB\Field(type="raw")
      */
     protected $post = ['en' => ''];
 
     /**
-     * @var array<string, string>
-     *
      * @MongoDB\Field(type="raw")
      */
     protected $bio = ['en' => ''];
 
     /**
-     * Locale.
-     *
-     * @var string
+     * Used locale to override Translation listener`s locale this is not a mapped field of entity metadata, just a simple property.
      */
     protected $locale = 'en';
 
@@ -91,123 +69,71 @@ class Person
      */
     private $user;
 
-    /**
-     * Get id.
-     *
-     * @return string
-     */
+    public function __toString(): string
+    {
+        if ($this->getName()) {
+            return $this->getName() ?? '';
+        }
+
+        return '';
+    }
+
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set user.
-     *
-     * @param User $user
-     */
-    public function setUser(User $user = null)
+    public function setUser(?User $user): void
     {
         $this->user = $user;
     }
 
-    /**
-     * Get user.
-     *
-     * @return User
-     */
-    public function getUser()
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     */
-    public function setName($name)
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * Set email.
-     *
-     * @param string $email
-     */
-    public function setEmail($email)
+    public function setEmail(?string $email): void
     {
         $this->email = $email;
     }
 
-    /**
-     * Get email.
-     *
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    /**
-     * Set web.
-     *
-     * @param string $web
-     */
-    public function setWeb($web)
+    public function setWeb(?string $web): void
     {
         $this->web = $web;
     }
 
-    /**
-     * Get web.
-     *
-     * @return string
-     */
-    public function getWeb()
+    public function getWeb(): ?string
     {
         return $this->web;
     }
 
-    /**
-     * Set phone.
-     *
-     * @param string $phone
-     */
-    public function setPhone($phone)
+    public function setPhone(?string $phone): void
     {
         $this->phone = $phone;
     }
 
-    /**
-     * Get phone.
-     *
-     * @return string
-     */
-    public function getPhone()
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
 
-    /**
-     * Set honorific.
-     *
-     * @param string      $honorific
-     * @param string|null $locale
-     */
-    public function setHonorific($honorific, $locale = null)
+    public function setHonorific(?string $honorific, string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -215,14 +141,7 @@ class Person
         $this->honorific[$locale] = $honorific;
     }
 
-    /**
-     * Get honorific.
-     *
-     * @param string|null $locale
-     *
-     * @return string
-     */
-    public function getHonorific($locale = null)
+    public function getHonorific(string $locale = null): ?string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -234,29 +153,17 @@ class Person
         return $this->honorific[$locale];
     }
 
-    /**
-     * Set i18n honorific.
-     */
-    public function setI18nHonorific(array $honorific)
+    public function setI18nHonorific(array $honorific): void
     {
         $this->honorific = $honorific;
     }
 
-    /**
-     * Get i18n honorific.
-     */
-    public function getI18nHonorific()
+    public function getI18nHonorific(): array
     {
         return $this->honorific;
     }
 
-    /**
-     * Set firm.
-     *
-     * @param string      $firm
-     * @param string|null $locale
-     */
-    public function setFirm($firm, $locale = null)
+    public function setFirm(?string $firm, string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -264,14 +171,7 @@ class Person
         $this->firm[$locale] = $firm;
     }
 
-    /**
-     * Get firm.
-     *
-     * @param string|null $locale
-     *
-     * @return string
-     */
-    public function getFirm($locale = null)
+    public function getFirm(string $locale = null): ?string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -283,29 +183,17 @@ class Person
         return $this->firm[$locale];
     }
 
-    /**
-     * Set i18n firm.
-     */
-    public function setI18nFirm(array $firm)
+    public function setI18nFirm(array $firm): void
     {
         $this->firm = $firm;
     }
 
-    /**
-     * Get i18n firm.
-     */
-    public function getI18nFirm()
+    public function getI18nFirm(): array
     {
         return $this->firm;
     }
 
-    /**
-     * Set post.
-     *
-     * @param string      $post
-     * @param string|null $locale
-     */
-    public function setPost($post, $locale = null)
+    public function setPost(?string $post, string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -313,14 +201,7 @@ class Person
         $this->post[$locale] = $post;
     }
 
-    /**
-     * Get post.
-     *
-     * @param string|null $locale
-     *
-     * @return string
-     */
-    public function getPost($locale = null)
+    public function getPost(string $locale = null): ?string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -332,29 +213,17 @@ class Person
         return $this->post[$locale];
     }
 
-    /**
-     * Set i18n post.
-     */
-    public function setI18nPost(array $post)
+    public function setI18nPost(array $post): void
     {
         $this->post = $post;
     }
 
-    /**
-     * Get i18n post.
-     */
-    public function getI18nPost()
+    public function getI18nPost(): array
     {
         return $this->post;
     }
 
-    /**
-     * Set bio.
-     *
-     * @param string      $bio
-     * @param string|null $locale
-     */
-    public function setBio($bio, $locale = null)
+    public function setBio(?string $bio, string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -362,14 +231,7 @@ class Person
         $this->bio[$locale] = $bio;
     }
 
-    /**
-     * Get bio.
-     *
-     * @param string|null $locale
-     *
-     * @return string
-     */
-    public function getBio($locale = null)
+    public function getBio(string $locale = null): ?string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -381,95 +243,49 @@ class Person
         return $this->bio[$locale];
     }
 
-    /**
-     * Set i18n bio.
-     */
-    public function setI18nBio(array $bio)
+    public function setI18nBio(array $bio): void
     {
         $this->bio = $bio;
     }
 
-    /**
-     * Get i18n bio.
-     */
-    public function getI18nBio()
+    public function getI18nBio(): array
     {
         return $this->bio;
     }
 
-    /**
-     * Set locale.
-     *
-     * @param string $locale
-     */
-    public function setLocale($locale)
+    public function setLocale(string $locale): void
     {
         $this->locale = $locale;
     }
 
-    /**
-     * Get locale.
-     *
-     * @return string
-     */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
 
-    /**
-     * Get honorific name.
-     *
-     * Returns person name with his/her honorific
-     *
-     * @return string
-     */
-    public function getHName()
+    public function getHName(): string
     {
         return $this->getHonorific().' '.$this->getName();
     }
 
-    /**
-     * Get Other.
-     *
-     * Returns strings with person position
-     *
-     * @return string
-     */
-    public function getOther()
+    public function getOther(): string
     {
         return $this->getPost().' '.$this->getFirm().' '.$this->getBio();
     }
 
-    /**
-     * Get info.
-     *
-     * Returns strings with person info:
-     * Firm, Post and Bio separated by commas
-     * or without Bio if param is false
-     *
-     * @param bool $withBio
-     *
-     * @return string
-     */
-    public function getInfo($withBio = true)
+    public function getInfo(bool $withBio = true): string
     {
         $aux = $withBio ?
              [$this->getPost(), $this->getFirm(), $this->getBio()] :
              [$this->getPost(), $this->getFirm()];
-        $aux = array_filter($aux, function ($a) {
-            return null !== $a && ('' != $a);
+        $aux = array_filter($aux, static function ($a) {
+            return null !== $a && ('' !== $a);
         });
 
         return implode(', ', $aux);
     }
 
-    /**
-     * Clone Person.
-     *
-     * @return Person
-     */
-    public function cloneResource()
+    public function cloneResource(): PersonInterface
     {
         $aux = clone $this;
         $aux->id = null;

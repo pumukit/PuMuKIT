@@ -5,78 +5,59 @@ namespace Pumukit\SchemaBundle\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * Pumukit\SchemaBundle\Document\Tag.
- *
  * @MongoDB\EmbeddedDocument()
  */
-class EmbeddedTag
+class EmbeddedTag implements TagInterface
 {
+    use Traits\Tag;
+
     /**
      * @MongoDB\Id
      */
     private $id;
 
     /**
-     * @var array<string, string>
-     *
      * @MongoDB\Field(type="raw")
      */
     private $title = ['en' => ''];
 
     /**
-     * @var array<string, string>
-     *
      * @MongoDB\Field(type="raw")
      */
     private $description = ['en' => ''];
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $slug;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      * @MongoDB\Index
      */
     private $cod = '';
 
     /**
-     * @var bool
-     *
      * @MongoDB\Field(type="boolean")
      */
     private $metatag = false;
 
     /**
-     * @var bool
-     *
      * @MongoDB\Field(type="boolean")
      */
     private $display = false;
 
     /**
-     * Used locale to override Translation listener`s locale
-     * this is not a mapped field of entity metadata, just a simple property.
-     *
-     * @var string
+     * Used locale to override Translation listener`s locale this is not a mapped field of entity metadata, just a simple property.
      */
     private $locale = 'en';
 
     /**
-     * @var \DateTime
-     *
      * @MongoDB\Field(type="date")
      */
     private $created;
 
     /**
-     * @var \DateTime
-     *
      * @MongoDB\Field(type="date")
      */
     private $updated;
@@ -91,9 +72,6 @@ class EmbeddedTag
      */
     private $level;
 
-    /**
-     * Construct.
-     */
     public function __construct(Tag $tag)
     {
         if (null !== $tag) {
@@ -103,7 +81,7 @@ class EmbeddedTag
             $this->slug = $tag->getSlug();
             $this->cod = $tag->getCod();
             $this->metatag = $tag->getMetatag();
-            $this->display = $tag->getDisplay();
+            $this->display = $tag->isDisplay();
             $this->locale = $tag->getLocale();
             $this->created = $tag->getCreated();
             $this->updated = $tag->getUpdated();
@@ -112,31 +90,17 @@ class EmbeddedTag
         }
     }
 
-    /**
-     * to string.
-     *
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getTitle();
     }
 
-    /**
-     * Get id.
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set title.
-     *
-     * @param string      $title
-     * @param string|null $locale
-     */
-    public function setTitle($title, $locale = null)
+    public function setTitle(string $title, string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -144,14 +108,7 @@ class EmbeddedTag
         $this->title[$locale] = $title;
     }
 
-    /**
-     * Get title.
-     *
-     * @param string|null $locale
-     *
-     * @return string
-     */
-    public function getTitle($locale = null)
+    public function getTitle(string $locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -163,33 +120,17 @@ class EmbeddedTag
         return $this->title[$locale];
     }
 
-    /**
-     * Get i18n title.
-     *
-     * @return array
-     */
-    public function getI18nTitle()
+    public function getI18nTitle(): array
     {
         return $this->title;
     }
 
-    /**
-     * Set i18n title.
-     *
-     * @param array $title
-     */
-    public function setI18nTitle(array $title)
+    public function setI18nTitle(array $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * Set description.
-     *
-     * @param string      $description
-     * @param string|null $locale
-     */
-    public function setDescription($description, $locale = null)
+    public function setDescription(string $description, string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -197,14 +138,7 @@ class EmbeddedTag
         $this->description[$locale] = $description;
     }
 
-    /**
-     * Get description.
-     *
-     * @param string|null $locale
-     *
-     * @return string
-     */
-    public function getDescription($locale = null)
+    public function getDescription(string $locale = null): ?string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -216,283 +150,111 @@ class EmbeddedTag
         return $this->description[$locale];
     }
 
-    /**
-     * Set i18n description.
-     *
-     * @param array $description
-     */
-    public function setI18nDescription(array $description)
+    public function setI18nDescription(array $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * Get i18n description.
-     *
-     * @return array
-     */
-    public function getI18nDescription()
+    public function getI18nDescription(): ?array
     {
         return $this->description;
     }
 
-    /**
-     * Set slug.
-     *
-     * @param string $slug
-     *
-     * @return string
-     */
-    public function setSlug($slug)
+    public function setSlug(string $slug): void
     {
         $this->slug = $slug;
-
-        return $this->slug;
     }
 
-    /**
-     * Get slug.
-     *
-     * @return string
-     */
-    public function getSlug()
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
 
-    /**
-     * Set cod.
-     *
-     * @param string $cod
-     */
-    public function setCod($cod)
+    public function setCod(string $code): void
     {
-        $this->cod = $cod;
+        $this->cod = $code;
     }
 
-    /**
-     * Get cod.
-     *
-     * @return string
-     */
-    public function getCod()
+    public function getCod(): string
     {
         return $this->cod;
     }
 
-    /**
-     * Set metatag.
-     *
-     * @param bool $metatag
-     */
-    public function setMetatag($metatag)
+    public function setMetatag(bool $metaTag): void
     {
-        $this->metatag = $metatag;
+        $this->metatag = $metaTag;
     }
 
-    /**
-     * Get metatag.
-     *
-     * @return bool
-     */
-    public function getMetatag()
+    public function getMetatag(): ?bool
     {
         return $this->metatag;
     }
 
-    /**
-     * Set display.
-     *
-     * @param bool $display
-     */
-    public function setDisplay($display)
+    public function setDisplay(bool $display): void
     {
         $this->display = $display;
     }
 
-    /**
-     * Get display.
-     *
-     * @return bool
-     */
-    public function getDisplay()
+    public function getDisplay(): bool
     {
         return $this->display;
     }
 
-    /**
-     * Set created.
-     *
-     * @param \DateTime $created
-     *
-     * @return \DateTime
-     */
-    public function setCreated($created)
+    public function isDisplay(): bool
+    {
+        return $this->display;
+    }
+
+    public function setCreated(\DateTime $created): void
     {
         $this->created = $created;
-
-        return $this->created;
     }
 
-    /**
-     * Get created.
-     *
-     * @return \DateTime
-     */
-    public function getCreated()
+    public function getCreated(): ?\DateTime
     {
         return $this->created;
     }
 
-    /**
-     * Set updated.
-     *
-     * @param \DateTime $updated
-     *
-     * @return \DateTime
-     */
-    public function setUpdated($updated)
+    public function setUpdated(\DateTime $updated): void
     {
         $this->updated = $updated;
-
-        return $this->updated;
     }
 
-    /**
-     * Get updated.
-     *
-     * @return \DateTime
-     */
-    public function getUpdated()
+    public function getUpdated(): ?\DateTime
     {
         return $this->updated;
     }
 
-    /**
-     * Set translatable locale.
-     *
-     * @param string $locale
-     */
-    public function setLocale($locale)
+    public function setLocale(string $locale): void
     {
         $this->locale = $locale;
     }
 
-    /**
-     * Get locale.
-     *
-     * @return string
-     */
-    public function getLocale()
+    public function getLocale(): ?string
     {
         return $this->locale;
     }
 
-    /**
-     * Get level.
-     */
-    public function getLevel()
+    public function getLevel(): ?string
     {
         return $this->level;
     }
 
-    /**
-     * Get path.
-     */
-    public function getPath()
+    public function getPath(): ?string
     {
         return $this->path;
     }
 
-    /**
-     * Returns true if given node is children of tag.
-     *
-     * @param EmbeddedTag|Tag $tag
-     *
-     * @return bool
-     */
-    public function isChildOf($tag)
-    {
-        if ($this->isDescendantOf($tag)) {
-            $suffixPath = substr($this->getPath(), strlen($tag->getPath()), strlen($this->getPath()));
-            if (1 === substr_count($suffixPath, '|')) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Returns true if given node is descendant of tag.
-     *
-     * @param EmbeddedTag|Tag $tag
-     *
-     * @return bool
-     */
-    public function isDescendantOf($tag)
-    {
-        if ($tag->getCod() == $this->getCod()) {
-            return false;
-        }
-
-        return substr($this->getPath(), 0, strlen($tag->getPath())) === $tag->getPath();
-    }
-
-    /**
-     * Returns true if given node is descendant of tag or the same.
-     *
-     * @param EmbeddedTag|Tag $tag
-     *
-     * @return bool
-     */
-    public function equalsOrDescendantOf($tag)
-    {
-        return substr($this->getPath(), 0, strlen($tag->getPath())) === $tag->getPath();
-    }
-
-    /**
-     * Returns true if given node cod is descendant of tag.
-     *
-     * @param mixed $tagCod
-     *
-     * @return bool
-     */
-    public function isDescendantOfByCod($tagCod)
-    {
-        if ($tagCod == $this->getCod()) {
-            return false;
-        }
-        if (0 === strpos($this->getPath(), sprintf('%s|', $tagCod))) {
-            return true;
-        }
-
-        return false === strpos($this->getPath(), sprintf('|%s|', $tagCod)) ? false : true;
-    }
-
-    /**
-     * @param mixed           $embedTags
-     * @param EmbeddedTag|Tag $tag
-     *
-     * @return EmbeddedTag
-     */
-    public static function getEmbeddedTag($embedTags, $tag)
+    public static function getEmbeddedTag($embedTags, $tag): EmbeddedTag
     {
         if ($tag instanceof self) {
             return $tag;
         }
+
         if ($tag instanceof Tag) {
             return new self($tag);
         }
 
         throw new \InvalidArgumentException('Only Tag or EmbeddedTag are allowed.');
-    }
-
-    /**
-     * Returns true if the tag is a PUB tag (that appears in the Pub tab in the back-office).
-     */
-    public function isPubTag()
-    {
-        return $this->isDescendantOfByCod('PUBCHANNELS') || $this->isDescendantOfByCod('PUBDECISIONS');
     }
 }
