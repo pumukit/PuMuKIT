@@ -49,23 +49,9 @@ class PumukitExtension extends AbstractExtension
      */
     private $linkService;
 
-    /**
-     * @var MultimediaObjectDurationService
-     */
     private $mmobjDurationService;
 
-    /**
-     * PumukitExtension constructor.
-     *
-     * @param DocumentManager                 $documentManager
-     * @param RequestContext                  $context
-     * @param string                          $defaultPic
-     * @param CaptionService                  $captionService
-     * @param PicService                      $picService
-     * @param LinkService                     $linkService
-     * @param MultimediaObjectDurationService $mmobjDurationService
-     */
-    public function __construct(DocumentManager $documentManager, RequestContext $context, $defaultPic, CaptionService $captionService, PicService $picService, LinkService $linkService, MultimediaObjectDurationService $mmobjDurationService)
+    public function __construct(DocumentManager $documentManager, RequestContext $context, $defaultPic, CaptionService $captionService, PicService $picService, LinkService $linkService, $mmobjDurationService)
     {
         $this->dm = $documentManager;
         $this->context = $context;
