@@ -166,6 +166,9 @@ class User extends BaseUser
         $this->groups->removeElement($group);
     }
 
+    /**
+     * @return ArrayCollection
+     */
     public function getGroups()
     {
         return $this->groups;
