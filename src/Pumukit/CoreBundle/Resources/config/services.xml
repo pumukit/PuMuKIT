@@ -45,5 +45,15 @@
             <argument type="service" id="pumukitschema.person"/>
         </service>
 
+        <service id="custom_authentication_failure_handler" class="Pumukit\CoreBundle\Handler\CustomAuthenticationFailureHandler">
+            <argument type="service" id="router"/>
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+        </service>
+
+        <service id="custom_authentication_success_handler" class="Pumukit\CoreBundle\Handler\CustomAuthenticationSuccessHandler">
+            <argument type="service" id="router"/>
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+        </service>
+
     </services>
 </container>

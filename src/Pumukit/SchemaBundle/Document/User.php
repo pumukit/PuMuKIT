@@ -8,33 +8,36 @@ use FOS\UserBundle\Model\GroupInterface;
 use FOS\UserBundle\Model\User as BaseUser;
 
 /**
- * Pumukit\SchemaBundle\Document\User.
- *
  * @MongoDB\Document
  */
 class User extends BaseUser
 {
     use Traits\Properties;
 
-    const ORIGIN_LOCAL = 'local';
+    public const ORIGIN_LOCAL = 'local';
+    public const MAX_LOGIN_ATTEMPTS = 1;
 
     /**
-     * @var int
-     *
      * @MongoDB\Id(strategy="auto")
      */
     protected $id;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     protected $fullname;
 
     /**
-     * @var string
-     *
+     * @MongoDB\Field(type="int")
+     */
+    protected $loginAttempt = 0;
+
+    /**
+     * @MongoDB\Field(type="date")
+     */
+    protected $lastLoginAttempt;
+
+    /**
      * @MongoDB\Field(type="string")
      */
     protected $origin = self::ORIGIN_LOCAL;
@@ -54,178 +57,148 @@ class User extends BaseUser
      */
     private $person;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->groups = new ArrayCollection();
         parent::__construct();
     }
 
-    /**
-     * Set permission profile.
-     *
-     * @param PermissionProfile $permissionProfile
-     */
-    public function setPermissionProfile(PermissionProfile $permissionProfile)
+    public function setPermissionProfile(PermissionProfile $permissionProfile): void
     {
         $this->permissionProfile = $permissionProfile;
     }
 
-    /**
-     * Get permission profile.
-     *
-     * @return PermissionProfile|null $permissionProfile
-     */
-    public function getPermissionProfile()
+    public function getPermissionProfile(): ?PermissionProfile
     {
         return $this->permissionProfile;
     }
 
-    /**
-     * Set person.
-     *
-     * @param Person $person
-     */
-    public function setPerson(Person $person = null)
+    public function setPerson(Person $person = null): void
     {
         $this->person = $person;
     }
 
-    /**
-     * Get person.
-     *
-     * @return Person|null
-     */
-    public function getPerson()
+    public function getPerson(): ?Person
     {
         return $this->person;
     }
 
-    /**
-     * Set fullname.
-     *
-     * @param string $fullname
-     */
-    public function setFullname($fullname)
+    public function setFullname(string $fullname): void
     {
         $this->fullname = $fullname;
     }
 
-    /**
-     * Get fullname.
-     *
-     * @return string
-     */
-    public function getFullname()
+    public function getFullname(): ?string
     {
         return $this->fullname;
     }
 
-    /**
-     * Set origin.
-     *
-     * @param string $origin
-     */
-    public function setOrigin($origin)
+    public function getLoginAttempt(): int
+    {
+        return $this->loginAttempt;
+    }
+
+    public function addLoginAttempt(): void
+    {
+        if ($this->loginAttempt > self::MAX_LOGIN_ATTEMPTS) {
+            $this->loginAttempt = self::MAX_LOGIN_ATTEMPTS;
+        }
+
+        if (self::MAX_LOGIN_ATTEMPTS === $this->loginAttempt) {
+            $this->setEnabled(false);
+        }
+
+        if ($this->loginAttempt < self::MAX_LOGIN_ATTEMPTS) {
+            ++$this->loginAttempt;
+            $this->setLastLoginAttempt(new \DateTime());
+        }
+    }
+
+    public function canLogin(): bool
+    {
+        return $this->loginAttempt < self::MAX_LOGIN_ATTEMPTS;
+    }
+
+    public function getLastLoginAttempt(): \DateTime
+    {
+        return $this->lastLoginAttempt;
+    }
+
+    public function setLastLoginAttempt(\DateTime $lastLoginAttempt): void
+    {
+        $this->lastLoginAttempt = $lastLoginAttempt;
+    }
+
+    public function resetLoginChecks(): void
+    {
+        $this->loginAttempt = 0;
+        $this->setLastLoginAttempt(new \DateTime());
+        $this->setEnabled(true);
+    }
+
+    public function setOrigin(string $origin): void
     {
         $this->origin = $origin;
     }
 
-    /**
-     * Get origin.
-     *
-     * @return string
-     */
-    public function getOrigin()
+    public function getOrigin(): string
     {
         return $this->origin;
     }
 
-    /**
-     * Is the origin local.
-     *
-     * @return bool
-     */
-    public function isLocal()
+    public function isLocal(): bool
     {
-        return self::ORIGIN_LOCAL == $this->origin;
+        return self::ORIGIN_LOCAL === $this->origin;
     }
 
-    /**
-     * Contains Group.
-     *
-     * @param GroupInterface $group
-     *
-     * @return bool
-     */
-    public function containsGroup(GroupInterface $group)
+    public function containsGroup(GroupInterface $group): bool
     {
         return $this->groups->contains($group);
     }
 
-    /**
-     * Add  group.
-     *
-     * @param GroupInterface $group
-     */
-    public function addGroup(GroupInterface $group)
+    public function addGroup(GroupInterface $group): void
     {
-        return $this->groups->add($group);
+        $this->groups->add($group);
     }
 
-    /**
-     * Remove  group.
-     *
-     * @param GroupInterface $group
-     */
-    public function removeGroup(GroupInterface $group)
+    public function removeGroup(GroupInterface $group): void
     {
         $this->groups->removeElement($group);
     }
 
-    /**
-     * Get Groups.
-     *
-     * @return ArrayCollection
-     */
     public function getGroups()
     {
         return $this->groups;
     }
 
-    /**
-     * Get groups ids.
-     *
-     * @return array
-     */
-    public function getGroupsIds()
+    public function getGroupsIds(): array
     {
         // Performance boost (Don't repeat it, only if it's exceptionally necesary)
         if ($this->groups instanceof \Doctrine\ODM\MongoDB\PersistentCollection && !$this->groups->isDirty()) {
             //See PersistentCollection class (coll + mongoData)
             return array_merge(
-                array_map(function ($g) {
-                    return new \MongoId($g->getId());
-                }, $this->groups->unwrap()->toArray()),
+                array_map(
+                    static function ($g) {
+                        return new \MongoId($g->getId());
+                    },
+                    $this->groups->unwrap()->toArray()
+                ),
                 $this->groups->getMongoData()
             );
         }
 
-        return array_map(function ($g) {
-            return new \MongoId($g->getId());
-        }, $this->groups->toArray());
+        return array_map(
+            static function ($g) {
+                return new \MongoId($g->getId());
+            },
+            $this->groups->toArray()
+        );
     }
 
     /**
-     * Returns the user roles.
-     *
-     * Note: Override BaseUser::getRole to avoid call User::getGroups and avoid a query.
-     *
-     * @return array The roles
+     * NOTE: Override BaseUser::getRole to avoid call User::getGroups and avoid a query.
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         $roles = $this->roles;
         $roles[] = static::ROLE_DEFAULT;

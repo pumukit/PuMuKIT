@@ -22,6 +22,8 @@ security:
             form_login:
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
+                failure_handler: custom_authentication_failure_handler
+                success_handler: custom_authentication_success_handler
             logout:       true
             anonymous:    true
             logout_on_user_change: true
