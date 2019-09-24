@@ -158,7 +158,7 @@ class User extends BaseUser
 
     public function addGroup(GroupInterface $group)
     {
-        $this->groups->add($group);
+        return $this->groups->add($group);
     }
 
     public function removeGroup(GroupInterface $group)
