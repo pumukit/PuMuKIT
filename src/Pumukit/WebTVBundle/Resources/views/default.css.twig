@@ -5,19 +5,8 @@
     {% set font_color = pumukit_info.font_color %}
 
     {% set default_contrast_background = default_contrast_background | default("#c05800") %}
-    {% set default_light_background = default_light_background | default("#767676") %}
-    {% set default_content_background = default_content_background | default("#fff") %}
-
-    {% set default_light_font = default_light_font | default("#fff") %}
     {% set default_content_font = default_content_font | default("#111") %}
-
     {% set page_background = page_background | default("#ffffff") %}
-
-    {% set content_background = content_background | default(default_content_background) %}
-    {% set menu_background = menu_background | default(default_light_background) %}
-    {% set menu_font_color = menu_font_color | default(default_light_font) %}
-    {% set menu_selected_background = menu_selected_background | default(default_light_font) %}
-    {% set menu_selected_font_color = menu_selected_font_color | default(default_light_background) %}
 
     body {
         background: {{ page_background }};
