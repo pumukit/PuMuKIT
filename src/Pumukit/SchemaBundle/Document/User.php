@@ -156,12 +156,12 @@ class User extends BaseUser
         return $this->groups->contains($group);
     }
 
-    public function addGroup(GroupInterface $group): void
+    public function addGroup(GroupInterface $group)
     {
         $this->groups->add($group);
     }
 
-    public function removeGroup(GroupInterface $group): void
+    public function removeGroup(GroupInterface $group)
     {
         $this->groups->removeElement($group);
     }
