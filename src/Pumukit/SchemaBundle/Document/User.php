@@ -15,7 +15,8 @@ class User extends BaseUser
     use Traits\Properties;
 
     public const ORIGIN_LOCAL = 'local';
-    public const MAX_LOGIN_ATTEMPTS = 1;
+    public const MAX_LOGIN_ATTEMPTS = 3;
+    public const MAX_USER_TIME_MIN_LOCK = 5;
 
     /**
      * @MongoDB\Id(strategy="auto")
@@ -96,6 +97,11 @@ class User extends BaseUser
     public function getLoginAttempt(): int
     {
         return $this->loginAttempt;
+    }
+
+    public function setLoginAttempt(int $logginAttempt): void
+    {
+        $this->loginAttempt = $logginAttempt;
     }
 
     public function addLoginAttempt(): void
