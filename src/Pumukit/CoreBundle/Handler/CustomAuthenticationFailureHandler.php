@@ -40,9 +40,7 @@ class CustomAuthenticationFailureHandler extends DefaultAuthenticationFailureHan
 
         $this->updateUser($user);
 
-        $this->setSessionException($request->getSession(), $exception);
-
-        return $this->httpUtils->createRedirectResponse($request, self::RETURNED_ROUTE);
+        return parent::onAuthenticationFailure($request, $exception);
     }
 
     private function updateUser(User $user): void
