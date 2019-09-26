@@ -1,7 +1,7 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_TAGS')) %}
     {% for tag in children %}
 
-        {% if (tag.getProperty('hide_in_tag_group') and is_granted('ROLE_SUPER_ADMIN')) or (not tag.getProperty('hide_in_tag_group')) %}
+        {% if not tag.getProperty('hide_in_tag_group') %}
             {% set has_children = tag.children|length %}
 
             <tr class="tv_admin_row_0 c_{{ tag.path|replace({ ("|" ~ tag.cod ~ "|"): '', '|': ' c_'}) }} d_{{ tag.parent.cod|default("") }}" id="row_tag_{{ tag.id }}" data-level="{{ tag.level }}">
