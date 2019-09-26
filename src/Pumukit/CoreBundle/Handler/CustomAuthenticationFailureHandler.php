@@ -4,26 +4,26 @@ namespace Pumukit\CoreBundle\Handler;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\User;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Exception\RouteNotFoundException;
-use Symfony\Component\Routing\Router;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
-use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Http\Authentication\DefaultAuthenticationFailureHandler;
+use Symfony\Component\Security\Http\HttpUtils;
 
-class CustomAuthenticationFailureHandler implements AuthenticationFailureHandlerInterface
+class CustomAuthenticationFailureHandler extends DefaultAuthenticationFailureHandler
 {
     private const RETURNED_ROUTE = 'pumukit_auth';
     private const EXCEPTION_MESSAGE = 'Invalid login';
-    private $router;
     private $documentManager;
 
-    public function __construct(Router $router, DocumentManager $documentManager)
+    public function __construct(HttpKernelInterface $httpKernel, HttpUtils $httpUtils, DocumentManager $documentManager)
     {
-        $this->router = $router;
         $this->documentManager = $documentManager;
+        parent::__construct($httpKernel, $httpUtils);
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
@@ -40,12 +40,9 @@ class CustomAuthenticationFailureHandler implements AuthenticationFailureHandler
 
         $this->updateUser($user);
 
-        $route = $this->router->generate(self::RETURNED_ROUTE);
-        if (!$route) {
-            throw new RouteNotFoundException(self::EXCEPTION_MESSAGE);
-        }
+        $this->setSessionException($request->getSession(), $exception);
 
-        return new RedirectResponse($route, Response::HTTP_FOUND);
+        return $this->httpUtils->createRedirectResponse($request, self::RETURNED_ROUTE);
     }
 
     private function updateUser(User $user): void
@@ -67,6 +64,13 @@ class CustomAuthenticationFailureHandler implements AuthenticationFailureHandler
                 $user->setEnabled(true);
                 $user->setLoginAttempt(1);
             }
+        }
+    }
+
+    private function setSessionException(?SessionInterface $session, AuthenticationException $exception)
+    {
+        if ($session) {
+            $session->set(Security::AUTHENTICATION_ERROR, $exception);
         }
     }
 }

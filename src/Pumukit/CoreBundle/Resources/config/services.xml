@@ -46,12 +46,13 @@
         </service>
 
         <service id="custom_authentication_failure_handler" class="Pumukit\CoreBundle\Handler\CustomAuthenticationFailureHandler">
-            <argument type="service" id="router"/>
+            <argument type="service" id="kernel"/>
+            <argument type="service" id="security.http_utils"/>
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
 
         <service id="custom_authentication_success_handler" class="Pumukit\CoreBundle\Handler\CustomAuthenticationSuccessHandler">
-            <argument type="service" id="router"/>
+            <argument type="service" id="security.http_utils"/>
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
 
