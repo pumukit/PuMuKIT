@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Pumukit\NewAdminBundle\Controller\NewAdminControllerInterface;
+use Pumukit\SchemaBundle\Document\Series;
 
 /**
  * @Route("/api/media")
@@ -19,7 +20,7 @@ class APIController extends Controller implements NewAdminControllerInterface
     public function statsAction(Request $request)
     {
         $mmRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $seriesRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:series');
+        $seriesRepo = $this->get('doctrine_mongodb')->getRepository(Series::class);
         $liveRepo = $this->get('doctrine_mongodb')->getRepository('PumukitLiveBundle:Live');
         $serializer = $this->get('jms_serializer');
 
@@ -113,7 +114,7 @@ class APIController extends Controller implements NewAdminControllerInterface
      */
     public function seriesAction(Request $request)
     {
-        $seriesRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
+        $seriesRepo = $this->get('doctrine_mongodb')->getRepository(Series::class);
         $serializer = $this->get('jms_serializer');
         $limit = $request->get('limit');
         $page = $request->get('page');

@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
+use Pumukit\SchemaBundle\Document\Series;
 
 /**
  * Class ModulesController.
@@ -162,7 +163,7 @@ class ModulesController extends Controller implements WebTVControllerInterface
     public function statsAction()
     {
         $mmRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $seriesRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:series');
+        $seriesRepo = $this->get('doctrine_mongodb')->getRepository(Series::class);
 
         $counts = [
             'series' => $seriesRepo->countPublic(),
