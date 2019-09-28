@@ -97,14 +97,14 @@ EOT
         $finder = new Finder();
         $files = $finder->files()->in($path);
 
-        $output->writeln('<comment>***** Files on folder: '.count($files).' *****</comment>');
+        $output->writeln('<comment>***** Files to check: '.count($files).' *****</comment>');
         foreach ($files as $file) {
             $filePath = $file->getRelativePathName();
             $absoluteFilePath = $file->getPathName();
 
             $existsInMongoDB = $this->findInMongoDB($documentManager, $filePath);
             if (!$existsInMongoDB) {
-                $output->writeln('No file found in MongoDB - <info>'.$this->path.'/'.$filePath.'</info>');
+                $output->writeln('No document found in MongoDB: <info>'.$this->path.'/'.$filePath.'</info>');
 
                 if ($this->delete) {
                     $output->writeln('Trying to delete file....');
