@@ -2,7 +2,7 @@
     <i class="mdi-navigation-menu" id="list_pics_mm_{{ mm.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
     <ul class="dropdown-menu" role="menu" aria-labelledby="list_pics_mm_{{ mm.id }}">
         <li>
-            <a href="#" onclick="window.submit_delete_mms_unesco('{{ mm.id }}'); return false;">
+            <a href="#" class="qa-button-delete-mms" onclick="window.submit_delete_mms_unesco('{{ mm.id }}'); return false;">
                 <i class="mdi-content-clear"></i>{% trans %}Delete multimedia object{% endtrans %}
             </a>
         </li>
@@ -14,7 +14,7 @@
             </li>
         {% endif %}
         <li>
-            <a href="#" onclick="window.submit_clone_mms_unesco('{{ mm.id }}'); return false;">
+            <a href="#" class="qa-button-clone-mms" onclick="window.submit_clone_mms_unesco('{{ mm.id }}'); return false;">
                 <i class="mdi-content-content-copy"></i>{% trans %}Clone multimedia object{% endtrans %}
             </a>
         </li>

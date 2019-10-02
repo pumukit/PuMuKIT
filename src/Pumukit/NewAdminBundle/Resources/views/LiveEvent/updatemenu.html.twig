@@ -8,18 +8,18 @@
         </li>
         {% if not is_naked() %}
             <li>
-                <a href="#" title="{% trans %}Clone event{% endtrans %}" class="event_option" data-href="{{ path('pumukit_new_admin_live_event_options', {'type' : 'clone','id': multimediaObject.id}) }}">
+                <a href="#" title="{% trans %}Clone event{% endtrans %}" class="event_option qa-button-clone-live-event" data-href="{{ path('pumukit_new_admin_live_event_options', {'type' : 'clone','id': multimediaObject.id}) }}">
                     <i class="mdi-content-content-copy"></i> {% trans %}Clone event{% endtrans %}
                 </a>
             </li>
         {% endif %}
         <li>
-            <a href="#" title="{% trans %}Delete event{% endtrans %}" class="event_option" data-href="{{ path('pumukit_new_admin_live_event_options', {'type' : 'delete','id': multimediaObject.id}) }}">
+            <a href="#" title="{% trans %}Delete event{% endtrans %}" class="event_option qa-button-delete-live-event" data-href="{{ path('pumukit_new_admin_live_event_options', {'type' : 'delete','id': multimediaObject.id}) }}">
                 <i class="mdi-content-clear"></i> {% trans %}Delete event{% endtrans %}
             </a>
         </li>
         <li>
-            <a href="#" title="{% trans %}Delete event and series{% endtrans %}" class="event_option" data-href="{{ path('pumukit_new_admin_live_event_options', {'type' : 'deleteAll', 'id': multimediaObject.id}) }}">
+            <a href="#" title="{% trans %}Delete event and series{% endtrans %}" class="event_option qa-button-delete-live-event-series" data-href="{{ path('pumukit_new_admin_live_event_options', {'type' : 'deleteAll', 'id': multimediaObject.id}) }}">
                 <i class="mdi-content-clear"></i> {% trans %}Delete event and series{% endtrans %}
             </a>
         </li>

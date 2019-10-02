@@ -18,13 +18,13 @@
                 </a>
             </li>
             <li>
-                <a href="#" onclick="window.submit_clone_series('{{ oneseries.id }}'); return false;">
+                <a class="qa-button-clone-series" href="#" onclick="window.submit_clone_series('{{ oneseries.id }}'); return false;">
                     <i class="mdi-content-content-copy"></i> {% trans %}Clone series{% endtrans %}
                 </a>
             </li>
         {% endif %}
         <li>
-            <a href="#" onclick="window.submit_delete_series('{{ oneseries.id }}', '{{ oneseries.getTitle() }}', '{{ numV }}'); return false;">
+            <a href="#" class="qa-button-delete-series" onclick="window.submit_delete_series('{{ oneseries.id }}', '{{ oneseries.getTitle() }}', '{{ numV }}'); return false;">
                 <i class="mdi-content-clear"></i> {% trans %}Delete the series{% endtrans %}
             </a>
         </li>
