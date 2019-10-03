@@ -1,0 +1,32 @@
+{% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
+
+{% if error is defined %}
+    <div class="alert alert-danger" style="line-height: 0.5em;">{{ error['message'] }}</div>
+{% endif %}
+
+<form id="pumukitnewadmin_user_form_update_profile" action="{{ path('pumukitnewadmin_profile_user_index') }}" method="POST">
+    <fieldset>
+        {% for child in form %}
+            {{ form_row(child) }}
+        {% endfor %}
+    </fieldset>
+    <button type="submit" class="btn btn-pumukit btn-raised">{{ "Save"|trans }}</button>
+</form>
+
+<script>
+    $('#pumukitnewadmin_user_form_update_profile').on('submit', function(event) {
+        event.preventDefault();
+
+        var route = "{{ path('pumukitnewadmin_profile_user_check_user', {'updateEmail' : '__EMAIL__'}) }}";
+        route = route.replace('__EMAIL__', $('#pumukitnewadmin_user_email').val());
+        $.ajax({
+            url: route,
+            error: function (response) {
+
+            },
+            success: function (response) {
+                document.getElementById("pumukitnewadmin_user_form_update_profile").submit();
+            }
+        });
+    });
+</script>

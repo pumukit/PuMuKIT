@@ -34,9 +34,6 @@ class PumukitAdminExtension extends AbstractExtension
     private $specialTranslationService;
     private $eventService;
 
-    /**
-     * Constructor.
-     */
     public function __construct(ProfileService $profileService, DocumentManager $documentManager, TranslatorInterface $translator, RouterInterface $router, MultimediaObjectService $mmobjService, SpecialTranslationService $specialTranslationService, EmbeddedEventSessionService $eventService)
     {
         $this->dm = $documentManager;
@@ -73,10 +70,7 @@ class PumukitAdminExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * Get functions.
-     */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('php_upload_max_filesize', [$this, 'getPhpUploadMaxFileSize']),
@@ -89,6 +83,8 @@ class PumukitAdminExtension extends AbstractExtension
             new TwigFunction('date_from_mongo_id', [$this, 'getDateFromMongoId']),
             new TwigFunction('default_poster', [$this, 'getDefaultPoster']),
             new TwigFunction('sort_roles', [$this, 'getSortRoles']),
+            new TwigFunction('status_string_text_by_value', [$this, 'getStatusTextByValue']),
+            new TwigFunction('role_string_text_by_value', [$this, 'getRoleTextByValue']),
         ];
     }
 
@@ -206,7 +202,22 @@ class PumukitAdminExtension extends AbstractExtension
         return $iconText;
     }
 
-    public function getSeriesIcon(Series $series): string
+    public function getStatusTextByValue(int $status): string
+    {
+        return MultimediaObject::$statusTexts[$status];
+    }
+
+    public function getRoleTextByValue(string $roleCode): string
+    {
+        $role = $this->dm->getRepository(Role::class)->findOneBy(['cod' => $roleCode]);
+        if (!$role) {
+            throw new \Exception('Role not found');
+        }
+
+        return $role->getName();
+    }
+
+    public function getSeriesIcon(Series $series)
     {
         [$mmobjsPublished, $mmobjsHidden, $mmobjsBlocked] = $this->countMmobjsByStatus($series);
 

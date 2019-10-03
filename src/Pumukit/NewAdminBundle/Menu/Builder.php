@@ -7,26 +7,19 @@ use Knp\Menu\ItemInterface as KnpItemInterface;
 use Pumukit\SchemaBundle\Security\Permission;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-/**
- * Class Builder.
- */
 class Builder implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
 
     private $authorizationChecker;
 
-    /**
-     * @param FactoryInterface $factory
-     * @param array            $options
-     *
-     * @return KnpItemInterface
-     */
-    public function mainMenu(FactoryInterface $factory, array $options)
+    public function mainMenu(FactoryInterface $factory, array $options): KnpItemInterface
     {
         $menu = $factory->createItem('root');
 
+        // @var AuthorizationCheckerInterface
         $this->authorizationChecker = $this->container->get('security.authorization_checker');
 
         $this->addDashboardMenu($menu);
@@ -38,15 +31,13 @@ class Builder implements ContainerAwareInterface
         $this->addTablesMenu($menu);
         $this->addManagementMenu($menu);
         $this->addToolsMenu($menu);
+        $this->addUserMenu($menu);
         $this->addCustomMenu($menu);
 
         return $menu;
     }
 
-    /**
-     * @param KnpItemInterface $menu
-     */
-    protected function addDashboardMenu(KnpItemInterface $menu)
+    protected function addDashboardMenu(KnpItemInterface $menu): void
     {
         $showDashboardTab = $this->container->getParameter('pumukit.show_dashboard_tab');
 
@@ -56,10 +47,7 @@ class Builder implements ContainerAwareInterface
         }
     }
 
-    /**
-     * @param KnpItemInterface $menu
-     */
-    protected function addWizardMenu(KnpItemInterface $menu)
+    protected function addWizardMenu(KnpItemInterface $menu): void
     {
         if (!$this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
             if ($this->authorizationChecker->isGranted(Permission::ACCESS_WIZARD_UPLOAD) && $this->authorizationChecker->isGranted(Permission::SHOW_WIZARD_MENU)) {
@@ -72,10 +60,7 @@ class Builder implements ContainerAwareInterface
         }
     }
 
-    /**
-     * @param KnpItemInterface $menu
-     */
-    protected function addMediaManagerMenu(KnpItemInterface $menu)
+    protected function addMediaManagerMenu(KnpItemInterface $menu): void
     {
         if ($this->authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_SERIES) || $this->authorizationChecker->isGranted(Permission::ACCESS_EDIT_PLAYLIST)) {
             $options = ['attributes' => ['class' => 'menu_media_manager']];
@@ -84,10 +69,7 @@ class Builder implements ContainerAwareInterface
         }
     }
 
-    /**
-     * @param KnpItemInterface $mediaManager
-     */
-    protected function addMediaManagerChildrenMenu(KnpItemInterface $mediaManager)
+    protected function addMediaManagerChildrenMenu(KnpItemInterface $mediaManager): void
     {
         if ($this->authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_SERIES)) {
             $options = ['route' => 'pumukitnewadmin_series_index', 'attributes' => ['class' => 'menu_series']];
@@ -112,10 +94,7 @@ class Builder implements ContainerAwareInterface
         }
     }
 
-    /**
-     * @param KnpItemInterface $menu
-     */
-    protected function addStatsMenu(KnpItemInterface $menu)
+    protected function addStatsMenu(KnpItemInterface $menu): void
     {
         if ($this->authorizationChecker->isGranted('ROLE_ACCESS_STATS')) {
             $options = ['attributes' => ['class' => 'menu_stats']];
@@ -136,10 +115,7 @@ class Builder implements ContainerAwareInterface
         }
     }
 
-    /**
-     * @param KnpItemInterface $menu
-     */
-    protected function addLiveMenu(KnpItemInterface $menu)
+    protected function addLiveMenu(KnpItemInterface $menu): void
     {
         $advanceLiveEvent = $this->container->hasParameter('pumukit_new_admin.advance_live_event') ? $this->container->getParameter('pumukit_new_admin.advance_live_event') : false;
         $options = ['attributes' => ['class' => 'menu_live']];
@@ -153,10 +129,7 @@ class Builder implements ContainerAwareInterface
         }
     }
 
-    /**
-     * @param KnpItemInterface $live
-     */
-    protected function addAdvancedLive(KnpItemInterface $live)
+    protected function addAdvancedLive(KnpItemInterface $live): void
     {
         if ($this->authorizationChecker->isGranted(Permission::ACCESS_LIVE_EVENTS)) {
             $options = ['route' => 'pumukit_new_admin_live_event_index', 'attributes' => ['class' => 'menu_live_events']];
@@ -168,10 +141,7 @@ class Builder implements ContainerAwareInterface
         }
     }
 
-    /**
-     * @param KnpItemInterface $live
-     */
-    protected function addBasicLive(KnpItemInterface $live)
+    protected function addBasicLive(KnpItemInterface $live): void
     {
         if ($this->authorizationChecker->isGranted(Permission::ACCESS_LIVE_CHANNELS)) {
             $options = ['route' => 'pumukitnewadmin_live_index', 'attributes' => ['class' => 'menu_live_channels']];
@@ -183,10 +153,7 @@ class Builder implements ContainerAwareInterface
         }
     }
 
-    /**
-     * @param KnpItemInterface $menu
-     */
-    protected function addJobMenu(KnpItemInterface $menu)
+    protected function addJobMenu(KnpItemInterface $menu): void
     {
         if ($this->authorizationChecker->isGranted(Permission::ACCESS_JOBS)) {
             $options = ['route' => 'pumukit_encoder_info', 'attributes' => ['class' => 'menu_encoder']];
@@ -194,10 +161,7 @@ class Builder implements ContainerAwareInterface
         }
     }
 
-    /**
-     * @param KnpItemInterface $menu
-     */
-    protected function addTablesMenu(KnpItemInterface $menu)
+    protected function addTablesMenu(KnpItemInterface $menu): void
     {
         if (($this->authorizationChecker->isGranted(Permission::ACCESS_PEOPLE) && $this->authorizationChecker->isGranted(Permission::SHOW_PEOPLE_MENU))
             || $this->authorizationChecker->isGranted(Permission::ACCESS_TAGS)
@@ -212,10 +176,7 @@ class Builder implements ContainerAwareInterface
         }
     }
 
-    /**
-     * @param KnpItemInterface $tables
-     */
-    protected function addPeopleMenu(KnpItemInterface $tables)
+    protected function addPeopleMenu(KnpItemInterface $tables): void
     {
         if ($this->authorizationChecker->isGranted(Permission::ACCESS_PEOPLE) && $this->authorizationChecker->isGranted(Permission::SHOW_PEOPLE_MENU)) {
             $options = ['route' => 'pumukitnewadmin_person_index', 'attributes' => ['class' => 'menu_people']];
@@ -223,10 +184,7 @@ class Builder implements ContainerAwareInterface
         }
     }
 
-    /**
-     * @param KnpItemInterface $tables
-     */
-    protected function addTagsMenu(KnpItemInterface $tables)
+    protected function addTagsMenu(KnpItemInterface $tables): void
     {
         if ($this->authorizationChecker->isGranted(Permission::ACCESS_TAGS)) {
             $options = ['route' => 'pumukitnewadmin_tag_index', 'attributes' => ['class' => 'menu_tags']];
@@ -234,10 +192,7 @@ class Builder implements ContainerAwareInterface
         }
     }
 
-    /**
-     * @param KnpItemInterface $tables
-     */
-    protected function addPlaceAndPrecinctMenu(KnpItemInterface $tables)
+    protected function addPlaceAndPrecinctMenu(KnpItemInterface $tables): void
     {
         $menuPlaceAndPrecinct = $this->container->hasParameter('pumukit_new_admin.show_menu_place_and_precinct') ? $this->container->getParameter('pumukit_new_admin.show_menu_place_and_precinct') : false;
         if ($this->authorizationChecker->isGranted(Permission::ACCESS_TAGS) && $menuPlaceAndPrecinct) {
@@ -246,10 +201,7 @@ class Builder implements ContainerAwareInterface
         }
     }
 
-    /**
-     * @param KnpItemInterface $tables
-     */
-    protected function addSeriesTypeMenu(KnpItemInterface $tables)
+    protected function addSeriesTypeMenu(KnpItemInterface $tables): void
     {
         $showSeriesTypeTab = $this->container->hasParameter('pumukit.use_series_channels') && $this->container->getParameter('pumukit.use_series_channels');
         if ($showSeriesTypeTab && $this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_TYPES)) {
@@ -258,10 +210,7 @@ class Builder implements ContainerAwareInterface
         }
     }
 
-    /**
-     * @param KnpItemInterface $menu
-     */
-    protected function addManagementMenu(KnpItemInterface $menu)
+    protected function addManagementMenu(KnpItemInterface $menu): void
     {
         if ($this->authorizationChecker->isGranted(Permission::ACCESS_ADMIN_USERS)
             || $this->authorizationChecker->isGranted(Permission::ACCESS_GROUPS)
@@ -277,10 +226,7 @@ class Builder implements ContainerAwareInterface
         }
     }
 
-    /**
-     * @param KnpItemInterface $management
-     */
-    protected function addAdminUsersMenu(KnpItemInterface $management)
+    protected function addAdminUsersMenu(KnpItemInterface $management): void
     {
         if ($this->authorizationChecker->isGranted(Permission::ACCESS_ADMIN_USERS)) {
             $options = ['route' => 'pumukitnewadmin_user_index', 'attributes' => ['class' => 'menu_users']];
@@ -288,10 +234,7 @@ class Builder implements ContainerAwareInterface
         }
     }
 
-    /**
-     * @param KnpItemInterface $management
-     */
-    protected function addGroupsMenu(KnpItemInterface $management)
+    protected function addGroupsMenu(KnpItemInterface $management): void
     {
         if ($this->authorizationChecker->isGranted(Permission::ACCESS_GROUPS)) {
             $options = ['route' => 'pumukitnewadmin_group_index', 'attributes' => ['class' => 'menu_groups']];
@@ -299,10 +242,7 @@ class Builder implements ContainerAwareInterface
         }
     }
 
-    /**
-     * @param KnpItemInterface $management
-     */
-    protected function addPermissionProfilesMenu(KnpItemInterface $management)
+    protected function addPermissionProfilesMenu(KnpItemInterface $management): void
     {
         if ($this->authorizationChecker->isGranted(Permission::ACCESS_PERMISSION_PROFILES)) {
             $options = ['route' => 'pumukitnewadmin_permissionprofile_index', 'attributes' => ['class' => 'menu_permission_profiles']];
@@ -310,10 +250,7 @@ class Builder implements ContainerAwareInterface
         }
     }
 
-    /**
-     * @param KnpItemInterface $management
-     */
-    protected function addRolesMenu(KnpItemInterface $management)
+    protected function addRolesMenu(KnpItemInterface $management): void
     {
         if ($this->authorizationChecker->isGranted(Permission::ACCESS_ROLES)) {
             $options = ['route' => 'pumukitnewadmin_role_index', 'attributes' => ['class' => 'menu_roles']];
@@ -321,10 +258,7 @@ class Builder implements ContainerAwareInterface
         }
     }
 
-    /**
-     * @param KnpItemInterface $menu
-     */
-    protected function addToolsMenu(KnpItemInterface $menu)
+    protected function addToolsMenu(KnpItemInterface $menu): void
     {
         $showImporterTab = $this->container->hasParameter('pumukit_opencast.show_importer_tab') && $this->container->getParameter('pumukit_opencast.show_importer_tab');
         $tools = null;
@@ -349,11 +283,7 @@ class Builder implements ContainerAwareInterface
         }
     }
 
-    /**
-     * @param ItemInterface         $item
-     * @param KnpItemInterface|null $tools
-     */
-    protected function addDynamicToolMenu(ItemInterface $item, $tools)
+    protected function addDynamicToolMenu(ItemInterface $item, KnpItemInterface $tools): void
     {
         if ($this->authorizationChecker->isGranted($item->getAccessRole())) {
             $class = 'menu_tools_'.strtolower(str_replace(' ', '_', $item->getName()));
@@ -362,10 +292,15 @@ class Builder implements ContainerAwareInterface
         }
     }
 
-    /**
-     * @param KnpItemInterface $menu
-     */
-    protected function addCustomMenu(KnpItemInterface $menu)
+    protected function addUserMenu(KnpItemInterface $management): void
+    {
+        if (!$this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
+            $options = ['route' => 'pumukitnewadmin_profile_user_index', 'attributes' => ['class' => 'menu_user']];
+            $management->addChild('My profile', $options);
+        }
+    }
+
+    protected function addCustomMenu(KnpItemInterface $management): void
     {
         // NOTE: Override this function to add new item menu in PuMuKIT
     }

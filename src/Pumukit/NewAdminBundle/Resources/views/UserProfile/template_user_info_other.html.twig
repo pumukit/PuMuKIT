@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col-md-12 user_profile_data_info_block">
+        <h5><strong>{{ "Last login"|trans }}</strong></h5>
+        <table class="table table-striped">
+                <tr>
+                    <td>
+                        {{ user.getLastLogin()|localizeddate('medium','medium', app.request.getLocale()) }}
+                    </td>
+                </tr>
+        </table>
+
+        <h5><strong>{{ "Provider"|trans }}</strong></h5>
+        <table class="table table-striped">
+                <tr>
+                    <td>
+                        {{ user.getOrigin() }}
+                    </td>
+                </tr>
+        </table>
+    </div>
+
+    <div class="col-md-12 user_profile_group_block">
+        <h5><strong>{{ "Groups"|trans }}</strong></h5>
+        <table class="table table-striped">
+            {% for group in app.user.getGroups() %}
+                <tr>
+                    <td>
+                        {{ group.name }}
+                    </td>
+                </tr>
+            {% else %}
+                <tr><td>{{ "No groups found"|trans }}</td></tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>

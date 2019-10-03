@@ -72,6 +72,10 @@
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
 
+        <service id="pumukitnewadmin.user_stats" class="Pumukit\NewAdminBundle\Services\UserStatsService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+        </service>
+
         <service id="pumukitnewadmin.tag_catalogue" class="Pumukit\NewAdminBundle\Services\TagCatalogueService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="translator"/>
