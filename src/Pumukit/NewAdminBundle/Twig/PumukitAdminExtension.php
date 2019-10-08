@@ -16,8 +16,12 @@ use Pumukit\SchemaBundle\Services\SpecialTranslationService;
 use Symfony\Component\Intl\Intl;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
 
-class PumukitAdminExtension extends \Twig_Extension
+class PumukitAdminExtension extends AbstractExtension
 {
     private $dm;
     private $languages;
@@ -45,30 +49,27 @@ class PumukitAdminExtension extends \Twig_Extension
         $this->eventService = $eventService;
     }
 
-    /**
-     * Get filters.
-     */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
-            new \Twig_SimpleFilter('basename', [$this, 'getBasename']),
-            new \Twig_SimpleFilter('profile', [$this, 'getProfile']),
-            new \Twig_SimpleFilter('display', [$this, 'getDisplay']),
-            new \Twig_SimpleFilter('duration_string', [$this, 'getDurationString']),
-            new \Twig_SimpleFilter('language_name', [$this, 'getLanguageName']),
-            new \Twig_SimpleFilter('status_icon', [$this, 'getStatusIcon']),
-            new \Twig_SimpleFilter('status_text', [$this, 'getStatusText']),
-            new \Twig_SimpleFilter('series_icon', [$this, 'getSeriesIcon']),
-            new \Twig_SimpleFilter('series_text', [$this, 'getSeriesText']),
-            new \Twig_SimpleFilter('profile_width', [$this, 'getProfileWidth']),
-            new \Twig_SimpleFilter('profile_height', [$this, 'getProfileHeight']),
-            new \Twig_SimpleFilter('series_announce_icon', [$this, 'getSeriesAnnounceIcon']),
-            new \Twig_SimpleFilter('series_announce_text', [$this, 'getSeriesAnnounceText']),
-            new \Twig_SimpleFilter('mms_announce_icon', [$this, 'getMmsAnnounceIcon']),
-            new \Twig_SimpleFilter('mms_announce_text', [$this, 'getMmsAnnounceText']),
-            new \Twig_SimpleFilter('filter_profiles', [$this, 'filterProfiles']),
-            new \Twig_SimpleFilter('count_multimedia_objects', [$this, 'countMultimediaObjects']),
-            new \Twig_SimpleFilter('next_session_event', [$this, 'getNextEventSession']),
+            new TwigFilter('basename', [$this, 'getBasename']),
+            new TwigFilter('profile', [$this, 'getProfile']),
+            new TwigFilter('display', [$this, 'getDisplay']),
+            new TwigFilter('duration_string', [$this, 'getDurationString']),
+            new TwigFilter('language_name', [$this, 'getLanguageName']),
+            new TwigFilter('status_icon', [$this, 'getStatusIcon']),
+            new TwigFilter('status_text', [$this, 'getStatusText']),
+            new TwigFilter('series_icon', [$this, 'getSeriesIcon']),
+            new TwigFilter('series_text', [$this, 'getSeriesText']),
+            new TwigFilter('profile_width', [$this, 'getProfileWidth']),
+            new TwigFilter('profile_height', [$this, 'getProfileHeight']),
+            new TwigFilter('series_announce_icon', [$this, 'getSeriesAnnounceIcon']),
+            new TwigFilter('series_announce_text', [$this, 'getSeriesAnnounceText']),
+            new TwigFilter('mms_announce_icon', [$this, 'getMmsAnnounceIcon']),
+            new TwigFilter('mms_announce_text', [$this, 'getMmsAnnounceText']),
+            new TwigFilter('filter_profiles', [$this, 'filterProfiles']),
+            new TwigFilter('count_multimedia_objects', [$this, 'countMultimediaObjects']),
+            new TwigFilter('next_session_event', [$this, 'getNextEventSession']),
         ];
     }
 
@@ -78,39 +79,25 @@ class PumukitAdminExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('php_upload_max_filesize', [$this, 'getPhpUploadMaxFilesize']),
-            new \Twig_SimpleFunction('path_exists', [$this, 'existsRoute']),
-            new \Twig_SimpleFunction('is_playable_on_playlist', [$this, 'isPlayableOnPlaylist']),
-            new \Twig_SimpleFunction('is_mmobj_owner', [$this, 'isUserOwner']),
-            new \Twig_SimpleFunction('broadcast_description', [$this, 'getBroadcastDescription']),
-            new \Twig_SimpleFunction('is_naked', [$this, 'isNaked'], ['needs_environment' => true]),
-            new \Twig_SimpleFunction('trans_i18n_broadcast', [$this, 'getI18nEmbeddedBroadcast']),
-            new \Twig_SimpleFunction('date_from_mongo_id', [$this, 'getDateFromMongoId']),
-            new \Twig_SimpleFunction('default_poster', [$this, 'getDefaultPoster']),
-            new \Twig_SimpleFunction('sort_roles', [$this, 'getSortRoles']),
+            new TwigFunction('php_upload_max_filesize', [$this, 'getPhpUploadMaxFileSize']),
+            new TwigFunction('path_exists', [$this, 'existsRoute']),
+            new TwigFunction('is_playable_on_playlist', [$this, 'isPlayableOnPlaylist']),
+            new TwigFunction('is_mmobj_owner', [$this, 'isUserOwner']),
+            new TwigFunction('broadcast_description', [$this, 'getBroadcastDescription']),
+            new TwigFunction('is_naked', [$this, 'isNaked'], ['needs_environment' => true]),
+            new TwigFunction('trans_i18n_broadcast', [$this, 'getI18nEmbeddedBroadcast']),
+            new TwigFunction('date_from_mongo_id', [$this, 'getDateFromMongoId']),
+            new TwigFunction('default_poster', [$this, 'getDefaultPoster']),
+            new TwigFunction('sort_roles', [$this, 'getSortRoles']),
         ];
     }
 
-    /**
-     * Get basename.
-     *
-     * @param string $path
-     *
-     * @return string
-     */
-    public function getBasename($path)
+    public function getBasename(string $path): string
     {
         return basename($path);
     }
 
-    /**
-     * Get profile.
-     *
-     * @param array $tags
-     *
-     * @return bool|string
-     */
-    public function getProfile($tags)
+    public function getProfile(array $tags)
     {
         $profile = '';
 
@@ -123,26 +110,12 @@ class PumukitAdminExtension extends \Twig_Extension
         return $profile;
     }
 
-    /**
-     * Check if a route exists.
-     *
-     * @param string $name route name
-     *
-     * @return bool
-     */
-    public function existsRoute($name)
+    public function existsRoute(string $name): bool
     {
         return null !== $this->router->getRouteCollection()->get($name);
     }
 
-    /**
-     * Get display.
-     *
-     * @param string $profileName
-     *
-     * @return string
-     */
-    public function getDisplay($profileName)
+    public function getDisplay(string $profileName)
     {
         $display = false;
         $profile = $this->profileService->getProfile($profileName);
@@ -154,27 +127,12 @@ class PumukitAdminExtension extends \Twig_Extension
         return $display;
     }
 
-    /**
-     * Get duration string.
-     *
-     * @param int $duration
-     *
-     * @return string
-     */
-    public function getDurationString($duration)
+    public function getDurationString(int $duration): string
     {
         return gmdate('H:i:s', $duration);
     }
 
-    /**
-     * Get language name.
-     *
-     * @param string $code      language ISO 639 code
-     * @param bool   $translate Translate the language name or get it in their language. True by default
-     *
-     * @return string
-     */
-    public function getLanguageName($code, $translate = true)
+    public function getLanguageName(string $code, bool $translate = true): string
     {
         $addonLanguages = CustomLanguageType::$addonLanguages;
 
@@ -198,14 +156,7 @@ class PumukitAdminExtension extends \Twig_Extension
         return $code;
     }
 
-    /**
-     * Get status icon.
-     *
-     * @param int $status
-     *
-     * @return string
-     */
-    public function getStatusIcon($status)
+    public function getStatusIcon(int $status): string
     {
         $iconClass = 'mdi-alert-warning';
 
@@ -227,14 +178,7 @@ class PumukitAdminExtension extends \Twig_Extension
         return $iconClass;
     }
 
-    /**
-     * Get status text.
-     *
-     * @param mixed $param
-     *
-     * @return string
-     */
-    public function getStatusText($param)
+    public function getStatusText($param): string
     {
         $iconText = 'New';
 
@@ -262,14 +206,7 @@ class PumukitAdminExtension extends \Twig_Extension
         return $iconText;
     }
 
-    /**
-     * Get series icon.
-     *
-     * @param Series $series
-     *
-     * @return string
-     */
-    public function getSeriesIcon(Series $series)
+    public function getSeriesIcon(Series $series): string
     {
         [$mmobjsPublished, $mmobjsHidden, $mmobjsBlocked] = $this->countMmobjsByStatus($series);
 
@@ -300,14 +237,7 @@ class PumukitAdminExtension extends \Twig_Extension
         return $iconClass;
     }
 
-    /**
-     * Get series text.
-     *
-     * @param int $series
-     *
-     * @return string
-     */
-    public function getSeriesText($series)
+    public function getSeriesText(int $series): string
     {
         [$mmobjsPublished, $mmobjsHidden, $mmobjsBlocked] = $this->countMmobjsByStatus($series);
 
@@ -323,14 +253,7 @@ class PumukitAdminExtension extends \Twig_Extension
         );
     }
 
-    /**
-     * Get track profile width resolution.
-     *
-     * @param array $tags
-     *
-     * @return string
-     */
-    public function getProfileWidth($tags)
+    public function getProfileWidth(array $tags): string
     {
         $profileName = $this->getProfileFromTags($tags);
         $profile = $this->profileService->getProfile($profileName);
@@ -341,14 +264,7 @@ class PumukitAdminExtension extends \Twig_Extension
         return '0';
     }
 
-    /**
-     * Get track profile height resolution.
-     *
-     * @param array $tags
-     *
-     * @return string
-     */
-    public function getProfileHeight($tags)
+    public function getProfileHeight(array $tags): string
     {
         $profileName = $this->getProfileFromTags($tags);
         $profile = $this->profileService->getProfile($profileName);
@@ -359,15 +275,7 @@ class PumukitAdminExtension extends \Twig_Extension
         return '0';
     }
 
-    /**
-     * Get announce icon of Series
-     * and MultimediaObjects inside of it.
-     *
-     * @param Series $series
-     *
-     * @return string $icon
-     */
-    public function getSeriesAnnounceIcon(Series $series)
+    public function getSeriesAnnounceIcon(Series $series): string
     {
         $icon = 'mdi-action-done pumukit-transparent';
 
@@ -378,15 +286,7 @@ class PumukitAdminExtension extends \Twig_Extension
         return $icon;
     }
 
-    /**
-     * Get announce text of Series
-     * and MultimediaObjects inside of it.
-     *
-     * @param Series $series
-     *
-     * @return string $text
-     */
-    public function getSeriesAnnounceText(Series $series)
+    public function getSeriesAnnounceText(Series $series): string
     {
         $text = '';
 
@@ -397,15 +297,7 @@ class PumukitAdminExtension extends \Twig_Extension
         return $text;
     }
 
-    /**
-     * Get announce icon of Multimedia Objects in Series
-     * and MultimediaObjects inside of it.
-     *
-     * @param Series $series
-     *
-     * @return string $icon
-     */
-    public function getMmsAnnounceIcon(Series $series)
+    public function getMmsAnnounceIcon(Series $series): string
     {
         $icon = 'mdi-action-done pumukit-transparent';
 
@@ -418,15 +310,7 @@ class PumukitAdminExtension extends \Twig_Extension
         return $icon;
     }
 
-    /**
-     * Get announce text of Multimedia Objects in Series
-     * and MultimediaObjects inside of it.
-     *
-     * @param Series $series
-     *
-     * @return string $text
-     */
-    public function getMmsAnnounceText(Series $series)
+    public function getMmsAnnounceText(Series $series): string
     {
         $text = '';
 
@@ -439,58 +323,29 @@ class PumukitAdminExtension extends \Twig_Extension
         return $text;
     }
 
-    /**
-     * Get php upload max filesize.
-     *
-     * @return string
-     */
-    public function getPhpUploadMaxFilesize()
+    public function getPhpUploadMaxFileSize(): string
     {
         return ini_get('upload_max_filesize').'B';
     }
 
-    /**
-     * Filter profiles to show only audio profiles.
-     *
-     * @param mixed $profiles
-     * @param mixed $onlyAudio
-     *
-     * @return array
-     */
-    public function filterProfiles($profiles, $onlyAudio)
+    public function filterProfiles($profiles, $onlyAudio): array
     {
-        return array_filter($profiles, function ($elem) use ($onlyAudio) {
+        return array_filter($profiles, static function ($elem) use ($onlyAudio) {
             return !$onlyAudio || $elem['audio'];
         });
     }
 
-    /**
-     * Count Multimedia Objects.
-     *
-     * @param Series $series
-     *
-     * @return int
-     */
-    public function countMultimediaObjects(Series $series)
+    public function countMultimediaObjects(Series $series): int
     {
         return $this->dm->getRepository(MultimediaObject::class)->countInSeries($series);
     }
 
-    /**
-     * Get Broadcast description.
-     *
-     * @param string $broadcastType
-     * @param string $template
-     * @param bool   $islive
-     *
-     * @return string
-     */
-    public function getBroadcastDescription($broadcastType, $template, $islive = false)
+    public function getBroadcastDescription($broadcastType, $template, bool $isLive = false): string
     {
         $description = '';
 
         $changeWord = 'multimedia object';
-        if ($islive) {
+        if ($isLive) {
             $changeWord = 'live event';
         }
         if ((EmbeddedBroadcast::TYPE_PUBLIC === $broadcastType) && $template) {
@@ -514,37 +369,17 @@ class PumukitAdminExtension extends \Twig_Extension
         return $description;
     }
 
-    /**
-     * Returns a boolean with whether the mmobj will be played on a playlist.
-     *
-     * @param MultimediaObject $mmobj
-     *
-     * @return bool
-     */
-    public function isPlayableOnPlaylist($mmobj)
+    public function isPlayableOnPlaylist(MultimediaObject $multimediaObject): bool
     {
-        return $this->mmobjService->isPlayableOnPlaylist($mmobj);
+        return $this->mmobjService->isPlayableOnPlaylist($multimediaObject);
     }
 
-    /**
-     * Returns a boolean is user is owner.
-     *
-     * @param User             $user
-     * @param MultimediaObject $mmobj
-     *
-     * @return bool
-     */
-    public function isUserOwner($user, $mmobj)
+    public function isUserOwner(User $user, MultimediaObject $multimediaObject): bool
     {
-        return $this->mmobjService->isUserOwner($user, $mmobj);
+        return $this->mmobjService->isUserOwner($user, $multimediaObject);
     }
 
-    /**
-     * Returns a boolean is request a naked backoffice.
-     *
-     * @return bool
-     */
-    public function isNaked(\Twig_Environment $env)
+    public function isNaked(Environment $env)
     {
         if (isset($env->getGlobals()['app'])) {
             return $env->getGlobals()['app']->getRequest()->attributes->get('nakedbackoffice', false);
@@ -553,25 +388,11 @@ class PumukitAdminExtension extends \Twig_Extension
         return false;
     }
 
-    /**
-     * Returns the embbedded Broadcast
-     * __toString() function translated.
-     *
-     * @param EmbeddedBroadcast $embeddedBroadcast
-     * @param mixed             $locale
-     *
-     * @return string
-     */
-    public function getI18nEmbeddedBroadcast(EmbeddedBroadcast $embeddedBroadcast, $locale = 'en')
+    public function getI18nEmbeddedBroadcast(EmbeddedBroadcast $embeddedBroadcast, ?string $locale = 'en'): string
     {
         return $this->specialTranslationService->getI18nEmbeddedBroadcast($embeddedBroadcast, $locale);
     }
 
-    /**
-     * @param MultimediaObject $multimediaObject
-     *
-     * @return mixed
-     */
     public function getDateFromMongoId(MultimediaObject $multimediaObject)
     {
         $id = new \MongoId($multimediaObject->getId());
@@ -579,13 +400,6 @@ class PumukitAdminExtension extends \Twig_Extension
         return $id->getTimestamp();
     }
 
-    /**
-     * Returns session that are reproducing now or the next session to reproduce it.
-     *
-     * @param Multimediaobject $multimediaObject
-     *
-     * @return bool|mixed
-     */
     public function getNextEventSession(Multimediaobject $multimediaObject)
     {
         $now = new \DateTime();
@@ -610,23 +424,12 @@ class PumukitAdminExtension extends \Twig_Extension
         return false;
     }
 
-    /**
-     * Get Default Poster.
-     *
-     * @returns string
-     */
-    public function getDefaultPoster()
+    public function getDefaultPoster(): string
     {
         return $this->eventService->getDefaultPoster();
     }
 
-    /**
-     * @param Multimediaobject $multimediaObject
-     * @param bool             $display
-     *
-     * @return array
-     */
-    public function getSortRoles(Multimediaobject $multimediaObject, $display = true)
+    public function getSortRoles(Multimediaobject $multimediaObject, bool $display = true): array
     {
         static $rolesCached = [];
 
@@ -640,7 +443,7 @@ class PumukitAdminExtension extends \Twig_Extension
         $aRoles = [];
         foreach ($roles as $role) {
             $embeddedRole = $multimediaObject->getEmbeddedRole($role);
-            if ($embeddedRole && 0 != count($embeddedRole->getPeople())) {
+            if ($embeddedRole && 0 !== count($embeddedRole->getPeople())) {
                 $aRoles[] = $embeddedRole;
             }
         }
@@ -648,14 +451,7 @@ class PumukitAdminExtension extends \Twig_Extension
         return $aRoles;
     }
 
-    /**
-     * Get profile.
-     *
-     * @param array $tags
-     *
-     * @return string
-     */
-    private function getProfileFromTags($tags)
+    private function getProfileFromTags(array $tags): string
     {
         $profile = '';
 
@@ -707,7 +503,7 @@ class PumukitAdminExtension extends \Twig_Extension
         return $this->countMmobjsByStatus[$series->getId()] = $result;
     }
 
-    private function countMmobjsWithTag($series, $tagCod)
+    private function countMmobjsWithTag(Series $series, string $tagCod)
     {
         if (isset($this->countMmobjsWithTag[$series->getId()][$tagCod])) {
             return $this->countMmobjsWithTag[$series->getId()][$tagCod];

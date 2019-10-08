@@ -21,7 +21,6 @@
 
         <service id="pumukit_baseplayer.twig_extension" class="Pumukit\BasePlayerBundle\Twig\BasePlayerExtension">
           <tag name="twig.extension" />
-          <argument type="service" id="doctrine_mongodb.odm.document_manager" />
           <argument type="service" id="router.request_context" on-invalid="ignore" />
           <argument type="service" id="pumukit_baseplayer.trackurl" />
         </service>

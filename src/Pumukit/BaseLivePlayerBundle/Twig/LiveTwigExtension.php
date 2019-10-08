@@ -46,10 +46,6 @@ class LiveTwigExtension extends AbstractExtension
      *
      * Original twig template:
      *    {{ live.url|replace({'rtmp://':'http://', 'rtmpt://': 'http://'}) }}/{{ live.sourcename }}/playlist.m3u8
-     *
-     * @param Live $live
-     *
-     * @return string
      */
     public function genHlsUrl(Live $live): string
     {
@@ -57,16 +53,9 @@ class LiveTwigExtension extends AbstractExtension
     }
 
     /**
-     * Get future and not finished event.
-     *
-     * @param null      $limit
-     * @param Live|null $live
-     *
      * @throws \Exception
-     *
-     * @return mixed
      */
-    public function getFutureAndNotFinishedEvent($limit = null, Live $live = null)
+    public function getFutureAndNotFinishedEvent(int $limit = null, ?Live $live = null)
     {
         $eventRepo = $this->dm->getRepository(Event::class);
 
@@ -74,35 +63,20 @@ class LiveTwigExtension extends AbstractExtension
     }
 
     /**
-     * @param EmbeddedEvent $event
-     *
      * @deprecated use getPosterPic
-     *
-     * @return string
      */
     public function getEventPoster(EmbeddedEvent $event): string
     {
         return $this->eventsService->getEventPoster($event);
     }
 
-    /**
-     * Get event poster.
-     *
-     * @param MultimediaObject $multimediaObject
-     *
-     * @return string
-     */
     public function getPosterPic(MultimediaObject $multimediaObject): string
     {
         return $this->eventsService->getEventPicPoster($multimediaObject);
     }
 
     /**
-     * @param EmbeddedEvent $event
-     *
      * @deprecated use getPosterPicTextColor
-     *
-     * @return string
      */
     public function getPosterTextColor(EmbeddedEvent $event): string
     {
@@ -110,24 +84,13 @@ class LiveTwigExtension extends AbstractExtension
     }
 
     /**
-     * Get poster text color.
-     *
      * @param MultimediaObject $multimediaObject
-     *
-     * @return string
      */
     public function getPosterPicTextColor(MultimediaObject $multimediaObject): string
     {
         return $this->eventsService->getPicPosterTextColor($multimediaObject);
     }
 
-    /**
-     * Get event thumbnail.
-     *
-     * @param array|EmbeddedEvent $event
-     *
-     * @return string
-     */
     public function getEventThumbnail($event): string
     {
         if (!is_array($event)) {

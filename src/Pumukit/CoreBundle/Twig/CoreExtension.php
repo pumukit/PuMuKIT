@@ -3,37 +3,26 @@
 namespace Pumukit\CoreBundle\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class CoreExtension extends \Twig_Extension
+class CoreExtension extends AbstractExtension
 {
     protected $container;
 
-    /**
-     * Constructor.
-     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
 
-    /**
-     * Get functions.
-     */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction('bundle_enabled', [$this, 'isBundleEnabled']),
+            new TwigFunction('bundle_enabled', [$this, 'isBundleEnabled']),
         ];
     }
 
-    /**
-     * Is bundle enabled.
-     *
-     * @param string $bundle
-     *
-     * @return bool
-     */
-    public function isBundleEnabled($bundle)
+    public function isBundleEnabled($bundle): bool
     {
         return array_key_exists(
             $bundle,

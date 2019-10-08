@@ -2,75 +2,38 @@
 
 namespace Pumukit\NewAdminBundle\Twig;
 
-use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\NewAdminBundle\Services\TagCatalogueService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-/**
- * Class CatalogueExtension.
- */
-class CatalogueExtension extends \Twig_Extension
+class CatalogueExtension extends AbstractExtension
 {
-    /**
-     * @var DocumentManager
-     */
-    private $dm;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var TagCatalogueService
-     */
     private $tagCatalogueService;
 
-    /**
-     * CatalogueExtension constructor.
-     *
-     * @param DocumentManager     $documentManager
-     * @param TranslatorInterface $translator
-     * @param TagCatalogueService $tagCatalogueService
-     */
-    public function __construct(DocumentManager $documentManager, TranslatorInterface $translator, TagCatalogueService $tagCatalogueService)
+    public function __construct(TagCatalogueService $tagCatalogueService)
     {
-        $this->dm = $documentManager;
-        $this->translator = $translator;
         $this->tagCatalogueService = $tagCatalogueService;
     }
 
-    /**
-     * Get functions.
-     */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction('all_custom_fields', [$this, 'getAllCustomFields']),
-            new \Twig_SimpleFunction('render_object_field', [$this, 'renderObjectField']),
+            new TwigFunction('all_custom_fields', [$this, 'getAllCustomFields']),
+            new TwigFunction('render_object_field', [$this, 'renderObjectField']),
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function getAllCustomFields()
+    public function getAllCustomFields(): array
     {
         return $this->tagCatalogueService->getAllCustomListFields();
     }
 
     /**
-     * @param MultimediaObject $object
-     * @param SessionInterface $session
-     * @param string           $field
-     *
      * @throws \Exception
-     *
-     * @return string
      */
-    public function renderObjectField(MultimediaObject $object, SessionInterface $session, $field)
+    public function renderObjectField(MultimediaObject $object, SessionInterface $session, string $field): string
     {
         return $this->tagCatalogueService->renderField($object, $session, $field);
     }
