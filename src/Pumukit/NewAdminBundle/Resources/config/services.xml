@@ -103,8 +103,6 @@
 
         <service id="pumukitnewadmin.catalogue_extension" class="Pumukit\NewAdminBundle\Twig\CatalogueExtension">
             <tag name="twig.extension" />
-            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
-            <argument type="service" id="translator"/>
             <argument type="service" id="pumukitnewadmin.tag_catalogue"/>
         </service>
 

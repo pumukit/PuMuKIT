@@ -3,8 +3,10 @@
 namespace Pumukit\NewAdminBundle\Twig;
 
 use Pumukit\NewAdminBundle\Menu\ItemsList;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class MultimediaObjectButtonsExtension extends \Twig_Extension
+class MultimediaObjectButtonsExtension extends AbstractExtension
 {
     private $mmobjListButtons;
     private $mmobjMenu;
@@ -17,29 +19,26 @@ class MultimediaObjectButtonsExtension extends \Twig_Extension
         $this->seriesMenu = $seriesMenu;
     }
 
-    /**
-     * Get functions.
-     */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction('get_extra_buttons', [$this, 'getMmobjExtraButtons']),
-            new \Twig_SimpleFunction('get_extra_menu_items', [$this, 'getMmobjExtraMenuItems']),
-            new \Twig_SimpleFunction('get_extra_series_menu_items', [$this, 'getSeriesExtraMenuItems']),
+            new TwigFunction('get_extra_buttons', [$this, 'getMmobjExtraButtons']),
+            new TwigFunction('get_extra_menu_items', [$this, 'getMmobjExtraMenuItems']),
+            new TwigFunction('get_extra_series_menu_items', [$this, 'getSeriesExtraMenuItems']),
         ];
     }
 
-    public function getMmobjExtraButtons()
+    public function getMmobjExtraButtons(): array
     {
         return $this->mmobjListButtons->items();
     }
 
-    public function getSeriesExtraMenuItems()
+    public function getSeriesExtraMenuItems(): array
     {
         return $this->seriesMenu->items();
     }
 
-    public function getMmobjExtraMenuItems()
+    public function getMmobjExtraMenuItems(): array
     {
         return $this->mmobjMenu->items();
     }
