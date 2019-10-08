@@ -237,7 +237,7 @@ class PumukitAdminExtension extends AbstractExtension
         return $iconClass;
     }
 
-    public function getSeriesText(int $series): string
+    public function getSeriesText(Series $series): string
     {
         [$mmobjsPublished, $mmobjsHidden, $mmobjsBlocked] = $this->countMmobjsByStatus($series);
 
