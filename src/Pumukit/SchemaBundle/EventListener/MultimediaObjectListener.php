@@ -31,7 +31,7 @@ class MultimediaObjectListener
             return;
         }
 
-        if ($multimediaObject->getProperty('opencast')) {
+        if ($multimediaObject->isMultistream()) {
             $multimediaObject->setType(MultimediaObject::TYPE_VIDEO);
         } elseif ($multimediaObject->getProperty('externalplayer')) {
             $multimediaObject->setType(MultimediaObject::TYPE_EXTERNAL);

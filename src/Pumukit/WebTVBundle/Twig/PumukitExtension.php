@@ -311,7 +311,7 @@ class PumukitExtension extends AbstractExtension
      */
     public function getIframeUrl($multimediaObject, $isHTML5 = false, $isDownloadable = false)
     {
-        $url = str_replace('%id%', $multimediaObject->getProperty('opencast'), $multimediaObject->getProperty('opencasturl'));
+        $url = str_replace('%id%', $multimediaObject->isMultistream(), $multimediaObject->getProperty('opencasturl'));
 
         $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
         if (!$embeddedBroadcast) {
