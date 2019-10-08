@@ -154,7 +154,8 @@ class MultimediaObjectServiceTest extends WebTestCase
 
         $this->assertFalse($this->mmsService->hasPlayableResource($mm2));
 
-        $mm2->setProperty('opencast', 'opencast_id');
+        $track2->addTag('presenter/delivery');
+        $mm2->addTrack($track2);
         $this->dm->persist($mm2);
         $this->dm->flush();
 
@@ -174,16 +175,11 @@ class MultimediaObjectServiceTest extends WebTestCase
         $this->tagService->addTagToMultimediaObject($mm, $webTVTag->getId());
 
         $mm->setStatus(MultimediaObject::STATUS_PUBLISHED);
-        $this->dm->persist($mm);
-        $this->dm->flush();
-
-        $this->assertFalse($this->mmsService->canBeDisplayed($mm, $webTVCode));
-
         $mm->setProperty('opencast', 'opencast_id');
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertTrue($this->mmsService->canBeDisplayed($mm, $webTVCode));
+        $this->assertFalse($this->mmsService->canBeDisplayed($mm, $webTVCode));
     }
 
     public function testResetMagicUrl()
