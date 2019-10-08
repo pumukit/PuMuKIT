@@ -51,7 +51,7 @@ class PumukitRefactorFileSystemCommand extends ContainerAwareCommand
                 New path:
                     element.path = "element/uidseries/video/uidvideo/file.ext"
 
-                Show change on: https://github.com/campusdomar/PuMuKIT2/commit/bd63851ce2a9d44be90017a0db0d5e073b55dec5#diff-2cb454b02139985bdcb5f15387a4be64
+                Show change on: https://github.com/pumukit/PuMuKIT/commit/bd63851ce2a9d44be90017a0db0d5e073b55dec5#diff-2cb454b02139985bdcb5f15387a4be64
 
                 Examples:
 
