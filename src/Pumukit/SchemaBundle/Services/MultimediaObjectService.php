@@ -67,7 +67,7 @@ class MultimediaObjectService
     {
         $externalplayer = $mm->getProperty('externalplayer');
 
-        return $mm->getDisplayTrack() || $mm->getProperty('opencast') || !empty($externalplayer);
+        return $mm->getDisplayTrack() || $mm->isMultistream() || !empty($externalplayer);
     }
 
     /**
