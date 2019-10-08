@@ -1,4 +1,4 @@
-PuMuKIT [![Build Status](https://travis-ci.org/campusdomar/PuMuKIT.svg?branch=2.4.x)](https://travis-ci.org/campusdomar/PuMuKIT) [![](https://dockerbuildbadges.quelltext.eu/status.svg?organization=teltek&repository=pumukit)](https://hub.docker.com/r/teltek/pumukit/builds/)
+PuMuKIT [![Build Status](https://travis-ci.org/pumukit/PuMuKIT.svg?branch=3.0.x)](https://travis-ci.org/pumukit/PuMuKIT) [![](https://dockerbuildbadges.quelltext.eu/status.svg?organization=teltek&repository=pumukit)](https://hub.docker.com/r/teltek/pumukit/builds/)
 =======
 
 
@@ -12,9 +12,9 @@ http://pumukit.org
 
 PuMuKIT Documentation Project
 -------------------------------
-https://github.com/campusdomar/PuMuKIT-doc
+https://github.com/pumukit/PuMuKIT-doc
 
 
 Third Party Bundles
 -------------------
-[Third Party Bundles List](https://github.com/campusdomar/PuMuKIT-doc/blob/master/ThirdPartyBundlesList.md)
+[Third Party Bundles List](https://github.com/pumukit/PuMuKIT-doc/blob/master/ThirdPartyBundlesList.md)
