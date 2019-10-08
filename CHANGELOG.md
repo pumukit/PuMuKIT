@@ -1,8 +1,8 @@
 # CHANGELOG
 
-Web version of the changelog in http://pumukit.org/pmk-2-x-release-archive/
-To get the diff for a specific change, go to https://github.com/campusdomar/PuMuKIT2/commit/XXX where XXX is the change hash
-To get the diff between two versions, go to https://github.com/campusdomar/PuMuKIT2/compare/2.0.0...2.1.0-rc1
+Web version of the changelog in http://pumukit.org
+To get the diff for a specific change, go to https://github.com/pumukit/PuMuKIT/commit/XXX where XXX is the change hash
+To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/compare/3.0.0...3.1.x
 
 ## [3.0.0](https://github.com/campusdomar/PuMuKIT2/compare/3.0.0...2.6.0) (2019-06-10)
 - Update to PHP technology stack (PHP7, Symfony 3.4...)
