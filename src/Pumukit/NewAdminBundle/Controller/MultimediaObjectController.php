@@ -99,12 +99,22 @@ class MultimediaObjectController extends SortableAdminController implements NewA
      * the session to set the correct page and selected object.
      *
      * Route: /admin/mm/{id}
+     *
+     * @param mixed $id
      */
-    public function shortenerAction(MultimediaObject $mm, Request $request)
+    public function shortenerAction($id, Request $request)
     {
-        $this->updateSession($mm);
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['id' => $id]);
+        if (!$multimediaObject) {
+            $template = 'PumukitNewAdminBundle:MultimediaObject:404notfound.html.twig';
+            $options = ['id' => $id];
 
-        return $this->redirectToRoute('pumukitnewadmin_mms_index', ['id' => $mm->getSeries()->getId()]);
+            return new Response($this->renderView($template, $options), 404);
+        }
+        $this->updateSession($multimediaObject);
+
+        return $this->redirectToRoute('pumukitnewadmin_mms_index', ['id' => $multimediaObject->getSeries()->getId()]);
     }
 
     /**
@@ -224,7 +234,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $template = $resource->isPrototype() ? '_template' : '';
 
         $activeEditor = $this->checkHasEditor();
-        $notChangePubChannel = !$this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
+        $changePubChannel = $this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
         $allBundles = $this->container->getParameter('kernel.bundles');
         $opencastExists = array_key_exists('PumukitOpencastBundle', $allBundles);
 
@@ -248,7 +258,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             'template' => $template,
             'active_editor' => $activeEditor,
             'opencast_exists' => $opencastExists,
-            'not_change_pub_channel' => $notChangePubChannel,
+            'not_change_pub_channel' => !$changePubChannel,
             'groups' => $allGroups,
             'show_simple_pub_tab' => $showSimplePubTab,
         ];
@@ -342,7 +352,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
 
-        $notChangePubChannel = !$this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
+        $changePubChannel = $this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
 
         $method = $request->getMethod();
         if (in_array($method, ['POST', 'PUT', 'PATCH'])) {
@@ -371,7 +381,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                 'pub_channels' => $pubChannelsTags,
                 'pub_decisions' => $pubDecisionsTags,
                 'parent_tags' => $parentTags,
-                'not_change_pub_channel' => $notChangePubChannel,
+                'not_change_pub_channel' => !$changePubChannel,
                 'groups' => $allGroups,
             ]
         );
@@ -400,6 +410,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $translator = $this->get('translator');
         $locale = $request->getLocale();
+        $previousStatus = $resource->getStatus();
+
         if ($resource->isPrototype()) {
             $formMeta = $this->createForm(MultimediaObjectTemplateMetaType::class, $resource, ['translator' => $translator, 'locale' => $locale]);
         } else {
@@ -416,15 +428,26 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
 
-        $notChangePubChannel = !$this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
+        $changePubChannel = $this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
 
         $isPrototype = $resource->isPrototype();
         $method = $request->getMethod();
-        if (in_array($method, ['POST', 'PUT', 'PATCH'])) {
+
+        if (in_array($method, ['POST', 'PUT', 'PATCH']) &&
+            $formPub->submit($request, !$request->isMethod('PATCH'))->isValid()) {
             $formPub->handleRequest($request);
+            //NOTE: If this field is disabled in the form, it sets it to 'null' on the mmobj.
+            //Ideally, fix the form instead of working around it like this
+            if (null === $resource->getStatus()) {
+                $resource->setStatus($previousStatus);
+            }
+
+            if ($changePubChannel) {
+                $resource = $this->updateTags($request->get('pub_channels', null), 'PUCH', $resource);
+            }
 
             if ($formPub->isSubmitted() && $formPub->isValid()) {
-                if (!$notChangePubChannel) {
+                if ($changePubChannel) {
                     $resource = $this->updateTags($request->get('pub_channels', null), 'PUCH', $resource);
                 }
 
@@ -485,7 +508,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                 'pub_channels' => $pubChannelsTags,
                 'pub_decisions' => $pubDecisionsTags,
                 'parent_tags' => $parentTags,
-                'not_change_pub_channel' => $notChangePubChannel,
+                'not_change_pub_channel' => !$changePubChannel,
                 'groups' => $allGroups,
             ]
         );

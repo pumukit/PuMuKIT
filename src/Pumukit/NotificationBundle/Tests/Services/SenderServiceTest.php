@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class SenderServiceTest extends WebTestCase
 {
     private $dm;
+    private $logger;
     private $senderService;
     private $mailer;
     private $templating;
@@ -35,7 +36,7 @@ class SenderServiceTest extends WebTestCase
         $container = static::$kernel->getContainer();
 
         $this->dm = $container->get('doctrine_mongodb')->getManager();
-
+        $this->logger = $container->get('logger');
         $this->mailer = $container->get('mailer');
         $this->templating = $container->get('templating');
         $this->translator = $container->get('translator');
@@ -51,7 +52,7 @@ class SenderServiceTest extends WebTestCase
         $this->platformName = 'Pumukit tv';
         $this->environment = 'dev';
 
-        $this->senderService = new SenderService($this->mailer, $this->templating, $this->translator, $this->dm, $this->enable, $this->senderEmail, $this->senderName, $this->enableMultiLang, $this->locales, $this->subjectSuccessTrans, $this->subjectFailsTrans, $this->adminEmail, $this->notificateErrorsToAdmin, $this->platformName, $this->environment);
+        $this->senderService = new SenderService($this->mailer, $this->templating, $this->translator, $this->dm, $this->logger, $this->enable, $this->senderEmail, $this->senderName, $this->enableMultiLang, $this->locales, $this->subjectSuccessTrans, $this->subjectFailsTrans, $this->adminEmail, $this->notificateErrorsToAdmin, $this->platformName, $this->environment);
     }
 
     public function tearDown()
@@ -60,6 +61,7 @@ class SenderServiceTest extends WebTestCase
             $this->dm->close();
         }
         $this->dm = null;
+        $this->logger = null;
         $this->mailer = null;
         $this->templating = null;
         $this->translator = null;

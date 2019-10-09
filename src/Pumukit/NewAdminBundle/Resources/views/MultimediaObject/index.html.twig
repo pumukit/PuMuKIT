@@ -75,22 +75,22 @@
                             {# RENDERS ANY BUTTONS DEFINED IN AN EXTRA PLUGIN #}
                             {% for item in get_extra_buttons() %}
                                 {% if app.user and is_granted(item.accessRole) %}
-                                    <a title="{{ item.name }}" class="btn btn-pumukit btn-raised qa_series_button_{{ item.name }}" href="{{ path(item.uri, {'series': series.id }) }}">
-                                        <i class="mdi-content-add"></i>
+                                    <a title="{{ item.name | trans }}" class="btn btn-pumukit btn-raised qa_series_button_{{ item.name }} extra_button" href="{{ path(item.uri, {'series': series.id }) }}">
+                                        <i class="{{ item.iconClass | default('fas fa-plus') }}"></i>
                                         {{ item.name | trans }}
                                     </a>
                                 {% endif %}
                             {% endfor %}
                             {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_WIZARD_UPLOAD')) %}
-                                <a class="btn btn-primary btn-raised wizard_button" href="{{ url(is_naked() ? 'pumukitwizard_simple_index' : 'pumukitwizard_default_type', {'id': series.id, 'from':'mms', 'same_series': true}) }}">
-                                    <i class="mdi-content-add"></i>
+                                <a class="extra_button btn btn-primary btn-raised wizard_button" href="{{ url(is_naked() ? 'pumukitwizard_simple_index' : 'pumukitwizard_default_type', {'id': series.id, 'from':'mms', 'same_series': true}) }}">
+                                    <i class="fas fa-rocket"></i>
                                     {% trans %}Wizard{% endtrans %}
                                 </a>
                             {% endif %}
                             {# TODO Path create with page number #}
                             {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADVANCED_UPLOAD')) %}
-                                <a title="{% trans %}Create new multimedia object{% endtrans %}" id="pumukitnewadmin_mms_new_button" class="btn btn-pumukit btn-raised" href="#">
-                                    <i class="mdi-content-add"></i>
+                                <a title="{% trans %}Create new multimedia object{% endtrans %}" id="pumukitnewadmin_mms_new_button" class="extra_button btn btn-pumukit btn-raised" href="#">
+                                    <i class="fas fa-plus"></i>
                                     {% trans %}New{% endtrans %}
                                 </a>
                             {% endif %}

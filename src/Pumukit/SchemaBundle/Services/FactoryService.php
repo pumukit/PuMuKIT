@@ -164,6 +164,7 @@ class FactoryService
      */
     public function doCreateMultimediaObject(Series $series, $flush = true, User $loggedInUser = null)
     {
+        $dispatch = false; //doCreateMultimediaObject does not dispatch events by definition
         $prototype = $this->getMultimediaObjectPrototype($series);
 
         if (null !== $prototype) {
@@ -196,8 +197,7 @@ class FactoryService
                 }
             }
         }
-
-        $mm = $this->addLoggedInUserAsPerson($mm, $loggedInUser);
+        $mm = $this->addLoggedInUserAsPerson($mm, $loggedInUser, $flush, $dispatch);
         // Add other owners in case of exists
         if (null !== $prototype) {
             foreach ($prototype->getRoles() as $embeddedRole) {
@@ -205,7 +205,7 @@ class FactoryService
                     $role = $this->dm->getRepository(Role::class)->findOneBy(['cod' => $this->personService->getPersonalScopeRoleCode()]);
                     foreach ($embeddedRole->getPeople() as $embeddedPerson) {
                         $person = $this->dm->getRepository(Person::class)->findOneBy(['_id' => $embeddedPerson->getId()]);
-                        $mm = $this->personService->createRelationPerson($person, $role, $mm);
+                        $mm = $this->personService->createRelationPerson($person, $role, $mm, $flush, $dispatch);
                     }
                 }
             }
@@ -464,12 +464,13 @@ class FactoryService
      *
      * @param MultimediaObject $src
      * @param Series|null      $series
+     * @param mixed            $addClonedToTitle
      *
      * @throws \Exception
      *
      * @return MultimediaObject
      */
-    public function cloneMultimediaObject(MultimediaObject $src, Series $series = null)
+    public function cloneMultimediaObject(MultimediaObject $src, Series $series = null, $addClonedToTitle = true)
     {
         $new = new MultimediaObject();
         $new->setLocale($this->locales[0]);
@@ -480,12 +481,15 @@ class FactoryService
         }
         $new->setType($src->getType());
 
-        $i18nTitles = [];
-        foreach ($src->getI18nTitle() as $key => $val) {
-            $string = $this->translator->trans('cloned', [], null, $key);
-            $i18nTitles[$key] = $val.' ('.$string.')';
+        $new->setI18nTitle($src->getI18nTitle());
+        if (true === $addClonedToTitle) {
+            $i18nTitles = [];
+            foreach ($src->getI18nTitle() as $key => $val) {
+                $string = $this->translator->trans('cloned', [], null, $key);
+                $i18nTitles[$key] = $val.' ('.$string.')';
+            }
+            $new->setI18nTitle($i18nTitles);
         }
-        $new->setI18nTitle($i18nTitles);
         $new->setI18nSubtitle($src->getI18nSubtitle());
         $new->setI18nDescription($src->getI18nDescription());
         $new->setI18nLine2($src->getI18nLine2());
@@ -688,16 +692,18 @@ class FactoryService
     /**
      * @param MultimediaObject $multimediaObject
      * @param User|null        $loggedInUser
+     * @param mixed            $flush
+     * @param mixed            $dispatch
      *
      * @throws \Exception
      *
      * @return MultimediaObject
      */
-    private function addLoggedInUserAsPerson(MultimediaObject $multimediaObject, User $loggedInUser = null)
+    private function addLoggedInUserAsPerson(MultimediaObject $multimediaObject, User $loggedInUser = null, $flush = true, $dispatch = true)
     {
         if ($this->addUserAsPerson && (null !== $person = $this->personService->getPersonFromLoggedInUser($loggedInUser))) {
             if (null !== $role = $this->personService->getPersonalScopeRole()) {
-                $multimediaObject = $this->personService->createRelationPerson($person, $role, $multimediaObject);
+                $multimediaObject = $this->personService->createRelationPerson($person, $role, $multimediaObject, $flush, $dispatch);
             }
         }
 
