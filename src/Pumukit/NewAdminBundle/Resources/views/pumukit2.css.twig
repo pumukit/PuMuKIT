@@ -1,8 +1,13 @@
 {% if is_naked() and app.request.attributes.has('nakedbackoffice_custom_css_url') %}
 /*Naked import custom css url*/
 @import url("{{ app.request.attributes.get('nakedbackoffice_custom_css_url') }}");
-
 {% endif %}
+
+/* objects list headers css*/
+th#th-img{
+width: 50px;
+}
+/* end objects list headers css*/
 
 {% if app.request.attributes.get('nakedbackoffice_color') %}
 /*Naked css rules*/
@@ -292,10 +297,6 @@ label.pmk_disabled_checkbox {
 /**
  * Material Design for Bootstrap Pumukit color.
  */
-body .well-pumukit, .container .well-pumukit, .container-fluid .well-pumukit, body .jumbotron-pumukit, .container .jumbotron-pumukit, .container-fluid .jumbotron-pumukit {
-    background-color: #c05800;
-}
-
 .btn-pumukit.btn-flat:not(.btn-link) {
     color: #c05800;
 }
@@ -808,8 +809,6 @@ hr.pumukit-green {
   }
 }
 
-
-
 .prototype_well {
     padding:0 !important;
 }
@@ -818,7 +817,20 @@ hr.pumukit-green {
     background: #c05800 !important;
 }
 
-
 #editTemplate .update_pub_status, #editTemplate .update_pub_status_label {
     display: none;
+}
+
+{% if is_naked() %}
+    body .main .well {
+        box-shadow: none;
+        border: solid #eee 1px;
+    }
+{% endif %}
+
+.extra_button {
+    padding: 8px 17px;
+}
+.extra_button i {
+    margin-right: 10px;
 }

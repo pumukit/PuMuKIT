@@ -100,11 +100,19 @@ class MultimediaObjectController extends SortableAdminController implements NewA
      *
      * Route: /admin/mm/{id}
      */
-    public function shortenerAction(MultimediaObject $mm, Request $request)
+    public function shortenerAction($id, Request $request)
     {
-        $this->updateSession($mm);
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('id' => $id));
+        if (!$multimediaObject) {
+            $template = 'PumukitNewAdminBundle:MultimediaObject:404notfound.html.twig';
+            $options = array('id' => $id);
 
-        return $this->redirectToRoute('pumukitnewadmin_mms_index', ['id' => $mm->getSeries()->getId()]);
+            return new Response($this->renderView($template, $options), 404);
+        }
+        $this->updateSession($multimediaObject);
+
+        return $this->redirectToRoute('pumukitnewadmin_mms_index',  ['id' => $multimediaObject->getSeries()->getId()]);
     }
 
     /**
@@ -400,6 +408,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $translator = $this->get('translator');
         $locale = $request->getLocale();
+
         if ($resource->isPrototype()) {
             $formMeta = $this->createForm(MultimediaObjectTemplateMetaType::class, $resource, ['translator' => $translator, 'locale' => $locale]);
         } else {
@@ -416,12 +425,22 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
 
-        $notChangePubChannel = !$this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
+        $changePubChannel = $this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
 
         $isPrototype = $resource->isPrototype();
         $method = $request->getMethod();
-        if (in_array($method, ['POST', 'PUT', 'PATCH'])) {
-            $formPub->handleRequest($request);
+
+        if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
+            $formPub->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+            //NOTE: If this field is disabled in the form, it sets it to 'null' on the mmobj.
+            //Ideally, fix the form instead of working around it like this
+            if (null === $resource->getStatus()) {
+                $resource->setStatus($previousStatus);
+            }
+
+            if ($changePubChannel) {
+                $resource = $this->updateTags($request->get('pub_channels', null), 'PUCH', $resource);
+            }
 
             if ($formPub->isSubmitted() && $formPub->isValid()) {
                 if (!$notChangePubChannel) {

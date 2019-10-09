@@ -9,7 +9,7 @@
                         <li></li>
                     </ul>
                 </td>
-                <td colspan="{% if is_naked() %}6{% else %}9{% endif %}" {% if constant('STATUS_ERROR', job) == job.getStatus() %} style="color:red" {% endif %}>
+                <td colspan="{% if is_naked() %}7{% else %}10{% endif %}" {% if constant('STATUS_ERROR', job) == job.getStatus() %} style="color:red" {% endif %}>
                     <a title="{% trans %}Encoder Job info{% endtrans %}"
                        style="color:inherit"
                        data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
@@ -43,6 +43,15 @@
                     <ul>
                         <li></li>
                     </ul>
+                </td>
+                <td>
+                    <a href="" onclick="toggleHide('{{track.id}}'); return false;" title="{% trans %}Show/Hide track{% endtrans %} {{ track.id }}">
+                        {% if track.hide %}
+                            <i class="glyphicon glyphicon-eye-close"></i>
+                        {% else %}
+                            <i class="glyphicon glyphicon-eye-open"></i>
+                        {% endif %}
+                    </a>
                 </td>
                 <td>
                     <a title="{% trans %}Edit file of multimedia object{% endtrans %} {{ track.id }}"
@@ -147,7 +156,6 @@
                     - {{ track.getDuration()|duration_string }}
                     - {{ (track.getSize() / 1048576)|number_format(2) }} MB
                     {% if track.getWidth() and track.getHeight() %}- {{ track.getWidth() }}x{{ track.getHeight() }}{% endif %}
-                    {% if track.getHide() %}<span class="label label-default">{% trans %}hidden{% endtrans %}</span></i>{% endif %}
                     {% for tag in track.getTags() if tag[0:8] != "profile:" and tag[0:11] != "pumukit1id:" and tag[0:8] != "ENCODED_" %}
                         <span class="label label-primary">{{ tag }}</span>
                     {% endfor %}
@@ -266,3 +274,24 @@
         </script>
     {% endif %}
 {% endif %}
+<script>
+ function toggleHide(trackId){
+     var url = '{{ path('pumukitnewadmin_track_toggle_hide', {'id': '__ID__', 'mmId': mm.id}) }}';
+     url = url.replace('__ID__', trackId);
+     $.ajax({
+         url: url,
+         type: 'POST',
+         data: $(this).serialize(),
+         error: function(jqXHR, textStatus, errorThrown){
+             var textError = jqXHR.responseText;
+             var message = errorThrown+': '+textError;
+             no_success(message);
+         },
+         success: function(response){
+             $('#tracks_mms_{{ mm.id }}').html(response);
+             var message = '{% trans %}Track successfully updated.{% endtrans %}';
+             success(message);
+         }
+     });
+ }
+</script>

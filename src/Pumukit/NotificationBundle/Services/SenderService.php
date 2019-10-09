@@ -6,6 +6,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\Person;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\HttpKernel\Log\LoggerInterface;
 
 class SenderService
 {
@@ -29,6 +30,7 @@ class SenderService
     private $subject = "Can't send email to this address.";
     private $template = self::TEMPLATE_ERROR;
     private $dm;
+    private $logger;
     private $personRepo;
     private $enable;
 
@@ -37,6 +39,7 @@ class SenderService
         EngineInterface $templating,
         TranslatorInterface $translator,
         DocumentManager $documentManager,
+        LoggerInterface $logger,
         $enable,
         $senderEmail,
         $senderName,
@@ -53,6 +56,7 @@ class SenderService
         $this->templating = $templating;
         $this->translator = $translator;
         $this->dm = $documentManager;
+        $this->logger = $logger;
         $this->enable = $enable;
         $this->senderEmail = $senderEmail;
         $this->senderName = $senderName;
@@ -167,15 +171,62 @@ class SenderService
         return $this->locales;
     }
 
+     /**
+     * Send emails.
+     *
+     * @param array $emailsTo
+     * @param $subject
+     * @param $template
+     * @param array $parameters
+     *
+     * @return bool
+     */
+    public function sendEmails($emailsTo, $subjectString, $templateString, array $parameters = array())
+    {
+        if (!$this->enable) {
+            $this->logger->info(__CLASS__.'['.__FUNCTION__.'] The email sender service is disabled. Not sending email to "'.$email);
+
+            return;
+        }
+
+        if (!is_array($emailsTo)) {
+            $emailsTo = [$emailsTo];
+        }
+
+        foreach ($emailsTo as $email) {
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { //No need for a separate filtering function when "filtering" is a single function call.
+                $this->logger->warning(__CLASS__.'['.__FUNCTION__.'] The email "'.$email.'" appears as invalid. Message will not be sent.');
+                continue;
+            }
+
+            $twig = new \Twig_Environment(new \Twig_Loader_Array());
+            $template = $twig->createTemplate($templateString);
+            $body = $template->render($parameters);
+            $subjectTemplate = $twig->createTemplate($subjectString);
+            $subject = $subjectTemplate->render($parameters);
+            $message = \Swift_Message::newInstance();
+            $message
+                ->setSubject($subject)
+                ->setSender($this->senderEmail, $this->senderName)
+                ->setFrom($this->senderEmail, $this->senderName)
+                ->addReplyTo($this->senderEmail, $this->senderName)
+                ->setTo($email)
+                ->setBody($body, 'text/html');
+
+            $error = $this->mailer->send($message);
+        }
+    }
+
     /**
      * Send notification.
      *
-     * @param string $emailTo
-     * @param string $subject
-     * @param string $template
-     * @param array  $parameters
-     * @param bool   $error
-     * @param bool   $transConfigSubject
+     * @param $emailTo
+     * @param $subject
+     * @param $template
+     * @param array $parameters
+     * @param bool  $error
+     * @param bool  $transConfigSubject
+>>>>>>> pmk2_2.7.x
      *
      * @return bool
      */

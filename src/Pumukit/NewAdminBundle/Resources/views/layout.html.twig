@@ -7,6 +7,8 @@
 {% endblock meta %}
 {% block title %}Pumukit2 admin{% endblock %}
 {% block stylesheets %}
+    <!-- Font Awesome -->
+    <link href="{{ asset('/bundles/pumukitnewadmin/lib/fontawesome/css/all.min.css') }}" rel="stylesheet">
     <!-- Twitter Bootstrap -->
     <link href="{{ asset('/bundles/pumukitnewadmin/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Material Design for Bootstrap -->
@@ -14,8 +16,6 @@
     <link href="{{ asset('/bundles/pumukitnewadmin/css/ripples.min.css') }}" rel="stylesheet">
     <!-- Dropdown.js -->
     <link href="{{ asset('/bundles/pumukitnewadmin/css/jquery.dropdown.css') }}" rel="stylesheet">
-    <!-- Pumukit CSS modifications -->
-    <link href="{{ path('pumukitnewadmin_css') }}" rel="stylesheet">
     <!-- jQuery UI custom (autocomplete) -->
     <link href="{{ asset('/bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom.structure.min.css') }}" rel="stylesheet">
@@ -26,6 +26,8 @@
     <link href="{{ asset('/bundles/pumukitnewadmin/css/material.css') }}" rel="stylesheet">
     <!-- materialize tags -->
     <link href="{{ asset('/bundles/pumukitnewadmin/css/materialize-tags.min.css') }}" rel="stylesheet">
+    <!-- Pumukit CSS modifications -->
+    <link href="{{ path('pumukitnewadmin_css') }}" rel="stylesheet">
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset('/bundles/pumukitnewadmin/js/jquery-1.10.2.min.js') }}"></script>

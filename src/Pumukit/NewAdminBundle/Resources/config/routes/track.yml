@@ -105,3 +105,9 @@ pumukitnewadmin_track_play:
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:Track:play
+
+pumukitnewadmin_track_toggle_hide:
+    pattern: /{id}/toggle_hide/{mmId}
+    methods: [PUT, POST]
+    defaults:
+        _controller: PumukitNewAdminBundle:Track:toggleHide

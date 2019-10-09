@@ -1,0 +1,5 @@
+{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+{% block body %}
+    <h3>{{ "Error: Multimedia Object with id %id% not found" | trans({"%id%": id}) }}</h3>
+    <p>{% trans %} Go back to {% endtrans %}<a href="{{ path('pumukitnewadmin_series_index')}}"> {% trans %}my series{% endtrans %}</a>.</p>
+{% endblock %}
