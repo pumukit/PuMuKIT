@@ -103,7 +103,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     public function shortenerAction($id, Request $request)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
-        $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('id' => $id));
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(array('id' => $id));
         if (!$multimediaObject) {
             $template = 'PumukitNewAdminBundle:MultimediaObject:404notfound.html.twig';
             $options = array('id' => $id);

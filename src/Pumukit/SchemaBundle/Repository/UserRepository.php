@@ -4,6 +4,7 @@ namespace Pumukit\SchemaBundle\Repository;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\DocumentRepository;
+use Pumukit\SchemaBundle\Document\User;
 
 /**
  * UserRepository.
@@ -19,7 +20,7 @@ class UserRepository extends DocumentRepository
      */
     public function findUsersInAnyGroups($groups)
     {
-        $userRepo = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:User');
+        $userRepo = $this->getDocumentManager()->getRepository(User::class);
         //Why is there a need to to this? Can't I just pass the array of groups?
         $groupsIds = [];
         foreach ($groups as $group) {
