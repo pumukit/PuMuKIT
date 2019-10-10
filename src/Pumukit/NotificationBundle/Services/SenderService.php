@@ -3,10 +3,10 @@
 namespace Pumukit\NotificationBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Psr\Log\LoggerInterface;
 use Pumukit\SchemaBundle\Document\Person;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Translation\TranslatorInterface;
-use Psr\Log\LoggerInterface;
 
 class SenderService
 {
@@ -171,28 +171,30 @@ class SenderService
         return $this->locales;
     }
 
-     /**
+    /**
      * Send emails.
      *
-     * @param array $emailsTo
+     * @param array  $emailsTo
      * @param string $subjectString
      * @param string $templateString
-     * @param array $parameters
+     * @param array  $parameters
      */
-    public function sendEmails($emailsTo, $subjectString, $templateString, array $parameters = array())
+    public function sendEmails($emailsTo, $subjectString, $templateString, array $parameters = [])
     {
         if (!is_array($emailsTo)) {
             $emailsTo = [$emailsTo];
         }
 
         if (!$this->enable) {
-            $this->logger->info(__CLASS__.'['.__FUNCTION__.'] The email sender service is disabled. Not sending emails to "'. implode(', ', $emailsTo).'"');
+            $this->logger->info(__CLASS__.'['.__FUNCTION__.'] The email sender service is disabled. Not sending emails to "'.implode(', ', $emailsTo).'"');
+
             return;
         }
 
         foreach ($emailsTo as $email) {
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { //No need for a separate filtering function when "filtering" is a single function call.
                 $this->logger->warning(__CLASS__.'['.__FUNCTION__.'] The email "'.$email.'" appears as invalid. Message will not be sent.');
+
                 continue;
             }
 
@@ -208,7 +210,8 @@ class SenderService
                 ->setFrom($this->senderEmail, $this->senderName)
                 ->addReplyTo($this->senderEmail, $this->senderName)
                 ->setTo($email)
-                ->setBody($body, 'text/html');
+                ->setBody($body, 'text/html')
+            ;
 
             $error = $this->mailer->send($message);
         }

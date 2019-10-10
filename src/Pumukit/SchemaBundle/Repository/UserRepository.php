@@ -26,13 +26,12 @@ class UserRepository extends DocumentRepository
         foreach ($groups as $group) {
             $groupsIds[] = new \MongoId($group->getId());
         }
-        $users = $userRepo
-                ->createQueryBuilder()
-                ->field('groups')
-                ->in($groupsIds)
-                ->getQuery()
-                ->execute()->toArray();
 
-        return $users;
+        return $userRepo
+            ->createQueryBuilder()
+            ->field('groups')
+            ->in($groupsIds)
+            ->getQuery()
+            ->execute()->toArray();
     }
 }

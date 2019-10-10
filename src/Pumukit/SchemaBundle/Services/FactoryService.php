@@ -464,6 +464,7 @@ class FactoryService
      *
      * @param MultimediaObject $src
      * @param Series|null      $series
+     * @param mixed            $addClonedToTitle
      *
      * @throws \Exception
      *
@@ -691,6 +692,8 @@ class FactoryService
     /**
      * @param MultimediaObject $multimediaObject
      * @param User|null        $loggedInUser
+     * @param mixed            $flush
+     * @param mixed            $dispatch
      *
      * @throws \Exception
      *

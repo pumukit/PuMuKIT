@@ -99,20 +99,22 @@ class MultimediaObjectController extends SortableAdminController implements NewA
      * the session to set the correct page and selected object.
      *
      * Route: /admin/mm/{id}
+     *
+     * @param mixed $id
      */
     public function shortenerAction($id, Request $request)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(array('id' => $id));
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['id' => $id]);
         if (!$multimediaObject) {
             $template = 'PumukitNewAdminBundle:MultimediaObject:404notfound.html.twig';
-            $options = array('id' => $id);
+            $options = ['id' => $id];
 
             return new Response($this->renderView($template, $options), 404);
         }
         $this->updateSession($multimediaObject);
 
-        return $this->redirectToRoute('pumukitnewadmin_mms_index',  ['id' => $multimediaObject->getSeries()->getId()]);
+        return $this->redirectToRoute('pumukitnewadmin_mms_index', ['id' => $multimediaObject->getSeries()->getId()]);
     }
 
     /**
@@ -431,7 +433,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $isPrototype = $resource->isPrototype();
         $method = $request->getMethod();
 
-        if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
+        if (in_array($method, ['POST', 'PUT', 'PATCH']) &&
             $formPub->submit($request, !$request->isMethod('PATCH'))->isValid()) {
             //NOTE: If this field is disabled in the form, it sets it to 'null' on the mmobj.
             //Ideally, fix the form instead of working around it like this

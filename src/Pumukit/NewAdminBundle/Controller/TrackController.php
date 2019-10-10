@@ -100,13 +100,14 @@ class TrackController extends Controller implements NewAdminControllerInterface
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
         $track->setHide(!$track->getHide());
+
         try {
             $multimediaObject = $this->get('pumukitschema.track')->updateTrackInMultimediaObject($multimediaObject, $track);
         } catch (\Exception $e) {
             return new Response($e->getMessage(), 400);
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', array('reload_links' => true, 'id' => $multimediaObject->getId())));
+        return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', ['reload_links' => true, 'id' => $multimediaObject->getId()]));
     }
 
     /**
