@@ -232,7 +232,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $template = $resource->isPrototype() ? '_template' : '';
 
         $activeEditor = $this->checkHasEditor();
-        $notChangePubChannel = !$this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
+        $changePubChannel = $this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
         $allBundles = $this->container->getParameter('kernel.bundles');
         $opencastExists = array_key_exists('PumukitOpencastBundle', $allBundles);
 
@@ -256,7 +256,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             'template' => $template,
             'active_editor' => $activeEditor,
             'opencast_exists' => $opencastExists,
-            'not_change_pub_channel' => $notChangePubChannel,
+            'not_change_pub_channel' => !$changePubChannel,
             'groups' => $allGroups,
             'show_simple_pub_tab' => $showSimplePubTab,
         ];
@@ -350,7 +350,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
 
-        $notChangePubChannel = !$this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
+        $changePubChannel = $this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
 
         $method = $request->getMethod();
         if (in_array($method, ['POST', 'PUT', 'PATCH'])) {
@@ -379,7 +379,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                 'pub_channels' => $pubChannelsTags,
                 'pub_decisions' => $pubDecisionsTags,
                 'parent_tags' => $parentTags,
-                'not_change_pub_channel' => $notChangePubChannel,
+                'not_change_pub_channel' => !$changePubChannel,
                 'groups' => $allGroups,
             ]
         );
@@ -408,6 +408,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $translator = $this->get('translator');
         $locale = $request->getLocale();
+        $previousStatus = $resource->getStatus();
 
         if ($resource->isPrototype()) {
             $formMeta = $this->createForm(MultimediaObjectTemplateMetaType::class, $resource, ['translator' => $translator, 'locale' => $locale]);
@@ -443,7 +444,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             }
 
             if ($formPub->isSubmitted() && $formPub->isValid()) {
-                if (!$notChangePubChannel) {
+                if ($changePubChannel) {
                     $resource = $this->updateTags($request->get('pub_channels', null), 'PUCH', $resource);
                 }
 
@@ -504,7 +505,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                 'pub_channels' => $pubChannelsTags,
                 'pub_decisions' => $pubDecisionsTags,
                 'parent_tags' => $parentTags,
-                'not_change_pub_channel' => $notChangePubChannel,
+                'not_change_pub_channel' => !$changePubChannel,
                 'groups' => $allGroups,
             ]
         );

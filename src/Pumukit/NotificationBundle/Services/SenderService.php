@@ -175,11 +175,9 @@ class SenderService
      * Send emails.
      *
      * @param array $emailsTo
-     * @param $subject
-     * @param $template
+     * @param string $subjectString
+     * @param string $templateString
      * @param array $parameters
-     *
-     * @return bool
      */
     public function sendEmails($emailsTo, $subjectString, $templateString, array $parameters = array())
     {
@@ -219,12 +217,12 @@ class SenderService
     /**
      * Send notification.
      *
-     * @param $emailTo
-     * @param $subject
-     * @param $template
-     * @param array $parameters
-     * @param bool  $error
-     * @param bool  $transConfigSubject
+     * @param array|string $emailTo
+     * @param string       $subject
+     * @param string       $template
+     * @param array        $parameters
+     * @param bool         $error
+     * @param bool         $transConfigSubject
      *
      * @return bool
      */

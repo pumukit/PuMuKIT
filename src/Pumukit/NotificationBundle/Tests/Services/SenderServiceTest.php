@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class SenderServiceTest extends WebTestCase
 {
     private $dm;
+    private $logger;
     private $senderService;
     private $mailer;
     private $templating;
