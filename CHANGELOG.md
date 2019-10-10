@@ -22,7 +22,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Update Resources/doc/Configuration.md of all bundles 
 - Updating code to use Doctrine ODM 2.0
 
-### Removed 
+#### Removed 
 - Broadcast code references
 - Unused files ( InterfaceTest, default files, ... )
 - Changelog info of versions lower than PuMuKIT 3.0
