@@ -6,7 +6,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\Person;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Translation\TranslatorInterface;
-use Symfony\Component\HttpKernel\Log\LoggerInterface;
+use Psr\Log\LoggerInterface;
 
 class SenderService
 {
@@ -226,7 +226,6 @@ class SenderService
      * @param array $parameters
      * @param bool  $error
      * @param bool  $transConfigSubject
->>>>>>> pmk2_2.7.x
      *
      * @return bool
      */
