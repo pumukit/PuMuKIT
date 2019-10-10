@@ -21,11 +21,10 @@ class UserRepository extends DocumentRepository
     public function findUsersInAnyGroups($groups)
     {
         $userRepo = $this->getDocumentManager()->getRepository(User::class);
-        //Why is there a need to to this? Can't I just pass the array of groups?
-        $groupsIds = [];
-        foreach ($groups as $group) {
-            $groupsIds[] = new \MongoId($group->getId());
-        }
+
+        $groupsIds = array_map(function ($group) {
+            return new \MongoId($group->getId());
+        }, $groups);
 
         return $userRepo
             ->createQueryBuilder()
