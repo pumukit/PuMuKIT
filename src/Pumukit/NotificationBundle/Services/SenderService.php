@@ -183,14 +183,13 @@ class SenderService
      */
     public function sendEmails($emailsTo, $subjectString, $templateString, array $parameters = array())
     {
-        if (!$this->enable) {
-            $this->logger->info(__CLASS__.'['.__FUNCTION__.'] The email sender service is disabled. Not sending email to "'.$email);
-
-            return;
-        }
-
         if (!is_array($emailsTo)) {
             $emailsTo = [$emailsTo];
+        }
+
+        if (!$this->enable) {
+            $this->logger->info(__CLASS__.'['.__FUNCTION__.'] The email sender service is disabled. Not sending emails to "'. implode(', ', $emailsTo).'"');
+            return;
         }
 
         foreach ($emailsTo as $email) {
