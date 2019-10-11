@@ -3789,7 +3789,6 @@
         <source>{0}times|{1}time|]1,Inf]times</source>
         <target>{0}times|{1}time|]1,Inf]times</target>
       </trans-unit>
-<<<<<<< HEAD
       <trans-unit id="5KIt_PS" resname="Error: Multimedia Object with id %id% not found">
         <source>Error: Multimedia Object with id %id% not found</source>
         <target>Error: Multimedia Object with id %id% not found</target>
