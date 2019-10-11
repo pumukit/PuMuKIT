@@ -3777,6 +3777,34 @@
         <source>Error</source>
         <target>Error</target>
       </trans-unit>
+      <trans-unit id="gOjdGlo" resname="Recording">
+        <source>Recording</source>
+        <target>Recording</target>
+      </trans-unit>
+      <trans-unit id="GyjReFW" resname="Viewed">
+        <source>Viewed</source>
+        <target>Viewed</target>
+      </trans-unit>
+      <trans-unit id="Y48fpVR" resname="{0}times|{1}time|]1,Inf]times">
+        <source>{0}times|{1}time|]1,Inf]times</source>
+        <target>{0}times|{1}time|]1,Inf]times</target>
+      </trans-unit>
+      <trans-unit id="5KIt_PS" resname="Error: Multimedia Object with id %id% not found">
+        <source>Error: Multimedia Object with id %id% not found</source>
+        <target>Error: Multimedia Object with id %id% not found</target>
+      </trans-unit>
+      <trans-unit id="eQLp7Fl" resname="Go back to">
+        <source>Go back to</source>
+        <target>Go back to</target>
+      </trans-unit>
+      <trans-unit id="YMfjw07" resname="my series">
+        <source>my series</source>
+        <target>my series</target>
+      </trans-unit>
+      <trans-unit id="CZ_p4k1" resname="Show/Hide track">
+        <source>Show/Hide track</source>
+        <target>Show/Hide track</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
