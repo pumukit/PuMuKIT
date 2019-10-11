@@ -2,6 +2,7 @@
 
 namespace Pumukit\NewAdminBundle\Form\Type;
 
+use Pumukit\SchemaBundle\Document\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -18,7 +19,7 @@ class UserUpdateType extends AbstractType
     private $translator;
     private $locale;
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->translator = $options['translator'];
         $this->locale = $options['locale'];
@@ -94,11 +95,11 @@ class UserUpdateType extends AbstractType
         );
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Pumukit\SchemaBundle\Document\User',
+                'data_class' => User::class,
             ]
         );
 
@@ -106,7 +107,7 @@ class UserUpdateType extends AbstractType
         $resolver->setRequired('locale');
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'pumukitnewadmin_user';
     }

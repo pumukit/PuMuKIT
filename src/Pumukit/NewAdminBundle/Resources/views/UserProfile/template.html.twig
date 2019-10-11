@@ -1,0 +1,38 @@
+{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+
+{% block body %}
+
+    {% include "PumukitNewAdminBundle:Misc:panel_title.html.twig" with { page_title:  "My profile" } %}
+
+
+    <div class="col-md-4">
+        <div class="well">
+            <div class="alert alert-material-orange-300">
+                <h3 class="text-center">{{ "My personal profile"|trans|upper }}</h3>
+            </div>
+            <br />
+            {% include "PumukitNewAdminBundle:UserProfile:template_user_info.html.twig" %}
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="well">
+            <div class="alert alert-material-blue-A100">
+                <h3 class="text-center">{{ "My profile info"|trans|upper }}</h3>
+            </div>
+            <br />
+            {% include "PumukitNewAdminBundle:UserProfile:template_user_info_other.html.twig" %}
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="well">
+            <div class="alert alert-material-green">
+                <h3 class="text-center">{{ "My stats"|trans|upper }}</h3>
+            </div>
+            <br />
+            {{ render(controller('PumukitNewAdminBundle:UserProfile:userStats'))}}
+        </div>
+    </div>
+
+{% endblock %}

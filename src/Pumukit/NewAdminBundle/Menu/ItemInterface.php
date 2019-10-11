@@ -4,20 +4,9 @@ namespace Pumukit\NewAdminBundle\Menu;
 
 interface ItemInterface
 {
-    /**
-     * @return string
-     */
-    public function getName();
+    public function getName(): string;
 
-    /**
-     * Get the uri for a menu item.
-     *
-     * @return string
-     */
-    public function getUri();
+    public function getUri(): string;
 
-    /**
-     * @return string
-     */
-    public function getAccessRole();
+    public function getAccessRole(): string;
 }

@@ -1,0 +1,59 @@
+<style>
+    {% include "PumukitWebTVBundle:Css:template_stats.css.twig" %}
+    .user_profile_video_info_block {
+        margin-top:10px;
+    }
+</style>
+
+<div class="row">
+
+    <div class="col-md-6 user_profile_video_storage_block">
+        <h5><strong>{{ "Storage"|trans }}</strong></h5>
+        <table class="table table-striped">
+            <tr><td>{{ userStorage|number_format(2) }} MB</td></tr>
+        </table>
+    </div>
+
+    <div class="col-md-6 user_profile_video_storage_block">
+        <h5><strong>{{ "Time uploaded"|trans }}</strong></h5>
+        <table class="table table-striped">
+            <tr><td>{{ userDuration }}</td></tr>
+        </table>
+    </div>
+
+    {% if objectsByStatus %}
+        <div class="col-md-12 user_profile_video_info_block">
+            <h5><strong>{{ "Your video stats"|trans }}</strong></h5>
+            {% for key, value in objectsByStatus %}
+                {% set text = status_string_text_by_value(key) %}
+                <div class="col-xs-4 col-sm-4 col-md-4">
+                    <div class="stats-circle stats-circle-{{ loop.index }} text-center center-block">
+                        <span>{{ value['multimediaObjects']|length }}</span>
+                        <div class="stats-label">{{ text|trans }}</div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="col-md-12 user_profile_video_info_block">
+        <h5><strong>{{ "Assigned videos by role"|trans }}</strong></h5>
+        <table class="table table-striped">
+            {% for key, value in objectsByRole %}
+                {% if value is not empty %}
+                    <tr>
+                        <td>{{ role_string_text_by_value(key) }}</td>
+                        <td>{{ value[0]['multimediaObjects']|length }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td>{{ role_string_text_by_value(key) }}</td>
+                        <td>0</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+
+</div>
+

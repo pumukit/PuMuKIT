@@ -3789,6 +3789,7 @@
         <source>{0}times|{1}time|]1,Inf]times</source>
         <target>{0}times|{1}time|]1,Inf]times</target>
       </trans-unit>
+<<<<<<< HEAD
       <trans-unit id="5KIt_PS" resname="Error: Multimedia Object with id %id% not found">
         <source>Error: Multimedia Object with id %id% not found</source>
         <target>Error: Multimedia Object with id %id% not found</target>
@@ -3804,6 +3805,57 @@
       <trans-unit id="CZ_p4k1" resname="Show/Hide track">
         <source>Show/Hide track</source>
         <target>Show/Hide track</target>
+      </trans-unit>
+      <trans-unit id="z6IKnQ2" resname="Personal profile">
+        <source>Personal profile</source>
+        <target>Personal profile</target>
+      <trans-unit id="j_dsskm" resname="My personal profile">
+        <source>My personal profile</source>
+        <target>My personal profile</target>
+      </trans-unit>
+      <trans-unit id="EPGZEYI" resname="My profile info">
+        <source>My profile info</source>
+        <target>My profile info</target>
+      </trans-unit>
+      <trans-unit id="5QtQix1" resname="Time uploaded">
+        <source>Time uploaded</source>
+        <target>Time uploaded</target>
+      </trans-unit>
+      <trans-unit id="LZRp8Ix" resname="Your video stats">
+        <source>Your video stats</source>
+        <target>Your video stats</target>
+      </trans-unit>
+      <trans-unit id="BpOx4v1" resname="Assigned videos by role">
+        <source>Assigned videos by role</source>
+        <target>Assigned videos by role</target>
+      </trans-unit>
+      <trans-unit id="DTlgLcO" resname="Last login">
+        <source>Last login</source>
+        <target>Last login</target>
+      </trans-unit>
+      <trans-unit id="RyWQrpd" resname="Provider">
+        <source>Provider</source>
+        <target>Provider</target>
+      </trans-unit>
+      <trans-unit id="Rj1ftLT" resname="No groups found">
+        <source>No groups found</source>
+        <target>No groups found</target>
+      </trans-unit>
+      <trans-unit id="ITD9xUa" resname="Email already in use">
+        <source>Email already in use</source>
+        <target>Email already in use</target>
+      </trans-unit>
+      <trans-unit id="8AEUIqw" resname="User info updated">
+        <source>User info updated</source>
+        <target>User info updated</target>
+      </trans-unit>
+      <trans-unit id="Jxxi_i3" resname="My profile">
+        <source>My profile</source>
+        <target>My profile</target>
+      </trans-unit>
+      <trans-unit id="dclYZH3" resname="My stats">
+        <source>My stats</source>
+        <target>My stats</target>
       </trans-unit>
     </body>
   </file>

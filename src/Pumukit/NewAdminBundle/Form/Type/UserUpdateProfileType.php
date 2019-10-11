@@ -15,7 +15,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserType extends AbstractType
+class UserUpdateProfileType extends AbstractType
 {
     private $translator;
     private $locale;
@@ -25,6 +25,7 @@ class UserType extends AbstractType
         $this->translator = $options['translator'];
         $this->locale = $options['locale'];
 
+        $user = $builder->getData();
         $builder
             ->add('enabled', HiddenType::class, ['data' => true])
             ->add(
@@ -32,6 +33,7 @@ class UserType extends AbstractType
                 TextType::class,
                 [
                     'attr' => ['aria-label' => $this->translator->trans('Name and Surname', [], null, $this->locale)],
+                    'disabled' => !$user->isLocal(),
                     'label' => $this->translator->trans('Name and Surname', [], null, $this->locale),
                 ]
             )
@@ -39,13 +41,8 @@ class UserType extends AbstractType
                 'username',
                 TextType::class,
                 [
-                    'attr' => [
-                        'aria-label' => $this->translator->trans('Username', [], null, $this->locale),
-                        'autocomplete' => 'off',
-                        'pattern' => '^[a-zA-Z0-9_\-\.@]{4,32}$',
-                        'oninvalid' => "setCustomValidity('The username can not have blank spaces neither special characters')",
-                        'oninput' => "setCustomValidity('')",
-                    ],
+                    'disabled' => true,
+                    'attr' => ['aria-label' => $this->translator->trans('Username', [], null, $this->locale)],
                     'label' => $this->translator->trans('Username', [], null, $this->locale),
                 ]
             )
@@ -58,6 +55,7 @@ class UserType extends AbstractType
                     'first_options' => ['label' => $this->translator->trans('Password')],
                     'second_options' => ['label' => $this->translator->trans('Repeat Password')],
                     'attr' => ['autocomplete' => 'off', 'aria-label' => $this->translator->trans('Password', [], null, $this->locale)],
+                    'disabled' => !$user->isLocal(),
                     'required' => false,
                     'label' => $this->translator->trans('Password', [], null, $this->locale),
                 ]
@@ -66,6 +64,7 @@ class UserType extends AbstractType
                 'email',
                 EmailType::class,
                 [
+                    'disabled' => true,
                     'attr' => ['aria-label' => $this->translator->trans('Email', [], null, $this->locale)],
                     'label' => $this->translator->trans('Email', [], null, $this->locale),
                 ]
@@ -74,6 +73,7 @@ class UserType extends AbstractType
                 'permissionProfile',
                 null,
                 [
+                    'disabled' => !$user->hasRole('ROLE_ACCESS_ADMIN_USERS'),
                     'attr' => ['aria-label' => $this->translator->trans('Permission Profile', [], null, $this->locale)],
                     'label' => $this->translator->trans('Permission Profile', [], null, $this->locale),
                 ]
