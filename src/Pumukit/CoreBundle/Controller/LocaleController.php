@@ -10,9 +10,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Router;
 
-/**
- * Class LocaleController.
- */
 class LocaleController extends AbstractController implements WebTVControllerInterface
 {
     /**
@@ -24,10 +21,6 @@ class LocaleController extends AbstractController implements WebTVControllerInte
         $session = $this->get('session');
         $session->set('_locale', $locale);
 
-        /** @var RequestContext */
-        $requestContext = $this->get('router.request_context');
-        $requestContext->setParameter('_locale', $locale);
-
         $request->setLocale($locale);
 
         $referer = $request->headers->get('referer');
@@ -35,17 +28,17 @@ class LocaleController extends AbstractController implements WebTVControllerInte
             return $this->redirect('/');
         }
 
-        $paseReferer = parse_url($referer);
+        $parseReferer = parse_url($referer);
 
-        if (!is_array($paseReferer)) {
+        if (!is_array($parseReferer)) {
             return $this->redirect('/');
         }
 
-        if (!isset($paseReferer['path'])) {
+        if (!isset($parseReferer['path'])) {
             return $this->redirect('/');
         }
 
-        $refererPath = $paseReferer['path'];
+        $refererPath = $parseReferer['path'];
         $lastPath = str_replace($request->getBaseUrl(), '', $refererPath);
 
         try {
@@ -60,21 +53,20 @@ class LocaleController extends AbstractController implements WebTVControllerInte
             return $this->redirect('/');
         }
 
-        //array_filter ARRAY_FILTER_USE_BOTH only in 5.6
         $params = [];
         foreach ($route as $k => $v) {
-            if ('_' != $k[0]) {
+            if ('_' !== $k[0]) {
                 $params[$k] = $v;
             }
         }
         $url = $this->generateUrl($route['_route'], $params);
 
-        if (isset($paseReferer['query'])) {
-            $url .= '?'.$paseReferer['query'];
+        if (isset($parseReferer['query'])) {
+            $url .= '?'.$parseReferer['query'];
         }
 
-        if (isset($paseReferer['fragment'])) {
-            $url .= '#'.$paseReferer['fragment'];
+        if (isset($parseReferer['fragment'])) {
+            $url .= '#'.$parseReferer['fragment'];
         }
 
         return $this->redirect($url);
