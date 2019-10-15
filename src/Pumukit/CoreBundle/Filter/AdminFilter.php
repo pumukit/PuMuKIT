@@ -11,7 +11,7 @@ use Pumukit\SchemaBundle\Document\Series;
 
 class AdminFilter extends BsonFilter
 {
-    public function addFilterCriteria(ClassMetadata $targetDocument)
+    public function addFilterCriteria(ClassMetadata $targetDocument): array
     {
         if (MultimediaObject::class === $targetDocument->reflClass->name) {
             return $this->getMultimediaObjectCriteria();

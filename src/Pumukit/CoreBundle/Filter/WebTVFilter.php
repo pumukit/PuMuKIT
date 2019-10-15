@@ -17,7 +17,7 @@ class WebTVFilter extends BsonFilter
      *
      * @return array|void
      */
-    public function addFilterCriteria(ClassMetadata $targetDocument)
+    public function addFilterCriteria(ClassMetadata $targetDocument): array
     {
         if (MultimediaObject::class === $targetDocument->reflClass->name) {
             return $this->getMultimediaObjectCriteria();

@@ -8,7 +8,7 @@ use Pumukit\SchemaBundle\Document\Series;
 
 class PersonalFilter extends WebTVFilter
 {
-    public function addFilterCriteria(ClassMetadata $targetDocument)
+    public function addFilterCriteria(ClassMetadata $targetDocument): array
     {
         if (MultimediaObject::class === $targetDocument->reflClass->name) {
             return $this->getMultimediaObjectCriteria();
