@@ -1,0 +1,50 @@
+security:
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        in_memory: { memory: null }
+        fos_user:
+            id: fos_user.user_provider.username
+
+    encoders:
+        FOS\UserBundle\Model\UserInterface: sha512
+
+    firewalls:
+        api:
+            pattern: ^/api
+            context: pumukit
+            http_basic:
+                provider: fos_user
+                realm: "secure-api"
+        main:
+            pattern: ^/
+            context: pumukit
+            form_login:
+                provider: fos_user
+                csrf_token_generator: security.csrf.token_manager
+            logout:       true
+            anonymous:    true
+        default:
+            anonymous: ~
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/, role: [ROLE_SCOPE_GLOBAL, ROLE_SCOPE_PERSONAL] }
+        - { path: ^/api/, role: [ROLE_SCOPE_GLOBAL, ROLE_SCOPE_PERSONAL, ROLE_ACCESS_API] }
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/profile, roles: ROLE_USER }
+    role_hierarchy:
+        ROLE_ADMIN:        ROLE_USER
+        ROLE_SUPER_ADMIN:  ROLE_ADMIN

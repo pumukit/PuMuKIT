@@ -1,0 +1,3 @@
+#controllers:
+#    resource: ../../src/Pumukit/*/Controller/
+#    type: annotation

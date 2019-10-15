@@ -1,0 +1,53 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+#pumukit_stats_ui:
+#  resource: "@PumukitStatsUIBundle/Resources/config/routing.yml"
+#  prefix:   /
+
+pumukit_jw_player:
+  resource: "@PumukitJWPlayerBundle/Resources/config/routing.yml"
+  prefix:   /
+
+pumukit_base_player:
+  resource: "@PumukitBasePlayerBundle/Resources/config/routing.yml"
+  prefix:   /
+
+pumukit_core:
+  resource: "@PumukitCoreBundle/Resources/config/routing.yml"
+  prefix:   /
+
+pumukit_stats:
+  resource: "@PumukitStatsBundle/Controller/"
+  type:     annotation
+  prefix:   /
+
+pumukit_schema:
+  resource: "@PumukitSchemaBundle/Controller/"
+  type:     annotation
+  prefix:   /
+
+pumukit_encoder:
+  resource: "@PumukitEncoderBundle/Controller/"
+  type:     annotation
+  prefix:   /
+
+pumukit_wizard:
+  resource: "@PumukitWizardBundle/Resources/config/routing.yml"
+
+pumukit_base_live_player:
+  resource: "@PumukitBaseLivePlayerBundle/Controller/"
+  type:     annotation
+  prefix:   /
+
+pumukit_web_tv_file:
+  resource: "@PumukitWebTVBundle/Resources/config/routing.yml"
+  prefix:   /
+
+pumukitnewadmin:
+  resource: "@PumukitNewAdminBundle/Resources/config/routing.yml"
+  prefix:   /
+
+fos_user_security:
+  resource: "@FOSUserBundle/Resources/config/routing/security.xml"

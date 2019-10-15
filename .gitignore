@@ -1,30 +1,29 @@
-/src/Pumukit/ExampleDataBundle/Resources/public/images
-/src/Pumukit/ExampleDataBundle/Resources/public/videos
-/web/bundles/
-/web/uploads/material/*
-!/web/uploads/material/.gitignore
-/web/uploads/pic/*
-!/web/uploads/pic/.gitignore
-/web/storage/downloads/*
-!/web/storage/downloads/.gitignore
-/web/storage/masters/*
-!/web/storage/masters/.gitignore
-/app/Resources/*
-!/app/Resources/views
-!/app/Resources/FOSUserBundle
-!/app/Resources/WhiteOctoberPagerfantaBundle
-!/app/Resources/TwigBundle
-/app/bootstrap.php.cache
-/app/cache/*
-/app/config/parameters.yml
-/app/logs/*
-/app/cache/.gitkeep
-/app/logs/.gitkeep
-/build/
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/public/bundles/
+/var/
 /vendor/
-/bin/
-/composer.phar
-*~
-\#*\#
-TAGS
-.php_cs.cache
+###< symfony/framework-bundle ###
+
+###> symfony/phpunit-bridge ###
+.phpunit
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> symfony/web-server-bundle ###
+/.web-server-pid
+###< symfony/web-server-bundle ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+###> friendsofphp/php-cs-fixer ###
+/.php_cs
+/.php_cs.cache
+###< friendsofphp/php-cs-fixer ###
