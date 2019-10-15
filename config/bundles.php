@@ -6,7 +6,6 @@ return [
     Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle::class => ['all' => true],
     Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],
     Vipx\BotDetectBundle\VipxBotDetectBundle::class => ['all' => true],
-    Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle::class => ['all' => true],
     Symfony\Bundle\TwigBundle\TwigBundle::class => ['all' => true],
     FOS\UserBundle\FOSUserBundle::class => ['all' => true],
     JMS\SerializerBundle\JMSSerializerBundle::class => ['all' => true],
@@ -31,5 +30,5 @@ return [
     Pumukit\WebTVBundle\PumukitWebTVBundle::class => ['all' => true],
     Pumukit\WizardBundle\PumukitWizardBundle::class => ['all' => true],
     Pumukit\WorkflowBundle\PumukitWorkflowBundle::class => ['all' => true],
-//    Pumukit\StatsUIBundle\PumukitStatsUIBundle::class => ['all' => true],
+    Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle::class => ['all' => true],
 ];

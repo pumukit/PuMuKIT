@@ -33,7 +33,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
      * @param Request $request
      *
      * @return array
-     * @Template
+     * @Template("PumukitNewAdminBundle:Series:index.html.twig")
      */
     public function indexAction(Request $request)
     {
