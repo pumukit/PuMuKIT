@@ -6,7 +6,6 @@
     "description": "Media Portal",
     "require": {
         "php": "^7.2",
-        "alcaeus/mongo-php-adapter": "@stable",
         "doctrine/mongodb-odm-bundle": "^4.0",
         "friendsofsymfony/user-bundle": "dev-master",
         "jasig/phpcas": "^1.3",

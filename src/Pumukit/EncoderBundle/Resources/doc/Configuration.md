@@ -29,7 +29,7 @@ pumukit_encoder:
                 type: store
                 host: 127.0.0.1
                 description: Local master server
-                dir_out: "%kernel.root_dir%/../web/storage/masters"
+                dir_out: "%kernel.root_dir%/../public/storage/masters"
             app: cp
             rel_duration_size: 1
             rel_duration_trans: 1
@@ -54,7 +54,7 @@ pumukit_encoder:
                 type: store
                 host: 127.0.0.1
                 description: Local master server
-                dir_out: "%kernel.root_dir%/../web/storage/masters"
+                dir_out: "%kernel.root_dir%/../public/storage/masters"
             app: ffmpeg
             rel_duration_size: 1
             rel_duration_trans: 1
