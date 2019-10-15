@@ -7,14 +7,14 @@ use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class SeriesController.
  */
-class SeriesController extends Controller implements WebTVControllerInterface
+class SeriesController extends AbstractController implements WebTVControllerInterface
 {
     /**
      * @Route("/series/{id}", name="pumukit_webtv_series_index")

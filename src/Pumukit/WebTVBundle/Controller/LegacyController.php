@@ -5,14 +5,14 @@ namespace Pumukit\WebTVBundle\Controller;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class LegacyController.
  */
-class LegacyController extends Controller implements WebTVControllerInterface
+class LegacyController extends AbstractController implements WebTVControllerInterface
 {
     /**
      * @Route("/serial/index/id/{pumukit1id}.html")

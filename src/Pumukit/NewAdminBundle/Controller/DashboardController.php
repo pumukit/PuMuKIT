@@ -5,7 +5,7 @@ namespace Pumukit\NewAdminBundle\Controller;
 use Pumukit\SchemaBundle\Document\Series;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 /**
  * @Security("is_granted('ROLE_ACCESS_DASHBOARD')")
  */
-class DashboardController extends Controller implements NewAdminControllerInterface
+class DashboardController extends AbstractController implements NewAdminControllerInterface
 {
     /**
      * @Route("/dashboard", name="pumukit_newadmin_dashboard_index")

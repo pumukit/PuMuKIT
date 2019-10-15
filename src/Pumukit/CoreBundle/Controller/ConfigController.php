@@ -3,12 +3,12 @@
 namespace Pumukit\CoreBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ConfigController extends Controller implements AdminControllerInterface
+class ConfigController extends AbstractController implements AdminControllerInterface
 {
     /**
      * @Security("is_granted('ROLE_SUPER_ADMIN')")

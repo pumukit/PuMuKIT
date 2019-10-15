@@ -4,13 +4,13 @@ namespace Pumukit\WebTVBundle\Controller;
 
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class IndexController.
  */
-class IndexController extends Controller implements WebTVControllerInterface
+class IndexController extends AbstractController implements WebTVControllerInterface
 {
     /**
      * @Route("/", name="pumukit_webtv_index_index")

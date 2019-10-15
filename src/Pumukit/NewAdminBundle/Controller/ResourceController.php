@@ -5,11 +5,11 @@ namespace Pumukit\NewAdminBundle\Controller;
 use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Utils\Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class ResourceController extends Controller
+class ResourceController extends AbstractController
 {
     public static $resourceName = 'series';
     public static $repoName = Series::class;

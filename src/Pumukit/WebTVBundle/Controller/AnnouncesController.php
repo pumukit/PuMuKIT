@@ -4,7 +4,7 @@ namespace Pumukit\WebTVBundle\Controller;
 
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class AnnouncesController.
  */
-class AnnouncesController extends Controller implements WebTVControllerInterface
+class AnnouncesController extends AbstractController implements WebTVControllerInterface
 {
     /**
      * @Route("/latestuploads", name="pumukit_webtv_announces_latestuploads")

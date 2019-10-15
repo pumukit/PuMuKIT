@@ -11,7 +11,7 @@ use Pumukit\SchemaBundle\Security\Permission;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
-class TrackController extends Controller implements NewAdminControllerInterface
+class TrackController extends AbstractController implements NewAdminControllerInterface
 {
     /**
      * @Security("is_granted('ROLE_ACCESS_ADVANCED_UPLOAD')")

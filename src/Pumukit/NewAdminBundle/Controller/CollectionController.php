@@ -7,10 +7,10 @@ use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Security\Permission;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
-class CollectionController extends Controller implements NewAdminControllerInterface
+class CollectionController extends AbstractController implements NewAdminControllerInterface
 {
     /**
      * Returns true if the user has enough permissions to delete the $resource passed.

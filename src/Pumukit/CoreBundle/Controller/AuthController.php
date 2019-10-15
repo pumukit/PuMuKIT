@@ -2,7 +2,7 @@
 
 namespace Pumukit\CoreBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class AuthController.
  */
-class AuthController extends Controller implements WebTVControllerInterface
+class AuthController extends AbstractController implements WebTVControllerInterface
 {
     /**
      * @Route("/auth", name="pumukit_auth")

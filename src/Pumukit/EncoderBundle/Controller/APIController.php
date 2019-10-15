@@ -2,14 +2,14 @@
 
 namespace Pumukit\EncoderBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/api/encoder")
  */
-class APIController extends Controller
+class APIController extends AbstractController
 {
     /**
      * @Route("/profiles.{_format}", defaults={"_format"="json"}, requirements={"_format": "json"})

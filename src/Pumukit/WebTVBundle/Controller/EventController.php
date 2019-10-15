@@ -7,14 +7,14 @@ use Pagerfanta\Pagerfanta;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class EventController.
  */
-class EventController extends Controller implements WebTVControllerInterface
+class EventController extends AbstractController implements WebTVControllerInterface
 {
     /**
      * @Route ("/events/", defaults={"filter": false}, name="pumukit_webtv_events")

@@ -10,13 +10,13 @@ use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Security\Permission;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_WIZARD_UPLOAD')")
  */
-class DefaultController extends Controller
+class DefaultController extends AbstractController
 {
     const SERIES_LIMIT = 30;
 

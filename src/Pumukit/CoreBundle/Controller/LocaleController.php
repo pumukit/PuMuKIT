@@ -2,7 +2,7 @@
 
 namespace Pumukit\CoreBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Router;
 /**
  * Class LocaleController.
  */
-class LocaleController extends Controller implements WebTVControllerInterface
+class LocaleController extends AbstractController implements WebTVControllerInterface
 {
     /**
      * @Route("/locale/{locale}", name="pumukit_locale")

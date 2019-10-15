@@ -12,14 +12,14 @@ use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\WebTVBundle\Services\SearchService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class SearchController.
  */
-class SearchController extends Controller implements WebTVControllerInterface
+class SearchController extends AbstractController implements WebTVControllerInterface
 {
     /**
      * @Route("/searchseries", name="pumukit_webtv_search_series")

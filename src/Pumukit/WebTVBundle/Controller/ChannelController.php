@@ -5,13 +5,13 @@ namespace Pumukit\WebTVBundle\Controller;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\SchemaBundle\Document\Series;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class ChannelController.
  */
-class ChannelController extends Controller implements WebTVControllerInterface
+class ChannelController extends AbstractController implements WebTVControllerInterface
 {
     /**
      * @Route("/series/channel/{channelNumber}.html", name="pumukit_webtv_channel_series")

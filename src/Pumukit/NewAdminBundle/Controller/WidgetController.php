@@ -3,10 +3,10 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
-class WidgetController extends Controller
+class WidgetController extends AbstractController
 {
     /**
      * @Template("PumukitNewAdminBundle:Widget:languageselect.html.twig")
