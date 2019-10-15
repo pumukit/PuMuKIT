@@ -1514,7 +1514,7 @@ class MultimediaObjectRepository extends DocumentRepository
             '$match' => [
                 '$and' => [
                     ['sessions.start' => ['$exists' => true]],
-                    ['sessions.start' => ['$gt' => new \MongoDate()]],
+                    ['sessions.start' => ['$gt' => new UTCDateTime()]],
                 ],
             ],
         ];
@@ -1621,8 +1621,8 @@ class MultimediaObjectRepository extends DocumentRepository
 
         $pipeline[] = [
             '$match' => [
-                'sessions.start' => ['$lt' => new \MongoDate()],
-                'sessionEnds' => ['$gt' => new \MongoDate()],
+                'sessions.start' => ['$lt' => new UTCDateTime()],
+                'sessionEnds' => ['$gt' => new UTCDateTime()],
             ],
         ];
 

@@ -3,6 +3,7 @@
 namespace Pumukit\StatsBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\UTCDateTime;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\StatsBundle\Document\ViewsLog;
@@ -29,7 +30,7 @@ class StatsService
     {
         $ids = [];
         $fromDate = new \DateTime(sprintf('-%s days', $days));
-        $fromMongoDate = new \MongoDate($fromDate->format('U'), $fromDate->format('u'));
+        $fromMongoDate = new UTCDateTime($fromDate->format('U'), $fromDate->format('u'));
         $viewsLogColl = $this->dm->getDocumentCollection($this->collectionName);
 
         $pipeline = [
@@ -351,11 +352,11 @@ class StatsService
     {
         $date = [];
         if ($fromDate) {
-            $fromMongoDate = new \MongoDate($fromDate->format('U'), $fromDate->format('u'));
+            $fromMongoDate = new UTCDateTime($fromDate->format('U'), $fromDate->format('u'));
             $date['$gte'] = $fromMongoDate;
         }
         if ($toDate) {
-            $toMongoDate = new \MongoDate($toDate->format('U'), $toDate->format('u'));
+            $toMongoDate = new UTCDateTime($toDate->format('U'), $toDate->format('u'));
             $date['$lte'] = $toMongoDate;
         }
         if (count($date) > 0) {

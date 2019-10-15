@@ -3,6 +3,7 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Doctrine\ODM\MongoDB\Query\Builder;
+use MongoDB\BSON\UTCDateTime;
 use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType;
@@ -773,39 +774,39 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
         if (isset($public_date_init, $public_date_finish)) {
             $query->field('public_date')->range(
-                new \MongoDate(strtotime($public_date_init)),
-                new \MongoDate(strtotime($public_date_finish))
+                new UTCDateTime(strtotime($public_date_init)),
+                new UTCDateTime(strtotime($public_date_finish))
             );
         } elseif (isset($public_date_init) && !empty($public_date_init)) {
             $date = date($public_date_init.'T23:59:59');
             $query->field('public_date')->range(
-                new \MongoDate(strtotime($public_date_init)),
-                new \MongoDate(strtotime($date))
+                new UTCDateTime(strtotime($public_date_init)),
+                new UTCDateTime(strtotime($date))
             );
         } elseif (isset($public_date_finish) && !empty($public_date_finish)) {
             $date = date($public_date_finish.'T23:59:59');
             $query->field('public_date')->range(
-                new \MongoDate(strtotime($public_date_finish)),
-                new \MongoDate(strtotime($date))
+                new UTCDateTime(strtotime($public_date_finish)),
+                new UTCDateTime(strtotime($date))
             );
         }
 
         if (isset($record_date_init, $record_date_finish)) {
             $query->field('record_date')->range(
-                new \MongoDate(strtotime($record_date_init)),
-                new \MongoDate(strtotime($record_date_finish))
+                new UTCDateTime(strtotime($record_date_init)),
+                new UTCDateTime(strtotime($record_date_finish))
             );
         } elseif (isset($record_date_init)) {
             $date = date($record_date_init.'T23:59:59');
             $query->field('record_date')->range(
-                new \MongoDate(strtotime($record_date_init)),
-                new \MongoDate(strtotime($date))
+                new UTCDateTime(strtotime($record_date_init)),
+                new UTCDateTime(strtotime($date))
             );
         } elseif (isset($record_date_finish)) {
             $date = date($record_date_finish.'T23:59:59');
             $query->field('record_date')->range(
-                new \MongoDate(strtotime($record_date_finish)),
-                new \MongoDate(strtotime($date))
+                new UTCDateTime(strtotime($record_date_finish)),
+                new UTCDateTime(strtotime($date))
             );
         }
 
