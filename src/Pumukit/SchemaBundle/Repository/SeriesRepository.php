@@ -3,7 +3,7 @@
 namespace Pumukit\SchemaBundle\Repository;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ODM\MongoDB\DocumentRepository;
+use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 use Doctrine\ODM\MongoDB\Query\Builder;
 use Pumukit\SchemaBundle\Document\EmbeddedTag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;

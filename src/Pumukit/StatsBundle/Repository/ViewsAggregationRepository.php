@@ -2,7 +2,7 @@
 
 namespace Pumukit\StatsBundle\Repository;
 
-use Doctrine\ODM\MongoDB\DocumentRepository;
+use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 
 /**
  * ViewsAggregationRepository.
