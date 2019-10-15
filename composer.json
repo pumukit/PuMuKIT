@@ -1,6 +1,9 @@
 {
+    "name": "pumukit/pumukit",
+    "license": "AGPL-3.0-or-later",
+    "version": "3",
     "type": "project",
-    "license": "proprietary",
+    "description": "Media Portal",
     "require": {
         "php": "^7.2",
         "alcaeus/mongo-php-adapter": "@stable",
