@@ -6,13 +6,12 @@ use Pumukit\SchemaBundle\Document\Annotation;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Event\AnnotationsEvents;
 use Pumukit\SchemaBundle\Event\AnnotationsUpdateEvent;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  *  @Route("/annotation")
@@ -20,8 +19,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 class AnnotationsAPIController extends Controller
 {
     /**
-     * @Route("/annotations.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
-     * @Method("GET")
+     * @Route("/annotations.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"}, methods={"GET"})
      */
     public function getAction(Request $request)
     {
@@ -78,8 +76,7 @@ class AnnotationsAPIController extends Controller
     }
 
     /**
-     * @Route("/{id}.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
-     * @Method("GET")
+     * @Route("/{id}.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"}, methods={"GET"})
      */
     public function getByIdAction(Annotation $annotation, Request $request)
     {
@@ -105,8 +102,7 @@ class AnnotationsAPIController extends Controller
     }
 
     /**
-     * @Route("/")
-     * @Method("PUT")
+     * @Route("/", methods={"PUT"})
      * @Security("has_role('ROLE_ACCESS_MULTIMEDIA_SERIES')")
      */
     public function createNewAction(Request $request)
@@ -161,8 +157,7 @@ class AnnotationsAPIController extends Controller
     }
 
     /**
-     * @Route("/{id}")
-     * @Method("PUT")
+     * @Route("/{id}", methods={"PUT"})
      * @Security("has_role('ROLE_ACCESS_MULTIMEDIA_SERIES')")
      */
     public function editAction(Annotation $annotation, Request $request)
@@ -196,8 +191,7 @@ class AnnotationsAPIController extends Controller
     }
 
     /**
-     * @Route("/{id}")
-     * @Method("DELETE")
+     * @Route("/{id}", methods={"DELETE"})
      * @Security("has_role('ROLE_ACCESS_MULTIMEDIA_SERIES')")
      */
     public function deleteAction(Annotation $annotation, Request $request)
@@ -213,8 +207,7 @@ class AnnotationsAPIController extends Controller
     }
 
     /**
-     * @Route("/reset/{id}")
-     * @Method("DELETE")
+     * @Route("/reset/{id}", methods={"DELETE"})
      * @Security("has_role('ROLE_ACCESS_MULTIMEDIA_SERIES')")
      */
     public function deleteAllAction(MultimediaObject $multimediaobject, Request $request)

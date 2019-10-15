@@ -4,11 +4,11 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Pumukit\NewAdminBundle\Form\Type\UserUpdateProfileType;
 use Pumukit\SchemaBundle\Document\User;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/user_profile")
