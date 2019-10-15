@@ -60,7 +60,7 @@ class EmbeddedRole
     /**
      * @var Collection
      *
-     * @MongoDB\EmbedMany(targetDocument="EmbeddedPerson")
+     * @MongoDB\EmbedMany(targetDocument=EmbeddedPerson::class)
      */
     private $people;
 

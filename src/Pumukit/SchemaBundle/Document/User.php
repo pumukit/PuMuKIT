@@ -44,7 +44,7 @@ class User extends BaseUser
     protected $origin = self::ORIGIN_LOCAL;
 
     /**
-     * @MongoDB\ReferenceMany(targetDocument="Group", storeAs="id", sort={"key":1}, strategy="setArray")
+     * @MongoDB\ReferenceMany(targetDocument=Group::class, storeAs="id", sort={"key":1}, strategy="setArray")
      */
     protected $groups;
 

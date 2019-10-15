@@ -87,7 +87,7 @@ class MultimediaObject
     private $secret;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="Series", storeAs="id", inversedBy="multimedia_object", cascade={"persist"})
+     * @MongoDB\ReferenceOne(targetDocument=Series::class, storeAs="id", inversedBy="multimedia_object", cascade={"persist"})
      * @Gedmo\SortableGroup
      * @MongoDB\Index
      */
@@ -103,43 +103,43 @@ class MultimediaObject
     private $seriesTitle = ['en' => ''];
 
     /**
-     * @MongoDB\EmbedOne(targetDocument="EmbeddedBroadcast")
+     * @MongoDB\EmbedOne(targetDocument=EmbeddedBroadcast::class)
      */
     private $embeddedBroadcast;
 
     /**
      * @var EmbeddedEvent
-     * @MongoDB\EmbedOne(targetDocument="EmbeddedEvent")
+     * @MongoDB\EmbedOne(targetDocument=EmbeddedEvent::class)
      */
     private $embeddedEvent;
 
     /**
      * @var Collection
-     * @MongoDB\EmbedMany(targetDocument="EmbeddedSegment")
+     * @MongoDB\EmbedMany(targetDocument=EmbeddedSegment::class)
      */
     private $embeddedSegments;
 
     /**
      * @var EmbeddedSocial
-     * @MongoDB\EmbedOne(targetDocument="EmbeddedSocial")
+     * @MongoDB\EmbedOne(targetDocument=EmbeddedSocial::class)
      */
     private $embeddedSocial;
 
     /**
      * @var Collection
-     * @MongoDB\EmbedMany(targetDocument="EmbeddedTag")
+     * @MongoDB\EmbedMany(targetDocument=EmbeddedTag::class)
      */
     private $tags;
 
     /**
      * @var Collection
-     * @MongoDB\EmbedMany(targetDocument="Track")
+     * @MongoDB\EmbedMany(targetDocument=Track::class)
      */
     private $tracks;
 
     /**
      * @var Collection
-     * @MongoDB\ReferenceMany(targetDocument="Group", storeAs="id", sort={"key":1}, strategy="setArray")
+     * @MongoDB\ReferenceMany(targetDocument=Group::class, storeAs="id", sort={"key":1}, strategy="setArray")
      */
     private $groups;
 
@@ -232,7 +232,7 @@ class MultimediaObject
 
     /**
      * @var ArrayCollection
-     * @MongoDB\EmbedMany(targetDocument="EmbeddedRole")
+     * @MongoDB\EmbedMany(targetDocument=EmbeddedRole::class)
      */
     private $people;
 
