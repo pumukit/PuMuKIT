@@ -49,12 +49,12 @@ class User extends BaseUser
     protected $groups;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="PermissionProfile", storeAs="id", cascade={"persist"})
+     * @MongoDB\ReferenceOne(targetDocument=PermissionProfile::class, storeAs="id", cascade={"persist"})
      */
     private $permissionProfile;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="Person", inversedBy="user", storeAs="id", cascade={"persist"})
+     * @MongoDB\ReferenceOne(targetDocument=Person::class, inversedBy="user", storeAs="id", cascade={"persist"})
      */
     private $person;
 

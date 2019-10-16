@@ -27,7 +27,7 @@ trait Pic
 
     /**
      * @var Collection
-     * @MongoDB\EmbedMany(targetDocument="Pic")
+     * @MongoDB\EmbedMany(targetDocument=Pic::class)
      */
     private $pics;
 

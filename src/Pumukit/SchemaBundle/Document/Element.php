@@ -21,7 +21,7 @@ class Element
     private $id;
 
     /**
-     * @MongoDB\OneToOne(targetDocument="Element")
+     * @MongoDB\OneToOne(targetDocument=Element::class)
      * @MongoDB\JoinColumn(name="ref_id", referencedColumnName="id")
      */
     //private $ref = null;
