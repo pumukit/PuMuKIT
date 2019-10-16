@@ -63,7 +63,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
      * @param Request $request
      *
      * @return array
-     * @Template
+     * @Template("PumukitNewAdminBundle:Series:list.html.twig")
      */
     public function listAction(Request $request)
     {
@@ -122,7 +122,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
      * @param Series $resource
      *
      * @return array
-     * @Template
+     * @Template("PumukitNewAdminBundle:Series:links.html.twig")
      */
     public function linksAction(Series $resource)
     {
@@ -679,7 +679,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
      * @param Series $series
      *
      * @return array
-     * @Template
+     * @Template("PumukitNewAdminBundle:Series:listProperties.html.twig")
      */
     public function listPropertiesAction(Series $series)
     {

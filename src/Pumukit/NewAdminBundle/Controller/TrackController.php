@@ -26,7 +26,7 @@ class TrackController extends Controller implements NewAdminControllerInterface
     /**
      * @Security("is_granted('ROLE_ACCESS_ADVANCED_UPLOAD')")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
-     * @Template
+     * @Template("PumukitNewAdminBundle:Track:create.html.twig")
      */
     public function createAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -47,7 +47,7 @@ class TrackController extends Controller implements NewAdminControllerInterface
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
-     * @Template
+     * @Template("PumukitNewAdminBundle:Track:upload.html.twig")
      * @Security("is_granted('ROLE_ACCESS_ADVANCED_UPLOAD')")
      */
     public function uploadAction(MultimediaObject $multimediaObject, Request $request)
@@ -146,7 +146,7 @@ class TrackController extends Controller implements NewAdminControllerInterface
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     * @Template
+     * @Template("PumukitNewAdminBundle:Track:info.html.twig")
      */
     public function infoAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -172,7 +172,7 @@ class TrackController extends Controller implements NewAdminControllerInterface
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     * @Template
+     * @Template("PumukitNewAdminBundle:Track:play.html.twig")
      */
     public function playAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -223,7 +223,7 @@ class TrackController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @Template
+     * @Template("PumukitNewAdminBundle:Track:list.html.twig")
      */
     public function listAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -263,7 +263,7 @@ class TrackController extends Controller implements NewAdminControllerInterface
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("job", class="PumukitEncoderBundle:Job", options={"id" = "jobId"})
-     * @Template
+     * @Template("PumukitNewAdminBundle:Track:infoJob.html.twig")
      */
     public function infoJobAction(MultimediaObject $multimediaObject, Job $job, Request $request)
     {
