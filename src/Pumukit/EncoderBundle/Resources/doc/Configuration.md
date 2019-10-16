@@ -80,7 +80,7 @@ pumukit_encoder:
                 type: download
                 host: 127.0.0.1
                 description: Local download server
-                dir_out: "%kernel.root_dir%/../web/storage/downloads"
+                dir_out: "%kernel.root_dir%/../public/storage/downloads"
                 url_out: "/storage/downloads"
             app: ffmpeg
             rel_duration_size: 1
@@ -108,7 +108,7 @@ pumukit_encoder:
                 type: download
                 host: 127.0.0.1
                 description: Local download server
-                dir_out: "%kernel.root_dir%/../web/storage/downloads"
+                dir_out: "%kernel.root_dir%/../public/storage/downloads"
                 url_out: "/storage/downloads"
             app: ffmpeg
             rel_duration_size: 1
@@ -136,7 +136,7 @@ pumukit_encoder:
                 type: download
                 host: 127.0.0.1
                 description: Local download server
-                dir_out: "%kernel.root_dir%/../web/storage/downloads"
+                dir_out: "%kernel.root_dir%/../public/storage/downloads"
                 url_out: "/storage/downloads"
             app: ffmpeg
             rel_duration_size: 1
@@ -163,7 +163,7 @@ pumukit_encoder:
                 type: download
                 host: 127.0.0.1
                 description: Local download server
-                dir_out: "%kernel.root_dir%/../web/storage/downloads"
+                dir_out: "%kernel.root_dir%/../public/storage/downloads"
                 url_out: "/storage/downloads"
             app: ffmpeg
             rel_duration_size: 1
