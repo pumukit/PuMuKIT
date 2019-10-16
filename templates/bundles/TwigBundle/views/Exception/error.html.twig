@@ -1,0 +1,8 @@
+{% extends ['PumukitWebTVBundle::layout.html.twig', '::base.html.twig'] %}
+{% block body %}
+  <h1>{% trans %}Oops! An Error Occurred{% endtrans %}</h1>
+  <h2>{% trans %}The server returned a{% endtrans %} "{{ status_code }} {{ status_text }}".</h2>
+  <div>
+    <p>{% trans %}Something is broken. Please let us know what you were doing when this error occurred. We will fix it as soon as possible. Sorry for any inconvenience caused.{% endtrans %}</p>
+  </div>
+{% endblock %}

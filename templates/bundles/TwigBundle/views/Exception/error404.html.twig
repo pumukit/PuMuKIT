@@ -1,0 +1,10 @@
+{% extends ['PumukitWebTVBundle::layout.html.twig', '::base.html.twig'] %}
+{% block body %}
+  <h1>
+    {% trans %}404 Not found{% endtrans %}
+  </h1>
+
+  <p>{% trans %}This page isn't available. Sorry about that.{% endtrans %}</p>
+  <p>{% trans %}Try searching for something else:{% endtrans %}</p>
+  {% include 'PumukitWebTVBundle:Misc:search_box.html.twig' with {'id': 'base'} %}
+{% endblock %}
