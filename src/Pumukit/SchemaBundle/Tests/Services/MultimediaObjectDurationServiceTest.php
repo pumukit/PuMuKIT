@@ -33,7 +33,7 @@ class MultimediaObjectDurationServiceTest extends WebTestCase
             ->get('pumukitschema.mmsduration')
         ;
 
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
+        $this->dm->getDocumentCollection(MultimediaObject::class)->deleteMany([]);
         $this->dm->flush();
     }
 

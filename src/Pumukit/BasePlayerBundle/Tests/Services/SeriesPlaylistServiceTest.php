@@ -30,8 +30,8 @@ class SeriesPlaylistServiceTest extends WebTestCase
         $this->seriesRepo = $this->dm->getRepository(Series::class);
         $this->seriesPlaylistService = static::$kernel->getContainer()->get('pumukit_baseplayer.seriesplaylist');
 
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
+        $this->dm->getDocumentCollection(MultimediaObject::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Series::class)->deleteMany([]);
         $this->dm->flush();
 
         $track = new Track();

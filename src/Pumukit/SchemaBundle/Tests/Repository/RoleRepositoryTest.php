@@ -26,7 +26,7 @@ class RoleRepositoryTest extends WebTestCase
         ;
 
         //DELETE DATABASE
-        $this->dm->getDocumentCollection(Role::class)->remove([]);
+        $this->dm->getDocumentCollection(Role::class)->deleteMany([]);
         $this->dm->flush();
     }
 

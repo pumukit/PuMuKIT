@@ -31,8 +31,8 @@ class SpecialTranslationServiceTest extends WebTestCase
             ->get('pumukitschema.special_translation')
         ;
 
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Group::class)->remove([]);
+        $this->dm->getDocumentCollection(MultimediaObject::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Group::class)->deleteMany([]);
         $this->dm->flush();
     }
 

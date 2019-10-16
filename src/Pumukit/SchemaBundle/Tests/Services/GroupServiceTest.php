@@ -43,8 +43,8 @@ class GroupServiceTest extends WebTestCase
 
         $this->groupService = new GroupService($this->dm, $groupDispatcher, $translator);
 
-        $this->dm->getDocumentCollection(User::class)->remove([]);
-        $this->dm->getDocumentCollection(Group::class)->remove([]);
+        $this->dm->getDocumentCollection(User::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Group::class)->deleteMany([]);
         $this->dm->flush();
     }
 

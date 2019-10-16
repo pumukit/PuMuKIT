@@ -46,8 +46,8 @@ class PicExtractorServiceTest extends WebTestCase
         $this->targetPath = $this->resourcesDir;
         $this->targetUrl = '/uploads';
 
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
+        $this->dm->getDocumentCollection(MultimediaObject::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Series::class)->deleteMany([]);
         $this->dm->flush();
 
         $mmsPicService = new MultimediaObjectPicService($this->dm, $this->picEventDispatcher, $this->targetPath, $this->targetUrl, false);

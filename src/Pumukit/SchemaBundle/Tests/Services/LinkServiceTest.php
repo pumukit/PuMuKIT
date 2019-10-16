@@ -35,8 +35,8 @@ class LinkServiceTest extends WebTestCase
             ->get('pumukitschema.factory')
         ;
 
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
+        $this->dm->getDocumentCollection(MultimediaObject::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Series::class)->deleteMany([]);
         $this->dm->flush();
     }
 

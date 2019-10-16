@@ -2,6 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Command;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Tag;
@@ -14,6 +15,7 @@ use Symfony\Component\Finder\Finder;
 
 class PumukitInitRepoCommand extends ContainerAwareCommand
 {
+    /** @var DocumentManager */
     private $dm;
     private $tagsRepo;
     private $pmk2_allLocales;
@@ -47,6 +49,9 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        /**
+         * @var DocumentManager
+         */
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $this->allPermissions = $this->getContainer()->get('pumukitschema.permission')->getAllPermissions();
         $this->pmk2_allLocales = array_unique(array_merge($this->getContainer()->getParameter('pumukit.locales'), ['en']));
@@ -183,17 +188,17 @@ EOT
 
     protected function removeTags()
     {
-        $this->dm->getDocumentCollection(Tag::class)->remove([]);
+        $this->dm->getDocumentCollection(Tag::class)->deleteMany([]);
     }
 
     protected function removeRoles()
     {
-        $this->dm->getDocumentCollection(Role::class)->remove([]);
+        $this->dm->getDocumentCollection(Role::class)->deleteMany([]);
     }
 
     protected function removePermissionProfiles()
     {
-        $this->dm->getDocumentCollection(PermissionProfile::class)->remove([]);
+        $this->dm->getDocumentCollection(PermissionProfile::class)->deleteMany([]);
     }
 
     protected function createRoot()

@@ -48,8 +48,8 @@ class PicServiceTest extends WebTestCase
         $this->webDir = realpath($this->rootDir.'/../web/bundles/pumukitschema');
         $this->localhost = $this->context->getScheme().'://localhost';
 
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
+        $this->dm->getDocumentCollection(MultimediaObject::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Series::class)->deleteMany([]);
         $this->dm->flush();
 
         $this->picService = new PicService($this->context, $this->webDir, $this->defaultSeriesPic, $this->defaultPlaylistPic, $this->defaultVideoPic, $this->defaultAudioHDPic, $this->defaultAudioSDPic);

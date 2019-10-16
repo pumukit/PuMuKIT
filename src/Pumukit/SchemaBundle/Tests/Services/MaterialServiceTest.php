@@ -46,8 +46,8 @@ class MaterialServiceTest extends WebTestCase
         $this->originalFilePath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'file.pdf';
         $this->uploadsPath = realpath(__DIR__.'/../../../../../web/uploads/material');
 
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
+        $this->dm->getDocumentCollection(MultimediaObject::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Series::class)->deleteMany([]);
         $this->dm->flush();
     }
 

@@ -46,11 +46,11 @@ class MultimediaObjectServiceTest extends WebTestCase
             ->get('pumukitschema.tag')
         ;
 
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
-        $this->dm->getDocumentCollection(Tag::class)->remove([]);
-        $this->dm->getDocumentCollection(Group::class)->remove([]);
-        $this->dm->getDocumentCollection(User::class)->remove([]);
+        $this->dm->getDocumentCollection(MultimediaObject::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Series::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Tag::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Group::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(User::class)->deleteMany([]);
         $this->dm->flush();
     }
 

@@ -56,9 +56,9 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
             ->get('router')
         ;
 
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Group::class)->remove([]);
-        $this->dm->getDocumentCollection(User::class)->remove([]);
+        $this->dm->getDocumentCollection(MultimediaObject::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Group::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(User::class)->deleteMany([]);
         $this->dm->flush();
     }
 

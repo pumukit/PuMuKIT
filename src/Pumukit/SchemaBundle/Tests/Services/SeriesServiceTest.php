@@ -37,7 +37,7 @@ class SeriesServiceTest extends WebTestCase
             ->get('pumukitschema.series_dispatcher')
         ;
 
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
+        $this->dm->getDocumentCollection(Series::class)->deleteMany([]);
         $this->dm->flush();
     }
 

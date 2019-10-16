@@ -39,7 +39,7 @@ class PermissionProfileServiceTest extends WebTestCase
             ->get('pumukitschema.permission')
         ;
 
-        $this->dm->getDocumentCollection(PermissionProfile::class)->remove([]);
+        $this->dm->getDocumentCollection(PermissionProfile::class)->deleteMany([]);
         $this->dm->flush();
 
         $this->permissionProfileService = new PermissionProfileService($this->dm, $this->dispatcher, $this->permissionService);

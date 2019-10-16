@@ -32,8 +32,8 @@ class EventPicServiceTest extends WebTestCase
         $this->originalPicPath = realpath(__DIR__.'/../Resources').'/logo.png';
         $this->uploadsPath = realpath(__DIR__.'/../../../../../web/uploads/pic');
 
-        $this->dm->getDocumentCollection(Live::class)->remove([]);
-        $this->dm->getDocumentCollection(Event::class)->remove([]);
+        $this->dm->getDocumentCollection(Live::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Event::class)->deleteMany([]);
         $this->dm->flush();
     }
 

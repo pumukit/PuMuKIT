@@ -36,7 +36,7 @@ class JobNotificationServiceTest extends WebTestCase
             ->get('pumukit_notification.listener')
         ;
 
-        $this->dm->getDocumentCollection(Job::class)->remove([]);
+        $this->dm->getDocumentCollection(Job::class)->deleteMany([]);
         $this->dm->flush();
     }
 

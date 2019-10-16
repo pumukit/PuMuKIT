@@ -42,9 +42,9 @@ class JobServiceTest extends WebTestCase
         $this->factory = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->propService = static::$kernel->getContainer()->get('pumukitencoder.mmpropertyjob');
 
-        $this->dm->getDocumentCollection(Job::class)->remove([]);
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
+        $this->dm->getDocumentCollection(Job::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(MultimediaObject::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Series::class)->deleteMany([]);
         $this->dm->flush();
 
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);

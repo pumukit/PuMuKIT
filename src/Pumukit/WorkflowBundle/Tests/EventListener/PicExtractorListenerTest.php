@@ -43,8 +43,8 @@ class PicExtractorListenerTest extends WebTestCase
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->profileService = static::$kernel->getContainer()->get('pumukitencoder.profile');
 
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
+        $this->dm->getDocumentCollection(MultimediaObject::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Series::class)->deleteMany([]);
 
         $mmsPicService = $this->getMockBuilder(MultimediaObjectPicService::class)
             ->disableOriginalConstructor()

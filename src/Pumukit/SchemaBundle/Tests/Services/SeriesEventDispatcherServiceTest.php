@@ -31,7 +31,7 @@ class SeriesEventDispatcherServiceTest extends WebTestCase
         ;
         $this->dispatcher = new EventDispatcher();
 
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
+        $this->dm->getDocumentCollection(Series::class)->deleteMany([]);
         $this->dm->flush();
 
         MockUpSeriesListener::$called = false;

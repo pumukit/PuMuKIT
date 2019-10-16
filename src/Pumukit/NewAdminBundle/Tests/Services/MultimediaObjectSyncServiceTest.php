@@ -35,9 +35,9 @@ class MultimediaObjectSyncServiceTest extends WebTestCase
         $this->tagService = static::$kernel->getContainer()->get('pumukitschema.tag');
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
 
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Role::class)->remove([]);
-        $this->dm->getDocumentCollection(Tag::class)->remove([]);
+        $this->dm->getDocumentCollection(MultimediaObject::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Role::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Tag::class)->deleteMany([]);
         $this->dm->flush();
     }
 

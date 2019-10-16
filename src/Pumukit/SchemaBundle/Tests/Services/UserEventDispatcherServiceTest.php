@@ -31,7 +31,7 @@ class UserEventDispatcherServiceTest extends WebTestCase
         ;
         $this->dispatcher = new EventDispatcher();
 
-        $this->dm->getDocumentCollection(User::class)->remove([]);
+        $this->dm->getDocumentCollection(User::class)->deleteMany([]);
         $this->dm->flush();
 
         MockUpUserListener::$called = false;

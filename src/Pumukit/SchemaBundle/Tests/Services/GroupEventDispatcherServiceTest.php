@@ -31,7 +31,7 @@ class GroupEventDispatcherServiceTest extends WebTestCase
         ;
         $this->dispatcher = new EventDispatcher();
 
-        $this->dm->getDocumentCollection(Group::class)->remove([]);
+        $this->dm->getDocumentCollection(Group::class)->deleteMany([]);
         $this->dm->flush();
 
         MockUpGroupListener::$called = false;

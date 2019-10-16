@@ -35,8 +35,8 @@ class MultimediaObjectInSeriesTest extends WebTestCase
         $this->seriesRepo = $this->dm->getRepository(Series::class);
         $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
 
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
+        $this->dm->getDocumentCollection(Series::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(MultimediaObject::class)->deleteMany([]);
     }
 
     public function tearDown()

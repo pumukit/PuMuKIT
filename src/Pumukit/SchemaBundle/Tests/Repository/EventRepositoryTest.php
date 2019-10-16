@@ -23,8 +23,8 @@ class EventRepositoryTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm->getRepository(Event::class);
 
-        $this->dm->getDocumentCollection(Event::class)->remove([]);
-        $this->dm->getDocumentCollection(Live::class)->remove([]);
+        $this->dm->getDocumentCollection(Event::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Live::class)->deleteMany([]);
         $this->dm->flush();
     }
 

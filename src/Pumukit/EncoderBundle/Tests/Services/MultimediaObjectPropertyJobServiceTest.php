@@ -22,8 +22,8 @@ class MultimediaObjectPropertyJobServiceTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->service = static::$kernel->getContainer()->get('pumukitencoder.mmpropertyjob');
 
-        $this->dm->getDocumentCollection(Job::class)->remove([]);
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
+        $this->dm->getDocumentCollection(Job::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(MultimediaObject::class)->deleteMany([]);
     }
 
     public function tearDown()

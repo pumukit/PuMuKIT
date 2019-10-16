@@ -45,11 +45,11 @@ class PersonServiceTest extends WebTestCase
             ->get('pumukitschema.factory')
         ;
 
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Person::class)->remove([]);
-        $this->dm->getDocumentCollection(Role::class)->remove([]);
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
-        $this->dm->getDocumentCollection(User::class)->remove([]);
+        $this->dm->getDocumentCollection(MultimediaObject::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Person::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Role::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Series::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(User::class)->deleteMany([]);
         $this->dm->flush();
     }
 

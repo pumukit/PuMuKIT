@@ -22,7 +22,7 @@ class LiveRepositoryTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm->getRepository(Live::class);
 
-        $this->dm->getDocumentCollection(Live::class)->remove([]);
+        $this->dm->getDocumentCollection(Live::class)->deleteMany([]);
         $this->dm->flush();
     }
 

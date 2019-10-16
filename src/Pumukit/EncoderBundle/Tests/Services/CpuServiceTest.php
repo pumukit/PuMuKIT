@@ -24,7 +24,7 @@ class CpuServiceTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm->getRepository(Job::class);
 
-        $this->dm->getDocumentCollection(Job::class)->remove([]);
+        $this->dm->getDocumentCollection(Job::class)->deleteMany([]);
         $this->dm->flush();
 
         $this->cpuService = new CpuService($this->getDemoCpus(), $this->dm);

@@ -24,7 +24,7 @@ class TagRepositoryTest extends WebTestCase
         $this->repo = $this->dm->getRepository(Tag::class);
 
         //DELETE DATABASE
-        $this->dm->getDocumentCollection(Tag::class)->remove([]);
+        $this->dm->getDocumentCollection(Tag::class)->deleteMany([]);
         $this->dm->flush();
     }
 

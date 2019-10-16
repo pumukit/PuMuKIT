@@ -31,7 +31,7 @@ class PermissionProfileEventDispatcherServiceTest extends WebTestCase
         ;
         $this->dispatcher = new EventDispatcher();
 
-        $this->dm->getDocumentCollection(PermissionProfile::class)->remove([]);
+        $this->dm->getDocumentCollection(PermissionProfile::class)->deleteMany([]);
         $this->dm->flush();
 
         MockUpPermissionProfileListener::$called = false;

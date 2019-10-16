@@ -64,9 +64,9 @@ class UserServiceTest extends WebTestCase
         $listener = new PermissionProfileListener($this->dm, $this->userService, $this->logger);
         $dispatcher->addListener('permissionprofile.update', [$listener, 'postUpdate']);
 
-        $this->dm->getDocumentCollection(User::class)->remove([]);
-        $this->dm->getDocumentCollection(Group::class)->remove([]);
-        $this->dm->getDocumentCollection(PermissionProfile::class)->remove([]);
+        $this->dm->getDocumentCollection(User::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Group::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(PermissionProfile::class)->deleteMany([]);
         $this->dm->flush();
     }
 
