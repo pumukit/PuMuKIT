@@ -22,7 +22,7 @@ class CoreExtension extends AbstractExtension
         ];
     }
 
-    public function isBundleEnabled($bundle): bool
+    public function isBundleEnabled(string $bundle): bool
     {
         return array_key_exists(
             $bundle,

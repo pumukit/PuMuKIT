@@ -16,9 +16,11 @@ class PersonalFilter extends WebTVFilter
         if (Series::class === $targetDocument->reflClass->name) {
             return $this->getSeriesCriteria();
         }
+
+        return [];
     }
 
-    protected function getMultimediaObjectCriteria()
+    protected function getMultimediaObjectCriteria(): array
     {
         $criteria = [];
         $criteria_portal = parent::getMultimediaObjectCriteria();
@@ -38,7 +40,7 @@ class PersonalFilter extends WebTVFilter
         return $criteria;
     }
 
-    protected function getSeriesCriteria()
+    protected function getSeriesCriteria(): array
     {
         $criteria = [];
         if (isset($this->parameters['person_id'], $this->parameters['role_code'], $this->parameters['series_groups'])) {
