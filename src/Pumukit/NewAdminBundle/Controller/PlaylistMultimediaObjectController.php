@@ -18,7 +18,7 @@ class PlaylistMultimediaObjectController extends AbstractController
     /**
      * Overwrite to search criteria with date.
      *
-     * @Template
+     * @Template("PumukitNewAdminBundle:PlaylistMultimediaObject:index.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -80,7 +80,7 @@ class PlaylistMultimediaObjectController extends AbstractController
     /**
      * Displays the 'info' tab.
      *
-     * @Template
+     * @Template("PumukitNewAdminBundle:PlaylistMultimediaObject:info.html.twig")
      */
     public function infoAction(MultimediaObject $mmobj, Request $request)
     {
@@ -97,7 +97,7 @@ class PlaylistMultimediaObjectController extends AbstractController
     }
 
     /**
-     * @Template
+     * @Template("PumukitNewAdminBundle:PlaylistMultimediaObject:list.html.twig")
      */
     public function listAction(Request $request)
     {
@@ -338,7 +338,7 @@ class PlaylistMultimediaObjectController extends AbstractController
     /**
      * Show modal to add one or more mmobjs to a playlist.
      *
-     * @Template
+     * @Template("PumukitNewAdminBundle:PlaylistMultimediaObject:addModal.html.twig")
      */
     public function addModalAction(Request $request)
     {

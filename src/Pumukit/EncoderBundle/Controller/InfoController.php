@@ -108,7 +108,7 @@ class InfoController extends AbstractController
 
     /**
      * @Route("/job/{id}", methods="GET", name="pumukit_encoder_job")
-     * @Template
+     * @Template("PumukitEncoderBundle:Info:infoJob.html.twig")
      */
     public function infoJobAction(Job $job, Request $request)
     {

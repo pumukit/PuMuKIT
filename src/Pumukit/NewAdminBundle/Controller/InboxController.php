@@ -60,7 +60,7 @@ class InboxController extends AbstractController implements NewAdminControllerIn
     }
 
     /**
-     * @Template
+     * @Template("PumukitNewAdminBundle:Inbox:form.html.twig")
      *
      * @param mixed $onlyDir
      */
