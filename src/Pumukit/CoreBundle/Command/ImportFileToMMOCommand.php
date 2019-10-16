@@ -21,7 +21,7 @@ class ImportFileToMMOCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('import:multimedia:file')
+            ->setName('pumukit:import:multimedia:file')
             ->setDescription('This command import file like a track on a multimedia object')
             ->addArgument('object', InputArgument::REQUIRED, 'object')
             ->addArgument('file', InputArgument::REQUIRED, 'file')

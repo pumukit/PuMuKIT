@@ -14,9 +14,6 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\ProcessBuilder;
 use UnexpectedValueException;
 
-/**
- * Class PumukitRefactorFileSystemCommand.
- */
 class PumukitRefactorFileSystemCommand extends ContainerAwareCommand
 {
     private $dm;

@@ -31,7 +31,7 @@ class CreateMMOCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('import:inbox')
+            ->setName('pumukit:import:inbox')
             ->setDescription('This command create a multimedia object from a file')
             ->addArgument('file', InputArgument::REQUIRED, 'multimedia file path')
             ->addArgument('inotify_event', InputArgument::OPTIONAL, 'inotify event, only works with IN_CLOSE_WRITE', 'IN_CLOSE_WRITE')

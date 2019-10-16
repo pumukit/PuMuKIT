@@ -11,9 +11,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 
-/**
- * Class DeleteOrphanFilesCommand.
- */
 class DeleteOrphanFilesCommand extends ContainerAwareCommand
 {
     private $dm;
