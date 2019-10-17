@@ -4,13 +4,13 @@ ARG ALPINE_VERSION=3.10
 FROM php:${PHP_VERSION}-fpm-alpine${ALPINE_VERSION} as base
 MAINTAINER Pablo Nieto, pnieto@teltek.es
 
-ARG APCU_VERSION=5.1.12
-ARG PHP_MONGODB_VERSION=1.5.3
-ARG XDEBUG_VERSION=2.6.1
+ARG APCU_VERSION=5.1.17
+ARG PHP_MONGODB_VERSION=1.6.0
+ARG XDEBUG_VERSION=2.7.2
 
 RUN apk  add --no-cache \
-    	     		--update \
-	     		libgcc \
+    	    --update \
+	     	libgcc \
 			libstdc++ \
 			ca-certificates \
 			libcrypto1.1 \
