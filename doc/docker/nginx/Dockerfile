@@ -1,4 +1,5 @@
 ARG NGINX_VERSION=1.15
+ARG PUMUKIT_BASE_VERSION=migration_symfony_4
 
 FROM alpine:latest
 
@@ -12,6 +13,7 @@ RUN openssl req -new -passout pass:NotSecure -key cert.key -out cert.csr \
     -subj '/C=ES/ST=PO/L=Vigo/O=PuMuKIT Dev/CN=localhost'
 RUN openssl x509 -req -sha256 -days 365 -in cert.csr -signkey cert.key -out cert.crt
 
+FROM teltek/pumukit:${PUMUKIT_BASE_VERSION} as pumukit
 
 FROM nginx:${NGINX_VERSION}-alpine
 
@@ -22,4 +24,4 @@ COPY conf/default.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /srv/pumukit
 
-COPY --from=teltek/pumukit:latest /srv/pumukit/web web/
+COPY --from=pumukit /srv/pumukit/public public/
