@@ -4,7 +4,6 @@
   este es custom dentro
 <form id="login_form" action="{{ path("fos_user_security_check") }}" method="post">
   <div class="body bg-gray">
-    {{  }}
     {% if error %}
       <div class="alert alert-danger alert-error">
         {{ error.messageKey|trans(error.messageData, 'security') }}
