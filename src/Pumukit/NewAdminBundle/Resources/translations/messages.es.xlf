@@ -3844,11 +3844,11 @@
       </trans-unit>
       <trans-unit id="LZRp8Ix" resname="Your video stats">
         <source>Your video stats</source>
-        <target state="needs-translation">Your video stats</target>
+        <target state="translated">Estadísticas de tus vídeos</target>
       </trans-unit>
       <trans-unit id="BpOx4v1" resname="Assigned videos by role">
         <source>Assigned videos by role</source>
-        <target state="needs-translation">Assigned videos by role</target>
+        <target state="translated">Vídeos asignados por rol</target>
       </trans-unit>
       <trans-unit id="DTlgLcO" resname="Last login">
         <source>Last login</source>
@@ -3856,7 +3856,7 @@
       </trans-unit>
       <trans-unit id="RyWQrpd" resname="Provider">
         <source>Provider</source>
-        <target state="needs-translation">Provider</target>
+        <target state="translated">Proveedor</target>
       </trans-unit>
       <trans-unit id="Rj1ftLT" resname="No groups found">
         <source>No groups found</source>
