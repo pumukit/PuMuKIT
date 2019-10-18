@@ -3800,35 +3800,38 @@
       </trans-unit>
       <trans-unit id="gOjdGlo" resname="Recording">
         <source>Recording</source>
-        <target state="needs-translation">Recording</target>
+        <target state="translated">Grabando</target>
       </trans-unit>
       <trans-unit id="GyjReFW" resname="Viewed">
         <source>Viewed</source>
-        <target state="needs-translation">Viewed</target>
+        <target state="translated">Visto</target>
       </trans-unit>
       <trans-unit id="Y48fpVR" resname="{0}times|{1}time|]1,Inf]times">
         <source>{0}times|{1}time|]1,Inf]times</source>
-        <target state="needs-translation">{0}times|{1}time|]1,Inf]times</target>
+        <target state="translated">{0}veces|{1}vez|]1,Inf]veces</target>
       </trans-unit>
       <trans-unit id="5KIt_PS" resname="Error: Multimedia Object with id %id% not found">
         <source>Error: Multimedia Object with id %id% not found</source>
-        <target state="needs-translation">Error: Multimedia Object with id %id% not found</target>
+        <target state="translated">Error: Objeto Multimedia con id %id% no encontrado</target>
       </trans-unit>
       <trans-unit id="eQLp7Fl" resname="Go back to">
         <source>Go back to</source>
-        <target state="needs-translation">Go back to</target>
+        <target state="translated">Volver a</target>
       </trans-unit>
       <trans-unit id="YMfjw07" resname="my series">
         <source>my series</source>
-        <target state="needs-translation">my series</target>
+        <target state="translated">mis series</target>
       </trans-unit>
       <trans-unit id="CZ_p4k1" resname="Show/Hide track">
         <source>Show/Hide track</source>
-        <target state="needs-translation">Show/Hide track</target>
+        <target state="translated">Mostrar/Ocultar archivo</target>
+        <alt-trans>
+          <target>Mostrar/Ocultar pista</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="z6IKnQ2" resname="Personal profile">
         <source>Personal profile</source>
-        <target state="needs-translation">Personal profile</target>
+        <target state="translated">Perfil personal</target>
       </trans-unit>
       <trans-unit id="j_dsskm" resname="My personal profile">
         <source>My personal profile</source>
@@ -3840,7 +3843,7 @@
       </trans-unit>
       <trans-unit id="5QtQix1" resname="Time uploaded">
         <source>Time uploaded</source>
-        <target state="needs-translation">Time uploaded</target>
+        <target state="translated">Tiempo subido</target>
       </trans-unit>
       <trans-unit id="LZRp8Ix" resname="Your video stats">
         <source>Your video stats</source>
@@ -3860,15 +3863,15 @@
       </trans-unit>
       <trans-unit id="Rj1ftLT" resname="No groups found">
         <source>No groups found</source>
-        <target state="needs-translation">No groups found</target>
+        <target state="translated">Ningún grupo encontrado</target>
       </trans-unit>
       <trans-unit id="ITD9xUa" resname="Email already in use">
         <source>Email already in use</source>
-        <target state="needs-translation">Email already in use</target>
+        <target state="translated">El correo electrónico ya está en uso</target>
       </trans-unit>
       <trans-unit id="8AEUIqw" resname="User info updated">
         <source>User info updated</source>
-        <target state="needs-translation">User info updated</target>
+        <target state="translated">Información de usuario actualizada</target>
       </trans-unit>
       <trans-unit id="Jxxi_i3" resname="My profile">
         <source>My profile</source>
