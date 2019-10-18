@@ -3832,11 +3832,11 @@
       </trans-unit>
       <trans-unit id="j_dsskm" resname="My personal profile">
         <source>My personal profile</source>
-        <target state="needs-translation">My personal profile</target>
+        <target state="translated">Mi perfil de usuario</target>
       </trans-unit>
       <trans-unit id="EPGZEYI" resname="My profile info">
         <source>My profile info</source>
-        <target state="needs-translation">My profile info</target>
+        <target state="translated">Mi información de perfil</target>
       </trans-unit>
       <trans-unit id="5QtQix1" resname="Time uploaded">
         <source>Time uploaded</source>
@@ -3852,7 +3852,7 @@
       </trans-unit>
       <trans-unit id="DTlgLcO" resname="Last login">
         <source>Last login</source>
-        <target state="needs-translation">Last login</target>
+        <target state="translated">Último acceso</target>
       </trans-unit>
       <trans-unit id="RyWQrpd" resname="Provider">
         <source>Provider</source>
@@ -3872,11 +3872,14 @@
       </trans-unit>
       <trans-unit id="Jxxi_i3" resname="My profile">
         <source>My profile</source>
-        <target state="needs-translation">My profile</target>
+        <target state="translated">Mi perfil</target>
+        <alt-trans>
+          <target>Mis estadísticas</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="dclYZH3" resname="My stats">
         <source>My stats</source>
-        <target state="needs-translation">My stats</target>
+        <target state="translated">Mis estadísticas</target>
       </trans-unit>
     </body>
   </file>
