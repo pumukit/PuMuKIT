@@ -3,6 +3,7 @@
 namespace Pumukit\CoreBundle\Command;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -565,7 +566,7 @@ EOT
     {
         /** @var MultimediaObject */
         $multimediaObject = $documentManager->getRepository(MultimediaObject::class)->findOneBy(
-            ['_id' => new \MongoId($multimediaObjectId)]
+            ['_id' => new ObjectId($multimediaObjectId)]
         );
 
         foreach ($multimediaObject->getPics() as $pic) {
@@ -589,7 +590,7 @@ EOT
     {
         /** @var MultimediaObject */
         $multimediaObject = $documentManager->getRepository(MultimediaObject::class)->findOneBy(
-            ['_id' => new \MongoId($multimediaObjectId)]
+            ['_id' => new ObjectId($multimediaObjectId)]
         );
 
         foreach ($multimediaObject->getMaterials() as $material) {

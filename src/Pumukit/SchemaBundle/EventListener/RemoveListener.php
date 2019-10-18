@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
+use MongoDB\BSON\ObjectId;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -91,7 +92,7 @@ class RemoveListener
                 $mmsService->deleteGroup($document, $multimediaObject, false);
             }
             $multimediaObjects = $mmobjRepo->createQueryBuilder()
-                ->field('embeddedBroadcast.groups')->in([new \MongoId($document->getId())])
+                ->field('embeddedBroadcast.groups')->in([new ObjectId($document->getId())])
                 ->getQuery()
                 ->execute()
             ;

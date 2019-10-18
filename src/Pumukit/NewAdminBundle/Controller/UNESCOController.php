@@ -3,6 +3,7 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Doctrine\ODM\MongoDB\Query\Builder;
+use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\UTCDateTime;
 use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
@@ -387,7 +388,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
         if (isset($id)) {
             $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(
-                ['_id' => new \MongoId($id)]
+                ['_id' => new ObjectId($id)]
             );
         } else {
             $multimediaObject = null;
@@ -442,7 +443,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
         $genreParent = $dm->getRepository(Tag::class)->findOneByCod('GENRE');
         if ($genreParent) {
-            $genres = $dm->getRepository(Tag::class)->findBy(['parent.$id' => new \MongoId($genreParent->getId())]);
+            $genres = $dm->getRepository(Tag::class)->findBy(['parent.$id' => new ObjectId($genreParent->getId())]);
             $aGenre = [];
             foreach ($genres as $genre) {
                 $aGenre[$genre->getCod()] = $genre->getTitle($locale);
@@ -486,7 +487,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $tagService = $this->container->get('pumukitschema.tag');
         $translator = $this->get('translator');
 
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new \MongoId($multimediaObjectId)]);
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
 
         $tag = $dm->getRepository(Tag::class)->findOneByCod($tagCod);
         $tagConfigured = $this->getConfiguredTag();
@@ -515,7 +516,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $dm = $this->container->get('doctrine_mongodb')->getManager();
         $tagService = $this->container->get('pumukitschema.tag');
 
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new \MongoId($multimediaObjectId)]);
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
 
         $tag = $dm->getRepository(Tag::class)->findOneByCod($tagCod);
         if ($multimediaObject->containsTag($tag)) {
@@ -549,7 +550,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         case 'delete_selected':
             $factoryService = $this->get('pumukitschema.factory');
             foreach ($data as $multimediaObjectId) {
-                $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new \MongoId($multimediaObjectId)]);
+                $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
                 $factoryService->deleteMultimediaObject($multimediaObject);
             }
 
@@ -558,7 +559,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
             $tagService = $this->container->get('pumukitschema.tag');
             $pudeNew = $dm->getRepository(Tag::class)->findOneBy(['cod' => 'PUDENEW']);
             foreach ($data as $multimediaObjectId) {
-                $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new \MongoId($multimediaObjectId)]);
+                $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
                 if ($multimediaObject->containsTag($pudeNew)) {
                     $tagService->removeTagFromMultimediaObject($multimediaObject, $pudeNew->getId());
                 } else {
@@ -591,7 +592,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $translator = $this->get('translator');
         $factoryService = $this->get('pumukitschema.factory');
 
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new \MongoId($multimediaObjectId)]);
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
 
         try {
             $factoryService->deleteMultimediaObject($multimediaObject);
@@ -614,7 +615,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $translator = $this->get('translator');
         $factoryService = $this->get('pumukitschema.factory');
 
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new \MongoId($multimediaObjectId)]);
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
 
         try {
             $factoryService->cloneMultimediaObject($multimediaObject);
@@ -699,7 +700,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
                 $selectedTag = $dm->getRepository(Tag::class)->findOneBy(['cod' => $configuredTag->getCod()]);
                 $query = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder()
                     ->field('tags._id')
-                    ->notEqual(new \MongoId($selectedTag->getId()))
+                    ->notEqual(new ObjectId($selectedTag->getId()))
                 ;
 
                 break;
@@ -707,7 +708,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
                 $selectedTag = $dm->getRepository(Tag::class)->findOneBy(['cod' => $tag]);
                 $query = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder()
                     ->field('tags._id')
-                    ->equals(new \MongoId($selectedTag->getId()))
+                    ->equals(new ObjectId($selectedTag->getId()))
                 ;
 
                 break;

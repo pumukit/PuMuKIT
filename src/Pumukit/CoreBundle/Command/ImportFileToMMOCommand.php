@@ -3,6 +3,7 @@
 namespace Pumukit\CoreBundle\Command;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -82,7 +83,7 @@ EOT
         }
 
         $multimediaObject = $this->mmobjRepo->findOneBy(
-            ['id' => new \MongoId($multimediaObjectId)]
+            ['id' => new ObjectId($multimediaObjectId)]
         );
 
         $profile = ($input->hasOption('profile')) ? $input->getOption('profile') : $this->profileService->getDefaultMasterProfile();

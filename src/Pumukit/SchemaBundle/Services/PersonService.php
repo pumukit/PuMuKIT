@@ -4,6 +4,7 @@ namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\EmbeddedPerson;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Person;
@@ -151,7 +152,7 @@ class PersonService
         $query = $qb
             ->update()
             ->multiple(true)
-            ->field('people._id')->equals(new \MongoId($role->getId()))
+            ->field('people._id')->equals(new ObjectId($role->getId()))
             ->field('people.$.cod')->set($role->getCod())
             ->field('people.$.xml')->set($role->getXml())
             ->field('people.$.display')->set($role->getDisplay())

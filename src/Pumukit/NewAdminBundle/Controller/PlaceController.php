@@ -2,6 +2,7 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use MongoDB\BSON\ObjectId;
 use Pumukit\NewAdminBundle\Form\Type\TagType;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
@@ -32,7 +33,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
         $dm = $this->get('doctrine_mongodb')->getManager();
 
         $placeTag = $dm->getRepository(Tag::class)->findOneBy(['cod' => 'PLACES']);
-        $places = $dm->getRepository(Tag::class)->findBy(['parent.$id' => new \MongoId($placeTag->getId())], ['title.'.$request->getLocale() => 1]);
+        $places = $dm->getRepository(Tag::class)->findBy(['parent.$id' => new ObjectId($placeTag->getId())], ['title.'.$request->getLocale() => 1]);
 
         return ['places' => $places];
     }
@@ -50,7 +51,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
         $dm = $this->get('doctrine_mongodb')->getManager();
 
         $placeTag = $dm->getRepository(Tag::class)->findOneBy(['cod' => 'PLACES']);
-        $places = $dm->getRepository(Tag::class)->findBy(['parent.$id' => new \MongoId($placeTag->getId())], ['title.'.$request->getLocale() => 1]);
+        $places = $dm->getRepository(Tag::class)->findBy(['parent.$id' => new ObjectId($placeTag->getId())], ['title.'.$request->getLocale() => 1]);
 
         return ['places' => $places];
     }
@@ -84,7 +85,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
 
-        $multimediaObjects = $dm->getRepository(MultimediaObject::class)->findBy(['tags._id' => new \MongoId($tag->getId())]);
+        $multimediaObjects = $dm->getRepository(MultimediaObject::class)->findBy(['tags._id' => new ObjectId($tag->getId())]);
 
         $series = [];
         foreach ($multimediaObjects as $multimediaObject) {
@@ -109,7 +110,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
         $translator = $this->get('translator');
 
         if ($id) {
-            $parent = $dm->getRepository(Tag::class)->findOneBy(['_id' => new \MongoId($id)]);
+            $parent = $dm->getRepository(Tag::class)->findOneBy(['_id' => new ObjectId($id)]);
             $isPrecinct = true;
         } else {
             $parent = $dm->getRepository(Tag::class)->findOneBy(['cod' => 'PLACES']);

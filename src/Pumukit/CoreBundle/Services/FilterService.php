@@ -4,6 +4,7 @@ namespace Pumukit\CoreBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Query\Filter\BsonFilter;
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Person;
@@ -197,7 +198,7 @@ class FilterService
         if ((null !== $person) && (null !== ($roleCode = $this->personService->getPersonalScopeRoleCode()))) {
             $people = [
                 '$elemMatch' => [
-                    'people._id' => new \MongoId($person->getId()),
+                    'people._id' => new ObjectId($person->getId()),
                     'cod' => $roleCode,
                 ],
             ];
@@ -242,7 +243,7 @@ class FilterService
         $people = [];
         if ((null !== $person) && (null !== ($roleCode = $this->personService->getPersonalScopeRoleCode()))) {
             $people['$elemMatch'] = [];
-            $people['$elemMatch']['people._id'] = new \MongoId($person->getId());
+            $people['$elemMatch']['people._id'] = new ObjectId($person->getId());
             $people['$elemMatch']['cod'] = $roleCode;
         }
 

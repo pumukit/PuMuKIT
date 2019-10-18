@@ -4,6 +4,7 @@ namespace Pumukit\BasePlayerBundle\Services;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\ObjectId;
 use Pumukit\BasePlayerBundle\Utils\CountableAppendIterator;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
@@ -90,7 +91,7 @@ class SeriesPlaylistService
     public function getMmobjFromIdAndPlaylist($mmobjId, Series $series, $criteria = [])
     {
         $qb = $this->createSortedQuerySeriesMmobjs($series, $criteria)
-            ->field('id')->equals(new \MongoId($mmobjId));
+            ->field('id')->equals(new ObjectId($mmobjId));
         $mmobj = $qb->getQuery()->getSingleResult();
 
         if (!$mmobj) {

@@ -2,6 +2,7 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use MongoDB\BSON\ObjectId;
 use Pumukit\NewAdminBundle\Form\Type\UserUpdateType;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
@@ -254,7 +255,7 @@ class UserController extends AdminController implements NewAdminControllerInterf
                     'name' => $group->getName(),
                     'origin' => $group->getOrigin(),
                 ];
-                $addGroupsIds[] = new \MongoId($group->getId());
+                $addGroupsIds[] = new ObjectId($group->getId());
             }
             $groupsToDelete = $groupService->findByIdNotIn($addGroupsIds);
             foreach ($groupsToDelete as $group) {
@@ -295,7 +296,7 @@ class UserController extends AdminController implements NewAdminControllerInterf
         foreach ($criteria as $property => $value) {
             if ('permissionProfile' == $property) {
                 if ('all' != $value) {
-                    $new_criteria[$property] = new \MongoId($value);
+                    $new_criteria[$property] = new ObjectId($value);
                 }
             } elseif ('origin' == $property) {
                 if ('all' != $value) {

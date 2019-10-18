@@ -2,7 +2,6 @@
 
 namespace Pumukit\NewAdminBundle\DependencyInjection;
 
-use Gedmo\Mapping\Annotation\Tree;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 

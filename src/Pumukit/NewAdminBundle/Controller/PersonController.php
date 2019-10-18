@@ -2,6 +2,7 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use MongoDB\BSON\ObjectId;
 use Pumukit\NewAdminBundle\Form\Type\PersonType;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Person;
@@ -411,7 +412,7 @@ class PersonController extends AdminController implements NewAdminControllerInte
         $excludedPeople = $multimediaObject->getPeopleByRole($role, true);
         $excludedPeopleIds = [];
         foreach ($excludedPeople as $person) {
-            $excludedPeopleIds[] = new \MongoId($person->getId());
+            $excludedPeopleIds[] = new ObjectId($person->getId());
         }
         $people = $personService->autoCompletePeopleByName($name, $excludedPeopleIds, true);
 

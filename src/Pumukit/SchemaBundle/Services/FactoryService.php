@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\Annotation;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -372,7 +373,7 @@ class FactoryService
             $this->seriesDispatcher->dispatchUpdate($series);
         }
         $annotRepo = $this->dm->getRepository(Annotation::class);
-        $annotations = $annotRepo->findBy(['multimediaObject' => new \MongoId($multimediaObject->getId())]);
+        $annotations = $annotRepo->findBy(['multimediaObject' => new ObjectId($multimediaObject->getId())]);
         foreach ($annotations as $annot) {
             $this->dm->remove($annot);
         }
@@ -542,7 +543,7 @@ class FactoryService
             $new->addLink($clonedLink);
         }
         $annotRepo = $this->dm->getRepository(Annotation::class);
-        $annotations = $annotRepo->findBy(['multimediaObject' => new \MongoId($src->getId())]);
+        $annotations = $annotRepo->findBy(['multimediaObject' => new ObjectId($src->getId())]);
         foreach ($annotations as $annot) {
             $clonedAnnot = clone $annot;
             $clonedAnnot->setMultimediaObject($new->getId());

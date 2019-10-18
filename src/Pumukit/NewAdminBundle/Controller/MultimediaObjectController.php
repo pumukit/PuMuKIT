@@ -2,6 +2,7 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use MongoDB\BSON\ObjectId;
 use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\NewAdminBundle\Event\BackofficeEvents;
@@ -290,7 +291,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
 
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new \MongoId($request->request->get('id'))]);
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($request->request->get('id'))]);
         $method = $request->getMethod();
         if (in_array($method, ['POST', 'PUT', 'PATCH'])) {
             $social = $multimediaObject->getEmbeddedSocial();
@@ -1234,7 +1235,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $aRoles = $dm->getRepository(Role::class)->findAll();
         $aPubChannel = $dm->getRepository(Tag::class)->findOneBy(['cod' => 'PUBCHANNELS']);
-        $aChannels = $dm->getRepository(Tag::class)->findBy(['parent.$id' => new \MongoId($aPubChannel->getId())]);
+        $aChannels = $dm->getRepository(Tag::class)->findBy(['parent.$id' => new ObjectId($aPubChannel->getId())]);
 
         $multimediaObjectLabel = $this->get('translator')->trans($this->container->getParameter('pumukit_new_admin.multimedia_object_label'));
         $statusPub = [
@@ -1359,7 +1360,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     public function updatePropertyAction(Request $request)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new \MongoId($request->get('id'))]);
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($request->get('id'))]);
         $method = $request->getMethod();
         if (in_array($method, ['POST'])) {
             $multimediaObject->setProperty('paellalayout', $request->get('paellalayout'));
@@ -1664,11 +1665,11 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                 'name' => $group->getName(),
                 'origin' => $group->getOrigin(),
             ];
-            $addGroupsIds[] = new \MongoId($group->getId());
+            $addGroupsIds[] = new ObjectId($group->getId());
         }
         $allGroups = $this->getAllGroups();
         foreach ($allGroups as $group) {
-            $allGroupsIds[] = new \MongoId($group->getId());
+            $allGroupsIds[] = new ObjectId($group->getId());
         }
         $groupsToDelete = $groupService->findByIdNotInOf($addGroupsIds, $allGroupsIds);
         foreach ($groupsToDelete as $group) {

@@ -49,9 +49,7 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /**
-         * @var DocumentManager
-         */
+        // @var DocumentManager
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $this->allPermissions = $this->getContainer()->get('pumukitschema.permission')->getAllPermissions();
         $this->pmk2_allLocales = array_unique(array_merge($this->getContainer()->getParameter('pumukit.locales'), ['en']));

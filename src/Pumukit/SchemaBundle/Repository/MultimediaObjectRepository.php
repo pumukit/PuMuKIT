@@ -4,7 +4,7 @@ namespace Pumukit\SchemaBundle\Repository;
 
 use Doctrine\ODM\MongoDB\Query\Builder;
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
-use Pumukit\SchemaBundle\Document\Broadcast;
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -103,7 +103,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findByPicId($picId)
     {
         return $this->createQueryBuilder()
-            ->field('pics._id')->equals(new \MongoId($picId))->getQuery()
+            ->field('pics._id')->equals(new ObjectId($picId))->getQuery()
             ->getSingleResult()
         ;
     }
@@ -118,7 +118,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findByPersonId($personId)
     {
         return $this->createStandardQueryBuilder()
-            ->field('people.people._id')->equals(new \MongoId($personId))->getQuery()
+            ->field('people.people._id')->equals(new ObjectId($personId))->getQuery()
             ->execute()
         ;
     }
@@ -149,7 +149,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findByRoleId($roleId)
     {
         return $this->createStandardQueryBuilder()
-            ->field('people._id')->equals(new \MongoId($roleId))
+            ->field('people._id')->equals(new ObjectId($roleId))
             ->getQuery()
             ->execute()
         ;
@@ -165,7 +165,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findOneByTrackId($trackId)
     {
         return $this->createStandardQueryBuilder()
-            ->field('tracks._id')->equals(new \MongoId($trackId))
+            ->field('tracks._id')->equals(new ObjectId($trackId))
             ->getQuery()
             ->getSingleResult()
         ;
@@ -187,7 +187,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function createBuilderByPersonIdWithRoleCod($personId, $roleCod, $sort = [], $limit = 0, $page = 0)
     {
         $qb = $this->createQueryBuilder();
-        $qb->field('people')->elemMatch($qb->expr()->field('people._id')->equals(new \MongoId($personId))->field('cod')->equals($roleCod));
+        $qb->field('people')->elemMatch($qb->expr()->field('people._id')->equals(new ObjectId($personId))->field('cod')->equals($roleCod));
 
         $qb = $this->addSortToQueryBuilder($qb, $sort);
 
@@ -227,7 +227,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findBySeriesAndPersonIdWithRoleCod($series, $personId, $roleCod)
     {
         $qb = $this->createStandardQueryBuilder()->field('series')->references($series);
-        $qb->field('people')->elemMatch($qb->expr()->field('people._id')->equals(new \MongoId($personId))->field('cod')->equals($roleCod));
+        $qb->field('people')->elemMatch($qb->expr()->field('people._id')->equals(new ObjectId($personId))->field('cod')->equals($roleCod));
 
         return $qb->getQuery()->execute();
     }
@@ -345,7 +345,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findSeriesFieldByPersonId($personId)
     {
         return $this->createQueryBuilder()
-            ->field('people.people._id')->equals(new \MongoId($personId))
+            ->field('people.people._id')->equals(new ObjectId($personId))
             ->distinct('series')
             ->getQuery()
             ->execute()
@@ -422,7 +422,7 @@ class MultimediaObjectRepository extends DocumentRepository
         $qb->field('people')
             ->elemMatch(
                 $qb->expr()
-                    ->field('people._id')->equals(new \MongoId($personId))
+                    ->field('people._id')->equals(new ObjectId($personId))
                     ->field('cod')->equals($roleCod)
             )
         ;
@@ -445,7 +445,7 @@ class MultimediaObjectRepository extends DocumentRepository
 
         $qb = $this->createQueryBuilder();
         $qb->addOr($qb->expr()->field('groups')->in($groupsIds));
-        $qb->addOr($qb->expr()->field('people')->elemMatch($qb->expr()->field('people._id')->equals(new \MongoId($personId))->field('cod')->equals($roleCod)));
+        $qb->addOr($qb->expr()->field('people')->elemMatch($qb->expr()->field('people._id')->equals(new ObjectId($personId))->field('cod')->equals($roleCod)));
 
         return $qb;
     }
@@ -550,7 +550,7 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function createBuilderWithTag(Tag $tag, $sort = [])
     {
-        $qb = $this->createStandardQueryBuilder()->field('tags._id')->equals(new \MongoId($tag->getId()));
+        $qb = $this->createStandardQueryBuilder()->field('tags._id')->equals(new ObjectId($tag->getId()));
 
         return $this->addSortToQueryBuilder($qb, $sort);
     }
@@ -596,7 +596,7 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function createBuilderWithGeneralTag(Tag $tag, $sort = [])
     {
-        $qb = $this->createStandardQueryBuilder()->field('tags._id')->in([new \MongoId($tag->getId())])->field('tags.path')->notIn([new \MongoRegex('/'.preg_quote($tag->getPath()).'.*\|/')]);
+        $qb = $this->createStandardQueryBuilder()->field('tags._id')->in([new ObjectId($tag->getId())])->field('tags.path')->notIn([new \MongoRegex('/'.preg_quote($tag->getPath()).'.*\|/')]);
 
         return $this->addSortToQueryBuilder($qb, $sort);
     }
@@ -610,7 +610,7 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function findOneWithTag(Tag $tag)
     {
-        return $this->createStandardQueryBuilder()->field('tags._id')->equals(new \MongoId($tag->getId()))->getQuery()->getSingleResult();
+        return $this->createStandardQueryBuilder()->field('tags._id')->equals(new ObjectId($tag->getId()))->getQuery()->getSingleResult();
     }
 
     /**
@@ -680,7 +680,7 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function findWithoutTag(Tag $tag, $sort = [], $limit = 0, $page = 0)
     {
-        $qb = $this->createStandardQueryBuilder()->field('tags._id')->notEqual(new \MongoId($tag->getId()));
+        $qb = $this->createStandardQueryBuilder()->field('tags._id')->notEqual(new ObjectId($tag->getId()));
 
         $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
 
@@ -696,7 +696,7 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function findOneWithoutTag(Tag $tag)
     {
-        return $this->createStandardQueryBuilder()->field('tags._id')->notEqual(new \MongoId($tag->getId()))->getQuery()->getSingleResult();
+        return $this->createStandardQueryBuilder()->field('tags._id')->notEqual(new ObjectId($tag->getId()))->getQuery()->getSingleResult();
     }
 
     /**
@@ -729,7 +729,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findSeriesFieldWithTag(Tag $tag)
     {
         return $this->createStandardQueryBuilder()
-            ->field('tags._id')->equals(new \MongoId($tag->getId()))
+            ->field('tags._id')->equals(new ObjectId($tag->getId()))
             ->distinct('series')
             ->getQuery()
             ->execute()
@@ -745,7 +745,7 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function findOneSeriesFieldWithTag(Tag $tag)
     {
-        return $this->createStandardQueryBuilder()->field('tags._id')->equals(new \MongoId($tag->getId()))->distinct('series')->getQuery()->getSingleResult();
+        return $this->createStandardQueryBuilder()->field('tags._id')->equals(new ObjectId($tag->getId()))->distinct('series')->getQuery()->getSingleResult();
     }
 
     /**
@@ -875,7 +875,7 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function findByEmbeddedBroadcast(EmbeddedBroadcast $embeddedBroadcast)
     {
-        return $this->createQueryBuilder()->field('embeddedBroadcast._id')->equals(new \MongoId($embeddedBroadcast->getId()))->getQuery()->execute();
+        return $this->createQueryBuilder()->field('embeddedBroadcast._id')->equals(new ObjectId($embeddedBroadcast->getId()))->getQuery()->execute();
     }
 
     /**
@@ -1109,7 +1109,7 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function findAllByTagQueryBuilder($tag)
     {
-        return $this->createQueryBuilder()->field('tags._id')->equals(new \MongoId($tag->getId()));
+        return $this->createQueryBuilder()->field('tags._id')->equals(new ObjectId($tag->getId()));
     }
 
     /**
@@ -1175,7 +1175,7 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function createBuilderWithGroup(Group $group, $sort = [])
     {
-        $qb = $this->createQueryBuilder()->field('groups')->in([new \MongoId($group->getId())]);
+        $qb = $this->createQueryBuilder()->field('groups')->in([new ObjectId($group->getId())]);
 
         return $this->addSortToQueryBuilder($qb, $sort);
     }
@@ -1228,7 +1228,7 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function createBuilderWithGroupInEmbeddedBroadcast(Group $group, $sort = [])
     {
-        $qb = $this->createQueryBuilder()->field('embeddedBroadcast.groups')->in([new \MongoId($group->getId())]);
+        $qb = $this->createQueryBuilder()->field('embeddedBroadcast.groups')->in([new ObjectId($group->getId())]);
 
         return $this->addSortToQueryBuilder($qb, $sort);
     }
@@ -1463,7 +1463,7 @@ class MultimediaObjectRepository extends DocumentRepository
                 }
                 if ($mockString) {
                     foreach ($groups as $group) {
-                        $groupsIds[] = new \MongoId($group);
+                        $groupsIds[] = new ObjectId($group);
                     }
                 } elseif ($mockGroup) {
                     $groupsIds = $this->getMongoIds($groups);
@@ -1493,7 +1493,7 @@ class MultimediaObjectRepository extends DocumentRepository
 
         $pipeline[] = [
             '$match' => [
-                '_id' => new \MongoId($multimediaObjectId),
+                '_id' => new ObjectId($multimediaObjectId),
                 'type' => MultimediaObject::TYPE_LIVE,
                 'embeddedEvent.embeddedEventSession' => ['$exists' => true],
             ],
@@ -1575,7 +1575,7 @@ class MultimediaObjectRepository extends DocumentRepository
         if ($multimediaObjectId) {
             $pipeline[] = [
                 '$match' => [
-                    '_id' => new \MongoId($multimediaObjectId),
+                    '_id' => new ObjectId($multimediaObjectId),
                     'type' => MultimediaObject::TYPE_LIVE,
                     'embeddedEvent.embeddedEventSession' => ['$exists' => true],
                 ],
@@ -1677,7 +1677,7 @@ class MultimediaObjectRepository extends DocumentRepository
         if ($seriesList) {
             $seriesIds = [];
             foreach ($seriesList as $series) {
-                $seriesIds[] = new \MongoId($series->getId());
+                $seriesIds[] = new ObjectId($series->getId());
             }
 
             $criteria['series'] = ['$in' => $seriesIds];
@@ -1752,7 +1752,7 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         $mongoIds = [];
         foreach ($documents as $document) {
-            $mongoIds[] = new \MongoId($document->getId());
+            $mongoIds[] = new ObjectId($document->getId());
         }
 
         return $mongoIds;

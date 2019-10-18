@@ -105,7 +105,7 @@ class UserStatsService
                     'people' => [
                         '$elemMatch' => [
                             'cod' => $code,
-                            'people._id' => new \MongoId($user->getPerson()->getId()),
+                            'people._id' => new ObjectId($user->getPerson()->getId()),
                         ],
                     ],
                 ],

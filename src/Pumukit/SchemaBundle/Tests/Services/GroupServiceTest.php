@@ -2,6 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -469,7 +470,7 @@ class GroupServiceTest extends WebTestCase
         $this->dm->persist($group3);
         $this->dm->flush();
 
-        $ids = [new \MongoId($group1->getId()), new \MongoId($group3->getId())];
+        $ids = [new ObjectId($group1->getId()), new ObjectId($group3->getId())];
         $groups = $this->groupService->findByIdNotIn($ids)->toArray();
         $this->assertFalse(in_array($group1, $groups));
         $this->assertTrue(in_array($group2, $groups));
@@ -500,8 +501,8 @@ class GroupServiceTest extends WebTestCase
         $this->dm->persist($group4);
         $this->dm->flush();
 
-        $ids = [new \MongoId($group1->getId()), new \MongoId($group3->getId())];
-        $total = [new \MongoId($group1->getId()), new \MongoId($group3->getId()), new \MongoId($group4->getId())];
+        $ids = [new ObjectId($group1->getId()), new ObjectId($group3->getId())];
+        $total = [new ObjectId($group1->getId()), new ObjectId($group3->getId()), new ObjectId($group4->getId())];
         $groups = $this->groupService->findByIdNotInOf($ids, $total)->toArray();
         $this->assertFalse(in_array($group1, $groups));
         $this->assertFalse(in_array($group2, $groups));
@@ -509,14 +510,14 @@ class GroupServiceTest extends WebTestCase
         $this->assertTrue(in_array($group4, $groups));
 
         $ids = [];
-        $total = [new \MongoId($group1->getId()), new \MongoId($group3->getId()), new \MongoId($group4->getId())];
+        $total = [new ObjectId($group1->getId()), new ObjectId($group3->getId()), new ObjectId($group4->getId())];
         $groups = $this->groupService->findByIdNotInOf($ids, $total)->toArray();
         $this->assertTrue(in_array($group1, $groups));
         $this->assertFalse(in_array($group2, $groups));
         $this->assertTrue(in_array($group3, $groups));
         $this->assertTrue(in_array($group4, $groups));
 
-        $ids = [new \MongoId($group1->getId()), new \MongoId($group3->getId())];
+        $ids = [new ObjectId($group1->getId()), new ObjectId($group3->getId())];
         $total = [];
         $groups = $this->groupService->findByIdNotInOf($ids, $total)->toArray();
         $this->assertFalse(in_array($group1, $groups));

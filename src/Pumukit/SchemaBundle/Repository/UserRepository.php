@@ -4,6 +4,7 @@ namespace Pumukit\SchemaBundle\Repository;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\User;
 
 /**
@@ -23,7 +24,7 @@ class UserRepository extends DocumentRepository
         $userRepo = $this->getDocumentManager()->getRepository(User::class);
 
         $groupsIds = array_map(function ($group) {
-            return new \MongoId($group->getId());
+            return new ObjectId($group->getId());
         }, $groups);
 
         return $userRepo

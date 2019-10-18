@@ -3,6 +3,7 @@
 namespace Pumukit\NewAdminBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\EmbeddedPerson;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
@@ -125,10 +126,10 @@ class TagCatalogueService
                 } elseif (('series.numerical_id' === $key) && !empty($value)) {
                     $series = $this->dm->getRepository(Series::class)->findOneBy(['numerical_id' => (int) $value]);
                     if ($series) {
-                        $newCriteria['series'] = new \MongoId($series->getId());
+                        $newCriteria['series'] = new ObjectId($series->getId());
                     } else {
                         // NOTE: Return 0 results.
-                        $newCriteria['series'] = new \MongoId();
+                        $newCriteria['series'] = new ObjectId();
                     }
                 } elseif (('mm.numerical_id' === $key) && !empty($value)) {
                     $newCriteria['numerical_id'] = (int) $value;
@@ -170,7 +171,7 @@ class TagCatalogueService
                     }
                 } elseif ('group' === $key) {
                     if ('all' !== $value) {
-                        $newCriteria['groups'] = new \MongoId($value);
+                        $newCriteria['groups'] = new ObjectId($value);
                     }
                 } elseif (in_array($key, ['initPublicDate', 'finishPublicDate', 'initRecordDate', 'finishRecordDate'])) {
                     if ('initPublicDate' === $key && !empty($value)) {

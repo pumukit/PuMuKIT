@@ -82,7 +82,7 @@ class SeriesStylesController extends AbstractController
         $id = $request->request->get('id');
         if (isset($id)) {
             $style = $dm->getRepository(SeriesStyle::class)->findOneBy(
-                ['_id' => new \MongoId($request->request->get('id'))]
+                ['_id' => new ObjectId($request->request->get('id'))]
             );
         } else {
             return new JsonResponse(['error']);
@@ -110,11 +110,11 @@ class SeriesStylesController extends AbstractController
         $translator = $this->get('translator');
         $session = $this->get('session');
 
-        $style = $dm->getRepository(SeriesStyle::class)->findOneBy(['_id' => new \MongoId($id)]);
+        $style = $dm->getRepository(SeriesStyle::class)->findOneBy(['_id' => new ObjectId($id)]);
 
         if ($style) {
             $series = $dm->getRepository(Series::class)->findOneBy(
-                ['series_style' => new \MongoId($style->getId())]
+                ['series_style' => new ObjectId($style->getId())]
             );
 
             if (!$series) {
@@ -145,7 +145,7 @@ class SeriesStylesController extends AbstractController
         $dm = $this->container->get('doctrine_mongodb')->getManager();
         if (isset($id)) {
             $style = $dm->getRepository(SeriesStyle::class)->findOneBy(
-                ['_id' => new \MongoId($id)]
+                ['_id' => new ObjectId($id)]
             );
         } else {
             $style = '';

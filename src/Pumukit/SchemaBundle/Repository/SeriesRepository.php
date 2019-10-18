@@ -5,6 +5,7 @@ namespace Pumukit\SchemaBundle\Repository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Query\Builder;
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\EmbeddedTag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
@@ -191,7 +192,7 @@ class SeriesRepository extends DocumentRepository
      */
     public function findByPicId($picId)
     {
-        return $this->createQueryBuilder()->field('pics._id')->equals(new \MongoId($picId))->getQuery()->getSingleResult();
+        return $this->createQueryBuilder()->field('pics._id')->equals(new ObjectId($picId))->getQuery()->getSingleResult();
     }
 
     /**
@@ -609,7 +610,7 @@ class SeriesRepository extends DocumentRepository
 
         $groups = [];
         foreach ($user->getGroups() as $group) {
-            $groups[] = new \MongoId($group->getId());
+            $groups[] = new ObjectId($group->getId());
         }
 
         $match = [];
