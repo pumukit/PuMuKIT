@@ -8,25 +8,17 @@ use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-/**
- * This is the class that validates and merges configuration from your app/config files.
- *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
- */
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('pumukit_encoder');
+        $treeBuilder = new TreeBuilder('pumukit_encoder');
+        $rootNode = $treeBuilder->getRootNode();
 
         //Doc in http://symfony.com/doc/current/components/config/definition.html
-        $this->addGlobalConfig($rootNode);
+        self::addGlobalConfig($rootNode);
         $this->addCpusSection($rootNode);
-        $this->addProfilesSection($rootNode);
+        self::addProfilesSection($rootNode);
         $this->addThumbnailSection($rootNode);
         $this->addTargetDefaultProfiles($rootNode);
 

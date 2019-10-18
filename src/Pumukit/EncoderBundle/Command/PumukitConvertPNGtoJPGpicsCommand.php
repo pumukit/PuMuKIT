@@ -3,12 +3,12 @@
 namespace Pumukit\EncoderBundle\Command;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class PumukitConvertPNGtoJPGpicsCommand extends ContainerAwareCommand
+class PumukitConvertPNGtoJPGpicsCommand extends Command
 {
     private $dm;
     private $picExtractorService;

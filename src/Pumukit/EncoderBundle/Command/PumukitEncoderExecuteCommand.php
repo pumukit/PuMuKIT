@@ -3,13 +3,13 @@
 namespace Pumukit\EncoderBundle\Command;
 
 use Pumukit\EncoderBundle\Document\Job;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class PumukitEncoderExecuteCommand extends ContainerAwareCommand
+class PumukitEncoderExecuteCommand extends Command
 {
     protected function configure()
     {

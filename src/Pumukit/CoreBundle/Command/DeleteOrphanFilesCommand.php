@@ -5,13 +5,13 @@ namespace Pumukit\CoreBundle\Command;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 
-class DeleteOrphanFilesCommand extends ContainerAwareCommand
+class DeleteOrphanFilesCommand extends Command
 {
     private $dm;
     private $output;

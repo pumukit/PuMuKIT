@@ -3,12 +3,12 @@
 namespace Pumukit\StatsBundle\Command;
 
 use Pumukit\StatsBundle\Document\ViewsLog;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class PumukitCleanLogCommand extends ContainerAwareCommand
+class PumukitCleanLogCommand extends Command
 {
     private $dm;
     private $from;

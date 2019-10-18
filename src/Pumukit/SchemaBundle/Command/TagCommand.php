@@ -3,13 +3,13 @@
 namespace Pumukit\SchemaBundle\Command;
 
 use Pumukit\SchemaBundle\Document\Tag;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class TagCommand extends ContainerAwareCommand
+class TagCommand extends Command
 {
     private $dm;
     private $tagRepo;

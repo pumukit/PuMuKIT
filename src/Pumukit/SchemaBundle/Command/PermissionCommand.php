@@ -3,13 +3,13 @@
 namespace Pumukit\SchemaBundle\Command;
 
 use Pumukit\SchemaBundle\Document\PermissionProfile;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class PermissionCommand extends ContainerAwareCommand
+class PermissionCommand extends Command
 {
     /**
      * @see Command

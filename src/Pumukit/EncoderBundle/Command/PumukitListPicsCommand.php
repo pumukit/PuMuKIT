@@ -2,12 +2,12 @@
 
 namespace Pumukit\EncoderBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class PumukitListPicsCommand extends ContainerAwareCommand
+class PumukitListPicsCommand extends Command
 {
     private $output;
     private $input;
