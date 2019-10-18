@@ -25,6 +25,9 @@ HTML5 eta h.264 kodeka euskarri duten web nabigatzaileak</target>
       <trans-unit id="9XsilUM" resname="Use &lt;a href=&quot;https://www.google.com/intl/es/chrome/browser/?hl=es&quot; target=&quot;_blank&quot; style=&quot;color: #FFF;&quot;&gt;Google Chrome&lt;/a&gt; or &lt;a href=&quot;http://www.apple.com/es/safari/&quot; target=&quot;_blank&quot; style=&quot;color: #FFF;&quot;&gt;Safari&lt;/a&gt; to improve your experience in watching recorded lectures">
         <source>Use &lt;a href="https://www.google.com/intl/es/chrome/browser/?hl=es" target="_blank" style="color: #FFF;"&gt;Google Chrome&lt;/a&gt; or &lt;a href="http://www.apple.com/es/safari/" target="_blank" style="color: #FFF;"&gt;Safari&lt;/a&gt; to improve your experience in watching recorded lectures</source>
         <target state="translated">Erabili &lt;a href="https://www.google.com/intl/es/chrome/browser/?hl=es" target="_blank" style="color: #FFF;"&gt;Google Chrome&lt;/a&gt; o &lt;a href="http://www.apple.com/es/safari/" target="_blank" style="color: #FFF;"&gt;Safari&lt;/a&gt; grabatutako saioak hobe ikusi ahal izateko</target>
+        <alt-trans>
+          <target>Erabili &lt;a href="https://www.google.com/intl/es/chrome/browser/?hl=es" target="_blank" style="color: #FFF;"&gt;Google Chrome&lt;/a&gt; o &lt;a href="http://www.apple.com/es/safari/" target="_blank" style="color: #FFF;"&gt;Safari&lt;/a&gt; grabatutako saioak hobe ikusi ahal izateko</target>
+        </alt-trans>
       </trans-unit>
     </body>
   </file>

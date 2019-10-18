@@ -524,6 +524,9 @@
       <trans-unit id="Z0fvRV9" resname="Health &amp; Medicine">
         <source>Health &amp; Medicine</source>
         <target state="translated">Salud &amp; Medicina</target>
+        <alt-trans>
+          <target>Salud &amp; Medicina</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="t4wWGP2" resname="Law">
         <source>Law</source>
@@ -532,6 +535,9 @@
       <trans-unit id="HPPfeB0" resname="Social Matters &amp; Education">
         <source>Social Matters &amp; Education</source>
         <target state="translated">Aspectos Sociales &amp; Educación</target>
+        <alt-trans>
+          <target>Aspectos Sociales &amp; Educación</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="GnUpqxT" resname="Subjects">
         <source>Subjects</source>
