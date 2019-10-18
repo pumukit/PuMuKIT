@@ -2,6 +2,7 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\SeriesStyle;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
