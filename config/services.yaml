@@ -21,7 +21,9 @@ parameters:
         logo:                "%env(PUMUKIT_LOGO)%"
         primary_color:       "%env(PUMUKIT_PRIMARY_COLOR)%"
         font_color:          "%env(PUMUKIT_FONT_COLOR)%"
-    pumukit.locales:         "%env(json:PUMUKIT_LOCALES)%"
+    pumukit.locales:
+        - "%env(PUMUKIT_DEFAULT_LOCALE_1)%"
+        - "%env(PUMUKIT_DEFAULT_LOCALE_2)%"
     pumukit.uploads_dir:     "%env(PUMUKIT_UPLOADS_DIR)%"
     pumukit.uploads_url:     "%env(PUMUKIT_UPLOADS_URL)%"
     pumukit.inbox:           "%env(PUMUKIT_INBOX)%"
