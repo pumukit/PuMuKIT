@@ -15,7 +15,7 @@
       </trans-unit>
       <trans-unit id="Rz7eYBN" resname="to improve your experience in watching recorded lectures" approved="yes">
         <source>to improve your experience in watching recorded lectures</source>
-        <target state="translated">para mejorar su experiencia durante la visualización de clases grabadas</target>
+        <target state="final">para mejorar su experiencia durante la visualización de clases grabadas</target>
       </trans-unit>
       <trans-unit id="sf.a06d" resname="Web explorers with HTML5 and h.264 codec video support">
         <source>Web explorers with HTML5 and h.264 codec video support</source>
@@ -24,6 +24,9 @@
       <trans-unit id="9XsilUM" resname="Use &lt;a href=&quot;https://www.google.com/intl/es/chrome/browser/?hl=es&quot; target=&quot;_blank&quot; style=&quot;color: #FFF;&quot;&gt;Google Chrome&lt;/a&gt; or &lt;a href=&quot;http://www.apple.com/es/safari/&quot; target=&quot;_blank&quot; style=&quot;color: #FFF;&quot;&gt;Safari&lt;/a&gt; to improve your experience in watching recorded lectures">
         <source>Use &lt;a href="https://www.google.com/intl/es/chrome/browser/?hl=es" target="_blank" style="color: #FFF;"&gt;Google Chrome&lt;/a&gt; or &lt;a href="http://www.apple.com/es/safari/" target="_blank" style="color: #FFF;"&gt;Safari&lt;/a&gt; to improve your experience in watching recorded lectures</source>
         <target state="translated">Use &lt;a href="https://www.google.com/intl/es/chrome/browser/?hl=es" target="_blank" style="color: #FFF;"&gt;Google Chrome&lt;/a&gt; o &lt;a href="http://www.apple.com/es/safari/" target="_blank" style="color: #FFF;"&gt;Safari&lt;/a&gt; para mejorar su experiencia durante el visionado de conferencias</target>
+        <alt-trans>
+          <target>Use &lt;a href="https://www.google.com/intl/es/chrome/browser/?hl=es" target="_blank" style="color: #FFF;"&gt;Google Chrome&lt;/a&gt; o &lt;a href="http://www.apple.com/es/safari/" target="_blank" style="color: #FFF;"&gt;Safari&lt;/a&gt; para mejorar su experiencia durante el visionado de conferencias</target>
+        </alt-trans>
       </trans-unit>
     </body>
   </file>
