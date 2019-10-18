@@ -9,7 +9,7 @@ ARG PHP_MEMORY_LIMIT=512M
 COPY --chown=www-data:www-data . ./
 
 # load environment variables
-RUN source doc/docker/.env
+RUN source .env
 
 RUN set -eux; \
     mkdir -p var/cache var/log var/sessions && \
