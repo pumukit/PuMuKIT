@@ -525,7 +525,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
             $resources = $this->reorderResources($resources);
 
             $paginationService = $this->get('pumukit_core.pagination_service');
-            $resources = $pager->createArrayAdapter($resources);
+            $resources = $paginationService->createArrayAdapter($resources);
         } else {
             $resources = $this->createPager($criteria, $sorting);
             if (array_key_exists('textScore', $sorting)) {

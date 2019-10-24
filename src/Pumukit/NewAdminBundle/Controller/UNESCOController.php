@@ -204,10 +204,10 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
         }
 
         $paginationService = $this->get('pumukit_core.pagination_service');
-        $pager = $paginationService->createDoctrineODMMongoDBAdapter($multimediaObjects, $page, $limit);
+        $pager = $paginationService->createDoctrineODMMongoDBAdapter($multimediaObjects, $page, $maxPerPage);
 
         if ($pager->getNbPages() < $page) {
-            $page = $adapter->getNbPages();
+            $page = $pager->getNbPages();
             $session->set('admin/unesco/page', $page);
         }
 
