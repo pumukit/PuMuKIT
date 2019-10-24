@@ -370,6 +370,6 @@ class ListController extends Controller implements WebTVControllerInterface
      */
     private function createPager($objects, $page, $limit = 10)
     {
-        return $this->get('pumukit_web_tv.pagination_service')->createDoctrineODMMongoDBAdapter($objects, $page, $limit);
+        return $this->get('pumukit_core.pagination_service')->createDoctrineODMMongoDBAdapter($objects, $page, $limit);
     }
 }

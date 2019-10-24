@@ -3,8 +3,6 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Doctrine\ODM\MongoDB\Query\Builder;
-use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
-use Pagerfanta\Pagerfanta;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectPubType;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
@@ -205,21 +203,17 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
             }
         }
 
-        $adapter = new DoctrineODMMongoDBAdapter($multimediaObjects);
-        $adapter = new Pagerfanta($adapter);
+        $paginationService = $this->get('pumukit_core.pagination_service');
+        $pager = $paginationService->createDoctrineODMMongoDBAdapter($multimediaObjects, $page, $limit);
 
-        $adapter->setMaxPerPage($maxPerPage)->setNormalizeOutOfRangePages(true);
-
-        if ($adapter->getNbPages() < $page) {
+        if ($pager->getNbPages() < $page) {
             $page = $adapter->getNbPages();
             $session->set('admin/unesco/page', $page);
         }
 
-        $adapter->setCurrentPage($page);
-
-        if ($adapter->getNbResults() > 0) {
+        if ($pager->getNbResults() > 0) {
             $resetCache = true;
-            foreach ($adapter->getCurrentPageResults() as $result) {
+            foreach ($pager->getCurrentPageResults() as $result) {
                 if ($session->get('admin/unesco/id') == $result->getId()) {
                     $resetCache = false;
 
@@ -227,7 +221,7 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
                 }
             }
             if ($resetCache) {
-                foreach ($adapter->getCurrentPageResults() as $result) {
+                foreach ($pager->getCurrentPageResults() as $result) {
                     $session->set('admin/unesco/id', $result->getId());
 
                     break;
@@ -238,7 +232,7 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
         }
 
         return [
-            'mms' => $adapter,
+            'mms' => $pager,
             'disable_pudenew' => !$this->container->getParameter('show_latest_with_pudenew'),
         ];
     }

@@ -2,8 +2,6 @@
 
 namespace Pumukit\WebTVBundle\Controller;
 
-use Pagerfanta\Adapter\ArrayAdapter;
-use Pagerfanta\Pagerfanta;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -41,20 +39,17 @@ class EventController extends Controller implements WebTVControllerInterface
         $eventsToday = $this->getEventsTodayNextSession($eventsNow, $eventsToday);
         $eventsFuture = $this->get('pumukitschema.eventsession')->findNextEvents();
 
-        $adapter = new ArrayAdapter($eventsFuture);
-        $eventsFuture = new Pagerfanta($adapter);
-
         $page = $request->query->get('page', 1);
 
         $maxPerPage = $this->container->getParameter('columns_objs_event') * 3;
-        $eventsFuture->setMaxPerPage($maxPerPage);
-        $eventsFuture->setNormalizeOutOfRangePages(true);
-        $eventsFuture->setCurrentPage((int) $page);
+
+        $paginationService = $this->get('pumukit_core.pagination_service');
+        $pager = $paginationService->createArrayAdapter($eventsFuture, $page, $maxPerPage);
 
         return [
             'eventsToday' => $eventsToday,
             'eventsNow' => $eventsNow,
-            'eventsFuture' => $eventsFuture,
+            'eventsFuture' => $pager,
             'defaultPic' => $defaultPic,
             'objectByCol' => $this->container->getParameter('columns_objs_event'),
             'show_info' => true,

@@ -2,8 +2,6 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Pagerfanta\Adapter\ArrayAdapter;
-use Pagerfanta\Pagerfanta;
 use Pumukit\NewAdminBundle\Form\Type\EmbeddedEventSessionType;
 use Pumukit\NewAdminBundle\Form\Type\EventsType;
 use Pumukit\NewAdminBundle\Form\Type\SeriesType;
@@ -229,19 +227,12 @@ class EventsController extends Controller implements NewAdminControllerInterface
             );
         }
 
-        $adapter = new ArrayAdapter($multimediaObjects);
-        $mms = new Pagerfanta($adapter);
+        $paginationService = $this->get('pumukit_core.pagination_service');
+        $pager = $paginationService->createArrayAdapter($multimediaObjects, $page, 10);
 
-        $mms->setMaxPerPage(10)->setNormalizeOutOfRangePages(true);
-        if (($mms->getNbPages() < $mms->getCurrentPage()) || ($mms->getNbPages() < $session->get('admin/live/event/page'))) {
-            $mms->setCurrentPage(1);
-        } else {
-            $mms->setCurrentPage($page);
-        }
-
-        if ($mms->getNbResults() > 0) {
+        if ($pager->getNbResults() > 0) {
             $resetCache = true;
-            foreach ($mms->getCurrentPageResults() as $result) {
+            foreach ($pager->getCurrentPageResults() as $result) {
                 if ($session->get('admin/live/event/id') == $result->getId()) {
                     $resetCache = false;
 
@@ -249,7 +240,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
                 }
             }
             if ($resetCache) {
-                foreach ($mms->getCurrentPageResults() as $result) {
+                foreach ($pager->getCurrentPageResults() as $result) {
                     $session->set('admin/live/event/id', $result->getId());
 
                     break;
@@ -259,7 +250,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
             $session->remove('admin/live/event/id');
         }
 
-        return ['multimediaObjects' => $mms, 'default_event_pic' => $eventPicDefault];
+        return ['multimediaObjects' => $pager, 'default_event_pic' => $eventPicDefault];
     }
 
     /**
