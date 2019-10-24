@@ -40,7 +40,7 @@ class EmbeddedSocial
      */
     public function __toString()
     {
-        return $this->getTwitterHashtag();
+        return $this->getTwitterHashtag() ?? '';
     }
 
     /**
