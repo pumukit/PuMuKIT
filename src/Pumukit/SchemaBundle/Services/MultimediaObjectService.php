@@ -181,6 +181,7 @@ class MultimediaObjectService
         foreach ($ownersPeople as $person) {
             if ($person->getId() === $user->getPerson()) {
                 $userIsOwnerOnRoles = true;
+                break;
             }
         }
 
