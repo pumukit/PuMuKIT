@@ -165,15 +165,7 @@ class MultimediaObjectService
         }
     }
 
-    /**
-     * Is user owner.
-     *
-     * @param User             $user
-     * @param MultimediaObject $multimediaObject
-     *
-     * @return bool
-     */
-    public function isUserOwner(User $user, MultimediaObject $multimediaObject)
+    public function isUserOwner(User $user, MultimediaObject $multimediaObject): bool
     {
         $userGroups = $user->getGroups()->toArray();
         $adminGroups = $multimediaObject->getGroups()->toArray();
@@ -181,10 +173,18 @@ class MultimediaObjectService
 
         $userIsOwner = false;
         if ($owners = $multimediaObject->getProperty('owners')) {
-            $userIsOwner = in_array($user->getId(), $owners);
+            $userIsOwner = in_array((string) $user->getId(), $owners, true);
         }
 
-        return $commonAdminGroups || $userIsOwner;
+        $userIsOwnerOnRoles = false;
+        $ownersPeople = $multimediaObject->getPeopleByRoleCod('owner');
+        foreach ($ownersPeople as $person) {
+            if ($person->getId() === $user->getPerson()) {
+                $userIsOwnerOnRoles = true;
+            }
+        }
+
+        return $commonAdminGroups || $userIsOwner || $userIsOwnerOnRoles;
     }
 
     /**
