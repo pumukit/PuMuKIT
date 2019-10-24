@@ -92,8 +92,12 @@ class PumukitAdminExtension extends AbstractExtension
         ];
     }
 
-    public function getBasename(string $path): string
+    public function getBasename(?string $path): string
     {
+        if (!$path) {
+            return '';
+        }
+
         return basename($path);
     }
 
