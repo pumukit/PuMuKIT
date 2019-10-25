@@ -173,14 +173,15 @@ class MultimediaObjectService
 
         $userIsOwner = false;
         if ($owners = $multimediaObject->getProperty('owners')) {
-            $userIsOwner = in_array((string) $user->getId(), $owners, true);
+            $userIsOwner = in_array($user->getId(), $owners);
         }
 
         $userIsOwnerOnRoles = false;
         $ownersPeople = $multimediaObject->getPeopleByRoleCod('owner');
         foreach ($ownersPeople as $person) {
-            if ($person->getId() === $user->getPerson()) {
+            if ($person->getId() === $user->getPerson()->getId()) {
                 $userIsOwnerOnRoles = true;
+
                 break;
             }
         }
