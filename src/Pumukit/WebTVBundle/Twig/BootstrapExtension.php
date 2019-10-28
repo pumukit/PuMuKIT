@@ -77,7 +77,7 @@ class BootstrapExtension extends AbstractExtension
             2 => 2,
             3 => 4,
             4 => 2,
-            6 => 6,
+            6 => 2,
             12 => 12,
         ];
 
