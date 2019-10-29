@@ -38,9 +38,9 @@ class DoctrineODMMongoDBAdapter implements AdapterInterface
      */
     public function getNbResults()
     {
-        $elements = $this->query ? new \ArrayIterator($this->query) : new \ArrayIterator($this->queryBuilder->getQuery());
+        $elements = $this->query ?? $this->queryBuilder->getQuery();
 
-        return iterator_count($elements);
+        return count($elements->toArray());
     }
 
     /**
