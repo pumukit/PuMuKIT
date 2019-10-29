@@ -4,8 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    env(MONGODB_URL): ''
-    env(MONGODB_DB): ''
+    env(MONGODB_URL): 'mongodb://localhost:27017'
+    env(MONGODB_DB): 'pumukit'
     locale:  "%env(PUMUKIT_LOCALE)%"
     secret:  "%env(PUMUKIT_SECRET)%"
 
