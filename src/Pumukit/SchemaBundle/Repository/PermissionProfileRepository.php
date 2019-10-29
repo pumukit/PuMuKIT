@@ -24,7 +24,6 @@ class PermissionProfileRepository extends DocumentRepository
         $this->createQueryBuilder()
             ->field('name')->notEqual($permissionProfile->getName())
             ->updateMany()
-            ->multiple(true)
             ->field('default')->set(!$default)
             ->field('default')->equals($default)
             ->getQuery()

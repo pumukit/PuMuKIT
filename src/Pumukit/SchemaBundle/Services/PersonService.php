@@ -152,7 +152,6 @@ class PersonService
 
         $query = $qb
             ->updateMany()
-            ->multiple(true)
             ->field('people._id')->equals(new ObjectId($role->getId()))
             ->field('people.$.cod')->set($role->getCod())
             ->field('people.$.xml')->set($role->getXml())

@@ -66,7 +66,6 @@ EOT
     {
         $qb = $this->dm->createQueryBuilder(ViewsLog::class)
             ->remove()
-            ->multiple(true)
             ->field('userAgent')->equals($userAgent);
 
         if ($this->from) {
