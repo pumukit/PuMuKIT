@@ -8,16 +8,12 @@ ARG PHP_MEMORY_LIMIT=512M
 # copy the code into the docker
 COPY --chown=www-data:www-data . ./
 
-# load environment variables
-RUN source .env
-
 RUN set -eux; \
     mkdir -p var/cache var/log var/sessions && \
     composer install --prefer-dist --no-scripts --no-progress --no-suggest --classmap-authoritative --no-interaction && \
     chown -R www-data var && \
     php bin/console a:i
 
-    
 COPY doc/docker/pumukit/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 RUN chmod +x /usr/local/bin/docker-entrypoint
 
