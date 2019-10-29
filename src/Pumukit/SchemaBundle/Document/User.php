@@ -8,7 +8,7 @@ use FOS\UserBundle\Model\GroupInterface;
 use FOS\UserBundle\Model\User as BaseUser;
 
 /**
- * @MongoDB\Document
+ * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\UserRepository")
  */
 class User extends BaseUser
 {
