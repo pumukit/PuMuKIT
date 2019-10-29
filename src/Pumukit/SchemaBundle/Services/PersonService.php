@@ -365,16 +365,11 @@ class PersonService
         $this->dm->flush();
     }
 
-    /**
-     * Count multimedia objects with person.
-     *
-     * @param Person $person
-     *
-     * @return int
-     */
-    public function countMultimediaObjectsWithPerson($person)
+    public function countMultimediaObjectsWithPerson(Person $person): int
     {
-        return count($this->repoMmobj->findByPersonId($person->getId()));
+        $elements = $this->repoMmobj->findByPersonId($person->getId());
+
+        return count($elements->toArray());
     }
 
     /**
