@@ -38,12 +38,9 @@ class DoctrineODMMongoDBAdapter implements AdapterInterface
      */
     public function getNbResults()
     {
-        if ($this->query) {
-            //Take adventage of Mongo re-using the complete query from getSlice.
-            return $this->query->count();
-        }
+        $elements = $this->query ? new \ArrayIterator($this->query) : new \ArrayIterator($this->queryBuilder->getQuery());
 
-        return $this->queryBuilder->getQuery()->count();
+        return iterator_count($elements);
     }
 
     /**

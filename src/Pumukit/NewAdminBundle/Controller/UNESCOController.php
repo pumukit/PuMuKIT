@@ -137,11 +137,15 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
             }
         }
 
-        $countMultimediaObjects = $dm->getRepository(MultimediaObject::class)->count();
+        $multimediaObjects = new \ArrayIterator($dm->getRepository(MultimediaObject::class)->findAll());
+        $countMultimediaObjects = iterator_count($multimediaObjects);
 
-        $countMultimediaObjectsWithoutTag = $dm->getRepository(MultimediaObject::class)->findWithoutTag(
+        $multimediaObjectsWithoutTag = new \ArrayIterator($dm->getRepository(MultimediaObject::class)->findWithoutTag(
             $configuredTag
-        );
+        ));
+
+        $countMultimediaObjectsWithoutTag = iterator_count($multimediaObjectsWithoutTag);
+
 
         $defaultTagOptions = [
             [
@@ -152,7 +156,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
             [
                 'key' => 1,
                 'title' => $translator->trans('Without category'),
-                'count' => count($countMultimediaObjectsWithoutTag),
+                'count' => $countMultimediaObjectsWithoutTag,
             ],
         ];
 
