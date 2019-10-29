@@ -38,7 +38,7 @@ class GroupController extends AdminController implements NewAdminControllerInter
             ->execute()
         ;
 
-        return ['groups' => $groups, 'origins' => $origins->toArray()];
+        return ['groups' => $groups, 'origins' => $origins];
     }
 
     /**
