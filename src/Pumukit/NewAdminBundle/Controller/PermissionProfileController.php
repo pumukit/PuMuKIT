@@ -87,7 +87,8 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         $permissionProfile = new PermissionProfile();
         $form = $this->getForm($permissionProfile, $request->getLocale());
 
-        if ($form->handleRequest($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $permissionProfile = $permissionProfileService->update($permissionProfile, true);
             } catch (\Exception $e) {

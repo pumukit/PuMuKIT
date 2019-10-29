@@ -63,14 +63,14 @@ class PermissionProfileService
     public function checkDefault(PermissionProfile $permissionProfile)
     {
         if ($permissionProfile->isDefault()) {
-            $default = $this->repo->findOneByDefault(true);
+            $default = $this->repo->findOneBy(['default' => true]);
             $this->repo->changeDefault($permissionProfile);
             if (null !== $default) {
                 $this->dispatcher->dispatchUpdate($default);
             }
         }
 
-        $default = $this->repo->findOneByDefault(true);
+        $default = $this->repo->findOneBy(['default' => true]);
         if ((null === $default) || (!$default->isDefault())) {
             $default = $this->setDefaultPermissionProfile();
             $this->dispatcher->dispatchUpdate($default);
@@ -229,7 +229,7 @@ class PermissionProfileService
      */
     public function getDefault()
     {
-        return $this->repo->findOneByDefault(true);
+        return $this->repo->findOneBy(['default' => true]);
     }
 
     /**

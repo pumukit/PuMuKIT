@@ -86,7 +86,7 @@ class PermissionProfileRepositoryTest extends WebTestCase
 
         $this->assertCount(1, $this->repo->findByDefault(true));
         $this->assertCount(2, $this->repo->findByDefault(false));
-        $this->assertEquals($permissionProfile1, $this->repo->findOneByDefault(true));
+        $this->assertEquals($permissionProfile1, $this->repo->findOneBy(['default' => true]));
 
         $permissionProfile4 = new PermissionProfile();
         $permissionProfile4->setName('test4');
@@ -100,7 +100,7 @@ class PermissionProfileRepositoryTest extends WebTestCase
 
         $this->assertCount(1, $this->repo->findByDefault(true));
         $this->assertCount(3, $this->repo->findByDefault(false));
-        $this->assertEquals($permissionProfile4, $this->repo->findOneByDefault(true));
+        $this->assertEquals($permissionProfile4, $this->repo->findOneBy(['default' => true]));
     }
 
     public function testFindDefaultCandidate()
