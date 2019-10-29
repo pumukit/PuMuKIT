@@ -4,52 +4,46 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    env(MONGODB_URL): 'mongodb://localhost:27017'
-    env(MONGODB_DB): 'pumukit'
-    locale:  "%env(PUMUKIT_LOCALE)%"
-    secret:  "%env(PUMUKIT_SECRET)%"
+  env(MONGODB_URL): 'mongodb://localhost:27017'
+  env(MONGODB_DB): 'pumukit'
+  locale:  "%env(PUMUKIT_LOCALE)%"
+  secret:  "%env(PUMUKIT_SECRET)%"
 
-    debug_toolbar:          true
-    debug_redirects:        false
-    use_assetic_controller: true
+  debug_toolbar:          true
+  debug_redirects:        false
+  use_assetic_controller: true
 
-    pumukit.info:
-        title:               "%env(PUMUKIT_TITLE)%"
-        description:         "%env(PUMUKIT_DESCRIPTION)%"
-        keywords:            "%env(PUMUKIT_KEYWORDS)%"
-        email:               "%env(PUMUKIT_EMAIL)%"
-        logo:                "%env(PUMUKIT_LOGO)%"
-        primary_color:       "%env(PUMUKIT_PRIMARY_COLOR)%"
-        font_color:          "%env(PUMUKIT_FONT_COLOR)%"
-    pumukit.locales:
-        - "%env(PUMUKIT_DEFAULT_LOCALE_1)%"
-        - "%env(PUMUKIT_DEFAULT_LOCALE_2)%"
-    pumukit.uploads_dir:     "%env(PUMUKIT_UPLOADS_DIR)%"
-    pumukit.uploads_url:     "%env(PUMUKIT_UPLOADS_URL)%"
-    pumukit.inbox:           "%env(PUMUKIT_INBOX)%"
-    pumukit.tmp:             "%env(PUMUKIT_TMP)%"
-    pumukit.delete_on_disk:  "%env(bool:PUMUKIT_DELETE_ON_DISK)%"
+  pumukit.info:
+    title:               "%env(PUMUKIT_TITLE)%"
+    description:         "%env(PUMUKIT_DESCRIPTION)%"
+    keywords:            "%env(PUMUKIT_KEYWORDS)%"
+    email:               "%env(PUMUKIT_EMAIL)%"
+    logo:                "%env(PUMUKIT_LOGO)%"
+    primary_color:       "%env(PUMUKIT_PRIMARY_COLOR)%"
+    font_color:          "%env(PUMUKIT_FONT_COLOR)%"
+  pumukit.locales:
+    - "%env(PUMUKIT_DEFAULT_LOCALE_1)%"
+    - "%env(PUMUKIT_DEFAULT_LOCALE_2)%"
+  pumukit.uploads_dir:     "%env(PUMUKIT_UPLOADS_DIR)%"
+  pumukit.uploads_url:     "%env(PUMUKIT_UPLOADS_URL)%"
+  pumukit.inbox:           "%env(PUMUKIT_INBOX)%"
+  pumukit.tmp:             "%env(PUMUKIT_TMP)%"
+  pumukit.delete_on_disk:  "%env(bool:PUMUKIT_DELETE_ON_DISK)%"
 
 services:
-    # default configuration for services in *this* file
-    _defaults:
-        autowire: true      # Automatically injects dependencies in your services.
-        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-        public: false       # Allows optimizing the container by removing unused services; this also means
-                            # fetching services directly from the container via $container->get() won't work.
-                            # The best practice is to be explicit about your dependencies anyway.
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
-#    App\:
-#        resource: '../src'
-#        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
-    Pumukit\:
-         resource: '../src/Pumukit/*/Command'
-    # controllers are imported separately to make sure services can be injected
-    # as action arguments even if you don't extend any base controller class
-    #App\Controller\:
-    #    resource: '../src/Pumukit'
-    #    tags: ['controller.service_arguments']
+  _defaults:
+    autowire: false     # Automatically injects dependencies in your services.
+    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+    public: false       # Allows optimizing the container by removing unused services; this also means
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous onestele
+  Pumukit\:
+    resource: '../src/Pumukit/*/Command'
+
+  App\Command\InitializeCommand:
+    arguments:
+      - "@kernel"
+      - "@doctrine_mongodb.odm.document_manager"
+      - "@pumukitschema.permission"
+      - "%pumukit.locales%"
+    tags:
+      - { name: 'console.command', command: 'pumukit:initialize' }
