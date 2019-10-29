@@ -150,7 +150,7 @@ class PersonService
         $qb = $this->dm->createQueryBuilder(MultimediaObject::class);
 
         $query = $qb
-            ->update()
+            ->updateMany()
             ->multiple(true)
             ->field('people._id')->equals(new ObjectId($role->getId()))
             ->field('people.$.cod')->set($role->getCod())
