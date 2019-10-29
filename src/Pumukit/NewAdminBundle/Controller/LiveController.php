@@ -27,7 +27,8 @@ class LiveController extends AdminController implements NewAdminControllerInterf
         $resource = $this->createNew();
         $form = $this->getForm($resource, $request->getLocale());
 
-        if ($form->handleRequest($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $resource = $this->update($resource);
 
             if (null === $resource) {
@@ -62,7 +63,8 @@ class LiveController extends AdminController implements NewAdminControllerInterf
         $resource = $this->findOr404($request);
         $form = $this->getForm($resource);
 
-        if ($form->handleRequest($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $dm->persist($resource);
                 $dm->flush();

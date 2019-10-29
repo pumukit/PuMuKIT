@@ -49,7 +49,8 @@ class UserController extends AdminController
         $user = $userService->instantiate();
         $form = $this->getForm($user, $request->getLocale());
 
-        if ($form->handleRequest($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $user = $userService->create($user);
                 $this->get('pumukitschema.person')->referencePersonIntoUser($user);

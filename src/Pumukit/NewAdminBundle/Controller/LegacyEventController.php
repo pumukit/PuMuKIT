@@ -72,8 +72,8 @@ class LegacyEventController extends AdminController implements NewAdminControlle
     {
         $resource = $this->createNew();
         $form = $this->getForm($resource, $request->getLocale());
-
-        if ($form->handleRequest($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $resource = $this->update($resource);
 
             if (null === $resource) {

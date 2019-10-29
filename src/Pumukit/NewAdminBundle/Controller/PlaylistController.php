@@ -85,8 +85,8 @@ class PlaylistController extends CollectionController
         $form = $this->createForm(PlaylistType::class, $series, ['translator' => $translator, 'locale' => $locale]);
 
         $method = $request->getMethod();
-        if (in_array($method, ['POST', 'PUT', 'PATCH']) &&
-            $form->handleRequest($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid() && in_array($method, ['POST', 'PUT', 'PATCH'])) {
             $dm = $this->get('doctrine_mongodb.odm.document_manager');
             $dm->persist($series);
             $dm->flush();

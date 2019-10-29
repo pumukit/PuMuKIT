@@ -78,7 +78,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
         $form = $this->createForm(TagType::class, $tag, ['translator' => $translator, 'locale' => $locale]);
 
         $form->handleRequest($request);
-        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() && ($request->isMethod('PUT') || $request->isMethod('POST'))) {
             try {
                 $this->get('pumukitschema.tag')->updateTag($tag);
             } catch (\Exception $e) {
@@ -108,7 +108,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
         $form = $this->createForm(TagType::class, $tag, ['translator' => $translator, 'locale' => $locale]);
 
         $form->handleRequest($request);
-        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() && ($request->isMethod('PUT') || $request->isMethod('POST'))) {
             try {
                 $dm->persist($tag);
                 $dm->flush();
