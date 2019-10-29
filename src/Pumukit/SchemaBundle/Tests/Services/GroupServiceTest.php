@@ -192,7 +192,7 @@ class GroupServiceTest extends WebTestCase
 
         $this->assertEquals(1, count($this->repo->findAll()));
         $this->assertEquals($group, $this->repo->findOneBy(['key' => $key]));
-        $this->assertEquals($group, $this->repo->findOneByName($name));
+        $this->assertEquals($group, $this->repo->findOneBy(['name' => $name]));
         $this->assertEquals($group, $this->repo->find($group->getId()));
     }
 
@@ -283,7 +283,7 @@ class GroupServiceTest extends WebTestCase
 
         $this->assertEquals(1, count($this->repo->findAll()));
         $this->assertEquals($group, $this->repo->findOneBy(['key' => $key1]));
-        $this->assertEquals($group, $this->repo->findOneByName($name1));
+        $this->assertEquals($group, $this->repo->findOneBy(['name' => $name1]));
 
         $createdGroup = $this->repo->find($group->getId());
 
@@ -300,7 +300,7 @@ class GroupServiceTest extends WebTestCase
 
         $this->assertEquals(1, count($this->repo->findAll()));
         $this->assertEquals($group, $this->repo->findOneBy(['key' => $key2]));
-        $this->assertEquals($group, $this->repo->findOneByName($name2));
+        $this->assertEquals($group, $this->repo->findOneBy(['name' => $name2]));
 
         $updatedGroup = $this->repo->find($group->getId());
 
@@ -384,7 +384,7 @@ class GroupServiceTest extends WebTestCase
 
         $this->assertEquals(1, count($this->repo->findAll()));
         $this->assertEquals($group, $this->repo->findOneBy(['key' => $key]));
-        $this->assertEquals($group, $this->repo->findOneByName($name));
+        $this->assertEquals($group, $this->repo->findOneBy(['name' => $name]));
         $this->assertEquals($group, $this->repo->find($group->getId()));
 
         $group = $this->groupService->delete($group);

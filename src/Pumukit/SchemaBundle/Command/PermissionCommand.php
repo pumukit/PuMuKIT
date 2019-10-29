@@ -61,7 +61,7 @@ EOT
     {
         $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $repo = $dm->getRepository(PermissionProfile::class);
-        $profile = $repo->findOneByName($profileName);
+        $profile = $repo->findOneBy(['name' => $profileName]);
 
         if (!$profile) {
             throw new \InvalidArgumentException(sprintf('No permission profile with name %s', $profileName));
