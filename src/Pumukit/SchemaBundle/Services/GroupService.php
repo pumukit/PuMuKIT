@@ -45,7 +45,7 @@ class GroupService
      */
     public function create(Group $group)
     {
-        $groupByKey = $this->repo->findOneByKey($group->getKey());
+        $groupByKey = $this->repo->findOneBy(['key' => $group->getKey()]);
         $groupByName = $this->repo->findOneByName($group->getName());
         if ($groupByKey && $groupByName) {
             throw new \Exception('There is already a group created with key '.$group->getKey().' and a group created with name '.$group->getName().'.');
@@ -76,7 +76,7 @@ class GroupService
      */
     public function update(Group $group, $executeFlush = true)
     {
-        $auxKeyGroup = $this->repo->findOneByKey($group->getKey());
+        $auxKeyGroup = $this->repo->findOneBy(['key' => $group->getKey()]);
         if ($auxKeyGroup) {
             if ($auxKeyGroup->getId() != $group->getId()) {
                 throw new \Exception('There is already a group created with key '.$group->getKey().'.');
