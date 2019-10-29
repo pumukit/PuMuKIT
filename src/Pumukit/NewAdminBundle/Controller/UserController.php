@@ -3,6 +3,7 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use MongoDB\BSON\ObjectId;
+use MongoDB\BSON\Regex;
 use Pumukit\NewAdminBundle\Form\Type\UserUpdateType;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
@@ -16,17 +17,12 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @Security("is_granted('ROLE_ACCESS_ADMIN_USERS')")
  */
-class UserController extends AdminController implements NewAdminControllerInterface
+class UserController extends AdminController
 {
     public static $resourceName = 'user';
     public static $repoName = User::class;
 
     /**
-     * Overwrite to check Users creation.
-     *
-     * @param Request $request
-     *
-     * @return array|Response
      * @Template("PumukitNewAdminBundle:User:index.html.twig")
      */
     public function indexAction(Request $request)
@@ -40,18 +36,10 @@ class UserController extends AdminController implements NewAdminControllerInterf
 
         $origins = $dm->createQueryBuilder(User::class)->distinct('origin')->getQuery()->execute();
 
-        return ['users' => $users, 'profiles' => $profiles, 'origins' => $origins->toArray()];
+        return ['users' => $users, 'profiles' => $profiles, 'origins' => $origins];
     }
 
     /**
-     * Create Action
-     * Overwrite to create Person
-     * referenced to User.
-     *
-     * @param Request $request
-     *
-     * @throws \Exception
-     *
      * @return Response|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
@@ -64,7 +52,7 @@ class UserController extends AdminController implements NewAdminControllerInterf
         if ($form->handleRequest($request)->isValid()) {
             try {
                 $user = $userService->create($user);
-                $user = $this->get('pumukitschema.person')->referencePersonIntoUser($user);
+                $this->get('pumukitschema.person')->referencePersonIntoUser($user);
             } catch (\Exception $e) {
                 throw $e;
             }
@@ -82,15 +70,7 @@ class UserController extends AdminController implements NewAdminControllerInterf
     }
 
     /**
-     * Update Action
-     * Overwrite to update it with user manager
-     * Checks plain password and updates encoded password.
-     *
-     * @param Request $request
-     *
      * @throws \Exception
-     *
-     * @return Response|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(Request $request)
     {
@@ -134,13 +114,6 @@ class UserController extends AdminController implements NewAdminControllerInterf
         );
     }
 
-    /**
-     * Delete action.
-     *
-     * @param Request $request
-     *
-     * @return bool|Response|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function deleteAction(Request $request)
     {
         $userToDelete = $this->findOr404($request);
@@ -154,14 +127,7 @@ class UserController extends AdminController implements NewAdminControllerInterf
     }
 
     /**
-     * Batch Delete action.
-     *
-     * @param Request $request
-     *
-     * @throws \Doctrine\ODM\MongoDB\LockException
-     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
-     *
-     * @return bool|Response|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Doctrine\ODM\MongoDB\LockException|\Doctrine\ODM\MongoDB\Mapping\MappingException
      */
     public function batchDeleteAction(Request $request)
     {
@@ -169,7 +135,7 @@ class UserController extends AdminController implements NewAdminControllerInterf
 
         $ids = $request->get('ids');
 
-        if ('string' === gettype($ids)) {
+        if (is_string($ids)) {
             $ids = json_decode($ids, true);
         }
 
@@ -185,11 +151,6 @@ class UserController extends AdminController implements NewAdminControllerInterf
     }
 
     /**
-     * Edit groups form.
-     *
-     * @param Request $request
-     *
-     * @return array
      * @Template("PumukitNewAdminBundle:User:editgroups.html.twig")
      */
     public function editGroupsAction(Request $request)
@@ -204,15 +165,9 @@ class UserController extends AdminController implements NewAdminControllerInterf
     }
 
     /**
-     * Update groups action.
-     *
-     * @param Request $request
-     *
      * @throws \Doctrine\ODM\MongoDB\LockException
      * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      * @throws \Exception
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateGroupsAction(Request $request)
     {
@@ -234,13 +189,6 @@ class UserController extends AdminController implements NewAdminControllerInterf
         return $this->redirect($this->generateUrl('pumukitnewadmin_user_list'));
     }
 
-    /**
-     * Get user groups.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     public function getGroupsAction(Request $request)
     {
         $user = $this->findOr404($request);
@@ -276,13 +224,6 @@ class UserController extends AdminController implements NewAdminControllerInterf
         );
     }
 
-    /**
-     * Gets the criteria values.
-     *
-     * @param array $criteria
-     *
-     * @return array
-     */
     public function getCriteria($criteria)
     {
         if (array_key_exists('reset', $criteria)) {
@@ -303,20 +244,13 @@ class UserController extends AdminController implements NewAdminControllerInterf
                     $new_criteria[$property] = $value;
                 }
             } elseif ('' !== $value) {
-                $new_criteria[$property] = new \MongoRegex('/'.$value.'/i');
+                $new_criteria[$property] = new Regex('/'.$value.'/i');
             }
         }
 
         return $new_criteria;
     }
 
-    /**
-     * Change the permission profiles of a list of users.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     public function promoteAction(Request $request)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
@@ -347,12 +281,6 @@ class UserController extends AdminController implements NewAdminControllerInterf
     }
 
     /**
-     * Modify User Groups.
-     *
-     * @param User  $user
-     * @param array $addGroups
-     * @param array $deleteGroups
-     *
      * @throws \Doctrine\ODM\MongoDB\LockException
      * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      * @throws \Exception

@@ -1,116 +1,114 @@
 <div class="table-responsive well">
-  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADMIN_USERS')) %}
-    <table class="table table-striped table-hover">
-      <thead>
-        <tr>
-          <th id="th-checkbox" width="1%">
-            <div class="checkbox">
-              <label>
-                <input type="checkbox" onclick="window.click_checkbox_all('user', this.checked)">
-              </label>
-            </div>
-          </th>
-          <th id="th-icons" colspan="3" width="5%"></th>
-          <th id="th-name">{% trans %}Name and Surname{% endtrans %}</th>
-          <th id="th-username">{% trans %}Username{% endtrans %}</th>
-          <th id="th-profile">{% trans %}Permission Profile{% endtrans %}</th>
-          <th id="th-origin">{% trans %}Origin{% endtrans %}</th>
-          <th id="th-email">{% trans %}Email{% endtrans %}</th>
-        </tr>
-      </thead>
+    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADMIN_USERS')) %}
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th id="th-checkbox" width="1%">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" onclick="window.click_checkbox_all('user', this.checked)">
+                        </label>
+                    </div>
+                </th>
+                <th id="th-icons" colspan="3" width="5%"></th>
+                <th id="th-name">{% trans %}Name and Surname{% endtrans %}</th>
+                <th id="th-username">{% trans %}Username{% endtrans %}</th>
+                <th id="th-profile">{% trans %}Permission Profile{% endtrans %}</th>
+                <th id="th-origin">{% trans %}Origin{% endtrans %}</th>
+                <th id="th-email">{% trans %}Email{% endtrans %}</th>
+            </tr>
+            </thead>
 
-      <tbody>
+            <tbody>
 
-        {% if users is empty %}
-        <tr>
-          <td headers="th-checkbox th-email th-icons th-icons th-icons th-name th-origin th-profile th-username" colspan="9">
-            {% trans %}There are no users with those values.{% endtrans %}
-          </td>
-        </tr>
-        {% endif %}
-
-        {% for user in users %}
-        <tr>
-          <td headers="th-checkbox">
-            <div class="checkbox">
-              <label>
-                <input id="{{ user.id }}" class="user_checkbox {{ user.hasRole('ROLE_SUPER_ADMIN') ? 'superadmin' : 'nosuperadmin'  }}" type="checkbox" size="1">
-              </label>
-            </div>
-          </td>
-          <td headers="th-icons">
-            {% if user.isLocal() %}
-            <a title="{% trans %}Edit non local user{% endtrans %} {{ user.fullname }}" href="{{ path('pumukitnewadmin_user_update', {'id': user.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
-              <i class="mdi-editor-mode-edit"></i>
-            </a>
+            {% for user in users %}
+                <tr>
+                    <td headers="th-checkbox">
+                        <div class="checkbox">
+                            <label>
+                                <input id="{{ user.id }}" class="user_checkbox {{ user.hasRole('ROLE_SUPER_ADMIN') ? 'superadmin' : 'nosuperadmin' }}" type="checkbox" size="1">
+                            </label>
+                        </div>
+                    </td>
+                    <td headers="th-icons">
+                        {% if user.isLocal() %}
+                            <a title="{% trans %}Edit non local user{% endtrans %} {{ user.fullname }}" href="{{ path('pumukitnewadmin_user_update', {'id': user.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+                                <i class="mdi-editor-mode-edit"></i>
+                            </a>
+                        {% else %}
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a title="{% trans %}Edit User{% endtrans %} {{ user.fullname }}" href="{{ path('pumukitnewadmin_user_update', {'id': user.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+                                    <i class="mdi-editor-mode-edit"></i>
+                                </a>
+                            {% else %}
+                                <i data-toggle="tooltip" data-placement="right" title="{% trans %}External defined users can not be edited here, contact your directory service administrator.{% endtrans %}" class="mdi-editor-mode-edit" style="color:grey!important"></i>
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                    <td headers="th-icons">
+                        {% if user.isLocal() or is_granted('ROLE_SUPER_ADMIN') %}
+                            <a href="#" onclick="window.submit_delete_user('{{ user.id }}', '{% autoescape 'js' %}{{ user.fullname }}{% endautoescape %}'); return false;" title="{% trans %}Delete User{% endtrans %}">
+                                <i class="mdi-content-clear"></i>
+                            </a>
+                        {% else %}
+                            <i data-toggle="tooltip" data-placement="right" title="{% trans %}External defined users can not be deleted here, contact your directory service administrator.{% endtrans %}" class="mdi-content-clear" style="color:grey!important"></i>
+                        {% endif %}
+                    </td headers="th-icons">
+                    <td>
+                        <a href="{{ path('pumukitnewadmin_user_editgroups', {'id': user.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal" title="{% trans %}User Groups{% endtrans %}">
+                            <i class="mdi-social-group" data-toggle="tooltip" data-placement="right" title="{% trans %}User Groups{% endtrans %}"></i>
+                        </a>
+                    </td>
+                    <td headers="th-name">
+                        {% if user.fullname is not empty %}{{ user.fullname }}{% endif %}
+                    </td>
+                    <td headers="th-username">
+                        {% if user.username is not empty %}{{ user.username }}{% endif %}
+                    </td>
+                    <td headers="th-profile" id="profile{{ user.id }}">
+                        {% if 'ROLE_SUPER_ADMIN' in user.roles %}
+                            System Super Administrator
+                        {% elseif user.getPermissionProfile() is not null %}
+                            {{ user.getPermissionProfile().getName() }}
+                        {% endif %}
+                    </td>
+                    <td headers="th-origin">
+                        {{ user.origin }}
+                    </td>
+                    <td headers="th-email">
+                        {% if user.email is not empty %}{{ user.email }}{% endif %}
+                    </td>
+                </tr>
             {% else %}
-                {% if is_granted('ROLE_ADMIN') %}
-                <a title="{% trans %}Edit User{% endtrans %} {{ user.fullname }}" href="{{ path('pumukitnewadmin_user_update', {'id': user.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
-                  <i class="mdi-editor-mode-edit"></i>
-                </a>
-                {% else %}
-                <i data-toggle="tooltip" data-placement="right" title="{% trans %}External defined users can not be edited here, contact your directory service administrator.{% endtrans %}" class="mdi-editor-mode-edit" style="color:grey!important"></i>
-                {% endif %}
-            {% endif %}
-          </td>
-          <td headers="th-icons">
-            {% if user.isLocal() or is_granted('ROLE_SUPER_ADMIN') %}
-            <a href="#" onclick="window.submit_delete_user('{{ user.id }}', '{% autoescape 'js' %}{{ user.fullname }}{% endautoescape %}'); return false;" title="{% trans %}Delete User{% endtrans %}">
-              <i class="mdi-content-clear"></i>
-            </a>
-            {% else %}
-            <i data-toggle="tooltip" data-placement="right" title="{% trans %}External defined users can not be deleted here, contact your directory service administrator.{% endtrans %}" class="mdi-content-clear" style="color:grey!important"></i>
-            {% endif %}
-          </td headers="th-icons">
-          <td>
-            <a href="{{ path('pumukitnewadmin_user_editgroups', {'id': user.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal" title="{% trans %}User Groups{% endtrans %}">
-              <i class="mdi-social-group" data-toggle="tooltip" data-placement="right" title="{% trans %}User Groups{% endtrans %}"></i>
-            </a>
-          </td>
-          <td headers="th-name">
-              {% if user.fullname is not empty %}{{ user.fullname }}{% endif %}
-          </td>
-          <td headers="th-username">
-              {% if user.username is not empty %}{{ user.username }}{% endif %}
-          </td>
-          <td  headers="th-profile" id="profile{{ user.id }}">
-            {% if 'ROLE_SUPER_ADMIN' in user.roles %}
-               System Super Administrator
-            {% elseif user.getPermissionProfile() is not null %}
-              {{ user.getPermissionProfile().getName() }}
-            {% endif %}
-          </td>
-          <td headers="th-origin">
-              {{ user.origin }}
-          </td>
-          <td headers="th-email">
-              {% if user.email is not empty %}{{ user.email }}{% endif %}
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-      <tfoot>
-        <tr>
-          <td colspan="9" class="foot-td">
-            <div class="col-md-8" id="numberUsers">
-              {{ users.getNbResults }}
-              {% transchoice users.getNbResults %}
-                    {0} users|{1} user|]1,Inf] users
-                {% endtranschoice %}
-                {% if app.session.get('admin/user/criteria')|length != 0%}
-                <a class="cancel-search-button" title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
-                {% endif %}
-            </div>
-            <div class="col-md-4 text-right">
-              <div class="pagerfanta">
-                {{ pagerfanta(users, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_user_index"}) }}
-              </div>
-            </div>
-          </td>
-        </tr>
-      </tfoot>
-    </table>
-  {% else %}
-    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
-  {% endif %}
+                <tr>
+                    <td headers="th-checkbox th-email th-icons th-icons th-icons th-name th-origin th-profile th-username" colspan="9">
+                        {% trans %}There are no users with those values.{% endtrans %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="9" class="foot-td">
+                    <div class="col-md-8" id="numberUsers">
+                        {{ users.getNbResults }}
+                        {% transchoice users.getNbResults %}
+                            {0} users|{1} user|]1,Inf] users
+                        {% endtranschoice %}
+                        {% if app.session.get('admin/user/criteria')|length != 0 %}
+                            <a class="cancel-search-button" title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true">{% trans %}Cancel search{% endtrans %}</a>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <div class="pagerfanta">
+                            {{ pagerfanta(users, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_user_index"}) }}
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    {% else %}
+        {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+    {% endif %}
 </div>

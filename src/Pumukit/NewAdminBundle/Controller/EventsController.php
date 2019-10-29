@@ -3,6 +3,7 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use MongoDB\BSON\ObjectId;
+use MongoDB\BSON\Regex;
 use MongoDB\BSON\UTCDateTime;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
@@ -188,7 +189,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
                 if (preg_match($this->regex, $data['name'])) {
                     $criteria['_id'] = new ObjectId($data['name']);
                 } else {
-                    $criteria['embeddedEvent.name.'.$request->getLocale()] = new \MongoRegex('/'.$data['name'].'/i');
+                    $criteria['embeddedEvent.name.'.$request->getLocale()] = new Regex('/'.$data['name'].'/i');
                 }
             }
             if ($data['date']['from'] && $data['date']['to']) {
@@ -772,7 +773,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
         $user = $this->getUser();
         $pipeline = [];
-        $pipeline[] = ['$match' => ['title.'.$request->getLocale() => new \MongoRegex('/'.$value.'/i')]];
+        $pipeline[] = ['$match' => ['title.'.$request->getLocale() => new Regex('/'.$value.'/i')]];
         $pipeline[] = ['$match' => ['type' => Series::TYPE_SERIES]];
 
         if ($user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {

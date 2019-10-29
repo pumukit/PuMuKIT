@@ -2,6 +2,7 @@
 
 namespace Pumukit\EncoderBundle\Command;
 
+use MongoDB\BSON\Regex;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -69,7 +70,7 @@ EOT
         $criteria = [
             'pics' => ['$exists' => true],
             'pics.tags' => 'auto',
-            'pics.path' => new \MongoRegex(sprintf('/%s/i', $this->extensionFile)),
+            'pics.path' => new Regex(sprintf('/%s/i', $this->extensionFile)),
         ];
 
         $multimediaObjects = $this->dm->getRepository(MultimediaObject::class)->findBy($criteria);

@@ -2,6 +2,8 @@
 
 namespace Pumukit\SchemaBundle\Utils\Search;
 
+use MongoDB\BSON\Regex;
+
 /**
  * Class Search.
  */
@@ -46,11 +48,6 @@ class SearchUtils
     private static $maxTokens = 0;
     private static $filterSizeStopWords = 2;
 
-    /**
-     * @param string $string
-     *
-     * @return \MongoRegex
-     */
     public static function generateRegexExpression($string)
     {
         $elements = str_getcsv(preg_quote($string), self::$delimiter);
@@ -64,7 +61,7 @@ class SearchUtils
 
         $regexString = self::completeRegexExpression($elements);
 
-        return new \MongoRegex($regexString);
+        return new Regex($regexString);
     }
 
     /**

@@ -5,6 +5,7 @@ namespace Pumukit\SchemaBundle\Services;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
+use MongoDB\BSON\Regex;
 use Pumukit\SchemaBundle\Document\EmbeddedPerson;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Person;
@@ -249,7 +250,7 @@ class PersonService
         }
 
         $qb = $this->repoPerson->createQueryBuilder()
-            ->field('name')->equals(new \MongoRegex('/'.$name.'/i'));
+            ->field('name')->equals(new Regex('/'.$name.'/i'));
 
         if ($exclude) {
             $qb->field('_id')->notIn($exclude);
