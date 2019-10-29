@@ -45,7 +45,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
         $form = $this->createForm(MaterialType::class, $material, ['translator' => $translator, 'locale' => $locale]);
 
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid() && ($request->isMethod('PUT') || $request->isMethod('POST')) ) {
+        if ($form->isSubmitted() && $form->isValid() && ($request->isMethod('PUT') || $request->isMethod('POST'))) {
             try {
                 $multimediaObject = $this->get('pumukitschema.material')->updateMaterialInMultimediaObject($multimediaObject, $material);
             } catch (\Exception $e) {

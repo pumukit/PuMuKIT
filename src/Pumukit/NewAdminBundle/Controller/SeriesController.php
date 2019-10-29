@@ -152,7 +152,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
 
         $method = $request->getMethod();
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid() && in_array($method, ['POST', 'PUT', 'PATCH']) ) {
+        if ($form->isSubmitted() && $form->isValid() && in_array($method, ['POST', 'PUT', 'PATCH'])) {
             $this->update($resource);
             $this->get('pumukitschema.series_dispatcher')->dispatchUpdate($resource);
             if (Series::SORT_MANUAL !== $resource->getSorting()) {

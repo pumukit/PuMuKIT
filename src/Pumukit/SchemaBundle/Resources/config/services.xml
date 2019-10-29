@@ -44,6 +44,11 @@
             <tag name="kernel.event_listener" event="permissionprofile.update" method="postUpdate" />
         </service>
 
+        <service id="pumukit_schema.role" class="Pumukit\SchemaBundle\Services\RoleService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument>%pumukit.locales%</argument>
+        </service>
+
         <service id="pumukitschema.schema.series" class="Pumukit\SchemaBundle\EventListener\SeriesListener">
             <argument type="service" id="doctrine_mongodb.odm.document_manager" />
             <argument type="service" id="pumukitschema.text_index" />

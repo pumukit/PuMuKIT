@@ -12,13 +12,6 @@ class PermissionProfileService
     private $dispatcher;
     private $permissionService;
 
-    /**
-     * Constructor.
-     *
-     * @param DocumentManager                         $documentManager
-     * @param PermissionProfileEventDispatcherService $dispatcher
-     * @param PermissionService                       $permissionService
-     */
     public function __construct(DocumentManager $documentManager, PermissionProfileEventDispatcherService $dispatcher, PermissionService $permissionService)
     {
         $this->dm = $documentManager;
@@ -28,12 +21,11 @@ class PermissionProfileService
     }
 
     /**
-     * Update User Permission.
+     * @param mixed $dispatchCreate
      *
-     * @param PermissionProfile $permissionProfile
-     * @param bool              $dispatchCreate
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function update(PermissionProfile $permissionProfile, $dispatchCreate = false)
+    public function update(PermissionProfile $permissionProfile, $dispatchCreate = false): PermissionProfile
     {
         $this->dm->persist($permissionProfile);
         $this->dm->flush();
@@ -49,17 +41,6 @@ class PermissionProfileService
         return $permissionProfile;
     }
 
-    /**
-     * Check default user permission.
-     *
-     * Checks if there is any change in 'default' property
-     * If there is no PermissionProfile as default,
-     * calls setDefaultPermissionProfile.
-     *
-     * @param PermissionProfile $permissionProfile
-     *
-     * @return PermissionProfile
-     */
     public function checkDefault(PermissionProfile $permissionProfile)
     {
         if ($permissionProfile->isDefault()) {
@@ -80,14 +61,9 @@ class PermissionProfileService
     }
 
     /**
-     * Set default user permission.
-     *
-     * Set as default user permission
-     * the one with less permissions
-     *
-     * @return PermissionProfile|null
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function setDefaultPermissionProfile()
+    public function setDefaultPermissionProfile(): ?PermissionProfile
     {
         $totalPermissions = count($this->permissionService->getAllPermissions());
         $default = $this->repo->findDefaultCandidate($totalPermissions);
@@ -103,16 +79,7 @@ class PermissionProfileService
         return $default;
     }
 
-    /**
-     * Calls doAddPermission  and the dispatchUpdate event.
-     *
-     * @param PermissionProfile $permissionProfile
-     * @param string            $permission
-     * @param bool              $executeFlush
-     *
-     * @return PermissionProfile
-     */
-    public function addPermission(PermissionProfile $permissionProfile, $permission, $executeFlush = true)
+    public function addPermission(PermissionProfile $permissionProfile, $permission, $executeFlush = true): PermissionProfile
     {
         $this->doAddPermission($permissionProfile, $permission, $executeFlush);
         $this->dispatcher->dispatchUpdate($permissionProfile);
@@ -121,15 +88,12 @@ class PermissionProfileService
     }
 
     /**
-     * Adds a permission.
+     * @param mixed $permission
+     * @param mixed $executeFlush
      *
-     * @param PermissionProfile $permissionProfile
-     * @param string            $permission
-     * @param bool              $executeFlush
-     *
-     * @return PermissionProfile
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function doAddPermission(PermissionProfile $permissionProfile, $permission, $executeFlush = true)
+    public function doAddPermission(PermissionProfile $permissionProfile, $permission, $executeFlush = true): PermissionProfile
     {
         if (array_key_exists($permission, $this->permissionService->getAllPermissions())) {
             $permissionProfile->addPermission($permission);
@@ -146,15 +110,12 @@ class PermissionProfileService
     }
 
     /**
-     * Remove permission.
+     * @param mixed $permission
+     * @param mixed $executeFlush
      *
-     * @param PermissionProfile $permissionProfile
-     * @param string            $permission
-     * @param bool              $executeFlush
-     *
-     * @return PermissionProfile
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function removePermission(PermissionProfile $permissionProfile, $permission, $executeFlush = true)
+    public function removePermission(PermissionProfile $permissionProfile, $permission, $executeFlush = true): PermissionProfile
     {
         if ($permissionProfile->containsPermission($permission)) {
             $dependencies = $this->permissionService->getDependablesByScope($permission, $permissionProfile->getScope());
@@ -176,13 +137,10 @@ class PermissionProfileService
     }
 
     /**
-     * Set scope.
+     * @param mixed $scope
+     * @param mixed $executeFlush
      *
-     * @param PermissionProfile $permissionProfile
-     * @param string            $scope
-     * @param bool              $executeFlush
-     *
-     * @return PermissionProfile
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function setScope(PermissionProfile $permissionProfile, $scope, $executeFlush = true)
     {
@@ -199,11 +157,10 @@ class PermissionProfileService
     }
 
     /**
-     * Updates all permissions for a given permissionProfile.
+     * @param mixed $permissionsList
+     * @param mixed $executeFlush
      *
-     * @param PermissionProfile $permissionProfile
-     * @param mixed             $permissionsList
-     * @param mixed             $executeFlush
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function batchUpdate(PermissionProfile $permissionProfile, $permissionsList, $executeFlush = true)
     {
@@ -222,25 +179,55 @@ class PermissionProfileService
         return $permissionProfile;
     }
 
-    /**
-     * Get Default.
-     *
-     * @return PermissionProfile|null
-     */
     public function getDefault()
     {
         return $this->repo->findOneBy(['default' => true]);
     }
 
-    /**
-     * Get by name.
-     *
-     * @param mixed $name
-     *
-     * @return PermissionProfile
-     */
     public function getByName($name)
     {
         return $this->repo->findOneBy(['name' => $name]);
+    }
+
+    public function exportAllToCsv(): string
+    {
+        $csv = $this->generateCsvHeader();
+
+        return $this->generateCsvContent($csv);
+    }
+
+    private function generateCsvHeader(): string
+    {
+        return implode(';', ['id', 'name', 'system', 'default', 'scope', 'permissions']).PHP_EOL;
+    }
+
+    private function generateCsvContent(string $csv): string
+    {
+        $permissionProfiles = $this->dm->getRepository(PermissionProfile::class)->findAll();
+
+        $i = 1;
+        foreach ($permissionProfiles as $permissionProfile) {
+            $dataCSV = [];
+            $dataCSV[] = $i;
+            $dataCSV[] = $permissionProfile->getName();
+            $dataCSV[] = (int) $permissionProfile->getSystem();
+            $dataCSV[] = (int) $permissionProfile->getDefault();
+            $dataCSV[] = $permissionProfile->getScope();
+
+            $permissions = [];
+            foreach ($permissionProfile->getPermissions() as $permission) {
+                $permissions[] = $permission;
+            }
+
+            $dataPermission = implode(',', $permissions);
+
+            $dataCSV[] = $dataPermission;
+            $data = implode(';', $dataCSV);
+            $csv .= $data.PHP_EOL;
+
+            ++$i;
+        }
+
+        return $csv;
     }
 }

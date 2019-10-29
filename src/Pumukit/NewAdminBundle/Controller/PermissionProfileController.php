@@ -122,7 +122,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         $form = $this->getForm($permissionProfile, $request->getLocale());
 
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid() && in_array($request->getMethod(), ['POST', 'PUT', 'PATCH']) ) {
+        if ($form->isSubmitted() && $form->isValid() && in_array($request->getMethod(), ['POST', 'PUT', 'PATCH'])) {
             try {
                 $permissionProfileService->update($permissionProfile);
             } catch (\Exception $e) {
@@ -265,6 +265,19 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         ;
 
         return $resources;
+    }
+
+    public function exportPermissionProfilesAction(): Response
+    {
+        $permissionProfileService = $this->get('pumukitschema.permissionprofile');
+
+        return new Response(
+            $permissionProfileService->exportAllToCsv(),
+            Response::HTTP_OK,
+            [
+                'Content-Disposition' => 'attachment; filename="permission_profiles.csv"',
+            ]
+        );
     }
 
     /**

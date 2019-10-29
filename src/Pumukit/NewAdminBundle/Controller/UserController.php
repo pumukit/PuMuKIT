@@ -282,6 +282,9 @@ class UserController extends AdminController
     }
 
     /**
+     * @param mixed $addGroups
+     * @param mixed $deleteGroups
+     *
      * @throws \Doctrine\ODM\MongoDB\LockException
      * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      * @throws \Exception
