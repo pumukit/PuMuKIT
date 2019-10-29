@@ -24,6 +24,7 @@ class UserRepository extends DocumentRepository
         $groupsIds = array_map(function ($group) {
             return new \MongoId($group->getId());
         }, $groups);
+
         return $userRepo
             ->createQueryBuilder()
             ->field('groups')
