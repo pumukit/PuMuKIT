@@ -1,7 +1,7 @@
 {
     "name": "pumukit/pumukit",
     "license": "AGPL-3.0-or-later",
-    "version": "3",
+    "version": "3.1.x-dev",
     "type": "project",
     "description": "Media Portal",
     "autoload": {
