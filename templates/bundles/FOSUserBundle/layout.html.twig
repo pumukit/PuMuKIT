@@ -1,0 +1,44 @@
+{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+
+{% block html_class %}bg-black{% endblock %}
+
+{% block meta %}
+    <meta charset="UTF-8">
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+{% endblock meta %}
+
+{% block title %} {{ parent() }} | Log in{% endblock title %}
+
+{% block stylesheets %}
+    <link href="{{ asset('bundles/pumukitwebtv/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" media="screen"/>
+    <link href="{{ asset('bundles/pumukitwebtv/css/font-awesome.min.css') }}" type="text/css" rel="stylesheet" media="screen"/>
+    <link href="{{ asset('/css/FOSUserBundle/AdminLTE.css' ) }}" rel="stylesheet" type="text/css"/>
+{% endblock stylesheets %}
+
+{% block javascripts %}
+    <script src="{{ asset('bundles/pumukitwebtv/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('bundles/pumukitwebtv/js/bootstrap.min.js') }}"></script>
+{% endblock javascripts %}
+
+{% block body_class %}bg-black{% endblock %}
+
+{% block body_base %}
+
+    <div class="form-box" id="login-box">
+        <div class="header" style="background: #c05800">
+            "{{ app.request.getHttpHost() }}" {{ 'layout.login'|trans({}, 'FOSUserBundle') }}
+        </div>
+        {% for type, messages in app.session.flashBag.all %}
+            {% for message in messages %}
+                <div class="{{ type }}">
+                    {{ message|trans({}, 'FOSUserBundle') }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+        <div>
+            {% block fos_user_content %}
+            {% endblock fos_user_content %}
+        </div>
+    </div>
+
+{% endblock body_base %}

@@ -162,7 +162,6 @@ pumukit_encoder:
       rel_duration_size: 1
       rel_duration_trans: 1
 
-
   target_default_profiles:
     PUCHWEBTV:
       audio: "audio_aac"
