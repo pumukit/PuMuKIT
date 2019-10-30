@@ -57,9 +57,7 @@
                             <div class="pull-right">
                                 {% trans %}Viewed{% endtrans %}:
                                 {{ object.getNumview() }}
-                                {% transchoice object.getNumview() %}
-                                    {0}times|{1}time|]1,Inf]times
-                                {% endtranschoice %}
+                                {{ "{0}times|{1}time|]1,Inf]times"| trans({'%count%': object.getNumview() }) }}
                             </div>
                         {% endif %}
                     </div>

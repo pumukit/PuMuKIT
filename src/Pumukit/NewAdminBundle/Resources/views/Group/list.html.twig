@@ -73,10 +73,8 @@
         <td colspan="9" class="foot-td">
             {% set column = ((groups.getNbPages/5)|round(0, 'floor')) %}
             <div class="col-md-8">
-              {{ groups.getNbResults }} 
-              {% transchoice groups.getNbResults %}
-	          {0} groups|{1} group|]1,Inf] groups
-	          {% endtranschoice %}
+              {{ groups.getNbResults }}
+              {{ "{0} groups|{1} group|]1,Inf] groups"| trans({'%count%': groups.getNbResults }) }}
 	          {% if app.session.get('admin/group/criteria')|length != 0%}
               <a class="cancel-search-button" title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
 	          {% endif %}

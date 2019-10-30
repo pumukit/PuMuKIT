@@ -92,9 +92,7 @@
                 <td colspan="9" class="foot-td">
                     <div class="col-md-8" id="numberUsers">
                         {{ users.getNbResults }}
-                        {% transchoice users.getNbResults %}
-                            {0} users|{1} user|]1,Inf] users
-                        {% endtranschoice %}
+                        {{ "{0} users|{1} user|]1,Inf] users"| trans({'%count%': users.getNbResults }) }}
                         {% if app.session.get('admin/user/criteria')|length != 0 %}
                             <a class="cancel-search-button" title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true">{% trans %}Cancel search{% endtrans %}</a>
                         {% endif %}

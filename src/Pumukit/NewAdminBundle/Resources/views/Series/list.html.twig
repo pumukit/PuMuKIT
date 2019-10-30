@@ -93,9 +93,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             {{ series.getNbResults }}
-                            {% transchoice series.getNbResults %}
-                                {0} series|{1} series|]1,Inf] series
-                            {% endtranschoice %}
+                            {{ "{0} series|{1} series|]1,Inf] series"| trans({'%count%': series.getNbResults }) }}
                             {% if app.session.get('admin/series/criteria')|length != 0 or (app.session.has('admin/series/empty_series') or app.request.query.has('empty_series')) %}
                                 <a class="cancel-search-button" title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true">{% trans %}Cancel search{% endtrans %}</a>
                             {% endif %}

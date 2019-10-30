@@ -1,91 +1,89 @@
 <div class="table-responsive" style="overflow:visible;">
-  <table class="table table-striped table-hover">
-    <thead>
-      <tr>
-        <th width="1%" id="th-checkbox">
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" onclick="window.click_checkbox_all('event', this.checked)">
-            </label>
-          </div>
-        </th>
-        <th id="th-icons" colspan="3" width="5%"></th>
-        <th id="th-date" width="8%">{% trans %}Date{% endtrans %}</th>
-        <th id="th-img"width="5%"></th>
-        <th id="th-name">{% trans %}Event{% endtrans %}</th>
-        <th id="th-public"width="1%">{% trans %}Public{% endtrans %}</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% if events|length == 0 %}
-      <tr>
-        <td headers="th-checkbox th-icons th-icons th-icons th-date th-img th-name th-public" colspan="8">
-          {% trans %}There are no live events with those values.{% endtrans %}
-        </td>
-      </tr>
-      {% endif %}
-      {% for event in events %}
-      <tr style="cursor:pointer;" {% if (app.session.get('admin/event/id') == event.id) %} class="success" {% endif %}>
-      <td headers="th-checkbox" >
-        <div class="checkbox">
-          <label>
-            <input id="{{ event.id }}" class="event_checkbox" type="checkbox">
-          </label>
-        </div>
-      </td>
-      <td headers="th-icons" onclick="click_fila_url('event', this, '{{ path('pumukitnewadmin_event_show', {'id': event.id}) }}');">
-        <a title="{% trans %}Edit Event {% endtrans %}{{ event.id }}" href="{{ path('pumukitnewadmin_event_update', {'id': event.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
-          <i class="mdi-editor-mode-edit"></i>
-        </a>
-      </td>
-      <td headers="th-icons">
-        <div class="dropdown">
-          {% include 'PumukitNewAdminBundle:LegacyEvent:updatemenu.html.twig' with {'event': event} %}
-        </div>
-      </td>
-      <td headers="th-icons">
-        <a href="#" onclick="window.submit_delete_event('{{ event.id }}'); return false;" title="{% trans %}Delete event{% endtrans %}">
-          <i class="mdi-content-clear"></i>
-        </a>
-      </td>
-      <td headers="th-date" class="text-nowrap" onclick="click_fila_url('event', this, '{{ path('pumukitnewadmin_event_show', {'id': event.id}) }}');">
-        {{ event.date|localizeddate('medium','medium',app.request.getLocale()) }}
-      </td>
-      <td headers="th-img" onclick="click_fila_url('event', this, '{{ path('pumukitnewadmin_event_show', {'id': event.id}) }}')">
-        {% if event.getPic() is not empty %}
-        <img src="{{ event.getPic() }}" height="23" width="23" />
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th width="1%" id="th-checkbox">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" onclick="window.click_checkbox_all('event', this.checked)">
+                    </label>
+                </div>
+            </th>
+            <th id="th-icons" colspan="3" width="5%"></th>
+            <th id="th-date" width="8%">{% trans %}Date{% endtrans %}</th>
+            <th id="th-img" width="5%"></th>
+            <th id="th-name">{% trans %}Event{% endtrans %}</th>
+            <th id="th-public" width="1%">{% trans %}Public{% endtrans %}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if events|length == 0 %}
+            <tr>
+                <td headers="th-checkbox th-icons th-icons th-icons th-date th-img th-name th-public" colspan="8">
+                    {% trans %}There are no live events with those values.{% endtrans %}
+                </td>
+            </tr>
         {% endif %}
-      </td>
-      <td headers="th-name" onclick="click_fila_url('event', this, '{{ path('pumukitnewadmin_event_show', {'id': event.id}) }}');">
-        {{ event.name }}
-      </td>
-      <td headers="th-public" onclick="click_fila_url('event', this, '{{ path('pumukitnewadmin_event_show', {'id': event.id}) }}');">
-        {{ event.display }}
-      </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-    <tfoot>
-      <tr>
-        <td colspan="8" class="foot-td">
-          {% set column = ((events.getNbPages/5)|round(0, 'floor')) %}
-          <div class="col-md-8">
-            {{ events.getNbResults }}
-            {% transchoice events.getNbResults %}
-            {0} live events|{1} live event|]1,Inf] live events
-            {% endtranschoice %}
-            {% if app.session.get('admin/event/criteria')|length != 0%}
-            <a class="cancel-search-button" title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
-            {% endif %}
-          </div>
-          <div class="col-md-4 text-right">
-            <div class="pagerfanta">
-              {% set sorting = {('sorting[' ~ (app.session.get('admin/event/sort')) ~ ']') : (app.session.get('admin/event/type')) } %}
-              {{ pagerfanta(events, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_event_index", "routeParams": sorting}) }}
-            </div>
-          </div>
-        </td>
-      </tr>
-    </tfoot>
-  </table>
+        {% for event in events %}
+            <tr style="cursor:pointer;" {% if (app.session.get('admin/event/id') == event.id) %} class="success" {% endif %}>
+                <td headers="th-checkbox">
+                    <div class="checkbox">
+                        <label>
+                            <input id="{{ event.id }}" class="event_checkbox" type="checkbox">
+                        </label>
+                    </div>
+                </td>
+                <td headers="th-icons" onclick="click_fila_url('event', this, '{{ path('pumukitnewadmin_event_show', {'id': event.id}) }}');">
+                    <a title="{% trans %}Edit Event {% endtrans %}{{ event.id }}" href="{{ path('pumukitnewadmin_event_update', {'id': event.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+                        <i class="mdi-editor-mode-edit"></i>
+                    </a>
+                </td>
+                <td headers="th-icons">
+                    <div class="dropdown">
+                        {% include 'PumukitNewAdminBundle:LegacyEvent:updatemenu.html.twig' with {'event': event} %}
+                    </div>
+                </td>
+                <td headers="th-icons">
+                    <a href="#" onclick="window.submit_delete_event('{{ event.id }}'); return false;" title="{% trans %}Delete event{% endtrans %}">
+                        <i class="mdi-content-clear"></i>
+                    </a>
+                </td>
+                <td headers="th-date" class="text-nowrap" onclick="click_fila_url('event', this, '{{ path('pumukitnewadmin_event_show', {'id': event.id}) }}');">
+                    {{ event.date|localizeddate('medium','medium',app.request.getLocale()) }}
+                </td>
+                <td headers="th-img" onclick="click_fila_url('event', this, '{{ path('pumukitnewadmin_event_show', {'id': event.id}) }}')">
+                    {% if event.getPic() is not empty %}
+                        <img src="{{ event.getPic() }}" height="23" width="23"/>
+                    {% endif %}
+                </td>
+                <td headers="th-name" onclick="click_fila_url('event', this, '{{ path('pumukitnewadmin_event_show', {'id': event.id}) }}');">
+                    {{ event.name }}
+                </td>
+                <td headers="th-public" onclick="click_fila_url('event', this, '{{ path('pumukitnewadmin_event_show', {'id': event.id}) }}');">
+                    {{ event.display }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="8" class="foot-td">
+                {% set column = ((events.getNbPages/5)|round(0, 'floor')) %}
+                <div class="col-md-8">
+                    {{ events.getNbResults }}
+                    {{ "{0} live events|{1} live event|]1,Inf] live events"| trans({'%count%': events.getNbResults }) }}
+                    {% if app.session.get('admin/event/criteria')|length != 0 %}
+                        <a class="cancel-search-button" title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true">{% trans %}Cancel search{% endtrans %}</a>
+                    {% endif %}
+                </div>
+                <div class="col-md-4 text-right">
+                    <div class="pagerfanta">
+                        {% set sorting = {('sorting[' ~ (app.session.get('admin/event/sort')) ~ ']') : (app.session.get('admin/event/type')) } %}
+                        {{ pagerfanta(events, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_event_index", "routeParams": sorting}) }}
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
 </div>

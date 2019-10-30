@@ -1,115 +1,114 @@
-{% if 0 == permissionprofiles|length%}
-  {% set range = 1..9 %}
+{% if 0 == permissionprofiles|length %}
+    {% set range = 1..9 %}
 {% elseif (permissionprofiles|length - (permissionprofiles.getMaxPerPage() * (permissionprofiles.getCurrentPage() - 1))) < (permissionprofiles.maxPerPage) %}
-  {% set range = (permissionprofiles|length - (permissionprofiles.getMaxPerPage() * (permissionprofiles.getCurrentPage() - 1)))..(permissionprofiles.maxPerPage-1) %}
+    {% set range = (permissionprofiles|length - (permissionprofiles.getMaxPerPage() * (permissionprofiles.getCurrentPage() - 1)))..(permissionprofiles.maxPerPage-1) %}
 {% else %}
-  {% set range = [] %}
+    {% set range = [] %}
 {% endif %}
 
 <div class="table-responsive well">
-  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PERMISSION_PROFILES')) %}
-    <div class="row">
-      <div class="col-md-2">
-        <p style="font-weight:bold;">
-        {{ permissionprofiles.getNbResults }}
-        {% transchoice permissionprofiles.getNbResults %}
-        {0} permission profiles|{1} permission profile|]1,Inf] permission profiles
-        {% endtranschoice %}
-        </p>
-        {% if app.session.get('admin/permissionprofile/criteria')|length != 0%}
-        <a class="cancel-search-button" title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
-        {% endif %}
-      </div>
-      <div class="col-md-4">
-        <div class="pagerfanta">
-          {{ pagerfanta(permissionprofiles, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_permissionprofile_index"}) }}
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div>
-          <span style="display:none;" id="remember_save_permissionprofile" class="alert alert-dismissable alert-danger">{% trans %}Press SAVE for changes to take effect{% endtrans %}</span> &nbsp;
-        </div>
-      </div>
-      <div class="col-md-3 text-right">
-        <button id="pumukitnewadmin_permissionprofile_update_cancel" type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button>
-        <button id="pumukitnewadmin_permissionprofile_update_ok" type="submit" class="btn btn-primary btn-raised" onclick="return processPermissionProfilesOk();">{% trans %}Save{% endtrans %}</button>
-        <a href="{{ path('pumukitnewadmin_permissionprofile_create') }}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
-          {% if is_granted('ROLE_SUPER_ADMIN') %}
-            <a href="{{ path('pumukitnewadmin_permissionprofile_export') }}" class="btn btn-primary" download>{% trans %}Export{% endtrans %}</a>
-          {% endif %}
-      </div>
-    </div>
-    <form method="POST" id="pumukitnewadmin_permissionprofile_table_form">
-    <input type="submit" style="display:none" value="submit-hidden" aria-hidden="true" />
-    <table class="table table-striped table-hover">
-      <thead>
-        <tr>
-          <th width="20%">{% trans %}Permissions{% endtrans %}</th>
-          {% for permissionprofile in permissionprofiles %}
-          <th width="1%">{% if not permissionprofile.system %}{% include 'PumukitNewAdminBundle:PermissionProfile:updatemenu.html.twig' %}{% endif %}</th>
-          <th width="8%">{{ permissionprofile.name }}</th>
-          {% else %}
-          <th>{% trans %}There are no user permissions with those values.{% endtrans %}</th>
-          {% endfor %}
-          {% for i in range %}
-          <th></th>
-          {% endfor %}
-        </tr>
-      </thead>
-      <tbody>
-        {% if permissions is empty %}
-        <tr>
-          <td colspan="8">
-            {% trans %}There are no permissions with those values.{% endtrans %}
-          </td>
-        </tr>
-        {% endif %}
-        <tr>
-          <td>{% trans %}Default{% endtrans %}</td>
-          {% for permissionprofile in permissionprofiles %}
-          <td></td>
-          <td>
-            {% include 'PumukitNewAdminBundle:PermissionProfile:updatedefault.html.twig' %}
-          </td>
-          {% endfor %}
-        </tr>
-        <tr>
-          <td>{% trans %}Scope{% endtrans %}</td>
-          {% for permissionprofile in permissionprofiles %}
-          <td></td>
-          <td>
-            {% include 'PumukitNewAdminBundle:PermissionProfile:updatescope.html.twig' %}
-          </td>
-          {% endfor %}
-        </tr>
-        {% for key,permission in permissions %}
-        <tr>
-          <td id="{{ key }}">
-            {{ permission }}{% if ((dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_GLOBAL')]|length > 0) or (dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_PERSONAL')]|length > 0)) %} <i data-original-title="{% for dependency in dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_GLOBAL')] %}{% if loop.first %}GLOBAL SCOPE DEPENDENCIES: {% endif %}{{ permissions[dependency] }}{% if loop.last %}. {% else %}, {% endif %}{% endfor %}{% for dependency in dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_PERSONAL')] %}{% if loop.first %}PERSONAL SCOPE DEPENDENCIES: {% endif %}{{ permissions[dependency] }}{% if loop.last %}.{% else %}, {% endif %}{% endfor %}" class="mdi-action-info" data-toggle="tooltip" data-placement="right" title=""></i>{% endif %}
-          </td>
-          {% for permissionprofile in permissionprofiles %}
-          <td></td>
-          <td>
-            <div class="checkbox {{ ((permissionprofile.system and not is_granted('ROLE_SUPER_ADMIN')) or (permissionprofile.scope == constant('SCOPE_NONE', permissionprofile))) ? ' pmk_disabled_checkbox'}}">
-              <label>
-                <input id="{{ key }}__{{ permissionprofile.id }}__permission"
-                       data-dependencies-global="{% for dependency in dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_GLOBAL')] %}{{ dependency }}__{{ permissionprofile.id}}__permission{% if not loop.last %} {% endif %}{% endfor %}"
-                       data-dependencies-personal="{% for dependency in dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_PERSONAL')] %}{{ dependency }}__{{ permissionprofile.id}}__permission{% if not loop.last %} {% endif %}{% endfor %}"
-                       form="pumukitnewadmin_permissionprofile_table_form"
-                       class="{{ permissionprofile.system ? 'system':'not_system' }}_permission_permissionprofile_checkbox permission_permissionprofile_checkbox"
-                       type="checkbox" size="1"
-                       {{ permissionprofile.containsPermission(key) ? 'checked=" checked"':'' }}
-                       {{ ((permissionprofile.system and not is_granted('ROLE_SUPER_ADMIN')) or (permissionprofile.scope == constant('SCOPE_NONE', permissionprofile))) ? ' disabled="disabled"':'' }}>
-              </label>
+    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PERMISSION_PROFILES')) %}
+        <div class="row">
+            <div class="col-md-2">
+                <p style="font-weight:bold;">
+                    {{ permissionprofiles.getNbResults }}
+                    {{ "{0} permission profiles|{1} permission profile|]1,Inf] permission profiles"| trans({'%count%': permissionprofiles.getNbResults }) }}
+                </p>
+                {% if app.session.get('admin/permissionprofile/criteria')|length != 0 %}
+                    <a class="cancel-search-button" title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true">{% trans %}Cancel search{% endtrans %}</a>
+                {% endif %}
             </div>
-          </td>
-          {% endfor %}
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    </form>
-  {% else %}
-    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
-  {% endif %}
+            <div class="col-md-4">
+                <div class="pagerfanta">
+                    {{ pagerfanta(permissionprofiles, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_permissionprofile_index"}) }}
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div>
+                    <span style="display:none;" id="remember_save_permissionprofile" class="alert alert-dismissable alert-danger">{% trans %}Press SAVE for changes to take effect{% endtrans %}</span> &nbsp;
+                </div>
+            </div>
+            <div class="col-md-3 text-right">
+                <button id="pumukitnewadmin_permissionprofile_update_cancel" type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button>
+                <button id="pumukitnewadmin_permissionprofile_update_ok" type="submit" class="btn btn-primary btn-raised" onclick="return processPermissionProfilesOk();">{% trans %}Save{% endtrans %}</button>
+                <a href="{{ path('pumukitnewadmin_permissionprofile_create') }}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
+                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <a href="{{ path('pumukitnewadmin_permissionprofile_export') }}" class="btn btn-primary" download>{% trans %}Export{% endtrans %}</a>
+                {% endif %}
+            </div>
+        </div>
+        <form method="POST" id="pumukitnewadmin_permissionprofile_table_form">
+            <input type="submit" style="display:none" value="submit-hidden" aria-hidden="true"/>
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th width="20%">{% trans %}Permissions{% endtrans %}</th>
+                    {% for permissionprofile in permissionprofiles %}
+                        <th width="1%">{% if not permissionprofile.system %}{% include 'PumukitNewAdminBundle:PermissionProfile:updatemenu.html.twig' %}{% endif %}</th>
+                        <th width="8%">{{ permissionprofile.name }}</th>
+                    {% else %}
+                        <th>{% trans %}There are no user permissions with those values.{% endtrans %}</th>
+                    {% endfor %}
+                    {% for i in range %}
+                        <th></th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                {% if permissions is empty %}
+                    <tr>
+                        <td colspan="8">
+                            {% trans %}There are no permissions with those values.{% endtrans %}
+                        </td>
+                    </tr>
+                {% endif %}
+                <tr>
+                    <td>{% trans %}Default{% endtrans %}</td>
+                    {% for permissionprofile in permissionprofiles %}
+                        <td></td>
+                        <td>
+                            {% include 'PumukitNewAdminBundle:PermissionProfile:updatedefault.html.twig' %}
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td>{% trans %}Scope{% endtrans %}</td>
+                    {% for permissionprofile in permissionprofiles %}
+                        <td></td>
+                        <td>
+                            {% include 'PumukitNewAdminBundle:PermissionProfile:updatescope.html.twig' %}
+                        </td>
+                    {% endfor %}
+                </tr>
+                {% for key,permission in permissions %}
+                    <tr>
+                        <td id="{{ key }}">
+                            {{ permission }}{% if ((dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_GLOBAL')]|length > 0) or (dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_PERSONAL')]|length > 0)) %}
+                            <i data-original-title="{% for dependency in dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_GLOBAL')] %}{% if loop.first %}GLOBAL SCOPE DEPENDENCIES: {% endif %}{{ permissions[dependency] }}{% if loop.last %}. {% else %}, {% endif %}{% endfor %}{% for dependency in dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_PERSONAL')] %}{% if loop.first %}PERSONAL SCOPE DEPENDENCIES: {% endif %}{{ permissions[dependency] }}{% if loop.last %}.{% else %}, {% endif %}{% endfor %}" class="mdi-action-info" data-toggle="tooltip" data-placement="right" title=""></i>{% endif %}
+                        </td>
+                        {% for permissionprofile in permissionprofiles %}
+                            <td></td>
+                            <td>
+                                <div class="checkbox {{ ((permissionprofile.system and not is_granted('ROLE_SUPER_ADMIN')) or (permissionprofile.scope == constant('SCOPE_NONE', permissionprofile))) ? ' pmk_disabled_checkbox' }}">
+                                    <label>
+                                        <input id="{{ key }}__{{ permissionprofile.id }}__permission"
+                                               data-dependencies-global="{% for dependency in dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_GLOBAL')] %}{{ dependency }}__{{ permissionprofile.id }}__permission{% if not loop.last %} {% endif %}{% endfor %}"
+                                               data-dependencies-personal="{% for dependency in dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_PERSONAL')] %}{{ dependency }}__{{ permissionprofile.id }}__permission{% if not loop.last %} {% endif %}{% endfor %}"
+                                               form="pumukitnewadmin_permissionprofile_table_form"
+                                               class="{{ permissionprofile.system ? 'system':'not_system' }}_permission_permissionprofile_checkbox permission_permissionprofile_checkbox"
+                                               type="checkbox" size="1"
+                                            {{ permissionprofile.containsPermission(key) ? 'checked=" checked"':'' }}
+                                            {{ ((permissionprofile.system and not is_granted('ROLE_SUPER_ADMIN')) or (permissionprofile.scope == constant('SCOPE_NONE', permissionprofile))) ? ' disabled="disabled"':'' }}>
+                                    </label>
+                                </div>
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </form>
+    {% else %}
+        {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+    {% endif %}
 </div>

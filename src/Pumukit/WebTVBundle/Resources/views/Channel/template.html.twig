@@ -9,7 +9,7 @@
         <div class="col-xs-12">
             {% for result in results | filter(result => result.numMmobjs > 0) %}
                 - {{ result.tag.title }}
-                [{% transchoice result.numMmobjs %}{0}0 Videos|{1}%count% Video|]1,Inf[%count% Videos{% endtranschoice %}]
+                [{{ "{0}0 Videos|{1}%count% Video|]1,Inf[%count% Videos"| trans({'%count%': result.numMmobjs }) }}]
             {% endfor %}
         </div>
 

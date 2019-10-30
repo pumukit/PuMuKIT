@@ -1,106 +1,102 @@
 <div class="table-responsive" style="overflow:visible;">
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th id="0" width="14%" class="text-center">{% trans %}MONDAY{% endtrans %}</th>
-      <th id="1" width="14%" class="text-center">{% trans %}TUESDAY{% endtrans %}</th>
-      <th id="2" width="14%" class="text-center">{% trans %}WEDNESDAY{% endtrans %}</th>
-      <th id="3" width="14%" class="text-center">{% trans %}THURSDAY{% endtrans %}</th>
-      <th id="4" width="14%" class="text-center">{% trans %}FRIDAY{% endtrans %}</th>
-      <th id="5" width="14%" class="text-center">{% trans %}SATURDAY{% endtrans %}</th>
-      <th id="6" width="14%" class="text-center">{% trans %}SUNDAY{% endtrans %}</th>
-    </tr>
-  </thead>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th id="0" width="14%" class="text-center">{% trans %}MONDAY{% endtrans %}</th>
+            <th id="1" width="14%" class="text-center">{% trans %}TUESDAY{% endtrans %}</th>
+            <th id="2" width="14%" class="text-center">{% trans %}WEDNESDAY{% endtrans %}</th>
+            <th id="3" width="14%" class="text-center">{% trans %}THURSDAY{% endtrans %}</th>
+            <th id="4" width="14%" class="text-center">{% trans %}FRIDAY{% endtrans %}</th>
+            <th id="5" width="14%" class="text-center">{% trans %}SATURDAY{% endtrans %}</th>
+            <th id="6" width="14%" class="text-center">{% trans %}SUNDAY{% endtrans %}</th>
+        </tr>
+        </thead>
 
-  <tbody>
-  {% set total_event = 0 %}
-  {% for key,dweek in calendar %}
-    <tr>
-    {% for dkey in range(0, 6) %}
-      {% if dweek[dkey] is defined %}
-        {% set d = dweek[dkey] %}
-      {% else %}
-        {% set d = '' %}
-      {% endif %}
-      <td headers="{{ dkey }}" style="cursor: auto; {{ ((d == 'now'|date('d')) and (m == 'now'|date('m')) and (y == 'now'|date('Y')))?"border:3px solid #000":"" }}" class="table-hover">
-        <div style="overflow-y: auto; position: relative; height: 70px;">
-          {% if d is not empty %}
-            <span style="position:absolute; top:0px; right:0px">{{ d }}</span>
-            {% set calendar_events = [] %}
-            {% for event in calendar_all_events %}
-              {% if ((y == event.date|date('Y')) and (m == event.date|date('m')) and (d == event.date|date('d'))) %}
-                {% set calendar_events = calendar_events|merge([event]) %}
-              {% endif %}
-            {% endfor %}
-            <ul style="padding-left: 6px; list-style-type: none; ">
-              {% for day_event in calendar_events %}
-                {% set total_event = total_event + 1 %}
-                <li>
-                  <a href="#" onclick="window.submit_delete_event('{{ day_event.id }}'); return false;" title="{% trans %}Delete event{% endtrans %}">
-                    <i class="mdi-content-clear"></i>
-                  </a>
-                  <span class="dropdown">
-                    {% include 'PumukitNewAdminBundle:LegacyEvent:updatemenu.html.twig' with {'event': day_event} %}
-                  </span>
-                  <span onclick="click_fila_url('event', this, '{{ path('pumukitnewadmin_event_show', {'id': day_event.id}) }}')">
-                    {% if day_event.getPic() is not empty %}
-                    <img src="{{ day_event.getPic() }}" height="16" width="18" />
+        <tbody>
+        {% set total_event = 0 %}
+        {% for key,dweek in calendar %}
+            <tr>
+                {% for dkey in range(0, 6) %}
+                    {% if dweek[dkey] is defined %}
+                        {% set d = dweek[dkey] %}
+                    {% else %}
+                        {% set d = '' %}
                     {% endif %}
-                  </span>
-                  <a title="{% trans %}Edit Event{% endtrans %} {{ day_event.name }}" href="{{ path('pumukitnewadmin_event_update', {'id': day_event.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
-                    <i class="mdi-editor-mode-edit"></i> {{ day_event.date|localizeddate('none','medium',app.request.getLocale()) }} {{ day_event.name }}
-                  </a>
-                </li>
-              {% endfor %}
-            </ul>
-          {% endif %}
-        </div>
-      </td>
-    {% endfor %}
-    </tr>
-  {% endfor %}
-  </tbody>
-  <tfoot>
-    <tr>
-      <td colspan="7" class="foot-td">
-        {% set column = ((events.getNbPages/5)|round(0, 'floor')) %}
-        <div class="col-md-8">
-          {{ events.getNbResults }}
-          {% transchoice events.getNbResults %}
-          {0} live events|{1} live event|]1,Inf] live events
-          {% endtranschoice %}
-          {% if app.session.get('admin/event/criteria')|length != 0%}
-          <a class="cancel-search-button" title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
-          {% endif %}
-        </div>
-        <div class="col-md-4 text-right">
-          <div class="pagerfanta">
-            <ul class="pagination pagination-sm">
-              <li class="prev">
-                <a id="previousMonth" class="azul" href="#">
-                  &laquo;{% trans %}Previous{% endtrans %}
-                </a>
-              </li>
-              <li class="prev active">
-                <span>
-                  &nbsp;{{ m ~'-'~y }}&nbsp;
-                </span>
-              </li>
-              <li class="next">
-                <a id="todayMonth" class="azul" href="#">
-                  {% trans %}TODAY{% endtrans %}
-                </a>
-              </li>
-              <li class="next">
-                <a id="nextMonth" class="azul" href="#">
-                  {% trans %}Next{% endtrans %}&raquo;
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-     </td>
-    </tr>
-  </tfoot>
-</table>
+                    <td headers="{{ dkey }}" style="cursor: auto; {{ ((d == 'now'|date('d')) and (m == 'now'|date('m')) and (y == 'now'|date('Y')))?"border:3px solid #000":"" }}" class="table-hover">
+                        <div style="overflow-y: auto; position: relative; height: 70px;">
+                            {% if d is not empty %}
+                                <span style="position:absolute; top:0px; right:0px">{{ d }}</span>
+                                {% set calendar_events = [] %}
+                                {% for event in calendar_all_events %}
+                                    {% if ((y == event.date|date('Y')) and (m == event.date|date('m')) and (d == event.date|date('d'))) %}
+                                        {% set calendar_events = calendar_events|merge([event]) %}
+                                    {% endif %}
+                                {% endfor %}
+                                <ul style="padding-left: 6px; list-style-type: none; ">
+                                    {% for day_event in calendar_events %}
+                                        {% set total_event = total_event + 1 %}
+                                        <li>
+                                            <a href="#" onclick="window.submit_delete_event('{{ day_event.id }}'); return false;" title="{% trans %}Delete event{% endtrans %}">
+                                                <i class="mdi-content-clear"></i>
+                                            </a>
+                                            <span class="dropdown">
+                                                {% include 'PumukitNewAdminBundle:LegacyEvent:updatemenu.html.twig' with {'event': day_event} %}
+                                            </span>
+                                            <span onclick="click_fila_url('event', this, '{{ path('pumukitnewadmin_event_show', {'id': day_event.id}) }}')">
+                                                {% if day_event.getPic() is not empty %}
+                                                    <img src="{{ day_event.getPic() }}" height="16" width="18"/>
+                                                {% endif %}
+                                            </span>
+                                            <a title="{% trans %}Edit Event{% endtrans %} {{ day_event.name }}" href="{{ path('pumukitnewadmin_event_update', {'id': day_event.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+                                                <i class="mdi-editor-mode-edit"></i> {{ day_event.date|localizeddate('none','medium',app.request.getLocale()) }} {{ day_event.name }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="7" class="foot-td">
+                {% set column = ((events.getNbPages/5)|round(0, 'floor')) %}
+                <div class="col-md-8">
+                    {{ events.getNbResults }}
+                    {{ "{0} live events|{1} live event|]1,Inf] live events"| trans({'%count%': events.getNbResults }) }}
+                    {% if app.session.get('admin/event/criteria')|length != 0 %}
+                        <a class="cancel-search-button" title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true">{% trans %}Cancel search{% endtrans %}</a>
+                    {% endif %}
+                </div>
+                <div class="col-md-4 text-right">
+                    <div class="pagerfanta">
+                        <ul class="pagination pagination-sm">
+                            <li class="prev">
+                                <a id="previousMonth" class="azul" href="#">
+                                    &laquo;{% trans %}Previous{% endtrans %}
+                                </a>
+                            </li>
+                            <li class="prev active">
+                                <span>&nbsp;{{ m ~'-'~y }}&nbsp;</span>
+                            </li>
+                            <li class="next">
+                                <a id="todayMonth" class="azul" href="#">
+                                    {% trans %}TODAY{% endtrans %}
+                                </a>
+                            </li>
+                            <li class="next">
+                                <a id="nextMonth" class="azul" href="#">
+                                    {% trans %}Next{% endtrans %}&raquo;
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
 </div>
