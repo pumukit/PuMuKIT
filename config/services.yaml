@@ -32,18 +32,132 @@ parameters:
 
 services:
   _defaults:
-    autowire: true     # Automatically injects dependencies in your services.
+    autowire: true      # Automatically injects dependencies in your services.
     autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-    public: false       # Allows optimizing the container by removing unused services; this also means
+    public: true       # Allows optimizing the container by removing unused services; this also means
+
+  App\:
+    resource: '../src/*'
+    exclude: '../src/{Pumukit,Entity,Migrations,Tests,Kernel.php}'
+
+#  App\Controller\:
+#    resource: '../src/Controller'
+#    tags: ['controller.service_arguments']
 
   Pumukit\:
-    resource: '../src/Pumukit/*/Command'
+    resource: '../src/Pumukit/'
+    exclude: '../src/Pumukit/*/{Repository,Event}'
 
-  App\Command\InitializeCommand:
+  Pumukit\BaseLivePlayerBundle\Twig\LiveTwigExtension:
     arguments:
-      - "@kernel"
       - "@doctrine_mongodb.odm.document_manager"
-      - "@pumukitschema.permission"
-      - "%pumukit.locales%"
-    tags:
-      - { name: 'console.command', command: 'pumukit:initialize' }
+      - "@pumukit_live.live"
+      - "@pumukitschema.eventsession"
+      - "%pumukit_new_admin.advance_live_event_create_default_pic%"
+
+  Pumukit\BasePlayerBundle\Services\IntroService:
+    arguments:
+      - '%pumukit.intro%'
+
+  Pumukit\BasePlayerBundle\Services\TrackUrlService:
+    arguments:
+      - "@doctrine_mongodb.odm.document_manager"
+      - "@router"
+      - "%pumukitplayer.secure_secret%"
+      - "%pumukitplayer.secure_duration%"
+
+  Pumukit\CoreBundle\Services\FilterService:
+    arguments:
+      - '@doctrine_mongodb.odm.document_manager'
+      - '@pumukitschema.person'
+      - '@security.csrf.token_storage'
+      - '%pumukitschema.enable_add_user_as_person%'
+
+  Pumukit\CoreBundle\Services\TwigTemplateLoaderService:
+    arguments:
+      - '@file_locator'
+      - '@templating.name_parser'
+      - ''
+      - ''
+      - ''
+
+  Pumukit\EncoderBundle\Services\CpuService:
+    arguments:
+      - '%pumukitencode.cpulist%'
+      - '@doctrine_mongodb.odm.document_manager'
+
+  Pumukit\EncoderBundle\Services\DynamicPicExtractorService:
+    arguments:
+      - '@doctrine_mongodb.odm.document_manager'
+      - '@pumukitschema.mmspic'
+      - '%pumukit.uploads_dir%/pic'
+      - '%pumukit.uploads_url%/pic'
+      - '%pumukit.dynamicpicextractor.command%'
+
+  Pumukit\EncoderBundle\Services\JobService:
+    arguments:
+      - '@doctrine_mongodb.odm.document_manager'
+      - '@pumukitencoder.profile'
+      - '@pumukitencoder.cpu'
+      - '@pumukit.inspection'
+      - '@event_dispatcher'
+      - '@logger'
+      - '@pumukitschema.track'
+      - '@security.csrf.token_storage'
+      - '@pumukitencoder.mmpropertyjob'
+      - '%kernel.root_dir%/../bin/'
+      - '%kernel.environment%'
+      - '%pumukit.tmp%'
+      - '%pumukit.inbox%'
+      - '%pumukitencode.delete_inbox_files%'
+
+  Pumukit\EncoderBundle\Services\PicExtractorService:
+    arguments:
+      $width: '%pumukitencode.thumbnail.width%'
+      $height: '%pumukitencode.thumbnail.height%'
+      $targetPath: '%pumukit.uploads_dir%/pic'
+      $targetUrl: '%pumukit.uploads_url%/pic'
+      $command: '%pumukit.picextractor.command%'
+
+  Pumukit\EncoderBundle\Services\ProfileService:
+    arguments:
+      - '%pumukitencode.profilelist%'
+      - '@doctrine_mongodb.odm.document_manager'
+      - '%pumukitencode.target_default_profiles%'
+
+  Pumukit\NewAdminBundle\Services\TagCatalogueService:
+    arguments:
+      - '@doctrine_mongodb.odm.document_manager'
+      - '@translator'
+      - '@router'
+      - '%pumukit_new_admin.base_catalogue_tag%'
+      - '%pumukit.locales%'
+
+  Pumukit\SchemaBundle\Services\EmbeddedEventSessionService:
+    arguments:
+      - '@doctrine_mongodb.odm.document_manager'
+      - '%pumukitschema.event_default_poster%'
+      - '%pumukit_new_admin.advance_live_event_create_default_pic%'
+
+  Pumukit\WebTVBundle\Twig\PumukitExtension:
+    arguments:
+      - '@doctrine_mongodb.odm.document_manager'
+      - '@router.request_context'
+      - '%pumukit_web_tv.default_pic%'
+      - '@pumukitschema.caption'
+      - '@pumukitschema.pic'
+      - '@pumukit_web_tv.link_service'
+      - '@pumukitschema.mmsduration'
+
+
+
+#  App\Command\InitializeCommand:
+#    arguments:
+#      - "@kernel"
+#      - "@doctrine_mongodb.odm.document_manager"
+#      - "@pumukitschema.permission"
+#      - "%pumukit.locales%"
+#    tags:
+#      - { name: 'console.command', command: 'pumukit:initialize' }
+
+
