@@ -2,7 +2,7 @@ pumukitnewadmin_playlistpic_index:
     path: /
     methods: [GET]
     defaults:
-        _controller: PumukitNewAdminBundle:PlaylistPic:index
+        _controller: Pumukit\NewAdminBundle\Controller\PlaylistPicController::indexAction
         _sylius:
             filterable: true
 
@@ -10,7 +10,7 @@ pumukitnewadmin_playlistpic_create:
     path: /create/{id}
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:PlaylistPic:create
+        _controller: Pumukit\NewAdminBundle\Controller\PlaylistPicController::createAction
         _sylius:
             redirect: pumukitnewadmin_playlist_index
 
@@ -18,13 +18,13 @@ pumukitnewadmin_playlistpic_update:
     path: /{id}/update
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:PlaylistPic:update
+        _controller: Pumukit\NewAdminBundle\Controller\PlaylistPicController::updateAction
 
 pumukitnewadmin_playlistpic_batch_delete:
     path: /batch_delete
     methods: [DELETE]
     defaults:
-        _controller: PumukitNewAdminBundle:PlaylistPic:batchDelete
+        _controller: Pumukit\NewAdminBundle\Controller\PlaylistPicController::batchDeleteAction
         _sylius:
             redirect: pumukitnewadmin_playlist_index
 
@@ -32,51 +32,51 @@ pumukitnewadmin_playlistpic_delete:
     path: /{id}/delete
     methods: [DELETE]
     defaults:
-        _controller: PumukitNewAdminBundle:PlaylistPic:delete
+        _controller: Pumukit\NewAdminBundle\Controller\PlaylistPicController::deleteAction
 
 
 pumukitnewadmin_playlistpic_up:
     path: /{id}/up
     methods: [POST]
     defaults:
-        _controller: PumukitNewAdminBundle:PlaylistPic:up
+        _controller: Pumukit\NewAdminBundle\Controller\PlaylistPicController::upAction
 
 
 pumukitnewadmin_playlistpic_down:
     path: /{id}/down
     methods: [POST]
     defaults:
-        _controller: PumukitNewAdminBundle:PlaylistPic:down
+        _controller: Pumukit\NewAdminBundle\Controller\PlaylistPicController::downAction
 
 
 pumukitnewadmin_playlistpic_list:
     path: /{id}/list
     methods: [GET]
     defaults:
-        _controller: PumukitNewAdminBundle:PlaylistPic:list
+        _controller: Pumukit\NewAdminBundle\Controller\PlaylistPicController::listAction
 
 
 pumukitnewadmin_playlistpic_show:
     path: /{id}/show
     methods: [GET]
     defaults:
-        _controller: PumukitNewAdminBundle:PlaylistPic:show
+        _controller: Pumukit\NewAdminBundle\Controller\PlaylistPicController::showAction
 
 
 pumukitnewadmin_playlistpic_upload:
     path: /{id}/upload
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:PlaylistPic:upload
+        _controller: Pumukit\NewAdminBundle\Controller\PlaylistPicController::uploadAction
 
 pumukitnewadmin_playlistpic_picstoaddlist:
     path: /{id}/picstoaddlist
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:PlaylistPic:picstoaddlist
+        _controller: Pumukit\NewAdminBundle\Controller\PlaylistPicController::picstoaddlistAction
 
 pumukitnewadmin_playlistpic_banner:
     path: /{id}/banner
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:PlaylistPic:banner
+        _controller: Pumukit\NewAdminBundle\Controller\PlaylistPicController::bannerAction

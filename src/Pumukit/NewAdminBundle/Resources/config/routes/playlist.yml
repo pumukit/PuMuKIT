@@ -3,7 +3,7 @@ pumukitnewadmin_playlist_index:
     methods: [GET]
     defaults:
 
-        _controller: PumukitNewAdminBundle:Playlist:index
+        _controller: Pumukit\NewAdminBundle\Controller\PlaylistController::indexAction
         _sylius:
             filterable: true
 
@@ -11,13 +11,13 @@ pumukitnewadmin_playlist_search:
     path: /search
     methods: [GET]
     defaults:
-        _controller: PumukitNewAdminBundle:Playlist:search
+        _controller: Pumukit\NewAdminBundle\Controller\PlaylistController::searchAction
 
 pumukitnewadmin_playlist_create:
     path: /create
     methods: [POST]
     defaults:
-        _controller: PumukitNewAdminBundle:Playlist:create
+        _controller: Pumukit\NewAdminBundle\Controller\PlaylistController::createAction
         _sylius:
             redirect: pumukitnewadmin_playlist_index
 
@@ -25,13 +25,13 @@ pumukitnewadmin_playlist_update:
     path: /{id}/update
     methods: [GET, POST, DELETE]
     defaults:
-        _controller: PumukitNewAdminBundle:Playlist:update
+        _controller: Pumukit\NewAdminBundle\Controller\PlaylistController::updateAction
 
 pumukitnewadmin_playlist_batch_delete:
     path: /batchdelete
     methods: [DELETE]
     defaults:
-        _controller: PumukitNewAdminBundle:Playlist:batchDelete
+        _controller: Pumukit\NewAdminBundle\Controller\PlaylistController::batchDeleteAction
         _sylius:
             redirect: pumukitnewadmin_playlist_list
 
@@ -39,7 +39,7 @@ pumukitnewadmin_playlist_delete:
     path: /{id}/delete
     methods: [DELETE]
     defaults:
-        _controller: PumukitNewAdminBundle:Playlist:delete
+        _controller: Pumukit\NewAdminBundle\Controller\PlaylistController::deleteAction
         _sylius:
             redirect: pumukitnewadmin_playlist_index
 
@@ -47,13 +47,13 @@ pumukitnewadmin_playlist_generate_magic_url:
     path: /{id}/generatemagic
     methods: [POST]
     defaults:
-        _controller: PumukitNewAdminBundle:Playlist:generateMagicUrl
+        _controller: Pumukit\NewAdminBundle\Controller\PlaylistController::generateMagicUrlAction
 
 pumukitnewadmin_playlist_copy:
     path: /{id}/copy
     methods: [GET, PUT, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:Playlist:copy
+        _controller: Pumukit\NewAdminBundle\Controller\PlaylistController::copyAction
         _sylius:
             redirect: pumukitnewadmin_playlist_index
 
@@ -61,16 +61,16 @@ pumukitnewadmin_playlist_list:
     path: /list
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:Playlist:list
+        _controller: Pumukit\NewAdminBundle\Controller\PlaylistController::listAction
 
 pumukitnewadmin_playlist_invert_announce:
     path: /invertannounce
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:Playlist:invertAnnounce
+        _controller: Pumukit\NewAdminBundle\Controller\PlaylistController::invertAnnounceAction
 
 pumukitnewadmin_playlist_show:
     path: /{id}/show
     methods: [GET]
     defaults:
-        _controller: PumukitNewAdminBundle:Playlist:show
+        _controller: Pumukit\NewAdminBundle\Controller\PlaylistController::showAction

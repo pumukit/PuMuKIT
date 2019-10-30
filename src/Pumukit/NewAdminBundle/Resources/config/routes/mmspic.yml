@@ -2,7 +2,7 @@ pumukitnewadmin_mmspic_index:
     path: /
     methods: [GET]
     defaults:
-        _controller: PumukitNewAdminBundle:MultimediaObjectPic:index
+        _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectPicController::indexAction
         _sylius:
             filterable: true
 
@@ -10,7 +10,7 @@ pumukitnewadmin_mmspic_create:
     path: /create/{id}
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:MultimediaObjectPic:create
+        _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectPicController::createAction
         _sylius:
             redirect: pumukitnewadmin_mms_index
 
@@ -18,19 +18,19 @@ pumukitnewadmin_mmspic_generate:
     path: /generate/{id}
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:MultimediaObjectPic:generate
+        _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectPicController::generateAction
 
 pumukitnewadmin_mmspic_update:
     path: /{id}/update
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:MultimediaObjectPic:update
+        _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectPicController::updateAction
 
 pumukitnewadmin_mmspic_batch_delete:
     path: /batch_delete
     methods: [DELETE]
     defaults:
-        _controller: PumukitNewAdminBundle:MultimediaObjectPic:batchDelete
+        _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectPicController::batchDeleteAction
         _sylius:
             redirect: pumukitnewadmin_mms_index
 
@@ -38,45 +38,45 @@ pumukitnewadmin_mmspic_delete:
     path: /{id}/delete
     methods: [DELETE]
     defaults:
-        _controller: PumukitNewAdminBundle:MultimediaObjectPic:delete
+        _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectPicController::deleteAction
 
 
 pumukitnewadmin_mmspic_up:
     path: /{id}/up
     methods: [POST]
     defaults:
-        _controller: PumukitNewAdminBundle:MultimediaObjectPic:up
+        _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectPicController::upAction
 
 
 pumukitnewadmin_mmspic_down:
     path: /{id}/down
     methods: [POST]
     defaults:
-        _controller: PumukitNewAdminBundle:MultimediaObjectPic:down
+        _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectPicController::downAction
 
 
 pumukitnewadmin_mmspic_list:
     path: /{id}/list
     methods: [GET]
     defaults:
-        _controller: PumukitNewAdminBundle:MultimediaObjectPic:list
+        _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectPicController::listAction
 
 
 pumukitnewadmin_mmspic_show:
     path: /{id}/show
     methods: [GET]
     defaults:
-        _controller: PumukitNewAdminBundle:MultimediaObjectPic:show
+        _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectPicController::showAction
 
 
 pumukitnewadmin_mmspic_upload:
     path: /{id}/upload
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:MultimediaObjectPic:upload
+        _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectPicController::uploadAction
 
 pumukitnewadmin_mmspic_picstoaddlist:
     path: /{id}/picstoaddlist
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:MultimediaObjectPic:picstoaddlist
+        _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectPicController::picstoaddlistAction
