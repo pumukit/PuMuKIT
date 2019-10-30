@@ -5,6 +5,8 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+        <defaults public="true" />
+
         <service id="pumukit_wizard.license" class="Pumukit\WizardBundle\Services\LicenseService">
             <argument>%pumukit_wizard.show_license%</argument>
             <argument>%pumukit_wizard.license_dir%</argument>

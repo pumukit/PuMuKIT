@@ -72,7 +72,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
             $logger = $this->container->get('logger');
             $logger->warning($e->getMessage());
 
-            $message = ('dev' === $this->getParameter('kernel.environment')) ? $e->getMessage() : 'The file is not a valid video or audio file';
+            $message = ('dev' === $this->container->getParameter('kernel.environment')) ? $e->getMessage() : 'The file is not a valid video or audio file';
 
             return [
                 'mm' => $multimediaObject,

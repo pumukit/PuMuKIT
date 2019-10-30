@@ -65,13 +65,13 @@ class DefaultController extends AbstractController
         if (!$licenseEnabledAndAccepted) {
             return $this->redirect($this->generateUrl('pumukitwizard_default_license', ['pumukitwizard_form_data' => $formData, 'same_series' => $sameSeries]));
         }
-        $mandatoryTitle = $this->getParameter('pumukit_wizard.mandatory_title') ? 1 : 0;
-        $reuseSeries = $this->getParameter('pumukit_wizard.reuse_series');
+        $mandatoryTitle = $this->container->getParameter('pumukit_wizard.mandatory_title') ? 1 : 0;
+        $reuseSeries = $this->container->getParameter('pumukit_wizard.reuse_series');
         $userSeries = [];
 
         if ($reuseSeries) {
             $user = $this->getUser();
-            $reuseAdminSeries = $this->getParameter('pumukit_wizard.reuse_admin_series');
+            $reuseAdminSeries = $this->container->getParameter('pumukit_wizard.reuse_admin_series');
             $dm = $this->get('doctrine_mongodb.odm.document_manager');
             $userSeries = $dm->getRepository(Series::class)->findUserSeries($user, $reuseAdminSeries);
 
@@ -219,7 +219,7 @@ class DefaultController extends AbstractController
             $objectDefaultLicense = $this->container->getParameter('pumukitschema.default_license');
             $objectAvailableLicenses = $this->container->getParameter('pumukit_new_admin.licenses');
         }
-        $mandatoryTitle = $this->getParameter('pumukit_wizard.mandatory_title') ? 1 : 0;
+        $mandatoryTitle = $this->container->getParameter('pumukit_wizard.mandatory_title') ? 1 : 0;
 
         return [
             'form_data' => $formData,

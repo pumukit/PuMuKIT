@@ -126,8 +126,8 @@ class SimpleController extends AbstractController
 
         $languages = CustomLanguageType::getLanguageNames($this->container->getParameter('pumukit.customlanguages'), $this->get('translator'));
 
-        $showMmTitle = $this->getParameter('pumukit_wizard.show_simple_mm_title');
-        $showSeriesTitle = $this->getParameter('pumukit_wizard.show_simple_series_title');
+        $showMmTitle = $this->container->getParameter('pumukit_wizard.show_simple_mm_title');
+        $showSeriesTitle = $this->container->getParameter('pumukit_wizard.show_simple_series_title');
 
         $seriesI18nTitle = [];
         if ($series) {
@@ -199,7 +199,7 @@ class SimpleController extends AbstractController
                 $series = $this->createSeries($externalData);
             }
 
-            $showMmTitle = $this->getParameter('pumukit_wizard.show_simple_mm_title');
+            $showMmTitle = $this->container->getParameter('pumukit_wizard.show_simple_mm_title');
             if ($showMmTitle) {
                 $i18nTitle = $request->request->get('multimediaobject_i18n_title', []);
                 if (!array_filter($i18nTitle)) {
