@@ -31,10 +31,9 @@
 
                     {% if not is_naked() %}
                         <td headers="th-icons">
-                            {% spaceless %}
-                                <i class="{{ oneseries|series_announce_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|series_announce_text }}"></i>
-                                <i class="{{ oneseries|mms_announce_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|mms_announce_text }}"></i>
-                            {% endspaceless %}
+                            {% set first_icon = '<i class="' ~ oneseries|series_announce_icon ~ '" data-toggle="tooltip" data-placement="right" title="' ~ oneseries|series_announce_text ~ '"></i>' %}
+                            {% set second_icon = '<i class="' ~ oneseries|mms_announce_icon ~ '" data-toggle="tooltip" data-placement="right" title="' ~ oneseries|mms_announce_text ~ '"></i>' %}
+                            {{ (first_icon|raw ~ second_icon|raw) | spaceless }}
                         </td>
                         <td headers="th-icons">
                             {% if app.user and is_granted('ROLE_ACCESS_PUBLICATION_TAB') %}

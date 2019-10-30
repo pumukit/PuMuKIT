@@ -67,7 +67,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
             'multimediaObject' => $multimediaObject,
             'track' => $track,
             'editor_chapters' => $editorChapters,
-            'cinema_mode' => $this->getParameter('pumukit_web_tv.cinema_mode'),
+            'cinema_mode' => $this->container->getParameter('pumukit_web_tv.cinema_mode'),
         ];
     }
 

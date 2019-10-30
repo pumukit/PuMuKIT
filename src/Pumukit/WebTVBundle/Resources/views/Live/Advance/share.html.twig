@@ -13,18 +13,9 @@
         <li class="list-group-item share_url">
             <span>{{ text_iframe|upper }}:</span>
             {% set trackId = (track.id is defined)?track.id:null %}
-            {% set iframe_value %}{% spaceless %}
-                    <iframe src='{{ url('pumukit_live_event_iframe_id', {'id':multimediaObject.id, 'track_id': trackId}) }}'
-                            {{- " id='pumukitiframe'" -}}
-                            {{- " frameborder='0'" -}}
-                            {{- " border='0'" -}}
-                            {{- " width='560'" -}}
-                            {{- " height='325'" -}}
-                            {{- " allowfullscreen" -}}
-                    ></iframe>
-                {% endspaceless %}
-            {% endset %}
-            <input type="text" value="{{ iframe_value }}" onclick="this.select()" aria-label="{% trans %}Iframe{% endtrans %}" title="{% trans %}Iframe{% endtrans %}" readonly/>
+            {% set url_iframe = url('pumukit_live_event_iframe_id', {'id':multimediaObject.id, 'track_id': trackId}) %}
+            {% set iframe_value = "<iframe src='" ~ urlIframe ~ "' id='pumukitiframe' frameborder='0' border='0' width='560' height='315' allowfullscreen></iframe>" %}
+            <input type="text" value="{{ (iframe_value|raw) |spaceless }}" onclick="this.select()" aria-label="{% trans %}Iframe{% endtrans %}" title="{% trans %}Iframe{% endtrans %}" readonly/>
         </li>
     </ul>
 </div>

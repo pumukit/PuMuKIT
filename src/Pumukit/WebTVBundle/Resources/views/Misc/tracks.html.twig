@@ -2,9 +2,7 @@
     <li class="list-group-item">
         <a href="{{ videoUrl }}" title="{{ "Url track"|trans }}">
             <i class="fas fa-video"></i>
-            {% spaceless %}
-                {{ object.isPublicEmbeddedBroadcast() ? 'Video'|trans : 'Private video'|trans }}
-            {% endspaceless %}
+            {{ (object.isPublicEmbeddedBroadcast() ? 'Video'|trans : 'Private video'|trans) | spaceless }}
         </a>
         &nbsp;|&nbsp;&nbsp;
         <span class="language">
@@ -28,15 +26,14 @@
                     <i class="fa fa-video-camera"></i>
                 {% endif %}
 
-                {% spaceless %}
-                    {% if track.isOnlyAudio %}
-                        {{ object.isPublicEmbeddedBroadcast() ? 'Audio'|trans : 'Private audio'|trans }}
-                    {% elseif track.containsTag('download') %}
-                        {% trans %}Download master{% endtrans %}
-                    {% else %}
-                        {{ object.isPublicEmbeddedBroadcast() ? 'Video'|trans : 'Private video'|trans }}
-                    {% endif %}
-                {% endspaceless %}
+                {% if track.isOnlyAudio %}
+                    {% set type_text = object.isPublicEmbeddedBroadcast() ? 'Audio'|trans : 'Private audio'|trans %}
+                {% elseif track.containsTag('download') %}
+                    {% set type_text = "Download master"|trans %}
+                {% else %}
+                {% set type_text = object.isPublicEmbeddedBroadcast() ? 'Video'|trans : 'Private video'|trans  %}
+                {% endif %}
+                {{ type_text | spaceless }}
 
                 <span class="language"> ({{ track.getLanguage()|language_name }})</span>
             </a>

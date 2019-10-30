@@ -1,147 +1,145 @@
 {% extends 'PumukitWizardBundle:Default:index.html.twig' %}
 {% block wizard_body %}
-{% set access_inbox = (app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX'))) %}
-{{ render(controller('PumukitWizardBundle:Default:steps', {'step': 2, 'option': form_data.type.option, 'show_series': show_series, 'same_series': same_series})) }}
-<div class="well">
-  <form id="pumukitwizard_multimediaobject_form"
-        action="{{ path('pumukitwizard_default_track') }}" method="POST">
-    {% include 'PumukitWizardBundle:Default:hidden.html.twig' with {'step': 'multimediaobject'} %}
-    <input type="hidden" name="pumukitwizard_form_data[mandatory_title]" id="pumukitwizard_mandatory_title" value="{{ mandatory_title }}">
-    <fieldset class="well">
-      <legend hidden>{% trans %}Metadata{% endtrans %}</legend>
-      <div class="col-md-10">
-        <div class="form-group" id="pumukitwizard_multimediaobject_i18n_title">
-          <label for="pumukitwizard_multimediaobject_i18n_title" id="pumukitwizard_multimediaobject_i18n_title_label" class="control-label">{% trans %}Title{% endtrans %}</label>
-          <div>
-            {% for locale in locales %}
-            <div class="input-group">
-              {% if form_data.multimediaobject is defined %}
-              <input type="text" id="pumukitwizard_multimediaobject_i18n_title_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_title][{{ locale }}]" class="form-control pumukitwizard_multimediaobject_i18n_title locale-{{ locale }}" value="{{ attribute(form_data.multimediaobject.i18n_title, locale) }}" aria-labelledby="pumukitwizard_multimediaobject_i18n_title_label">
-              {% else %}
-              <input type="text" id="pumukitwizard_multimediaobject_i18n_title_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_title][{{ locale }}]" class="form-control pumukitwizard_multimediaobject_i18n_title locale-{{ locale }}" value="" aria-labelledby="pumukitwizard_multimediaobject_i18n_title_label">
-              {% endif %}
-              <span class="input-group-addon">{{ locale }}</span>
+    {% set access_inbox = (app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX'))) %}
+    {{ render(controller('PumukitWizardBundle:Default:steps', {'step': 2, 'option': form_data.type.option, 'show_series': show_series, 'same_series': same_series})) }}
+    <div class="well">
+        <form id="pumukitwizard_multimediaobject_form"
+              action="{{ path('pumukitwizard_default_track') }}" method="POST">
+            {% include 'PumukitWizardBundle:Default:hidden.html.twig' with {'step': 'multimediaobject'} %}
+            <input type="hidden" name="pumukitwizard_form_data[mandatory_title]" id="pumukitwizard_mandatory_title" value="{{ mandatory_title }}">
+            <fieldset class="well">
+                <legend hidden>{% trans %}Metadata{% endtrans %}</legend>
+                <div class="col-md-10">
+                    <div class="form-group" id="pumukitwizard_multimediaobject_i18n_title">
+                        <label for="pumukitwizard_multimediaobject_i18n_title" id="pumukitwizard_multimediaobject_i18n_title_label" class="control-label">{% trans %}Title{% endtrans %}</label>
+                        <div>
+                            {% for locale in locales %}
+                                <div class="input-group">
+                                    {% if form_data.multimediaobject is defined %}
+                                        <input type="text" id="pumukitwizard_multimediaobject_i18n_title_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_title][{{ locale }}]" class="form-control pumukitwizard_multimediaobject_i18n_title locale-{{ locale }}" value="{{ attribute(form_data.multimediaobject.i18n_title, locale) }}" aria-labelledby="pumukitwizard_multimediaobject_i18n_title_label">
+                                    {% else %}
+                                        <input type="text" id="pumukitwizard_multimediaobject_i18n_title_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_title][{{ locale }}]" class="form-control pumukitwizard_multimediaobject_i18n_title locale-{{ locale }}" value="" aria-labelledby="pumukitwizard_multimediaobject_i18n_title_label">
+                                    {% endif %}
+                                    <span class="input-group-addon">{{ locale }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-group" id="pumukitwizard_multimediaobject_i18n_subtitle">
+                        <label for="pumukitwizard_multimediaobject_i18n_subtitle" id="pumukitwizard_multimediaobject_i18n_subtitle_label" class="control-label">{% trans %}Subtitle{% endtrans %}</label>
+                        <div>
+                            {% for locale in locales %}
+                                <div class="input-group">
+                                    {% if form_data.multimediaobject is defined %}
+                                        <input type="text" id="pumukitwizard_multimediaobject_i18n_subtitle_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_subtitle][{{ locale }}]" class="form-control pumukitwizard_multimediaobject_i18n_subtitle locale-{{ locale }}" value="{{ attribute(form_data.multimediaobject.i18n_subtitle, locale) }}" aria-labelledby="pumukitwizard_multimediaobject_i18n_subtitle_label">
+                                    {% else %}
+                                        <input type="text" id="pumukitwizard_multimediaobject_i18n_subtitle_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_subtitle][{{ locale }}]" class="form-control pumukitwizard_multimediaobject_i18n_subtitle locale-{{ locale }}" value="" aria-labelledby="pumukitwizard_multimediaobject_i18n_subtitle_label">
+                                    {% endif %}
+                                    <span class="input-group-addon">{{ locale }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-group" id="pumukitwizard_multimediaobject_i18n_description">
+                        <label for="pumukitwizard_multimediaobject_i18n_description" id="pumukitwizard_multimediaobject_i18n_description_label" class="control-label">{% trans %}Description{% endtrans %}</label>
+                        <div>
+                            {% for locale in locales %}
+                                <div class="input-group">
+                                    {% if form_data.multimediaobject is defined %}
+                                        <input type="text" id="pumukitwizard_multimediaobject_i18n_description_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_description][{{ locale }}]" class="form-control pumukitwizard_multimediaobject_i18n_description locale-{{ locale }}" value="{{ attribute(form_data.multimediaobject.i18n_description, locale) }}" aria-labelledby="pumukitwizard_multimediaobject_i18n_description_label">
+                                    {% else %}
+                                        <input type="text" id="pumukitwizard_multimediaobject_i18n_description_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_description][{{ locale }}]" class="form-control pumukitwizard_multimediaobject_i18n_description locale-{{ locale }}" value="" aria-labelledby="pumukitwizard_multimediaobject_i18n_description_label">
+                                    {% endif %}
+                                    <span class="input-group-addon">{{ locale }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% if show_object_license %}
+                        <div class="form-group col-md-7 row" id="pumukitwizard_multimediaobject_license">
+                            <label for="pumukitwizard_multimediaobjectlicense" id="pumukitwizard_multimediaobject_i18n_license_label" class="control-label">{% trans %}License{% endtrans %}</label>
+                            <div class="form-control-wrapper">
+                                {% if object_available_licenses|length > 0 %}
+                                    <select id="pumukitwizard_multimediaobject_license_select" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control">
+                                        <option value="0">{% trans %}Select a license...{% endtrans %}</option>
+                                        {% for license in object_available_licenses %}
+                                            {% if form_data.multimediaobject is defined and form_data.multimediaobject.license is defined %}
+                                                <option value="{{ license }}" {{ form_data['multimediaobject']['license'] == license ? 'selected="selected"':'' }}>{{ license }}</option>
+                                            {% else %}
+                                                <option value="{{ license }}">{{ license }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                {% else %}
+                                    {% if form_data.multimediaobject is defined and form_data.multimediaobject.license is defined %}
+                                        <input type="text" id="pumukitwizard_multimediaobject_license" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control" value="{{ form_data.multimediaobject.license }}" aria-labelledby="pumukitwizard_multimediaobject_i18n_license_label">
+                                    {% elseif object_default_license is not null %}
+                                        <input type="text" id="pumukitwizard_multimediaobject_license" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control" value="{{ object_default_license }}" aria-labelledby="pumukitwizard_multimediaobject_i18n_license_label">
+                                    {% else %}
+                                        <input type="text" id="pumukitwizard_multimediaobject_license" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control" value="" aria-labelledby="pumukitwizard_multimediaobject_i18n_license_label">
+                                    {% endif %}
+                                    <span class="material-input"></span>
+                                {% endif %}
+                                <a target="_blank" class="info-link" href="http://es.creativecommons.org/blog/licencias/">+INFO</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="form-group col-md-12 row" id="pumukitwizard_multimediaobject_i18n_line2" {% if not is_granted('ROLE_SCOPE_GLOBAL') %} style="display:none"{% endif %}>
+                        <label for="pumukitwizard_multimediaobject_i18n_line2" id="pumukitwizard_multimediaobject_i18n_line2_label" class="control-label">{% trans %}Headline{% endtrans %}</label>
+                        <div>
+                            {% for locale in locales %}
+                                <div class="input-group">
+                                    {% if form_data.multimediaobject is defined %}
+                                        <input type="text" id="pumukitwizard_multimediaobject_i18n_line2_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_line2][{{ locale }}]" class="form-control pumukitwizard_multimediaobject_i18n_line2 locale-{{ locale }}" value="{{ attribute(form_data.multimediaobject.i18n_line2, locale) }}" aria-labelledby="pumukitwizard_multimediaobject_i18n_line2_label">
+                                    {% else %}
+                                        <input type="text" id="pumukitwizard_multimediaobject_i18n_line2_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_line2][{{ locale }}]" class="form-control pumukitwizard_multimediaobject_i18n_line2 locale-{{ locale }}" value="" aria-labelledby="pumukitwizard_multimediaobject_i18n_line2_label">
+                                    {% endif %}
+                                    <span class="input-group-addon">{{ locale }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% if show_tags and (available_tags|length > 0) %}
+                        <div class="form-group col-md-7 row" id="pumukitwizard_multimediaobject_tag">
+                            <label for="pumukitwizard_multimediaobject_tag" id="pumukitwizard_multimediaobject_i18n_tag_label" class="control-label">{% trans %}Tag{% endtrans %}</label>
+                            <div class="form-control-wrapper">
+                                <select id="pumukitwizard_multimediaobject_tag_select" name="pumukitwizard_form_data[multimediaobject][tag]" class="form-control">
+                                    <option value="0">{% trans %}Select a tag...{% endtrans %}</option>
+                                    {% for tag in available_tags %}
+                                        {% if form_data.multimediaobject is defined and form_data.multimediaobject.tag is defined %}
+                                            <option value="{{ tag.cod }}" {{ form_data['multimediaobject']['tag'] == tag.cod ? 'selected="selected"':'' }}>{{ tag.getTitle() }}</option>
+                                        {% else %}
+                                            <option value="{{ tag.cod }}">{{ tag.getTitle() }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                {% if mandatory_title %}
+                    <div class="col-md-2  wizard-empty-title">
+                        <span id="pumukitwizard_multimediaobject_title_empty" class="wizard-error" hidden="hidden">{% trans %}Empty title{% endtrans %}</span>
+                    </div>
+                {% endif %}
+            </fieldset>
+            <div class="row">
+                <div class="col-md-4">
+                    {% if same_series and form_data.series.id is defined and form_data.series.id is not null %}
+                        <a href="{{ path('pumukitnewadmin_mms_index', {'id': form_data.series.id}) }}" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</a>
+                    {% else %}
+                        <a href="{{ path('pumukitnewadmin_series_index') }}" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</a>
+                    {% endif %}
+                </div>
+                <div class="col-md-8">
+                    <div class="text-right">
+                        {% if license_enable or show_series or access_inbox %}
+                            <button type="button" class="btn btn-default btn-raised pumukitwizard-btn-back">&laquo; {% trans %}Back{% endtrans %}</button>
+                        {% endif %}
+                        <button type="submit" class="btn btn-primary btn-raised">{% trans %}Next{% endtrans %} &raquo;</button>
+                    </div>
+                </div>
             </div>
-            {% endfor %}
-          </div>
-        </div>
-        <div class="form-group" id="pumukitwizard_multimediaobject_i18n_subtitle">
-          <label for="pumukitwizard_multimediaobject_i18n_subtitle" id="pumukitwizard_multimediaobject_i18n_subtitle_label" class="control-label">{% trans %}Subtitle{% endtrans %}</label>
-          <div>
-            {% for locale in locales %}
-            <div class="input-group">
-              {% if form_data.multimediaobject is defined %}
-              <input type="text" id="pumukitwizard_multimediaobject_i18n_subtitle_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_subtitle][{{ locale }}]" class="form-control pumukitwizard_multimediaobject_i18n_subtitle locale-{{ locale }}" value="{{ attribute(form_data.multimediaobject.i18n_subtitle, locale) }}" aria-labelledby="pumukitwizard_multimediaobject_i18n_subtitle_label">
-              {% else %}
-              <input type="text" id="pumukitwizard_multimediaobject_i18n_subtitle_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_subtitle][{{ locale }}]" class="form-control pumukitwizard_multimediaobject_i18n_subtitle locale-{{ locale }}" value="" aria-labelledby="pumukitwizard_multimediaobject_i18n_subtitle_label">
-              {% endif %}
-              <span class="input-group-addon">{{ locale }}</span>
-            </div>
-            {% endfor %}
-          </div>
-        </div>
-        <div class="form-group" id="pumukitwizard_multimediaobject_i18n_description">
-          <label for="pumukitwizard_multimediaobject_i18n_description" id="pumukitwizard_multimediaobject_i18n_description_label" class="control-label">{% trans %}Description{% endtrans %}</label>
-          <div>
-            {% for locale in locales %}
-            <div class="input-group">
-              {% if form_data.multimediaobject is defined %}
-              <input type="text" id="pumukitwizard_multimediaobject_i18n_description_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_description][{{ locale }}]" class="form-control pumukitwizard_multimediaobject_i18n_description locale-{{ locale }}" value="{{ attribute(form_data.multimediaobject.i18n_description, locale) }}" aria-labelledby="pumukitwizard_multimediaobject_i18n_description_label">
-              {% else %}
-              <input type="text" id="pumukitwizard_multimediaobject_i18n_description_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_description][{{ locale }}]" class="form-control pumukitwizard_multimediaobject_i18n_description locale-{{ locale }}" value="" aria-labelledby="pumukitwizard_multimediaobject_i18n_description_label">
-              {% endif %}
-              <span class="input-group-addon">{{ locale }}</span>
-            </div>
-            {% endfor %}
-          </div>
-        </div>
-        {% if show_object_license %}
-        <div class="form-group col-md-7 row" id="pumukitwizard_multimediaobject_license">
-          <label for="pumukitwizard_multimediaobjectlicense" id="pumukitwizard_multimediaobject_i18n_license_label" class="control-label">{% trans %}License{% endtrans %}</label>
-          <div class="form-control-wrapper">
-            {% if object_available_licenses|length > 0 %}
-            <select id="pumukitwizard_multimediaobject_license_select" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control">
-              <option value="0">{% trans %}Select a license...{% endtrans %}</option>
-              {% for license in object_available_licenses %}
-              {% if form_data.multimediaobject is defined and form_data.multimediaobject.license is defined %}
-              <option value="{{ license }}" {{ form_data['multimediaobject']['license'] == license ? 'selected="selected"':'' }}>{{ license }}</option>
-              {% else %}
-              <option value="{{ license }}">{{ license }}</option>
-              {% endif %}
-              {% endfor %}
-            </select>
-            {% else %}
-            {% if form_data.multimediaobject is defined and form_data.multimediaobject.license is defined %}
-            <input type="text" id="pumukitwizard_multimediaobject_license" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control" value="{{ form_data.multimediaobject.license }}" aria-labelledby="pumukitwizard_multimediaobject_i18n_license_label">
-            {% elseif object_default_license is not null %}
-            <input type="text" id="pumukitwizard_multimediaobject_license" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control" value="{{ object_default_license }}" aria-labelledby="pumukitwizard_multimediaobject_i18n_license_label">
-            {% else %}
-            <input type="text" id="pumukitwizard_multimediaobject_license" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control" value="" aria-labelledby="pumukitwizard_multimediaobject_i18n_license_label">
-            {% endif %}
-            <span class="material-input"></span>
-            {% endif %}
-            <a target="_blank" class="info-link" href="http://es.creativecommons.org/blog/licencias/">+INFO</a>
-          </div>
-        </div>
-        {% endif %}
-        <div class="form-group col-md-12 row" id="pumukitwizard_multimediaobject_i18n_line2" {% if not is_granted('ROLE_SCOPE_GLOBAL') %} style="display:none"{% endif %}>
-          <label for="pumukitwizard_multimediaobject_i18n_line2" id="pumukitwizard_multimediaobject_i18n_line2_label" class="control-label">{% trans %}Headline{% endtrans %}</label>
-          <div>
-            {% for locale in locales %}
-            <div class="input-group">
-              {% if form_data.multimediaobject is defined %}
-              <input type="text" id="pumukitwizard_multimediaobject_i18n_line2_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_line2][{{ locale }}]" class="form-control pumukitwizard_multimediaobject_i18n_line2 locale-{{ locale }}" value="{{ attribute(form_data.multimediaobject.i18n_line2, locale) }}" aria-labelledby="pumukitwizard_multimediaobject_i18n_line2_label">
-              {% else %}
-              <input type="text" id="pumukitwizard_multimediaobject_i18n_line2_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_line2][{{ locale }}]" class="form-control pumukitwizard_multimediaobject_i18n_line2 locale-{{ locale }}" value="" aria-labelledby="pumukitwizard_multimediaobject_i18n_line2_label">
-              {% endif %}
-              <span class="input-group-addon">{{ locale }}</span>
-            </div>
-            {% endfor %}
-          </div>
-        </div>
-        {% if show_tags and (available_tags|length > 0) %}
-        <div class="form-group col-md-7 row" id="pumukitwizard_multimediaobject_tag">
-          <label for="pumukitwizard_multimediaobject_tag" id="pumukitwizard_multimediaobject_i18n_tag_label" class="control-label">{% trans %}Tag{% endtrans %}</label>
-          <div class="form-control-wrapper">
-            <select id="pumukitwizard_multimediaobject_tag_select" name="pumukitwizard_form_data[multimediaobject][tag]" class="form-control">
-              <option value="0">{% trans %}Select a tag...{% endtrans %}</option>
-              {% for tag in available_tags %}
-              {% if form_data.multimediaobject is defined and form_data.multimediaobject.tag is defined %}
-              <option value="{{ tag.cod }}" {{ form_data['multimediaobject']['tag'] == tag.cod ? 'selected="selected"':'' }}>{{ tag.getTitle() }}</option>
-              {% else %}
-              <option value="{{ tag.cod }}">{{ tag.getTitle() }}</option>
-              {% endif %}
-              {% endfor %}
-            </select>
-          </div>
-        </div>
-        {% endif %}
-      </div>
-      {% if mandatory_title %}
-      <div class="col-md-2  wizard-empty-title">
-        <span id="pumukitwizard_multimediaobject_title_empty" class="wizard-error" hidden="hidden">{% trans %}Empty title{% endtrans %}</span>
-      </div>
-      {% endif %}
-    </fieldset>
-    <div class="row">
-      <div class="col-md-4">
-        {% spaceless %}
-          {% if same_series and form_data.series.id is defined and form_data.series.id is not null %}
-          <a href="{{ path('pumukitnewadmin_mms_index', {'id': form_data.series.id}) }}" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</a>
-          {% else %}
-          <a href="{{ path('pumukitnewadmin_series_index') }}" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</a>
-          {% endif %}
-        {% endspaceless %}
-      </div>
-      <div class="col-md-8">
-        <div class="text-right">
-          {% if license_enable or show_series or access_inbox %}
-          <button type="button" class="btn btn-default btn-raised pumukitwizard-btn-back">&laquo; {% trans %}Back{% endtrans %}</button>
-          {% endif %}
-          <button type="submit" class="btn btn-primary btn-raised">{% trans %}Next{% endtrans %} &raquo;</button>
-        </div>
-      </div>
+        </form>
     </div>
-  </form>
-</div>
 {% endblock wizard_body %}

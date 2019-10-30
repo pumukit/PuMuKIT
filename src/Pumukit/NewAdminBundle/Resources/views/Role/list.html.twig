@@ -1,101 +1,99 @@
 <div class="table-responsive well">
-  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ROLES')) %}
-    <table class="table table-striped table-hover">
-      <thead>
-        <tr>
-          <th width="1%" id="th-checkbox">
-            <div class="checkbox">
-              <label>
-                <input type="checkbox" onclick="window.click_checkbox_all('role', this.checked)">
-              </label>
-            </div>
-          </th>
-          <th colspan="4" width="7%" id="th-icons"></th>
-          <th id="th-display" width="1%">{% trans %}Display{% endtrans %}</th>
-          <th id="th-code">{% trans %}Code{% endtrans %}</th>
-          <th id="th-name">{% trans %}Name{% endtrans %}</th>
-          <th id="th-people" width="1%">{% trans %}People{% endtrans %}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% if roles is empty %}
-        <tr>
-          <td colspan="10" headers="th-checkbox th-code th-display th-icons th-icons th-icons th-icons th-name th-people">
-            {% trans %}There are no roles with those values.{% endtrans %}
-          </td>
-        </tr>
-        {% endif %}
-        {% for role in roles %}
-        <tr>
-          <td headers="th-checkbox">
-            <div class="checkbox">
-              <label>
-                <input id="{{ role.id }}" class="role_checkbox" type="checkbox" size="1">
-              </label>
-            </div>
-          </td>
-          <td headers="th-icons">
-            <a title="{% trans %}Edit Role{% endtrans %} {{ role.cod }}" href="{{ path('pumukitnewadmin_role_update', {'id': role.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
-              <i class="mdi-editor-mode-edit"></i>
-            </a>
-          <td headers="th-icons">
-            <a title="{% trans %}Delete role{% endtrans %}" href="#" onclick="window.submit_delete_role('{{ role.id }}', '{{ role.getNumberPeopleInMultimediaObject() }}'); return false;">
-              <i class="mdi-content-clear"></i>
-            </a>
-          </td>
-          <td headers="th-icons">
-              {% if roles.getCurrentPage() != 1 or not loop.first %}
-              {% spaceless %}
-              <a href="{{ path('pumukitnewadmin_role_down', {'id': role.id}) }}" title="{% trans %}Move one position up{% endtrans %}">&#8593;</a>
-              <a href="{{ path('pumukitnewadmin_role_bottom', {'id': role.id}) }}" title="{% trans %}Move to the beginning of the list{% endtrans %}"><i class="mdi-editor-vertical-align-top"></i></a>
-              {% endspaceless %}
-              {% endif %}
-          </td>
-          <td headers="th-icons">
-              {% if (roles.getCurrentPage() != roles.getNbPages()) or (loop.index + ((roles.getCurrentPage() - 1 ) * roles.getMaxPerPage()) != roles.getNbResults())  %}
-              {% spaceless %}
-              <a href="{{ path('pumukitnewadmin_role_up', {'id': role.id}) }}" title="{% trans %}Move one position down{% endtrans %}">&#8595;</a>
-              <a href="{{ path('pumukitnewadmin_role_top', {'id': role.id}) }}" title="{% trans %}Move to the end of the list{% endtrans %}"><i class="mdi-editor-vertical-align-bottom"></i></a>
-              {% endspaceless %}
-              {% endif %}
-          </td headers="th-display">
-          <td>
-            {{ role.display }}
-            </td>
-          <td headers="th-code">
-              {{ role.cod }}
-            </td>
-          <td headers="th-name">
-              {{ role.name }}
-            </td>
-          <td headers="th-people">
-              {{ role.getNumberPeopleInMultimediaObject() }}
-            </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-      <tfoot>
-        <tr>
-          <td colspan="10" class="foot-td">
-            <div class="col-md-8">
-              {{ roles.getNbResults }}
-              {% transchoice roles.getNbResults %}
-                {0} roles|{1} role|]1,Inf] roles
-                {% endtranschoice %}
-                {% if app.session.get('admin/role/criteria')|length != 0%}
-                <a class="cancel-search-button" title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
-                {% endif %}
-            </div>
-            <div class="col-md-4 text-right">
-              <div class="pagerfanta">
-                {{ pagerfanta(roles, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_role_index"}) }}
-              </div>
-            </div>
-          </td>
-        </tr>
-      </tfoot>
-    </table>
-  {% else %}
-    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
-  {% endif %}
+    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ROLES')) %}
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th width="1%" id="th-checkbox">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" onclick="window.click_checkbox_all('role', this.checked)">
+                        </label>
+                    </div>
+                </th>
+                <th colspan="4" width="7%" id="th-icons"></th>
+                <th id="th-display" width="1%">{% trans %}Display{% endtrans %}</th>
+                <th id="th-code">{% trans %}Code{% endtrans %}</th>
+                <th id="th-name">{% trans %}Name{% endtrans %}</th>
+                <th id="th-people" width="1%">{% trans %}People{% endtrans %}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if roles is empty %}
+                <tr>
+                    <td colspan="10" headers="th-checkbox th-code th-display th-icons th-icons th-icons th-icons th-name th-people">
+                        {% trans %}There are no roles with those values.{% endtrans %}
+                    </td>
+                </tr>
+            {% endif %}
+            {% for role in roles %}
+                <tr>
+                    <td headers="th-checkbox">
+                        <div class="checkbox">
+                            <label>
+                                <input id="{{ role.id }}" class="role_checkbox" type="checkbox" size="1">
+                            </label>
+                        </div>
+                    </td>
+                    <td headers="th-icons">
+                        <a title="{% trans %}Edit Role{% endtrans %} {{ role.cod }}" href="{{ path('pumukitnewadmin_role_update', {'id': role.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+                            <i class="mdi-editor-mode-edit"></i>
+                        </a>
+                    <td headers="th-icons">
+                        <a title="{% trans %}Delete role{% endtrans %}" href="#" onclick="window.submit_delete_role('{{ role.id }}', '{{ role.getNumberPeopleInMultimediaObject() }}'); return false;">
+                            <i class="mdi-content-clear"></i>
+                        </a>
+                    </td>
+                    <td headers="th-icons">
+                        {% if roles.getCurrentPage() != 1 or not loop.first %}
+                            {% set first_element = '<a href="' ~ path('pumukitnewadmin_role_down', {'id': role.id}) ~ '"  title="' ~ "Move one position up"|trans ~ '" style="color:#00786d;">&#8593;</a>' %}
+                            {% set second_element = '<a href="' ~ path('pumukitnewadmin_role_bottom', {'id': role.id}) ~ '" title="' ~ "Move to the beginning of the list"|trans ~ '" ><i class="mdi-editor-vertical-align-top"></i></a>' %}
+                            {{ (first_element|raw ~ second_element|raw) | spaceless }}
+                        {% endif %}
+                    </td>
+                    <td headers="th-icons">
+                        {% if (roles.getCurrentPage() != roles.getNbPages()) or (loop.index + ((roles.getCurrentPage() - 1 ) * roles.getMaxPerPage()) != roles.getNbResults()) %}
+                            {% set first_element = '<a href="' ~ path('pumukitnewadmin_role_up', {'id': role.id}) ~ '"  title="' ~ "Move one position down"|trans ~ '" style="color:#00786d;">&#8595;</a>' %}
+                            {% set second_element = '<a href="' ~ path('pumukitnewadmin_role_top', {'id': role.id}) ~ '" title="' ~ "Move to the end of the list"|trans ~ '" ><i class="mdi-editor-vertical-align-bottom"></i></a>' %}
+                            {{ (first_element|raw ~ second_element|raw) | spaceless }}
+                        {% endif %}
+                    <td headers="th-display">&nbsp;</td>
+                    <td>
+                        {{ role.display }}
+                    </td>
+                    <td headers="th-code">
+                        {{ role.cod }}
+                    </td>
+                    <td headers="th-name">
+                        {{ role.name }}
+                    </td>
+                    <td headers="th-people">
+                        {{ role.getNumberPeopleInMultimediaObject() }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="10" class="foot-td">
+                    <div class="col-md-8">
+                        {{ roles.getNbResults }}
+                        {% transchoice roles.getNbResults %}
+                            {0} roles|{1} role|]1,Inf] roles
+                        {% endtranschoice %}
+                        {% if app.session.get('admin/role/criteria')|length != 0 %}
+                            <a class="cancel-search-button" title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true">{% trans %}Cancel search{% endtrans %}</a>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <div class="pagerfanta">
+                            {{ pagerfanta(roles, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_role_index"}) }}
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    {% else %}
+        {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+    {% endif %}
 </div>

@@ -156,13 +156,11 @@
             </fieldset>
             <div class="row">
                 <div class="col-md-4">
-                    {% spaceless %}
-                        {% if same_series and form_data.series.id is defined and form_data.series.id is not null %}
-                            <a href="{{ path('pumukitnewadmin_mms_index', {'id': form_data.series.id}) }}" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</a>
-                        {% else %}
-                            <a href="{{ path('pumukitnewadmin_series_index') }}" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</a>
-                        {% endif %}
-                    {% endspaceless %}
+                    {% if same_series and form_data.series.id is defined and form_data.series.id is not null %}
+                        <a href="{{ path('pumukitnewadmin_mms_index', {'id': form_data.series.id}) }}" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</a>
+                    {% else %}
+                        <a href="{{ path('pumukitnewadmin_series_index') }}" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</a>
+                    {% endif %}
                 </div>
                 <div class="col-md-8">
                     <div class="text-right">

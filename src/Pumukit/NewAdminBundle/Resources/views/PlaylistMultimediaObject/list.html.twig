@@ -50,18 +50,16 @@
                 </td>
                 <td>
                     {% if mms.getCurrentPage() != 1 or not loop.first %}
-                        {% spaceless %}
-                            <a href="{{ path('pumukitnewadmin_playlistmms_up', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move one position up{% endtrans %}">&#8593;</a>
-                            <a href="{{ path('pumukitnewadmin_playlistmms_top', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move to the beginning of the list{% endtrans %}"><i class="mdi-editor-vertical-align-top"></i></a>
-                        {% endspaceless %}
+                        {% set first_element = '<a href="' ~ path('pumukitnewadmin_playlistmms_up', {'id': playlist.id, 'mm_pos':mm_pos}) ~ '"  title="' ~ "Move one position up"|trans ~ '" style="color:#00786d;">&#8593;</a>' %}
+                        {% set second_element = '<a href="' ~ path('pumukitnewadmin_playlistmms_top', {'id': playlist.id, 'mm_pos':mm_pos}) ~ '" title="' ~ "Move to the beginning of the list"|trans ~ '" ><i class="mdi-editor-vertical-align-top"></i></a>' %}
+                        {{ (first_element|raw ~ second_element|raw) | spaceless }}
                     {% endif %}
                 </td>
                 <td>
                     {% if (mms.getCurrentPage() != mms.getNbPages()) or (loop.index + ((mms.getCurrentPage() - 1 ) * mms.getMaxPerPage()) != mms.getNbResults()) %}
-                        {% spaceless %}
-                            <a href="{{ path('pumukitnewadmin_playlistmms_down', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move one position down{% endtrans %}">&#8595;</a>
-                            <a href="{{ path('pumukitnewadmin_playlistmms_bottom', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move to the end of the list{% endtrans %}"><i class="mdi-editor-vertical-align-bottom"></i></a>
-                        {% endspaceless %}
+                        {% set first_element = '<a href="' ~ path('pumukitnewadmin_playlistmms_down', {'id': playlist.id, 'mm_pos':mm_pos}) ~ '"  title="' ~ "Move one position down"|trans ~ '" style="color:#00786d;">&#8595;</a>' %}
+                        {% set second_element = '<a href="' ~ path('pumukitnewadmin_playlistmms_bottom', {'id': playlist.id, 'mm_pos':mm_pos}) ~ '" title="' ~ "Move to the end of the list"|trans ~ '" ><i class="mdi-editor-vertical-align-bottom"></i></a>' %}
+                        {{ (first_tooltip|raw ~ second_tooltip|raw) | spaceless }}
                     {% endif %}
                 </td>
                 <td>

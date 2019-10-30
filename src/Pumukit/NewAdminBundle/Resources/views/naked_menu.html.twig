@@ -1,17 +1,18 @@
-{% set series_title %}{% spaceless %}
+{% set series_title %}
     {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}
         {% trans %}My Series{% endtrans %}
     {% else %}
         {% trans %}Multimedia Series{% endtrans %}
     {% endif %}
-{% endspaceless %}{% endset %}
-{% set playlist_title %}{% spaceless %}
+{% endset %}
+
+{% set playlist_title %}
     {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}
         {% trans %}My Playlists{% endtrans %}
     {% else %}
         {% trans %}Moodle Playlists{% endtrans %}
     {% endif %}
-{% endspaceless %}{% endset %}
+{% endset %}
 
 {% set route_name = app.request.get('_route') %}
 {% set series_routes = ['pumukitnewadmin_series_index', 'pumukitnewadmin_mms_index', 'pumukitwizard_default_multimediaobject', 'pumukitwizard_default_track', 'pumukitwizard_default_series'] %}
@@ -29,7 +30,6 @@
         padding-inline-start: 0 !important;
     }
 </style>
-
 <div>
     {% if not is_naked() %}
         <ul class="nav nav-tabs title-tabs naked-menu" style="background: {{ app.request.attributes.get('nakedbackoffice_main_color', '#ED6D00') }};">
@@ -38,13 +38,13 @@
                 is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
                 <li {{ series_active ? "class=\"active\"":"" }}>
                     <a title="{% trans %}Go to series{% endtrans %}" href="{{ url('pumukitnewadmin_series_index') }}" style="color: {{ app.request.attributes.get('nakedbackoffice_color', 'white') }};">
-                        {{ series_title }}
+                        {{ series_title | spaceless }}
                         <div class="ripple-wrapper"></div>
                     </a>
                 </li>
                 <li {{ playlist_active ?"class=\"active\"":"" }}>
                     <a title="{% trans %}Go to playlists{% endtrans %}" href="{{ url('pumukitnewadmin_playlist_index') }}" style="color: {{ app.request.attributes.get('nakedbackoffice_color', 'white') }};">
-                        {{ playlist_title }}
+                        {{ playlist_title | spaceless }}
                         <div class="ripple-wrapper"></div>
                     </a>
                 </li>
