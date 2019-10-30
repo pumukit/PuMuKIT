@@ -69,7 +69,7 @@
             <div class="panel-body">
                 {% set none_attach = true %}
 
-                {% for track in multimediaObject.getTracks() if track.allowDownload() and not track.getHide() and showDownloads %}
+                {% for track in multimediaObject.getTracks() | filter(track => track.allowDownload() and not track.getHide() and showDownloads) %}
                     {% set none_attach = false %}
                     <div class="qa-player-tracks tracks">
                         <span class="glyphicon glyphicon-facetime-video"></span>
@@ -84,7 +84,7 @@
                     </div>
                 {% endfor %}
 
-                {% for material in multimediaObject.getMaterials() if not material.getHide() and showDownloads  %}
+                {% for material in multimediaObject.getMaterials()filter(material => not material.getHide() and showDownloads)  %}
                     {% set none_attach = false %}
                     <div class="qa-player-material material">
                         <span class="glyphicon glyphicon-paperclip"></span>
@@ -92,14 +92,16 @@
                     </div>
                 {% endfor %}
 
-                {% for link in multimediaObject.getLinks() if showDownloads %}
+                {% for link in multimediaObject.getLinks() %}
+                    {% if showdDownloads %}
                     {% set none_attach = false %}
-                    <div class="qa-player-link link">
-                        <a target="_blank" href="{{ link.getUrl() }}">
-                            <span class="glyphicon glyphicon-globe"></span>
-                            {{ link.getName() }}
-                        </a>
-                    </div>
+                        <div class="qa-player-link link">
+                            <a target="_blank" href="{{ link.getUrl() }}">
+                                <span class="glyphicon glyphicon-globe"></span>
+                                {{ link.getName() }}
+                            </a>
+                        </div>
+                    {% endif %}
                 {% endfor %}
                 {% if none_attach %}
                     <strong>{% trans %} There are no attachments {% endtrans %}</strong>

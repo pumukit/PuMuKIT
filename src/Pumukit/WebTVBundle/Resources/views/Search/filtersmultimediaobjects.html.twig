@@ -18,7 +18,7 @@
             <label for="tags">{{ "Categories"|trans }}:</label>
             <select id="tags" name="tags[]" class="form-control" onchange="submitForm(this);">
                 <option value="" {% if tags_found == "" %} selected="selected" {% endif %}>{% trans %}All{% endtrans %}</option>
-                {% for tag in parent_tag.children if tag.title != "" %}
+                {% for tag in parent_tag.children | filter(tag => tag.title != "") %}
                     <option value="{{ tag.cod }}" {% if tag.cod in tags_found %} selected="selected" {% endif %}>{{ tag.title }}</option>
                 {% endfor %}
             </select>
@@ -30,7 +30,7 @@
             <label for="tags">{{ parent_tag_optional.label }}:</label>
             <select id="tags" name="tags[]" class="form-control" onchange="submitForm(this);">
                 <option value="" {% if tags_found == "" %} selected="selected" {% endif %}>{% trans %}All{% endtrans %}</option>
-                {% for tag in parent_tag_optional.children if tag.title != "" %}
+                {% for tag in parent_tag_optional.children  | filter(tag => tag.title != "") %}
                     <option value="{{ tag.cod }}" {% if tag.cod in tags_found %} selected="selected" {% endif %}>{{ tag.title }}</option>
                 {% endfor %}
             </select>
@@ -85,7 +85,7 @@
             <option value="" {% if app.request.query.get('language') == "" %} selected="selected" {% endif %}>
                 {% trans %}All{% endtrans %}
             </option>
-            {% for language in languages if language != "" %}
+            {% for language in languages  | filter(language => language != "") %}
                 <option value="{{ language }}" {% if app.request.query.get('language') == language %} selected="selected" {% endif %}>
                     {{ language |language_name }}
                 </option>
@@ -144,7 +144,7 @@
                 <option value="" {% if app.request.query.get('license') == "" %} selected="selected" {% endif %}>
                     {% trans %}All{% endtrans %}
                 </option>
-                {% for license in licenses if licenses != "" %}
+                {% for license in licenses  | filter(licenses => licenses != "") %}
                     <option value="{{ license }}" {% if app.request.query.get('license') == license %} selected="selected" {% endif %}>
                         {{ license }}
                     </option>

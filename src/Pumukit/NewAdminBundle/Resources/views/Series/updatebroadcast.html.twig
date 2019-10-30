@@ -22,18 +22,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for mm in multimediaObjects if not mm.isLive() %}
-                            <tr {{ (mm.ispublished) ? '' : ' style="background-color: rgb(242, 242, 242)" ' }}>
-                                <td>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" id="{{ mm.id }}" class="checkbox_change_pub_mms" checked="checked"
-                                                   onclick="window.click_checkbox_change_pub_mms()">
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>{{ mm.getTitle() }}</td>
-                            </tr>
+                            {% for mm in multimediaObjects %}
+                                {% if not mm.isLive() %}
+                                    <tr {{ (mm.ispublished) ? '' : ' style="background-color: rgb(242, 242, 242)" ' }}>
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" id="{{ mm.id }}" class="checkbox_change_pub_mms" checked="checked"
+                                                           onclick="window.click_checkbox_change_pub_mms()">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>{{ mm.getTitle() }}</td>
+                                    </tr>
+                                {% endif %}
                             {% endfor %}
                         </tbody>
                     </table>

@@ -1,140 +1,142 @@
 <div class="modal-header">
-  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <h4 class="modal-title" id="myModalLabel">{% trans %}change status of multimedia objects inside the series{% endtrans %}:</h4>
-  <h2 class="modal-title">&laquo;{{ series.getTitle() }}&raquo;</h2>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="myModalLabel">{% trans %}change status of multimedia objects inside the series{% endtrans %}:</h4>
+    <h2 class="modal-title">&laquo;{{ series.getTitle() }}&raquo;</h2>
 </div>
 
 <div class="modal-body">
-  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
-  <form onsubmit="window.submit_series_change_pub(); return false;"
-        action="{{ path('pumukitnewadmin_series_updatepub') }}" method="POST">
-    <fieldset>
-      <legend hidden>{% trans %}change status of multimedia objects inside the series{% endtrans %}</legend>
-      <div class="form-group">
-        <label for="mm" class="control-label">{% trans %}Multimedia Objects{% endtrans %}:</label>
-        <div>
-          <div class="table-responsive">
-            <table id="table_mms_change_pub" class="table table-striped table-hover" style="overflow:visible;">
-            <thead>
-              <tr>
-                <th></th>
-                <th>{% trans %}Title{% endtrans %}</th>
-                <th>{% trans %}Status{% endtrans %}</th>
-                {% for channel in pub_channels %}
-                <th style="{{ (channel.display and not is_granted('ROLE_TAG_DISABLE_' ~ channel.cod|upper)) ? '' : 'color:grey' }}">{{ channel.getTitle() }}</th>
-                {% endfor %}
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox" checked="checked" onclick="window.click_checkbox_changepub_all('series', this.checked)" class="checkbox_change_pub_mms_all">
-                    </label>
-                  </div>
-                </td>
-                <td><span style="font-weight: bold">{% trans %}ALL{% endtrans %}</span></td>
-                <td>
-                  <select onchange="var status_selected = $('#all_status_change_pub option:selected').val();
+    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+        <form onsubmit="window.submit_series_change_pub(); return false;"
+              action="{{ path('pumukitnewadmin_series_updatepub') }}" method="POST">
+            <fieldset>
+                <legend hidden>{% trans %}change status of multimedia objects inside the series{% endtrans %}</legend>
+                <div class="form-group">
+                    <label for="mm" class="control-label">{% trans %}Multimedia Objects{% endtrans %}:</label>
+                    <div>
+                        <div class="table-responsive">
+                            <table id="table_mms_change_pub" class="table table-striped table-hover" style="overflow:visible;">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>{% trans %}Title{% endtrans %}</th>
+                                    <th>{% trans %}Status{% endtrans %}</th>
+                                    {% for channel in pub_channels %}
+                                        <th style="{{ (channel.display and not is_granted('ROLE_TAG_DISABLE_' ~ channel.cod|upper)) ? '' : 'color:grey' }}">{{ channel.getTitle() }}</th>
+                                    {% endfor %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" checked="checked" onclick="window.click_checkbox_changepub_all('series', this.checked)" class="checkbox_change_pub_mms_all">
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td><span style="font-weight: bold">{% trans %}ALL{% endtrans %}</span></td>
+                                    <td>
+                                        <select onchange="var status_selected = $('#all_status_change_pub option:selected').val();
                                     if (status_selected.length != 0){
                                         $('select.status_change_pub').each(function(){$(this).val(status_selected)});
                                     }"
-                          {% if not is_granted('ROLE_CHANGE_MMOBJECT_STATUS') %} disabled="disabled" {% endif %}
-                          id="all_status_change_pub" class="form-control">
-                    <option selected="selected"></option>
-                    <option value="{{ mm_status.published }}">{% trans %}Published{% endtrans %}</option>
-                    <option value="{{ mm_status.blocked }}">{% trans %}Blocked{% endtrans %}</option>
-                    <option value="{{ mm_status.hidden }}">{% trans %}Hidden{% endtrans %}</option>
-                  </select>
-                </td>
-                {% for channel in pub_channels %}
-                {% set disabled = (not channel.display or not is_granted('ROLE_CHANGE_MMOBJECT_PUBCHANNEL') or is_granted('ROLE_TAG_DISABLE_' ~ channel.cod|upper)) %}
-                <td>
-                  <div class="checkbox {{ disabled ? 'pmk_disabled_checkbox' : '' }}">
-                    <label>
-                      <input type="checkbox"
-                             {% if disabled %}
-                             disabled="disabled"
-                             {% else %}
-                             onclick="window.click_checkbox_channel_changepub_all('{{ channel.id }}', this.checked);"
-                             id="{{ channel.id }}"
-                             class="checkbox_all_channels checkbox_change_pub_channel_{{ channel.id }}"
-                             {% endif %}/>
-                    </label>
-                  </div>
-                </td>
-                {% endfor %}
-              </tr>
+                                            {% if not is_granted('ROLE_CHANGE_MMOBJECT_STATUS') %} disabled="disabled" {% endif %}
+                                                id="all_status_change_pub" class="form-control">
+                                            <option selected="selected"></option>
+                                            <option value="{{ mm_status.published }}">{% trans %}Published{% endtrans %}</option>
+                                            <option value="{{ mm_status.blocked }}">{% trans %}Blocked{% endtrans %}</option>
+                                            <option value="{{ mm_status.hidden }}">{% trans %}Hidden{% endtrans %}</option>
+                                        </select>
+                                    </td>
+                                    {% for channel in pub_channels %}
+                                        {% set disabled = (not channel.display or not is_granted('ROLE_CHANGE_MMOBJECT_PUBCHANNEL') or is_granted('ROLE_TAG_DISABLE_' ~ channel.cod|upper)) %}
+                                        <td>
+                                            <div class="checkbox {{ disabled ? 'pmk_disabled_checkbox' : '' }}">
+                                                <label>
+                                                    <input type="checkbox"
+                                                        {% if disabled %}
+                                                        disabled="disabled"
+                                                    {% else %}
+                                                        onclick="window.click_checkbox_channel_changepub_all('{{ channel.id }}', this.checked);"
+                                                        id="{{ channel.id }}"
+                                                        class="checkbox_all_channels checkbox_change_pub_channel_{{ channel.id }}"
+                                                        {% endif %}/>
+                                                </label>
+                                            </div>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
 
-              {% for mm in multimediaObjects if not mm.isLive() %}
-              <tr {{ (mm.status == mm_status.published) ? '' : ' style="background-color: rgb(242, 242, 242)" ' }}>
-                <td>
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox" id="{{ mm.id }}" class="checkbox_change_pub_mms" checked="checked" onclick="window.check_checkbox_all(this.checked)">
-                    </label>
-                  </div>
-                </td>
-                <td>{{ mm.getTitle() }}</td>
-                <td>
-                  <select name="data[{{ mm.id }}][status]"
-                          id="status_change_pub_{{ mm.id }}"
-                          {% if not is_granted('ROLE_CHANGE_MMOBJECT_STATUS') %} disabled="disabled" {% endif %}
-                          class="status_change_pub form-control">
-                    <option {{ ((mm_status.published) == mm.status) ? 'selected="selected"' : '' }} value="{{ mm_status.published }}">{% trans %}Published{% endtrans %}</option>
-                    <option {{ ((mm_status.blocked) == mm.status) ? 'selected="selected"' : '' }} value="{{ mm_status.blocked }}">{% trans %}Blocked{% endtrans %}</option>
-                    <option {{ ((mm_status.hidden) == mm.status) ? 'selected="selected"' : '' }} value="{{ mm_status.hidden }}">{% trans %}Hidden{% endtrans %}</option>
-                  </select>
-                </td>
+                                {% for mm in multimediaObjects %}
+                                    {% if not mm.isLive() %}
+                                        <tr {{ (mm.status == mm_status.published) ? '' : ' style="background-color: rgb(242, 242, 242)" ' }}>
+                                            <td>
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox" id="{{ mm.id }}" class="checkbox_change_pub_mms" checked="checked" onclick="window.check_checkbox_all(this.checked)">
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td>{{ mm.getTitle() }}</td>
+                                            <td>
+                                                <select name="data[{{ mm.id }}][status]"
+                                                        id="status_change_pub_{{ mm.id }}"
+                                                    {% if not is_granted('ROLE_CHANGE_MMOBJECT_STATUS') %} disabled="disabled" {% endif %}
+                                                        class="status_change_pub form-control">
+                                                    <option {{ ((mm_status.published) == mm.status) ? 'selected="selected"' : '' }} value="{{ mm_status.published }}">{% trans %}Published{% endtrans %}</option>
+                                                    <option {{ ((mm_status.blocked) == mm.status) ? 'selected="selected"' : '' }} value="{{ mm_status.blocked }}">{% trans %}Blocked{% endtrans %}</option>
+                                                    <option {{ ((mm_status.hidden) == mm.status) ? 'selected="selected"' : '' }} value="{{ mm_status.hidden }}">{% trans %}Hidden{% endtrans %}</option>
+                                                </select>
+                                            </td>
 
-                {% for channel in pub_channels %}
-                {% set status = mm.containsTag(channel) %}
-                {% if not channel.display or not is_granted('ROLE_CHANGE_MMOBJECT_PUBCHANNEL') or is_granted('ROLE_TAG_DISABLE_' ~ channel.cod|upper) %}
-                <td>
-                  <div class="checkbox pmk_disabled_checkbox">
-                    <label>
-                      <input type="checkbox"
-                             disabled="disabled"
-                             {{ (status) ? 'checked="checked"' : "" }}
-                             />
-                    </label>
-                  </div>
-                </td>
-                {% else %}
-                <td>
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox"
-                             onclick="window.check_checkbox_channel_all('{{ channel.id }}', this.checked);"
-                             name="data[{{ mm.id }}][pub_channels][{{ channel.id }}]"
-                             class="pub_channel_input_checkbox pub_channel_change_pub_{{ channel.id }}"
-                             id="pub_channel_change_pub_{{ channel.id }}_mm_{{ mm.id }}"
-                             {{ (status) ? 'checked="checked"' : "" }}
-                             />
-                    </label>
-                  </div>
-                </td>
-                {% endif %}
-                {% endfor %}
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-          </div>
-        </div>
-        <div style="text-align: right">{% trans %}Select{% endtrans %}:
-          <a href="#" onclick="window.click_changepub_selection($(this), false); return false;">{% trans %}nothing{% endtrans %}</a>
-          <a href="#" onclick="window.click_changepub_selection($(this), true); return false;">{% trans %}all{% endtrans %}</a>
-        </div>
-      </div>
-    </fieldset>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
-      <button type="submit" class="btn btn-pumukit btn-raised">{% trans %}Save changes{% endtrans %}</button>
-    </div>
-  </form>
-  {% else %}
-    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
-  {% endif %}
+                                            {% for channel in pub_channels %}
+                                                {% set status = mm.containsTag(channel) %}
+                                                {% if not channel.display or not is_granted('ROLE_CHANGE_MMOBJECT_PUBCHANNEL') or is_granted('ROLE_TAG_DISABLE_' ~ channel.cod|upper) %}
+                                                    <td>
+                                                        <div class="checkbox pmk_disabled_checkbox">
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                       disabled="disabled"
+                                                                    {{ (status) ? 'checked="checked"' : "" }}
+                                                                />
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                {% else %}
+                                                    <td>
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                       onclick="window.check_checkbox_channel_all('{{ channel.id }}', this.checked);"
+                                                                       name="data[{{ mm.id }}][pub_channels][{{ channel.id }}]"
+                                                                       class="pub_channel_input_checkbox pub_channel_change_pub_{{ channel.id }}"
+                                                                       id="pub_channel_change_pub_{{ channel.id }}_mm_{{ mm.id }}"
+                                                                    {{ (status) ? 'checked="checked"' : "" }}
+                                                                />
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div style="text-align: right">{% trans %}Select{% endtrans %}:
+                        <a href="#" onclick="window.click_changepub_selection($(this), false); return false;">{% trans %}nothing{% endtrans %}</a>
+                        <a href="#" onclick="window.click_changepub_selection($(this), true); return false;">{% trans %}all{% endtrans %}</a>
+                    </div>
+                </div>
+            </fieldset>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
+                <button type="submit" class="btn btn-pumukit btn-raised">{% trans %}Save changes{% endtrans %}</button>
+            </div>
+        </form>
+    {% else %}
+        {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+    {% endif %}
 </div>

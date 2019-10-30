@@ -13,13 +13,14 @@
         </div>
 
         <div>
-            {% for mtag in mm.tags if mtag.level == 2 %}
+            {% for mtag in mm.tags | filter(mtag => mtag.level == 2) %}
+
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title-preview panel-title">Tags {{ mtag.title }} </h3>
                     </div>
                     <div class="panel-body-preview panel-body">
-                        {% for tag in mm.tags if tag.isDescendantOf(mtag) %}
+                        {% for tag in mm.tags | filter(tag => tag.isDescendantOf(mtag)) %}
                             <span class="label label-default">{{ tag.title }}</span>
                         {% else %}
                             <em>{% trans %}None{% endtrans %}</em>
@@ -28,12 +29,12 @@
                 </div>
             {% else %}
                 <div class="panel panel-primary">
-                  <div class="panel-heading">
-                    <h3 class="panel-title-preview panel-title">{% trans %}Tags{% endtrans %}</h3>
-                  </div>
-                  <div class="panel-body-preview panel-body">
-                    <span>{% trans %}No tags{% endtrans %}.</span>
-                  </div>
+                    <div class="panel-heading">
+                        <h3 class="panel-title-preview panel-title">{% trans %}Tags{% endtrans %}</h3>
+                    </div>
+                    <div class="panel-body-preview panel-body">
+                        <span>{% trans %}No tags{% endtrans %}.</span>
+                    </div>
                 </div>
             {% endfor %}
         </div>
@@ -45,7 +46,7 @@
                 </div>
                 <div class="panel-body-preview panel-body">
                     <ul class="list-unstyled">
-                        {% for role in mm.getRoles() if role.getDisplay() %}
+                        {% for role in mm.getRoles() | filter(role => role.getDisplay())%}
                             {% set actors = mm.getPeopleByRole(role, true) %}
                             {% if actors|length != 0 %}
                                 <li><u>{{ role.name }}</u></li>

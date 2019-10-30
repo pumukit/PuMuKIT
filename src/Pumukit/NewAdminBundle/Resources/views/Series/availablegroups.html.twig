@@ -1,14 +1,15 @@
-{% for group in groups if group not in resource_groups %}
-<a href="#"
-   id="delete_{{ resource_name }}_group_{{ group.id }}"
-   onclick="javascript:return select_group(this);"
-   ondblclick="javascript:add_group('{{ group.id }}', '{{ group.key }}', '{{ group.name }}', '{{ group.origin }}', '{{ resource_name }}');"
-   class="list-group-item notload delete-{{ resource_name }}-group-item pumukitnewadmin-trim-row group_{{ group.key }}">
-  <i class="mdi-social-group"></i>
-  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::SHOW_CODES')) %}
-    {{ group.key }} - {{ group.name }} - ({{ group.origin }})
-  {% else %}
-    {{ group.name }}
-  {% endif %}
-</a>
+{% for group in groups %}
+    {% if group not in resource_groups %}
+    <a href="#" id="delete_{{ resource_name }}_group_{{ group.id }}"
+       onclick="javascript:return select_group(this);"
+       ondblclick="javascript:add_group('{{ group.id }}', '{{ group.key }}', '{{ group.name }}', '{{ group.origin }}', '{{ resource_name }}');"
+       class="list-group-item notload delete-{{ resource_name }}-group-item pumukitnewadmin-trim-row group_{{ group.key }}">
+        <i class="mdi-social-group"></i>
+        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::SHOW_CODES')) %}
+            {{ group.key }} - {{ group.name }} - ({{ group.origin }})
+        {% else %}
+            {{ group.name }}
+        {% endif %}
+    </a>
+    {% endif %}
 {% endfor %}
