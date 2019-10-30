@@ -84,7 +84,7 @@
                     </div>
                 {% endfor %}
 
-                {% for material in multimediaObject.getMaterials()filter(material => not material.getHide() and showDownloads)  %}
+                {% for material in multimediaObject.getMaterials() | filter(material => not material.getHide() and showDownloads)  %}
                     {% set none_attach = false %}
                     <div class="qa-player-material material">
                         <span class="glyphicon glyphicon-paperclip"></span>

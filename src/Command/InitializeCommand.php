@@ -326,6 +326,7 @@ EOT
                                 if ($verbose) {
                                     $output->writeln('<comment>'.$e->getMessage().'</comment>');
                                 }
+
                                 continue 2;
                             }
                             $output->writeln('<info>Tag persisted - new id: '.$tag->getId().' cod: '.$tag->getCod().'</info>');
