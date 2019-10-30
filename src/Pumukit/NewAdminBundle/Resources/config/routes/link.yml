@@ -2,28 +2,28 @@ pumukitnewadmin_link_create:
     path: /create/{id}
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:Link:create
+        _controller: Pumukit\NewAdminBundle\Controller\LinkController::createAction
 
 pumukitnewadmin_link_update:
     path: /{id}/update/{mmId}
     methods: [GET, PUT, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:Link:update
+        _controller: Pumukit\NewAdminBundle\Controller\LinkController::updateAction
 
 pumukitnewadmin_link_delete:
     path: /{id}/delete/{mmId}
     methods: [DELETE]
     defaults:
-        _controller: PumukitNewAdminBundle:Link:delete
+        _controller: Pumukit\NewAdminBundle\Controller\LinkController::deleteAction
 
 pumukitnewadmin_link_up:
     path: /{id}/up/{mmId}
     methods: [POST]
     defaults:
-        _controller: PumukitNewAdminBundle:Link:up
+        _controller: Pumukit\NewAdminBundle\Controller\LinkController::upAction
 
 pumukitnewadmin_link_down:
     path: /{id}/down/{mmId}
     methods: [POST]
     defaults:
-        _controller: PumukitNewAdminBundle:Link:down
+        _controller: Pumukit\NewAdminBundle\Controller\LinkController::downAction

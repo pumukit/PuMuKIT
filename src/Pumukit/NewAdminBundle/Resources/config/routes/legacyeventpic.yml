@@ -2,22 +2,22 @@ pumukitnewadmin_eventpic_create:
     path: /create/{id}
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:LegacyEventPic:create
+        _controller: Pumukit\NewAdminBundle\Controller\LegacyEventPicController::createAction
 
 pumukitnewadmin_eventpic_update:
     path: /{id}/update
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:LegacyEventPic:update
+        _controller: Pumukit\NewAdminBundle\Controller\LegacyEventPicController::updateAction
 
 pumukitnewadmin_eventpic_upload:
     path: /{id}/upload
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:LegacyEventPic:upload
+        _controller: Pumukit\NewAdminBundle\Controller\LegacyEventPicController::uploadAction
 
 pumukitnewadmin_eventpic_delete:
     path: /{id}/delete
     methods: [DELETE]
     defaults:
-        _controller: PumukitNewAdminBundle:LegacyEventPic:delete
+        _controller: Pumukit\NewAdminBundle\Controller\LegacyEventPicController::deleteAction

@@ -2,40 +2,40 @@ pumukitnewadmin_tag_index:
     path: /
     methods: [GET]
     defaults:
-        _controller: PumukitNewAdminBundle:Tag:index
+        _controller: Pumukit\NewAdminBundle\Controller\TagController::indexAction
 
 pumukitnewadmin_tag_children:
     path: /{id}/children
     methods: [GET]
     defaults:
-        _controller: PumukitNewAdminBundle:Tag:children
+        _controller: Pumukit\NewAdminBundle\Controller\TagController::childrenAction
 
 pumukitnewadmin_tag_create:
     path: /create/parent/{parent}
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:Tag:create
+        _controller: Pumukit\NewAdminBundle\Controller\TagController::createAction
 
 pumukitnewadmin_tag_update:
     path: /{id}/update
     methods: [GET, PUT, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:Tag:update
+        _controller: Pumukit\NewAdminBundle\Controller\TagController::updateAction
 
 pumukitnewadmin_tag_delete:
     path: /{id}/delete
     methods: [DELETE]
     defaults:
-        _controller: PumukitNewAdminBundle:Tag:delete
+        _controller: Pumukit\NewAdminBundle\Controller\TagController::deleteAction
 
 pumukitnewadmin_tag_list:
     path: /list
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:Tag:list
+        _controller: Pumukit\NewAdminBundle\Controller\TagController::listAction
 
 pumukitnewadmin_tag_batch_delete:
     path: /batchdelete
     methods: [DELETE]
     defaults:
-        _controller: PumukitNewAdminBundle:Tag:batchDelete
+        _controller: Pumukit\NewAdminBundle\Controller\TagController::batchDeleteAction

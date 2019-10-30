@@ -12,7 +12,7 @@ pumukitnewadmin_js:
     path: /admin/pumukit.js
     methods: [GET]
     defaults:
-        _controller: FrameworkBundle:Template:template
+        _controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
         template: 'PumukitNewAdminBundle::pumukit2.js.twig'
         maxAge:       86400
         sharedAge:    86400
@@ -22,7 +22,7 @@ pumukitnewadmin_locale_js:
     path: /admin/pumukit.{_locale}.js
     methods: [GET]
     defaults:
-        _controller: FrameworkBundle:Template:template
+        _controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
         template: 'PumukitNewAdminBundle::pumukit2.js.twig'
         maxAge:       86400
         sharedAge:    86400
@@ -32,7 +32,7 @@ pumukitnewadmin_css:
     path: /admin/pumukit.css
     methods: [GET]
     defaults:
-        _controller: FrameworkBundle:Template:template
+        _controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
         template: 'PumukitNewAdminBundle::pumukit2.css.twig'
         maxAge:       86400
         sharedAge:    86400
@@ -43,7 +43,7 @@ pumukit_jquery_ui_autocomplete_css:
     path: /admin/jquery_ui_autocomplete.css
     methods: [GET]
     defaults:
-        _controller: FrameworkBundle:Template:template
+        _controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
         template: 'PumukitNewAdminBundle::jquery-ui-autocomplete.css.twig'
         maxAge:       86400
         sharedAge:    86400
@@ -81,7 +81,7 @@ pumukitnewadmin_mms_shortener:
     path: /admin/mm/{id}/
     methods: [GET]
     defaults:
-        _controller: PumukitNewAdminBundle:MultimediaObject:shortener
+        _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectController::shortenerAction
 
 pumukitnewadmin_playlistmms:
     resource: "@PumukitNewAdminBundle/Resources/config/routes/playlistmms.yml"

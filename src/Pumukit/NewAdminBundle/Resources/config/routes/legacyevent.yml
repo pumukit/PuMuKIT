@@ -2,7 +2,7 @@ pumukitnewadmin_event_index:
     path: /
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:LegacyEvent:index
+        _controller: Pumukit\NewAdminBundle\Controller\LegacyEventController::indexAction
         _sylius:
             filterable: true
 
@@ -10,7 +10,7 @@ pumukitnewadmin_event_create:
     path: /create
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:LegacyEvent:create
+        _controller: Pumukit\NewAdminBundle\Controller\LegacyEventController::createAction
         _sylius:
             redirect: pumukitnewadmin_event_index
 
@@ -18,7 +18,7 @@ pumukitnewadmin_event_update:
     path: /{id}/update
     methods: [GET, PUT, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:LegacyEvent:update
+        _controller: Pumukit\NewAdminBundle\Controller\LegacyEventController::updateAction
         _sylius:
             redirect: pumukitnewadmin_event_index
 
@@ -26,7 +26,7 @@ pumukitnewadmin_event_batch_delete:
     path: /batchdelete
     methods: [DELETE]
     defaults:
-        _controller: PumukitNewAdminBundle:LegacyEvent:batchDelete
+        _controller: Pumukit\NewAdminBundle\Controller\LegacyEventController::batchDeleteAction
         _sylius:
             redirect: pumukitnewadmin_event_index
 
@@ -34,7 +34,7 @@ pumukitnewadmin_event_delete:
     path: /{id}/delete
     methods: [DELETE]
     defaults:
-        _controller: PumukitNewAdminBundle:LegacyEvent:delete
+        _controller: Pumukit\NewAdminBundle\Controller\LegacyEventController::deleteAction
         _sylius:
             redirect: pumukitnewadmin_event_index
 
@@ -42,13 +42,13 @@ pumukitnewadmin_event_show:
     path: /{id}/show
     methods: [GET]
     defaults:
-        _controller: PumukitNewAdminBundle:LegacyEvent:show
+        _controller: Pumukit\NewAdminBundle\Controller\LegacyEventController::showAction
 
 pumukitnewadmin_event_list:
     path: /list
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:LegacyEvent:list
+        _controller: Pumukit\NewAdminBundle\Controller\LegacyEventController::listAction
         _sylius:
             filterable: true
 
@@ -56,4 +56,4 @@ pumukitnewadmin_event_updatesession:
     path: /updatesession
     methods: [GET]
     defaults:
-        _controller: PumukitNewAdminBundle:LegacyEvent:updateSession
+        _controller: Pumukit\NewAdminBundle\Controller\LegacyEventController::updateSessionAction
