@@ -373,11 +373,11 @@ class JobService
     public function getAllJobsStatus()
     {
         return [
-            'paused' => count($this->repo->findWithStatus([Job::STATUS_PAUSED])),
-            'waiting' => count($this->repo->findWithStatus([Job::STATUS_WAITING])),
-            'executing' => count($this->repo->findWithStatus([Job::STATUS_EXECUTING])),
-            'finished' => count($this->repo->findWithStatus([Job::STATUS_FINISHED])),
-            'error' => count($this->repo->findWithStatus([Job::STATUS_ERROR])),
+            'paused' => count($this->repo->findBy(['status' => Job::STATUS_PAUSED])),
+            'waiting' => count($this->repo->findBy(['status' => Job::STATUS_WAITING])),
+            'executing' => count($this->repo->findBy(['status' => Job::STATUS_EXECUTING])),
+            'finished' => count($this->repo->findBy(['status' => Job::STATUS_FINISHED])),
+            'error' => count($this->repo->findBy(['status' => Job::STATUS_ERROR])),
         ];
     }
 
@@ -391,11 +391,11 @@ class JobService
     public function getAllJobsStatusWithOwner($owner)
     {
         return [
-            'paused' => count($this->repo->findWithStatusAndOwner([Job::STATUS_PAUSED], [], $owner)),
-            'waiting' => count($this->repo->findWithStatusAndOwner([Job::STATUS_WAITING], [], $owner)),
-            'executing' => count($this->repo->findWithStatusAndOwner([Job::STATUS_EXECUTING], [], $owner)),
-            'finished' => count($this->repo->findWithStatusAndOwner([Job::STATUS_FINISHED], [], $owner)),
-            'error' => count($this->repo->findWithStatusAndOwner([Job::STATUS_ERROR], [], $owner)),
+            'paused' => count($this->repo->findBy(['status' => Job::STATUS_PAUSED, 'email' => $owner])),
+            'waiting' => count($this->repo->findBy(['status' => Job::STATUS_WAITING, 'email' => $owner])),
+            'executing' => count($this->repo->findBy(['status' => Job::STATUS_EXECUTING, 'email' => $owner])),
+            'finished' => count($this->repo->findBy(['status' => Job::STATUS_FINISHED, 'email' => $owner])),
+            'error' => count($this->repo->findBy(['status' => Job::STATUS_ERROR, 'email' => $owner])),
         ];
     }
 
