@@ -11,7 +11,7 @@
         </div>
     {% endif %}
     <div style="max-height:800px;overflow-y:auto;padding: 7px;">
-        {% for parent in parent_tags | filter(parent => parent.getDisplay() and parent.getChildren()|length != 0 and not parent.getProperty('hide_in_tag_group') %}
+        {% for parent in parent_tags | filter(parent => parent.getDisplay() and parent.getChildren()|length != 0 and not parent.getProperty('hide_in_tag_group')) %}
             <div class="panel panel-default panel-tag-{{ parent.cod }}">
                 <div class="panel-heading">{{ parent.title }}</div>
                 <div class="panel-body" id="tag{{ parent.id }}_mms">
