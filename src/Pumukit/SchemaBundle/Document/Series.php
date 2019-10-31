@@ -57,7 +57,7 @@ class Series
      *
      * @var int
      * @MongoDB\Field(type="int")
-     * @MongoDB\UniqueIndex(safe=1)
+     * @MongoDB\UniqueIndex()
      */
     private $numerical_id;
 
