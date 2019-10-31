@@ -166,7 +166,7 @@ class TagCatalogueService
                 } elseif ('roles' === $key) {
                     foreach ($value as $key2 => $field) {
                         if (!empty($field)) {
-                            $newCriteria['roles'][$key2] = new Regex('/.*'.preg_quote($field).'.*/i');
+                            $newCriteria['roles'][$key2] = new Regex('/.*'.preg_quote($field).'.*','i');
                         }
                     }
                 } elseif ('group' === $key) {

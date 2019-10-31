@@ -70,7 +70,7 @@ EOT
         $criteria = [
             'pics' => ['$exists' => true],
             'pics.tags' => 'auto',
-            'pics.path' => new Regex(sprintf('/%s/i', $this->extensionFile)),
+            'pics.path' => new Regex(sprintf('/%s/', $this->extensionFile),'i'),
         ];
 
         $multimediaObjects = $this->dm->getRepository(MultimediaObject::class)->findBy($criteria);
