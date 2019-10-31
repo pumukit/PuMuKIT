@@ -2,6 +2,9 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use MongoDB\BSON\Regex;
+use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Pumukit\SchemaBundle\Document\Role;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -9,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 class AdminController extends ResourceController implements NewAdminControllerInterface
 {
     /**
-     * Overwrite to update the criteria with MongoRegex, and save it in the session.
+     * Overwrite to update the criteria with Regex, and save it in the session.
      */
     public function indexAction(Request $request)
     {
@@ -240,7 +243,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
         foreach ($criteria as $property => $value) {
             //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
             if ('' !== $value) {
-                $new_criteria[$property] = new \MongoRegex('/'.$value.'/i');
+                $new_criteria[$property] = new Regex('/'.$value.'/i');
             }
         }
 

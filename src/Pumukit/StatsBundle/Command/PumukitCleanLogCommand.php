@@ -2,6 +2,7 @@
 
 namespace Pumukit\StatsBundle\Command;
 
+use MongoDB\BSON\Regex;
 use Pumukit\StatsBundle\Document\ViewsLog;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -54,7 +55,7 @@ EOT
                 $this->execRemoveQuery($metadata->getAgent());
             } else {
                 $regex = sprintf('/%s/', preg_quote($metadata->getAgent()));
-                $this->execRemoveQuery(new \MongoRegex($regex));
+                $this->execRemoveQuery(new Regex($regex));
             }
         }
 

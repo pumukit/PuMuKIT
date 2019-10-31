@@ -2,6 +2,7 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use MongoDB\BSON\Regex;
 use Pumukit\NewAdminBundle\Form\Type\UserUpdateType;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
@@ -303,7 +304,7 @@ class UserController extends AdminController implements NewAdminControllerInterf
                     $new_criteria[$property] = $value;
                 }
             } elseif ('' !== $value) {
-                $new_criteria[$property] = new \MongoRegex('/'.$value.'/i');
+                $new_criteria[$property] = new Regex('/'.$value.'/i');
             }
         }
 

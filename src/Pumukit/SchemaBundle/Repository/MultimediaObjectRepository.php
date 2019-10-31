@@ -5,6 +5,7 @@ namespace Pumukit\SchemaBundle\Repository;
 use Doctrine\ODM\MongoDB\Query\Builder;
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 use MongoDB\BSON\UTCDateTime;
+use MongoDB\BSON\Regex;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
@@ -391,7 +392,7 @@ class MultimediaObjectRepository extends DocumentRepository
         $text = trim($text);
         if ((false !== strpos($text, '*')) && (false === strpos($text, ' '))) {
             $text = str_replace('*', '.*', $text);
-            $mRegex = new \MongoRegex("/{$text}/i");
+            $mRegex = new Regex("/{$text}/i");
             $qb->addOr($qb->expr()->field('title'.$locale)->equals($mRegex));
             $qb->addOr($qb->expr()->field('people.people.name')->equals($mRegex));
         } else {
@@ -597,7 +598,7 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function createBuilderWithGeneralTag(Tag $tag, $sort = [])
     {
-        $qb = $this->createStandardQueryBuilder()->field('tags._id')->in([new \MongoId($tag->getId())])->field('tags.path')->notIn([new \MongoRegex('/'.preg_quote($tag->getPath()).'.*\|/')]);
+        $qb = $this->createStandardQueryBuilder()->field('tags._id')->in([new \MongoId($tag->getId())])->field('tags.path')->notIn([new Regex('/'.preg_quote($tag->getPath()).'.*\|/')]);
 
         return $this->addSortToQueryBuilder($qb, $sort);
     }

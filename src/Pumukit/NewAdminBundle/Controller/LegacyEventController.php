@@ -2,6 +2,7 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use MongoDB\BSON\Regex;
 use Pumukit\SchemaBundle\Document\Event;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -214,7 +215,7 @@ class LegacyEventController extends AdminController implements NewAdminControlle
         foreach ($criteria as $property => $value) {
             //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
             if (('' !== $value) && ('date' !== $property)) {
-                $new_criteria[$property] = new \MongoRegex('/'.$value.'/i');
+                $new_criteria[$property] = new Regex('/'.$value.'/i');
             } elseif (('' !== $value) && ('date' == $property)) {
                 if ('' !== $value['from']) {
                     $date_from = new \DateTime($value['from']);

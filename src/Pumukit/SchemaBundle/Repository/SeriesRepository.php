@@ -5,6 +5,7 @@ namespace Pumukit\SchemaBundle\Repository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Query\Builder;
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
+use MongoDB\BSON\Regex;
 use Pumukit\SchemaBundle\Document\EmbeddedTag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
@@ -534,7 +535,7 @@ class SeriesRepository extends DocumentRepository
      */
     public function findByTitleWithLocaleQueryBuilder($title = '', $locale = 'en', $sort = [], $limit = 0, $page = 0)
     {
-        $qb = $this->createQueryBuilder()->field('title.'.$locale)->equals(new \MongoRegex(sprintf('/%s/i', $title)));
+        $qb = $this->createQueryBuilder()->field('title.'.$locale)->equals(new Regex(sprintf('/%s/i', $title)));
 
         return $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
     }
