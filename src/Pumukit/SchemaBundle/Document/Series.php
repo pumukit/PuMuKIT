@@ -84,18 +84,18 @@ class Series
     private $sorting = self::SORT_MANUAL;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="SeriesType", inversedBy="series", storeAs="id", cascade={"persist"})
+     * @MongoDB\ReferenceOne(targetDocument=SeriesType::class, inversedBy="series", storeAs="id", cascade={"persist"})
      */
     private $series_type;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="SeriesStyle", inversedBy="series", storeAs="id", cascade={"persist"})
+     * @MongoDB\ReferenceOne(targetDocument=SeriesStyle::class, inversedBy="series", storeAs="id", cascade={"persist"})
      */
     private $series_style;
 
     /**
      * @var Playlist
-     * @MongoDB\EmbedOne(targetDocument="Playlist")
+     * @MongoDB\EmbedOne(targetDocument=Playlist::class)
      * @Serializer\Exclude
      */
     private $playlist;

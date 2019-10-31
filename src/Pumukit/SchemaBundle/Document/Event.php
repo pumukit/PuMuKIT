@@ -21,7 +21,7 @@ class Event
     /**
      * @var Live
      *
-     * @MongoDB\ReferenceOne(targetDocument="Live", cascade={"persist"})
+     * @MongoDB\ReferenceOne(targetDocument=Live::class, cascade={"persist"})
      */
     private $live;
 
@@ -77,7 +77,7 @@ class Event
     /**
      * @var Pic|null
      *
-     * @MongoDB\EmbedOne(targetDocument="Pumukit\SchemaBundle\Document\Pic")
+     * @MongoDB\EmbedOne(targetDocument=Pic::class)
      */
     private $pic;
 

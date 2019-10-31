@@ -27,7 +27,7 @@ trait Material
 
     /**
      * @var Collection
-     * @MongoDB\EmbedMany(targetDocument="Material")
+     * @MongoDB\EmbedMany(targetDocument=Material::class)
      */
     private $materials;
 
