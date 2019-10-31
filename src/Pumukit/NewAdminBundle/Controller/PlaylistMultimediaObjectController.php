@@ -2,6 +2,10 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use MongoDB\BSON\ObjectId;
+use Pagerfanta\Adapter\DoctrineCollectionAdapter;
+use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
+use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Series;
@@ -456,7 +460,7 @@ class PlaylistMultimediaObjectController extends Controller
         $people = [];
         if ((null !== $person) && (null !== ($roleCode = $this->get('pumukitschema.person')->getPersonalScopeRoleCode()))) {
             $people['$elemMatch'] = [];
-            $people['$elemMatch']['people._id'] = new \MongoId($person->getId());
+            $people['$elemMatch']['people._id'] = new ObjectId($person->getId());
             $people['$elemMatch']['cod'] = $roleCode;
         }
         $groups = [];

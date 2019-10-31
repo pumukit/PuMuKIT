@@ -4,6 +4,7 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use MongoDB\BSON\UTCDateTime;
 use MongoDB\BSON\Regex;
+use MongoDB\BSON\ObjectId;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\NewAdminBundle\Form\Type\EmbeddedEventSessionType;
@@ -54,7 +55,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
         $aRoles = $dm->getRepository(Role::class)->findAll();
         $aPubChannel = $dm->getRepository(Tag::class)->findOneBy(['cod' => 'PUBCHANNELS']);
         $aChannels = $dm->getRepository(Tag::class)->findBy(
-            ['parent.$id' => new \MongoId($aPubChannel->getId())]
+            ['parent.$id' => new ObjectId($aPubChannel->getId())]
         );
 
         $statusPub = [
@@ -100,7 +101,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
             $createSeries = true;
         } else {
             $series = $dm->getRepository(Series::class)->findOneBy(
-                ['_id' => new \MongoId($series)]
+                ['_id' => new ObjectId($series)]
             );
         }
 
@@ -186,7 +187,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
             $session->set('admin/live/event/dataForm', $data);
             if (!empty($data['name'])) {
                 if (preg_match($this->regex, $data['name'])) {
-                    $criteria['_id'] = new \MongoId($data['name']);
+                    $criteria['_id'] = new ObjectId($data['name']);
                 } else {
                     $criteria['embeddedEvent.name.'.$request->getLocale()] = new Regex('/'.$data['name'], 'i');
                 }
@@ -365,7 +366,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
         $data = $request->request->get('events_checkbox');
         foreach ($data as $multimediaObjectId) {
             $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(
-                ['_id' => new \MongoId($multimediaObjectId)]
+                ['_id' => new ObjectId($multimediaObjectId)]
             );
             $this->deleteEvent($multimediaObject);
         }
@@ -452,7 +453,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
 
                 if (isset($data['live'])) {
                     $live = $dm->getRepository(Live::class)->findOneBy(
-                        ['_id' => new \MongoId($data['live'])]
+                        ['_id' => new ObjectId($data['live'])]
                     );
                     $event->setLive($live);
                 }
@@ -634,7 +635,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
 
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new \MongoId($id)]);
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($id)]);
 
         return ['multimediaObject' => $multimediaObject];
     }
@@ -652,7 +653,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
 
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new \MongoId($multimediaObject)]);
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObject)]);
         foreach ($multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession() as $session) {
             if ($session->getId() == $session_id) {
                 $multimediaObject->getEmbeddedEvent()->removeEmbeddedEventSession($session);
@@ -679,7 +680,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
 
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new \MongoId($multimediaObject)]);
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObject)]);
         foreach ($multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession() as $session) {
             if ($session->getId() == $session_id) {
                 $newSession = new EmbeddedEventSession();
@@ -722,7 +723,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
 
         $form = $this->createForm(EmbeddedEventSessionType::class, null, ['translator' => $translator, 'locale' => $locale]);
 
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new \MongoId($multimediaObject)]);
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObject)]);
 
         if (!$session_id) {
             return ['form' => $form->createView(), 'multimediaObject' => $multimediaObject];
@@ -810,7 +811,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
         if (isset($multimediaObject)) {
-            $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new \MongoId($multimediaObject)]);
+            $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObject)]);
 
             return ['multimediaObject' => $multimediaObject];
         }
@@ -831,7 +832,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
         $series = $request->request->get('seriesSuggest');
         if ($series) {
             $dm = $this->container->get('doctrine_mongodb')->getManager();
-            $series = $dm->getRepository(Series::class)->findOneBy(['_id' => new \MongoId($series)]);
+            $series = $dm->getRepository(Series::class)->findOneBy(['_id' => new ObjectId($series)]);
             if ($series) {
                 $multimediaObject->setSeries($series);
                 $dm->flush();
@@ -967,7 +968,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
         $aggregate = $dm->getDocumentCollection(MultimediaObject::class);
         $user = $this->getUser();
         $pipeline = [];
-        $pipeline[] = ['$match' => ['series' => new \MongoId($multimediaObject->getSeries()->getId())]];
+        $pipeline[] = ['$match' => ['series' => new ObjectId($multimediaObject->getSeries()->getId())]];
         $ownerKey = $this->container->getParameter('pumukitschema.personal_scope_role_code');
         if ($user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
             $pipeline[] = ['$match' => ['people.people.email' => ['$ne' => $user->getEmail()]]];

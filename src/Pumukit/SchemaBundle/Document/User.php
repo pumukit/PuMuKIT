@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use FOS\UserBundle\Model\GroupInterface;
 use FOS\UserBundle\Model\User as BaseUser;
+use MongoDB\BSON\ObjectId;
 
 /**
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\UserRepository")
@@ -188,7 +189,7 @@ class User extends BaseUser
             return array_merge(
                 array_map(
                     static function ($g) {
-                        return new \MongoId($g->getId());
+                        return new ObjectId($g->getId());
                     },
                     $this->groups->unwrap()->toArray()
                 ),
@@ -198,7 +199,7 @@ class User extends BaseUser
 
         return array_map(
             static function ($g) {
-                return new \MongoId($g->getId());
+                return new ObjectId($g->getId());
             },
             $this->groups->toArray()
         );

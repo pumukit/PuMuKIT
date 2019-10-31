@@ -39,7 +39,8 @@
         "ext-json": "*",
         "ext-fileinfo": "*",
         "ext-sysvsem": "*",
-        "ext-gd": "*"
+        "ext-gd": "*",
+        "ext-mongodb": "*"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

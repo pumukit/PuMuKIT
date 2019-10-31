@@ -3,6 +3,7 @@
 namespace Pumukit\NewAdminBundle\Twig;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\ObjectId;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
@@ -410,7 +411,7 @@ class PumukitAdminExtension extends AbstractExtension
 
     public function getDateFromMongoId(MultimediaObject $multimediaObject)
     {
-        $id = new \MongoId($multimediaObject->getId());
+        $id = new ObjectId($multimediaObject->getId());
 
         return $id->getTimestamp();
     }
@@ -490,7 +491,7 @@ class PumukitAdminExtension extends AbstractExtension
 
         $seriesColl = $this->dm->getDocumentCollection(MultimediaObject::class);
         $aggrPipe = [
-            ['$match' => ['series' => new \MongoId($series->getId())]],
+            ['$match' => ['series' => new ObjectId($series->getId())]],
             ['$group' => ['_id' => '$status',
                 'count' => ['$sum' => 1], ]],
         ];
@@ -524,7 +525,7 @@ class PumukitAdminExtension extends AbstractExtension
             return $this->countMmobjsWithTag[$series->getId()][$tagCod];
         }
         $repoSeries = $this->dm->getRepository(MultimediaObject::class);
-        $qb = $repoSeries->createStandardQueryBuilder()->field('series')->equals(new \MongoId($series->getId()))->field('tags.cod')->equals('PUDENEW');
+        $qb = $repoSeries->createStandardQueryBuilder()->field('series')->equals(new ObjectId($series->getId()))->field('tags.cod')->equals('PUDENEW');
         $count = $qb->count()->getQuery()->execute();
 
         $this->countMmobjsWithTag[$series->getId()][$tagCod] = $count;

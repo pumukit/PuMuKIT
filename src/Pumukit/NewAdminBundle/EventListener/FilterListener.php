@@ -3,6 +3,7 @@
 namespace Pumukit\NewAdminBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\ObjectId;
 use Pumukit\NewAdminBundle\Controller\NewAdminControllerInterface;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Person;
@@ -95,7 +96,7 @@ class FilterListener
         $people = [];
         if ((null !== $person) && (null !== ($roleCode = $this->personService->getPersonalScopeRoleCode()))) {
             $people['$elemMatch'] = [];
-            $people['$elemMatch']['people._id'] = new \MongoId($person->getId());
+            $people['$elemMatch']['people._id'] = new ObjectId($person->getId());
             $people['$elemMatch']['cod'] = $roleCode;
         }
 

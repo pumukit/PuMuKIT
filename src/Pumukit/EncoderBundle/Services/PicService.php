@@ -3,6 +3,7 @@
 namespace Pumukit\EncoderBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Series;
@@ -66,7 +67,7 @@ class PicService
 
         if ($id) {
             $match = [
-                '$match' => ['_id' => new \MongoId($id)],
+                '$match' => ['_id' => new ObjectId($id)],
             ];
 
             array_push($pipeline, $match);

@@ -2,6 +2,7 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\Live;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -134,7 +135,7 @@ class LiveController extends AdminController implements NewAdminControllerInterf
 
         $dm = $this->container->get('doctrine_mongodb')->getManager();
 
-        $liveEvents = $dm->getRepository(MultimediaObject::class)->findOneBy(['embeddedEvent.live.$id' => new \MongoId($resourceId)]);
+        $liveEvents = $dm->getRepository(MultimediaObject::class)->findOneBy(['embeddedEvent.live.$id' => new ObjectId($resourceId)]);
         if ($liveEvents) {
             return new JsonResponse(['error']);
         }
@@ -195,7 +196,7 @@ class LiveController extends AdminController implements NewAdminControllerInterf
         $dm = $this->container->get('doctrine_mongodb')->getManager();
 
         foreach ($ids as $id) {
-            $liveEvents = $dm->getRepository(MultimediaObject::class)->findOneBy(['embeddedEvent.live.$id' => new \MongoId($id)]);
+            $liveEvents = $dm->getRepository(MultimediaObject::class)->findOneBy(['embeddedEvent.live.$id' => new ObjectId($id)]);
             if ($liveEvents) {
                 $emptyChannels = false;
                 $channelId = $id;

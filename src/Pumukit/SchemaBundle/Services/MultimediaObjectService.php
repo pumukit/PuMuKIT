@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -210,7 +211,7 @@ class MultimediaObjectService
      */
     public function removeFromAllPlaylists(MultimediaObject $multimediaObject)
     {
-        $qb = $this->seriesRepo->createQueryBuilder()->field('playlist.multimedia_objects')->equals(new \MongoId($multimediaObject->getId()));
+        $qb = $this->seriesRepo->createQueryBuilder()->field('playlist.multimedia_objects')->equals(new ObjectId($multimediaObject->getId()));
 
         $playlists = $qb->getQuery()->execute();
         foreach ($playlists as $playlist) {

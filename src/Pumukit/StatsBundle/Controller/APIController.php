@@ -2,6 +2,7 @@
 
 namespace Pumukit\StatsBundle\Controller;
 
+use MongoDB\BSON\ObjectId;
 use Pumukit\NewAdminBundle\Controller\NewAdminControllerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -149,7 +150,7 @@ class APIController extends Controller implements NewAdminControllerInterface
         $options['sort'] = $sort;
         $options['group_by'] = $groupBy;
 
-        [$views, $total] = $viewsService->getTotalViewedGroupedByMmobj(new \MongoId($mmobjId), $options);
+        [$views, $total] = $viewsService->getTotalViewedGroupedByMmobj(new ObjectId($mmobjId), $options);
 
         $views = [
             'limit' => $limit,
@@ -189,7 +190,7 @@ class APIController extends Controller implements NewAdminControllerInterface
         $options['sort'] = $sort;
         $options['group_by'] = $groupBy;
 
-        [$views, $total] = $viewsService->getTotalViewedGroupedBySeries(new \MongoId($seriesId), $options);
+        [$views, $total] = $viewsService->getTotalViewedGroupedBySeries(new ObjectId($seriesId), $options);
 
         $views = [
             'limit' => $limit,
