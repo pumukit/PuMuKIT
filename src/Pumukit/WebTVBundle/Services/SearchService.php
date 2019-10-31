@@ -198,7 +198,7 @@ class SearchService
 
         if ((false !== strpos($searchFound, '*')) && (false === strpos($searchFound, ' '))) {
             $searchFound = str_replace('*', '.*', $searchFound);
-            $mRegex = new Regex("/{$searchFound}",'i');
+            $mRegex = new Regex("/{$searchFound}", 'i');
             $queryBuilder->addOr($queryBuilder->expr()->field('title.'.$locale)->equals($mRegex));
             $queryBuilder->addOr($queryBuilder->expr()->field('people.people.name')->equals($mRegex));
         } elseif ('' != $searchFound) {

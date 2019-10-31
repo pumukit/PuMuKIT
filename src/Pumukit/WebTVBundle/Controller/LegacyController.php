@@ -159,7 +159,7 @@ class LegacyController extends Controller implements WebTVControllerInterface
         $mmobjRepo = $dm->getRepository(MultimediaObject::class);
 
         $multimediaObject = $mmobjRepo->createQueryBuilder()
-            ->field('tracks.tags')->equals(new Regex('/\\bpumukit1id:'.$pumukit1id.'\\b','i'))
+            ->field('tracks.tags')->equals(new Regex('/\\bpumukit1id:'.$pumukit1id.'\\b', 'i'))
             ->getQuery()->getSingleResult();
 
         if (!$multimediaObject) {

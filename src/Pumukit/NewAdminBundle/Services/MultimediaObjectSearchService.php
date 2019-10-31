@@ -139,7 +139,7 @@ class MultimediaObjectSearchService
         if ((false !== strpos($text, '*')) && (false === strpos($text, ' '))) {
             $text = str_replace('*', '.*', $text);
             $text = SearchUtils::scapeTildes($text);
-            $mRegex = new Regex("/{$text}",'i');
+            $mRegex = new Regex("/{$text}", 'i');
             $queryBuilder->addOr($queryBuilder->expr()->field('title.'.$locale)->equals($mRegex));
             $queryBuilder->addOr($queryBuilder->expr()->field('people.people.name')->equals($mRegex));
         } else {
@@ -180,7 +180,7 @@ class MultimediaObjectSearchService
         if ((false !== strpos($text, '*')) && (false === strpos($text, ' '))) {
             $text = str_replace('*', '.*', $text);
             $text = SearchUtils::scapeTildes($text);
-            $mRegex = new Regex("/{$text}",'i');
+            $mRegex = new Regex("/{$text}", 'i');
             $base[] = [('title.'.$locale) => $mRegex];
             $base[] = ['people.people.name' => $mRegex];
         } else {

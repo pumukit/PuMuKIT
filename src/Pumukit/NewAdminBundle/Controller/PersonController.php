@@ -643,25 +643,25 @@ class PersonController extends AdminController implements NewAdminControllerInte
         if (array_key_exists('name', $criteria) && array_key_exists('letter', $criteria)) {
             if (('' !== $criteria['name']) && ('' !== $criteria['letter'])) {
                 $more = strtoupper($criteria['name'][0]) == strtoupper($criteria['letter']) ? '|^'.$criteria['name'].'.*' : '';
-                $new_criteria['name'] = new Regex('/^'.$criteria['letter'].'.*'.$criteria['name'].'.*'.$more,'i');
+                $new_criteria['name'] = new Regex('/^'.$criteria['letter'].'.*'.$criteria['name'].'.*'.$more, 'i');
             } elseif ('' !== $criteria['name']) {
-                $new_criteria['name'] = new Regex('/'.$criteria['name'],'i');
+                $new_criteria['name'] = new Regex('/'.$criteria['name'], 'i');
             } elseif ('' !== $criteria['letter']) {
-                $new_criteria['name'] = new Regex('/^'.$criteria['letter'],'i');
+                $new_criteria['name'] = new Regex('/^'.$criteria['letter'], 'i');
             }
         } elseif (array_key_exists('name', $criteria)) {
             if ('' !== $criteria['name']) {
-                $new_criteria['name'] = new Regex('/'.$criteria['name'],'i');
+                $new_criteria['name'] = new Regex('/'.$criteria['name'], 'i');
             }
         } elseif (array_key_exists('letter', $criteria)) {
             if ('' !== $criteria['letter']) {
-                $new_criteria['name'] = new Regex('/^'.$criteria['letter'],'i');
+                $new_criteria['name'] = new Regex('/^'.$criteria['letter'], 'i');
             }
         }
 
         if (array_key_exists('post', $criteria)) {
             if ('' !== $criteria['post']) {
-                $new_criteria['post.'.$locale] = new Regex('/'.$criteria['post'],'i');
+                $new_criteria['post.'.$locale] = new Regex('/'.$criteria['post'], 'i');
             }
         }
 
