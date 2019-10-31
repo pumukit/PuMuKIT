@@ -1198,7 +1198,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(1, $this->repo->findWithTag($tag2, $sort, $limit, $page)->count(true));
 
         //FIND WITH GENERAL TAG
-        $this->assertEquals(6, count($this->repo->findWithGeneralTag($tag1)));
+        $this->assertEquals(7, count($this->repo->findWithGeneralTag($tag1)));
         $limit = 3;
         $this->assertEquals(3, $this->repo->findWithGeneralTag($tag1, $sort, $limit)->count(true));
         $page = 1;
@@ -1206,7 +1206,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(2, count($this->repo->findWithGeneralTag($tag2)));
         $this->assertEquals(0, count($this->repo->findWithGeneralTag($tag3)));
         //FIND WITH GENERAL TAG (SORT)
-        $arrayAsc = [$mm31, $mm33, $mm34];
+        $arrayAsc = [$mm23, $mm31, $mm33];
         $this->assertEquals($arrayAsc, array_values($this->repo->findWithGeneralTag($tag1, $sortAsc, $limit, $page)->toArray()));
         $arrayDesc = [$mm23, $mm22, $mm12];
         $this->assertEquals($arrayDesc, array_values($this->repo->findWithGeneralTag($tag1, $sortDesc, $limit, $page)->toArray()));
