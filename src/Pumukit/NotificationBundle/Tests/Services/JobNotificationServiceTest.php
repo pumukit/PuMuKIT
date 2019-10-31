@@ -16,7 +16,7 @@ class JobNotificationServiceTest extends WebTestCase
 {
     private $dm;
     private $repo;
-    private $container;
+    protected static $container;
     private $jobNotificationService;
 
     public function setUp()

@@ -16,7 +16,7 @@ class LegacyEventPicService
     private $targetUrl;
     private $forceDeleteOnDisk;
 
-    public function __construct(DocumentManager $documentManager, $targetPath, $targetUrl, $forceDeleteOnDisk = true)
+    public function __construct(DocumentManager $documentManager, string $targetPath, string $targetUrl, bool $forceDeleteOnDisk = true)
     {
         $this->dm = $documentManager;
         $this->targetPath = realpath($targetPath);

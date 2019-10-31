@@ -13,13 +13,5 @@
             <argument type="service" id="doctrine_mongodb.odm.document_manager" />
         </service>
 
-        <service id="pumukit_live.twig_extension" class="Pumukit\BaseLivePlayerBundle\Twig\LiveTwigExtension">
-            <argument type="service" id="doctrine_mongodb.odm.document_manager" />
-            <argument type="service" id="pumukit_live.live" />
-            <argument type="service" id="pumukitschema.eventsession" />
-            <argument>%pumukit_new_admin.advance_live_event_create_default_pic%</argument>
-            <tag name="twig.extension"/>
-        </service>
-
     </services>
 </container>

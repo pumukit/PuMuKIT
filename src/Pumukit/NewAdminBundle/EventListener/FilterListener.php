@@ -9,7 +9,7 @@ use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\PersonService;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class FilterListener
 {
@@ -18,7 +18,7 @@ class FilterListener
     private $securityContext;
     private $addUserAsPerson;
 
-    public function __construct(DocumentManager $documentManager, PersonService $personService, TokenStorage $securityContext, $addUserAsPerson = true)
+    public function __construct(DocumentManager $documentManager, PersonService $personService, TokenStorageInterface $securityContext, $addUserAsPerson = true)
     {
         $this->dm = $documentManager;
         $this->personService = $personService;

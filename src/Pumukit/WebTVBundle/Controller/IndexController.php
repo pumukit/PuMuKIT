@@ -3,6 +3,7 @@
 namespace Pumukit\WebTVBundle\Controller;
 
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
+use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,16 +13,25 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class IndexController extends AbstractController implements WebTVControllerInterface
 {
+    private $breadcrumbsService;
+    private $showStats;
+
+    public function __construct(BreadcrumbsService $breadcrumbsService, bool $showStats)
+    {
+        $this->breadcrumbsService  = $breadcrumbsService;
+        $this->showStats = $showStats;
+    }
+
     /**
      * @Route("/", name="pumukit_webtv_index_index")
      * @Template("PumukitWebTVBundle:Index:template.html.twig")
      */
     public function indexAction()
     {
-        $this->get('pumukit_web_tv.breadcrumbs')->reset();
+        $this->breadcrumbsService->reset();
 
         return [
-            'menu_stats' => $this->container->getParameter('menu.show_stats'),
+            'menu_stats' => $this->showStats,
         ];
     }
 }

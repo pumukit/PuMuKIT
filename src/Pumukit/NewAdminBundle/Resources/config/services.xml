@@ -49,17 +49,6 @@
             <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" priority="255"/>
         </service>
 
-        <service id="pumukitnewadmin.twig_extension" class="Pumukit\NewAdminBundle\Twig\PumukitAdminExtension">
-            <tag name="twig.extension"/>
-            <argument type="service" id="pumukitencoder.profile"/>
-            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
-            <argument type="service" id="translator"/>
-            <argument type="service" id="router"/>
-            <argument type="service" id="pumukitschema.multimedia_object"/>
-            <argument type="service" id="pumukitschema.special_translation"/>
-            <argument type="service" id="pumukitschema.eventsession"/>
-        </service>
-
         <service id="pumukitnewadmin.series_search" class="Pumukit\NewAdminBundle\Services\SeriesSearchService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
@@ -96,19 +85,6 @@
         <service id="pumukitnewadmin.mmobjlistbuttons" class="Pumukit\NewAdminBundle\Menu\ItemsList"/>
         <service id="pumukitnewadmin.mmobjmenu" class="Pumukit\NewAdminBundle\Menu\ItemsList"/>
         <service id="pumukitnewadmin.seriesmenu" class="Pumukit\NewAdminBundle\Menu\ItemsList"/>
-
-        <!-- This extension is used to get the list of buttons(items) added through the pumukitnewadmin.mmobjlistbuttonsitem tag -->
-        <service id="pumukitnewadmin.twig_mmobjbuttons_extension" class="Pumukit\NewAdminBundle\Twig\MultimediaObjectButtonsExtension">
-            <argument type="service" id="pumukitnewadmin.mmobjlistbuttons"/>
-            <argument type="service" id="pumukitnewadmin.mmobjmenu"/>
-            <argument type="service" id="pumukitnewadmin.seriesmenu"/>
-            <tag name="twig.extension"/>
-        </service>
-
-        <service id="pumukitnewadmin.catalogue_extension" class="Pumukit\NewAdminBundle\Twig\CatalogueExtension">
-            <tag name="twig.extension" />
-            <argument type="service" id="pumukitnewadmin.tag_catalogue"/>
-        </service>
 
         <service id="pumukitnewadmin.translatecontroller" class="Pumukit\NewAdminBundle\Controller\TranslateController"/>
 

@@ -30,6 +30,11 @@ parameters:
   pumukit.tmp:             "%env(PUMUKIT_TMP)%"
   pumukit.delete_on_disk:  "%env(bool:PUMUKIT_DELETE_ON_DISK)%"
 
+  pumukit.naked_backoffice_domain: 'localhost-naked'
+  pumukit.naked_backoffice_background: ''
+  pumukit.naked_backoffice_color: ''
+  pumukit.naked_custom_css_url: ''
+
 services:
   _defaults:
     autowire: true      # Automatically injects dependencies in your services.
@@ -46,7 +51,7 @@ services:
 
   Pumukit\:
     resource: '../src/Pumukit/'
-    exclude: '../src/Pumukit/*/{Repository,Event}'
+    exclude: '../src/Pumukit/*/{Repository,Document,Event,Security,EventListener,Utils}'
 
   Pumukit\BaseLivePlayerBundle\Twig\LiveTwigExtension:
     arguments:
@@ -125,6 +130,13 @@ services:
       - '@doctrine_mongodb.odm.document_manager'
       - '%pumukitencode.target_default_profiles%'
 
+  Pumukit\NewAdminBundle\EventListener\NakedBackofficeListener:
+    arguments:
+        $domain: '%pumukit.naked_backoffice_domain%'
+        $background: '%pumukit.naked_backoffice_background%'
+        $color: '%pumukit.naked_backoffice_color%'
+        $customCssURL: '%pumukit.naked_custom_css_url%'
+
   Pumukit\NewAdminBundle\Services\TagCatalogueService:
     arguments:
       - '@doctrine_mongodb.odm.document_manager'
@@ -133,11 +145,91 @@ services:
       - '%pumukit_new_admin.base_catalogue_tag%'
       - '%pumukit.locales%'
 
+  Pumukit\NotificationBundle\Services\JobNotificationService:
+    arguments:
+      $enable: false
+      $environment: ''
+      $template: ''
+      $subjectSuccess: ''
+      $subjectFails: ''
+      $subjectSuccessTrans: ''
+      $subjectFailsTrans: ''
+
+  Pumukit\NotificationBundle\Services\SenderService:
+    arguments:
+      $mailer: ''
+      $enable: ''
+      $senderEmail: ''
+      $senderName: ''
+      $enableMultiLang: ''
+      $locales: ''
+      $subjectSuccessTrans: ''
+      $subjectFailsTrans: ''
+      $adminEmail: ''
+      $notificateErrorsToAdmin: ''
+      $platformName: ''
+      $environment: ''
+
+  Pumukit\SchemaBundle\Security\RoleHierarchy:
+    arguments:
+      $hierarchy: ''
+
   Pumukit\SchemaBundle\Services\EmbeddedEventSessionService:
     arguments:
       - '@doctrine_mongodb.odm.document_manager'
       - '%pumukitschema.event_default_poster%'
       - '%pumukit_new_admin.advance_live_event_create_default_pic%'
+
+  Pumukit\SchemaBundle\Services\LegacyEventPicService:
+    arguments:
+      $targetPath: '%pumukit.uploads_dir%/pic'
+      $targetUrl: '%pumukit.uploads_url%/pic'
+      $forceDeleteOnDisk: '%pumukit.delete_on_disk%'
+
+  Pumukit\SchemaBundle\Services\MaterialService:
+    arguments:
+      $targetPath: '%pumukit.uploads_dir%/pic'
+      $targetUrl: '%pumukit.uploads_url%/pic'
+      $forceDeleteOnDisk: '%pumukit.delete_on_disk%'
+
+  Pumukit\SchemaBundle\Services\MultimediaObjectPicService:
+    arguments:
+      $targetPath: '%pumukit.uploads_dir%/pic'
+      $targetUrl: '%pumukit.uploads_url%/pic'
+      $forceDeleteOnDisk: '%pumukit.delete_on_disk%'
+
+  Pumukit\SchemaBundle\Services\SeriesPicService:
+    arguments:
+      $locales: '%pumukit.locales%'
+      $targetPath: '%pumukit.uploads_dir%/pic'
+      $targetUrl: '%pumukit.uploads_url%/pic'
+      $forceDeleteOnDisk: '%pumukit.delete_on_disk%'
+
+  Pumukit\WebTVBundle\Services\BreadcrumbsService:
+    alias: pumukit_web_tv.breadcrumbs
+
+  Pumukit\WebTVBundle\Services\CategoriesService:
+    arguments:
+      $parentCod: '%categories_tag_cod%'
+      $listGeneralParam: '%categories.list_general_tags%'
+
+  Pumukit\WebTVBundle\Services\LinkService:
+    arguments:
+      $linkTagToSearch: '%pumukit_web_tv.linktagtosearch%'
+
+  Pumukit\WebTVBundle\Services\ListService:
+    arguments:
+      $advanceLiveEvents: '%pumukit_new_admin.advance_live_event%'
+      $wallTag: '%wall_block.wall_tag%'
+
+  Pumukit\WebTVBundle\Services\MenuService:
+    arguments:
+      $advanceEvents: '%pumukit_new_admin.advance_live_event%'
+
+  Pumukit\WebTVBundle\Services\SearchService:
+    arguments:
+      $parentTagCod: '%search.parent_tag.cod%'
+      $parentTagCodOptional: '%search.parent_tag_2.cod%'
 
   Pumukit\WebTVBundle\Twig\PumukitExtension:
     arguments:
@@ -148,6 +240,22 @@ services:
       - '@pumukitschema.pic'
       - '@pumukit_web_tv.link_service'
       - '@pumukitschema.mmsduration'
+
+  Pumukit\WizardBundle\DependencyInjection\Configuration:
+    arguments:
+      $profiles: ''
+
+  Pumukit\WizardBundle\Services\LicenseService:
+    arguments:
+      $showLicense: '%pumukit_wizard.show_license%'
+      $licenseDir: '%pumukit_wizard.license_dir%'
+      $locales: '%pumukit.locales%'
+
+  Pumukit\WizardBundle\Services\WizardService:
+    arguments:
+      $basePath: '%kernel.root_dir%/../'
+      $locales: '%pumukit.locales%'
+      $inboxDepth: '%pumukit.inbox_depth%'
 
 
 
@@ -161,3 +269,6 @@ services:
 #      - { name: 'console.command', command: 'pumukit:initialize' }
 
 
+  Pumukit\WebTVBundle\Controller\IndexController:
+    arguments:
+      $showStats: '%menu.show_stats%'

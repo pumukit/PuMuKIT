@@ -12,17 +12,6 @@
             <argument >%pumukit_web_tv.linktagtosearch%</argument>
         </service>
 
-        <service id="pumukit_web_tv.twig_extension" class="Pumukit\WebTVBundle\Twig\PumukitExtension">
-          <argument type="service" id="doctrine_mongodb.odm.document_manager" />
-          <argument type="service" id="router.request_context" on-invalid="ignore" />
-          <argument>%pumukit_web_tv.default_pic%</argument>
-          <argument type="service" id="pumukitschema.caption" />
-          <argument type="service" id="pumukitschema.pic" />
-          <argument type="service" id="pumukit_web_tv.link_service" />
-          <argument type="service" id="pumukitschema.mmsduration" />
-          <tag name="twig.extension" />
-        </service>
-
         <service id="pumukit_web_tv.breadcrumbs" class="Pumukit\WebTVBundle\Services\BreadcrumbsService">
           <argument type="service" id="router" />
           <argument type="service" id="session" />
@@ -36,15 +25,6 @@
         <service id="pumukit_web_tv.channels" class="Pumukit\WebTVBundle\Services\ChannelService">
           <argument type="service" id="doctrine_mongodb.odm.document_manager" />
           <argument type="service" id="translator" />
-        </service>
-
-        <service id="twig.extension.mongo_date" class="Pumukit\WebTVBundle\Twig\MongoDateExtension">
-            <tag name="twig.extension"/>
-        </service>
-
-        <service id="pumukit_web_tv.bootstrap_extension" class="Pumukit\WebTVBundle\Twig\BootstrapExtension">
-            <argument type="service" id="router.request_context" on-invalid="ignore" />
-            <tag name="twig.extension" />
         </service>
 
         <service id="pumukit_web_tv.menu_service" class="Pumukit\WebTVBundle\Services\MenuService">

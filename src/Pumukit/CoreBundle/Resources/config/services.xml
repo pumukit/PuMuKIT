@@ -22,11 +22,6 @@
             <tag name="kernel.event_listener" event="kernel.controller"/>
         </service>
 
-        <service id="pumukitcore.twig_extension" class="Pumukit\CoreBundle\Twig\CoreExtension">
-            <tag name="twig.extension"/>
-            <argument type="service" id="service_container"/>
-        </service>
-
         <service id="pumukitcore.listener.command_exception" class="Pumukit\CoreBundle\EventListener\ConsoleExceptionListener">
             <argument type="service" id="logger"/>
             <tag name="kernel.event_listener" event="console.exception"/>
