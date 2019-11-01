@@ -445,38 +445,32 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                 $resource = $this->updateTags($request->get('pub_channels', null), 'PUCH', $resource);
             }
 
-            if ($formPub->isSubmitted() && $formPub->isValid()) {
-                if ($changePubChannel) {
-                    $resource = $this->updateTags($request->get('pub_channels', null), 'PUCH', $resource);
-                }
-
-                if ($isPrototype) {
-                    $resource->setStatus(MultimediaObject::STATUS_PROTOTYPE);
-                }
-
-                $event = new PublicationSubmitEvent($resource, $request);
-                $this->get('event_dispatcher')->dispatch(BackofficeEvents::PUBLICATION_SUBMIT, $event);
-
-                $resource = $this->updateTags($request->get('pub_decisions', null), 'PUDE', $resource);
-
-                $this->update($resource);
-
-                $this->dispatchUpdate($resource);
-                $this->get('pumukitschema.sorted_multimedia_object')->reorder($series);
-
-                $mms = $this->getListMultimediaObjects($series);
-                if (false === strpos($request->server->get('HTTP_REFERER'), 'mmslist')) {
-                    return $this->render(
-                        'PumukitNewAdminBundle:MultimediaObject:list.html.twig',
-                        [
-                            'series' => $series,
-                            'mms' => $mms,
-                        ]
-                    );
-                }
-
-                return $this->redirectToRoute('pumukitnewadmin_mms_listall', [], 301);
+            if ($isPrototype) {
+                $resource->setStatus(MultimediaObject::STATUS_PROTOTYPE);
             }
+
+            $event = new PublicationSubmitEvent($resource, $request);
+            $this->get('event_dispatcher')->dispatch(BackofficeEvents::PUBLICATION_SUBMIT, $event);
+
+            $resource = $this->updateTags($request->get('pub_decisions', null), 'PUDE', $resource);
+
+            $this->update($resource);
+
+            $this->dispatchUpdate($resource);
+            $this->get('pumukitschema.sorted_multimedia_object')->reorder($series);
+
+            $mms = $this->getListMultimediaObjects($series);
+            if (false === strpos($request->server->get('HTTP_REFERER'), 'mmslist')) {
+                return $this->render(
+                    'PumukitNewAdminBundle:MultimediaObject:list.html.twig',
+                    [
+                        'series' => $series,
+                        'mms' => $mms,
+                    ]
+                );
+            }
+
+            return $this->redirectToRoute('pumukitnewadmin_mms_listall', [], 301);
         }
 
         $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
