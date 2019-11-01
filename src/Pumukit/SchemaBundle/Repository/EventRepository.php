@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Repository;
 
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
+use MongoDB\BSON\UTCDateTime;
 use Pumukit\SchemaBundle\Document\Event;
 use Pumukit\SchemaBundle\Document\Live;
 
@@ -74,8 +75,8 @@ class EventRepository extends DocumentRepository
     {
         $dmColl = $this->dm->getDocumentCollection(Event::class);
 
-        $nowWithMarginBefore = new \MongoDate(strtotime(sprintf('%s minute', $marginBefore)));
-        $nowWithMarginAfter = new \MongoDate(strtotime(sprintf('-%s minute', $marginAfter)));
+        $nowWithMarginBefore = new UTCDateTime(strtotime(sprintf('%s minute', $marginBefore)));
+        $nowWithMarginAfter = new UTCDateTime(strtotime(sprintf('-%s minute', $marginAfter)));
         $pipeline = [
             ['$match' => ['display' => true]],
             ['$project' => ['date' => true, 'end' => ['$add' => ['$date', ['$multiply' => ['$duration', 60000]]]]]],

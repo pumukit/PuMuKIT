@@ -2,6 +2,9 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use MongoDB\BSON\UTCDateTime;
+use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Pagerfanta;
 use Pumukit\NewAdminBundle\Form\Type\EmbeddedEventSessionType;
 use Pumukit\NewAdminBundle\Form\Type\EventsType;
 use Pumukit\NewAdminBundle\Form\Type\SeriesType;
@@ -159,7 +162,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
 
         $criteria['type'] = MultimediaObject::TYPE_LIVE;
         if ($type) {
-            $date = new \MongoDate();
+            $date = new UTCDateTime();
             if ('now' === $type) {
                 $criteria['embeddedEvent.embeddedEventSession'] = ['$elemMatch' => [
                     'start' => ['$lte' => $date],
@@ -168,8 +171,8 @@ class EventsController extends Controller implements NewAdminControllerInterface
             } elseif ('today' === $type) {
                 $dateStart = new \DateTime(date('Y-m-d'));
                 $dateEnds = new \DateTime(date('Y-m-d 23:59:59'));
-                $dateStart = new \MongoDate($dateStart->getTimestamp());
-                $dateEnds = new \MongoDate($dateEnds->getTimestamp());
+                $dateStart = new UTCDateTime($dateStart->getTimestamp());
+                $dateEnds = new UTCDateTime($dateEnds->getTimestamp());
                 $criteria['embeddedEvent.embeddedEventSession'] = ['$elemMatch' => [
                     'start' => ['$gte' => $dateStart],
                     'ends' => ['$lte' => $dateEnds],
@@ -193,19 +196,19 @@ class EventsController extends Controller implements NewAdminControllerInterface
 
                 $criteria['embeddedEvent.embeddedEventSession'] = ['$elemMatch' => [
                     'start' => [
-                        '$gte' => new \MongoDate($start),
+                        '$gte' => new UTCDateTime($start),
                     ],
                     'ends' => [
-                        '$lte' => new \MongoDate($ends),
+                        '$lte' => new UTCDateTime($ends),
                     ], ]];
             } else {
                 if ($data['date']['from']) {
                     $date = strtotime($data['date']['from']);
-                    $criteria['embeddedEvent.embeddedEventSession.start'] = ['$gte' => new \MongoDate($date)];
+                    $criteria['embeddedEvent.embeddedEventSession.start'] = ['$gte' => new UTCDateTime($date)];
                 }
                 if ($data['date']['to']) {
                     $date = strtotime($data['date']['to']);
-                    $criteria['embeddedEvent.embeddedEventSession.ends'] = ['$lte' => new \MongoDate($date)];
+                    $criteria['embeddedEvent.embeddedEventSession.ends'] = ['$lte' => new UTCDateTime($date)];
                 }
             }
         } elseif ($session->has('admin/live/event/criteria')) {

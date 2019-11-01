@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\UTCDateTime;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 
@@ -150,8 +151,9 @@ class StatsService
         if (!$toDate) {
             $toDate = new \DateTime();
         }
-        $fromMongoDate = new \MongoDate($fromDate->format('U'), $fromDate->format('u'));
-        $toMongoDate = new \MongoDate($toDate->format('U'), $toDate->format('u'));
+
+        $fromMongoDate = new UTCDateTime($fromDate->format('U'));
+        $toMongoDate = new UTCDateTime($toDate->format('U'));
 
         $pipeline[] = ['$match' => array_merge(
             $matchExtra,
