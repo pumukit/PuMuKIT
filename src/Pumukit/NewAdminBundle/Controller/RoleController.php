@@ -144,4 +144,17 @@ class RoleController extends SortableAdminController implements NewAdminControll
     {
         return new Role();
     }
+
+    public function exportRolesAction(): Response
+    {
+        $roleService = $this->get('pumukit_schema.role');
+
+        return new Response(
+            $roleService->exportAllToCsv(),
+            Response::HTTP_OK,
+            [
+                'Content-Disposition' => 'attachment; filename="roles_i18n.csv"',
+            ]
+        );
+    }
 }

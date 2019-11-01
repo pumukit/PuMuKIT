@@ -265,6 +265,19 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         return $resources;
     }
 
+    public function exportPermissionProfilesAction(): Response
+    {
+        $permissionProfileService = $this->get('pumukitschema.permissionprofile');
+
+        return new Response(
+            $permissionProfileService->exportAllToCsv(),
+            Response::HTTP_OK,
+            [
+                'Content-Disposition' => 'attachment; filename="permission_profiles.csv"',
+            ]
+        );
+    }
+
     /**
      * Returns an array with all permissions and there newly set (if any) permissions and scope.
      *
