@@ -137,11 +137,10 @@ pumukitnewadmin_mms_getchildrentag:
         _controller: PumukitNewAdminBundle:MultimediaObject:getChildrenTag
 
 pumukitnewadmin_mms_searchtag:
-    path: /search/{search_text}
+    path: /search
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:searchTag
-        search_text:
 
 pumukitnewadmin_mms_list:
     path: /list
