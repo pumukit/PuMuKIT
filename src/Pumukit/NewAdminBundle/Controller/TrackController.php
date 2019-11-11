@@ -123,7 +123,7 @@ class TrackController extends Controller implements NewAdminControllerInterface
         $profiles = $this->get('pumukitencoder.profile')->getProfiles();
 
         $form->handleRequest($request);
-        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() && ($request->isMethod('PUT') || $request->isMethod('POST'))) {
             try {
                 $multimediaObject = $this->get('pumukitschema.track')->updateTrackInMultimediaObject($multimediaObject, $track);
             } catch (\Exception $e) {

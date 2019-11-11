@@ -59,7 +59,7 @@ class PersonController extends AdminController implements NewAdminControllerInte
 
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
             $form->handleRequest($request);
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 try {
                     $person = $personService->savePerson($person);
                 } catch (\Exception $e) {
@@ -100,7 +100,7 @@ class PersonController extends AdminController implements NewAdminControllerInte
 
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
             $form->handleRequest($request);
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 try {
                     $person = $personService->updatePerson($person);
                 } catch (\Exception $e) {
@@ -234,7 +234,7 @@ class PersonController extends AdminController implements NewAdminControllerInte
             $personService = $this->get('pumukitschema.person');
             $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
             $form->handleRequest($request);
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 try {
                     $multimediaObject = $personService->createRelationPerson($person, $role, $multimediaObject);
                 } catch (\Exception $e) {
@@ -306,7 +306,7 @@ class PersonController extends AdminController implements NewAdminControllerInte
 
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
             $form->handleRequest($request);
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 try {
                     $person = $personService->updatePerson($person);
                 } catch (\Exception $e) {

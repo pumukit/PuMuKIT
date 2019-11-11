@@ -151,8 +151,8 @@ class SeriesController extends AdminController implements NewAdminControllerInte
         $form = $this->createForm(SeriesType::class, $resource, ['translator' => $translator, 'locale' => $locale, 'disable_PUDENEW' => $disablePudenew]);
 
         $method = $request->getMethod();
-        if (in_array($method, ['POST', 'PUT', 'PATCH']) &&
-            $form->handleRequest($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid() && in_array($method, ['POST', 'PUT', 'PATCH'])) {
             $this->update($resource);
             $this->get('pumukitschema.series_dispatcher')->dispatchUpdate($resource);
             if (Series::SORT_MANUAL !== $resource->getSorting()) {
