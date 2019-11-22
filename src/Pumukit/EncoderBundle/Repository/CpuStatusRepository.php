@@ -2,7 +2,7 @@
 
 namespace Pumukit\EncoderBundle\Repository;
 
-use Doctrine\ODM\MongoDB\DocumentRepository;
+use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 
 /**
  * CpuStatusRepository.

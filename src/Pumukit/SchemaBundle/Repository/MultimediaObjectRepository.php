@@ -2,8 +2,8 @@
 
 namespace Pumukit\SchemaBundle\Repository;
 
-use Doctrine\ODM\MongoDB\DocumentRepository;
 use Doctrine\ODM\MongoDB\Query\Builder;
+use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
