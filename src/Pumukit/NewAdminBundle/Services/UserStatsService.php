@@ -4,6 +4,7 @@ namespace Pumukit\NewAdminBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use FOS\UserBundle\Model\UserInterface;
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\User;
@@ -105,7 +106,7 @@ class UserStatsService
                     'people' => [
                         '$elemMatch' => [
                             'cod' => $code,
-                            'people._id' => new \MongoId($user->getPerson()->getId()),
+                            'people._id' => new ObjectId($user->getPerson()->getId()),
                         ],
                     ],
                 ],

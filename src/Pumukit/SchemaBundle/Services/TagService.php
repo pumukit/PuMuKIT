@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
 
@@ -225,7 +226,7 @@ class TagService
         $query = $qb
             ->update()
             ->multiple(true)
-            ->field('tags._id')->equals(new \MongoId($tag->getId()))
+            ->field('tags._id')->equals(new ObjectId($tag->getId()))
             ->field('tags.$.title')->set($tag->getI18nTitle())
             ->field('tags.$.description')->set($tag->getI18nDescription())
             ->field('tags.$.cod')->set($tag->getCod())

@@ -3,6 +3,7 @@
 namespace Pumukit\WebTVBundle\Twig;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\EmbeddedTag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -423,7 +424,7 @@ class PumukitExtension extends AbstractExtension
     public function getMMobjsFromSerie(Series $series)
     {
         $criteria = [
-            'series' => new \MongoId($series),
+            'series' => new ObjectId($series),
             'status' => MultimediaObject::STATUS_PUBLISHED,
             'tags.cod' => 'PUCHWEBTV',
             'type' => ['$ne' => MultimediaObject::TYPE_LIVE],

@@ -2,6 +2,8 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use MongoDB\BSON\ObjectId;
+use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectTemplateMetaType;
 use Pumukit\NewAdminBundle\Form\Type\SeriesType;
@@ -101,7 +103,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
         $dm = $this->get('doctrine_mongodb')->getManager();
         $translator = $this->get('translator');
 
-        $series = $dm->getRepository(Series::class)->findOneBy(['_id' => new \MongoId($id)]);
+        $series = $dm->getRepository(Series::class)->findOneBy(['_id' => new ObjectId($id)]);
         if (!$series) {
             throw new \Exception($translator->trans('No series found with ID').' '.$id);
         }

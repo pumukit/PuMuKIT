@@ -3,6 +3,7 @@
 namespace Pumukit\WebTVBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\Annotation;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
@@ -34,7 +35,7 @@ class ChapterMarkService
             ->getRepository(Annotation::class)
             ->createQueryBuilder()
             ->field('type')->equals('paella/marks')
-            ->field('multimediaObject')->equals(new \MongoId($multimediaObject->getId()))
+            ->field('multimediaObject')->equals(new ObjectId($multimediaObject->getId()))
             ->getQuery()->getSingleResult();
 
         /** @var Annotation|null */
@@ -42,7 +43,7 @@ class ChapterMarkService
             ->getRepository(Annotation::class)
             ->createQueryBuilder()
             ->field('type')->equals('paella/trimming')
-            ->field('multimediaObject')->equals(new \MongoId($multimediaObject->getId()))
+            ->field('multimediaObject')->equals(new ObjectId($multimediaObject->getId()))
             ->getQuery()->getSingleResult();
 
         $editorChapters = [];

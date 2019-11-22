@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
@@ -74,7 +75,7 @@ class SeriesService
         } elseif (EmbeddedBroadcast::TYPE_GROUPS === $type) {
             $groups = [];
             foreach ($embeddedBroadcast->getGroups() as $group) {
-                $groups[] = new \MongoId($group->getId());
+                $groups[] = new ObjectId($group->getId());
             }
             $count = $this->mmRepo->countInSeriesWithEmbeddedBroadcastGroups($series, $type, $groups);
         } else {

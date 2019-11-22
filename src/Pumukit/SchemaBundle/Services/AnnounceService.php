@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 
@@ -54,7 +55,7 @@ class AnnounceService
         $last = [];
 
         foreach ($lastSeries as $serie) {
-            $haveMmojb = $this->mmobjRepo->findBy(['series' => new \MongoId($serie->getId())]);
+            $haveMmojb = $this->mmobjRepo->findBy(['series' => new ObjectId($serie->getId())]);
             if (0 !== count($haveMmojb)) {
                 $last[] = $serie;
             }

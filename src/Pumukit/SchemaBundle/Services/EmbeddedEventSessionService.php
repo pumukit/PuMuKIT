@@ -4,6 +4,7 @@ namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\UTCDateTime;
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\EmbeddedEvent;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
@@ -1079,7 +1080,7 @@ class EmbeddedEventSessionService
         if ($multimediaObjectId) {
             $pipeline[] = [
                 '$match' => [
-                    '_id' => new \MongoId($multimediaObjectId),
+                    '_id' => new ObjectId($multimediaObjectId),
                     'type' => MultimediaObject::TYPE_LIVE,
                     'embeddedEvent.embeddedEventSession' => ['$exists' => true],
                 ],
@@ -1140,7 +1141,7 @@ class EmbeddedEventSessionService
         $pipeline = [];
         $pipeline[] = [
             '$match' => [
-                'embeddedEvent._id' => new \MongoId($eventId),
+                'embeddedEvent._id' => new ObjectId($eventId),
             ],
         ];
         $pipeline[] = [
@@ -1219,7 +1220,7 @@ class EmbeddedEventSessionService
         $pipeline = [];
         $pipeline[] = [
             '$match' => [
-                'embeddedEvent._id' => new \MongoId($eventId),
+                'embeddedEvent._id' => new ObjectId($eventId),
             ],
         ];
         $pipeline[] = [
@@ -1259,7 +1260,7 @@ class EmbeddedEventSessionService
         if ($multimediaObjectId) {
             $pipeline[] = [
                 '$match' => [
-                    '_id' => ['$nin' => [new \MongoId($multimediaObjectId)]],
+                    '_id' => ['$nin' => [new ObjectId($multimediaObjectId)]],
                     'type' => MultimediaObject::TYPE_LIVE,
                     'embeddedEvent.display' => true,
                     'embeddedEvent.embeddedEventSession' => ['$exists' => true],

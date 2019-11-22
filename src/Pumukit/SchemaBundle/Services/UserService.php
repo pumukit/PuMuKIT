@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
@@ -494,7 +495,7 @@ class UserService
     public function findWithGroup(Group $group)
     {
         return $this->repo->createQueryBuilder()
-            ->field('groups')->in([new \MongoId($group->getId())])
+            ->field('groups')->in([new ObjectId($group->getId())])
             ->getQuery()
             ->execute()
         ;

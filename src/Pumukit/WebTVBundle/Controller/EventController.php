@@ -2,6 +2,9 @@
 
 namespace Pumukit\WebTVBundle\Controller;
 
+use MongoDB\BSON\ObjectId;
+use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Pagerfanta;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -84,7 +87,7 @@ class EventController extends Controller implements WebTVControllerInterface
         $embeddedEventSessionService = $this->get('pumukitschema.eventsession');
 
         $criteria = [
-            '_id' => new \MongoId($id),
+            '_id' => new ObjectId($id),
         ];
         $events = $embeddedEventSessionService->findNextSessions($criteria, 0, true);
 

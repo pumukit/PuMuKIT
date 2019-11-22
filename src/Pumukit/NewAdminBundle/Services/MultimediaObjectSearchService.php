@@ -4,6 +4,7 @@ namespace Pumukit\NewAdminBundle\Services;
 
 use Doctrine\ODM\MongoDB\Query\Builder;
 use MongoDB\BSON\Regex;
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
 use Pumukit\SchemaBundle\Utils\Search\SearchUtils;
@@ -91,14 +92,14 @@ class MultimediaObjectSearchService
             $isMongoId = true;
 
             try {
-                new \MongoId($personName);
+                new ObjectId($personName);
             } catch (\Exception $exception) {
                 $isMongoId = false;
             }
             // Only in Mongo 1.5.0
             // NOTE: $isMongoId = \MongoId::isValid($personName);
             if ($isMongoId) {
-                $peopleCriteria = new \MongoId($personName);
+                $peopleCriteria = new ObjectId($personName);
                 $new_criteria['people'] = ['$elemMatch' => ['cod' => $roleCode, 'people._id' => $peopleCriteria]];
             } else {
                 $peopleCriteria = ['$regex' => $personName, '$options' => 'i'];
@@ -108,14 +109,14 @@ class MultimediaObjectSearchService
             $isMongoId = true;
 
             try {
-                new \MongoId($personName);
+                new ObjectId($personName);
             } catch (\Exception $exception) {
                 $isMongoId = false;
             }
             // Only in Mongo 1.5.0
             // NOTE: $isMongoId = \MongoId::isValid($personName);
             if ($isMongoId) {
-                $peopleCriteria = new \MongoId($personName);
+                $peopleCriteria = new ObjectId($personName);
                 $new_criteria += ['people.people._id' => $peopleCriteria];
             } else {
                 $peopleCriteria = ['$regex' => $personName, '$options' => 'i'];

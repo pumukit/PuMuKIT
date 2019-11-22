@@ -3,6 +3,7 @@
 namespace Pumukit\NewAdminBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Tag;
@@ -76,8 +77,8 @@ class MultimediaObjectSyncService
         return $this->dm->getRepository(MultimediaObject::class)->findBy(
             [
                 'type' => ['$ne' => MultimediaObject::TYPE_LIVE],
-                'series' => new \MongoId($multimediaObject->getSeries()->getId()),
-                '_id' => ['$ne' => new \MongoId($multimediaObject->getId())],
+                'series' => new ObjectId($multimediaObject->getSeries()->getId()),
+                '_id' => ['$ne' => new ObjectId($multimediaObject->getId())],
             ]
         );
     }
@@ -312,7 +313,7 @@ class MultimediaObjectSyncService
     public function syncTags(MultimediaObject $multimediaObject, MultimediaObject $originData, $tagId)
     {
         $tag = $this->dm->getRepository(Tag::class)->findOneBy(
-            ['_id' => new \MongoId($tagId)]
+            ['_id' => new ObjectId($tagId)]
         );
 
         foreach ($multimediaObject->getTags() as $embeddedTag) {
@@ -340,7 +341,7 @@ class MultimediaObjectSyncService
     public function syncRoles(MultimediaObject $multimediaObject, MultimediaObject $originData, $roleId)
     {
         $role = $this->dm->getRepository(Role::class)->findOneBy(
-            ['_id' => new \MongoId($roleId)]
+            ['_id' => new ObjectId($roleId)]
         );
 
         $embeddedRole = $multimediaObject->getEmbeddedRole($role);

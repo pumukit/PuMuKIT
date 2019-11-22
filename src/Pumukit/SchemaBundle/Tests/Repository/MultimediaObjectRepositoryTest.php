@@ -2,6 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\EmbeddedPerson;
 use Pumukit\SchemaBundle\Document\EmbeddedRole;
@@ -3046,10 +3047,10 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($mm24);
         $this->dm->flush();
 
-        $groups1 = [new \MongoId($group1->getId()), new \MongoId($group2->getId())];
-        $groups2 = [new \MongoId($group2->getId()), new \MongoId($group1->getId())];
-        $groups3 = [new \MongoId($group2->getId())];
-        $groups4 = [new \MongoId($group1->getId())];
+        $groups1 = [new ObjectId($group1->getId()), new ObjectId($group2->getId())];
+        $groups2 = [new ObjectId($group2->getId()), new ObjectId($group1->getId())];
+        $groups3 = [new ObjectId($group2->getId())];
+        $groups4 = [new ObjectId($group1->getId())];
         $groups5 = [];
 
         $this->assertEquals(1, $this->repo->countInSeriesWithEmbeddedBroadcastType($series1, $typePublic));

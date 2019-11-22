@@ -2,6 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Controller;
 
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\Annotation;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Event\AnnotationsEvents;
@@ -38,7 +39,7 @@ class AnnotationsAPIController extends Controller
         $annonQB = $annonRepo->createQueryBuilder();
 
         if ($episode) {
-            $annonQB->field('multimediaObject')->equals(new \MongoId($episode));
+            $annonQB->field('multimediaObject')->equals(new ObjectId($episode));
         }
 
         if ($type) {
@@ -119,7 +120,7 @@ class AnnotationsAPIController extends Controller
         $isPrivate = $request->get('isPrivate') ?: false;
 
         $annotation = new Annotation();
-        $annotation->setMultimediaObject(new \MongoId($episode));
+        $annotation->setMultimediaObject(new ObjectId($episode));
         $annotation->setType($type);
         $annotation->setValue($value);
         $annotation->setInPoint($inPoint);
@@ -218,7 +219,7 @@ class AnnotationsAPIController extends Controller
 
         $annonRepo = $this->get('doctrine_mongodb')->getRepository(Annotation::class);
         $annonQB = $annonRepo->createQueryBuilder();
-        $annonQB->field('multimediaObject')->equals(new \MongoId($multimediaobject->getId()));
+        $annonQB->field('multimediaObject')->equals(new ObjectId($multimediaobject->getId()));
         $annonQB->remove()->getQuery()->execute();
 
         $response = $serializer->serialize(['status' => 'ok'], 'xml');

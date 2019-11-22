@@ -2,6 +2,7 @@
 
 namespace Pumukit\WebTVBundle\Controller;
 
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Live;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -62,7 +63,7 @@ class DefaultController extends Controller
         $embeddedEventSessionService = $this->get('pumukitschema.eventsession');
 
         $criteria = [
-            '_id' => new \MongoId($multimediaObject->getId()),
+            '_id' => new ObjectId($multimediaObject->getId()),
         ];
 
         $nowSessions = $embeddedEventSessionService->findCurrentSessions($criteria, 0, true);
@@ -141,7 +142,7 @@ class DefaultController extends Controller
         $embeddedEventSessionService = $this->get('pumukitschema.eventsession');
 
         $criteria = [
-            '_id' => new \MongoId($multimediaObject->getId()),
+            '_id' => new ObjectId($multimediaObject->getId()),
         ];
 
         $nowSessions = $embeddedEventSessionService->findCurrentSessions($criteria, 0, true);
@@ -360,7 +361,7 @@ class DefaultController extends Controller
         $qb = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder()
             ->field('status')->equals(MultimediaObject::STATUS_PUBLISHED)
             ->field('tags.cod')->equals('PUCHWEBTV')
-            ->field('series')->equals(new \MongoId($seriesId));
+            ->field('series')->equals(new ObjectId($seriesId));
         $qb->field('tracks')->elemMatch($qb->expr()->field('tags')->equals('display')->field('hide')->equals(false));
 
         return $qb;

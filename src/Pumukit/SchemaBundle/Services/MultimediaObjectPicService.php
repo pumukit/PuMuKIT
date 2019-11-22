@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
 use Symfony\Component\Filesystem\Filesystem;
@@ -155,12 +156,12 @@ class MultimediaObjectPicService
         $fs = new Filesystem();
         $fs->mkdir($absCurrentDir);
 
-        $mongoId = new \MongoId();
+        $mongoId = new ObjectId();
 
         $fileName = $mongoId.'.'.$format;
         $path = $absCurrentDir.'/'.$fileName;
         while (file_exists($path)) {
-            $mongoId = new \MongoId();
+            $mongoId = new ObjectId();
             $fileName = $mongoId.'.'.$format;
             $path = $absCurrentDir.'/'.$fileName;
         }
