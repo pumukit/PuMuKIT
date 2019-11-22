@@ -97,7 +97,7 @@ class Track extends Element
 
     /**
      * @var int
-     * @MongoDB\Field(type="increment")
+     * @MongoDB\Field(type="int", strategy="increment" )
      */
     private $numview;
 

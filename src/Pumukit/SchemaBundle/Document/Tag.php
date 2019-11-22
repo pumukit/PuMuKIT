@@ -23,7 +23,7 @@ class Tag implements TagInterface
     /**
      * Number of Multimedia Object with this tag. Only for cache purposes.
      *
-     * @MongoDB\Field(type="increment")
+     * @MongoDB\Field(type="int", strategy="increment" )
      */
     private $number_multimedia_objects = 0;
 
@@ -95,7 +95,7 @@ class Tag implements TagInterface
     /**
      * Number of children. Only for cache purposes.
      *
-     * @MongoDB\Field(type="increment")
+     * @MongoDB\Field(type="int", strategy="increment" )
      */
     private $number_children = 0;
 
