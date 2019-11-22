@@ -18,7 +18,7 @@ class LinkController extends Controller implements NewAdminControllerInterface
 {
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
-     * @Template
+     * @Template("PumukitNewAdminBundle:Link:create.html.twig")
      */
     public function createAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -53,7 +53,7 @@ class LinkController extends Controller implements NewAdminControllerInterface
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     * @Template
+     * @Template("PumukitNewAdminBundle:Link:update.html.twig")
      */
     public function updateAction(MultimediaObject $multimediaObject, Request $request)
     {

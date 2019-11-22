@@ -29,7 +29,7 @@ class PlaylistController extends CollectionController
     /**
      * Overwrite to search criteria with date.
      *
-     * @Template
+     * @Template("PumukitNewAdminBundle:Playlist:index.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -52,7 +52,7 @@ class PlaylistController extends CollectionController
     /**
      * List action.
      *
-     * @Template
+     * @Template("PumukitNewAdminBundle:Playlist:list.html.twig")
      */
     public function listAction(Request $request)
     {

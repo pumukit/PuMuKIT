@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 class TagController extends Controller implements NewAdminControllerInterface
 {
     /**
-     * @Template
+     * @Template("PumukitNewAdminBundle:Tag:index.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -39,7 +39,7 @@ class TagController extends Controller implements NewAdminControllerInterface
 
     /**
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag")
-     * @Template
+     * @Template("PumukitNewAdminBundle::Tag:children.html.twig")
      */
     public function childrenAction(Tag $tag, Request $request)
     {
@@ -69,7 +69,7 @@ class TagController extends Controller implements NewAdminControllerInterface
 
     /**
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag")
-     * @Template
+     * @Template("PumukitNewAdminBundle:Tag:update.html.twig")
      */
     public function updateAction(Tag $tag, Request $request)
     {
@@ -93,7 +93,7 @@ class TagController extends Controller implements NewAdminControllerInterface
 
     /**
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"id" = "parent"})
-     * @Template
+     * @Template("PumukitNewAdminBundle:Tag:create.html.twig")
      */
     public function createAction(Tag $parent, Request $request)
     {
@@ -125,7 +125,7 @@ class TagController extends Controller implements NewAdminControllerInterface
     /**
      * List action.
      *
-     * @Template
+     * @Template("PumukitNewAdminBundle:Tag:list.html.twig")
      */
     public function listAction(Request $request)
     {

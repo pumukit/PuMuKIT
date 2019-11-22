@@ -18,7 +18,7 @@ class MaterialController extends Controller implements NewAdminControllerInterfa
 {
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
-     * @Template
+     * @Template("PumukitNewAdminBundle:Material:create.html.twig")
      */
     public function createAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -67,7 +67,7 @@ class MaterialController extends Controller implements NewAdminControllerInterfa
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
-     * @Template
+     * @Template("PumukitNewAdminBundle:Material:upload.html.twig")
      */
     public function uploadAction(MultimediaObject $multimediaObject, Request $request)
     {

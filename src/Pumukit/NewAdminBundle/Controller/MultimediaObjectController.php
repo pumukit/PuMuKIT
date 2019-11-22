@@ -40,7 +40,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     /**
      * Overwrite to search criteria with date.
      *
-     * @Template
+     * @Template("PumukitNewAdminBundle:MultimediaObject:index.html.twig")
      *
      * @param Request $request
      *
@@ -161,7 +161,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     /**
      * Overwrite to update the session.
      *
-     * @Template
+     * @Template("PumukitNewAdminBundle:MultimediaObject:show.html.twig")
      */
     public function showAction(Request $request)
     {
@@ -178,7 +178,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     /**
      * Display the form for editing or update the resource.
      *
-     * @Template
+     * @Template("PumukitNewAdminBundle:MultimediaObject:edit.html.twig")
      */
     public function editAction(Request $request)
     {
@@ -265,7 +265,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * @Template
+     * @Template("PumukitNewAdminBundle:MultimediaObject:links.html.twig")
      */
     public function linksAction(MultimediaObject $resource)
     {
@@ -1122,7 +1122,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     /**
      * List the properties of a multimedia object in a modal.
      *
-     * @Template
+     * @Template("PumukitNewAdminBundle:MultimediaObject:listProperties.html.twig")
      */
     public function listPropertiesAction(MultimediaObject $multimediaObject)
     {
@@ -1133,7 +1133,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
      * List the external player properties of a multimedia object in a modal.
      *
      * @Security("is_granted('ROLE_ADD_EXTERNAL_PLAYER')")
-     * @Template
+     * @Template("PumukitNewAdminBundle:MultimediaObject:listExternalPlayer.html.twig")
      */
     public function listExternalPlayerAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -1181,7 +1181,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     /**
      * Show a player of a multimedia object in a modal.
      *
-     * @Template
+     * @Template("PumukitNewAdminBundle:MultimediaObject:modalPreview.html.twig")
      */
     public function modalPreviewAction(Multimediaobject $multimediaObject)
     {
@@ -1196,7 +1196,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     /**
      * Used to update table_mms_status_wrapper via AJAX.
      *
-     * @Template
+     * @Template("PumukitNewAdminBundle:MultimediaObject:status.html.twig")
      */
     public function statusAction(MultimediaObject $mm, Request $request)
     {
@@ -1206,7 +1206,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     /**
      * Overwrite to search criteria with date.
      *
-     * @Template
+     * @Template("PumukitNewAdminBundle:MultimediaObject:indexAll.html.twig")
      */
     public function indexAllAction(Request $request)
     {

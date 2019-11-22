@@ -24,7 +24,7 @@ class LegacyEventController extends AdminController implements NewAdminControlle
     /**
      * Overwrite to get the calendar.
      *
-     * @Template
+     * @Template("PumukitNewAdminBundle:LegacyEvent:index.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -95,7 +95,7 @@ class LegacyEventController extends AdminController implements NewAdminControlle
     /**
      * List action.
      *
-     * @Template
+     * @Template("PumukitNewAdminBundle:LegacyEvent:list.html.twig")
      */
     public function listAction(Request $request)
     {
