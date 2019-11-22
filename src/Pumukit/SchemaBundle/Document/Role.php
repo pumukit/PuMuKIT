@@ -19,7 +19,7 @@ class Role
      * @var string
      *
      * @MongoDB\Field(type="string")
-     * @MongoDB\UniqueIndex(safe=1)
+     * @MongoDB\UniqueIndex()
      */
     private $cod = '0';
 
