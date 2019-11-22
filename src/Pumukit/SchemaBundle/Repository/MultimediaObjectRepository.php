@@ -4,6 +4,7 @@ namespace Pumukit\SchemaBundle\Repository;
 
 use Doctrine\ODM\MongoDB\Query\Builder;
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
+use MongoDB\BSON\UTCDateTime;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
@@ -1514,7 +1515,7 @@ class MultimediaObjectRepository extends DocumentRepository
             '$match' => [
                 '$and' => [
                     ['sessions.start' => ['$exists' => true]],
-                    ['sessions.start' => ['$gt' => new \MongoDate()]],
+                    ['sessions.start' => ['$gt' => new UTCDateTime()]],
                 ],
             ],
         ];
@@ -1621,8 +1622,8 @@ class MultimediaObjectRepository extends DocumentRepository
 
         $pipeline[] = [
             '$match' => [
-                'sessions.start' => ['$lt' => new \MongoDate()],
-                'sessionEnds' => ['$gt' => new \MongoDate()],
+                'sessions.start' => ['$lt' => new UTCDateTime()],
+                'sessionEnds' => ['$gt' => new UTCDateTime()],
             ],
         ];
 

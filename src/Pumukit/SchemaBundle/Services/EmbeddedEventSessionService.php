@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\UTCDateTime;
 use Pumukit\SchemaBundle\Document\EmbeddedEvent;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
@@ -198,7 +199,7 @@ class EmbeddedEventSessionService
      */
     public function findEventsNow()
     {
-        $now = new \MongoDate();
+        $now = new UTCDateTime();
         $pipeline = $this->initPipeline();
         $pipeline[] = [
             '$match' => [
@@ -227,8 +228,8 @@ class EmbeddedEventSessionService
         $pipeline = $this->initPipeline();
         $pipeline[] = [
             '$match' => ['$and' => [
-                ['sessions.start' => ['$gte' => new \MongoDate($todayStarts)]],
-                ['sessions.start' => ['$lte' => new \MongoDate($todayEnds)]],
+                ['sessions.start' => ['$gte' => new UTCDateTime($todayStarts)]],
+                ['sessions.start' => ['$lte' => new UTCDateTime($todayEnds)]],
             ]],
         ];
         $this->endPipeline($pipeline);
@@ -246,7 +247,7 @@ class EmbeddedEventSessionService
         $pipeline = $this->initPipeline();
         $pipeline[] = [
             '$match' => [
-                'sessions.start' => ['$gte' => new \MongoDate($todayEnds)],
+                'sessions.start' => ['$gte' => new UTCDateTime($todayEnds)],
             ],
         ];
         $pipeline[] = [
@@ -268,7 +269,7 @@ class EmbeddedEventSessionService
     {
         $pipeline = $this->initPipeline();
         $date = new \DateTime('now');
-        $now = new \MongoDate($date->format('U'));
+        $now = new UTCDateTime($date->format('U'));
         $pipeline[] = [
             '$match' => [
                 'sessions.start' => ['$exists' => true],
@@ -318,8 +319,8 @@ class EmbeddedEventSessionService
 
         $pipeline[] = [
             '$match' => [
-                'sessions.start' => ['$lt' => new \MongoDate()],
-                'sessionEnds' => ['$gt' => new \MongoDate()],
+                'sessions.start' => ['$lt' => new UTCDateTime()],
+                'sessionEnds' => ['$gt' => new UTCDateTime()],
             ],
         ];
 
@@ -389,7 +390,7 @@ class EmbeddedEventSessionService
             '$match' => [
                 '$and' => [
                     ['sessions.start' => ['$exists' => true]],
-                    ['sessions.start' => ['$gt' => new \MongoDate()]],
+                    ['sessions.start' => ['$gt' => new UTCDateTime()]],
                 ],
             ],
         ];
@@ -484,12 +485,12 @@ class EmbeddedEventSessionService
             ],
         ];
 
-        $time = new \MongoDate(time());
+        $time = new UTCDateTime(time());
         $pipeline[] = [
             '$match' => [
                 '$or' => [
                     [
-                        'sessions.start' => ['$gte' => new \MongoDate($todayStarts)],
+                        'sessions.start' => ['$gte' => new UTCDateTime($todayStarts)],
                     ],
                     [
                         'sessions.start' => ['$lt' => $time],
@@ -1102,7 +1103,7 @@ class EmbeddedEventSessionService
         $pipeline[] = ['$unwind' => '$sessions'];
         $pipeline[] = [
             '$match' => [
-                'sessions.start' => ['$gt' => new \MongoDate()],
+                'sessions.start' => ['$gt' => new UTCDateTime()],
             ],
         ];
         $pipeline[] = [
@@ -1281,9 +1282,9 @@ class EmbeddedEventSessionService
             ],
         ];
         $pipeline[] = ['$unwind' => '$sessions'];
-        $now = new \MongoDate();
+        $now = new UTCDateTime();
         $todayDate = new \DateTime('now');
-        $today = new \MongoDate($todayDate->setTime(0, 0)->format('U'));
+        $today = new UTCDateTime($todayDate->setTime(0, 0)->format('U'));
         $pipeline[] = [
             '$match' => [
                 'sessions.start' => ['$gte' => $today],
