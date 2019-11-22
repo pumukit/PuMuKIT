@@ -82,13 +82,13 @@ class Tag implements TagInterface
 
     /**
      * @Gedmo\TreeParent
-     * @MongoDB\ReferenceOne(targetDocument="Tag", inversedBy="children", cascade={"persist"})
+     * @MongoDB\ReferenceOne(targetDocument=Tag::class, inversedBy="children", cascade={"persist"})
      * @MongoDB\Index
      */
     private $parent;
 
     /**
-     * @MongoDB\ReferenceMany(targetDocument="Tag", mappedBy="parent", sort={"cod": 1})
+     * @MongoDB\ReferenceMany(targetDocument=Tag::class, mappedBy="parent", sort={"cod": 1})
      */
     private $children = [];
 

@@ -76,13 +76,13 @@ class EmbeddedEvent
 
     /**
      * @var ArrayCollection
-     * @MongoDB\EmbedMany(targetDocument="EmbeddedEventSession")
+     * @MongoDB\EmbedMany(targetDocument=EmbeddedEventSession::class)
      */
     private $embeddedEventSession;
 
     /**
      * @var DocumentLive
-     * @MongoDB\ReferenceOne(targetDocument="Pumukit\SchemaBundle\Document\Live", cascade={"persist"})
+     * @MongoDB\ReferenceOne(targetDocument=Live::class, cascade={"persist"})
      */
     private $live;
 

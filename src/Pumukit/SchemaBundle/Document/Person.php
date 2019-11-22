@@ -65,7 +65,7 @@ class Person implements PersonInterface
     protected $locale = 'en';
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="User", inversedBy="person", storeAs="id", cascade={"persist"})
+     * @MongoDB\ReferenceOne(targetDocument=User::class, inversedBy="person", storeAs="id", cascade={"persist"})
      */
     private $user;
 

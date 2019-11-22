@@ -36,7 +36,7 @@ class Comments
      * @var int
      *
      * @MongoDB\Field(type="int")
-     * @MongoDB\EmbedOne(targetDocument="MultimediaObject")
+     * @MongoDB\EmbedOne(targetDocument=MultimediaObject::class)
      */
     private $multimedia_object_id;
 

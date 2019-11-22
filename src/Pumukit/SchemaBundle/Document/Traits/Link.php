@@ -27,7 +27,7 @@ trait Link
 
     /**
      * @var Collection
-     * @MongoDB\EmbedMany(targetDocument="Link")
+     * @MongoDB\EmbedMany(targetDocument=Link::class)
      */
     private $links;
 
