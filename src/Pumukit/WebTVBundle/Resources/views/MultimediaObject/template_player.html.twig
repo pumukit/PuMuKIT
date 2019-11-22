@@ -1,7 +1,9 @@
-{% if multimediaObject.getProperty('externalplayer') and not app.request.get('track_id') %}
-    <div class="embed-responsive embed-responsive-16by9">
-        <iframe src="{{ multimediaObject.getProperty('externalplayer') }}" width="100%" class="embed-responsive-item" frameborder="0" allowfullscreen></iframe>
-    </div>
-{% else %}
-    {% include 'PumukitWebTVBundle:MultimediaObject:player.html.twig' with {'responsive': true} %}
+{% if multimediaObject %}
+    {% if multimediaObject.getProperty('externalplayer') and not app.request.get('track_id') %}
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe src="{{ multimediaObject.getProperty('externalplayer') }}" width="100%" class="embed-responsive-item" frameborder="0" allowfullscreen></iframe>
+        </div>
+    {% else %}
+        {% include 'PumukitWebTVBundle:MultimediaObject:player.html.twig' with {'responsive': true} %}
+    {% endif %}
 {% endif %}
