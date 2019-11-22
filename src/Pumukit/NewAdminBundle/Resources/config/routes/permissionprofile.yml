@@ -2,7 +2,7 @@ pumukitnewadmin_permissionprofile_index:
     path: /
     methods: [GET]
     defaults:
-        _controller: PumukitNewAdminBundle:PermissionProfile:index
+        _controller: Pumukit\NewAdminBundle\Controller\PermissionProfileController::indexAction
         _sylius:
             filterable: true
 
@@ -10,7 +10,7 @@ pumukitnewadmin_permissionprofile_create:
     path: /create
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:PermissionProfile:create
+        _controller: Pumukit\NewAdminBundle\Controller\PermissionProfileController::createAction
         _sylius:
             redirect: pumukitnewadmin_permissionprofile_index
 
@@ -18,7 +18,7 @@ pumukitnewadmin_permissionprofile_update:
     path: /{id}/edit
     methods: [GET, PUT, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:PermissionProfile:update
+        _controller: Pumukit\NewAdminBundle\Controller\PermissionProfileController::updateAction
         _sylius:
             redirect: pumukitnewadmin_permissionprofile_index
 
@@ -26,7 +26,7 @@ pumukitnewadmin_permissionprofile_batch_delete:
     path: /batchdelete
     methods: [DELETE]
     defaults:
-        _controller: PumukitNewAdminBundle:PermissionProfile:batchDelete
+        _controller: Pumukit\NewAdminBundle\Controller\PermissionProfileController::batchDeleteAction
         _sylius:
             redirect: pumukitnewadmin_permissionprofile_index
 
@@ -34,7 +34,7 @@ pumukitnewadmin_permissionprofile_delete:
     path: /{id}/delete
     methods: [DELETE]
     defaults:
-        _controller: PumukitNewAdminBundle:PermissionProfile:delete
+        _controller: Pumukit\NewAdminBundle\Controller\PermissionProfileController::deleteAction
         _sylius:
             redirect: pumukitnewadmin_permissionprofile_index
 
@@ -42,13 +42,13 @@ pumukitnewadmin_permissionprofile_list:
     path: /list
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:PermissionProfile:list
+        _controller: Pumukit\NewAdminBundle\Controller\PermissionProfileController::listAction
 
 pumukitnewadmin_permissionprofile_batch_update:
     path: /batchupdate
     methods: [POST]
     defaults:
-        _controller: PumukitNewAdminBundle:PermissionProfile:batchUpdate
+        _controller: Pumukit\NewAdminBundle\Controller\PermissionProfileController::batchUpdateAction
         _sylius:
             redirect: pumukitnewadmin_permissionprofile_index
 
@@ -56,4 +56,4 @@ pumukitnewadmin_permissionprofile_export:
     path: /export
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:PermissionProfile:exportPermissionProfiles
+        _controller: Pumukit\NewAdminBundle\Controller\PermissionProfileController::exportPermissionProfilesAction

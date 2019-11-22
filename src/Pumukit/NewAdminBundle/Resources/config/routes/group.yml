@@ -2,7 +2,7 @@ pumukitnewadmin_group_index:
     path: /
     methods: [GET]
     defaults:
-        _controller: PumukitNewAdminBundle:Group:index
+        _controller: Pumukit\NewAdminBundle\Controller\GroupController::indexAction
         _sylius:
             filterable: true
 
@@ -10,7 +10,7 @@ pumukitnewadmin_group_create:
     path: /create
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:Group:create
+        _controller: Pumukit\NewAdminBundle\Controller\GroupController::createAction
         _sylius:
             redirect: pumukitnewadmin_group_index
 
@@ -18,7 +18,7 @@ pumukitnewadmin_group_update:
     path: /{id}/edit
     methods: [GET, PUT, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:Group:update
+        _controller: Pumukit\NewAdminBundle\Controller\GroupController::updateAction
         _sylius:
             redirect: pumukitnewadmin_group_index
 
@@ -26,7 +26,7 @@ pumukitnewadmin_group_batch_delete:
     path: /batchdelete
     methods: [DELETE]
     defaults:
-        _controller: PumukitNewAdminBundle:Group:batchDelete
+        _controller: Pumukit\NewAdminBundle\Controller\GroupController::batchDeleteAction
         _sylius:
             redirect: pumukitnewadmin_group_index
 
@@ -34,7 +34,7 @@ pumukitnewadmin_group_delete:
     path: /{id}/delete
     methods: [DELETE]
     defaults:
-        _controller: PumukitNewAdminBundle:Group:delete
+        _controller: Pumukit\NewAdminBundle\Controller\GroupController::deleteAction
         _sylius:
             redirect: pumukitnewadmin_group_index
 
@@ -42,7 +42,7 @@ pumukitnewadmin_group_list:
     path: /list
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:Group:list
+        _controller: Pumukit\NewAdminBundle\Controller\GroupController::listAction
         _sylius:
             filterable: true
 
@@ -50,52 +50,52 @@ pumukitnewadmin_group_info:
     path: /{id}/info
     methods: [GET]
     defaults:
-        _controller: PumukitNewAdminBundle:Group:info
+        _controller: Pumukit\NewAdminBundle\Controller\GroupController::infoAction
 
 pumukitnewadmin_group_data_resources:
     path: /{id}/dataresources
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:Group:dataResources
+        _controller: Pumukit\NewAdminBundle\Controller\GroupController::dataResourcesAction
 
 pumukitnewadmin_group_delete_user:
     path: /{id}/deleteuser/{userId}
     methods: [DELETE]
     defaults:
-        _controller: PumukitNewAdminBundle:Group:deleteUser
+        _controller: Pumukit\NewAdminBundle\Controller\GroupController::deleteUserAction
 
 pumukitnewadmin_group_delete_multimediaobject:
     path: /{id}/deletemultimediaobject/{mmId}
     methods: [DELETE]
     defaults:
-        _controller: PumukitNewAdminBundle:Group:deleteMultimediaObject
+        _controller: Pumukit\NewAdminBundle\Controller\GroupController::deleteMultimediaObjectAction
 
 pumukitnewadmin_group_delete_embeddedbroadcast:
     path: /{id}/deleteembeddedbroadcast/{mmId}
     methods: [DELETE]
     defaults:
-        _controller: PumukitNewAdminBundle:Group:deleteEmbeddedBroadcast
+        _controller: Pumukit\NewAdminBundle\Controller\GroupController::deleteEmbeddedBroadcastAction
 
 pumukitnewadmin_group_can_be_deleted:
     path: /{id}/canbedeleted
     methods: [GET]
     defaults:
-        _controller: PumukitNewAdminBundle:Group:canBeDeleted
+        _controller: Pumukit\NewAdminBundle\Controller\GroupController::canBeDeletedAction
 
 pumukitnewadmin_group_delete_all_users:
     path: /{id}/deleteallusers
     methods: [DELETE]
     defaults:
-        _controller: PumukitNewAdminBundle:Group:deleteAllUsers
+        _controller: Pumukit\NewAdminBundle\Controller\GroupController::deleteAllUsersAction
 
 pumukitnewadmin_group_delete_all_multimediaobjects:
     path: /{id}/deleteallmultimediaobjects
     methods: [DELETE]
     defaults:
-        _controller: PumukitNewAdminBundle:Group:deleteAllMultimediaObjects
+        _controller: Pumukit\NewAdminBundle\Controller\GroupController::deleteAllMultimediaObjectsAction
 
 pumukitnewadmin_group_delete_all_embeddedbroadcasts:
     path: /{id}/deleteallembeddedbroadcasts
     methods: [DELETE]
     defaults:
-        _controller: PumukitNewAdminBundle:Group:deleteAllEmbeddedBroadcasts
+        _controller: Pumukit\NewAdminBundle\Controller\GroupController::deleteAllEmbeddedBroadcastsAction

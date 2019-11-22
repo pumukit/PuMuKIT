@@ -2,7 +2,7 @@ pumukitnewadmin_series_index:
     path: /
     methods: [GET]
     defaults:
-        _controller: PumukitNewAdminBundle:Series:index
+        _controller: Pumukit\NewAdminBundle\Controller\SeriesController::indexAction
         _sylius:
             filterable: true
 
@@ -10,13 +10,13 @@ pumukitnewadmin_series_search:
     path: /search
     methods: [GET]
     defaults:
-        _controller: PumukitNewAdminBundle:Series:search
+        _controller: Pumukit\NewAdminBundle\Controller\SeriesController::searchAction
 
 pumukitnewadmin_series_create:
     path: /create
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:Series:create
+        _controller: Pumukit\NewAdminBundle\Controller\SeriesController::createAction
         _sylius:
             redirect: pumukitnewadmin_series_index
 
@@ -24,25 +24,25 @@ pumukitnewadmin_series_clone:
     path: /clone/{id}
     methods: [POST]
     defaults:
-        _controller: PumukitNewAdminBundle:Series:clone
+        _controller: Pumukit\NewAdminBundle\Controller\SeriesController::cloneAction
 
 pumukitnewadmin_series_links:
     path: /{id}/links
     methods: [GET]
     defaults:
-        _controller: PumukitNewAdminBundle:Series:links
+        _controller: Pumukit\NewAdminBundle\Controller\SeriesController::linksAction
 
 pumukitnewadmin_series_update:
     path: /{id}/update
     methods: [GET, POST, DELETE]
     defaults:
-        _controller: PumukitNewAdminBundle:Series:update
+        _controller: Pumukit\NewAdminBundle\Controller\SeriesController::updateAction
 
 pumukitnewadmin_series_batch_delete:
     path: /batchdelete
     methods: [DELETE]
     defaults:
-        _controller: PumukitNewAdminBundle:Series:batchDelete
+        _controller: Pumukit\NewAdminBundle\Controller\SeriesController::batchDeleteAction
         _sylius:
             redirect: pumukitnewadmin_series_list
 
@@ -50,7 +50,7 @@ pumukitnewadmin_series_delete:
     path: /{id}/delete
     methods: [DELETE]
     defaults:
-        _controller: PumukitNewAdminBundle:Series:delete
+        _controller: Pumukit\NewAdminBundle\Controller\SeriesController::deleteAction
         _sylius:
             redirect: pumukitnewadmin_series_index
 
@@ -58,13 +58,13 @@ pumukitnewadmin_series_generate_magic_url:
     path: /{id}/generatemagic
     methods: [POST]
     defaults:
-        _controller: PumukitNewAdminBundle:Series:generateMagicUrl
+        _controller: Pumukit\NewAdminBundle\Controller\SeriesController::generateMagicUrlAction
 
 pumukitnewadmin_series_copy:
     path: /{id}/copy
     methods: [GET, PUT, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:Series:copy
+        _controller: Pumukit\NewAdminBundle\Controller\SeriesController::copyAction
         _sylius:
             redirect: pumukitnewadmin_series_index
 
@@ -72,40 +72,40 @@ pumukitnewadmin_series_show:
     path: /{id}/show
     methods: [GET]
     defaults:
-        _controller: PumukitNewAdminBundle:Series:show
+        _controller: Pumukit\NewAdminBundle\Controller\SeriesController::showAction
 
 pumukitnewadmin_series_list:
     path: /list
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:Series:list
+        _controller: Pumukit\NewAdminBundle\Controller\SeriesController::listAction
 
 pumukitnewadmin_series_invert_announce:
     path: /invertannounce
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:Series:invertAnnounce
+        _controller: Pumukit\NewAdminBundle\Controller\SeriesController::invertAnnounceAction
 
 pumukitnewadmin_series_changepub:
     path: /changepub
     methods: [GET]
     defaults:
-        _controller: PumukitNewAdminBundle:Series:changePub
+        _controller: Pumukit\NewAdminBundle\Controller\SeriesController::changePubAction
 
 pumukitnewadmin_series_updatepub:
     path: /updatepub
     methods: [POST]
     defaults:
-        _controller: PumukitNewAdminBundle:Series:updatePub
+        _controller: Pumukit\NewAdminBundle\Controller\SeriesController::updatePubAction
 
 pumukitnewadmin_series_updatebroadcast:
     path: /{id}/updatebroadcast
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:Series:updateBroadcast
+        _controller: Pumukit\NewAdminBundle\Controller\SeriesController::updateBroadcastAction
 
 pumukitnewadmin_series_listproperties:
     path: /{id}/listproperties
     methods: [GET]
     defaults:
-        _controller: PumukitNewAdminBundle:Series:listProperties
+        _controller: Pumukit\NewAdminBundle\Controller\SeriesController::listPropertiesAction

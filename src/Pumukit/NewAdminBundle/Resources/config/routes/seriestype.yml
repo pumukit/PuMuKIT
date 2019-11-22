@@ -2,7 +2,7 @@ pumukitnewadmin_seriestype_index:
     path: /
     methods: [GET]
     defaults:
-        _controller: PumukitNewAdminBundle:SeriesType:index
+        _controller: Pumukit\NewAdminBundle\Controller\SeriesTypeController::indexAction
         _sylius:
             filterable: true
 
@@ -10,7 +10,7 @@ pumukitnewadmin_seriestype_create:
     path: /create
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:SeriesType:create
+        _controller: Pumukit\NewAdminBundle\Controller\SeriesTypeController::createAction
         _sylius:
             redirect: pumukitnewadmin_seriestype_index
 
@@ -18,7 +18,7 @@ pumukitnewadmin_seriestype_update:
     path: /{id}/update
     methods: [GET, PUT, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:SeriesType:update
+        _controller: Pumukit\NewAdminBundle\Controller\SeriesTypeController::updateAction
         _sylius:
             redirect: pumukitnewadmin_seriestype_index
 
@@ -26,7 +26,7 @@ pumukitnewadmin_seriestype_batch_delete:
     path: /batchdelete
     methods: [DELETE]
     defaults:
-        _controller: PumukitNewAdminBundle:SeriesType:batchDelete
+        _controller: Pumukit\NewAdminBundle\Controller\SeriesTypeController::batchDeleteAction
         _sylius:
             redirect: pumukitnewadmin_seriestype_index
 
@@ -34,7 +34,7 @@ pumukitnewadmin_seriestype_delete:
     path: /{id}/delete
     methods: [DELETE]
     defaults:
-        _controller: PumukitNewAdminBundle:SeriesType:delete
+        _controller: Pumukit\NewAdminBundle\Controller\SeriesTypeController::deleteAction
         _sylius:
             redirect: pumukitnewadmin_seriestype_index
 
@@ -42,7 +42,7 @@ pumukitnewadmin_seriestype_copy:
     path: /{id}/copy
     methods: [GET, PUT, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:SeriesType:copy
+        _controller: Pumukit\NewAdminBundle\Controller\SeriesTypeController::copyAction
         _sylius:
             redirect: pumukitnewadmin_seriestype_index
 
@@ -50,12 +50,12 @@ pumukitnewadmin_seriestype_show:
     path: /{id}/show
     methods: [GET]
     defaults:
-        _controller: PumukitNewAdminBundle:SeriesType:show
+        _controller: Pumukit\NewAdminBundle\Controller\SeriesTypeController::showAction
 
 pumukitnewadmin_seriestype_list:
     path: /list
     methods: [GET, POST]
     defaults:
-        _controller: PumukitNewAdminBundle:SeriesType:list
+        _controller: Pumukit\NewAdminBundle\Controller\SeriesTypeController::listAction
         _sylius:
             filterable: true
