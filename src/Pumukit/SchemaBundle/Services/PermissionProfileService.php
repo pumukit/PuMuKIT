@@ -243,4 +243,38 @@ class PermissionProfileService
     {
         return $this->repo->findOneBy(['name' => $name]);
     }
+
+    public function exportAllToCsv(): string
+    {
+        $csv = $this->generateCsvHeader();
+
+        return $this->generateCsvContent($csv);
+    }
+
+    private function generateCsvHeader(): string
+    {
+        return implode(';', ['name', 'system', 'default', 'scope', 'permissions']).PHP_EOL;
+    }
+
+    private function generateCsvContent(string $csv): string
+    {
+        $permissionProfiles = $this->dm->getRepository(PermissionProfile::class)->findAll();
+        foreach ($permissionProfiles as $permissionProfile) {
+            $dataCSV = [];
+            $dataCSV[] = $permissionProfile->getName();
+            $dataCSV[] = (int) $permissionProfile->getSystem();
+            $dataCSV[] = (int) $permissionProfile->getDefault();
+            $dataCSV[] = $permissionProfile->getScope();
+            $permissions = [];
+            foreach ($permissionProfile->getPermissions() as $permission) {
+                $permissions[] = $permission;
+            }
+            $dataPermission = implode(',', $permissions);
+            $dataCSV[] = $dataPermission;
+            $data = implode(';', $dataCSV);
+            $csv .= $data.PHP_EOL;
+        }
+
+        return $csv;
+    }
 }
