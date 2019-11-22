@@ -2,6 +2,7 @@
 
 namespace Pumukit\WebTVBundle\Controller;
 
+use MongoDB\BSON\Regex;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
@@ -158,7 +159,7 @@ class LegacyController extends Controller implements WebTVControllerInterface
         $mmobjRepo = $dm->getRepository(MultimediaObject::class);
 
         $multimediaObject = $mmobjRepo->createQueryBuilder()
-            ->field('tracks.tags')->equals(new \MongoRegex('/\\bpumukit1id:'.$pumukit1id.'\\b/i'))
+            ->field('tracks.tags')->equals(new Regex('/\\bpumukit1id:'.$pumukit1id.'\\b', 'i'))
             ->getQuery()->getSingleResult();
 
         if (!$multimediaObject) {

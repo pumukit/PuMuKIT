@@ -2,6 +2,8 @@
 
 namespace Pumukit\SchemaBundle\Utils\Search;
 
+use MongoDB\BSON\Regex;
+
 /**
  * Class Search.
  */
@@ -49,7 +51,7 @@ class SearchUtils
     /**
      * @param string $string
      *
-     * @return \MongoRegex
+     * @return Regex
      */
     public static function generateRegexExpression($string)
     {
@@ -64,7 +66,7 @@ class SearchUtils
 
         $regexString = self::completeRegexExpression($elements);
 
-        return new \MongoRegex($regexString);
+        return new Regex($regexString);
     }
 
     /**

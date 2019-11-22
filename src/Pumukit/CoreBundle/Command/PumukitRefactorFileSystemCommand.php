@@ -3,6 +3,7 @@
 namespace Pumukit\CoreBundle\Command;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\Regex;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -393,7 +394,7 @@ EOT
     {
         return $documentManager->getRepository(MultimediaObject::class)->findBy(
             [
-                'pics.url' => new \MongoRegex('/uploads/pic/'),
+                'pics.url' => new Regex('/uploads/pic/'),
                 'pics.path' => ['$exists' => false],
             ]
         );
@@ -410,7 +411,7 @@ EOT
     {
         return $documentManager->getRepository(MultimediaObject::class)->findBy(
             [
-                'materials.url' => new \MongoRegex('/uploads/material/'),
+                'materials.url' => new Regex('/uploads/material/'),
                 'materials.path' => ['$exists' => false],
             ]
         );

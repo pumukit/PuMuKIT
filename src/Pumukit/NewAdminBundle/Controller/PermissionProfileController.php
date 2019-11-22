@@ -20,7 +20,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
     public static $repoName = PermissionProfile::class;
 
     /**
-     * Overwrite to update the criteria with MongoRegex, and save it in the session.
+     * Overwrite to update the criteria with Regex, and save it in the session.
      *
      * @Template("PumukitNewAdminBundle:PermissionProfile:index.html.twig")
      */

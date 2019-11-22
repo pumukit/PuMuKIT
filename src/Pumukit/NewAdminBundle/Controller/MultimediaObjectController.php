@@ -2,6 +2,8 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use MongoDB\BSON\Regex;
+use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\NewAdminBundle\Event\BackofficeEvents;
 use Pumukit\NewAdminBundle\Event\PublicationSubmitEvent;
@@ -595,9 +597,9 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $parent_path = str_replace('|', '\\|', $parent->getPath());
 
         $qb = $dm->createQueryBuilder(Tag::class);
-        $children = $qb->addOr($qb->expr()->field('title.'.$lang)->equals(new \MongoRegex('/.*'.$search_text.'.*/i')))
-            ->addOr($qb->expr()->field('cod')->equals(new \MongoRegex('/.*'.$search_text.'.*/i')))
-            ->addAnd($qb->expr()->field('path')->equals(new \MongoRegex('/'.$parent_path.'(.+[\|]+)+/')))
+        $children = $qb->addOr($qb->expr()->field('title.'.$lang)->equals(new Regex('/.*'.$search_text.'.*', 'i')))
+            ->addOr($qb->expr()->field('cod')->equals(new Regex('/.*'.$search_text.'.*', 'i')))
+            ->addAnd($qb->expr()->field('path')->equals(new Regex('/'.$parent_path.'(.+[\|]+)+/')))
                   //->limit(20)
             ->getQuery()
             ->execute()

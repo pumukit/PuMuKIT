@@ -4,6 +4,7 @@ namespace Pumukit\WebTVBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Query\Builder;
+use MongoDB\BSON\Regex;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
@@ -197,7 +198,7 @@ class SearchService
 
         if ((false !== strpos($searchFound, '*')) && (false === strpos($searchFound, ' '))) {
             $searchFound = str_replace('*', '.*', $searchFound);
-            $mRegex = new \MongoRegex("/{$searchFound}/i");
+            $mRegex = new Regex("/{$searchFound}", 'i');
             $queryBuilder->addOr($queryBuilder->expr()->field('title.'.$locale)->equals($mRegex));
             $queryBuilder->addOr($queryBuilder->expr()->field('people.people.name')->equals($mRegex));
         } elseif ('' != $searchFound) {
@@ -280,7 +281,7 @@ class SearchService
         }
 
         if ($useTagAsGeneral && null !== $blockedTag) {
-            $queryBuilder->field('tags.path')->notIn([new \MongoRegex('/'.preg_quote($blockedTag->getPath()).'.*\|/')]);
+            $queryBuilder->field('tags.path')->notIn([new Regex('/'.preg_quote($blockedTag->getPath()).'.*\|/')]);
         }
 
         return $queryBuilder;
