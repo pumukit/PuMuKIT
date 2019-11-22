@@ -2,9 +2,6 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Pagerfanta\Adapter\DoctrineCollectionAdapter;
-use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
-use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Series;
@@ -159,17 +156,12 @@ class PlaylistMultimediaObjectController extends Controller
         $limit = $request->get('modal_limit', 20);
         //Get all multimedia objects. The filter will do the rest.
         $mmobjs = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
-        $adapter = new DoctrineODMMongoDBAdapter($mmobjs);
-        $mmobjs = new Pagerfanta($adapter);
-        $mmobjs
-            ->setMaxPerPage($limit)
-            ->setNormalizeOutOfRangePages(true)
-        ;
 
-        $mmobjs->setCurrentPage($page);
+        $paginationService = $this->get('pumukit_core.pagination_service');
+        $pager = $paginationService->createDoctrineODMMongoDBAdapter($mmobjs, $page, $limit);
 
         return [
-            'my_mmobjs' => $mmobjs,
+            'my_mmobjs' => $pager,
         ];
     }
 
@@ -191,11 +183,10 @@ class PlaylistMultimediaObjectController extends Controller
         $queryBuilder->limit($limit);
         $queryBuilder->sortMeta('score', 'textScore');
 
-        $adapter = new DoctrineODMMongoDBAdapter($queryBuilder);
-        $mmobjs = new Pagerfanta($adapter);
-        $mmobjs->setMaxPerPage($limit);
+        $paginationService = $this->get('pumukit_core.pagination_service');
+        $pager = $paginationService->createDoctrineODMMongoDBAdapter($queryBuilder, 0, $limit);
 
-        return ['mmobjs' => $mmobjs];
+        return ['mmobjs' => $pager];
     }
 
     /**
@@ -407,8 +398,6 @@ class PlaylistMultimediaObjectController extends Controller
     protected function getPlaylistMmobjs(Series $series, $request)
     {
         $mmsList = $series->getPlaylist()->getMultimediaObjects();
-        $adapter = new DoctrineCollectionAdapter($mmsList);
-        $pagerfanta = new Pagerfanta($adapter);
 
         $session = $this->get('session');
         if ($request->get('page', null)) {
@@ -420,12 +409,11 @@ class PlaylistMultimediaObjectController extends Controller
         }
 
         $page = $session->get('admin/playlistmms/page', 1);
-        $maxPerPage = $session->get('admin/playlistmms/paginate', 10);
+        $limit = $session->get('admin/playlistmms/paginate', 10);
 
-        $pagerfanta->setMaxPerPage($maxPerPage)->setNormalizeOutOfRangePages(true);
-        $pagerfanta->setCurrentPage($page);
+        $paginationService = $this->get('pumukit_core.pagination_service');
 
-        return $pagerfanta;
+        return $paginationService->createDoctrineCollectionAdapter($mmsList, $page, $limit);
     }
 
     /**

@@ -2,8 +2,6 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Pagerfanta\Adapter\ArrayAdapter;
-use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -240,26 +238,10 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
         ];
     }
 
-    /**
-     * Get paginated pics.
-     *
-     * @param \Doctrine\Common\Collections\Collection $urlPics
-     * @param int                                     $limit
-     * @param int                                     $page
-     *
-     * @return Pagerfanta
-     */
     private function getPaginatedPics($urlPics, $limit, $page)
     {
-        $adapter = new ArrayAdapter($urlPics->toArray());
-        $pics = new Pagerfanta($adapter);
+        $paginationService = $this->get('pumukit_core.pagination_service');
 
-        $pics
-            ->setMaxPerPage($limit)
-            ->setNormalizeOutOfRangePages(true)
-            ->setCurrentPage($page)
-        ;
-
-        return $pics;
+        return $paginationService->createArrayAdapter($urlPics->toArray(), $page, $limit);
     }
 }

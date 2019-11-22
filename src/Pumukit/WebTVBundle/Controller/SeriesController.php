@@ -94,6 +94,6 @@ class SeriesController extends Controller implements WebTVControllerInterface
     {
         $limit = $this->container->getParameter('limit_objs_series');
 
-        return $this->get('pumukit_web_tv.pagination_service')->createDoctrineODMMongoDBAdapter($objects, $page, $limit);
+        return $this->get('pumukit_core.pagination_service')->createDoctrineODMMongoDBAdapter($objects, $page, $limit);
     }
 }

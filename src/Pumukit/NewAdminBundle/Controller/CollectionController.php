@@ -2,8 +2,6 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
-use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Security\Permission;
@@ -82,12 +80,9 @@ class CollectionController extends Controller implements NewAdminControllerInter
         }
         $page = $session->get($session_namespace.'/page', 1);
         $limit = $session->get($session_namespace.'/paginate', 10);
-        $adapter = new DoctrineODMMongoDBAdapter($queryBuilder);
-        $pagerfanta = new Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage($limit);
-        $pagerfanta->setNormalizeOutOfRangePages(true);
-        $pagerfanta->setCurrentPage($page);
 
-        return $pagerfanta;
+        $paginationService = $this->get('pumukit_core.pagination_service');
+
+        return $paginationService->createDoctrineODMMongoDBAdapter($queryBuilder, $page, $limit);
     }
 }

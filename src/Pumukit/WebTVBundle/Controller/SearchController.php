@@ -169,7 +169,7 @@ class SearchController extends Controller implements WebTVControllerInterface
     protected function createPager($objects, $page)
     {
         $limit = $this->container->getParameter('limit_objs_search');
-        $pager = $this->get('pumukit_web_tv.pagination_service')->createDoctrineODMMongoDBAdapter($objects, $page, $limit);
+        $pager = $this->get('pumukit_core.pagination_service')->createDoctrineODMMongoDBAdapter($objects, $page, $limit);
 
         $pager->getCurrentPageResults(); // TTK-17149 force the complete search query to avoid a new query to count
         $totalObjects = $pager->getNbResults();

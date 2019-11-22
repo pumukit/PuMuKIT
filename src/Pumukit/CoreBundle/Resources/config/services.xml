@@ -56,5 +56,7 @@
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
 
+        <service id="pumukit_core.pagination_service" class="Pumukit\CoreBundle\Services\PaginationService" />
+
     </services>
 </container>

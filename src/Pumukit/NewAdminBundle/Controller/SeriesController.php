@@ -2,7 +2,6 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectTemplateMetaType;
 use Pumukit\NewAdminBundle\Form\Type\SeriesType;
@@ -524,8 +523,9 @@ class SeriesController extends AdminController implements NewAdminControllerInte
             $resources = $queryBuilder->getQuery()->execute();
 
             $resources = $this->reorderResources($resources);
-            $adapter = new ArrayAdapter($resources);
-            $resources = new Pagerfanta($adapter);
+
+            $paginationService = $this->get('pumukit_core.pagination_service');
+            $resources = $paginationService->createArrayAdapter($resources);
         } else {
             $resources = $this->createPager($criteria, $sorting);
             if (array_key_exists('textScore', $sorting)) {

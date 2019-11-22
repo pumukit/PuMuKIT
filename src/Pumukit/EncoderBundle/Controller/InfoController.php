@@ -2,8 +2,6 @@
 
 namespace Pumukit\EncoderBundle\Controller;
 
-use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
-use Pagerfanta\Pagerfanta;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
@@ -177,10 +175,8 @@ class InfoController extends Controller
 
     private function createPager($objects, $page, $limit = 5)
     {
-        $adapter = new DoctrineODMMongoDBAdapter($objects);
-        $pagerfanta = new Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage($limit)->setNormalizeOutOfRangePages(true)->setCurrentPage($page);
+        $paginationService = $this->get('pumukit_core.pagination_service');
 
-        return $pagerfanta;
+        return $paginationService->createDoctrineODMMongoDBAdapter($objects, $page, $limit);
     }
 }

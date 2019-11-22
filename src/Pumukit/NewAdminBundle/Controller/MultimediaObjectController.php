@@ -2,7 +2,6 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\NewAdminBundle\Event\BackofficeEvents;
 use Pumukit\NewAdminBundle\Event\PublicationSubmitEvent;
@@ -1491,17 +1490,9 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             ->getQueryBuilderOrderedBy($series, $sorting)
         ;
 
-        $adapter = new DoctrineODMMongoDBAdapter($mmsQueryBuilder);
-        $mms = new Pagerfanta($adapter);
+        $paginationService = $this->get('pumukit_core.pagination_service');
 
-        $mms
-            ->setMaxPerPage($maxPerPage)
-            ->setNormalizeOutOfRangePages(true)
-        ;
-
-        $mms->setCurrentPage($page);
-
-        return $mms;
+        return $paginationService->createDoctrineODMMongoDBAdapter($mmsQueryBuilder, $page);
     }
 
     protected function dispatchUpdate($multimediaObject)

@@ -74,10 +74,6 @@
             <argument>%categories.list_general_tags%</argument>
         </service>
 
-        <service id="pumukit_web_tv.pagination_service" class="Pumukit\WebTVBundle\Services\PaginationService">
-            <argument type="service" id="doctrine_mongodb.odm.document_manager" />
-        </service>
-
         <service id="pumukit_web_tv.chapter_marks_service" class="Pumukit\WebTVBundle\Services\ChapterMarkService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager" />
         </service>

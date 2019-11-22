@@ -2,9 +2,7 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Utils\Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -91,9 +89,9 @@ class ResourceController extends Controller
         $queryBuilder->setQueryArray($criteria);
         $queryBuilder->sort($sorting);
 
-        $adapter = new DoctrineODMMongoDBAdapter($queryBuilder);
+        $paginationService = $this->get('pumukit_core.pagination_service');
 
-        return new Pagerfanta($adapter);
+        return $paginationService->createDoctrineODMMongoDBAdapter($queryBuilder);
     }
 
     private function getRedirectRoute($routeName = 'index')
