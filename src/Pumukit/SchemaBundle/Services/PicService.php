@@ -334,20 +334,20 @@ class PicService
      */
     protected function getAbsoluteUrlPic($picUrl = '')
     {
-        if ($picUrl) {
-            if ('/' == $picUrl[0]) {
-                $scheme = $this->context->getScheme();
-                $host = $this->context->getHost();
-                $port = '';
-                if ('http' === $scheme && 80 != $this->context->getHttpPort()) {
-                    $port = ':'.$this->context->getHttpPort();
-                } elseif ('https' === $scheme && 443 != $this->context->getHttpsPort()) {
-                    $port = ':'.$this->context->getHttpsPort();
-                }
-
-                return $scheme.'://'.$host.$port.$picUrl;
-            }
+        if (!$picUrl || '/' != $picUrl[0]) {
+            return $picUrl;
         }
+
+        $scheme = $this->context->getScheme();
+        $host = $this->context->getHost();
+        $port = '';
+        if ('http' === $scheme && 80 != $this->context->getHttpPort()) {
+            $port = ':'.$this->context->getHttpPort();
+        } elseif ('https' === $scheme && 443 != $this->context->getHttpsPort()) {
+            $port = ':'.$this->context->getHttpsPort();
+        }
+
+        return $scheme.'://'.$host.$port.$picUrl;
     }
 
     /**
