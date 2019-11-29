@@ -75,8 +75,8 @@ class EventRepository extends DocumentRepository
     {
         $dmColl = $this->dm->getDocumentCollection(Event::class);
 
-        $nowWithMarginBefore = new UTCDateTime(strtotime(sprintf('%s minute', $marginBefore)));
-        $nowWithMarginAfter = new UTCDateTime(strtotime(sprintf('-%s minute', $marginAfter)));
+        $nowWithMarginBefore = new UTCDateTime(strtotime(sprintf('%s minute', $marginBefore)) * 1000);
+        $nowWithMarginAfter = new UTCDateTime(strtotime(sprintf('-%s minute', $marginAfter)) * 1000);
         $pipeline = [
             ['$match' => ['display' => true]],
             ['$project' => ['date' => true, 'end' => ['$add' => ['$date', ['$multiply' => ['$duration', 60000]]]]]],

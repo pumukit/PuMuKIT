@@ -224,8 +224,8 @@ class EmbeddedEventSessionService
      */
     public function findEventsToday()
     {
-        $todayStarts = mktime(00, 00, 00, date('m'), date('d'), date('Y'));
-        $todayEnds = mktime(23, 59, 59, date('m'), date('d'), date('Y'));
+        $todayStarts = mktime(00, 00, 00, date('m'), date('d'), date('Y')) * 1000;
+        $todayEnds = mktime(23, 59, 59, date('m'), date('d'), date('Y')) * 1000;
         $pipeline = $this->initPipeline();
         $pipeline[] = [
             '$match' => ['$and' => [
@@ -244,7 +244,7 @@ class EmbeddedEventSessionService
      */
     public function findNextEvents()
     {
-        $todayEnds = mktime(23, 59, 59, date('m'), date('d'), date('Y'));
+        $todayEnds = mktime(23, 59, 59, date('m'), date('d'), date('Y')) * 1000;
         $pipeline = $this->initPipeline();
         $pipeline[] = [
             '$match' => [
@@ -270,7 +270,7 @@ class EmbeddedEventSessionService
     {
         $pipeline = $this->initPipeline();
         $date = new \DateTime('now');
-        $now = new UTCDateTime($date->format('U'));
+        $now = new UTCDateTime($date);
         $pipeline[] = [
             '$match' => [
                 'sessions.start' => ['$exists' => true],
@@ -449,7 +449,7 @@ class EmbeddedEventSessionService
      */
     public function findEventsMenu(array $criteria = [], $limit = 0)
     {
-        $todayStarts = mktime(00, 00, 00, date('m'), date('d'), date('Y'));
+        $todayStarts = mktime(00, 00, 00, date('m'), date('d'), date('Y')) * 1000;
 
         $pipeline = [];
 
@@ -486,7 +486,7 @@ class EmbeddedEventSessionService
             ],
         ];
 
-        $time = new UTCDateTime(time());
+        $time = new UTCDateTime();
         $pipeline[] = [
             '$match' => [
                 '$or' => [
@@ -1285,7 +1285,7 @@ class EmbeddedEventSessionService
         $pipeline[] = ['$unwind' => '$sessions'];
         $now = new UTCDateTime();
         $todayDate = new \DateTime('now');
-        $today = new UTCDateTime($todayDate->setTime(0, 0)->format('U'));
+        $today = new UTCDateTime($todayDate->setTime(0, 0));
         $pipeline[] = [
             '$match' => [
                 'sessions.start' => ['$gte' => $today],

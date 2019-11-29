@@ -152,8 +152,8 @@ class StatsService
             $toDate = new \DateTime();
         }
 
-        $fromMongoDate = new UTCDateTime($fromDate->format('U'));
-        $toMongoDate = new UTCDateTime($toDate->format('U'));
+        $fromMongoDate = new UTCDateTime($fromDate);
+        $toMongoDate = new UTCDateTime($toDate);
 
         $pipeline[] = ['$match' => array_merge(
             $matchExtra,
