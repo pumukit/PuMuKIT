@@ -4,8 +4,8 @@ namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use MongoDB\BSON\Regex;
 use MongoDB\BSON\ObjectId;
+use MongoDB\BSON\Regex;
 use Pumukit\SchemaBundle\Document\EmbeddedPerson;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Person;

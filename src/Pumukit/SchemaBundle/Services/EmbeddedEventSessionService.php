@@ -3,8 +3,8 @@
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use MongoDB\BSON\UTCDateTime;
 use MongoDB\BSON\ObjectId;
+use MongoDB\BSON\UTCDateTime;
 use Pumukit\SchemaBundle\Document\EmbeddedEvent;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 

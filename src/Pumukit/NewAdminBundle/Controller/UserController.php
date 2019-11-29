@@ -2,8 +2,8 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use MongoDB\BSON\Regex;
 use MongoDB\BSON\ObjectId;
+use MongoDB\BSON\Regex;
 use Pumukit\NewAdminBundle\Form\Type\UserUpdateType;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\PermissionProfile;

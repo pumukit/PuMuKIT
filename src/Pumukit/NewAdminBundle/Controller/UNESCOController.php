@@ -3,10 +3,8 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Doctrine\ODM\MongoDB\Query\Builder;
-use MongoDB\BSON\UTCDateTime;
 use MongoDB\BSON\ObjectId;
-use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
-use Pagerfanta\Pagerfanta;
+use MongoDB\BSON\UTCDateTime;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectPubType;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;

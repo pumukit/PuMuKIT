@@ -2,8 +2,8 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use MongoDB\BSON\Regex;
 use MongoDB\BSON\ObjectId;
+use MongoDB\BSON\Regex;
 use Pumukit\NewAdminBundle\Form\Type\PersonType;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Person;

@@ -2,9 +2,8 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use MongoDB\BSON\Regex;
 use MongoDB\BSON\ObjectId;
-use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
+use MongoDB\BSON\Regex;
 use Pagerfanta\Pagerfanta;
 use Pumukit\NewAdminBundle\Event\BackofficeEvents;
 use Pumukit\NewAdminBundle\Event\PublicationSubmitEvent;

@@ -2,11 +2,9 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use MongoDB\BSON\UTCDateTime;
-use MongoDB\BSON\Regex;
 use MongoDB\BSON\ObjectId;
-use Pagerfanta\Adapter\ArrayAdapter;
-use Pagerfanta\Pagerfanta;
+use MongoDB\BSON\Regex;
+use MongoDB\BSON\UTCDateTime;
 use Pumukit\NewAdminBundle\Form\Type\EmbeddedEventSessionType;
 use Pumukit\NewAdminBundle\Form\Type\EventsType;
 use Pumukit\NewAdminBundle\Form\Type\SeriesType;
