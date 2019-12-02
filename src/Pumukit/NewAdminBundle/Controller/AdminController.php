@@ -3,8 +3,6 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use MongoDB\BSON\Regex;
-use Pumukit\SchemaBundle\Document\PermissionProfile;
-use Pumukit\SchemaBundle\Document\Role;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

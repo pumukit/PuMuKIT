@@ -3,10 +3,8 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Doctrine\ODM\MongoDB\Query\Builder;
-use MongoDB\BSON\UTCDateTime;
 use MongoDB\BSON\ObjectId;
-use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
-use Pagerfanta\Pagerfanta;
+use MongoDB\BSON\UTCDateTime;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectPubType;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
@@ -771,39 +769,39 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
 
         if (isset($public_date_init, $public_date_finish)) {
             $query->field('public_date')->range(
-                new UTCDateTime(strtotime($public_date_init)),
-                new UTCDateTime(strtotime($public_date_finish))
+                new UTCDateTime(strtotime($public_date_init) * 1000),
+                new UTCDateTime(strtotime($public_date_finish) * 1000)
             );
         } elseif (isset($public_date_init) && !empty($public_date_init)) {
             $date = date($public_date_init.'T23:59:59');
             $query->field('public_date')->range(
-                new UTCDateTime(strtotime($public_date_init)),
-                new UTCDateTime(strtotime($date))
+                new UTCDateTime(strtotime($public_date_init) * 1000),
+                new UTCDateTime(strtotime($date) * 1000)
             );
         } elseif (isset($public_date_finish) && !empty($public_date_finish)) {
             $date = date($public_date_finish.'T23:59:59');
             $query->field('public_date')->range(
-                new UTCDateTime(strtotime($public_date_finish)),
-                new UTCDateTime(strtotime($date))
+                new UTCDateTime(strtotime($public_date_finish) * 1000),
+                new UTCDateTime(strtotime($date) * 1000)
             );
         }
 
         if (isset($record_date_init, $record_date_finish)) {
             $query->field('record_date')->range(
-                new UTCDateTime(strtotime($record_date_init)),
-                new UTCDateTime(strtotime($record_date_finish))
+                new UTCDateTime(strtotime($record_date_init) * 1000),
+                new UTCDateTime(strtotime($record_date_finish) * 1000)
             );
         } elseif (isset($record_date_init)) {
             $date = date($record_date_init.'T23:59:59');
             $query->field('record_date')->range(
-                new UTCDateTime(strtotime($record_date_init)),
-                new UTCDateTime(strtotime($date))
+                new UTCDateTime(strtotime($record_date_init) * 1000),
+                new UTCDateTime(strtotime($date) * 1000)
             );
         } elseif (isset($record_date_finish)) {
             $date = date($record_date_finish.'T23:59:59');
             $query->field('record_date')->range(
-                new UTCDateTime(strtotime($record_date_finish)),
-                new UTCDateTime(strtotime($date))
+                new UTCDateTime(strtotime($record_date_finish) * 1000),
+                new UTCDateTime(strtotime($date) * 1000)
             );
         }
 

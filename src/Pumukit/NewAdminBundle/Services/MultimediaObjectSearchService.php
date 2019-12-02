@@ -3,8 +3,8 @@
 namespace Pumukit\NewAdminBundle\Services;
 
 use Doctrine\ODM\MongoDB\Query\Builder;
-use MongoDB\BSON\Regex;
 use MongoDB\BSON\ObjectId;
+use MongoDB\BSON\Regex;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
 use Pumukit\SchemaBundle\Utils\Search\SearchUtils;

@@ -30,7 +30,7 @@ class StatsService
     {
         $ids = [];
         $fromDate = new \DateTime(sprintf('-%s days', $days));
-        $fromMongoDate = new UTCDateTime($fromDate->format('U'));
+        $fromMongoDate = new UTCDateTime($fromDate);
         $viewsLogColl = $this->dm->getDocumentCollection($this->collectionName);
 
         $pipeline = [
@@ -352,11 +352,11 @@ class StatsService
     {
         $date = [];
         if ($fromDate) {
-            $fromMongoDate = new UTCDateTime($fromDate->format('U'));
+            $fromMongoDate = new UTCDateTime($fromDate);
             $date['$gte'] = $fromMongoDate;
         }
         if ($toDate) {
-            $toMongoDate = new UTCDateTime($toDate->format('U'));
+            $toMongoDate = new UTCDateTime($toDate);
             $date['$lte'] = $toMongoDate;
         }
         if (count($date) > 0) {

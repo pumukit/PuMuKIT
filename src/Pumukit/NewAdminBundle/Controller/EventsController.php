@@ -2,11 +2,9 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use MongoDB\BSON\UTCDateTime;
-use MongoDB\BSON\Regex;
 use MongoDB\BSON\ObjectId;
-use Pagerfanta\Adapter\ArrayAdapter;
-use Pagerfanta\Pagerfanta;
+use MongoDB\BSON\Regex;
+use MongoDB\BSON\UTCDateTime;
 use Pumukit\NewAdminBundle\Form\Type\EmbeddedEventSessionType;
 use Pumukit\NewAdminBundle\Form\Type\EventsType;
 use Pumukit\NewAdminBundle\Form\Type\SeriesType;
@@ -173,8 +171,8 @@ class EventsController extends Controller implements NewAdminControllerInterface
             } elseif ('today' === $type) {
                 $dateStart = new \DateTime(date('Y-m-d'));
                 $dateEnds = new \DateTime(date('Y-m-d 23:59:59'));
-                $dateStart = new UTCDateTime($dateStart->getTimestamp());
-                $dateEnds = new UTCDateTime($dateEnds->getTimestamp());
+                $dateStart = new UTCDateTime($dateStart);
+                $dateEnds = new UTCDateTime($dateEnds);
                 $criteria['embeddedEvent.embeddedEventSession'] = ['$elemMatch' => [
                     'start' => ['$gte' => $dateStart],
                     'ends' => ['$lte' => $dateEnds],
@@ -193,8 +191,8 @@ class EventsController extends Controller implements NewAdminControllerInterface
                 }
             }
             if ($data['date']['from'] && $data['date']['to']) {
-                $start = strtotime($data['date']['from']);
-                $ends = strtotime($data['date']['to'].'23:59:59');
+                $start = strtotime($data['date']['from']) * 1000;
+                $ends = strtotime($data['date']['to'].'23:59:59') * 1000;
 
                 $criteria['embeddedEvent.embeddedEventSession'] = ['$elemMatch' => [
                     'start' => [
@@ -205,11 +203,11 @@ class EventsController extends Controller implements NewAdminControllerInterface
                     ], ]];
             } else {
                 if ($data['date']['from']) {
-                    $date = strtotime($data['date']['from']);
+                    $date = strtotime($data['date']['from']) * 1000;
                     $criteria['embeddedEvent.embeddedEventSession.start'] = ['$gte' => new UTCDateTime($date)];
                 }
                 if ($data['date']['to']) {
-                    $date = strtotime($data['date']['to']);
+                    $date = strtotime($data['date']['to']) * 1000;
                     $criteria['embeddedEvent.embeddedEventSession.ends'] = ['$lte' => new UTCDateTime($date)];
                 }
             }

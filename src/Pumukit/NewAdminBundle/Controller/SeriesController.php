@@ -3,7 +3,6 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use MongoDB\BSON\ObjectId;
-use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectTemplateMetaType;
 use Pumukit\NewAdminBundle\Form\Type\SeriesType;
