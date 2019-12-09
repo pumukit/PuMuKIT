@@ -7,7 +7,7 @@
     <body>
       <trans-unit id="r_lWsHJ" resname="Audio/Video uploaded successfully">
         <source>Audio/Video uploaded successfully</source>
-        <target state="needs-translation">Audio/Video uploaded successfully</target>
+        <target state="translated">L’àudio o el vídeo s’han penjat correctament</target>
       </trans-unit>
       <trans-unit id="x5.NBqq" resname="The video must be encoded to be available at the website. An email will be sent to you when finishing encoding notifying the availability of your video at the website.">
         <source>The video must be encoded to be available at the website. An email will be sent to you when finishing encoding notifying the availability of your video at the website.</source>
