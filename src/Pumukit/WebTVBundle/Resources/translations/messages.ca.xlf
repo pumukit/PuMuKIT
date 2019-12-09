@@ -443,119 +443,119 @@
       </trans-unit>
       <trans-unit id="FV_BbAQ" resname="Submit">
         <source>Submit</source>
-        <target state="needs-translation">Submit</target>
+        <target state="translated">Tramet</target>
       </trans-unit>
       <trans-unit id="1wfcLxk" resname="Logo">
         <source>Logo</source>
-        <target state="needs-translation">Logo</target>
+        <target state="translated">Logotip</target>
       </trans-unit>
       <trans-unit id="9vRoj.I" resname="Send">
         <source>Send</source>
-        <target state="needs-translation">Send</target>
+        <target state="translated">Envia</target>
       </trans-unit>
       <trans-unit id="jRT25y3" resname="Events">
         <source>Events</source>
-        <target state="needs-translation">Events</target>
+        <target state="translated">Esdeveniments</target>
       </trans-unit>
       <trans-unit id="ltvt7Kf" resname="Starts">
         <source>Starts</source>
-        <target state="needs-translation">Starts</target>
+        <target state="translated">Comença</target>
       </trans-unit>
       <trans-unit id="tTs1Fj9" resname="Next session">
         <source>Next session</source>
-        <target state="needs-translation">Next session</target>
+        <target state="translated">Propera sessió</target>
       </trans-unit>
       <trans-unit id="9LBu9tP" resname="To">
         <source>To</source>
-        <target state="needs-translation">To</target>
+        <target state="translated">A</target>
       </trans-unit>
       <trans-unit id="mnIiGid" resname="Questions">
         <source>Questions</source>
-        <target state="needs-translation">Questions</target>
+        <target state="translated">Preguntes</target>
       </trans-unit>
       <trans-unit id="ur3H7no" resname="Download this audio">
         <source>Download this audio</source>
-        <target state="needs-translation">Download this audio</target>
+        <target state="translated">Baixa aquest àudio</target>
       </trans-unit>
       <trans-unit id="8PrrE9j" resname="Download this video">
         <source>Download this video</source>
-        <target state="needs-translation">Download this video</target>
+        <target state="translated">Baixa aquest vídeo</target>
       </trans-unit>
       <trans-unit id="t6n1UY2" resname="Live events">
         <source>Live events</source>
-        <target state="needs-translation">Live events</target>
+        <target state="translated">Esdeveniments en directe</target>
       </trans-unit>
       <trans-unit id="U25e1Sx" resname="No live events now.">
         <source>No live events now.</source>
-        <target state="needs-translation">No live events now.</target>
+        <target state="translated">No hi ha esdeveniments en directe ara mateix.</target>
       </trans-unit>
       <trans-unit id="swD5G4y" resname="There are no scheduled live events. You will find ended live events in the series catalogue or through the media portal search.">
         <source>There are no scheduled live events. You will find ended live events in the series catalogue or through the media portal search.</source>
-        <target state="needs-translation">There are no scheduled live events. You will find ended live events in the series catalogue or through the media portal search.</target>
+        <target state="translated">No hi ha esdeveniments en directe programats. Trobareu els esdeveniments en directe finalitzats al catàleg de sèries o a través de la cerca del portal d’objectes multimèdia.</target>
       </trans-unit>
       <trans-unit id="JIfvQBZ" resname="This page isn't available. Sorry about that.">
         <source>This page isn't available. Sorry about that.</source>
-        <target state="needs-translation">This page isn't available. Sorry about that.</target>
+        <target state="translated">Aquesta pàgina no està disponible. Dispenseu les molèsties.</target>
       </trans-unit>
       <trans-unit id="kw0lAFO" resname="Try searching for something else:">
         <source>Try searching for something else:</source>
-        <target state="needs-translation">Try searching for something else:</target>
+        <target state="translated">Mireu de fer una altra cerca:</target>
       </trans-unit>
       <trans-unit id="OnhpU4i" resname="Home">
         <source>Home</source>
-        <target state="needs-translation">Home</target>
+        <target state="translated">Pàgina d’inici</target>
       </trans-unit>
       <trans-unit id="pITMFRb" resname="By subject catalogue">
         <source>By subject catalogue</source>
-        <target state="needs-translation">By subject catalogue</target>
+        <target state="translated">Per catàleg de temes</target>
       </trans-unit>
       <trans-unit id="nThEPiI" resname="University">
         <source>University</source>
-        <target state="needs-translation">University</target>
+        <target state="translated">Universitat</target>
       </trans-unit>
       <trans-unit id="dvaKdfA" resname="Business">
         <source>Business</source>
-        <target state="needs-translation">Business</target>
+        <target state="translated">Comerç</target>
       </trans-unit>
       <trans-unit id="0NSg446" resname="Natural Sciences">
         <source>Natural Sciences</source>
-        <target state="needs-translation">Natural Sciences</target>
+        <target state="translated">Ciències naturals</target>
       </trans-unit>
       <trans-unit id="Z0fvRV9" resname="Health &amp; Medicine">
         <source>Health &amp; Medicine</source>
-        <target state="needs-translation">Health &amp; Medicine</target>
+        <target state="translated">Salut i medicina</target>
       </trans-unit>
       <trans-unit id="t4wWGP2" resname="Law">
         <source>Law</source>
-        <target state="needs-translation">Law</target>
+        <target state="translated">Dret</target>
       </trans-unit>
       <trans-unit id="HPPfeB0" resname="Social Matters &amp; Education">
         <source>Social Matters &amp; Education</source>
-        <target state="needs-translation">Social Matters &amp; Education</target>
+        <target state="translated">Afers socials i educació</target>
       </trans-unit>
       <trans-unit id="GnUpqxT" resname="Subjects">
         <source>Subjects</source>
-        <target state="needs-translation">Subjects</target>
+        <target state="translated">Assignatures</target>
       </trans-unit>
       <trans-unit id="jW3vDbZ" resname="Now events">
         <source>Now events</source>
-        <target state="needs-translation">Now events</target>
+        <target state="translated">Esdeveniments actuals</target>
       </trans-unit>
       <trans-unit id="u_Iqlyf" resname="Today events">
         <source>Today events</source>
-        <target state="needs-translation">Today events</target>
+        <target state="translated">Esdeveniments d’avui</target>
       </trans-unit>
       <trans-unit id="8wIYotR" resname="Future events">
         <source>Future events</source>
-        <target state="needs-translation">Future events</target>
+        <target state="translated">Esdeveniments previstos</target>
       </trans-unit>
       <trans-unit id="2SnrnwG" resname="Media Thumbnail">
         <source>Media Thumbnail</source>
-        <target state="needs-translation">Media Thumbnail</target>
+        <target state="translated">Miniatura de l’objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="56JB3rr" resname="URL">
         <source>URL</source>
-        <target state="needs-translation">URL</target>
+        <target state="translated">URL</target>
       </trans-unit>
       <trans-unit id="F_V94dr" resname="Iframe">
         <source>Iframe</source>
