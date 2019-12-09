@@ -147,135 +147,135 @@
       </trans-unit>
       <trans-unit id="Lr9qxBC" resname="Low-Priority">
         <source>Low-Priority</source>
-        <target state="needs-translation">Low-Priority</target>
+        <target state="translated">Prioritat baixa</target>
       </trans-unit>
       <trans-unit id="mguqIPS" resname="Normal-Priority">
         <source>Normal-Priority</source>
-        <target state="needs-translation">Normal-Priority</target>
+        <target state="translated">Prioritat normal</target>
       </trans-unit>
       <trans-unit id="wy28cpg" resname="High-Priority">
         <source>High-Priority</source>
-        <target state="needs-translation">High-Priority</target>
+        <target state="translated">Prioritat alta</target>
       </trans-unit>
       <trans-unit id="Kp9S5.y" resname="Video/Audio language">
         <source>Video/Audio language</source>
-        <target state="needs-translation">Video/Audio language</target>
+        <target state="translated">Idioma de l’àudio o vídeo</target>
       </trans-unit>
       <trans-unit id="XiPsajA" resname="Mode">
         <source>Mode</source>
-        <target state="needs-translation">Mode</target>
+        <target state="translated">Mode</target>
       </trans-unit>
       <trans-unit id="e0jJK_e" resname="Inbox on server">
         <source>Inbox on server</source>
-        <target state="needs-translation">Inbox on server</target>
+        <target state="translated">Safata d’entrada al servidor</target>
       </trans-unit>
       <trans-unit id="8vdBP_d" resname="Local hard drive">
         <source>Local hard drive</source>
-        <target state="needs-translation">Local hard drive</target>
+        <target state="translated">Disc dur local</target>
       </trans-unit>
       <trans-unit id="qCDi58t" resname="Inbox directory on server">
         <source>Inbox directory on server</source>
-        <target state="needs-translation">Inbox directory on server</target>
+        <target state="translated">Directori de la safata d’entrada al servidor</target>
       </trans-unit>
       <trans-unit id="v1S3IJZ" resname="Audio/video file">
         <source>Audio/video file</source>
-        <target state="needs-translation">Audio/video file</target>
+        <target state="translated">Fitxer d’àudio o vídeo</target>
       </trans-unit>
       <trans-unit id="gOStBWv" resname="Under">
         <source>Under</source>
-        <target state="needs-translation">Under</target>
+        <target state="translated">Menor de</target>
       </trans-unit>
       <trans-unit id="RmSCf46" resname="Progress">
         <source>Progress</source>
-        <target state="needs-translation">Progress</target>
+        <target state="translated">Progrés</target>
       </trans-unit>
       <trans-unit id="39B8U6X" resname="Empty file field">
         <source>Empty file field</source>
-        <target state="needs-translation">Empty file field</target>
+        <target state="translated">El camp del fitxer està buit</target>
       </trans-unit>
       <trans-unit id="uq3fcPt" resname="Type">
         <source>Type</source>
-        <target state="needs-translation">Type</target>
+        <target state="translated">Tipus</target>
       </trans-unit>
       <trans-unit id="G8yiJzC" resname="Add one single multimedia object">
         <source>Add one single multimedia object</source>
-        <target state="needs-translation">Add one single multimedia object</target>
+        <target state="translated">Afegiu un únic objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="8HHHynz" resname="Add multiple multimedia objects">
         <source>Add multiple multimedia objects</source>
-        <target state="needs-translation">Add multiple multimedia objects</target>
+        <target state="translated">Afegiu diversos objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="n1s3Bkh" resname="The video will be encoded and available soon. An email will be sent to you when the encoding is finished notifying you the availability of your video.">
         <source>The video will be encoded and available soon. An email will be sent to you when the encoding is finished notifying you the availability of your video.</source>
-        <target state="needs-translation">The video will be encoded and available soon. An email will be sent to you when the encoding is finished notifying you the availability of your video.</target>
+        <target state="translated">El vídeo es codificarà i aviat estarà disponible. Rebreu un correu electrònic quan s’acabi la codificació per notificar-vos que el vídeo ja està disponible.</target>
       </trans-unit>
       <trans-unit id="xkqwKmh" resname="Main action">
         <source>Main action</source>
-        <target state="needs-translation">Main action</target>
+        <target state="translated">Acció principal</target>
       </trans-unit>
       <trans-unit id="rF87yjA" resname="Other actions">
         <source>Other actions</source>
-        <target state="needs-translation">Other actions</target>
+        <target state="translated">Altres accions</target>
       </trans-unit>
       <trans-unit id="YJ5DE.c" resname="Back to Media Manager">
         <source>Back to Media Manager</source>
-        <target state="needs-translation">Back to Media Manager</target>
+        <target state="translated">Torna al gestor d’objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="RA85Z.v" resname="back to My Multimedia Series">
         <source>back to My Multimedia Series</source>
-        <target state="needs-translation">back to My Multimedia Series</target>
+        <target state="translated">torna a les meves sèries multimèdia</target>
       </trans-unit>
       <trans-unit id="PVvSGK7" resname="Step %i%: Series">
         <source>Step %i%: Series</source>
-        <target state="needs-translation">Step %i%: Series</target>
+        <target state="translated">Pas %i%: Sèrie</target>
       </trans-unit>
       <trans-unit id=".tDcUBd" resname="Step %i%: Type">
         <source>Step %i%: Type</source>
-        <target state="needs-translation">Step %i%: Type</target>
+        <target state="translated">Pas %i%: Tipus</target>
       </trans-unit>
       <trans-unit id="08NyRGE" resname="Step %i%: Metadata">
         <source>Step %i%: Metadata</source>
-        <target state="needs-translation">Step %i%: Metadata</target>
+        <target state="translated">Pas %i%: Metadades</target>
       </trans-unit>
       <trans-unit id="vXMxh04" resname="Step %i%: File">
         <source>Step %i%: File</source>
-        <target state="needs-translation">Step %i%: File</target>
+        <target state="translated">Pas %i%: Fitxer</target>
       </trans-unit>
       <trans-unit id="i8foJhr" resname="Step %i% Files">
         <source>Step %i% Files</source>
-        <target state="needs-translation">Step %i% Files</target>
+        <target state="translated">Pas %i%: Fitxers</target>
       </trans-unit>
       <trans-unit id="0mHcUcS" resname="Select an inbox folder with the multimedia files">
         <source>Select an inbox folder with the multimedia files</source>
-        <target state="needs-translation">Select an inbox folder with the multimedia files</target>
+        <target state="translated">Seleccioneu una safata d’entrada amb els fitxers multimèdia</target>
       </trans-unit>
       <trans-unit id="a1b7xcD" resname="Upload local file">
         <source>Upload local file</source>
-        <target state="needs-translation">Upload local file</target>
+        <target state="translated">Penja el fitxer local</target>
       </trans-unit>
       <trans-unit id="hl6J3nj" resname="Upload">
         <source>Upload</source>
-        <target state="needs-translation">Upload</target>
+        <target state="translated">Penja</target>
       </trans-unit>
       <trans-unit id="wBHWCXv" resname="License">
         <source>License</source>
-        <target state="needs-translation">License</target>
+        <target state="translated">Llicència</target>
       </trans-unit>
       <trans-unit id="Kweggdq" resname="Accept license">
         <source>Accept license</source>
-        <target state="needs-translation">Accept license</target>
+        <target state="translated">Accepta la llicència</target>
       </trans-unit>
       <trans-unit id="KpaRooJ" resname="You must accept the license to continue.">
         <source>You must accept the license to continue.</source>
-        <target state="needs-translation">You must accept the license to continue.</target>
+        <target state="translated">Heu d’acceptar la llicència per continuar.</target>
       </trans-unit>
       <trans-unit id="FQORaiq" resname="Tag">
         <source>Tag</source>
-        <target state="needs-translation">Tag</target>
+        <target state="translated">Etiqueta</target>
       </trans-unit>
       <trans-unit id="5fZBzo5" resname="Select a tag...">
         <source>Select a tag...</source>
-        <target state="needs-translation">Select a tag...</target>
+        <target state="translated">Selecciona una etiqueta...</target>
       </trans-unit>
       <trans-unit id="axiQO6p" resname="Select a license...">
         <source>Select a license...</source>
