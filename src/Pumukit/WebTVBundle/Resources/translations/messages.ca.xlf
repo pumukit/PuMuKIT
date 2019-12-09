@@ -307,103 +307,103 @@
       </trans-unit>
       <trans-unit id="wYmEDPf" resname="Log in">
         <source>Log in</source>
-        <target state="needs-translation">Log in</target>
+        <target state="translated">Inicia la sessió</target>
       </trans-unit>
       <trans-unit id="dxGvdY." resname="Most viewed since last month">
         <source>Most viewed since last month</source>
-        <target state="needs-translation">Most viewed since last month</target>
+        <target state="translated">Els més vistos des del mes passat</target>
       </trans-unit>
       <trans-unit id="Y03hFHd" resname="Attachments">
         <source>Attachments</source>
-        <target state="needs-translation">Attachments</target>
+        <target state="translated">Adjunts</target>
       </trans-unit>
       <trans-unit id="qf8A9nZ" resname="There are no attachments">
         <source>There are no attachments</source>
-        <target state="needs-translation">There are no attachments</target>
+        <target state="translated">No hi ha adjunts</target>
       </trans-unit>
       <trans-unit id="JwZe7Lz" resname="Share on Facebook">
         <source>Share on Facebook</source>
-        <target state="needs-translation">Share on Facebook</target>
+        <target state="translated">Comparteix al Facebook</target>
       </trans-unit>
       <trans-unit id="oLaJrXb" resname="Share on Google +">
         <source>Share on Google +</source>
-        <target state="needs-translation">Share on Google +</target>
+        <target state="translated">Comparteix al Google+</target>
       </trans-unit>
       <trans-unit id="23BK_RT" resname="Share on Twitter">
         <source>Share on Twitter</source>
-        <target state="needs-translation">Share on Twitter</target>
+        <target state="translated">Comparteix al Twitter</target>
       </trans-unit>
       <trans-unit id="qbNnS8N" resname="Select by year">
         <source>Select by year</source>
-        <target state="needs-translation">Select by year</target>
+        <target state="translated">Selecciona per any</target>
       </trans-unit>
       <trans-unit id="IYGXaTQ" resname="From">
         <source>From</source>
-        <target state="needs-translation">From</target>
+        <target state="translated">Des de</target>
       </trans-unit>
       <trans-unit id="fK_FboA" resname="Until">
         <source>Until</source>
-        <target state="needs-translation">Until</target>
+        <target state="translated">Fins a</target>
       </trans-unit>
       <trans-unit id="ifaDJWD" resname="Year">
         <source>Year</source>
-        <target state="needs-translation">Year</target>
+        <target state="translated">Any</target>
       </trans-unit>
       <trans-unit id="keIPglO" resname="Select by date range">
         <source>Select by date range</source>
-        <target state="needs-translation">Select by date range</target>
+        <target state="translated">Selecciona per franja de data</target>
       </trans-unit>
       <trans-unit id="K1BVl9q" resname="Any">
         <source>Any</source>
-        <target state="needs-translation">Any</target>
+        <target state="translated">Qualsevol</target>
       </trans-unit>
       <trans-unit id="65ZmAE4" resname="Search by series">
         <source>Search by series</source>
-        <target state="needs-translation">Search by series</target>
+        <target state="translated">Cerca per sèries</target>
       </trans-unit>
       <trans-unit id="lpzL089" resname="Email">
         <source>Email</source>
-        <target state="needs-translation">Email</target>
+        <target state="translated">Correu electrònic</target>
       </trans-unit>
       <trans-unit id="fWDZgc4" resname="Search by multimedia objects">
         <source>Search by multimedia objects</source>
-        <target state="needs-translation">Search by multimedia objects</target>
+        <target state="translated">Cerca per objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="9ZBS4FK" resname="Multimedia objects search">
         <source>Multimedia objects search</source>
-        <target state="needs-translation">Multimedia objects search</target>
+        <target state="translated">Cerca d’objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="ILgQc9Q" resname="Total search results:">
         <source>Total search results:</source>
-        <target state="needs-translation">Total search results:</target>
+        <target state="translated">Total de resultats de la cerca:</target>
       </trans-unit>
       <trans-unit id="6r3q15n" resname="Not multimedia objects found">
         <source>Not multimedia objects found</source>
-        <target state="needs-translation">Not multimedia objects found</target>
+        <target state="translated">No s’ha trobat cap objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="CuFdbuE" resname="Private audio">
         <source>Private audio</source>
-        <target state="needs-translation">Private audio</target>
+        <target state="translated">Àudio privat</target>
       </trans-unit>
       <trans-unit id="tchdntm" resname="Log in with a valid user is required to watch it">
         <source>Log in with a valid user is required to watch it</source>
-        <target state="needs-translation">Log in with a valid user is required to watch it</target>
+        <target state="translated">Cal iniciar la sessió amb un usuari vàlid per mirar-lo</target>
       </trans-unit>
       <trans-unit id="hrl4QaS" resname="Enter a valid password to watch it">
         <source>Enter a valid password to watch it</source>
-        <target state="needs-translation">Enter a valid password to watch it</target>
+        <target state="translated">Introduïu una contrasenya vàlida per mirar-lo</target>
       </trans-unit>
       <trans-unit id="AmXL6i2" resname="Introduce a password">
         <source>Introduce a password</source>
-        <target state="needs-translation">Introduce a password</target>
+        <target state="translated">Introduïu una contrasenya</target>
       </trans-unit>
       <trans-unit id="DyCJYAX" resname="Password is not valid">
         <source>Password is not valid</source>
-        <target state="needs-translation">Password is not valid</target>
+        <target state="translated">La contrasenya no és vàlida</target>
       </trans-unit>
       <trans-unit id="Le1KPuZ" resname="Log In">
         <source>Log In</source>
-        <target state="needs-translation">Log In</target>
+        <target state="translated">Inicieu la sessió</target>
       </trans-unit>
       <trans-unit id="8aBdu0t" resname="Enter pass">
         <source>Enter pass</source>
