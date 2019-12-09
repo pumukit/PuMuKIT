@@ -279,63 +279,63 @@
       </trans-unit>
       <trans-unit id="axiQO6p" resname="Select a license...">
         <source>Select a license...</source>
-        <target state="needs-translation">Select a license...</target>
+        <target state="translated">Selecciona una llicència...</target>
       </trans-unit>
       <trans-unit id="RLAnzlw" resname="Accept the license">
         <source>Accept the license</source>
-        <target state="needs-translation">Accept the license</target>
+        <target state="translated">Accepta la llicència</target>
       </trans-unit>
       <trans-unit id="djjaiGU" resname="Accept license.">
         <source>Accept license.</source>
-        <target state="needs-translation">Accept license.</target>
+        <target state="translated">Accepteu la llicència.</target>
       </trans-unit>
       <trans-unit id="OQFiIn2" resname="Step %i%: License">
         <source>Step %i%: License</source>
-        <target state="needs-translation">Step %i%: License</target>
+        <target state="translated">Pas %i%: Llicència</target>
       </trans-unit>
       <trans-unit id="VgLM3Db" resname="Step %i%: Files">
         <source>Step %i%: Files</source>
-        <target state="needs-translation">Step %i%: Files</target>
+        <target state="translated">Pas %i%: Fitxers</target>
       </trans-unit>
       <trans-unit id="COpQaKq" resname="Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.">
         <source>Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.</source>
-        <target state="needs-translation">Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.</target>
+        <target state="translated">No es permet penjar vídeos més grans de %max_filesize%. Es recomana una resolució de vídeo de 4:3 o 16:9 per garantir el funcionament correcte del procés de càrrega de vídeos al portal web.</target>
       </trans-unit>
       <trans-unit id="WyeFaHz" resname="Empty title">
         <source>Empty title</source>
-        <target state="needs-translation">Empty title</target>
+        <target state="translated">Títol buit</target>
       </trans-unit>
       <trans-unit id="dpAPG.0" resname="Back">
         <source>Back</source>
-        <target state="needs-translation">Back</target>
+        <target state="translated">Torna</target>
       </trans-unit>
       <trans-unit id="qCleCP9" resname="Series">
         <source>Series</source>
-        <target state="needs-translation">Series</target>
+        <target state="translated">Sèrie</target>
       </trans-unit>
       <trans-unit id="GP3VSbL" resname="New">
         <source>New</source>
-        <target state="needs-translation">New</target>
+        <target state="translated">Nova</target>
       </trans-unit>
       <trans-unit id="ZI.xJ3." resname="ERROR!!">
         <source>ERROR!!</source>
-        <target state="needs-translation">ERROR!!</target>
+        <target state="translated">ERROR!</target>
       </trans-unit>
       <trans-unit id="X9RxnLY" resname="There was an error:">
         <source>There was an error:</source>
-        <target state="needs-translation">There was an error:</target>
+        <target state="translated">S’ha produït un error:</target>
       </trans-unit>
       <trans-unit id="kihsarY" resname="Series title">
         <source>Series title</source>
-        <target state="needs-translation">Series title</target>
+        <target state="translated">Títol de la sèrie</target>
       </trans-unit>
       <trans-unit id="2ZvNeLW" resname="Upload file">
         <source>Upload file</source>
-        <target state="needs-translation">Upload file</target>
+        <target state="translated">Penja el fitxer</target>
       </trans-unit>
       <trans-unit id="8ze7Pzt" resname="Multimedia Object title">
         <source>Multimedia Object title</source>
-        <target state="needs-translation">Multimedia Object title</target>
+        <target state="translated">Títol de l’objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="kg5BPH1" resname="Status">
         <source>Status</source>
