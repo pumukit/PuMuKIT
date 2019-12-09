@@ -7,83 +7,83 @@
     <body>
       <trans-unit id="e1wLqeS" resname="Health Sciences">
         <source>Health Sciences</source>
-        <target state="needs-translation">Health Sciences</target>
+        <target state="translated">Ciències de la salut</target>
       </trans-unit>
       <trans-unit id="p2zJo2w" resname="Humanities">
         <source>Humanities</source>
-        <target state="needs-translation">Humanities</target>
+        <target state="translated">Humanitats</target>
       </trans-unit>
       <trans-unit id="7_ynbr1" resname="Experimental sciences">
         <source>Experimental sciences</source>
-        <target state="needs-translation">Experimental sciences</target>
+        <target state="translated">Ciències experimentals</target>
       </trans-unit>
       <trans-unit id="SZY.Lp7" resname="Technical science">
         <source>Technical science</source>
-        <target state="needs-translation">Technical science</target>
+        <target state="translated">Ciències tècniques</target>
       </trans-unit>
       <trans-unit id="MUpUMZs" resname="Social and Legal sciences">
         <source>Social and Legal sciences</source>
-        <target state="needs-translation">Social and Legal sciences</target>
+        <target state="translated">Ciències socials i jurídiques</target>
       </trans-unit>
       <trans-unit id="Rks8nO0" resname="PuMuKIT">
         <source>PuMuKIT</source>
-        <target state="needs-translation">PuMuKIT</target>
+        <target state="translated">PuMuKIT</target>
       </trans-unit>
       <trans-unit id="oByF8Cc" resname="PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.">
         <source>PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.</source>
-        <target state="needs-translation">PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.</target>
+        <target state="translated">El PuMuKIT (PUblicador MUltimèdia en KIT) permet publicar a través d’Internet els continguts audiovisuals produïts en una institució, universitat, etc. El PuMuKIT publica els continguts multimèdia emmagatzemats a la vostra base de dades de dues maneres diferents: generant un portal web i un portal WebTV i creant fluxos RSS compatibles amb l’ARCA.</target>
       </trans-unit>
       <trans-unit id="MKOwLL7" resname="No title">
         <source>No title</source>
-        <target state="needs-translation">No title</target>
+        <target state="translated">Sense títol</target>
       </trans-unit>
       <trans-unit id="6njlRCj" resname="Videos you may also be interested in">
         <source>Videos you may also be interested in</source>
-        <target state="needs-translation">Videos you may also be interested in</target>
+        <target state="translated">Vídeos que també us poden interessar</target>
       </trans-unit>
       <trans-unit id="maiyxjk" resname="Videos from same Series">
         <source>Videos from same Series</source>
-        <target state="needs-translation">Videos from same Series</target>
+        <target state="translated">Vídeos de la mateixa sèrie</target>
       </trans-unit>
       <trans-unit id="V6sZ0yf" resname="Record Date">
         <source>Record Date</source>
-        <target state="needs-translation">Record Date</target>
+        <target state="translated">Data de gravació</target>
       </trans-unit>
       <trans-unit id="1TS_gp4" resname="Video">
         <source>Video</source>
-        <target state="needs-translation">Video</target>
+        <target state="translated">Vídeo</target>
       </trans-unit>
       <trans-unit id="GyjReFW" resname="Viewed">
         <source>Viewed</source>
-        <target state="needs-translation">Viewed</target>
+        <target state="translated">Visualitzat</target>
       </trans-unit>
       <trans-unit id="M2B0gF." resname="time">
         <source>time</source>
-        <target state="needs-translation">time</target>
+        <target state="translated">vegada</target>
       </trans-unit>
       <trans-unit id="K.YaO8h" resname="times">
         <source>times</source>
-        <target state="needs-translation">times</target>
+        <target state="translated">vegades</target>
       </trans-unit>
       <trans-unit id="Y48fpVR" resname="{0}times|{1}time|]1,Inf]times">
         <source>{0}times|{1}time|]1,Inf]times</source>
-        <target state="needs-translation">{0}times|{1}time|]1,Inf]times</target>
+        <target state="translated">{0}vegades|{1}vegada|]1,Inf]vegades</target>
       </trans-unit>
       <trans-unit id="qCleCP9" resname="Series">
         <source>Series</source>
-        <target state="needs-translation">Series</target>
+        <target state="translated">Sèrie</target>
       </trans-unit>
       <trans-unit id="yaljlGP" resname="Videos">
         <source>Videos</source>
-        <target state="needs-translation">Videos</target>
+        <target state="translated">Vídeos</target>
       </trans-unit>
       <trans-unit id="IehJKTi" resname="Hours">
         <source>Hours</source>
-        <target state="needs-translation">Hours</target>
+        <target state="translated">Hores</target>
       </trans-unit>
       <trans-unit id="wTlux3Y" resname="There are no videos with these specifications">
         <source>There are no videos with these specifications</source>
-        <target state="needs-translation">There are no videos with these specifications</target>
+        <target state="translated">No hi ha vídeos amb aquestes especificacions</target>
       </trans-unit>
       <trans-unit id="eNInDAJ" resname="Date of holding">
         <source>Date of holding</source>
