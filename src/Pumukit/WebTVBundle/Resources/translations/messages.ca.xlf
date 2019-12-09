@@ -207,103 +207,103 @@
       </trans-unit>
       <trans-unit id="uLHYlMa" resname="Categories">
         <source>Categories</source>
-        <target state="needs-translation">Categories</target>
+        <target state="translated">Categories</target>
       </trans-unit>
       <trans-unit id="jh2INdQ" resname="Most viewed">
         <source>Most viewed</source>
-        <target state="needs-translation">Most viewed</target>
+        <target state="translated">Més visualitzats</target>
       </trans-unit>
       <trans-unit id="luxdM4r" resname="Recently added">
         <source>Recently added</source>
-        <target state="needs-translation">Recently added</target>
+        <target state="translated">Afegits recentment</target>
       </trans-unit>
       <trans-unit id="bSMv3zK" resname="Full Catalogue">
         <source>Full Catalogue</source>
-        <target state="needs-translation">Full Catalogue</target>
+        <target state="translated">Catàleg complet</target>
       </trans-unit>
       <trans-unit id="yRKQJb0" resname="Sort by">
         <source>Sort by</source>
-        <target state="needs-translation">Sort by</target>
+        <target state="translated">Ordena per</target>
       </trans-unit>
       <trans-unit id="mcQKtAW" resname="Date">
         <source>Date</source>
-        <target state="needs-translation">Date</target>
+        <target state="translated">Data</target>
       </trans-unit>
       <trans-unit id="cuTTnHc" resname="Alphabetically">
         <source>Alphabetically</source>
-        <target state="needs-translation">Alphabetically</target>
+        <target state="translated">Alfabèticament</target>
       </trans-unit>
       <trans-unit id="WwQid6I" resname="Recording date">
         <source>Recording date</source>
-        <target state="needs-translation">Recording date</target>
+        <target state="translated">Data de gravació</target>
       </trans-unit>
       <trans-unit id="n8rDDKz" resname="Marks:">
         <source>Marks:</source>
-        <target state="needs-translation">Marks:</target>
+        <target state="translated">Marques:</target>
       </trans-unit>
       <trans-unit id=".RChRul" resname="Materials">
         <source>Materials</source>
-        <target state="needs-translation">Materials</target>
+        <target state="translated">Materials</target>
       </trans-unit>
       <trans-unit id="w2V3GZW" resname="There is no materials">
         <source>There is no materials</source>
-        <target state="needs-translation">There is no materials</target>
+        <target state="translated">No hi ha materials</target>
       </trans-unit>
       <trans-unit id="fl18mLs" resname="Share this video">
         <source>Share this video</source>
-        <target state="needs-translation">Share this video</target>
+        <target state="translated">Comparteix aquest vídeo</target>
       </trans-unit>
       <trans-unit id="c0.XezY" resname="URL:">
         <source>URL:</source>
-        <target state="needs-translation">URL:</target>
+        <target state="translated">URL:</target>
       </trans-unit>
       <trans-unit id="Qw_p6ul" resname="IFRAME:">
         <source>IFRAME:</source>
-        <target state="needs-translation">IFRAME:</target>
+        <target state="translated">IFRAME:</target>
       </trans-unit>
       <trans-unit id="pP5lJk7" resname="Language">
         <source>Language</source>
-        <target state="needs-translation">Language</target>
+        <target state="translated">Idioma</target>
       </trans-unit>
       <trans-unit id="8NXUTbx" resname="Private video">
         <source>Private video</source>
-        <target state="needs-translation">Private video</target>
+        <target state="translated">Vídeo privat</target>
       </trans-unit>
       <trans-unit id="zduNAuo" resname="{0}0 Videos|{1}%count% Video|]1,Inf[%count% Videos">
         <source>{0}0 Videos|{1}%count% Video|]1,Inf[%count% Videos</source>
-        <target state="needs-translation">{0}0 Videos|{1}%count% Video|]1,Inf[%count% Videos</target>
+        <target state="translated">{0}0 vídeos|{1}%count% vídeo|]1,Inf[%count% vídeos</target>
       </trans-unit>
       <trans-unit id="YcpZSUd" resname="Show videos">
         <source>Show videos</source>
-        <target state="needs-translation">Show videos</target>
+        <target state="translated">Mostra els vídeos</target>
       </trans-unit>
       <trans-unit id="HirXZpT" resname="No resources available">
         <source>No resources available</source>
-        <target state="needs-translation">No resources available</target>
+        <target state="translated">No hi ha recursos disponibles</target>
       </trans-unit>
       <trans-unit id="OxlkZOz" resname="Private Video">
         <source>Private Video</source>
-        <target state="needs-translation">Private Video</target>
+        <target state="translated">Vídeo privat</target>
       </trans-unit>
       <trans-unit id="BcxKeUd" resname="This video is private with restricted access">
         <source>This video is private with restricted access</source>
-        <target state="needs-translation">This video is private with restricted access</target>
+        <target state="translated">Aquest vídeo és privat i té l’accés restringit</target>
       </trans-unit>
       <trans-unit id="Qr4xNv4" resname="Log in is required to watch it">
         <source>Log in is required to watch it</source>
-        <target state="needs-translation">Log in is required to watch it</target>
+        <target state="translated">Cal iniciar la sessió per mirar-lo</target>
       </trans-unit>
       <trans-unit id="s6ikH_i" resname="Go to back-office">
         <source>Go to back-office</source>
-        <target state="needs-translation">Go to back-office</target>
+        <target state="translated">Vés al back office</target>
       </trans-unit>
       <trans-unit id="ZWiU94y" resname="Manage my videos">
         <source>Manage my videos</source>
-        <target state="needs-translation">Manage my videos</target>
+        <target state="translated">Gestiona els meus vídeos</target>
       </trans-unit>
       <trans-unit id="SWFhRVF" resname="Log out">
         <source>Log out</source>
-        <target state="needs-translation">Log out</target>
+        <target state="translated">Finalitza la sessió</target>
       </trans-unit>
       <trans-unit id="wYmEDPf" resname="Log in">
         <source>Log in</source>
