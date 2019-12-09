@@ -559,27 +559,27 @@
       </trans-unit>
       <trans-unit id="F_V94dr" resname="Iframe">
         <source>Iframe</source>
-        <target state="needs-translation">Iframe</target>
+        <target state="translated">Iframe</target>
       </trans-unit>
       <trans-unit id="GoAAU4B" resname="Twitter icon">
         <source>Twitter icon</source>
-        <target state="needs-translation">Twitter icon</target>
+        <target state="translated">Icona del Twitter</target>
       </trans-unit>
       <trans-unit id="tKBwotN" resname="loading">
         <source>loading</source>
-        <target state="needs-translation">loading</target>
+        <target state="translated">s’està carregant</target>
       </trans-unit>
       <trans-unit id="iCgsLsi" resname="Most viewed on the last month">
         <source>Most viewed on the last month</source>
-        <target state="needs-translation">Most viewed on the last month</target>
+        <target state="translated">Els més vistos del mes passat</target>
       </trans-unit>
       <trans-unit id="wodtiBE" resname="Hightlight">
         <source>Hightlight</source>
-        <target state="needs-translation">Hightlight</target>
+        <target state="translated">Destaca</target>
       </trans-unit>
       <trans-unit id="9cm9ExS" resname="Show more">
         <source>Show more</source>
-        <target state="needs-translation">Show more</target>
+        <target state="translated">Mostra’n més</target>
       </trans-unit>
       <trans-unit id="nJRvhul" resname="Event pic">
         <source>Event pic</source>
