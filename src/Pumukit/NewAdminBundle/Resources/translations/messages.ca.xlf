@@ -7,131 +7,131 @@
     <body>
       <trans-unit id="0eH6Xwj" resname="create new broadcast">
         <source>create new broadcast</source>
-        <target state="needs-translation">create new broadcast</target>
+        <target state="translated">crea una emissió nova</target>
       </trans-unit>
       <trans-unit id="iYiIF7t" resname="There was an error in creating the Broadcast.">
         <source>There was an error in creating the Broadcast.</source>
-        <target state="needs-translation">There was an error in creating the Broadcast.</target>
+        <target state="translated">S’ha produït un error en crear l’emissió.</target>
       </trans-unit>
       <trans-unit id="sEghCMK" resname="Broadcast successfully created.">
         <source>Broadcast successfully created.</source>
-        <target state="needs-translation">Broadcast successfully created.</target>
+        <target state="translated">L’emissió s’ha creat correctament.</target>
       </trans-unit>
       <trans-unit id="fZ63rLE" resname="Close">
         <source>Close</source>
-        <target state="needs-translation">Close</target>
+        <target state="translated">Tanca</target>
       </trans-unit>
       <trans-unit id="3Qrnpcv" resname="Save changes">
         <source>Save changes</source>
-        <target state="needs-translation">Save changes</target>
+        <target state="translated">Desa els canvis</target>
       </trans-unit>
       <trans-unit id="U_MugDs" resname="You don't have enough permissions to access this content.">
         <source>You don't have enough permissions to access this content.</source>
-        <target state="needs-translation">You don't have enough permissions to access this content.</target>
+        <target state="translated">No teniu prou permisos per accedir a aquest contingut.</target>
       </trans-unit>
       <trans-unit id="ScJmuqq" resname="Search">
         <source>Search</source>
-        <target state="needs-translation">Search</target>
+        <target state="translated">Cerca</target>
       </trans-unit>
       <trans-unit id="3NHVIj9" resname="Name">
         <source>Name</source>
-        <target state="needs-translation">Name</target>
+        <target state="translated">Nom</target>
       </trans-unit>
       <trans-unit id="Ab4wu0o" resname="reset">
         <source>reset</source>
-        <target state="needs-translation">reset</target>
+        <target state="translated">reinicialitza</target>
       </trans-unit>
       <trans-unit id="38M3a4J" resname="filter">
         <source>filter</source>
-        <target state="needs-translation">filter</target>
+        <target state="translated">filtra</target>
       </trans-unit>
       <trans-unit id="cv5nXnE" resname="Broadcast profiles">
         <source>Broadcast profiles</source>
-        <target state="needs-translation">Broadcast profiles</target>
+        <target state="translated">Perfils d’emissió</target>
       </trans-unit>
       <trans-unit id="YyyQsdx" resname="Actions on selected items">
         <source>Actions on selected items</source>
-        <target state="needs-translation">Actions on selected items</target>
+        <target state="translated">Accions sobre els elements seleccionats</target>
       </trans-unit>
       <trans-unit id="sQf8vSO" resname="Select an action...">
         <source>Select an action...</source>
-        <target state="needs-translation">Select an action...</target>
+        <target state="translated">Selecciona una acció...</target>
       </trans-unit>
       <trans-unit id="0qtdRv7" resname="Delete selected">
         <source>Delete selected</source>
-        <target state="needs-translation">Delete selected</target>
+        <target state="translated">Elimina els elements seleccionats</target>
       </trans-unit>
       <trans-unit id="GP3VSbL" resname="New">
         <source>New</source>
-        <target state="needs-translation">New</target>
+        <target state="translated">Nou</target>
       </trans-unit>
       <trans-unit id="uq3fcPt" resname="Type">
         <source>Type</source>
-        <target state="needs-translation">Type</target>
+        <target state="translated">Tipus</target>
       </trans-unit>
       <trans-unit id="pCO0d3d" resname="Profile Name">
         <source>Profile Name</source>
-        <target state="needs-translation">Profile Name</target>
+        <target state="translated">Nom del perfil</target>
       </trans-unit>
       <trans-unit id="Um4Ah8w" resname="Description">
         <source>Description</source>
-        <target state="needs-translation">Description</target>
+        <target state="translated">Descripció</target>
       </trans-unit>
       <trans-unit id="rCCle.3" resname="Hide">
         <source>Hide</source>
-        <target state="needs-translation">Hide</target>
+        <target state="translated">Oculta</target>
       </trans-unit>
       <trans-unit id="Ss7NrbC" resname="Mm.Obj.">
         <source>Mm.Obj.</source>
-        <target state="needs-translation">Mm.Obj.</target>
+        <target state="translated">Obj. multim.</target>
       </trans-unit>
       <trans-unit id="oK_.9dN" resname="There are no broadcasts with those values.">
         <source>There are no broadcasts with those values.</source>
-        <target state="needs-translation">There are no broadcasts with those values.</target>
+        <target state="translated">No hi ha emissions amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="OEv5eU3" resname="Edit Broadcast">
         <source>Edit Broadcast</source>
-        <target state="needs-translation">Edit Broadcast</target>
+        <target state="translated">Edita l’emissió</target>
       </trans-unit>
       <trans-unit id="26SyAGA" resname="Select this broadcast by default">
         <source>Select this broadcast by default</source>
-        <target state="needs-translation">Select this broadcast by default</target>
+        <target state="translated">Selecciona aquesta emissió per defecte</target>
       </trans-unit>
       <trans-unit id="dLyPzZK" resname="Default broadcast changed to">
         <source>Default broadcast changed to</source>
-        <target state="needs-translation">Default broadcast changed to</target>
+        <target state="translated">L’emissió per defecte ha canviat a</target>
       </trans-unit>
       <trans-unit id="eQZz5nG" resname="{0} broadcasts|{1} broadcast|]1,Inf] broadcasts">
         <source>{0} broadcasts|{1} broadcast|]1,Inf] broadcasts</source>
-        <target state="needs-translation">{0} broadcasts|{1} broadcast|]1,Inf] broadcasts</target>
+        <target state="translated">{0} emissions|{1} emissió|]1,Inf] emissions</target>
       </trans-unit>
       <trans-unit id="uQjDk6r" resname="Cancel current search">
         <source>Cancel current search</source>
-        <target state="needs-translation">Cancel current search</target>
+        <target state="translated">Cancel·la la cerca actual</target>
       </trans-unit>
       <trans-unit id="tUVjur1" resname="Cancel search">
         <source>Cancel search</source>
-        <target state="needs-translation">Cancel search</target>
+        <target state="translated">Cancel·la la cerca</target>
       </trans-unit>
       <trans-unit id="HkcMWkl" resname="modify broadcast">
         <source>modify broadcast</source>
-        <target state="needs-translation">modify broadcast</target>
+        <target state="translated">modifica l’emissió</target>
       </trans-unit>
       <trans-unit id="s_ycw1o" resname="There was an error in updating the Broadcast.">
         <source>There was an error in updating the Broadcast.</source>
-        <target state="needs-translation">There was an error in updating the Broadcast.</target>
+        <target state="translated">S’ha produït un error en actualitzar l’emissió.</target>
       </trans-unit>
       <trans-unit id="Be6F0F5" resname="Broadcast successfully updated.">
         <source>Broadcast successfully updated.</source>
-        <target state="needs-translation">Broadcast successfully updated.</target>
+        <target state="translated">L’emissió s’ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="Z7aWRoY" resname="Dashboard">
         <source>Dashboard</source>
-        <target state="needs-translation">Dashboard</target>
+        <target state="translated">Quadre de comandament</target>
       </trans-unit>
       <trans-unit id="ztC85.k" resname="This page uses Javascript to show you a Timeline.">
         <source>This page uses Javascript to show you a Timeline.</source>
-        <target state="needs-translation">This page uses Javascript to show you a Timeline.</target>
+        <target state="translated">Aquesta pàgina fa servir el Javascript per mostrar-vos una cronologia.</target>
       </trans-unit>
       <trans-unit id="s0f7i8q" resname="Please enable Javascript in your browser to see the full page.">
         <source>Please enable Javascript in your browser to see the full page.</source>
