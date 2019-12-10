@@ -103,6 +103,6 @@ class Material extends Element
      */
     public function getLanguage()
     {
-        return $this->language;
+        return $this->language ?? '';
     }
 }
