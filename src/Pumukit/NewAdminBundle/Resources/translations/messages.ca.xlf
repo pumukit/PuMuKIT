@@ -3793,7 +3793,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="GyjReFW" resname="Viewed">
         <source>Viewed</source>
-        <target state="needs-translation">Viewed</target>
+        <target state="translated">Visualitzat</target>
       </trans-unit>
       <trans-unit id="Y48fpVR" resname="{0}times|{1}time|]1,Inf]times">
         <source>{0}times|{1}time|]1,Inf]times</source>
