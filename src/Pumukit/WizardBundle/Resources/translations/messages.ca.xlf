@@ -339,7 +339,7 @@
       </trans-unit>
       <trans-unit id="kg5BPH1" resname="Status">
         <source>Status</source>
-        <target state="needs-translation">Status</target>
+        <target state="translated">Estat</target>
       </trans-unit>
     </body>
   </file>
