@@ -135,195 +135,195 @@
       </trans-unit>
       <trans-unit id="s0f7i8q" resname="Please enable Javascript in your browser to see the full page.">
         <source>Please enable Javascript in your browser to see the full page.</source>
-        <target state="needs-translation">Please enable Javascript in your browser to see the full page.</target>
+        <target state="translated">Habiliteu el Javascript al navegador per veure la pàgina completa.</target>
       </trans-unit>
       <trans-unit id="hWnvxO1" resname="Thank you.">
         <source>Thank you.</source>
-        <target state="needs-translation">Thank you.</target>
+        <target state="translated">Gràcies.</target>
       </trans-unit>
       <trans-unit id="kktIm6H" resname="Go to series WebTV page">
         <source>Go to series WebTV page</source>
-        <target state="needs-translation">Go to series WebTV page</target>
+        <target state="translated">Ves a la pàgina del portal WebTV de sèries</target>
       </trans-unit>
       <trans-unit id="mcQKtAW" resname="Date">
         <source>Date</source>
-        <target state="needs-translation">Date</target>
+        <target state="translated">Data</target>
       </trans-unit>
       <trans-unit id="Vlmffir" resname="Img">
         <source>Img</source>
-        <target state="needs-translation">Img</target>
+        <target state="translated">Img</target>
       </trans-unit>
       <trans-unit id="Th9Jqci" resname="Event">
         <source>Event</source>
-        <target state="needs-translation">Event</target>
+        <target state="translated">Esdeveniment</target>
       </trans-unit>
       <trans-unit id="WRk1sVs" resname="Public">
         <source>Public</source>
-        <target state="needs-translation">Public</target>
+        <target state="translated">Públic</target>
       </trans-unit>
       <trans-unit id="o_n3FSn" resname="There are no live events with those values.">
         <source>There are no live events with those values.</source>
-        <target state="needs-translation">There are no live events with those values.</target>
+        <target state="translated">No hi ha esdeveniments en directe amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="mAV5Fuu" resname="Edit Event">
         <source>Edit Event</source>
-        <target state="needs-translation">Edit Event</target>
+        <target state="translated">Edita l’esdeveniment</target>
       </trans-unit>
       <trans-unit id="Lw7oMZR" resname="{0} live events|{1} live event|]1,Inf] live events">
         <source>{0} live events|{1} live event|]1,Inf] live events</source>
-        <target state="needs-translation">{0} live events|{1} live event|]1,Inf] live events</target>
+        <target state="translated">{0} esdeveniments en directe|{1} esdeveniment en directe|]1,Inf] esdeveniments en directe</target>
       </trans-unit>
       <trans-unit id="Hc3dW9O" resname="MONDAY">
         <source>MONDAY</source>
-        <target state="needs-translation">MONDAY</target>
+        <target state="translated">DILLUNS</target>
       </trans-unit>
       <trans-unit id="RjiUT1E" resname="TUESDAY">
         <source>TUESDAY</source>
-        <target state="needs-translation">TUESDAY</target>
+        <target state="translated">DIMARTS</target>
       </trans-unit>
       <trans-unit id="Gy8aR2z" resname="WEDNESDAY">
         <source>WEDNESDAY</source>
-        <target state="needs-translation">WEDNESDAY</target>
+        <target state="translated">DIMECRES</target>
       </trans-unit>
       <trans-unit id="iIVMQP1" resname="THURSDAY">
         <source>THURSDAY</source>
-        <target state="needs-translation">THURSDAY</target>
+        <target state="translated">DIJOUS</target>
       </trans-unit>
       <trans-unit id="v52b9.x" resname="FRIDAY">
         <source>FRIDAY</source>
-        <target state="needs-translation">FRIDAY</target>
+        <target state="translated">DIVENDRES</target>
       </trans-unit>
       <trans-unit id="r56W5Jg" resname="SATURDAY">
         <source>SATURDAY</source>
-        <target state="needs-translation">SATURDAY</target>
+        <target state="translated">DISSABTE</target>
       </trans-unit>
       <trans-unit id="Crc5ubF" resname="SUNDAY">
         <source>SUNDAY</source>
-        <target state="needs-translation">SUNDAY</target>
+        <target state="translated">DIUMENGE</target>
       </trans-unit>
       <trans-unit id="pXsIpIC" resname="Previous">
         <source>Previous</source>
-        <target state="needs-translation">Previous</target>
+        <target state="translated">Anterior</target>
       </trans-unit>
       <trans-unit id="6kFxro1" resname="TODAY">
         <source>TODAY</source>
-        <target state="needs-translation">TODAY</target>
+        <target state="translated">AVUI</target>
       </trans-unit>
       <trans-unit id="H.V6Kdf" resname="Next">
         <source>Next</source>
-        <target state="needs-translation">Next</target>
+        <target state="translated">Següent</target>
       </trans-unit>
       <trans-unit id="uZRevsn" resname="create new live event">
         <source>create new live event</source>
-        <target state="needs-translation">create new live event</target>
+        <target state="translated">crea un esdeveniment en directe nou</target>
       </trans-unit>
       <trans-unit id="IYGXaTQ" resname="From">
         <source>From</source>
-        <target state="needs-translation">From</target>
+        <target state="translated">Des de</target>
       </trans-unit>
       <trans-unit id="9LBu9tP" resname="To">
         <source>To</source>
-        <target state="needs-translation">To</target>
+        <target state="translated">Fins a</target>
       </trans-unit>
       <trans-unit id="PCxKv.u" resname="Live broadcastings">
         <source>Live broadcastings</source>
-        <target state="needs-translation">Live broadcastings</target>
+        <target state="translated">Emissions en directe</target>
       </trans-unit>
       <trans-unit id="QFIGm0l" resname="Create new live event">
         <source>Create new live event</source>
-        <target state="needs-translation">Create new live event</target>
+        <target state="translated">Crea un esdeveniment en directe nou</target>
       </trans-unit>
       <trans-unit id="6kYmTOY" resname="Select any live event.">
         <source>Select any live event.</source>
-        <target state="needs-translation">Select any live event.</target>
+        <target state="translated">Selecciona qualsevol esdeveniment en directe.</target>
       </trans-unit>
       <trans-unit id="byAvVKe" resname="List">
         <source>List</source>
-        <target state="needs-translation">List</target>
+        <target state="translated">Llista</target>
       </trans-unit>
       <trans-unit id="1dCjC1F" resname="Calendar">
         <source>Calendar</source>
-        <target state="needs-translation">Calendar</target>
+        <target state="translated">Calendari</target>
       </trans-unit>
       <trans-unit id="jIzdvYg" resname="min.">
         <source>min.</source>
-        <target state="needs-translation">min.</target>
+        <target state="translated">min.</target>
       </trans-unit>
       <trans-unit id="preRnFs" resname="Select or create any live event.">
         <source>Select or create any live event.</source>
-        <target state="needs-translation">Select or create any live event.</target>
+        <target state="translated">Selecciona o crea qualsevol esdeveniment en directe.</target>
       </trans-unit>
       <trans-unit id="W8OAz6R" resname="modify live event">
         <source>modify live event</source>
-        <target state="needs-translation">modify live event</target>
+        <target state="translated">modifica l’esdeveniment en directe</target>
       </trans-unit>
       <trans-unit id="QjTYka2" resname="There was an error in updating the Live event.">
         <source>There was an error in updating the Live event.</source>
-        <target state="needs-translation">There was an error in updating the Live event.</target>
+        <target state="translated">S’ha produït un error en actualitzar l’esdeveniment en directe.</target>
       </trans-unit>
       <trans-unit id="nvDSbvi" resname="Live event successfully updated.">
         <source>Live event successfully updated.</source>
-        <target state="needs-translation">Live event successfully updated.</target>
+        <target state="translated">L’esdeveniment en directe s’ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="LbUtKlv" resname="Add thumbnail">
         <source>Add thumbnail</source>
-        <target state="needs-translation">Add thumbnail</target>
+        <target state="translated">Afegeix una miniatura</target>
       </trans-unit>
       <trans-unit id="tDebHgn" resname="Delete thumbnail">
         <source>Delete thumbnail</source>
-        <target state="needs-translation">Delete thumbnail</target>
+        <target state="translated">Elimina la miniatura</target>
       </trans-unit>
       <trans-unit id="GXZu1sy" resname="Cancel">
         <source>Cancel</source>
-        <target state="needs-translation">Cancel</target>
+        <target state="translated">Cancel·la</target>
       </trans-unit>
       <trans-unit id="6T0A.vD" resname="create new group">
         <source>create new group</source>
-        <target state="needs-translation">create new group</target>
+        <target state="translated">crea un grup nou</target>
       </trans-unit>
       <trans-unit id="UCCzJKC" resname="Group successfully created.">
         <source>Group successfully created.</source>
-        <target state="needs-translation">Group successfully created.</target>
+        <target state="translated">El grup s’ha creat correctament.</target>
       </trans-unit>
       <trans-unit id="ZNCH6.x" resname="External defined users and groups can not be edited here, contact your directory service administrator.">
         <source>External defined users and groups can not be edited here, contact your directory service administrator.</source>
-        <target state="needs-translation">External defined users and groups can not be edited here, contact your directory service administrator.</target>
+        <target state="translated">Els usuaris i els grups definits externament no es poden editar aquí. Poseu-vos en contacte amb l’administrador del servei del directori.</target>
       </trans-unit>
       <trans-unit id="VeFMGtf" resname="Video Template of Series">
         <source>Video Template of Series</source>
-        <target state="needs-translation">Video Template of Series</target>
+        <target state="translated">Plantilla de vídeo de la sèrie</target>
       </trans-unit>
       <trans-unit id="maUt8.8" resname="Key">
         <source>Key</source>
-        <target state="needs-translation">Key</target>
+        <target state="translated">Clau</target>
       </trans-unit>
       <trans-unit id="0_HF_Kb" resname="Origin">
         <source>Origin</source>
-        <target state="needs-translation">Origin</target>
+        <target state="translated">Origen</target>
       </trans-unit>
       <trans-unit id="Obu3Gfo" resname="Groups">
         <source>Groups</source>
-        <target state="needs-translation">Groups</target>
+        <target state="translated">Grups</target>
       </trans-unit>
       <trans-unit id="Djl6f7m" resname="group deletion">
         <source>group deletion</source>
-        <target state="needs-translation">group deletion</target>
+        <target state="translated">supressió de grups</target>
       </trans-unit>
       <trans-unit id="RruO.hU" resname="group info">
         <source>group info</source>
-        <target state="needs-translation">group info</target>
+        <target state="translated">informació del grup</target>
       </trans-unit>
       <trans-unit id="N7toFqN" resname="Delete Group">
         <source>Delete Group</source>
-        <target state="needs-translation">Delete Group</target>
+        <target state="translated">Elimina el grup</target>
       </trans-unit>
       <trans-unit id="74Wvobk" resname="Delete All">
         <source>Delete All</source>
-        <target state="needs-translation">Delete All</target>
+        <target state="translated">Elimina’ls tots</target>
       </trans-unit>
       <trans-unit id="pYlyTnf" resname="There are no groups with those values.">
         <source>There are no groups with those values.</source>
-        <target state="needs-translation">There are no groups with those values.</target>
+        <target state="translated">No hi ha grups amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="3V8tns5" resname="Edit Group">
         <source>Edit Group</source>
