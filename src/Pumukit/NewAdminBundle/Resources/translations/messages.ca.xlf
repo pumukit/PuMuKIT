@@ -3797,7 +3797,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="Y48fpVR" resname="{0}times|{1}time|]1,Inf]times">
         <source>{0}times|{1}time|]1,Inf]times</source>
-        <target state="needs-translation">{0}times|{1}time|]1,Inf]times</target>
+        <target state="translated">{0}vegades|{1}vegada|]1,Inf]vegades</target>
       </trans-unit>
       <trans-unit id="5KIt_PS" resname="Error: Multimedia Object with id %id% not found">
         <source>Error: Multimedia Object with id %id% not found</source>
