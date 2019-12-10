@@ -1343,67 +1343,67 @@
       </trans-unit>
       <trans-unit id="83tvNKQ" resname="Edit Role">
         <source>Edit Role</source>
-        <target state="needs-translation">Edit Role</target>
+        <target state="translated">Edita el rol</target>
       </trans-unit>
       <trans-unit id="MSsLB5u" resname="{0} roles|{1} role|]1,Inf] roles">
         <source>{0} roles|{1} role|]1,Inf] roles</source>
-        <target state="needs-translation">{0} roles|{1} role|]1,Inf] roles</target>
+        <target state="translated">{0} rols|{1} rol|]1,Inf] rols</target>
       </trans-unit>
       <trans-unit id="hrH_89J" resname="modify role">
         <source>modify role</source>
-        <target state="needs-translation">modify role</target>
+        <target state="translated">modifica el rol</target>
       </trans-unit>
       <trans-unit id="gk1w9iU" resname="There was an error in updating the Role.">
         <source>There was an error in updating the Role.</source>
-        <target state="needs-translation">There was an error in updating the Role.</target>
+        <target state="translated">S’ha produït un error en actualitzar el rol.</target>
       </trans-unit>
       <trans-unit id="XWSPlxq" resname="Role successfully updated.">
         <source>Role successfully updated.</source>
-        <target state="needs-translation">Role successfully updated.</target>
+        <target state="translated">El rol s’ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="69rZukx" resname="Others">
         <source>Others</source>
-        <target state="needs-translation">Others</target>
+        <target state="translated">D’altres</target>
       </trans-unit>
       <trans-unit id="B9_rhh3" resname="Announced">
         <source>Announced</source>
-        <target state="needs-translation">Announced</target>
+        <target state="translated">Anunciats</target>
       </trans-unit>
       <trans-unit id="hxPGZeg" resname="Indifferent">
         <source>Indifferent</source>
-        <target state="needs-translation">Indifferent</target>
+        <target state="translated">Indiferent</target>
       </trans-unit>
       <trans-unit id="haOas0X" resname="Yes">
         <source>Yes</source>
-        <target state="needs-translation">Yes</target>
+        <target state="translated">Sí</target>
       </trans-unit>
       <trans-unit id="HqRCoTS" resname="No">
         <source>No</source>
-        <target state="needs-translation">No</target>
+        <target state="translated">No</target>
       </trans-unit>
       <trans-unit id="gwCPg2E" resname="change status of multimedia objects inside the series">
         <source>change status of multimedia objects inside the series</source>
-        <target state="needs-translation">change status of multimedia objects inside the series</target>
+        <target state="translated">canvia l’estat dels objectes multimèdia de la sèrie</target>
       </trans-unit>
       <trans-unit id=".GP.CrL" resname="Multimedia Series">
         <source>Multimedia Series</source>
-        <target state="needs-translation">Multimedia Series</target>
+        <target state="translated">Sèrie multimèdia</target>
       </trans-unit>
       <trans-unit id="u4DTOa7" resname="Create new series">
         <source>Create new series</source>
-        <target state="needs-translation">Create new series</target>
+        <target state="translated">Crea una sèrie nova</target>
       </trans-unit>
       <trans-unit id="8qb1OKn" resname="Select any series.">
         <source>Select any series.</source>
-        <target state="needs-translation">Select any series.</target>
+        <target state="translated">Selecciona qualsevol sèrie.</target>
       </trans-unit>
       <trans-unit id="pE9M1aR" resname="Click to modify status of all Multimedia Objects">
         <source>Click to modify status of all Multimedia Objects</source>
-        <target state="needs-translation">Click to modify status of all Multimedia Objects</target>
+        <target state="translated">Feu clic per modificar l’estat de tots els objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="qThPhrk" resname="Not enough privileges to modify status of all Multimedia Objects">
         <source>Not enough privileges to modify status of all Multimedia Objects</source>
-        <target state="needs-translation">Not enough privileges to modify status of all Multimedia Objects</target>
+        <target state="translated">No teniu prou privilegis per modificar l’estat de tots els objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="Wn.0eFr" resname="There are no series with those values.">
         <source>There are no series with those values.</source>
