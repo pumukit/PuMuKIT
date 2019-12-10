@@ -27,63 +27,63 @@
       </trans-unit>
       <trans-unit id="1g27oHk" resname="Priority">
         <source>Priority</source>
-        <target state="needs-translation">Priority</target>
+        <target state="translated">Prioritat</target>
       </trans-unit>
       <trans-unit id="T8UqPEx" resname="Duration">
         <source>Duration</source>
-        <target state="needs-translation">Duration</target>
+        <target state="translated">Durada</target>
       </trans-unit>
       <trans-unit id="6yM2NjP" resname="New Duration">
         <source>New Duration</source>
-        <target state="needs-translation">New Duration</target>
+        <target state="translated">Durada nova</target>
       </trans-unit>
       <trans-unit id="ACBfrGE" resname="Initial Time">
         <source>Initial Time</source>
-        <target state="needs-translation">Initial Time</target>
+        <target state="translated">Hora inicial</target>
       </trans-unit>
       <trans-unit id="JxGJrji" resname="Start Time">
         <source>Start Time</source>
-        <target state="needs-translation">Start Time</target>
+        <target state="translated">Hora d’inici</target>
       </trans-unit>
       <trans-unit id="SLzN3Ym" resname="End Time">
         <source>End Time</source>
-        <target state="needs-translation">End Time</target>
+        <target state="translated">Hora de finalització</target>
       </trans-unit>
       <trans-unit id="cTFmlx1" resname="Command">
         <source>Command</source>
-        <target state="needs-translation">Command</target>
+        <target state="translated">Ordre</target>
       </trans-unit>
       <trans-unit id="skOby43" resname="Output">
         <source>Output</source>
-        <target state="needs-translation">Output</target>
+        <target state="translated">Sortida</target>
       </trans-unit>
       <trans-unit id="QeYqvyp" resname="Multimedia Object Admin Link">
         <source>Multimedia Object Admin Link</source>
-        <target state="needs-translation">Multimedia Object Admin Link</target>
+        <target state="translated">Enllaç d’administració de l’objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="QFUsnzv" resname="Technical info">
         <source>Technical info</source>
-        <target state="needs-translation">Technical info</target>
+        <target state="translated">Informació tècnica</target>
       </trans-unit>
       <trans-unit id="cvY.5HK" resname="Job Id">
         <source>Job Id</source>
-        <target state="needs-translation">Job Id</target>
+        <target state="translated">Identificador de la tasca</target>
       </trans-unit>
       <trans-unit id="nt31c8t" resname="Metadata">
         <source>Metadata</source>
-        <target state="needs-translation">Metadata</target>
+        <target state="translated">Metadades</target>
       </trans-unit>
       <trans-unit id="JAv3aP1" resname="Multimedia Object Title">
         <source>Multimedia Object Title</source>
-        <target state="needs-translation">Multimedia Object Title</target>
+        <target state="translated">Títol de l’objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="NfPDbcX" resname="Series Id">
         <source>Series Id</source>
-        <target state="needs-translation">Series Id</target>
+        <target state="translated">Identificador de la sèrie</target>
       </trans-unit>
       <trans-unit id="8.FNcj3" resname="Series Title">
         <source>Series Title</source>
-        <target state="needs-translation">Series Title</target>
+        <target state="translated">Títol de la sèrie</target>
       </trans-unit>
     </body>
   </file>
