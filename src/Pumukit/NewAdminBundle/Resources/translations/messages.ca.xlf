@@ -443,123 +443,123 @@
       </trans-unit>
       <trans-unit id="fns6AVO" resname="Activated">
         <source>Activated</source>
-        <target state="needs-translation">Activated</target>
+        <target state="translated">Activat</target>
       </trans-unit>
       <trans-unit id="SEClciL" resname="Deactivated">
         <source>Deactivated</source>
-        <target state="needs-translation">Deactivated</target>
+        <target state="translated">Desactivat</target>
       </trans-unit>
       <trans-unit id="kg5BPH1" resname="Status">
         <source>Status</source>
-        <target state="needs-translation">Status</target>
+        <target state="translated">Estat</target>
       </trans-unit>
       <trans-unit id="6_fbNuS" resname="On hold">
         <source>On hold</source>
-        <target state="needs-translation">On hold</target>
+        <target state="translated">En espera</target>
       </trans-unit>
       <trans-unit id="YXNtHFE" resname="Live broadcasting">
         <source>Live broadcasting</source>
-        <target state="needs-translation">Live broadcasting</target>
+        <target state="translated">Emissió en directe</target>
       </trans-unit>
       <trans-unit id="MF58_JM" resname="modify live channel">
         <source>modify live channel</source>
-        <target state="needs-translation">modify live channel</target>
+        <target state="translated">modifica el canal en directe</target>
       </trans-unit>
       <trans-unit id="JUX_EPG" resname="There was an error in updating the Live channel.">
         <source>There was an error in updating the Live channel.</source>
-        <target state="needs-translation">There was an error in updating the Live channel.</target>
+        <target state="translated">S’ha produït un error en actualitzar el canal en directe.</target>
       </trans-unit>
       <trans-unit id="O3hvK9j" resname="Live channel successfully updated.">
         <source>Live channel successfully updated.</source>
-        <target state="needs-translation">Live channel successfully updated.</target>
+        <target state="translated">El canal en directe s’ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="N28VjaR" resname="create new material">
         <source>create new material</source>
-        <target state="needs-translation">create new material</target>
+        <target state="translated">crea un material nou</target>
       </trans-unit>
       <trans-unit id="XiPsajA" resname="Mode">
         <source>Mode</source>
-        <target state="needs-translation">Mode</target>
+        <target state="translated">Mode</target>
       </trans-unit>
       <trans-unit id="UACc4dp" resname="File">
         <source>File</source>
-        <target state="needs-translation">File</target>
+        <target state="translated">Fitxer</target>
       </trans-unit>
       <trans-unit id="WJ1UGHV" resname="URL format not valid">
         <source>URL format not valid</source>
-        <target state="needs-translation">URL format not valid</target>
+        <target state="translated">El format de l’URL no és vàlid</target>
       </trans-unit>
       <trans-unit id="gOStBWv" resname="Under">
         <source>Under</source>
-        <target state="needs-translation">Under</target>
+        <target state="translated">Menor de</target>
       </trans-unit>
       <trans-unit id="39B8U6X" resname="Empty file field">
         <source>Empty file field</source>
-        <target state="needs-translation">Empty file field</target>
+        <target state="translated">El camp del fitxer està buit</target>
       </trans-unit>
       <trans-unit id="1DQ41HM" resname="Create Material">
         <source>Create Material</source>
-        <target state="needs-translation">Create Material</target>
+        <target state="translated">Crea el material</target>
       </trans-unit>
       <trans-unit id="6QW4P2e" resname="update material">
         <source>update material</source>
-        <target state="needs-translation">update material</target>
+        <target state="translated">actualitza el material</target>
       </trans-unit>
       <trans-unit id="DtnOHns" resname="Material successfully updated.">
         <source>Material successfully updated.</source>
-        <target state="needs-translation">Material successfully updated.</target>
+        <target state="translated">El material s’ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="XQtGDig" resname="New Material added.">
         <source>New Material added.</source>
-        <target state="needs-translation">New Material added.</target>
+        <target state="translated">El material nou s’ha afegit.</target>
       </trans-unit>
       <trans-unit id="tKBwotN" resname="loading">
         <source>loading</source>
-        <target state="needs-translation">loading</target>
+        <target state="translated">s’està carregant</target>
       </trans-unit>
       <trans-unit id="LF6Zcug" resname="WARNING: You do not have enough permissions to modify admin groups.">
         <source>WARNING: You do not have enough permissions to modify admin groups.</source>
-        <target state="needs-translation">WARNING: You do not have enough permissions to modify admin groups.</target>
+        <target state="translated">ADVERTÈNCIA: No teniu prou permisos per modificar els grups administradors.</target>
       </trans-unit>
       <trans-unit id="6Rn7P12" resname="BROADCAST GROUPS">
         <source>BROADCAST GROUPS</source>
-        <target state="needs-translation">BROADCAST GROUPS</target>
+        <target state="translated">GRUPS D’EMISSIÓ</target>
       </trans-unit>
       <trans-unit id="N6tLDY2" resname="Available Groups">
         <source>Available Groups</source>
-        <target state="needs-translation">Available Groups</target>
+        <target state="translated">Grups disponibles</target>
       </trans-unit>
       <trans-unit id="3RRBNzs" resname="Selected Groups">
         <source>Selected Groups</source>
-        <target state="needs-translation">Selected Groups</target>
+        <target state="translated">Grups seleccionats</target>
       </trans-unit>
       <trans-unit id="_QRwabW" resname="BROADCAST PASSWORD">
         <source>BROADCAST PASSWORD</source>
-        <target state="needs-translation">BROADCAST PASSWORD</target>
+        <target state="translated">CONTRASENYA D’EMISSIÓ</target>
       </trans-unit>
       <trans-unit id="AmXL6i2" resname="Introduce a password">
         <source>Introduce a password</source>
-        <target state="needs-translation">Introduce a password</target>
+        <target state="translated">Introduïu una contrasenya</target>
       </trans-unit>
       <trans-unit id="t0Bw_Q6" resname="Repeat password">
         <source>Repeat password</source>
-        <target state="needs-translation">Repeat password</target>
+        <target state="translated">Repetiu la contrasenya</target>
       </trans-unit>
       <trans-unit id="P.o1Awe" resname="Show/Hide password">
         <source>Show/Hide password</source>
-        <target state="needs-translation">Show/Hide password</target>
+        <target state="translated">Mostra/Oculta la contrasenya</target>
       </trans-unit>
       <trans-unit id="SuBM34X" resname="Generate random password">
         <source>Generate random password</source>
-        <target state="needs-translation">Generate random password</target>
+        <target state="translated">Genera una contrasenya aleatòria</target>
       </trans-unit>
       <trans-unit id="DAYL1Pt" resname="Passwords must match">
         <source>Passwords must match</source>
-        <target state="needs-translation">Passwords must match</target>
+        <target state="translated">Les contrasenyes han de coincidir</target>
       </trans-unit>
       <trans-unit id="YYyqUmK" resname="Passwords can not be empty">
         <source>Passwords can not be empty</source>
-        <target state="needs-translation">Passwords can not be empty</target>
+        <target state="translated">Les contrasenyes no poden estar buides</target>
       </trans-unit>
       <trans-unit id="FfxltpM" resname="Publication">
         <source>Publication</source>
