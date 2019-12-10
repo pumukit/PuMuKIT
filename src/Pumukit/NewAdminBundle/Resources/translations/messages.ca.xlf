@@ -1407,35 +1407,35 @@
       </trans-unit>
       <trans-unit id="Wn.0eFr" resname="There are no series with those values.">
         <source>There are no series with those values.</source>
-        <target state="needs-translation">There are no series with those values.</target>
+        <target state="translated">No hi ha sèries amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="tza7GLI" resname="{0} series|{1} series|]1,Inf] series">
         <source>{0} series|{1} series|]1,Inf] series</source>
-        <target state="needs-translation">{0} series|{1} series|]1,Inf] series</target>
+        <target state="translated">{0} sèries|{1} sèrie|]1,Inf] sèries</target>
       </trans-unit>
       <trans-unit id="_Z7FpTw" resname="Series properties">
         <source>Series properties</source>
-        <target state="needs-translation">Series properties</target>
+        <target state="translated">Propietats de la sèrie</target>
       </trans-unit>
       <trans-unit id="hHV2_s." resname="Series Metadata">
         <source>Series Metadata</source>
-        <target state="needs-translation">Series Metadata</target>
+        <target state="translated">Metadades de la sèrie</target>
       </trans-unit>
       <trans-unit id="mUN6rHJ" resname="Videos Metadata Template">
         <source>Videos Metadata Template</source>
-        <target state="needs-translation">Videos Metadata Template</target>
+        <target state="translated">Plantilla de metadades de vídeos</target>
       </trans-unit>
       <trans-unit id="_odO_zF" resname="Password protected">
         <source>Password protected</source>
-        <target state="needs-translation">Password protected</target>
+        <target state="translated">Protegit amb contrasenya</target>
       </trans-unit>
       <trans-unit id="2Tb2ncR" resname="Only logged in Users">
         <source>Only logged in Users</source>
-        <target state="needs-translation">Only logged in Users</target>
+        <target state="translated">Només els usuaris connectats</target>
       </trans-unit>
       <trans-unit id="AlWvBOc" resname="Only Users in Groups">
         <source>Only Users in Groups</source>
-        <target state="needs-translation">Only Users in Groups</target>
+        <target state="translated">Només els usuaris en grups</target>
       </trans-unit>
       <trans-unit id="kN2qYZb" resname="Modify broadcast profile of all multimedia objects in this Series">
         <source>Modify broadcast profile of all multimedia objects in this Series</source>
