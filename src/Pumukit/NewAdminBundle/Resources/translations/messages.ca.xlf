@@ -1439,79 +1439,79 @@
       </trans-unit>
       <trans-unit id="kN2qYZb" resname="Modify broadcast profile of all multimedia objects in this Series">
         <source>Modify broadcast profile of all multimedia objects in this Series</source>
-        <target state="needs-translation">Modify broadcast profile of all multimedia objects in this Series</target>
+        <target state="translated">Modifica el perfil d’emissió de tots els objectes multimèdia d’aquesta sèrie</target>
       </trans-unit>
       <trans-unit id="9P1HJF6" resname="WARNING: All Multimedia Objects in this Series will be modified with the selected Broadcast.">
         <source>WARNING: All Multimedia Objects in this Series will be modified with the selected Broadcast.</source>
-        <target state="needs-translation">WARNING: All Multimedia Objects in this Series will be modified with the selected Broadcast.</target>
+        <target state="translated">ADVERTÈNCIA: Tots els objectes multimèdia d’aquesta sèrie es modificaran amb l’emissió seleccionada.</target>
       </trans-unit>
       <trans-unit id="OVAa0Wz" resname="Any Internet user can play this multimedia object in the video portal">
         <source>Any Internet user can play this multimedia object in the video portal</source>
-        <target state="needs-translation">Any Internet user can play this multimedia object in the video portal</target>
+        <target state="translated">Qualsevol usuari d’Internet pot reproduir aquest objecte multimèdia al portal de vídeo</target>
       </trans-unit>
       <trans-unit id="X9NzRJt" resname="Only users with the defined password can play this multimedia object in the video portal">
         <source>Only users with the defined password can play this multimedia object in the video portal</source>
-        <target state="needs-translation">Only users with the defined password can play this multimedia object in the video portal</target>
+        <target state="translated">Només els usuaris amb la contrasenya definida poden reproduir aquest objecte multimèdia al portal de vídeo</target>
       </trans-unit>
       <trans-unit id="xgeNGfj" resname="Only logged in users in the system can play this multimedia object in the video portal">
         <source>Only logged in users in the system can play this multimedia object in the video portal</source>
-        <target state="needs-translation">Only logged in users in the system can play this multimedia object in the video portal</target>
+        <target state="translated">Només els usuaris connectats al sistema poden reproduir aquest objecte multimèdia al portal de vídeo</target>
       </trans-unit>
       <trans-unit id="yYoW5uR" resname="Only users in the selected Groups can play this multimedia object in the video portal">
         <source>Only users in the selected Groups can play this multimedia object in the video portal</source>
-        <target state="needs-translation">Only users in the selected Groups can play this multimedia object in the video portal</target>
+        <target state="translated">Només els usuaris dels grups seleccionats poden reproduir aquest objecte multimèdia al portal de vídeo</target>
       </trans-unit>
       <trans-unit id="JBJxUX3" resname="Modify all broadcasts">
         <source>Modify all broadcasts</source>
-        <target state="needs-translation">Modify all broadcasts</target>
+        <target state="translated">Modifica totes les emissions</target>
       </trans-unit>
       <trans-unit id="ewt91gg" resname="Delete the series">
         <source>Delete the series</source>
-        <target state="needs-translation">Delete the series</target>
+        <target state="translated">Elimina la sèrie</target>
       </trans-unit>
       <trans-unit id="X8ZiPVL" resname="Show configuration">
         <source>Show configuration</source>
-        <target state="needs-translation">Show configuration</target>
+        <target state="translated">Mostra la configuració</target>
       </trans-unit>
       <trans-unit id="ywftoq1" resname="Texts.">
         <source>Texts.</source>
-        <target state="needs-translation">Texts.</target>
+        <target state="translated">Textos.</target>
       </trans-unit>
       <trans-unit id="MBj9Rp0" resname="Click to show or add header/banner and footer">
         <source>Click to show or add header/banner and footer</source>
-        <target state="needs-translation">Click to show or add header/banner and footer</target>
+        <target state="translated">Feu clic per mostrar o afegir la capçalera o el bàner i el peu de pàgina</target>
       </trans-unit>
       <trans-unit id="59fZd9D" resname="Add banner">
         <source>Add banner</source>
-        <target state="needs-translation">Add banner</target>
+        <target state="translated">Afegeix un bàner</target>
       </trans-unit>
       <trans-unit id=".eL1ZHl" resname="create new series type">
         <source>create new series type</source>
-        <target state="needs-translation">create new series type</target>
+        <target state="translated">crea un tipus nou de sèrie</target>
       </trans-unit>
       <trans-unit id="M5jGGMW" resname="Series types">
         <source>Series types</source>
-        <target state="needs-translation">Series types</target>
+        <target state="translated">Tipus de sèrie</target>
       </trans-unit>
       <trans-unit id="QkQfYLR" resname="Create new series type">
         <source>Create new series type</source>
-        <target state="needs-translation">Create new series type</target>
+        <target state="translated">Crea un tipus nou de sèrie</target>
       </trans-unit>
       <trans-unit id="okzxY6S" resname="Select any type.">
         <source>Select any type.</source>
-        <target state="needs-translation">Select any type.</target>
+        <target state="translated">Selecciona qualsevol tipus.</target>
       </trans-unit>
       <trans-unit id="qCleCP9" resname="Series">
         <source>Series</source>
-        <target state="needs-translation">Series</target>
+        <target state="translated">Sèrie</target>
       </trans-unit>
       <trans-unit id="PEN92mY" resname="There are no series types with those values.">
         <source>There are no series types with those values.</source>
-        <target state="needs-translation">There are no series types with those values.</target>
+        <target state="translated">No hi ha tipus de sèrie amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="KraI25G" resname="Edit seriestype channel">
         <source>Edit seriestype channel</source>
-        <target state="needs-translation">Edit seriestype channel</target>
+        <target state="translated">Edita el canal del tipus de sèrie</target>
       </trans-unit>
       <trans-unit id="M84EwYn" resname="{0} series types|{1} series type |]1,Inf] series types">
         <source>{0} series types|{1} series type |]1,Inf] series types</source>
