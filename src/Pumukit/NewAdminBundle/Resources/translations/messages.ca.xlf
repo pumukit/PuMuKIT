@@ -1135,211 +1135,211 @@
       </trans-unit>
       <trans-unit id="KfQqMhe" resname="Update the video to show the thumbnails">
         <source>Update the video to show the thumbnails</source>
-        <target state="needs-translation">Update the video to show the thumbnails</target>
+        <target state="translated">Actualitza el vídeo perquè mostri les miniatures</target>
       </trans-unit>
       <trans-unit id="KoDzITI" resname="Update the event to show the thumbnail">
         <source>Update the event to show the thumbnail</source>
-        <target state="needs-translation">Update the event to show the thumbnail</target>
+        <target state="translated">Actualitza l’esdeveniment perquè mostri la miniatura</target>
       </trans-unit>
       <trans-unit id="..vaOTK" resname="change broadcast status of multimedia objects inside the series">
         <source>change broadcast status of multimedia objects inside the series</source>
-        <target state="needs-translation">change broadcast status of multimedia objects inside the series</target>
+        <target state="translated">canvia l’estat d’emissió dels objectes multimèdia de la sèrie</target>
       </trans-unit>
       <trans-unit id="nSmw0o5" resname="Multimedia Objects">
         <source>Multimedia Objects</source>
-        <target state="needs-translation">Multimedia Objects</target>
+        <target state="translated">Objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="tceu180" resname="ALL">
         <source>ALL</source>
-        <target state="needs-translation">ALL</target>
+        <target state="translated">TOTS</target>
       </trans-unit>
       <trans-unit id="LvQuwh2" resname="Published">
         <source>Published</source>
-        <target state="needs-translation">Published</target>
+        <target state="translated">Publicats</target>
       </trans-unit>
       <trans-unit id="GPKglH_" resname="Blocked">
         <source>Blocked</source>
-        <target state="needs-translation">Blocked</target>
+        <target state="translated">Bloquejats</target>
       </trans-unit>
       <trans-unit id="fm.v.w8" resname="Hidden">
         <source>Hidden</source>
-        <target state="needs-translation">Hidden</target>
+        <target state="translated">Ocults</target>
       </trans-unit>
       <trans-unit id="WLO_NSp" resname="Published: is listed in the Series and can be played with published URL">
         <source>Published: is listed in the Series and can be played with published URL</source>
-        <target state="needs-translation">Published: is listed in the Series and can be played with published URL</target>
+        <target state="translated">Publicats: es troben llistats a la sèrie i es poden reproduir amb l’URL publicat</target>
       </trans-unit>
       <trans-unit id="pQVjZ29" resname="Hidden: is not listed in the Series but can be played with magic URL">
         <source>Hidden: is not listed in the Series but can be played with magic URL</source>
-        <target state="needs-translation">Hidden: is not listed in the Series but can be played with magic URL</target>
+        <target state="translated">Ocults: no es troben llistats a la sèrie, però es poden reproduir amb un URL màgic</target>
       </trans-unit>
       <trans-unit id="xvUgIUN" resname="Blocked: cannot be accessed outside the back-end">
         <source>Blocked: cannot be accessed outside the back-end</source>
-        <target state="needs-translation">Blocked: cannot be accessed outside the back-end</target>
+        <target state="translated">Bloquejats: no s’hi pot accedir des de fora del back-end</target>
       </trans-unit>
       <trans-unit id="KngCXea" resname="Select">
         <source>Select</source>
-        <target state="needs-translation">Select</target>
+        <target state="translated">Selecciona</target>
       </trans-unit>
       <trans-unit id="F4XPw7x" resname="nothing">
         <source>nothing</source>
-        <target state="needs-translation">nothing</target>
+        <target state="translated">res</target>
       </trans-unit>
       <trans-unit id="XvXvA2S" resname="all">
         <source>all</source>
-        <target state="needs-translation">all</target>
+        <target state="translated">tot</target>
       </trans-unit>
       <trans-unit id="c5wyau1" resname="Moodle Playlists">
         <source>Moodle Playlists</source>
-        <target state="needs-translation">Moodle Playlists</target>
+        <target state="translated">Llistes de reproducció del Moodle</target>
       </trans-unit>
       <trans-unit id="uTzzvzb" resname="Create new playlist">
         <source>Create new playlist</source>
-        <target state="needs-translation">Create new playlist</target>
+        <target state="translated">Crea una llista de reproducció nova</target>
       </trans-unit>
       <trans-unit id="4Cwh5Sh" resname="Select any playlist.">
         <source>Select any playlist.</source>
-        <target state="needs-translation">Select any playlist.</target>
+        <target state="translated">Selecciona qualsevol llista de reproducció.</target>
       </trans-unit>
       <trans-unit id="JnYOfOW" resname="videos">
         <source>videos</source>
-        <target state="needs-translation">videos</target>
+        <target state="translated">vídeos</target>
       </trans-unit>
       <trans-unit id="ophuMd5" resname="There are no playlist with those values.">
         <source>There are no playlist with those values.</source>
-        <target state="needs-translation">There are no playlist with those values.</target>
+        <target state="translated">No hi ha llistes de reproducció amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="7VO065x" resname="{0} playlist|{1} playlist|]1,Inf] playlists">
         <source>{0} playlist|{1} playlist|]1,Inf] playlists</source>
-        <target state="needs-translation">{0} playlist|{1} playlist|]1,Inf] playlists</target>
+        <target state="translated">{0} llistes de reproducció|{1} llista de reproducció|]1,Inf] llistes de reproducció</target>
       </trans-unit>
       <trans-unit id="1sCfIXZ" resname="Num. Mm.Obj.">
         <source>Num. Mm.Obj.</source>
-        <target state="needs-translation">Num. Mm.Obj.</target>
+        <target state="translated">Obj. multim. núm.</target>
       </trans-unit>
       <trans-unit id="nt31c8t" resname="Metadata">
         <source>Metadata</source>
-        <target state="needs-translation">Metadata</target>
+        <target state="translated">Metadades</target>
       </trans-unit>
       <trans-unit id="aNA2dZe" resname="Id:">
         <source>Id:</source>
-        <target state="needs-translation">Id:</target>
+        <target state="translated">Identificador:</target>
       </trans-unit>
       <trans-unit id="dZVMX02" resname="Preview:">
         <source>Preview:</source>
-        <target state="needs-translation">Preview:</target>
+        <target state="translated">Previsualització:</target>
       </trans-unit>
       <trans-unit id="zt_T89m" resname="Playlist Metadata">
         <source>Playlist Metadata</source>
-        <target state="needs-translation">Playlist Metadata</target>
+        <target state="translated">Metadades de la llista de reproducció</target>
       </trans-unit>
       <trans-unit id="gGKrAMY" resname="Delete the playlist">
         <source>Delete the playlist</source>
-        <target state="needs-translation">Delete the playlist</target>
+        <target state="translated">Elimina la llista de reproducció</target>
       </trans-unit>
       <trans-unit id="RNMotGg" resname="Series saved ERROR">
         <source>Series saved ERROR</source>
-        <target state="needs-translation">Series saved ERROR</target>
+        <target state="translated">S’ha produït un error en desar la sèrie</target>
       </trans-unit>
       <trans-unit id="B7KZYS9" resname="Series saved OK">
         <source>Series saved OK</source>
-        <target state="needs-translation">Series saved OK</target>
+        <target state="translated">La sèrie s’ha desat correctament</target>
       </trans-unit>
       <trans-unit id="fGESeZx" resname="Add the object &quot;%title%&quot; to the playlist">
         <source>Add the object "%title%" to the playlist</source>
-        <target state="needs-translation">Add the object "%title%" to the playlist</target>
+        <target state="translated">Afegeix l’objecte "%title%" a la llista de reproducció</target>
       </trans-unit>
       <trans-unit id="OHxjNgO" resname="Add %num% multimedia objects to the playlist">
         <source>Add %num% multimedia objects to the playlist</source>
-        <target state="needs-translation">Add %num% multimedia objects to the playlist</target>
+        <target state="translated">Afegeix %num% objectes multimèdia a la llista de reproducció</target>
       </trans-unit>
       <trans-unit id="SQu79Mq" resname="There are no playlist, please create one.">
         <source>There are no playlist, please create one.</source>
-        <target state="needs-translation">There are no playlist, please create one.</target>
+        <target state="translated">No hi ha llistes de reproducció. Creeu-ne una.</target>
       </trans-unit>
       <trans-unit id="fwl.c15" resname="Create playlist">
         <source>Create playlist</source>
-        <target state="needs-translation">Create playlist</target>
+        <target state="translated">Crea una llista de reproducció</target>
       </trans-unit>
       <trans-unit id="3uVb1Fp" resname="Error creating playlist">
         <source>Error creating playlist</source>
-        <target state="needs-translation">Error creating playlist</target>
+        <target state="translated">S’ha produït un error en crear la llista de reproducció</target>
       </trans-unit>
       <trans-unit id="m2jGRFD" resname="Error adding object to playlist">
         <source>Error adding object to playlist</source>
-        <target state="needs-translation">Error adding object to playlist</target>
+        <target state="translated">S’ha produït un error en afegir l’objecte a la llista de reproducció</target>
       </trans-unit>
       <trans-unit id="k6LpCbD" resname="Back to playlist list">
         <source>Back to playlist list</source>
-        <target state="needs-translation">Back to playlist list</target>
+        <target state="translated">Torna a la llista de llistes de reproducció</target>
       </trans-unit>
       <trans-unit id="1xRaTyA" resname="Add multimedia object">
         <source>Add multimedia object</source>
-        <target state="needs-translation">Add multimedia object</target>
+        <target state="translated">Afegeix l’objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="FwMioy8" resname="Info">
         <source>Info</source>
-        <target state="needs-translation">Info</target>
+        <target state="translated">Informació</target>
       </trans-unit>
       <trans-unit id="MksTT1f" resname="Preview">
         <source>Preview</source>
-        <target state="needs-translation">Preview</target>
+        <target state="translated">Previsualització</target>
       </trans-unit>
       <trans-unit id="Ax5FB5U" resname="Add Multimedia Object to Playlist">
         <source>Add Multimedia Object to Playlist</source>
-        <target state="needs-translation">Add Multimedia Object to Playlist</target>
+        <target state="translated">Afegeix l’objecte multimèdia a la llista de reproducció</target>
       </trans-unit>
       <trans-unit id="5BBGIIV" resname="Add videos">
         <source>Add videos</source>
-        <target state="needs-translation">Add videos</target>
+        <target state="translated">Afegeix vídeos</target>
       </trans-unit>
       <trans-unit id="Qq9oOdz" resname="The url does not have a valid format.">
         <source>The url does not have a valid format.</source>
-        <target state="needs-translation">The url does not have a valid format.</target>
+        <target state="translated">L’URL no té un format vàlid.</target>
       </trans-unit>
       <trans-unit id="7utrTpP" resname="Please, enter an url with the following format: &lt;b&gt;https://example.domain.org/video/XXXXXXXX&lt;/b&gt;">
         <source>Please, enter an url with the following format: &lt;b&gt;https://example.domain.org/video/XXXXXXXX&lt;/b&gt;</source>
-        <target state="needs-translation">Please, enter an url with the following format: &lt;b&gt;https://example.domain.org/video/XXXXXXXX&lt;/b&gt;</target>
+        <target state="translated">Introduïu un URL amb el format següent: &lt;b&gt;https://exemple.domini.org/video/XXXXXXXX&lt;/b&gt;</target>
       </trans-unit>
       <trans-unit id="Bpiop_k" resname="or enter the ID of the Multimedia Object.">
         <source>or enter the ID of the Multimedia Object.</source>
-        <target state="needs-translation">or enter the ID of the Multimedia Object.</target>
+        <target state="translated">o introduïu l’identificador de l’objecte multimèdia.</target>
       </trans-unit>
       <trans-unit id="fzrFUrD" resname="There is no published Multimedia Object with the following id:">
         <source>There is no published Multimedia Object with the following id:</source>
-        <target state="needs-translation">There is no published Multimedia Object with the following id:</target>
+        <target state="translated">No hi ha objectes multimèdia publicats amb l’identificador següent:</target>
       </trans-unit>
       <trans-unit id="7MVYspe" resname="create new role">
         <source>create new role</source>
-        <target state="needs-translation">create new role</target>
+        <target state="translated">crea un rol nou</target>
       </trans-unit>
       <trans-unit id="aE2coLP" resname="There was an error in creating the Role.">
         <source>There was an error in creating the Role.</source>
-        <target state="needs-translation">There was an error in creating the Role.</target>
+        <target state="translated">S’ha produït un error en crear el rol.</target>
       </trans-unit>
       <trans-unit id="NCn_oK5" resname="Role successfully created.">
         <source>Role successfully created.</source>
-        <target state="needs-translation">Role successfully created.</target>
+        <target state="translated">El rol s’ha creat correctament.</target>
       </trans-unit>
       <trans-unit id=".Yjgpj8" resname="Cod">
         <source>Cod</source>
-        <target state="needs-translation">Cod</target>
+        <target state="translated">Codi</target>
       </trans-unit>
       <trans-unit id="wlM3BVR" resname="Roles">
         <source>Roles</source>
-        <target state="needs-translation">Roles</target>
+        <target state="translated">Rols</target>
       </trans-unit>
       <trans-unit id="NOEIwIl" resname="Display">
         <source>Display</source>
-        <target state="needs-translation">Display</target>
+        <target state="translated">Mostra</target>
       </trans-unit>
       <trans-unit id="NA9GMDP" resname="Code">
         <source>Code</source>
-        <target state="needs-translation">Code</target>
+        <target state="translated">Codi</target>
       </trans-unit>
       <trans-unit id="TVwd2v4" resname="There are no roles with those values.">
         <source>There are no roles with those values.</source>
-        <target state="needs-translation">There are no roles with those values.</target>
+        <target state="translated">No hi ha rols amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="83tvNKQ" resname="Edit Role">
         <source>Edit Role</source>
