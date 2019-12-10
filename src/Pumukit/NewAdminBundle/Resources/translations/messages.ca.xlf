@@ -3012,236 +3012,236 @@ una acció...</target>
       <trans-unit id="lKPkOKY" resname="Publishing&#10;                        Decisions">
         <source>Publishing
                         Decisions</source>
-        <target state="needs-translation">Publishing
-                        Decisions</target>
+        <target state="translated">Decisions
+                        de publicació</target>
       </trans-unit>
       <trans-unit id="OEOXHc." resname="ID">
         <source>ID</source>
-        <target state="needs-translation">ID</target>
+        <target state="translated">Identificador</target>
       </trans-unit>
       <trans-unit id="uBc67J6" resname="Multimedia object ID">
         <source>Multimedia object ID</source>
-        <target state="needs-translation">Multimedia object ID</target>
+        <target state="translated">Identificador de l’objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="vhe1K.B" resname="Series ID">
         <source>Series ID</source>
-        <target state="needs-translation">Series ID</target>
+        <target state="translated">Identificador de la sèrie</target>
       </trans-unit>
       <trans-unit id="cZiMTY4" resname="Text">
         <source>Text</source>
-        <target state="needs-translation">Text</target>
+        <target state="translated">Text</target>
       </trans-unit>
       <trans-unit id="5GhbOgo" resname="Search by title, subtitle or description">
         <source>Search by title, subtitle or description</source>
-        <target state="needs-translation">Search by title, subtitle or description</target>
+        <target state="translated">Cerca per títol, subtítol o descripció</target>
       </trans-unit>
       <trans-unit id="pmgCKu0" resname="Keyword">
         <source>Keyword</source>
-        <target state="needs-translation">Keyword</target>
+        <target state="translated">Paraula clau</target>
       </trans-unit>
       <trans-unit id="r0tk0sE" resname="Up to 5 minutes">
         <source>Up to 5 minutes</source>
-        <target state="needs-translation">Up to 5 minutes</target>
+        <target state="translated">Fins a 5 minuts</target>
       </trans-unit>
       <trans-unit id="9YdKi_N" resname="Up to 10 minutes">
         <source>Up to 10 minutes</source>
-        <target state="needs-translation">Up to 10 minutes</target>
+        <target state="translated">Fins a 10 minuts</target>
       </trans-unit>
       <trans-unit id="NR5LbBC" resname="Up to 30 minutes">
         <source>Up to 30 minutes</source>
-        <target state="needs-translation">Up to 30 minutes</target>
+        <target state="translated">Fins a 30 minuts</target>
       </trans-unit>
       <trans-unit id="SbY7LSk" resname="Up to 60 minutes">
         <source>Up to 60 minutes</source>
-        <target state="needs-translation">Up to 60 minutes</target>
+        <target state="translated">Fins a 60 minuts</target>
       </trans-unit>
       <trans-unit id="MxZZanA" resname="More than 60 minutes">
         <source>More than 60 minutes</source>
-        <target state="needs-translation">More than 60 minutes</target>
+        <target state="translated">Més de 60 minuts</target>
       </trans-unit>
       <trans-unit id="ifaDJWD" resname="Year">
         <source>Year</source>
-        <target state="needs-translation">Year</target>
+        <target state="translated">Any</target>
       </trans-unit>
       <trans-unit id="K1BVl9q" resname="Any">
         <source>Any</source>
-        <target state="needs-translation">Any</target>
+        <target state="translated">Qualsevol</target>
       </trans-unit>
       <trans-unit id="Z.qmImw" resname="Format YYYY-MM-DD">
         <source>Format YYYY-MM-DD</source>
-        <target state="needs-translation">Format YYYY-MM-DD</target>
+        <target state="translated">Format AAAA-MM-DD</target>
       </trans-unit>
       <trans-unit id="F7yReDQ" resname="Broadcast">
         <source>Broadcast</source>
-        <target state="needs-translation">Broadcast</target>
+        <target state="translated">Emissió</target>
       </trans-unit>
       <trans-unit id="9vRoj.I" resname="Send">
         <source>Send</source>
-        <target state="needs-translation">Send</target>
+        <target state="translated">Envia</target>
       </trans-unit>
       <trans-unit id="1y_GdUG" resname="Advanced search form">
         <source>Advanced search form</source>
-        <target state="needs-translation">Advanced search form</target>
+        <target state="translated">Formulari de cerca avançada</target>
       </trans-unit>
       <trans-unit id="KUc83Og" resname="Publication date">
         <source>Publication date</source>
-        <target state="needs-translation">Publication date</target>
+        <target state="translated">Data de publicació</target>
       </trans-unit>
       <trans-unit id="WwQid6I" resname="Recording date">
         <source>Recording date</source>
-        <target state="needs-translation">Recording date</target>
+        <target state="translated">Data de gravació</target>
       </trans-unit>
       <trans-unit id="y9lpGXM" resname="Saving error">
         <source>Saving error</source>
-        <target state="needs-translation">Saving error</target>
+        <target state="translated">S’ha produït un error en desar</target>
       </trans-unit>
       <trans-unit id="tcEgsxb" resname="Saved">
         <source>Saved</source>
-        <target state="needs-translation">Saved</target>
+        <target state="translated">S’ha desat</target>
       </trans-unit>
       <trans-unit id="baeVqGZ" resname="Genre">
         <source>Genre</source>
-        <target state="needs-translation">Genre</target>
+        <target state="translated">Gènere</target>
       </trans-unit>
       <trans-unit id="nwiNvr1" resname="Advanced">
         <source>Advanced</source>
-        <target state="needs-translation">Advanced</target>
+        <target state="translated">Opcions avançades</target>
       </trans-unit>
       <trans-unit id="pPs.mWz" resname="UNESCO catalogue">
         <source>UNESCO catalogue</source>
-        <target state="needs-translation">UNESCO catalogue</target>
+        <target state="translated">Catàleg de la UNESCO</target>
       </trans-unit>
       <trans-unit id="zkaD5wE" resname="Channel">
         <source>Channel</source>
-        <target state="needs-translation">Channel</target>
+        <target state="translated">Canal</target>
       </trans-unit>
       <trans-unit id="yyT31Aq" resname="Sorting">
         <source>Sorting</source>
-        <target state="needs-translation">Sorting</target>
+        <target state="translated">Classificació</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target state="needs-translation">date</target>
+        <target state="translated">data</target>
       </trans-unit>
       <trans-unit id="N3biNWj" resname="date_all">
         <source>date_all</source>
-        <target state="needs-translation">date_all</target>
+        <target state="translated">data_tot</target>
       </trans-unit>
       <trans-unit id="1GF1slj" resname="date_subserial">
         <source>date_subserial</source>
-        <target state="needs-translation">date_subserial</target>
+        <target state="translated">data_subserial</target>
       </trans-unit>
       <trans-unit id="YSQOpvl" resname="subserial">
         <source>subserial</source>
-        <target state="needs-translation">subserial</target>
+        <target state="translated">subserial</target>
       </trans-unit>
       <trans-unit id="LA.rmuv" resname="multisubserial">
         <source>multisubserial</source>
-        <target state="needs-translation">multisubserial</target>
+        <target state="translated">multisubserial</target>
       </trans-unit>
       <trans-unit id="Nr3mbyi" resname="manual">
         <source>manual</source>
-        <target state="needs-translation">manual</target>
+        <target state="translated">manual</target>
       </trans-unit>
       <trans-unit id="n17fyKD" resname="publication date ascending">
         <source>publication date ascending</source>
-        <target state="needs-translation">publication date ascending</target>
+        <target state="translated">data de publicació ascendent</target>
       </trans-unit>
       <trans-unit id="fAXffnN" resname="publication date descending">
         <source>publication date descending</source>
-        <target state="needs-translation">publication date descending</target>
+        <target state="translated">data de publicació descendent</target>
       </trans-unit>
       <trans-unit id="8a3nLp_" resname="recording date descending">
         <source>recording date descending</source>
-        <target state="needs-translation">recording date descending</target>
+        <target state="translated">data de gravació descendent</target>
       </trans-unit>
       <trans-unit id="6LtPTFc" resname="recording date ascending">
         <source>recording date ascending</source>
-        <target state="needs-translation">recording date ascending</target>
+        <target state="translated">data de gravació ascendent</target>
       </trans-unit>
       <trans-unit id="qvIyBkY" resname="title">
         <source>title</source>
-        <target state="needs-translation">title</target>
+        <target state="translated">títol</target>
       </trans-unit>
       <trans-unit id="bG.WfVj" resname="WebTV">
         <source>WebTV</source>
-        <target state="needs-translation">WebTV</target>
+        <target state="translated">WebTV</target>
       </trans-unit>
       <trans-unit id="e1wLqeS" resname="Health Sciences">
         <source>Health Sciences</source>
-        <target state="needs-translation">Health Sciences</target>
+        <target state="translated">Ciències de la salut</target>
       </trans-unit>
       <trans-unit id="txAs3w2" resname="Sciences">
         <source>Sciences</source>
-        <target state="needs-translation">Sciences</target>
+        <target state="translated">Ciències</target>
       </trans-unit>
       <trans-unit id="R4fq98k" resname="Legal">
         <source>Legal</source>
-        <target state="needs-translation">Legal</target>
+        <target state="translated">Dret</target>
       </trans-unit>
       <trans-unit id="p2zJo2w" resname="Humanities">
         <source>Humanities</source>
-        <target state="needs-translation">Humanities</target>
+        <target state="translated">Humanitats</target>
       </trans-unit>
       <trans-unit id="GFQHGWn" resname="Without category">
         <source>Without category</source>
-        <target state="needs-translation">Without category</target>
+        <target state="translated">Sense categoria</target>
       </trans-unit>
       <trans-unit id="nWMiwfT" resname="Login">
         <source>Login</source>
-        <target state="needs-translation">Login</target>
+        <target state="translated">Inici de sessió</target>
       </trans-unit>
       <trans-unit id="588_9PF" resname="Password">
         <source>Password</source>
-        <target state="needs-translation">Password</target>
+        <target state="translated">Contrasenya</target>
       </trans-unit>
       <trans-unit id="3oRX_Sy" resname="Live management">
         <source>Live management</source>
-        <target state="needs-translation">Live management</target>
+        <target state="translated">Gestió en directe</target>
       </trans-unit>
       <trans-unit id="x0S6SCF" resname="Channel configuration">
         <source>Channel configuration</source>
-        <target state="needs-translation">Channel configuration</target>
+        <target state="translated">Configuració del canal</target>
       </trans-unit>
       <trans-unit id="nBHDWlo" resname="Videos VOD">
         <source>Videos VOD</source>
-        <target state="needs-translation">Videos VOD</target>
+        <target state="translated">Vídeos per encàrrec (VOD)</target>
       </trans-unit>
       <trans-unit id="Jbye.t_" resname="Event name">
         <source>Event name</source>
-        <target state="needs-translation">Event name</target>
+        <target state="translated">Nom de l’esdeveniment</target>
       </trans-unit>
       <trans-unit id="WOU_q8H" resname="Sessions number">
         <source>Sessions number</source>
-        <target state="needs-translation">Sessions number</target>
+        <target state="translated">Nombre de sessions</target>
       </trans-unit>
       <trans-unit id="SmNkdOW" resname="Broadcasting date">
         <source>Broadcasting date</source>
-        <target state="needs-translation">Broadcasting date</target>
+        <target state="translated">Data d’emissió</target>
       </trans-unit>
       <trans-unit id="EiWubBr" resname="sessions">
         <source>sessions</source>
-        <target state="needs-translation">sessions</target>
+        <target state="translated">sessions</target>
       </trans-unit>
       <trans-unit id="Do2jr40" resname="No future sessions">
         <source>No future sessions</source>
-        <target state="needs-translation">No future sessions</target>
+        <target state="translated">No hi ha sessions previstes</target>
       </trans-unit>
       <trans-unit id="0A9SRUQ" resname="Filter by">
         <source>Filter by</source>
-        <target state="needs-translation">Filter by</target>
+        <target state="translated">Filtra per</target>
       </trans-unit>
       <trans-unit id="jLTwKVQ" resname="Show video on WebTV">
         <source>Show video on WebTV</source>
-        <target state="needs-translation">Show video on WebTV</target>
+        <target state="translated">Mostra el vídeo al portal WebTV</target>
       </trans-unit>
       <trans-unit id="t6n1UY2" resname="Live events">
         <source>Live events</source>
-        <target state="needs-translation">Live events</target>
+        <target state="translated">Esdeveniments en directe</target>
       </trans-unit>
       <trans-unit id="8wIYotR" resname="Future events">
         <source>Future events</source>
-        <target state="needs-translation">Future events</target>
+        <target state="translated">Esdeveniments previstos</target>
       </trans-unit>
       <trans-unit id="13YPWbA" resname="Session must start before ends">
         <source>Session must start before ends</source>
