@@ -1823,123 +1823,123 @@
       </trans-unit>
       <trans-unit id="6qYkpgC" resname="Are you sure you want to delete this role?">
         <source>Are you sure you want to delete this role?</source>
-        <target state="needs-translation">Are you sure you want to delete this role?</target>
+        <target state="translated">Confirmeu que voleu eliminar aquest rol?</target>
       </trans-unit>
       <trans-unit id="Yp7Yoj7" resname="Role successfully deleted.">
         <source>Role successfully deleted.</source>
-        <target state="needs-translation">Role successfully deleted.</target>
+        <target state="translated">El rol s’ha eliminat correctament.</target>
       </trans-unit>
       <trans-unit id="NMZAk89" resname="Impossible to delete, role with">
         <source>Impossible to delete, role with</source>
-        <target state="needs-translation">Impossible to delete, role with</target>
+        <target state="translated">No es pot eliminar, rol amb</target>
       </trans-unit>
       <trans-unit id="yQImgPi" resname="people">
         <source>people</source>
-        <target state="needs-translation">people</target>
+        <target state="translated">persones</target>
       </trans-unit>
       <trans-unit id="olRYImi" resname="Are you sure you want to delete the user">
         <source>Are you sure you want to delete the user</source>
-        <target state="needs-translation">Are you sure you want to delete the user</target>
+        <target state="translated">Confirmeu que voleu eliminar l’usuari</target>
       </trans-unit>
       <trans-unit id="VyNTZyH" resname="Error deleting user">
         <source>Error deleting user</source>
-        <target state="needs-translation">Error deleting user</target>
+        <target state="translated">S’ha produït un error en eliminar l’usuari</target>
       </trans-unit>
       <trans-unit id="tRLZfny" resname="User">
         <source>User</source>
-        <target state="needs-translation">User</target>
+        <target state="translated">L’usuari</target>
       </trans-unit>
       <trans-unit id="ZrOB7xr" resname="successfully deleted.">
         <source>successfully deleted.</source>
-        <target state="needs-translation">successfully deleted.</target>
+        <target state="translated">s’ha eliminat correctament.</target>
       </trans-unit>
       <trans-unit id="vXs0SAh" resname="Are you sure you want to delete this broadcast?">
         <source>Are you sure you want to delete this broadcast?</source>
-        <target state="needs-translation">Are you sure you want to delete this broadcast?</target>
+        <target state="translated">Confirmeu que voleu eliminar aquesta emissió?</target>
       </trans-unit>
       <trans-unit id="p50y7tV" resname="Broadcast successfully deleted.">
         <source>Broadcast successfully deleted.</source>
-        <target state="needs-translation">Broadcast successfully deleted.</target>
+        <target state="translated">L’emissió s’ha eliminat correctament.</target>
       </trans-unit>
       <trans-unit id="G27sbjQ" resname="Impossible to delete, broadcast with">
         <source>Impossible to delete, broadcast with</source>
-        <target state="needs-translation">Impossible to delete, broadcast with</target>
+        <target state="translated">No es pot eliminar, emissió amb</target>
       </trans-unit>
       <trans-unit id="lllYOXk" resname="multimedia object(s).">
         <source>multimedia object(s).</source>
-        <target state="needs-translation">multimedia object(s).</target>
+        <target state="translated">objectes multimèdia.</target>
       </trans-unit>
       <trans-unit id="Kx0pDb." resname="Are you sure you want to delete this live channel?">
         <source>Are you sure you want to delete this live channel?</source>
-        <target state="needs-translation">Are you sure you want to delete this live channel?</target>
+        <target state="translated">Confirmeu que voleu eliminar aquest canal en directe?</target>
       </trans-unit>
       <trans-unit id="oj2f5PI" resname="Live channel successfully deleted.">
         <source>Live channel successfully deleted.</source>
-        <target state="needs-translation">Live channel successfully deleted.</target>
+        <target state="translated">El canal en directe s’ha eliminat correctament.</target>
       </trans-unit>
       <trans-unit id="TrgM1tZ" resname="Are you sure you want to delete this series type?">
         <source>Are you sure you want to delete this series type?</source>
-        <target state="needs-translation">Are you sure you want to delete this series type?</target>
+        <target state="translated">Confirmeu que voleu eliminar aquest tipus de sèrie?</target>
       </trans-unit>
       <trans-unit id="w6aKpss" resname="Series type successfully deleted.">
         <source>Series type successfully deleted.</source>
-        <target state="needs-translation">Series type successfully deleted.</target>
+        <target state="translated">El tipus de sèrie s’ha eliminat correctament.</target>
       </trans-unit>
       <trans-unit id="31mlu_f" resname="Are you sure you want to delete this live event?">
         <source>Are you sure you want to delete this live event?</source>
-        <target state="needs-translation">Are you sure you want to delete this live event?</target>
+        <target state="translated">Confirmeu que voleu eliminar aquest esdeveniment en directe?</target>
       </trans-unit>
       <trans-unit id="SSyB98E" resname="Live event successfully deleted.">
         <source>Live event successfully deleted.</source>
-        <target state="needs-translation">Live event successfully deleted.</target>
+        <target state="translated">L’esdeveniment en directe s’ha eliminat correctament.</target>
       </trans-unit>
       <trans-unit id="E7k1qxa" resname="Are you sure you want to sync this tags? The tags in other objects from this series will be lost.">
         <source>Are you sure you want to sync this tags? The tags in other objects from this series will be lost.</source>
-        <target state="needs-translation">Are you sure you want to sync this tags? The tags in other objects from this series will be lost.</target>
+        <target state="translated">Confirmeu que voleu sincronitzar aquestes etiquetes? Es perdran les etiquetes d’altres objectes d’aquesta sèrie.</target>
       </trans-unit>
       <trans-unit id="ePSCF2q" resname="Are you sure you want to delete this multimedia object?">
         <source>Are you sure you want to delete this multimedia object?</source>
-        <target state="needs-translation">Are you sure you want to delete this multimedia object?</target>
+        <target state="translated">Confirmeu que voleu eliminar aquest objecte multimèdia?</target>
       </trans-unit>
       <trans-unit id="CeEjD2m" resname="Multimedia Object successfully deleted.">
         <source>Multimedia Object successfully deleted.</source>
-        <target state="needs-translation">Multimedia Object successfully deleted.</target>
+        <target state="translated">L’objecte multimèdia s’ha eliminat correctament.</target>
       </trans-unit>
       <trans-unit id="7u81YwG" resname="Are you sure you want to regenerate the magic url for this multimedia object?">
         <source>Are you sure you want to regenerate the magic url for this multimedia object?</source>
-        <target state="needs-translation">Are you sure you want to regenerate the magic url for this multimedia object?</target>
+        <target state="translated">Confirmeu que voleu regenerar l’URL màgic d’aquest objecte multimèdia?</target>
       </trans-unit>
       <trans-unit id="gJHFxD7" resname="Magic Url successfully generated.">
         <source>Magic Url successfully generated.</source>
-        <target state="needs-translation">Magic Url successfully generated.</target>
+        <target state="translated">L’URL màgic s’ha generat correctament.</target>
       </trans-unit>
       <trans-unit id="em6xvLB" resname="Are you sure you want to regenerate the magic url for the Series: &quot;+seriesTitle+&quot;?">
         <source>Are you sure you want to regenerate the magic url for the Series: "+seriesTitle+"?</source>
-        <target state="needs-translation">Are you sure you want to regenerate the magic url for the Series: "+seriesTitle+"?</target>
+        <target state="translated">Confirmeu que voleu regenerar l’URL màgic de la sèrie "+seriesTitle+"?</target>
       </trans-unit>
       <trans-unit id="uVXqMVU" resname="Are you sure you want to clone this multimedia object?">
         <source>Are you sure you want to clone this multimedia object?</source>
-        <target state="needs-translation">Are you sure you want to clone this multimedia object?</target>
+        <target state="translated">Confirmeu que voleu clonar aquest objecte multimèdia?</target>
       </trans-unit>
       <trans-unit id="yqhzxI6" resname="Multimedia Object successfully cloned.">
         <source>Multimedia Object successfully cloned.</source>
-        <target state="needs-translation">Multimedia Object successfully cloned.</target>
+        <target state="translated">L’objecte multimèdia s’ha clonat correctament.</target>
       </trans-unit>
       <trans-unit id="JK9jnZq" resname="Are you sure you want to delete the series">
         <source>Are you sure you want to delete the series</source>
-        <target state="needs-translation">Are you sure you want to delete the series</target>
+        <target state="translated">Confirmeu que voleu eliminar la sèrie</target>
       </trans-unit>
       <trans-unit id="wVqjGA4" resname="This series has">
         <source>This series has</source>
-        <target state="needs-translation">This series has</target>
+        <target state="translated">Aquesta sèrie</target>
       </trans-unit>
       <trans-unit id="68_0wqL" resname="multimedia object(s)">
         <source>multimedia object(s)</source>
-        <target state="needs-translation">multimedia object(s)</target>
+        <target state="translated">té objectes multimèdia</target>
       </trans-unit>
       <trans-unit id=".RXtNr9" resname="successfully deleted">
         <source>successfully deleted</source>
-        <target state="needs-translation">successfully deleted</target>
+        <target state="translated">s’ha eliminat correctament</target>
       </trans-unit>
       <trans-unit id="B8XoUzq" resname="Are you sure you want to delete the playlist">
         <source>Are you sure you want to delete the playlist</source>
