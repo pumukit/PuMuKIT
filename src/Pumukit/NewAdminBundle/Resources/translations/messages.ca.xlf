@@ -1079,59 +1079,59 @@
       </trans-unit>
       <trans-unit id="z6ZAHt." resname="Banner from URL">
         <source>Banner from URL</source>
-        <target state="needs-translation">Banner from URL</target>
+        <target state="translated">Bàner des d’un URL</target>
       </trans-unit>
       <trans-unit id="MDPZQgI" resname="Banner from local hard drive">
         <source>Banner from local hard drive</source>
-        <target state="needs-translation">Banner from local hard drive</target>
+        <target state="translated">Bàner des d’un disc dur local</target>
       </trans-unit>
       <trans-unit id="ZTa3g8I" resname="New Pic added.">
         <source>New Pic added.</source>
-        <target state="needs-translation">New Pic added.</target>
+        <target state="translated">La imatge nova s’ha afegit.</target>
       </trans-unit>
       <trans-unit id="I5Ev4hB" resname="Banner URL">
         <source>Banner URL</source>
-        <target state="needs-translation">Banner URL</target>
+        <target state="translated">URL del bàner</target>
       </trans-unit>
       <trans-unit id="vtr0zkG" resname="Write the target URL">
         <source>Write the target URL</source>
-        <target state="needs-translation">Write the target URL</target>
+        <target state="translated">Escriviu l’URL de destinació</target>
       </trans-unit>
       <trans-unit id="n9coxmy" resname="Add">
         <source>Add</source>
-        <target state="needs-translation">Add</target>
+        <target state="translated">Afegeix</target>
       </trans-unit>
       <trans-unit id="nWqay2J" resname="Add a file">
         <source>Add a file</source>
-        <target state="needs-translation">Add a file</target>
+        <target state="translated">Afegeix un fitxer</target>
       </trans-unit>
       <trans-unit id="IoyFwZH" resname="Select a file on first place. Thank you.">
         <source>Select a file on first place. Thank you.</source>
-        <target state="needs-translation">Select a file on first place. Thank you.</target>
+        <target state="translated">Seleccioneu un fitxer en primer lloc. Gràcies.</target>
       </trans-unit>
       <trans-unit id="MmARbXP" resname="add new thumbnail">
         <source>add new thumbnail</source>
-        <target state="needs-translation">add new thumbnail</target>
+        <target state="translated">afegeix una miniatura nova</target>
       </trans-unit>
       <trans-unit id="j3heZP6" resname="New Thumbnail added.">
         <source>New Thumbnail added.</source>
-        <target state="needs-translation">New Thumbnail added.</target>
+        <target state="translated">La miniatura nova s’ha afegit.</target>
       </trans-unit>
       <trans-unit id="cZ1T7qm" resname="Write the URL">
         <source>Write the URL</source>
-        <target state="needs-translation">Write the URL</target>
+        <target state="translated">Escriviu l’URL</target>
       </trans-unit>
       <trans-unit id="v8MBqPt" resname="New thumbnail">
         <source>New thumbnail</source>
-        <target state="needs-translation">New thumbnail</target>
+        <target state="translated">Miniatura nova</target>
       </trans-unit>
       <trans-unit id="Z4Tq.lm" resname="Use Thumbnail">
         <source>Use Thumbnail</source>
-        <target state="needs-translation">Use Thumbnail</target>
+        <target state="translated">Utilitza la miniatura</target>
       </trans-unit>
       <trans-unit id="nsKa7x9" resname="There are no thumbnails in the database.">
         <source>There are no thumbnails in the database.</source>
-        <target state="needs-translation">There are no thumbnails in the database.</target>
+        <target state="translated">No hi ha miniatures a la base de dades.</target>
       </trans-unit>
       <trans-unit id="KfQqMhe" resname="Update the video to show the thumbnails">
         <source>Update the video to show the thumbnails</source>
