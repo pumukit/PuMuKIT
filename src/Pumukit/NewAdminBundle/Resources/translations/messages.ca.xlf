@@ -2135,83 +2135,83 @@
       </trans-unit>
       <trans-unit id="y_HqDaU" resname="There was an error in updating the User.">
         <source>There was an error in updating the User.</source>
-        <target state="needs-translation">There was an error in updating the User.</target>
+        <target state="translated">S’ha produït un error en actualitzar l’usuari.</target>
       </trans-unit>
       <trans-unit id="QXcI6C0" resname="User successfully updated.">
         <source>User successfully updated.</source>
-        <target state="needs-translation">User successfully updated.</target>
+        <target state="translated">L’usuari s’ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="4LRJfJP" resname="There was an error in creating the User.">
         <source>There was an error in creating the User.</source>
-        <target state="needs-translation">There was an error in creating the User.</target>
+        <target state="translated">S’ha produït un error en crear l’usuari.</target>
       </trans-unit>
       <trans-unit id="jL7JI3P" resname="User successfully created.">
         <source>User successfully created.</source>
-        <target state="needs-translation">User successfully created.</target>
+        <target state="translated">L’usuari s’ha creat correctament.</target>
       </trans-unit>
       <trans-unit id="ivE.rDK" resname="There was an error in creating the Permission Profile.">
         <source>There was an error in creating the Permission Profile.</source>
-        <target state="needs-translation">There was an error in creating the Permission Profile.</target>
+        <target state="translated">S’ha produït un error en crear el perfil de permisos.</target>
       </trans-unit>
       <trans-unit id="4JQE_07" resname="Permission Profile successfully created.">
         <source>Permission Profile successfully created.</source>
-        <target state="needs-translation">Permission Profile successfully created.</target>
+        <target state="translated">El perfil de permisos s’ha creat correctament.</target>
       </trans-unit>
       <trans-unit id="igz0C_y" resname="There was an error in updating the Permission Profile.">
         <source>There was an error in updating the Permission Profile.</source>
-        <target state="needs-translation">There was an error in updating the Permission Profile.</target>
+        <target state="translated">S’ha produït un error en actualitzar el perfil de permisos.</target>
       </trans-unit>
       <trans-unit id="q_SHmt8" resname="Permission Profile successfully updated.">
         <source>Permission Profile successfully updated.</source>
-        <target state="needs-translation">Permission Profile successfully updated.</target>
+        <target state="translated">El perfil de permisos s’ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="ZjZcDHe" resname="Permission Profiles successfully updated.">
         <source>Permission Profiles successfully updated.</source>
-        <target state="needs-translation">Permission Profiles successfully updated.</target>
+        <target state="translated">Els perfils de permisos s’han actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="nUGcFk_" resname="The permission">
         <source>The permission</source>
-        <target state="needs-translation">The permission</target>
+        <target state="translated">El permís</target>
       </trans-unit>
       <trans-unit id="crbZUZ3" resname="is dependent of the permission(s)">
         <source>is dependent of the permission(s)</source>
-        <target state="needs-translation">is dependent of the permission(s)</target>
+        <target state="translated">depèn dels permisos</target>
       </trans-unit>
       <trans-unit id="sounSSe" resname="If you click OK you will uncheck all these permissions. Are you sure?">
         <source>If you click OK you will uncheck all these permissions. Are you sure?</source>
-        <target state="needs-translation">If you click OK you will uncheck all these permissions. Are you sure?</target>
+        <target state="translated">Si feu clic a D’acord desactivareu tots aquests permisos. Voleu continuar?</target>
       </trans-unit>
       <trans-unit id="OsIT4lO" resname="ATTENTION: Are you sure you want to delete this User from this Group?">
         <source>ATTENTION: Are you sure you want to delete this User from this Group?</source>
-        <target state="needs-translation">ATTENTION: Are you sure you want to delete this User from this Group?</target>
+        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar aquest usuari d’aquest grup?</target>
       </trans-unit>
       <trans-unit id="SOEdbzh" resname="ATTENTION: Are you sure you want to delete this Admin Multimedia Object from this Group?">
         <source>ATTENTION: Are you sure you want to delete this Admin Multimedia Object from this Group?</source>
-        <target state="needs-translation">ATTENTION: Are you sure you want to delete this Admin Multimedia Object from this Group?</target>
+        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar aquest objecte multimèdia d’administració d’aquest grup?</target>
       </trans-unit>
       <trans-unit id="uAtpvbf" resname="ATTENTION: Are you sure you want to delete this Play Multimedia Object from this Group?">
         <source>ATTENTION: Are you sure you want to delete this Play Multimedia Object from this Group?</source>
-        <target state="needs-translation">ATTENTION: Are you sure you want to delete this Play Multimedia Object from this Group?</target>
+        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar aquest objecte multimèdia de reproducció d’aquest grup?</target>
       </trans-unit>
       <trans-unit id="HQDtFM_" resname="WARNING: You will no longer have access to this Multimedia Object.">
         <source>WARNING: You will no longer have access to this Multimedia Object.</source>
-        <target state="needs-translation">WARNING: You will no longer have access to this Multimedia Object.</target>
+        <target state="translated">ADVERTÈNCIA: Deixareu de tenir accés a aquest objecte multimèdia.</target>
       </trans-unit>
       <trans-unit id="w8EOstY" resname="Any Internet user can play this multimedia object">
         <source>Any Internet user can play this multimedia object</source>
-        <target state="needs-translation">Any Internet user can play this multimedia object</target>
+        <target state="translated">Qualsevol usuari d’Internet pot reproduir aquest objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="RBNtvVe" resname="Only users with the defined password can play this multimedia object">
         <source>Only users with the defined password can play this multimedia object</source>
-        <target state="needs-translation">Only users with the defined password can play this multimedia object</target>
+        <target state="translated">Només els usuaris amb la contrasenya definida poden reproduir aquest objecte multimèdia</target>
       </trans-unit>
       <trans-unit id=".gDZQyh" resname="Only logged in users in the system can play this multimedia object">
         <source>Only logged in users in the system can play this multimedia object</source>
-        <target state="needs-translation">Only logged in users in the system can play this multimedia object</target>
+        <target state="translated">Només els usuaris connectats al sistema poden reproduir aquest objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="FxXP0wh" resname="Only users in the selected Groups can play this multimedia object">
         <source>Only users in the selected Groups can play this multimedia object</source>
-        <target state="needs-translation">Only users in the selected Groups can play this multimedia object</target>
+        <target state="translated">Només els usuaris dels grups seleccionats poden reproduir aquest objecte multimèdia</target>
       </trans-unit>
       <trans-unit id=".l7.lEI" resname="Media Manager">
         <source>Media Manager</source>
