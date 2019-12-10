@@ -1943,195 +1943,195 @@
       </trans-unit>
       <trans-unit id="B8XoUzq" resname="Are you sure you want to delete the playlist">
         <source>Are you sure you want to delete the playlist</source>
-        <target state="needs-translation">Are you sure you want to delete the playlist</target>
+        <target state="translated">Confirmeu que voleu eliminar la llista de reproducció</target>
       </trans-unit>
       <trans-unit id="eqXGEIN" resname="This playlist has">
         <source>This playlist has</source>
-        <target state="needs-translation">This playlist has</target>
+        <target state="translated">Aquesta llista de reproducció té</target>
       </trans-unit>
       <trans-unit id="evNsUIU" resname="Playlist">
         <source>Playlist</source>
-        <target state="needs-translation">Playlist</target>
+        <target state="translated">Llista de reproducció</target>
       </trans-unit>
       <trans-unit id="CnuGXCW" resname="Are you sure you want to delete the Permission Profile">
         <source>Are you sure you want to delete the Permission Profile</source>
-        <target state="needs-translation">Are you sure you want to delete the Permission Profile</target>
+        <target state="translated">Confirmeu que voleu eliminar el perfil de permisos</target>
       </trans-unit>
       <trans-unit id="YUT0gTi" resname="Are you sure you want to delete this thumbnail?">
         <source>Are you sure you want to delete this thumbnail?</source>
-        <target state="needs-translation">Are you sure you want to delete this thumbnail?</target>
+        <target state="translated">Confirmeu que voleu eliminar aquesta miniatura?</target>
       </trans-unit>
       <trans-unit id="Eru2JsX" resname="Thumbnail removed.">
         <source>Thumbnail removed.</source>
-        <target state="needs-translation">Thumbnail removed.</target>
+        <target state="translated">La miniatura s’ha eliminat.</target>
       </trans-unit>
       <trans-unit id="cOI7VBt" resname="Are you sure you want to delete the relation of">
         <source>Are you sure you want to delete the relation of</source>
-        <target state="needs-translation">Are you sure you want to delete the relation of</target>
+        <target state="translated">Confirmeu que voleu eliminar la relació de</target>
       </trans-unit>
       <trans-unit id="93IwAVp" resname="Error deleting Person">
         <source>Error deleting Person</source>
-        <target state="needs-translation">Error deleting Person</target>
+        <target state="translated">S’ha produït un error en eliminar la persona</target>
       </trans-unit>
       <trans-unit id="dzQnHNH" resname="Person successfully removed from Multimedia Object">
         <source>Person successfully removed from Multimedia Object</source>
-        <target state="needs-translation">Person successfully removed from Multimedia Object</target>
+        <target state="translated">La persona s’ha eliminat correctament de l’objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="BcN9q8y" resname="Are you sure you want to delete this link?">
         <source>Are you sure you want to delete this link?</source>
-        <target state="needs-translation">Are you sure you want to delete this link?</target>
+        <target state="translated">Confirmeu que voleu eliminar aquest enllaç?</target>
       </trans-unit>
       <trans-unit id="EFNCv3g" resname="Are you sure you want to delete this material?">
         <source>Are you sure you want to delete this material?</source>
-        <target state="needs-translation">Are you sure you want to delete this material?</target>
+        <target state="translated">Confirmeu que voleu eliminar aquest material?</target>
       </trans-unit>
       <trans-unit id="Bu3wtKv" resname="Material successfully deleted.">
         <source>Material successfully deleted.</source>
-        <target state="needs-translation">Material successfully deleted.</target>
+        <target state="translated">El material s’ha eliminat correctament.</target>
       </trans-unit>
       <trans-unit id="v7zlmez" resname="Are you sure you want to delete this track?">
         <source>Are you sure you want to delete this track?</source>
-        <target state="needs-translation">Are you sure you want to delete this track?</target>
+        <target state="translated">Confirmeu que voleu eliminar aquesta pista?</target>
       </trans-unit>
       <trans-unit id="nTMzQbi" resname="Error extracting thumbnail">
         <source>Error extracting thumbnail</source>
-        <target state="needs-translation">Error extracting thumbnail</target>
+        <target state="translated">S’ha produït un error en extreure la miniatura</target>
       </trans-unit>
       <trans-unit id="8Tf7CDw" resname="Are you sure you want to delete the data of">
         <source>Are you sure you want to delete the data of</source>
-        <target state="needs-translation">Are you sure you want to delete the data of</target>
+        <target state="translated">Confirmeu que voleu eliminar les dades de</target>
       </trans-unit>
       <trans-unit id="YAfbY_G" resname="Person">
         <source>Person</source>
-        <target state="needs-translation">Person</target>
+        <target state="translated">Persona</target>
       </trans-unit>
       <trans-unit id="l17pdOk" resname="Error deleting Group">
         <source>Error deleting Group</source>
-        <target state="needs-translation">Error deleting Group</target>
+        <target state="translated">S’ha produït un error en eliminar el grup</target>
       </trans-unit>
       <trans-unit id="NMoOdmC" resname="Group">
         <source>Group</source>
-        <target state="needs-translation">Group</target>
+        <target state="translated">Grup</target>
       </trans-unit>
       <trans-unit id="1Nsvfkd" resname="Can not delete all users">
         <source>Can not delete all users</source>
-        <target state="needs-translation">Can not delete all users</target>
+        <target state="translated">No es poden eliminar tots els usuaris</target>
       </trans-unit>
       <trans-unit id="8HYsTzv" resname="Are you sure?">
         <source>Are you sure?</source>
-        <target state="needs-translation">Are you sure?</target>
+        <target state="translated">Voleu continuar?</target>
       </trans-unit>
       <trans-unit id="uw0Ge.Y" resname="Multimedia Object(s) successfully deleted.">
         <source>Multimedia Object(s) successfully deleted.</source>
-        <target state="needs-translation">Multimedia Object(s) successfully deleted.</target>
+        <target state="translated">Els objectes multimèdia s’han eliminat correctament.</target>
       </trans-unit>
       <trans-unit id="p5b_bOk" resname="Tags with children can not be deleted.">
         <source>Tags with children can not be deleted.</source>
-        <target state="needs-translation">Tags with children can not be deleted.</target>
+        <target state="translated">No es poden eliminar les etiquetes amb subetiquetes.</target>
       </trans-unit>
       <trans-unit id="2bLbIeE" resname="Are you sure you want to delete selected groups?">
         <source>Are you sure you want to delete selected groups?</source>
-        <target state="needs-translation">Are you sure you want to delete selected groups?</target>
+        <target state="translated">Confirmeu que voleu eliminar els grups seleccionats?</target>
       </trans-unit>
       <trans-unit id="VStEpQy" resname="Multimedia Object cut. Paste it in the desire Series.">
         <source>Multimedia Object cut. Paste it in the desire Series.</source>
-        <target state="needs-translation">Multimedia Object cut. Paste it in the desire Series.</target>
+        <target state="translated">S’ha retallat l’objecte multimèdia. Enganxeu-lo a la sèrie que vulgueu.</target>
       </trans-unit>
       <trans-unit id="d8PHX.C" resname="Multimedia Objects cut. Paste them in the desire Series.">
         <source>Multimedia Objects cut. Paste them in the desire Series.</source>
-        <target state="needs-translation">Multimedia Objects cut. Paste them in the desire Series.</target>
+        <target state="translated">S’han retallat els objectes multimèdia. Enganxeu-los a la sèrie que vulgueu.</target>
       </trans-unit>
       <trans-unit id="Tb1szZW" resname="Paste multimedia object(s) in this series?">
         <source>Paste multimedia object(s) in this series?</source>
-        <target state="needs-translation">Paste multimedia object(s) in this series?</target>
+        <target state="translated">Voleu enganxar els objectes multimèdia en aquesta sèrie?</target>
       </trans-unit>
       <trans-unit id="h7qAnp6" resname="Multimedia Object(s) pasted in the Series.">
         <source>Multimedia Object(s) pasted in the Series.</source>
-        <target state="needs-translation">Multimedia Object(s) pasted in the Series.</target>
+        <target state="translated">Els objectes multimèdia s’han enganxat a la sèrie.</target>
       </trans-unit>
       <trans-unit id="N6fBqyB" resname="Select any user.">
         <source>Select any user.</source>
-        <target state="needs-translation">Select any user.</target>
+        <target state="translated">Selecciona qualsevol usuari.</target>
       </trans-unit>
       <trans-unit id="DT.oOJ0" resname="Users updated.">
         <source>Users updated.</source>
-        <target state="needs-translation">Users updated.</target>
+        <target state="translated">S’han actualitzat els usuaris.</target>
       </trans-unit>
       <trans-unit id="hkEGkeo" resname="From date must be less than to date">
         <source>From date must be less than to date</source>
-        <target state="needs-translation">From date must be less than to date</target>
+        <target state="translated">La data d’inici ha de ser anterior a la data de finalització</target>
       </trans-unit>
       <trans-unit id="W2SAiJZ" resname="Multimedia Object successfully created.">
         <source>Multimedia Object successfully created.</source>
-        <target state="needs-translation">Multimedia Object successfully created.</target>
+        <target state="translated">L’objecte multimèdia s’ha creat correctament.</target>
       </trans-unit>
       <trans-unit id="INEMKnf" resname="Series successfully created.">
         <source>Series successfully created.</source>
-        <target state="needs-translation">Series successfully created.</target>
+        <target state="translated">La sèrie s’ha creat correctament.</target>
       </trans-unit>
       <trans-unit id="CD8V2jD" resname="Playlist successfully created.">
         <source>Playlist successfully created.</source>
-        <target state="needs-translation">Playlist successfully created.</target>
+        <target state="translated">La llista de reproducció s’ha creat correctament.</target>
       </trans-unit>
       <trans-unit id="g2VW76s" resname="The given URL is not valid">
         <source>The given URL is not valid</source>
-        <target state="needs-translation">The given URL is not valid</target>
+        <target state="translated">L’URL introduït no és vàlid</target>
       </trans-unit>
       <trans-unit id="yeEl78P" resname="This directory">
         <source>This directory</source>
-        <target state="needs-translation">This directory</target>
+        <target state="translated">Aquest directori</target>
       </trans-unit>
       <trans-unit id="Me9XpOy" resname="Can not delete tag with code">
         <source>Can not delete tag with code</source>
-        <target state="needs-translation">Can not delete tag with code</target>
+        <target state="translated">No es pot eliminar una etiqueta amb codi</target>
       </trans-unit>
       <trans-unit id="2ASxJzK" resname="Multimedia Object(s) has/have this tag">
         <source>Multimedia Object(s) has/have this tag</source>
-        <target state="needs-translation">Multimedia Object(s) has/have this tag</target>
+        <target state="translated">Hi ha objectes multimèdia amb aquesta etiqueta</target>
       </trans-unit>
       <trans-unit id="1Pu5dTM" resname="Are you sure you want to delete the tag with code">
         <source>Are you sure you want to delete the tag with code</source>
-        <target state="needs-translation">Are you sure you want to delete the tag with code</target>
+        <target state="translated">Confirmeu que voleu eliminar l’etiqueta amb codi</target>
       </trans-unit>
       <trans-unit id="FQORaiq" resname="Tag">
         <source>Tag</source>
-        <target state="needs-translation">Tag</target>
+        <target state="translated">Etiqueta</target>
       </trans-unit>
       <trans-unit id="hJTTcFb" resname="ATTENTION: Are you sure you want to delete all User from this Group?">
         <source>ATTENTION: Are you sure you want to delete all User from this Group?</source>
-        <target state="needs-translation">ATTENTION: Are you sure you want to delete all User from this Group?</target>
+        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar tots els usuaris d’aquest grup?</target>
       </trans-unit>
       <trans-unit id="9viBwjA" resname="ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?">
         <source>ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?</source>
-        <target state="needs-translation">ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?</target>
+        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar tots els objectes multimèdia d’administració d’aquest grup?</target>
       </trans-unit>
       <trans-unit id="rcNVqHI" resname="ATTENTION: Are you sure you want to delete all Play Multimedia Objects from this Group?">
         <source>ATTENTION: Are you sure you want to delete all Play Multimedia Objects from this Group?</source>
-        <target state="needs-translation">ATTENTION: Are you sure you want to delete all Play Multimedia Objects from this Group?</target>
+        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar tots els objectes multimèdia de reproducció d’aquest grup?</target>
       </trans-unit>
       <trans-unit id="0WK8JjE" resname="There was an error in creating the Live event.">
         <source>There was an error in creating the Live event.</source>
-        <target state="needs-translation">There was an error in creating the Live event.</target>
+        <target state="translated">S’ha produït un error en crear l’esdeveniment en directe.</target>
       </trans-unit>
       <trans-unit id="i1NJEAu" resname="Live event successfully created.">
         <source>Live event successfully created.</source>
-        <target state="needs-translation">Live event successfully created.</target>
+        <target state="translated">L’esdeveniment en directe s’ha creat correctament.</target>
       </trans-unit>
       <trans-unit id="5Z0ROY3" resname="There was an error in creating the Live channel.">
         <source>There was an error in creating the Live channel.</source>
-        <target state="needs-translation">There was an error in creating the Live channel.</target>
+        <target state="translated">S’ha produït un error en crear el canal en directe.</target>
       </trans-unit>
       <trans-unit id="mHcQkpB" resname="Live channel successfully created.">
         <source>Live channel successfully created.</source>
-        <target state="needs-translation">Live channel successfully created.</target>
+        <target state="translated">El canal en directe s’ha creat correctament.</target>
       </trans-unit>
       <trans-unit id="3GvYMAf" resname="Series type channel successfully created.">
         <source>Series type channel successfully created.</source>
-        <target state="needs-translation">Series type channel successfully created.</target>
+        <target state="translated">El canal de tipus de sèrie s’ha creat correctament.</target>
       </trans-unit>
       <trans-unit id="zN9Po12" resname="Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.">
         <source>Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.</source>
-        <target state="needs-translation">Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.</target>
+        <target state="translated">S’ha produït un error en desar l’objecte multimèdia: la data de publicació no pot ser anterior a la data de gravació.</target>
       </trans-unit>
       <trans-unit id="y_HqDaU" resname="There was an error in updating the User.">
         <source>There was an error in updating the User.</source>
