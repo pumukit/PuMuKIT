@@ -7,59 +7,59 @@
     <body>
       <trans-unit id="uX6x6RT" resname="Pending jobs (paused &amp; waiting)">
         <source>Pending jobs (paused &amp; waiting)</source>
-        <target state="needs-translation">Pending jobs (paused &amp; waiting)</target>
+        <target state="translated">Tasques pendents (en pausa i en espera)</target>
       </trans-unit>
       <trans-unit id="IhosPrb" resname="Executing jobs">
         <source>Executing jobs</source>
-        <target state="needs-translation">Executing jobs</target>
+        <target state="translated">Tasques en execució</target>
       </trans-unit>
       <trans-unit id="Fxkfoly" resname="Executed jobs">
         <source>Executed jobs</source>
-        <target state="needs-translation">Executed jobs</target>
+        <target state="translated">Tasques executades</target>
       </trans-unit>
       <trans-unit id="U_MugDs" resname="You don't have enough permissions to access this content.">
         <source>You don't have enough permissions to access this content.</source>
-        <target state="needs-translation">You don't have enough permissions to access this content.</target>
+        <target state="translated">No teniu prou permisos per accedir a aquest contingut.</target>
       </trans-unit>
       <trans-unit id="NxktSEx" resname="Job info">
         <source>Job info</source>
-        <target state="needs-translation">Job info</target>
+        <target state="translated">Informació de la tasca</target>
       </trans-unit>
       <trans-unit id="EhVukhv" resname="Id">
         <source>Id</source>
-        <target state="needs-translation">Id</target>
+        <target state="translated">Identificador</target>
       </trans-unit>
       <trans-unit id="kg5BPH1" resname="Status">
         <source>Status</source>
-        <target state="needs-translation">Status</target>
+        <target state="translated">Estat</target>
       </trans-unit>
       <trans-unit id="I0S1ntK" resname="Mm">
         <source>Mm</source>
-        <target state="needs-translation">Mm</target>
+        <target state="translated">Multimèdia</target>
       </trans-unit>
       <trans-unit id="1pajW90" resname="Profile">
         <source>Profile</source>
-        <target state="needs-translation">Profile</target>
+        <target state="translated">Perfil</target>
       </trans-unit>
       <trans-unit id="gCuh9lB" resname="Cpu">
         <source>Cpu</source>
-        <target state="needs-translation">Cpu</target>
+        <target state="translated">CPU</target>
       </trans-unit>
       <trans-unit id="T8UqPEx" resname="Duration">
         <source>Duration</source>
-        <target state="needs-translation">Duration</target>
+        <target state="translated">Durada</target>
       </trans-unit>
       <trans-unit id="m7clAFB" resname="Before">
         <source>Before</source>
-        <target state="needs-translation">Before</target>
+        <target state="translated">Abans</target>
       </trans-unit>
       <trans-unit id="85WSOT7" resname="after">
         <source>after</source>
-        <target state="needs-translation">after</target>
+        <target state="translated">després</target>
       </trans-unit>
       <trans-unit id="DA.THGf" resname="Times">
         <source>Times</source>
-        <target state="needs-translation">Times</target>
+        <target state="translated">Vegades</target>
       </trans-unit>
       <trans-unit id="1wueJLy" resname="Created">
         <source>Created</source>
