@@ -2411,99 +2411,99 @@
       </trans-unit>
       <trans-unit id="dCz6rVt" resname="Published Multimedia Object(s)">
         <source>Published Multimedia Object(s)</source>
-        <target state="needs-translation">Published Multimedia Object(s)</target>
+        <target state="translated">Objectes multimèdia publicats</target>
       </trans-unit>
       <trans-unit id="miRTiec" resname="Hidden Multimedia Object(s)">
         <source>Hidden Multimedia Object(s)</source>
-        <target state="needs-translation">Hidden Multimedia Object(s)</target>
+        <target state="translated">Objectes multimèdia ocults</target>
       </trans-unit>
       <trans-unit id="qZp9jP4" resname="Blocked Multimedia Object(s)">
         <source>Blocked Multimedia Object(s)</source>
-        <target state="needs-translation">Blocked Multimedia Object(s)</target>
+        <target state="translated">Objectes multimèdia bloquejats</target>
       </trans-unit>
       <trans-unit id="oY0wgNr" resname="No tags found with this criteria">
         <source>No tags found with this criteria</source>
-        <target state="needs-translation">No tags found with this criteria</target>
+        <target state="translated">No s’han trobat etiquetes amb aquests criteris</target>
       </trans-unit>
       <trans-unit id="ttQS1uE" resname="Insert filter...">
         <source>Insert filter...</source>
-        <target state="needs-translation">Insert filter...</target>
+        <target state="translated">Insereix un filtre...</target>
       </trans-unit>
       <trans-unit id="pKI5bV2" resname="Login since">
         <source>Login since</source>
-        <target state="needs-translation">Login since</target>
+        <target state="translated">Sessió iniciada des de</target>
       </trans-unit>
       <trans-unit id="KojsaU8" resname="Edit non local user">
         <source>Edit non local user</source>
-        <target state="needs-translation">Edit non local user</target>
+        <target state="translated">Edita un usuari no local</target>
       </trans-unit>
       <trans-unit id="dKYL9Uo" resname="modify non local user">
         <source>modify non local user</source>
-        <target state="needs-translation">modify non local user</target>
+        <target state="translated">modifica un usuari no local</target>
       </trans-unit>
       <trans-unit id="OBiStub" resname="Error promoting user">
         <source>Error promoting user</source>
-        <target state="needs-translation">Error promoting user</target>
+        <target state="translated">S’ha produït un error en promocionar l’usuari</target>
       </trans-unit>
       <trans-unit id="FbYZdLJ" resname="Location">
         <source>Location</source>
-        <target state="needs-translation">Location</target>
+        <target state="translated">Ubicació</target>
       </trans-unit>
       <trans-unit id="TIkGz3b" resname="Channels">
         <source>Channels</source>
-        <target state="needs-translation">Channels</target>
+        <target state="translated">Canals</target>
       </trans-unit>
       <trans-unit id="9IMKHa4" resname="Schedule">
         <source>Schedule</source>
-        <target state="needs-translation">Schedule</target>
+        <target state="translated">Calendari</target>
       </trans-unit>
       <trans-unit id="KrUvkj4" resname="Announce">
         <source>Announce</source>
-        <target state="needs-translation">Announce</target>
+        <target state="translated">Avís</target>
       </trans-unit>
       <trans-unit id="3y.zuwr" resname="STREAM">
         <source>STREAM</source>
-        <target state="needs-translation">STREAM</target>
+        <target state="translated">TRANSMISSIÓ</target>
       </trans-unit>
       <trans-unit id="MWnOZEK" resname="Technology">
         <source>Technology</source>
-        <target state="needs-translation">Technology</target>
+        <target state="translated">Tecnologia</target>
       </trans-unit>
       <trans-unit id="x66qfqi" resname="Qualities">
         <source>Qualities</source>
-        <target state="needs-translation">Qualities</target>
+        <target state="translated">Qualitats</target>
       </trans-unit>
       <trans-unit id="8xAM7F2" resname="IP source">
         <source>IP source</source>
-        <target state="needs-translation">IP source</target>
+        <target state="translated">Font d’IP</target>
       </trans-unit>
       <trans-unit id="DDhhg4r" resname="Last Added (Announced)">
         <source>Last Added (Announced)</source>
-        <target state="needs-translation">Last Added (Announced)</target>
+        <target state="translated">Darrers afegits (anunciats)</target>
       </trans-unit>
       <trans-unit id="ODzWwLh" resname="Subtitle">
         <source>Subtitle</source>
-        <target state="needs-translation">Subtitle</target>
+        <target state="translated">Subtítol</target>
       </trans-unit>
       <trans-unit id="xfWkyBV" resname="Headline">
         <source>Headline</source>
-        <target state="needs-translation">Headline</target>
+        <target state="translated">Titular</target>
       </trans-unit>
       <trans-unit id=".q6uCNS" resname="zip - Compress file">
         <source>zip - Compress file</source>
-        <target state="needs-translation">zip - Compress file</target>
+        <target state="translated">zip - Fitxer de compressió</target>
       </trans-unit>
       <trans-unit id="a8ldDcQ" resname="tgz - Compress file">
         <source>tgz - Compress file</source>
-        <target state="needs-translation">tgz - Compress file</target>
+        <target state="translated">tgz - Fitxer de compressió</target>
       </trans-unit>
       <trans-unit id=".BHGwRg" resname="tar - Backup file">
         <source>tar - Backup file</source>
-        <target state="needs-translation">tar - Backup file</target>
+        <target state="translated">tar - Fitxer de còpia de seguretat</target>
       </trans-unit>
       <trans-unit id="zNJUyF_" resname="swf - Flash file">
         <source>swf - Flash file</source>
-        <target state="needs-translation">swf - Flash file</target>
+        <target state="translated">swf - Fitxer Flash</target>
       </trans-unit>
       <trans-unit id="tduUoQ1" resname="rar - Compress file">
         <source>rar - Compress file</source>
