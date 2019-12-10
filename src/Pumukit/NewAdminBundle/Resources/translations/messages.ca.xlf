@@ -3449,247 +3449,247 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="9A6g70f" resname="Not valid to tagged objets">
         <source>Not valid to tagged objets</source>
-        <target state="needs-translation">Not valid to tagged objets</target>
+        <target state="translated">No és vàlid per a objectes etiquetats</target>
       </trans-unit>
       <trans-unit id="SMIii47" resname="Clone series">
         <source>Clone series</source>
-        <target state="needs-translation">Clone series</target>
+        <target state="translated">Clona la sèrie</target>
       </trans-unit>
       <trans-unit id="9yX0Jhr" resname="Are you sure you want to clone this series?">
         <source>Are you sure you want to clone this series?</source>
-        <target state="needs-translation">Are you sure you want to clone this series?</target>
+        <target state="translated">Confirmeu que voleu clonar aquesta sèrie?</target>
       </trans-unit>
       <trans-unit id="xCcnCNf" resname="Series successfully cloned.">
         <source>Series successfully cloned.</source>
-        <target state="needs-translation">Series successfully cloned.</target>
+        <target state="translated">La sèrie s’ha clonat correctament.</target>
       </trans-unit>
       <trans-unit id="S1iJNW7" resname="No people.">
         <source>No people.</source>
-        <target state="needs-translation">No people.</target>
+        <target state="translated">No hi ha persones.</target>
       </trans-unit>
       <trans-unit id="ndCL6K3" resname="Multimedia object picture">
         <source>Multimedia object picture</source>
-        <target state="needs-translation">Multimedia object picture</target>
+        <target state="translated">Imatge de l’objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="t3844f0" resname="Playlist picture">
         <source>Playlist picture</source>
-        <target state="needs-translation">Playlist picture</target>
+        <target state="translated">Imatge de la llista de reproducció</target>
       </trans-unit>
       <trans-unit id="ZyykMeP" resname="Event picture">
         <source>Event picture</source>
-        <target state="needs-translation">Event picture</target>
+        <target state="translated">Imatge de l’esdeveniment</target>
       </trans-unit>
       <trans-unit id="yObHKax" resname="Places and precinct">
         <source>Places and precinct</source>
-        <target state="needs-translation">Places and precinct</target>
+        <target state="translated">Llocs i àmbit</target>
       </trans-unit>
       <trans-unit id="VK0RyXt" resname="Place and precinct">
         <source>Place and precinct</source>
-        <target state="needs-translation">Place and precinct</target>
+        <target state="translated">Lloc i àmbit</target>
       </trans-unit>
       <trans-unit id="Vu_PIJV" resname="Address">
         <source>Address</source>
-        <target state="needs-translation">Address</target>
+        <target state="translated">Adreça</target>
       </trans-unit>
       <trans-unit id="FIdE_dD" resname="Precinct">
         <source>Precinct</source>
-        <target state="needs-translation">Precinct</target>
+        <target state="translated">Àmbit</target>
       </trans-unit>
       <trans-unit id="g64sGUF" resname="Error loading tag">
         <source>Error loading tag</source>
-        <target state="needs-translation">Error loading tag</target>
+        <target state="translated">S’ha produït un error en carregar l’etiqueta</target>
       </trans-unit>
       <trans-unit id="CwRzTyg" resname="Error deleting tag">
         <source>Error deleting tag</source>
-        <target state="needs-translation">Error deleting tag</target>
+        <target state="translated">S’ha produït un error en eliminar l’etiqueta</target>
       </trans-unit>
       <trans-unit id="Malnlhe" resname="Place successfully deleted.">
         <source>Place successfully deleted.</source>
-        <target state="needs-translation">Place successfully deleted.</target>
+        <target state="translated">El lloc s’ha eliminat correctament.</target>
       </trans-unit>
       <trans-unit id="X9SGs9L" resname="Places successfully deleted.">
         <source>Places successfully deleted.</source>
-        <target state="needs-translation">Places successfully deleted.</target>
+        <target state="translated">Els llocs s’han eliminat correctament.</target>
       </trans-unit>
       <trans-unit id="uN1ADLZ" resname="Select one place to load data">
         <source>Select one place to load data</source>
-        <target state="needs-translation">Select one place to load data</target>
+        <target state="translated">Seleccioneu un lloc per carregar les dades</target>
       </trans-unit>
       <trans-unit id="8wTEA9N" resname="Precinct successfully deleted.">
         <source>Precinct successfully deleted.</source>
-        <target state="needs-translation">Precinct successfully deleted.</target>
+        <target state="translated">L’àmbit s’ha eliminat correctament.</target>
       </trans-unit>
       <trans-unit id="Wjx11W8" resname="Select one precinct to load data">
         <source>Select one precinct to load data</source>
-        <target state="needs-translation">Select one precinct to load data</target>
+        <target state="translated">Seleccioneu un àmbit per carregar les dades</target>
       </trans-unit>
       <trans-unit id="CFp4TPJ" resname="i18n.multiple.Published">
         <source>i18n.multiple.Published</source>
-        <target state="needs-translation">i18n.multiple.Published</target>
+        <target state="translated">i18n.multiple.Publicat</target>
       </trans-unit>
       <trans-unit id="1FBVDqa" resname="i18n.multiple.Hidden">
         <source>i18n.multiple.Hidden</source>
-        <target state="needs-translation">i18n.multiple.Hidden</target>
+        <target state="translated">i18n.multiple.Ocult</target>
       </trans-unit>
       <trans-unit id="b1Ytm3C" resname="i18n.multiple.Blocked">
         <source>i18n.multiple.Blocked</source>
-        <target state="needs-translation">i18n.multiple.Blocked</target>
+        <target state="translated">i18n.multiple.Bloquejat</target>
       </trans-unit>
       <trans-unit id="jWuw_Y7" resname="Show advanced">
         <source>Show advanced</source>
-        <target state="needs-translation">Show advanced</target>
+        <target state="translated">Mostra les opcions avançades</target>
       </trans-unit>
       <trans-unit id="LzQ2Zqq" resname="Format">
         <source>Format</source>
-        <target state="needs-translation">Format</target>
+        <target state="translated">Format</target>
       </trans-unit>
       <trans-unit id="GywIqHM" resname="Quality">
         <source>Quality</source>
-        <target state="needs-translation">Quality</target>
+        <target state="translated">Qualitat</target>
       </trans-unit>
       <trans-unit id="zifRnx3" resname="Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and&#10;        &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database,&#10;        &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name">
         <source>Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and
         &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database,
         &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name</source>
-        <target state="needs-translation">Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and
-        &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database,
-        &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name</target>
+        <target state="translated">Introduïu el nom de la persona que voleu afegir. Si aquesta persona ja existeix a la base de dades, es mostrarà una llista desplegable des de la qual podreu seleccionar-la i
+        &lt;strong&gt;utilitzar-la&lt;/strong&gt;. Si la persona no existeix a la base de dades,
+        &lt;strong&gt;creeu&lt;/strong&gt; una entrada nova amb el nom escrit</target>
       </trans-unit>
       <trans-unit id="O0G6nHy" resname="No data">
         <source>No data</source>
-        <target state="needs-translation">No data</target>
+        <target state="translated">No hi ha dades</target>
       </trans-unit>
       <trans-unit id="MKOwLL7" resname="No title">
         <source>No title</source>
-        <target state="needs-translation">No title</target>
+        <target state="translated">Sense títol</target>
       </trans-unit>
       <trans-unit id="VcKaSv1" resname="Precinct without series">
         <source>Precinct without series</source>
-        <target state="needs-translation">Precinct without series</target>
+        <target state="translated">Àmbit sense sèries</target>
       </trans-unit>
       <trans-unit id="yaljlGP" resname="Videos">
         <source>Videos</source>
-        <target state="needs-translation">Videos</target>
+        <target state="translated">Vídeos</target>
       </trans-unit>
       <trans-unit id="HS.4cLQ" resname="Create new place">
         <source>Create new place</source>
-        <target state="needs-translation">Create new place</target>
+        <target state="translated">Crea un lloc nou</target>
       </trans-unit>
       <trans-unit id="essa3WZ" resname="Place successfully created.">
         <source>Place successfully created.</source>
-        <target state="needs-translation">Place successfully created.</target>
+        <target state="translated">El lloc s’ha creat correctament.</target>
       </trans-unit>
       <trans-unit id="qXARYaB" resname="Autocomplete series">
         <source>Autocomplete series</source>
-        <target state="needs-translation">Autocomplete series</target>
+        <target state="translated">Autocompleta la sèrie</target>
       </trans-unit>
       <trans-unit id="nU95LQY" resname="Series successfully updated.">
         <source>Series successfully updated.</source>
-        <target state="needs-translation">Series successfully updated.</target>
+        <target state="translated">La sèrie s’ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="qsxJV33" resname="Error: Series have another owners on others events">
         <source>Error: Series have another owners on others events</source>
-        <target state="needs-translation">Error: Series have another owners on others events</target>
+        <target state="translated">Error: La sèrie té uns altres propietaris en altres esdeveniments</target>
       </trans-unit>
       <trans-unit id="c9nOksT" resname="Error: Series have some events">
         <source>Error: Series have some events</source>
-        <target state="needs-translation">Error: Series have some events</target>
+        <target state="translated">Error: La sèrie té alguns esdeveniments</target>
       </trans-unit>
       <trans-unit id="otgkhCc" resname="Cloned event successfully">
         <source>Cloned event successfully</source>
-        <target state="needs-translation">Cloned event successfully</target>
+        <target state="translated">L’esdeveniment s’ha clonat correctament</target>
       </trans-unit>
       <trans-unit id="ZKHf6Mw" resname="Deleted event successfully">
         <source>Deleted event successfully</source>
-        <target state="needs-translation">Deleted event successfully</target>
+        <target state="translated">L’esdeveniment s’ha eliminat correctament</target>
       </trans-unit>
       <trans-unit id="qmeq21W" resname="Delete event and series successfully">
         <source>Delete event and series successfully</source>
-        <target state="needs-translation">Delete event and series successfully</target>
+        <target state="translated">L’esdeveniment i la sèrie s’han eliminat correctament</target>
       </trans-unit>
       <trans-unit id="iDcYYvG" resname="Option not allowed">
         <source>Option not allowed</source>
-        <target state="needs-translation">Option not allowed</target>
+        <target state="translated">L’opció no està permesa</target>
       </trans-unit>
       <trans-unit id="5tk0wDe" resname="Sync metadata for all multimedia objects">
         <source>Sync metadata for all multimedia objects</source>
-        <target state="needs-translation">Sync metadata for all multimedia objects</target>
+        <target state="translated">Sincronitza les metadades de tots els objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="nJ4TWrx" resname="Select metadata to sync on all multimedia objects of this series">
         <source>Select metadata to sync on all multimedia objects of this series</source>
-        <target state="needs-translation">Select metadata to sync on all multimedia objects of this series</target>
+        <target state="translated">Selecciona les metadades per sincronitzar a tots els objectes multimèdia d’aquesta sèrie</target>
       </trans-unit>
       <trans-unit id="jSYaNy." resname="Sync">
         <source>Sync</source>
-        <target state="needs-translation">Sync</target>
+        <target state="translated">Sincronitza</target>
       </trans-unit>
       <trans-unit id="blSiCW2" resname="There was an error sync up metadata.">
         <source>There was an error sync up metadata.</source>
-        <target state="needs-translation">There was an error sync up metadata.</target>
+        <target state="translated">S’ha produït un error en sincronitzar les metadades.</target>
       </trans-unit>
       <trans-unit id="kYZr.e4" resname="Sync up metadata was successfully.">
         <source>Sync up metadata was successfully.</source>
-        <target state="needs-translation">Sync up metadata was successfully.</target>
+        <target state="translated">Les metadades s’han sincronitzat correctament.</target>
       </trans-unit>
       <trans-unit id="DfbxytN" resname="Show">
         <source>Show</source>
-        <target state="needs-translation">Show</target>
+        <target state="translated">Mostra</target>
       </trans-unit>
       <trans-unit id="BXaTJaC" resname="Show presenter">
         <source>Show presenter</source>
-        <target state="needs-translation">Show presenter</target>
+        <target state="translated">Mostra el presentador</target>
       </trans-unit>
       <trans-unit id="JaVio6g" resname="presenter">
         <source>presenter</source>
-        <target state="needs-translation">presenter</target>
+        <target state="translated">presentador</target>
       </trans-unit>
       <trans-unit id="9eMldhu" resname="Show presentation">
         <source>Show presentation</source>
-        <target state="needs-translation">Show presentation</target>
+        <target state="translated">Mostra la presentació</target>
       </trans-unit>
       <trans-unit id="v6wxT_." resname="presentation">
         <source>presentation</source>
-        <target state="needs-translation">presentation</target>
+        <target state="translated">presentació</target>
       </trans-unit>
       <trans-unit id="_2ahr06" resname="Original name">
         <source>Original name</source>
-        <target state="needs-translation">Original name</target>
+        <target state="translated">Nom original</target>
       </trans-unit>
       <trans-unit id="9ShOV_x" resname="No name">
         <source>No name</source>
-        <target state="needs-translation">No name</target>
+        <target state="translated">Sense nom</target>
       </trans-unit>
       <trans-unit id="rArhFm_" resname="Upload date">
         <source>Upload date</source>
-        <target state="needs-translation">Upload date</target>
+        <target state="translated">Data de càrrega</target>
       </trans-unit>
       <trans-unit id="awFD0Dh" resname="Return">
         <source>Return</source>
-        <target state="needs-translation">Return</target>
+        <target state="translated">Retorn</target>
       </trans-unit>
       <trans-unit id=".lxppRP" resname="Video ID">
         <source>Video ID</source>
-        <target state="needs-translation">Video ID</target>
+        <target state="translated">Identificador del vídeo</target>
       </trans-unit>
       <trans-unit id="cM.uhTI" resname="Without criteria">
         <source>Without criteria</source>
-        <target state="needs-translation">Without criteria</target>
+        <target state="translated">Sense criteris</target>
       </trans-unit>
       <trans-unit id=".bZIb_I" resname="Multiple criteria">
         <source>Multiple criteria</source>
-        <target state="needs-translation">Multiple criteria</target>
+        <target state="translated">Diversos criteris</target>
       </trans-unit>
       <trans-unit id="SJTnZeA" resname="Track name">
         <source>Track name</source>
-        <target state="needs-translation">Track name</target>
+        <target state="translated">Nom de la pista</target>
       </trans-unit>
       <trans-unit id="NiTFfNE" resname="Numerical video ID">
         <source>Numerical video ID</source>
-        <target state="needs-translation">Numerical video ID</target>
+        <target state="translated">Identificador numèric del vídeo</target>
       </trans-unit>
       <trans-unit id="uyP.XFA" resname="Numerical series ID">
         <source>Numerical series ID</source>
-        <target state="needs-translation">Numerical series ID</target>
+        <target state="translated">Identificador numèric de la sèrie</target>
       </trans-unit>
       <trans-unit id="cXCGmaz" resname="Criteria">
         <source>Criteria</source>
