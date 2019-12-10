@@ -659,51 +659,51 @@
       </trans-unit>
       <trans-unit id="M7k0ds9" resname="Time">
         <source>Time</source>
-        <target state="needs-translation">Time</target>
+        <target state="translated">Hora</target>
       </trans-unit>
       <trans-unit id="VXRvY92" resname="JWPlayer does not support your browser version">
         <source>JWPlayer does not support your browser version</source>
-        <target state="needs-translation">JWPlayer does not support your browser version</target>
+        <target state="translated">El JWPlayer no és compatible amb la versió del vostre navegador</target>
       </trans-unit>
       <trans-unit id="e9X3KLs" resname="Please use 9.0 or higher version or use another browser.">
         <source>Please use 9.0 or higher version or use another browser.</source>
-        <target state="needs-translation">Please use 9.0 or higher version or use another browser.</target>
+        <target state="translated">Utilitzeu la versió 9.0 (o superior) o bé un altre navegador.</target>
       </trans-unit>
       <trans-unit id="wlNtjtj" resname="The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.">
         <source>The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</source>
-        <target state="needs-translation">The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</target>
+        <target state="translated">Cal que instal·leu el connector del Flash. El JWPlayer necessita almenys la versió 10.1.82.76 del Flash per poder fer la transmissió.</target>
       </trans-unit>
       <trans-unit id="HHzHKHy" resname="Live chat">
         <source>Live chat</source>
-        <target state="needs-translation">Live chat</target>
+        <target state="translated">Xat en directe</target>
       </trans-unit>
       <trans-unit id="NvvDhQX" resname="Chat icon">
         <source>Chat icon</source>
-        <target state="needs-translation">Chat icon</target>
+        <target state="translated">Icona del xat</target>
       </trans-unit>
       <trans-unit id="3NHVIj9" resname="Name">
         <source>Name</source>
-        <target state="needs-translation">Name</target>
+        <target state="translated">Nom</target>
       </trans-unit>
       <trans-unit id="lhXIE3s" resname="Name cannot be empty">
         <source>Name cannot be empty</source>
-        <target state="needs-translation">Name cannot be empty</target>
+        <target state="translated">El nom no pot estar buit</target>
       </trans-unit>
       <trans-unit id="L3dmip3" resname="Message">
         <source>Message</source>
-        <target state="needs-translation">Message</target>
+        <target state="translated">Missatge</target>
       </trans-unit>
       <trans-unit id="pCwHVEo" resname="Sorry but there was an error">
         <source>Sorry but there was an error</source>
-        <target state="needs-translation">Sorry but there was an error</target>
+        <target state="translated">S’ha produït un error</target>
       </trans-unit>
       <trans-unit id="nCmGYqT" resname="Event chat">
         <source>Event chat</source>
-        <target state="needs-translation">Event chat</target>
+        <target state="translated">Xat de l’esdeveniment</target>
       </trans-unit>
       <trans-unit id="DKsclhd" resname="video">
         <source>video</source>
-        <target state="needs-translation">video</target>
+        <target state="translated">vídeo</target>
       </trans-unit>
       <trans-unit id="926pIe3" resname="Wall">
         <source>Wall</source>
@@ -711,11 +711,11 @@
       </trans-unit>
       <trans-unit id="xj62cgx" resname="Private">
         <source>Private</source>
-        <target state="needs-translation">Private</target>
+        <target state="translated">Privat</target>
       </trans-unit>
       <trans-unit id="Ewpvcv4" resname="Advanced search">
         <source>Advanced search</source>
-        <target state="needs-translation">Advanced search</target>
+        <target state="translated">Cerca avançada</target>
       </trans-unit>
     </body>
   </file>
