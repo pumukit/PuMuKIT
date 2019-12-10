@@ -1627,199 +1627,199 @@
       </trans-unit>
       <trans-unit id="6h4Em02" resname="Embedded Iframe">
         <source>Embedded Iframe</source>
-        <target state="needs-translation">Embedded Iframe</target>
+        <target state="translated">Iframe incrustat</target>
       </trans-unit>
       <trans-unit id="_brOZC5" resname="Video track">
         <source>Video track</source>
-        <target state="needs-translation">Video track</target>
+        <target state="translated">Pista de vídeo</target>
       </trans-unit>
       <trans-unit id="3ZvmUZs" resname="Warning: This Track is not a playable resource.">
         <source>Warning: This Track is not a playable resource.</source>
-        <target state="needs-translation">Warning: This Track is not a playable resource.</target>
+        <target state="translated">Advertència: Aquesta pista no és un recurs reproduïble.</target>
       </trans-unit>
       <trans-unit id="NxktSEx" resname="Job info">
         <source>Job info</source>
-        <target state="needs-translation">Job info</target>
+        <target state="translated">Informació de la tasca</target>
       </trans-unit>
       <trans-unit id="I0S1ntK" resname="Mm">
         <source>Mm</source>
-        <target state="needs-translation">Mm</target>
+        <target state="translated">Multimèdia</target>
       </trans-unit>
       <trans-unit id="gCuh9lB" resname="Cpu">
         <source>Cpu</source>
-        <target state="needs-translation">Cpu</target>
+        <target state="translated">CPU</target>
       </trans-unit>
       <trans-unit id="m7clAFB" resname="Before">
         <source>Before</source>
-        <target state="needs-translation">Before</target>
+        <target state="translated">Abans</target>
       </trans-unit>
       <trans-unit id="85WSOT7" resname="after">
         <source>after</source>
-        <target state="needs-translation">after</target>
+        <target state="translated">després</target>
       </trans-unit>
       <trans-unit id="DA.THGf" resname="Times">
         <source>Times</source>
-        <target state="needs-translation">Times</target>
+        <target state="translated">Vegades</target>
       </trans-unit>
       <trans-unit id="1wueJLy" resname="Created">
         <source>Created</source>
-        <target state="needs-translation">Created</target>
+        <target state="translated">Creat</target>
       </trans-unit>
       <trans-unit id="A0lK.UJ" resname="started">
         <source>started</source>
-        <target state="needs-translation">started</target>
+        <target state="translated">iniciat</target>
       </trans-unit>
       <trans-unit id="BTQ_mEU" resname="finished">
         <source>finished</source>
-        <target state="needs-translation">finished</target>
+        <target state="translated">finalitzat</target>
       </trans-unit>
       <trans-unit id="9FcVhYx" resname="Edit priority">
         <source>Edit priority</source>
-        <target state="needs-translation">Edit priority</target>
+        <target state="translated">Edita la prioritat</target>
       </trans-unit>
       <trans-unit id="LSRskfv" resname="Output Command">
         <source>Output Command</source>
-        <target state="needs-translation">Output Command</target>
+        <target state="translated">Ordre de sortida</target>
       </trans-unit>
       <trans-unit id="5GTGYFq" resname="RETRY">
         <source>RETRY</source>
-        <target state="needs-translation">RETRY</target>
+        <target state="translated">REINTENTA</target>
       </trans-unit>
       <trans-unit id="ZdrrN4v" resname="DELETE">
         <source>DELETE</source>
-        <target state="needs-translation">DELETE</target>
+        <target state="translated">ELIMINA</target>
       </trans-unit>
       <trans-unit id="poPttLS" resname="Encoder Job info">
         <source>Encoder Job info</source>
-        <target state="needs-translation">Encoder Job info</target>
+        <target state="translated">Informació de la tasca del codificador</target>
       </trans-unit>
       <trans-unit id="xYDO_5g" resname="Delete Encoder Job">
         <source>Delete Encoder Job</source>
-        <target state="needs-translation">Delete Encoder Job</target>
+        <target state="translated">Elimina la tasca del codificador</target>
       </trans-unit>
       <trans-unit id="JyToKKj" resname="File info of multimedia object">
         <source>File info of multimedia object</source>
-        <target state="needs-translation">File info of multimedia object</target>
+        <target state="translated">Informació de fitxer de l’objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="PJm7Cwi" resname="Delete track">
         <source>Delete track</source>
-        <target state="needs-translation">Delete track</target>
+        <target state="translated">Elimina la pista</target>
       </trans-unit>
       <trans-unit id="DbXaeNB" resname="Autocomplete technical metadata of track">
         <source>Autocomplete technical metadata of track</source>
-        <target state="needs-translation">Autocomplete technical metadata of track</target>
+        <target state="translated">Autocompleta les metadades tècniques de la pista</target>
       </trans-unit>
       <trans-unit id="EaAlxnm" resname="Capture frame from">
         <source>Capture frame from</source>
-        <target state="needs-translation">Capture frame from</target>
+        <target state="translated">Captura un fotograma de</target>
       </trans-unit>
       <trans-unit id="R5_Hfk2" resname="Download track">
         <source>Download track</source>
-        <target state="needs-translation">Download track</target>
+        <target state="translated">Baixa la pista</target>
       </trans-unit>
       <trans-unit id="XtfaAeR" resname="Transcode to profile">
         <source>Transcode to profile</source>
-        <target state="needs-translation">Transcode to profile</target>
+        <target state="translated">Transcodifica al perfil</target>
       </trans-unit>
       <trans-unit id="MlHf97L" resname="New master">
         <source>New master</source>
-        <target state="needs-translation">New master</target>
+        <target state="translated">Original nou</target>
       </trans-unit>
       <trans-unit id="40bXTdX" resname="Object without video files.">
         <source>Object without video files.</source>
-        <target state="needs-translation">Object without video files.</target>
+        <target state="translated">Objecte sense fitxers de vídeo.</target>
       </trans-unit>
       <trans-unit id="ev0.iTn" resname="play track">
         <source>play track</source>
-        <target state="needs-translation">play track</target>
+        <target state="translated">reprodueix la pista</target>
       </trans-unit>
       <trans-unit id="mNcePoJ" resname="update track">
         <source>update track</source>
-        <target state="needs-translation">update track</target>
+        <target state="translated">actualitza la pista</target>
       </trans-unit>
       <trans-unit id="rSgp7EK" resname="Track successfully updated.">
         <source>Track successfully updated.</source>
-        <target state="needs-translation">Track successfully updated.</target>
+        <target state="translated">La pista s’ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="HbDC1hM" resname="Update the web page to show master videos">
         <source>Update the web page to show master videos</source>
-        <target state="needs-translation">Update the web page to show master videos</target>
+        <target state="translated">Actualitzeu la pàgina web per mostrar els vídeos originals</target>
       </trans-unit>
       <trans-unit id="VZEQwqi" resname="New Track added.">
         <source>New Track added.</source>
-        <target state="needs-translation">New Track added.</target>
+        <target state="translated">La pista nova s’ha afegit.</target>
       </trans-unit>
       <trans-unit id="dBYCcHI" resname="External defined user. User Groups cannot be edited. Contact your directory service administrator to change membership.">
         <source>External defined user. User Groups cannot be edited. Contact your directory service administrator to change membership.</source>
-        <target state="needs-translation">External defined user. User Groups cannot be edited. Contact your directory service administrator to change membership.</target>
+        <target state="translated">Usuari definit externament. Els grups de l’usuari no es poden editar. Poseu-vos en contacte amb l’administrador del servei del directori per canviar-ne l’afiliació.</target>
       </trans-unit>
       <trans-unit id="z_uoNon" resname="create new user">
         <source>create new user</source>
-        <target state="needs-translation">create new user</target>
+        <target state="translated">crea un usuari nou</target>
       </trans-unit>
       <trans-unit id="ejqjrR0" resname="edit groups for user">
         <source>edit groups for user</source>
-        <target state="needs-translation">edit groups for user</target>
+        <target state="translated">edita els grups de l’usuari</target>
       </trans-unit>
       <trans-unit id="GoS7oiB" resname="GROUPS">
         <source>GROUPS</source>
-        <target state="needs-translation">GROUPS</target>
+        <target state="translated">GRUPS</target>
       </trans-unit>
       <trans-unit id="MBaNOCX" resname="User current Groups">
         <source>User current Groups</source>
-        <target state="needs-translation">User current Groups</target>
+        <target state="translated">Grups actuals de l’usuari</target>
       </trans-unit>
       <trans-unit id="47ienTP" resname="Username">
         <source>Username</source>
-        <target state="needs-translation">Username</target>
+        <target state="translated">Nom d’usuari</target>
       </trans-unit>
       <trans-unit id="JjyR0Hl" resname="Permission Profile">
         <source>Permission Profile</source>
-        <target state="needs-translation">Permission Profile</target>
+        <target state="translated">Perfil de permisos</target>
       </trans-unit>
       <trans-unit id="pSrOQg8" resname="All">
         <source>All</source>
-        <target state="needs-translation">All</target>
+        <target state="translated">Tot</target>
       </trans-unit>
       <trans-unit id="awzJBNC" resname="Users">
         <source>Users</source>
-        <target state="needs-translation">Users</target>
+        <target state="translated">Usuaris</target>
       </trans-unit>
       <trans-unit id="altW76A" resname="Promote to">
         <source>Promote to</source>
-        <target state="needs-translation">Promote to</target>
+        <target state="translated">Promou a</target>
       </trans-unit>
       <trans-unit id="zjENukk" resname="Name and Surname">
         <source>Name and Surname</source>
-        <target state="needs-translation">Name and Surname</target>
+        <target state="translated">Nom i cognoms</target>
       </trans-unit>
       <trans-unit id="QiB_WnK" resname="There are no users with those values.">
         <source>There are no users with those values.</source>
-        <target state="needs-translation">There are no users with those values.</target>
+        <target state="translated">No hi ha usuaris amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="6KiDUxl" resname="Edit User">
         <source>Edit User</source>
-        <target state="needs-translation">Edit User</target>
+        <target state="translated">Edita l’usuari</target>
       </trans-unit>
       <trans-unit id="7rt_Xjw" resname="External defined users can not be edited here, contact your directory service administrator.">
         <source>External defined users can not be edited here, contact your directory service administrator.</source>
-        <target state="needs-translation">External defined users can not be edited here, contact your directory service administrator.</target>
+        <target state="translated">Els usuaris definits externament no es poden editar aquí. Poseu-vos en contacte amb l’administrador del servei del directori.</target>
       </trans-unit>
       <trans-unit id="FOaEZZ0" resname="External defined users can not be deleted here, contact your directory service administrator.">
         <source>External defined users can not be deleted here, contact your directory service administrator.</source>
-        <target state="needs-translation">External defined users can not be deleted here, contact your directory service administrator.</target>
+        <target state="translated">Els usuaris definits externament no es poden eliminar aquí. Poseu-vos en contacte amb l’administrador del servei del directori.</target>
       </trans-unit>
       <trans-unit id="7CtpnxA" resname="User Groups">
         <source>User Groups</source>
-        <target state="needs-translation">User Groups</target>
+        <target state="translated">Grups de l’usuari</target>
       </trans-unit>
       <trans-unit id="7NWsJuk" resname="{0} users|{1} user|]1,Inf] users">
         <source>{0} users|{1} user|]1,Inf] users</source>
-        <target state="needs-translation">{0} users|{1} user|]1,Inf] users</target>
+        <target state="translated">{0} usuaris|{1} usuari|]1,Inf] usuaris</target>
       </trans-unit>
       <trans-unit id="Nb_JDYF" resname="modify user">
         <source>modify user</source>
-        <target state="needs-translation">modify user</target>
+        <target state="translated">modifica l’usuari</target>
       </trans-unit>
       <trans-unit id="6qYkpgC" resname="Are you sure you want to delete this role?">
         <source>Are you sure you want to delete this role?</source>
