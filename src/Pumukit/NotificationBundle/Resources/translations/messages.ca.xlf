@@ -7,23 +7,23 @@
     <body>
       <trans-unit id="EhVukhv" resname="Id">
         <source>Id</source>
-        <target state="needs-translation">Id</target>
+        <target state="translated">Id</target>
       </trans-unit>
       <trans-unit id="kg5BPH1" resname="Status">
         <source>Status</source>
-        <target state="needs-translation">Status</target>
+        <target state="translated">Estat</target>
       </trans-unit>
       <trans-unit id="0tHgmzW" resname="Multimedia Object Id">
         <source>Multimedia Object Id</source>
-        <target state="needs-translation">Multimedia Object Id</target>
+        <target state="translated">Identificador de l’objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="1pajW90" resname="Profile">
         <source>Profile</source>
-        <target state="needs-translation">Profile</target>
+        <target state="translated">Perfil</target>
       </trans-unit>
       <trans-unit id="gCuh9lB" resname="Cpu">
         <source>Cpu</source>
-        <target state="needs-translation">Cpu</target>
+        <target state="translated">CPU</target>
       </trans-unit>
       <trans-unit id="1g27oHk" resname="Priority">
         <source>Priority</source>
