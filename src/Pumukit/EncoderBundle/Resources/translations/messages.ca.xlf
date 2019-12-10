@@ -63,119 +63,119 @@
       </trans-unit>
       <trans-unit id="1wueJLy" resname="Created">
         <source>Created</source>
-        <target state="needs-translation">Created</target>
+        <target state="translated">Creat</target>
       </trans-unit>
       <trans-unit id="A0lK.UJ" resname="started">
         <source>started</source>
-        <target state="needs-translation">started</target>
+        <target state="translated">iniciat</target>
       </trans-unit>
       <trans-unit id="BTQ_mEU" resname="finished">
         <source>finished</source>
-        <target state="needs-translation">finished</target>
+        <target state="translated">finalitzat</target>
       </trans-unit>
       <trans-unit id="1g27oHk" resname="Priority">
         <source>Priority</source>
-        <target state="needs-translation">Priority</target>
+        <target state="translated">Prioritat</target>
       </trans-unit>
       <trans-unit id="9FcVhYx" resname="Edit priority">
         <source>Edit priority</source>
-        <target state="needs-translation">Edit priority</target>
+        <target state="translated">Edita la prioritat</target>
       </trans-unit>
       <trans-unit id="LSRskfv" resname="Output Command">
         <source>Output Command</source>
-        <target state="needs-translation">Output Command</target>
+        <target state="translated">Ordre de sortida</target>
       </trans-unit>
       <trans-unit id="GXZu1sy" resname="Cancel">
         <source>Cancel</source>
-        <target state="needs-translation">Cancel</target>
+        <target state="translated">Cancel·la</target>
       </trans-unit>
       <trans-unit id="5GTGYFq" resname="RETRY">
         <source>RETRY</source>
-        <target state="needs-translation">RETRY</target>
+        <target state="translated">REINTENTA</target>
       </trans-unit>
       <trans-unit id="ZdrrN4v" resname="DELETE">
         <source>DELETE</source>
-        <target state="needs-translation">DELETE</target>
+        <target state="translated">ELIMINA</target>
       </trans-unit>
       <trans-unit id="Lxeg_NU" resname="Jobs">
         <source>Jobs</source>
-        <target state="needs-translation">Jobs</target>
+        <target state="translated">Tasques</target>
       </trans-unit>
       <trans-unit id="HqRCoTS" resname="No">
         <source>No</source>
-        <target state="needs-translation">No</target>
+        <target state="translated">No</target>
       </trans-unit>
       <trans-unit id="7DckhU_" resname="No showing">
         <source>No showing</source>
-        <target state="needs-translation">No showing</target>
+        <target state="translated">No es mostra</target>
       </trans-unit>
       <trans-unit id="d.xaro4" resname="Please change the filter or">
         <source>Please change the filter or</source>
-        <target state="needs-translation">Please change the filter or</target>
+        <target state="translated">Canvieu el filtre o</target>
       </trans-unit>
       <trans-unit id="Bbct2hB" resname="reset it">
         <source>reset it</source>
-        <target state="needs-translation">reset it</target>
+        <target state="translated">reinicieu-lo</target>
       </trans-unit>
       <trans-unit id="g59aAVd" resname="MM">
         <source>MM</source>
-        <target state="needs-translation">MM</target>
+        <target state="translated">Multimèdia</target>
       </trans-unit>
       <trans-unit id="bX2Mz2G" resname="Timeini">
         <source>Timeini</source>
-        <target state="needs-translation">Timeini</target>
+        <target state="translated">Hora inicial</target>
       </trans-unit>
       <trans-unit id="Dx6YFZM" resname="Timestart">
         <source>Timestart</source>
-        <target state="needs-translation">Timestart</target>
+        <target state="translated">Hora d’inici</target>
       </trans-unit>
       <trans-unit id="qJ4bJBH" resname="Timeend">
         <source>Timeend</source>
-        <target state="needs-translation">Timeend</target>
+        <target state="translated">Hora de finalització</target>
       </trans-unit>
       <trans-unit id="poPttLS" resname="Encoder Job info">
         <source>Encoder Job info</source>
-        <target state="needs-translation">Encoder Job info</target>
+        <target state="translated">Informació de la tasca del codificador</target>
       </trans-unit>
       <trans-unit id="mCA_Av2" resname="{0} jobs|{1} job|]1,Inf] jobs">
         <source>{0} jobs|{1} job|]1,Inf] jobs</source>
-        <target state="needs-translation">{0} jobs|{1} job|]1,Inf] jobs</target>
+        <target state="translated">{0} tasques|{1} tasca|]1,Inf] tasques</target>
       </trans-unit>
       <trans-unit id="4VmwYYf" resname="Paused">
         <source>Paused</source>
-        <target state="needs-translation">Paused</target>
+        <target state="translated">En pausa</target>
       </trans-unit>
       <trans-unit id="bik6jAC" resname="Waiting">
         <source>Waiting</source>
-        <target state="needs-translation">Waiting</target>
+        <target state="translated">En espera</target>
       </trans-unit>
       <trans-unit id="N1xv0h5" resname="Executing">
         <source>Executing</source>
-        <target state="needs-translation">Executing</target>
+        <target state="translated">En execució</target>
       </trans-unit>
       <trans-unit id="eAT3p5q" resname="Finished">
         <source>Finished</source>
-        <target state="needs-translation">Finished</target>
+        <target state="translated">Finalitzades</target>
       </trans-unit>
       <trans-unit id="VKDowX6" resname="Error">
         <source>Error</source>
-        <target state="needs-translation">Error</target>
+        <target state="translated">Errònies</target>
       </trans-unit>
       <trans-unit id="XZoXy3C" resname="jobs">
         <source>jobs</source>
-        <target state="needs-translation">jobs</target>
+        <target state="translated">tasques</target>
       </trans-unit>
       <trans-unit id="SNbynGV" resname="This CPU is in maintenance mode.">
         <source>This CPU is in maintenance mode.</source>
-        <target state="needs-translation">This CPU is in maintenance mode.</target>
+        <target state="translated">Aquesta CPU està en mode de manteniment.</target>
       </trans-unit>
       <trans-unit id="NpPnkTp" resname="Encoder">
         <source>Encoder</source>
-        <target state="needs-translation">Encoder</target>
+        <target state="translated">Codificador</target>
       </trans-unit>
       <trans-unit id="RRKgQYP" resname="This cpu only executes jobs from the following profiles:">
         <source>This cpu only executes jobs from the following profiles:</source>
-        <target state="needs-translation">This cpu only executes jobs from the following profiles:</target>
+        <target state="translated">Aquesta CPU només executa tasques dels perfils següents:</target>
       </trans-unit>
     </body>
   </file>
