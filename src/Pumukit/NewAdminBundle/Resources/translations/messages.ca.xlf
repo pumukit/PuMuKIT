@@ -763,159 +763,159 @@
       </trans-unit>
       <trans-unit id="w5PdKxi" resname="OWNERS">
         <source>OWNERS</source>
-        <target state="needs-translation">OWNERS</target>
+        <target state="translated">PROPIETARIS</target>
       </trans-unit>
       <trans-unit id="7X45qy_" resname="Users that can admin this series">
         <source>Users that can admin this series</source>
-        <target state="needs-translation">Users that can admin this series</target>
+        <target state="translated">Usuaris que poden administrar aquesta sèrie</target>
       </trans-unit>
       <trans-unit id="0a0PeIJ" resname="Users that can admin this multimedia object">
         <source>Users that can admin this multimedia object</source>
-        <target state="needs-translation">Users that can admin this multimedia object</target>
+        <target state="translated">Usuaris que poden administrar aquest objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="wQ5CiPB" resname="Person Fullname">
         <source>Person Fullname</source>
-        <target state="needs-translation">Person Fullname</target>
+        <target state="translated">Nom complet de la persona</target>
       </trans-unit>
       <trans-unit id="lpzL089" resname="Email">
         <source>Email</source>
-        <target state="needs-translation">Email</target>
+        <target state="translated">Correu electrònic</target>
       </trans-unit>
       <trans-unit id="KcuvVWb" resname="Edit Person">
         <source>Edit Person</source>
-        <target state="needs-translation">Edit Person</target>
+        <target state="translated">Edita la persona</target>
       </trans-unit>
       <trans-unit id="R1lJisK" resname="Create">
         <source>Create</source>
-        <target state="needs-translation">Create</target>
+        <target state="translated">Crea</target>
       </trans-unit>
       <trans-unit id="EVB6Di9" resname="new">
         <source>new</source>
-        <target state="needs-translation">new</target>
+        <target state="translated">nova</target>
       </trans-unit>
       <trans-unit id="ZDJ6suN" resname="Edit Pub Channel">
         <source>Edit Pub Channel</source>
-        <target state="needs-translation">Edit Pub Channel</target>
+        <target state="translated">Edita el canal públic</target>
       </trans-unit>
       <trans-unit id="T2WYFmC" resname="Modify broadcast profile of videos template">
         <source>Modify broadcast profile of videos template</source>
-        <target state="needs-translation">Modify broadcast profile of videos template</target>
+        <target state="translated">Modifica el perfil d’emissió de la plantilla de vídeos</target>
       </trans-unit>
       <trans-unit id="Srm_gIU" resname="Modify broadcast profile of multimedia object">
         <source>Modify broadcast profile of multimedia object</source>
-        <target state="needs-translation">Modify broadcast profile of multimedia object</target>
+        <target state="translated">Modifica el perfil d’emissió de l’objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="7hy0Oje" resname="Broadcast Profile">
         <source>Broadcast Profile</source>
-        <target state="needs-translation">Broadcast Profile</target>
+        <target state="translated">Perfil d’emissió</target>
       </trans-unit>
       <trans-unit id="2u52BrM" resname="Reset">
         <source>Reset</source>
-        <target state="needs-translation">Reset</target>
+        <target state="translated">Reinicialitza</target>
       </trans-unit>
       <trans-unit id="adcjyWa" resname="Press OK for changes to take effect">
         <source>Press OK for changes to take effect</source>
-        <target state="needs-translation">Press OK for changes to take effect</target>
+        <target state="translated">Premeu D’acord per aplicar els canvis</target>
       </trans-unit>
       <trans-unit id="C9wCg62" resname="WARNING: If you press OK, you will no longer have access to this Multimedia Object">
         <source>WARNING: If you press OK, you will no longer have access to this Multimedia Object</source>
-        <target state="needs-translation">WARNING: If you press OK, you will no longer have access to this Multimedia Object</target>
+        <target state="translated">ADVERTÈNCIA: Si premeu D’acord, deixareu de tenir accés a aquest objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="_C1kZmX" resname="Thumbnails">
         <source>Thumbnails</source>
-        <target state="needs-translation">Thumbnails</target>
+        <target state="translated">Miniatures</target>
       </trans-unit>
       <trans-unit id="8XGbgYK" resname="Video Files">
         <source>Video Files</source>
-        <target state="needs-translation">Video Files</target>
+        <target state="translated">Fitxers de vídeo</target>
       </trans-unit>
       <trans-unit id="Y03hFHd" resname="Attachments">
         <source>Attachments</source>
-        <target state="needs-translation">Attachments</target>
+        <target state="translated">Adjunts</target>
       </trans-unit>
       <trans-unit id="kCTBl9h" resname="Links">
         <source>Links</source>
-        <target state="needs-translation">Links</target>
+        <target state="translated">Enllaços</target>
       </trans-unit>
       <trans-unit id="45jpbzp" resname="Delete multimedia object">
         <source>Delete multimedia object</source>
-        <target state="needs-translation">Delete multimedia object</target>
+        <target state="translated">Elimina l’objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="yUpGGKD" resname="Clone multimedia object">
         <source>Clone multimedia object</source>
-        <target state="needs-translation">Clone multimedia object</target>
+        <target state="translated">Clona l’objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="rkKT.Nd" resname="Show properties">
         <source>Show properties</source>
-        <target state="needs-translation">Show properties</target>
+        <target state="translated">Mostra les propietats</target>
       </trans-unit>
       <trans-unit id="H0nJyRa" resname="Multimedia Object saved ERROR">
         <source>Multimedia Object saved ERROR</source>
-        <target state="needs-translation">Multimedia Object saved ERROR</target>
+        <target state="translated">S’ha produït un error en desar l’objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="omLkUZH" resname="Multimedia Object saved OK">
         <source>Multimedia Object saved OK</source>
-        <target state="needs-translation">Multimedia Object saved OK</target>
+        <target state="translated">L’objecte multimèdia s’ha desat correctament</target>
       </trans-unit>
       <trans-unit id="S1TDJ_4" resname="Publication Channels">
         <source>Publication Channels</source>
-        <target state="needs-translation">Publication Channels</target>
+        <target state="translated">Canals de publicació</target>
       </trans-unit>
       <trans-unit id="J7YbmD3" resname="Publishing Decisions">
         <source>Publishing Decisions</source>
-        <target state="needs-translation">Publishing Decisions</target>
+        <target state="translated">Decisions de publicació</target>
       </trans-unit>
       <trans-unit id="O9PiM6P" resname="Broadcast profile">
         <source>Broadcast profile</source>
-        <target state="needs-translation">Broadcast profile</target>
+        <target state="translated">Perfil d’emissió</target>
       </trans-unit>
       <trans-unit id="Gys6aaW" resname="Apply these tags to all multimedia objects of this series.">
         <source>Apply these tags to all multimedia objects of this series.</source>
-        <target state="needs-translation">Apply these tags to all multimedia objects of this series.</target>
+        <target state="translated">Aplica aquestes etiquetes a tots els objectes multimèdia d’aquesta sèrie.</target>
       </trans-unit>
       <trans-unit id="vEDWyTG" resname="Sync in this series">
         <source>Sync in this series</source>
-        <target state="needs-translation">Sync in this series</target>
+        <target state="translated">Sincronitza en aquesta sèrie</target>
       </trans-unit>
       <trans-unit id="tCnBDqf" resname="Mutlimedia Object Template saved ERROR">
         <source>Mutlimedia Object Template saved ERROR</source>
-        <target state="needs-translation">Mutlimedia Object Template saved ERROR</target>
+        <target state="translated">S’ha produït un error en desar la plantilla d’objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="vec.BdY" resname="Mutlimedia Object Template saved OK">
         <source>Mutlimedia Object Template saved OK</source>
-        <target state="needs-translation">Mutlimedia Object Template saved OK</target>
+        <target state="translated">La plantilla d’objecte multimèdia s’ha desat correctament</target>
       </trans-unit>
       <trans-unit id="vW36nMC" resname="Press OK for the change to take effect">
         <source>Press OK for the change to take effect</source>
-        <target state="needs-translation">Press OK for the change to take effect</target>
+        <target state="translated">Premeu D’acord per aplicar el canvi</target>
       </trans-unit>
       <trans-unit id="bT15s09" resname="create new permission profile">
         <source>create new permission profile</source>
-        <target state="needs-translation">create new permission profile</target>
+        <target state="translated">crea un nou perfil de permisos</target>
       </trans-unit>
       <trans-unit id="Ru3Y59V" resname="Permission Profiles">
         <source>Permission Profiles</source>
-        <target state="needs-translation">Permission Profiles</target>
+        <target state="translated">Perfils de permisos</target>
       </trans-unit>
       <trans-unit id="kcNV1ur" resname="{0} permission profiles|{1} permission profile|]1,Inf] permission profiles">
         <source>{0} permission profiles|{1} permission profile|]1,Inf] permission profiles</source>
-        <target state="needs-translation">{0} permission profiles|{1} permission profile|]1,Inf] permission profiles</target>
+        <target state="translated">{0} perfils de permisos|{1} perfil de permisos|]1,Inf] perfils de permisos</target>
       </trans-unit>
       <trans-unit id="rNzT5AZ" resname="Press SAVE for changes to take effect">
         <source>Press SAVE for changes to take effect</source>
-        <target state="needs-translation">Press SAVE for changes to take effect</target>
+        <target state="translated">Premeu DESA per aplicar els canvis</target>
       </trans-unit>
       <trans-unit id="FQn1YfJ" resname="Save">
         <source>Save</source>
-        <target state="needs-translation">Save</target>
+        <target state="translated">Desa</target>
       </trans-unit>
       <trans-unit id="q8zHjMk" resname="Permissions">
         <source>Permissions</source>
-        <target state="needs-translation">Permissions</target>
+        <target state="translated">Permisos</target>
       </trans-unit>
       <trans-unit id="fC.pA4I" resname="There are no user permissions with those values.">
         <source>There are no user permissions with those values.</source>
-        <target state="needs-translation">There are no user permissions with those values.</target>
+        <target state="translated">No hi ha permisos d’usuari amb aquests valors.</target>
       </trans-unit>
       <trans-unit id=".8wCbaE" resname="There are no permissions with those values.">
         <source>There are no permissions with those values.</source>
