@@ -919,163 +919,163 @@
       </trans-unit>
       <trans-unit id=".8wCbaE" resname="There are no permissions with those values.">
         <source>There are no permissions with those values.</source>
-        <target state="needs-translation">There are no permissions with those values.</target>
+        <target state="translated">No hi ha permisos amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="IbERy.5" resname="Default">
         <source>Default</source>
-        <target state="needs-translation">Default</target>
+        <target state="translated">Predeterminat</target>
       </trans-unit>
       <trans-unit id="sHP2xo7" resname="Scope">
         <source>Scope</source>
-        <target state="needs-translation">Scope</target>
+        <target state="translated">Abast</target>
       </trans-unit>
       <trans-unit id="6iSkR8R" resname="update permission profile">
         <source>update permission profile</source>
-        <target state="needs-translation">update permission profile</target>
+        <target state="translated">actualitza el perfil de permisos</target>
       </trans-unit>
       <trans-unit id="v7fMzab" resname="Edit the permission profile">
         <source>Edit the permission profile</source>
-        <target state="needs-translation">Edit the permission profile</target>
+        <target state="translated">Edita el perfil de permisos</target>
       </trans-unit>
       <trans-unit id="8fAHwT7" resname="Delete the permission profile">
         <source>Delete the permission profile</source>
-        <target state="needs-translation">Delete the permission profile</target>
+        <target state="translated">Elimina el perfil de permisos</target>
       </trans-unit>
       <trans-unit id="ti01rvY" resname="create new person">
         <source>create new person</source>
-        <target state="needs-translation">create new person</target>
+        <target state="translated">crea una persona nova</target>
       </trans-unit>
       <trans-unit id=".K2pjv2" resname="Person successfully created.">
         <source>Person successfully created.</source>
-        <target state="needs-translation">Person successfully created.</target>
+        <target state="translated">La persona s’ha creat correctament.</target>
       </trans-unit>
       <trans-unit id="3L.aehR" resname="edit new person">
         <source>edit new person</source>
-        <target state="needs-translation">edit new person</target>
+        <target state="translated">edita la persona nova</target>
       </trans-unit>
       <trans-unit id="_1CkwZ6" resname="Person successfully associated to Multimedia Object">
         <source>Person successfully associated to Multimedia Object</source>
-        <target state="needs-translation">Person successfully associated to Multimedia Object</target>
+        <target state="translated">La persona s’ha associat correctament a l’objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="LHnYFAj" resname="with role">
         <source>with role</source>
-        <target state="needs-translation">with role</target>
+        <target state="translated">amb el rol</target>
       </trans-unit>
       <trans-unit id="pVVGIsZ" resname="Post">
         <source>Post</source>
-        <target state="needs-translation">Post</target>
+        <target state="translated">Càrrec</target>
       </trans-unit>
       <trans-unit id="G.Fj8mm" resname="Letter">
         <source>Letter</source>
-        <target state="needs-translation">Letter</target>
+        <target state="translated">Lletra</target>
       </trans-unit>
       <trans-unit id="cAZax3z" resname="Select any person.">
         <source>Select any person.</source>
-        <target state="needs-translation">Select any person.</target>
+        <target state="translated">Selecciona qualsevol persona.</target>
       </trans-unit>
       <trans-unit id="_4Y1aAq" resname="There are no people with those values.">
         <source>There are no people with those values.</source>
-        <target state="needs-translation">There are no people with those values.</target>
+        <target state="translated">No hi ha persones amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="jPj8I85" resname="Can't delete Person">
         <source>Can't delete Person</source>
-        <target state="needs-translation">Can't delete Person</target>
+        <target state="translated">No es pot eliminar la persona</target>
       </trans-unit>
       <trans-unit id="t1J036t" resname="There is a referenced User">
         <source>There is a referenced User</source>
-        <target state="needs-translation">There is a referenced User</target>
+        <target state="translated">Hi ha un usuari referenciat</target>
       </trans-unit>
       <trans-unit id="aVux4sC" resname="Cannot delete the data of">
         <source>Cannot delete the data of</source>
-        <target state="needs-translation">Cannot delete the data of</target>
+        <target state="translated">No es poden eliminar les dades dels</target>
       </trans-unit>
       <trans-unit id="xmBMRRZ" resname="multimedia object(s) contain(s) this person">
         <source>multimedia object(s) contain(s) this person</source>
-        <target state="needs-translation">multimedia object(s) contain(s) this person</target>
+        <target state="translated">objectes multimèdia que conté aquesta persona</target>
       </trans-unit>
       <trans-unit id="6EqFlw." resname="{0} people|{1} person|]1,Inf] people">
         <source>{0} people|{1} person|]1,Inf] people</source>
-        <target state="needs-translation">{0} people|{1} person|]1,Inf] people</target>
+        <target state="translated">{0} persones|{1} persona|]1,Inf] persones</target>
       </trans-unit>
       <trans-unit id="5jOk1qp" resname="Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and">
         <source>Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and</source>
-        <target state="needs-translation">Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and</target>
+        <target state="translated">Afegiu el nom de la persona que voleu afegir. Si aquesta persona ja existeix a la base de dades, es mostrarà una llista desplegable des de la qual podreu seleccionar-la i</target>
       </trans-unit>
       <trans-unit id="IaVznnK" resname="use him/her">
         <source>use him/her</source>
-        <target state="needs-translation">use him/her</target>
+        <target state="translated">utilitzar-la</target>
       </trans-unit>
       <trans-unit id="1zmXUua" resname="If he/she doesn't exist in the database">
         <source>If he/she doesn't exist in the database</source>
-        <target state="needs-translation">If he/she doesn't exist in the database</target>
+        <target state="translated">Si la persona no existeix a la base de dades,</target>
       </trans-unit>
       <trans-unit id="_ohHsMM" resname="create">
         <source>create</source>
-        <target state="needs-translation">create</target>
+        <target state="translated">creeu</target>
       </trans-unit>
       <trans-unit id="gDJ8ktq" resname="a new entrance with the written name">
         <source>a new entrance with the written name</source>
-        <target state="needs-translation">a new entrance with the written name</target>
+        <target state="translated">una entrada nova amb el nom escrit</target>
       </trans-unit>
       <trans-unit id="CNtq9Xn" resname="name to search for">
         <source>name to search for</source>
-        <target state="needs-translation">name to search for</target>
+        <target state="translated">nom per cercar</target>
       </trans-unit>
       <trans-unit id="3VrOngG" resname="working">
         <source>working</source>
-        <target state="needs-translation">working</target>
+        <target state="translated">treballant</target>
       </trans-unit>
       <trans-unit id="rKtK0Co" resname="Select before a person">
         <source>Select before a person</source>
-        <target state="needs-translation">Select before a person</target>
+        <target state="translated">Primerament heu de seleccionar una persona</target>
       </trans-unit>
       <trans-unit id="w22Bnnv" resname="Use">
         <source>Use</source>
-        <target state="needs-translation">Use</target>
+        <target state="translated">Utilitza</target>
       </trans-unit>
       <trans-unit id="EhVukhv" resname="Id">
         <source>Id</source>
-        <target state="needs-translation">Id</target>
+        <target state="translated">Identificador</target>
       </trans-unit>
       <trans-unit id="Y9zriAC" resname="Phone">
         <source>Phone</source>
-        <target state="needs-translation">Phone</target>
+        <target state="translated">Telèfon</target>
       </trans-unit>
       <trans-unit id="zaFNCy2" resname="INFO">
         <source>INFO</source>
-        <target state="needs-translation">INFO</target>
+        <target state="translated">INFORMACIÓ</target>
       </trans-unit>
       <trans-unit id="KGDhGAr" resname="SERIES">
         <source>SERIES</source>
-        <target state="needs-translation">SERIES</target>
+        <target state="translated">SÈRIE</target>
       </trans-unit>
       <trans-unit id="GyokaI7" resname="Select any person">
         <source>Select any person</source>
-        <target state="needs-translation">Select any person</target>
+        <target state="translated">Selecciona qualsevol persona</target>
       </trans-unit>
       <trans-unit id="OfEL0bF" resname="modify person">
         <source>modify person</source>
-        <target state="needs-translation">modify person</target>
+        <target state="translated">modifica la persona</target>
       </trans-unit>
       <trans-unit id="hLhQE86" resname="Person successfully updated.">
         <source>Person successfully updated.</source>
-        <target state="needs-translation">Person successfully updated.</target>
+        <target state="translated">La persona s’ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="2IFBgFe" resname="edit person">
         <source>edit person</source>
-        <target state="needs-translation">edit person</target>
+        <target state="translated">edita la persona</target>
       </trans-unit>
       <trans-unit id="gk9RU.y" resname="Person associated to Multimedia Object">
         <source>Person associated to Multimedia Object</source>
-        <target state="needs-translation">Person associated to Multimedia Object</target>
+        <target state="translated">La persona s’ha associat a l’objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="czrDEMn" resname="successfully updated">
         <source>successfully updated</source>
-        <target state="needs-translation">successfully updated</target>
+        <target state="translated">s’ha actualitzat correctament</target>
       </trans-unit>
       <trans-unit id="Suf8Jop" resname="add new banner">
         <source>add new banner</source>
-        <target state="needs-translation">add new banner</target>
+        <target state="translated">afegeix un bàner nou</target>
       </trans-unit>
       <trans-unit id="z6ZAHt." resname="Banner from URL">
         <source>Banner from URL</source>
