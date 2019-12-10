@@ -563,203 +563,203 @@
       </trans-unit>
       <trans-unit id="FfxltpM" resname="Publication">
         <source>Publication</source>
-        <target state="needs-translation">Publication</target>
+        <target state="translated">Publicació</target>
       </trans-unit>
       <trans-unit id="ltE0rve" resname="Basic Metadata">
         <source>Basic Metadata</source>
-        <target state="needs-translation">Basic Metadata</target>
+        <target state="translated">Metadades bàsiques</target>
       </trans-unit>
       <trans-unit id="EzEnW8U" resname="Tags">
         <source>Tags</source>
-        <target state="needs-translation">Tags</target>
+        <target state="translated">Etiquetes</target>
       </trans-unit>
       <trans-unit id="Hhnvc4L" resname="Owners &amp; Groups">
         <source>Owners &amp; Groups</source>
-        <target state="needs-translation">Owners &amp; Groups</target>
+        <target state="translated">Propietaris i grups</target>
       </trans-unit>
       <trans-unit id="fbIIlwU" resname="People">
         <source>People</source>
-        <target state="needs-translation">People</target>
+        <target state="translated">Persones</target>
       </trans-unit>
       <trans-unit id="M.Z9z4s" resname="Multimedia">
         <source>Multimedia</source>
-        <target state="needs-translation">Multimedia</target>
+        <target state="translated">Multimèdia</target>
       </trans-unit>
       <trans-unit id="d9YkHEs" resname="Media Edition">
         <source>Media Edition</source>
-        <target state="needs-translation">Media Edition</target>
+        <target state="translated">Edició multimèdia</target>
       </trans-unit>
       <trans-unit id="YUE6N.o" resname="DISCARD">
         <source>DISCARD</source>
-        <target state="needs-translation">DISCARD</target>
+        <target state="translated">DESCARTA</target>
       </trans-unit>
       <trans-unit id="whC.3yj" resname="SAVE">
         <source>SAVE</source>
-        <target state="needs-translation">SAVE</target>
+        <target state="translated">DESA</target>
       </trans-unit>
       <trans-unit id="bOMjdCr" resname="SAVE AND CLOSE">
         <source>SAVE AND CLOSE</source>
-        <target state="needs-translation">SAVE AND CLOSE</target>
+        <target state="translated">DESA I TANCA</target>
       </trans-unit>
       <trans-unit id="XbYnTgi" resname="EDIT MODE">
         <source>EDIT MODE</source>
-        <target state="needs-translation">EDIT MODE</target>
+        <target state="translated">MODE D’EDICIÓ</target>
       </trans-unit>
       <trans-unit id="rOM2jcP" resname="Back to series list">
         <source>Back to series list</source>
-        <target state="needs-translation">Back to series list</target>
+        <target state="translated">Torna a la llista de sèries</target>
       </trans-unit>
       <trans-unit id="U3v_ecO" resname="Select an action">
         <source>Select an action</source>
-        <target state="needs-translation">Select an action</target>
+        <target state="translated">Selecciona una acció</target>
       </trans-unit>
       <trans-unit id="MUY8Kr8" resname="Announce/Not announce selected">
         <source>Announce/Not announce selected</source>
-        <target state="needs-translation">Announce/Not announce selected</target>
+        <target state="translated">Anuncia/No anunciïs els seleccionats</target>
       </trans-unit>
       <trans-unit id="7Er4EIv" resname="List multimedia objects in descending order of publication date">
         <source>List multimedia objects in descending order of publication date</source>
-        <target state="needs-translation">List multimedia objects in descending order of publication date</target>
+        <target state="translated">Llista els objectes multimèdia segons la data de publicació per ordre descendent</target>
       </trans-unit>
       <trans-unit id="tjhiDXt" resname="List multimedia objects in ascending order of publication date">
         <source>List multimedia objects in ascending order of publication date</source>
-        <target state="needs-translation">List multimedia objects in ascending order of publication date</target>
+        <target state="translated">Llista els objectes multimèdia segons la data de publicació per ordre ascendent</target>
       </trans-unit>
       <trans-unit id="AxD4nlk" resname="List multimedia objects in descending order of recording date">
         <source>List multimedia objects in descending order of recording date</source>
-        <target state="needs-translation">List multimedia objects in descending order of recording date</target>
+        <target state="translated">Llista els objectes multimèdia segons la data de gravació per ordre descendent</target>
       </trans-unit>
       <trans-unit id="OIRTi8R" resname="List multimedia objects in ascending order of recording date">
         <source>List multimedia objects in ascending order of recording date</source>
-        <target state="needs-translation">List multimedia objects in ascending order of recording date</target>
+        <target state="translated">Llista els objectes multimèdia segons la data de gravació per ordre ascendent</target>
       </trans-unit>
       <trans-unit id="n8QxF8i" resname="Cut multimedia objects">
         <source>Cut multimedia objects</source>
-        <target state="needs-translation">Cut multimedia objects</target>
+        <target state="translated">Talla els objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="4AWlJxV" resname="Cut multimedia object">
         <source>Cut multimedia object</source>
-        <target state="needs-translation">Cut multimedia object</target>
+        <target state="translated">Talla l’objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="EIaPnXC" resname="Paste multimedia objects">
         <source>Paste multimedia objects</source>
-        <target state="needs-translation">Paste multimedia objects</target>
+        <target state="translated">Enganxa els objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="XQIAlIX" resname="Add to playlist">
         <source>Add to playlist</source>
-        <target state="needs-translation">Add to playlist</target>
+        <target state="translated">Afegeix a la llista de reproducció</target>
       </trans-unit>
       <trans-unit id="nH27FpW" resname="Preview show of the series">
         <source>Preview show of the series</source>
-        <target state="needs-translation">Preview show of the series</target>
+        <target state="translated">Previsualització de la sèrie</target>
       </trans-unit>
       <trans-unit id="iBbFK8W" resname="Wizard">
         <source>Wizard</source>
-        <target state="needs-translation">Wizard</target>
+        <target state="translated">Auxiliar</target>
       </trans-unit>
       <trans-unit id="uSX6BvG" resname="Create new multimedia object">
         <source>Create new multimedia object</source>
-        <target state="needs-translation">Create new multimedia object</target>
+        <target state="translated">Crea un objecte multimèdia nou</target>
       </trans-unit>
       <trans-unit id="I3W53Mr" resname="Select any multimedia object.">
         <source>Select any multimedia object.</source>
-        <target state="needs-translation">Select any multimedia object.</target>
+        <target state="translated">Selecciona qualsevol objecte multimèdia.</target>
       </trans-unit>
       <trans-unit id="x0qdFyr" resname="Warning: This link will give a 404 error until this multimedia object is correctly published.">
         <source>Warning: This link will give a 404 error until this multimedia object is correctly published.</source>
-        <target state="needs-translation">Warning: This link will give a 404 error until this multimedia object is correctly published.</target>
+        <target state="translated">Advertència: Aquest enllaç donarà un error 404 fins que l’objecte multimèdia no estigui publicat correctament.</target>
       </trans-unit>
       <trans-unit id="O8.cGGq" resname="This URL will give you access to the series without login.">
         <source>This URL will give you access to the series without login.</source>
-        <target state="needs-translation">This URL will give you access to the series without login.</target>
+        <target state="translated">Aquest URL us donarà accés a la sèrie sense iniciar sessió.</target>
       </trans-unit>
       <trans-unit id="3PYR5qZ" resname="Warning: This link will show a player with no video until a display track is added.">
         <source>Warning: This link will show a player with no video until a display track is added.</source>
-        <target state="needs-translation">Warning: This link will show a player with no video until a display track is added.</target>
+        <target state="translated">Advertència: Aquest enllaç mostrarà un reproductor sense cap vídeo fins que no s’afegeixi una pista de visualització.</target>
       </trans-unit>
       <trans-unit id="1IJ3MfG" resname="WARNING, this multimedia object is not yet published on WebTV, or does not have a playable resource.">
         <source>WARNING, this multimedia object is not yet published on WebTV, or does not have a playable resource.</source>
-        <target state="needs-translation">WARNING, this multimedia object is not yet published on WebTV, or does not have a playable resource.</target>
+        <target state="translated">ADVERTÈNCIA: Aquest objecte multimèdia encara no està publicat al portal WebTV o no té cap recurs reproduïble.</target>
       </trans-unit>
       <trans-unit id="Ds6Rhwz" resname="Audio/Video">
         <source>Audio/Video</source>
-        <target state="needs-translation">Audio/Video</target>
+        <target state="translated">Àudio/Vídeo</target>
       </trans-unit>
       <trans-unit id="fozSBW2" resname="Title">
         <source>Title</source>
-        <target state="needs-translation">Title</target>
+        <target state="translated">Títol</target>
       </trans-unit>
       <trans-unit id="T8UqPEx" resname="Duration">
         <source>Duration</source>
-        <target state="needs-translation">Duration</target>
+        <target state="translated">Durada</target>
       </trans-unit>
       <trans-unit id="RKks.Xv" resname="RecDate">
         <source>RecDate</source>
-        <target state="needs-translation">RecDate</target>
+        <target state="translated">Data grav</target>
       </trans-unit>
       <trans-unit id="NLvpdQx" resname="PubDate">
         <source>PubDate</source>
-        <target state="needs-translation">PubDate</target>
+        <target state="translated">Data publ</target>
       </trans-unit>
       <trans-unit id="zWDsE1R" resname="Move one position up">
         <source>Move one position up</source>
-        <target state="needs-translation">Move one position up</target>
+        <target state="translated">Desplaça una posició cap amunt</target>
       </trans-unit>
       <trans-unit id="QvqDRmI" resname="Move to the beginning of the list">
         <source>Move to the beginning of the list</source>
-        <target state="needs-translation">Move to the beginning of the list</target>
+        <target state="translated">Desplaça cap al començament de la llista</target>
       </trans-unit>
       <trans-unit id="1lAMLtL" resname="Move one position down">
         <source>Move one position down</source>
-        <target state="needs-translation">Move one position down</target>
+        <target state="translated">Desplaça una posició cap avall</target>
       </trans-unit>
       <trans-unit id="s_sYQIy" resname="Move to the end of the list">
         <source>Move to the end of the list</source>
-        <target state="needs-translation">Move to the end of the list</target>
+        <target state="translated">Desplaça cap al final de la llista</target>
       </trans-unit>
       <trans-unit id="JRvXwOL" resname="No_pic">
         <source>No_pic</source>
-        <target state="needs-translation">No_pic</target>
+        <target state="translated">Sense_imatge</target>
       </trans-unit>
       <trans-unit id="glRjWBo" resname="There are no multimedia objects with those values.">
         <source>There are no multimedia objects with those values.</source>
-        <target state="needs-translation">There are no multimedia objects with those values.</target>
+        <target state="translated">No hi ha objectes multimèdia amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="t00dckA" resname="Mm. Obj.">
         <source>Mm. Obj.</source>
-        <target state="needs-translation">Mm. Obj.</target>
+        <target state="translated">Obj. multim.</target>
       </trans-unit>
       <trans-unit id="J4d1a9v" resname="Multimedia object properties">
         <source>Multimedia object properties</source>
-        <target state="needs-translation">Multimedia object properties</target>
+        <target state="translated">Propietats de l’objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="3JN7WYk" resname="None">
         <source>None</source>
-        <target state="needs-translation">None</target>
+        <target state="translated">Cap</target>
       </trans-unit>
       <trans-unit id="QeAATX8" resname="Change broadcast profile">
         <source>Change broadcast profile</source>
-        <target state="needs-translation">Change broadcast profile</target>
+        <target state="translated">Canvia el perfil d’emissió</target>
       </trans-unit>
       <trans-unit id="wL91vXi" resname="Change">
         <source>Change</source>
-        <target state="needs-translation">Change</target>
+        <target state="translated">Canvia</target>
       </trans-unit>
       <trans-unit id="OcQRuMw" resname="ADMIN GROUPS">
         <source>ADMIN GROUPS</source>
-        <target state="needs-translation">ADMIN GROUPS</target>
+        <target state="translated">GRUPS ADMINISTRADORS</target>
       </trans-unit>
       <trans-unit id="bjDC7sH" resname="Groups that can admin this series">
         <source>Groups that can admin this series</source>
-        <target state="needs-translation">Groups that can admin this series</target>
+        <target state="translated">Grups que poden administrar aquesta sèrie</target>
       </trans-unit>
       <trans-unit id="eG9U5az" resname="Groups that can admin this multimedia object">
         <source>Groups that can admin this multimedia object</source>
-        <target state="needs-translation">Groups that can admin this multimedia object</target>
+        <target state="translated">Grups que poden administrar aquest objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="55HQc1g" resname="Selected Admin Groups">
         <source>Selected Admin Groups</source>
-        <target state="needs-translation">Selected Admin Groups</target>
+        <target state="translated">Grups administradors seleccionats</target>
       </trans-unit>
       <trans-unit id="w5PdKxi" resname="OWNERS">
         <source>OWNERS</source>
