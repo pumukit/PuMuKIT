@@ -3693,99 +3693,99 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="cXCGmaz" resname="Criteria">
         <source>Criteria</source>
-        <target state="needs-translation">Criteria</target>
+        <target state="translated">Criteris</target>
       </trans-unit>
       <trans-unit id="p3BiCQV" resname="Without filter">
         <source>Without filter</source>
-        <target state="needs-translation">Without filter</target>
+        <target state="translated">Sense filtre</target>
       </trans-unit>
       <trans-unit id=".3bGq3U" resname="Configure your fields list">
         <source>Configure your fields list</source>
-        <target state="needs-translation">Configure your fields list</target>
+        <target state="translated">Configureu la vostra llista de camps</target>
       </trans-unit>
       <trans-unit id="YWOkHA5" resname="Custom field">
         <source>Custom field</source>
-        <target state="needs-translation">Custom field</target>
+        <target state="translated">Camp personalitzat</target>
       </trans-unit>
       <trans-unit id="acQEWR6" resname="Views">
         <source>Views</source>
-        <target state="needs-translation">Views</target>
+        <target state="translated">Visualitzacions</target>
       </trans-unit>
       <trans-unit id="4h_TXxH" resname="Copy">
         <source>Copy</source>
-        <target state="needs-translation">Copy</target>
+        <target state="translated">Copia</target>
       </trans-unit>
       <trans-unit id="j_FHaW_" resname="Translate">
         <source>Translate</source>
-        <target state="needs-translation">Translate</target>
+        <target state="translated">Tradueix</target>
       </trans-unit>
       <trans-unit id="algu._j" resname="Iframe URL">
         <source>Iframe URL</source>
-        <target state="needs-translation">Iframe URL</target>
+        <target state="translated">URL de l’iframe</target>
       </trans-unit>
       <trans-unit id="jyNk4Ru" resname="Day">
         <source>Day</source>
-        <target state="needs-translation">Day</target>
+        <target state="translated">Dia</target>
       </trans-unit>
       <trans-unit id="MQylA_8" resname="Month">
         <source>Month</source>
-        <target state="needs-translation">Month</target>
+        <target state="translated">Mes</target>
       </trans-unit>
       <trans-unit id="A3MtGeZ" resname="Num">
         <source>Num</source>
-        <target state="needs-translation">Num</target>
+        <target state="translated">Núm.</target>
       </trans-unit>
       <trans-unit id="iTvUpcp" resname="Total Time">
         <source>Total Time</source>
-        <target state="needs-translation">Total Time</target>
+        <target state="translated">Temps total</target>
       </trans-unit>
       <trans-unit id="msfeW55" resname="Total Size">
         <source>Total Size</source>
-        <target state="needs-translation">Total Size</target>
+        <target state="translated">Mida total</target>
       </trans-unit>
       <trans-unit id="ybPDgkf" resname="Total">
         <source>Total</source>
-        <target state="needs-translation">Total</target>
+        <target state="translated">Total</target>
       </trans-unit>
       <trans-unit id="K2m_11l" resname="Num series">
         <source>Num series</source>
-        <target state="needs-translation">Num series</target>
+        <target state="translated">Nombre de sèries</target>
       </trans-unit>
       <trans-unit id="DoL48E_" resname="Num objects">
         <source>Num objects</source>
-        <target state="needs-translation">Num objects</target>
+        <target state="translated">Nombre d’objectes</target>
       </trans-unit>
       <trans-unit id="22fF_E2" resname="Total hours">
         <source>Total hours</source>
-        <target state="needs-translation">Total hours</target>
+        <target state="translated">Hores totals</target>
       </trans-unit>
       <trans-unit id="Uc32slY" resname="Total size">
         <source>Total size</source>
-        <target state="needs-translation">Total size</target>
+        <target state="translated">Mida total</target>
       </trans-unit>
       <trans-unit id="ppxN7OF" resname="Storage">
         <source>Storage</source>
-        <target state="needs-translation">Storage</target>
+        <target state="translated">Emmagatzematge</target>
       </trans-unit>
       <trans-unit id="XFT.IFz" resname="Numerical ID">
         <source>Numerical ID</source>
-        <target state="needs-translation">Numerical ID</target>
+        <target state="translated">Identificador numèric</target>
       </trans-unit>
       <trans-unit id="8.FNcj3" resname="Series Title">
         <source>Series Title</source>
-        <target state="needs-translation">Series Title</target>
+        <target state="translated">Títol de la sèrie</target>
       </trans-unit>
       <trans-unit id="0lBOUri" resname="catalogue">
         <source>catalogue</source>
-        <target state="needs-translation">catalogue</target>
+        <target state="translated">catàleg</target>
       </trans-unit>
       <trans-unit id="8zto_mL" resname="Please enter your translation:">
         <source>Please enter your translation:</source>
-        <target state="needs-translation">Please enter your translation:</target>
+        <target state="translated">Introduïu la vostra traducció:</target>
       </trans-unit>
       <trans-unit id="VKDowX6" resname="Error">
         <source>Error</source>
-        <target state="needs-translation">Error</target>
+        <target state="translated">Error</target>
       </trans-unit>
       <trans-unit id="gOjdGlo" resname="Recording">
         <source>Recording</source>
@@ -3809,7 +3809,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="YMfjw07" resname="my series">
         <source>my series</source>
-        <target state="needs-translation">my series</target>
+        <target state="translated">les meves sèries</target>
       </trans-unit>
       <trans-unit id="CZ_p4k1" resname="Show/Hide track">
         <source>Show/Hide track</source>
