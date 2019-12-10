@@ -327,119 +327,119 @@
       </trans-unit>
       <trans-unit id="3V8tns5" resname="Edit Group">
         <source>Edit Group</source>
-        <target state="needs-translation">Edit Group</target>
+        <target state="translated">Edita el grup</target>
       </trans-unit>
       <trans-unit id="qoForm6" resname="External defined groups can not be edited here, contact your directory service administrator.">
         <source>External defined groups can not be edited here, contact your directory service administrator.</source>
-        <target state="needs-translation">External defined groups can not be edited here, contact your directory service administrator.</target>
+        <target state="translated">Els grups definits externament no es poden editar aquí. Poseu-vos en contacte amb l’administrador del servei del directori.</target>
       </trans-unit>
       <trans-unit id="dK6GWQZ" resname="Delete Group or Group relations">
         <source>Delete Group or Group relations</source>
-        <target state="needs-translation">Delete Group or Group relations</target>
+        <target state="translated">Elimina el grup o les relacions del grup</target>
       </trans-unit>
       <trans-unit id="Anpekvg" resname="Group Info">
         <source>Group Info</source>
-        <target state="needs-translation">Group Info</target>
+        <target state="translated">Informació del grup</target>
       </trans-unit>
       <trans-unit id="XBOkAuq" resname="{0} groups|{1} group|]1,Inf] groups">
         <source>{0} groups|{1} group|]1,Inf] groups</source>
-        <target state="needs-translation">{0} groups|{1} group|]1,Inf] groups</target>
+        <target state="translated">{0} grups|{1} grup|]1,Inf] grups</target>
       </trans-unit>
       <trans-unit id="NV958p1" resname="Comments">
         <source>Comments</source>
-        <target state="needs-translation">Comments</target>
+        <target state="translated">Comentaris</target>
       </trans-unit>
       <trans-unit id="ibMyLjA" resname="modify group">
         <source>modify group</source>
-        <target state="needs-translation">modify group</target>
+        <target state="translated">modifica el grup</target>
       </trans-unit>
       <trans-unit id="NYEYlC4" resname="Group successfully updated.">
         <source>Group successfully updated.</source>
-        <target state="needs-translation">Group successfully updated.</target>
+        <target state="translated">El grup s’ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="63qEL.l" resname="Resource">
         <source>Resource</source>
-        <target state="needs-translation">Resource</target>
+        <target state="translated">Recurs</target>
       </trans-unit>
       <trans-unit id="dJaf54Z" resname="Select a file on the tree">
         <source>Select a file on the tree</source>
-        <target state="needs-translation">Select a file on the tree</target>
+        <target state="translated">Selecciona un fitxer de l’arbre</target>
       </trans-unit>
       <trans-unit id="_XTjOlq" resname="To use the inbox mode define the inbox path as &lt;code&gt;pumukit.inbox&lt;/code&gt; parameter in your config file.">
         <source>To use the inbox mode define the inbox path as &lt;code&gt;pumukit.inbox&lt;/code&gt; parameter in your config file.</source>
-        <target state="needs-translation">To use the inbox mode define the inbox path as &lt;code&gt;pumukit.inbox&lt;/code&gt; parameter in your config file.</target>
+        <target state="translated">Per utilitzar el mode de safata d’entrada, definiu la ruta de la safata d’entrada amb el paràmetre &lt;code&gt;pumukit.inbox&lt;/code&gt; al fitxer de configuració.</target>
       </trans-unit>
       <trans-unit id="5V8Ndup" resname="not exists">
         <source>not exists</source>
-        <target state="needs-translation">not exists</target>
+        <target state="translated">no existeix</target>
       </trans-unit>
       <trans-unit id="cXhTHhb" resname="is not readable">
         <source>is not readable</source>
-        <target state="needs-translation">is not readable</target>
+        <target state="translated">no es pot llegir</target>
       </trans-unit>
       <trans-unit id="T1Q0geP" resname="Check the file system permissions">
         <source>Check the file system permissions</source>
-        <target state="needs-translation">Check the file system permissions</target>
+        <target state="translated">Comproveu els permisos del sistema de fitxers</target>
       </trans-unit>
       <trans-unit id="1gHdHzZ" resname="create new link">
         <source>create new link</source>
-        <target state="needs-translation">create new link</target>
+        <target state="translated">crea un enllaç nou</target>
       </trans-unit>
       <trans-unit id="VlM5vE0" resname="OK">
         <source>OK</source>
-        <target state="needs-translation">OK</target>
+        <target state="translated">D’acord</target>
       </trans-unit>
       <trans-unit id="8iT6pMv" resname="Edit file of multimedia object">
         <source>Edit file of multimedia object</source>
-        <target state="needs-translation">Edit file of multimedia object</target>
+        <target state="translated">Edita el fitxer de l’objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="5WS0CB1" resname="hidden">
         <source>hidden</source>
-        <target state="needs-translation">hidden</target>
+        <target state="translated">ocult</target>
       </trans-unit>
       <trans-unit id="ysdP217" resname="Create Link">
         <source>Create Link</source>
-        <target state="needs-translation">Create Link</target>
+        <target state="translated">Crea l’enllaç</target>
       </trans-unit>
       <trans-unit id="X.OJzxg" resname="create new live channel">
         <source>create new live channel</source>
-        <target state="needs-translation">create new live channel</target>
+        <target state="translated">crea un canal en directe nou</target>
       </trans-unit>
       <trans-unit id="yiRBJpK" resname="Create new live channel">
         <source>Create new live channel</source>
-        <target state="needs-translation">Create new live channel</target>
+        <target state="translated">Crea un canal en directe nou</target>
       </trans-unit>
       <trans-unit id="P.DiE.Z" resname="Select any live channel.">
         <source>Select any live channel.</source>
-        <target state="needs-translation">Select any live channel.</target>
+        <target state="translated">Selecciona qualsevol canal en directe.</target>
       </trans-unit>
       <trans-unit id="56JB3rr" resname="URL">
         <source>URL</source>
-        <target state="needs-translation">URL</target>
+        <target state="translated">URL</target>
       </trans-unit>
       <trans-unit id="1AVfr6N" resname="Resolution">
         <source>Resolution</source>
-        <target state="needs-translation">Resolution</target>
+        <target state="translated">Resolució</target>
       </trans-unit>
       <trans-unit id="vM0vTZW" resname="There are no live channels with those values.">
         <source>There are no live channels with those values.</source>
-        <target state="needs-translation">There are no live channels with those values.</target>
+        <target state="translated">No hi ha canals en directe amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="MSyxwji" resname="Edit live channel">
         <source>Edit live channel</source>
-        <target state="needs-translation">Edit live channel</target>
+        <target state="translated">Edita el canal en directe</target>
       </trans-unit>
       <trans-unit id=".2Ctz0H" resname="{0} live channels|{1} live channel|]1,Inf] live channels">
         <source>{0} live channels|{1} live channel|]1,Inf] live channels</source>
-        <target state="needs-translation">{0} live channels|{1} live channel|]1,Inf] live channels</target>
+        <target state="translated">{0} canals en directe|{1} canal en directe|]1,Inf] canals en directe</target>
       </trans-unit>
       <trans-unit id="ijy5zeY" resname="Source IP">
         <source>Source IP</source>
-        <target state="needs-translation">Source IP</target>
+        <target state="translated">IP d’origen</target>
       </trans-unit>
       <trans-unit id="kLbLRjR" resname="Show player at homepage">
         <source>Show player at homepage</source>
-        <target state="needs-translation">Show player at homepage</target>
+        <target state="translated">Mostra el reproductor a la pàgina d’inici</target>
       </trans-unit>
       <trans-unit id="fns6AVO" resname="Activated">
         <source>Activated</source>
