@@ -2215,199 +2215,199 @@
       </trans-unit>
       <trans-unit id=".l7.lEI" resname="Media Manager">
         <source>Media Manager</source>
-        <target state="needs-translation">Media Manager</target>
+        <target state="translated">Gestor d’objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="tKc2V0D" resname="Stats">
         <source>Stats</source>
-        <target state="needs-translation">Stats</target>
+        <target state="translated">Estadístiques</target>
       </trans-unit>
       <trans-unit id="tkrAXxf" resname="Live">
         <source>Live</source>
-        <target state="needs-translation">Live</target>
+        <target state="translated">En directe</target>
       </trans-unit>
       <trans-unit id="JCj2BMP" resname="Live Channels">
         <source>Live Channels</source>
-        <target state="needs-translation">Live Channels</target>
+        <target state="translated">Canals en directe</target>
       </trans-unit>
       <trans-unit id="S47Rm1_" resname="Live Events">
         <source>Live Events</source>
-        <target state="needs-translation">Live Events</target>
+        <target state="translated">Esdeveniments en directe</target>
       </trans-unit>
       <trans-unit id="LwyER6t" resname="Encoder jobs">
         <source>Encoder jobs</source>
-        <target state="needs-translation">Encoder jobs</target>
+        <target state="translated">Tasques del codificador</target>
       </trans-unit>
       <trans-unit id="4.4qP_U" resname="Tables">
         <source>Tables</source>
-        <target state="needs-translation">Tables</target>
+        <target state="translated">Taules</target>
       </trans-unit>
       <trans-unit id="5RJIdzu" resname="Management">
         <source>Management</source>
-        <target state="needs-translation">Management</target>
+        <target state="translated">Gestió</target>
       </trans-unit>
       <trans-unit id="hXvatsl" resname="Admin users">
         <source>Admin users</source>
-        <target state="needs-translation">Admin users</target>
+        <target state="translated">Usuaris administradors</target>
       </trans-unit>
       <trans-unit id=".pr7z15" resname="Permission profiles">
         <source>Permission profiles</source>
-        <target state="needs-translation">Permission profiles</target>
+        <target state="translated">Perfils de permisos</target>
       </trans-unit>
       <trans-unit id="6pPWomL" resname="Tools">
         <source>Tools</source>
-        <target state="needs-translation">Tools</target>
+        <target state="translated">Eines</target>
       </trans-unit>
       <trans-unit id="jESY9eH" resname="OC-Importer">
         <source>OC-Importer</source>
-        <target state="needs-translation">OC-Importer</target>
+        <target state="translated">Importador de l’Opencast</target>
       </trans-unit>
       <trans-unit id="flsBov8" resname="My Multimedia Objects">
         <source>My Multimedia Objects</source>
-        <target state="needs-translation">My Multimedia Objects</target>
+        <target state="translated">Els meus objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="O6fgznR" resname="{0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs.">
         <source>{0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs.</source>
-        <target state="needs-translation">{0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs.</target>
+        <target state="translated">{0} |{1} 1 tasca pendent. |]1,Inf[ %count% tasques pendents.</target>
       </trans-unit>
       <trans-unit id="w4fn4EI" resname="{0} |{1} 1 executing job. |]1,Inf[ %count% executing jobs.">
         <source>{0} |{1} 1 executing job. |]1,Inf[ %count% executing jobs.</source>
-        <target state="needs-translation">{0} |{1} 1 executing job. |]1,Inf[ %count% executing jobs.</target>
+        <target state="translated">{0} |{1} 1 tasca en execució. |]1,Inf[ %count% tasques en execució.</target>
       </trans-unit>
       <trans-unit id="RXjCcTt" resname="Multimedia object preview">
         <source>Multimedia object preview</source>
-        <target state="needs-translation">Multimedia object preview</target>
+        <target state="translated">Previsualització de l’objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="99uIZSi" resname="The multimedia object '%title%' is not playable">
         <source>The multimedia object '%title%' is not playable</source>
-        <target state="needs-translation">The multimedia object '%title%' is not playable</target>
+        <target state="translated">L’objecte multimèdia '%title%' no es pot reproduir</target>
       </trans-unit>
       <trans-unit id="8U1WTQ5" resname="The multimedia object '%title%' is not published">
         <source>The multimedia object '%title%' is not published</source>
-        <target state="needs-translation">The multimedia object '%title%' is not published</target>
+        <target state="translated">L’objecte multimèdia '%title%' no està publicat</target>
       </trans-unit>
       <trans-unit id="B3BQNfz" resname="My Moodle Playlists">
         <source>My Moodle Playlists</source>
-        <target state="needs-translation">My Moodle Playlists</target>
+        <target state="translated">Les meves llistes de reproducció del Moodle</target>
       </trans-unit>
       <trans-unit id="8Hl1wYi" resname="List multimedia objects of the playlist">
         <source>List multimedia objects of the playlist</source>
-        <target state="needs-translation">List multimedia objects of the playlist</target>
+        <target state="translated">Llista els objectes multimèdia de la llista de reproducció</target>
       </trans-unit>
       <trans-unit id="YsLXZVx" resname="This object cannot be played on the playlist">
         <source>This object cannot be played on the playlist</source>
-        <target state="needs-translation">This object cannot be played on the playlist</target>
+        <target state="translated">Aquest objecte no es pot reproduir a la llista de reproducció</target>
       </trans-unit>
       <trans-unit id="EPEiolr" resname="This user does not own any multimedia objects">
         <source>This user does not own any multimedia objects</source>
-        <target state="needs-translation">This user does not own any multimedia objects</target>
+        <target state="translated">Aquest usuari no té cap objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="PWlKoNH" resname="Edit multimedia object">
         <source>Edit multimedia object</source>
-        <target state="needs-translation">Edit multimedia object</target>
+        <target state="translated">Edita l’objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="dtgXFGE" resname="Delete multimedia object from de playlist">
         <source>Delete multimedia object from de playlist</source>
-        <target state="needs-translation">Delete multimedia object from de playlist</target>
+        <target state="translated">Elimina l’objecte multimèdia de la llista de reproducció</target>
       </trans-unit>
       <trans-unit id="NjI5RKZ" resname="My Multimedia Series">
         <source>My Multimedia Series</source>
-        <target state="needs-translation">My Multimedia Series</target>
+        <target state="translated">Les meves sèries multimèdia</target>
       </trans-unit>
       <trans-unit id="zYbUi03" resname="List multimedia objects of the series">
         <source>List multimedia objects of the series</source>
-        <target state="needs-translation">List multimedia objects of the series</target>
+        <target state="translated">Llista els objectes multimèdia de la sèrie</target>
       </trans-unit>
       <trans-unit id="qI.EImz" resname="Go to series">
         <source>Go to series</source>
-        <target state="needs-translation">Go to series</target>
+        <target state="translated">Vés a les sèries</target>
       </trans-unit>
       <trans-unit id="mgGCAQ." resname="Go to playlists">
         <source>Go to playlists</source>
-        <target state="needs-translation">Go to playlists</target>
+        <target state="translated">Vés a les llistes de reproducció</target>
       </trans-unit>
       <trans-unit id="9HA4HnV" resname="Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name">
         <source>Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name</source>
-        <target state="needs-translation">Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name</target>
+        <target state="translated">Introduïu el nom de la persona que voleu afegir. Si aquesta persona ja existeix a la base de dades, es mostrarà una llista desplegable des de la qual podreu seleccionar-la i &lt;strong&gt;utilitzar-la&lt;/strong&gt;. Si la persona no existeix a la base de dades, &lt;strong&gt;creeu&lt;/strong&gt; una entrada nova amb el nom escrit</target>
       </trans-unit>
       <trans-unit id=".EOJuwR" resname="My Playlists">
         <source>My Playlists</source>
-        <target state="needs-translation">My Playlists</target>
+        <target state="translated">Les meves llistes de reproducció</target>
       </trans-unit>
       <trans-unit id="EtmhLYs" resname="Delete multimedia object from the playlist">
         <source>Delete multimedia object from the playlist</source>
-        <target state="needs-translation">Delete multimedia object from the playlist</target>
+        <target state="translated">Elimina l’objecte multimèdia de la llista de reproducció</target>
       </trans-unit>
       <trans-unit id="eoflj3v" resname="My Series">
         <source>My Series</source>
-        <target state="needs-translation">My Series</target>
+        <target state="translated">Les meves sèries</target>
       </trans-unit>
       <trans-unit id="i.25PK_" resname="Keywords">
         <source>Keywords</source>
-        <target state="needs-translation">Keywords</target>
+        <target state="translated">Paraules clau</target>
       </trans-unit>
       <trans-unit id="jfx3q0C" resname="Copyright">
         <source>Copyright</source>
-        <target state="needs-translation">Copyright</target>
+        <target state="translated">Copyright</target>
       </trans-unit>
       <trans-unit id="wBHWCXv" resname="License">
         <source>License</source>
-        <target state="needs-translation">License</target>
+        <target state="translated">Llicència</target>
       </trans-unit>
       <trans-unit id="os.h5dY" resname="Publication Date">
         <source>Publication Date</source>
-        <target state="needs-translation">Publication Date</target>
+        <target state="translated">Data de publicació</target>
       </trans-unit>
       <trans-unit id="yAX_GVC" resname="Recording Date">
         <source>Recording Date</source>
-        <target state="needs-translation">Recording Date</target>
+        <target state="translated">Data de gravació</target>
       </trans-unit>
       <trans-unit id="XfFDvxx" resname="Header Text">
         <source>Header Text</source>
-        <target state="needs-translation">Header Text</target>
+        <target state="translated">Text de capçalera</target>
       </trans-unit>
       <trans-unit id="ID4LME1" resname="Footer Text">
         <source>Footer Text</source>
-        <target state="needs-translation">Footer Text</target>
+        <target state="translated">Text de peu de pàgina</target>
       </trans-unit>
       <trans-unit id="BXXynfi" resname="Template">
         <source>Template</source>
-        <target state="needs-translation">Template</target>
+        <target state="translated">Plantilla</target>
       </trans-unit>
       <trans-unit id="wDUpbl_" resname="Subseries">
         <source>Subseries</source>
-        <target state="needs-translation">Subseries</target>
+        <target state="translated">Subsèrie</target>
       </trans-unit>
       <trans-unit id="U_Z_uFz" resname="USERS">
         <source>USERS</source>
-        <target state="needs-translation">USERS</target>
+        <target state="translated">USUARIS</target>
       </trans-unit>
       <trans-unit id="xaNywP8" resname="ADMIN MULTIMEDIA OBJECTS">
         <source>ADMIN MULTIMEDIA OBJECTS</source>
-        <target state="needs-translation">ADMIN MULTIMEDIA OBJECTS</target>
+        <target state="translated">OBJECTES MULTIMÈDIA D’ADMINISTRACIÓ</target>
       </trans-unit>
       <trans-unit id="0vQO3eJ" resname="PLAY MULTIMEDIA OBJECTS">
         <source>PLAY MULTIMEDIA OBJECTS</source>
-        <target state="needs-translation">PLAY MULTIMEDIA OBJECTS</target>
+        <target state="translated">OBJECTES MULTIMÈDIA DE REPRODUCCIÓ</target>
       </trans-unit>
       <trans-unit id="Q5HwQii" resname="Magic Url">
         <source>Magic Url</source>
-        <target state="needs-translation">Magic Url</target>
+        <target state="translated">URL màgic</target>
       </trans-unit>
       <trans-unit id="D6SR_sC" resname="Is part of">
         <source>Is part of</source>
-        <target state="needs-translation">Is part of</target>
+        <target state="translated">Forma part de</target>
       </trans-unit>
       <trans-unit id="FH5rukO" resname="No tags">
         <source>No tags</source>
-        <target state="needs-translation">No tags</target>
+        <target state="translated">Sense etiquetes</target>
       </trans-unit>
       <trans-unit id="edgoIv4" resname="Login from">
         <source>Login from</source>
-        <target state="needs-translation">Login from</target>
+        <target state="translated">Inicia la sessió des de</target>
       </trans-unit>
       <trans-unit id="0FJ_Sz1" resname="Logout">
         <source>Logout</source>
-        <target state="needs-translation">Logout</target>
+        <target state="translated">Finalitza la sessió</target>
       </trans-unit>
       <trans-unit id="dCz6rVt" resname="Published Multimedia Object(s)">
         <source>Published Multimedia Object(s)</source>
