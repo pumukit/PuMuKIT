@@ -583,11 +583,11 @@
       </trans-unit>
       <trans-unit id="nJRvhul" resname="Event pic">
         <source>Event pic</source>
-        <target state="needs-translation">Event pic</target>
+        <target state="translated">Imatge de l’esdeveniment</target>
       </trans-unit>
       <trans-unit id="ma9mBv_" resname="Menu">
         <source>Menu</source>
-        <target state="needs-translation">Menu</target>
+        <target state="translated">Menú</target>
       </trans-unit>
       <trans-unit id="MIUxXxN" resname="Sort by date">
         <source>Sort by date</source>
@@ -599,7 +599,7 @@
       </trans-unit>
       <trans-unit id=".cXS6UE" resname="Powered by">
         <source>Powered by</source>
-        <target state="needs-translation">Powered by</target>
+        <target state="translated">Funciona amb</target>
       </trans-unit>
       <trans-unit id="OEjvXg." resname="Full catalogue">
         <source>Full catalogue</source>
@@ -607,55 +607,55 @@
       </trans-unit>
       <trans-unit id="wBHWCXv" resname="License">
         <source>License</source>
-        <target state="needs-translation">License</target>
+        <target state="translated">Llicència</target>
       </trans-unit>
       <trans-unit id="J.EVWdm" resname="There are no multimedia objects">
         <source>There are no multimedia objects</source>
-        <target state="needs-translation">There are no multimedia objects</target>
+        <target state="translated">No hi ha objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="5mpwcGU" resname="Url track">
         <source>Url track</source>
-        <target state="needs-translation">Url track</target>
+        <target state="translated">Pista d’URL</target>
       </trans-unit>
       <trans-unit id="PWlKoNH" resname="Edit multimedia object">
         <source>Edit multimedia object</source>
-        <target state="needs-translation">Edit multimedia object</target>
+        <target state="translated">Edita l’objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="tkrAXxf" resname="Live">
         <source>Live</source>
-        <target state="needs-translation">Live</target>
+        <target state="translated">En directe</target>
       </trans-unit>
       <trans-unit id="Xypi4__" resname="The event has not been held yet">
         <source>The event has not been held yet</source>
-        <target state="needs-translation">The event has not been held yet</target>
+        <target state="translated">L’esdeveniment encara no s’ha celebrat</target>
       </trans-unit>
       <trans-unit id="i7YNXXs" resname="The event has already been held">
         <source>The event has already been held</source>
-        <target state="needs-translation">The event has already been held</target>
+        <target state="translated">L’esdeveniment ja s’ha celebrat</target>
       </trans-unit>
       <trans-unit id="q1EATp1" resname="days">
         <source>days</source>
-        <target state="needs-translation">days</target>
+        <target state="translated">dies</target>
       </trans-unit>
       <trans-unit id="70fBjSz" resname="There aren't events at this moment">
         <source>There aren't events at this moment</source>
-        <target state="needs-translation">There aren't events at this moment</target>
+        <target state="translated">No hi ha esdeveniments ara mateix</target>
       </trans-unit>
       <trans-unit id="RoN3Re7" resname="Current live event">
         <source>Current live event</source>
-        <target state="needs-translation">Current live event</target>
+        <target state="translated">Esdeveniment en directe actual</target>
       </trans-unit>
       <trans-unit id="QcHoioP" resname="Next live event">
         <source>Next live event</source>
-        <target state="needs-translation">Next live event</target>
+        <target state="translated">Proper esdeveniment en directe</target>
       </trans-unit>
       <trans-unit id="Th9Jqci" resname="Event">
         <source>Event</source>
-        <target state="needs-translation">Event</target>
+        <target state="translated">Esdeveniment</target>
       </trans-unit>
       <trans-unit id="6UY9zPB" resname="Place">
         <source>Place</source>
-        <target state="needs-translation">Place</target>
+        <target state="translated">Lloc</target>
       </trans-unit>
       <trans-unit id="M7k0ds9" resname="Time">
         <source>Time</source>
