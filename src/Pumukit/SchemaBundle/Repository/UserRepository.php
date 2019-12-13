@@ -21,7 +21,6 @@ class UserRepository extends DocumentRepository
     public function findUsersInAnyGroups($groups)
     {
         $userRepo = $this->getDocumentManager()->getRepository(User::class);
-
         $groupsIds = array_map(function ($group) {
             return new \MongoId($group->getId());
         }, $groups);
