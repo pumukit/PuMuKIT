@@ -5,53 +5,56 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
-      <trans-unit id="CEtHFOh" resname="New from LDAP">
+      <trans-unit id="CEtHFOh" resname="New from LDAP" approved="yes">
         <source>New from LDAP</source>
-        <target state="translated">Nuevo desde LDAP</target>
+        <target state="final">Nuevo desde LDAP</target>
       </trans-unit>
-      <trans-unit id="j0upFKE" resname="new person from LDAP">
+      <trans-unit id="j0upFKE" resname="new person from LDAP" approved="yes">
         <source>new person from LDAP</source>
-        <target state="translated">nueva persona desde LDAP</target>
+        <target state="final">nueva persona desde LDAP</target>
       </trans-unit>
-      <trans-unit id="P7QuL28" resname="Write the email login of the person you would like to add from the LDAP server. A pull-down menu will be shown, where you can select and use the person data.">
+      <trans-unit id="P7QuL28" resname="Write the email login of the person you would like to add from the LDAP server. A pull-down menu will be shown, where you can select and use the person data." approved="yes">
         <source>Write the email login of the person you would like to add from the LDAP server. A pull-down menu will be shown, where you can select and use the person data.</source>
-        <target state="translated">Escriba el e-mail de registro de la persona que desea agregar desde el servidor LDAP. Se mostrará un menú desplegable en donde se podrá seleccionar y utilizar los datos de esa persona.</target>
+        <target state="final">Escriba el e-mail de registro de la persona que desea agregar desde el servidor LDAP. Se mostrará un menú desplegable en donde se podrá seleccionar y utilizar los datos de esa persona.</target>
       </trans-unit>
-      <trans-unit id="nWMiwfT" resname="Login">
+      <trans-unit id="nWMiwfT" resname="Login" approved="yes">
         <source>Login</source>
-        <target state="translated">Inicio de sesión</target>
+        <target state="final">Inicio de sesión</target>
       </trans-unit>
-      <trans-unit id="4XUQNaU" resname="login to search for">
+      <trans-unit id="4XUQNaU" resname="login to search for" approved="yes">
         <source>login to search for</source>
-        <target state="translated">iniciar sesión para buscar</target>
+        <target state="final">iniciar sesión para buscar</target>
       </trans-unit>
-      <trans-unit id="3VrOngG" resname="working">
+      <trans-unit id="3VrOngG" resname="working" approved="yes">
         <source>working</source>
-        <target state="translated">trabajando</target>
+        <target state="final">trabajando</target>
       </trans-unit>
-      <trans-unit id="GXZu1sy" resname="Cancel">
+      <trans-unit id="GXZu1sy" resname="Cancel" approved="yes">
         <source>Cancel</source>
-        <target state="translated">Cancelar</target>
+        <target state="final">Cancelar</target>
       </trans-unit>
-      <trans-unit id="w22Bnnv" resname="Use">
+      <trans-unit id="w22Bnnv" resname="Use" approved="yes">
         <source>Use</source>
-        <target state="translated">Uso</target>
+        <target state="final">Uso</target>
       </trans-unit>
-      <trans-unit id="U_MugDs" resname="You don't have enough permissions to access this content.">
+      <trans-unit id="U_MugDs" resname="You don't have enough permissions to access this content." approved="yes">
         <source>You don't have enough permissions to access this content.</source>
-        <target state="translated">No tiene permisos suficientes para acceder a este contenido.</target>
+        <target state="final">No tiene permisos suficientes para acceder a este contenido.</target>
       </trans-unit>
-      <trans-unit id="_1CkwZ6" resname="Person successfully associated to Multimedia Object">
+      <trans-unit id="_1CkwZ6" resname="Person successfully associated to Multimedia Object" approved="yes">
         <source>Person successfully associated to Multimedia Object</source>
-        <target state="translated">La persona ha sido asociada al Objeto Multimedia</target>
+        <target state="final">La persona ha sido asociada correctamente al Objeto Multimedia</target>
+        <alt-trans>
+          <target>La persona ha sido asociada al Objeto Multimedia</target>
+        </alt-trans>
       </trans-unit>
-      <trans-unit id="LHnYFAj" resname="with role">
+      <trans-unit id="LHnYFAj" resname="with role" approved="yes">
         <source>with role</source>
-        <target state="translated">con rol</target>
+        <target state="final">con rol</target>
       </trans-unit>
-      <trans-unit id="rKtK0Co" resname="Select before a person">
+      <trans-unit id="rKtK0Co" resname="Select before a person" approved="yes">
         <source>Select before a person</source>
-        <target state="translated">Seleccione antes a una persona</target>
+        <target state="final">Seleccione antes a una persona</target>
       </trans-unit>
     </body>
   </file>
