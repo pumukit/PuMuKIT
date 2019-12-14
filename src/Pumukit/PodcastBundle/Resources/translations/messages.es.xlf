@@ -39,7 +39,7 @@
       </trans-unit>
       <trans-unit id=".19D.92" resname="Audio POD">
         <source>Audio POD</source>
-        <target state="translated">Audio POD</target>
+        <target state="needs-translation">Audio POD</target>
       </trans-unit>
       <trans-unit id="f8RqpkC" resname="Subscribe to this series podcast (requires iTunes)">
         <source>Subscribe to this series podcast (requires iTunes)</source>
