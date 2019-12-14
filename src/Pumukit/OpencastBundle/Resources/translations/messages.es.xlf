@@ -11,7 +11,7 @@
       </trans-unit>
       <trans-unit id="2Y7g5fk" resname="ERROR">
         <source>ERROR</source>
-        <target state="translated">ERROR</target>
+        <target state="needs-translation">ERROR</target>
       </trans-unit>
       <trans-unit id="LQBPGOH" resname="Execute on the server">
         <source>Execute on the server</source>
@@ -39,15 +39,15 @@
       </trans-unit>
       <trans-unit id="Vlmffir" resname="Img">
         <source>Img</source>
-        <target state="translated">Img</target>
+        <target state="needs-translation">Img</target>
       </trans-unit>
       <trans-unit id="EhVukhv" resname="Id">
         <source>Id</source>
-        <target state="translated">Id</target>
+        <target state="needs-translation">Id</target>
       </trans-unit>
       <trans-unit id="qCleCP9" resname="Series">
         <source>Series</source>
-        <target state="translated">Series</target>
+        <target state="needs-translation">Series</target>
       </trans-unit>
       <trans-unit id="T8UqPEx" resname="Duration">
         <source>Duration</source>
@@ -139,7 +139,7 @@
       </trans-unit>
       <trans-unit id="VlM5vE0" resname="OK">
         <source>OK</source>
-        <target state="translated">OK</target>
+        <target state="needs-translation">OK</target>
       </trans-unit>
       <trans-unit id="pTjOkcc" resname="update Opencast track of Multimedia Object">
         <source>update Opencast track of Multimedia Object</source>
