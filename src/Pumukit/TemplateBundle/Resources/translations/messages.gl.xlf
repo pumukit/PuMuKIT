@@ -23,7 +23,7 @@
       </trans-unit>
       <trans-unit id="2u52BrM" resname="Reset">
         <source>Reset</source>
-        <target state="needs-translation">Reset</target>
+        <target state="translated">Restablecer</target>
       </trans-unit>
       <trans-unit id="3Qrnpcv" resname="Save changes">
         <source>Save changes</source>
@@ -39,11 +39,11 @@
       </trans-unit>
       <trans-unit id="7EYXAPJ" resname="Edit Templates">
         <source>Edit Templates</source>
-        <target state="needs-translation">Edit Templates</target>
+        <target state="translated">Editar Modelo</target>
       </trans-unit>
       <trans-unit id="FwMioy8" resname="Info">
         <source>Info</source>
-        <target state="needs-translation">Info</target>
+        <target state="translated">Información</target>
       </trans-unit>
       <trans-unit id="z3AXMYV" resname="Warning: This link will give a 404 error while this template is hide.">
         <source>Warning: This link will give a 404 error while this template is hide.</source>
