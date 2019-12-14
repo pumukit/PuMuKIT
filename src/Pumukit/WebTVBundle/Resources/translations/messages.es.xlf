@@ -179,7 +179,7 @@
       </trans-unit>
       <trans-unit id="OrWf0.0" resname="Download master">
         <source>Download master</source>
-        <target state="translated">Descarga master</target>
+        <target state="translated">Descargar máster</target>
       </trans-unit>
       <trans-unit id="WEBL323" resname="403 Forbidden">
         <source>403 Forbidden</source>
@@ -295,7 +295,7 @@
       </trans-unit>
       <trans-unit id="s6ikH_i" resname="Go to back-office">
         <source>Go to back-office</source>
-        <target state="translated">Ir al panel de gestión de contenidos</target>
+        <target state="translated">Ir al back office</target>
       </trans-unit>
       <trans-unit id="ZWiU94y" resname="Manage my videos">
         <source>Manage my videos</source>
@@ -524,6 +524,9 @@
       <trans-unit id="Z0fvRV9" resname="Health &amp; Medicine">
         <source>Health &amp; Medicine</source>
         <target state="translated">Salud &amp; Medicina</target>
+        <alt-trans>
+          <target>Salud &amp; Medicina</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="t4wWGP2" resname="Law">
         <source>Law</source>
@@ -532,6 +535,9 @@
       <trans-unit id="HPPfeB0" resname="Social Matters &amp; Education">
         <source>Social Matters &amp; Education</source>
         <target state="translated">Aspectos Sociales &amp; Educación</target>
+        <alt-trans>
+          <target>Aspectos Sociales &amp; Educación</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="GnUpqxT" resname="Subjects">
         <source>Subjects</source>
