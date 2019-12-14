@@ -368,6 +368,9 @@
       <trans-unit id="_XTjOlq" resname="To use the inbox mode define the inbox path as &lt;code&gt;pumukit.inbox&lt;/code&gt; parameter in your config file.">
         <source>To use the inbox mode define the inbox path as &lt;code&gt;pumukit.inbox&lt;/code&gt; parameter in your config file.</source>
         <target state="translated">Para utilizar el modo de bandeja de entrada, defina la ruta de la bandeja de entrada como parámetro &lt;code&gt;pumukit.inbox&lt;/code&gt; en su archivo de configuración.</target>
+        <alt-trans>
+          <target>Para utilizar el modo de bandeja de entrada, defina la ruta de la bandeja de entrada como parámetro &lt;code&gt;pumukit.inbox&lt;/code&gt; en su archivo de configuración.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="5V8Ndup" resname="not exists">
         <source>not exists</source>
@@ -576,6 +579,9 @@
       <trans-unit id="Hhnvc4L" resname="Owners &amp; Groups">
         <source>Owners &amp; Groups</source>
         <target state="translated">Propietarios &amp; Grupos</target>
+        <alt-trans>
+          <target>Propietarios &amp; Grupos</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="fbIIlwU" resname="People">
         <source>People</source>
@@ -1300,6 +1306,9 @@
       <trans-unit id="7utrTpP" resname="Please, enter an url with the following format: &lt;b&gt;https://example.domain.org/video/XXXXXXXX&lt;/b&gt;">
         <source>Please, enter an url with the following format: &lt;b&gt;https://example.domain.org/video/XXXXXXXX&lt;/b&gt;</source>
         <target state="translated">Por favor, introduzca una url con el siguiente formato: &lt;b&gt;https://ejemplo.dominio.org/video/XXXXXXXX&lt;/b&gt;</target>
+        <alt-trans>
+          <target>Por favor, introduzca una url con el siguiente formato: &lt;b&gt;https://ejemplo.dominio.org/video/XXXXXXXX&lt;/b&gt;</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="Bpiop_k" resname="or enter the ID of the Multimedia Object.">
         <source>or enter the ID of the Multimedia Object.</source>
@@ -1627,6 +1636,9 @@
       <trans-unit id="liAqQOK" resname="&lt;span class=&quot;alert alert-dismissable alert-warning&quot;&gt;&lt;i&gt;Warning: This multimedia object is not correctly published on WebTV&lt;/i&gt;&lt;/span&gt;">
         <source>&lt;span class="alert alert-dismissable alert-warning"&gt;&lt;i&gt;Warning: This multimedia object is not correctly published on WebTV&lt;/i&gt;&lt;/span&gt;</source>
         <target state="translated">&lt;span class="alert alert-dismissable alert-warning"&gt;&lt;i&gt;Advertencia: Este objeto multimedia no está publicado correctamente en WebTV&lt;/i&gt;&lt;/span&gt;</target>
+        <alt-trans>
+          <target>&lt;span class="alert alert-dismissable alert-warning"&gt;&lt;i&gt;Advertencia: Este objeto multimedia no está publicado correctamente en WebTV&lt;/i&gt;&lt;/span&gt;</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="6h4Em02" resname="Embedded Iframe">
         <source>Embedded Iframe</source>
@@ -2331,6 +2343,9 @@
       <trans-unit id="9HA4HnV" resname="Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name">
         <source>Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name</source>
         <target state="translated">Introduzca el nombre de la persona que quiere añadir. En el caso de que esa persona ya exista en la base de datos, aparecerá una lista desplegable en donde podrá seleccionarla y &lt;strong&gt;usarla&lt;/strong&gt;. Si no existe en la base de datos, &lt;strong&gt;cree&lt;/strong&gt; una nueva entrada con el nombre</target>
+        <alt-trans>
+          <target>Introduzca el nombre de la persona que quiere añadir. En el caso de que esa persona ya exista en la base de datos, aparecerá una lista desplegable en donde podrá seleccionarla y &lt;strong&gt;usarla&lt;/strong&gt;. Si no existe en la base de datos, &lt;strong&gt;cree&lt;/strong&gt; una nueva entrada con el nombre</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id=".EOJuwR" resname="My Playlists">
         <source>My Playlists</source>
@@ -3544,6 +3559,9 @@
         &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database,
         &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name</source>
         <target state="translated">Introduzca el nombre de la persona que quiere añadir. En caso de que esa persona ya exista en la base de datos, aparecerá una lista desplegable en donde podrá seleccionarla y &lt;strong&gt;usarla&lt;/strong&gt;. Si no existe en la base de datos, &lt;strong&gt;cree&lt;/strong&gt; una nueva entrada con el nombre</target>
+        <alt-trans>
+          <target>Introduzca el nombre de la persona que quiere añadir. En caso de que esa persona ya exista en la base de datos, aparecerá una lista desplegable en donde podrá seleccionarla y &lt;strong&gt;usarla&lt;/strong&gt;. Si no existe en la base de datos, &lt;strong&gt;cree&lt;/strong&gt; una nueva entrada con el nombre</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="O0G6nHy" resname="No data">
         <source>No data</source>
