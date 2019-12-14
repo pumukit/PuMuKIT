@@ -8,6 +8,9 @@
       <trans-unit id="uX6x6RT" resname="Pending jobs (paused &amp; waiting)">
         <source>Pending jobs (paused &amp; waiting)</source>
         <target state="translated">Tarefas pendentes (pausadas &amp; agardando)</target>
+        <alt-trans>
+          <target>Tarefas pendentes (pausadas &amp; agardando)</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="IhosPrb" resname="Executing jobs">
         <source>Executing jobs</source>

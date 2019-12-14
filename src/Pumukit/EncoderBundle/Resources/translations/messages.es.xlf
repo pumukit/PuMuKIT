@@ -91,7 +91,7 @@
       </trans-unit>
       <trans-unit id="5GTGYFq" resname="RETRY" approved="yes">
         <source>RETRY</source>
-        <target state="translated">REINTENTAR</target>
+        <target state="final">REINTENTAR</target>
       </trans-unit>
       <trans-unit id="ZdrrN4v" resname="DELETE">
         <source>DELETE</source>
@@ -103,7 +103,7 @@
       </trans-unit>
       <trans-unit id="HqRCoTS" resname="No" approved="yes">
         <source>No</source>
-        <target state="translated">No</target>
+        <target state="final">No</target>
       </trans-unit>
       <trans-unit id="7DckhU_" resname="No showing">
         <source>No showing</source>
