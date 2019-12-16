@@ -8,6 +8,9 @@
       <trans-unit id="bnUjEOx" resname="Can not delete Multimedia Object with id %videoId%. It has %jobsCount% jobs executing.">
         <source>Can not delete Multimedia Object with id %videoId%. It has %jobsCount% jobs executing.</source>
         <target state="translated">&gt;No es pot eliminar l’objecte multimèdia amb l’identificador %videoId%. Té %jobsCount% tasques en execució.</target>
+        <alt-trans>
+          <target>&gt;No es pot eliminar l’objecte multimèdia amb l’identificador %videoId%. Té %jobsCount% tasques en execució.</target>
+        </alt-trans>
       </trans-unit>
     </body>
   </file>
