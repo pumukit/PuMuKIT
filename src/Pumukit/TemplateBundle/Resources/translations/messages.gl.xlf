@@ -7,7 +7,10 @@
     <body>
       <trans-unit id="VrVkt1x" resname="Templates">
         <source>Templates</source>
-        <target state="translated">Plantillas</target>
+        <target state="translated">Modelos</target>
+        <alt-trans>
+          <target>Plantillas</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="GP3VSbL" resname="New">
         <source>New</source>
@@ -23,15 +26,18 @@
       </trans-unit>
       <trans-unit id="2u52BrM" resname="Reset">
         <source>Reset</source>
-        <target state="needs-translation">Reset</target>
+        <target state="translated">Restablecer</target>
       </trans-unit>
       <trans-unit id="3Qrnpcv" resname="Save changes">
         <source>Save changes</source>
         <target state="translated">Gardar cambios</target>
       </trans-unit>
-      <trans-unit id="f1_fMrh" resname="No templates">
+      <trans-unit id="f1_fMrh" resname="No templates" approved="yes">
         <source>No templates</source>
-        <target state="translated">Ningunha plantilla</target>
+        <target state="final">Ningun modelo</target>
+        <alt-trans>
+          <target>Ningunha plantilla</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="Gyk1v1d" resname="Access Templates section">
         <source>Access Templates section</source>
@@ -39,15 +45,15 @@
       </trans-unit>
       <trans-unit id="7EYXAPJ" resname="Edit Templates">
         <source>Edit Templates</source>
-        <target state="needs-translation">Edit Templates</target>
+        <target state="translated">Editar Modelo</target>
       </trans-unit>
       <trans-unit id="FwMioy8" resname="Info">
         <source>Info</source>
-        <target state="needs-translation">Info</target>
+        <target state="translated">Información</target>
       </trans-unit>
       <trans-unit id="z3AXMYV" resname="Warning: This link will give a 404 error while this template is hide.">
         <source>Warning: This link will give a 404 error while this template is hide.</source>
-        <target state="needs-translation">Warning: This link will give a 404 error while this template is hide.</target>
+        <target state="translated">Aviso: esta ligazón dará un erro 404 mentres este modelo esté oculto.</target>
       </trans-unit>
     </body>
   </file>

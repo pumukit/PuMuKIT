@@ -35,7 +35,7 @@
       </trans-unit>
       <trans-unit id="Th9Jqci" resname="Event">
         <source>Event</source>
-        <target xml:lang="eu" state="translated">Emanaldia</target>
+        <target state="translated">Evento</target>
       </trans-unit>
       <trans-unit id="6UY9zPB" resname="Place">
         <source>Place</source>

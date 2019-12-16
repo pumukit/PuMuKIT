@@ -31,7 +31,7 @@
       </trans-unit>
       <trans-unit id="Ab4wu0o" resname="reset">
         <source>reset</source>
-        <target state="needs-translation">reset</target>
+        <target state="translated">restablecer</target>
       </trans-unit>
       <trans-unit id="38M3a4J" resname="filter">
         <source>filter</source>
@@ -43,11 +43,11 @@
       </trans-unit>
       <trans-unit id="EhVukhv" resname="Id">
         <source>Id</source>
-        <target state="needs-translation">Id</target>
+        <target state="translated">Id</target>
       </trans-unit>
       <trans-unit id="qCleCP9" resname="Series">
         <source>Series</source>
-        <target state="needs-translation">Series</target>
+        <target state="translated">Series</target>
       </trans-unit>
       <trans-unit id="T8UqPEx" resname="Duration">
         <source>Duration</source>
@@ -91,7 +91,7 @@
       </trans-unit>
       <trans-unit id="c.hOhIO" resname="{0} users|{1} mediaPackages|]1,Inf] Media Packages">
         <source>{0} users|{1} mediaPackages|]1,Inf] Media Packages</source>
-        <target state="needs-translation">{0} users|{1} mediaPackages|]1,Inf] Media Packages</target>
+        <target state="translated">{0} users|{1} mediaPackages|]1,Inf] Media Packages</target>
       </trans-unit>
       <trans-unit id="uQjDk6r" resname="Cancel current search">
         <source>Cancel current search</source>
@@ -139,7 +139,7 @@
       </trans-unit>
       <trans-unit id="VlM5vE0" resname="OK">
         <source>OK</source>
-        <target state="needs-translation">OK</target>
+        <target state="translated">Está ben</target>
       </trans-unit>
       <trans-unit id="pTjOkcc" resname="update Opencast track of Multimedia Object">
         <source>update Opencast track of Multimedia Object</source>
@@ -155,7 +155,7 @@
       </trans-unit>
       <trans-unit id="CscPjL9" resname="i18n.one.Series">
         <source>i18n.one.Series</source>
-        <target state="needs-translation">i18n.one.Series</target>
+        <target state="translated">i18n.one.Series</target>
       </trans-unit>
     </body>
   </file>
