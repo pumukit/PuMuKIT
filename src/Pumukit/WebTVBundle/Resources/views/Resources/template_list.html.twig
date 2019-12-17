@@ -1,6 +1,9 @@
 <div class="{{ template_list_class|default('custom-list-by') }}">
     {% set nameDate = '00/0000' %}
     {% set clearFixIndex = 1 %}
+    {% if template_list_grouped is not defined %}
+        {% set template_list_grouped = true %}
+    {% endif %}
     {% for object in objects %}
         {% if object.isCollection() %}
             {% set newNameDate = object.getPublicDate().format('m/Y') %}
@@ -8,7 +11,7 @@
             {% set newNameDate = object.getRecordDate().format('m/Y') %}
         {% endif %}
 
-        {% if template_list_grouped|default(true) and nameDate != newNameDate %}
+        {% if template_list_grouped and nameDate != newNameDate %}
             {% set clearFixIndex = 1 %}
             {% set nameDate = newNameDate %}
             <div class="name col-xs-12">
@@ -33,5 +36,5 @@
             {% endif %}
             .
         </div>
-    {% endfor %}    
+    {% endfor %}
 </div>
