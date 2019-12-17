@@ -127,8 +127,10 @@ class SearchController extends Controller implements WebTVControllerInterface
         $queryBuilder = $this->get('pumukit_web_tv.search_service')->addTagsQueryBuilder($queryBuilder, $tagsFound, $blockedTag, $useTagAsGeneral);
         $queryBuilder = $this->get('pumukit_web_tv.search_service')->addLicenseQueryBuilder($queryBuilder, $license);
 
+        $templateListGrouped = false;
         if ('' == $searchFound) {
             $queryBuilder = $queryBuilder->sort('record_date', 'desc');
+            $templateListGrouped = true;
         } else {
             $queryBuilder = $queryBuilder->sortMeta('score', 'textScore');
         }
@@ -142,6 +144,7 @@ class SearchController extends Controller implements WebTVControllerInterface
         return [
             'type' => 'multimediaObject',
             'template_title' => $templateTitle,
+            'template_list_grouped' => $templateListGrouped,
             'objects' => $pager,
             'parent_tag' => $parentTag,
             'parent_tag_optional' => $parentTagOptional,
