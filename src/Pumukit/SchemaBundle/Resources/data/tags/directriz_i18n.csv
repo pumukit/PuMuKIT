@@ -1,7 +1,7 @@
-id;cod;tree_parent_cod;metatag;display;name_es;name_gl;name_en
-1;DIRECTRIZ;0;1;1;DIRECTRIZ;DIRECTRIZ;GUIDELINE
-2;Dscience;DIRECTRIZ;0;1;"Ciencias Experimentales";"Ciencias Experimentais";"Experimental sciences"
-3;Dsocial;DIRECTRIZ;0;1;"Ciencias Jurídico-Sociales";"Ciencias Xurídico-Sociais";"Social and Legal sciences"
-4;Dhealth;DIRECTRIZ;0;1;"Ciencias de la Salud";"Ciencias da Saude";"Health Sciences"
-5;Dtechnical;DIRECTRIZ;0;1;"Ciencias tecnológicas";"Ciencias tecnolóxicas";"Technical sciences"
-6;Dhumanities;DIRECTRIZ;0;1;"Humanidades";"Humanidades";"Humanities"
+id;cod;tree_parent_cod;metatag;display;name_es;name_gl;name_en;name_ca
+1;DIRECTRIZ;0;1;1;DIRECTRIZ;DIRECTRIZ;GUIDELINE;GUIDELINE
+2;Dscience;DIRECTRIZ;0;1;"Ciencias Experimentales";"Ciencias Experimentais";"Experimental sciences";"Ciències experimentals"
+3;Dsocial;DIRECTRIZ;0;1;"Ciencias Jurídico-Sociales";"Ciencias Xurídico-Sociais";"Social and Legal sciences";"Ciències socials i jurídiques"
+4;Dhealth;DIRECTRIZ;0;1;"Ciencias de la Salud";"Ciencias da Saude";"Health Sciences";"Ciències de la salut"
+5;Dtechnical;DIRECTRIZ;0;1;"Ciencias tecnológicas";"Ciencias tecnolóxicas";"Technical sciences";"Ciències tècniques"
+6;Dhumanities;DIRECTRIZ;0;1;"Humanidades";"Humanidades";"Humanities";"Humanitats"
