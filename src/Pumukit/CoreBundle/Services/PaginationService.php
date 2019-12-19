@@ -11,20 +11,16 @@ use Pagerfanta\Pagerfanta;
 
 class PaginationService
 {
-    public function createDoctrineODMMongoDBAdapter(Builder $objects, $page = 0, $limit = 0)
+    public function createDoctrineODMMongoDBAdapter(Builder $objects, $page = 1, $limit = 10): Pagerfanta
     {
         [$page, $limit] = $this->validatePagerValues($page, $limit);
-
-        if (0 === $limit) {
-            return $objects->getQuery()->execute();
-        }
 
         $adapter = new DoctrineODMMongoDBAdapter($objects);
 
         return $this->generatePager($adapter, $page, $limit);
     }
 
-    public function createArrayAdapter(array $objects, $page = 0, $limit = 0): Pagerfanta
+    public function createArrayAdapter(array $objects, $page = 1, $limit = 10): Pagerfanta
     {
         [$page, $limit] = $this->validatePagerValues($page, $limit);
 
@@ -33,7 +29,7 @@ class PaginationService
         return $this->generatePager($adapter, $page, $limit);
     }
 
-    public function createDoctrineCollectionAdapter($objects, $page = 0, $limit = 0): Pagerfanta
+    public function createDoctrineCollectionAdapter($objects, $page = 1, $limit = 10): Pagerfanta
     {
         [$page, $limit] = $this->validatePagerValues($page, $limit);
 
@@ -42,12 +38,12 @@ class PaginationService
         return $this->generatePager($adapter, $page, $limit);
     }
 
-    private function generatePager(AdapterInterface $adapter, int $page = 0, int $limit = 0): Pagerfanta
+    private function generatePager(AdapterInterface $adapter, int $page = 1, int $limit = 10): Pagerfanta
     {
         $pager = new Pagerfanta($adapter);
-        $pager->setMaxPerPage($limit);
+        $pager->setMaxPerPage($page);
         $pager->setNormalizeOutOfRangePages(true);
-        $pager->setCurrentPage($page);
+        $pager->setCurrentPage($limit);
 
         return $pager;
     }
