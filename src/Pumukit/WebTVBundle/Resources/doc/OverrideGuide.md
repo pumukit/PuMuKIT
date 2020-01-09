@@ -24,31 +24,22 @@ Process
 $ php app/console  generate:bundle --namespace=Pumukit/ExampleOrg/WebTVBundle --dir=src --no-interaction
 `
 
-#### 1.2 Register the new bundle as the "parent" of the Pumukit bundle:
+#### 1.2 Override bundle with service configuration (services.xml):
 
 
-```php
-#PumukitExampleOrgWebTVBundle.php
-<?php
-namespace Pumukit\ExampleOrg\WebTVBundle;
-
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-
-class PumukitExampleOrgWebTVBundle extends Bundle
-{
-  public function getParent()
-  {
-    return 'PumukitWebTVBundle';
-  }
-}
+```xml
+<service id="pumukitcore.twig_loader.live_bundle" class="Pumukit\CoreBundle\Services\TwigTemplateLoaderService">
+    <argument type="service" id="templating.locator" />
+    <argument type="service" id="templating.name_parser" />
+    <argument>%kernel.project_dir%</argument>
+    <argument>WebTVBundle</argument>
+    <argument>{customName}WebTVBundle</argument>
+    <tag name="twig.loader" priority="1"/>
+</service>
 ```
 
 For more info see: http://symfony.com/doc/current/cookbook/bundles/inheritance.html
 
-#### 1.3 Install the new bundle (if necessary).
-`
-$ php app/console  pumukit:install:bundle Pumukit/ExampleOrg/WebTVBundle/PumukitExampleOrgWebTVBundle
-`
 ### 2.- Create your custom CSS rules
 
 #### 2.1 Override 'custom.css.twig'
