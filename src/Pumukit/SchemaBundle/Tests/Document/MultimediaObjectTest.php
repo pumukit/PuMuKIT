@@ -9,8 +9,6 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
-//use Pumukit\SchemaBundle\Document\PersonInMultimediaObject;
-
 use Pumukit\SchemaBundle\Document\Track;
 
 /**
