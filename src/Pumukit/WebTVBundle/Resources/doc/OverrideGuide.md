@@ -28,7 +28,7 @@ $ php app/console  generate:bundle --namespace=Pumukit/ExampleOrg/WebTVBundle --
 
 
 ```xml
-<service id="pumukitcore.twig_loader.live_bundle" class="Pumukit\CoreBundle\Services\TwigTemplateLoaderService">
+<service id="pumukitcore.twig_loader.customwebtv_bundle" class="Pumukit\CoreBundle\Services\TwigTemplateLoaderService">
     <argument type="service" id="templating.locator" />
     <argument type="service" id="templating.name_parser" />
     <argument>%kernel.project_dir%</argument>
