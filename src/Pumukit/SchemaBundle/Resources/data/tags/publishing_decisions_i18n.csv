@@ -1,9 +1,9 @@
-id;cod;tree_parent_cod;metatag;display;name_es;name_gl;name_en
-1;PUBDECISIONS;0;1;0;PUBDECISIONS;PUBDECISIONS;PUBDECISIONS
-2;PUDEREV;PUBDECISIONS;0;0;"Revisado";"Revisado";"Revisited"
-3;PUDENEW;PUBDECISIONS;0;1;"Últimos Añadidos (Anunciado)";"Últimos Engadidos (Anunciado)";"Last Added (Announced)"
-4;PUDEPD1;PUBDECISIONS;0;0;"Decisión Editorial 1";"Decisión Editorial 1";"Publishing Decision 1"
-5;PUDEPD2;PUBDECISIONS;0;0;"Decisión Editorial 2";"Decisión Editorial 2";"Publishing Decision 2"
-6;PUDEPD3;PUBDECISIONS;0;0;"Decisión Editorial 3";"Decisión Editorial 3";"Publishing Decision 3"
-6;PUDEUNI;PUBDECISIONS;0;1;"Universidad";"Universidad";"University"
-7;PUDEWALL;PUBDECISIONS;0;1;"Mural";"Wall";"Mural"
+id;cod;tree_parent_cod;metatag;display;name_es;name_gl;name_en;name_ca
+1;PUBDECISIONS;0;1;0;PUBDECISIONS;PUBDECISIONS;PUBDECISIONS;PUBDECISIONS
+2;PUDEREV;PUBDECISIONS;0;0;"Revisado";"Revisado";"Revisited";"Revisited"
+3;PUDENEW;PUBDECISIONS;0;1;"Últimos Añadidos (Anunciado)";"Últimos Engadidos (Anunciado)";"Last Added (Announced)";"Darrers afegits (anunciats)"
+4;PUDEPD1;PUBDECISIONS;0;0;"Decisión Editorial 1";"Decisión Editorial 1";"Publishing Decision 1";"Decisió de publicació 1"
+5;PUDEPD2;PUBDECISIONS;0;0;"Decisión Editorial 2";"Decisión Editorial 2";"Publishing Decision 2";"Decisió de publicació 2"
+6;PUDEPD3;PUBDECISIONS;0;0;"Decisión Editorial 3";"Decisión Editorial 3";"Publishing Decision 3";"Decisió de publicació 3"
+6;PUDEUNI;PUBDECISIONS;0;1;"Universidad";"Universidad";"University";"Universitat"
+7;PUDEWALL;PUBDECISIONS;0;1;"Mural";"Wall";"Mural";"Wall"
