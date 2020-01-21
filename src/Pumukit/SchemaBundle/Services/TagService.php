@@ -224,7 +224,7 @@ class TagService
         $qb = $this->dm->createQueryBuilder(MultimediaObject::class);
 
         $query = $qb
-            ->update()
+            ->updateMany()
             ->multiple(true)
             ->field('tags._id')->equals(new ObjectId($tag->getId()))
             ->field('tags.$.title')->set($tag->getI18nTitle())
@@ -278,7 +278,7 @@ class TagService
             $qb = $this->dm->createQueryBuilder(MultimediaObject::class);
 
             $query = $qb
-                ->update()
+                ->updateMany()
                 ->multiple(true)
                 ->field('tags')->pull($qb->expr()->field('_id')->equals($tag->getId()))
                 ->getQuery()

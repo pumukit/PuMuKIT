@@ -35,7 +35,7 @@ class SortedMultimediaObjectsService
         foreach ($mms as $mm) {
             $this->dm
                 ->createQueryBuilder(MultimediaObject::class)
-                ->update()
+                ->updateMany()
                 ->field('rank')->set($rank++)
                 ->field('_id')->equals($mm->getId())
                 ->getQuery()

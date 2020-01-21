@@ -54,7 +54,7 @@ class MultimediaObjectPropertyJobService
     private function addPropertyInArray(MultimediaObject $multimediaObject, $key, $value)
     {
         $this->dm->createQueryBuilder(MultimediaObject::class)
-            ->update()
+            ->updateMany()
             ->field('properties.'.$key)->push($value)
             ->field('_id')->equals($multimediaObject->getId())
             ->getQuery()
@@ -66,7 +66,7 @@ class MultimediaObjectPropertyJobService
     {
         //Try to delete all the property if is the last job in this state.
         $out = $this->dm->createQueryBuilder(MultimediaObject::class)
-            ->update()
+            ->updateMany()
             ->field('properties.'.$key)->unsetField()
             ->field('_id')->equals($multimediaObject->getId())
             ->field('properties.'.$key)->equals([$value])
@@ -80,7 +80,7 @@ class MultimediaObjectPropertyJobService
 
         // If not delete job from the property
         $out = $this->dm->createQueryBuilder(MultimediaObject::class)
-            ->update()
+            ->updateMany()
             ->field('properties.'.$key)->pull($value)
             ->field('_id')->equals($multimediaObject->getId())
             ->field('properties.'.$key)->equals($value)
