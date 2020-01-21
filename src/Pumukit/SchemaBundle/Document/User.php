@@ -106,18 +106,14 @@ class User extends BaseUser
 
     public function addLoginAttempt(): void
     {
-        if ($this->loginAttempt > self::MAX_LOGIN_ATTEMPTS) {
-            $this->loginAttempt = self::MAX_LOGIN_ATTEMPTS;
-        }
-
-        if (self::MAX_LOGIN_ATTEMPTS === $this->loginAttempt) {
-            $this->setEnabled(false);
-        }
-
+        ++$this->loginAttempt;
         if ($this->loginAttempt < self::MAX_LOGIN_ATTEMPTS) {
-            ++$this->loginAttempt;
             $this->setLastLoginAttempt(new \DateTime());
+            return;
         }
+
+        $this->loginAttempt = self::MAX_LOGIN_ATTEMPTS;
+        $this->setEnabled(false);
     }
 
     public function canLogin(): bool
