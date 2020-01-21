@@ -55,7 +55,7 @@ class CustomAuthenticationFailureHandler extends DefaultAuthenticationFailureHan
         if (!$user->isEnabled()) {
             $now = new \DateTime();
 
-            $lastLoginAttempt = $user->getLastLoginAttempt();
+            $lastLoginAttempt = clone $user->getLastLoginAttempt();
             $lastLoginAttempt->add(new \DateInterval('PT'.User::MAX_USER_TIME_MIN_LOCK.'M'));
 
             if ($lastLoginAttempt < $now) {
