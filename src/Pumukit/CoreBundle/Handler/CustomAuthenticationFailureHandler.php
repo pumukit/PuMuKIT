@@ -46,23 +46,12 @@ class CustomAuthenticationFailureHandler extends DefaultAuthenticationFailureHan
     private function updateUser(User $user): void
     {
         $user->addLoginAttempt();
-        $this->checkToEnableUser($user);
-        $this->documentManager->flush();
-    }
 
-    private function checkToEnableUser(User $user): void
-    {
-        if (!$user->isEnabled()) {
-            $now = new \DateTime();
-
-            $lastLoginAttempt = clone $user->getLastLoginAttempt();
-            $lastLoginAttempt->add(new \DateInterval('PT'.User::MAX_USER_TIME_MIN_LOCK.'M'));
-
-            if ($lastLoginAttempt < $now) {
-                $user->setEnabled(true);
-                $user->setLoginAttempt(1);
-            }
+        if($user->isResetLoginAttemptsAllowed()){
+            $user->resetLoginAttempts();
         }
+
+        $this->documentManager->flush();
     }
 
     private function setSessionException(?SessionInterface $session, AuthenticationException $exception)
