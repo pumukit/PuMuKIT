@@ -293,7 +293,7 @@ EOT
                                 $output->writeln('<comment>'.$e->getMessage().'</comment>');
                             }
 
-                            continue;
+                            throw $e;
                         }
                         $output->writeln('<info>Tag persisted - new id: '.$tag->getId().' cod: '.$tag->getCod().'</info>');
 
@@ -311,10 +311,14 @@ EOT
                     }
                 } catch (\Exception $e) {
                     $output->writeln('<error>'.$repoName.': '.$e->getMessage().'</error>');
+
+                    throw $e;
                 }
             } else {
                 $output->writeln($repoName.': Last valid row = ...');
                 $output->writeln("Error: line {$row} has {$number} elements");
+
+                throw new \Exception($repoName.': Last valid row = ...'."Error: line {$row} has {$number} elements");
             }
 
             if ($verbose && 0 == $row % 100) {
