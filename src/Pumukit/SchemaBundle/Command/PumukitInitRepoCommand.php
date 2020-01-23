@@ -2,6 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Command;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Tag;
@@ -14,325 +15,289 @@ use Symfony\Component\Finder\Finder;
 
 class PumukitInitRepoCommand extends ContainerAwareCommand
 {
+    private const ROOT_TAG_CODE = 'ROOT';
+    private const ROOT_TAG_DATA = ['id' => null, 'cod' => 'ROOT', 'tree_parent_cod' => null, 'metatag' => 1, 'display' => 0, 'name_en' => 'ROOT'];
+    private const TAG_REQUIRED_FIELDS = ['cod', 'tree_parent_cod', 'metatag', 'display', 'name_en'];
+
+    /** @var DocumentManager */
     private $dm;
-    private $tagsRepo;
-    private $pmk2_allLocales;
+    private $locales;
+    private $repoName;
+    private $force;
+    private $file;
 
     private $tagsPath = 'Resources/data/tags/';
     private $rolesPath = 'Resources/data/roles/';
     private $permissionProfilesPath = 'Resources/data/permissionprofiles/';
 
     private $allPermissions;
-    private $tagRequiredFields = ['cod', 'tree_parent_cod', 'metatag', 'display', 'name_en'];
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('pumukit:init:repo')
             ->setDescription('Load Pumukit data fixtures to your database')
-            ->addArgument('repo', InputArgument::REQUIRED, 'Select the repo to init: tag, role, permissionprofile, all')
+            ->addArgument('repo', InputArgument::OPTIONAL, 'Select the repo to init: tag, role, permissionprofile')
             ->addArgument('file', InputArgument::OPTIONAL, 'Input CSV path')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
             ->setHelp(
                 <<<'EOT'
-
+ 
 Command to load a controlled set of data into a database. Useful for init Pumukit environment.
 
-The --force parameter has to be used to actually drop the database.
+Examples:
+
+php bin/console pumukit:init:repo all 
+php bin/console pumukit:init:repo tag  
+php bin/console pumukit:init:repo role
+php bin/console pumukit:init:repo permissionprofile
+
+Example with file option: 
+
+php bin/console pumukit:init:repo tag src/Pumukit/SchemaBundle/Resources/data/tag/unesco_i18n.csv
+
+Example with force option:
+
+php bin/console pumukit:init:repo tag --force 
+
+** The --force parameter has to be used to actually drop the database.
 
 EOT
             )
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+
         $this->allPermissions = $this->getContainer()->get('pumukitschema.permission')->getAllPermissions();
-        $this->pmk2_allLocales = array_unique(array_merge($this->getContainer()->getParameter('pumukit.locales'), ['en']));
-        $this->tagsRepo = $this->dm->getRepository(Tag::class);
+        $this->locales = array_unique(array_merge($this->getContainer()->getParameter('pumukit.locales'), ['en']));
+        $this->repoName = $input->getArgument('repo');
+        $this->force = $input->getOption('force');
+        $this->file = $input->getArgument('file');
+    }
 
-        $repoName = $input->getArgument('repo');
-
-        if ($input->getOption('force')) {
-            switch ($repoName) {
-            case 'all':
-                $errorExecuting = $this->executeTags($input, $output);
-                if (-1 === $errorExecuting) {
-                    return -1;
-                }
-                $errorExecuting = $this->executeRoles($input, $output);
-                if (-1 === $errorExecuting) {
-                    return -1;
-                }
-                $errorExecuting = $this->executePermissionProfiles($input, $output);
-                if (-1 === $errorExecuting) {
-                    return -1;
-                }
-
-                break;
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $result = [];
+        switch ($this->repoName) {
             case 'tag':
-                $errorExecuting = $this->executeTags($input, $output);
-                if (-1 === $errorExecuting) {
-                    return -1;
-                }
+                $result = $this->executeTags();
 
                 break;
             case 'role':
-                $errorExecuting = $this->executeRoles($input, $output);
-                if (-1 === $errorExecuting) {
-                    return -1;
-                }
+                $result = $this->executeRoles();
 
                 break;
             case 'permissionprofile':
-                $errorExecuting = $this->executePermissionProfiles($input, $output);
-                if (-1 === $errorExecuting) {
-                    return -1;
-                }
+               $result = $this->executePermissionProfiles();
 
                 break;
-            }
-        } elseif ('tag' == $repoName) {
-            $errorExecuting = $this->executeTags($input, $output, false);
-            if (-1 === $errorExecuting) {
-                return -1;
-            }
-        } else {
-            $output->writeln('<error>ATTENTION:</error> This operation should not be executed in a production environment.');
-            $output->writeln('');
-            $output->writeln('<info>Would drop the database</info>');
-            $output->writeln('Please run the operation with --force to execute and with --repo to chose the repository to initialize.');
-            $output->writeln('<error>All data will be lost!</error>');
+            case 'all':
+                $this->repoName = 'tag';
+                $resultTag = $this->executeTags();
+                $this->repoName = 'role';
+                $resultRoles = $this->executeRoles();
+                $this->repoName = 'permissionprofile';
+                $resultPermissionProfiles = $this->executePermissionProfiles();
 
-            return -1;
+                $result = array_merge($resultTag, $resultRoles, $resultPermissionProfiles);
+
+                break;
+            default:
+        }
+
+        foreach ($result as $element) {
+            foreach ($element as $key => $value) {
+                $output->writeln($key.' - '.$value);
+            }
         }
     }
 
-    protected function executeTags(InputInterface $input, OutputInterface $output, $force = true)
+    protected function executeTags(): array
     {
-        $finder = new Finder();
-        $finder->files()->in($this->getContainer()->get('kernel')->locateResource('@PumukitSchemaBundle/'.$this->tagsPath));
-        $file = $input->getArgument('file');
+        $finder = $this->locateResource($this->tagsPath);
 
-        if ((0 === strcmp($file, '')) && 0 === $finder->count()) {
-            $output->writeln("<error>Tags: There's no data to initialize</error>");
-
-            return -1;
+        if ($this->isEmptyFile($finder)) {
+            return [
+                $this->file => 'Empty file',
+            ];
         }
-        if ($force) {
+
+        if ($this->force) {
             $this->removeTags();
         }
+
         $root = $this->createRoot();
-        $verbose = $input->getOption('verbose');
-        if ($file) {
-            $this->createFromFile($file, $root, $output, 'tag', $verbose);
-        } else {
-            foreach ($finder as $tagFile) {
-                $this->createFromFile($tagFile, $root, $output, 'tag', $verbose);
-            }
+
+        $files = isset($this->file) ? [$this->file] : $finder;
+
+        $result = [];
+        foreach ($files as $fileRoute) {
+            $result[] = $this->createFromFile($fileRoute, $root);
         }
 
-        return 0;
+        return $result;
     }
 
-    protected function executeRoles(InputInterface $input, OutputInterface $output)
+    protected function executeRoles(): array
     {
-        $finder = new Finder();
-        $finder->files()->in($this->getContainer()->get('kernel')->locateResource('@PumukitSchemaBundle/'.$this->rolesPath));
-        $file = $input->getArgument('file');
-        if ((0 === strcmp($file, '')) && 0 === $finder->count()) {
-            $output->writeln("<error>Roles: There's no data to initialize</error>");
+        $finder = $this->locateResource($this->rolesPath);
 
-            return -1;
-        }
-        $this->removeRoles();
-        if ($file) {
-            $this->createFromFile($file, null, $output, 'role');
-        } else {
-            foreach ($finder as $roleFile) {
-                $this->createFromFile($roleFile, null, $output, 'role');
-            }
+        if ($this->isEmptyFile($finder)) {
+            return [
+                $this->file => 'Empty file',
+            ];
         }
 
-        return 0;
+        if ($this->force) {
+            $this->removeRoles();
+        }
+
+        $root = $this->createRoot();
+
+        $files = isset($this->file) ? [$this->file] : $finder;
+
+        $result = [];
+        foreach ($files as $fileRoute) {
+            $result[] = $this->createFromFile($fileRoute, $root);
+        }
+
+        return $result;
     }
 
-    protected function executePermissionProfiles(InputInterface $input, OutputInterface $output)
+    protected function executePermissionProfiles(): array
     {
-        $finder = new Finder();
+        $finder = $this->locateResource($this->permissionProfilesPath);
 
-        $finder->files()->in($this->getContainer()->get('kernel')->locateResource('@PumukitSchemaBundle/'.$this->permissionProfilesPath));
-        $file = $input->getArgument('file');
-        if ((0 === strcmp($file, '')) && 0 === $finder->count()) {
-            $output->writeln("<error>PermissionProfiles: There's no data to initialize</error>");
-
-            return -1;
-        }
-        $this->removePermissionProfiles();
-        if ($file) {
-            $this->createFromFile($file, null, $output, 'permissionprofile');
-        } else {
-            foreach ($finder as $permissionProfilesFile) {
-                $this->createFromFile($permissionProfilesFile, null, $output, 'permissionprofile');
-            }
+        if ($this->isEmptyFile($finder)) {
+            return [
+                $this->file => 'Empty file',
+            ];
         }
 
-        return 0;
+        if ($this->force) {
+            $this->removePermissionProfiles();
+        }
+
+        $root = $this->createRoot();
+
+        $files = isset($this->file) ? [$this->file] : $finder;
+
+        $result = [];
+        foreach ($files as $fileRoute) {
+            $result[] = $this->createFromFile($fileRoute, $root);
+        }
+
+        return $result;
     }
 
-    protected function removeTags()
+    protected function removeTags(): void
     {
         $this->dm->getDocumentCollection(Tag::class)->remove([]);
     }
 
-    protected function removeRoles()
+    protected function removeRoles(): void
     {
         $this->dm->getDocumentCollection(Role::class)->remove([]);
     }
 
-    protected function removePermissionProfiles()
+    protected function removePermissionProfiles(): void
     {
         $this->dm->getDocumentCollection(PermissionProfile::class)->remove([]);
     }
 
-    protected function createRoot()
+    protected function createRoot(): Tag
     {
-        $root = $this->tagsRepo->findOneByCod('ROOT');
-        if (!$root) {
-            $root = $this->createTagFromCsvArray(['id' => null, 'cod' => 'ROOT', 'tree_parent_cod' => null, 'metatag' => 1, 'display' => 0, 'name_en' => 'ROOT']);
+        $root = $this->dm->getRepository(Tag::class)->findOneBy(['cod' => self::ROOT_TAG_CODE]);
+        if (!isset($root)) {
+            $root = $this->createTagFromCsvArray(self::ROOT_TAG_DATA);
         }
-        $this->dm->persist($root);
+
         $this->dm->flush();
 
         return $root;
     }
 
-    protected function createFromFile($file_route, $root, OutputInterface $output, $repoName, $verbose = false)
+    protected function createFromFile(string $fileRoute, Tag $root): array
     {
-        // NECCESSARY CHECKS
-        $csvTagHeaders = false;
-        if (!file_exists($file_route)) {
-            $output->writeln('<error>'.$repoName.': Error stating '.$file_route.": File doesn't exist</error>");
-
-            return -1;
+        $fileWasValidated = $this->validateFile($fileRoute);
+        if (!$fileWasValidated['status']) {
+            return [$fileRoute => $fileWasValidated['message']];
         }
 
-        if (false === ($file = fopen($file_route, 'r'))) {
-            $output->writeln('<error>Error opening '.$file_route.": fopen() returned 'false' </error>");
-
-            return -1;
-        }
-
-        if ('tag' == $repoName) {
-            //Creates the csvTagHeaders (to be used later)
-            if (false === ($csvTagHeaders = fgetcsv($file, 0, ';', '"'))) {
-                $output->writeln('<error>Error reading first row (csv header) of '.$file_route.": fgetcsv returned 'false' </error>");
-
-                return -1;
-            }
-
-            //Checks if the file header has the required fields. (Only for tags)
-            $result_diff = array_diff($this->tagRequiredFields, $csvTagHeaders);
-            if (count($result_diff) > 0) {
-                $output->writeln('<error>Error reading first row (csv header) of '.$file_route.": HEADER doesn't have the required fields: ".print_r($result_diff, true).' </error>');
-
-                return -1;
-            }
-        }
-        // END CHECKS
-
-        $fileExtension = pathinfo($file_route, PATHINFO_EXTENSION);
-        $ending = substr($fileExtension, -1);
-        if (('~' === $ending) || ('#' === $ending)) {
-            $output->writeln('<comment>'.$repoName.': Ignoring file '.$file.'</comment>');
-
-            return -1;
-        }
-        if ($verbose) {
-            $output->writeln('<info>Found file: '.realpath($file_route).'</info>');
-        }
-
-        $row = 1;
         $importedTags = [];
+        $file = fopen($fileRoute, 'rb');
+        $csvTagHeaders = fgetcsv($file, 0, ';');
+
+        $numberPersisted = 0;
         while (false !== ($currentRow = fgetcsv($file, 0, ';'))) {
-            $number = count($currentRow);
-            if (('tag' === $repoName) ||
-                (('role' === $repoName) && (7 == $number || 10 == $number)) ||
-                (('permissionprofile' === $repoName) && (6 == $number))) {
-                //Check header rows
-                if ('id' == trim($currentRow[0])) {
-                    continue;
-                }
+            if ('id' === trim($currentRow[0])) {
+                continue;
+            }
 
-                try {
-                    switch ($repoName) {
-                    case 'tag':
-                        $csvTagsArray = [];
-                        $limit = count($currentRow);
-                        for ($i = 0; $i < $limit; ++$i) {
-                            $key = $csvTagHeaders[$i]; // Here we turn the csv into an associative array (Doesn't a csv parsing library do this already?)
-                            $csvTagsArray[$key] = $currentRow[$i];
-                        }
+            switch ($this->repoName) {
+                case 'tag':
+                    $csvTagsArray = [];
 
-                        if (isset($importedTags[$csvTagsArray['tree_parent_cod']])) {
-                            $parent = $importedTags[$csvTagsArray['tree_parent_cod']];
-                        } else {
-                            $parent = $this->tagsRepo->findOneByCod($csvTagsArray['tree_parent_cod']);
-                        }
+                    $limit = count($currentRow);
 
-                        if (!isset($parent)) {
-                            $parent = $root;
-                        }
-
-                        try {
-                            $tag = $this->createTagFromCsvArray($csvTagsArray, $parent);
-                            $importedTags[$tag->getCod()] = $tag;
-                        } catch (\LengthException $e) {
-                            if ($verbose) {
-                                $output->writeln('<comment>'.$e->getMessage().'</comment>');
-                            }
-
-                            continue;
-                        }
-                        $output->writeln('<info>Tag persisted - new id: '.$tag->getId().' cod: '.$tag->getCod().'</info>');
-
-                        break;
-                    case 'role':
-                        $role = $this->createRoleFromCsvArray($currentRow);
-                        $output->writeln('Role persisted - new id: '.$role->getId().' code: '.$role->getCod());
-
-                        break;
-                    case 'permissionprofile':
-                        $permissionProfile = $this->createPermissionProfileFromCsvArray($currentRow);
-                        $output->writeln('PermissionProfile persisted - new id: '.$permissionProfile->getId().' name: '.$permissionProfile->getName());
-
-                        break;
+                    for ($i = 0; $i < $limit; ++$i) {
+                        $key = $csvTagHeaders[$i];
+                        $csvTagsArray[$key] = $currentRow[$i];
                     }
-                } catch (\Exception $e) {
-                    $output->writeln('<error>'.$repoName.': '.$e->getMessage().'</error>');
-                }
-            } else {
-                $output->writeln($repoName.': Last valid row = ...');
-                $output->writeln("Error: line {$row} has {$number} elements");
-            }
 
-            if ($verbose && 0 == $row % 100) {
-                echo 'Row '.$row."\n";
-            }
+                    $parent = $importedTags[$csvTagsArray['tree_parent_cod']] ?? $this->dm->getRepository(Tag::class)->findOneBy(['cod' => $csvTagsArray['tree_parent_cod']]);
+                    if (!isset($parent)) {
+                        $parent = $root;
+                    }
 
-            ++$row;
+                    if (!$this->dm->getRepository(Tag::class)->findOneBy(['cod' => $csvTagsArray['cod']])) {
+                        $tag = $this->createTagFromCsvArray($csvTagsArray, $parent);
+                        $importedTags[$tag->getCod()] = $tag;
+
+                        ++$numberPersisted;
+                    }
+
+                    break;
+                case 'role':
+                    $csvRolesArray = [];
+
+                    $limit = count($currentRow);
+
+                    for ($i = 0; $i < $limit; ++$i) {
+                        $key = $csvTagHeaders[$i];
+                        $csvRolesArray[$key] = $currentRow[$i];
+                    }
+
+                    if (!$this->dm->getRepository(Role::class)->findOneBy(['cod' => $csvRolesArray['cod']])) {
+                        $this->createRoleFromCsvArray($csvRolesArray);
+                        ++$numberPersisted;
+                    }
+
+                    break;
+                case 'permissionprofile':
+                    if (!$this->dm->getRepository(PermissionProfile::class)->findOneBy(['name' => $currentRow[1]])) {
+                        $this->createPermissionProfileFromCsvArray($currentRow);
+                        ++$numberPersisted;
+                    }
+
+                    break;
+            }
         }
+
         fclose($file);
+
         $this->dm->flush();
+
+        return [
+            $fileRoute => $numberPersisted,
+        ];
     }
 
-    private function createTagFromCsvArray($csvTagsArray, $tag_parent = null)
+    private function createTagFromCsvArray(array $csvTagsArray, $tag_parent = null): Tag
     {
-        if ($tag = $this->tagsRepo->findOneByCod($csvTagsArray['cod'])) {
-            throw new \LengthException('Nothing done - Tag already on DB - id: '.$tag->getId().' cod: '.$tag->getCod());
-        }
-
         $tag = new Tag();
         $tag->setCod($csvTagsArray['cod']);
         $tag->setMetatag($csvTagsArray['metatag']);
@@ -340,16 +305,16 @@ EOT
         if ($tag_parent) {
             $tag->setParent($tag_parent);
         }
-        //Get all titles neccessary on PMK.
-        foreach ($this->pmk2_allLocales as $locale) {
+
+        foreach ($this->locales as $locale) {
             $key_name = 'name_'.$locale;
             if (isset($csvTagsArray[$key_name])) {
                 $tag->setTitle($csvTagsArray[$key_name], $locale);
             } else {
-                //Default name will be in english
                 $tag->setTitle($csvTagsArray['name_en'], $locale);
             }
         }
+
         foreach (array_keys($csvTagsArray) as $key) {
             if (preg_match('/property_*/', $key, $matches)) {
                 $property_name = str_replace($matches[0], '', $key);
@@ -362,35 +327,30 @@ EOT
         return $tag;
     }
 
-    /**
-     * Create Role from CSV array.
-     *
-     * @param mixed $csv_array
-     */
-    private function createRoleFromCsvArray($csv_array)
+    private function createRoleFromCsvArray(array $csvTagsArray): Role
     {
         $role = new Role();
 
-        $role->setCod($csv_array[1]);
-        $role->setXml($csv_array[2]);
-        $role->setDisplay($csv_array[3]);
-        // NOTE Take care of csv language order!
-        $role->setName($csv_array[4], 'es');
-        if (isset($csv_array[5])) {
-            $role->setName($csv_array[5], 'gl');
+        $role->setCod($csvTagsArray['cod']);
+        $role->setXml($csvTagsArray['xml']);
+        $role->setDisplay($csvTagsArray['display']);
+
+        foreach ($this->locales as $locale) {
+            $key_name = 'name_'.$locale;
+            if (isset($csvTagsArray[$key_name])) {
+                $role->setName($csvTagsArray[$key_name], $locale);
+            } else {
+                $role->setName($csvTagsArray['name_en'], $locale);
+            }
         }
-        if (isset($csv_array[6])) {
-            $role->setName($csv_array[6], 'en');
-        }
-        // NOTE Take care of csv language order!
-        if (isset($csv_array[7])) {
-            $role->setText($csv_array[7], 'es');
-        }
-        if (isset($csv_array[8])) {
-            $role->setText($csv_array[8], 'gl');
-        }
-        if (isset($csv_array[9])) {
-            $role->setText($csv_array[9], 'en');
+
+        foreach ($this->locales as $locale) {
+            $key_name = 'text_'.$locale;
+            if (isset($csvTagsArray[$key_name])) {
+                $role->setText($csvTagsArray[$key_name], $locale);
+            } else {
+                $role->setText($csvTagsArray['name_en'], $locale);
+            }
         }
 
         $this->dm->persist($role);
@@ -398,24 +358,19 @@ EOT
         return $role;
     }
 
-    /**
-     * Create PermissionProfile from CSV array.
-     *
-     * @param mixed $csv_array
-     */
-    private function createPermissionProfileFromCsvArray($csv_array)
+    private function createPermissionProfileFromCsvArray(array $permissionProfileArray): PermissionProfile
     {
         $permissionProfile = new PermissionProfile();
 
-        $permissionProfile->setName($csv_array[1]);
-        $permissionProfile->setSystem($csv_array[2]);
-        $permissionProfile->setDefault($csv_array[3]);
-        if ((PermissionProfile::SCOPE_GLOBAL === $csv_array[4]) ||
-            (PermissionProfile::SCOPE_PERSONAL === $csv_array[4]) ||
-            (PermissionProfile::SCOPE_NONE === $csv_array[4])) {
-            $permissionProfile->setScope($csv_array[4]);
+        $permissionProfile->setName($permissionProfileArray[1]);
+        $permissionProfile->setSystem($permissionProfileArray[2]);
+        $permissionProfile->setDefault($permissionProfileArray[3]);
+        if ((PermissionProfile::SCOPE_GLOBAL === $permissionProfileArray[4]) ||
+            (PermissionProfile::SCOPE_PERSONAL === $permissionProfileArray[4]) ||
+            (PermissionProfile::SCOPE_NONE === $permissionProfileArray[4])) {
+            $permissionProfile->setScope($permissionProfileArray[4]);
         }
-        foreach (array_filter(preg_split('/[,\s]+/', $csv_array[5])) as $permission) {
+        foreach (array_filter(preg_split('/[,\s]+/', $permissionProfileArray[5])) as $permission) {
             if ('none' === $permission) {
                 break;
             }
@@ -428,18 +383,84 @@ EOT
                 $permissionProfile->addPermission($permission);
             }
         }
-
         $this->dm->persist($permissionProfile);
 
         return $permissionProfile;
     }
 
-    private function addAllPermissions(PermissionProfile $permissionProfile)
+    private function addAllPermissions(PermissionProfile $permissionProfile): PermissionProfile
     {
         foreach ($this->allPermissions as $key => $value) {
             $permissionProfile->addPermission($key);
         }
 
         return $permissionProfile;
+    }
+
+    private function locateResource(string $filePath): Finder
+    {
+        $finder = new Finder();
+        $finder->files()->in($this->getContainer()->get('kernel')->locateResource('@PumukitSchemaBundle/'.$filePath));
+
+        return $finder;
+    }
+
+    private function isEmptyFile(Finder $finder): bool
+    {
+        return 0 === strcmp($this->file, '') && 0 === $finder->count();
+    }
+
+    private function validateFile(string $fileRoute): array
+    {
+        $validate = true;
+        $message = '';
+
+        try {
+            if (!file_exists($fileRoute)) {
+                $message = '<error>'.$this->repoName.': Error stating '.$fileRoute.": File doesn't exist</error>";
+                $validate = false;
+            }
+
+            if (false === ($file = fopen($fileRoute, 'rb'))) {
+                $message = '<error>Error opening '.$fileRoute.": fopen() returned 'false' </error>";
+                $validate = false;
+            }
+
+            if ('tag' === $this->repoName) {
+                if (false === ($csvTagHeaders = fgetcsv($file, 0, ';'))) {
+                    $message = '<error>Error reading first row (csv header) of '.
+                               $fileRoute.
+                               ": fgetcsv returned 'false' </error>";
+                    $validate = false;
+                }
+
+                $result_diff = array_diff(self::TAG_REQUIRED_FIELDS, $csvTagHeaders);
+                if (count($result_diff) > 0) {
+                    $message = '<error>Error reading first row (csv header) of '.
+                               $fileRoute.
+                               ": HEADER doesn't have the required fields: ".
+                               print_r($result_diff, true).
+                               ' </error>';
+                    $validate = false;
+                }
+            }
+
+            $fileExtension = pathinfo($fileRoute, PATHINFO_EXTENSION);
+            $ending = substr($fileExtension, -1);
+            if ('~' === $ending || ('#' === $ending)) {
+                $message = '<comment>'.$this->repoName.': Ignoring file '.$file.'</comment>';
+                $validate = false;
+            }
+        } catch (\Exception $e) {
+            return [
+                'status' => $validate,
+                'message' => $message,
+            ];
+        }
+
+        return [
+            'status' => $validate,
+            'message' => $message,
+        ];
     }
 }
