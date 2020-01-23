@@ -11,48 +11,37 @@ use Pagerfanta\Pagerfanta;
 
 class PaginationService
 {
-    public function createDoctrineODMMongoDBAdapter(Builder $objects, $page = 1, $limit = 10): Pagerfanta
-    {
-        [$page, $limit] = $this->validatePagerValues($page, $limit);
+    private const DEFAULT_MAX_ELEMENTS_PER_PAGE = 10;
+    private const DEFAULT_PAGE = 1;
 
+    public function createDoctrineODMMongoDBAdapter(Builder $objects, int $page = self::DEFAULT_PAGE, int $limit = self::DEFAULT_MAX_ELEMENTS_PER_PAGE): Pagerfanta
+    {
         $adapter = new DoctrineODMMongoDBAdapter($objects);
 
         return $this->generatePager($adapter, $page, $limit);
     }
 
-    public function createArrayAdapter(array $objects, $page = 1, $limit = 10): Pagerfanta
+    public function createArrayAdapter(array $objects, int $page = self::DEFAULT_PAGE, int $limit = self::DEFAULT_MAX_ELEMENTS_PER_PAGE): Pagerfanta
     {
-        [$page, $limit] = $this->validatePagerValues($page, $limit);
-
         $adapter = new ArrayAdapter($objects);
 
         return $this->generatePager($adapter, $page, $limit);
     }
 
-    public function createDoctrineCollectionAdapter($objects, $page = 1, $limit = 10): Pagerfanta
+    public function createDoctrineCollectionAdapter($objects, int $page = self::DEFAULT_PAGE, int $limit = self::DEFAULT_MAX_ELEMENTS_PER_PAGE): Pagerfanta
     {
-        [$page, $limit] = $this->validatePagerValues($page, $limit);
-
         $adapter = new DoctrineCollectionAdapter($objects);
 
         return $this->generatePager($adapter, $page, $limit);
     }
 
-    private function generatePager(AdapterInterface $adapter, int $page = 1, int $limit = 10): Pagerfanta
+    private function generatePager(AdapterInterface $adapter, int $page, int $limit): Pagerfanta
     {
         $pager = new Pagerfanta($adapter);
-        $pager->setMaxPerPage($page);
+        $pager->setMaxPerPage($limit);
         $pager->setNormalizeOutOfRangePages(true);
-        $pager->setCurrentPage($limit);
+        $pager->setCurrentPage($page);
 
         return $pager;
-    }
-
-    private function validatePagerValues($page, $limit): array
-    {
-        return [
-            (int) $page,
-            (int) $limit,
-        ];
     }
 }
