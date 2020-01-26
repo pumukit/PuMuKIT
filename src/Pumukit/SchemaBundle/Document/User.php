@@ -16,7 +16,6 @@ class User extends BaseUser
 
     public const ORIGIN_LOCAL = 'local';
     public const MAX_LOGIN_ATTEMPTS = 3;
-    //Format reference: https://www.php.net/manual/en/dateinterval.createfromdatestring.php
     public const RESET_LOGIN_ATTEMPTS_INTERVAL = '5 minutes';
 
     /**
@@ -100,9 +99,9 @@ class User extends BaseUser
         return $this->loginAttempt;
     }
 
-    public function setLoginAttempt(int $logginAttempt): void
+    public function setLoginAttempt(int $loginAttempt): void
     {
-        $this->loginAttempt = $logginAttempt;
+        $this->loginAttempt = $loginAttempt;
     }
 
     public function addLoginAttempt(): void
@@ -123,7 +122,7 @@ class User extends BaseUser
     public function isResetLoginAttemptsAllowed(): bool
     {
         $lastLoginAttempt = clone $this->getLastLoginAttempt();
-        $lastLoginAttempt->add(\DateInterval::createFromDateString(User::RESET_LOGIN_ATTEMPTS_INTERVAL));
+        $lastLoginAttempt->add(\DateInterval::createFromDateString(self::RESET_LOGIN_ATTEMPTS_INTERVAL));
         $now = new \DateTime();
 
         return $lastLoginAttempt < $now;
@@ -181,9 +180,6 @@ class User extends BaseUser
         $this->groups->removeElement($group);
     }
 
-    /**
-     * @return ArrayCollection
-     */
     public function getGroups()
     {
         return $this->groups;
