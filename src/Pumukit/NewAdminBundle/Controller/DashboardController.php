@@ -65,7 +65,7 @@ class DashboardController extends Controller implements NewAdminControllerInterf
 
         $XML = new \SimpleXMLElement('<data></data>');
         $XML->addAttribute('wiki-url', $request->getUri());
-        $XML->addAttribute('wiki-section', 'Pumukit2 time-line Feed');
+        $XML->addAttribute('wiki-section', 'Pumukit time-line Feed');
 
         foreach ($series as $s) {
             $XMLSeries = $XML->addChild('event', htmlspecialchars($s->getTitle()));
