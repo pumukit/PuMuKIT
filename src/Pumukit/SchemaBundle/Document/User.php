@@ -111,6 +111,7 @@ class User extends BaseUser
 
         if ($this->loginAttempt < self::MAX_LOGIN_ATTEMPTS) {
             $this->setLastLoginAttempt(new \DateTime());
+
             return;
         }
 

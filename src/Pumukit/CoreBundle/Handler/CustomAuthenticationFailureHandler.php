@@ -47,7 +47,7 @@ class CustomAuthenticationFailureHandler extends DefaultAuthenticationFailureHan
     {
         $user->addLoginAttempt();
 
-        if($user->isResetLoginAttemptsAllowed()){
+        if ($user->isResetLoginAttemptsAllowed()) {
             $user->resetLoginAttempts();
         }
 
