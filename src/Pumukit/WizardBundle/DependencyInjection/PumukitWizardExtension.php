@@ -2,9 +2,7 @@
 
 namespace Pumukit\WizardBundle\DependencyInjection;
 
-use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
@@ -36,9 +34,6 @@ class PumukitWizardExtension extends Extension
         if (isset($config['simple_default_master_profile'])) {
             $container->setParameter('pumukit_wizard.simple_default_master_profile', $config['simple_default_master_profile']);
         }
-
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.xml');
     }
 
     /**

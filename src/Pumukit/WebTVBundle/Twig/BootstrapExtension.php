@@ -2,19 +2,11 @@
 
 namespace Pumukit\WebTVBundle\Twig;
 
-use Symfony\Component\Routing\RequestContext;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class BootstrapExtension extends AbstractExtension
 {
-    protected $context;
-
-    public function __construct(RequestContext $context)
-    {
-        $this->context = $context;
-    }
-
     public function getFunctions(): array
     {
         return [

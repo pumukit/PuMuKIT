@@ -7,6 +7,12 @@ services:
   doctrine:
     alias: doctrine_mongodb
 
+  fos_user.util.password_updater:
+    class: Pumukit\SchemaBundle\Services\PasswordUpdater
+    public: false
+    arguments:
+      $genUserSalt: '%pumukitschema.gen_user_salt%'
+
   pumukitlive.legacyeventpic:
     class: Pumukit\SchemaBundle\Services\LegacyEventPicService
     arguments:
@@ -193,12 +199,6 @@ services:
   pumukitschema.text_index:
     class: Pumukit\SchemaBundle\Services\TextIndexService
 
-  security.role_hierarchy:
-    class: Pumukit\SchemaBundle\Security\RoleHierarchy
-    public: false
-    arguments:
-      $hierarchy: '%security.role_hierarchy.roles%'
-
   pumukitschema.embeddedbroadcast:
     class: Pumukit\SchemaBundle\Services\EmbeddedBroadcastService
 
@@ -211,8 +211,110 @@ services:
       $defaultPoster: '%pumukitschema.event_default_poster%'
       $defaultThumbnail: '%pumukit_new_admin.advance_live_event_create_default_pic%'
 
-  fos_user.util.password_updater:
-    class: Pumukit\SchemaBundle\Services\PasswordUpdater
+  pumukit_stats.log:
+    class: Pumukit\StatsBundle\EventListener\Log
+    tags:
+      - { name: "kernel.event_listener", event: "multimediaobject.view", method: "onMultimediaObjectViewed" }
+
+  pumukit_stats.stats:
+    class: Pumukit\StatsBundle\Services\StatsService
+    arguments:
+      $useAggregation: '%pumukit_stats.use_aggregation%'
+
+  pumukit_web_tv.breadcrumbs:
+    class: Pumukit\WebTVBundle\Services\BreadcrumbsService
+    arguments:
+      $allTitle: '%pumukit_web_tv.breadcrumbs_all_title%'
+      $allRoute: '%pumukit_web_tv.breadcrumbs_all_route%'
+      $homeTitle: '%breadcrumbs_home_title%'
+      $parentWeb: '%pumukit_web_tv.breadcrumbs_parentweb%'
+
+  pumukit_web_tv.channels:
+    class: Pumukit\WebTVBundle\Services\ChannelService
+
+  pumukit_web_tv.categories_service:
+    class: Pumukit\WebTVBundle\Services\CategoriesService
+    arguments:
+      $parentCod: '%categories_tag_cod%'
+      $listGeneralParam: '%categories.list_general_tags%'
+
+  pumukit_web_tv.chapter_marks_service:
+    class: Pumukit\WebTVBundle\Services\ChapterMarkService
+
+  pumukit_web_tv.link_service:
+    class: Pumukit\WebTVBundle\Services\LinkService
+    arguments:
+      $linkTagToSearch: '%pumukit_web_tv.linktagtosearch%'
+
+  pumukit_web_tv.list_service:
+    class: Pumukit\WebTVBundle\Services\ListService
+    arguments:
+      $advanceLiveEvents: '%pumukit_new_admin.advance_live_event%'
+      $wallTag: '%wall_block.wall_tag%'
+
+  pumukit_web_tv.menu_service:
+    class: Pumukit\WebTVBundle\Services\MenuService
+    arguments:
+      $advanceEvents: '%pumukit_new_admin.advance_live_event%'
+
+  pumukit_web_tv.search_service:
+    class: Pumukit\WebTVBundle\Services\SearchService
+    arguments:
+      $parentTagCod: '%search.parent_tag.cod%'
+      $parentTagCodOptional: '%search.parent_tag_2.cod%'
+
+  pumukit_web_tv.twig_mongo_date_extension:
+    class: Pumukit\WebTVBundle\Twig\MongoDateExtension
+
+  pumukit_web_tv.twig_bootstrap_extension:
+    class: Pumukit\WebTVBundle\Twig\BootstrapExtension
+
+  pumukit_web_tv.twig_pumukit_extension:
+    class: Pumukit\WebTVBundle\Twig\PumukitExtension
+    arguments:
+      $defaultPic: '%pumukit_web_tv.default_pic%'
+
+  pumukit_wizard.license:
+    class: Pumukit\WizardBundle\Services\LicenseService
+    arguments:
+      $showLicense: '%pumukit_wizard.show_license%'
+      $licenseDir: '%pumukit_wizard.license_dir%'
+      $locales: '%pumukit.locales%'
+
+  pumukit_wizard.wizard:
+    class: Pumukit\WizardBundle\Services\WizardService
+    arguments:
+      $basePath: '%kernel.root_dir%/../'
+      $locales: '%pumukit.locales%'
+      $inboxDepth: '%pumukit.inbox_depth%'
+
+  pumukit_wizard.form_dispatcher:
+    class: Pumukit\WizardBundle\Services\FormEventDispatcherService
+
+  pumukit_workflow.job_generator_listener:
+    class: Pumukit\WorkflowBundle\EventListener\JobGeneratorListener
+    tags:
+      - { name: "kernel.event_listener", event: "job.success", method: "onJobSuccess" }
+      - { name: "kernel.event_listener", event: "multimediaobject.update", method: "onMultimediaobjectUpdate" }
+
+  pumukit_workflow.pic_extractor_listener:
+    class: Pumukit\WorkflowBundle\EventListener\PicExtractorListener
+    arguments:
+      $autoExtractPic: '%pumukit_workflow.auto_extract_pic%'
+      $autoExtractPicPercentage: '%pumukit_workflow.auto_extract_pic_percentage%'
+    tags:
+      - { name: "kernel.event_listener", event: "job.success", method: "onJobSuccess" }
+
+  pumukit_workflow.dynamic_pic_extractor_listener:
+    class: Pumukit\WorkflowBundle\EventListener\DynamicPicExtractorListener
+    arguments:
+      $enableDynamicPicExtract: '%pumukit_workflow.dynamic_pic_extract%'
+      $trackTagAllowed: '%pumukit_workflow.dynamic_pic_extract_track_tag_allowed%'
+    tags:
+      - { name: "kernel.event_listener", event: "job.success", method: "onJobSuccess" }
+      
+  security.role_hierarchy:
+    class: Pumukit\SchemaBundle\Security\RoleHierarchy
     public: false
     arguments:
-      $genUserSalt: '%pumukitschema.gen_user_salt%'
+      $hierarchy: '%security.role_hierarchy.roles%'
