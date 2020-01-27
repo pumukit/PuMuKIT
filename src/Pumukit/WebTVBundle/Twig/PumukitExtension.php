@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Services\CaptionService;
+use Pumukit\SchemaBundle\Services\MultimediaObjectDurationService;
 use Pumukit\SchemaBundle\Services\PicService;
 use Pumukit\WebTVBundle\Services\LinkService;
 use Symfony\Component\Routing\RequestContext;
@@ -51,7 +52,7 @@ class PumukitExtension extends AbstractExtension
 
     private $mmobjDurationService;
 
-    public function __construct(DocumentManager $documentManager, RequestContext $context, $defaultPic, CaptionService $captionService, PicService $picService, LinkService $linkService, $mmobjDurationService)
+    public function __construct(DocumentManager $documentManager, RequestContext $context, $defaultPic, CaptionService $captionService, PicService $picService, LinkService $linkService, MultimediaObjectDurationService $mmobjDurationService)
     {
         $this->dm = $documentManager;
         $this->context = $context;
