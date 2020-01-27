@@ -3,3 +3,25 @@ services:
     autowire: true
     autoconfigure: true
     public: true
+
+  pumukit_workflow.job_generator_listener:
+    class: Pumukit\WorkflowBundle\EventListener\JobGeneratorListener
+    tags:
+      - { name: "kernel.event_listener", event: "job.success", method: "onJobSuccess" }
+      - { name: "kernel.event_listener", event: "multimediaobject.update", method: "onMultimediaobjectUpdate" }
+
+  pumukit_workflow.pic_extractor_listener:
+    class: Pumukit\WorkflowBundle\EventListener\PicExtractorListener
+    arguments:
+      $autoExtractPic: '%pumukit_workflow.auto_extract_pic%'
+      $autoExtractPicPercentage: '%pumukit_workflow.auto_extract_pic_percentage%'
+    tags:
+      - { name: "kernel.event_listener", event: "job.success", method: "onJobSuccess" }
+
+  pumukit_workflow.dynamic_pic_extractor_listener:
+    class: Pumukit\WorkflowBundle\EventListener\DynamicPicExtractorListener
+    arguments:
+      $enableDynamicPicExtract: '%pumukit_workflow.dynamic_pic_extract%'
+      $trackTagAllowed: '%pumukit_workflow.dynamic_pic_extract_track_tag_allowed%'
+    tags:
+      - { name: "kernel.event_listener", event: "job.success", method: "onJobSuccess" }

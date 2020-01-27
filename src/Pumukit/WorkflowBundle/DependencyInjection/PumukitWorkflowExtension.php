@@ -27,7 +27,5 @@ class PumukitWorkflowExtension extends Extension
         $container->setParameter('pumukit_workflow.dynamic_pic_extract', $config['dynamic_pic_extract']);
         $container->setParameter('pumukit_workflow.dynamic_pic_extract_track_tag_allowed', $config['dynamic_pic_extract_track_tag_allowed']);
 
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.xml');
     }
 }
