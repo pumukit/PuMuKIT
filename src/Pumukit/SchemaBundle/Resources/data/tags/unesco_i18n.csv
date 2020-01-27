@@ -1408,7 +1408,7 @@ id;cod;tree_parent_cod;metatag;display;name_es;name_gl;name_en;name_ca
 1407;U330722;U330700;0;1;"Dispositivos ultrasónicos";"Dispositivos ultrasónicos";"Ultrasonic devices";"Dispositius ultrasònics"
 1408;U330723;U330700;0;1;"Dispositivos de rayos X";"Dispositivos de raios X";"X-ray devices";"Dispositius de raigs X"
 1409;U330790;U330700;0;1;"Microelectrónica";"Microelectrónica";"Microelectronics";"Microelectrònica"
-1410;U330791;U330700;0;1;"Microelectrónica. Tecnología del silicio";"Microelectrónica. Tecnoloxía do silicio";"Microelectronics. Technology of silicon";"Microelectrònica. Tecnologia de silici
+1410;U330791;U330700;0;1;"Microelectrónica. Tecnología del silicio";"Microelectrónica. Tecnoloxía do silicio";"Microelectronics. Technology of silicon";"Microelectrònica. Tecnologia de silici"
 1411;U330792;U330700;0;1;"Microelectrónica. Tecnologías III-V y alternativas";"Microelectrónica. Tecnoloxías III-V e alternativas";"Microelectronics. Technologies III-V and alternatives";"Microelectrònica. Tecnologies III-V i alternatives"
 1412;U330793;U330700;0;1;"Microelectrónica. Diseño";"Microelectrónica. Deseño";"Microelectronics;Design";"Microelectrònica. Disseny"
 1413;U330799;U330700;0;1;"Otras";"Outras";"Other";"Altres"
@@ -1737,7 +1737,7 @@ id;cod;tree_parent_cod;metatag;display;name_es;name_gl;name_en;name_ca
 1736;U339099;U339000;0;1;"Otras";"Outras";"Other";"Altres"
 1737;U339900;U330000;0;1;"Otras especialidades tecnológicas";"Outras especialidades tecnolóxicas";"Other technological specialities";"Altres especialitats tecnològiques"
 1738;U510000;UNESCO;0;1;"Antropología";"Antropoloxía";"Anthropology";"Antropologia"
-1739;U510100;U510000;0;1;"Antropología cultural";"Antropoloxía cultural";"Cultural anthropology":"Antropologia cultural"
+1739;U510100;U510000;0;1;"Antropología cultural";"Antropoloxía cultural";"Cultural anthropology";"Antropologia cultural"
 1740;U510101;U510100;0;1;"Adorno";"Adorno";"Adornment";"Guarniment"
 1741;U510102;U510100;0;1;"Vestido";"Vestido";"Clothing";"Vestit"
 1742;U510103;U510100;0;1;"Danzas;fiestas";"Danzas;festas";"Dances;feasts";"Danses, festes"
