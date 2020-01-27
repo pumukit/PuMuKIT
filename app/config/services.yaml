@@ -3,3 +3,20 @@ services:
     autowire: true
     autoconfigure: true
     public: true
+
+  pumukit_wizard.license:
+    class: Pumukit\WizardBundle\Services\LicenseService
+    arguments:
+      $showLicense: '%pumukit_wizard.show_license%'
+      $licenseDir: '%pumukit_wizard.license_dir%'
+      $locales: '%pumukit.locales%'
+
+  pumukit_wizard.wizard:
+    class: Pumukit\WizardBundle\Services\WizardService
+    arguments:
+      $basePath: '%kernel.root_dir%/../'
+      $locales: '%pumukit.locales%'
+      $inboxDepth: '%pumukit.inbox_depth%'
+
+  pumukit_wizard.form_dispatcher:
+    class: Pumukit\WizardBundle\Services\FormEventDispatcherService
