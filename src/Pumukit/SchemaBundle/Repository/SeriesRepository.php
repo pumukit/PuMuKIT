@@ -536,7 +536,7 @@ class SeriesRepository extends DocumentRepository
      */
     public function findByTitleWithLocaleQueryBuilder($title = '', $locale = 'en', $sort = [], $limit = 0, $page = 0)
     {
-        $qb = $this->createQueryBuilder()->field('title.'.$locale)->equals(new Regex(sprintf('/%s', $title), 'i'));
+        $qb = $this->createQueryBuilder()->field('title.'.$locale)->equals(new Regex($title, 'i'));
 
         return $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
     }

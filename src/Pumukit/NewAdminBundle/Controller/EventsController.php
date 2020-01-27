@@ -187,7 +187,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
                 if (preg_match($this->regex, $data['name'])) {
                     $criteria['_id'] = new ObjectId($data['name']);
                 } else {
-                    $criteria['embeddedEvent.name.'.$request->getLocale()] = new Regex('/'.$data['name'], 'i');
+                    $criteria['embeddedEvent.name.'.$request->getLocale()] = new Regex($data['name'], 'i');
                 }
             }
             if ($data['date']['from'] && $data['date']['to']) {
@@ -764,7 +764,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
 
         $user = $this->getUser();
         $pipeline = [];
-        $pipeline[] = ['$match' => ['title.'.$request->getLocale() => new Regex('/'.$value, 'i')]];
+        $pipeline[] = ['$match' => ['title.'.$request->getLocale() => new Regex($value, 'i')]];
         $pipeline[] = ['$match' => ['type' => Series::TYPE_SERIES]];
 
         if ($user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
