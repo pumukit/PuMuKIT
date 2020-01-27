@@ -57,6 +57,23 @@ services:
     arguments:
       $defaultPic: '%pumukit_web_tv.default_pic%'
 
+  pumukit_wizard.license:
+    class: Pumukit\WizardBundle\Services\LicenseService
+    arguments:
+      $showLicense: '%pumukit_wizard.show_license%'
+      $licenseDir: '%pumukit_wizard.license_dir%'
+      $locales: '%pumukit.locales%'
+
+  pumukit_wizard.wizard:
+    class: Pumukit\WizardBundle\Services\WizardService
+    arguments:
+      $basePath: '%kernel.root_dir%/../'
+      $locales: '%pumukit.locales%'
+      $inboxDepth: '%pumukit.inbox_depth%'
+
+  pumukit_wizard.form_dispatcher:
+    class: Pumukit\WizardBundle\Services\FormEventDispatcherService
+
   pumukit_workflow.job_generator_listener:
     class: Pumukit\WorkflowBundle\EventListener\JobGeneratorListener
     tags:
