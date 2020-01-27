@@ -305,7 +305,7 @@ class UserController extends AdminController implements NewAdminControllerInterf
                     $new_criteria[$property] = $value;
                 }
             } elseif ('' !== $value) {
-                $new_criteria[$property] = new Regex('/'.$value, 'i');
+                $new_criteria[$property] = new Regex($value, 'i');
             }
         }
 

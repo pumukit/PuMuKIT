@@ -241,7 +241,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
         foreach ($criteria as $property => $value) {
             //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
             if ('' !== $value) {
-                $new_criteria[$property] = new Regex('/'.$value, 'i');
+                $new_criteria[$property] = new Regex($value, 'i');
             }
         }
 

@@ -597,9 +597,9 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $parent_path = str_replace('|', '\\|', $parent->getPath());
 
         $qb = $dm->createQueryBuilder(Tag::class);
-        $children = $qb->addOr($qb->expr()->field('title.'.$lang)->equals(new Regex('/.*'.$search_text.'.*', 'i')))
-            ->addOr($qb->expr()->field('cod')->equals(new Regex('/.*'.$search_text.'.*', 'i')))
-            ->addAnd($qb->expr()->field('path')->equals(new Regex('/'.$parent_path.'(.+[\|]+)+/')))
+        $children = $qb->addOr($qb->expr()->field('title.'.$lang)->equals(new Regex('.*'.$search_text.'.*', 'i')))
+            ->addOr($qb->expr()->field('cod')->equals(new Regex('.*'.$search_text.'.*', 'i')))
+            ->addAnd($qb->expr()->field('path')->equals(new Regex($parent_path)))
                   //->limit(20)
             ->getQuery()
             ->execute()
