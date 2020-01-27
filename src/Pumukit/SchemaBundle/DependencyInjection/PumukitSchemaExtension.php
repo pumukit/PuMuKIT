@@ -2,9 +2,7 @@
 
 namespace Pumukit\SchemaBundle\DependencyInjection;
 
-use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategy;
 
@@ -38,8 +36,5 @@ class PumukitSchemaExtension extends Extension
 
         // To use with CAS (rewrite session_id with the CAS ticket)
         $container->setParameter('security.authentication.session_strategy.strategy', SessionAuthenticationStrategy::NONE);
-
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.xml');
     }
 }
