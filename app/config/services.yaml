@@ -129,6 +129,21 @@ services:
   pumukitschema.group_dispatcher:
     class: Pumukit\SchemaBundle\Services\GroupEventDispatcherService
 
+  pumukitschema.link_dispatcher:
+    class: Pumukit\SchemaBundle\Services\LinkEventDispatcherService
+
+  pumukitschema.material_dispatcher:
+    class: Pumukit\SchemaBundle\Services\MaterialEventDispatcherService
+
+  pumukitschema.personwithrole_dispatcher:
+    class: Pumukit\SchemaBundle\Services\PersonWithRoleEventDispatcherService
+
+  pumukitschema.pic_dispatcher:
+    class: Pumukit\SchemaBundle\Services\PicEventDispatcherService
+
+  pumukitschema.track_dispatcher:
+    class: Pumukit\SchemaBundle\Services\TrackEventDispatcherService
+
   pumukitschema.link:
     class: Pumukit\SchemaBundle\Services\LinkService
 
