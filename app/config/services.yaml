@@ -4,6 +4,16 @@ services:
     autoconfigure: true
     public: true
 
+  pumukit_stats.log:
+    class: Pumukit\StatsBundle\EventListener\Log
+    tags:
+      - { name: "kernel.event_listener", event: "multimediaobject.view", method: "onMultimediaObjectViewed" }
+
+  pumukit_stats.stats:
+    class: Pumukit\StatsBundle\Services\StatsService
+    arguments:
+      $useAggregation: '%pumukit_stats.use_aggregation%'
+
   pumukit_web_tv.breadcrumbs:
     class: Pumukit\WebTVBundle\Services\BreadcrumbsService
     arguments:
