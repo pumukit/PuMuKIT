@@ -4,6 +4,7 @@ imports:
     - { resource: doctrine_extensions.yml }
     - { resource: parameters_deploy.yml, ignore_errors: true }
     - { resource: encoder.yml }
+    - { resource: services.yaml }
 
 parameters:
     locale:  "%env(PUMUKIT_LOCALE)%"
