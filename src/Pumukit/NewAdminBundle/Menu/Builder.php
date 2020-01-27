@@ -7,7 +7,6 @@ use Knp\Menu\ItemInterface as KnpItemInterface;
 use Pumukit\SchemaBundle\Security\Permission;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class Builder implements ContainerAwareInterface
 {
