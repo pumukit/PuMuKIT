@@ -20,7 +20,7 @@ class CreateMMOCommand extends ContainerAwareCommand
     private $inspectionService;
     private $factoryService;
     private $tagService;
-    private $pmk2AllLocales;
+    private $locales;
 
     private $validStatuses = [
         'published' => MultimediaObject::STATUS_PUBLISHED,
@@ -41,13 +41,13 @@ class CreateMMOCommand extends ContainerAwareCommand
 This command create a multimedia object from a multimedia file path
 
 Basic example:
-<info>php app/console import:inbox /var/www/html/pumukit2/web/storage/tmp/test.mp4</info>
+<info>php app/console import:inbox {pathToPuMuKIT}/web/storage/tmp/test.mp4</info>
 
 Complete example:
-<info>php app/console import:inbox /var/www/html/pumukit2/web/storage/tmp/test.mp4 IN_CLOSE_WRITE</info>
+<info>php app/console import:inbox {pathToPuMuKIT}/web/storage/tmp/test.mp4 IN_CLOSE_WRITE</info>
 
 Complete example with hidden status:
-<info>php app/console import:inbox /var/www/html/pumukit2/web/storage/tmp/test.mp4 IN_CLOSE_WRITE --status=hidden</info>
+<info>php app/console import:inbox {pathToPuMuKIT}/web/storage/tmp/test.mp4 IN_CLOSE_WRITE --status=hidden</info>
 
 EOT
             )
@@ -63,7 +63,7 @@ EOT
         $this->inspectionService = $this->getContainer()->get('pumukit.inspection');
         $this->factoryService = $this->getContainer()->get('pumukitschema.factory');
         $this->tagService = $this->getContainer()->get('pumukitschema.tag');
-        $this->pmk2AllLocales = array_unique(array_merge($this->getContainer()->getParameter('pumukit.locales'), ['en']));
+        $this->locales = array_unique(array_merge($this->getContainer()->getParameter('pumukit.locales'), ['en']));
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -130,14 +130,14 @@ EOT
         $series = $this->seriesRepo->findOneBy(['title.'.$locale => $seriesTitle]);
         if (!$series) {
             $seriesTitleAllLocales = [$locale => $seriesTitle];
-            foreach ($this->pmk2AllLocales as $l) {
+            foreach ($this->locales as $l) {
                 $seriesTitleAllLocales[$l] = $seriesTitle;
             }
             $series = $this->factoryService->createSeries(null, $seriesTitleAllLocales);
         }
 
         $multimediaObject = $this->factoryService->createMultimediaObject($series);
-        foreach ($this->pmk2AllLocales as $l) {
+        foreach ($this->locales as $l) {
             $multimediaObject->setTitle($title, $l);
         }
         if (null !== $status) {

@@ -1,7 +1,7 @@
 <?php
 /**
  * This test signs a bug in 'doctrine/mongodb-odm'. The bug is similar to #981.
- * Pumukit2 has the next workaround while the bug is not fixed:.
+ * Pumukit has the next workaround while the bug is not fixed:.
  *
  * +      $mm->setSeries($series);
  * -      $series->addMultimediaObject($mm);
