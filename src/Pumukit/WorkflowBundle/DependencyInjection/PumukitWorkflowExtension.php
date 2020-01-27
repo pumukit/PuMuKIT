@@ -2,9 +2,7 @@
 
 namespace Pumukit\WorkflowBundle\DependencyInjection;
 
-use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
@@ -26,6 +24,5 @@ class PumukitWorkflowExtension extends Extension
         $container->setParameter('pumukit_workflow.auto_extract_pic_percentage', $config['auto_extract_pic_percentage']);
         $container->setParameter('pumukit_workflow.dynamic_pic_extract', $config['dynamic_pic_extract']);
         $container->setParameter('pumukit_workflow.dynamic_pic_extract_track_tag_allowed', $config['dynamic_pic_extract_track_tag_allowed']);
-
     }
 }
