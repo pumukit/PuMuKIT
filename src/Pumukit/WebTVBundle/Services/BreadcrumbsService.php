@@ -36,7 +36,7 @@ class BreadcrumbsService
     public function __construct(
         RouterInterface $router,
         SessionInterface $session,
-        $translator,
+        TranslatorInterface $translator,
         $allTitle = 'All',
         $allRoute = 'pumukit_webtv_medialibrary_index',
         $homeTitle = 'home',
