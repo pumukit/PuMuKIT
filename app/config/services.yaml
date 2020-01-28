@@ -13,6 +13,33 @@ services:
     arguments:
       $genUserSalt: '%pumukitschema.gen_user_salt%'
 
+  pumukit_baseplayer.trackurl:
+    class: Pumukit\BasePlayerBundle\Services\TrackUrlService
+    arguments:
+      $secret: '%pumukitplayer.secure_secret%'
+      $secureDuration: '%pumukitplayer.secure_duration%'
+
+  pumukit_baseplayer.seriesplaylist:
+    class: Pumukit\BasePlayerBundle\Services\SeriesPlaylistService
+
+  pumukit_baseplayer.twig_extension:
+    class: Pumukit\BasePlayerBundle\Twig\BasePlayerExtension
+    arguments:
+    tags:
+      - { name: "twig.extension"}
+
+  pumukit_baseplayer.intro:
+    class: Pumukit\BasePlayerBundle\Services\IntroService
+    arguments:
+      $globalUrlIntroduction: '%pumukit.intro%'
+
+  pumukit_baseplayer.player_service:
+    class: Pumukit\BasePlayerBundle\Services\PlayerService
+
+
+  pumukit_baseplayer.useragent_parser:
+    class: Pumukit\BasePlayerBundle\Services\UserAgentParserService
+
   pumukitlive.legacyeventpic:
     class: Pumukit\SchemaBundle\Services\LegacyEventPicService
     arguments:
@@ -312,7 +339,7 @@ services:
       $trackTagAllowed: '%pumukit_workflow.dynamic_pic_extract_track_tag_allowed%'
     tags:
       - { name: "kernel.event_listener", event: "job.success", method: "onJobSuccess" }
-      
+
   security.role_hierarchy:
     class: Pumukit\SchemaBundle\Security\RoleHierarchy
     public: false
