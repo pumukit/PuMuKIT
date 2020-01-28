@@ -13,6 +13,20 @@ services:
     arguments:
       $genUserSalt: '%pumukitschema.gen_user_salt%'
 
+  Pumukit\BaseLivePlayerBundle\Twig\LiveTwigExtension:
+    arguments:
+      $eventDefaultPic: "%pumukit_new_admin.advance_live_event_create_default_pic%"
+    tags:
+      - { name: "twig.extension" }
+
+  pumukit_live.live:
+    class: Pumukit\BaseLivePlayerBundle\Services\LiveService
+
+  pumukit_base_live_player.api:
+    class: Pumukit\BaseLivePlayerBundle\Services\APIService
+    #arguments:
+      #type="service" id="doctrine_mongodb.odm.document_manager" />
+
   pumukitlive.legacyeventpic:
     class: Pumukit\SchemaBundle\Services\LegacyEventPicService
     arguments:
@@ -312,7 +326,7 @@ services:
       $trackTagAllowed: '%pumukit_workflow.dynamic_pic_extract_track_tag_allowed%'
     tags:
       - { name: "kernel.event_listener", event: "job.success", method: "onJobSuccess" }
-      
+
   security.role_hierarchy:
     class: Pumukit\SchemaBundle\Security\RoleHierarchy
     public: false
