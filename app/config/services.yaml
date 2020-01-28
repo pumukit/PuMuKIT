@@ -1,5 +1,9 @@
 parameters:
   pumukit.inspection.command: ffprobe -v quiet -print_format json -show_format -show_streams "{{file}}"
+  pumukit.warning_on_unpublished: false
+  pumukit.show_dashboard_tab: true
+  pumukit.show_mms_list_all_menu: false
+  pumukit.inbox_depth: false
 
 services:
   _defaults:
@@ -77,7 +81,7 @@ services:
 
   pumukit_baseplayer.useragent_parser:
     class: Pumukit\BasePlayerBundle\Services\UserAgentParserService
-    
+
   twig.extension.intl:
     class: Twig_Extensions_Extension_Intl
     tags:
@@ -131,6 +135,112 @@ services:
 
   pumukit_core.pagination_service:
     class: Pumukit\CoreBundle\Services\PaginationService
+
+  form.type.texti18n:
+    class: Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType
+    argument:
+      $locales: '%pumukit.locales%'
+      $translators: '%pumukit_new_admin.metadata_translators%'
+    tags:
+      - { name: "form.type", alias: "texti18n" }
+
+  form.type.texti18nadvance:
+    class: Pumukit\NewAdminBundle\Form\Type\Base\TextI18nAdvanceType
+    arguments:
+      $locales: '%pumukit.locales%'
+      $translators: '%pumukit_new_admin.metadata_translators%'
+    tags:
+      - { name: "form.type", alias: "texti18nadvance" }
+
+  form.type.textareai18n:
+    class: Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType
+    arguments:
+      $locales: '%pumukit.locales%'
+      $translators: '%pumukit_new_admin.metadata_translators%'
+    tags:
+      - { name: "form.type", alias: "textareai18n" }
+
+  form.type.customlanguage:
+    class: Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType
+    arguments:
+      $customLanguages: '%pumukit.customlanguages%'
+    tags:
+      - { name: "form.type", alias: "customlanguage" }
+
+  form.type.license:
+    class: Pumukit\NewAdminBundle\Form\Type\Base\LicenseType
+    arguments:
+      $licenses: '%pumukit_new_admin.licenses%'
+    tags:
+      - { name: "form.type", alias: "license" }
+
+  pumukitnewadmin.kernelexception.listener:
+    class: Pumukit\NewAdminBundle\EventListener\ExceptionListener
+    tags:
+      - { name: "kernel.event_listener", event: "kernel.exception", method: "onKernelException", priority: "255" }
+
+  pumukitnewadmin.twig_extension:
+    class: Pumukit\NewAdminBundle\Twig\PumukitAdminExtension
+    tags:
+      - { name: "twig.extension" }
+
+  pumukitnewadmin.series_search:
+    class: Pumukit\NewAdminBundle\Services\SeriesSearchService
+
+  pumukitnewadmin.multimedia_object_search:
+    class: Pumukit\NewAdminBundle\Services\MultimediaObjectSearchService
+
+  pumukitnewadmin.multimedia_object_sync:
+    class: Pumukit\NewAdminBundle\Services\MultimediaObjectSyncService
+
+  pumukitnewadmin.user_stats:
+    class: Pumukit\NewAdminBundle\Services\UserStatsService
+
+  pumukitnewadmin.tag_catalogue:
+    class: Pumukit\NewAdminBundle\Services\TagCatalogueService
+    arguments:
+      $configuredTag: '%pumukit_new_admin.base_catalogue_tag%'
+      $locales: '%pumukit.locales%'
+
+  pumukitnewadmin.filter:
+    class: Pumukit\NewAdminBundle\EventListener\FilterListener
+    arguments:
+      $addUserAsPerson: '%pumukitschema.enable_add_user_as_person%'
+    tags:
+      - { name: "kernel.event_listener", event: "kernel.controller" }
+
+  Pumukit\NewAdminBundle\Menu\ItemsList:
+    class: Pumukit\NewAdminBundle\Menu\ItemsList
+#    alias:
+#      - pumukitnewadmin.menu
+#      - pumukitnewadmin.mmobjlistbuttons
+#      - pumukitnewadmin.mmobjmenu
+#      - pumukitnewadmin.seriesmenu
+#
+  pumukitnewadmin.menu:
+    class: Pumukit\NewAdminBundle\Menu\ItemsList
+
+  pumukitnewadmin.mmobjlistbuttons:
+    class: Pumukit\NewAdminBundle\Menu\ItemsList
+
+  pumukitnewadmin.mmobjmenu:
+    class: Pumukit\NewAdminBundle\Menu\ItemsList
+
+  pumukitnewadmin.seriesmenu:
+    class: Pumukit\NewAdminBundle\Menu\ItemsList
+
+  pumukitnewadmin.twig_mmobjbuttons_extension:
+    class: Pumukit\NewAdminBundle\Twig\MultimediaObjectButtonsExtension
+    tags:
+      - { name: "twig.extension" }
+
+  pumukitnewadmin.catalogue_extension:
+    class: Pumukit\NewAdminBundle\Twig\CatalogueExtension
+    tags:
+      - { name: "twig.extension" }
+
+  pumukitnewadmin.translatecontroller:
+    class: Pumukit\NewAdminBundle\Controller\TranslateController
 
   pumukitlive.legacyeventpic:
     class: Pumukit\SchemaBundle\Services\LegacyEventPicService

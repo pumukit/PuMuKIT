@@ -2,10 +2,8 @@
 
 namespace Pumukit\NewAdminBundle\DependencyInjection;
 
-use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
@@ -29,9 +27,6 @@ class PumukitNewAdminExtension extends Extension
         $container->setParameter('pumukit_new_admin.show_naked_pub_tab', $config['show_naked_pub_tab']);
         $container->setParameter('pumukit_new_admin.base_catalogue_tag', $config['base_catalogue_tag']);
         $container->setParameter('pumukit_new_admin.metadata_translators', []);
-
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.xml');
 
         if ($container->hasParameter('pumukit.naked_backoffice_domain')) {
             $arguments = [
