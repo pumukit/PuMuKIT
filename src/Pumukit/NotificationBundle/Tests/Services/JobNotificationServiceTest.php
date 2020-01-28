@@ -25,7 +25,8 @@ class JobNotificationServiceTest extends WebTestCase
         static::bootKernel($options);
         $this->container = static::$kernel->getContainer();
 
-        if (!array_key_exists('PumukitNotificationBundle', $this->container->getParameter('kernel.bundles'))) {
+        if (!array_key_exists('PumukitNotificationBundle', $this->container->getParameter('kernel.bundles')) ||
+            false === $this->container->getParameter('pumukit_notification.enable')) {
             $this->markTestSkipped('NotificationBundle is not installed');
         }
 
