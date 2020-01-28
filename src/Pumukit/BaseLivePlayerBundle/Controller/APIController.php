@@ -73,7 +73,7 @@ class APIController extends Controller
 
         return [
             $criteria = $request->get('criteria') ?: [],
-            $sort = $request->get('sort') ?: [],
+            $sort = $request->get('sort') ?: '',
             $limit,
         ];
     }

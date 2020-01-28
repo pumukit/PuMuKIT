@@ -55,6 +55,18 @@ services:
   pumukit_core.pagination_service:
     class: Pumukit\CoreBundle\Services\PaginationService
 
+  Pumukit\BaseLivePlayerBundle\Twig\LiveTwigExtension:
+    arguments:
+      $eventDefaultPic: "%pumukit_new_admin.advance_live_event_create_default_pic%"
+    tags:
+      - { name: "twig.extension" }
+
+  pumukit_live.live:
+    class: Pumukit\BaseLivePlayerBundle\Services\LiveService
+
+  pumukit_base_live_player.api:
+    class: Pumukit\BaseLivePlayerBundle\Services\APIService
+
   pumukitlive.legacyeventpic:
     class: Pumukit\SchemaBundle\Services\LegacyEventPicService
     arguments:
