@@ -1,8 +1,16 @@
+parameters:
+  pumukit.inspection.command: ffprobe -v quiet -print_format json -show_format -show_streams "{{file}}"
+
 services:
   _defaults:
     autowire: true
     autoconfigure: true
     public: true
+
+  pumukit.inspection:
+    class: Pumukit\InspectionBundle\Services\InspectionFfprobeService
+    arguments:
+      $command: '%pumukit.inspection.command%'
 
   doctrine:
     alias: doctrine_mongodb
@@ -39,6 +47,18 @@ services:
 
   pumukit_baseplayer.useragent_parser:
     class: Pumukit\BasePlayerBundle\Services\UserAgentParserService
+    
+  Pumukit\BaseLivePlayerBundle\Twig\LiveTwigExtension:
+    arguments:
+      $eventDefaultPic: "%pumukit_new_admin.advance_live_event_create_default_pic%"
+    tags:
+      - { name: "twig.extension" }
+
+  pumukit_live.live:
+    class: Pumukit\BaseLivePlayerBundle\Services\LiveService
+
+  pumukit_base_live_player.api:
+    class: Pumukit\BaseLivePlayerBundle\Services\APIService
 
   pumukitlive.legacyeventpic:
     class: Pumukit\SchemaBundle\Services\LegacyEventPicService
