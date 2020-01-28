@@ -102,7 +102,7 @@ services:
 
   form.type.texti18n:
     class: Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType
-    argument:
+    arguments:
       $locales: '%pumukit.locales%'
       $translators: '%pumukit_new_admin.metadata_translators%'
     tags:
