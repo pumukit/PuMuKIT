@@ -7,9 +7,17 @@ parameters:
   pumukit.show_mms_list_all_menu: false
   pumukit.inbox_depth: false
   pumukit.customlanguages:
-    - en
     - es
+    - gl
+    - en
+    - pt
+    - fr
+    - it
+    - de
     - ca
+    - eu
+    - lse
+    - lsi
 
 services:
   _defaults:
