@@ -3,3 +3,6 @@ parameters:
     pumukit.locales:
         - en
         - es
+
+pumukit_notification:
+  enable: false
