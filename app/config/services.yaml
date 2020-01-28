@@ -1,8 +1,16 @@
+parameters:
+  pumukit.inspection.command: ffprobe -v quiet -print_format json -show_format -show_streams "{{file}}"
+
 services:
   _defaults:
     autowire: true
     autoconfigure: true
     public: true
+
+  pumukit.inspection:
+    class: Pumukit\InspectionBundle\Services\InspectionFfprobeService
+    arguments:
+      $command: '%pumukit.inspection.command%'
 
   doctrine:
     alias: doctrine_mongodb
