@@ -21,10 +21,49 @@ services:
     arguments:
       $genUserSalt: '%pumukitschema.gen_user_salt%'
 
+  pumukit_baseplayer.trackurl:
+    class: Pumukit\BasePlayerBundle\Services\TrackUrlService
+    arguments:
+      $secret: '%pumukitplayer.secure_secret%'
+      $secureDuration: '%pumukitplayer.secure_duration%'
+
+  pumukit_baseplayer.seriesplaylist:
+    class: Pumukit\BasePlayerBundle\Services\SeriesPlaylistService
+
+  pumukit_baseplayer.twig_extension:
+    class: Pumukit\BasePlayerBundle\Twig\BasePlayerExtension
+    arguments:
+    tags:
+      - { name: "twig.extension"}
+
+  pumukit_baseplayer.intro:
+    class: Pumukit\BasePlayerBundle\Services\IntroService
+    arguments:
+      $globalUrlIntroduction: '%pumukit.intro%'
+
+  pumukit_baseplayer.player_service:
+    class: Pumukit\BasePlayerBundle\Services\PlayerService
+
+
+  pumukit_baseplayer.useragent_parser:
+    class: Pumukit\BasePlayerBundle\Services\UserAgentParserService
+    
   twig.extension.intl:
     class: Twig_Extensions_Extension_Intl
     tags:
       - { name: "twig.extension"}
+
+  Pumukit\BaseLivePlayerBundle\Twig\LiveTwigExtension:
+    arguments:
+      $eventDefaultPic: "%pumukit_new_admin.advance_live_event_create_default_pic%"
+    tags:
+      - { name: "twig.extension" }
+
+  pumukit_live.live:
+    class: Pumukit\BaseLivePlayerBundle\Services\LiveService
+
+  pumukit_base_live_player.api:
+    class: Pumukit\BaseLivePlayerBundle\Services\APIService
 
   pumukitcore.ajax_session_close_listener:
     class: Pumukit\CoreBundle\EventListener\AjaxSessionCloseListener
@@ -62,18 +101,6 @@ services:
 
   pumukit_core.pagination_service:
     class: Pumukit\CoreBundle\Services\PaginationService
-
-  Pumukit\BaseLivePlayerBundle\Twig\LiveTwigExtension:
-    arguments:
-      $eventDefaultPic: "%pumukit_new_admin.advance_live_event_create_default_pic%"
-    tags:
-      - { name: "twig.extension" }
-
-  pumukit_live.live:
-    class: Pumukit\BaseLivePlayerBundle\Services\LiveService
-
-  pumukit_base_live_player.api:
-    class: Pumukit\BaseLivePlayerBundle\Services\APIService
 
   pumukitlive.legacyeventpic:
     class: Pumukit\SchemaBundle\Services\LegacyEventPicService
