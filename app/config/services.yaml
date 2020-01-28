@@ -4,6 +4,7 @@ parameters:
   pumukit.show_dashboard_tab: true
   pumukit.show_mms_list_all_menu: false
   pumukit.inbox_depth: false
+  pumukit.customlanguages: '["en", "es", "ca"]'
 
 services:
   _defaults:
