@@ -13,6 +13,48 @@ services:
     arguments:
       $genUserSalt: '%pumukitschema.gen_user_salt%'
 
+  twig.extension.intl:
+    class: Twig_Extensions_Extension_Intl
+    tags:
+      - { name: "twig.extension"}
+
+  pumukitcore.ajax_session_close_listener:
+    class: Pumukit\CoreBundle\EventListener\AjaxSessionCloseListener
+    tags:
+      - { name: "kernel.event_listener", event: "kernel.request", priority: "-255"}
+
+  pumukitcore.filter:
+    class: Pumukit\CoreBundle\EventListener\FilterListener
+    tags:
+      - { name: "kernel.event_listener", event: "kernel.controller"}
+
+  pumukitcore.twig_extension:
+    class: Pumukit\CoreBundle\Twig\CoreExtension
+    tags:
+      - { name: "twig.extension"}
+
+  pumukitcore.listener.command_exception:
+    class: Pumukit\CoreBundle\EventListener\ConsoleExceptionListener
+    tags:
+      - { name: "kernel.event_listener", event: "console.exception"}
+
+  pumukitcore.filter_service:
+    class: Pumukit\CoreBundle\Services\FilterService
+    arguments:
+      $addUserAsPerson: '%pumukitschema.enable_add_user_as_person%'
+
+  pumukitcore.import_mapping_data:
+    class: Pumukit\CoreBundle\Services\ImportMappingDataService
+
+  custom_authentication_failure_handler:
+    class: Pumukit\CoreBundle\Handler\CustomAuthenticationFailureHandler
+
+  custom_authentication_success_handler:
+    class: Pumukit\CoreBundle\Handler\CustomAuthenticationSuccessHandler
+
+  pumukit_core.pagination_service:
+    class: Pumukit\CoreBundle\Services\PaginationService
+
   pumukitlive.legacyeventpic:
     class: Pumukit\SchemaBundle\Services\LegacyEventPicService
     arguments:
@@ -312,7 +354,7 @@ services:
       $trackTagAllowed: '%pumukit_workflow.dynamic_pic_extract_track_tag_allowed%'
     tags:
       - { name: "kernel.event_listener", event: "job.success", method: "onJobSuccess" }
-      
+
   security.role_hierarchy:
     class: Pumukit\SchemaBundle\Security\RoleHierarchy
     public: false
