@@ -1,8 +1,16 @@
+parameters:
+  pumukit.inspection.command: ffprobe -v quiet -print_format json -show_format -show_streams "{{file}}"
+
 services:
   _defaults:
     autowire: true
     autoconfigure: true
     public: true
+
+  pumukit.inspection:
+    class: Pumukit\InspectionBundle\Services\InspectionFfprobeService
+    arguments:
+      $command: '%pumukit.inspection.command%'
 
   doctrine:
     alias: doctrine_mongodb
@@ -312,7 +320,7 @@ services:
       $trackTagAllowed: '%pumukit_workflow.dynamic_pic_extract_track_tag_allowed%'
     tags:
       - { name: "kernel.event_listener", event: "job.success", method: "onJobSuccess" }
-      
+
   security.role_hierarchy:
     class: Pumukit\SchemaBundle\Security\RoleHierarchy
     public: false
