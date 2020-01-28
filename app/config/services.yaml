@@ -33,30 +33,28 @@ services:
     tags:
       - { name: "twig.extension" }
 
-  pumukit_baseplayer.trackurl:
-    class: Pumukit\BasePlayerBundle\Services\TrackUrlService
+  Pumukit\BasePlayerBundle\Services\TrackUrlService:
     arguments:
       $secret: '%pumukitplayer.secure_secret%'
       $secureDuration: '%pumukitplayer.secure_duration%'
 
-  pumukit_baseplayer.seriesplaylist:
+  Pumukit\BasePlayerBundle\Services\SeriesPlaylistService:
     class: Pumukit\BasePlayerBundle\Services\SeriesPlaylistService
 
-  pumukit_baseplayer.twig_extension:
+  Pumukit\BasePlayerBundle\Twig\BasePlayerExtension:
     class: Pumukit\BasePlayerBundle\Twig\BasePlayerExtension
-    arguments:
     tags:
       - { name: "twig.extension" }
 
-  pumukit_baseplayer.intro:
+  Pumukit\BasePlayerBundle\Services\IntroService:
     class: Pumukit\BasePlayerBundle\Services\IntroService
     arguments:
       $globalUrlIntroduction: '%pumukit.intro%'
 
-  pumukit_baseplayer.player_service:
+  Pumukit\BasePlayerBundle\Services\PlayerService:
     class: Pumukit\BasePlayerBundle\Services\PlayerService
 
-  pumukit_baseplayer.useragent_parser:
+  Pumukit\BasePlayerBundle\Services\UserAgentParserService:
     class: Pumukit\BasePlayerBundle\Services\UserAgentParserService
 
   Pumukit\BaseLivePlayerBundle\Twig\LiveTwigExtension:
@@ -65,61 +63,61 @@ services:
     tags:
       - { name: "twig.extension" }
 
-  pumukit_live.live:
+  Pumukit\BaseLivePlayerBundle\Services\LiveService:
     class: Pumukit\BaseLivePlayerBundle\Services\LiveService
 
-  pumukit_base_live_player.api:
+  Pumukit\BaseLivePlayerBundle\Services\APIService:
     class: Pumukit\BaseLivePlayerBundle\Services\APIService
 
-  pumukitcore.ajax_session_close_listener:
+  Pumukit\CoreBundle\EventListener\AjaxSessionCloseListener:
     class: Pumukit\CoreBundle\EventListener\AjaxSessionCloseListener
     tags:
       - { name: "kernel.event_listener", event: "kernel.request", priority: "-255" }
 
-  pumukitcore.filter:
+  Pumukit\CoreBundle\EventListener\FilterListener:
     class: Pumukit\CoreBundle\EventListener\FilterListener
     tags:
       - { name: "kernel.event_listener", event: "kernel.controller" }
 
-  pumukitcore.twig_extension:
+  Pumukit\CoreBundle\Twig\CoreExtension:
     class: Pumukit\CoreBundle\Twig\CoreExtension
     tags:
       - { name: "twig.extension" }
 
-  pumukitcore.listener.command_exception:
+  Pumukit\CoreBundle\EventListener\ConsoleExceptionListener:
     class: Pumukit\CoreBundle\EventListener\ConsoleExceptionListener
     tags:
       - { name: "kernel.event_listener", event: "console.exception" }
 
-  pumukitcore.filter_service:
+  Pumukit\CoreBundle\Services\FilterService:
     class: Pumukit\CoreBundle\Services\FilterService
     arguments:
       $addUserAsPerson: '%pumukitschema.enable_add_user_as_person%'
 
-  pumukitcore.import_mapping_data:
+  Pumukit\CoreBundle\Services\ImportMappingDataService:
     class: Pumukit\CoreBundle\Services\ImportMappingDataService
 
-  custom_authentication_failure_handler:
+  Pumukit\CoreBundle\Handler\CustomAuthenticationFailureHandler:
     class: Pumukit\CoreBundle\Handler\CustomAuthenticationFailureHandler
 
-  custom_authentication_success_handler:
+  Pumukit\CoreBundle\Handler\CustomAuthenticationSuccessHandler:
     class: Pumukit\CoreBundle\Handler\CustomAuthenticationSuccessHandler
 
-  pumukit_core.pagination_service:
+  Pumukit\CoreBundle\Services\PaginationService:
     class: Pumukit\CoreBundle\Services\PaginationService
 
-  pumukitencoder.cpu:
+  Pumukit\EncoderBundle\Services\CpuService:
     class: Pumukit\EncoderBundle\Services\CpuService
     arguments:
       $cpus: '%pumukitencode.cpulist%'
 
-  pumukitencoder.profile:
+  Pumukit\EncoderBundle\Services\ProfileService:
     class: Pumukit\EncoderBundle\Services\ProfileService
     arguments:
       $profiles: '%pumukitencode.profilelist%'
       $default_profiles: '%pumukitencode.target_default_profiles%'
 
-  pumukitencoder.job:
+  Pumukit\EncoderBundle\Services\JobService:
     class: Pumukit\EncoderBundle\Services\JobService
     arguments:
       $binPath: '%kernel.root_dir%/../bin/'
@@ -130,10 +128,10 @@ services:
     tags:
       - { name: "monolog.logger", channel: "encoder" }
 
-  pumukitencoder.mmpropertyjob:
+  Pumukit\EncoderBundle\Services\MultimediaObjectPropertyJobService:
     class: Pumukit\EncoderBundle\Services\MultimediaObjectPropertyJobService
 
-  pumukitencoder.picextractor:
+  Pumukit\EncoderBundle\Services\PicExtractorService:
     class: Pumukit\EncoderBundle\Services\PicExtractorService
     arguments:
       $width: '%pumukitencode.thumbnail.width%'
@@ -142,27 +140,27 @@ services:
       $targetUrl: '%pumukit.uploads_url%/pic'
       $command: '%pumukit.picextractor.command%'
 
-  pumukitencoder.pic:
+  Pumukit\EncoderBundle\Services\PicService:
     class: Pumukit\EncoderBundle\Services\PicService
 
-  pumukitencoder.remove:
+  Pumukit\EncoderBundle\EventListener\RemoveListener:
     class: Pumukit\EncoderBundle\EventListener\RemoveListener
     tags:
       - { name: "kernel.event_listener", event: "track.delete", method: "postTrackRemove" }
 
-  pumukit_encoder.dynamic_pic_extractor:
+  Pumukit\EncoderBundle\Services\DynamicPicExtractorService:
     class: Pumukit\EncoderBundle\Services\DynamicPicExtractorService
     arguments:
       $targetPath: '%pumukit.uploads_dir%/pic'
       $targetUrl: '%pumukit.uploads_url%/pic'
       $command: '%pumukit.dynamicpicextractor.command%'
 
-  pumukit.inspection:
+  Pumukit\InspectionBundle\Services\InspectionFfprobeService:
     class: Pumukit\InspectionBundle\Services\InspectionFfprobeService
     arguments:
       $command: '%pumukit.inspection.command%'
 
-  form.type.texti18n:
+  Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType:
     class: Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType
     arguments:
       $locales: '%pumukit.locales%'
@@ -170,7 +168,7 @@ services:
     tags:
       - { name: "form.type", alias: "texti18n" }
 
-  form.type.texti18nadvance:
+  Pumukit\NewAdminBundle\Form\Type\Base\TextI18nAdvanceType:
     class: Pumukit\NewAdminBundle\Form\Type\Base\TextI18nAdvanceType
     arguments:
       $locales: '%pumukit.locales%'
@@ -178,7 +176,7 @@ services:
     tags:
       - { name: "form.type", alias: "texti18nadvance" }
 
-  form.type.textareai18n:
+  Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType:
     class: Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType
     arguments:
       $locales: '%pumukit.locales%'
@@ -186,49 +184,49 @@ services:
     tags:
       - { name: "form.type", alias: "textareai18n" }
 
-  form.type.customlanguage:
+  Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType:
     class: Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType
     arguments:
       $customLanguages: '%pumukit.customlanguages%'
     tags:
       - { name: "form.type", alias: "customlanguage" }
 
-  form.type.license:
+  Pumukit\NewAdminBundle\Form\Type\Base\LicenseType:
     class: Pumukit\NewAdminBundle\Form\Type\Base\LicenseType
     arguments:
       $licenses: '%pumukit_new_admin.licenses%'
     tags:
       - { name: "form.type", alias: "license" }
 
-  pumukitnewadmin.kernelexception.listener:
+  Pumukit\NewAdminBundle\EventListener\ExceptionListener:
     class: Pumukit\NewAdminBundle\EventListener\ExceptionListener
     tags:
       - { name: "kernel.event_listener", event: "kernel.exception", method: "onKernelException", priority: "255" }
 
-  pumukitnewadmin.twig_extension:
+  Pumukit\NewAdminBundle\Twig\PumukitAdminExtension:
     class: Pumukit\NewAdminBundle\Twig\PumukitAdminExtension
     tags:
       - { name: "twig.extension" }
 
-  pumukitnewadmin.series_search:
+  Pumukit\NewAdminBundle\Services\SeriesSearchService:
     class: Pumukit\NewAdminBundle\Services\SeriesSearchService
 
-  pumukitnewadmin.multimedia_object_search:
+  Pumukit\NewAdminBundle\Services\MultimediaObjectSearchService:
     class: Pumukit\NewAdminBundle\Services\MultimediaObjectSearchService
 
-  pumukitnewadmin.multimedia_object_sync:
+  Pumukit\NewAdminBundle\Services\MultimediaObjectSyncService:
     class: Pumukit\NewAdminBundle\Services\MultimediaObjectSyncService
 
-  pumukitnewadmin.user_stats:
+  Pumukit\NewAdminBundle\Services\UserStatsService:
     class: Pumukit\NewAdminBundle\Services\UserStatsService
 
-  pumukitnewadmin.tag_catalogue:
+  Pumukit\NewAdminBundle\Services\TagCatalogueService:
     class: Pumukit\NewAdminBundle\Services\TagCatalogueService
     arguments:
       $configuredTag: '%pumukit_new_admin.base_catalogue_tag%'
       $locales: '%pumukit.locales%'
 
-  pumukitnewadmin.filter:
+  Pumukit\NewAdminBundle\EventListener\FilterListener:
     class: Pumukit\NewAdminBundle\EventListener\FilterListener
     arguments:
       $addUserAsPerson: '%pumukitschema.enable_add_user_as_person%'
@@ -238,32 +236,32 @@ services:
   Pumukit\NewAdminBundle\Menu\ItemsList:
     class: Pumukit\NewAdminBundle\Menu\ItemsList
 
-  pumukitnewadmin.menu:
-    class: Pumukit\NewAdminBundle\Menu\ItemsList
+#  pumukitnewadmin.menu:
+#    class: Pumukit\NewAdminBundle\Menu\ItemsList
 
-  pumukitnewadmin.mmobjlistbuttons:
-    class: Pumukit\NewAdminBundle\Menu\ItemsList
+#  pumukitnewadmin.mmobjlistbuttons:
+#    class: Pumukit\NewAdminBundle\Menu\ItemsList
 
-  pumukitnewadmin.mmobjmenu:
-    class: Pumukit\NewAdminBundle\Menu\ItemsList
+#  pumukitnewadmin.mmobjmenu:
+#    class: Pumukit\NewAdminBundle\Menu\ItemsList
 
-  pumukitnewadmin.seriesmenu:
-    class: Pumukit\NewAdminBundle\Menu\ItemsList
+#  pumukitnewadmin.seriesmenu:
+#    class: Pumukit\NewAdminBundle\Menu\ItemsList
 
-  pumukitnewadmin.twig_mmobjbuttons_extension:
+  Pumukit\NewAdminBundle\Twig\MultimediaObjectButtonsExtension:
     class: Pumukit\NewAdminBundle\Twig\MultimediaObjectButtonsExtension
     tags:
       - { name: "twig.extension" }
 
-  pumukitnewadmin.catalogue_extension:
+  Pumukit\NewAdminBundle\Twig\CatalogueExtension:
     class: Pumukit\NewAdminBundle\Twig\CatalogueExtension
     tags:
       - { name: "twig.extension" }
 
-  pumukitnewadmin.translatecontroller:
+  Pumukit\NewAdminBundle\Controller\TranslateController:
     class: Pumukit\NewAdminBundle\Controller\TranslateController
 
-  pumukit_notification.sender:
+  Pumukit\NotificationBundle\Services\SenderService:
     class: Pumukit\NotificationBundle\Services\SenderService
     arguments:
       $mailer: '@mailer'
@@ -279,7 +277,7 @@ services:
       $platformName: '%pumukit_notification.platform_name%'
       $environment: '%kernel.environment%'
 
-  pumukit_notification.listener:
+  Pumukit\NotificationBundle\Services\JobNotificationService:
     class: Pumukit\NotificationBundle\Services\JobNotificationService
     arguments:
       $enable: '%pumukit_notification.enable%'
@@ -293,20 +291,20 @@ services:
       - { name: "kernel.event_listener", event: "job.success", method: "onJobSuccess" }
       - { name: "kernel.event_listener", event: "job.error", method: "onJobError" }
 
-  fos_user.util.password_updater:
+  Pumukit\SchemaBundle\Services\PasswordUpdater:
     class: Pumukit\SchemaBundle\Services\PasswordUpdater
     public: false
     arguments:
       $genUserSalt: '%pumukitschema.gen_user_salt%'
 
-  pumukitlive.legacyeventpic:
+  Pumukit\SchemaBundle\Services\LegacyEventPicService:
     class: Pumukit\SchemaBundle\Services\LegacyEventPicService
     arguments:
       $targetPath: '%pumukit.uploads_dir%/pic'
       $targetUrl: '%pumukit.uploads_url%/pic'
       $forceDeleteOnDisk: '%pumukit.delete_on_disk%'
 
-  pumukitschema.schema.locale:
+  Pumukit\SchemaBundle\EventListener\LocaleListener:
     class: Pumukit\SchemaBundle\EventListener\LocaleListener
     arguments:
       $defaultLocale: '%kernel.default_locale%'
@@ -315,27 +313,27 @@ services:
       - { name: "doctrine_mongodb.odm.event_listener", event: "postLoad" }
       - { name: "kernel.event_subscriber" }
 
-  pumukitschema.schema.remove:
+  Pumukit\SchemaBundle\EventListener\RemoveListener:
     class: Pumukit\SchemaBundle\EventListener\RemoveListener
     tags:
       - { name: "doctrine_mongodb.odm.event_listener", event: "preRemove" }
 
-  pumukitschema.schema.permissionprofile:
+  Pumukit\SchemaBundle\EventListener\PermissionProfileListener:
     class: Pumukit\SchemaBundle\EventListener\PermissionProfileListener
     tags:
       - { name: "kernel.event_listener", event: "permissionprofile.update", method: "postUpdate" }
 
-  pumukit_schema.role:
+  Pumukit\SchemaBundle\Services\RoleService:
     class: Pumukit\SchemaBundle\Services\RoleService
     arguments:
       $locales: '%pumukit.locales%'
 
-  pumukitschema.schema.series:
+  Pumukit\SchemaBundle\EventListener\SeriesListener:
     class: Pumukit\SchemaBundle\EventListener\SeriesListener
     tags:
       - { name: "kernel.event_listener", event: "series.update", method: "postUpdate" }
 
-  pumukitschema.schema.multimediaobject:
+  Pumukit\SchemaBundle\EventListener\MultimediaObjectListener:
     class: Pumukit\SchemaBundle\EventListener\MultimediaObjectListener
     tags:
       - { name: "kernel.event_listener", event: "multimediaobject.update", method: "postUpdate" }
@@ -347,7 +345,7 @@ services:
       - { name: "kernel.event_listener", event: "personwithrole.update", method: "postUpdate" }
       - { name: "kernel.event_listener", event: "personwithrole.delete", method: "postUpdate" }
 
-  pumukitschema.factory:
+  Pumukit\SchemaBundle\Services\FactoryService:
     class: Pumukit\SchemaBundle\Services\FactoryService
     arguments:
       $addUserAsPerson: '%pumukitschema.enable_add_user_as_person%'
@@ -355,7 +353,7 @@ services:
       $defaultCopyright: '@=parameter("pumukitschema.default_copyright") ? parameter("pumukitschema.default_copyright") : parameter("pumukit.info")["title"]'
       $defaultLicense: '%pumukitschema.default_license%'
 
-  pumukitschema.seriespic:
+  Pumukit\SchemaBundle\Services\SeriesPicService:
     class: Pumukit\SchemaBundle\Services\SeriesPicService
     arguments:
       $locales: '%pumukit.locales%'
@@ -363,113 +361,113 @@ services:
       $targetUrl: '%pumukit.uploads_url%/pic'
       $forceDeleteOnDisk: '%pumukit.delete_on_disk%'
 
-  pumukitschema.mmspic:
+  Pumukit\SchemaBundle\Services\MultimediaObjectPicService:
     class: Pumukit\SchemaBundle\Services\MultimediaObjectPicService
     arguments:
       $targetPath: '%pumukit.uploads_dir%/pic/'
       $targetUrl: '%pumukit.uploads_url%/pic'
       $forceDeleteOnDisk: '%pumukit.delete_on_disk%'
 
-  pumukitschema.mmsduration:
+  Pumukit\SchemaBundle\Services\MultimediaObjectDurationService:
     class: Pumukit\SchemaBundle\Services\MultimediaObjectDurationService
 
-  pumukitschema.multimedia_object:
+  Pumukit\SchemaBundle\Services\MultimediaObjectService:
     class: Pumukit\SchemaBundle\Services\MultimediaObjectService
 
-  pumukitschema.multimedia_object_voter:
+  Pumukit\SchemaBundle\Services\MultimediaObjectVoter:
     class: Pumukit\SchemaBundle\Services\MultimediaObjectVoter
     tags:
       - { name: "security.voter" }
 
-  pumukitschema.sorted_multimedia_object:
+  Pumukit\SchemaBundle\Services\SortedMultimediaObjectsService:
     class: Pumukit\SchemaBundle\Services\SortedMultimediaObjectsService
 
-  pumukitschema.multimedia_object_views:
+  Pumukit\SchemaBundle\EventListener\MultimediaObjectViews:
     class: Pumukit\SchemaBundle\EventListener\MultimediaObjectViews
     tags:
       - { name: "kernel.event_listener", event: "multimediaobject.view", method: "onMultimediaObjectViewed" }
 
-  pumukitschema.tag:
+  Pumukit\SchemaBundle\Services\TagService:
     class: Pumukit\SchemaBundle\Services\TagService
 
-  pumukitschema.series:
+  Pumukit\SchemaBundle\Services\SeriesService:
     class: Pumukit\SchemaBundle\Services\SeriesService
 
-  pumukitschema.announce:
+  Pumukit\SchemaBundle\Services\AnnounceService:
     class: Pumukit\SchemaBundle\Services\AnnounceService
 
-  pumukitschema.permissionprofile_dispatcher:
+  Pumukit\SchemaBundle\Services\PermissionProfileEventDispatcherService:
     class: Pumukit\SchemaBundle\Services\PermissionProfileEventDispatcherService
 
-  pumukitschema.permissionprofile:
+  Pumukit\SchemaBundle\Services\PermissionProfileService:
     class: Pumukit\SchemaBundle\Services\PermissionProfileService
 
-  pumukitschema.permission:
+  Pumukit\SchemaBundle\Services\PermissionService:
     class: Pumukit\SchemaBundle\Services\PermissionService
     arguments:
       $externalPermissions: '%pumukitschema.external_permissions%'
 
-  pumukitschema.multimediaobject_dispatcher:
+  Pumukit\SchemaBundle\Services\MultimediaObjectEventDispatcherService:
     class: Pumukit\SchemaBundle\Services\MultimediaObjectEventDispatcherService
 
-  pumukitschema.user_dispatcher:
+  Pumukit\SchemaBundle\Services\UserEventDispatcherService:
     class: Pumukit\SchemaBundle\Services\UserEventDispatcherService
 
-  pumukitschema.series_dispatcher:
+  Pumukit\SchemaBundle\Services\SeriesEventDispatcherService:
     class: Pumukit\SchemaBundle\Services\SeriesEventDispatcherService
 
-  pumukitschema.group_dispatcher:
+  Pumukit\SchemaBundle\Services\GroupEventDispatcherService:
     class: Pumukit\SchemaBundle\Services\GroupEventDispatcherService
 
-  pumukitschema.link_dispatcher:
+  Pumukit\SchemaBundle\Services\LinkEventDispatcherService:
     class: Pumukit\SchemaBundle\Services\LinkEventDispatcherService
 
-  pumukitschema.material_dispatcher:
+  Pumukit\SchemaBundle\Services\MaterialEventDispatcherService:
     class: Pumukit\SchemaBundle\Services\MaterialEventDispatcherService
 
-  pumukitschema.personwithrole_dispatcher:
+  Pumukit\SchemaBundle\Services\PersonWithRoleEventDispatcherService:
     class: Pumukit\SchemaBundle\Services\PersonWithRoleEventDispatcherService
 
-  pumukitschema.pic_dispatcher:
+  Pumukit\SchemaBundle\Services\PicEventDispatcherService:
     class: Pumukit\SchemaBundle\Services\PicEventDispatcherService
 
-  pumukitschema.track_dispatcher:
+  Pumukit\SchemaBundle\Services\TrackEventDispatcherService:
     class: Pumukit\SchemaBundle\Services\TrackEventDispatcherService
 
-  pumukitschema.link:
+  Pumukit\SchemaBundle\Services\LinkService:
     class: Pumukit\SchemaBundle\Services\LinkService
 
-  pumukitschema.material:
+  Pumukit\SchemaBundle\Services\MaterialService:
     class: Pumukit\SchemaBundle\Services\MaterialService
     arguments:
       $targetPath: '%pumukit.uploads_dir%/material'
       $targetUrl: '%pumukit.uploads_url%/material'
       $forceDeleteOnDisk: '%pumukit.delete_on_disk%'
 
-  pumukitschema.caption:
+  Pumukit\SchemaBundle\Services\CaptionService:
     class: Pumukit\SchemaBundle\Services\CaptionService
 
-  pumukitschema.track:
+  Pumukit\SchemaBundle\Services\TrackService:
     class: Pumukit\SchemaBundle\Services\TrackService
     arguments:
       $tmpPath: '%pumukit.tmp%'
       $forceDeleteOnDisk: '%pumukit.delete_on_disk%'
 
-  pumukitschema.person:
+  Pumukit\SchemaBundle\Services\PersonService:
     class: Pumukit\SchemaBundle\Services\PersonService
     arguments:
       $addUserAsPerson: '%pumukitschema.enable_add_user_as_person%'
       $personalScopeRoleCode: '%pumukitschema.personal_scope_role_code%'
 
-  pumukitschema.user:
+  Pumukit\SchemaBundle\Services\UserService:
     class: Pumukit\SchemaBundle\Services\UserService
     arguments:
       $personalScopeDeleteOwners: '%pumukitschema.personal_scope_delete_owners%'
 
-  pumukitschema.group:
+  Pumukit\SchemaBundle\Services\GroupService:
     class: Pumukit\SchemaBundle\Services\GroupService
 
-  pumukitschema.pic:
+  Pumukit\SchemaBundle\Services\PicService:
     class: Pumukit\SchemaBundle\Services\PicService
     arguments:
       $webDir: '%kernel.root_dir%/web'
@@ -479,35 +477,35 @@ services:
       $defaultAudioHDPic: '%pumukitschema.default_audio_hd_pic%'
       $defaultAudioSDPic: '%pumukitschema.default_audio_sd_pic%'
 
-  pumukitschema.stats:
+  Pumukit\SchemaBundle\Services\StatsService:
     class: Pumukit\SchemaBundle\Services\StatsService
 
-  pumukitschema.text_index:
+  Pumukit\SchemaBundle\Services\TextIndexService:
     class: Pumukit\SchemaBundle\Services\TextIndexService
 
-  pumukitschema.embeddedbroadcast:
+  Pumukit\SchemaBundle\Services\EmbeddedBroadcastService:
     class: Pumukit\SchemaBundle\Services\EmbeddedBroadcastService
 
-  pumukitschema.special_translation:
+  Pumukit\SchemaBundle\Services\SpecialTranslationService:
     class: Pumukit\SchemaBundle\Services\SpecialTranslationService
 
-  pumukitschema.eventsession:
+  Pumukit\SchemaBundle\Services\EmbeddedEventSessionService:
     class: Pumukit\SchemaBundle\Services\EmbeddedEventSessionService
     arguments:
       $defaultPoster: '%pumukitschema.event_default_poster%'
       $defaultThumbnail: '%pumukit_new_admin.advance_live_event_create_default_pic%'
 
-  pumukit_stats.log:
+  Pumukit\StatsBundle\EventListener\Log:
     class: Pumukit\StatsBundle\EventListener\Log
     tags:
       - { name: "kernel.event_listener", event: "multimediaobject.view", method: "onMultimediaObjectViewed" }
 
-  pumukit_stats.stats:
+  Pumukit\StatsBundle\Services\StatsService:
     class: Pumukit\StatsBundle\Services\StatsService
     arguments:
       $useAggregation: '%pumukit_stats.use_aggregation%'
 
-  pumukit_web_tv.breadcrumbs:
+  Pumukit\WebTVBundle\Services\BreadcrumbsService:
     class: Pumukit\WebTVBundle\Services\BreadcrumbsService
     arguments:
       $allTitle: '%pumukit_web_tv.breadcrumbs_all_title%'
@@ -515,75 +513,75 @@ services:
       $homeTitle: '%breadcrumbs_home_title%'
       $parentWeb: '%pumukit_web_tv.breadcrumbs_parentweb%'
 
-  pumukit_web_tv.channels:
+  Pumukit\WebTVBundle\Services\ChannelService:
     class: Pumukit\WebTVBundle\Services\ChannelService
 
-  pumukit_web_tv.categories_service:
+  Pumukit\WebTVBundle\Services\CategoriesService:
     class: Pumukit\WebTVBundle\Services\CategoriesService
     arguments:
       $parentCod: '%categories_tag_cod%'
       $listGeneralParam: '%categories.list_general_tags%'
 
-  pumukit_web_tv.chapter_marks_service:
+  Pumukit\WebTVBundle\Services\ChapterMarkService:
     class: Pumukit\WebTVBundle\Services\ChapterMarkService
 
-  pumukit_web_tv.link_service:
+  Pumukit\WebTVBundle\Services\LinkService:
     class: Pumukit\WebTVBundle\Services\LinkService
     arguments:
       $linkTagToSearch: '%pumukit_web_tv.linktagtosearch%'
 
-  pumukit_web_tv.list_service:
+  Pumukit\WebTVBundle\Services\ListService:
     class: Pumukit\WebTVBundle\Services\ListService
     arguments:
       $advanceLiveEvents: '%pumukit_new_admin.advance_live_event%'
       $wallTag: '%wall_block.wall_tag%'
 
-  pumukit_web_tv.menu_service:
+  Pumukit\WebTVBundle\Services\MenuService:
     class: Pumukit\WebTVBundle\Services\MenuService
     arguments:
       $advanceEvents: '%pumukit_new_admin.advance_live_event%'
 
-  pumukit_web_tv.search_service:
+  Pumukit\WebTVBundle\Services\SearchService:
     class: Pumukit\WebTVBundle\Services\SearchService
     arguments:
       $parentTagCod: '%search.parent_tag.cod%'
       $parentTagCodOptional: '%search.parent_tag_2.cod%'
 
-  pumukit_web_tv.twig_mongo_date_extension:
+  Pumukit\WebTVBundle\Twig\MongoDateExtension:
     class: Pumukit\WebTVBundle\Twig\MongoDateExtension
 
-  pumukit_web_tv.twig_bootstrap_extension:
+  Pumukit\WebTVBundle\Twig\BootstrapExtension:
     class: Pumukit\WebTVBundle\Twig\BootstrapExtension
 
-  pumukit_web_tv.twig_pumukit_extension:
+  Pumukit\WebTVBundle\Twig\PumukitExtension:
     class: Pumukit\WebTVBundle\Twig\PumukitExtension
     arguments:
       $defaultPic: '%pumukit_web_tv.default_pic%'
 
-  pumukit_wizard.license:
+  Pumukit\WizardBundle\Services\LicenseService:
     class: Pumukit\WizardBundle\Services\LicenseService
     arguments:
       $showLicense: '%pumukit_wizard.show_license%'
       $licenseDir: '%pumukit_wizard.license_dir%'
       $locales: '%pumukit.locales%'
 
-  pumukit_wizard.wizard:
+  Pumukit\WizardBundle\Services\WizardService:
     class: Pumukit\WizardBundle\Services\WizardService
     arguments:
       $basePath: '%kernel.root_dir%/../'
       $locales: '%pumukit.locales%'
       $inboxDepth: '%pumukit.inbox_depth%'
 
-  pumukit_wizard.form_dispatcher:
+  Pumukit\WizardBundle\Services\FormEventDispatcherService:
     class: Pumukit\WizardBundle\Services\FormEventDispatcherService
 
-  pumukit_workflow.job_generator_listener:
+  Pumukit\WorkflowBundle\EventListener\JobGeneratorListener:
     class: Pumukit\WorkflowBundle\EventListener\JobGeneratorListener
     tags:
       - { name: "kernel.event_listener", event: "job.success", method: "onJobSuccess" }
       - { name: "kernel.event_listener", event: "multimediaobject.update", method: "onMultimediaobjectUpdate" }
 
-  pumukit_workflow.pic_extractor_listener:
+  Pumukit\WorkflowBundle\EventListener\PicExtractorListener:
     class: Pumukit\WorkflowBundle\EventListener\PicExtractorListener
     arguments:
       $autoExtractPic: '%pumukit_workflow.auto_extract_pic%'
@@ -591,7 +589,7 @@ services:
     tags:
       - { name: "kernel.event_listener", event: "job.success", method: "onJobSuccess" }
 
-  pumukit_workflow.dynamic_pic_extractor_listener:
+  Pumukit\WorkflowBundle\EventListener\DynamicPicExtractorListener:
     class: Pumukit\WorkflowBundle\EventListener\DynamicPicExtractorListener
     arguments:
       $enableDynamicPicExtract: '%pumukit_workflow.dynamic_pic_extract%'
@@ -599,7 +597,7 @@ services:
     tags:
       - { name: "kernel.event_listener", event: "job.success", method: "onJobSuccess" }
 
-  security.role_hierarchy:
+  Pumukit\SchemaBundle\Security\RoleHierarchy:
     class: Pumukit\SchemaBundle\Security\RoleHierarchy
     public: false
     arguments:
