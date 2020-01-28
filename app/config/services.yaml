@@ -1,5 +1,10 @@
 parameters:
   pumukit.inspection.command: ffprobe -v quiet -print_format json -show_format -show_streams "{{file}}"
+  pumukit.warning_on_unpublished: false
+  pumukit.show_dashboard_tab: true
+  pumukit.show_mms_list_all_menu: false
+  pumukit.inbox_depth: false
+  pumukit.customlanguages: '["en", "es", "ca"]'
 
 services:
   _defaults:
@@ -7,49 +12,13 @@ services:
     autoconfigure: true
     public: true
 
-  pumukit_notification.sender:
-    class: Pumukit\NotificationBundle\Services\SenderService
-    arguments:
-      $mailer: '@mailer'
-      $enable: '%pumukit_notification.enable%'
-      $senderEmail: '%pumukit_notification.sender_email%'
-      $senderName: '%pumukit_notification.sender_name%'
-      $enableMultiLang: '%pumukit_notification.enable_multi_lang%'
-      $locales: '%pumukit.locales%'
-      $subjectSuccessTrans: '%pumukit_notification.subject_success_trans%'
-      $subjectFailsTrans: '%pumukit_notification.subject_fails_trans%'
-      $adminEmail: '%pumukit_notification.admin_email%'
-      $notificateErrorsToAdmin: '%pumukit_notification.notificate_errors_to_admin%'
-      $platformName: '%pumukit_notification.platform_name%'
-      $environment: '%kernel.environment%'
-
-  pumukit_notification.listener:
-    class: Pumukit\NotificationBundle\Services\JobNotificationService
-    arguments:
-      $enable: '%pumukit_notification.enable%'
-      $environment: '%kernel.environment%'
-      $template: '%pumukit_notification.template%'
-      $subjectSuccess: '%pumukit_notification.subject_success%'
-      $subjectFails: '%pumukit_notification.subject_fails%'
-      $subjectSuccessTrans: '%pumukit_notification.subject_success_trans%'
-      $subjectFailsTrans: '%pumukit_notification.subject_fails_trans%'
-    tags:
-      - { name: "kernel.event_listener", event: "job.success", method: "onJobSuccess"}
-      - { name: "kernel.event_listener", event: "job.error", method: "onJobError" }
-
-  pumukit.inspection:
-    class: Pumukit\InspectionBundle\Services\InspectionFfprobeService
-    arguments:
-      $command: '%pumukit.inspection.command%'
-
   doctrine:
     alias: doctrine_mongodb
 
-  fos_user.util.password_updater:
-    class: Pumukit\SchemaBundle\Services\PasswordUpdater
-    public: false
-    arguments:
-      $genUserSalt: '%pumukitschema.gen_user_salt%'
+  twig.extension.intl:
+    class: Twig_Extensions_Extension_Intl
+    tags:
+      - { name: "twig.extension"}
 
   pumukit_baseplayer.trackurl:
     class: Pumukit\BasePlayerBundle\Services\TrackUrlService
@@ -74,14 +43,8 @@ services:
   pumukit_baseplayer.player_service:
     class: Pumukit\BasePlayerBundle\Services\PlayerService
 
-
   pumukit_baseplayer.useragent_parser:
     class: Pumukit\BasePlayerBundle\Services\UserAgentParserService
-    
-  twig.extension.intl:
-    class: Twig_Extensions_Extension_Intl
-    tags:
-      - { name: "twig.extension"}
 
   Pumukit\BaseLivePlayerBundle\Twig\LiveTwigExtension:
     arguments:
@@ -131,6 +94,148 @@ services:
 
   pumukit_core.pagination_service:
     class: Pumukit\CoreBundle\Services\PaginationService
+
+  pumukit.inspection:
+    class: Pumukit\InspectionBundle\Services\InspectionFfprobeService
+    arguments:
+      $command: '%pumukit.inspection.command%'
+
+  form.type.texti18n:
+    class: Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType
+    arguments:
+      $locales: '%pumukit.locales%'
+      $translators: '%pumukit_new_admin.metadata_translators%'
+    tags:
+      - { name: "form.type", alias: "texti18n" }
+
+  form.type.texti18nadvance:
+    class: Pumukit\NewAdminBundle\Form\Type\Base\TextI18nAdvanceType
+    arguments:
+      $locales: '%pumukit.locales%'
+      $translators: '%pumukit_new_admin.metadata_translators%'
+    tags:
+      - { name: "form.type", alias: "texti18nadvance" }
+
+  form.type.textareai18n:
+    class: Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType
+    arguments:
+      $locales: '%pumukit.locales%'
+      $translators: '%pumukit_new_admin.metadata_translators%'
+    tags:
+      - { name: "form.type", alias: "textareai18n" }
+
+  form.type.customlanguage:
+    class: Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType
+    arguments:
+      $customLanguages: '%pumukit.customlanguages%'
+    tags:
+      - { name: "form.type", alias: "customlanguage" }
+
+  form.type.license:
+    class: Pumukit\NewAdminBundle\Form\Type\Base\LicenseType
+    arguments:
+      $licenses: '%pumukit_new_admin.licenses%'
+    tags:
+      - { name: "form.type", alias: "license" }
+
+  pumukitnewadmin.kernelexception.listener:
+    class: Pumukit\NewAdminBundle\EventListener\ExceptionListener
+    tags:
+      - { name: "kernel.event_listener", event: "kernel.exception", method: "onKernelException", priority: "255" }
+
+  pumukitnewadmin.twig_extension:
+    class: Pumukit\NewAdminBundle\Twig\PumukitAdminExtension
+    tags:
+      - { name: "twig.extension" }
+
+  pumukitnewadmin.series_search:
+    class: Pumukit\NewAdminBundle\Services\SeriesSearchService
+
+  pumukitnewadmin.multimedia_object_search:
+    class: Pumukit\NewAdminBundle\Services\MultimediaObjectSearchService
+
+  pumukitnewadmin.multimedia_object_sync:
+    class: Pumukit\NewAdminBundle\Services\MultimediaObjectSyncService
+
+  pumukitnewadmin.user_stats:
+    class: Pumukit\NewAdminBundle\Services\UserStatsService
+
+  pumukitnewadmin.tag_catalogue:
+    class: Pumukit\NewAdminBundle\Services\TagCatalogueService
+    arguments:
+      $configuredTag: '%pumukit_new_admin.base_catalogue_tag%'
+      $locales: '%pumukit.locales%'
+
+  pumukitnewadmin.filter:
+    class: Pumukit\NewAdminBundle\EventListener\FilterListener
+    arguments:
+      $addUserAsPerson: '%pumukitschema.enable_add_user_as_person%'
+    tags:
+      - { name: "kernel.event_listener", event: "kernel.controller" }
+
+  Pumukit\NewAdminBundle\Menu\ItemsList:
+    class: Pumukit\NewAdminBundle\Menu\ItemsList
+
+  pumukitnewadmin.menu:
+    class: Pumukit\NewAdminBundle\Menu\ItemsList
+
+  pumukitnewadmin.mmobjlistbuttons:
+    class: Pumukit\NewAdminBundle\Menu\ItemsList
+
+  pumukitnewadmin.mmobjmenu:
+    class: Pumukit\NewAdminBundle\Menu\ItemsList
+
+  pumukitnewadmin.seriesmenu:
+    class: Pumukit\NewAdminBundle\Menu\ItemsList
+
+  pumukitnewadmin.twig_mmobjbuttons_extension:
+    class: Pumukit\NewAdminBundle\Twig\MultimediaObjectButtonsExtension
+    tags:
+      - { name: "twig.extension" }
+
+  pumukitnewadmin.catalogue_extension:
+    class: Pumukit\NewAdminBundle\Twig\CatalogueExtension
+    tags:
+      - { name: "twig.extension" }
+
+  pumukitnewadmin.translatecontroller:
+    class: Pumukit\NewAdminBundle\Controller\TranslateController
+
+  pumukit_notification.sender:
+    class: Pumukit\NotificationBundle\Services\SenderService
+    arguments:
+      $mailer: '@mailer'
+      $enable: '%pumukit_notification.enable%'
+      $senderEmail: '%pumukit_notification.sender_email%'
+      $senderName: '%pumukit_notification.sender_name%'
+      $enableMultiLang: '%pumukit_notification.enable_multi_lang%'
+      $locales: '%pumukit.locales%'
+      $subjectSuccessTrans: '%pumukit_notification.subject_success_trans%'
+      $subjectFailsTrans: '%pumukit_notification.subject_fails_trans%'
+      $adminEmail: '%pumukit_notification.admin_email%'
+      $notificateErrorsToAdmin: '%pumukit_notification.notificate_errors_to_admin%'
+      $platformName: '%pumukit_notification.platform_name%'
+      $environment: '%kernel.environment%'
+
+  pumukit_notification.listener:
+    class: Pumukit\NotificationBundle\Services\JobNotificationService
+    arguments:
+      $enable: '%pumukit_notification.enable%'
+      $environment: '%kernel.environment%'
+      $template: '%pumukit_notification.template%'
+      $subjectSuccess: '%pumukit_notification.subject_success%'
+      $subjectFails: '%pumukit_notification.subject_fails%'
+      $subjectSuccessTrans: '%pumukit_notification.subject_success_trans%'
+      $subjectFailsTrans: '%pumukit_notification.subject_fails_trans%'
+    tags:
+      - { name: "kernel.event_listener", event: "job.success", method: "onJobSuccess"}
+      - { name: "kernel.event_listener", event: "job.error", method: "onJobError" }
+
+  fos_user.util.password_updater:
+    class: Pumukit\SchemaBundle\Services\PasswordUpdater
+    public: false
+    arguments:
+      $genUserSalt: '%pumukitschema.gen_user_salt%'
 
   pumukitlive.legacyeventpic:
     class: Pumukit\SchemaBundle\Services\LegacyEventPicService
