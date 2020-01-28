@@ -1,10 +1,15 @@
 parameters:
   pumukit.inspection.command: ffprobe -v quiet -print_format json -show_format -show_streams "{{file}}"
+  pumukit.picextractor.command: ffmpeg -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"
+  pumukit.dynamicpicextractor.command: ffmpeg -i "{{input}}" -ss 00:00:05 -t 3 -quality 80 -r 10 -s 768x432 "{{output}}"
   pumukit.warning_on_unpublished: false
   pumukit.show_dashboard_tab: true
   pumukit.show_mms_list_all_menu: false
   pumukit.inbox_depth: false
-  pumukit.customlanguages: '["en", "es", "ca"]'
+  pumukit.customlanguages:
+    - en
+    - es
+    - ca
 
 services:
   _defaults:
@@ -18,7 +23,7 @@ services:
   twig.extension.intl:
     class: Twig_Extensions_Extension_Intl
     tags:
-      - { name: "twig.extension"}
+      - { name: "twig.extension" }
 
   pumukit_baseplayer.trackurl:
     class: Pumukit\BasePlayerBundle\Services\TrackUrlService
@@ -33,7 +38,7 @@ services:
     class: Pumukit\BasePlayerBundle\Twig\BasePlayerExtension
     arguments:
     tags:
-      - { name: "twig.extension"}
+      - { name: "twig.extension" }
 
   pumukit_baseplayer.intro:
     class: Pumukit\BasePlayerBundle\Services\IntroService
@@ -61,22 +66,22 @@ services:
   pumukitcore.ajax_session_close_listener:
     class: Pumukit\CoreBundle\EventListener\AjaxSessionCloseListener
     tags:
-      - { name: "kernel.event_listener", event: "kernel.request", priority: "-255"}
+      - { name: "kernel.event_listener", event: "kernel.request", priority: "-255" }
 
   pumukitcore.filter:
     class: Pumukit\CoreBundle\EventListener\FilterListener
     tags:
-      - { name: "kernel.event_listener", event: "kernel.controller"}
+      - { name: "kernel.event_listener", event: "kernel.controller" }
 
   pumukitcore.twig_extension:
     class: Pumukit\CoreBundle\Twig\CoreExtension
     tags:
-      - { name: "twig.extension"}
+      - { name: "twig.extension" }
 
   pumukitcore.listener.command_exception:
     class: Pumukit\CoreBundle\EventListener\ConsoleExceptionListener
     tags:
-      - { name: "kernel.event_listener", event: "console.exception"}
+      - { name: "kernel.event_listener", event: "console.exception" }
 
   pumukitcore.filter_service:
     class: Pumukit\CoreBundle\Services\FilterService
@@ -94,6 +99,55 @@ services:
 
   pumukit_core.pagination_service:
     class: Pumukit\CoreBundle\Services\PaginationService
+
+  pumukitencoder.cpu:
+    class: Pumukit\EncoderBundle\Services\CpuService
+    arguments:
+      $cpus: '%pumukitencode.cpulist%'
+
+  pumukitencoder.profile:
+    class: Pumukit\EncoderBundle\Services\ProfileService
+    arguments:
+      $profiles: '%pumukitencode.profilelist%'
+      $default_profiles: '%pumukitencode.target_default_profiles%'
+
+  pumukitencoder.job:
+    class: Pumukit\EncoderBundle\Services\JobService
+    arguments:
+      $binPath: '%kernel.root_dir%/../bin/'
+      $environment: '%kernel.environment%'
+      $tmpPath: '%pumukit.tmp%'
+      $inboxPath: '%pumukit.inbox%'
+      $deleteInboxFiles: '%pumukitencode.delete_inbox_files%'
+    tags:
+      - { name: "monolog.logger", channel: "encoder" }
+
+  pumukitencoder.mmpropertyjob:
+    class: Pumukit\EncoderBundle\Services\MultimediaObjectPropertyJobService
+
+  pumukitencoder.picextractor:
+    class: Pumukit\EncoderBundle\Services\PicExtractorService
+    arguments:
+      $width: '%pumukitencode.thumbnail.width%'
+      $height: '%pumukitencode.thumbnail.height%'
+      $targetPath: '%pumukit.uploads_dir%/pic'
+      $targetUrl: '%pumukit.uploads_url%/pic'
+      $command: '%pumukit.picextractor.command%'
+
+  pumukitencoder.pic:
+    class: Pumukit\EncoderBundle\Services\PicService
+
+  pumukitencoder.remove:
+    class: Pumukit\EncoderBundle\EventListener\RemoveListener
+    tags:
+      - { name: "kernel.event_listener", event: "track.delete", method: "postTrackRemove" }
+
+  pumukit_encoder.dynamic_pic_extractor:
+    class: Pumukit\EncoderBundle\Services\DynamicPicExtractorService
+    arguments:
+      $targetPath: '%pumukit.uploads_dir%/pic'
+      $targetUrl: '%pumukit.uploads_url%/pic'
+      $command: '%pumukit.dynamicpicextractor.command%'
 
   pumukit.inspection:
     class: Pumukit\InspectionBundle\Services\InspectionFfprobeService
@@ -228,7 +282,7 @@ services:
       $subjectSuccessTrans: '%pumukit_notification.subject_success_trans%'
       $subjectFailsTrans: '%pumukit_notification.subject_fails_trans%'
     tags:
-      - { name: "kernel.event_listener", event: "job.success", method: "onJobSuccess"}
+      - { name: "kernel.event_listener", event: "job.success", method: "onJobSuccess" }
       - { name: "kernel.event_listener", event: "job.error", method: "onJobError" }
 
   fos_user.util.password_updater:
