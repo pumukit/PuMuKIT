@@ -2,9 +2,7 @@
 
 namespace Pumukit\BasePlayerBundle\DependencyInjection;
 
-use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
@@ -25,8 +23,5 @@ class PumukitBasePlayerExtension extends Extension
         $container->setParameter('pumukitplayer.secure_secret', $config['secure_secret']);
         $container->setParameter('pumukitplayer.secure_duration', $config['secure_duration']);
         $container->setParameter('pumukitplayer.when_dispatch_view_event', $config['when_dispatch_view_event']);
-
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.xml');
     }
 }
