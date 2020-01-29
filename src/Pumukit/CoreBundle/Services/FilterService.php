@@ -53,10 +53,10 @@ class FilterService
     /**
      * FilterService constructor.
      *
-     * @param DocumentManager $dm
-     * @param PersonService   $personService
-     * @param TokenStorageInterface    $securityContext
-     * @param bool            $addUserAsPerson
+     * @param DocumentManager       $dm
+     * @param PersonService         $personService
+     * @param TokenStorageInterface $securityContext
+     * @param bool                  $addUserAsPerson
      */
     public function __construct(DocumentManager $dm, PersonService $personService, TokenStorageInterface $securityContext, $addUserAsPerson = true)
     {
