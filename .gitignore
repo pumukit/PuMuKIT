@@ -1,14 +1,11 @@
-/src/Pumukit/ExampleDataBundle/Resources/public/images
-/src/Pumukit/ExampleDataBundle/Resources/public/videos
-/web/bundles/
-/web/uploads/material/*
-!/web/uploads/material/.gitignore
-/web/uploads/pic/*
-!/web/uploads/pic/.gitignore
-/web/storage/downloads/*
-!/web/storage/downloads/.gitignore
-/web/storage/masters/*
-!/web/storage/masters/.gitignore
+/public/uploads/material/*
+!/public/uploads/material/.gitignore
+/public/uploads/pic/*
+!/public/uploads/pic/.gitignore
+/public/storage/downloads/*
+!/public/storage/downloads/.gitignore
+/public/storage/masters/*
+!/public/storage/masters/.gitignore
 /app/Resources/*
 !/app/Resources/views
 !/app/Resources/FOSUserBundle
@@ -22,7 +19,6 @@
 /app/logs/.gitkeep
 /build/
 /vendor/
-/bin/
 /composer.phar
 *~
 \#*\#
@@ -30,3 +26,26 @@ TAGS
 .php_cs.cache
 /var/cache/*
 /var/log/*
+
+###> friendsofphp/php-cs-fixer ###
+/.php_cs
+/.php_cs.cache
+###< friendsofphp/php-cs-fixer ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+###> symfony/phpunit-bridge ###
+.phpunit
+###< symfony/phpunit-bridge ###
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+###< symfony/framework-bundle ###
