@@ -20,7 +20,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Process\ProcessBuilder;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class JobService
 {
@@ -51,7 +51,7 @@ class JobService
         EventDispatcherInterface $dispatcher,
         LoggerInterface $logger,
         TrackService $trackService,
-        TokenStorage $tokenStorage,
+        TokenStorageInterface $tokenStorage,
         MultimediaObjectPropertyJobService $propService,
         $binPath,
         $environment = 'dev',

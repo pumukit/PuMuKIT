@@ -7,7 +7,7 @@ use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\StatsBundle\Document\ViewsLog;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class Log
 {
@@ -15,7 +15,7 @@ class Log
     private $requestStack;
     private $tokenStorage;
 
-    public function __construct(DocumentManager $documentManager, RequestStack $requestStack, TokenStorage $tokenStorage)
+    public function __construct(DocumentManager $documentManager, RequestStack $requestStack, TokenStorageInterface $tokenStorage)
     {
         $this->dm = $documentManager;
         $this->requestStack = $requestStack;
