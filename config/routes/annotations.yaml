@@ -1,5 +1,5 @@
 controllers:
-    resource: ../../src/Controller/
+    resource: ../../src/Pumukit/*/Controller/
     type: annotation
 
 #pumukit_stats_ui:
