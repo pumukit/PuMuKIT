@@ -1,0 +1,6 @@
+twig:
+  debug:            "%kernel.debug%"
+  strict_variables: "%kernel.debug%"
+  globals:
+    pumukit_info:  "%pumukit.info%"
+    locales:       "%pumukit.locales%"
