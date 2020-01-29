@@ -22,10 +22,10 @@ doctrine_mongodb:
         microsite:
           class:     Pumukit\CoreBundle\Filter\MicrositeFilter
           enabled:   false
-      mappings:
-        App:
-          is_bundle: false
-          type: annotation
-          dir: '%kernel.project_dir%/src/Document'
-          prefix: 'App\Document'
-          alias: App
+#      mappings:
+#        App:
+#          is_bundle: false
+#          type: annotation
+#          dir: '%kernel.project_dir%/src/Document'
+#          prefix: 'App\Document'
+#          alias: App
