@@ -30,13 +30,12 @@ before_script:
   - composer -V
   - composer install
 
-
 script:
   - find src -type f -name "*.php" -print0 | xargs -0 -n1 -P8 php -l
   - php bin/console lint:yaml src
-  - php bin/console lint:yaml app
+  - php bin/console lint:yaml config
   - php bin/console lint:twig src
-  - php bin/console lint:twig app
+  - php bin/console lint:twig templates
   - ./bin/travis_checks/check_var_dumps
   - php bin/php-cs-fixer fix src --dry-run -v
   - php bin/phpstan analyse -l 4 src
@@ -46,7 +45,7 @@ script:
   - php bin/phpstan analyse -l 7 src/Pumukit/InspectionBundle/
   - php bin/phpstan analyse -l 7 src/Pumukit/JWPlayerBundle/
   - php bin/phpstan analyse -l 5 src/Pumukit/WizardBundle/
-  - php bin/phpunit -c app
+  - php bin/phpunit
   - php bin/console doctrine:mongodb:schema:create
   - php bin/console pumukit:init:repo all --force
   - php bin/console server:start
