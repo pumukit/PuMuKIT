@@ -128,6 +128,9 @@ services:
     tags:
       - { name: "monolog.logger", channel: "encoder" }
 
+  Pumukit\InspectionBundle\Services\InspectionServiceInterface:
+    class: Pumukit\InspectionBundle\Services\InspectionServiceInterface
+
   Pumukit\EncoderBundle\Services\MultimediaObjectPropertyJobService:
     class: Pumukit\EncoderBundle\Services\MultimediaObjectPropertyJobService
 

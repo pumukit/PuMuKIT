@@ -28,3 +28,5 @@
 \#*\#
 TAGS
 .php_cs.cache
+/var/cache/*
+/var/log/*
