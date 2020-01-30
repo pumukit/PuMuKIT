@@ -1,0 +1,118 @@
+<div class="well col-md-12">
+  <div class="box box-warning">
+    <div class="box-header with-border">
+      <h3 class="box-title">{{pmkCtrl.current.label}}</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+      <div class="row">
+        <div class="col col-md-6">
+          <div class="col col-sm-12">
+            <table class="table table-bordered table-striped dataTable">
+              <thead>
+                <tr>
+                  <th style="width:60px;"> Ranking </th>
+                  <th> Title </th>
+                  <th style="min-width:80px;"> Recording date </th>
+                  <th> Series </th>
+                  <th> Views </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td> 1. </td>
+                  <td> <a class="two-lines" href="/video/{{pmkCtrl.current.id}}" target="_blank">{{pmkCtrl.current.label}}</a> </td>
+                  <td> {{pmkCtrl.current.date | date:'yyyy-MM-dd (HH:mm:ss)'}} </td>
+                  <td> <a href="#" class="two-lines" ng-click="pmkCtrl.go_to('series',pmkCtrl.current.serie)">{{pmkCtrl.current.serie.label}}</a> </td>
+                  <td> {{pmkCtrl.total_views}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="col col-md-6">
+          <a href="/video/{{pmkCtrl.current.id}}" target="_blank">
+            <div class="pumukit_mmobj">
+              <div class="thumbnail">
+                <span class="play_icon" alt=""></span>
+                <img alt="serial_pic" class="serial thumbnailimg" ng-src="{{pmkCtrl.current.img}}">
+                <div class="thumbnailholder"></div>
+              </div>
+              <div class="info-wrapper">
+                <div class="info">
+                  <div class="title" title="{{pmkCtrl.current.description}}">
+                    <span class="mmobj_thumbnail_title">{{pmkCtrl.current.label}}</span>
+                  </div>
+                  <div class="subtitle">
+                    <abbr title="{{pmkCtrl.current.serie.label}}">{{pmkCtrl.current.serie.label}}</abbr>
+                  </div>
+                  <div class="date mmobj">
+                    {{pmkCtrl.current.date | asDate | date:'dd/MM/yyyy'}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="well col col-md-12">
+  <div class="box box-success">
+    <div class="box-header with-border">
+      <h3 class="box-title">Views by time period for {{pmkCtrl.current.label}}</h3>
+      <div class="box-tools pull-right">
+
+        <div class="btn-group">
+          <label class="btn btn-default ng-pristine ng-untouched ng-valid"
+		 ng-class="{'btn-success': pmkCtrl.current_span == 'day'}"
+		 ng-click="pmkCtrl.current_span = 'day'; pmkCtrl.set_url_parameters('timespan')">Day</label>
+          <label class="btn btn-default ng-pristine ng-untouched ng-valid"
+		 ng-class="{'btn-success': pmkCtrl.current_span == 'month'}"
+		 ng-click="pmkCtrl.current_span = 'month'; pmkCtrl.set_url_parameters('timespan')">Month</label>
+          <label class="btn btn-default ng-pristine ng-untouched ng-valid"
+		 ng-class="{'btn-success': pmkCtrl.current_span == 'year'}"
+		 ng-click="pmkCtrl.current_span = 'year'; pmkCtrl.set_url_parameters('timespan')">Year</label>
+        </div>
+        <!--<div range-slider min="1" max="24" model-min="pmkCtrl.slider_mv.min" model-max="pmkCtrl.slider_mv.max" show-values="true" pin-handle="min" ng-mouseup="pmkCtrl.get_most_viewed('slider')" attach-handle-values="true">
+        </div>-->
+      </div>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+      <div class="col col-md-6">
+        <table class="table table-bordered table-striped dataTable" fixed-header table-height="370px" >
+          <thead>
+            <tr>
+              <th> Date </th>
+              <th> Views </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="entry in pmkCtrl.his.objects.particular.new_data | orderBy: entry[0]">
+              <td> {{entry[0] | asDate | date:pmkCtrl.span_format[pmkCtrl.current_span].filter}} </td>
+              <td> {{entry[1]}} </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td><b> Total:</b></td>
+              <td><b>{{pmkCtrl.total_views}}</b></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="col col-md-6">
+        <!--<nvd3 options="pmkCtrl.tl.objects.general.options" data="pmkCtrl.tl.objects.general.data" config="pmkCtrl.tl.objects.general.config" api="pmkCtrl.tl.objects.general.api">
+        </nvd3>-->
+        <nvd3 options="pmkCtrl.his.objects.particular.options" data="pmkCtrl.his.objects.particular.data" config="pmkCtrl.his.objects.particular.config" api="pmkCtrl.his.objects.particular.api">
+        </nvd3>
+      </div>
+    </div><!-- /.box-body -->
+    <div ng-show="pmkCtrl.loading.his.objects.particular" class="overlay">
+      <i class="fa fa-refresh fa-spin"></i>
+    </div>
+  </div><!-- /.box-->
+
+</div>

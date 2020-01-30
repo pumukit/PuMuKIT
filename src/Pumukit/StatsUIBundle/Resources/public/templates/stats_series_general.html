@@ -1,0 +1,128 @@
+<div class="well col col-md-12">
+  <div class="box box-warning">
+    <div class="box-header with-border">
+      <h3 class="box-title">Most viewed series</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+      <div class="row">
+        <div class="col col-md-6">
+          <table class="table table-bordered table-striped dataTable">
+            <thead>
+              <tr>
+                <th style="width:60px;"> Ranking </th>
+                <th> Title </th>
+                <th style="min-width:110px;"> Number of videos </th>
+                <th> Views </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="serie in pmkCtrl.mv.series.general.data[0].values">
+                <td> {{(pmkCtrl.page.mv-1)*10 + $index +1}}. </td>
+                <td> <a href="#" class="two-lines" ng-click="pmkCtrl.go_to('series', serie)">{{serie.label}} </a></td>
+                <td class="text-center"> {{serie.items}} </td>
+                <td> {{serie.value}} </td>
+              </tr>
+              <tr ng-if="pmkCtrl.mv.series.general.data[0].values.length == 0 ">
+                <td colspan="4">
+                  <b>No results found. The filters may be restricting the search too much.</b>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col col-md-6">
+          <nvd3 options="pmkCtrl.mv.series.general.options" data="pmkCtrl.mv.series.general.data" config="pmkCtrl.mv.series.general.config" api="pmkCtrl.mv.series.general.api">
+          </nvd3>
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col col-sm-5">
+          <div class="dataTables_info" id="example1_info">
+            Showing {{(pmkCtrl.page.mv-1)*10 +1}} to
+            <span ng-show="((pmkCtrl.page.mv)*10) < pmkCtrl.total_items.mv">
+              {{(pmkCtrl.page.mv)*10}}
+            </span>
+            <span ng-hide="((pmkCtrl.page.mv)*10) < pmkCtrl.total_items.mv">
+              {{pmkCtrl.total_items.mv}}
+            </span>
+            of {{pmkCtrl.total_items.mv}}
+          </div>
+        </div>
+        <div class="col col-sm-7">
+          <div class="dataTables_paginate">
+            <ul class="pagination">
+              <li ng-class="{'disabled': pmkCtrl.page.mv == 1}">
+              <a href="#" ng-click="pmkCtrl.go_to_page(pmkCtrl.page.mv - 1)"> Previous </a>
+              </li>
+              <li ng-repeat = "page in pmkCtrl.range(pmkCtrl.total_pages.mv) track by $index" ng-class = "{'active': pmkCtrl.page.mv == page}">
+              <a href="#" ng-click="pmkCtrl.go_to_page(page)"> {{page}}</a>
+              </li>
+              <li ng-class="{'disabled':pmkCtrl.page.mv == pmkCtrl.total_pages.mv}">
+              <a href="#" ng-click="pmkCtrl.go_to_page(pmkCtrl.page.mv + 1)" > Next </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.box-body -->
+    <div ng-show="pmkCtrl.loading.mv.series.general" class="overlay">
+      <i class="fa fa-refresh fa-spin"></i>
+    </div>
+  </div><!-- /.box -->
+</div>
+<div class="well col col-md-12">
+  <div class="box box-success">
+    <div class="box-header with-border">
+      <h3 class="box-title">Views by time period</h3>
+      <div class="box-tools pull-right">
+        <div class="btn-group">
+          <label class="btn btn-default ng-pristine ng-untouched ng-valid"
+		 ng-class="{'btn-success': pmkCtrl.current_span == 'day'}"
+		 ng-click="pmkCtrl.current_span = 'day'; pmkCtrl.set_url_parameters('timespan')">Day</label>
+          <label class="btn btn-default ng-pristine ng-untouched ng-valid"
+		 ng-class="{'btn-success': pmkCtrl.current_span == 'month'}"
+		 ng-click="pmkCtrl.current_span = 'month'; pmkCtrl.set_url_parameters('timespan')">Month</label>
+          <label class="btn btn-default ng-pristine ng-untouched ng-valid"
+		 ng-class="{'btn-success': pmkCtrl.current_span == 'year'}"
+		 ng-click="pmkCtrl.current_span = 'year'; pmkCtrl.set_url_parameters('timespan')">Year</label>
+        </div>
+        <!--<div range-slider min="1" max="24" model-min="pmkCtrl.slider_mv.min" model-max="pmkCtrl.slider_mv.max" show-values="true" pin-handle="min" ng-mouseup="pmkCtrl.get_most_viewed('slider')" attach-handle-values="true">
+        </div>-->
+      </div>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+      <div class="col col-md-6">
+        <table class="table table-bordered table-striped dataTable" fixed-header table-height="370px">
+          <thead>
+            <tr>
+              <th> Date </th>
+              <th> Views </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="entry in pmkCtrl.his.series.general.new_data | orderBy: entry[0]">
+              <td> {{entry[0] | asDate | date:pmkCtrl.span_format[pmkCtrl.current_span].filter}} </td>
+              <td> {{entry[1]}} </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td><b> Total:</b></td>
+              <td><b>{{pmkCtrl.total_views}}</b></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="col col-md-6">
+        <nvd3 options="pmkCtrl.his.series.general.options" data="pmkCtrl.his.series.general.data" config="pmkCtrl.his.series.general.config" api="pmkCtrl.his.series.general.api">
+        </nvd3>
+      </div>
+    </div><!-- /.box-body -->
+    <div ng-show="pmkCtrl.loading.his.series.general" class="overlay">
+      <i class="fa fa-refresh fa-spin"></i>
+    </div>
+  </div><!-- /.box-->
+</div>
