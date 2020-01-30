@@ -22,6 +22,7 @@
         "knplabs/knp-menu-bundle": "~2.0",
         "sensio/framework-extra-bundle": "^3.0.2",
         "suncat/mobile-detect-bundle": "1.1.*",
+        "symfony/asset": "^4.0",
         "symfony/dotenv": "^4.0",
         "symfony/expression-language": "^4.0",
         "symfony/flex": "^1.6",
