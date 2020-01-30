@@ -1,0 +1,105 @@
+<div>
+    <div class="content-wrapper upper-footer">
+        <!-- Main content -->
+        <section class="content">
+        <div class="col col-md-12" style="margin-bottom: 30px;">
+            <h3 class="cab_body_div">
+                <ul class="breadcrumb" style="margin-bottom: 5px;">
+                    <li class="active">
+                        <span ng-show="pmkCtrl.view.scope == 'general'">
+                          General Statistics for
+                          <span ng-show="pmkCtrl.view.tabes.objects"><b>Objects</b> (videos/audios)</span>
+                          <span ng-hide="pmkCtrl.view.tabes.objects"><b>Series</b></span>
+                        </span>
+                        <span ng-hide="pmkCtrl.view.scope == 'general'">
+                          &nbsp;Statistics of the
+                          <span ng-show="pmkCtrl.view.tabes.objects">object:</span>
+                          <span ng-hide="pmkCtrl.view.tabes.objects">series:</span>
+                          <b>&nbsp;{{pmkCtrl.current.label}}</b>
+                        </span>
+                    </li>
+                </ul>
+            </h3>
+        </div>
+
+        <div class="col col-md-push-1 col-sm-push-1 col-md-4 col-sm-5">
+            <div class="form-group" >
+                <span ng-hide="pmkCtrl.view.tabes.objects && pmkCtrl.view.scope!='general'">
+                    <label id="pmkCtrl_filter_title_label">Search by title:</label>
+                    <div class="input-group">
+                        <input type="text" ng-model="pmkCtrl.filter.title" ng-disabled="pmkCtrl.view.tabes.objects && pmkCtrl.view.scope!='general'" class="form-control form_daterangepicker" aria-labelledby="pmkCtrl_filter_title_label"/>
+                        <div class="input-group-addon no-padding">
+                            <button class="btn btn-default btn-raised" style="padding: 8px 10px" ng-click="pmkCtrl.set_url_parameters('filter');" title="Set URL parameters">
+                                <i class="fa fa-search glyphicon glyphicon-search"></i>
+                            </button>
+                            <button class="btn btn-default btn-raised" style="padding: 8px 10px" ng-click="pmkCtrl.clear_filter('filter');" title="Clear filter">
+                                <i class="fa fa-remove glyphicon glyphicon-remove"></i>
+                            </button>
+                        </div>
+                    </div> <!-- /.input group -->
+                </span>
+
+                <label id="pmkCtrl_datepicker_label">Date range:</label>
+                <div class="input-group">
+                    <span class="no-margin no-padding form_daterangepicker" style="border:none;">
+                        <input id="form_daterangepicker" class="form-control form_daterangepicker" type="daterange" show-dropdowns="true" ng-model="pmkCtrl.datepicker_mv.model" ranges="pmkCtrl.datepicker_mv.ranges" opens="center" locale="pmkCtrl.datepicker_mv.locale" ng-change="pmkCtrl.set_url_parameters('datepicker')" always-show-calendars="true" min-date="pmkCtrl.datepicker_mv.min_date" max-date="pmkCtrl.datepicker_mv.max_date" linked-calendars="false" aria-labelledby="pmkCtrl_datepicker_label"/>
+                        <input ng-show="pmkCtrl.check_all_history()" class="form-control form_daterangepicker" type="text" ng-model="pmkCtrl.datepicker_mv.text" ng-click="pmkCtrl.toggle_daterange()" style="position:absolute; background: rgb(238, 238, 238); width: calc(100% - 84px)" aria-labelledby="pmkCtrl_datepicker_label"/>
+                    </span>
+                    <div class="input-group-addon no-padding">
+                        <button class="btn btn-default btn-raised" style="padding: 8px 10px" ng-click="pmkCtrl.toggle_daterange($event)" title="Toggle date range">
+                            <i class="fa fa-calendar glyphicon glyphicon-calendar"></i>
+                        </button>
+                        <button class="btn btn-default btn-raised" style="padding: 8px 10px" ng-click="pmkCtrl.clear_filter('datepicker')" title="Clear filter">
+                            <i class="fa fa-remove glyphicon glyphicon-remove"></i>
+                        </button>
+                    </div>
+                </div> <!-- /.input group -->
+          </div>
+
+          <div ng-class="{'clear-filters': !(pmkCtrl.view.tabes.objects && !(pmkCtrl.view.scope == 'general'))}">
+            <a class="btn btn-app btn-raised" ng-click="pmkCtrl.clear_filter('all')"><i class="fa fa-remove glyphicon glyphicon-remove"></i> Clear filters </a>
+          </div>
+        </div>
+
+        <div class="col col-md-1 col-md-push-1" ng-class="{'clear-filters': !(pmkCtrl.view.tabes.objects && !(pmkCtrl.view.scope == 'general'))}">
+        </div>
+
+            <div class="col col-md-5 col-sm-6 col-md-push-1 col-sm-push-1">
+                <div class="col col-md-8">
+                    <div class="small-box custom-small-box bg-green alert alert-dismissible alert-success">
+                        <div class="inner" style="overflow:hidden">
+                            <div class="col col-sm-4">
+                                <h3>{{pmkCtrl.total_views}}</h3>
+                            </div>
+                            <div class="col col-sm-6 two-lines">
+                                <p>Total views in the date range</p>
+                            </div>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-eye glyphicon glyphicon-eye-open"></i>
+                        </div>
+                    </div>
+                </div>
+                <div ng-hide="pmkCtrl.view.tabes.objects && pmkCtrl.view.scope!='general'" class="col col-md-8">
+                    <div class="small-box custom-small-box bg-orange alert alert-dismissible alert-warning">
+                        <div class="inner" style="overflow:hidden;">
+                            <div class="col col-sm-4">
+                                <h3>{{pmkCtrl.total_items.mv}}</h3>
+                            </div>
+                            <div class="col col-sm-6 two-lines">
+                                <p>Total objects</p>
+                            </div>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars mdi-av-equalizer"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <div ng-include="pmkCtrl.template" ></div>
+        </section>
+    </div><!-- /.content-wrapper -->
+</div>
+
+

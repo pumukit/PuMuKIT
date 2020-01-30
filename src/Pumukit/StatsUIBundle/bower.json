@@ -1,0 +1,32 @@
+{
+  "name": "StatsBundle",
+  "homepage": "https://github.com/campusdomar/PuMuKIT2",
+  "authors": [
+    "rubenrua <rubenrua@teltek.es>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "Resources/public/vendor/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.0",
+    "angular-route": "^1.5.0",
+    "moment": ">=2.9.0",
+    "angular-nvd3": "^1.0.5",
+    "nvd3": "1.8.1",
+    "ng-bs-daterangepicker": "0.0.5",
+    "bootstrap-daterangepicker": "2.1.17",
+    "angu-fixed-header-table": "^1.2.0"
+  }
+}
