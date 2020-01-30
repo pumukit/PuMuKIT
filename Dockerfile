@@ -11,7 +11,7 @@ ENV RUN_INIT_COMMANDS=false
 COPY --chown=www-data:www-data . ./
 
 # load environment variables
-RUN source doc/docker/.env
+RUN source .env
 
 RUN set -eux; \
     mkdir -p var/cache var/log var/sessions && \
@@ -19,7 +19,7 @@ RUN set -eux; \
     chown -R www-data var && \
     php bin/console a:i
 
-    
+
 COPY doc/docker/pumukit/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 RUN chmod +x /usr/local/bin/docker-entrypoint
 
