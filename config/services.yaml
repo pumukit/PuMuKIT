@@ -616,3 +616,12 @@ services:
     public: false
     arguments:
       $hierarchy: '%security.role_hierarchy.roles%'
+
+  Gedmo\Tree\TreeListener:
+     tags:
+         - { name: doctrine.event_subscriber, connection: default }
+         - { name: doctrine_mongodb.odm.event_subscriber }
+     calls:
+         - method: setAnnotationReader
+           arguments:
+               - "@annotation_reader"
