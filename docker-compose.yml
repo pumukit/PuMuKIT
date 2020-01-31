@@ -7,20 +7,20 @@ services:
       - .env
     build:
       context: ./
-      args: 
+      args:
         - PUMUKIT_BASE_VERSION=$PUMUKIT_BASE_VERSION
       cache_from:
         - teltek/pumukit
         - teltek/nginx
     depends_on:
       - db
-    # volumes:
+    volumes:
       # Comment out the next lines in production
       # - ./web/storage:/srv/pumukit/web/storage:rw,cached
       # - ./web/uploads:/srv/pumukit/web/uploads:rw,cached
       # - ./web/bundles:/srv/pumukit/web/bundles:rw,cached
       # Comment out the next line for dev
-      #- ./:/srv/pumukit
+      - ./:/srv/pumukit
 
   h2-proxy:
     image: teltek/nginx:$PUMUKIT_BASE_VERSION
@@ -33,12 +33,12 @@ services:
         - teltek/nginx
     depends_on:
       - php
-    #volumes:
-      # Comment out the next lines in production    
+    volumes:
+      # Comment out the next lines in production
       # - ./web/storage:/srv/pumukit/web/storage:ro
       # - ./web/uploads:/srv/pumukit/web/uploads:ro
       # - ./web/bundles:/srv/pumukit/web/bundles:ro
-      #- ./:/srv/pumukit      
+      - ./:/srv/pumukit
     ports:
       - "80:80"
       - "443:443"
