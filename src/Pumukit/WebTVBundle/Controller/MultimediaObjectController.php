@@ -135,12 +135,12 @@ class MultimediaObjectController extends Controller implements WebTVControllerIn
 
         $editorChapters = $this->get('pumukit_web_tv.chapter_marks_service')->getChapterMarks($multimediaObject);
 
+        /** @var IntroService */
+        $basePlayerIntroService = $this->get('pumukit_baseplayer.intro');
+
         return [
             'autostart' => $request->query->get('autostart', 'true'),
-            'intro' => $this->get('pumukit_baseplayer.intro')->getIntroForMultimediaObject(
-                $request->query->get('intro'),
-                $multimediaObject->getProperty('intro')
-            ),
+            'intro' => $basePlayerIntroService->getVideoIntroduction($multimediaObject, $request->query->getBoolean('intro')),
             'multimediaObject' => $multimediaObject,
             'track' => $track,
             'magic_url' => true,
