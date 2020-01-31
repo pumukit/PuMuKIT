@@ -34,7 +34,7 @@ class CustomAuthenticationSuccessHandler extends DefaultAuthenticationSuccessHan
 
     private function updateUser(User $user): void
     {
-        $user->resetLoginChecks();
+        $user->resetLoginAttempts();
         $this->documentManager->flush();
     }
 }
