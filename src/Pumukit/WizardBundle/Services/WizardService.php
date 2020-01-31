@@ -4,6 +4,7 @@ namespace Pumukit\WizardBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\EncoderBundle\Services\JobService;
+use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
 use Pumukit\InspectionBundle\Services\InspectionServiceInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
@@ -67,21 +68,15 @@ class WizardService
     /**
      * WizardService constructor.
      *
-     * @param DocumentManager               $documentManager
-     * @param FactoryService                $factoryService
-     * @param InspectionServiceInterface    $inspectionService
-     * @param FormEventDispatcherService    $formEventDispatcher
-     * @param JobService                    $jobService
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param TagService                    $tagService
-     * @param string                        $basePath
-     * @param array                         $locales
-     * @param bool|null                     $inboxDepth
+     * @param InspectionServiceInterface $inspectionService
+     * @param string                     $basePath
+     * @param array                      $locales
+     * @param bool|null                  $inboxDepth
      */
     public function __construct(
         DocumentManager $documentManager,
         FactoryService $factoryService,
-        InspectionServiceInterface $inspectionService,
+        InspectionFfprobeService $inspectionService,
         FormEventDispatcherService $formEventDispatcher,
         JobService $jobService,
         AuthorizationCheckerInterface $authorizationChecker,
@@ -139,8 +134,6 @@ class WizardService
     }
 
     /**
-     * @param array $seriesData
-     *
      * @throws \Exception
      *
      * @return mixed|object|Series|null
@@ -160,8 +153,6 @@ class WizardService
     }
 
     /**
-     * @param array $seriesData
-     *
      * @throws \Exception
      *
      * @return mixed|Series|null
@@ -186,8 +177,6 @@ class WizardService
 
     /**
      * @param string $key
-     * @param array  $formData
-     * @param array  $default
      *
      * @return mixed
      */
@@ -265,9 +254,7 @@ class WizardService
     }
 
     /**
-     * @param MultimediaObject $multimediaObject
-     * @param string           $tagCode
-     * @param User             $user
+     * @param string $tagCode
      *
      * @throws \Exception
      *
@@ -290,10 +277,6 @@ class WizardService
     }
 
     /**
-     * @param array  $mmData
-     * @param Series $series
-     * @param User   $user
-     *
      * @throws \Exception
      *
      * @return MultimediaObject
@@ -337,10 +320,8 @@ class WizardService
     /**
      * @param User   $user
      * @param string $selectedPath
-     * @param int    $inboxDepth
      * @param string $series
      * @param string $status
-     * @param array  $pubChannel
      * @param string $profile
      * @param string $priority
      * @param string $language

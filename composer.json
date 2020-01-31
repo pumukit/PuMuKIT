@@ -34,12 +34,13 @@
         "white-october/pagerfanta-bundle": "^1.2"
     },
     "require-dev": {
-        "symfony/phpunit-bridge": "^3.0",
-        "phpunit/phpunit": "7.*",
-        "phpstan/phpstan": "@stable",
         "friendsofphp/php-cs-fixer": "~2.14.6",
+        "phpstan/phpstan": "@stable",
+        "phpstan/phpstan-doctrine": "^0.11.5",
         "phpstan/phpstan-symfony": "^0.11.6",
-        "phpstan/phpstan-doctrine": "^0.11.5"
+        "phpunit/phpunit": "7.*",
+        "symfony/phpunit-bridge": "^3.0",
+        "symfony/profiler-pack": "^1.0"
     },
     "scripts": {
         "post-install-cmd": [

@@ -28,4 +28,5 @@ return [
     Pumukit\WebTVBundle\PumukitWebTVBundle::class => ['all' => true],
     Pumukit\WizardBundle\PumukitWizardBundle::class => ['all' => true],
     Pumukit\WorkflowBundle\PumukitWorkflowBundle::class => ['all' => true],
+    Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['dev' => true, 'test' => true],
 ];
