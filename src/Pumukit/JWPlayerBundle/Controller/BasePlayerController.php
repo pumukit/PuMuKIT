@@ -38,14 +38,14 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
             return $track;
         }
 
-        [$autoStart, $intro, $whenDispatchViewEvent] = $this->getPlayerParameters($request, $multimediaObject);
+        $playerParameters = $this->getPlayerParameters($request, $multimediaObject);
 
         return [
-            'autostart' => $request->query->get('autostart', 'false'),
-            'intro' => $intro,
+            'autostart' => $playerParameters['autoStart'],
+            'intro' => $playerParameters['intro'],
             'multimediaObject' => $multimediaObject,
             'object' => $multimediaObject,
-            'when_dispatch_view_event' => $whenDispatchViewEvent,
+            'when_dispatch_view_event' => $playerParameters['whenDispatchViewEvent'],
             'track' => $track,
         ];
     }
@@ -75,13 +75,13 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
             return $track;
         }
 
-        [$autoStart, $intro, $whenDispatchViewEvent] = $this->getPlayerParameters($request, $multimediaObject);
+        $playerParameters = $this->getPlayerParameters($request, $multimediaObject);
 
         return [
-            'autostart' => $autoStart,
-            'intro' => $intro,
+            'autostart' => $playerParameters['autoStart'],
+            'intro' => $playerParameters['intro'],
             'object' => $multimediaObject,
-            'when_dispatch_view_event' => $whenDispatchViewEvent,
+            'when_dispatch_view_event' => $playerParameters['whenDispatchViewEvent'],
             'track' => $track,
             'magic_url' => true,
         ];
@@ -121,11 +121,9 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
         $basePlayerIntroService = $this->get('pumukit_baseplayer.intro');
 
         return [
-            'autostart' => $request->query->get('autostart', 'false'),
+            'autoStart' => $request->query->get('autostart', 'false'),
             'intro' => $basePlayerIntroService->getVideoIntroduction($multimediaObject, $request->query->getBoolean('intro')),
-            'multimediaObject' => $multimediaObject,
-            'object' => $multimediaObject,
-            'when_dispatch_view_event' => $this->container->getParameter('pumukitplayer.when_dispatch_view_event'),
+            'whenDispatchViewEvent' => $this->container->getParameter('pumukitplayer.when_dispatch_view_event'),
         ];
     }
 }

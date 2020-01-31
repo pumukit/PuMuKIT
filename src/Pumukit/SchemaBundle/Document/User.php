@@ -17,7 +17,7 @@ class User extends BaseUser
 
     public const ORIGIN_LOCAL = 'local';
     public const MAX_LOGIN_ATTEMPTS = 3;
-    public const MAX_USER_TIME_MIN_LOCK = 5;
+    public const RESET_LOGIN_ATTEMPTS_INTERVAL = '5 minutes';
 
     /**
      * @MongoDB\Id(strategy="auto")
@@ -100,25 +100,40 @@ class User extends BaseUser
         return $this->loginAttempt;
     }
 
-    public function setLoginAttempt(int $logginAttempt): void
+    public function setLoginAttempt(int $loginAttempt): void
     {
-        $this->loginAttempt = $logginAttempt;
+        $this->loginAttempt = $loginAttempt;
     }
 
     public function addLoginAttempt(): void
     {
-        if ($this->loginAttempt > self::MAX_LOGIN_ATTEMPTS) {
-            $this->loginAttempt = self::MAX_LOGIN_ATTEMPTS;
-        }
-
-        if (self::MAX_LOGIN_ATTEMPTS === $this->loginAttempt) {
-            $this->setEnabled(false);
-        }
+        ++$this->loginAttempt;
 
         if ($this->loginAttempt < self::MAX_LOGIN_ATTEMPTS) {
-            ++$this->loginAttempt;
             $this->setLastLoginAttempt(new \DateTime());
+
+            return;
         }
+
+        $this->loginAttempt = self::MAX_LOGIN_ATTEMPTS;
+
+        $this->setEnabled(false);
+    }
+
+    public function isResetLoginAttemptsAllowed(): bool
+    {
+        $lastLoginAttempt = clone $this->getLastLoginAttempt();
+        $lastLoginAttempt->add(\DateInterval::createFromDateString(self::RESET_LOGIN_ATTEMPTS_INTERVAL));
+        $now = new \DateTime();
+
+        return $lastLoginAttempt < $now;
+    }
+
+    public function resetLoginAttempts(): void
+    {
+        $this->loginAttempt = 0;
+        $this->setLastLoginAttempt(new \DateTime());
+        $this->setEnabled(true);
     }
 
     public function canLogin(): bool
@@ -134,13 +149,6 @@ class User extends BaseUser
     public function setLastLoginAttempt(\DateTime $lastLoginAttempt): void
     {
         $this->lastLoginAttempt = $lastLoginAttempt;
-    }
-
-    public function resetLoginChecks(): void
-    {
-        $this->loginAttempt = 0;
-        $this->setLastLoginAttempt(new \DateTime());
-        $this->setEnabled(true);
     }
 
     public function setOrigin(string $origin): void
