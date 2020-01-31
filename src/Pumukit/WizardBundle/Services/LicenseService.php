@@ -14,10 +14,8 @@ class LicenseService
     /**
      * LicenseService constructor.
      *
-     * @param bool                $showLicense
-     * @param string              $licenseDir
-     * @param array               $locales
-     * @param TranslatorInterface $translator
+     * @param bool   $showLicense
+     * @param string $licenseDir
      *
      * @throws \Exception
      */

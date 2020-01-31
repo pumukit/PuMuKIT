@@ -46,8 +46,6 @@ class Configuration implements ConfigurationInterface
 
     /**
      * Adds `profiles` section.
-     *
-     * @param ArrayNodeDefinition $node
      */
     public static function addProfilesSection(ArrayNodeDefinition $node)
     {
@@ -129,8 +127,6 @@ class Configuration implements ConfigurationInterface
 
     /**
      * Adds `cpu` section.
-     *
-     * @param ArrayNodeDefinition $node
      */
     public function addCpusSection(ArrayNodeDefinition $node)
     {
@@ -170,8 +166,6 @@ class Configuration implements ConfigurationInterface
 
     /**
      * Adds `thumbnail` section.
-     *
-     * @param ArrayNodeDefinition $node
      */
     public function addThumbnailSection(ArrayNodeDefinition $node)
     {
@@ -193,8 +187,6 @@ class Configuration implements ConfigurationInterface
 
     /**
      * Adds `target_default_profiles` section.
-     *
-     * @param ArrayNodeDefinition $node
      */
     public function addTargetDefaultProfiles(ArrayNodeDefinition $node)
     {

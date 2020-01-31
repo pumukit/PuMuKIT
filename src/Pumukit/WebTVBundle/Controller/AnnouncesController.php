@@ -37,8 +37,6 @@ class AnnouncesController extends Controller implements WebTVControllerInterface
     /**
      * @Route("/latestuploads/pager", name="pumukit_webtv_announces_latestuploads_pager")
      *
-     * @param Request $request
-     *
      * @return Response
      */
     public function latestUploadsPagerAction(Request $request)

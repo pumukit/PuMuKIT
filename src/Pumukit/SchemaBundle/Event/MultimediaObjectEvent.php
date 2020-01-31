@@ -12,9 +12,6 @@ class MultimediaObjectEvent extends Event
      */
     protected $multimediaObject;
 
-    /**
-     * @param MultimediaObject $multimediaObject
-     */
     public function __construct(MultimediaObject $multimediaObject)
     {
         $this->multimediaObject = $multimediaObject;

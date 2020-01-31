@@ -34,11 +34,9 @@ class DynamicPicExtractorService
     /**
      * DynamicPicExtractorService constructor.
      *
-     * @param DocumentManager            $documentManager
-     * @param MultimediaObjectPicService $mmsPicService
-     * @param string                     $targetPath
-     * @param string                     $targetUrl
-     * @param string                     $command
+     * @param string $targetPath
+     * @param string $targetUrl
+     * @param string $command
      */
     public function __construct(DocumentManager $documentManager, MultimediaObjectPicService $mmsPicService, $targetPath, $targetUrl, $command)
     {
@@ -53,9 +51,6 @@ class DynamicPicExtractorService
     }
 
     /**
-     * @param MultimediaObject $multimediaObject
-     * @param Track            $track
-     *
      * @throws \Exception
      *
      * @return bool
@@ -86,8 +81,6 @@ class DynamicPicExtractorService
     }
 
     /**
-     * @param MultimediaObject $multimediaObject
-     *
      * @return string
      */
     private function createDir(MultimediaObject $multimediaObject)
@@ -130,8 +123,7 @@ class DynamicPicExtractorService
     }
 
     /**
-     * @param MultimediaObject $multimediaObject
-     * @param string           $fileUrl
+     * @param string $fileUrl
      *
      * @return mixed|null
      */
@@ -147,9 +139,7 @@ class DynamicPicExtractorService
     }
 
     /**
-     * @param MultimediaObject $multimediaObject
-     * @param Pic              $file
-     * @param string           $filePath
+     * @param string $filePath
      *
      * @return MultimediaObject
      */

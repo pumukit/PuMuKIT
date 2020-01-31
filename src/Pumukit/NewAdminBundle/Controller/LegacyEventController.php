@@ -64,8 +64,6 @@ class LegacyEventController extends AdminController implements NewAdminControlle
      * Overwrite to return json response
      * and update page.
      *
-     * @param Request $request
-     *
      * @return JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function createAction(Request $request)
@@ -154,8 +152,6 @@ class LegacyEventController extends AdminController implements NewAdminControlle
      * Update Action
      * Overwrite to return list and not index
      * and show toast message.
-     *
-     * @param Request $request
      *
      * @return JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */

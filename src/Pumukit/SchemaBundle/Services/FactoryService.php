@@ -65,9 +65,6 @@ class FactoryService
     /**
      * Wrapper for createCollection. Creates a TYPE_SERIES collection.
      *
-     * @param User|null  $loggedInUser
-     * @param array|null $title
-     *
      * @throws \Exception
      *
      * @return Series
@@ -79,9 +76,6 @@ class FactoryService
 
     /**
      * Wrapper for createColletion. Creates a TYPE_PLAYLIST collection.
-     *
-     * @param User|null  $loggedInUser
-     * @param array|null $title
      *
      * @throws \Exception
      *
@@ -95,9 +89,7 @@ class FactoryService
     /**
      * Internal method to create a new collection (series or playlist) with default values. Not emit events.
      *
-     * @param int        $collectionType
-     * @param User|null  $loggedInUser
-     * @param array|null $title
+     * @param int $collectionType
      *
      * @throws \Exception
      *
@@ -135,9 +127,7 @@ class FactoryService
     /**
      * Create a new collection (series or playlist) with default values.
      *
-     * @param int        $collectionType
-     * @param User|null  $loggedInUser
-     * @param array|null $title
+     * @param int $collectionType
      *
      * @throws \Exception
      *
@@ -155,9 +145,8 @@ class FactoryService
     /**
      * Internla method to create a new Multimedia Object from Template. Not emit events.
      *
-     * @param Series $series
-     * @param bool   $flush
-     * @param User   $loggedInUser
+     * @param bool $flush
+     * @param User $loggedInUser
      *
      * @throws \Exception
      *
@@ -225,9 +214,8 @@ class FactoryService
     /**
      * Create a new Multimedia Object from Template.
      *
-     * @param Series $series
-     * @param bool   $flush
-     * @param User   $loggedInUser
+     * @param bool $flush
+     * @param User $loggedInUser
      *
      * @throws \Exception
      *
@@ -342,8 +330,6 @@ class FactoryService
     /**
      * Delete Series.
      *
-     * @param Series $series
-     *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function deleteSeries(Series $series)
@@ -364,8 +350,6 @@ class FactoryService
 
     /**
      * Delete MultimediaObject.
-     *
-     * @param MultimediaObject $multimediaObject
      */
     public function deleteMultimediaObject(MultimediaObject $multimediaObject)
     {
@@ -399,8 +383,6 @@ class FactoryService
     }
 
     /**
-     * @param Series $series
-     *
      * @throws \Exception
      */
     public function cloneSeries(Series $series)
@@ -463,9 +445,7 @@ class FactoryService
     /**
      * Clone a multimedia object.
      *
-     * @param MultimediaObject $src
-     * @param Series|null      $series
-     * @param mixed            $addClonedToTitle
+     * @param mixed $addClonedToTitle
      *
      * @throws \Exception
      *
@@ -611,8 +591,7 @@ class FactoryService
     /**
      * Create a new Multimedia Object Template.
      *
-     * @param Series $series
-     * @param User   $loggedInUser
+     * @param User $loggedInUser
      *
      * @throws \Exception
      *
@@ -643,8 +622,6 @@ class FactoryService
 
     /**
      * Create multimedia object from prototype.
-     *
-     * @param MultimediaObject $prototype
      *
      * @throws \Exception
      *
@@ -691,10 +668,8 @@ class FactoryService
     }
 
     /**
-     * @param MultimediaObject $multimediaObject
-     * @param User|null        $loggedInUser
-     * @param mixed            $flush
-     * @param mixed            $dispatch
+     * @param mixed $flush
+     * @param mixed $dispatch
      *
      * @throws \Exception
      *

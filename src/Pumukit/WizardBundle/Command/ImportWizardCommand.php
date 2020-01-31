@@ -61,10 +61,6 @@ EOT
         ;
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         $this->dm = $this->getContainer()->get('doctrine_mongodb.odm.document_manager');
@@ -90,9 +86,6 @@ EOT
     }
 
     /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
      * @throws \Exception
      *
      * @return int|void|null
@@ -107,8 +100,6 @@ EOT
     }
 
     /**
-     * @param OutputInterface $output
-     *
      * @throws \Exception
      */
     private function importFiles(OutputInterface $output)

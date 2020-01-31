@@ -19,8 +19,6 @@ class EventController extends Controller implements WebTVControllerInterface
      * @Route ("/events/", defaults={"filter": false}, name="pumukit_webtv_events")
      * @Template("PumukitWebTVBundle:Live:template.html.twig")
      *
-     * @param Request $request
-     *
      * @return array|\Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request)
@@ -119,7 +117,6 @@ class EventController extends Controller implements WebTVControllerInterface
     /**
      * @param string $title
      * @param string $routeName
-     * @param array  $routeParameters
      */
     private function updateBreadcrumbs($title, $routeName, array $routeParameters = [])
     {

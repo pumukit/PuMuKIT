@@ -198,8 +198,6 @@ class EmbeddedRole
 
     /**
      * Set I18n name.
-     *
-     * @param array $name
      */
     public function setI18nName(array $name)
     {
@@ -251,8 +249,6 @@ class EmbeddedRole
 
     /**
      * Set I18n text.
-     *
-     * @param array $text
      */
     public function setI18nText(array $text)
     {
@@ -352,8 +348,6 @@ class EmbeddedRole
     /**
      * Contains all people.
      *
-     * @param array $people
-     *
      * @return bool TRUE if this embedded role contains all people, FLASE otherwise
      */
     public function containsAllPeople(array $people)
@@ -369,8 +363,6 @@ class EmbeddedRole
 
     /**
      * Contains any person.
-     *
-     * @param array $people
      *
      * @return bool TRUE if this embedded person contains any person of the list, FLASE otherwise
      */

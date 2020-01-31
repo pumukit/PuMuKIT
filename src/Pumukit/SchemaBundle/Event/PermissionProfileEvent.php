@@ -12,9 +12,6 @@ class PermissionProfileEvent extends Event
      */
     protected $permissionProfile;
 
-    /**
-     * @param PermissionProfile $permissionProfile
-     */
     public function __construct(PermissionProfile $permissionProfile)
     {
         $this->permissionProfile = $permissionProfile;

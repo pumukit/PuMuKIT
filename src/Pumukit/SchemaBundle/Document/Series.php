@@ -325,8 +325,6 @@ class Series
 
     /**
      * Set series_type.
-     *
-     * @param SeriesType $series_type
      */
     public function setSeriesType(SeriesType $series_type)
     {
@@ -407,8 +405,6 @@ class Series
 
     /**
      * Set playlist.
-     *
-     * @param Playlist $playlist
      */
     public function setPlaylist(Playlist $playlist)
     {
@@ -540,8 +536,6 @@ class Series
 
     /**
      * Set I18n title.
-     *
-     * @param array $title
      */
     public function setI18nTitle(array $title)
     {
@@ -593,8 +587,6 @@ class Series
 
     /**
      * Set I18n subtitle.
-     *
-     * @param array $subtitle
      */
     public function setI18nSubtitle(array $subtitle)
     {
@@ -666,8 +658,6 @@ class Series
 
     /**
      * Set I18n description.
-     *
-     * @param array $description
      */
     public function setI18nDescription(array $description)
     {
@@ -719,8 +709,6 @@ class Series
 
     /**
      * Set I18n header.
-     *
-     * @param array $header
      */
     public function setI18nHeader(array $header)
     {
@@ -772,8 +760,6 @@ class Series
 
     /**
      * Set I18n footer.
-     *
-     * @param array $footer
      */
     public function setI18nFooter(array $footer)
     {
@@ -873,8 +859,6 @@ class Series
 
     /**
      * Set I18n line2.
-     *
-     * @param array $line2
      */
     public function setI18nLine2(array $line2)
     {

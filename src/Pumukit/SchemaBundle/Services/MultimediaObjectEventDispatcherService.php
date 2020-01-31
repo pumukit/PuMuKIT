@@ -17,8 +17,6 @@ class MultimediaObjectEventDispatcherService
 
     /**
      * Constructor.
-     *
-     * @param EventDispatcherInterface $dispatcher
      */
     public function __construct(EventDispatcherInterface $dispatcher)
     {
@@ -31,8 +29,6 @@ class MultimediaObjectEventDispatcherService
      * Dispatchs the event MULTIMEDIAOBJECT_CREATE
      * 'multimediaobject.create' passing
      * the multimedia object
-     *
-     * @param MultimediaObject $multimediaObject
      */
     public function dispatchCreate(MultimediaObject $multimediaObject)
     {
@@ -46,8 +42,6 @@ class MultimediaObjectEventDispatcherService
      * Dispatchs the event MULTIMEDIAOBJECT_UPDATE
      * 'multimediaobject.update' passing
      * the multimedia object
-     *
-     * @param MultimediaObject $multimediaObject
      */
     public function dispatchUpdate(MultimediaObject $multimediaObject)
     {
@@ -61,8 +55,6 @@ class MultimediaObjectEventDispatcherService
      * Dispatchs the event MULTIMEDIAOBJECT_DELETE
      * 'multimediaobject.delete' passing
      * the multimedia object
-     *
-     * @param MultimediaObject $multimediaObject
      */
     public function dispatchDelete(MultimediaObject $multimediaObject)
     {
@@ -76,9 +68,6 @@ class MultimediaObjectEventDispatcherService
      * Dispatchs the event MULTIMEDIAOBJECT_CLONE
      * 'multimediaobject.clone' passing
      * the multimedia object
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param MultimediaObject $multimediaObjectCloned
      */
     public function dispatchClone(MultimediaObject $multimediaObject, MultimediaObject $multimediaObjectCloned)
     {

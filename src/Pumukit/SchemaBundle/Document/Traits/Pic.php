@@ -38,8 +38,6 @@ trait Pic
 
     /**
      * Add pic.
-     *
-     * @param DocumentPic $pic
      */
     public function addPic(DocumentPic $pic)
     {
@@ -48,8 +46,6 @@ trait Pic
 
     /**
      * Remove pic.
-     *
-     * @param DocumentPic $pic
      */
     public function removePic(DocumentPic $pic)
     {
@@ -90,8 +86,6 @@ trait Pic
 
     /**
      * Contains pic.
-     *
-     * @param DocumentPic $pic
      *
      * @return bool
      */
@@ -201,8 +195,6 @@ trait Pic
     /**
      * Get pics with all tags.
      *
-     * @param array $tags
-     *
      * @return array
      */
     public function getPicsWithAllTags(array $tags)
@@ -221,8 +213,6 @@ trait Pic
     /**
      * Get pics with all tags.
      *
-     * @param array $tags
-     *
      * @return DocumentPic|null
      */
     public function getPicWithAllTags(array $tags)
@@ -238,8 +228,6 @@ trait Pic
 
     /**
      * Get pics with any tag.
-     *
-     * @param array $tags
      *
      * @return array
      */
@@ -259,8 +247,6 @@ trait Pic
     /**
      * Get pic with any tag.
      *
-     * @param array $tags
-     *
      * @return DocumentPic|null
      */
     public function getPicWithAnyTag(array $tags)
@@ -276,11 +262,6 @@ trait Pic
 
     /**
      * Get filter pics with tag.
-     *
-     * @param array $any_tags
-     * @param array $all_tags
-     * @param array $not_any_tags
-     * @param array $not_all_tags
      *
      * @return array
      */

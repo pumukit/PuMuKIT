@@ -78,10 +78,6 @@ EOT
         ;
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         $this->dm = $this->getContainer()->get('doctrine_mongodb.odm.document_manager');
@@ -97,9 +93,6 @@ EOT
     }
 
     /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
      * @throws \Exception
      *
      * @return int|void|null
@@ -151,8 +144,6 @@ EOT
     /**
      * Function to repair path on MongoDB.
      *
-     * @param DocumentManager $documentManager
-     *
      * @throws \Exception
      */
     private function repairMongoDBPicsAndMaterial(DocumentManager $documentManager)
@@ -167,8 +158,7 @@ EOT
     }
 
     /**
-     * @param DocumentManager $documentManager
-     * @param string          $type
+     * @param string $type
      *
      * @throws \Exception
      *
@@ -196,8 +186,7 @@ EOT
     }
 
     /**
-     * @param OutputInterface $output
-     * @param string          $message
+     * @param string $message
      */
     private function showMessage(OutputInterface $output, $message)
     {
@@ -205,9 +194,7 @@ EOT
     }
 
     /**
-     * @param DocumentManager  $documentManager
-     * @param MultimediaObject $multimediaObject
-     * @param string           $type
+     * @param string $type
      *
      * @throws \Exception
      */
@@ -227,9 +214,8 @@ EOT
     }
 
     /**
-     * @param DocumentManager $documentManager
-     * @param iterable        $elements
-     * @param string          $type
+     * @param iterable $elements
+     * @param string   $type
      */
     private function fixPath(DocumentManager $documentManager, $elements, $type)
     {
@@ -261,9 +247,6 @@ EOT
     }
 
     /**
-     * @param OutputInterface $output
-     * @param DocumentManager $documentManager
-     *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     private function refactorPicsPath(OutputInterface $output, DocumentManager $documentManager)
@@ -323,9 +306,6 @@ EOT
     }
 
     /**
-     * @param OutputInterface $output
-     * @param DocumentManager $documentManager
-     *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     private function refactorMaterialsPath(OutputInterface $output, DocumentManager $documentManager)
@@ -387,8 +367,6 @@ EOT
     /**
      * Returns multimedia objects with pics without paths.
      *
-     * @param DocumentManager $documentManager
-     *
      * @return array
      */
     private function findPicsWithoutPaths(DocumentManager $documentManager)
@@ -404,8 +382,6 @@ EOT
     /**
      * Returns multimedia objects with materials without paths.
      *
-     * @param DocumentManager $documentManager
-     *
      * @return array
      */
     private function findMaterialsWithoutPaths(DocumentManager $documentManager)
@@ -419,8 +395,6 @@ EOT
     }
 
     /**
-     * @param DocumentManager $documentManager
-     *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
      * @return \Doctrine\MongoDB\Iterator
@@ -452,8 +426,6 @@ EOT
     }
 
     /**
-     * @param DocumentManager $documentManager
-     *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
      * @return \Doctrine\MongoDB\Iterator
@@ -560,11 +532,10 @@ EOT
     }
 
     /**
-     * @param DocumentManager $documentManager
-     * @param string          $multimediaObjectId
-     * @param string          $oldPath
-     * @param string          $newPath
-     * @param string          $newUrl
+     * @param string $multimediaObjectId
+     * @param string $oldPath
+     * @param string $newPath
+     * @param string $newUrl
      */
     private function updateMultimediaObjectPic(DocumentManager $documentManager, $multimediaObjectId, $oldPath, $newPath, $newUrl)
     {
@@ -583,13 +554,6 @@ EOT
         $documentManager->flush();
     }
 
-    /**
-     * @param DocumentManager $documentManager
-     * @param string          $multimediaObjectId
-     * @param string          $oldPath
-     * @param string          $newPath
-     * @param string          $newUrl
-     */
     private function updateMultimediaObjectMaterial(DocumentManager $documentManager, string $multimediaObjectId, string $oldPath, string $newPath, string $newUrl)
     {
         /** @var MultimediaObject */
@@ -608,9 +572,8 @@ EOT
     }
 
     /**
-     * @param OutputInterface $output
-     * @param bool            $haveChanges
-     * @param string|null     $oldDirName
+     * @param bool        $haveChanges
+     * @param string|null $oldDirName
      *
      * @return bool
      */

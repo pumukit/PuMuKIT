@@ -16,8 +16,7 @@ class PermissionProfileRepository extends DocumentRepository
     /**
      * Change default.
      *
-     * @param PermissionProfile $permissionProfile
-     * @param bool              $default
+     * @param bool $default
      */
     public function changeDefault(PermissionProfile $permissionProfile, $default = true)
     {

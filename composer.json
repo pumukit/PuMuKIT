@@ -34,7 +34,7 @@
         "white-october/pagerfanta-bundle": "^1.2"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "~2.14.6",
+        "friendsofphp/php-cs-fixer": "^2.16",
         "phpstan/phpstan": "@stable",
         "phpstan/phpstan-doctrine": "^0.11.5",
         "phpstan/phpstan-symfony": "^0.11.6",

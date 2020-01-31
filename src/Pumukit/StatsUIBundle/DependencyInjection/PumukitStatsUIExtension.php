@@ -20,7 +20,7 @@ class PumukitStatsUIExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $permissions = array(array('role' => 'ROLE_ACCESS_STATS', 'description' => 'Access Stats'));
+        $permissions = [['role' => 'ROLE_ACCESS_STATS', 'description' => 'Access Stats']];
         $newPermissions = array_merge($container->getParameter('pumukitschema.external_permissions'), $permissions);
         $container->setParameter('pumukitschema.external_permissions', $newPermissions);
     }
