@@ -37,7 +37,7 @@ Example complete:
 <info>php app/console import:multimedia:file %idmultimediaobject% %pathfile% --profile=%profile% --language=%language% %description%</info>
 
 Basic example:
-<info>php app/console import:multimedia:file 58a31ce08381165d008b456a {pathToPuMuKIT}/web/storage/tmp/test.mp4</info>
+<info>php app/console import:multimedia:file 58a31ce08381165d008b456a {pathToPuMuKITStorageTempDir}/test.mp4</info>
 
 EOT
             )

@@ -2,6 +2,8 @@
 
 namespace Pumukit\WorkflowBundle\Tests\EventListener;
 
+use Psr\Log\LoggerInterface;
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
@@ -9,7 +11,6 @@ use Pumukit\SchemaBundle\EventListener\MultimediaObjectListener;
 use Pumukit\SchemaBundle\Services\TextIndexService;
 use Pumukit\SchemaBundle\Services\TrackService;
 use Pumukit\WorkflowBundle\EventListener\JobGeneratorListener;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
@@ -18,7 +19,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
  * @internal
  * @coversNothing
  */
-class JobGeneratorListenerTest extends WebTestCase
+class JobGeneratorListenerTest extends PumukitTestCase
 {
     private $dm;
     private $logger;
@@ -29,11 +30,14 @@ class JobGeneratorListenerTest extends WebTestCase
 
     public function setUp()
     {
+        $this->dm = parent::setUp();
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->logger = static::$kernel->getContainer()->get('logger');
+        $this->logger = $this->getMockBuilder(LoggerInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
 
         $streamserver = ['dir_out' => sys_get_temp_dir()];
         $testProfiles = ['video' => ['target' => 'TAGA TAGC', 'resolution_hor' => 0, 'resolution_ver' => 0, 'audio' => false, 'streamserver' => $streamserver],
@@ -53,25 +57,19 @@ class JobGeneratorListenerTest extends WebTestCase
             ->will($this->returnArgument(1))
         ;
 
-        $logger = $this->getMockBuilder('Psr\Log\LoggerInterface')
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
-
         $this->jobGeneratorListener = new JobGeneratorListener($this->dm, $jobService, $profileService, $this->logger);
 
         $dispatcher = new EventDispatcher();
         $this->listener = new MultimediaObjectListener($this->dm, new TextIndexService());
         $dispatcher->addListener('multimediaobject.update', [$this->listener, 'postUpdate']);
-        $this->trackDispatcher = static::$kernel->getContainer()
-            ->get('pumukitschema.track_dispatcher')
-        ;
+        $this->trackDispatcher = static::$kernel->getContainer()->get('pumukitschema.track_dispatcher');
         $profileService = new ProfileService($testProfiles, $this->dm);
         $this->trackService = new TrackService($this->dm, $this->trackDispatcher, $profileService, null, true);
     }
 
     public function tearDown()
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->logger = null;
@@ -80,7 +78,6 @@ class JobGeneratorListenerTest extends WebTestCase
         $this->trackDispatcher = null;
         $this->trackService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testGetTargets()

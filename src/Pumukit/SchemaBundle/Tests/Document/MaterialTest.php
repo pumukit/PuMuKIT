@@ -21,7 +21,7 @@ class MaterialTest extends TestCase
         $hide = false;
         $language = 'en';
 
-        $material = new material();
+        $material = new Material();
 
         $material->setName($name);
         $material->setTags($tags);
@@ -48,14 +48,14 @@ class MaterialTest extends TestCase
     {
         $size = 5368709120; // 5GB, integer types in 32 bits machines only admit 2GB
 
-        $material = new material();
+        $material = new Material();
         $material->setSize($size);
         $this->assertEquals($size, $material->getSize());
     }
 
     public function testTagCollection()
     {
-        $material = new material();
+        $material = new Material();
         $this->assertFalse($material->containsTag('t'));
         $material->addTag('t');
         $this->assertTrue($material->containsTag('t'));
@@ -84,13 +84,4 @@ class MaterialTest extends TestCase
         $this->assertFalse($material->containsAllTags(['t0', 't1', 't2', 't3']));
     }
 
-    /*public function testRef()
-    {
-        $t1 = new material();
-        $t2 = new material();
-
-        $t2->setRef($t1);
-        $this->assertEquals(null, $t1->getRef());
-        $this->assertEquals($t1, $t2->getRef());
-    }*/
 }

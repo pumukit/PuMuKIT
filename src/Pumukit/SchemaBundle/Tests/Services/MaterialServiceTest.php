@@ -44,7 +44,7 @@ class MaterialServiceTest extends WebTestCase
         ;
 
         $this->originalFilePath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'file.pdf';
-        $this->uploadsPath = realpath(__DIR__.'/../../../../../web/uploads/material');
+        $this->uploadsPath = static::$kernel->getContainer()->getParameter('pumukit.uploads_material_dir');
 
         $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
         $this->dm->getDocumentCollection(Series::class)->remove([]);

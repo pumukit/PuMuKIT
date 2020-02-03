@@ -3,18 +3,19 @@
 namespace Pumukit\EncoderBundle\Tests\Funcional;
 
 use Monolog\Handler\StreamHandler;
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Bridge\Monolog\Logger;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @internal
  * @coversNothing
  */
-class FuncionalTest extends WebTestCase
+class FuncionalTest extends PumukitTestCase
 {
     private $dm;
     private $repo;
@@ -31,10 +32,11 @@ class FuncionalTest extends WebTestCase
     {
         $this->markTestSkipped('Functional tests not available. (A little better, but still broken)');
 
+        $this->dm = parent::setUp();
+
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm->getRepository(Job::class);
 
         $this->profileService = static::$kernel->getContainer()->get('pumukitencoder.profile');
@@ -46,14 +48,8 @@ class FuncionalTest extends WebTestCase
 
         $this->videoInputPath = realpath(__DIR__.'/../Resources').'/CAMERA.mp4';
 
-        $this->dm->getDocumentCollection(Job::class)->remove([]);
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
-        $this->dm->flush();
+        $dispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
 
-        $dispatcher = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')
-            ->getMock()
-        ;
         $logger = new Logger('job_service_test_logger');
         $logger->pushHandler(new StreamHandler(realpath(__DIR__.'/../Resources').'/encoder_test.log', Logger::WARNING));
         $this->jobService = new JobService(
@@ -68,6 +64,23 @@ class FuncionalTest extends WebTestCase
             $this->propService,
             'test'
         );
+    }
+
+    public function tearDown(): void
+    {
+        $this->dm = parent::tearDown();
+        $this->dm->close();
+        $this->dm = null;
+        $this->repo = null;
+        $this->profileService = null;
+        $this->cpuService = null;
+        $this->inspectionService = null;
+        $this->jobService = null;
+        $this->tokenStorage = null;
+        $this->trackService = null;
+        $this->propService = null;
+        $this->videoInputPath = null;
+        gc_collect_cycles();
     }
 
     public function testSimpleEncoding()

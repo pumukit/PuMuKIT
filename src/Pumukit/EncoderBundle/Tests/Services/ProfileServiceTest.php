@@ -2,15 +2,15 @@
 
 namespace Pumukit\EncoderBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\ProfileService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class ProfileServiceTest extends WebTestCase
+class ProfileServiceTest extends PumukitTestCase
 {
     private $dm;
     private $repo;
@@ -18,10 +18,10 @@ class ProfileServiceTest extends WebTestCase
 
     public function setUp()
     {
+        $this->dm = parent::setUp();
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm->getRepository(Job::class);
 
         $this->dm->getDocumentCollection(Job::class)->remove([]);
@@ -32,12 +32,13 @@ class ProfileServiceTest extends WebTestCase
 
     public function tearDown()
     {
+        parent::tearDown();
+
         $this->dm->close();
         $this->dm = null;
         $this->repo = null;
         $this->profileService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testGetProfiles()

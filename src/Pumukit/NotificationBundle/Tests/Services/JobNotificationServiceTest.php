@@ -2,56 +2,51 @@
 
 namespace Pumukit\NotificationBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class JobNotificationServiceTest extends WebTestCase
+class JobNotificationServiceTest extends PumukitTestCase
 {
     private $dm;
     private $repo;
-    private $container;
+    private $containerHelper;
     private $jobNotificationService;
 
     public function setUp()
     {
-        $options = ['environment' => 'test'];
-        static::bootKernel($options);
-        $this->container = static::$kernel->getContainer();
+        $this->dm = parent::setUp();
 
-        if (!array_key_exists('PumukitNotificationBundle', $this->container->getParameter('kernel.bundles')) ||
-            false === $this->container->getParameter('pumukit_notification.enable')) {
+        $options = ['environment' => 'test'];
+        self::bootKernel($options);
+        $this->containerHelper = self::$kernel->getContainer();
+
+        if (!array_key_exists('PumukitNotificationBundle', $this->containerHelper->getParameter('kernel.bundles')) ||
+            false === $this->containerHelper->getParameter('pumukit_notification.enable')) {
             $this->markTestSkipped('NotificationBundle is not installed');
         }
 
-        $this->dm = $this->container->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm->getRepository(Job::class);
 
-        $this->jobNotificationService = $this->container
+        $this->jobNotificationService = $this->containerHelper
             ->get('pumukit_notification.listener')
         ;
-
-        $this->dm->getDocumentCollection(Job::class)->remove([]);
-        $this->dm->flush();
     }
 
     public function tearDown()
     {
-        if (isset($this->dm)) {
-            $this->dm->close();
-        }
-        $this->container = null;
+        parent::tearDown();
+        $this->containerHelper = null;
         $this->dm = null;
         $this->repo = null;
         $this->jobNotificationService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testOnJobSuccess()

@@ -2,20 +2,21 @@
 
 namespace Pumukit\EncoderBundle\Tests\Services;
 
+use Psr\Log\LoggerInterface;
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\CpuService;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @internal
  * @coversNothing
  */
-class JobServiceTest extends WebTestCase
+class JobServiceTest extends PumukitTestCase
 {
     private $dm;
     private $repo;
@@ -30,10 +31,11 @@ class JobServiceTest extends WebTestCase
 
     public function setUp()
     {
+        $this->dm = parent::setUp();
+
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm->getRepository(Job::class);
         $this->repoMmobj = $this->dm->getRepository(MultimediaObject::class);
         $this->logger = static::$kernel->getContainer()->get('logger');
@@ -41,11 +43,6 @@ class JobServiceTest extends WebTestCase
         $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
         $this->factory = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->propService = static::$kernel->getContainer()->get('pumukitencoder.mmpropertyjob');
-
-        $this->dm->getDocumentCollection(Job::class)->remove([]);
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
-        $this->dm->flush();
 
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
         $cpuService = new CpuService($this->getDemoCpus(), $this->dm);
@@ -74,6 +71,8 @@ class JobServiceTest extends WebTestCase
 
     public function tearDown()
     {
+        parent::tearDown();
+
         $this->dm->close();
         $this->dm = null;
         $this->repo = null;
@@ -85,7 +84,6 @@ class JobServiceTest extends WebTestCase
         $this->resourcesDir = null;
         $this->jobService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testCreateTrackFromLocalHardDrive()

@@ -223,9 +223,9 @@ EOT
         foreach ($elements as $elem) {
             $path = $elem->getPath();
             if (!isset($path) && false !== stripos($elem->getUrl(), '/uploads/pic/')) {
-                $path = realpath($this->getContainer()->getParameter('kernel.root_dir').'/../web'.$elem->getUrl());
+                $path = realpath($this->getContainer()->getParameter('pumukit.public_dir').$elem->getUrl());
                 if (!$path) {
-                    throw new \Exception('Error reading: '.$this->getContainer()->getParameter('kernel.root_dir').'/../web'.$elem->getUrl());
+                    throw new \Exception('Error reading: '.$this->getContainer()->getParameter('pumukit.public_dir').$elem->getUrl());
                 }
                 $checkFile = $this->checkFileExists($path);
                 if ($checkFile && $this->force) {

@@ -2,6 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Tests\EventListener;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\EventListener\PermissionProfileListener;
@@ -11,14 +12,13 @@ use Pumukit\SchemaBundle\Services\PermissionProfileService;
 use Pumukit\SchemaBundle\Services\PermissionService;
 use Pumukit\SchemaBundle\Services\UserEventDispatcherService;
 use Pumukit\SchemaBundle\Services\UserService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * @internal
  * @coversNothing
  */
-class PermissionProfileListenerTest extends WebTestCase
+class PermissionProfileListenerTest extends PumukitTestCase
 {
     private $dm;
     private $userRepo;
@@ -30,10 +30,10 @@ class PermissionProfileListenerTest extends WebTestCase
 
     public function setUp()
     {
+        $this->dm = parent::setUp();
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->userRepo = $this->dm->getRepository(User::class);
         $this->permissionProfileRepo = $this->dm->getRepository(PermissionProfile::class);
 
@@ -56,24 +56,15 @@ class PermissionProfileListenerTest extends WebTestCase
             $this->permissionProfileService,
             $personalScopeDeleteOwners
         );
-        $this->logger = static::$kernel->getContainer()
-            ->get('logger')
-        ;
+        $this->logger = static::$kernel->getContainer()->get('logger');
 
         $this->listener = new PermissionProfileListener($this->dm, $this->userService, $this->logger);
         $dispatcher->addListener('permissionprofile.update', [$this->listener, 'postUpdate']);
-
-        $this->dm->getDocumentCollection(PermissionProfile::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(User::class)
-            ->remove([])
-        ;
-        $this->dm->flush();
     }
 
     public function tearDown()
     {
+        parent::tearDown();
         $this->dm = null;
         $this->userRepo = null;
         $this->permissionProfileRepo = null;
@@ -81,7 +72,6 @@ class PermissionProfileListenerTest extends WebTestCase
         $this->userService = null;
         $this->listener = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testPostUpdate()

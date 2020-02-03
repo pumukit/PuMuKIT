@@ -2,19 +2,19 @@
 
 namespace Pumukit\WizardBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\WizardBundle\Event\FormEvent;
 use Pumukit\WizardBundle\Event\WizardEvents;
 use Pumukit\WizardBundle\Services\FormEventDispatcherService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * @internal
  * @coversNothing
  */
-class FormEventDispatcherServiceTest extends WebTestCase
+class FormEventDispatcherServiceTest extends PumukitTestCase
 {
     const EMPTY_TITLE = 'EMTPY TITLE';
 
@@ -24,11 +24,9 @@ class FormEventDispatcherServiceTest extends WebTestCase
 
     public function setUp()
     {
+        $this->dm = parent::setUp();
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb.odm.document_manager')
-        ;
         $this->dispatcher = new EventDispatcher();
         MockUpFormListener::$called = false;
         MockUpFormListener::$title = self::EMPTY_TITLE;
@@ -37,10 +35,10 @@ class FormEventDispatcherServiceTest extends WebTestCase
 
     public function tearDown()
     {
+        parent::tearDown();
         $this->dispatcher = null;
         $this->formDispatcher = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testDispatchSubmit()

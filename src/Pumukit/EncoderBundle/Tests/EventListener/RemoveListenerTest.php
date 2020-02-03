@@ -2,17 +2,17 @@
 
 namespace Pumukit\EncoderBundle\Tests\EventListener;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Track;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class RemoveListenerTest extends WebTestCase
+class RemoveListenerTest extends PumukitTestCase
 {
     private $dm;
     private $repoJobs;
@@ -21,16 +21,15 @@ class RemoveListenerTest extends WebTestCase
     private $trackService;
     private $factoryService;
     private $resourcesDir;
-    private $logger;
     private $tokenStorage;
 
     public function setUp()
     {
+        $this->dm = parent::setUp();
+
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->logger = static::$kernel->getContainer()->get('logger');
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->repoJobs = $this->dm->getRepository(Job::class);
         $this->repoMmobj = $this->dm->getRepository(MultimediaObject::class);
         $this->repoSeries = $this->dm->getRepository(Series::class);
@@ -39,23 +38,12 @@ class RemoveListenerTest extends WebTestCase
         $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
 
         $this->resourcesDir = realpath(__DIR__.'/../Resources');
-
-        $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(Series::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(Job::class)
-            ->remove([])
-        ;
-        $this->dm->flush();
     }
 
     public function tearDown()
     {
+        $this->dm = parent::tearDown();
         $this->dm->close();
-        $this->logger = null;
         $this->dm = null;
         $this->repoJobs = null;
         $this->repoMmobj = null;
@@ -65,7 +53,6 @@ class RemoveListenerTest extends WebTestCase
         $this->tokenStorage = null;
         $this->resourcesDir = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testPostTrackRemove()

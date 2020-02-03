@@ -3,6 +3,7 @@
 namespace Pumukit\StatsBundle\Tests\EventListener;
 
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Track;
@@ -15,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @internal
  * @coversNothing
  */
-class LogTest extends WebTestCase
+class LogTest extends PumukitTestCase
 {
     private $dm;
     private $repo;
@@ -24,40 +25,24 @@ class LogTest extends WebTestCase
 
     public function setUp()
     {
+        $this->dm = parent::setUp();
+
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
-        $this->repo = $this->dm
-            ->getRepository(ViewsLog::class)
-        ;
-        $this->factoryService = static::$kernel->getContainer()
-            ->get('pumukitschema.factory')
-        ;
-        $this->tokenStorage = static::$kernel->getContainer()
-            ->get('security.token_storage')
-        ;
-
-        $this->dm->getDocumentCollection(ViewsLog::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(Series::class)
-            ->remove([])
-        ;
+        $this->repo = $this->dm->getRepository(ViewsLog::class);
+        $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
+        $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
     }
 
     public function tearDown()
     {
+        parent::tearDown();
         $this->dm = null;
         $this->repo = null;
         $this->factoryService = null;
         $this->tokenStorage = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testonMultimediaObjectViewed()

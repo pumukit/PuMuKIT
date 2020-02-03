@@ -45,7 +45,8 @@ class PicServiceTest extends WebTestCase
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->context = static::$kernel->getContainer()->get('router.request_context');
         $this->rootDir = static::$kernel->getContainer()->getParameter('kernel.root_dir');
-        $this->webDir = realpath($this->rootDir.'/../web/bundles/pumukitschema');
+        $publicDir = static::$kernel->getContainer()->getParameter('pumukit.public_dir');
+        $this->webDir = realpath($publicDir.'/bundles/pumukitschema');
         $this->localhost = $this->context->getScheme().'://localhost';
 
         $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);

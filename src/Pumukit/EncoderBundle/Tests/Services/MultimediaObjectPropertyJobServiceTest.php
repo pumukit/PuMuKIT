@@ -2,24 +2,25 @@
 
 namespace Pumukit\EncoderBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class MultimediaObjectPropertyJobServiceTest extends WebTestCase
+class MultimediaObjectPropertyJobServiceTest extends PumukitTestCase
 {
     private $dm;
     private $service;
 
     public function setUp()
     {
+        $this->dm = parent::setUp();
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+
         $this->service = static::$kernel->getContainer()->get('pumukitencoder.mmpropertyjob');
 
         $this->dm->getDocumentCollection(Job::class)->remove([]);
@@ -28,10 +29,10 @@ class MultimediaObjectPropertyJobServiceTest extends WebTestCase
 
     public function tearDown()
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testService()
