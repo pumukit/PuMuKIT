@@ -59,8 +59,6 @@ class GroupController extends AdminController implements NewAdminControllerInter
      * Overwrite to use group service
      * to check if exists and dispatch event.
      *
-     * @param Request $request
-     *
      * @return JsonResponse|Response|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
@@ -101,8 +99,6 @@ class GroupController extends AdminController implements NewAdminControllerInter
      * Overwrite to avoid updating not
      * local groups and to use group service
      * to update group and dispatch event.
-     *
-     * @param Request $request
      *
      * @return JsonResponse|Response|\Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -262,8 +258,6 @@ class GroupController extends AdminController implements NewAdminControllerInter
      *
      * @Template("PumukitNewAdminBundle:Group:info.html.twig")
      *
-     * @param Request $request
-     *
      * @return array
      */
     public function infoAction(Request $request)
@@ -304,9 +298,6 @@ class GroupController extends AdminController implements NewAdminControllerInter
      * Data Resource Action.
      *
      * @Template("PumukitNewAdminBundle:Group:dataresources.html.twig")
-     *
-     * @param Group   $group
-     * @param Request $request
      *
      * @throws \Exception
      *
@@ -386,9 +377,6 @@ class GroupController extends AdminController implements NewAdminControllerInter
     /**
      * Can be deleted.
      *
-     * @param Group   $group
-     * @param Request $request
-     *
      * @return JsonResponse
      */
     public function canBeDeletedAction(Group $group, Request $request)
@@ -413,9 +401,6 @@ class GroupController extends AdminController implements NewAdminControllerInter
     /**
      * Delete all users from group.
      *
-     * @param Group   $group
-     * @param Request $request
-     *
      * @return Response
      */
     public function deleteAllUsersAction(Group $group, Request $request)
@@ -433,9 +418,6 @@ class GroupController extends AdminController implements NewAdminControllerInter
     /**
      * Delete all multimediaObjects from group.
      *
-     * @param Group   $group
-     * @param Request $request
-     *
      * @return Response
      */
     public function deleteAllMultimediaObjectsAction(Group $group, Request $request)
@@ -452,9 +434,6 @@ class GroupController extends AdminController implements NewAdminControllerInter
 
     /**
      * Delete all embeddedbroadcasts from group.
-     *
-     * @param Group   $group
-     * @param Request $request
      *
      * @return Response
      */

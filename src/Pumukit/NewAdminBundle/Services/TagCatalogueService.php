@@ -46,11 +46,8 @@ class TagCatalogueService
     /**
      * TagCatalogueService constructor.
      *
-     * @param DocumentManager     $documentManager
-     * @param TranslatorInterface $translator
-     * @param RouterInterface     $router
-     * @param string              $configuredTag
-     * @param array               $locales
+     * @param string $configuredTag
+     * @param array  $locales
      */
     public function __construct(DocumentManager $documentManager, TranslatorInterface $translator, RouterInterface $router, $configuredTag, $locales)
     {
@@ -84,10 +81,6 @@ class TagCatalogueService
         return $tag;
     }
 
-    /**
-     * @param SessionInterface $session
-     * @param bool             $all
-     */
     public function resetSessionCriteria(SessionInterface $session, bool $all = true)
     {
         if ($all) {
@@ -107,10 +100,6 @@ class TagCatalogueService
         $session->remove('admin/unesco/element_sort');
     }
 
-    /**
-     * @param Request          $request
-     * @param SessionInterface $session
-     */
     public function addSessionCriteria(Request $request, SessionInterface $session)
     {
         $formBasic = false;
@@ -235,9 +224,7 @@ class TagCatalogueService
     }
 
     /**
-     * @param MultimediaObject $object
-     * @param SessionInterface $session
-     * @param string           $field
+     * @param string $field
      *
      * @throws \Exception
      *
@@ -487,10 +474,6 @@ class TagCatalogueService
         return $allFields;
     }
 
-    /**
-     * @param Request          $request
-     * @param SessionInterface $session
-     */
     private function checkAndSortCriteria(Request $request, SessionInterface $session)
     {
         $mappingSort = [
@@ -519,8 +502,7 @@ class TagCatalogueService
     }
 
     /**
-     * @param MultimediaObject $object
-     * @param string           $field
+     * @param string $field
      *
      * @return string
      */
@@ -629,9 +611,6 @@ class TagCatalogueService
     }
 
     /**
-     * @param MultimediaObject $object
-     * @param SessionInterface $session
-     *
      * @return string
      */
     private function criteriaRenderField(MultimediaObject $object, SessionInterface $session)
@@ -656,9 +635,7 @@ class TagCatalogueService
     }
 
     /**
-     * @param MultimediaObject $object
-     * @param SessionInterface $session
-     * @param string           $key
+     * @param string $key
      *
      * @return string
      */
@@ -698,8 +675,7 @@ class TagCatalogueService
     }
 
     /**
-     * @param MultimediaObject $object
-     * @param string           $field
+     * @param string $field
      *
      * @return string
      */
@@ -721,8 +697,6 @@ class TagCatalogueService
     }
 
     /**
-     * @param MultimediaObject $object
-     *
      * @return mixed
      */
     private function getTracksName(MultimediaObject $object)

@@ -16,8 +16,6 @@ class PermissionProfileEventDispatcherService
 
     /**
      * Constructor.
-     *
-     * @param EventDispatcherInterface $dispatcher
      */
     public function __construct(EventDispatcherInterface $dispatcher)
     {
@@ -30,8 +28,6 @@ class PermissionProfileEventDispatcherService
      * Dispatchs the event PERMISSIONPROFILE_CREATE
      * 'permissionprofile.create' passing
      * the permissionProfile
-     *
-     * @param PermissionProfile $permissionProfile
      */
     public function dispatchCreate(PermissionProfile $permissionProfile)
     {
@@ -45,8 +41,6 @@ class PermissionProfileEventDispatcherService
      * Dispatchs the event PERMISSIONPROFILE_UPDATE
      * 'permissionprofile.update' passing
      * the permissionProfile
-     *
-     * @param PermissionProfile $permissionProfile
      */
     public function dispatchUpdate(PermissionProfile $permissionProfile)
     {
@@ -60,8 +54,6 @@ class PermissionProfileEventDispatcherService
      * Dispatchs the event PERMISSIONPROFILE_DELETE
      * 'permissionprofile.delete' passing
      * the permissionProfile
-     *
-     * @param PermissionProfile $permissionProfile
      */
     public function dispatchDelete(PermissionProfile $permissionProfile)
     {

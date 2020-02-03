@@ -177,7 +177,6 @@ class SenderService
      * @param array  $emailsTo
      * @param string $subjectString
      * @param string $templateString
-     * @param array  $parameters
      */
     public function sendEmails($emailsTo, $subjectString, $templateString, array $parameters = [])
     {
@@ -223,7 +222,6 @@ class SenderService
      * @param array|string $emailTo
      * @param string       $subject
      * @param string       $template
-     * @param array        $parameters
      * @param bool         $error
      * @param bool         $transConfigSubject
      *

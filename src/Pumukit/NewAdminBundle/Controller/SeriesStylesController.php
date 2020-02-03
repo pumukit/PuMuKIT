@@ -47,8 +47,6 @@ class SeriesStylesController extends Controller
     }
 
     /**
-     * @param Request $request
-     *
      * @return JsonResponse
      *
      * @Route("/create", name="pumukit_newadmin_series_styles_create")
@@ -70,8 +68,6 @@ class SeriesStylesController extends Controller
     }
 
     /**
-     * @param Request $request
-     *
      * @return JsonResponse
      *
      * @Route("/edit", name="pumukit_newadmin_series_styles_edit")

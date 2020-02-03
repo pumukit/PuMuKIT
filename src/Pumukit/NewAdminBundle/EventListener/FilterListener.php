@@ -87,8 +87,6 @@ class FilterListener
      * Query in MongoDB:
      * {"people":{"$elemMatch":{"people._id":{"$id":"___MongoID_of_Person___"},"cod":"___Role_cod___"}}}
      *
-     * @param Person|null $person
-     *
      * @return array $people
      */
     private function getPeopleMongoQuery(Person $person = null)
@@ -124,8 +122,6 @@ class FilterListener
      *
      * Query in MongoDB:
      * {"groups":{"$in":["___MongoID_of_Group_1___", "___MongoID_of_Group_2___"...]}}
-     *
-     * @param User $user
      *
      * @return array $groups
      */

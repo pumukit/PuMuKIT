@@ -17,8 +17,6 @@ class TrackEventDispatcherService
 
     /**
      * Constructor.
-     *
-     * @param EventDispatcherInterface $dispatcher
      */
     public function __construct(EventDispatcherInterface $dispatcher)
     {
@@ -31,9 +29,6 @@ class TrackEventDispatcherService
      * Dispatchs the event TRACK_CREATE
      * 'track.create' passing
      * the multimedia object and the track
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Track            $track
      */
     public function dispatchCreate(MultimediaObject $multimediaObject, Track $track)
     {
@@ -47,9 +42,6 @@ class TrackEventDispatcherService
      * Dispatchs the event TRACK_UPDATE
      * 'track.update' passing
      * the multimedia object and the track
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Track            $track
      */
     public function dispatchUpdate(MultimediaObject $multimediaObject, Track $track)
     {
@@ -63,9 +55,6 @@ class TrackEventDispatcherService
      * Dispatchs the event TRACK_DELETE
      * 'track.delete' passing
      * the multimedia object and the track
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Track            $track
      */
     public function dispatchDelete(MultimediaObject $multimediaObject, Track $track)
     {

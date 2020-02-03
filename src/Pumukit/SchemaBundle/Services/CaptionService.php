@@ -11,8 +11,6 @@ class CaptionService
     /**
      * Get VTT captions.
      *
-     * @param MultimediaObject $multimediaObject
-     *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getCaptions(MultimediaObject $multimediaObject)

@@ -22,9 +22,6 @@ class PicService
 
     /**
      * PicService constructor.
-     *
-     * @param DocumentManager            $documentManager
-     * @param MultimediaObjectPicService $mmsPicService
      */
     public function __construct(DocumentManager $documentManager, MultimediaObjectPicService $mmsPicService)
     {
@@ -224,7 +221,6 @@ class PicService
 
     /**
      * @param array $data
-     * @param array $params
      * @param bool  $no_replace
      *
      * @throws \Exception

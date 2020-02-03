@@ -13,9 +13,6 @@ class MultimediaObjectCloneEvent extends Event
     protected $multimediaObject;
     protected $multimediaObjectCloned;
 
-    /**
-     * @param MultimediaObject $multimediaObject
-     */
     public function __construct(MultimediaObject $multimediaObject, MultimediaObject $multimediaObjectCloned)
     {
         $this->multimediaObject = $multimediaObject;

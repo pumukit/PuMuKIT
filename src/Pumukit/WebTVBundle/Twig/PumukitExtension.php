@@ -200,8 +200,6 @@ class PumukitExtension extends AbstractExtension
      * Get precinct full title.
      *
      * @param EmbeddedTag $precinctEmbeddedTag
-     *
-     * @return string
      */
     public function getPrecinctFullTitle($precinctEmbeddedTag): string
     {
@@ -280,8 +278,6 @@ class PumukitExtension extends AbstractExtension
     /**
      * Wrapper for the duration of the object. Gets the duration using the MultimediaObjectDurationService.
      *
-     * @param MultimediaObject $mmobj
-     *
      * @return int
      */
     public function getMmobjDuration(MultimediaObject $mmobj)
@@ -291,8 +287,6 @@ class PumukitExtension extends AbstractExtension
 
     /**
      * Get captions.
-     *
-     * @param MultimediaObject $multimediaObject
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -384,8 +378,6 @@ class PumukitExtension extends AbstractExtension
     /**
      * Get next live event session.
      *
-     * @param MultimediaObject $multimediaObject
-     *
      * @throws \Exception
      *
      * @return object
@@ -415,8 +407,6 @@ class PumukitExtension extends AbstractExtension
     }
 
     /**
-     * @param Series $series
-     *
      * @throws \MongoException
      *
      * @return int

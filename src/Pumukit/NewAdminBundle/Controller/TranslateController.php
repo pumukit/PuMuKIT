@@ -11,8 +11,6 @@ class TranslateController implements NewAdminControllerInterface
      * Translate controller.
      * Declared as a service to be extended.
      *
-     * @param Request $request
-     *
      * @return JsonResponse
      */
     public function indexAction(Request $request)

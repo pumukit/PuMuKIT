@@ -38,8 +38,6 @@ trait Material
 
     /**
      * Add material.
-     *
-     * @param DocumentMaterial $material
      */
     public function addMaterial(DocumentMaterial $material)
     {
@@ -48,8 +46,6 @@ trait Material
 
     /**
      * Remove material.
-     *
-     * @param DocumentMaterial $material
      */
     public function removeMaterial(DocumentMaterial $material)
     {
@@ -90,8 +86,6 @@ trait Material
 
     /**
      * Contains material.
-     *
-     * @param DocumentMaterial $material
      *
      * @return bool
      */
@@ -169,8 +163,6 @@ trait Material
     /**
      * Get materials with all tags.
      *
-     * @param array $tags
-     *
      * @return array
      */
     public function getMaterialsWithAllTags(array $tags)
@@ -189,8 +181,6 @@ trait Material
     /**
      * Get material with all tags.
      *
-     * @param array $tags
-     *
      * @return DocumentMaterial|null
      */
     public function getMaterialWithAllTags(array $tags)
@@ -206,8 +196,6 @@ trait Material
 
     /**
      * Get materials with any tag.
-     *
-     * @param array $tags
      *
      * @return array
      */
@@ -227,8 +215,6 @@ trait Material
     /**
      * Get material with any tag.
      *
-     * @param array $tags
-     *
      * @return DocumentMaterial|null
      */
     public function getMaterialWithAnyTag(array $tags)
@@ -244,11 +230,6 @@ trait Material
 
     /**
      * Get filtered materials with tags.
-     *
-     * @param array $any_tags
-     * @param array $all_tags
-     * @param array $not_any_tags
-     * @param array $not_all_tags
      *
      * @return array
      */

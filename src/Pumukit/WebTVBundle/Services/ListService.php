@@ -27,10 +27,8 @@ class ListService
     /**
      * ListService constructor.
      *
-     * @param DocumentManager             $documentManager
-     * @param EmbeddedEventSessionService $embeddedEventSessionService
-     * @param string                      $advanceLiveEvents
-     * @param string                      $wallTag
+     * @param string $advanceLiveEvents
+     * @param string $wallTag
      */
     public function __construct(DocumentManager $documentManager, EmbeddedEventSessionService $embeddedEventSessionService, $advanceLiveEvents, $wallTag)
     {
@@ -69,7 +67,6 @@ class ListService
     }
 
     /**
-     * @param array  $criteria
      * @param string $sort
      * @param string $locale
      * @param null   $parentTag
@@ -182,9 +179,6 @@ class ListService
     }
 
     /**
-     * @param Builder   $qb
-     * @param \DateTime $date
-     *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
      * @return array
@@ -253,10 +247,6 @@ class ListService
     }
 
     /**
-     * @param Builder   $qb
-     * @param \DateTime $dateStart
-     * @param \DateTime $dateEnd
-     *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
      * @return mixed

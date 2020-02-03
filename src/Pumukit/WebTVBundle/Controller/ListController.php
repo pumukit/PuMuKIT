@@ -25,9 +25,6 @@ class ListController extends Controller implements WebTVControllerInterface
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"tagCod": "cod"}})
      * @Template("PumukitWebTVBundle:List:template.html.twig")
      *
-     * @param Tag     $tag
-     * @param Request $request
-     *
      * @throws \Exception
      *
      * @return array
@@ -75,9 +72,6 @@ class ListController extends Controller implements WebTVControllerInterface
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"tagCod": "cod"}})
      * @Template("PumukitWebTVBundle:List:template.html.twig")
      *
-     * @param Tag     $tag
-     * @param Request $request
-     *
      * @throws \Exception
      *
      * @return array
@@ -117,9 +111,6 @@ class ListController extends Controller implements WebTVControllerInterface
      * @ParamConverter("user", class="PumukitSchemaBundle:User", options={"mapping": {"username": "username"}})
      * @Template("PumukitWebTVBundle:List:template.html.twig")
      *
-     * @param User    $user
-     * @param Request $request
-     *
      * @throws \Exception
      *
      * @return array
@@ -158,9 +149,6 @@ class ListController extends Controller implements WebTVControllerInterface
      * @ParamConverter("user", class="PumukitSchemaBundle:User", options={"mapping": {"username": "username"}})
      * @Template("PumukitWebTVBundle:List:template.html.twig")
      *
-     * @param User    $user
-     * @param Request $request
-     *
      * @throws \Exception
      *
      * @return array
@@ -196,9 +184,6 @@ class ListController extends Controller implements WebTVControllerInterface
     /**
      * @Route("/users/{username}/pager/{type}", name="pumukit_webtv_byuser_objects_pager", defaults={"username": null, "type": "multimediaobject"})
      * @ParamConverter("user", class="PumukitSchemaBundle:User", options={"mapping": {"username": "username"}})
-     *
-     * @param User    $user
-     * @param Request $request
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
@@ -262,9 +247,6 @@ class ListController extends Controller implements WebTVControllerInterface
     /**
      * @Route("/bytag/{tagCod}/pager/{type}", name="pumukit_webtv_bytag_objects_pager", defaults={"tagCod": null, "type": "multimediaobject"})
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"tagCod": "cod"}})
-     *
-     * @param Request $request
-     * @param Tag     $tag
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
@@ -351,7 +333,6 @@ class ListController extends Controller implements WebTVControllerInterface
     /**
      * @param string $title
      * @param string $routeName
-     * @param array  $routeParameters
      */
     private function updateBreadcrumbs($title, $routeName, array $routeParameters = [])
     {
