@@ -697,16 +697,16 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
                 // NOTE: Videos without configured tag
                 $selectedTag = $dm->getRepository(Tag::class)->findOneBy(['cod' => $configuredTag->getCod()]);
                 $query = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder()
-                    ->field('tags._id')
-                    ->notEqual(new \MongoId($selectedTag->getId()))
+                    ->field('tags.cod')
+                    ->notEqual(new \MongoId($selectedTag->getCod()))
                 ;
 
                 break;
             case 'tag':
                 $selectedTag = $dm->getRepository(Tag::class)->findOneBy(['cod' => $tag]);
                 $query = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder()
-                    ->field('tags._id')
-                    ->equals(new \MongoId($selectedTag->getId()))
+                    ->field('tags.cod')
+                    ->equals(new \MongoId($selectedTag->getCod()))
                 ;
 
                 break;
