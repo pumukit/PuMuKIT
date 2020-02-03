@@ -26,11 +26,7 @@ class UserService
     /**
      * UserService constructor.
      *
-     * @param DocumentManager            $documentManager
-     * @param UserEventDispatcherService $dispatcher
-     * @param PermissionService          $permissionService
-     * @param PermissionProfileService   $permissionProfileService
-     * @param bool                       $personalScopeDeleteOwners
+     * @param bool $personalScopeDeleteOwners
      */
     public function __construct(DocumentManager $documentManager, UserEventDispatcherService $dispatcher, PermissionService $permissionService, PermissionProfileService $permissionProfileService, $personalScopeDeleteOwners = false)
     {
@@ -51,9 +47,7 @@ class UserService
      * Add user id of the creator of the
      * Multimedia Object as property
      *
-     * @param MultimediaObject $multimediaObject
-     * @param User             $user
-     * @param bool             $executeFlush
+     * @param bool $executeFlush
      *
      * @return MultimediaObject
      */
@@ -75,9 +69,7 @@ class UserService
      * Multimedia Object as property if
      * is logged in user and not admin
      *
-     * @param MultimediaObject $multimediaObject
-     * @param User             $user
-     * @param bool             $executeFlush
+     * @param bool $executeFlush
      *
      * @return MultimediaObject
      */
@@ -91,8 +83,6 @@ class UserService
 
     /**
      * Create user.
-     *
-     * @param User $user
      *
      * @return User
      */
@@ -113,7 +103,6 @@ class UserService
     /**
      * Update user.
      *
-     * @param User $user
      * @param bool $executeFlush
      * @param bool $checkOrigin
      * @param bool $execute_dispatch
@@ -160,7 +149,6 @@ class UserService
     /**
      * Delete user.
      *
-     * @param User $user
      * @param bool $executeFlush
      */
     public function delete(User $user, $executeFlush = true)
@@ -176,7 +164,6 @@ class UserService
     /**
      * Add roles.
      *
-     * @param User  $user
      * @param array $permissions
      * @param bool  $executeFlush
      *
@@ -200,7 +187,6 @@ class UserService
     /**
      * Remove roles.
      *
-     * @param User  $user
      * @param array $permissions
      * @param bool  $executeFlush
      *
@@ -224,8 +210,6 @@ class UserService
     /**
      * Count Users with given permission profile.
      *
-     * @param PermissionProfile $permissionProfile
-     *
      * @return int
      */
     public function countUsersWithPermissionProfile(PermissionProfile $permissionProfile)
@@ -240,8 +224,6 @@ class UserService
 
     /**
      * Get Users with given permission profile.
-     *
-     * @param PermissionProfile $permissionProfile
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
@@ -278,7 +260,6 @@ class UserService
     /**
      * Set user scope.
      *
-     * @param User   $user
      * @param string $oldScope
      * @param string $newScope
      *
@@ -314,7 +295,6 @@ class UserService
     /**
      * Add user scope.
      *
-     * @param User   $user
      * @param string $scope
      *
      * @return User
@@ -367,8 +347,6 @@ class UserService
      * Checks if the PermissionProfile
      * of the User has Global Scope
      *
-     * @param User $user
-     *
      * @return bool
      */
     public function hasGlobalScope(User $user)
@@ -385,8 +363,6 @@ class UserService
      *
      * Checks if the PermissionProfile
      * of the User has Personal Scope
-     *
-     * @param User $user
      *
      * @return bool
      */
@@ -405,8 +381,6 @@ class UserService
      * Checks if the PermissionProfile
      * of the User has None Scope
      *
-     * @param User $user
-     *
      * @return bool
      */
     public function hasNoneScope(User $user)
@@ -421,10 +395,8 @@ class UserService
     /**
      * Add group to user.
      *
-     * @param Group $group
-     * @param User  $user
-     * @param bool  $executeFlush
-     * @param bool  $checkOrigin
+     * @param bool $executeFlush
+     * @param bool $checkOrigin
      *
      * @throws \Exception
      */
@@ -448,10 +420,8 @@ class UserService
     /**
      * Delete group from user.
      *
-     * @param Group $group
-     * @param User  $user
-     * @param bool  $executeFlush
-     * @param bool  $checkOrigin
+     * @param bool $executeFlush
+     * @param bool $checkOrigin
      *
      * @throws \Exception
      */
@@ -475,9 +445,6 @@ class UserService
     /**
      * Is allowed to modify group.
      *
-     * @param User  $user
-     * @param Group $group
-     *
      * @return bool
      */
     public function isAllowedToModifyUserGroup(User $user, Group $group)
@@ -487,8 +454,6 @@ class UserService
 
     /**
      * Find with group.
-     *
-     * @param Group $group
      *
      * @return mixed
      */
@@ -504,8 +469,6 @@ class UserService
     /**
      * Delete all users from group.
      *
-     * @param Group $group
-     *
      * @throws \Exception
      */
     public function deleteAllFromGroup(Group $group)
@@ -520,7 +483,6 @@ class UserService
     /**
      * Is User last relation.
      *
-     * @param User        $loggedInUser
      * @param string|null $mmId
      * @param string|null $personId
      * @param array       $owners
@@ -550,7 +512,6 @@ class UserService
     /**
      * Is logged in the person to be removed from owner of a multimedia object.
      *
-     * @param User            $loggedInUser
      * @param \MongoId|string $personId
      *
      * @throws \Doctrine\ODM\MongoDB\LockException
@@ -583,7 +544,6 @@ class UserService
     /**
      * Is user in owners array.
      *
-     * @param User  $loggedInUser
      * @param array $owners
      *
      * @throws \Doctrine\ODM\MongoDB\LockException
@@ -613,7 +573,6 @@ class UserService
     /**
      * User has group in common with given groups array.
      *
-     * @param User        $loggedInUser
      * @param string|null $mmId
      * @param string|null $personId
      * @param array       $groups
@@ -663,7 +622,6 @@ class UserService
      * Multimedia Object or Series as property
      *
      * @param MultimediaObject|Series $object
-     * @param User                    $user
      * @param bool                    $executeFlush
      *
      * @return MultimediaObject

@@ -17,9 +17,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class DefaultController extends Controller
 {
     /**
-     * @param Live    $live
-     * @param Request $request
-     *
      * @Route("/live/{id}", name="pumukit_live_id")
      * @Template("PumukitWebTVBundle:Live/Basic:template.html.twig")
      *
@@ -33,9 +30,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param Live    $live
-     * @param Request $request
-     *
      * @Route("/live/iframe/{id}", name="pumukit_live_iframe_id")
      * @Template("PumukitWebTVBundle:Live/Basic:template_iframe.html.twig")
      *
@@ -50,9 +44,6 @@ class DefaultController extends Controller
      * @Route("/live/event/{id}", name="pumukit_live_event_id")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
      * @Template("PumukitWebTVBundle:Live/Advance:template.html.twig")
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Request          $request
      *
      * @throws \MongoException
      *
@@ -104,9 +95,7 @@ class DefaultController extends Controller
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
      * @Template("PumukitWebTVBundle:Live/Advance:iframe.html.twig")
      *
-     * @param MultimediaObject $multimediaObject
-     * @param Request          $request
-     * @param bool             $iframe
+     * @param bool $iframe
      *
      * @throws \MongoException
      *
@@ -214,8 +203,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param Request $request
-     *
      * @return array
      *
      * @Route("/live", name="pumukit_live")
@@ -238,8 +225,6 @@ class DefaultController extends Controller
     /**
      * @Route("/live/playlist/{id}", name="pumukit_live_playlist_id", defaults={"_format": "xml"})
      * @Template("PumukitWebTVBundle:Live/Basic:playlist.xml.twig")
-     *
-     * @param Live $live
      *
      * @return array
      */
@@ -264,9 +249,6 @@ class DefaultController extends Controller
     /**
      * @Route("/event/contact/{id}", name="pumukit_webtv_contact_event")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Request          $request
      *
      * @return JsonResponse
      */
@@ -309,9 +291,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param Live    $live
-     * @param Request $request
-     * @param bool    $iframe
+     * @param bool $iframe
      *
      * @return array|\Symfony\Component\HttpFoundation\Response
      */
@@ -340,7 +320,6 @@ class DefaultController extends Controller
     /**
      * @param string $title
      * @param string $routeName
-     * @param array  $routeParameters
      */
     protected function updateBreadcrumbs($title, $routeName, array $routeParameters = [])
     {

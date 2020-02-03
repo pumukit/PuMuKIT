@@ -25,13 +25,10 @@ class BreadcrumbsService
     /**
      * BreadcrumbsService constructor.
      *
-     * @param RouterInterface     $router
-     * @param SessionInterface    $session
-     * @param TranslatorInterface $translator
-     * @param string              $allTitle
-     * @param string              $allRoute
-     * @param string              $homeTitle
-     * @param null                $parentWeb
+     * @param string $allTitle
+     * @param string $allRoute
+     * @param string $homeTitle
+     * @param null   $parentWeb
      */
     public function __construct(
         RouterInterface $router,
@@ -85,7 +82,6 @@ class BreadcrumbsService
     /**
      * @param string $title
      * @param string $routeName
-     * @param array  $routeParameters
      * @param bool   $forceTranslation
      */
     public function addList($title, $routeName, array $routeParameters = [], $forceTranslation = false)
@@ -100,9 +96,6 @@ class BreadcrumbsService
         $this->add($title, $routeName, $routeParameters);
     }
 
-    /**
-     * @param Series $series
-     */
     public function addSeries(Series $series)
     {
         if (1 == count($this->breadcrumbs)) {
@@ -118,9 +111,6 @@ class BreadcrumbsService
         }
     }
 
-    /**
-     * @param MultimediaObject $multimediaObject
-     */
     public function addMultimediaObject(MultimediaObject $multimediaObject)
     {
         $this->addSeries($multimediaObject->getSeries());
@@ -140,7 +130,6 @@ class BreadcrumbsService
     /**
      * @param string $title
      * @param string $routeName
-     * @param array  $routeParameters
      */
     public function add($title, $routeName, array $routeParameters = [])
     {

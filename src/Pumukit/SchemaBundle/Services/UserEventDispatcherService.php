@@ -16,8 +16,6 @@ class UserEventDispatcherService
 
     /**
      * Constructor.
-     *
-     * @param EventDispatcherInterface $dispatcher
      */
     public function __construct(EventDispatcherInterface $dispatcher)
     {
@@ -30,8 +28,6 @@ class UserEventDispatcherService
      * Dispatchs the event USER_CREATE
      * 'user.create' passing
      * the user
-     *
-     * @param User $user
      */
     public function dispatchCreate(User $user)
     {
@@ -45,8 +41,6 @@ class UserEventDispatcherService
      * Dispatchs the event USER_UPDATE
      * 'user.update' passing
      * the user
-     *
-     * @param User $user
      */
     public function dispatchUpdate(User $user)
     {
@@ -60,8 +54,6 @@ class UserEventDispatcherService
      * Dispatchs the event USER_DELETE
      * 'user.delete' passing
      * the user
-     *
-     * @param User $user
      */
     public function dispatchDelete(User $user)
     {

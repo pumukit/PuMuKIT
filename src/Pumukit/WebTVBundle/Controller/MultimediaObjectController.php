@@ -23,9 +23,6 @@ class MultimediaObjectController extends Controller implements WebTVControllerIn
      * @Route("/video/{id}", name="pumukit_webtv_multimediaobject_index" )
      * @Template("PumukitWebTVBundle:MultimediaObject:template.html.twig")
      *
-     * @param MultimediaObject $multimediaObject
-     * @param Request          $request
-     *
      * @throws \MongoException
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -74,9 +71,6 @@ class MultimediaObjectController extends Controller implements WebTVControllerIn
     /**
      * @Route("/iframe/{id}", name="pumukit_webtv_multimediaobject_iframe" )
      *
-     * @param MultimediaObject $multimediaObject
-     * @param Request          $request
-     *
      * @return Response
      */
     public function iframeAction(MultimediaObject $multimediaObject, Request $request)
@@ -89,9 +83,6 @@ class MultimediaObjectController extends Controller implements WebTVControllerIn
     /**
      * @Route("/video/magic/{secret}", name="pumukit_webtv_multimediaobject_magicindex", defaults={"show_hide": true})
      * @Template("PumukitWebTVBundle:MultimediaObject:template.html.twig")
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Request          $request
      *
      * @throws \MongoException
      *
@@ -153,9 +144,6 @@ class MultimediaObjectController extends Controller implements WebTVControllerIn
     /**
      * @Route("/iframe/magic/{secret}", name="pumukit_webtv_multimediaobject_magiciframe", defaults={"show_hide": true})
      *
-     * @param MultimediaObject $multimediaObject
-     * @param Request          $request
-     *
      * @return Response
      */
     public function magicIframeAction(MultimediaObject $multimediaObject, Request $request)
@@ -167,9 +155,6 @@ class MultimediaObjectController extends Controller implements WebTVControllerIn
 
     /**
      * @Template("PumukitWebTVBundle:MultimediaObject:template_series.html.twig")
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Request          $request
      *
      * @return array
      */
@@ -217,8 +202,6 @@ class MultimediaObjectController extends Controller implements WebTVControllerIn
     /**
      * @Template("PumukitWebTVBundle:MultimediaObject:template_related.html.twig")
      *
-     * @param MultimediaObject $multimediaObject
-     *
      * @return array
      */
     public function relatedAction(MultimediaObject $multimediaObject)
@@ -235,9 +218,6 @@ class MultimediaObjectController extends Controller implements WebTVControllerIn
     /**
      * @Route("/video/{id}/info", name="pumukit_webtv_multimediaobject_info" )
      * @Template("PumukitWebTVBundle:MultimediaObject:template_info.html.twig")
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Request          $request
      *
      * @throws \MongoException
      *
@@ -279,9 +259,6 @@ class MultimediaObjectController extends Controller implements WebTVControllerIn
         return $this->container->getParameter('pumukit.full_magic_url');
     }
 
-    /**
-     * @param MultimediaObject $multimediaObject
-     */
     private function updateBreadcrumbs(MultimediaObject $multimediaObject)
     {
         $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');

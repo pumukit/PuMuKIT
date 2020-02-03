@@ -55,10 +55,6 @@ EOT
         ;
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         $this->dm = $this->getContainer()->get('doctrine_mongodb.odm.document_manager');
@@ -71,9 +67,6 @@ EOT
     }
 
     /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
      * @throws \Exception
      *
      * @return int|void|null
@@ -88,9 +81,7 @@ EOT
     }
 
     /**
-     * @param OutputInterface $output
-     * @param DocumentManager $documentManager
-     * @param string          $path
+     * @param string $path
      */
     private function findFilesOfPath(OutputInterface $output, DocumentManager $documentManager, $path)
     {
@@ -117,8 +108,7 @@ EOT
     }
 
     /**
-     * @param DocumentManager $documentManager
-     * @param string          $filePath
+     * @param string $filePath
      *
      * @return bool
      */
@@ -165,8 +155,7 @@ EOT
     }
 
     /**
-     * @param OutputInterface $output
-     * @param string          $directoryPath
+     * @param string $directoryPath
      */
     private function isEmptyDirectory(OutputInterface $output, $directoryPath)
     {

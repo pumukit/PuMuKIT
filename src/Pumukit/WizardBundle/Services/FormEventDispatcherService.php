@@ -17,8 +17,6 @@ class FormEventDispatcherService
 
     /**
      * Constructor.
-     *
-     * @param EventDispatcherInterface $dispatcher
      */
     public function __construct(EventDispatcherInterface $dispatcher)
     {
@@ -31,10 +29,6 @@ class FormEventDispatcherService
      * Dispatchs the event FORM_SUBMIT
      * 'wizard.form.submit' passing
      * the submitted form
-     *
-     * @param User             $user
-     * @param MultimediaObject $multimediaObject
-     * @param array            $form
      */
     public function dispatchSubmit(User $user, MultimediaObject $multimediaObject, array $form)
     {

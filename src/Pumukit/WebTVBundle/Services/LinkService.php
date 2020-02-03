@@ -15,8 +15,7 @@ class LinkService
     /**
      * LinkService constructor.
      *
-     * @param UrlGeneratorInterface $generator
-     * @param string                $linkTagToSearch
+     * @param string $linkTagToSearch
      */
     public function __construct(UrlGeneratorInterface $generator, $linkTagToSearch)
     {
@@ -27,7 +26,6 @@ class LinkService
     /**
      * @param string|null $tagCod
      * @param string|null $onlyGeneral
-     * @param array       $parameters
      *
      * @return string
      */

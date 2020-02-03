@@ -25,8 +25,6 @@ class UserController extends AdminController implements NewAdminControllerInterf
     /**
      * Overwrite to check Users creation.
      *
-     * @param Request $request
-     *
      * @return array|Response
      * @Template("PumukitNewAdminBundle:User:index.html.twig")
      */
@@ -48,8 +46,6 @@ class UserController extends AdminController implements NewAdminControllerInterf
      * Create Action
      * Overwrite to create Person
      * referenced to User.
-     *
-     * @param Request $request
      *
      * @throws \Exception
      *
@@ -87,8 +83,6 @@ class UserController extends AdminController implements NewAdminControllerInterf
      * Update Action
      * Overwrite to update it with user manager
      * Checks plain password and updates encoded password.
-     *
-     * @param Request $request
      *
      * @throws \Exception
      *
@@ -139,8 +133,6 @@ class UserController extends AdminController implements NewAdminControllerInterf
     /**
      * Delete action.
      *
-     * @param Request $request
-     *
      * @return bool|Response|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request)
@@ -157,8 +149,6 @@ class UserController extends AdminController implements NewAdminControllerInterf
 
     /**
      * Batch Delete action.
-     *
-     * @param Request $request
      *
      * @throws \Doctrine\ODM\MongoDB\LockException
      * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
@@ -189,8 +179,6 @@ class UserController extends AdminController implements NewAdminControllerInterf
     /**
      * Edit groups form.
      *
-     * @param Request $request
-     *
      * @return array
      * @Template("PumukitNewAdminBundle:User:editgroups.html.twig")
      */
@@ -207,8 +195,6 @@ class UserController extends AdminController implements NewAdminControllerInterf
 
     /**
      * Update groups action.
-     *
-     * @param Request $request
      *
      * @throws \Doctrine\ODM\MongoDB\LockException
      * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
@@ -238,8 +224,6 @@ class UserController extends AdminController implements NewAdminControllerInterf
 
     /**
      * Get user groups.
-     *
-     * @param Request $request
      *
      * @return JsonResponse
      */
@@ -315,8 +299,6 @@ class UserController extends AdminController implements NewAdminControllerInterf
     /**
      * Change the permission profiles of a list of users.
      *
-     * @param Request $request
-     *
      * @return JsonResponse
      */
     public function promoteAction(Request $request)
@@ -351,7 +333,6 @@ class UserController extends AdminController implements NewAdminControllerInterf
     /**
      * Modify User Groups.
      *
-     * @param User  $user
      * @param array $addGroups
      * @param array $deleteGroups
      *

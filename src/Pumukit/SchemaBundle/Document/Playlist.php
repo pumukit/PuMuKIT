@@ -30,8 +30,6 @@ class Playlist
     /**
      * Contains multimedia_object.
      *
-     * @param MultimediaObject $multimedia_object
-     *
      * @return bool
      */
     public function containsMultimediaObject(MultimediaObject $multimedia_object)
@@ -41,8 +39,6 @@ class Playlist
 
     /**
      * Add multimedia object.
-     *
-     * @param MultimediaObject $multimedia_object
      */
     public function addMultimediaObject(MultimediaObject $multimedia_object)
     {
@@ -51,8 +47,6 @@ class Playlist
 
     /**
      * Remove multimedia object.
-     *
-     * @param MultimediaObject $multimedia_object
      */
     public function removeMultimediaObject(MultimediaObject $multimedia_object)
     {
@@ -117,8 +111,6 @@ class Playlist
      * Get Published mmobjs
      * try catch is used to avoid filter issues.
      * By default, returns all mmobjs (all status).
-     *
-     * @param array $status
      *
      * @return array
      */

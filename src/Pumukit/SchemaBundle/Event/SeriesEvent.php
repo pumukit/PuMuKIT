@@ -12,9 +12,6 @@ class SeriesEvent extends Event
      */
     protected $series;
 
-    /**
-     * @param Series $series
-     */
     public function __construct(Series $series)
     {
         $this->series = $series;

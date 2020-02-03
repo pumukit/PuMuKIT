@@ -179,8 +179,6 @@ class EmbeddedEvent
 
     /**
      * Set I18n name.
-     *
-     * @param array $name
      */
     public function setI18nName(array $name)
     {
@@ -229,8 +227,6 @@ class EmbeddedEvent
 
     /**
      * Set I18n name.
-     *
-     * @param array $description
      */
     public function setI18nDescription(array $description)
     {
@@ -476,8 +472,6 @@ class EmbeddedEvent
 
     /**
      * Set I18n Already Held Message.
-     *
-     * @param array $message
      */
     public function setI18nAlreadyHeldMessage(array $message)
     {
@@ -529,8 +523,6 @@ class EmbeddedEvent
 
     /**
      * Set I18n Not Yet Held Message.
-     *
-     * @param array $message
      */
     public function setI18nNotYetHeldMessage(array $message)
     {

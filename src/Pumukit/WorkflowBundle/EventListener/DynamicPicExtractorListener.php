@@ -34,11 +34,8 @@ class DynamicPicExtractorListener
     /**
      * DynamicPicExtractorListener constructor.
      *
-     * @param DocumentManager            $documentManager
-     * @param DynamicPicExtractorService $dynamicPicExtractorService
-     * @param LoggerInterface            $logger
-     * @param bool                       $enableDynamicPicExtract
-     * @param string                     $trackTagAllowed
+     * @param bool   $enableDynamicPicExtract
+     * @param string $trackTagAllowed
      */
     public function __construct(DocumentManager $documentManager, DynamicPicExtractorService $dynamicPicExtractorService, LoggerInterface $logger, $enableDynamicPicExtract = true, $trackTagAllowed = 'master')
     {
@@ -50,8 +47,6 @@ class DynamicPicExtractorListener
     }
 
     /**
-     * @param JobEvent $event
-     *
      * @throws \Exception
      */
     public function onJobSuccess(JobEvent $event)
@@ -62,9 +57,6 @@ class DynamicPicExtractorListener
     }
 
     /**
-     * @param MultimediaObject $multimediaObject
-     * @param Track            $track
-     *
      * @throws \Exception
      *
      * @return bool
@@ -79,9 +71,6 @@ class DynamicPicExtractorListener
     }
 
     /**
-     * @param MultimediaObject $multimediaObject
-     * @param Track            $track
-     *
      * @throws \Exception
      *
      * @return bool

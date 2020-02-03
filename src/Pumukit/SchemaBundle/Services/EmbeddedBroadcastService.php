@@ -37,9 +37,8 @@ class EmbeddedBroadcastService
     /**
      * Set public embedded broadcast.
      *
-     * @param MultimediaObject $multimediaObject
-     * @param string           $type
-     * @param bool             $executeFlush
+     * @param string $type
+     * @param bool   $executeFlush
      *
      * @return MultimediaObject
      */
@@ -104,8 +103,6 @@ class EmbeddedBroadcastService
     /**
      * Clone resource.
      *
-     * @param EmbeddedBroadcast $embeddedBroadcast
-     *
      * @return EmbeddedBroadcast
      */
     public function cloneResource(EmbeddedBroadcast $embeddedBroadcast)
@@ -152,9 +149,8 @@ class EmbeddedBroadcastService
     /**
      * Update type and name.
      *
-     * @param MultimediaObject $multimediaObject
-     * @param string           $type
-     * @param bool             $executeFlush
+     * @param string $type
+     * @param bool   $executeFlush
      */
     public function updateTypeAndName($type, MultimediaObject $multimediaObject, $executeFlush = true)
     {
@@ -178,9 +174,8 @@ class EmbeddedBroadcastService
     /**
      * Update password.
      *
-     * @param string           $password
-     * @param MultimediaObject $multimediaObject
-     * @param bool             $executeFlush
+     * @param string $password
+     * @param bool   $executeFlush
      */
     public function updatePassword($password, MultimediaObject $multimediaObject, $executeFlush = true)
     {
@@ -200,9 +195,7 @@ class EmbeddedBroadcastService
     /**
      * Add group to embeddedBroadcast.
      *
-     * @param Group            $group
-     * @param MultimediaObject $multimediaObject
-     * @param bool             $executeFlush
+     * @param bool $executeFlush
      */
     public function addGroup(Group $group, MultimediaObject $multimediaObject, $executeFlush = true)
     {
@@ -222,9 +215,7 @@ class EmbeddedBroadcastService
     /**
      * Delete group from embedded Broadcasr.
      *
-     * @param Group            $group
-     * @param MultimediaObject $multimediaObject
-     * @param bool             $executeFlush
+     * @param bool $executeFlush
      */
     public function deleteGroup(Group $group, MultimediaObject $multimediaObject, $executeFlush = true)
     {
@@ -244,9 +235,8 @@ class EmbeddedBroadcastService
     /**
      * Can User play multimediaObject.
      *
-     * @param MultimediaObject $multimediaObject
-     * @param User             $user
-     * @param string           $password
+     * @param User   $user
+     * @param string $password
      *
      * @return bool|Response
      */
@@ -275,8 +265,7 @@ class EmbeddedBroadcastService
     /**
      * Is user related to multimedia object.
      *
-     * @param MultimediaObject $multimediaObject
-     * @param User             $user
+     * @param User $user
      *
      * @return bool
      */
@@ -299,8 +288,6 @@ class EmbeddedBroadcastService
 
     /**
      * Delete all embedded broadcasts from group.
-     *
-     * @param Group $group
      */
     public function deleteAllFromGroup(Group $group)
     {

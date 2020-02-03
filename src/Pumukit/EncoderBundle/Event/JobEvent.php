@@ -25,7 +25,6 @@ class JobEvent extends Event
     protected $multimediaObject;
 
     /**
-     * @param Job              $job
      * @param Track            $track
      * @param MultimediaObject $multimediaObject
      */

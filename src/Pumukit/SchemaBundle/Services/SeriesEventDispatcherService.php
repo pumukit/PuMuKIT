@@ -16,8 +16,6 @@ class SeriesEventDispatcherService
 
     /**
      * Constructor.
-     *
-     * @param EventDispatcherInterface $dispatcher
      */
     public function __construct(EventDispatcherInterface $dispatcher)
     {
@@ -30,8 +28,6 @@ class SeriesEventDispatcherService
      * Dispatchs the event SERIES_CREATE
      * 'series.create' passing
      * the series
-     *
-     * @param Series $series
      */
     public function dispatchCreate(Series $series)
     {
@@ -45,8 +41,6 @@ class SeriesEventDispatcherService
      * Dispatchs the event SERIES_UPDATE
      * 'series.update' passing
      * the series
-     *
-     * @param Series $series
      */
     public function dispatchUpdate(Series $series)
     {
@@ -60,8 +54,6 @@ class SeriesEventDispatcherService
      * Dispatchs the event SERIES_DELETE
      * 'series.delete' passing
      * the series
-     *
-     * @param Series $series
      */
     public function dispatchDelete(Series $series)
     {

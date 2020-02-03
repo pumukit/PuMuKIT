@@ -18,10 +18,6 @@ class LinkEvent extends Event
      */
     protected $link;
 
-    /**
-     * @param MultimediaObject $multimediaObject
-     * @param Link             $link
-     */
     public function __construct(MultimediaObject $multimediaObject, Link $link)
     {
         $this->multimediaObject = $multimediaObject;

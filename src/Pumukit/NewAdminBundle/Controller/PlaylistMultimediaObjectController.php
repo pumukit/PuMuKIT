@@ -469,8 +469,7 @@ class PlaylistMultimediaObjectController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param string  $idsKey
+     * @param string $idsKey
      *
      * @return mixed
      */

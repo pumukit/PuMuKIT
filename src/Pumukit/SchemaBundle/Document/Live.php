@@ -420,8 +420,6 @@ class Live
 
     /**
      * Set I18n name.
-     *
-     * @param array $name
      */
     public function setI18nName(array $name)
     {
@@ -473,8 +471,6 @@ class Live
 
     /**
      * Set I18n description.
-     *
-     * @param array $description
      */
     public function setI18nDescription(array $description)
     {
