@@ -5,25 +5,17 @@ namespace Pumukit\EncoderBundle\DependencyInjection;
 use Pumukit\EncoderBundle\Services\CpuService;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-/**
- * This is the class that validates and merges configuration from your app/config files.
- *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
- */
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('pumukit_encoder');
+        $treeBuilder = new TreeBuilder('pumukit_encoder');
+        $rootNode = $treeBuilder->getRootNode();
 
-        //Doc in http://symfony.com/doc/current/components/config/definition.html
         $this->addGlobalConfig($rootNode);
         $this->addCpusSection($rootNode);
         $this->addProfilesSection($rootNode);
@@ -33,7 +25,7 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    public static function addGlobalConfig(ArrayNodeDefinition $node)
+    public static function addGlobalConfig(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
@@ -44,12 +36,7 @@ class Configuration implements ConfigurationInterface
             ;
     }
 
-    /**
-     * Adds `profiles` section.
-     *
-     * @param ArrayNodeDefinition $node
-     */
-    public static function addProfilesSection(ArrayNodeDefinition $node)
+    public static function addProfilesSection(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
@@ -78,10 +65,8 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('codec')->info('Codec of the track')->end()
             ->scalarNode('mime_type')->info('Mime Type of the track')->end()
             ->scalarNode('extension')->info('Extension of the track. If empty the input file extension is used.')->end()
-                            //Used in JobGeneratorListener
             ->integerNode('resolution_hor')->min(0)->defaultValue(0)
             ->info('Horizontal resolution of the track, 0 if it depends from original video')->end()
-                            //Used in JobGeneratorListener
             ->integerNode('resolution_ver')->min(0)->defaultValue(0)
             ->info('Vertical resolution of the track, 0 if it depends from original video')->end()
             ->scalarNode('bitrate')->info('Bit rate of the track')->end()
@@ -89,7 +74,6 @@ class Configuration implements ConfigurationInterface
             ->info('Framerate of the track')->end()
             ->integerNode('channels')->min(0)->defaultValue(1)
             ->info('Available Channels')->end()
-                            //Used in JobGeneratorListener
             ->booleanNode('audio')->defaultValue(false)
             ->info('The track is only audio')->end()
             ->scalarNode('bat')->isRequired()->cannotBeEmpty()
@@ -127,12 +111,7 @@ class Configuration implements ConfigurationInterface
           ;
     }
 
-    /**
-     * Adds `cpu` section.
-     *
-     * @param ArrayNodeDefinition $node
-     */
-    public function addCpusSection(ArrayNodeDefinition $node)
+    public function addCpusSection(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
@@ -168,14 +147,9 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    /**
-     * Adds `thumbnail` section.
-     *
-     * @param ArrayNodeDefinition $node
-     */
-    public function addThumbnailSection(ArrayNodeDefinition $node)
+    public function addThumbnailSection(ArrayNodeDefinition $node): void
     {
-        /** @var \Symfony\Component\Config\Definition\Builder\NodeBuilder */
+        /** @var NodeBuilder */
         $aux = $node
             ->children()
             ->arrayNode('thumbnail')
@@ -191,12 +165,7 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    /**
-     * Adds `target_default_profiles` section.
-     *
-     * @param ArrayNodeDefinition $node
-     */
-    public function addTargetDefaultProfiles(ArrayNodeDefinition $node)
+    public function addTargetDefaultProfiles(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
