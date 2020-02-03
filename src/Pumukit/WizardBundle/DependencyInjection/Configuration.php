@@ -5,28 +5,20 @@ namespace Pumukit\WizardBundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-/**
- * This is the class that validates and merges configuration from your app/config files.
- */
 class Configuration implements ConfigurationInterface
 {
     private $profiles;
 
-    /**
-     * Constructor.
-     */
     public function __construct(array $profiles)
     {
         $this->profiles = $profiles;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('pumukit_wizard');
+        $treeBuilder = new TreeBuilder('pumukit_wizard');
+        $rootNode = $treeBuilder->getRootNode();
+
         $rootNode
             ->children()
             ->booleanNode('show_license')
