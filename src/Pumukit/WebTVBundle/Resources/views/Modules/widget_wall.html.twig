@@ -10,10 +10,11 @@
             </div>
 
             <div class="col-xs-12 col-md-3 wall-info">
-                <div class="wall-title">
-                    <h4>{{ object.getTitle() }}</h4>
-                </div>
-
+                <a href="{{ path('pumukit_webtv_multimediaobject_index', {'id': object.id}) }}">
+                    <div class="wall-title">
+                        <h4>{{ object.getTitle() }}</h4>
+                    </div>
+                </a>
                 <div class="wall-subtitle">
                     {{ object.getDescription() }}
                 </div>
