@@ -20,9 +20,10 @@ class MultimediaObjectRankTest extends PumukitTestCase
 
     public function setUp()
     {
-        $this->dm = parent::setUp();
         $options = ['environment' => 'test'];
         static::bootKernel($options);
+
+        $this->dm = parent::setUp();
 
         $this->repo = $this->dm->getRepository(MultimediaObject::class);
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
@@ -58,6 +59,8 @@ class MultimediaObjectRankTest extends PumukitTestCase
         $this->dm->persist($mm4);
         $this->dm->persist($otherMm);
         $this->dm->flush();
+
+        dump($mm1->getRank());
 
         $this->assertEquals(1, $mm1->getRank());
         $this->assertEquals(2, $mm2->getRank());
@@ -117,7 +120,6 @@ class MultimediaObjectRankTest extends PumukitTestCase
 
     private function createMultimediaObjectAssignedToSeries($title, Series $series)
     {
-        $rank = 1;
         $status = MultimediaObject::STATUS_NEW;
         $record_date = new \DateTime();
         $public_date = new \DateTime();

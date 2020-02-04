@@ -21,10 +21,9 @@ class JobNotificationServiceTest extends PumukitTestCase
 
     public function setUp()
     {
-        $this->dm = parent::setUp();
-
         $options = ['environment' => 'test'];
         self::bootKernel($options);
+        $this->dm = parent::setUp();
         $this->containerHelper = self::$kernel->getContainer();
 
         if (!array_key_exists('PumukitNotificationBundle', $this->containerHelper->getParameter('kernel.bundles')) ||

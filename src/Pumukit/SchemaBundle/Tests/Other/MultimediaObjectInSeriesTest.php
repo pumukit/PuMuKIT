@@ -26,10 +26,9 @@ class MultimediaObjectInSeriesTest extends PumukitTestCase
 
     public function setUp()
     {
-        $this->dm = parent::setUp();
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
+        $this->dm = parent::setUp();
         $container = static::$kernel->getContainer();
         $this->factoryService = $container->get('pumukitschema.factory');
         $this->seriesRepo = $this->dm->getRepository(Series::class);

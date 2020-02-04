@@ -26,11 +26,9 @@ class MaterialServiceTest extends PumukitTestCase
 
     public function setUp()
     {
-        $this->dm = parent::setUp();
-
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
+        $this->dm = parent::setUp();
         $this->repoMmobj = $this->dm
             ->getRepository(MultimediaObject::class)
         ;
@@ -126,6 +124,7 @@ class MaterialServiceTest extends PumukitTestCase
         $this->assertEquals(0, count($mm->getMaterials()));
 
         $filePath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'fileCopy.pdf';
+
         if (copy($this->originalFilePath, $filePath)) {
             $file = new UploadedFile($filePath, 'file.pdf', null, null, null, true);
 

@@ -23,10 +23,10 @@ class SeriesServiceTest extends PumukitTestCase
 
     public function setUp()
     {
-        $this->dm = parent::setUp();
-
         $options = ['environment' => 'test'];
         static::bootKernel($options);
+
+        $this->dm = parent::setUp();
 
         $this->repo = $this->dm
             ->getRepository(Series::class)
@@ -59,7 +59,6 @@ class SeriesServiceTest extends PumukitTestCase
         $series->setNumericalID(1);
 
         $this->dm->persist($series);
-        $this->dm->flush();
 
         $secret = $series->getSecret();
 
@@ -80,7 +79,6 @@ class SeriesServiceTest extends PumukitTestCase
         $series1->setNumericalID(1);
 
         $this->dm->persist($series1);
-        $this->dm->flush();
 
         $key1 = 'Group1';
         $name1 = 'Group 1';
@@ -133,9 +131,13 @@ class SeriesServiceTest extends PumukitTestCase
         $embeddedBroadcast14->addGroup($group2);
 
         $mm11 = new MultimediaObject();
+        $mm11->setNumericalID(11);
         $mm12 = new MultimediaObject();
+        $mm12->setNumericalID(12);
         $mm13 = new MultimediaObject();
+        $mm13->setNumericalID(13);
         $mm14 = new MultimediaObject();
+        $mm14->setNumericalID(14);
 
         $mm11->setSeries($series1);
         $mm12->setSeries($series1);

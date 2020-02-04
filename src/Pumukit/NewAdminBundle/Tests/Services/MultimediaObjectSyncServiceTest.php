@@ -24,11 +24,9 @@ class MultimediaObjectSyncServiceTest extends PumukitTestCase
 
     public function setUp()
     {
-        $this->dm = parent::setUp();
-
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
+        $this->dm = parent::setUp();
         $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
 
         $this->syncService = static::$kernel->getContainer()->get('pumukitnewadmin.multimedia_object_sync');

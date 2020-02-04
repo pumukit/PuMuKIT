@@ -25,10 +25,10 @@ class RemoveListenerTest extends PumukitTestCase
 
     public function setUp()
     {
-        $this->dm = parent::setUp();
-
         $options = ['environment' => 'test'];
         static::bootKernel($options);
+
+        $this->dm = parent::setUp();
 
         $this->repoJobs = $this->dm->getRepository(Job::class);
         $this->repoMmobj = $this->dm->getRepository(MultimediaObject::class);

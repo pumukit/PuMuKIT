@@ -34,10 +34,9 @@ class PicExtractorServiceTest extends PumukitTestCase
             $this->markTestSkipped('PicExtractor test marks as skipped (No ffmpeg).');
         }
 
-        $this->dm = parent::setUp();
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
+        $this->dm = parent::setUp();
         $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
         $this->factory = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->picEventDispatcher = static::$kernel->getContainer()->get('pumukitschema.pic_dispatcher');

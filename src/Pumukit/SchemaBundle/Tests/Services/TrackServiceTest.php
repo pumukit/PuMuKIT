@@ -32,10 +32,9 @@ class TrackServiceTest extends PumukitTestCase
 
     public function setUp()
     {
-        $this->dm = parent::setUp();
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
+        $this->dm = parent::setUp();
         $this->logger = $this->getMockBuilder(LoggerInterface::class)
             ->disableOriginalConstructor()
             ->getMock()

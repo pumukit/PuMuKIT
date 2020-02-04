@@ -5,7 +5,6 @@ namespace Pumukit\SchemaBundle\Tests\Services;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
@@ -21,19 +20,15 @@ class TagServiceTest extends PumukitTestCase
 
     public function setUp()
     {
-        $this->dm = parent::setUp();
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->tagRepo = $this->dm
-            ->getRepository(Tag::class)
-        ;
-        $this->mmobjRepo = $this->dm
-            ->getRepository(MultimediaObject::class)
-        ;
+        $this->dm = parent::setUp();
+
+        $this->tagRepo = $this->dm->getRepository(Tag::class);
+        $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
         $this->tagService = static::$kernel->getContainer()->get('pumukitschema.tag');
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
-
     }
 
     public function tearDown()
@@ -478,7 +473,7 @@ class TagServiceTest extends PumukitTestCase
         $locale = 'en';
 
         if (!$parentTag) {
-            $parentTag = $this->tagRepo->findOneByCod('ROOT');
+            $parentTag = $this->tagRepo->findOneBy(['cod' => 'ROOT']);
             if (!$parentTag) {
                 $parentTag = new Tag();
                 $parentTag->setCod('ROOT');

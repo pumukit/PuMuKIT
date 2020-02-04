@@ -33,9 +33,9 @@ class SenderServiceTest extends PumukitTestCase
 
     public function setUp()
     {
-        $this->dm = parent::setUp();
         $options = ['environment' => 'dev'];
         static::bootKernel($options);
+        $this->dm = parent::setUp();
         $container = static::$kernel->getContainer();
         $this->logger = $this->getMockBuilder(LoggerInterface::class)
             ->disableOriginalConstructor()

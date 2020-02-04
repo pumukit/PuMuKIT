@@ -18,11 +18,9 @@ class EventRepositoryTest extends PumukitTestCase
 
     public function setUp()
     {
-        $this->dm = parent::setUp();
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $this->dm = parent::setUp();
         $this->repo = $this->dm->getRepository(Event::class);
     }
 

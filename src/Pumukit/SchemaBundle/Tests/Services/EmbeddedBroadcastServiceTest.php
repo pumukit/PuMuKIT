@@ -30,9 +30,11 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
 
     public function setUp()
     {
-        $this->dm = parent::setUp();
+
         $options = ['environment' => 'test'];
         static::bootKernel($options);
+
+        $this->dm = parent::setUp();
 
         $this->mmRepo = $this->dm
             ->getRepository(MultimediaObject::class)

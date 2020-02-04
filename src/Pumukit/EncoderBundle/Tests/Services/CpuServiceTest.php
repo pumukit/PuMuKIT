@@ -18,11 +18,9 @@ class CpuServiceTest extends PumukitTestCase
 
     public function setUp()
     {
-        $this->dm = parent::setUp();
-
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
+        $this->dm = parent::setUp();
         $this->repo = $this->dm->getRepository(Job::class);
 
         $this->dm->getDocumentCollection(Job::class)->remove([]);

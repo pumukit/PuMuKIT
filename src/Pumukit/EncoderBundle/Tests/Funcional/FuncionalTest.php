@@ -31,12 +31,9 @@ class FuncionalTest extends PumukitTestCase
     public function setUp()
     {
         $this->markTestSkipped('Functional tests not available. (A little better, but still broken)');
-
-        $this->dm = parent::setUp();
-
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
+        $this->dm = parent::setUp();
         $this->repo = $this->dm->getRepository(Job::class);
 
         $this->profileService = static::$kernel->getContainer()->get('pumukitencoder.profile');

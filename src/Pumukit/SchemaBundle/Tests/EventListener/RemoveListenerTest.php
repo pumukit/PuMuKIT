@@ -32,9 +32,10 @@ class RemoveListenerTest extends PumukitTestCase
 
     public function setUp()
     {
-        $this->dm = parent::setUp();
         $options = ['environment' => 'test'];
         static::bootKernel($options);
+
+        $this->dm = parent::setUp();
 
         $this->logger = $this->getMockBuilder(LoggerInterface::class)
             ->disableOriginalConstructor()
@@ -46,9 +47,7 @@ class RemoveListenerTest extends PumukitTestCase
         $this->repoSeries = $this->dm->getRepository(Series::class);
         $this->repoUser = $this->dm->getRepository(User::class);
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
-        $this->embeddedBroadcastService = static::$kernel->getContainer()
-            ->get('pumukitschema.embeddedbroadcast')
-        ;
+        $this->embeddedBroadcastService = static::$kernel->getContainer()->get('pumukitschema.embeddedbroadcast');
         $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
 
         $this->resourcesDir = realpath(__DIR__.'/../Resources');

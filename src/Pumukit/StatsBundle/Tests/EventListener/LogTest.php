@@ -25,11 +25,9 @@ class LogTest extends PumukitTestCase
 
     public function setUp()
     {
-        $this->dm = parent::setUp();
-
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
+        $this->dm = parent::setUp();
         $this->repo = $this->dm->getRepository(ViewsLog::class);
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');

@@ -2,6 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
@@ -19,7 +20,7 @@ use Symfony\Component\Routing\RequestContext;
  * @internal
  * @coversNothing
  */
-class PicServiceTest extends WebTestCase
+class PicServiceTest extends PumukitTestCase
 {
     private $dm;
     private $factoryService;
@@ -42,7 +43,7 @@ class PicServiceTest extends WebTestCase
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb.odm.document_manager');
+        $this->dm = parent::setUp();
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
 
         $this->context = $this->getMockBuilder(RequestContext::class)
@@ -73,6 +74,7 @@ class PicServiceTest extends WebTestCase
 
     public function tearDown()
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->factoryService = null;
@@ -85,7 +87,6 @@ class PicServiceTest extends WebTestCase
         $this->trackDispatcher = null;
         $this->trackService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testGetDefaultUrlPicForObject()
