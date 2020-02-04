@@ -13,7 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\ProcessBuilder;
+use Symfony\Component\Process\Process;
 use UnexpectedValueException;
 
 /**
@@ -483,7 +483,7 @@ EOT
         $dirName = dirname($newPath);
 
         if (!$this->checkFileExists($dirName)) {
-            if (mkdir($dirName, 0755, true)) {
+            if (mkdir($dirName, 0755, true) || is_dir($dirName)) {
                 $this->createProcessToMove($oldPath, $newPath);
             } else {
                 throw new \Exception('Error trying to create folders - '.$dirName);
@@ -502,16 +502,14 @@ EOT
     private function createProcessToMove($oldPath, $newPath)
     {
         $parameters = [
+            'mv',
             $oldPath,
             $newPath,
         ];
 
-        $builder = new ProcessBuilder();
-        $builder->setPrefix('mv');
-        $builder->setArguments($parameters);
+        $process = new Process($parameters);
 
-        $builder->setTimeout(3600);
-        $process = $builder->getProcess();
+        $process->setTimeout(3600);
 
         try {
             $process->mustRun();
