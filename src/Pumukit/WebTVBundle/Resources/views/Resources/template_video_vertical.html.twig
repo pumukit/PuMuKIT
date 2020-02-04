@@ -8,13 +8,15 @@
 <div class="{{ col_calculator(objectByCol|default(1)) }} image_representation">
     <div class="row {% if current.getId()|default('') == multimediaObject.getId() %}current{% endif %}">
         <div class="col-sm-6 col-md-5">
-            <a href="{{ videoPath }}" title="{{ videoTitle }}">
-                <div class="embed-responsive embed-responsive-16by9">
-                    <div class="embed-responsive-item text-center">
-                        <img alt="{{ videoTitle }}" src="{{ object|first_url_pic() }}" class="img-responsive img_adapter_4_3" />
+            <div class="row">
+                <a href="{{ videoPath }}" title="{{ videoTitle }}">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <div class="embed-responsive-item text-center">
+                            <img alt="{{ videoTitle }}" src="{{ object|first_url_pic() }}" class="img-responsive img_adapter_4_3" />
+                        </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
         <div class="col-sm-6 col-md-7">
             {% if show_info|default(true) %}

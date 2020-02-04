@@ -2,65 +2,104 @@
     {% include 'PumukitWebTVBundle:MultimediaObject:template_tags.html.twig' %}
 </div>
 
-<div class="row">
-    <div class="qa-player-recording-date col-xs-12 text-right">
-        {% trans %}Recording date{% endtrans %}: {{ multimediaObject.getRecordDate()|localizeddate('medium','none',app.request.getLocale()) }}
-    </div>
-</div>
-
-<div class="row">
-    <div class="qa-player-viewed col-xs-12 text-right">
-        {% trans %}Viewed{% endtrans %}: {{ multimediaObject.getNumview() }}
-        {% if multimediaObject.getNumview() > 1 %}
-            {% trans %} times {% endtrans %}
-        {% else %}
-            {% trans %} time {% endtrans %}
-        {% endif %}
-    </div>
-</div>
-
 {% include "PumukitWebTVBundle:Misc:chapter_marks.html.twig" %}
 
 <div class="row">
-    <div class="col-xs-12 video-subtitle">
+    <div class="col-xs-12">
+
+        <h4 class="qa-player-title video-title">
+                {{ multimediaObject.title|default("No title"|trans) }}
+                <span class="pull-right edit-button"></span>
+        </h4>
+
         {% if multimediaObject.getSubtitle() %}
-            <h3 class="qa-player-subtitle"> {{ multimediaObject.getSubtitle() }} </h3>
+            <p class="qa-player-subtitle"> {{ multimediaObject.getSubtitle() }} </p>
         {% endif %}
+
+        <div class="row video-info">
+            <div class="col-xs-12 col-sm-6">
+                <span class="qa-player-viewed">
+                    {{ multimediaObject.getNumview() }}
+                    {% if multimediaObject.getNumview() > 1 %}
+                        {% trans %} view {% endtrans %}
+                    {% else %}
+                        {% trans %} views {% endtrans %}
+                    {% endif %}
+                </span>
+                <span class="qa-player-recording-date">
+                    {{ multimediaObject.getRecordDate()|localizeddate('medium','none',app.request.getLocale()) }}
+                </span>
+            </div>
+            <div class="col-xs-12 col-sm-6 video-material text-right">
+                {% for track in multimediaObject.getTracks() if track.allowDownload() and not track.getHide() and showDownloads %}
+                    {% set none_attach = false %}
+                    <div class="qa-player-tracks tracks">
+                        <span class="fa fa-download"></span>
+                        <a class="video-tracks" download href="{{ track_url(track) }}?forcedl=1">
+                            {% trans %}Download{% endtrans %}
+                        </a>
+                    </div>
+                {% endfor %}
+
+                <div class="qa-player-share share">
+                    <span class="fa fa-share"></span>
+                    <a class="video-tracks" href="#">
+                        {% trans %}Share{% endtrans %}
+                    </a>
+                </div>
+
+                {% for material in multimediaObject.getMaterials() if not material.getHide() and showDownloads  %}
+                    {% set none_attach = false %}
+                    <div class="qa-player-material material">
+                        <span class="fa fa-paperclip"></span>
+                        <a href="#">{% trans %} Attachments {% endtrans %}</a>
+                        <!--<a href="{{ material.getUrl() }}">{{ material.getName() }}</a>-->
+                    </div>
+                {% endfor %}
+
+                <!--{% for link in multimediaObject.getLinks() if showDownloads %}
+                    {% set none_attach = false %}
+                    <div class="qa-player-link link">
+                        <a target="_blank" href="{{ link.getUrl() }}">
+                            <span class="glyphicon glyphicon-globe"></span>
+                            {{ link.getName() }}
+                        </a>
+                    </div>
+                {% endfor %}-->
+
+                {% if not multimediaObject.getSeries().isHide() %}
+                <div class="qa-player-series video-series">
+                    <span class="fa fa-play-circle"></span>
+                        {% if isMagicRoute and fullMagicUrl %}        
+                            <a href="{{ path('pumukit_webtv_series_magicindex', {secret: multimediaObject.getSeries().getSecret() }) }}">
+                                {% trans %}i18n.one.Series{% endtrans %}
+                            </a>
+                        {% else %}
+                            <a href="{{ path('pumukit_webtv_series_index', {id: multimediaObject.getSeries().getId() }) }}">
+                                {% trans %}i18n.one.Series{% endtrans %}
+                            </a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
 
         <p class="qa-player-description description">
             {{ multimediaObject.getDescription()|nl2br }}
         </p>
 
-        <div class="qa-player-license text-left video-license">
+        <!--<div class="qa-player-license text-left video-license">
             {% if multimediaObject.getLicense() is not empty %}
                 {% trans %}License{% endtrans %}: {{ multimediaObject.getLicense() }}
             {% endif %}
-        </div>
-
-        {% if not multimediaObject.getSeries().isHide() %}
-            {% if isMagicRoute and fullMagicUrl %}        
-                <div class="qa-player-series video-series">
-                    {% trans %}i18n.one.Series{% endtrans %}:
-                    <a href="{{ path('pumukit_webtv_series_magicindex', {secret: multimediaObject.getSeries().getSecret() }) }}">
-                        {{ multimediaObject.getSeriesTitle()|default('') }}
-                    </a>
-                </div>
-            {% else %}
-                <div class="qa-player-series video-series">
-                    {% trans %}i18n.one.Series{% endtrans %}:
-                    <a href="{{ path('pumukit_webtv_series_index', {id: multimediaObject.getSeries().getId() }) }}">
-                        {{ multimediaObject.getSeriesTitle()|default('') }}
-                    </a>
-                </div>
-            {% endif %}
-        {% endif %}
+        </div>-->
 
         {% include "PumukitWebTVBundle:Misc:people.html.twig" with {'object': multimediaObject} %}
     </div>
 </div>
 <br>
 <div class="row">
-    <div class="col-sm-6">
+    <!--<div class="col-sm-6">
 
         <div class="panel panel-default panel-pmk">
             <div class="panel-heading">
@@ -109,6 +148,6 @@
     </div>
     <div class="col-sm-6">
         {% include 'PumukitWebTVBundle:MultimediaObject:template_share.html.twig' %}
-    </div>
+    </div>-->
 </div>
 <br>
