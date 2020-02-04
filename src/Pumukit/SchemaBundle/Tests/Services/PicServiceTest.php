@@ -13,6 +13,7 @@ use Pumukit\SchemaBundle\Services\TextIndexService;
 use Pumukit\SchemaBundle\Services\TrackService;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Routing\RequestContext;
 
 /**
  * @internal
@@ -43,7 +44,12 @@ class PicServiceTest extends WebTestCase
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb.odm.document_manager');
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
-        $this->context = static::$kernel->getContainer()->get('router.request_context');
+
+        $this->context = $this->getMockBuilder(RequestContext::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
         $this->rootDir = static::$kernel->getContainer()->getParameter('kernel.root_dir');
         $publicDir = static::$kernel->getContainer()->getParameter('pumukit.public_dir');
         $this->webDir = realpath($publicDir.'/bundles/pumukitschema');

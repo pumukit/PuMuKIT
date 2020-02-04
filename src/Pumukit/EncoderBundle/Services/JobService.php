@@ -19,7 +19,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Process\ProcessBuilder;
+use Symfony\Component\Process\Process;
+
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class JobService
@@ -162,7 +163,7 @@ class JobService
      * @param string $language
      * @param array  $description
      * @param array  $initVars    Init values of the Job
-     * @param int    $duration    Only necesary in JobService::ADD_JOB_NOT_CHECKS
+     * @param int    $duration    Only necessary in JobService::ADD_JOB_NOT_CHECKS
      * @param int    $flags       A bit field of constants to customize the job creation: JobService::ADD_JOB_UNIQUE, JobService::ADD_JOB_NOT_CHECKS
      *
      * @throws \Exception
@@ -449,29 +450,11 @@ class JobService
 
     public function executeInBackground(Job $job)
     {
-        $pb = new ProcessBuilder();
-        // PHP wraps the process in "sh -c" by default, but we need to control
-        // the process directly.
-        /*
-          if ( ! defined('PHP_WINDOWS_VERSION_MAJOR')) {
-          $pb->add('exec');
-          }
-        */
+        $command = [
+            'php', $this->binPath, 'console', sprintf('--env=%s ', $this->environment), 'pumukit:encoder:job', $job->getId()
+        ];
 
-        $console = $this->binPath.'console';
-
-        $pb
-            ->add('php')
-            ->add($console)
-            ->add(sprintf('--env=%s', $this->environment))
-            ;
-
-        $pb
-            ->add('pumukit:encoder:job')
-            ->add($job->getId())
-            ;
-
-        $process = $pb->getProcess();
+        $process = new Process($command);
 
         $command = $process->getCommandLine();
         $this->logger->info('[executeInBackground] CommandLine '.$command);

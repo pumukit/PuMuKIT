@@ -2,6 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
@@ -13,7 +14,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @internal
  * @coversNothing
  */
-class MaterialServiceTest extends WebTestCase
+class MaterialServiceTest extends PumukitTestCase
 {
     private $dm;
     private $repoMmobj;
@@ -25,11 +26,11 @@ class MaterialServiceTest extends WebTestCase
 
     public function setUp()
     {
+        $this->dm = parent::setUp();
+
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
         $this->repoMmobj = $this->dm
             ->getRepository(MultimediaObject::class)
         ;
@@ -53,6 +54,7 @@ class MaterialServiceTest extends WebTestCase
 
     public function tearDown()
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->repoMmobj = null;
@@ -63,7 +65,6 @@ class MaterialServiceTest extends WebTestCase
         $this->originalFilePath = null;
         $this->uploadsPath = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testAddMaterialUrl()

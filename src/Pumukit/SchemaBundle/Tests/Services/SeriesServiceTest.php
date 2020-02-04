@@ -2,6 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -13,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  * @internal
  * @coversNothing
  */
-class SeriesServiceTest extends WebTestCase
+class SeriesServiceTest extends PumukitTestCase
 {
     private $dm;
     private $repo;
@@ -22,11 +23,11 @@ class SeriesServiceTest extends WebTestCase
 
     public function setUp()
     {
+        $this->dm = parent::setUp();
+
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
             ->getRepository(Series::class)
         ;
@@ -43,18 +44,19 @@ class SeriesServiceTest extends WebTestCase
 
     public function tearDown()
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->repo = null;
         $this->seriesService = null;
         $this->seriesDispatcher = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testResetMagicUrl()
     {
         $series = new Series();
+        $series->setNumericalID(1);
 
         $this->dm->persist($series);
         $this->dm->flush();
@@ -75,6 +77,7 @@ class SeriesServiceTest extends WebTestCase
     public function testSameEmbeddedBroadcast()
     {
         $series1 = new Series();
+        $series1->setNumericalID(1);
 
         $this->dm->persist($series1);
         $this->dm->flush();

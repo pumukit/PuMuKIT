@@ -2,6 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -16,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @internal
  * @coversNothing
  */
-class EmbeddedBroadcastServiceTest extends WebTestCase
+class EmbeddedBroadcastServiceTest extends PumukitTestCase
 {
     private $dm;
     private $mmRepo;
@@ -29,11 +30,10 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
 
     public function setUp()
     {
+        $this->dm = parent::setUp();
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
         $this->mmRepo = $this->dm
             ->getRepository(MultimediaObject::class)
         ;
@@ -55,15 +55,11 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
         $this->router = static::$kernel->getContainer()
             ->get('router')
         ;
-
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Group::class)->remove([]);
-        $this->dm->getDocumentCollection(User::class)->remove([]);
-        $this->dm->flush();
     }
 
     public function tearDown()
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->mmRepo = null;
@@ -74,7 +70,6 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
         $this->templating = null;
         $this->router = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testCreateEmbeddedBroadcastByType()
@@ -680,6 +675,7 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
         // Test TYPE_PASSWORD
 
         $series = new Series();
+        $series->setNumericalID(1);
         $series->setTitle('series');
         $this->dm->persist($series);
         $this->dm->flush();
@@ -737,18 +733,21 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
         $this->assertEquals(0, count($this->mmRepo->findWithGroupInEmbeddedBroadcast($group)->toArray()));
 
         $mm1 = new MultimediaObject();
+        $mm1->setNumericalID(1);
         $mm1->setTitle('mm1');
         $emb1 = new EmbeddedBroadcast();
         $emb1->addGroup($group);
         $mm1->setEmbeddedBroadcast($emb1);
 
         $mm2 = new MultimediaObject();
+        $mm2->setNumericalID(2);
         $mm2->setTitle('mm2');
         $emb2 = new EmbeddedBroadcast();
         $emb2->addGroup($group);
         $mm2->setEmbeddedBroadcast($emb2);
 
         $mm3 = new MultimediaObject();
+        $mm3->setNumericalID(3);
         $mm3->setTitle('mm3');
         $mm3->addGroup($group);
         $emb3 = new EmbeddedBroadcast();

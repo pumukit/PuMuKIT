@@ -2,6 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Tests\EventListener;
 
+use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\ProfileService;
@@ -35,7 +36,11 @@ class RemoveListenerTest extends PumukitTestCase
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->logger = static::$kernel->getContainer()->get('logger');
+        $this->logger = $this->getMockBuilder(LoggerInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
         $this->repoJobs = $this->dm->getRepository(Job::class);
         $this->repoMmobj = $this->dm->getRepository(MultimediaObject::class);
         $this->repoSeries = $this->dm->getRepository(Series::class);

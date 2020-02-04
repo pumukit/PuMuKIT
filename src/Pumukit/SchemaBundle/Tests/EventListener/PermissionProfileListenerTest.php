@@ -2,6 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Tests\EventListener;
 
+use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\User;
@@ -56,7 +57,10 @@ class PermissionProfileListenerTest extends PumukitTestCase
             $this->permissionProfileService,
             $personalScopeDeleteOwners
         );
-        $this->logger = static::$kernel->getContainer()->get('logger');
+        $this->logger = $this->getMockBuilder(LoggerInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
 
         $this->listener = new PermissionProfileListener($this->dm, $this->userService, $this->logger);
         $dispatcher->addListener('permissionprofile.update', [$this->listener, 'postUpdate']);

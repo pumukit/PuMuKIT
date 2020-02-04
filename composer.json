@@ -23,6 +23,7 @@
         "sensio/framework-extra-bundle": "^5.5",
         "suncat/mobile-detect-bundle": "1.1.*",
         "symfony/asset": "^4.0",
+        "symfony/css-selector": "^4.0",
         "symfony/dotenv": "^4.0",
         "symfony/expression-language": "^4.0",
         "symfony/flex": "^1.6",

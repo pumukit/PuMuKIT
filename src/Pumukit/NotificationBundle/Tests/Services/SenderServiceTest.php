@@ -2,6 +2,7 @@
 
 namespace Pumukit\NotificationBundle\Tests\Services;
 
+use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\NotificationBundle\Services\SenderService;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -36,8 +37,10 @@ class SenderServiceTest extends PumukitTestCase
         $options = ['environment' => 'dev'];
         static::bootKernel($options);
         $container = static::$kernel->getContainer();
-
-        $this->logger = $container->get('logger');
+        $this->logger = $this->getMockBuilder(LoggerInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
         $this->mailer = $container->get('mailer');
         $this->templating = $container->get('templating');
         $this->translator = $container->get('translator');
