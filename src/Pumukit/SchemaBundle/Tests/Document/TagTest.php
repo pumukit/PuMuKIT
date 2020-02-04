@@ -2,14 +2,14 @@
 
 namespace Pumukit\SchemaBundle\Tests\Document;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Tag;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class TagTest extends WebTestCase
+class TagTest extends PumukitTestCase
 {
     private $dm;
     private $tagRepo;
@@ -19,28 +19,22 @@ class TagTest extends WebTestCase
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
+        $this->dm = parent::setUp();
         $this->tagRepo = $this->dm
             ->getRepository(Tag::class)
         ;
 
         $this->tagService = static::$kernel->getContainer()->get('pumukitschema.tag');
-
-        $this->dm->getDocumentCollection(Tag::class)
-            ->remove([])
-        ;
     }
 
     public function tearDown()
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->tagRepo = null;
         $this->tagService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testGetterAndSetter()

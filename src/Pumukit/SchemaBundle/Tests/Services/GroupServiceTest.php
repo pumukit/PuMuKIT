@@ -3,20 +3,20 @@
 namespace Pumukit\SchemaBundle\Tests\Services;
 
 use MongoDB\BSON\ObjectId;
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\GroupEventDispatcherService;
 use Pumukit\SchemaBundle\Services\GroupService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * @internal
  * @coversNothing
  */
-class GroupServiceTest extends WebTestCase
+class GroupServiceTest extends PumukitTestCase
 {
     private $dm;
     private $repo;
@@ -27,10 +27,7 @@ class GroupServiceTest extends WebTestCase
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
-        $translator = static::$kernel->getContainer()->get('translator');
+        $this->dm = parent::setUp();
         $this->repo = $this->dm
             ->getRepository(Group::class)
         ;
@@ -43,21 +40,17 @@ class GroupServiceTest extends WebTestCase
         $translator = static::$kernel->getContainer()->get('translator');
 
         $this->groupService = new GroupService($this->dm, $groupDispatcher, $translator);
-
-        $this->dm->getDocumentCollection(User::class)->remove([]);
-        $this->dm->getDocumentCollection(Group::class)->remove([]);
-        $this->dm->flush();
     }
 
     public function tearDown()
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->repo = null;
         $this->userRepo = null;
         $this->groupService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testCountUsersInGroup()
@@ -549,9 +542,11 @@ class GroupServiceTest extends WebTestCase
         $this->dm->flush();
 
         $mm1 = new MultimediaObject();
+        $mm1->setNumericalID(1);
         $mm1->setTitle('mm1');
 
         $mm2 = new MultimediaObject();
+        $mm2->setNumericalID(2);
         $mm2->setTitle('mm2');
 
         $mm1->addGroup($group1);
@@ -581,9 +576,11 @@ class GroupServiceTest extends WebTestCase
         $this->dm->flush();
 
         $mm1 = new MultimediaObject();
+        $mm1->setNumericalID(1);
         $mm1->setTitle('mm1');
 
         $mm2 = new MultimediaObject();
+        $mm2->setNumericalID(2);
         $mm2->setTitle('mm2');
 
         $this->dm->persist($mm1);
@@ -629,9 +626,11 @@ class GroupServiceTest extends WebTestCase
         $this->dm->flush();
 
         $mm1 = new MultimediaObject();
+        $mm1->setNumericalID(1);
         $mm1->setTitle('mm1');
 
         $mm2 = new MultimediaObject();
+        $mm2->setNumericalID(2);
         $mm2->setTitle('mm2');
 
         $mm1->addGroup($group1);
@@ -747,6 +746,7 @@ class GroupServiceTest extends WebTestCase
         $user->removeGroup($group);
 
         $mm = new MultimediaObject();
+        $mm->setNumericalID(1);
         $mm->setTitle('mm');
         $mm->addGroup($group);
 

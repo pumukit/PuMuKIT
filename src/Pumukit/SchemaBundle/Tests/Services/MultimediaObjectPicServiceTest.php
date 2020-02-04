@@ -44,7 +44,7 @@ class MultimediaObjectPicServiceTest extends WebTestCase
         ;
 
         $this->originalPicPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'logo.png';
-        $this->uploadsPath = realpath(__DIR__.'/../../../../../web/uploads/pic');
+        $this->uploadsPath = static::$kernel->getContainer()->getParameter('pumukit.uploads_pic_dir');
 
         $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
         $this->dm->getDocumentCollection(Series::class)->remove([]);

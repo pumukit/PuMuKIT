@@ -2,18 +2,18 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Services\MaterialService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @internal
  * @coversNothing
  */
-class MaterialServiceTest extends WebTestCase
+class MaterialServiceTest extends PumukitTestCase
 {
     private $dm;
     private $repoMmobj;
@@ -27,9 +27,7 @@ class MaterialServiceTest extends WebTestCase
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
+        $this->dm = parent::setUp();
         $this->repoMmobj = $this->dm
             ->getRepository(MultimediaObject::class)
         ;
@@ -44,7 +42,7 @@ class MaterialServiceTest extends WebTestCase
         ;
 
         $this->originalFilePath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'file.pdf';
-        $this->uploadsPath = realpath(__DIR__.'/../../../../../web/uploads/material');
+        $this->uploadsPath = static::$kernel->getContainer()->getParameter('pumukit.uploads_material_dir');
 
         $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
         $this->dm->getDocumentCollection(Series::class)->remove([]);
@@ -53,6 +51,7 @@ class MaterialServiceTest extends WebTestCase
 
     public function tearDown()
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->repoMmobj = null;
@@ -63,7 +62,6 @@ class MaterialServiceTest extends WebTestCase
         $this->originalFilePath = null;
         $this->uploadsPath = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testAddMaterialUrl()
@@ -125,6 +123,7 @@ class MaterialServiceTest extends WebTestCase
         $this->assertEquals(0, count($mm->getMaterials()));
 
         $filePath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'fileCopy.pdf';
+
         if (copy($this->originalFilePath, $filePath)) {
             $file = new UploadedFile($filePath, 'file.pdf', null, null, null, true);
 

@@ -2,6 +2,8 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Psr\Log\LoggerInterface;
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
@@ -14,14 +16,13 @@ use Pumukit\SchemaBundle\Services\PermissionProfileService;
 use Pumukit\SchemaBundle\Services\PermissionService;
 use Pumukit\SchemaBundle\Services\UserEventDispatcherService;
 use Pumukit\SchemaBundle\Services\UserService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * @internal
  * @coversNothing
  */
-class UserServiceTest extends WebTestCase
+class UserServiceTest extends PumukitTestCase
 {
     private $dm;
     private $repo;
@@ -33,8 +34,11 @@ class UserServiceTest extends WebTestCase
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $this->dm = parent::setUp();
+        $this->logger = $this->getMockBuilder(LoggerInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
         $this->repo = $this->dm->getRepository(User::class);
         $this->permissionProfileRepo = $this->dm->getRepository(PermissionProfile::class);
 
@@ -47,9 +51,6 @@ class UserServiceTest extends WebTestCase
             $permissionProfileDispatcher,
             $permissionService
         );
-        $this->logger = static::$kernel->getContainer()
-            ->get('logger')
-        ;
 
         $personalScopeDeleteOwners = false;
 
@@ -72,13 +73,13 @@ class UserServiceTest extends WebTestCase
 
     public function tearDown()
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->repo = null;
         $this->permissionProfileRepo = null;
         $this->userService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testCreateAndUpdate()

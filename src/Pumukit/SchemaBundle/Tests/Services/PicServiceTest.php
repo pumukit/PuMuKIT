@@ -2,6 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
@@ -11,14 +12,14 @@ use Pumukit\SchemaBundle\EventListener\MultimediaObjectListener;
 use Pumukit\SchemaBundle\Services\PicService;
 use Pumukit\SchemaBundle\Services\TextIndexService;
 use Pumukit\SchemaBundle\Services\TrackService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Routing\RequestContext;
 
 /**
  * @internal
  * @coversNothing
  */
-class PicServiceTest extends WebTestCase
+class PicServiceTest extends PumukitTestCase
 {
     private $dm;
     private $factoryService;
@@ -29,30 +30,38 @@ class PicServiceTest extends WebTestCase
     private $defaultVideoPic = '/images/video.jpg';
     private $defaultAudioHDPic = '/images/audio_hd.jpg';
     private $defaultAudioSDPic = '/images/audio_sd.jpg';
-    private $localhost = 'http://localhost';
     private $webDir;
     private $listener;
     private $trackDispatcher;
     private $trackService;
     private $rootDir;
+    private $absoluteDomain;
 
     public function setUp()
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb.odm.document_manager');
+        $this->dm = parent::setUp();
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
-        $this->context = static::$kernel->getContainer()->get('router.request_context');
+
+        $this->context = $this->getMockBuilder(RequestContext::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
         $this->rootDir = static::$kernel->getContainer()->getParameter('kernel.root_dir');
-        $this->webDir = realpath($this->rootDir.'/../web/bundles/pumukitschema');
-        $this->localhost = $this->context->getScheme().'://localhost';
+        $publicDir = static::$kernel->getContainer()->getParameter('pumukit.public_dir');
+        $scheme = static::$kernel->getContainer()->getParameter('router.request_context.scheme');
+        $host = static::$kernel->getContainer()->getParameter('router.request_context.host');
+        $this->webDir = realpath($publicDir.'/bundles/pumukitschema');
+        $this->absoluteDomain = $scheme.'://'.$host;
 
         $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
         $this->dm->getDocumentCollection(Series::class)->remove([]);
         $this->dm->flush();
 
-        $this->picService = new PicService($this->context, $this->webDir, $this->defaultSeriesPic, $this->defaultPlaylistPic, $this->defaultVideoPic, $this->defaultAudioHDPic, $this->defaultAudioSDPic);
+        $this->picService = new PicService($scheme, $host, $this->webDir, $this->defaultSeriesPic, $this->defaultPlaylistPic, $this->defaultVideoPic, $this->defaultAudioHDPic, $this->defaultAudioSDPic);
 
         $dispatcher = new EventDispatcher();
         $this->listener = new MultimediaObjectListener($this->dm, new TextIndexService());
@@ -66,19 +75,18 @@ class PicServiceTest extends WebTestCase
 
     public function tearDown()
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->factoryService = null;
         $this->context = null;
         $this->rootDir = null;
         $this->webDir = null;
-        $this->localhost = null;
         $this->picService = null;
         $this->listener = null;
         $this->trackDispatcher = null;
         $this->trackService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testGetDefaultUrlPicForObject()
@@ -89,7 +97,7 @@ class PicServiceTest extends WebTestCase
         $this->assertEquals($this->defaultVideoPic, $this->picService->getDefaultUrlPicForObject($pic, $absolute));
 
         $absolute = true;
-        $this->assertEquals($this->localhost.$this->defaultVideoPic, $this->picService->getDefaultUrlPicForObject($pic, $absolute));
+        $this->assertEquals($this->absoluteDomain.$this->defaultVideoPic, $this->picService->getDefaultUrlPicForObject($pic, $absolute));
     }
 
     public function testGetDefaultPathPicForObject()
@@ -108,7 +116,7 @@ class PicServiceTest extends WebTestCase
         $this->assertEquals($this->defaultSeriesPic, $this->picService->getFirstUrlPic($series, $absolute));
 
         $absolute = true;
-        $this->assertEquals($this->localhost.$this->defaultSeriesPic, $this->picService->getFirstUrlPic($series, $absolute));
+        $this->assertEquals($this->absoluteDomain.$this->defaultSeriesPic, $this->picService->getFirstUrlPic($series, $absolute));
 
         $seriesUrl1 = '/uploads/series1.jpg';
         $seriesPic1 = new Pic();
@@ -150,7 +158,7 @@ class PicServiceTest extends WebTestCase
         $this->assertEquals($this->defaultVideoPic, $this->picService->getFirstUrlPic($mm, $absolute));
 
         $absolute = true;
-        $this->assertEquals($this->localhost.$this->defaultVideoPic, $this->picService->getFirstUrlPic($mm, $absolute));
+        $this->assertEquals($this->absoluteDomain.$this->defaultVideoPic, $this->picService->getFirstUrlPic($mm, $absolute));
 
         $track->setOnlyAudio(true);
         $track->addTag('master');
@@ -164,9 +172,9 @@ class PicServiceTest extends WebTestCase
 
         $absolute = true;
         $hd = true;
-        $this->assertEquals($this->localhost.$this->defaultAudioHDPic, $this->picService->getFirstUrlPic($mm, $absolute, $hd));
+        $this->assertEquals($this->absoluteDomain.$this->defaultAudioHDPic, $this->picService->getFirstUrlPic($mm, $absolute, $hd));
         $hd = false;
-        $this->assertEquals($this->localhost.$this->defaultAudioSDPic, $this->picService->getFirstUrlPic($mm, $absolute, $hd));
+        $this->assertEquals($this->absoluteDomain.$this->defaultAudioSDPic, $this->picService->getFirstUrlPic($mm, $absolute, $hd));
 
         $mmUrl1 = '/uploads/video1.jpg';
         $mmPic1 = new Pic();
@@ -180,7 +188,7 @@ class PicServiceTest extends WebTestCase
         $this->assertEquals($mmUrl1, $this->picService->getFirstUrlPic($mm));
 
         $absolute = true;
-        $this->assertEquals($this->localhost.$mmUrl1, $this->picService->getFirstUrlPic($mm, $absolute));
+        $this->assertEquals($this->absoluteDomain.$mmUrl1, $this->picService->getFirstUrlPic($mm, $absolute));
 
         $mmUrl2 = '/uploads/video2.jpg';
         $mmPic2 = new Pic();
@@ -198,7 +206,7 @@ class PicServiceTest extends WebTestCase
         $this->assertEquals($mmUrl2, $this->picService->getFirstUrlPic($mm));
 
         $absolute = true;
-        $this->assertEquals($this->localhost.$mmUrl2, $this->picService->getFirstUrlPic($mm, $absolute));
+        $this->assertEquals($this->absoluteDomain.$mmUrl2, $this->picService->getFirstUrlPic($mm, $absolute));
     }
 
     public function testGetFirstPathPic()

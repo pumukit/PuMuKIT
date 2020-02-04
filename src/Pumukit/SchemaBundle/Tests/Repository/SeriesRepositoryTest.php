@@ -77,7 +77,7 @@ class SeriesRepositoryTest extends WebTestCase
     public function testRepository()
     {
         $series = new Series();
-
+        $series->setNumericalID(3);
         $title = 'Series title';
         $series->setTitle($title);
 
@@ -957,11 +957,13 @@ class SeriesRepositoryTest extends WebTestCase
     public function testFindByEmbeddedBroadcastType()
     {
         $mm1 = new MultimediaObject();
+        $mm1->setNumericalID(1);
         $mm1->setTitle('test2');
         $this->dm->persist($mm1);
         $this->dm->flush();
 
         $mm2 = new MultimediaObject();
+        $mm2->setNumericalID(2);
         $mm2->setTitle('test1');
         $this->dm->persist($mm2);
         $this->dm->flush();
@@ -991,8 +993,10 @@ class SeriesRepositoryTest extends WebTestCase
         $this->dm->flush();
 
         $series1 = new Series();
+        $series1->setNumericalID(1);
         $series1->setTitle('series1');
         $series2 = new Series();
+        $series2->setNumericalID(2);
         $series2->setTitle('series2');
         $this->dm->persist($series1);
         $this->dm->persist($series2);
@@ -1187,10 +1191,12 @@ class SeriesRepositoryTest extends WebTestCase
         $esLocale = 'es';
         $series1I8nTitle = [$enLocale => $test1, $esLocale => $prueba1];
         $series1 = new Series();
+        $series1->setNumericalID(1);
         $series1->setI18nTitle($series1I8nTitle);
 
         $series2I8nTitle = [$enLocale => $test2, $esLocale => $prueba2];
         $series2 = new Series();
+        $series2->setNumericalID(2);
         $series2->setI18nTitle($series2I8nTitle);
 
         $this->dm->persist($series1);

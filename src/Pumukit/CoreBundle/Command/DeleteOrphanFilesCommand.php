@@ -46,9 +46,9 @@ class DeleteOrphanFilesCommand extends ContainerAwareCommand
                 Example to use:
 
                 1. List orphan files
-                    php app/console pumukit:files:delete:orphan --path="{pathToPuMuKIT}/web/uploads/material"
+                    php app/console pumukit:files:delete:orphan --path="{pathToPuMuKITUploadsMaterialDir}"
                 2. Delete orphan files
-                    php app/console pumukit:files:delete:orphan --path="{pathToPuMuKIT}/web/uploads/material" --delete
+                    php app/console pumukit:files:delete:orphan --path="{pathToPuMuKITUploadsMaterialDir}" --delete
 
 EOT
             )

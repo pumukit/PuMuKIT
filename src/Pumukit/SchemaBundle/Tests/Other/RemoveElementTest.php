@@ -2,17 +2,17 @@
 
 namespace Pumukit\SchemaBundle\Tests\Other;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class RemoveElementTest extends WebTestCase
+class RemoveElementTest extends PumukitTestCase
 {
     private $dm;
     private $mmRepo;
@@ -32,8 +32,8 @@ class RemoveElementTest extends WebTestCase
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
+        $this->dm = parent::setUp();
+
         $this->mmRepo = $this->dm
             ->getRepository(MultimediaObject::class)
         ;
@@ -58,22 +58,11 @@ class RemoveElementTest extends WebTestCase
         $this->groupService = static::$kernel->getContainer()
             ->get('pumukitschema.group')
         ;
-
-        //DELETE DATABASE
-        $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(Group::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(User::class)
-            ->remove([])
-        ;
-        $this->dm->flush();
     }
 
     public function tearDown()
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->repo = null;
@@ -81,7 +70,6 @@ class RemoveElementTest extends WebTestCase
         $this->mmsPicService = null;
         $this->tagService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testMultimediaObjectRemoveGroupDocument()
@@ -95,19 +83,23 @@ class RemoveElementTest extends WebTestCase
         $group2 = $this->createGroup($key2, $name2);
 
         $mm1 = new MultimediaObject();
+        $mm1->setNumericalID(1);
         $mm1->setTitle('test');
         $mm1->addGroup($group1);
 
         $mm2 = new MultimediaObject();
+        $mm2->setNumericalID(2);
         $mm2->setTitle('test');
         $mm2->addGroup($group1);
         $mm2->addGroup($group2);
 
         $mm3 = new MultimediaObject();
+        $mm3->setNumericalID(3);
         $mm3->setTitle('test');
         $mm3->addGroup($group1);
 
         $mm4 = new MultimediaObject();
+        $mm4->setNumericalID(4);
         $mm4->setTitle('test');
         $mm4->addGroup($group1);
         $mm4->addGroup($group2);
