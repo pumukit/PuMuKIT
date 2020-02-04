@@ -2,18 +2,18 @@
 
 namespace Pumukit\NewAdminBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Tag;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class MultimediaObjectSyncServiceTest extends WebTestCase
+class MultimediaObjectSyncServiceTest extends PumukitTestCase
 {
     private $dm;
     private $mmobjRepo;
@@ -26,30 +26,23 @@ class MultimediaObjectSyncServiceTest extends WebTestCase
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-
+        $this->dm = parent::setUp();
         $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
 
         $this->syncService = static::$kernel->getContainer()->get('pumukitnewadmin.multimedia_object_sync');
         $this->tagService = static::$kernel->getContainer()->get('pumukitschema.tag');
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
-
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Role::class)->remove([]);
-        $this->dm->getDocumentCollection(Tag::class)->remove([]);
-        $this->dm->flush();
     }
 
     public function tearDown()
     {
+        parent::tearDown();
         $this->dm->close();
         $this->mmobjRepo = null;
         $this->announceService = null;
         $this->factoryService = null;
         $this->tagService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testSyncMetadata()

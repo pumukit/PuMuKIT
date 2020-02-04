@@ -80,8 +80,8 @@ Create image options:
 
 Examples:
 
-php app/console pumukit:pics:convert --path="{pathToPuMuKIT}/web/uploads/pic/5b4f4af72bb478f9048b457d/" --type="mm" --convert
-php app/console pumukit:pics:convert --path="{pathToPuMuKIT}/web/uploads/pic/5b4f4af72bb478f9048b457d/" --type="mm" --convert --no_replace
+php app/console pumukit:pics:convert --path="{pathToPuMuKITUploadsPicDir}/5b4f4af72bb478f9048b457d/" --type="mm" --convert
+php app/console pumukit:pics:convert --path="{pathToPuMuKITUploadsMaterialDir}/5b4f4af72bb478f9048b457d/" --type="mm" --convert --no_replace
 
 
 

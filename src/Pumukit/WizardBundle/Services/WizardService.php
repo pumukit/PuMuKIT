@@ -13,7 +13,7 @@ use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\TagService;
-use Symfony\Component\Process\ProcessBuilder;
+use Symfony\Component\Process\Process;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
@@ -300,17 +300,18 @@ class WizardService
      */
     public function createProcess($aCommandArguments = [])
     {
-        $builder = new ProcessBuilder();
-        $console = $this->basePath.'app/console';
+        $command = [
+            'php',
+            $this->basePath,
+            'bin/console',
+            'pumukit:wizard:import',
+        ];
 
-        $builder->add('php')->add($console);
-
-        $builder->add('pumukit:wizard:import');
         foreach ($aCommandArguments as $argument) {
-            $builder->add($argument);
+            $command[] = $argument;
         }
 
-        $process = $builder->getProcess();
+        $process = new Process($command);
 
         $command = $process->getCommandLine();
 

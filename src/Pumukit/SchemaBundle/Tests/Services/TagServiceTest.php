@@ -2,15 +2,15 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class TagServiceTest extends WebTestCase
+class TagServiceTest extends PumukitTestCase
 {
     private $dm;
     private $tagRepo;
@@ -23,34 +23,23 @@ class TagServiceTest extends WebTestCase
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
-        $this->tagRepo = $this->dm
-            ->getRepository(Tag::class)
-        ;
-        $this->mmobjRepo = $this->dm
-            ->getRepository(MultimediaObject::class)
-        ;
+        $this->dm = parent::setUp();
+
+        $this->tagRepo = $this->dm->getRepository(Tag::class);
+        $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
         $this->tagService = static::$kernel->getContainer()->get('pumukitschema.tag');
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
-
-        $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(Tag::class)
-            ->remove([])
-        ;
     }
 
     public function tearDown()
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->tagRepo = null;
         $this->mmobjRepo = null;
         $this->tagService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testAddTagToMultimediaObject()
@@ -430,10 +419,13 @@ class TagServiceTest extends WebTestCase
     public function testTagsInPrototype()
     {
         $tag = $this->createTagWithTree('tag1');
-        $broTag = $this->tagRepo->findOneByCod('brother');
+        $broTag = $this->tagRepo->findOneBy(['cod' => 'brother']);
 
         $series = $this->factoryService->createSeries();
         $mmObject0 = $this->factoryService->createMultimediaObject($series);
+        $this->dm->persist($series);
+        $this->dm->persist($mmObject0);
+        $this->dm->flush();
         $this->assertEquals(0, count($mmObject0->getTags()));
 
         $prototype = $this->mmobjRepo->findPrototype($series);
@@ -460,6 +452,7 @@ class TagServiceTest extends WebTestCase
         $duration = 300;
 
         $mmobj = new MultimediaObject();
+        $mmobj->setNumericalID(random_int(0, 10000));
         $mmobj->setLocale($locale);
         $mmobj->setStatus($status);
         $mmobj->setRecordDate($record_date);
@@ -480,7 +473,7 @@ class TagServiceTest extends WebTestCase
         $locale = 'en';
 
         if (!$parentTag) {
-            $parentTag = $this->tagRepo->findOneByCod('ROOT');
+            $parentTag = $this->tagRepo->findOneBy(['cod' => 'ROOT']);
             if (!$parentTag) {
                 $parentTag = new Tag();
                 $parentTag->setCod('ROOT');

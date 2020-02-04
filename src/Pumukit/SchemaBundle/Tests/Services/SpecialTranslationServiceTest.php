@@ -2,16 +2,16 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class SpecialTranslationServiceTest extends WebTestCase
+class SpecialTranslationServiceTest extends PumukitTestCase
 {
     private $dm;
     private $mmRepo;
@@ -21,9 +21,7 @@ class SpecialTranslationServiceTest extends WebTestCase
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
+        $this->dm = parent::setUp();
         $this->mmRepo = $this->dm
             ->getRepository(MultimediaObject::class)
         ;
@@ -38,12 +36,12 @@ class SpecialTranslationServiceTest extends WebTestCase
 
     public function tearDown()
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->mmRepo = null;
         $this->specialTranslationService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testGetI18nEmbeddedBroadcast()
@@ -57,6 +55,7 @@ class SpecialTranslationServiceTest extends WebTestCase
         $this->assertEquals(0, count($this->mmRepo->findWithGroupInEmbeddedBroadcast($group)->toArray()));
 
         $mm1 = new MultimediaObject();
+        $mm1->setNumericalID(1);
         $mm1->setTitle('mm1');
         $emb1 = new EmbeddedBroadcast();
         $emb1->addGroup($group);
@@ -64,12 +63,14 @@ class SpecialTranslationServiceTest extends WebTestCase
         $mm1->setEmbeddedBroadcast($emb1);
 
         $mm2 = new MultimediaObject();
+        $mm2->setNumericalID(2);
         $mm2->setTitle('mm2');
         $emb2 = new EmbeddedBroadcast();
         $emb2->setType(EmbeddedBroadcast::TYPE_PUBLIC);
         $mm2->setEmbeddedBroadcast($emb2);
 
         $mm3 = new MultimediaObject();
+        $mm3->setNumericalID(3);
         $mm3->setTitle('mm3');
         $emb3 = new EmbeddedBroadcast();
         $emb3->setType(EmbeddedBroadcast::TYPE_PASSWORD);
@@ -77,6 +78,7 @@ class SpecialTranslationServiceTest extends WebTestCase
         $mm3->setEmbeddedBroadcast($emb3);
 
         $mm4 = new MultimediaObject();
+        $mm4->setNumericalID(4);
         $mm4->setTitle('mm2');
         $emb4 = new EmbeddedBroadcast();
         $emb4->setType(EmbeddedBroadcast::TYPE_LOGIN);

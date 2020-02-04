@@ -1,6 +1,2 @@
 exclude_patterns:
     - doc/*
-    - app/check.php
-    - app/SymfonyRequirements.php
-    - web/config.php
-    - web/app_*.php

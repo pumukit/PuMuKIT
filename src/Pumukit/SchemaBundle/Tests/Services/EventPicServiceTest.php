@@ -30,7 +30,7 @@ class EventPicServiceTest extends WebTestCase
         $this->eventPicService = static::$kernel->getContainer()->get('pumukitlive.legacyeventpic');
 
         $this->originalPicPath = realpath(__DIR__.'/../Resources').'/logo.png';
-        $this->uploadsPath = realpath(__DIR__.'/../../../../../web/uploads/pic');
+        $this->uploadsPath = static::$kernel->getContainer()->getParameter('pumukit.uploads_pic_dir');
 
         $this->dm->getDocumentCollection(Live::class)->remove([]);
         $this->dm->getDocumentCollection(Event::class)->remove([]);

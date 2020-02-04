@@ -2,20 +2,20 @@
 
 namespace Pumukit\EncoderBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Services\PicExtractorService;
 use Pumukit\InspectionBundle\Utils\TestCommand;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * @internal
  * @coversNothing
  */
-class PicExtractorServiceTest extends WebTestCase
+class PicExtractorServiceTest extends PumukitTestCase
 {
     private $dm;
     private $mmobjRepo;
@@ -36,8 +36,7 @@ class PicExtractorServiceTest extends WebTestCase
 
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $this->dm = parent::setUp();
         $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
         $this->factory = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->picEventDispatcher = static::$kernel->getContainer()->get('pumukitschema.pic_dispatcher');
@@ -59,9 +58,7 @@ class PicExtractorServiceTest extends WebTestCase
 
     public function tearDown()
     {
-        if (isset($this->dm)) {
-            $this->dm->close();
-        }
+        parent::tearDown();
         $this->dm = null;
         $this->mmobjRepo = null;
         $this->factory = null;
@@ -72,7 +69,6 @@ class PicExtractorServiceTest extends WebTestCase
         $this->targetUrl = null;
         $this->picExtractor = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testExtractPic()

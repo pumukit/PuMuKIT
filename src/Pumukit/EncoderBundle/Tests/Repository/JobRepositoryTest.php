@@ -2,14 +2,14 @@
 
 namespace Pumukit\EncoderBundle\Tests\Repository;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Document\Job;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class JobRepositoryTest extends WebTestCase
+class JobRepositoryTest extends PumukitTestCase
 {
     private $dm;
     private $repo;
@@ -18,8 +18,7 @@ class JobRepositoryTest extends WebTestCase
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $this->dm = parent::setUp();
         $this->repo = $this->dm->getRepository(Job::class);
 
         $this->dm->getDocumentCollection(Job::class)->remove([]);
@@ -28,11 +27,11 @@ class JobRepositoryTest extends WebTestCase
 
     public function tearDown()
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->repo = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testRepositoryEmpty()

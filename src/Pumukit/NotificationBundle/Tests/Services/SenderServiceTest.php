@@ -2,14 +2,15 @@
 
 namespace Pumukit\NotificationBundle\Tests\Services;
 
+use Psr\Log\LoggerInterface;
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\NotificationBundle\Services\SenderService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class SenderServiceTest extends WebTestCase
+class SenderServiceTest extends PumukitTestCase
 {
     private $dm;
     private $logger;
@@ -33,10 +34,12 @@ class SenderServiceTest extends WebTestCase
     {
         $options = ['environment' => 'dev'];
         static::bootKernel($options);
+        $this->dm = parent::setUp();
         $container = static::$kernel->getContainer();
-
-        $this->dm = $container->get('doctrine_mongodb')->getManager();
-        $this->logger = $container->get('logger');
+        $this->logger = $this->getMockBuilder(LoggerInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
         $this->mailer = $container->get('mailer');
         $this->templating = $container->get('templating');
         $this->translator = $container->get('translator');
@@ -57,9 +60,7 @@ class SenderServiceTest extends WebTestCase
 
     public function tearDown()
     {
-        if (isset($this->dm)) {
-            $this->dm->close();
-        }
+        parent::tearDown();
         $this->dm = null;
         $this->logger = null;
         $this->mailer = null;
@@ -74,7 +75,6 @@ class SenderServiceTest extends WebTestCase
         $this->environment = null;
         $this->senderService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testIsEnabled()

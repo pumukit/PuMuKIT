@@ -1,11 +1,11 @@
 parameters:
-  pumukit.inspection.command: ffprobe -v quiet -print_format json -show_format -show_streams "{{file}}"
-  pumukit.picextractor.command: ffmpeg -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"
+  pumukit.inspection.command:          ffprobe -v quiet -print_format json -show_format -show_streams "{{file}}"
+  pumukit.picextractor.command:        ffmpeg -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"
   pumukit.dynamicpicextractor.command: ffmpeg -i "{{input}}" -ss 00:00:05 -t 3 -quality 80 -r 10 -s 768x432 "{{output}}"
-  pumukit.warning_on_unpublished: false
-  pumukit.show_dashboard_tab: true
-  pumukit.show_mms_list_all_menu: false
-  pumukit.inbox_depth: false
+  pumukit.warning_on_unpublished:      false
+  pumukit.show_dashboard_tab:          true
+  pumukit.show_mms_list_all_menu:      false
+  pumukit.inbox_depth:                 false
   pumukit.customlanguages:
     - es
     - gl
@@ -18,14 +18,15 @@ parameters:
     - eu
     - lse
     - lsi
-  env(MONGODB_URL): ''
-  env(MONGODB_DB): ''
-  locale:  "%env(PUMUKIT_LOCALE)%"
-  secret:  "%env(PUMUKIT_SECRET)%"
-
-  debug_toolbar:          true
-  debug_redirects:        false
-  use_assetic_controller: true
+  env(MONGODB_URL):                    ''
+  env(MONGODB_DB):                     ''
+  locale:                              "%env(PUMUKIT_LOCALE)%"
+  secret:                              "%env(PUMUKIT_SECRET)%"
+  debug_toolbar:                       true
+  debug_redirects:                     false
+  use_assetic_controller:              true
+  router.request_context.scheme:       "%env(PUMUKIT_SCHEME)%"
+  router.request_context.host:         "%env(PUMUKIT_HOST)%"
 
   pumukit.info:
     title:               "%env(PUMUKIT_TITLE)%"
@@ -35,18 +36,36 @@ parameters:
     logo:                "%env(PUMUKIT_LOGO)%"
     primary_color:       "%env(PUMUKIT_PRIMARY_COLOR)%"
     font_color:          "%env(PUMUKIT_FONT_COLOR)%"
-  pumukit.locales:         "%env(json:PUMUKIT_LOCALES)%"
-  pumukit.uploads_dir:     "%env(PUMUKIT_UPLOADS_DIR)%"
-  pumukit.uploads_url:     "%env(PUMUKIT_UPLOADS_URL)%"
-  pumukit.inbox:           "%env(PUMUKIT_INBOX)%"
-  pumukit.tmp:             "%env(PUMUKIT_TMP)%"
-  pumukit.delete_on_disk:  "%env(bool:PUMUKIT_DELETE_ON_DISK)%"
+
+  pumukit.locales:                     "%env(json:PUMUKIT_LOCALES)%"
+  #  pumukit.public_dir:                  "%env(PUMUKIT_PUBLIC_DIR)%"
+  pumukit.public_dir:                  '%kernel.project_dir%/public/'
+  #  pumukit.storage_dir:                 "%env(PUMUKIT_STORAGE_DIR)%"
+  pumukit.storage_dir:                 '%kernel.project_dir%/public/storage'
+  #  pumukit.uploads_dir:                 "%env(PUMUKIT_UPLOADS_DIR)%"
+  pumukit.uploads_dir:                 '%kernel.project_dir%/public/uploads'
+  #  pumukit.uploads_url:                 "%env(PUMUKIT_UPLOADS_URL)%"
+  pumukit.uploads_url:                 "/uploads"
+  #  pumukit.uploads_material_dir:        "%env(PUMUKIT_UPLOADS_MATERIAL_DIR)%"
+  pumukit.uploads_material_dir:        '%kernel.project_dir%/public/uploads/material'
+  #  pumukit.uploads_pic_dir:             "%env(PUMUKIT_UPLOADS_PIC_DIR)%"
+  pumukit.uploads_pic_dir:             '%kernel.project_dir%/public/uploads/pic'
+  #  pumukit.inbox:                       "%env(PUMUKIT_INBOX)%"
+  pumukit.inbox:                       '%kernel.project_dir%/public/storage/inbox'
+  #  pumukit.tmp:                         "%env(PUMUKIT_TMP)%"
+  pumukit.tmp:                         '%kernel.project_dir%/public/storage/tmp'
+  #  pumukit.downloads:                   "%env(PUMUKIT_DOWNLOADS)%"
+  pumukit.downloads:                   '%kernel.project_dir%/public/storage/downloads'
+  #  pumukit.masters:                     "%env(PUMUKIT_MASTERS)%"
+  pumukit.masters:                     '%kernel.project_dir%/public/storage/masters'
+  #  pumukit.delete_on_disk:              "%env(bool:PUMUKIT_DELETE_ON_DISK)%"
+  pumukit.delete_on_disk:              false
 
 services:
   _defaults:
-    autowire: true
+    autowire:      true
     autoconfigure: true
-    public: true
+    public:        true
 
   doctrine:
     alias: doctrine_mongodb
@@ -58,7 +77,7 @@ services:
 
   Pumukit\BasePlayerBundle\Services\TrackUrlService:
     arguments:
-      $secret: '%pumukitplayer.secure_secret%'
+      $secret:         '%pumukitplayer.secure_secret%'
       $secureDuration: '%pumukitplayer.secure_duration%'
 
   Pumukit\BasePlayerBundle\Services\SeriesPlaylistService:
@@ -137,16 +156,16 @@ services:
   Pumukit\EncoderBundle\Services\ProfileService:
     class: Pumukit\EncoderBundle\Services\ProfileService
     arguments:
-      $profiles: '%pumukitencode.profilelist%'
+      $profiles:         '%pumukitencode.profilelist%'
       $default_profiles: '%pumukitencode.target_default_profiles%'
 
   Pumukit\EncoderBundle\Services\JobService:
     class: Pumukit\EncoderBundle\Services\JobService
     arguments:
-      $binPath: '%kernel.root_dir%/../bin/'
-      $environment: '%kernel.environment%'
-      $tmpPath: '%pumukit.tmp%'
-      $inboxPath: '%pumukit.inbox%'
+      $binPath:          '%kernel.project_dir%/bin/'
+      $environment:      '%kernel.environment%'
+      $tmpPath:          '%pumukit.tmp%'
+      $inboxPath:        '%pumukit.inbox%'
       $deleteInboxFiles: '%pumukitencode.delete_inbox_files%'
     tags:
       - { name: "monolog.logger", channel: "encoder" }
@@ -160,11 +179,11 @@ services:
   Pumukit\EncoderBundle\Services\PicExtractorService:
     class: Pumukit\EncoderBundle\Services\PicExtractorService
     arguments:
-      $width: '%pumukitencode.thumbnail.width%'
-      $height: '%pumukitencode.thumbnail.height%'
+      $width:      '%pumukitencode.thumbnail.width%'
+      $height:     '%pumukitencode.thumbnail.height%'
       $targetPath: '%pumukit.uploads_dir%/pic'
-      $targetUrl: '%pumukit.uploads_url%/pic'
-      $command: '%pumukit.picextractor.command%'
+      $targetUrl:  '%pumukit.uploads_url%/pic'
+      $command:    '%pumukit.picextractor.command%'
 
   Pumukit\EncoderBundle\Services\PicService:
     class: Pumukit\EncoderBundle\Services\PicService
@@ -178,8 +197,8 @@ services:
     class: Pumukit\EncoderBundle\Services\DynamicPicExtractorService
     arguments:
       $targetPath: '%pumukit.uploads_dir%/pic'
-      $targetUrl: '%pumukit.uploads_url%/pic'
-      $command: '%pumukit.dynamicpicextractor.command%'
+      $targetUrl:  '%pumukit.uploads_url%/pic'
+      $command:    '%pumukit.dynamicpicextractor.command%'
 
   Pumukit\InspectionBundle\Services\InspectionFfprobeService:
     class: Pumukit\InspectionBundle\Services\InspectionFfprobeService
@@ -189,7 +208,7 @@ services:
   Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType:
     class: Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType
     arguments:
-      $locales: '%pumukit.locales%'
+      $locales:     '%pumukit.locales%'
       $translators: '%pumukit_new_admin.metadata_translators%'
     tags:
       - { name: "form.type", alias: "texti18n" }
@@ -197,7 +216,7 @@ services:
   Pumukit\NewAdminBundle\Form\Type\Base\TextI18nAdvanceType:
     class: Pumukit\NewAdminBundle\Form\Type\Base\TextI18nAdvanceType
     arguments:
-      $locales: '%pumukit.locales%'
+      $locales:     '%pumukit.locales%'
       $translators: '%pumukit_new_admin.metadata_translators%'
     tags:
       - { name: "form.type", alias: "texti18nadvance" }
@@ -205,7 +224,7 @@ services:
   Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType:
     class: Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType
     arguments:
-      $locales: '%pumukit.locales%'
+      $locales:     '%pumukit.locales%'
       $translators: '%pumukit_new_admin.metadata_translators%'
     tags:
       - { name: "form.type", alias: "textareai18n" }
@@ -250,7 +269,7 @@ services:
     class: Pumukit\NewAdminBundle\Services\TagCatalogueService
     arguments:
       $configuredTag: '%pumukit_new_admin.base_catalogue_tag%'
-      $locales: '%pumukit.locales%'
+      $locales:       '%pumukit.locales%'
 
   Pumukit\NewAdminBundle\EventListener\FilterListener:
     class: Pumukit\NewAdminBundle\EventListener\FilterListener
@@ -278,35 +297,35 @@ services:
   Pumukit\NotificationBundle\Services\SenderService:
     class: Pumukit\NotificationBundle\Services\SenderService
     arguments:
-      $mailer: '@mailer'
-      $enable: '%pumukit_notification.enable%'
-      $senderEmail: '%pumukit_notification.sender_email%'
-      $senderName: '%pumukit_notification.sender_name%'
-      $enableMultiLang: '%pumukit_notification.enable_multi_lang%'
-      $locales: '%pumukit.locales%'
-      $subjectSuccessTrans: '%pumukit_notification.subject_success_trans%'
-      $subjectFailsTrans: '%pumukit_notification.subject_fails_trans%'
-      $adminEmail: '%pumukit_notification.admin_email%'
+      $mailer:                  '@mailer'
+      $enable:                  '%pumukit_notification.enable%'
+      $senderEmail:             '%pumukit_notification.sender_email%'
+      $senderName:              '%pumukit_notification.sender_name%'
+      $enableMultiLang:         '%pumukit_notification.enable_multi_lang%'
+      $locales:                 '%pumukit.locales%'
+      $subjectSuccessTrans:     '%pumukit_notification.subject_success_trans%'
+      $subjectFailsTrans:       '%pumukit_notification.subject_fails_trans%'
+      $adminEmail:              '%pumukit_notification.admin_email%'
       $notificateErrorsToAdmin: '%pumukit_notification.notificate_errors_to_admin%'
-      $platformName: '%pumukit_notification.platform_name%'
-      $environment: '%kernel.environment%'
+      $platformName:            '%pumukit_notification.platform_name%'
+      $environment:             '%kernel.environment%'
 
   Pumukit\NotificationBundle\Services\JobNotificationService:
     class: Pumukit\NotificationBundle\Services\JobNotificationService
     arguments:
-      $enable: '%pumukit_notification.enable%'
-      $environment: '%kernel.environment%'
-      $template: '%pumukit_notification.template%'
-      $subjectSuccess: '%pumukit_notification.subject_success%'
-      $subjectFails: '%pumukit_notification.subject_fails%'
+      $enable:              '%pumukit_notification.enable%'
+      $environment:         '%kernel.environment%'
+      $template:            '%pumukit_notification.template%'
+      $subjectSuccess:      '%pumukit_notification.subject_success%'
+      $subjectFails:        '%pumukit_notification.subject_fails%'
       $subjectSuccessTrans: '%pumukit_notification.subject_success_trans%'
-      $subjectFailsTrans: '%pumukit_notification.subject_fails_trans%'
+      $subjectFailsTrans:   '%pumukit_notification.subject_fails_trans%'
     tags:
       - { name: "kernel.event_listener", event: "job.success", method: "onJobSuccess" }
       - { name: "kernel.event_listener", event: "job.error", method: "onJobError" }
 
   Pumukit\SchemaBundle\Services\PasswordUpdater:
-    class: Pumukit\SchemaBundle\Services\PasswordUpdater
+    class:  Pumukit\SchemaBundle\Services\PasswordUpdater
     public: false
     arguments:
       $genUserSalt: '%pumukitschema.gen_user_salt%'
@@ -314,14 +333,14 @@ services:
   Pumukit\SchemaBundle\Services\LegacyEventPicService:
     class: Pumukit\SchemaBundle\Services\LegacyEventPicService
     arguments:
-      $targetPath: '%pumukit.uploads_dir%/pic'
-      $targetUrl: '%pumukit.uploads_url%/pic'
+      $targetPath:        '%pumukit.uploads_dir%/pic'
+      $targetUrl:         '%pumukit.uploads_url%/pic'
       $forceDeleteOnDisk: '%pumukit.delete_on_disk%'
 
   Pumukit\SchemaBundle\EventListener\LocaleListener:
     class: Pumukit\SchemaBundle\EventListener\LocaleListener
     arguments:
-      $defaultLocale: '%kernel.default_locale%'
+      $defaultLocale:  '%kernel.default_locale%'
       $pumukitLocales: '%pumukit.locales%'
     tags:
       - { name: "doctrine_mongodb.odm.event_listener", event: "postLoad" }
@@ -362,24 +381,24 @@ services:
   Pumukit\SchemaBundle\Services\FactoryService:
     class: Pumukit\SchemaBundle\Services\FactoryService
     arguments:
-      $addUserAsPerson: '%pumukitschema.enable_add_user_as_person%'
-      $locales: '%pumukit.locales%'
+      $addUserAsPerson:  '%pumukitschema.enable_add_user_as_person%'
+      $locales:          '%pumukit.locales%'
       $defaultCopyright: '@=parameter("pumukitschema.default_copyright") ? parameter("pumukitschema.default_copyright") : parameter("pumukit.info")["title"]'
-      $defaultLicense: '%pumukitschema.default_license%'
+      $defaultLicense:   '%pumukitschema.default_license%'
 
   Pumukit\SchemaBundle\Services\SeriesPicService:
     class: Pumukit\SchemaBundle\Services\SeriesPicService
     arguments:
-      $locales: '%pumukit.locales%'
-      $targetPath: '%pumukit.uploads_dir%/pic/'
-      $targetUrl: '%pumukit.uploads_url%/pic'
+      $locales:           '%pumukit.locales%'
+      $targetPath:        '%pumukit.uploads_dir%/pic/'
+      $targetUrl:         '%pumukit.uploads_url%/pic'
       $forceDeleteOnDisk: '%pumukit.delete_on_disk%'
 
   Pumukit\SchemaBundle\Services\MultimediaObjectPicService:
     class: Pumukit\SchemaBundle\Services\MultimediaObjectPicService
     arguments:
-      $targetPath: '%pumukit.uploads_dir%/pic/'
-      $targetUrl: '%pumukit.uploads_url%/pic'
+      $targetPath:        '%pumukit.uploads_dir%/pic/'
+      $targetUrl:         '%pumukit.uploads_url%/pic'
       $forceDeleteOnDisk: '%pumukit.delete_on_disk%'
 
   Pumukit\SchemaBundle\Services\MultimediaObjectDurationService:
@@ -454,8 +473,8 @@ services:
   Pumukit\SchemaBundle\Services\MaterialService:
     class: Pumukit\SchemaBundle\Services\MaterialService
     arguments:
-      $targetPath: '%pumukit.uploads_dir%/material'
-      $targetUrl: '%pumukit.uploads_url%/material'
+      $targetPath:        '%pumukit.uploads_dir%/material'
+      $targetUrl:         '%pumukit.uploads_url%/material'
       $forceDeleteOnDisk: '%pumukit.delete_on_disk%'
 
   Pumukit\SchemaBundle\Services\CaptionService:
@@ -464,13 +483,13 @@ services:
   Pumukit\SchemaBundle\Services\TrackService:
     class: Pumukit\SchemaBundle\Services\TrackService
     arguments:
-      $tmpPath: '%pumukit.tmp%'
+      $tmpPath:           '%pumukit.tmp%'
       $forceDeleteOnDisk: '%pumukit.delete_on_disk%'
 
   Pumukit\SchemaBundle\Services\PersonService:
     class: Pumukit\SchemaBundle\Services\PersonService
     arguments:
-      $addUserAsPerson: '%pumukitschema.enable_add_user_as_person%'
+      $addUserAsPerson:       '%pumukitschema.enable_add_user_as_person%'
       $personalScopeRoleCode: '%pumukitschema.personal_scope_role_code%'
 
   Pumukit\SchemaBundle\Services\UserService:
@@ -484,12 +503,14 @@ services:
   Pumukit\SchemaBundle\Services\PicService:
     class: Pumukit\SchemaBundle\Services\PicService
     arguments:
-      $webDir: '%kernel.root_dir%/web'
-      $defaultSeriesPic: '%pumukitschema.default_series_pic%'
+      $scheme:             '%router.request_context.scheme%'
+      $host:               '%router.request_context.host%'
+      $webDir:             '%pumukit.public_dir'
+      $defaultSeriesPic:   '%pumukitschema.default_series_pic%'
       $defaultPlaylistPic: '%pumukitschema.default_playlist_pic%'
-      $defaultVideoPic: '%pumukitschema.default_video_pic%'
-      $defaultAudioHDPic: '%pumukitschema.default_audio_hd_pic%'
-      $defaultAudioSDPic: '%pumukitschema.default_audio_sd_pic%'
+      $defaultVideoPic:    '%pumukitschema.default_video_pic%'
+      $defaultAudioHDPic:  '%pumukitschema.default_audio_hd_pic%'
+      $defaultAudioSDPic:  '%pumukitschema.default_audio_sd_pic%'
 
   Pumukit\SchemaBundle\Services\StatsService:
     class: Pumukit\SchemaBundle\Services\StatsService
@@ -506,7 +527,7 @@ services:
   Pumukit\SchemaBundle\Services\EmbeddedEventSessionService:
     class: Pumukit\SchemaBundle\Services\EmbeddedEventSessionService
     arguments:
-      $defaultPoster: '%pumukitschema.event_default_poster%'
+      $defaultPoster:    '%pumukitschema.event_default_poster%'
       $defaultThumbnail: '%pumukit_new_admin.advance_live_event_create_default_pic%'
 
   Pumukit\StatsBundle\EventListener\Log:
@@ -522,8 +543,8 @@ services:
   Pumukit\WebTVBundle\Services\BreadcrumbsService:
     class: Pumukit\WebTVBundle\Services\BreadcrumbsService
     arguments:
-      $allTitle: '%pumukit_web_tv.breadcrumbs_all_title%'
-      $allRoute: '%pumukit_web_tv.breadcrumbs_all_route%'
+      $allTitle:  '%pumukit_web_tv.breadcrumbs_all_title%'
+      $allRoute:  '%pumukit_web_tv.breadcrumbs_all_route%'
       $homeTitle: '%breadcrumbs_home_title%'
       $parentWeb: '%pumukit_web_tv.breadcrumbs_parentweb%'
 
@@ -533,7 +554,7 @@ services:
   Pumukit\WebTVBundle\Services\CategoriesService:
     class: Pumukit\WebTVBundle\Services\CategoriesService
     arguments:
-      $parentCod: '%categories_tag_cod%'
+      $parentCod:        '%categories_tag_cod%'
       $listGeneralParam: '%categories.list_general_tags%'
 
   Pumukit\WebTVBundle\Services\ChapterMarkService:
@@ -548,7 +569,7 @@ services:
     class: Pumukit\WebTVBundle\Services\ListService
     arguments:
       $advanceLiveEvents: '%pumukit_new_admin.advance_live_event%'
-      $wallTag: '%wall_block.wall_tag%'
+      $wallTag:           '%wall_block.wall_tag%'
 
   Pumukit\WebTVBundle\Services\MenuService:
     class: Pumukit\WebTVBundle\Services\MenuService
@@ -558,7 +579,7 @@ services:
   Pumukit\WebTVBundle\Services\SearchService:
     class: Pumukit\WebTVBundle\Services\SearchService
     arguments:
-      $parentTagCod: '%search.parent_tag.cod%'
+      $parentTagCod:         '%search.parent_tag.cod%'
       $parentTagCodOptional: '%search.parent_tag_2.cod%'
 
   Pumukit\WebTVBundle\Twig\MongoDateExtension:
@@ -576,14 +597,14 @@ services:
     class: Pumukit\WizardBundle\Services\LicenseService
     arguments:
       $showLicense: '%pumukit_wizard.show_license%'
-      $licenseDir: '%pumukit_wizard.license_dir%'
-      $locales: '%pumukit.locales%'
+      $licenseDir:  '%pumukit_wizard.license_dir%'
+      $locales:     '%pumukit.locales%'
 
   Pumukit\WizardBundle\Services\WizardService:
     class: Pumukit\WizardBundle\Services\WizardService
     arguments:
-      $basePath: '%kernel.root_dir%/../'
-      $locales: '%pumukit.locales%'
+      $basePath:   '%kernel.project_dir%/'
+      $locales:    '%pumukit.locales%'
       $inboxDepth: '%pumukit.inbox_depth%'
 
   Pumukit\WizardBundle\Services\FormEventDispatcherService:
@@ -598,7 +619,7 @@ services:
   Pumukit\WorkflowBundle\EventListener\PicExtractorListener:
     class: Pumukit\WorkflowBundle\EventListener\PicExtractorListener
     arguments:
-      $autoExtractPic: '%pumukit_workflow.auto_extract_pic%'
+      $autoExtractPic:           '%pumukit_workflow.auto_extract_pic%'
       $autoExtractPicPercentage: '%pumukit_workflow.auto_extract_pic_percentage%'
     tags:
       - { name: "kernel.event_listener", event: "job.success", method: "onJobSuccess" }
@@ -607,21 +628,30 @@ services:
     class: Pumukit\WorkflowBundle\EventListener\DynamicPicExtractorListener
     arguments:
       $enableDynamicPicExtract: '%pumukit_workflow.dynamic_pic_extract%'
-      $trackTagAllowed: '%pumukit_workflow.dynamic_pic_extract_track_tag_allowed%'
+      $trackTagAllowed:         '%pumukit_workflow.dynamic_pic_extract_track_tag_allowed%'
     tags:
       - { name: "kernel.event_listener", event: "job.success", method: "onJobSuccess" }
 
   Pumukit\SchemaBundle\Security\RoleHierarchy:
-    class: Pumukit\SchemaBundle\Security\RoleHierarchy
+    class:  Pumukit\SchemaBundle\Security\RoleHierarchy
     public: false
     arguments:
       $hierarchy: '%security.role_hierarchy.roles%'
 
   Gedmo\Tree\TreeListener:
-     tags:
-         - { name: doctrine.event_subscriber, connection: default }
-         - { name: doctrine_mongodb.odm.event_subscriber }
-     calls:
-         - method: setAnnotationReader
-           arguments:
-               - "@annotation_reader"
+    tags:
+      - { name: doctrine.event_subscriber, connection: default }
+      - { name: doctrine_mongodb.odm.event_subscriber }
+    calls:
+      - method: setAnnotationReader
+        arguments:
+          - "@annotation_reader"
+
+  Gedmo\Sortable\SortableListener:
+    tags:
+      - { name: doctrine.event_subscriber, connection: default }
+      - { name: doctrine_mongodb.odm.event_subscriber }
+    calls:
+      - method: setAnnotationReader
+        arguments:
+          - '@annotation_reader'

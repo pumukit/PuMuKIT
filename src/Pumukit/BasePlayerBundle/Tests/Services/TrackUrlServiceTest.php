@@ -2,17 +2,17 @@
 
 namespace Pumukit\BasePlayerBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Track;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class TrackUrlServiceTest extends WebTestCase
+class TrackUrlServiceTest extends PumukitTestCase
 {
     private $client;
     private $dm;
@@ -21,30 +21,31 @@ class TrackUrlServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $options = ['environment' => 'test'];
+        $this->dm = parent::setUp();
 
         $this->client = static::createClient();
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
         $this->trackurlService = static::$kernel->getContainer()->get('pumukit_baseplayer.trackurl');
     }
 
     public function tearDown()
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->mmobjRepo = null;
         $this->trackurlService = null;
         $this->client = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testGenerateTrackFileUrl()
     {
         $track = new Track();
         $series = new Series();
+        $series->setNumericalID(1);
         $mmobj = new MultimediaObject();
+        $mmobj->setNumericalID(1);
         $mmobj->setStatus(MultimediaObject::STATUS_PUBLISHED);
         $tag = new Tag();
         $tag->setCod('PUCHWEBTV');
@@ -100,7 +101,9 @@ class TrackUrlServiceTest extends WebTestCase
     public function testGenerateTrackFileUrlBadExt()
     {
         $series = new Series();
+        $series->setNumericalID(1);
         $mmobj = new MultimediaObject();
+        $mmobj->setNumericalID(1);
         $track = new Track();
         $track->setUrl('https://itunesu-assets.itunes.apple.com/apple-assets-us-std-000001/CobaltPublic6/v4/32/30/4a/32304a65-98c0-6098-3d14-9eb527a59895/ce642c0936a07f17d64df621d5eee4dce2f427c48919297a232e784331f541ea-2556284337.m4v?a=v%3D3%26artistId%3D384228265%26podcastId%3D384232270%26podcastName%3DConvex%2BOptimization%2B%2528EE364A%2529%26episodeId%3D1000085092297%26episodeName%3D4.%2BConvex%2BOptimization%2BI%2BLecture%2B4%26episodeKind%3Dmovie%26pageLocation%3Ditc');
         $mmobj->setSeries($series);

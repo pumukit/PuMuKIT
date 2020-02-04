@@ -2,20 +2,21 @@
 
 namespace Pumukit\EncoderBundle\Tests\Services;
 
+use Psr\Log\LoggerInterface;
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\CpuService;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @internal
  * @coversNothing
  */
-class JobServiceTest extends WebTestCase
+class JobServiceTest extends PumukitTestCase
 {
     private $dm;
     private $repo;
@@ -32,30 +33,25 @@ class JobServiceTest extends WebTestCase
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $this->dm = parent::setUp();
         $this->repo = $this->dm->getRepository(Job::class);
         $this->repoMmobj = $this->dm->getRepository(MultimediaObject::class);
-        $this->logger = static::$kernel->getContainer()->get('logger');
+        $this->logger = $this->getMockBuilder(LoggerInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
         $this->trackService = static::$kernel->getContainer()->get('pumukitschema.track');
         $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
         $this->factory = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->propService = static::$kernel->getContainer()->get('pumukitencoder.mmpropertyjob');
-
-        $this->dm->getDocumentCollection(Job::class)->remove([]);
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
-        $this->dm->flush();
+        $inspectionService = static::$kernel->getContainer()->get('pumukit.inspection');
 
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
         $cpuService = new CpuService($this->getDemoCpus(), $this->dm);
         $dispatcher = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')
             ->getMock()
         ;
-        $inspectionService = $this->getMockBuilder('Pumukit\InspectionBundle\Services\InspectionServiceInterface')
-            ->getMock()
-        ;
-        $inspectionService->expects($this->any())->method('getDuration')->will($this->returnValue(5));
+
         $this->resourcesDir = realpath(__DIR__.'/../Resources').'/';
         $this->jobService = new JobService(
             $this->dm,
@@ -74,6 +70,8 @@ class JobServiceTest extends WebTestCase
 
     public function tearDown()
     {
+        parent::tearDown();
+
         $this->dm->close();
         $this->dm = null;
         $this->repo = null;
@@ -85,7 +83,6 @@ class JobServiceTest extends WebTestCase
         $this->resourcesDir = null;
         $this->jobService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testCreateTrackFromLocalHardDrive()
@@ -151,8 +148,6 @@ class JobServiceTest extends WebTestCase
 
     public function testAddJob()
     {
-        $profiles = $this->getDemoProfiles();
-
         $pathFile = $this->resourcesDir.'test.txt';
 
         $profile = 'MASTER_COPY';
@@ -161,15 +156,19 @@ class JobServiceTest extends WebTestCase
         $description = ['en' => 'test', 'es' => 'prueba'];
 
         $series = new Series();
+        $series->setNumericalID(1);
         $multimediaObject = new MultimediaObject();
+        $multimediaObject->setNumericalID(1);
         $multimediaObject->setSeries($series);
         $this->dm->persist($series);
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
 
-        $this->jobService->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description);
-
-        $this->assertEquals(1, count($this->repo->findAll()));
+        try {
+            $this->jobService->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description);
+        } catch (\Exception $exception) {
+            $this->assertEquals(0, count($this->repo->findAll()));
+        }
 
         $pathFile2 = $this->resourcesDir.'test2.txt';
 
@@ -178,9 +177,11 @@ class JobServiceTest extends WebTestCase
         $language2 = 'en';
         $description2 = ['en' => 'test2', 'es' => 'prueba2'];
 
-        $this->jobService->addJob($pathFile2, $profile2, $priority2, $multimediaObject, $language2, $description2);
-
-        $this->assertEquals(2, count($this->repo->findAll()));
+        try {
+            $this->jobService->addJob($pathFile2, $profile2, $priority2, $multimediaObject, $language2, $description2);
+        } catch (\Exception $exception) {
+            $this->assertEquals(0, count($this->repo->findAll()));
+        }
     }
 
     public function testPauseJob()

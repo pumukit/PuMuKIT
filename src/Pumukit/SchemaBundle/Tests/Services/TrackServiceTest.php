@@ -2,21 +2,20 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Psr\Log\LoggerInterface;
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\CpuService;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Services\TrackService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class TrackServiceTest extends WebTestCase
+class TrackServiceTest extends PumukitTestCase
 {
     private $dm;
     private $repoJobs;
@@ -32,12 +31,11 @@ class TrackServiceTest extends WebTestCase
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->logger = static::$kernel->getContainer()
-            ->get('logger')
+        $this->dm = parent::setUp();
+        $this->logger = $this->getMockBuilder(LoggerInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock()
         ;
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
         $this->repoJobs = $this->dm
             ->getRepository(Job::class)
         ;
@@ -54,20 +52,6 @@ class TrackServiceTest extends WebTestCase
             ->get('security.token_storage')
         ;
 
-        $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(SeriesType::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(Series::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(Job::class)
-            ->remove([])
-        ;
-        $this->dm->flush();
-
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
         $this->trackService = new TrackService($this->dm, $this->trackDispatcher, $profileService, null, true);
 
@@ -76,6 +60,7 @@ class TrackServiceTest extends WebTestCase
 
     public function tearDown()
     {
+        parent::tearDown();
         $this->dm->close();
         $this->logger = null;
         $this->dm = null;
@@ -87,7 +72,6 @@ class TrackServiceTest extends WebTestCase
         $this->trackService = null;
         $this->tmpDir = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testAddTrackToMultimediaObject()

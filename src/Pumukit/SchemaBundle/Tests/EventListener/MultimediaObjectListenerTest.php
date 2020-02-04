@@ -2,20 +2,20 @@
 
 namespace Pumukit\SchemaBundle\Tests\EventListener;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\EventListener\MultimediaObjectListener;
 use Pumukit\SchemaBundle\Services\TextIndexService;
 use Pumukit\SchemaBundle\Services\TrackService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * @internal
  * @coversNothing
  */
-class MultimediaObjectListenerTest extends WebTestCase
+class MultimediaObjectListenerTest extends PumukitTestCase
 {
     private $dm;
     private $mmRepo;
@@ -33,28 +33,20 @@ class MultimediaObjectListenerTest extends WebTestCase
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $this->dm = parent::setUp();
         $this->mmRepo = $this->dm->getRepository(MultimediaObject::class);
 
         $dispatcher = new EventDispatcher();
-        // $mmDispatcher = new MultimediaObjectEventDispatcherService($dispatcher);
         $this->listener = new MultimediaObjectListener($this->dm, new TextIndexService());
         $dispatcher->addListener('multimediaobject.update', [$this->listener, 'postUpdate']);
-        $this->trackDispatcher = static::$kernel->getContainer()
-            ->get('pumukitschema.track_dispatcher')
-        ;
+        $this->trackDispatcher = static::$kernel->getContainer()->get('pumukitschema.track_dispatcher');
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
         $this->trackService = new TrackService($this->dm, $this->trackDispatcher, $profileService, null, true);
-
-        $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove([])
-        ;
-        $this->dm->flush();
     }
 
     public function tearDown()
     {
+        parent::tearDown();
         $this->dm = null;
         $this->mmRepo = null;
         $this->listener = null;
@@ -67,7 +59,6 @@ class MultimediaObjectListenerTest extends WebTestCase
         $this->localhost = null;
         $this->picService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testPostUpdate()
@@ -75,6 +66,7 @@ class MultimediaObjectListenerTest extends WebTestCase
         // MULTIMEDIA OBJECT TEST
         // TEST IS ONLY AUDIO
         $mm = new MultimediaObject();
+        $mm->setNumericalID(1);
 
         $t1 = new Track();
         $t1->setOnlyAudio(true);
@@ -104,6 +96,7 @@ class MultimediaObjectListenerTest extends WebTestCase
 
         // TEST GET MASTER
         $mm = new MultimediaObject();
+        $mm->setNumericalID(2);
         $track3 = new Track();
         $track3->addTag('master');
         $track3->setOnlyAudio(false);

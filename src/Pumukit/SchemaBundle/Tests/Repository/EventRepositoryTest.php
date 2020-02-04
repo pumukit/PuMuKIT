@@ -2,15 +2,15 @@
 
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Event;
 use Pumukit\SchemaBundle\Document\Live;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class EventRepositoryTest extends WebTestCase
+class EventRepositoryTest extends PumukitTestCase
 {
     private $dm;
     private $repo;
@@ -19,22 +19,17 @@ class EventRepositoryTest extends WebTestCase
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $this->dm = parent::setUp();
         $this->repo = $this->dm->getRepository(Event::class);
-
-        $this->dm->getDocumentCollection(Event::class)->remove([]);
-        $this->dm->getDocumentCollection(Live::class)->remove([]);
-        $this->dm->flush();
     }
 
     public function tearDown()
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->repo = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testRepository()

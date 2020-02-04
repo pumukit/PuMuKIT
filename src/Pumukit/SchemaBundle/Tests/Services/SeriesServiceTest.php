@@ -2,18 +2,18 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Services\SeriesService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class SeriesServiceTest extends WebTestCase
+class SeriesServiceTest extends PumukitTestCase
 {
     private $dm;
     private $repo;
@@ -25,8 +25,8 @@ class SeriesServiceTest extends WebTestCase
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
+        $this->dm = parent::setUp();
+
         $this->repo = $this->dm
             ->getRepository(Series::class)
         ;
@@ -43,21 +43,21 @@ class SeriesServiceTest extends WebTestCase
 
     public function tearDown()
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->repo = null;
         $this->seriesService = null;
         $this->seriesDispatcher = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testResetMagicUrl()
     {
         $series = new Series();
+        $series->setNumericalID(1);
 
         $this->dm->persist($series);
-        $this->dm->flush();
 
         $secret = $series->getSecret();
 
@@ -75,9 +75,9 @@ class SeriesServiceTest extends WebTestCase
     public function testSameEmbeddedBroadcast()
     {
         $series1 = new Series();
+        $series1->setNumericalID(1);
 
         $this->dm->persist($series1);
-        $this->dm->flush();
 
         $key1 = 'Group1';
         $name1 = 'Group 1';
@@ -130,9 +130,13 @@ class SeriesServiceTest extends WebTestCase
         $embeddedBroadcast14->addGroup($group2);
 
         $mm11 = new MultimediaObject();
+        $mm11->setNumericalID(11);
         $mm12 = new MultimediaObject();
+        $mm12->setNumericalID(12);
         $mm13 = new MultimediaObject();
+        $mm13->setNumericalID(13);
         $mm14 = new MultimediaObject();
+        $mm14->setNumericalID(14);
 
         $mm11->setSeries($series1);
         $mm12->setSeries($series1);

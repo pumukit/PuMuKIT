@@ -236,6 +236,7 @@ class MultimediaObjectServiceTest extends WebTestCase
         $group3->setName('name3');
 
         $multimediaObject = new MultimediaObject();
+        $multimediaObject->setNumericalID(1);
         $multimediaObject->setTitle('test');
 
         $this->dm->persist($group1);
@@ -286,6 +287,7 @@ class MultimediaObjectServiceTest extends WebTestCase
         $group3->setName('name3');
 
         $multimediaObject = new MultimediaObject();
+        $multimediaObject->setNumericalID(1);
         $multimediaObject->setTitle('test');
 
         $this->dm->persist($group1);
@@ -373,14 +375,17 @@ class MultimediaObjectServiceTest extends WebTestCase
         $owners3 = [$user1->getId(), $user2->getId()];
 
         $mm1 = new MultimediaObject();
+        $mm1->setNumericalID(1);
         $mm1->setTitle('mm1');
         $mm1->setProperty('owners', $owners1);
 
         $mm2 = new MultimediaObject();
+        $mm2->setNumericalID(2);
         $mm2->setTitle('mm2');
         $mm2->setProperty('owners', $owners2);
 
         $mm3 = new MultimediaObject();
+        $mm3->setNumericalID(3);
         $mm3->setTitle('mm3');
         $mm3->setProperty('owners', $owners3);
 
@@ -408,14 +413,17 @@ class MultimediaObjectServiceTest extends WebTestCase
         $this->assertEquals(0, count($this->repo->findWithGroup($group)->toArray()));
 
         $mm1 = new MultimediaObject();
+        $mm1->setNumericalID(1);
         $mm1->setTitle('mm1');
         $mm1->addGroup($group);
 
         $mm2 = new MultimediaObject();
+        $mm2->setNumericalID(2);
         $mm2->setTitle('mm2');
         $mm2->addGroup($group);
 
         $mm3 = new MultimediaObject();
+        $mm3->setNumericalID(3);
         $mm3->setTitle('mm3');
         $mm3->addGroup($group);
 

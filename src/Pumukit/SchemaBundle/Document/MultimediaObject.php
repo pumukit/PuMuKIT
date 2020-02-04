@@ -139,7 +139,7 @@ class MultimediaObject
 
     /**
      * @var Collection
-     * @MongoDB\ReferenceMany(targetDocument=Group::class, storeAs="id", sort={"key":1}, strategy="setArray")
+     * @MongoDB\ReferenceMany(targetDocument=Group::class, storeAs="id", sort={"key":1}, strategy="setArray", cascade={"persist","remove"})
      */
     private $groups;
 

@@ -3,14 +3,14 @@
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
 use MongoDB\BSON\ObjectId;
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Group;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class GroupRepositoryTest extends WebTestCase
+class GroupRepositoryTest extends PumukitTestCase
 {
     private $dm;
     private $repo;
@@ -19,24 +19,17 @@ class GroupRepositoryTest extends WebTestCase
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $this->dm = parent::setUp();
         $this->repo = $this->dm->getRepository(Group::class);
-
-        //DELETE DATABASE
-        $this->dm->getDocumentCollection(Group::class)
-            ->remove([])
-        ;
-        $this->dm->flush();
     }
 
     public function tearDown()
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->repo = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testRepositoryEmpty()
