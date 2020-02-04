@@ -4,13 +4,10 @@ namespace Pumukit\StatsBundle\Tests\Services;
 
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Track;
-use Pumukit\StatsBundle\Document\ViewsAggregation;
 use Pumukit\StatsBundle\Document\ViewsLog;
 use Pumukit\StatsBundle\Services\StatsService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
@@ -33,7 +30,6 @@ class StatsServiceTest extends PumukitTestCase
         $this->repo = $this->dm->getRepository(ViewsLog::class);
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->viewsService = static::$kernel->getContainer()->get('pumukit_stats.stats');
-
     }
 
     public function tearDown()

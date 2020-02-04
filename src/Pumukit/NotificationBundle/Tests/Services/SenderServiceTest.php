@@ -5,7 +5,6 @@ namespace Pumukit\NotificationBundle\Tests\Services;
 use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\NotificationBundle\Services\SenderService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal

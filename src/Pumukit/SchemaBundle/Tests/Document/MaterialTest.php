@@ -83,5 +83,4 @@ class MaterialTest extends TestCase
         $this->assertFalse($material->containsAllTags(['t0', 't2']));
         $this->assertFalse($material->containsAllTags(['t0', 't1', 't2', 't3']));
     }
-
 }

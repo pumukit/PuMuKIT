@@ -10,7 +10,6 @@ use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -30,7 +29,6 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
 
     public function setUp()
     {
-
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 

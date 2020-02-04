@@ -20,7 +20,6 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Process\Process;
-
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class JobService
@@ -451,7 +450,7 @@ class JobService
     public function executeInBackground(Job $job)
     {
         $command = [
-            'php', $this->binPath, 'console', sprintf('--env=%s ', $this->environment), 'pumukit:encoder:job', $job->getId()
+            'php', $this->binPath, 'console', sprintf('--env=%s ', $this->environment), 'pumukit:encoder:job', $job->getId(),
         ];
 
         $process = new Process($command);

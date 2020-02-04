@@ -4,12 +4,9 @@ namespace Pumukit\StatsBundle\Tests\EventListener;
 
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\StatsBundle\Document\ViewsLog;
 use Pumukit\StatsBundle\EventListener\Log;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

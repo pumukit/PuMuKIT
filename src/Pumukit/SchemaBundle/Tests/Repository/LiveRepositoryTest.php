@@ -4,7 +4,6 @@ namespace Pumukit\SchemaBundle\Tests\Repository;
 
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Live;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal

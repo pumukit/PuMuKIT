@@ -5,7 +5,6 @@ namespace Pumukit\SchemaBundle\Tests\Other;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
@@ -59,8 +58,6 @@ class MultimediaObjectRankTest extends PumukitTestCase
         $this->dm->persist($mm4);
         $this->dm->persist($otherMm);
         $this->dm->flush();
-
-        dump($mm1->getRank());
 
         $this->assertEquals(1, $mm1->getRank());
         $this->assertEquals(2, $mm2->getRank());

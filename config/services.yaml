@@ -25,6 +25,8 @@ parameters:
   debug_toolbar:                       true
   debug_redirects:                     false
   use_assetic_controller:              true
+  router.request_context.scheme:       "%env(PUMUKIT_SCHEME)%"
+  router.request_context.host:         "%env(PUMUKIT_HOST)%"
 
   pumukit.info:
     title:               "%env(PUMUKIT_TITLE)%"
@@ -36,27 +38,27 @@ parameters:
     font_color:          "%env(PUMUKIT_FONT_COLOR)%"
 
   pumukit.locales:                     "%env(json:PUMUKIT_LOCALES)%"
-#  pumukit.public_dir:                  "%env(PUMUKIT_PUBLIC_DIR)%"
+  #  pumukit.public_dir:                  "%env(PUMUKIT_PUBLIC_DIR)%"
   pumukit.public_dir:                  '%kernel.project_dir%/public/'
-#  pumukit.storage_dir:                 "%env(PUMUKIT_STORAGE_DIR)%"
+  #  pumukit.storage_dir:                 "%env(PUMUKIT_STORAGE_DIR)%"
   pumukit.storage_dir:                 '%kernel.project_dir%/public/storage'
-#  pumukit.uploads_dir:                 "%env(PUMUKIT_UPLOADS_DIR)%"
+  #  pumukit.uploads_dir:                 "%env(PUMUKIT_UPLOADS_DIR)%"
   pumukit.uploads_dir:                 '%kernel.project_dir%/public/uploads'
-#  pumukit.uploads_url:                 "%env(PUMUKIT_UPLOADS_URL)%"
+  #  pumukit.uploads_url:                 "%env(PUMUKIT_UPLOADS_URL)%"
   pumukit.uploads_url:                 "/uploads"
-#  pumukit.uploads_material_dir:        "%env(PUMUKIT_UPLOADS_MATERIAL_DIR)%"
+  #  pumukit.uploads_material_dir:        "%env(PUMUKIT_UPLOADS_MATERIAL_DIR)%"
   pumukit.uploads_material_dir:        '%kernel.project_dir%/public/uploads/material'
-#  pumukit.uploads_pic_dir:             "%env(PUMUKIT_UPLOADS_PIC_DIR)%"
+  #  pumukit.uploads_pic_dir:             "%env(PUMUKIT_UPLOADS_PIC_DIR)%"
   pumukit.uploads_pic_dir:             '%kernel.project_dir%/public/uploads/pic'
-#  pumukit.inbox:                       "%env(PUMUKIT_INBOX)%"
+  #  pumukit.inbox:                       "%env(PUMUKIT_INBOX)%"
   pumukit.inbox:                       '%kernel.project_dir%/public/storage/inbox'
-#  pumukit.tmp:                         "%env(PUMUKIT_TMP)%"
+  #  pumukit.tmp:                         "%env(PUMUKIT_TMP)%"
   pumukit.tmp:                         '%kernel.project_dir%/public/storage/tmp'
-#  pumukit.downloads:                   "%env(PUMUKIT_DOWNLOADS)%"
+  #  pumukit.downloads:                   "%env(PUMUKIT_DOWNLOADS)%"
   pumukit.downloads:                   '%kernel.project_dir%/public/storage/downloads'
-#  pumukit.masters:                     "%env(PUMUKIT_MASTERS)%"
+  #  pumukit.masters:                     "%env(PUMUKIT_MASTERS)%"
   pumukit.masters:                     '%kernel.project_dir%/public/storage/masters'
-#  pumukit.delete_on_disk:              "%env(bool:PUMUKIT_DELETE_ON_DISK)%"
+  #  pumukit.delete_on_disk:              "%env(bool:PUMUKIT_DELETE_ON_DISK)%"
   pumukit.delete_on_disk:              false
 
 services:
@@ -501,6 +503,8 @@ services:
   Pumukit\SchemaBundle\Services\PicService:
     class: Pumukit\SchemaBundle\Services\PicService
     arguments:
+      $scheme:             '%router.request_context.scheme%'
+      $host:               '%router.request_context.host%'
       $webDir:             '%pumukit.public_dir'
       $defaultSeriesPic:   '%pumukitschema.default_series_pic%'
       $defaultPlaylistPic: '%pumukitschema.default_playlist_pic%'
@@ -642,3 +646,12 @@ services:
       - method: setAnnotationReader
         arguments:
           - "@annotation_reader"
+
+  Gedmo\Sortable\SortableListener:
+    tags:
+      - { name: doctrine.event_subscriber, connection: default }
+      - { name: doctrine_mongodb.odm.event_subscriber }
+    calls:
+      - method: setAnnotationReader
+        arguments:
+          - '@annotation_reader'

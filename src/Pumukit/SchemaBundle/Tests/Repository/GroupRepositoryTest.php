@@ -5,7 +5,6 @@ namespace Pumukit\SchemaBundle\Tests\Repository;
 use MongoDB\BSON\ObjectId;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Group;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal

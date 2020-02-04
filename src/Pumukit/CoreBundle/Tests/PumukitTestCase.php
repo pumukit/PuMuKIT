@@ -2,7 +2,6 @@
 
 namespace Pumukit\CoreBundle\Tests;
 
-use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\EncoderBundle\Document\CpuStatus;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\SchemaBundle\Document\Annotation;

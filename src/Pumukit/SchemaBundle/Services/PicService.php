@@ -4,14 +4,11 @@ namespace Pumukit\SchemaBundle\Services;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Component\Routing\RequestContext;
 
 class PicService
 {
-    /**
-     * @var RequestContext
-     */
-    protected $context;
+    private $scheme;
+    private $host;
     private $defaultSeriesPic;
     private $defaultVideoPic;
     private $defaultAudioHDPic;
@@ -19,9 +16,10 @@ class PicService
     private $webDir;
     private $defaultPlaylistPic;
 
-    public function __construct(RequestContext $context, $webDir = '', $defaultSeriesPic = '', $defaultPlaylistPic = '', $defaultVideoPic = '', $defaultAudioHDPic = '', $defaultAudioSDPic = '')
+    public function __construct($scheme, $host, $webDir = '', $defaultSeriesPic = '', $defaultPlaylistPic = '', $defaultVideoPic = '', $defaultAudioHDPic = '', $defaultAudioSDPic = '')
     {
-        $this->context = $context;
+        $this->scheme = $scheme;
+        $this->host = $host;
         $this->webDir = $webDir;
         $this->defaultSeriesPic = $defaultSeriesPic;
         $this->defaultPlaylistPic = $defaultPlaylistPic;
@@ -338,16 +336,7 @@ class PicService
             return $picUrl;
         }
 
-        $scheme = $this->context->getScheme();
-        $host = $this->context->getHost();
-        $port = '';
-        if ('http' === $scheme && 80 != $this->context->getHttpPort()) {
-            $port = ':'.$this->context->getHttpPort();
-        } elseif ('https' === $scheme && 443 != $this->context->getHttpsPort()) {
-            $port = ':'.$this->context->getHttpsPort();
-        }
-
-        return $scheme.'://'.$host.$port.$picUrl;
+        return $this->scheme.'://'.$this->host.$picUrl;
     }
 
     /**
