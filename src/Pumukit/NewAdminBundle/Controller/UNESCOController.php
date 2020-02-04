@@ -698,7 +698,7 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
                 $selectedTag = $dm->getRepository(Tag::class)->findOneBy(['cod' => $configuredTag->getCod()]);
                 $query = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder()
                     ->field('tags.cod')
-                    ->notEqual(new \MongoId($selectedTag->getCod()))
+                    ->notEqual($selectedTag->getCod())
                 ;
 
                 break;
@@ -706,7 +706,7 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
                 $selectedTag = $dm->getRepository(Tag::class)->findOneBy(['cod' => $tag]);
                 $query = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder()
                     ->field('tags.cod')
-                    ->equals(new \MongoId($selectedTag->getCod()))
+                    ->equals($selectedTag->getCod())
                 ;
 
                 break;
