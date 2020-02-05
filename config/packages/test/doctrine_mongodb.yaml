@@ -1,0 +1,2 @@
+doctrine_mongodb:
+  default_database: '%env(resolve:MONGODB_DB)%_test'
