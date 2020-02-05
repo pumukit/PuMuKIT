@@ -2,11 +2,13 @@
 
 namespace Pumukit\SchemaBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\CoreBundle\Services\SerializerService;
 use Pumukit\NewAdminBundle\Controller\NewAdminControllerInterface;
 use Pumukit\SchemaBundle\Document\Live;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,17 +16,16 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/api/media")
  */
-class APIController extends Controller implements NewAdminControllerInterface
+class APIController extends AbstractController implements NewAdminControllerInterface
 {
     /**
      * @Route("/stats.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
      */
-    public function statsAction(Request $request)
+    public function statsAction(Request $request, DocumentManager $documentManager, SerializerService $serializer)
     {
-        $mmRepo = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
-        $seriesRepo = $this->get('doctrine_mongodb')->getRepository(Series::class);
-        $liveRepo = $this->get('doctrine_mongodb')->getRepository(Live::class);
-        $serializer = $this->get('jms_serializer');
+        $mmRepo = $documentManager->getRepository(MultimediaObject::class);
+        $seriesRepo = $documentManager->getRepository(Series::class);
+        $liveRepo = $documentManager->getRepository(Live::class);
 
         $totalSeries = $seriesRepo->countPublic();
         $totalMmobjs = $mmRepo->count();
@@ -42,7 +43,7 @@ class APIController extends Controller implements NewAdminControllerInterface
             'live_channels' => $totalLiveChannels,
         ];
 
-        $data = $serializer->serialize($counts, $request->getRequestFormat());
+        $data = $serializer->dataSerialize($counts, $request->getRequestFormat());
 
         return new Response($data);
     }
@@ -50,10 +51,9 @@ class APIController extends Controller implements NewAdminControllerInterface
     /**
      * @Route("/mmobj.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
      */
-    public function multimediaObjectsAction(Request $request)
+    public function multimediaObjectsAction(Request $request, DocumentManager $documentManager, SerializerService $serializer)
     {
-        $mmRepo = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
-        $serializer = $this->get('jms_serializer');
+        $mmRepo = $documentManager->getRepository(MultimediaObject::class);
 
         $limit = $request->get('limit');
         $page = $request->get('page');
@@ -63,7 +63,7 @@ class APIController extends Controller implements NewAdminControllerInterface
             $criteria = $this->getMultimediaObjectCriteria($request->get('criteria'), $request->get('criteriajson'));
         } catch (\Exception $e) {
             $error = ['error' => sprintf('Invalid criteria (%s)', $e->getMessage())];
-            $data = $serializer->serialize($error, $request->getRequestFormat());
+            $data = $serializer->dataSerialize($error, $request->getRequestFormat());
 
             return new Response($data, 400);
         }
@@ -109,7 +109,7 @@ class APIController extends Controller implements NewAdminControllerInterface
             'mmobjs' => $mmobjs,
         ];
 
-        $data = $serializer->serialize($counts, $request->getRequestFormat());
+        $data = $serializer->dataSerialize($counts, $request->getRequestFormat());
 
         return new Response($data);
     }
@@ -117,10 +117,9 @@ class APIController extends Controller implements NewAdminControllerInterface
     /**
      * @Route("/series.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
      */
-    public function seriesAction(Request $request)
+    public function seriesAction(Request $request, DocumentManager $documentManager, SerializerService $serializer)
     {
-        $seriesRepo = $this->get('doctrine_mongodb')->getRepository(Series::class);
-        $serializer = $this->get('jms_serializer');
+        $seriesRepo = $documentManager->getRepository(Series::class);
         $limit = $request->get('limit');
         $page = $request->get('page');
         $skip = $request->get('skip');
@@ -170,7 +169,7 @@ class APIController extends Controller implements NewAdminControllerInterface
             'series' => $series,
         ];
 
-        $data = $serializer->serialize($counts, $request->getRequestFormat());
+        $data = $serializer->dataSerialize($counts, $request->getRequestFormat());
 
         return new Response($data);
     }
@@ -178,10 +177,9 @@ class APIController extends Controller implements NewAdminControllerInterface
     /**
      * @Route("/live.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
      */
-    public function liveAction(Request $request)
+    public function liveAction(Request $request, DocumentManager $documentManager, SerializerService $serializer)
     {
-        $liveRepo = $this->get('doctrine_mongodb')->getRepository(Live::class);
-        $serializer = $this->get('jms_serializer');
+        $liveRepo = $documentManager->getRepository(Live::class);
 
         $limit = $request->get('limit');
         if (!$limit || $limit > 100) {
@@ -192,7 +190,7 @@ class APIController extends Controller implements NewAdminControllerInterface
             $criteria = $this->getCriteria($request->get('criteria'), $request->get('criteriajson'));
         } catch (\Exception $e) {
             $error = ['error' => sprintf('Invalid criteria (%s)', $e->getMessage())];
-            $data = $serializer->serialize($error, $request->getRequestFormat());
+            $data = $serializer->dataSerialize($error, $request->getRequestFormat());
 
             return new Response($data, 400);
         }
@@ -223,7 +221,7 @@ class APIController extends Controller implements NewAdminControllerInterface
             'live' => $live,
         ];
 
-        $data = $serializer->serialize($counts, $request->getRequestFormat());
+        $data = $serializer->dataSerialize($counts, $request->getRequestFormat());
 
         return new Response($data);
     }
@@ -231,12 +229,9 @@ class APIController extends Controller implements NewAdminControllerInterface
     /**
      * @Route("/locales.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
      */
-    public function localesAction(Request $request)
+    public function localesAction(Request $request, SerializerService $serializer, array $locales)
     {
-        $serializer = $this->get('jms_serializer');
-
-        $locales = $this->container->getParameter('pumukit.locales');
-        $data = $serializer->serialize($locales, $request->getRequestFormat());
+        $data = $serializer->dataSerialize($locales, $request->getRequestFormat());
 
         return new Response($data);
     }

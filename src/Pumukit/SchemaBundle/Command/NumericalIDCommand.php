@@ -2,20 +2,27 @@
 
 namespace Pumukit\SchemaBundle\Command;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class NumericalIDCommand extends ContainerAwareCommand
+class NumericalIDCommand extends Command
 {
     private $dm;
     private $step;
     private $force;
     private $output;
+
+    public function __construct(DocumentManager $documentManager)
+    {
+        $this->dm = $documentManager;
+        parent::__construct();
+    }
 
     protected function configure()
     {
@@ -26,9 +33,9 @@ class NumericalIDCommand extends ContainerAwareCommand
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter force the execution of this action')
             ->setHelp(
                 <<<'EOT'
-            
+
             Example:
-            
+
             php app/console pumukit:update:numerical:id --step=generate
 EOT
             )
@@ -37,16 +44,12 @@ EOT
 
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $this->step = $input->getOption('step');
         $this->force = (true === $input->getOption('force'));
 
         $this->output = $output;
     }
 
-    /**
-     * @see Command
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         switch ($this->step) {

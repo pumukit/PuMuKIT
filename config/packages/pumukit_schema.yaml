@@ -3,6 +3,16 @@ services:
     autowire:      true
     autoconfigure: true
     public:        true
+    bind:
+      $locales: '%pumukit.locales%'
+
+  Pumukit\SchemaBundle\Controller\:
+    resource: '../../src/Pumukit/SchemaBundle/Controller'
+    tags: ['controller.service_arguments']
+
+  Pumukit\SchemaBundle\Command\:
+    resource: '../../src/Pumukit/SchemaBundle/Command'
+    tags: ['console.command']
 
   Pumukit\SchemaBundle\Services\PasswordUpdater:
     class:  Pumukit\SchemaBundle\Services\PasswordUpdater
