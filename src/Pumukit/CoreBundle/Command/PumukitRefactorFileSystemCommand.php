@@ -6,7 +6,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Regex;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -16,10 +16,7 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 use UnexpectedValueException;
 
-/**
- * Class PumukitRefactorFileSystemCommand.
- */
-class PumukitRefactorFileSystemCommand extends ContainerAwareCommand
+class PumukitRefactorFileSystemCommand extends Command
 {
     private $dm;
     private $output;
@@ -32,6 +29,12 @@ class PumukitRefactorFileSystemCommand extends ContainerAwareCommand
     private $id;
     private $regex = '/^[0-9a-z]{24}$/';
     private $allowedTypes = ['pics', 'materials'];
+
+    public function __construct(DocumentManager $documentManager)
+    {
+        $this->dm = $documentManager;
+        parent::__construct();
+    }
 
     protected function configure()
     {
@@ -80,8 +83,6 @@ EOT
 
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        $this->dm = $this->getContainer()->get('doctrine_mongodb.odm.document_manager');
-        $this->logger = $this->getContainer()->get('logger');
         $this->output = $output;
         $this->input = $input;
 
@@ -92,16 +93,11 @@ EOT
         $this->finder = new Finder();
     }
 
-    /**
-     * @throws \Exception
-     *
-     * @return int|void|null
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->checkInputs();
 
-        $this->repairMongoDBPicsAndMaterial($this->dm);
+        $this->repairMongoDBPicsAndMaterial();
 
         if ($this->pics) {
             $message = '***** List pics paths to refactor *****';
@@ -110,7 +106,7 @@ EOT
             }
 
             $this->showMessage($output, $message);
-            $this->refactorPicsPath($output, $this->dm);
+            $this->refactorPicsPath($output);
             $this->showMessage($output, '----- Refactor pics done -----');
         }
 
@@ -118,7 +114,7 @@ EOT
             $output->writeln('Trying to refactor materials paths ...');
 
             try {
-                $this->refactorMaterialsPath($output, $this->dm);
+                $this->refactorMaterialsPath($output);
             } catch (\Exception $exception) {
                 throw new \Exception($exception->getMessage());
             }
@@ -127,10 +123,7 @@ EOT
         }
     }
 
-    /**
-     * @throws \Exception
-     */
-    private function checkInputs()
+    private function checkInputs(): void
     {
         if (!$this->pics && !$this->materials) {
             throw new \Exception('Please select one type ( pics or materials )');
@@ -141,35 +134,23 @@ EOT
         }
     }
 
-    /**
-     * Function to repair path on MongoDB.
-     *
-     * @throws \Exception
-     */
-    private function repairMongoDBPicsAndMaterial(DocumentManager $documentManager)
+    private function repairMongoDBPicsAndMaterial(): void
     {
         if ($this->pics) {
-            $this->repairMongoDB($documentManager, 'pics');
+            $this->repairMongoDB('pics');
         }
 
         if ($this->materials) {
-            $this->repairMongoDB($documentManager, 'materials');
+            $this->repairMongoDB('materials');
         }
     }
 
-    /**
-     * @param string $type
-     *
-     * @throws \Exception
-     *
-     * @return bool
-     */
-    private function repairMongoDB(DocumentManager $documentManager, $type)
+    private function repairMongoDB(string $type): bool
     {
         if ('pics' === $type) {
-            $multimediaObjects = $this->findPicsWithoutPaths($documentManager);
+            $multimediaObjects = $this->findPicsWithoutPaths();
         } else {
-            $multimediaObjects = $this->findMaterialsWithoutPaths($documentManager);
+            $multimediaObjects = $this->findMaterialsWithoutPaths();
         }
 
         if (!$multimediaObjects) {
@@ -179,26 +160,18 @@ EOT
         }
 
         foreach ($multimediaObjects as $multimediaObject) {
-            $this->fixPathMultimediaObject($documentManager, $multimediaObject, $type);
+            $this->fixPathMultimediaObject($multimediaObject, $type);
         }
 
         return true;
     }
 
-    /**
-     * @param string $message
-     */
-    private function showMessage(OutputInterface $output, $message)
+    private function showMessage(OutputInterface $output, $message): void
     {
         $output->writeln($message);
     }
 
-    /**
-     * @param string $type
-     *
-     * @throws \Exception
-     */
-    private function fixPathMultimediaObject(DocumentManager $documentManager, MultimediaObject $multimediaObject, $type)
+    private function fixPathMultimediaObject(MultimediaObject $multimediaObject, $type): void
     {
         if (!in_array($type, $this->allowedTypes)) {
             throw new \Exception('Types cant be distinct of '.implode(' or ', $this->allowedTypes));
@@ -210,14 +183,10 @@ EOT
             $elements = $multimediaObject->getMaterials();
         }
 
-        $this->fixPath($documentManager, $elements, $type);
+        $this->fixPath($elements, $type);
     }
 
-    /**
-     * @param iterable $elements
-     * @param string   $type
-     */
-    private function fixPath(DocumentManager $documentManager, $elements, $type)
+    private function fixPath($elements, $type)
     {
         $haveChanges = false;
         foreach ($elements as $elem) {
@@ -242,16 +211,13 @@ EOT
         }
 
         if ($haveChanges && $this->force) {
-            $documentManager->flush();
+            $this->dm->flush();
         }
     }
 
-    /**
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     */
-    private function refactorPicsPath(OutputInterface $output, DocumentManager $documentManager)
+    private function refactorPicsPath(OutputInterface $output)
     {
-        $multimediaObjects = $this->findWrongPathPics($documentManager);
+        $multimediaObjects = $this->findWrongPathPics();
 
         foreach ($multimediaObjects as $multimediaObject) {
             $haveChanges = false;
@@ -288,7 +254,7 @@ EOT
                     }
 
                     try {
-                        $this->updateMultimediaObjectPic($documentManager, $multimediaObjectId, $pic['path'], $newPath, $newUrl);
+                        $this->updateMultimediaObjectPic($multimediaObjectId, $pic['path'], $newPath, $newUrl);
                     } catch (\Exception $exception) {
                         $this->showMessage($output, 'Cant update mmobj '.$multimediaObjectId.' with the new path of the pic '.$pic['path']);
 
@@ -305,12 +271,9 @@ EOT
         }
     }
 
-    /**
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     */
-    private function refactorMaterialsPath(OutputInterface $output, DocumentManager $documentManager)
+    private function refactorMaterialsPath(OutputInterface $output)
     {
-        $multimediaObjects = $this->findWrongPathMaterials($documentManager);
+        $multimediaObjects = $this->findWrongPathMaterials();
 
         foreach ($multimediaObjects as $multimediaObject) {
             $haveChanges = false;
@@ -347,7 +310,7 @@ EOT
                     }
 
                     try {
-                        $this->updateMultimediaObjectMaterial($documentManager, $multimediaObjectId, $material['path'], $newPath, $newUrl);
+                        $this->updateMultimediaObjectMaterial($multimediaObjectId, $material['path'], $newPath, $newUrl);
                     } catch (\Exception $exception) {
                         $this->showMessage($output, 'Cant update mmobj '.$multimediaObjectId.' with the new path of the material '.$material['path']);
 
@@ -364,14 +327,9 @@ EOT
         }
     }
 
-    /**
-     * Returns multimedia objects with pics without paths.
-     *
-     * @return array
-     */
-    private function findPicsWithoutPaths(DocumentManager $documentManager)
+    private function findPicsWithoutPaths()
     {
-        return $documentManager->getRepository(MultimediaObject::class)->findBy(
+        return $this->dm->getRepository(MultimediaObject::class)->findBy(
             [
                 'pics.url' => new Regex('/uploads/pic/'),
                 'pics.path' => ['$exists' => false],
@@ -379,14 +337,9 @@ EOT
         );
     }
 
-    /**
-     * Returns multimedia objects with materials without paths.
-     *
-     * @return array
-     */
-    private function findMaterialsWithoutPaths(DocumentManager $documentManager)
+    private function findMaterialsWithoutPaths()
     {
-        return $documentManager->getRepository(MultimediaObject::class)->findBy(
+        return $this->dm->getRepository(MultimediaObject::class)->findBy(
             [
                 'materials.url' => new Regex('/uploads/material/'),
                 'materials.path' => ['$exists' => false],
@@ -394,14 +347,9 @@ EOT
         );
     }
 
-    /**
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     *
-     * @return \Doctrine\MongoDB\Iterator
-     */
-    private function findWrongPathPics(DocumentManager $documentManager)
+    private function findWrongPathPics()
     {
-        $collection = $documentManager->getDocumentCollection(MultimediaObject::class);
+        $collection = $this->dm->getDocumentCollection(MultimediaObject::class);
 
         $pipeline = [
             [
@@ -410,7 +358,7 @@ EOT
                 ],
             ],
         ];
-        array_push($pipeline, ['$unwind' => '$pics']);
+        $pipeline[] = ['$unwind' => '$pics'];
 
         $group = [
             '$group' => [
@@ -420,19 +368,14 @@ EOT
             ],
         ];
 
-        array_push($pipeline, $group);
+        $pipeline[] = $group;
 
         return $collection->aggregate($pipeline, ['cursor' => []]);
     }
 
-    /**
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     *
-     * @return \Doctrine\MongoDB\Iterator
-     */
-    private function findWrongPathMaterials(DocumentManager $documentManager)
+    private function findWrongPathMaterials()
     {
-        $collection = $documentManager->getDocumentCollection(MultimediaObject::class);
+        $collection = $this->dm->getDocumentCollection(MultimediaObject::class);
 
         $pipeline = [
             [
@@ -442,7 +385,7 @@ EOT
                 ],
             ],
         ];
-        array_push($pipeline, ['$unwind' => '$materials']);
+        $pipeline[] = ['$unwind' => '$materials'];
 
         $group = [
             '$group' => [
@@ -452,17 +395,12 @@ EOT
             ],
         ];
 
-        array_push($pipeline, $group);
+        $pipeline[] = $group;
 
         return $collection->aggregate($pipeline, ['cursor' => []]);
     }
 
-    /**
-     * @param string $path
-     *
-     * @return bool
-     */
-    private function checkFileExists($path)
+    private function checkFileExists(string $path): bool
     {
         $fileSystem = new Filesystem();
         if ($fileSystem->exists($path)) {
@@ -472,13 +410,7 @@ EOT
         return false;
     }
 
-    /**
-     * @param string $oldPath
-     * @param string $newPath
-     *
-     * @throws \Exception
-     */
-    private function moveElement($oldPath, $newPath)
+    private function moveElement(string $oldPath, string $newPath)
     {
         $dirName = dirname($newPath);
 
@@ -493,13 +425,7 @@ EOT
         $this->createProcessToMove($oldPath, $newPath);
     }
 
-    /**
-     * @param string $oldPath
-     * @param string $newPath
-     *
-     * @return mixed
-     */
-    private function createProcessToMove($oldPath, $newPath)
+    private function createProcessToMove(string $oldPath, string $newPath)
     {
         $parameters = [
             'mv',
@@ -529,16 +455,9 @@ EOT
         return null;
     }
 
-    /**
-     * @param string $multimediaObjectId
-     * @param string $oldPath
-     * @param string $newPath
-     * @param string $newUrl
-     */
-    private function updateMultimediaObjectPic(DocumentManager $documentManager, $multimediaObjectId, $oldPath, $newPath, $newUrl)
+    private function updateMultimediaObjectPic(string $multimediaObjectId, string $oldPath, string $newPath, string $newUrl): void
     {
-        /** @var MultimediaObject */
-        $multimediaObject = $documentManager->getRepository(MultimediaObject::class)->findOneBy(
+        $multimediaObject = $this->dm->getRepository(MultimediaObject::class)->findOneBy(
             ['_id' => new ObjectId($multimediaObjectId)]
         );
 
@@ -549,13 +468,13 @@ EOT
             }
         }
 
-        $documentManager->flush();
+        $this->dm->flush();
     }
 
-    private function updateMultimediaObjectMaterial(DocumentManager $documentManager, string $multimediaObjectId, string $oldPath, string $newPath, string $newUrl)
+    private function updateMultimediaObjectMaterial(string $multimediaObjectId, string $oldPath, string $newPath, string $newUrl): void
     {
         /** @var MultimediaObject */
-        $multimediaObject = $documentManager->getRepository(MultimediaObject::class)->findOneBy(
+        $multimediaObject = $this->dm->getRepository(MultimediaObject::class)->findOneBy(
             ['_id' => new ObjectId($multimediaObjectId)]
         );
 
@@ -566,16 +485,10 @@ EOT
             }
         }
 
-        $documentManager->flush();
+        $this->dm->flush();
     }
 
-    /**
-     * @param bool        $haveChanges
-     * @param string|null $oldDirName
-     *
-     * @return bool
-     */
-    private function deleteDirectory(OutputInterface $output, $haveChanges, $oldDirName)
+    private function deleteDirectory(OutputInterface $output, bool $haveChanges, string $oldDirName): bool
     {
         if ($haveChanges && isset($oldDirName)) {
             if ($this->checkFileExists(dirname($oldDirName))) {

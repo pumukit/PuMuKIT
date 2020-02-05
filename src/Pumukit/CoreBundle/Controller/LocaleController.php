@@ -2,30 +2,22 @@
 
 namespace Pumukit\CoreBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\RouterInterface;
 
-/**
- * Class LocaleController.
- */
-class LocaleController extends Controller implements WebTVControllerInterface
+class LocaleController extends AbstractController implements WebTVControllerInterface
 {
     /**
      * @Route("/locale/{locale}", name="pumukit_locale")
      */
-    public function changeAction(Request $request, string $locale): RedirectResponse
+    public function changeAction(Request $request, SessionInterface $session, RequestContext $requestContext, RouterInterface $router, string $locale): RedirectResponse
     {
-        /** @var SessionInterface */
-        $session = $this->get('session');
         $session->set('_locale', $locale);
-
-        /** @var RequestContext */
-        $requestContext = $this->get('router.request_context');
         $requestContext->setParameter('_locale', $locale);
 
         $request->setLocale($locale);
@@ -49,8 +41,6 @@ class LocaleController extends Controller implements WebTVControllerInterface
         $lastPath = str_replace($request->getBaseUrl(), '', $refererPath);
 
         try {
-            /** @var Router */
-            $router = $this->get('router');
             $route = $router->match($lastPath);
         } catch (\Exception $e) {
             return $this->redirect('/');
