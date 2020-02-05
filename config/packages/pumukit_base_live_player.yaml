@@ -1,0 +1,17 @@
+services:
+  _defaults:
+    autowire:      true
+    autoconfigure: true
+    public:        true
+
+  Pumukit\BaseLivePlayerBundle\Twig\LiveTwigExtension:
+    arguments:
+      $eventDefaultPic: "%pumukit_new_admin.advance_live_event_create_default_pic%"
+    tags:
+      - { name: "twig.extension" }
+
+  Pumukit\BaseLivePlayerBundle\Services\LiveService:
+    class: Pumukit\BaseLivePlayerBundle\Services\LiveService
+
+  Pumukit\BaseLivePlayerBundle\Services\APIService:
+    class: Pumukit\BaseLivePlayerBundle\Services\APIService

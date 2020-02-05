@@ -1,0 +1,58 @@
+services:
+  _defaults:
+    autowire:      true
+    autoconfigure: true
+    public:        true
+
+  Pumukit\WebTVBundle\Services\BreadcrumbsService:
+    class: Pumukit\WebTVBundle\Services\BreadcrumbsService
+    arguments:
+      $allTitle:  '%pumukit_web_tv.breadcrumbs_all_title%'
+      $allRoute:  '%pumukit_web_tv.breadcrumbs_all_route%'
+      $homeTitle: '%breadcrumbs_home_title%'
+      $parentWeb: '%pumukit_web_tv.breadcrumbs_parentweb%'
+
+  Pumukit\WebTVBundle\Services\ChannelService:
+    class: Pumukit\WebTVBundle\Services\ChannelService
+
+  Pumukit\WebTVBundle\Services\CategoriesService:
+    class: Pumukit\WebTVBundle\Services\CategoriesService
+    arguments:
+      $parentCod:        '%categories_tag_cod%'
+      $listGeneralParam: '%categories.list_general_tags%'
+
+  Pumukit\WebTVBundle\Services\ChapterMarkService:
+    class: Pumukit\WebTVBundle\Services\ChapterMarkService
+
+  Pumukit\WebTVBundle\Services\LinkService:
+    class: Pumukit\WebTVBundle\Services\LinkService
+    arguments:
+      $linkTagToSearch: '%pumukit_web_tv.linktagtosearch%'
+
+  Pumukit\WebTVBundle\Services\ListService:
+    class: Pumukit\WebTVBundle\Services\ListService
+    arguments:
+      $advanceLiveEvents: '%pumukit_new_admin.advance_live_event%'
+      $wallTag:           '%wall_block.wall_tag%'
+
+  Pumukit\WebTVBundle\Services\MenuService:
+    class: Pumukit\WebTVBundle\Services\MenuService
+    arguments:
+      $advanceEvents: '%pumukit_new_admin.advance_live_event%'
+
+  Pumukit\WebTVBundle\Services\SearchService:
+    class: Pumukit\WebTVBundle\Services\SearchService
+    arguments:
+      $parentTagCod:         '%search.parent_tag.cod%'
+      $parentTagCodOptional: '%search.parent_tag_2.cod%'
+
+  Pumukit\WebTVBundle\Twig\MongoDateExtension:
+    class: Pumukit\WebTVBundle\Twig\MongoDateExtension
+
+  Pumukit\WebTVBundle\Twig\BootstrapExtension:
+    class: Pumukit\WebTVBundle\Twig\BootstrapExtension
+
+  Pumukit\WebTVBundle\Twig\PumukitExtension:
+    class: Pumukit\WebTVBundle\Twig\PumukitExtension
+    arguments:
+      $defaultPic: '%pumukit_web_tv.default_pic%'
