@@ -31,7 +31,6 @@ services:
     class: Pumukit\SchemaBundle\EventListener\LocaleListener
     arguments:
       $defaultLocale:  '%kernel.default_locale%'
-      $pumukitLocales: '%pumukit.locales%'
     tags:
       - { name: "doctrine_mongodb.odm.event_listener", event: "postLoad" }
       - { name: "kernel.event_subscriber" }
@@ -48,8 +47,6 @@ services:
 
   Pumukit\SchemaBundle\Services\RoleService:
     class: Pumukit\SchemaBundle\Services\RoleService
-    arguments:
-      $locales: '%pumukit.locales%'
 
   Pumukit\SchemaBundle\EventListener\SeriesListener:
     class: Pumukit\SchemaBundle\EventListener\SeriesListener
@@ -72,14 +69,12 @@ services:
     class: Pumukit\SchemaBundle\Services\FactoryService
     arguments:
       $addUserAsPerson:  '%pumukitschema.enable_add_user_as_person%'
-      $locales:          '%pumukit.locales%'
       $defaultCopyright: '@=parameter("pumukitschema.default_copyright") ? parameter("pumukitschema.default_copyright") : parameter("pumukit.info")["title"]'
       $defaultLicense:   '%pumukitschema.default_license%'
 
   Pumukit\SchemaBundle\Services\SeriesPicService:
     class: Pumukit\SchemaBundle\Services\SeriesPicService
     arguments:
-      $locales:           '%pumukit.locales%'
       $targetPath:        '%pumukit.uploads_dir%/pic/'
       $targetUrl:         '%pumukit.uploads_url%/pic'
       $forceDeleteOnDisk: '%pumukit.delete_on_disk%'
