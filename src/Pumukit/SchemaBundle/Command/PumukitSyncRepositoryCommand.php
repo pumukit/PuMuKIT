@@ -2,18 +2,25 @@
 
 namespace Pumukit\SchemaBundle\Command;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Tag;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class PumukitSyncRepositoryCommand extends ContainerAwareCommand
+class PumukitSyncRepositoryCommand extends Command
 {
     private $dm;
     private $mmRepo;
+
+    public function __construct(DocumentManager $documentManager)
+    {
+        $this->dm = $documentManager;
+        parent::__construct();
+    }
 
     protected function configure()
     {
@@ -33,8 +40,6 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-
         $this->mmRepo = $this->dm->getRepository(MultimediaObject::class);
 
         $this->syncTags($input, $output);
@@ -178,7 +183,7 @@ EOT
 
     private function syncNumberPeopleInMultimediaObjectsOnRoles(InputInterface $input, OutputInterface $output)
     {
-        $rolesRepo = $this->getContainer()->get('doctrine_mongodb')->getRepository(Role::class);
+        $rolesRepo = $this->dm->getRepository(Role::class);
 
         $output->writeln(' ');
 
