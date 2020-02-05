@@ -28,6 +28,7 @@ before_script:
   - npm install -g pa11y
   - pa11y -V
   - composer -V
+  - composer validate
   - composer install
 
 script:
