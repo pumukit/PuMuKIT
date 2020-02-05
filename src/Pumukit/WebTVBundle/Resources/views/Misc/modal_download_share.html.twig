@@ -1,0 +1,42 @@
+<div class="pmk-modal-player modal fade" id="modalPlayer" tabindex="-1" role="dialog" aria-labelledby="actionsModalPlayer">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h3 class="modal-title" id="">Modal</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-xs-12 col-md-6">
+						<div class="qa-player-tracks tracks">
+                            <h4>{% trans %}Download{% endtrans %}</h4>
+							<p>Lorem ipsum dolor sit amet consectetur adipiscing elit per torquent sed sem, sollicitudin gravida a nunc 
+                            sagittis tortor aliquam fames convallis. Dui hendrerit magna dapibus felis feugiat placerat luctus nunc rhoncus 
+                            urna penatibus mattis, semper pharetra lacus montes nulla rutrum lectus interdum praesent ac. </p>
+							<span class="fa fa-download"></span>
+							<a class="video-tracks" href="">
+								{% trans %}Download{% endtrans %}
+							</a>
+						</div>
+					</div>
+					<div class="col-xs-12 col-md-6">
+                        <h4>{% trans %} Attachments {% endtrans %}</h4>
+                        {% for material in multimediaObject.getMaterials() if not material.getHide() and showDownloads  %}
+							{% set none_attach = false %}
+							<div class="qa-player-material material">
+								<span class="glyphicon glyphicon-paperclip"></span>
+								<a href="{{ material.getUrl() }}">{{ material.getName() }}</a>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
+				{# <a href="#" type="button" class="btn btn-primary">{% trans %}Accept{% endtrans %}</a> #}
+			</div>
+		</div>
+	</div>
+</div>
