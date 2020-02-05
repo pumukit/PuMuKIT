@@ -4,6 +4,10 @@ services:
     autoconfigure: true
     public:        true
 
+  Pumukit\BaseLivePlayerBundle\Controller\:
+    resource: '../../src/Pumukit/BaseLivePlayerBundle/Controller/'
+    tags: ['controller.service_arguments']
+
   Pumukit\BaseLivePlayerBundle\Twig\LiveTwigExtension:
     arguments:
       $eventDefaultPic: "%pumukit_new_admin.advance_live_event_create_default_pic%"

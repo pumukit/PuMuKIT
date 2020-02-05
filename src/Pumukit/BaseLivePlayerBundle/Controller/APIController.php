@@ -2,9 +2,9 @@
 
 namespace Pumukit\BaseLivePlayerBundle\Controller;
 
-use JMS\Serializer\Serializer;
 use Pumukit\BaseLivePlayerBundle\Services\APIService;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Pumukit\CoreBundle\Services\SerializerService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,56 +12,34 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/api/live")
  */
-class APIController extends Controller
+class APIController extends AbstractController
 {
     /**
      * @Route("/events.{_format}", defaults={"_format"="json"}, requirements={"_format": "json"})
-     *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function eventsAction(Request $request): Response
+    public function eventsAction(Request $request, APIService $APIService, SerializerService $serializer): Response
     {
         [$criteria, $sort, $limit] = $this->getParameters($request);
 
-        /** @var APIService */
-        $apiService = $this->get('pumukit_base_live_player.api');
+        $counts = $APIService->getEventsByCriteria($criteria, $sort, $limit);
 
-        $counts = $apiService->getEventsByCriteria($criteria, $sort, $limit);
-
-        $data = $this->dataSerialize($counts, $request->getRequestFormat());
+        $data = $serializer->dataSerialize($counts, $request->getRequestFormat());
 
         return new Response($data);
     }
 
     /**
      * @Route("/lives.{_format}", defaults={"_format"="json"}, requirements={"_format": "json"})
-     *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function livesAction(Request $request): Response
+    public function livesAction(Request $request, APIService $APIService, SerializerService $serializer): Response
     {
         [$criteria, $sort, $limit] = $this->getParameters($request);
 
-        /** @var APIService */
-        $apiService = $this->get('pumukit_base_live_player.api');
+        $counts = $APIService->getLivesByCriteria($criteria, $sort, $limit);
 
-        $counts = $apiService->getLivesByCriteria($criteria, $sort, $limit);
-
-        $data = $this->dataSerialize($counts, $request->getRequestFormat());
+        $data = $serializer->dataSerialize($counts, $request->getRequestFormat());
 
         return new Response($data);
-    }
-
-    private function dataSerialize(array $counts, string $requestFormat = null): string
-    {
-        /** @var Serializer */
-        $serializer = $this->get('jms_serializer');
-
-        if (!$requestFormat) {
-            $requestFormat = 'html';
-        }
-
-        return $serializer->serialize($counts, $requestFormat);
     }
 
     private function getParameters(Request $request): array
