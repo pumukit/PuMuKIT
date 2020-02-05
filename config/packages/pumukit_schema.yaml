@@ -1,0 +1,217 @@
+services:
+  _defaults:
+    autowire:      true
+    autoconfigure: true
+    public:        true
+
+  Pumukit\SchemaBundle\Services\PasswordUpdater:
+    class:  Pumukit\SchemaBundle\Services\PasswordUpdater
+    public: false
+    arguments:
+      $genUserSalt: '%pumukitschema.gen_user_salt%'
+
+  Pumukit\SchemaBundle\Services\LegacyEventPicService:
+    class: Pumukit\SchemaBundle\Services\LegacyEventPicService
+    arguments:
+      $targetPath:        '%pumukit.uploads_dir%/pic'
+      $targetUrl:         '%pumukit.uploads_url%/pic'
+      $forceDeleteOnDisk: '%pumukit.delete_on_disk%'
+
+  Pumukit\SchemaBundle\EventListener\LocaleListener:
+    class: Pumukit\SchemaBundle\EventListener\LocaleListener
+    arguments:
+      $defaultLocale:  '%kernel.default_locale%'
+      $pumukitLocales: '%pumukit.locales%'
+    tags:
+      - { name: "doctrine_mongodb.odm.event_listener", event: "postLoad" }
+      - { name: "kernel.event_subscriber" }
+
+  Pumukit\SchemaBundle\EventListener\RemoveListener:
+    class: Pumukit\SchemaBundle\EventListener\RemoveListener
+    tags:
+      - { name: "doctrine_mongodb.odm.event_listener", event: "preRemove" }
+
+  Pumukit\SchemaBundle\EventListener\PermissionProfileListener:
+    class: Pumukit\SchemaBundle\EventListener\PermissionProfileListener
+    tags:
+      - { name: "kernel.event_listener", event: "permissionprofile.update", method: "postUpdate" }
+
+  Pumukit\SchemaBundle\Services\RoleService:
+    class: Pumukit\SchemaBundle\Services\RoleService
+    arguments:
+      $locales: '%pumukit.locales%'
+
+  Pumukit\SchemaBundle\EventListener\SeriesListener:
+    class: Pumukit\SchemaBundle\EventListener\SeriesListener
+    tags:
+      - { name: "kernel.event_listener", event: "series.update", method: "postUpdate" }
+
+  Pumukit\SchemaBundle\EventListener\MultimediaObjectListener:
+    class: Pumukit\SchemaBundle\EventListener\MultimediaObjectListener
+    tags:
+      - { name: "kernel.event_listener", event: "multimediaobject.update", method: "postUpdate" }
+      - { name: "kernel.event_listener", event: "track.create", method: "postUpdate" }
+      - { name: "kernel.event_listener", event: "track.update", method: "postUpdate" }
+      - { name: "kernel.event_listener", event: "track.delete", method: "postUpdate" }
+      - { name: "kernel.event_listener", event: "personwithrole.create", method: "postUpdate" }
+      - { name: "kernel.event_listener", event: "personwithrole.update", method: "postUpdate" }
+      - { name: "kernel.event_listener", event: "personwithrole.update", method: "postUpdate" }
+      - { name: "kernel.event_listener", event: "personwithrole.delete", method: "postUpdate" }
+
+  Pumukit\SchemaBundle\Services\FactoryService:
+    class: Pumukit\SchemaBundle\Services\FactoryService
+    arguments:
+      $addUserAsPerson:  '%pumukitschema.enable_add_user_as_person%'
+      $locales:          '%pumukit.locales%'
+      $defaultCopyright: '@=parameter("pumukitschema.default_copyright") ? parameter("pumukitschema.default_copyright") : parameter("pumukit.info")["title"]'
+      $defaultLicense:   '%pumukitschema.default_license%'
+
+  Pumukit\SchemaBundle\Services\SeriesPicService:
+    class: Pumukit\SchemaBundle\Services\SeriesPicService
+    arguments:
+      $locales:           '%pumukit.locales%'
+      $targetPath:        '%pumukit.uploads_dir%/pic/'
+      $targetUrl:         '%pumukit.uploads_url%/pic'
+      $forceDeleteOnDisk: '%pumukit.delete_on_disk%'
+
+  Pumukit\SchemaBundle\Services\MultimediaObjectPicService:
+    class: Pumukit\SchemaBundle\Services\MultimediaObjectPicService
+    arguments:
+      $targetPath:        '%pumukit.uploads_dir%/pic/'
+      $targetUrl:         '%pumukit.uploads_url%/pic'
+      $forceDeleteOnDisk: '%pumukit.delete_on_disk%'
+
+  Pumukit\SchemaBundle\Services\MultimediaObjectDurationService:
+    class: Pumukit\SchemaBundle\Services\MultimediaObjectDurationService
+
+  Pumukit\SchemaBundle\Services\MultimediaObjectService:
+    class: Pumukit\SchemaBundle\Services\MultimediaObjectService
+
+  Pumukit\SchemaBundle\Services\MultimediaObjectVoter:
+    class: Pumukit\SchemaBundle\Services\MultimediaObjectVoter
+    tags:
+      - { name: "security.voter" }
+
+  Pumukit\SchemaBundle\Services\SortedMultimediaObjectsService:
+    class: Pumukit\SchemaBundle\Services\SortedMultimediaObjectsService
+
+  Pumukit\SchemaBundle\EventListener\MultimediaObjectViews:
+    class: Pumukit\SchemaBundle\EventListener\MultimediaObjectViews
+    tags:
+      - { name: "kernel.event_listener", event: "multimediaobject.view", method: "onMultimediaObjectViewed" }
+
+  Pumukit\SchemaBundle\Services\TagService:
+    class: Pumukit\SchemaBundle\Services\TagService
+
+  Pumukit\SchemaBundle\Services\SeriesService:
+    class: Pumukit\SchemaBundle\Services\SeriesService
+
+  Pumukit\SchemaBundle\Services\AnnounceService:
+    class: Pumukit\SchemaBundle\Services\AnnounceService
+
+  Pumukit\SchemaBundle\Services\PermissionProfileEventDispatcherService:
+    class: Pumukit\SchemaBundle\Services\PermissionProfileEventDispatcherService
+
+  Pumukit\SchemaBundle\Services\PermissionProfileService:
+    class: Pumukit\SchemaBundle\Services\PermissionProfileService
+
+  Pumukit\SchemaBundle\Services\PermissionService:
+    class: Pumukit\SchemaBundle\Services\PermissionService
+    arguments:
+      $externalPermissions: '%pumukitschema.external_permissions%'
+
+  Pumukit\SchemaBundle\Services\MultimediaObjectEventDispatcherService:
+    class: Pumukit\SchemaBundle\Services\MultimediaObjectEventDispatcherService
+
+  Pumukit\SchemaBundle\Services\UserEventDispatcherService:
+    class: Pumukit\SchemaBundle\Services\UserEventDispatcherService
+
+  Pumukit\SchemaBundle\Services\SeriesEventDispatcherService:
+    class: Pumukit\SchemaBundle\Services\SeriesEventDispatcherService
+
+  Pumukit\SchemaBundle\Services\GroupEventDispatcherService:
+    class: Pumukit\SchemaBundle\Services\GroupEventDispatcherService
+
+  Pumukit\SchemaBundle\Services\LinkEventDispatcherService:
+    class: Pumukit\SchemaBundle\Services\LinkEventDispatcherService
+
+  Pumukit\SchemaBundle\Services\MaterialEventDispatcherService:
+    class: Pumukit\SchemaBundle\Services\MaterialEventDispatcherService
+
+  Pumukit\SchemaBundle\Services\PersonWithRoleEventDispatcherService:
+    class: Pumukit\SchemaBundle\Services\PersonWithRoleEventDispatcherService
+
+  Pumukit\SchemaBundle\Services\PicEventDispatcherService:
+    class: Pumukit\SchemaBundle\Services\PicEventDispatcherService
+
+  Pumukit\SchemaBundle\Services\TrackEventDispatcherService:
+    class: Pumukit\SchemaBundle\Services\TrackEventDispatcherService
+
+  Pumukit\SchemaBundle\Services\LinkService:
+    class: Pumukit\SchemaBundle\Services\LinkService
+
+  Pumukit\SchemaBundle\Services\MaterialService:
+    class: Pumukit\SchemaBundle\Services\MaterialService
+    arguments:
+      $targetPath:        '%pumukit.uploads_dir%/material'
+      $targetUrl:         '%pumukit.uploads_url%/material'
+      $forceDeleteOnDisk: '%pumukit.delete_on_disk%'
+
+  Pumukit\SchemaBundle\Services\CaptionService:
+    class: Pumukit\SchemaBundle\Services\CaptionService
+
+  Pumukit\SchemaBundle\Services\TrackService:
+    class: Pumukit\SchemaBundle\Services\TrackService
+    arguments:
+      $tmpPath:           '%pumukit.tmp%'
+      $forceDeleteOnDisk: '%pumukit.delete_on_disk%'
+
+  Pumukit\SchemaBundle\Services\PersonService:
+    class: Pumukit\SchemaBundle\Services\PersonService
+    arguments:
+      $addUserAsPerson:       '%pumukitschema.enable_add_user_as_person%'
+      $personalScopeRoleCode: '%pumukitschema.personal_scope_role_code%'
+
+  Pumukit\SchemaBundle\Services\UserService:
+    class: Pumukit\SchemaBundle\Services\UserService
+    arguments:
+      $personalScopeDeleteOwners: '%pumukitschema.personal_scope_delete_owners%'
+
+  Pumukit\SchemaBundle\Services\GroupService:
+    class: Pumukit\SchemaBundle\Services\GroupService
+
+  Pumukit\SchemaBundle\Services\PicService:
+    class: Pumukit\SchemaBundle\Services\PicService
+    arguments:
+      $scheme:             '%router.request_context.scheme%'
+      $host:               '%router.request_context.host%'
+      $webDir:             '%pumukit.public_dir'
+      $defaultSeriesPic:   '%pumukitschema.default_series_pic%'
+      $defaultPlaylistPic: '%pumukitschema.default_playlist_pic%'
+      $defaultVideoPic:    '%pumukitschema.default_video_pic%'
+      $defaultAudioHDPic:  '%pumukitschema.default_audio_hd_pic%'
+      $defaultAudioSDPic:  '%pumukitschema.default_audio_sd_pic%'
+
+  Pumukit\SchemaBundle\Services\StatsService:
+    class: Pumukit\SchemaBundle\Services\StatsService
+
+  Pumukit\SchemaBundle\Services\TextIndexService:
+    class: Pumukit\SchemaBundle\Services\TextIndexService
+
+  Pumukit\SchemaBundle\Services\EmbeddedBroadcastService:
+    class: Pumukit\SchemaBundle\Services\EmbeddedBroadcastService
+
+  Pumukit\SchemaBundle\Services\SpecialTranslationService:
+    class: Pumukit\SchemaBundle\Services\SpecialTranslationService
+
+  Pumukit\SchemaBundle\Services\EmbeddedEventSessionService:
+    class: Pumukit\SchemaBundle\Services\EmbeddedEventSessionService
+    arguments:
+      $defaultPoster:    '%pumukitschema.event_default_poster%'
+      $defaultThumbnail: '%pumukit_new_admin.advance_live_event_create_default_pic%'
+
+  Pumukit\SchemaBundle\Security\RoleHierarchy:
+    class:  Pumukit\SchemaBundle\Security\RoleHierarchy
+    public: false
+    arguments:
+      $hierarchy: '%security.role_hierarchy.roles%'

@@ -1,0 +1,35 @@
+services:
+  _defaults:
+    autowire:      true
+    autoconfigure: true
+    public:        true
+
+  Pumukit\NotificationBundle\Services\SenderService:
+    class: Pumukit\NotificationBundle\Services\SenderService
+    arguments:
+      $mailer:                  '@mailer'
+      $enable:                  '%pumukit_notification.enable%'
+      $senderEmail:             '%pumukit_notification.sender_email%'
+      $senderName:              '%pumukit_notification.sender_name%'
+      $enableMultiLang:         '%pumukit_notification.enable_multi_lang%'
+      $locales:                 '%pumukit.locales%'
+      $subjectSuccessTrans:     '%pumukit_notification.subject_success_trans%'
+      $subjectFailsTrans:       '%pumukit_notification.subject_fails_trans%'
+      $adminEmail:              '%pumukit_notification.admin_email%'
+      $notificateErrorsToAdmin: '%pumukit_notification.notificate_errors_to_admin%'
+      $platformName:            '%pumukit_notification.platform_name%'
+      $environment:             '%kernel.environment%'
+
+  Pumukit\NotificationBundle\Services\JobNotificationService:
+    class: Pumukit\NotificationBundle\Services\JobNotificationService
+    arguments:
+      $enable:              '%pumukit_notification.enable%'
+      $environment:         '%kernel.environment%'
+      $template:            '%pumukit_notification.template%'
+      $subjectSuccess:      '%pumukit_notification.subject_success%'
+      $subjectFails:        '%pumukit_notification.subject_fails%'
+      $subjectSuccessTrans: '%pumukit_notification.subject_success_trans%'
+      $subjectFailsTrans:   '%pumukit_notification.subject_fails_trans%'
+    tags:
+      - { name: "kernel.event_listener", event: "job.success", method: "onJobSuccess" }
+      - { name: "kernel.event_listener", event: "job.error", method: "onJobError" }
