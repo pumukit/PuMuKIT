@@ -3,6 +3,14 @@ services:
     autowire:      true
     autoconfigure: true
     public:        true
+    bind:
+      $secret:         '%pumukitplayer.secure_secret%'
+      $secureDuration: '%pumukitplayer.secure_duration%'
+      $pumukitPlayerWhenDispatchViewEvent: '%pumukitplayer.when_dispatch_view_event%'
+
+  Pumukit\BasePlayerBundle\Controller\:
+    resource: '../../src/Pumukit/BasePlayerBundle/Controller/'
+    tags: ['controller.service_arguments']
 
   Pumukit\BasePlayerBundle\Services\TrackUrlService:
     arguments:
