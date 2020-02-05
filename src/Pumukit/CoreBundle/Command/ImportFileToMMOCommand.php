@@ -4,22 +4,35 @@ namespace Pumukit\CoreBundle\Command;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
+use Pumukit\EncoderBundle\Services\JobService;
+use Pumukit\EncoderBundle\Services\ProfileService;
+use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ImportFileToMMOCommand extends ContainerAwareCommand
+class ImportFileToMMOCommand extends Command
 {
-    private $mmobjRepo;
+    private $documentManager;
     private $jobService;
     private $profileService;
     private $inspectionService;
     private $defaultLanguage;
 
-    protected function configure()
+    public function __construct(DocumentManager $documentManager, JobService $jobService, ProfileService $profileService, InspectionFfprobeService $inspectionService, string $locale)
+    {
+        $this->documentManager = $documentManager;
+        $this->jobService = $jobService;
+        $this->profileService = $profileService;
+        $this->inspectionService = $inspectionService;
+        $this->defaultLanguage = $locale;
+        parent::__construct();
+    }
+
+    protected function configure(): void
     {
         $this
             ->setName('import:multimedia:file')
@@ -42,17 +55,6 @@ Basic example:
 EOT
             )
         ;
-    }
-
-    protected function initialize(InputInterface $input, OutputInterface $output)
-    {
-        /** @var DocumentManager */
-        $dm = $this->getContainer()->get('doctrine_mongodb.odm.document_manager');
-        $this->mmobjRepo = $dm->getRepository(MultimediaObject::class);
-        $this->jobService = $this->getContainer()->get('pumukitencoder.job');
-        $this->profileService = $this->getContainer()->get('pumukitencoder.profile');
-        $this->inspectionService = $this->getContainer()->get('pumukit.inspection');
-        $this->defaultLanguage = $this->getContainer()->getParameter('locale');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -82,7 +84,7 @@ EOT
             throw new \Exception('Error on object argument. This argument must be string');
         }
 
-        $multimediaObject = $this->mmobjRepo->findOneBy(
+        $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(
             ['id' => new ObjectId($multimediaObjectId)]
         );
 

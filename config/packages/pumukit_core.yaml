@@ -3,6 +3,24 @@ services:
     autowire:      true
     autoconfigure: true
     public:        true
+    bind:
+      $locale: '%locale%'
+      $locales: '%pumukit.locales%'
+
+  Pumukit\CoreBundle\Controller\:
+    resource: '../../src/Pumukit/CoreBundle/Controller'
+    tags: ['controller.service_arguments']
+
+  Pumukit\CoreBundle\Command\:
+    resource: '../../src/Pumukit/CoreBundle/Command'
+    tags: ['console.command']
+
+  Pumukit\CoreBundle\Command\CreateMMOCommand\:
+    resource: '../../src/Pumukit/CoreBundle/Command/CreateMMOCommand.php'
+    arguments:
+      $wizardSimpleDefaultMasterProfile: '?%pumukit_wizard.simple_default_master_profile%'
+    tags:
+     - { name: 'console.command' }
 
   Pumukit\CoreBundle\EventListener\AjaxSessionCloseListener:
     class: Pumukit\CoreBundle\EventListener\AjaxSessionCloseListener
