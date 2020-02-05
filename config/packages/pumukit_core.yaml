@@ -1,0 +1,42 @@
+services:
+  _defaults:
+    autowire:      true
+    autoconfigure: true
+    public:        true
+
+  Pumukit\CoreBundle\EventListener\AjaxSessionCloseListener:
+    class: Pumukit\CoreBundle\EventListener\AjaxSessionCloseListener
+    tags:
+      - { name: "kernel.event_listener", event: "kernel.request", priority: "-255" }
+
+  Pumukit\CoreBundle\EventListener\FilterListener:
+    class: Pumukit\CoreBundle\EventListener\FilterListener
+    tags:
+      - { name: "kernel.event_listener", event: "kernel.controller" }
+
+  Pumukit\CoreBundle\Twig\CoreExtension:
+    class: Pumukit\CoreBundle\Twig\CoreExtension
+    tags:
+      - { name: "twig.extension" }
+
+  Pumukit\CoreBundle\EventListener\ConsoleExceptionListener:
+    class: Pumukit\CoreBundle\EventListener\ConsoleExceptionListener
+    tags:
+      - { name: "kernel.event_listener", event: "console.exception" }
+
+  Pumukit\CoreBundle\Services\FilterService:
+    class: Pumukit\CoreBundle\Services\FilterService
+    arguments:
+      $addUserAsPerson: '%pumukitschema.enable_add_user_as_person%'
+
+  Pumukit\CoreBundle\Services\ImportMappingDataService:
+    class: Pumukit\CoreBundle\Services\ImportMappingDataService
+
+  Pumukit\CoreBundle\Handler\CustomAuthenticationFailureHandler:
+    class: Pumukit\CoreBundle\Handler\CustomAuthenticationFailureHandler
+
+  Pumukit\CoreBundle\Handler\CustomAuthenticationSuccessHandler:
+    class: Pumukit\CoreBundle\Handler\CustomAuthenticationSuccessHandler
+
+  Pumukit\CoreBundle\Services\PaginationService:
+    class: Pumukit\CoreBundle\Services\PaginationService

@@ -1,0 +1,94 @@
+services:
+  _defaults:
+    autowire:      true
+    autoconfigure: true
+    public:        true
+
+  Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType:
+    class: Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType
+    arguments:
+      $locales:     '%pumukit.locales%'
+      $translators: '%pumukit_new_admin.metadata_translators%'
+    tags:
+      - { name: "form.type", alias: "texti18n" }
+
+  Pumukit\NewAdminBundle\Form\Type\Base\TextI18nAdvanceType:
+    class: Pumukit\NewAdminBundle\Form\Type\Base\TextI18nAdvanceType
+    arguments:
+      $locales:     '%pumukit.locales%'
+      $translators: '%pumukit_new_admin.metadata_translators%'
+    tags:
+      - { name: "form.type", alias: "texti18nadvance" }
+
+  Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType:
+    class: Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType
+    arguments:
+      $locales:     '%pumukit.locales%'
+      $translators: '%pumukit_new_admin.metadata_translators%'
+    tags:
+      - { name: "form.type", alias: "textareai18n" }
+
+  Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType:
+    class: Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType
+    arguments:
+      $customLanguages: '%pumukit.customlanguages%'
+    tags:
+      - { name: "form.type", alias: "customlanguage" }
+
+  Pumukit\NewAdminBundle\Form\Type\Base\LicenseType:
+    class: Pumukit\NewAdminBundle\Form\Type\Base\LicenseType
+    arguments:
+      $licenses: '%pumukit_new_admin.licenses%'
+    tags:
+      - { name: "form.type", alias: "license" }
+
+  Pumukit\NewAdminBundle\EventListener\ExceptionListener:
+    class: Pumukit\NewAdminBundle\EventListener\ExceptionListener
+    tags:
+      - { name: "kernel.event_listener", event: "kernel.exception", method: "onKernelException", priority: "255" }
+
+  Pumukit\NewAdminBundle\Twig\PumukitAdminExtension:
+    class: Pumukit\NewAdminBundle\Twig\PumukitAdminExtension
+    tags:
+      - { name: "twig.extension" }
+
+  Pumukit\NewAdminBundle\Services\SeriesSearchService:
+    class: Pumukit\NewAdminBundle\Services\SeriesSearchService
+
+  Pumukit\NewAdminBundle\Services\MultimediaObjectSearchService:
+    class: Pumukit\NewAdminBundle\Services\MultimediaObjectSearchService
+
+  Pumukit\NewAdminBundle\Services\MultimediaObjectSyncService:
+    class: Pumukit\NewAdminBundle\Services\MultimediaObjectSyncService
+
+  Pumukit\NewAdminBundle\Services\UserStatsService:
+    class: Pumukit\NewAdminBundle\Services\UserStatsService
+
+  Pumukit\NewAdminBundle\Services\TagCatalogueService:
+    class: Pumukit\NewAdminBundle\Services\TagCatalogueService
+    arguments:
+      $configuredTag: '%pumukit_new_admin.base_catalogue_tag%'
+      $locales:       '%pumukit.locales%'
+
+  Pumukit\NewAdminBundle\EventListener\FilterListener:
+    class: Pumukit\NewAdminBundle\EventListener\FilterListener
+    arguments:
+      $addUserAsPerson: '%pumukitschema.enable_add_user_as_person%'
+    tags:
+      - { name: "kernel.event_listener", event: "kernel.controller" }
+
+  Pumukit\NewAdminBundle\Menu\ItemsList:
+    class: Pumukit\NewAdminBundle\Menu\ItemsList
+
+  Pumukit\NewAdminBundle\Twig\MultimediaObjectButtonsExtension:
+    class: Pumukit\NewAdminBundle\Twig\MultimediaObjectButtonsExtension
+    tags:
+      - { name: "twig.extension" }
+
+  Pumukit\NewAdminBundle\Twig\CatalogueExtension:
+    class: Pumukit\NewAdminBundle\Twig\CatalogueExtension
+    tags:
+      - { name: "twig.extension" }
+
+  Pumukit\NewAdminBundle\Controller\TranslateController:
+    class: Pumukit\NewAdminBundle\Controller\TranslateController
