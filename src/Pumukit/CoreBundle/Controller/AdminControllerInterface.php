@@ -12,5 +12,4 @@ namespace Pumukit\CoreBundle\Controller;
  */
 interface AdminControllerInterface
 {
-    //...
 }

@@ -2,25 +2,30 @@
 
 namespace Pumukit\CoreBundle\Command;
 
-use Assetic\Exception\Exception;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\ProfileService;
+use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\SchemaBundle\Services\TagService;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CreateMMOCommand extends ContainerAwareCommand
+class CreateMMOCommand extends Command
 {
-    private $seriesRepo;
+    private $documentManager;
     private $jobService;
     private $inspectionService;
     private $factoryService;
     private $tagService;
+    private $profileService;
     private $locales;
+    private $wizardSimpleDefaultMasterProfile;
 
     private $validStatuses = [
         'published' => MultimediaObject::STATUS_PUBLISHED,
@@ -28,7 +33,20 @@ class CreateMMOCommand extends ContainerAwareCommand
         'hidden' => MultimediaObject::STATUS_HIDDEN,
     ];
 
-    protected function configure()
+    public function __construct(DocumentManager $documentManager, JobService $jobService, InspectionFfprobeService $inspectionService, FactoryService $factoryService, TagService $tagService, ProfileService $profileService, array $locales, ?string $wizardSimpleDefaultMasterProfile = null)
+    {
+        $this->wizardSimpleDefaultMasterProfile = $wizardSimpleDefaultMasterProfile;
+        $this->documentManager = $documentManager;
+        $this->jobService = $jobService;
+        $this->inspectionService = $inspectionService;
+        $this->factoryService = $factoryService;
+        $this->tagService = $tagService;
+        $this->profileService = $profileService;
+        $this->locales = array_unique(array_merge($locales, ['en']));
+        parent::__construct();
+    }
+
+    protected function configure(): void
     {
         $this
             ->setName('import:inbox')
@@ -54,19 +72,7 @@ EOT
         ;
     }
 
-    protected function initialize(InputInterface $input, OutputInterface $output)
-    {
-        /** @var DocumentManager */
-        $dm = $this->getContainer()->get('doctrine_mongodb.odm.document_manager');
-        $this->seriesRepo = $dm->getRepository(Series::class);
-        $this->jobService = $this->getContainer()->get('pumukitencoder.job');
-        $this->inspectionService = $this->getContainer()->get('pumukit.inspection');
-        $this->factoryService = $this->getContainer()->get('pumukitschema.factory');
-        $this->tagService = $this->getContainer()->get('pumukitschema.tag');
-        $this->locales = array_unique(array_merge($this->getContainer()->getParameter('pumukit.locales'), ['en']));
-    }
-
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $status = null;
         if ($input->getOption('status')) {
@@ -82,7 +88,7 @@ EOT
             $status = $this->validStatuses[$statusText];
         }
 
-        if ('IN_CLOSE_WRITE' != $input->getArgument('inotify_event')) {
+        if ('IN_CLOSE_WRITE' !== $input->getArgument('inotify_event')) {
             return -1;
         }
         $locale = $this->getContainer()->getParameter('locale');
@@ -127,7 +133,7 @@ EOT
             throw new \Exception('The file ('.$path.') is not a valid video or audio file (duration is zero)');
         }
 
-        $series = $this->seriesRepo->findOneBy(['title.'.$locale => $seriesTitle]);
+        $series = $this->documentManager->getRepository(Series::class)->findOneBy(['title.'.$locale => $seriesTitle]);
         if (!$series) {
             $seriesTitleAllLocales = [$locale => $seriesTitle];
             foreach ($this->locales as $l) {
@@ -146,17 +152,16 @@ EOT
         $this->tagService->addTagByCodToMultimediaObject($multimediaObject, 'PUCHWEBTV');
 
         $this->jobService->createTrackFromInboxOnServer($multimediaObject, $path, $profile, 2, $locale, []);
+
+        return 0;
     }
 
     private function getDefaultMasterProfile()
     {
-        if ($this->getContainer()->hasParameter('pumukit_wizard.simple_default_master_profile')) {
-            return $this->getContainer()->getParameter('pumukit_wizard.simple_default_master_profile');
+        if ($this->wizardSimpleDefaultMasterProfile) {
+            return $this->wizardSimpleDefaultMasterProfile;
         }
 
-        /** @var ProfileService */
-        $profileService = $this->getContainer()->get('pumukitencoder.profile');
-
-        return $profileService->getDefaultMasterProfile();
+        return $this->profileService->getDefaultMasterProfile();
     }
 }

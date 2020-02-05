@@ -6,25 +6,18 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-/**
- * Class SecurityController.
- */
-class SecurityController extends Controller
+class SecurityController extends AbstractController
 {
     /**
      * @Route("/security/edit/{id}", name="pumukit_webtv_can_edit_multimediaobject")
      * @Template("PumukitCoreBundle:Security:editButton.html.twig")
-     *
-     * @param string $id
-     *
-     * @return array
      */
-    public function canEditAction(Request $request, $id)
+    public function canEditAction(Request $request, DocumentManager $documentManager, string $id)
     {
         //Performance: No queries for anonymous users
         $request->attributes->set('noindex', true);
@@ -32,9 +25,7 @@ class SecurityController extends Controller
             return ['access' => false, 'multimediaObject' => null];
         }
 
-        /** @var DocumentManager */
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $multimediaObject = $dm->find(MultimediaObject::class, $id);
+        $multimediaObject = $documentManager->find(MultimediaObject::class, $id);
 
         if (!$multimediaObject) {
             throw $this->createNotFoundException();
