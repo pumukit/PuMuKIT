@@ -3,6 +3,7 @@
 </div>
 
 {% include "PumukitWebTVBundle:Misc:chapter_marks.html.twig" %}
+{% include "PumukitWebTVBundle:Misc:modal_download_share.html.twig" %}
 
 <div class="row">
     <div class="col-xs-12">
@@ -31,31 +32,24 @@
                 </span>
             </div>
             <div class="col-xs-12 col-sm-6 video-material text-right">
-                {% for track in multimediaObject.getTracks() if track.allowDownload() and not track.getHide() and showDownloads %}
-                    {% set none_attach = false %}
-                    <div class="qa-player-tracks tracks">
-                        <span class="fa fa-download"></span>
-                        <a class="video-tracks" download href="{{ track_url(track) }}?forcedl=1">
-                            {% trans %}Download{% endtrans %}
-                        </a>
-                    </div>
-                {% endfor %}
+                <div class="qa-player-tracks tracks">
+                    <span class="fa fa-download"></span>
+                    <a class="video-tracks" href="#" data-toggle="modal" data-target="#modalPlayer">
+                        {% trans %}Download{% endtrans %}
+                    </a>
+                </div>
 
                 <div class="qa-player-share share">
                     <span class="fa fa-share"></span>
-                    <a class="video-tracks" href="#">
+                    <a href="#" data-toggle="modal" data-target="#modalPlayer">
                         {% trans %}Share{% endtrans %}
                     </a>
                 </div>
 
-                {% for material in multimediaObject.getMaterials() if not material.getHide() and showDownloads  %}
-                    {% set none_attach = false %}
-                    <div class="qa-player-material material">
-                        <span class="fa fa-paperclip"></span>
-                        <a href="#">{% trans %} Attachments {% endtrans %}</a>
-                        <!--<a href="{{ material.getUrl() }}">{{ material.getName() }}</a>-->
-                    </div>
-                {% endfor %}
+                <div class="qa-player-material material">
+                    <span class="fa fa-paperclip"></span>
+                    <a href="#" data-toggle="modal" data-target="#modalPlayer">{% trans %} Attachments {% endtrans %}</a>
+                </div>
 
                 <!--{% for link in multimediaObject.getLinks() if showDownloads %}
                     {% set none_attach = false %}
