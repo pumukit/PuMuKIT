@@ -542,7 +542,7 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function createBuilderWithTag(Tag $tag, $sort = [])
     {
-        $qb = $this->createStandardQueryBuilder()->field('tags._id')->equals(new ObjectId($tag->getId()));
+        $qb = $this->createStandardQueryBuilder()->field('tags.cod')->equals($tag->getCod());
 
         return $this->addSortToQueryBuilder($qb, $sort);
     }
@@ -585,7 +585,7 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function createBuilderWithGeneralTag(Tag $tag, $sort = [])
     {
-        $qb = $this->createStandardQueryBuilder()->field('tags._id')->in([new ObjectId($tag->getId())])->field('tags.path')->notIn([new Regex(preg_quote($tag->getPath()).'.*\|/')]);
+        $qb = $this->createStandardQueryBuilder()->field('tags.cod')->equals($tag->getCod())->field('tags.path')->notIn([new Regex(preg_quote($tag->getPath()).'.*\|/')]);
 
         return $this->addSortToQueryBuilder($qb, $sort);
     }
