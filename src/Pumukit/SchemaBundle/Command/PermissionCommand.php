@@ -2,18 +2,31 @@
 
 namespace Pumukit\SchemaBundle\Command;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Pumukit\SchemaBundle\Services\PermissionProfileService;
+use Pumukit\SchemaBundle\Services\PermissionService;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class PermissionCommand extends ContainerAwareCommand
+class PermissionCommand extends Command
 {
-    /**
-     * @see Command
-     */
+    private $permissionProfileService;
+    private $permissionService;
+    private $dm;
+
+    public function __construct(PermissionProfileService $permissionProfileService, PermissionService $permissionService, DocumentManager $documentManager)
+    {
+        $this->permissionProfileService = $permissionProfileService;
+        $this->permissionService = $permissionService;
+        $this->dm = $documentManager;
+
+        parent::__construct();
+    }
+
     protected function configure()
     {
         $this
@@ -35,9 +48,6 @@ EOT
         ;
     }
 
-    /**
-     * @see Command
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $profileName = $input->getArgument('profile');
@@ -46,22 +56,18 @@ EOT
         $this->checkPermission($permissionName);
         $delete = (true === $input->getOption('delete'));
 
-        $permissionProfileService = $this->getContainer()->get('pumukitschema.permissionprofile');
-
         if ($delete) {
-            $permissionProfileService->removePermission($profile, $permissionName);
+            $this->permissionProfileService->removePermission($profile, $permissionName);
             $output->writeln(sprintf('Profile "%s" has been deleted into profile %s.', $permissionName, $profileName));
         } else {
-            $permissionProfileService->addPermission($profile, $permissionName);
+            $this->permissionProfileService->addPermission($profile, $permissionName);
             $output->writeln(sprintf('Profile "%s" has been added into profile %s.', $permissionName, $profileName));
         }
     }
 
-    private function getProfile($profileName)
+    private function getProfile(string $profileName)
     {
-        $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-        $repo = $dm->getRepository(PermissionProfile::class);
-        $profile = $repo->findOneByName($profileName);
+        $profile = $this->dm->getRepository(PermissionProfile::class)->findOneBy(['name' => $profileName]);
 
         if (!$profile) {
             throw new \InvalidArgumentException(sprintf('No permission profile with name %s', $profileName));
@@ -70,11 +76,9 @@ EOT
         return $profile;
     }
 
-    private function checkPermission($permissionName)
+    private function checkPermission($permissionName): void
     {
-        $permissionService = $this->getContainer()->get('pumukitschema.permission');
-
-        if (!$permissionService->exists($permissionName)) {
+        if (!$this->permissionService->exists($permissionName)) {
             throw new \InvalidArgumentException(sprintf('No permission with name %s', $permissionName));
         }
     }

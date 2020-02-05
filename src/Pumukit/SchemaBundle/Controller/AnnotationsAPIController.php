@@ -2,13 +2,17 @@
 
 namespace Pumukit\SchemaBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
+use Pumukit\CoreBundle\Services\SerializerService;
 use Pumukit\SchemaBundle\Document\Annotation;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Event\AnnotationsEvents;
 use Pumukit\SchemaBundle\Event\AnnotationsUpdateEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -17,15 +21,13 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  *  @Route("/annotation")
  */
-class AnnotationsAPIController extends Controller
+class AnnotationsAPIController extends AbstractController
 {
     /**
      * @Route("/annotations.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"}, methods={"GET"})
      */
-    public function getAction(Request $request)
+    public function getAction(Request $request, DocumentManager $documentManager, SerializerService $serializer)
     {
-        $serializer = $this->get('jms_serializer');
-
         $episode = $request->get('episode');
         $type = $request->get('type');
         $day = $request->get('day');
@@ -33,7 +35,7 @@ class AnnotationsAPIController extends Controller
         $limit = $request->get('limit') ?: 10;
         $offset = $request->get('offset') ?: 0;
 
-        $annonRepo = $this->get('doctrine_mongodb')->getRepository(Annotation::class);
+        $annonRepo = $documentManager->getRepository(Annotation::class);
         $annonQB = $annonRepo->createQueryBuilder();
 
         if ($episode) {
@@ -71,7 +73,7 @@ class AnnotationsAPIController extends Controller
             ],
         ];
 
-        $response = $serializer->serialize($data, $request->getRequestFormat());
+        $response = $serializer->dataSerialize($data, $request->getRequestFormat());
 
         return new Response($response);
     }
@@ -79,9 +81,8 @@ class AnnotationsAPIController extends Controller
     /**
      * @Route("/{id}.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"}, methods={"GET"})
      */
-    public function getByIdAction(Annotation $annotation, Request $request)
+    public function getByIdAction(Annotation $annotation, Request $request, SerializerService $serializer)
     {
-        $serializer = $this->get('jms_serializer');
         $data = [
             'annotation' => [
                 'annotationId' => $annotation->getId(),
@@ -97,7 +98,7 @@ class AnnotationsAPIController extends Controller
                 'created' => $annotation->getCreated(),
             ],
         ];
-        $response = $serializer->serialize($data, $request->getRequestFormat());
+        $response = $serializer->dataSerialize($data, $request->getRequestFormat());
 
         return new Response($response);
     }
@@ -106,10 +107,8 @@ class AnnotationsAPIController extends Controller
      * @Route("/", methods={"PUT"})
      * @Security("has_role('ROLE_ACCESS_MULTIMEDIA_SERIES')")
      */
-    public function createNewAction(Request $request)
+    public function createNewAction(Request $request, SerializerService $serializer, DocumentManager $documentManager, EventDispatcher $eventDispatcher)
     {
-        $serializer = $this->get('jms_serializer');
-
         $episode = $request->get('episode');
         $type = $request->get('type');
         $value = $request->get('value');
@@ -132,8 +131,8 @@ class AnnotationsAPIController extends Controller
         $session = $session->getId();
         $annotation->setSession($session);
 
-        $this->get('doctrine_mongodb.odm.document_manager')->persist($annotation);
-        $this->get('doctrine_mongodb.odm.document_manager')->flush();
+        $documentManager->persist($annotation);
+        $documentManager->flush();
 
         $data = [
             'annotation' => [
@@ -150,9 +149,9 @@ class AnnotationsAPIController extends Controller
                 'created' => $annotation->getCreated(),
             ],
         ];
-        $response = $serializer->serialize($data, 'json');
+        $response = $serializer->dataSerialize($data, 'json');
         $event = new AnnotationsUpdateEvent($episode);
-        $this->get('event_dispatcher')->dispatch(AnnotationsEvents::UPDATE, $event);
+        $eventDispatcher->dispatch($event, AnnotationsEvents::UPDATE);
 
         return new Response($response);
     }
@@ -161,14 +160,12 @@ class AnnotationsAPIController extends Controller
      * @Route("/{id}", methods={"PUT"})
      * @Security("has_role('ROLE_ACCESS_MULTIMEDIA_SERIES')")
      */
-    public function editAction(Annotation $annotation, Request $request)
+    public function editAction(Annotation $annotation, Request $request, SerializerService $serializer, DocumentManager $documentManager, EventDispatcher $eventDispatcher)
     {
-        $serializer = $this->get('jms_serializer');
-
         $value = $request->get('value');
         $annotation->setValue($value);
-        $this->get('doctrine_mongodb.odm.document_manager')->persist($annotation);
-        $this->get('doctrine_mongodb.odm.document_manager')->flush();
+        $documentManager->persist($annotation);
+        $documentManager->flush();
         $data = [
             'annotation' => [
                 'annotationId' => $annotation->getId(),
@@ -184,9 +181,9 @@ class AnnotationsAPIController extends Controller
                 'created' => $annotation->getCreated(),
             ],
         ];
-        $response = $serializer->serialize($data, 'xml');
+        $response = $serializer->dataSerialize($data, 'xml');
         $event = new AnnotationsUpdateEvent($annotation->getMultimediaObject());
-        $this->get('event_dispatcher')->dispatch(AnnotationsEvents::UPDATE, $event);
+        $eventDispatcher->dispatch( $event, AnnotationsEvents::UPDATE);
 
         return new Response($response);
     }
@@ -195,14 +192,12 @@ class AnnotationsAPIController extends Controller
      * @Route("/{id}", methods={"DELETE"})
      * @Security("has_role('ROLE_ACCESS_MULTIMEDIA_SERIES')")
      */
-    public function deleteAction(Annotation $annotation, Request $request)
+    public function deleteAction(Annotation $annotation, DocumentManager $documentManager, SerializerService $serializer)
     {
-        $serializer = $this->get('jms_serializer');
+        $documentManager->remove($annotation);
+        $documentManager->flush();
 
-        $this->get('doctrine_mongodb.odm.document_manager')->remove($annotation);
-        $this->get('doctrine_mongodb.odm.document_manager')->flush();
-
-        $response = $serializer->serialize($annotation, 'xml');
+        $response = $serializer->dataSerialize($annotation, 'xml');
 
         return new Response($response);
     }
@@ -211,11 +206,9 @@ class AnnotationsAPIController extends Controller
      * @Route("/reset/{id}", methods={"DELETE"})
      * @Security("has_role('ROLE_ACCESS_MULTIMEDIA_SERIES')")
      */
-    public function deleteAllAction(MultimediaObject $multimediaobject, Request $request)
+    public function deleteAllAction(MultimediaObject $multimediaobject, DocumentManager $documentManager, SerializerService $serializer)
     {
-        $serializer = $this->get('jms_serializer');
-
-        $annonRepo = $this->get('doctrine_mongodb')->getRepository(Annotation::class);
+        $annonRepo = $documentManager->getRepository(Annotation::class);
         $annonQB = $annonRepo->createQueryBuilder();
         $annonQB->field('multimediaObject')->equals(new ObjectId($multimediaobject->getId()));
         $annonQB->remove()->getQuery()->execute();
