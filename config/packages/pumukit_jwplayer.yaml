@@ -1,0 +1,9 @@
+services:
+  _defaults:
+    autowire:      true
+    autoconfigure: true
+    public:        true
+
+  Pumukit\JWPlayerBundle\Controller\:
+    resource: '../../src/Pumukit/JWPlayerBundle/Controller/'
+    tags: ['controller.service_arguments']
