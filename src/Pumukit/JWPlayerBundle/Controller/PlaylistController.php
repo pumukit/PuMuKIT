@@ -19,21 +19,17 @@ class PlaylistController extends BasePlaylistController
      * @Route("/playlist/magic/{secret}", name="pumukit_playlistplayer_magicindex", defaults={"show_hide": true, "no_channels": true} )
      * @Template("PumukitJWPlayerBundle:JWPlayer:player_playlist.html.twig")
      */
-    public function indexAction(Series $series, Request $request)
+    public function indexAction(Request $request, DocumentManager $documentManager, SeriesPlaylistService $seriesPlaylistService, Series $series)
     {
-        /** @var SeriesPlaylistService */
-        $playlistService = $this->get('pumukit_baseplayer.seriesplaylist');
-        /** @var DocumentManager */
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
         if (!$series->isPlaylist()) {
             $criteria = [
                 'type' => ['$ne' => MultimediaObject::TYPE_LIVE],
                 'embeddedBroadcast.type' => EmbeddedBroadcast::TYPE_PUBLIC,
                 'tracks' => ['$elemMatch' => ['tags' => 'display', 'hide' => false]],
             ];
-            $mmobjs = $dm->getRepository(MultimediaObject::class)->findBy($criteria, ['rank' => 'asc']);
+            $mmobjs = $documentManager->getRepository(MultimediaObject::class)->findBy($criteria, ['rank' => 'asc']);
         } else {
-            $mmobjs = $playlistService->getPlaylistMmobjs($series);
+            $mmobjs = $seriesPlaylistService->getPlaylistMmobjs($series);
         }
 
         return [
