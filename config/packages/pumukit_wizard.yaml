@@ -3,6 +3,23 @@ services:
     autowire:      true
     autoconfigure: true
     public:        true
+    bind:
+      $pumukitWizardShowTags: '%pumukit_wizard.show_tags%'
+      $pumukitWizardShowObjectLicense: '%pumukit_wizard.show_object_license%'
+      $pumukitNewAdminLicenses: '%pumukit_new_admin.licenses%'
+      $pumukitSchemaDefaultLicense: '%pumukitschema.default_license%'
+      $pumukitWizardTagParentCod: '%pumukit_wizard.tag_parent_code%'
+      $pumukitWizardMandatoryTitle: '%pumukit_wizard.mandatory_title%'
+      $pumukitCustomLanguages: '%pumukit.customlanguages%'
+      $locales: '%pumukit.locales%'
+
+  Pumukit\WizardBundle\Controller\:
+    resource: '../../src/Pumukit/WizardBundle/Controller/'
+    tags: ['controller.service_arguments']
+
+  Pumukit\WizardBundle\Command\:
+    resource: '../../src/Pumukit/WizardBundle/Command/'
+    tags: ['console.command']
 
   Pumukit\WizardBundle\Services\LicenseService:
     class: Pumukit\WizardBundle\Services\LicenseService
