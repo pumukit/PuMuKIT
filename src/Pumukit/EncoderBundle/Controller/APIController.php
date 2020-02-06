@@ -2,21 +2,24 @@
 
 namespace Pumukit\EncoderBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Pumukit\EncoderBundle\Services\CpuService;
+use Pumukit\EncoderBundle\Services\JobService;
+use Pumukit\EncoderBundle\Services\ProfileService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/api/encoder")
  */
-class APIController extends Controller
+class APIController extends AbstractController
 {
     /**
      * @Route("/profiles.{_format}", defaults={"_format"="json"}, requirements={"_format": "json"})
      */
-    public function profilesAction()
+    public function profilesAction(ProfileService $profileService): JsonResponse
     {
-        $profiles = $this->get('pumukitencoder.profile')->getProfiles();
+        $profiles = $profileService->getProfiles();
 
         return new JsonResponse($profiles);
     }
@@ -24,9 +27,9 @@ class APIController extends Controller
     /**
      * @Route("/cpus.{_format}", defaults={"_format"="json"}, requirements={"_format": "json"})
      */
-    public function cpusAction()
+    public function cpusAction(CpuService $cpuService): JsonResponse
     {
-        $cpus = $this->get('pumukitencoder.cpu')->getCpus();
+        $cpus = $cpuService->getCpus();
 
         return new JsonResponse($cpus);
     }
@@ -34,9 +37,8 @@ class APIController extends Controller
     /**
      * @Route("/jobs.{_format}", defaults={"_format"="json"}, requirements={"_format": "json"})
      */
-    public function jobsAction()
+    public function jobsAction(JobService $jobService): JsonResponse
     {
-        $jobService = $this->get('pumukitencoder.job');
         $stats = $jobService->getAllJobsStatus();
 
         return new JsonResponse($stats);

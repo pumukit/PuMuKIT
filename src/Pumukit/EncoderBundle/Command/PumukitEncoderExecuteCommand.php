@@ -2,16 +2,28 @@
 
 namespace Pumukit\EncoderBundle\Command;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\EncoderBundle\Document\Job;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Pumukit\EncoderBundle\Services\JobService;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class PumukitEncoderExecuteCommand extends ContainerAwareCommand
+class PumukitEncoderExecuteCommand extends Command
 {
-    protected function configure()
+    private $dm;
+    private $jobService;
+
+    public function __construct(DocumentManager $documentManager, JobService $jobService)
+    {
+        $this->dm = $documentManager;
+        $this->jobService = $jobService;
+        parent::__construct();
+    }
+
+    protected function configure(): void
     {
         $this
             ->setName('pumukit:encoder:job')
@@ -29,17 +41,19 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-        $jobService = $this->getContainer()->get('pumukitencoder.job');
-
         if (null === ($id = $input->getArgument('id'))) {
             throw new \RuntimeException("Argument 'ID' is required in order to execute this command correctly.");
         }
 
-        if (null === ($job = $dm->find(Job::class, $id))) {
+        if (null === ($job = $this->dm->getRepository(Job::class)->find($id))) {
             throw new \RuntimeException("Not job found with id {$id}.");
         }
 
-        $jobService->execute($job);
+        $this->executeJob($job);
+    }
+
+    private function executeJob(Job $job): void
+    {
+        $this->jobService->execute($job);
     }
 }
