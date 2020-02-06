@@ -26,9 +26,9 @@ class MoveFilesCommand extends ContainerAwareCommand
         $this
             ->setName('pumukit:move:files')
             ->setDescription('This command move files from origin NAS to new NAS')
-            ->addOption('origin',null,InputOption::VALUE_REQUIRED,'Origin path NAS','/mnt/nas/almacen/masters/')
-            ->addOption('destiny',null,InputOption::VALUE_REQUIRED,'Destiny path NAS','/mnt/pumukit/storage/masters/')
-            ->addOption('limit',null,InputOption::VALUE_OPTIONAL,'Limit of files to move')
+            ->addOption('origin', null, InputOption::VALUE_REQUIRED, 'Origin path NAS', '/mnt/nas/almacen/masters/')
+            ->addOption('destiny', null, InputOption::VALUE_REQUIRED, 'Destiny path NAS', '/mnt/pumukit/storage/masters/')
+            ->addOption('limit', null, InputOption::VALUE_OPTIONAL, 'Limit of files to move')
             ->setHelp(
                 <<<'EOT'
 
@@ -47,7 +47,7 @@ EOT
         $this->dm = $this->getContainer()->get('doctrine_mongodb.odm.document_manager');
         $this->origin = $input->getOption('origin');
         $this->destiny = $input->getOption('destiny');
-        $this->limit = abs((int)$input->getOption('limit'));
+        $this->limit = abs((int) $input->getOption('limit'));
 
         $this->logger = $this->getContainer()->get('logger');
 
