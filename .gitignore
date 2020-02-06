@@ -6,13 +6,7 @@
 !/public/storage/downloads/.gitignore
 /public/storage/masters/*
 !/public/storage/masters/.gitignore
-/app/Resources/*
-!/app/Resources/views
-!/app/Resources/FOSUserBundle
-!/app/Resources/WhiteOctoberPagerfantaBundle
-!/app/Resources/TwigBundle
-/app/bootstrap.php.cache
-/app/config/parameters.yml
+/public/storage/tmp/*
 /build/
 /vendor/
 /composer.phar

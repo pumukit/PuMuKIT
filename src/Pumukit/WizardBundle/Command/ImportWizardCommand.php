@@ -2,26 +2,25 @@
 
 namespace Pumukit\WizardBundle\Command;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\EncoderBundle\Services\JobService;
+use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\WizardBundle\Services\WizardService;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 
-/**
- * Class ImportWizardCommand.
- */
-class ImportWizardCommand extends ContainerAwareCommand
+class ImportWizardCommand extends Command
 {
     private $dm;
     private $jobService;
-    private $profileService;
     private $inspectionService;
     private $wizardService;
-    private $defaultLanguage;
     private $user;
     private $path;
     private $inboxDepth;
@@ -33,7 +32,17 @@ class ImportWizardCommand extends ContainerAwareCommand
     private $language;
     private $factoryService;
 
-    protected function configure()
+    public function __construct(DocumentManager $documentManager, WizardService $wizardService, JobService $jobService, InspectionFfprobeService $inspectionFfprobeService, FactoryService $factoryService)
+    {
+        $this->dm = $documentManager;
+        $this->wizardService = $wizardService;
+        $this->jobService = $jobService;
+        $this->inspectionService = $inspectionFfprobeService;
+        $this->factoryService = $factoryService;
+        parent::__construct();
+    }
+
+    protected function configure(): void
     {
         $this
             ->setName('pumukit:wizard:import')
@@ -61,16 +70,8 @@ EOT
         ;
     }
 
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
-        $this->dm = $this->getContainer()->get('doctrine_mongodb.odm.document_manager');
-        $this->wizardService = $this->getContainer()->get('pumukit_wizard.wizard');
-        $this->jobService = $this->getContainer()->get('pumukitencoder.job');
-        $this->profileService = $this->getContainer()->get('pumukitencoder.profile');
-        $this->inspectionService = $this->getContainer()->get('pumukit.inspection');
-        $this->defaultLanguage = $this->getContainer()->getParameter('locale');
-        $this->factoryService = $this->getContainer()->get('pumukitschema.factory');
-
         $this->user = $this->dm->getRepository(User::class)->findOneBy([
             '_id' => $input->getArgument('user'),
         ]);
@@ -85,12 +86,7 @@ EOT
         $this->language = $input->getArgument('language');
     }
 
-    /**
-     * @throws \Exception
-     *
-     * @return int|void|null
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $output->writeln('<info> ***** Start - Generating Job for wizard tracks ***** </info>');
 
@@ -99,10 +95,7 @@ EOT
         $output->writeln('<info> ***** End - Generating Job for wizard tracks ***** </info>');
     }
 
-    /**
-     * @throws \Exception
-     */
-    private function importFiles(OutputInterface $output)
+    private function importFiles(OutputInterface $output): void
     {
         $series = $this->dm->getRepository(Series::class)->findOneBy(['_id' => $this->series]);
         if (!$series) {
