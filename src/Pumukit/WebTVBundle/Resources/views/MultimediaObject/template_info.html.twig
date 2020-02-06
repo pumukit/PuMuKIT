@@ -18,8 +18,9 @@
         {% endif %}
 
         <div class="row video-info">
-            <div class="col-xs-12 col-sm-6">
-                <span class="qa-player-viewed">
+            <div class="col-xs-12 col-sm-5">
+                <span class="qa-player-viewed views">
+                    <i class="fa fa-eye"></i>
                     {{ multimediaObject.getNumview() }}
                     {% if multimediaObject.getNumview() > 1 %}
                         {% trans %} view {% endtrans %}
@@ -28,42 +29,28 @@
                     {% endif %}
                 </span>
                 <span class="qa-player-recording-date">
+                    <i class="fa fa-calendar"></i>
                     {{ multimediaObject.getRecordDate()|localizeddate('medium','none',app.request.getLocale()) }}
                 </span>
             </div>
-            <div class="col-xs-12 col-sm-6 video-material text-right">
+            <div class="col-xs-12 col-sm-7 video-material text-right">
                 <div class="qa-player-tracks tracks">
-                    <span class="fa fa-download"></span>
+                    <i class="fa fa-download"></i>
                     <a class="video-tracks" href="#" data-toggle="modal" data-target="#modalPlayer">
                         {% trans %}Download{% endtrans %}
                     </a>
                 </div>
 
                 <div class="qa-player-share share">
-                    <span class="fa fa-share"></span>
+                    <i class="fa fa-share"></i>
                     <a href="#" data-toggle="modal" data-target="#modalPlayer">
                         {% trans %}Share{% endtrans %}
                     </a>
                 </div>
 
-                <div class="qa-player-material material">
-                    <span class="fa fa-paperclip"></span>
-                    <a href="#" data-toggle="modal" data-target="#modalPlayer">{% trans %} Attachments {% endtrans %}</a>
-                </div>
-
-                <!--{% for link in multimediaObject.getLinks() if showDownloads %}
-                    {% set none_attach = false %}
-                    <div class="qa-player-link link">
-                        <a target="_blank" href="{{ link.getUrl() }}">
-                            <span class="glyphicon glyphicon-globe"></span>
-                            {{ link.getName() }}
-                        </a>
-                    </div>
-                {% endfor %}-->
-
                 {% if not multimediaObject.getSeries().isHide() %}
                 <div class="qa-player-series video-series">
-                    <span class="fa fa-play-circle"></span>
+                    <i class="fa fa-play-circle"></i>
                         {% if isMagicRoute and fullMagicUrl %}        
                             <a href="{{ path('pumukit_webtv_series_magicindex', {secret: multimediaObject.getSeries().getSecret() }) }}">
                                 {% trans %}i18n.one.Series{% endtrans %}
@@ -77,71 +64,22 @@
                 </div>
             </div>
         </div>
+        
+        <div class="row video-description">
+            <div class="col-xs-12 col-sm-12">
+                <div class="collapse" id="description">
+                    <p class="qa-player-description description">
+                        {{ multimediaObject.getDescription()|nl2br }}
+                    </p>
+                </div>
 
-        <p class="qa-player-description description">
-            {{ multimediaObject.getDescription()|nl2br }}
-        </p>
-
-        <!--<div class="qa-player-license text-left video-license">
-            {% if multimediaObject.getLicense() is not empty %}
-                {% trans %}License{% endtrans %}: {{ multimediaObject.getLicense() }}
-            {% endif %}
-        </div>-->
-
+                <a class="show-more" role="button" data-toggle="collapse" href="#description" aria-expanded="false" aria-controls="description">
+                    {% trans %}Show more{% endtrans %}
+                </a>
+            </div>
+        </div>
         {% include "PumukitWebTVBundle:Misc:people.html.twig" with {'object': multimediaObject} %}
     </div>
 </div>
 <br>
-<div class="row">
-    <!--<div class="col-sm-6">
 
-        <div class="panel panel-default panel-pmk">
-            <div class="panel-heading">
-                {% trans %} Attachments {% endtrans %}
-            </div>
-            <div class="panel-body">
-                {% set none_attach = true %}
-
-                {% for track in multimediaObject.getTracks() if track.allowDownload() and not track.getHide() and showDownloads %}
-                    {% set none_attach = false %}
-                    <div class="qa-player-tracks tracks">
-                        <span class="glyphicon glyphicon-facetime-video"></span>
-                        <a class="video-tracks" download href="{{ track_url(track) }}?forcedl=1">
-                            {% if track.isOnlyAudio() %}
-                                {% trans %}Download this audio{% endtrans %}
-                            {% else %}
-                                {% trans %}Download this video{% endtrans %}
-                            {% endif %}
-                            <span class="pull-right">{{ (track.getSize() / 1048576)|number_format(2) }}MB</span>
-                        </a>
-                    </div>
-                {% endfor %}
-
-                {% for material in multimediaObject.getMaterials() if not material.getHide() and showDownloads  %}
-                    {% set none_attach = false %}
-                    <div class="qa-player-material material">
-                        <span class="glyphicon glyphicon-paperclip"></span>
-                        <a href="{{ material.getUrl() }}">{{ material.getName() }}</a>
-                    </div>
-                {% endfor %}
-
-                {% for link in multimediaObject.getLinks() if showDownloads %}
-                    {% set none_attach = false %}
-                    <div class="qa-player-link link">
-                        <a target="_blank" href="{{ link.getUrl() }}">
-                            <span class="glyphicon glyphicon-globe"></span>
-                            {{ link.getName() }}
-                        </a>
-                    </div>
-                {% endfor %}
-                {% if none_attach %}
-                    <strong>{% trans %} There are no attachments {% endtrans %}</strong>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6">
-        {% include 'PumukitWebTVBundle:MultimediaObject:template_share.html.twig' %}
-    </div>-->
-</div>
-<br>
