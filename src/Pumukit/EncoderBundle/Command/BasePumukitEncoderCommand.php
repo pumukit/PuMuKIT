@@ -3,11 +3,11 @@
 namespace Pumukit\EncoderBundle\Command;
 
 use Pumukit\EncoderBundle\Document\Job;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 
-abstract class BasePumukitEncoderCommand extends ContainerAwareCommand
+abstract class BasePumukitEncoderCommand extends Command
 {
-    protected function formatStatus($job_status)
+    protected function formatStatus($job_status): string
     {
         $tags = [
             Job::STATUS_ERROR => ['<error>', '</error>'],

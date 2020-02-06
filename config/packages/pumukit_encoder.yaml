@@ -4,6 +4,14 @@ services:
     autoconfigure: true
     public:        true
 
+  Pumukit\EncoderBundle\Controller\:
+    resource: '../../src/Pumukit/EncoderBundle/Controller/'
+    tags: ['controller.service_arguments']
+
+  Pumukit\EncoderBundle\Command\:
+    resource: '../../src/Pumukit/EncoderBundle/Command/'
+    tags: ['console.command']
+
   Pumukit\EncoderBundle\Services\CpuService:
     class: Pumukit\EncoderBundle\Services\CpuService
     arguments:
