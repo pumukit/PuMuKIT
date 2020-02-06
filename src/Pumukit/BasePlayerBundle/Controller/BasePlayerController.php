@@ -10,10 +10,12 @@ use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-abstract class BasePlayerController extends Controller
+abstract class BasePlayerController extends AbstractController
 {
     /**
      * @Route("/videoplayer/{id}", name="pumukit_videoplayer_index" )
@@ -25,9 +27,9 @@ abstract class BasePlayerController extends Controller
      */
     abstract public function magicAction(Request $request, EmbeddedBroadcastService $embeddedBroadcastService, MultimediaObjectService $multimediaObjectService, IntroService $basePlayerIntroService, MultimediaObject $multimediaObject);
 
-    protected function dispatchViewEvent(MultimediaObject $multimediaObject, Track $track = null): void
+    protected function dispatchViewEvent(MultimediaObject $multimediaObject, Track $track = null, EventDispatcher $eventDispatcher): void
     {
         $event = new ViewedEvent($multimediaObject, $track);
-        $this->get('event_dispatcher')->dispatch(BasePlayerEvents::MULTIMEDIAOBJECT_VIEW, $event);
+        $eventDispatcher->dispatch(BasePlayerEvents::MULTIMEDIAOBJECT_VIEW, $event);
     }
 }
