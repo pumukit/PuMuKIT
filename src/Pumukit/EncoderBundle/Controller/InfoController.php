@@ -2,13 +2,18 @@
 
 namespace Pumukit\EncoderBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\EncoderBundle\Services\CpuService;
+use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -16,21 +21,17 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Route("/admin/encoder")
  * @Security("is_granted('ROLE_ACCESS_JOBS')")
  */
-class InfoController extends Controller
+class InfoController extends AbstractController
 {
     /**
      * @Route("/", name="pumukit_encoder_info")
      * @Template("PumukitEncoderBundle:Info:index.html.twig")
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, DocumentManager $documentManager, CpuService $cpuService, JobService $jobService, PaginationService $paginationService): array
     {
         $user = $this->getUser();
-
-        $cpuService = $this->get('pumukitencoder.cpu');
         $cpus = $cpuService->getCpus();
-
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $jobRepo = $dm->getRepository(Job::class);
+        $jobRepo = $documentManager->getRepository(Job::class);
 
         $pendingStates = [];
         if ($request->query->get('show_waiting', true)) {
@@ -39,6 +40,7 @@ class InfoController extends Controller
         if ($request->query->get('show_paused', true)) {
             $pendingStates[] = Job::STATUS_PAUSED;
         }
+
         $pendingSort = [
             'priority' => 'desc',
             'timeini' => 'asc',
@@ -72,15 +74,12 @@ class InfoController extends Controller
             $executedJobs = $jobRepo->createQueryWithStatusAndOwner($pendingStates, $executedSort, $user);
         }
 
-        $jobService = $this->get('pumukitencoder.job');
-
         if (!$user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
             $stats = $jobService->getAllJobsStatus();
         } else {
             $stats = $jobService->getAllJobsStatusWithOwner($user);
         }
 
-        $cpuService = $this->get('pumukitencoder.cpu');
         $deactivatedCpus = $cpuService->getCpuNamesInMaintenanceMode();
 
         return [
@@ -89,15 +88,15 @@ class InfoController extends Controller
             'jobs' => [
                 'pending' => [
                     'total' => ($stats['paused'] + $stats['waiting']),
-                    'jobs' => $this->createPager($pendingJobs, $request->query->get('page_pending', 1)),
+                    'jobs' => $this->createPager($paginationService, $pendingJobs, $request->query->get('page_pending', 1)),
                 ],
                 'executing' => [
                     'total' => ($stats['executing']),
-                    'jobs' => $this->createPager($executingJobs, $request->query->get('page_executing', 1), 20),
+                    'jobs' => $this->createPager($paginationService, $executingJobs, $request->query->get('page_executing', 1), 20),
                 ],
                 'executed' => [
                     'total' => ($stats['error'] + $stats['finished']),
-                    'jobs' => $this->createPager($executedJobs, $request->query->get('page_executed', 1)),
+                    'jobs' => $this->createPager($paginationService, $executedJobs, $request->query->get('page_executed', 1)),
                 ],
             ],
             'stats' => $stats,
@@ -108,12 +107,12 @@ class InfoController extends Controller
      * @Route("/job/{id}", methods="GET", name="pumukit_encoder_job")
      * @Template("PumukitEncoderBundle:Info:infoJob.html.twig")
      */
-    public function infoJobAction(Job $job, Request $request)
+    public function infoJobAction(Job $job, Request $request, JobService $jobService): array
     {
         $deletedMultimediaObject = false;
 
         try {
-            $command = $this->get('pumukitencoder.job')->renderBat($job);
+            $command = $jobService->renderBat($job);
         } catch (\Exception $e) {
             $command = $e->getMessage();
             $deletedMultimediaObject = true;
@@ -129,11 +128,11 @@ class InfoController extends Controller
     /**
      * @Route("/job", methods="POST", name="pumukit_encoder_update_job")
      */
-    public function updateJobPriorityAction(Request $request)
+    public function updateJobPriorityAction(Request $request, JobService $jobService): JsonResponse
     {
         $priority = $request->get('priority');
         $jobId = $request->get('jobId');
-        $this->get('pumukitencoder.job')->updateJobPriority($jobId, $priority);
+        $jobService->updateJobPriority($jobId, $priority);
 
         return new JsonResponse([
             'jobId' => $jobId,
@@ -144,10 +143,10 @@ class InfoController extends Controller
     /**
      * @Route("/job", methods="DELETE", name="pumukit_encoder_delete_job")
      */
-    public function deleteJobAction(Request $request)
+    public function deleteJobAction(Request $request, JobService $jobService)
     {
         $jobId = $request->get('jobId');
-        $this->get('pumukitencoder.job')->deleteJob($jobId);
+        $jobService->deleteJob($jobId);
 
         return new JsonResponse(['jobId' => $jobId]);
     }
@@ -155,9 +154,9 @@ class InfoController extends Controller
     /**
      * @Route("/job/retry/{id}", methods="POST", name="pumukit_encoder_retry_job")
      */
-    public function retryJobAction(Job $job, Request $request)
+    public function retryJobAction(Job $job, Request $request, JobService $jobService)
     {
-        $flashMessage = $this->get('pumukitencoder.job')->retryJob($job);
+        $flashMessage = $jobService->retryJob($job);
 
         return new JsonResponse([
             'jobId' => $job->getId(),
@@ -168,15 +167,13 @@ class InfoController extends Controller
     /**
      * @Route("/mm/{id}", methods="GET", name="pumukit_encoder_mm")
      */
-    public function multimediaObjectAction(MultimediaObject $multimediaObject, Request $request)
+    public function multimediaObjectAction(MultimediaObject $multimediaObject): RedirectResponse
     {
         return $this->redirect($this->generateUrl('pumukitnewadmin_mms_shortener', ['id' => $multimediaObject->getId()]));
     }
 
-    private function createPager($objects, $page, $limit = 5)
+    private function createPager(PaginationService $paginationService, $objects, $page, $limit = 5)
     {
-        $paginationService = $this->get('pumukit_core.pagination_service');
-
         return $paginationService->createDoctrineODMMongoDBAdapter($objects, $page, $limit);
     }
 }
