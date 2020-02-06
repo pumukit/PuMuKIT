@@ -11,6 +11,7 @@
         "ext-json": "*",
         "ext-mongodb": "*",
         "ext-sysvsem": "*",
+        "ext-curl": "*",
         "alcaeus/mongo-php-adapter": "@stable",
         "doctrine/mongodb-odm": "~1",
         "doctrine/mongodb-odm-bundle": "~3",

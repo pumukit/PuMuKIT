@@ -4,6 +4,10 @@ services:
     autoconfigure: true
     public:        true
 
+  Pumukit\WebTVBundle\Controller\:
+    resource: '../../src/Pumukit/WebTVBundle/Controller/'
+    tags: ['controller.service_arguments']
+
   Pumukit\WebTVBundle\Services\BreadcrumbsService:
     class: Pumukit\WebTVBundle\Services\BreadcrumbsService
     arguments:
