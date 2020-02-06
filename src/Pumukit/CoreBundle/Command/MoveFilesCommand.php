@@ -31,11 +31,11 @@ class MoveFilesCommand extends ContainerAwareCommand
             ->addOption('limit',null,InputOption::VALUE_OPTIONAL,'Limit of files to move')
             ->setHelp(
                 <<<'EOT'
-                
+
                 Use the command like this:
-                
+
                 php app/console pumukit:move:files --origin=/mnt/nas/almacen/masters --destiny=/mnt/newnas/newalmacen/masters --limit=1
-                
+
                 to copy master files of multimedia objects to destiny path ( keeping personal path of file )
 EOT
             )
@@ -47,7 +47,7 @@ EOT
         $this->dm = $this->getContainer()->get('doctrine_mongodb.odm.document_manager');
         $this->origin = $input->getOption('origin');
         $this->destiny = $input->getOption('destiny');
-        $this->limit = abs($input->getOption('limit'));
+        $this->limit = abs((int)$input->getOption('limit'));
 
         $this->logger = $this->getContainer()->get('logger');
 
