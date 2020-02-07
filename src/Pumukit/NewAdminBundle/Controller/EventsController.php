@@ -37,6 +37,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class EventsController extends Controller implements NewAdminControllerInterface
 {
+    protected static $regex = '/^[0-9a-z]{24}$/';
+
     /** @var DocumentManager */
     protected $documentManager;
     /** @var TranslatorInterface */
@@ -47,11 +49,9 @@ class EventsController extends Controller implements NewAdminControllerInterface
     protected $multimediaObjectPicService;
     /** @var SeriesEventDispatcherService */
     protected $seriesDispatcher;
-    private $regex = '/^[0-9a-z]{24}$/';
 
-    public function __construct(string $regex, DocumentManager $documentManager, TranslatorInterface $translatorService, FactoryService $factoryService, MultimediaObjectPicService $multimediaObjectPicService, SeriesEventDispatcherService $seriesDispatcher)
+    public function __construct(DocumentManager $documentManager, TranslatorInterface $translatorService, FactoryService $factoryService, MultimediaObjectPicService $multimediaObjectPicService, SeriesEventDispatcherService $seriesDispatcher)
     {
-        $this->regex = $regex;
         $this->documentManager = $documentManager;
         $this->translatorService = $translatorService;
         $this->factoryService = $factoryService;
@@ -195,7 +195,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
             $data = $request->query->get('criteria');
             $session->set('admin/live/event/dataForm', $data);
             if (!empty($data['name'])) {
-                if (preg_match($this->regex, $data['name'])) {
+                if (preg_match($this::regex, $data['name'])) {
                     $criteria['_id'] = new ObjectId($data['name']);
                 } else {
                     $criteria['embeddedEvent.name.'.$request->getLocale()] = new Regex($data['name'], 'i');
