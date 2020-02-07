@@ -196,7 +196,7 @@ class PlaylistController extends CollectionController
         }
         $criteria = $this->get('session')->get('admin/playlist/criteria', []);
 
-        return $this->get('pumukitnewadmin.series_search')->processCriteria($criteria, true, $request->getLocale());
+        return $this->seriesSearchService->processCriteria($criteria, true, $request->getLocale());
     }
 
     /**

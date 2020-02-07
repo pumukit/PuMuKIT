@@ -30,8 +30,7 @@ class LegacyEventPicController extends AbstractController implements NewAdminCon
     public function updateAction(Event $event, Request $request)
     {
         if ($url = $request->get('url')) {
-            $picService = $this->get('pumukitlive.legacyeventpic');
-            $picService->addPicUrl($event, $url);
+            $this->legacyEventPicService->addPicUrl($event, $url);
         }
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_event_list'));
@@ -47,8 +46,7 @@ class LegacyEventPicController extends AbstractController implements NewAdminCon
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
             }
             if ($request->files->has('file')) {
-                $picService = $this->get('pumukitlive.legacyeventpic');
-                $picService->addPicFile($event, $request->files->get('file'));
+                $this->legacyEventPicService->addPicFile($event, $request->files->get('file'));
             }
         } catch (\Exception $e) {
             return [
@@ -70,7 +68,7 @@ class LegacyEventPicController extends AbstractController implements NewAdminCon
      */
     public function deleteAction(Event $event, Request $request)
     {
-        $this->get('pumukitlive.legacyeventpic')->removePicFromEvent($event);
+        $this->legacyEventPicService->removePicFromEvent($event);
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_event_list'));
     }
