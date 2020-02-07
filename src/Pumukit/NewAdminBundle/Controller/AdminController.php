@@ -4,6 +4,7 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\Regex;
+use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\GroupService;
@@ -21,9 +22,9 @@ class AdminController extends ResourceController implements NewAdminControllerIn
     /** @var UserService */
     protected $userService;
 
-    public function __construct(DocumentManager $documentManager, FactoryService $factoryService, GroupService $groupService, UserService $userService)
+    public function __construct(DocumentManager $documentManager, PaginationService $paginationService, FactoryService $factoryService, GroupService $groupService, UserService $userService)
     {
-        parent::__construct($documentManager);
+        parent::__construct($documentManager, $paginationService);
         $this->factoryService = $factoryService;
         $this->groupService = $groupService;
         $this->userService = $userService;
