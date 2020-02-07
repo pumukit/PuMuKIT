@@ -15,7 +15,7 @@ use Pumukit\SchemaBundle\Security\Permission;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,7 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
-class UNESCOController extends Controller implements NewAdminControllerInterface
+class UNESCOController extends AbstractController implements NewAdminControllerInterface
 {
     public static $baseTags = [
         'Health Sciences' => [

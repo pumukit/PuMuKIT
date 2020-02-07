@@ -15,9 +15,9 @@ class ResourceController extends AbstractController
     public static $repoName = Series::class;
 
     /** @var DocumentManager */
-    private $documentManager;
+    protected $documentManager;
     /** @var PaginationService */
-    private $paginationService;
+    protected $paginationService;
 
     public function __construct(DocumentManager $documentManager, PaginationService $paginationService)
     {

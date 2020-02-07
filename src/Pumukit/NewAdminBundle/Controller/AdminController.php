@@ -2,13 +2,34 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\Regex;
+use Pumukit\CoreBundle\Services\PaginationService;
+use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\SchemaBundle\Services\GroupService;
+use Pumukit\SchemaBundle\Services\UserService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdminController extends ResourceController implements NewAdminControllerInterface
 {
+    /** @var FactoryService */
+    protected $factoryService;
+    /** @var GroupService */
+    protected $groupService;
+    /** @var UserService */
+    protected $userService;
+
+    public function __construct(DocumentManager $documentManager, PaginationService $paginationService, FactoryService $factoryService, GroupService $groupService, UserService $userService)
+    {
+        parent::__construct($documentManager, $paginationService);
+        $this->factoryService = $factoryService;
+        $this->groupService = $groupService;
+        $this->userService = $userService;
+    }
+
     /**
      * Overwrite to update the criteria with Regex, and save it in the session.
      */
@@ -35,7 +56,6 @@ class AdminController extends ResourceController implements NewAdminControllerIn
      */
     public function createAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
         $resourceName = $this->getResourceName();
 
         $resource = $this->createNew();
@@ -44,8 +64,8 @@ class AdminController extends ResourceController implements NewAdminControllerIn
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $dm->persist($resource);
-                $dm->flush();
+                $this->documentManager->persist($resource);
+                $this->documentManager->flush();
             } catch (\Exception $e) {
                 return new JsonResponse(['status' => $e->getMessage()], 409);
             }
@@ -75,8 +95,6 @@ class AdminController extends ResourceController implements NewAdminControllerIn
      */
     public function updateAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
         $resourceName = $this->getResourceName();
 
         $resource = $this->findOr404($request);
@@ -85,8 +103,8 @@ class AdminController extends ResourceController implements NewAdminControllerIn
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && in_array($request->getMethod(), ['POST', 'PUT', 'PATCH'])) {
             try {
-                $dm->persist($resource);
-                $dm->flush();
+                $this->documentManager->persist($resource);
+                $this->documentManager->flush();
             } catch (\Exception $e) {
                 return new JsonResponse(['status' => $e->getMessage()], 409);
             }
@@ -143,7 +161,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
         $resourceId = $resource->getId();
         $resourceName = $this->getResourceName();
 
-        $this->get('pumukitschema.factory')->deleteResource($resource);
+        $this->factoryService->deleteResource($resource);
         if ($resourceId === $this->get('session')->get('admin/'.$resourceName.'/id')) {
             $this->get('session')->remove('admin/'.$resourceName.'/id');
         }
@@ -175,12 +193,10 @@ class AdminController extends ResourceController implements NewAdminControllerIn
      */
     public function delete($resource)
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
         $this->get('session')->remove('admin/'.$this->getResourceName().'/id');
 
-        $factory = $this->get('pumukitschema.factory');
-        $factory->deleteResource($resource);
-        $dm->flush();
+        $this->factoryService->deleteResource($resource);
+        $this->documentManager->flush();
     }
 
     public function batchDeleteAction(Request $request)
@@ -193,12 +209,11 @@ class AdminController extends ResourceController implements NewAdminControllerIn
 
         $resourceName = $this->getResourceName();
 
-        $factory = $this->get('pumukitschema.factory');
         foreach ($ids as $id) {
             $resource = $this->find($id);
 
             try {
-                $factory->deleteResource($resource);
+                $this->factoryService->deleteResource($resource);
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
@@ -288,9 +303,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
         $resourceName = $this->getResourceName();
         $formType = 'Pumukit\\NewAdminBundle\\Form\\Type\\'.ucfirst($resourceName).'Type';
 
-        $translator = $this->get('translator');
-
-        return $this->createForm($formType, $resource, ['translator' => $translator, 'locale' => $locale]);
+        return $this->createForm($formType, $resource, ['translator' => $this->translatorService, 'locale' => $locale]);
     }
 
     /**
@@ -301,11 +314,9 @@ class AdminController extends ResourceController implements NewAdminControllerIn
      */
     public function getAllGroups()
     {
-        $groupService = $this->get('pumukitschema.group');
-        $userService = $this->get('pumukitschema.user');
         $loggedInUser = $this->getUser();
-        if ($loggedInUser->isSuperAdmin() || $userService->hasGlobalScope($loggedInUser)) {
-            $allGroups = $groupService->findAll();
+        if ($loggedInUser->isSuperAdmin() || $this->userService->hasGlobalScope($loggedInUser)) {
+            $allGroups = $this->groupService->findAll();
         } else {
             $allGroups = $loggedInUser->getGroups();
         }

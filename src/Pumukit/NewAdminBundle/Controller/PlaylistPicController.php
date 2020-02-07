@@ -5,13 +5,13 @@ namespace Pumukit\NewAdminBundle\Controller;
 use Pumukit\SchemaBundle\Document\Series;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_EDIT_PLAYLIST')")
  */
-class PlaylistPicController extends Controller implements NewAdminControllerInterface
+class PlaylistPicController extends AbstractController implements NewAdminControllerInterface
 {
     /**
      * @Template("PumukitNewAdminBundle:Pic:create.html.twig")

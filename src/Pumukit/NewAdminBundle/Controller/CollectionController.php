@@ -2,14 +2,35 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Security\Permission;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\SchemaBundle\Services\PersonService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
-class CollectionController extends Controller implements NewAdminControllerInterface
+class CollectionController extends AbstractController implements NewAdminControllerInterface
 {
+    /** @var DocumentManager */
+    protected $documentManager;
+    /** @var FactoryService */
+    protected $factoryService;
+    /** @var PaginationService */
+    protected $paginationService;
+    /** @var PersonService */
+    protected $personService;
+
+    public function __construct(DocumentManager $documentManager, FactoryService $factoryService, PaginationService $paginationService, PersonService $personService)
+    {
+        $this->documentManager = $documentManager;
+        $this->factoryService = $factoryService;
+        $this->paginationService = $paginationService;
+        $this->personService = $personService;
+    }
+
     /**
      * Returns true if the user has enough permissions to delete the $resource passed.
      *
@@ -21,13 +42,12 @@ class CollectionController extends Controller implements NewAdminControllerInter
     {
         if (!$this->isGranted(Permission::MODIFY_OWNER)) {
             $loggedInUser = $this->getUser();
-            $personService = $this->get('pumukitschema.person');
-            $person = $personService->getPersonFromLoggedInUser($loggedInUser);
-            $role = $personService->getPersonalScopeRole();
+            $person = $this->personService->getPersonFromLoggedInUser($loggedInUser);
+            $role = $this->personService->getPersonalScopeRole();
             if (!$person) {
                 return false;
             }
-            $mmobjRepo = $this->get('doctrine_mongodb.odm.document_manager')
+            $mmobjRepo = $this->documentManager
                 ->getRepository(MultimediaObject::class)
             ;
             $allMmobjs = $mmobjRepo->createStandardQueryBuilder()->field('series')->equals($series->getId())->getQuery()->execute();
@@ -49,8 +69,7 @@ class CollectionController extends Controller implements NewAdminControllerInter
      */
     protected function batchDeleteCollection(array $ids)
     {
-        $factoryService = $this->get('pumukitschema.factory');
-        $seriesRepo = $this->get('doctrine_mongodb.odm.document_manager')
+        $seriesRepo = $this->documentManager
             ->getRepository(Series::class)
         ;
         foreach ($ids as $id) {
@@ -61,7 +80,7 @@ class CollectionController extends Controller implements NewAdminControllerInter
             }
 
             try {
-                $factoryService->deleteSeries($collection);
+                $this->factoryService->deleteSeries($collection);
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
@@ -81,8 +100,6 @@ class CollectionController extends Controller implements NewAdminControllerInter
         $page = $session->get($session_namespace.'/page', 1);
         $limit = $session->get($session_namespace.'/paginate', 10);
 
-        $paginationService = $this->get('pumukit_core.pagination_service');
-
-        return $paginationService->createDoctrineODMMongoDBAdapter($queryBuilder, $page, $limit);
+        return $this->paginationService->createDoctrineODMMongoDBAdapter($queryBuilder, $page, $limit);
     }
 }
