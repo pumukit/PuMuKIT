@@ -30,9 +30,7 @@ class RoleController extends SortableAdminController implements NewAdminControll
      */
     public function updateAction(Request $request)
     {
-
         $role = $this->personService->findRoleById($request->get('id'));
-
 
         $locale = $request->getLocale();
         $form = $this->createForm(RoleType::class, $role, ['translator' => $this->translationService, 'locale' => $locale]);
@@ -107,7 +105,7 @@ class RoleController extends SortableAdminController implements NewAdminControll
             return new Response("Can not delete role '".$resource->getName()."', There are Multimedia objects with this role. ", 409);
         }
 
-        $this->get('pumukitschema.factory')->deleteResource($resource);
+        $this->factoryService->deleteResource($resource);
         if ($resourceId === $this->get('session')->get('admin/'.$resourceName.'/id')) {
             $this->get('session')->remove('admin/'.$resourceName.'/id');
         }

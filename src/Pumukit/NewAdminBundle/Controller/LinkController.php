@@ -22,7 +22,6 @@ class LinkController extends AbstractController implements NewAdminControllerInt
      */
     public function createAction(MultimediaObject $multimediaObject, Request $request)
     {
-
         $locale = $request->getLocale();
         $link = new Link();
         $form = $this->createForm(LinkType::class, $link, ['translator' => $this->translationService, 'locale' => $locale]);
@@ -57,7 +56,6 @@ class LinkController extends AbstractController implements NewAdminControllerInt
      */
     public function updateAction(MultimediaObject $multimediaObject, Request $request)
     {
-
         $locale = $request->getLocale();
         $link = $multimediaObject->getLinkById($request->get('id'));
         $form = $this->createForm(LinkType::class, $link, ['translator' => $this->translationService, 'locale' => $locale]);

@@ -73,7 +73,6 @@ class TagController extends AbstractController implements NewAdminControllerInte
      */
     public function updateAction(Tag $tag, Request $request)
     {
-
         $locale = $request->getLocale();
         $form = $this->createForm(TagType::class, $tag, ['translator' => $this->translationService, 'locale' => $locale]);
 
@@ -101,7 +100,6 @@ class TagController extends AbstractController implements NewAdminControllerInte
 
         $tag = new Tag();
         $tag->setParent($parent);
-
 
         $locale = $request->getLocale();
 

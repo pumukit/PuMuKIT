@@ -100,13 +100,10 @@ class SeriesController extends AdminController implements NewAdminControllerInte
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
 
-
         $series = $dm->getRepository(Series::class)->findOneBy(['_id' => new ObjectId($id)]);
         if (!$series) {
             throw new \Exception($this->translationService->trans('No series found with ID').' '.$id);
         }
-
-
 
         try {
             $this->factoryService->cloneSeries($series);
@@ -140,7 +137,6 @@ class SeriesController extends AdminController implements NewAdminControllerInte
         $resource = $this->findOr404($request);
         $this->get('session')->set('admin/series/id', $request->get('id'));
 
-
         $locale = $request->getLocale();
         $disablePudenew = !$this->container->getParameter('show_latest_with_pudenew');
         $form = $this->createForm(SeriesType::class, $resource, ['translator' => $this->translationService, 'locale' => $locale, 'disable_PUDENEW' => $disablePudenew]);
@@ -165,8 +161,6 @@ class SeriesController extends AdminController implements NewAdminControllerInte
 
         // EDIT MULTIMEDIA OBJECT TEMPLATE CONTROLLER SOURCE CODE
 
-
-
         $personalScopeRoleCode = $this->personService->getPersonalScopeRoleCode();
 
         $allGroups = $this->getAllGroups();
@@ -184,7 +178,6 @@ class SeriesController extends AdminController implements NewAdminControllerInte
 
         $parentTags = $this->factoryService->getParentTags();
         $mmtemplate = $this->factoryService->getMultimediaObjectPrototype($resource);
-
 
         $locale = $request->getLocale();
 
@@ -225,8 +218,6 @@ class SeriesController extends AdminController implements NewAdminControllerInte
      */
     public function deleteAction(Request $request)
     {
-
-
         $series = $this->findOr404($request);
         if (!$this->isUserAllowedToDelete($series)) {
             return new Response('You don\'t have enough permissions to delete this series. Contact your administrator.', Response::HTTP_FORBIDDEN);
@@ -278,8 +269,6 @@ class SeriesController extends AdminController implements NewAdminControllerInte
      */
     public function batchDeleteAction(Request $request)
     {
-
-
         $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {
@@ -374,7 +363,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $multimediaObjects = $dm->getRepository(MultimediaObject::class)->findWithoutPrototype($series);
 
-        $pubChannels = $this->get('pumukitschema.factory')->getTagsByCod('PUBCHANNELS', true);
+        $pubChannels = $this->factoryService->getTagsByCod('PUBCHANNELS', true);
 
         foreach ($pubChannels as $key => $pubTag) {
             if ($pubTag->getProperty('hide_in_tag_group')) {
@@ -506,7 +495,6 @@ class SeriesController extends AdminController implements NewAdminControllerInte
             $resources = $queryBuilder->getQuery()->execute();
 
             $resources = $this->reorderResources($resources);
-
 
             $resources = $this->paginationService->createArrayAdapter($resources);
         } else {
@@ -717,7 +705,6 @@ class SeriesController extends AdminController implements NewAdminControllerInte
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $repo = $dm->getRepository(MultimediaObject::class);
         $repoTags = $dm->getRepository(Tag::class);
-
 
         $executeFlush = false;
         foreach ($values as $id => $value) {

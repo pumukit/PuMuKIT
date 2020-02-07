@@ -162,8 +162,6 @@ class LiveController extends AdminController
 
     public function batchDeleteAction(Request $request)
     {
-
-
         $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {

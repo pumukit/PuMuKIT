@@ -203,7 +203,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
             }
         }
 
-
         $pager = $this->paginationService->createDoctrineODMMongoDBAdapter($multimediaObjects, $page, $maxPerPage);
 
         if ($pager->getNbPages() < $page) {
@@ -246,7 +245,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
      */
     public function resetSessionAction($all = true)
     {
-
         $session = $this->get('session');
 
         $this->tagCatalogueService->resetSessionCriteria($session, $all);
@@ -263,7 +261,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
      */
     public function addCriteriaSessionAction(Request $request)
     {
-
         $session = $this->get('session');
 
         $this->tagCatalogueService->addSessionCriteria($request, $session);
@@ -283,9 +280,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
      */
     public function editUNESCOAction(Request $request, MultimediaObject $multimediaObject)
     {
-
-
-
         $personalScopeRoleCode = $this->personService->getPersonalScopeRoleCode();
 
         try {
@@ -300,7 +294,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         }
 
         $parentTags = $this->factoryService->getParentTags();
-
 
         $locale = $request->getLocale();
         $formMeta = $this->createForm(MultimediaObjectMetaType::class, $multimediaObject, ['translator' => $this->translationService, 'locale' => $locale]);
@@ -472,7 +465,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $dm = $this->container->get('doctrine_mongodb')->getManager();
         $tagService = $this->container->get('pumukitschema.tag');
 
-
         $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
 
         $tag = $dm->getRepository(Tag::class)->findOneByCod($tagCod);
@@ -575,8 +567,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $session->remove('admin/unesco/paginate');
         $session->remove('admin/unesco/id');
 
-
-
         $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
 
         try {
@@ -598,8 +588,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
 
-
-
         $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
 
         try {
@@ -619,7 +607,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     public function customFieldsAction(Request $request)
     {
         $session = $this->get('session');
-
 
         if (!$session->has('admin/unesco/selected_fields')) {
             $defaultSelectedFields = $tagCatalogueService->getDefaultListFields();
@@ -881,8 +868,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
      */
     private function getConfiguredTag()
     {
-
-
         return $tagCatalogueService->getConfiguredTag();
     }
 }

@@ -20,7 +20,6 @@ class PlaylistMultimediaObjectController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-
         $session = $this->get('session');
         $sessionId = $session->get('admin/playlist/id', null);
         $series = $this->factoryService->findSeriesById($request->query->get('id'), $sessionId);
@@ -99,7 +98,6 @@ class PlaylistMultimediaObjectController extends AbstractController
      */
     public function listAction(Request $request)
     {
-
         $sessionId = $this->get('session')->get('admin/playlist/id', null);
         $series = $this->factoryService->findSeriesById($request->query->get('id'), $sessionId);
         if (!$series) {
@@ -158,7 +156,6 @@ class PlaylistMultimediaObjectController extends AbstractController
         //Get all multimedia objects. The filter will do the rest.
         $mmobjs = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
 
-
         $pager = $this->paginationService->createDoctrineODMMongoDBAdapter($mmobjs, $page, $limit);
 
         return [
@@ -183,7 +180,6 @@ class PlaylistMultimediaObjectController extends AbstractController
         $queryBuilder->setQueryArray($criteria);
         $queryBuilder->limit($limit);
         $queryBuilder->sortMeta('score', 'textScore');
-
 
         $pager = $this->paginationService->createDoctrineODMMongoDBAdapter($queryBuilder, 0, $limit);
 
@@ -411,8 +407,6 @@ class PlaylistMultimediaObjectController extends AbstractController
 
         $page = $session->get('admin/playlistmms/page', 1);
         $limit = $session->get('admin/playlistmms/paginate', 10);
-
-
 
         return $this->paginationService->createDoctrineCollectionAdapter($mmsList, $page, $limit);
     }
