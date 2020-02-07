@@ -142,10 +142,10 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
     public function deletePlaceAction(Request $request, Tag $tag)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
-        $tagService = $this->get('pumukitschema.tag');
+
 
         try {
-            $tagService->deleteTag($tag);
+            $this->tagService->deleteTag($tag);
             $dm->flush();
 
             return $this->redirectToRoute('pumukitnewadmin_places_index');
@@ -170,7 +170,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->get('pumukitschema.tag')->updateTag($tag);
+                $this->tagService->updateTag($tag);
             } catch (\Exception $e) {
                 return new JsonResponse(['status' => $e->getMessage()], JsonResponse::HTTP_CONFLICT);
             }

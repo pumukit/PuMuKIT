@@ -717,7 +717,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $repo = $dm->getRepository(MultimediaObject::class);
         $repoTags = $dm->getRepository(Tag::class);
-        $tagService = $this->get('pumukitschema.tag');
+
 
         $executeFlush = false;
         foreach ($values as $id => $value) {
@@ -729,10 +729,10 @@ class SeriesController extends AdminController implements NewAdminControllerInte
                         $tag = $repoTags->find($channelId);
                         if ($tag && !$this->isGranted(Permission::getRoleTagDisableForPubChannel($tag->getCod()))) {
                             if ($mustContainsTag && (!($mm->containsTag($tag)))) {
-                                $tagService->addTag($mm, $tag, false);
+                                $this->tagService->addTag($mm, $tag, false);
                                 $executeFlush = true;
                             } elseif ((!($mustContainsTag)) && $mm->containsTag($tag)) {
-                                $tagService->removeTag($mm, $tag, false);
+                                $this->tagService->removeTag($mm, $tag, false);
                                 $executeFlush = true;
                             }
                         }

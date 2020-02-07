@@ -536,10 +536,10 @@ class MultimediaObjectController extends SortableAdminController
     {
         $resource = $this->findOr404($request);
 
-        $tagService = $this->get('pumukitschema.tag');
+
 
         try {
-            $addedTags = $tagService->addTagToMultimediaObject($resource, $request->get('tagId'));
+            $addedTags = $this->tagService->addTagToMultimediaObject($resource, $request->get('tagId'));
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
@@ -566,10 +566,10 @@ class MultimediaObjectController extends SortableAdminController
     {
         $resource = $this->findOr404($request);
 
-        $tagService = $this->get('pumukitschema.tag');
+
 
         try {
-            $deletedTags = $tagService->removeTagFromMultimediaObject($resource, $request->get('tagId'));
+            $deletedTags = $this->tagService->removeTagFromMultimediaObject($resource, $request->get('tagId'));
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
@@ -752,7 +752,7 @@ class MultimediaObjectController extends SortableAdminController
             $ids = json_decode($ids, true);
         }
 
-        $tagService = $this->get('pumukitschema.tag');
+
         $tagNew = $this->get('doctrine_mongodb.odm.document_manager')
             ->getRepository(Tag::class)->findOneByCod('PUDENEW');
         foreach ($ids as $id) {
@@ -763,9 +763,9 @@ class MultimediaObjectController extends SortableAdminController
             }
 
             if ($resource->containsTagWithCod('PUDENEW')) {
-                $tagService->removeTagFromMultimediaObject($resource, $tagNew->getId());
+                $this->tagService->removeTagFromMultimediaObject($resource, $tagNew->getId());
             } else {
-                $tagService->addTagToMultimediaObject($resource, $tagNew->getId());
+                $this->tagService->addTagToMultimediaObject($resource, $tagNew->getId());
             }
         }
 
@@ -919,7 +919,7 @@ class MultimediaObjectController extends SortableAdminController
         if ($all) {
             $targetTags = $multimediaObject->getTags()->toArray();
 
-            $this->get('pumukitschema.tag')->resetCategoriesForCollections($mms, $targetTags);
+            $this->tagService->resetCategoriesForCollections($mms, $targetTags);
         } else {
 
             $parentTags = $this->factoryService->getParentTags();
@@ -931,7 +931,7 @@ class MultimediaObjectController extends SortableAdminController
                 }
             }
 
-            $this->get('pumukitschema.tag')->syncTagsForCollections(
+            $this->tagService->syncTagsForCollections(
                 $mms,
                 $multimediaObject->getTags()->toArray(),
                 $parentTagsToSync

@@ -53,7 +53,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
     public function deleteAction(Tag $tag, Request $request)
     {
         try {
-            $this->get('pumukitschema.tag')->deleteTag($tag);
+            $this->tagService->deleteTag($tag);
         } catch (\Exception $e) {
             $msg = sprintf(
                 'Tag with children (%d) and multimedia objects (%d)',
@@ -80,7 +80,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && ($request->isMethod('PUT') || $request->isMethod('POST'))) {
             try {
-                $this->get('pumukitschema.tag')->updateTag($tag);
+                $this->tagService->updateTag($tag);
             } catch (\Exception $e) {
                 return new JsonResponse(['status' => $e->getMessage()], JsonResponse::HTTP_CONFLICT);
             }
@@ -162,7 +162,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
         $tagsWithChildren = [];
         foreach ($ids as $id) {
             $tag = $repo->find($id);
-            if ($this->get('pumukitschema.tag')->canDeleteTag($tag)) {
+            if ($this->tagService->canDeleteTag($tag)) {
                 $tags[] = $tag;
             } else {
                 $tagsWithChildren[] = $tag;

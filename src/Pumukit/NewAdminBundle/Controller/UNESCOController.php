@@ -480,7 +480,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $removedTags = [];
 
         if ($tag->isDescendantOf($tagConfigured)) {
-            $removedTags = $tagService->removeTagFromMultimediaObject($multimediaObject, $tag->getId());
+            $removedTags = $this->tagService->removeTagFromMultimediaObject($multimediaObject, $tag->getId());
         }
 
         if (empty($removedTags)) {
@@ -509,7 +509,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
             return new JsonResponse(['error' => JsonResponse::HTTP_BAD_REQUEST]);
         }
 
-        $tagService->addTagToMultimediaObject($multimediaObject, $tag->getId());
+        $this->tagService->addTagToMultimediaObject($multimediaObject, $tag->getId());
 
         return new JsonResponse(['success']);
     }
@@ -546,9 +546,9 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
             foreach ($data as $multimediaObjectId) {
                 $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
                 if ($multimediaObject->containsTag($pudeNew)) {
-                    $tagService->removeTagFromMultimediaObject($multimediaObject, $pudeNew->getId());
+                    $this->tagService->removeTagFromMultimediaObject($multimediaObject, $pudeNew->getId());
                 } else {
-                    $tagService->addTagToMultimediaObject($multimediaObject, $pudeNew->getId());
+                    $this->tagService->addTagToMultimediaObject($multimediaObject, $pudeNew->getId());
                 }
             }
 
