@@ -1028,7 +1028,6 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function updateBroadcastAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $specialTranslationService = $this->get('pumukitschema.special_translation');
         if ($multimediaObject->isLive()) {
             $broadcasts = $embeddedBroadcastService->getAllTypes(true);
         } else {
@@ -1055,7 +1054,7 @@ class MultimediaObjectController extends SortableAdminController
             $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
             $jsonResponse = [
                 'description' => (string) $embeddedBroadcast,
-                'descriptioni18n' => $specialTranslationService->getI18nEmbeddedBroadcast($embeddedBroadcast),
+                'descriptioni18n' => $this->specialTranslationService->getI18nEmbeddedBroadcast($embeddedBroadcast),
                 'template' => $template,
             ];
 
