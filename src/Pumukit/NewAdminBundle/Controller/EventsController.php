@@ -24,6 +24,7 @@ use Pumukit\SchemaBundle\Services\SeriesEventDispatcherService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -35,7 +36,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  * @Security("is_granted('ROLE_ACCESS_LIVE_EVENTS')")
  * @Route("liveevent/")
  */
-class EventsController extends Controller implements NewAdminControllerInterface
+class EventsController extends AbstractController implements NewAdminControllerInterface
 {
     protected static $regex = '/^[0-9a-z]{24}$/';
 

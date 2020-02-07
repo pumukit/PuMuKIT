@@ -7,6 +7,7 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Services\StatsService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +17,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 /**
  * @Security("is_granted('ROLE_ACCESS_DASHBOARD')")
  */
-class DashboardController extends Controller implements NewAdminControllerInterface
+class DashboardController extends AbstractController implements NewAdminControllerInterface
 {
     /** @var StatsService */
     protected $statsService;
