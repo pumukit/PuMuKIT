@@ -9,7 +9,7 @@ use Pumukit\SchemaBundle\Document\Tag;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Security("is_granted('ROLE_ACCESS_TAGS')")
  * @Route("/places")
  */
-class PlaceController extends Controller implements NewAdminControllerInterface
+class PlaceController extends AbstractController implements NewAdminControllerInterface
 {
     /**
      * @return array

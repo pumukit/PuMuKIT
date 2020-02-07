@@ -7,14 +7,14 @@ use Pumukit\SchemaBundle\Document\Tag;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_TAGS')")
  */
-class TagController extends Controller implements NewAdminControllerInterface
+class TagController extends AbstractController implements NewAdminControllerInterface
 {
     /**
      * @Template("PumukitNewAdminBundle:Tag:index.html.twig")
