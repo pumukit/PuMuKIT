@@ -349,7 +349,7 @@ class PermissionProfileController extends AdminController
     {
         $permissions = $this->permissionService->getAllPermissions();
 
-        if (!$this->hasParameter('pumukit.use_series_channels') || !$this->getParameter('pumukit.use_series_channels')) {
+        if (!$this->container->hasParameter('pumukit.use_series_channels') || !$this->getParameter('pumukit.use_series_channels')) {
             unset($permissions[Permission::ACCESS_SERIES_TYPES]);
         }
 

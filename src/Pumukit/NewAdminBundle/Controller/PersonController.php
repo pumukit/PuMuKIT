@@ -201,7 +201,7 @@ class PersonController extends AdminController
         $resources = $this->getResources($request, $criteria, $selectedPersonId);
 
         $template = $multimediaObject->isPrototype() ? '_template' : '';
-        $ldapEnabled = $this->container->has('pumukit_ldap.ldap');
+        $ldapEnabled = $this->container->hasParameter('pumukit_ldap.ldap');
 
         $owner = $request->get('owner', false);
 
