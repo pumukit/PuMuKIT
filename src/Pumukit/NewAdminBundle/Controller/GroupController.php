@@ -39,10 +39,10 @@ class GroupController extends AdminController implements NewAdminControllerInter
         $groups = $this->getResources($request, $criteria);
 
         $origins = $this->documentManager
-                 ->createQueryBuilder(Group::class)
-                 ->distinct('origin')
-                 ->getQuery()
-                 ->execute()
+            ->createQueryBuilder(Group::class)
+            ->distinct('origin')
+            ->getQuery()
+            ->execute()
                  ;
 
         return ['groups' => $groups, 'origins' => $origins->toArray()];
