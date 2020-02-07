@@ -103,8 +103,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     {
         $configuredTag = $this->getConfiguredTag();
 
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
-
         if (null !== $this->container->getParameter('pumukit_new_admin.base_catalogue_tag')) {
             $menuTags = [];
             foreach ($configuredTag->getChildren() as $child) {
@@ -126,16 +124,16 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
             foreach (static::$baseTags as $key => $tag) {
                 foreach ($tag as $cod) {
-                    $menuTags[$this->translationService->trans($key)][] = $dm->getRepository(Tag::class)->findOneBy(
+                    $menuTags[$this->translationService->trans($key)][] = $this->documentManager->getRepository(Tag::class)->findOneBy(
                         ['cod' => $cod]
                     );
                 }
             }
         }
 
-        $countMultimediaObjects = $dm->getRepository(MultimediaObject::class)->count();
+        $countMultimediaObjects = $this->documentManager->getRepository(MultimediaObject::class)->count();
 
-        $countMultimediaObjectsWithoutTag = $dm->getRepository(MultimediaObject::class)->findWithoutTag(
+        $countMultimediaObjectsWithoutTag = $this->documentManager->getRepository(MultimediaObject::class)->findWithoutTag(
             $configuredTag
         );
 
@@ -179,8 +177,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         } elseif ($tag) {
             $multimediaObjects = $this->searchMultimediaObjects($session->get('UNESCO/criteria'), $tag);
         } else {
-            $dm = $this->container->get('doctrine_mongodb')->getManager();
-            $multimediaObjects = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
+            $multimediaObjects = $this->documentManager->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
         }
 
         if ($session->has('admin/unesco/element_sort')) {
@@ -309,8 +306,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
         //If the 'pudenew' tag is not being used, set the display to 'false'.
         if (!$this->container->getParameter('show_latest_with_pudenew')) {
-            $dm = $this->container->get('doctrine_mongodb')->getManager();
-            $dm->getRepository(Tag::class)->findOneByCod('PUDENEW')->setDisplay(false);
+            $this->documentManager->getRepository(Tag::class)->findOneByCod('PUDENEW')->setDisplay(false);
         }
         $pubChannelsTags = $this->factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $this->factoryService->getTagsByCod('PUBDECISIONS', true);
@@ -362,12 +358,10 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
      */
     public function showAction($id = null)
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
-
         $activeEditor = $this->checkHasEditor();
 
         if (isset($id)) {
-            $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(
+            $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(
                 ['_id' => new ObjectId($id)]
             );
         } else {
@@ -391,15 +385,13 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
      */
     public function advancedSearchFormAction(Request $request)
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
-
         $translator = $this->get('translator');
         $locale = $request->getLocale();
 
-        $roles = $dm->getRepository(Role::class)->findAll();
+        $roles = $this->documentManager->getRepository(Role::class)->findAll();
 
-        $pudeRadio = $dm->getRepository(Tag::class)->findOneByCod('PUDERADIO');
-        $pudeTV = $dm->getRepository(Tag::class)->findOneByCod('PUDETV');
+        $pudeRadio = $this->documentManager->getRepository(Tag::class)->findOneByCod('PUDERADIO');
+        $pudeTV = $this->documentManager->getRepository(Tag::class)->findOneByCod('PUDETV');
 
         $statusPub = [
             MultimediaObject::STATUS_PUBLISHED => $this->translationService->trans('Published'),
@@ -420,9 +412,9 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
             MultimediaObject::TYPE_EXTERNAL => $this->translationService->trans('External player'),
         ];
 
-        $genreParent = $dm->getRepository(Tag::class)->findOneByCod('GENRE');
+        $genreParent = $this->documentManager->getRepository(Tag::class)->findOneByCod('GENRE');
         if ($genreParent) {
-            $genres = $dm->getRepository(Tag::class)->findBy(['parent.$id' => new ObjectId($genreParent->getId())]);
+            $genres = $this->documentManager->getRepository(Tag::class)->findBy(['parent.$id' => new ObjectId($genreParent->getId())]);
             $aGenre = [];
             foreach ($genres as $genre) {
                 $aGenre[$genre->getCod()] = $genre->getTitle($locale);
@@ -462,12 +454,11 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
      */
     public function deleteTagDnDAction($tagCod, $multimediaObjectId)
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
         $tagService = $this->container->get('pumukitschema.tag');
 
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
+        $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
 
-        $tag = $dm->getRepository(Tag::class)->findOneByCod($tagCod);
+        $tag = $this->documentManager->getRepository(Tag::class)->findOneByCod($tagCod);
         $tagConfigured = $this->getConfiguredTag();
         $removedTags = [];
 
@@ -491,12 +482,11 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
      */
     public function addTagDnDAction($tagCod, $multimediaObjectId)
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
         $tagService = $this->container->get('pumukitschema.tag');
 
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
+        $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
 
-        $tag = $dm->getRepository(Tag::class)->findOneByCod($tagCod);
+        $tag = $this->documentManager->getRepository(Tag::class)->findOneByCod($tagCod);
         if ($multimediaObject->containsTag($tag)) {
             return new JsonResponse(['error' => JsonResponse::HTTP_BAD_REQUEST]);
         }
@@ -521,20 +511,19 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $session->remove('admin/unesco/id');
 
         $data = $request->request->get('data');
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
 
         switch ($option) {
         case 'delete_selected':
 
             foreach ($data as $multimediaObjectId) {
-                $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
+                $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
                 $this->factoryService->deleteMultimediaObject($multimediaObject);
             }
 
             break;
         case 'invert_announce_selected':
             $tagService = $this->container->get('pumukitschema.tag');
-            $pudeNew = $dm->getRepository(Tag::class)->findOneBy(['cod' => 'PUDENEW']);
+            $pudeNew = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PUDENEW']);
             foreach ($data as $multimediaObjectId) {
                 $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
                 if ($multimediaObject->containsTag($pudeNew)) {
@@ -560,7 +549,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
      */
     public function deleteAction($multimediaObjectId)
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
         $session = $this->get('session');
         $session->remove('admin/unesco/tag');
         $session->remove('admin/unesco/page');
@@ -586,8 +574,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
      */
     public function cloneAction($multimediaObjectId)
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
-
         $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
 
         try {
@@ -653,7 +639,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     private function searchMultimediaObjects($criteria, $tag = null)
     {
         $configuredTag = $this->getConfiguredTag();
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
+
         $session = $this->get('session');
         $session->set('admin/unesco/tag', $tag);
 
@@ -787,7 +773,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
      */
     private function getMmobjsYears()
     {
-        $mmObjColl = $this->get('doctrine_mongodb')->getManager()->getDocumentCollection(
+        $mmObjColl = $this->documentManager->getManager()->getDocumentCollection(
             MultimediaObject::class
         );
         $pipeline = [

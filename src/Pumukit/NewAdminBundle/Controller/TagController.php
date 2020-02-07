@@ -21,8 +21,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
      */
     public function indexAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $repo = $dm->getRepository(Tag::class);
+        $repo = $this->documentManager->getRepository(Tag::class);
 
         $root_name = 'ROOT';
         $root = $repo->findOneByCod($root_name);
@@ -96,8 +95,6 @@ class TagController extends AbstractController implements NewAdminControllerInte
      */
     public function createAction(Tag $parent, Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
         $tag = new Tag();
         $tag->setParent($parent);
 
@@ -108,8 +105,8 @@ class TagController extends AbstractController implements NewAdminControllerInte
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && ($request->isMethod('PUT') || $request->isMethod('POST'))) {
             try {
-                $dm->persist($tag);
-                $dm->flush();
+                $this->documentManager->persist($tag);
+                $this->documentManager->flush();
             } catch (\Exception $e) {
                 return new JsonResponse(['status' => $e->getMessage()], JsonResponse::HTTP_CONFLICT);
             }
@@ -127,8 +124,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
      */
     public function listAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $repo = $dm->getRepository(Tag::class);
+        $repo = $this->documentManager->getRepository(Tag::class);
 
         $root_name = 'ROOT';
         $root = $repo->findOneByCod($root_name);
@@ -147,8 +143,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
 
     public function batchDeleteAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $repo = $dm->getRepository(Tag::class);
+        $repo = $this->documentManager->getRepository(Tag::class);
 
         $ids = $request->get('ids');
 
@@ -176,9 +171,9 @@ class TagController extends AbstractController implements NewAdminControllerInte
             return new JsonResponse(['status' => $message], JsonResponse::HTTP_CONFLICT);
         }
         foreach ($tags as $tag) {
-            $dm->remove($tag);
+            $this->documentManager->remove($tag);
         }
-        $dm->flush();
+        $this->documentManager->flush();
 
         $this->addFlash('success', 'delete');
 

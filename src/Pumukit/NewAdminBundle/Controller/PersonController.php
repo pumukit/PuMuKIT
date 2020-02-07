@@ -596,8 +596,7 @@ class PersonController extends AdminController
             $ids = json_decode($ids, true);
         }
 
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $mmRepo = $dm->getRepository(MultimediaObject::class);
+        $mmRepo = $this->documentManager->getRepository(MultimediaObject::class);
 
         foreach ($ids as $id) {
             $person = $this->find($id);

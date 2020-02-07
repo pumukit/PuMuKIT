@@ -126,10 +126,9 @@ class PlaylistMultimediaObjectController extends AbstractController
      */
     public function modalAction(Series $playlist, Request $request)
     {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $limit = $request->get('modal_limit', 20);
         //Get all multimedia objects. The filter will do the rest.
-        $mmobjs = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
+        $mmobjs = $this->documentManager->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
         $total = $mmobjs->count()->getQuery()->execute();
 
         return [
@@ -149,11 +148,10 @@ class PlaylistMultimediaObjectController extends AbstractController
      */
     public function modalMyMmobjsAction(Series $playlist, Request $request)
     {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $page = $request->get('modal_page', 1);
         $limit = $request->get('modal_limit', 20);
         //Get all multimedia objects. The filter will do the rest.
-        $mmobjs = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
+        $mmobjs = $this->documentManager->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
 
         $pager = $this->paginationService->createDoctrineODMMongoDBAdapter($mmobjs, $page, $limit);
 
@@ -174,7 +172,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         $criteria = ['search' => $value];
         $criteria = $this->multimediaObjectSearchService->processMMOCriteria($criteria, $request->getLocale());
 
-        $queryBuilder = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
+        $queryBuilder = $this->documentManager->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
         $criteria = array_merge($queryBuilder->getQueryArray(), $criteria);
         $queryBuilder->setQueryArray($criteria);
         $queryBuilder->limit($limit);
@@ -194,7 +192,7 @@ class PlaylistMultimediaObjectController extends AbstractController
 
         $this->enableFilter();
         $id = $request->query->get('mmid', '');
-        $mmobj = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(MultimediaObject::class)->find($id);
+        $mmobj = $this->documentManager->getRepository(MultimediaObject::class)->find($id);
         $user = $this->getUser();
         $canBePlayed = null;
         $canUserPlay = null;
@@ -224,17 +222,16 @@ class PlaylistMultimediaObjectController extends AbstractController
             $mmobjIds = json_decode($mmobjIds, true);
         }
 
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $mmobjRepo = $dm->getRepository(MultimediaObject::class);
+        $mmobjRepo = $this->documentManager->getRepository(MultimediaObject::class);
         foreach ($mmobjIds as $id) {
             $mmobj = $mmobjRepo->find($id);
             if (!$mmobj) {
                 continue;
             }
             $playlist->getPlaylist()->addMultimediaObject($mmobj);
-            $dm->persist($playlist);
+            $this->documentManager->persist($playlist);
         }
-        $dm->flush();
+        $this->documentManager->flush();
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_playlistmms_list', ['id' => $playlist->getId()]));
     }
@@ -250,15 +247,14 @@ class PlaylistMultimediaObjectController extends AbstractController
             $mmobjIds = json_decode($mmobjIds, true);
         }
 
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $mms = $playlist->getPlaylist()->getMultimediaObjects();
         foreach ($mmobjIds as $pos => $id) {
             if (isset($mms[$pos]) && $mms[$pos]->getId() == $id) {
                 $playlist->getPlaylist()->removeMultimediaObjectByPos($pos);
             }
         }
-        $dm->persist($playlist);
-        $dm->flush();
+        $this->documentManager->persist($playlist);
+        $this->documentManager->flush();
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_playlistmms_list', ['id' => $playlist->getId()]));
     }
@@ -273,8 +269,7 @@ class PlaylistMultimediaObjectController extends AbstractController
             throw new \Exception('The request is missing the \'mm_id\' parameter');
         }
 
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $mmobjRepo = $dm->getRepository(MultimediaObject::class);
+        $mmobjRepo = $this->documentManager->getRepository(MultimediaObject::class);
 
         $playlistEmbed = $series->getPlaylist();
         $mmobjId = $request->query->get('mm_id');
@@ -284,8 +279,8 @@ class PlaylistMultimediaObjectController extends AbstractController
         }
 
         $playlistEmbed->addMultimediaObject($mm);
-        $dm->persist($playlistEmbed);
-        $dm->flush();
+        $this->documentManager->persist($playlistEmbed);
+        $this->documentManager->flush();
     }
 
     public function upAction(Series $playlist, Request $request)
@@ -370,7 +365,6 @@ class PlaylistMultimediaObjectController extends AbstractController
      */
     public function addBatchToSeveralPlaylistAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $mmobjRepo = $dm->getRepository(MultimediaObject::class);
         $seriesRepo = $dm->getRepository(Series::class);
 
@@ -419,7 +413,7 @@ class PlaylistMultimediaObjectController extends AbstractController
     protected function moveAction(Series $playlist, $initPos, $endPos)
     {
         $actionResponse = $this->redirect($this->generateUrl('pumukitnewadmin_playlistmms_index', ['id' => $playlist->getId()]));
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+
         $playlist->getPlaylist()->moveMultimediaObject($initPos, $endPos);
         $dm->persist($playlist);
         $dm->flush();
@@ -439,7 +433,6 @@ class PlaylistMultimediaObjectController extends AbstractController
     //Disables the standard backoffice filter and enables the 'personal' filter. (Check own videos or public videos)
     protected function enableFilter()
     {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $user = $this->get('security.token_storage')->getToken()->getUser();
         if ($this->isGranted(PermissionProfile::SCOPE_GLOBAL)) {
             return;

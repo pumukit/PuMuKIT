@@ -40,14 +40,12 @@ class UserController extends AdminController
      */
     public function indexAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
         $criteria = $this->getCriteria($request->get('criteria', []));
         $users = $this->getResources($request, $criteria);
-        $repo = $dm->getRepository(PermissionProfile::class);
+        $repo = $this->documentManager->getRepository(PermissionProfile::class);
         $profiles = $repo->findAll();
 
-        $origins = $dm->createQueryBuilder(User::class)->distinct('origin')->getQuery()->execute();
+        $origins = $this->documentManager->createQueryBuilder(User::class)->distinct('origin')->getQuery()->execute();
 
         return ['users' => $users, 'profiles' => $profiles, 'origins' => $origins->toArray()];
     }
@@ -165,7 +163,7 @@ class UserController extends AdminController
      */
     public function batchDeleteAction(Request $request)
     {
-        $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(User::class);
+        $repo = $this->documentManager->getRepository(User::class);
 
         $ids = $request->get('ids');
 
@@ -311,9 +309,8 @@ class UserController extends AdminController
      */
     public function promoteAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $profileRepo = $dm->getRepository(PermissionProfile::class);
-        $usersRepo = $dm->getRepository(User::class);
+        $profileRepo = $this->documentManager->getRepository(PermissionProfile::class);
+        $usersRepo = $this->documentManager->getRepository(User::class);
 
         $ids = $request->request->get('ids');
         $profile = $profileRepo->find($request->request->get('profile'));
@@ -350,8 +347,7 @@ class UserController extends AdminController
      */
     private function modifyUserGroups(User $user, $addGroups = [], $deleteGroups = [])
     {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $groupRepo = $dm->getRepository(Group::class);
+        $groupRepo = $this->documentManager->getRepository(Group::class);
 
         foreach ($addGroups as $addGroup) {
             $groupsIds = explode('_', $addGroup);
@@ -371,12 +367,12 @@ class UserController extends AdminController
             }
         }
 
-        $dm->flush();
+        $this->documentManager->flush();
     }
 
     private function isAllowedToBeDeleted(User $userToDelete)
     {
-        $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(User::class);
+        $repo = $this->documentManager->getRepository(User::class);
 
         $loggedInUser = $this->getUser();
 
@@ -436,7 +432,7 @@ class UserController extends AdminController
 
     private function getNumberAdminUsers()
     {
-        $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(User::class);
+        $repo = $this->documentManager->getRepository(User::class);
 
         return $repo->createQueryBuilder()->where(
             "function(){for ( var k in this.roles ) { if ( this.roles[k] == 'ROLE_SUPER_ADMIN' ) return true;}}"
@@ -445,7 +441,7 @@ class UserController extends AdminController
 
     private function getUniqueAdminUser()
     {
-        $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(User::class);
+        $repo = $this->documentManager->getRepository(User::class);
 
         return $repo->createQueryBuilder()->where(
             "function(){for ( var k in this.roles ) { if ( this.roles[k] == 'ROLE_SUPER_ADMIN' ) return true;}}"

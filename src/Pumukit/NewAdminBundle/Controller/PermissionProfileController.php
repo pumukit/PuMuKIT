@@ -202,8 +202,7 @@ class PermissionProfileController extends AdminController
      */
     public function batchUpdateAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $repo = $dm->getRepository(PermissionProfile::class);
+        $repo = $this->documentManager->getRepository(PermissionProfile::class);
 
         $selectedDefault = $request->get('selected_default');
         $selectedScopes = $request->get('selected_scopes');
@@ -241,7 +240,7 @@ class PermissionProfileController extends AdminController
                 return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
         }
-        $dm->flush();
+        $this->documentManager->flush();
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_permissionprofile_list'));
     }

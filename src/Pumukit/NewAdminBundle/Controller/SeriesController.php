@@ -98,9 +98,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
      */
     public function cloneAction($id)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
-        $series = $dm->getRepository(Series::class)->findOneBy(['_id' => new ObjectId($id)]);
+        $series = $this->documentManager->getRepository(Series::class)->findOneBy(['_id' => new ObjectId($id)]);
         if (!$series) {
             throw new \Exception($this->translationService->trans('No series found with ID').' '.$id);
         }
@@ -323,7 +321,6 @@ class SeriesController extends AdminController implements NewAdminControllerInte
             $ids = json_decode($ids, true);
         }
 
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
         foreach ($ids as $id) {
             $resource = $this->find($id);
 
@@ -336,9 +333,9 @@ class SeriesController extends AdminController implements NewAdminControllerInte
             } else {
                 $resource->setAnnounce(true);
             }
-            $dm->persist($resource);
+            $this->documentManager->persist($resource);
         }
-        $dm->flush();
+        $this->documentManager->flush();
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_series_list'));
     }
@@ -359,8 +356,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
             'hidden' => MultimediaObject::STATUS_HIDDEN,
         ];
 
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $multimediaObjects = $dm->getRepository(MultimediaObject::class)->findWithoutPrototype($series);
+        $multimediaObjects = $this->documentManager->getRepository(MultimediaObject::class)->findWithoutPrototype($series);
 
         $pubChannels = $this->factoryService->getTagsByCod('PUBCHANNELS', true);
 
@@ -412,8 +408,8 @@ class SeriesController extends AdminController implements NewAdminControllerInte
         $emptySeries = [];
         if ($request->query->has('empty_series') || $this->get('session')->has('admin/series/empty_series')) {
             $this->get('session')->set('admin/series/empty_series', true);
-            $dm = $this->get('doctrine_mongodb')->getManager();
-            $mmObjColl = $dm->getDocumentCollection(MultimediaObject::class);
+
+            $mmObjColl = $this->documentManager->getDocumentCollection(MultimediaObject::class);
             $pipeline = [
                 ['$group' => ['_id' => '$series', 'count' => ['$sum' => 1]]],
                 ['$match' => ['count' => 1]],
@@ -569,8 +565,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
      */
     public function updateBroadcastAction(Series $series, Request $request)
     {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $mmRepo = $dm->getRepository(MultimediaObject::class);
+        $mmRepo = $this->documentManager->getRepository(MultimediaObject::class);
         $broadcasts = $this->embeddedBroadcastService->getAllTypes();
         $allGroups = $this->getAllGroups();
         $embeddedBroadcast = false;
@@ -615,7 +610,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
                         );
                     }
                 }
-                $dm->flush();
+                $this->documentManager->flush();
             } catch (\Exception $e) {
                 return new JsonResponse(['error' => $e->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
             }
@@ -666,10 +661,9 @@ class SeriesController extends AdminController implements NewAdminControllerInte
             if (!$person) {
                 return false;
             }
-            $dm = $this->get('doctrine_mongodb.odm.document_manager');
 
             $enableFilter = false;
-            if ($dm->getFilterCollection()->isEnabled('backoffice')) {
+            if ($this->documentManager->getFilterCollection()->isEnabled('backoffice')) {
                 $enableFilter = true;
                 $dm->getFilterCollection()->disable('backoffice');
             }
@@ -700,7 +694,6 @@ class SeriesController extends AdminController implements NewAdminControllerInte
      */
     private function modifyMultimediaObjectsStatus($values)
     {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $repo = $dm->getRepository(MultimediaObject::class);
         $repoTags = $dm->getRepository(Tag::class);
 
@@ -782,7 +775,6 @@ class SeriesController extends AdminController implements NewAdminControllerInte
     {
         $type = $this->get('session')->get('admin/series/type');
 
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $mmRepo = $dm->getRepository(MultimediaObject::class);
         $numberMultimediaObjectsInSeries1 = $mmRepo->countInSeries($series1);
         $numberMultimediaObjectsInSeries2 = $mmRepo->countInSeries($series2);
@@ -808,7 +800,6 @@ class SeriesController extends AdminController implements NewAdminControllerInte
      */
     private function modifyBroadcastGroups(MultimediaObject $multimediaObject, $type = EmbeddedBroadcast::TYPE_PUBLIC, $password = '', $addGroups = [], $deleteGroups = [], $executeFlush = true)
     {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $groupRepo = $dm->getRepository(Group::class);
 
         $embeddedBroadcastService->updateTypeAndName($type, $multimediaObject, false);
@@ -838,7 +829,6 @@ class SeriesController extends AdminController implements NewAdminControllerInte
 
     private function getFirstMultimediaObject(Series $series)
     {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $mmRepo = $dm->getRepository(MultimediaObject::class);
         $all = $mmRepo->findBySeries($series);
         foreach ($all as $multimediaObject) {
