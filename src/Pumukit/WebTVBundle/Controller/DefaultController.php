@@ -2,7 +2,6 @@
 
 namespace Pumukit\WebTVBundle\Controller;
 
-use Detection\MobileDetect;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use Psr\Log\LoggerInterface;
@@ -41,7 +40,6 @@ class DefaultController extends AbstractController
         BreadcrumbsService $breadcrumbService,
         EmbeddedEventSessionService $embeddedEventSessionService,
         TranslatorInterface $translator,
-        MobileDetect $mobileDetectorService,
         LoggerInterface $logger,
         \Swift_Mailer $mailer,
         $captchaPublicKey,
@@ -55,7 +53,7 @@ class DefaultController extends AbstractController
         $this->breadcrumbService = $breadcrumbService;
         $this->embeddedEventSessionService = $embeddedEventSessionService;
         $this->translator = $translator;
-        $this->mobileDetectorService = $mobileDetectorService;
+        $this->mobileDetectorService = $this->get('mobile_detect.mobile_detector');
         $this->logger = $logger;
         $this->mailer = $mailer;
         $this->captchaPublicKey = $captchaPublicKey;

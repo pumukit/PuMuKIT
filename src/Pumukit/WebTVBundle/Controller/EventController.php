@@ -31,10 +31,10 @@ class EventController extends AbstractController implements WebTVControllerInter
         DocumentManager $documentManager,
         BreadcrumbsService $breadcrumbsService,
         TranslatorInterface $translator,
-        string $pumukitNewAdminAdvanceLiveEventCreateDefaultPic,
-        EmbeddedEventSessionService $eventSessionService,
-        int $columnsObjsEvent,
         PaginationService $paginationService,
+        EmbeddedEventSessionService $eventSessionService,
+        string $pumukitNewAdminAdvanceLiveEventCreateDefaultPic,
+        int $columnsObjsEvent,
         bool $pumukitLiveTwitterEnable,
         bool $pumukitNewAdminAdvanceLiveEvent
     ) {
