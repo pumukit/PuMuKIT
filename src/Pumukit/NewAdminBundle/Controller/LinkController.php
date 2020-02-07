@@ -22,10 +22,10 @@ class LinkController extends AbstractController implements NewAdminControllerInt
      */
     public function createAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $translator = $this->get('translator');
+
         $locale = $request->getLocale();
         $link = new Link();
-        $form = $this->createForm(LinkType::class, $link, ['translator' => $translator, 'locale' => $locale]);
+        $form = $this->createForm(LinkType::class, $link, ['translator' => $this->translationService, 'locale' => $locale]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && ($request->isMethod('PUT') || $request->isMethod('POST'))) {
@@ -57,10 +57,10 @@ class LinkController extends AbstractController implements NewAdminControllerInt
      */
     public function updateAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $translator = $this->get('translator');
+
         $locale = $request->getLocale();
         $link = $multimediaObject->getLinkById($request->get('id'));
-        $form = $this->createForm(LinkType::class, $link, ['translator' => $translator, 'locale' => $locale]);
+        $form = $this->createForm(LinkType::class, $link, ['translator' => $this->translationService, 'locale' => $locale]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && ($request->isMethod('PUT') || $request->isMethod('POST'))) {

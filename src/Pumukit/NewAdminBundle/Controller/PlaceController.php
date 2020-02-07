@@ -98,7 +98,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
     public function createAction(Request $request, $id = null)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
-        $translator = $this->get('translator');
+
 
         if ($id) {
             $parent = $dm->getRepository(Tag::class)->findOneBy(['_id' => new ObjectId($id)]);
@@ -114,7 +114,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
         $tag->setCod($suggested_code);
         $tag->setParent($parent);
 
-        $form = $this->createForm(TagType::class, $tag, ['translator' => $translator, 'locale' => $request->getLocale()]);
+        $form = $this->createForm(TagType::class, $tag, ['translator' => $this->translationService, 'locale' => $request->getLocale()]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -163,9 +163,9 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
      */
     public function updateAction(Request $request, Tag $tag)
     {
-        $translator = $this->get('translator');
+
         $locale = $request->getLocale();
-        $form = $this->createForm(TagType::class, $tag, ['translator' => $translator, 'locale' => $locale]);
+        $form = $this->createForm(TagType::class, $tag, ['translator' => $this->translationService, 'locale' => $locale]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

@@ -104,7 +104,7 @@ class SeriesStylesController extends AbstractController
     public function deleteAction($id)
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
-        $translator = $this->get('translator');
+
         $session = $this->get('session');
 
         $style = $dm->getRepository(SeriesStyle::class)->findOneBy(['_id' => new ObjectId($id)]);
@@ -120,13 +120,13 @@ class SeriesStylesController extends AbstractController
 
                 $session->set('seriesstyle/id', '');
 
-                return new JsonResponse(['success', 'msg' => $translator->trans('Successfully deleted series style')]);
+                return new JsonResponse(['success', 'msg' => $this->translationService->trans('Successfully deleted series style')]);
             }
 
-            return new JsonResponse(['error', 'msg' => $translator->trans('There are series with this series style')]);
+            return new JsonResponse(['error', 'msg' => $this->translationService->trans('There are series with this series style')]);
         }
 
-        return new JsonResponse(['error', 'msg' => $translator->trans("Series style {$style->getId}() doesn't exists")]);
+        return new JsonResponse(['error', 'msg' => $this->translationService->trans("Series style {$style->getId}() doesn't exists")]);
     }
 
     /**

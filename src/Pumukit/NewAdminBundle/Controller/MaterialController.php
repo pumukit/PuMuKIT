@@ -22,10 +22,10 @@ class MaterialController extends AbstractController implements NewAdminControlle
      */
     public function createAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $translator = $this->get('translator');
+
         $locale = $request->getLocale();
         $material = new Material();
-        $form = $this->createForm(MaterialType::class, $material, ['translator' => $translator, 'locale' => $locale]);
+        $form = $this->createForm(MaterialType::class, $material, ['translator' => $this->translationService, 'locale' => $locale]);
 
         return [
             'material' => $material,
@@ -39,10 +39,10 @@ class MaterialController extends AbstractController implements NewAdminControlle
      */
     public function updateAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $translator = $this->get('translator');
+
         $locale = $request->getLocale();
         $material = $multimediaObject->getMaterialById($request->get('id'));
-        $form = $this->createForm(MaterialType::class, $material, ['translator' => $translator, 'locale' => $locale]);
+        $form = $this->createForm(MaterialType::class, $material, ['translator' => $this->translationService, 'locale' => $locale]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && ($request->isMethod('PUT') || $request->isMethod('POST'))) {

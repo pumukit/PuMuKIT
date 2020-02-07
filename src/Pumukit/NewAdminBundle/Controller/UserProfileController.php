@@ -26,7 +26,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class UserProfileController extends AdminController
 {
     /** @var TranslatorInterface */
-    protected $translator;
+    protected $this->translationService;
 
     /** @var UserManagerInterface */
     protected $fosUserManager;

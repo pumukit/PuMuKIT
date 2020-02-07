@@ -50,10 +50,9 @@ class SeriesPicController extends AbstractController implements NewAdminControll
     {
         $isBanner = false;
         if (($url = $request->get('url')) || ($url = $request->get('picUrl'))) {
-            $picService = $this->get('pumukitschema.seriespic');
             $isBanner = $request->query->get('banner', false);
             $bannerTargetUrl = $request->get('url_bannerTargetUrl', null);
-            $series = $picService->addPicUrl($series, $url, $isBanner, $bannerTargetUrl);
+            $series = $this->seriesPicService->addPicUrl($series, $url, $isBanner, $bannerTargetUrl);
         }
 
         if ($isBanner) {
@@ -80,10 +79,10 @@ class SeriesPicController extends AbstractController implements NewAdminControll
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
             }
             if ($request->files->has('file')) {
-                $picService = $this->get('pumukitschema.seriespic');
+                $picService = $this->seriesPicService;
                 $isBanner = $request->query->get('banner', false);
                 $bannerTargetUrl = $request->get('file_bannerTargetUrl', null);
-                $picService->addPicFile($series, $request->files->get('file'), $isBanner, $bannerTargetUrl);
+                $this->seriesPicService->addPicFile($series, $request->files->get('file'), $isBanner, $bannerTargetUrl);
             }
         } catch (\Exception $e) {
             return [
@@ -121,7 +120,7 @@ class SeriesPicController extends AbstractController implements NewAdminControll
             throw $this->createNotFoundException('Requested series does not exist');
         }
 
-        $series = $this->get('pumukitschema.seriespic')->removePicFromSeries($series, $picId);
+        $series = $this->seriesPicService->removePicFromSeries($series, $picId);
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_series_update', ['id' => $series->getId()]));
     }
@@ -185,7 +184,7 @@ class SeriesPicController extends AbstractController implements NewAdminControll
      */
     public function picstoaddlistAction(Series $series, Request $request)
     {
-        $picService = $this->get('pumukitschema.seriespic');
+        $picService = $this->seriesPicService;
 
         if ($request->get('page', null)) {
             $this->get('session')->set('admin/seriespic/page', $request->get('page', 1));
@@ -193,7 +192,7 @@ class SeriesPicController extends AbstractController implements NewAdminControll
         $page = (int) ($this->get('session')->get('admin/seriespic/page', 1));
         $limit = 12;
 
-        $urlPics = $picService->getRecommendedPics($series);
+        $urlPics = $this->seriesPicService->getRecommendedPics($series);
 
         $total = (int) (ceil(count($urlPics) / $limit));
 

@@ -44,10 +44,10 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
     {
         $isBanner = false;
         if (($url = $request->get('url')) || ($url = $request->get('picUrl'))) {
-            $picService = $this->get('pumukitschema.seriespic');
+            $picService = $this->seriesPicService;
             $isBanner = $request->query->get('banner', false);
             $bannerTargetUrl = $request->get('url_bannerTargetUrl', null);
-            $playlist = $picService->addPicUrl($playlist, $url, $isBanner, $bannerTargetUrl);
+            $playlist = $this->seriesPicService->addPicUrl($playlist, $url, $isBanner, $bannerTargetUrl);
         }
 
         if ($isBanner) {
@@ -72,10 +72,10 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
             }
             if ($request->files->has('file')) {
-                $picService = $this->get('pumukitschema.seriespic');
+                $picService = $this->seriesPicService;
                 $isBanner = $request->query->get('banner', false);
                 $bannerTargetUrl = $request->get('file_bannerTargetUrl', null);
-                $picService->addPicFile($playlist, $request->files->get('file'), $isBanner, $bannerTargetUrl);
+                $this->seriesPicService->addPicFile($playlist, $request->files->get('file'), $isBanner, $bannerTargetUrl);
             }
         } catch (\Exception $e) {
             return [
@@ -111,7 +111,7 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
             throw $this->createNotFoundException('Requested playlist does not exist');
         }
 
-        $playlist = $this->get('pumukitschema.seriespic')->removePicFromSeries($playlist, $picId);
+        $playlist = $this->seriesPicService->removePicFromSeries($playlist, $picId);
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_playlist_update', ['id' => $playlist->getId()]));
     }
@@ -169,7 +169,7 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
      */
     public function picstoaddlistAction(Series $playlist, Request $request)
     {
-        $picService = $this->get('pumukitschema.seriespic');
+        $picService = $this->seriesPicService;
 
         if ($request->get('page', null)) {
             $this->get('session')->set('admin/playlistpic/page', $request->get('page', 1));
@@ -177,7 +177,7 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
         $page = (int) ($this->get('session')->get('admin/playlistpic/page', 1));
         $limit = 12;
 
-        $urlPics = $picService->getRecommendedPics($playlist);
+        $urlPics = $this->seriesPicService->getRecommendedPics($playlist);
 
         $total = (int) (ceil(count($urlPics) / $limit));
 
