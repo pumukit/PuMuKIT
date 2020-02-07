@@ -348,14 +348,13 @@ class PermissionProfileController extends AdminController
 
     private function getPermissions()
     {
-        $permissionService = $this->get('pumukitschema.permission');
-        $permissions = $permissionService->getAllPermissions();
+        $permissions = $this->permissionService->getAllPermissions();
 
         if (!$this->container->hasParameter('pumukit.use_series_channels') || !$this->container->getParameter('pumukit.use_series_channels')) {
             unset($permissions[Permission::ACCESS_SERIES_TYPES]);
         }
 
-        $dependencies = $permissionService->getAllDependencies();
+        $dependencies = $this->permissionService->getAllDependencies();
 
         return [$permissions, $dependencies];
     }
