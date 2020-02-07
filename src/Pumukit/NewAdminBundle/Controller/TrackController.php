@@ -33,18 +33,18 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 {
     private $logger;
     private $documentManager;
-    private $this->translationService;
+    private $translationService;
     private $jobService;
     private $trackService;
     private $profileService;
     private $inspectionService;
     private $picExtractorService;
 
-    public function __construct(LoggerInterface $logger, DocumentManager $documentManager, TranslatorInterface $this->translationService, JobService $jobService, TrackService $trackService, ProfileService $profileService, InspectionFfprobeService $inspectionService, PicExtractorService $picExtractorService)
+    public function __construct(LoggerInterface $logger, DocumentManager $documentManager, TranslatorInterface $translationService, JobService $jobService, TrackService $trackService, ProfileService $profileService, InspectionFfprobeService $inspectionService, PicExtractorService $picExtractorService)
     {
         $this->logger = $logger;
         $this->documentManager = $documentManager;
-        $this->translator = $this->translationService;
+        $this->translationService = $translationService;
         $this->jobService = $jobService;
         $this->trackService = $trackService;
         $this->profileService = $profileService;
@@ -61,7 +61,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     {
         $locale = $request->getLocale();
         $track = new Track();
-        $form = $this->createForm(TrackType::class, $track, ['translator' => $this->translator, 'locale' => $locale]);
+        $form = $this->createForm(TrackType::class, $track, ['translator' => $this->translationService, 'locale' => $locale]);
 
         $masterProfiles = $this->profileService->getMasterProfiles(true);
 
@@ -139,7 +139,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     {
         $locale = $request->getLocale();
         $track = $multimediaObject->getTrackById($request->get('id'));
-        $form = $this->createForm(TrackUpdateType::class, $track, ['translator' => $this->translator, 'locale' => $locale, 'is_super_admin' => $this->isGranted('ROLE_SUPER_ADMIN')]);
+        $form = $this->createForm(TrackUpdateType::class, $track, ['translator' => $this->translationService, 'locale' => $locale, 'is_super_admin' => $this->isGranted('ROLE_SUPER_ADMIN')]);
 
         $profiles = $this->profileService->getProfiles();
 
