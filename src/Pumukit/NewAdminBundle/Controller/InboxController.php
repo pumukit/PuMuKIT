@@ -66,7 +66,7 @@ class InboxController extends AbstractController implements NewAdminControllerIn
      */
     public function formAction($onlyDir = false)
     {
-        if (!$this->container->hasParameter('pumukit.inbox')) {
+        if (!$this->hasParameter('pumukit.inbox')) {
             return $this->render('@PumukitNewAdmin/Inbox/form_noconf.html.twig');
         }
 
