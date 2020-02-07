@@ -543,7 +543,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
             'pumukitnewadmin_series_i18n_line2',
             'pumukitnewadmin_series_template',
         ];
-        $showSeriesTypeTab = $this->hasParameter(
+        $showSeriesTypeTab = $this->container->hasParameter(
             'pumukit.use_series_channels'
         ) && $this->getParameter('pumukit.use_series_channels');
         if (!$showSeriesTypeTab) {

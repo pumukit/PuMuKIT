@@ -82,8 +82,6 @@ class SeriesController extends AdminController
      * Overwrite to search criteria with date.
      *
      * @Template("PumukitNewAdminBundle:Series:index.html.twig")
-     *
-     * @return array
      */
     public function indexAction(Request $request)
     {
@@ -110,7 +108,6 @@ class SeriesController extends AdminController
     /**
      * List action.
      *
-     * @return array
      * @Template("PumukitNewAdminBundle:Series:list.html.twig")
      */
     public function listAction(Request $request)
@@ -122,11 +119,6 @@ class SeriesController extends AdminController
         return ['series' => $resources];
     }
 
-    /**
-     * Create new resource.
-     *
-     * @return JsonResponse
-     */
     public function createAction(Request $request)
     {
         $series = $this->factoryService->createSeries($this->getUser());
@@ -232,7 +224,7 @@ class SeriesController extends AdminController
         //These fields are form fields that are rendered separately, so they should be 'excluded' from the generic foreach.
         $exclude_fields = [];
         $show_later_fields = ['pumukitnewadmin_series_i18n_header', 'pumukitnewadmin_series_i18n_footer', 'pumukitnewadmin_series_i18n_line2', 'pumukitnewadmin_series_template', 'pumukitnewadmin_series_sorting', 'pumukitnewadmin_series_series_style'];
-        $showSeriesTypeTab = $this->hasParameter('pumukit.use_series_channels') && $this->getParameter('pumukit.use_series_channels');
+        $showSeriesTypeTab = $this->container->hasParameter('pumukit.use_series_channels') && $this->getParameter('pumukit.use_series_channels');
         if (!$showSeriesTypeTab) {
             $exclude_fields[] = 'pumukitnewadmin_series_series_type';
         }
@@ -257,9 +249,6 @@ class SeriesController extends AdminController
         );
     }
 
-    /**
-     * @return Response|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function deleteAction(Request $request)
     {
         $series = $this->findOr404($request);
