@@ -24,22 +24,22 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class UserProfileController extends AdminController
 {
     /** @var TranslatorInterface */
-    private $translator;
+    protected $translator;
 
     /** @var DocumentManager */
-    private $documentManager;
+    protected $documentManager;
 
     /** @var PaginationService */
-    private $paginationService;
+    protected $paginationService;
 
     /** @var UserManagerInterface */
-    private $fosUserManager;
+    protected $fosUserManager;
 
     /** @var UserService */
-    private $userService;
+    protected $userService;
 
     /** @var UserStatsService */
-    private $userStatsService;
+    protected $userStatsService;
 
     public function __construct(
         TranslatorInterface $translator,
