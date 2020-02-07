@@ -222,8 +222,6 @@ class SeriesPicController extends AbstractController implements NewAdminControll
 
     private function getPaginatedPics($urlPics, $limit, $page)
     {
-
-
         return $this->paginationService->createArrayAdapter($urlPics->toArray(), $page, $limit);
     }
 }

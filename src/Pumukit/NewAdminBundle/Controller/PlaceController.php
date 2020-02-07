@@ -99,7 +99,6 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
 
-
         if ($id) {
             $parent = $dm->getRepository(Tag::class)->findOneBy(['_id' => new ObjectId($id)]);
             $isPrecinct = true;
@@ -143,7 +142,6 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
 
-
         try {
             $this->tagService->deleteTag($tag);
             $dm->flush();
@@ -163,7 +161,6 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
      */
     public function updateAction(Request $request, Tag $tag)
     {
-
         $locale = $request->getLocale();
         $form = $this->createForm(TagType::class, $tag, ['translator' => $this->translationService, 'locale' => $locale]);
 

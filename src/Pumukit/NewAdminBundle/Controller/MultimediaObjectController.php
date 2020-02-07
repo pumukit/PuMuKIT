@@ -62,7 +62,6 @@ class MultimediaObjectController extends SortableAdminController
     {
         $session = $this->get('session');
 
-
         $sessionId = $session->get('admin/series/id', null);
         $series = $this->factoryService->findSeriesById($request->query->get('id'), $sessionId);
         if (!$series) {
@@ -134,8 +133,6 @@ class MultimediaObjectController extends SortableAdminController
         $dm = $this->get('doctrine_mongodb')->getManager();
         $session = $this->get('session');
 
-
-
         $sessionId = $session->get('admin/series/id', null);
         $series = $this->factoryService->findSeriesById($request->get('id'), $sessionId);
         $session->set('admin/series/id', $series->getId());
@@ -191,9 +188,6 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function editAction(Request $request)
     {
-
-
-
         $personalScopeRoleCode = $this->personService->getPersonalScopeRoleCode();
 
         try {
@@ -323,9 +317,6 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function updatemetaAction(Request $request)
     {
-
-
-
         $personalScopeRoleCode = $this->personService->getPersonalScopeRoleCode();
         $allGroups = $this->getAllGroups();
 
@@ -401,9 +392,6 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function updatepubAction(Request $request)
     {
-
-
-
         $resource = $this->findOr404($request);
 
         $sessionId = $this->get('session')->get('admin/series/id', null);
@@ -416,7 +404,6 @@ class MultimediaObjectController extends SortableAdminController
         $parentTags = $this->factoryService->getParentTags();
 
         $this->get('session')->set('admin/mms/id', $resource->getId());
-
 
         $locale = $request->getLocale();
         $previousStatus = $resource->getStatus();
@@ -536,8 +523,6 @@ class MultimediaObjectController extends SortableAdminController
     {
         $resource = $this->findOr404($request);
 
-
-
         try {
             $addedTags = $this->tagService->addTagToMultimediaObject($resource, $request->get('tagId'));
         } catch (\Exception $e) {
@@ -565,8 +550,6 @@ class MultimediaObjectController extends SortableAdminController
     public function deleteTagAction(Request $request)
     {
         $resource = $this->findOr404($request);
-
-
 
         try {
             $deletedTags = $this->tagService->removeTagFromMultimediaObject($resource, $request->get('tagId'));
@@ -671,7 +654,7 @@ class MultimediaObjectController extends SortableAdminController
         }
 
         try {
-            $this->get('pumukitschema.factory')->deleteMultimediaObject($resource);
+            $this->factoryService->deleteMultimediaObject($resource);
         } catch (\Exception $e) {
             return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
@@ -733,7 +716,7 @@ class MultimediaObjectController extends SortableAdminController
         $resource = $this->findOr404($request);
         $seriesId = $resource->getSeries()->getId();
 
-        $this->get('pumukitschema.factory')->cloneMultimediaObject($resource);
+        $this->factoryService->cloneMultimediaObject($resource);
 
         return $this->redirect($this->generateUrl(
             'pumukitnewadmin_mms_list',
@@ -751,7 +734,6 @@ class MultimediaObjectController extends SortableAdminController
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true);
         }
-
 
         $tagNew = $this->get('doctrine_mongodb.odm.document_manager')
             ->getRepository(Tag::class)->findOneByCod('PUDENEW');
@@ -778,7 +760,6 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function listAction(Request $request)
     {
-
         $seriesId = $request->get('seriesId', null);
         $sessionId = $this->get('session')->get('admin/series/id', null);
         $series = $this->factoryService->findSeriesById($seriesId, $sessionId);
@@ -834,7 +815,6 @@ class MultimediaObjectController extends SortableAdminController
 
         $ids = $this->get('session')->get('admin/mms/cut');
 
-
         $seriesId = $request->get('seriesId', null);
         $sessionId = $this->get('session')->get('admin/series/id', null);
         $series = $this->factoryService->findSeriesById($seriesId, $sessionId);
@@ -875,7 +855,6 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function reorderAction(Request $request)
     {
-
         $sessionId = $this->get('session')->get('admin/series/id', null);
         $series = $this->factoryService->findSeriesById($request->get('id'), $sessionId);
 
@@ -921,7 +900,6 @@ class MultimediaObjectController extends SortableAdminController
 
             $this->tagService->resetCategoriesForCollections($mms, $targetTags);
         } else {
-
             $parentTags = $this->factoryService->getParentTags();
             $parentTagsToSync = [];
 
@@ -1414,7 +1392,6 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function updateMultimediaObjectSyncAction(Request $request, MultimediaObject $multimediaObject)
     {
-
         $message = $this->translationService->trans('Sync metadata was fail.');
 
         $syncService = $this->container->get('pumukitnewadmin.multimedia_object_sync');
@@ -1452,7 +1429,7 @@ class MultimediaObjectController extends SortableAdminController
             }
             foreach ($checkedTags as $cod => $checked) {
                 if (!$this->isGranted(Permission::getRoleTagDisableForPubChannel($cod))) {
-                    $tag = $this->get('pumukitschema.factory')->getTagsByCod($cod, false);
+                    $tag = $this->factoryService->getTagsByCod($cod, false);
                     $resource->addTag($tag);
                 }
             }
@@ -1489,8 +1466,6 @@ class MultimediaObjectController extends SortableAdminController
             ->getRepository(MultimediaObject::class)
             ->getQueryBuilderOrderedBy($series, $sorting)
         ;
-
-
 
         return $this->paginationService->createDoctrineODMMongoDBAdapter($mmsQueryBuilder, $page);
     }
@@ -1674,7 +1649,6 @@ class MultimediaObjectController extends SortableAdminController
         if ($superAdmin) {
             return true;
         }
-
 
         $globalScope = $this->userService->hasGlobalScope($loggedInUser);
         if ($globalScope) {

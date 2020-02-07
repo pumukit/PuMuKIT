@@ -35,8 +35,8 @@ class PersonController extends AdminController
         FactoryService $factoryService,
         GroupService $groupService,
         UserService $userService,
-        PersonService $personService)
-    {
+        PersonService $personService
+    ) {
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
         $this->personService = $personService;
     }
@@ -52,7 +52,6 @@ class PersonController extends AdminController
         $criteria = $this->getCriteria($request->get('criteria', []), $request->getLocale());
         $selectedPersonId = $request->get('selectedPersonId', null);
         $resources = $this->getResources($request, $criteria, $selectedPersonId);
-
 
         $countMmPeople = [];
         foreach ($resources as $person) {
@@ -112,7 +111,6 @@ class PersonController extends AdminController
     public function updateAction(Request $request)
     {
         $person = $this->personService->findPersonById($request->get('id'));
-
 
         $locale = $request->getLocale();
         $form = $this->createForm(PersonType::class, $person, ['translator' => $this->translationService, 'locale' => $locale]);
@@ -241,7 +239,6 @@ class PersonController extends AdminController
         $person = new Person();
         $person->setName(preg_replace('/\d+ - /', '', $request->get('name')));
 
-
         $locale = $request->getLocale();
 
         $form = $this->createForm(PersonType::class, $person, ['translator' => $this->translationService, 'locale' => $locale]);
@@ -312,7 +309,6 @@ class PersonController extends AdminController
 
         $person = $this->personService->findPersonById($request->get('id'));
         $personalScopeRoleCode = $this->personService->getPersonalScopeRoleCode();
-
 
         $locale = $request->getLocale();
 
@@ -526,7 +522,6 @@ class PersonController extends AdminController
      */
     public function deleteRelationAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
-
         $person = $this->personService->findPersonById($request->get('id'));
 
         if ($role->getCod() === $this->container->getParameter('pumukitschema.personal_scope_role_code')) {
@@ -574,7 +569,6 @@ class PersonController extends AdminController
     {
         $person = $this->personService->findPersonById($request->get('id'));
 
-
         try {
             if (0 === $this->personService->countMultimediaObjectsWithPerson($person)) {
                 $this->personService->deletePerson($person);
@@ -601,8 +595,6 @@ class PersonController extends AdminController
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true);
         }
-
-
 
         $dm = $this->get('doctrine_mongodb')->getManager();
         $mmRepo = $dm->getRepository(MultimediaObject::class);

@@ -353,7 +353,6 @@ class UserController extends AdminController
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $groupRepo = $dm->getRepository(Group::class);
 
-
         foreach ($addGroups as $addGroup) {
             $groupsIds = explode('_', $addGroup);
             $groupId = $groupsIds[2];

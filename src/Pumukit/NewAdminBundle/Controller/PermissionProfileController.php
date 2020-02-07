@@ -34,8 +34,8 @@ class PermissionProfileController extends AdminController
         FactoryService $factoryService,
         GroupService $groupService,
         UserService $userService,
-        PermissionProfileService $permissionProfileService)
-    {
+        PermissionProfileService $permissionProfileService
+    ) {
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
         $this->permissionProfileService = $permissionProfileService;
     }
@@ -165,8 +165,6 @@ class PermissionProfileController extends AdminController
      */
     public function getForm($permissionProfile = null, $locale = 'en')
     {
-
-
         return $this->createForm(PermissionProfileType::class, $permissionProfile, ['translator' => $this->translationService, 'locale' => $locale]);
     }
 
@@ -187,7 +185,7 @@ class PermissionProfileController extends AdminController
         }
 
         try {
-            $this->get('pumukitschema.factory')->deleteResource($permissionProfile);
+            $this->factoryService->deleteResource($permissionProfile);
             $this->get('pumukitschema.permissionprofile_dispatcher')->dispatchDelete($permissionProfile);
             if ($permissionProfileId === $this->get('session')->get('admin/permissionprofile/id')) {
                 $this->get('session')->remove('admin/permissionprofile/id');
@@ -339,7 +337,6 @@ class PermissionProfileController extends AdminController
 
     private function isAllowedToBeDeleted(PermissionProfile $permissionProfile)
     {
-
         $usersWithPermissionProfile = $this->userService->countUsersWithPermissionProfile($permissionProfile);
 
         if (0 < $usersWithPermissionProfile) {

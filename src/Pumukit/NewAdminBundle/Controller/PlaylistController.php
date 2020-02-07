@@ -79,7 +79,6 @@ class PlaylistController extends CollectionController
     {
         $this->get('session')->set('admin/playlist/id', $series->getId());
 
-
         $locale = $request->getLocale();
         $form = $this->createForm(PlaylistType::class, $series, ['translator' => $this->translationService, 'locale' => $locale]);
 
@@ -113,8 +112,6 @@ class PlaylistController extends CollectionController
      */
     public function deleteAction(Series $playlist, Request $request)
     {
-
-
         if (!$this->isUserAllowedToDelete($playlist)) {
             return new Response('You don\'t have enough permissions to delete this playlist. Contact your administrator.', Response::HTTP_FORBIDDEN);
         }
