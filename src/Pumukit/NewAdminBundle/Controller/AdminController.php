@@ -233,11 +233,6 @@ class AdminController extends ResourceController implements NewAdminControllerIn
         return $repository->findOneBy($criteria);
     }
 
-    /**
-     * Gets the criteria values.
-     *
-     * @param mixed $criteria
-     */
     public function getCriteria($criteria)
     {
         if (array_key_exists('reset', $criteria)) {
@@ -258,11 +253,6 @@ class AdminController extends ResourceController implements NewAdminControllerIn
         return $new_criteria;
     }
 
-    /**
-     * Gets the list of resources according to a criteria.
-     *
-     * @param mixed $criteria
-     */
     public function getResources(Request $request, $criteria)
     {
         $sorting = $this->getSorting($request);

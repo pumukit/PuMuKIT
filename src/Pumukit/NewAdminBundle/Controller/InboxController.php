@@ -70,7 +70,7 @@ class InboxController extends AbstractController implements NewAdminControllerIn
             return $this->render('@PumukitNewAdmin/Inbox/form_noconf.html.twig');
         }
 
-        $dir = realpath($this->container->getParameter('pumukit.inbox'));
+        $dir = realpath($this->getParameter('pumukit.inbox'));
 
         if (!file_exists($dir)) {
             return $this->render('@PumukitNewAdmin/Inbox/form_nofile.html.twig', ['dir' => $dir]);

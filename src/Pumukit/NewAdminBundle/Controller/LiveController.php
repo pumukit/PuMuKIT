@@ -53,7 +53,7 @@ class LiveController extends AdminController
         return $this->render(
             'PumukitNewAdminBundle:Live:create.html.twig',
             [
-                'enableChat' => $this->container->getParameter('pumukit_live.chat.enable'),
+                'enableChat' => $this->getParameter('pumukit_live.chat.enable'),
                 'live' => $resource,
                 'form' => $form->createView(),
             ]
@@ -87,7 +87,7 @@ class LiveController extends AdminController
         return $this->render(
             'PumukitNewAdminBundle:'.ucfirst($resourceName).':update.html.twig',
             [
-                'enableChat' => $this->container->getParameter('pumukit_live.chat.enable'),
+                'enableChat' => $this->getParameter('pumukit_live.chat.enable'),
                 'live' => $resource,
                 'form' => $form->createView(),
             ]

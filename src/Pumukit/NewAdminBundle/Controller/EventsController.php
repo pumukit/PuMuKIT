@@ -102,7 +102,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
         return [
             'object' => $object,
-            'disable_pudenew' => !$this->container->getParameter('show_latest_with_pudenew'),
+            'disable_pudenew' => !$this->getParameter('show_latest_with_pudenew'),
             'roles' => $aRoles,
             'statusPub' => $statusPub,
             'pubChannels' => $aChannels,
@@ -118,7 +118,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
      */
     public function createEventAction(Request $request)
     {
-        $languages = $this->container->getParameter('pumukit.locales');
+        $languages = $this->getParameter('pumukit.locales');
 
         $series = $request->request->get('seriesSuggest') ? $request->request->get('seriesSuggest') : false;
 
@@ -142,7 +142,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
                 $eventPicSeriesDefault = $series->getPic();
                 $this->multimediaObjectPicService->addPicUrl($multimediaObject, $eventPicSeriesDefault->getUrl(), false);
             } else {
-                $eventPicSeriesDefault = $this->container->getParameter('pumukit_new_admin.advance_live_event_create_serie_pic');
+                $eventPicSeriesDefault = $this->getParameter('pumukit_new_admin.advance_live_event_create_serie_pic');
                 $this->multimediaObjectPicService->addPicUrl($multimediaObject, $eventPicSeriesDefault, false);
             }
         }
@@ -183,7 +183,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
     public function listEventAction(Request $request, $type = null)
     {
         $session = $this->get('session');
-        $eventPicDefault = $this->container->getParameter('pumukit_new_admin.advance_live_event_create_default_pic');
+        $eventPicDefault = $this->getParameter('pumukit_new_admin.advance_live_event_create_default_pic');
         $page = ($this->get('session')->get('admin/live/event/page')) ?: ($request->query->get('page') ?: 1);
 
         $criteria['type'] = MultimediaObject::TYPE_LIVE;
@@ -427,12 +427,12 @@ class EventsController extends AbstractController implements NewAdminControllerI
         $people['author'] = $multimediaObject->getEmbeddedEvent()->getAuthor();
         $people['producer'] = $multimediaObject->getEmbeddedEvent()->getProducer();
 
-        $enableChat = $this->container->getParameter('pumukit_live.chat.enable');
-        $enableTwitter = $this->container->getParameter('pumukit_live.twitter.enable');
-        $enableContactForm = $this->container->getParameter('liveevent_contact_and_share');
-        $twitterAccountsLinkColor = $this->container->getParameter('pumukit_live.twitter.accounts_link_color');
+        $enableChat = $this->getParameter('pumukit_live.chat.enable');
+        $enableTwitter = $this->getParameter('pumukit_live.twitter.enable');
+        $enableContactForm = $this->getParameter('liveevent_contact_and_share');
+        $twitterAccountsLinkColor = $this->getParameter('pumukit_live.twitter.accounts_link_color');
 
-        $autocompleteSeries = $this->container->getParameter('pumukit_new_admin.advance_live_event_autocomplete_series');
+        $autocompleteSeries = $this->getParameter('pumukit_new_admin.advance_live_event_autocomplete_series');
 
         $form->handleRequest($request);
         if ('POST' === $request->getMethod()) {
@@ -532,7 +532,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
     public function seriesAction(Request $request, Series $series)
     {
         $locale = $request->getLocale();
-        $disablePudenew = !$this->container->getParameter('show_latest_with_pudenew');
+        $disablePudenew = !$this->getParameter('show_latest_with_pudenew');
 
         $form = $this->createForm(SeriesType::class, $series, ['translator' => $this->translatorService, 'locale' => $locale, 'disable_PUDENEW' => $disablePudenew]);
 
@@ -545,7 +545,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
         ];
         $showSeriesTypeTab = $this->container->hasParameter(
             'pumukit.use_series_channels'
-        ) && $this->container->getParameter('pumukit.use_series_channels');
+        ) && $this->getParameter('pumukit.use_series_channels');
         if (!$showSeriesTypeTab) {
             $exclude_fields[] = 'pumukitnewadmin_series_series_type';
         }
@@ -929,7 +929,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
         $user = $this->getUser();
         $pipeline = [];
         $pipeline[] = ['$match' => ['series' => new ObjectId($multimediaObject->getSeries()->getId())]];
-        $ownerKey = $this->container->getParameter('pumukitschema.personal_scope_role_code');
+        $ownerKey = $this->getParameter('pumukitschema.personal_scope_role_code');
         if ($user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
             $pipeline[] = ['$match' => ['people.people.email' => ['$ne' => $user->getEmail()]]];
             $pipeline[] = ['$match' => ['people.cod' => $ownerKey]];

@@ -103,7 +103,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     {
         $configuredTag = $this->getConfiguredTag();
 
-        if (null !== $this->container->getParameter('pumukit_new_admin.base_catalogue_tag')) {
+        if (null !== $this->getParameter('pumukit_new_admin.base_catalogue_tag')) {
             $menuTags = [];
             foreach ($configuredTag->getChildren() as $child) {
                 if ($child->getDisplay()) {
@@ -229,7 +229,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
         return [
             'mms' => $pager,
-            'disable_pudenew' => !$this->container->getParameter('show_latest_with_pudenew'),
+            'disable_pudenew' => !$this->getParameter('show_latest_with_pudenew'),
         ];
     }
 
@@ -305,7 +305,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $session->set('admin/unesco/id', $multimediaObject->getId());
 
         //If the 'pudenew' tag is not being used, set the display to 'false'.
-        if (!$this->container->getParameter('show_latest_with_pudenew')) {
+        if (!$this->getParameter('show_latest_with_pudenew')) {
             $this->documentManager->getRepository(Tag::class)->findOneByCod('PUDENEW')->setDisplay(false);
         }
         $pubChannelsTags = $this->factoryService->getTagsByCod('PUBCHANNELS', true);
@@ -319,7 +319,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
         $activeEditor = $this->checkHasEditor();
         $notChangePubChannel = !$this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
-        $allBundles = $this->container->getParameter('kernel.bundles');
+        $allBundles = $this->getParameter('kernel.bundles');
         $opencastExists = array_key_exists('PumukitOpencastBundle', $allBundles);
 
         $allGroups = $this->getAllGroups();
@@ -423,7 +423,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
             $aGenre = [];
         }
 
-        $disablePudenew = !$this->container->getParameter('show_latest_with_pudenew');
+        $disablePudenew = !$this->getParameter('show_latest_with_pudenew');
 
         $groups = $this->getAllGroups();
 
