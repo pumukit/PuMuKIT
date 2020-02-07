@@ -4,6 +4,10 @@ services:
     autoconfigure: true
     public:        true
 
+  Pumukit\NewAdminBundle\Controller\:
+    resource: '../../src/Pumukit/NewAdminBundle/Controller/'
+    tags: ['controller.service_arguments']
+
   Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType:
     class: Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType
     arguments:
@@ -89,14 +93,3 @@ services:
     class: Pumukit\NewAdminBundle\Twig\CatalogueExtension
     tags:
       - { name: "twig.extension" }
-
-  # Controllers:
-  Pumukit\NewAdminBundle\Controller\TranslateController:
-    class: Pumukit\NewAdminBundle\Controller\TranslateController
-
-  Pumukit\NewAdminBundle\Controller\TrackController:
-    class: Pumukit\NewAdminBundle\Controller\TrackController
-
-  Pumukit\NewAdminBundle\Controller\:
-    resource: '../../src/Pumukit/NewAdminBundle/Controller/'
-    tags: ['controller.service_arguments']
