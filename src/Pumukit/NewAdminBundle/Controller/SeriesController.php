@@ -572,7 +572,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $mmRepo = $dm->getRepository(MultimediaObject::class);
-        $broadcasts = $this->get('pumukitschema.embeddedbroadcast')->getAllTypes();
+        $broadcasts = $this->embeddedBroadcastService->getAllTypes();
         $allGroups = $this->getAllGroups();
         $seriesService = $this->get('pumukitschema.series');
         $embeddedBroadcast = false;
@@ -812,7 +812,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $groupRepo = $dm->getRepository(Group::class);
-        $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
+
         $embeddedBroadcastService->updateTypeAndName($type, $multimediaObject, false);
         if (EmbeddedBroadcast::TYPE_PASSWORD === $type) {
             $embeddedBroadcastService->updatePassword($password, $multimediaObject, false);

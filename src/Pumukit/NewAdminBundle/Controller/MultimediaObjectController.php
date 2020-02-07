@@ -1029,7 +1029,6 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function updateBroadcastAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
         $specialTranslationService = $this->get('pumukitschema.special_translation');
         if ($multimediaObject->isLive()) {
             $broadcasts = $embeddedBroadcastService->getAllTypes(true);
@@ -1575,7 +1574,7 @@ class MultimediaObjectController extends SortableAdminController
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $groupRepo = $dm->getRepository(Group::class);
-        $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
+
         $embeddedBroadcastService->updateTypeAndName($type, $multimediaObject, false);
         if (EmbeddedBroadcast::TYPE_PASSWORD === $type) {
             $embeddedBroadcastService->updatePassword($password, $multimediaObject, false);
