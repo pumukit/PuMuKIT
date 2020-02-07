@@ -317,7 +317,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
         $jobs = $this->jobService->getNotFinishedJobsByMultimediaObjectId($multimediaObject->getId());
 
-        $notMasterProfiles = $this->get('pumukitencoder.profile')->getProfiles(null, true, false);
+        $notMasterProfiles = $this->profileService->getProfiles(null, true, false);
 
         $template = $multimediaObject->isPrototype() ? '_template' : '';
 
