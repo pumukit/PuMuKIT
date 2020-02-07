@@ -138,7 +138,7 @@ class MultimediaObjectController extends SortableAdminController
         $session->set('admin/series/id', $series->getId());
 
         $mmobj = $this->factoryService->createMultimediaObject($series, true, $this->getUser());
-        $this->get('pumukitschema.sorted_multimedia_object')->reorder($series);
+        $this->sortedMultimediaObjectService->reorder($series);
 
         if ($request->attributes->has('microsite_custom_tag')) {
             $sTagCode = $request->attributes->get('microsite_custom_tag');
@@ -360,7 +360,7 @@ class MultimediaObjectController extends SortableAdminController
                 $this->update($resource);
 
                 $this->dispatchUpdate($resource);
-                $this->get('pumukitschema.sorted_multimedia_object')->reorder($resource->getSeries());
+                $this->sortedMultimediaObjectService->reorder($resource->getSeries());
 
                 $referer = $request->headers->get('referer');
 
@@ -452,7 +452,7 @@ class MultimediaObjectController extends SortableAdminController
             $this->update($resource);
 
             $this->dispatchUpdate($resource);
-            $this->get('pumukitschema.sorted_multimedia_object')->reorder($series);
+            $this->sortedMultimediaObjectService->reorder($series);
 
             $mms = $this->getListMultimediaObjects($series);
             if (false === strpos($request->server->get('HTTP_REFERER'), 'mmslist')) {
@@ -633,7 +633,7 @@ class MultimediaObjectController extends SortableAdminController
         $this->update($resource);
 
         $this->addFlash('success', 'up');
-        $this->get('pumukitschema.sorted_multimedia_object')->reorder($resource->getSeries());
+        $this->sortedMultimediaObjectService->reorder($resource->getSeries());
 
         return $this->redirectToIndex();
     }
@@ -844,7 +844,7 @@ class MultimediaObjectController extends SortableAdminController
 
         $this->get('session')->remove('admin/mms/cut');
 
-        $this->get('pumukitschema.sorted_multimedia_object')->reorder($series);
+        $this->sortedMultimediaObjectService->reorder($series);
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));
     }
@@ -862,7 +862,7 @@ class MultimediaObjectController extends SortableAdminController
         $dm->persist($series);
         $dm->flush();
 
-        $this->get('pumukitschema.sorted_multimedia_object')->reorder($series);
+        $this->sortedMultimediaObjectService->reorder($series);
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));
     }
