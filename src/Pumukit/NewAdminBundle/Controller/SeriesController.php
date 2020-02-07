@@ -665,22 +665,22 @@ class SeriesController extends AdminController implements NewAdminControllerInte
             $enableFilter = false;
             if ($this->documentManager->getFilterCollection()->isEnabled('backoffice')) {
                 $enableFilter = true;
-                $dm->getFilterCollection()->disable('backoffice');
+                $this->documentManager->getFilterCollection()->disable('backoffice');
             }
-            $mmobjRepo = $dm->getRepository(MultimediaObject::class);
+            $mmobjRepo = $this->documentManager->getRepository(MultimediaObject::class);
             $allMmobjs = $mmobjRepo->createStandardQueryBuilder()->field('series')->equals($series->getId())->getQuery()->execute();
             foreach ($allMmobjs as $resource) {
                 if (!$resource->containsPersonWithRole($person, $role) ||
                     count($resource->getPeopleByRole($role, true)) > 1) {
                     if ($enableFilter) {
-                        $dm->getFilterCollection()->enable('backoffice');
+                        $this->documentManager->getFilterCollection()->enable('backoffice');
                     }
 
                     return false;
                 }
             }
             if ($enableFilter) {
-                $dm->getFilterCollection()->enable('backoffice');
+                $this->documentManager->getFilterCollection()->enable('backoffice');
             }
         }
 
@@ -694,8 +694,8 @@ class SeriesController extends AdminController implements NewAdminControllerInte
      */
     private function modifyMultimediaObjectsStatus($values)
     {
-        $repo = $dm->getRepository(MultimediaObject::class);
-        $repoTags = $dm->getRepository(Tag::class);
+        $repo = $this->documentManager->getRepository(MultimediaObject::class);
+        $repoTags = $this->documentManager->getRepository(Tag::class);
 
         $executeFlush = false;
         foreach ($values as $id => $value) {
@@ -725,7 +725,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
         }
 
         if ($executeFlush) {
-            $dm->flush();
+            $this->documentManager->flush();
         }
     }
 
@@ -775,7 +775,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
     {
         $type = $this->get('session')->get('admin/series/type');
 
-        $mmRepo = $dm->getRepository(MultimediaObject::class);
+        $mmRepo = $this->documentManager->getRepository(MultimediaObject::class);
         $numberMultimediaObjectsInSeries1 = $mmRepo->countInSeries($series1);
         $numberMultimediaObjectsInSeries2 = $mmRepo->countInSeries($series2);
 
@@ -800,7 +800,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
      */
     private function modifyBroadcastGroups(MultimediaObject $multimediaObject, $type = EmbeddedBroadcast::TYPE_PUBLIC, $password = '', $addGroups = [], $deleteGroups = [], $executeFlush = true)
     {
-        $groupRepo = $dm->getRepository(Group::class);
+        $groupRepo = $this->documentManager->getRepository(Group::class);
 
         $embeddedBroadcastService->updateTypeAndName($type, $multimediaObject, false);
         if (EmbeddedBroadcast::TYPE_PASSWORD === $type) {
@@ -823,13 +823,13 @@ class SeriesController extends AdminController implements NewAdminControllerInte
             }
         }
         if ($executeFlush) {
-            $dm->flush();
+            $this->documentManager->flush();
         }
     }
 
     private function getFirstMultimediaObject(Series $series)
     {
-        $mmRepo = $dm->getRepository(MultimediaObject::class);
+        $mmRepo = $this->documentManager->getRepository(MultimediaObject::class);
         $all = $mmRepo->findBySeries($series);
         foreach ($all as $multimediaObject) {
             return $multimediaObject;

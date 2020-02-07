@@ -525,7 +525,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
             $tagService = $this->container->get('pumukitschema.tag');
             $pudeNew = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PUDENEW']);
             foreach ($data as $multimediaObjectId) {
-                $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
+                $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
                 if ($multimediaObject->containsTag($pudeNew)) {
                     $this->tagService->removeTagFromMultimediaObject($multimediaObject, $pudeNew->getId());
                 } else {
@@ -555,7 +555,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $session->remove('admin/unesco/paginate');
         $session->remove('admin/unesco/id');
 
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
+        $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
 
         try {
             $this->factoryService->deleteMultimediaObject($multimediaObject);
@@ -574,7 +574,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
      */
     public function cloneAction($multimediaObjectId)
     {
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
+        $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
 
         try {
             $this->factoryService->cloneMultimediaObject($multimediaObject);
@@ -651,16 +651,16 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         switch ($tagCondition) {
             case '1':
                 // NOTE: Videos without configured tag
-                $selectedTag = $dm->getRepository(Tag::class)->findOneBy(['cod' => $configuredTag->getCod()]);
-                $query = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder()
+                $selectedTag = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => $configuredTag->getCod()]);
+                $query = $this->documentManager->getRepository(MultimediaObject::class)->createStandardQueryBuilder()
                     ->field('tags.cod')
                     ->notEqual($selectedTag->getCod())
                 ;
 
                 break;
             case 'tag':
-                $selectedTag = $dm->getRepository(Tag::class)->findOneBy(['cod' => $tag]);
-                $query = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder()
+                $selectedTag = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => $tag]);
+                $query = $this->documentManager->getRepository(MultimediaObject::class)->createStandardQueryBuilder()
                     ->field('tags.cod')
                     ->equals($selectedTag->getCod())
                 ;
@@ -669,7 +669,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
             case '2':
             default:
                 // NOTE: All videos
-                $query = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
+                $query = $this->documentManager->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
 
                 break;
         }

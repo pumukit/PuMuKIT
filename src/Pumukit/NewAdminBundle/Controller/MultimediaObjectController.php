@@ -571,7 +571,7 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function searchTagAction(Request $request)
     {
-        $repo = $dm->getRepository(Tag::class);
+        $repo = $this->documentManager->getRepository(Tag::class);
 
         $search_text = $request->get('search_text');
         $lang = $request->getLocale();
@@ -580,7 +580,7 @@ class MultimediaObjectController extends SortableAdminController
         $parent = $repo->findOneBy(['_id' => $request->get('parent')]);
         $parent_path = str_replace('|', '\\|', $parent->getPath());
 
-        $qb = $dm->createQueryBuilder(Tag::class);
+        $qb = $this->documentManager->createQueryBuilder(Tag::class);
         $children = $qb->addOr($qb->expr()->field('title.'.$lang)->equals(new Regex('.*'.$search_text.'.*', 'i')))
             ->addOr($qb->expr()->field('cod')->equals(new Regex('.*'.$search_text.'.*', 'i')))
             ->addAnd($qb->expr()->field('path')->equals(new Regex($parent_path)))
@@ -813,7 +813,7 @@ class MultimediaObjectController extends SortableAdminController
         $series = $this->factoryService->findSeriesById($seriesId, $sessionId);
 
         foreach ($ids as $id) {
-            $multimediaObject = $dm->getRepository(MultimediaObject::class)->find($id);
+            $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->find($id);
 
             if (!$multimediaObject) {
                 continue;
@@ -827,13 +827,13 @@ class MultimediaObjectController extends SortableAdminController
                 $multimediaObject->setRank(-1);
             }
 
-            $dm->persist($multimediaObject);
+            $this->documentManager->persist($multimediaObject);
 
             $this->get('pumukitschema.multimediaobject_dispatcher')->dispatchUpdate($multimediaObject);
         }
 
-        $dm->persist($series);
-        $dm->flush();
+        $this->documentManager->persist($series);
+        $this->documentManager->flush();
 
         $this->get('session')->remove('admin/mms/cut');
 
@@ -852,8 +852,8 @@ class MultimediaObjectController extends SortableAdminController
 
         $series->setSorting($request->get('sorting', Series::SORT_MANUAL));
 
-        $dm->persist($series);
-        $dm->flush();
+        $this->documentManager->persist($series);
+        $this->documentManager->flush();
 
         $this->sortedMultimediaObjectService->reorder($series);
 
@@ -916,7 +916,7 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function reloadTagsAction(Request $request)
     {
-        $repo = $dm->getRepository(Tag::class);
+        $repo = $this->documentManager->getRepository(Tag::class);
 
         $mmId = $request->get('mmId');
         $parent = $repo->findOneBy(['_id' => $request->get('parentId')]);
@@ -1124,7 +1124,7 @@ class MultimediaObjectController extends SortableAdminController
 
             $data['url'] = urldecode($data['url']);
             $multimediaObject->setProperty('externalplayer', $data['url']);
-            $dm->flush();
+            $this->documentManager->flush();
 
             $this->get('pumukitschema.multimediaobject_dispatcher')->dispatchUpdate($multimediaObject);
 
@@ -1142,7 +1142,7 @@ class MultimediaObjectController extends SortableAdminController
     public function deleteExternalPropertyAction(MultimediaObject $multimediaObject)
     {
         $multimediaObject->removeProperty('externalplayer');
-        $dm->flush();
+        $this->documentManager->flush();
 
         $this->get('pumukitschema.multimediaobject_dispatcher')->dispatchUpdate($multimediaObject);
 
@@ -1193,9 +1193,9 @@ class MultimediaObjectController extends SortableAdminController
             $this->get('session')->remove('admin/mmslist/id');
         }
 
-        $aRoles = $dm->getRepository(Role::class)->findAll();
-        $aPubChannel = $dm->getRepository(Tag::class)->findOneBy(['cod' => 'PUBCHANNELS']);
-        $aChannels = $dm->getRepository(Tag::class)->findBy(['parent.$id' => new ObjectId($aPubChannel->getId())]);
+        $aRoles = $this->documentManager->getRepository(Role::class)->findAll();
+        $aPubChannel = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PUBCHANNELS']);
+        $aChannels = $this->documentManager->getRepository(Tag::class)->findBy(['parent.$id' => new ObjectId($aPubChannel->getId())]);
 
         $multimediaObjectLabel = $this->translationService->trans($this->container->getParameter('pumukit_new_admin.multimedia_object_label'));
         $statusPub = [
@@ -1318,11 +1318,11 @@ class MultimediaObjectController extends SortableAdminController
 
     public function updatePropertyAction(Request $request)
     {
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($request->get('id'))]);
+        $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($request->get('id'))]);
         $method = $request->getMethod();
         if (in_array($method, ['POST'])) {
             $multimediaObject->setProperty('paellalayout', $request->get('paellalayout'));
-            $dm->flush();
+            $this->documentManager->flush();
         }
 
         return new JsonResponse(['paellalayout' => $multimediaObject->getProperty('paellalayout')]);
@@ -1344,7 +1344,7 @@ class MultimediaObjectController extends SortableAdminController
         $locale = $request->getLocale();
         $syncService = $this->container->get('pumukitnewadmin.multimedia_object_sync');
 
-        $tags = $dm->getRepository(Tag::class)->findBy(
+        $tags = $this->documentManager->getRepository(Tag::class)->findBy(
             [
                 'metatag' => true,
                 'display' => true,
@@ -1354,7 +1354,7 @@ class MultimediaObjectController extends SortableAdminController
         if (!$tags) {
             throw new \Exception($this->translationService->trans('No tags defined with metatag'));
         }
-        $roles = $dm->getRepository(Role::class)->findBy([], ["name.{$locale}" => 1]);
+        $roles = $this->documentManager->getRepository(Role::class)->findBy([], ["name.{$locale}" => 1]);
         if (0 === count($roles)) {
             throw new \Exception($this->translationService->trans('No roles defined'));
         }
@@ -1520,7 +1520,7 @@ class MultimediaObjectController extends SortableAdminController
      */
     private function modifyMultimediaObjectGroups(MultimediaObject $multimediaObject, $addGroups = [], $deleteGroups = [])
     {
-        $groupRepo = $dm->getRepository(Group::class);
+        $groupRepo = $this->documentManager->getRepository(Group::class);
 
         foreach ($addGroups as $addGroup) {
             $groupIdArray = explode('_', $addGroup);
@@ -1539,7 +1539,7 @@ class MultimediaObjectController extends SortableAdminController
             }
         }
 
-        $dm->flush();
+        $this->documentManager->flush();
     }
 
     /**
@@ -1552,7 +1552,7 @@ class MultimediaObjectController extends SortableAdminController
      */
     private function modifyBroadcastGroups(MultimediaObject $multimediaObject, $type = EmbeddedBroadcast::TYPE_PUBLIC, $password = '', $addGroups = [], $deleteGroups = [])
     {
-        $groupRepo = $dm->getRepository(Group::class);
+        $groupRepo = $this->documentManager->getRepository(Group::class);
 
         $embeddedBroadcastService->updateTypeAndName($type, $multimediaObject, false);
         if (EmbeddedBroadcast::TYPE_PASSWORD === $type) {
@@ -1585,7 +1585,7 @@ class MultimediaObjectController extends SortableAdminController
             }
         }
 
-        $dm->flush();
+        $this->documentManager->flush();
     }
 
     private function getResourceGroups($groups = [])
@@ -1634,7 +1634,7 @@ class MultimediaObjectController extends SortableAdminController
 
         $userInOwners = false;
 
-        $personRepo = $dm->getRepository(Person::class);
+        $personRepo = $this->documentManager->getRepository(Person::class);
         foreach ((array) $multimediaObject->getProperty('owners') as $owner) {
             $person = $personRepo->find($owner);
             if ($person) {
