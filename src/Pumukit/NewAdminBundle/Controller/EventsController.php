@@ -2,6 +2,7 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Regex;
 use MongoDB\BSON\UTCDateTime;
@@ -17,6 +18,9 @@ use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
+use Pumukit\SchemaBundle\Services\SeriesEventDispatcherService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -25,6 +29,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_LIVE_EVENTS')")
@@ -32,7 +37,27 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class EventsController extends Controller implements NewAdminControllerInterface
 {
+    /** @var DocumentManager */
+    protected $documentManager;
+    /** @var TranslatorInterface */
+    protected $translatorService;
+    /** @var FactoryService */
+    protected $factoryService;
+    /** @var MultimediaObjectPicService */
+    protected $multimediaObjectPicService;
+    /** @var SeriesEventDispatcherService */
+    protected $seriesDispatcher;
     private $regex = '/^[0-9a-z]{24}$/';
+
+    public function __construct(string $regex, DocumentManager $documentManager, TranslatorInterface $translatorService, FactoryService $factoryService, MultimediaObjectPicService $multimediaObjectPicService, SeriesEventDispatcherService $seriesDispatcher)
+    {
+        $this->regex = $regex;
+        $this->documentManager = $documentManager;
+        $this->translatorService = $translatorService;
+        $this->factoryService = $factoryService;
+        $this->multimediaObjectPicService = $multimediaObjectPicService;
+        $this->seriesDispatcher = $seriesDispatcher;
+    }
 
     /**
      * @return array
@@ -42,15 +67,13 @@ class EventsController extends Controller implements NewAdminControllerInterface
      */
     public function indexEventAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
         if ($request->query->get('page')) {
             $this->get('session')->set('admin/live/event/page', $request->query->get('page'));
         }
 
-        $aRoles = $dm->getRepository(Role::class)->findAll();
-        $aPubChannel = $dm->getRepository(Tag::class)->findOneBy(['cod' => 'PUBCHANNELS']);
-        $aChannels = $dm->getRepository(Tag::class)->findBy(
+        $aRoles = $this->documentManager->getRepository(Role::class)->findAll();
+        $aPubChannel = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PUBCHANNELS']);
+        $aChannels = $this->documentManager->getRepository(Tag::class)->findBy(
             ['parent.$id' => new ObjectId($aPubChannel->getId())]
         );
 
@@ -80,38 +103,32 @@ class EventsController extends Controller implements NewAdminControllerInterface
      */
     public function createEventAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $translator = $this->get('translator');
         $languages = $this->container->getParameter('pumukit.locales');
-
-        $factoryService = $this->get('pumukitschema.factory');
 
         $series = $request->request->get('seriesSuggest') ? $request->request->get('seriesSuggest') : false;
 
         $createSeries = false;
         if (!$series) {
-            $series = $factoryService->createSeries($this->getUser());
-            $dm->persist($series);
+            $series = $this->factoryService->createSeries($this->getUser());
+            $this->documentManager->persist($series);
             $createSeries = true;
         } else {
-            $series = $dm->getRepository(Series::class)->findOneBy(
+            $series = $this->documentManager->getRepository(Series::class)->findOneBy(
                 ['_id' => new ObjectId($series)]
             );
         }
 
-        $multimediaObject = $factoryService->createMultimediaObject($series, true, $this->getUser());
+        $multimediaObject = $this->factoryService->createMultimediaObject($series, true, $this->getUser());
         $multimediaObject->setType(MultimediaObject::TYPE_LIVE);
-
-        $mmoPicService = $this->get('pumukitschema.mmspic');
 
         if (!$createSeries) {
             $seriesPics = $series->getPics();
             if (count($seriesPics) > 0) {
                 $eventPicSeriesDefault = $series->getPic();
-                $mmoPicService->addPicUrl($multimediaObject, $eventPicSeriesDefault->getUrl(), false);
+                $this->multimediaObjectPicService->addPicUrl($multimediaObject, $eventPicSeriesDefault->getUrl(), false);
             } else {
                 $eventPicSeriesDefault = $this->container->getParameter('pumukit_new_admin.advance_live_event_create_serie_pic');
-                $mmoPicService->addPicUrl($multimediaObject, $eventPicSeriesDefault, false);
+                $this->multimediaObjectPicService->addPicUrl($multimediaObject, $eventPicSeriesDefault, false);
             }
         }
 
@@ -120,16 +137,16 @@ class EventsController extends Controller implements NewAdminControllerInterface
         $event->setDate(new \DateTime());
 
         foreach ($languages as $language) {
-            $event->setName($translator->trans('New'), $language);
+            $event->setName($this->translatorService->trans('New'), $language);
             $event->setDescription('', $language);
         }
 
         $event->setCreateSerial(true);
-        $dm->persist($event);
+        $this->documentManager->persist($event);
 
         $multimediaObject->setEmbeddedEvent($event);
-        $dm->persist($multimediaObject);
-        $dm->flush();
+        $this->documentManager->persist($multimediaObject);
+        $this->documentManager->flush();
 
         $session = $this->get('session');
         $session->set('admin/live/event/id', $multimediaObject->getId());
@@ -150,7 +167,6 @@ class EventsController extends Controller implements NewAdminControllerInterface
      */
     public function listEventAction(Request $request, $type = null)
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
         $session = $this->get('session');
         $eventPicDefault = $this->container->getParameter('pumukit_new_admin.advance_live_event_create_default_pic');
         $page = ($this->get('session')->get('admin/live/event/page')) ?: ($request->query->get('page') ?: 1);
@@ -216,16 +232,15 @@ class EventsController extends Controller implements NewAdminControllerInterface
         $session->set('admin/live/event/sort/field', $sortField);
         $session->set('admin/live/event/sort/type', $sortType);
         if ('embeddedEvent.embeddedEventSession.start' === $sortField) {
-            $multimediaObjects = $dm->getRepository(MultimediaObject::class)->findBy($criteria);
+            $multimediaObjects = $this->documentManager->getRepository(MultimediaObject::class)->findBy($criteria);
             $multimediaObjects = $this->reorderMultimediaObjectsByNextNearSession($multimediaObjects, $sortType);
         } else {
-            $multimediaObjects = $dm->getRepository(MultimediaObject::class)->findBy(
+            $multimediaObjects = $this->documentManager->getRepository(MultimediaObject::class)->findBy(
                 $criteria,
                 [$sortField => $sortType]
             );
         }
 
-        $paginationService = $this->get('pumukit_core.pagination_service');
         $pager = $paginationService->createArrayAdapter($multimediaObjects, $page, 10);
 
         if ($pager->getNbResults() > 0) {
@@ -310,7 +325,6 @@ class EventsController extends Controller implements NewAdminControllerInterface
      */
     public function menuOptionsAction($type, MultimediaObject $multimediaObject)
     {
-        $translator = $this->container->get('translator');
         $message = '';
 
         try {
@@ -338,7 +352,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
             return new JsonResponse(['status' => $e->getMessage()], 409);
         }
 
-        return new JsonResponse(['status' => $translator->trans($message)]);
+        return new JsonResponse(['status' => $this->translatorService->trans($message)]);
     }
 
     /**
@@ -349,11 +363,9 @@ class EventsController extends Controller implements NewAdminControllerInterface
      */
     public function deleteSelectedEventsAction(Request $request)
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
-
         $data = $request->request->get('events_checkbox');
         foreach ($data as $multimediaObjectId) {
-            $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(
+            $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(
                 ['_id' => new ObjectId($multimediaObjectId)]
             );
             $this->deleteEvent($multimediaObject);
@@ -392,12 +404,9 @@ class EventsController extends Controller implements NewAdminControllerInterface
      */
     public function eventAction(Request $request, MultimediaObject $multimediaObject)
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
-
-        $translator = $this->get('translator');
         $locale = $request->getLocale();
 
-        $form = $this->createForm(EventsType::class, $multimediaObject->getEmbeddedEvent(), ['translator' => $translator, 'locale' => $locale]);
+        $form = $this->createForm(EventsType::class, $multimediaObject->getEmbeddedEvent(), ['translator' => $this->translatorService, 'locale' => $locale]);
 
         $people = [];
         $people['author'] = $multimediaObject->getEmbeddedEvent()->getAuthor();
@@ -435,7 +444,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
                 $event->setUrl($externalURL);
 
                 if (isset($data['live'])) {
-                    $live = $dm->getRepository(Live::class)->findOneBy(
+                    $live = $this->documentManager->getRepository(Live::class)->findOneBy(
                         ['_id' => new ObjectId($data['live'])]
                     );
                     $event->setLive($live);
@@ -446,7 +455,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
                     } else {
                         $embeddedSocial = new EmbeddedSocial();
                         $embeddedSocial->setEmail($data['contact']);
-                        $dm->persist($embeddedSocial);
+                        $this->documentManager->persist($embeddedSocial);
                         $multimediaObject->setEmbeddedSocial($embeddedSocial);
                     }
                 } else {
@@ -469,7 +478,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
                     } else {
                         $embeddedSocial = new EmbeddedSocial();
                         $embeddedSocial->setTwitterHashtag($data['twitter_hashtag']);
-                        $dm->persist($embeddedSocial);
+                        $this->documentManager->persist($embeddedSocial);
                         $multimediaObject->setEmbeddedSocial($embeddedSocial);
                     }
                 }
@@ -479,16 +488,15 @@ class EventsController extends Controller implements NewAdminControllerInterface
                     } else {
                         $embeddedSocial = new EmbeddedSocial();
                         $embeddedSocial->setTwitter($data['twitter_widget_id']);
-                        $dm->persist($embeddedSocial);
+                        $this->documentManager->persist($embeddedSocial);
                         $multimediaObject->setEmbeddedSocial($embeddedSocial);
                     }
                 }
 
-                $eventsService = $this->container->get('pumukitschema.eventsession');
                 $color = $eventsService->validateHtmlColor($data['poster_text_color']);
                 $multimediaObject->setProperty('postertextcolor', $color);
 
-                $dm->flush();
+                $this->documentManager->flush();
             } catch (\Exception $e) {
                 return new JsonResponse(['status' => $e->getMessage()], 409);
             }
@@ -508,11 +516,10 @@ class EventsController extends Controller implements NewAdminControllerInterface
      */
     public function seriesAction(Request $request, Series $series)
     {
-        $translator = $this->get('translator');
         $locale = $request->getLocale();
         $disablePudenew = !$this->container->getParameter('show_latest_with_pudenew');
 
-        $form = $this->createForm(SeriesType::class, $series, ['translator' => $translator, 'locale' => $locale, 'disable_PUDENEW' => $disablePudenew]);
+        $form = $this->createForm(SeriesType::class, $series, ['translator' => $this->translatorService, 'locale' => $locale, 'disable_PUDENEW' => $disablePudenew]);
 
         $exclude_fields = [];
         $show_later_fields = [
@@ -548,12 +555,9 @@ class EventsController extends Controller implements NewAdminControllerInterface
      */
     public function sessionAction(Request $request, MultimediaObject $multimediaObject)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
-        $translator = $this->get('translator');
         $locale = $request->getLocale();
 
-        $form = $this->createForm(EmbeddedEventSessionType::class, null, ['translator' => $translator, 'locale' => $locale]);
+        $form = $this->createForm(EmbeddedEventSessionType::class, null, ['translator' => $this->translatorService, 'locale' => $locale]);
 
         $form->handleRequest($request);
         if ('POST' === $request->getMethod()) {
@@ -582,12 +586,12 @@ class EventsController extends Controller implements NewAdminControllerInterface
                     $embeddedEventSession->setEnds($end);
                     $embeddedEventSession->setDuration($duration);
                     $embeddedEventSession->setNotes($notes);
-                    $dm->persist($embeddedEventSession);
+                    $this->documentManager->persist($embeddedEventSession);
 
                     $multimediaObject->getEmbeddedEvent()->addEmbeddedEventSession($embeddedEventSession);
                 }
 
-                $dm->flush();
+                $this->documentManager->flush();
             } catch (\Exception $e) {
                 return new JsonResponse(['status' => $e->getMessage()], 409);
             }
@@ -610,9 +614,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
      */
     public function sessionListAction($id)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($id)]);
+        $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($id)]);
 
         return ['multimediaObject' => $multimediaObject];
     }
@@ -628,16 +630,14 @@ class EventsController extends Controller implements NewAdminControllerInterface
      */
     public function sessionDeleteAction($multimediaObject, $session_id)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObject)]);
+        $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObject)]);
         foreach ($multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession() as $session) {
             if ($session->getId() == $session_id) {
                 $multimediaObject->getEmbeddedEvent()->removeEmbeddedEventSession($session);
             }
         }
 
-        $dm->flush();
+        $this->documentManager->flush();
 
         return new JsonResponse(['sessions' => $multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession()]);
     }
@@ -655,9 +655,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
      */
     public function sessionCloneAction($multimediaObject, $session_id)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObject)]);
+        $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObject)]);
         foreach ($multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession() as $session) {
             if ($session->getId() == $session_id) {
                 $newSession = new EmbeddedEventSession();
@@ -669,12 +667,12 @@ class EventsController extends Controller implements NewAdminControllerInterface
                 $dateEnds->add(new \DateInterval('P1D'));
                 $newSession->setStart($date);
                 $newSession->setEnds($dateEnds);
-                $dm->persist($newSession);
+                $this->documentManager->persist($newSession);
                 $multimediaObject->getEmbeddedEvent()->addEmbeddedEventSession($newSession);
             }
         }
 
-        $dm->flush();
+        $this->documentManager->flush();
 
         return new JsonResponse(['sessions' => $multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession()]);
     }
@@ -692,14 +690,11 @@ class EventsController extends Controller implements NewAdminControllerInterface
      */
     public function modalSessionAction(Request $request, $multimediaObject, $session_id = false)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
-        $translator = $this->get('translator');
         $locale = $request->getLocale();
 
-        $form = $this->createForm(EmbeddedEventSessionType::class, null, ['translator' => $translator, 'locale' => $locale]);
+        $form = $this->createForm(EmbeddedEventSessionType::class, null, ['translator' => $this->translatorService, 'locale' => $locale]);
 
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObject)]);
+        $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObject)]);
 
         if (!$session_id) {
             return ['form' => $form->createView(), 'multimediaObject' => $multimediaObject];
@@ -736,7 +731,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
     {
         $value = $request->query->get('term');
 
-        $aggregate = $this->get('doctrine_mongodb')->getManager()->getDocumentCollection(Series::class);
+        $aggregate = $this->documentManager->getDocumentCollection(Series::class);
 
         $user = $this->getUser();
         $pipeline = [];
@@ -783,9 +778,8 @@ class EventsController extends Controller implements NewAdminControllerInterface
      */
     public function seriesChangeModalAction($multimediaObject = null)
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
         if (isset($multimediaObject)) {
-            $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObject)]);
+            $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObject)]);
 
             return ['multimediaObject' => $multimediaObject];
         }
@@ -802,11 +796,10 @@ class EventsController extends Controller implements NewAdminControllerInterface
     {
         $series = $request->request->get('seriesSuggest');
         if ($series) {
-            $dm = $this->container->get('doctrine_mongodb')->getManager();
-            $series = $dm->getRepository(Series::class)->findOneBy(['_id' => new ObjectId($series)]);
+            $series = $this->documentManager->getRepository(Series::class)->findOneBy(['_id' => new ObjectId($series)]);
             if ($series) {
                 $multimediaObject->setSeries($series);
-                $dm->flush();
+                $this->documentManager->flush();
 
                 return new JsonResponse(['success']);
             }
@@ -839,23 +832,20 @@ class EventsController extends Controller implements NewAdminControllerInterface
      */
     public function autocompleteSeriesWithEventDataAction(Request $request, MultimediaObject $multimediaObject)
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
-        $translator = $this->get('translator');
-
-        $series = $dm->getRepository(Series::class)->findOneBy(['_id' => $multimediaObject->getSeries()->getId()]);
+        $series = $this->documentManager->getRepository(Series::class)->findOneBy(['_id' => $multimediaObject->getSeries()->getId()]);
         if (!$series) {
-            throw new \Exception($translator->trans('Series not found'));
+            throw new \Exception($this->translatorService->trans('Series not found'));
         }
 
         try {
             $series->setI18nTitle($multimediaObject->getEmbeddedEvent()->getI18nName());
             $series->setI18nDescription($multimediaObject->getEmbeddedEvent()->getI18nDescription());
-            $dm->flush();
+            $this->documentManager->flush();
         } catch (\Exception $exception) {
             throw new \Exception($exception->getMessage());
         }
 
-        $this->get('pumukitschema.series_dispatcher')->dispatchUpdate($series);
+        $this->seriesDispatcher->dispatchUpdate($series);
 
         return new JsonResponse(['success']);
     }
@@ -869,17 +859,14 @@ class EventsController extends Controller implements NewAdminControllerInterface
      */
     private function cloneEvent(MultimediaObject $multimediaObject)
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
-        $factoryService = $this->container->get('pumukitschema.factory');
-
-        $cloneMultimediaObject = $factoryService->cloneMultimediaObject($multimediaObject);
+        $cloneMultimediaObject = $this->factoryService->cloneMultimediaObject($multimediaObject);
         $cloneMultimediaObject->setType(MultimediaObject::TYPE_LIVE);
 
-        $dm->persist($cloneMultimediaObject);
+        $this->documentManager->persist($cloneMultimediaObject);
 
         $series = $multimediaObject->getSeries();
         $cloneSeries = clone $series;
-        $dm->persist($cloneSeries);
+        $this->documentManager->persist($cloneSeries);
 
         $cloneMultimediaObject->setSeries($cloneSeries);
 
@@ -893,11 +880,11 @@ class EventsController extends Controller implements NewAdminControllerInterface
         $event->setLive($multimediaObject->getEmbeddedEvent()->getLive());
         $event->setUrl($multimediaObject->getEmbeddedEvent()->getUrl());
         $event->setCreateSerial(false);
-        $dm->persist($event);
+        $this->documentManager->persist($event);
 
         $cloneMultimediaObject->setEmbeddedEvent($event);
-        $dm->persist($cloneMultimediaObject);
-        $dm->flush();
+        $this->documentManager->persist($cloneMultimediaObject);
+        $this->documentManager->flush();
 
         return 'Cloned event successfully';
     }
@@ -909,8 +896,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
      */
     private function deleteEvent(MultimediaObject $multimediaObject)
     {
-        $factoryService = $this->container->get('pumukitschema.factory');
-        $factoryService->deleteMultimediaObject($multimediaObject);
+        $this->factoryService->deleteMultimediaObject($multimediaObject);
 
         return 'Deleted event successfully';
     }
@@ -924,8 +910,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
      */
     private function deleteEventAndSeries(MultimediaObject $multimediaObject)
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
-        $aggregate = $dm->getDocumentCollection(MultimediaObject::class);
+        $aggregate = $this->documentManager->getDocumentCollection(MultimediaObject::class);
         $user = $this->getUser();
         $pipeline = [];
         $pipeline[] = ['$match' => ['series' => new ObjectId($multimediaObject->getSeries()->getId())]];
@@ -941,31 +926,22 @@ class EventsController extends Controller implements NewAdminControllerInterface
         ];
         $mmObjsNotOwner = $aggregate->aggregate($pipeline, ['cursor' => []])->toArray();
 
-        $factoryService = $this->container->get('pumukitschema.factory');
-        $translator = $this->container->get('translator');
-
         if (0 !== count($mmObjsNotOwner) && $user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
-            throw new \Exception($translator->trans('Error: Series have another owners on others events'));
+            throw new \Exception($this->translatorService->trans('Error: Series have another owners on others events'));
         }
         $series = $multimediaObject->getSeries();
-        $seriesRepo = $dm->getRepository(Series::class);
+        $seriesRepo = $this->documentManager->getRepository(Series::class);
         $count = $seriesRepo->countMultimediaObjects($series);
         if (1 === $count) {
-            $factoryService->deleteMultimediaObject($multimediaObject);
-            $factoryService->deleteSeries($series);
+            $this->factoryService->deleteMultimediaObject($multimediaObject);
+            $this->factoryService->deleteSeries($series);
         } else {
-            throw new \Exception($translator->trans('Error: Series have some events'));
+            throw new \Exception($this->translatorService->trans('Error: Series have some events'));
         }
 
         return 'Delete event and series successfully';
     }
 
-    /**
-     * @param array  $multimediaObjects
-     * @param string $sortType
-     *
-     * @return array
-     */
     private function reorderMultimediaObjectsByNextNearSession($multimediaObjects, $sortType)
     {
         $date = new \DateTime();
