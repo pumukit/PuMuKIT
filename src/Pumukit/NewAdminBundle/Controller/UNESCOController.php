@@ -203,8 +203,8 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
             }
         }
 
-        $paginationService = $this->get('pumukit_core.pagination_service');
-        $pager = $paginationService->createDoctrineODMMongoDBAdapter($multimediaObjects, $page, $maxPerPage);
+
+        $pager = $this->paginationService->createDoctrineODMMongoDBAdapter($multimediaObjects, $page, $maxPerPage);
 
         if ($pager->getNbPages() < $page) {
             $page = $pager->getNbPages();

@@ -1490,9 +1490,9 @@ class MultimediaObjectController extends SortableAdminController
             ->getQueryBuilderOrderedBy($series, $sorting)
         ;
 
-        $paginationService = $this->get('pumukit_core.pagination_service');
 
-        return $paginationService->createDoctrineODMMongoDBAdapter($mmsQueryBuilder, $page);
+
+        return $this->paginationService->createDoctrineODMMongoDBAdapter($mmsQueryBuilder, $page);
     }
 
     protected function dispatchUpdate($multimediaObject)
