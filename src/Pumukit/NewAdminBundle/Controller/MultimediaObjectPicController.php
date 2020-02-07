@@ -54,8 +54,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
     {
         $isEventPoster = $request->get('is_event_poster', false);
         if (($url = $request->get('url')) || ($url = $request->get('picUrl'))) {
-            $picService = $this->get('pumukitschema.mmspic');
-            $multimediaObject = $picService->addPicUrl($multimediaObject, $url, true, $isEventPoster);
+            $multimediaObject = $this->multimediaObjectPicService->addPicUrl($multimediaObject, $url, true, $isEventPoster);
         }
 
         return [
@@ -78,8 +77,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
             }
             if ($request->files->has('file')) {
-                $picService = $this->get('pumukitschema.mmspic');
-                $picService->addPicFile($multimediaObject, $request->files->get('file'), $isEventPoster);
+                $this->multimediaObjectPicService->addPicFile($multimediaObject, $request->files->get('file'), $isEventPoster);
             }
         } catch (\Exception $e) {
             return [
@@ -177,7 +175,6 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
     public function picstoaddlistAction(MultimediaObject $multimediaObject, Request $request)
     {
         $isEventPoster = $request->get('is_event_poster', false);
-        $picService = $this->get('pumukitschema.mmspic');
 
         if ($request->get('page', null)) {
             $this->get('session')->set('admin/mmspic/page', $request->get('page', 1));
@@ -187,7 +184,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
 
         $series = $multimediaObject->getSeries();
 
-        $urlPics = $picService->getRecommendedPics($series);
+        $urlPics = $this->multimediaObjectPicService->getRecommendedPics($series);
 
         $total = (int) (ceil(count($urlPics) / $limit));
 
@@ -219,8 +216,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
 
             $data = base64_decode($decodedData);
 
-            $picService = $this->get('pumukitschema.mmspic');
-            $picService->addPicMem($multimediaObject, $data, $format);
+            $this->multimediaObjectPicService->addPicMem($multimediaObject, $data, $format);
 
             return new JsonResponse('done');
         }
