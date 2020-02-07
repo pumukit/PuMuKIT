@@ -8,7 +8,7 @@ use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\PicExtractorService;
 use Pumukit\EncoderBundle\Services\ProfileService;
-use Pumukit\InspectionBundle\Services\InspectionServiceInterface;
+use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
 use Pumukit\NewAdminBundle\Form\Type\TrackType;
 use Pumukit\NewAdminBundle\Form\Type\TrackUpdateType;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -40,7 +40,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     private $inspectionService;
     private $picExtractorService;
 
-    public function __construct(LoggerInterface $logger, DocumentManager $dm, TranslatorInterface $translator, JobService $jobService, TrackService $trackService, ProfileService $profileService, InspectionServiceInterface $inspectionService, PicExtractorService $picExtractorService)
+    public function __construct(LoggerInterface $logger, DocumentManager $dm, TranslatorInterface $translator, JobService $jobService, TrackService $trackService, ProfileService $profileService, InspectionFfprobeService $inspectionService, PicExtractorService $picExtractorService)
     {
         $this->logger = $logger;
         $this->dm = $dm;
@@ -249,7 +249,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         $jobs = $this->jobService->getNotFinishedJobsByMultimediaObjectId($multimediaObject->getId());
 
         $notMasterProfiles = $this->profileService->getProfiles(null, true, false);
-        $allBundles = $this->container->getParameter('kernel.bundles');
+        $allBundles = $this->getParameter('kernel.bundles');
         $opencastExists = array_key_exists('PumukitOpencastBundle', $allBundles);
 
         return [
