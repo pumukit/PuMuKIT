@@ -96,3 +96,7 @@ services:
 
   Pumukit\NewAdminBundle\Controller\TrackController:
     class: Pumukit\NewAdminBundle\Controller\TrackController
+
+  Pumukit\NewAdminBundle\Controller\:
+    resource: '../../src/Pumukit/NewAdminBundle/Controller/'
+    tags: ['controller.service_arguments']

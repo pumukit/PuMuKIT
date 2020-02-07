@@ -2,15 +2,28 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class ResourceController extends Controller
+class ResourceController extends AbstractController
 {
     public static $resourceName = 'series';
     public static $repoName = Series::class;
+
+    /** @var DocumentManager */
+    private $documentManager;
+    /** @var PaginationService */
+    private $paginationService;
+
+    public function __construct(DocumentManager $documentManager, PaginationService $paginationService)
+    {
+        $this->documentManager = $documentManager;
+        $this->paginationService = $paginationService;
+    }
 
     public function getResourceName()
     {
@@ -29,9 +42,7 @@ class ResourceController extends Controller
 
     public function getRepository()
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
-
-        return $dm->getRepository(static::$repoName);
+        return $this->documentManager->getRepository(static::$repoName);
     }
 
     public function getSorting(Request $request = null, $session_namespace = null)
@@ -69,9 +80,8 @@ class ResourceController extends Controller
 
     public function update($resource)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $dm->persist($resource);
-        $dm->flush();
+        $this->documentManager->persist($resource);
+        $this->documentManager->flush();
     }
 
     public function createNew()
@@ -89,9 +99,7 @@ class ResourceController extends Controller
         $queryBuilder->setQueryArray($criteria);
         $queryBuilder->sort($sorting);
 
-        $paginationService = $this->get('pumukit_core.pagination_service');
-
-        return $paginationService->createDoctrineODMMongoDBAdapter($queryBuilder);
+        return $this->paginationService->createDoctrineODMMongoDBAdapter($queryBuilder);
     }
 
     private function getRedirectRoute($routeName = 'index')
