@@ -70,7 +70,7 @@ class UserController extends AdminController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $user = $this->userService->create($user);
-                $user = $this->get('pumukitschema.person')->referencePersonIntoUser($user);
+                $user = $this->personService->referencePersonIntoUser($user);
             } catch (\Exception $e) {
                 throw $e;
             }
@@ -396,7 +396,7 @@ class UserController extends AdminController
 
         if (null !== $person = $userToDelete->getPerson()) {
             try {
-                $this->get('pumukitschema.person')->removeUserFromPerson($userToDelete, $person, true);
+                $this->personService->removeUserFromPerson($userToDelete, $person, true);
             } catch (\Exception $e) {
                 return new Response(
                     "Can not delete the user '".$userToDelete->getUsername()."'. ".$e->getMessage(),

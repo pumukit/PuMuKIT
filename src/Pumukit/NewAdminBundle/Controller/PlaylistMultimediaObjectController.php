@@ -65,7 +65,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         if ($request->query->has('pos')) {
             $this->get('session')->set('admin/playlistmms/pos', $request->query->get('pos'));
         }
-        $roles = $this->get('pumukitschema.person')->getRoles();
+        $roles = $this->personService->getRoles();
         $activeEditor = $this->checkHasEditor();
 
         return [
@@ -453,9 +453,9 @@ class PlaylistMultimediaObjectController extends AbstractController
         }
         $dm->getFilterCollection()->disable('backoffice');
         $filter = $dm->getFilterCollection()->enable('personal');
-        $person = $this->get('pumukitschema.person')->getPersonFromLoggedInUser($user);
+        $person = $this->personService->getPersonFromLoggedInUser($user);
         $people = [];
-        if ((null !== $person) && (null !== ($roleCode = $this->get('pumukitschema.person')->getPersonalScopeRoleCode()))) {
+        if ((null !== $person) && (null !== ($roleCode = $this->personService->getPersonalScopeRoleCode()))) {
             $people['$elemMatch'] = [];
             $people['$elemMatch']['people._id'] = new ObjectId($person->getId());
             $people['$elemMatch']['cod'] = $roleCode;
