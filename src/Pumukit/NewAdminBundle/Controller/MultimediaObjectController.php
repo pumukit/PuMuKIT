@@ -98,7 +98,7 @@ class MultimediaObjectController extends SortableAdminController
         return [
             'series' => $series,
             'mms' => $mms,
-            'disable_pudenew' => !$this->container->getParameter('show_latest_with_pudenew'),
+            'disable_pudenew' => !$this->getParameter('show_latest_with_pudenew'),
         ];
     }
 
@@ -217,7 +217,7 @@ class MultimediaObjectController extends SortableAdminController
         $formPub = $this->createForm(MultimediaObjectPubType::class, $resource, $options);
 
         //If the 'pudenew' tag is not being used, set the display to 'false'.
-        if (!$this->container->getParameter('show_latest_with_pudenew')) {
+        if (!$this->getParameter('show_latest_with_pudenew')) {
             $this->documentManager
                 ->getRepository(Tag::class)
                 ->findOneByCod('PUDENEW')
@@ -235,12 +235,12 @@ class MultimediaObjectController extends SortableAdminController
 
         $activeEditor = $this->checkHasEditor();
         $changePubChannel = $this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
-        $allBundles = $this->container->getParameter('kernel.bundles');
+        $allBundles = $this->getParameter('kernel.bundles');
         $opencastExists = array_key_exists('PumukitOpencastBundle', $allBundles);
 
         $allGroups = $this->getAllGroups();
 
-        $showSimplePubTab = $this->container->getParameter('pumukit_new_admin.show_naked_pub_tab');
+        $showSimplePubTab = $this->getParameter('pumukit_new_admin.show_naked_pub_tab');
 
         return [
             'mm' => $resource,
@@ -269,7 +269,7 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function linksAction(MultimediaObject $resource)
     {
-        $warningOnUnpublished = $this->container->getParameter('pumukit.warning_on_unpublished');
+        $warningOnUnpublished = $this->getParameter('pumukit.warning_on_unpublished');
 
         return [
             'mm' => $resource,
@@ -1021,9 +1021,9 @@ class MultimediaObjectController extends SortableAdminController
     public function updateBroadcastAction(MultimediaObject $multimediaObject, Request $request)
     {
         if ($multimediaObject->isLive()) {
-            $broadcasts = $embeddedBroadcastService->getAllTypes(true);
+            $broadcasts = $this->embeddedBroadcastService->getAllTypes(true);
         } else {
-            $broadcasts = $embeddedBroadcastService->getAllTypes();
+            $broadcasts = $this->embeddedBroadcastService->getAllTypes();
         }
         $allGroups = $this->getAllGroups();
         $template = $multimediaObject->isPrototype() ? '_template' : '';
@@ -1197,7 +1197,7 @@ class MultimediaObjectController extends SortableAdminController
         $aPubChannel = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PUBCHANNELS']);
         $aChannels = $this->documentManager->getRepository(Tag::class)->findBy(['parent.$id' => new ObjectId($aPubChannel->getId())]);
 
-        $multimediaObjectLabel = $this->translationService->trans($this->container->getParameter('pumukit_new_admin.multimedia_object_label'));
+        $multimediaObjectLabel = $this->translationService->trans($this->getParameter('pumukit_new_admin.multimedia_object_label'));
         $statusPub = [
             MultimediaObject::STATUS_PUBLISHED => 'Published',
             MultimediaObject::STATUS_BLOCKED => 'Blocked',
@@ -1209,7 +1209,7 @@ class MultimediaObjectController extends SortableAdminController
             'roles' => $aRoles,
             'statusPub' => $statusPub,
             'pubChannels' => $aChannels,
-            'disable_pudenew' => !$this->container->getParameter('show_latest_with_pudenew'),
+            'disable_pudenew' => !$this->getParameter('show_latest_with_pudenew'),
             'multimedia_object_label' => $multimediaObjectLabel,
         ];
     }
@@ -1227,7 +1227,7 @@ class MultimediaObjectController extends SortableAdminController
             'PumukitNewAdminBundle:MultimediaObject:listAll.html.twig',
             [
                 'mms' => $resources,
-                'disable_pudenew' => !$this->container->getParameter('show_latest_with_pudenew'),
+                'disable_pudenew' => !$this->getParameter('show_latest_with_pudenew'),
             ]
         );
     }
@@ -1554,16 +1554,16 @@ class MultimediaObjectController extends SortableAdminController
     {
         $groupRepo = $this->documentManager->getRepository(Group::class);
 
-        $embeddedBroadcastService->updateTypeAndName($type, $multimediaObject, false);
+        $this->embeddedBroadcastService->updateTypeAndName($type, $multimediaObject, false);
         if (EmbeddedBroadcast::TYPE_PASSWORD === $type) {
-            $embeddedBroadcastService->updatePassword($password, $multimediaObject, false);
+            $this->embeddedBroadcastService->updatePassword($password, $multimediaObject, false);
         } elseif (EmbeddedBroadcast::TYPE_GROUPS === $type) {
             foreach ($addGroups as $addGroup) {
                 $groupIdArray = explode('_', $addGroup);
                 $groupId = end($groupIdArray);
                 $group = $groupRepo->find($groupId);
                 if ($group) {
-                    $embeddedBroadcastService->addGroup($group, $multimediaObject, false);
+                    $this->embeddedBroadcastService->addGroup($group, $multimediaObject, false);
                 }
             }
             foreach ($deleteGroups as $deleteGroup) {
@@ -1571,7 +1571,7 @@ class MultimediaObjectController extends SortableAdminController
                 $groupId = end($groupIdArray);
                 $group = $groupRepo->find($groupId);
                 if ($group) {
-                    $embeddedBroadcastService->deleteGroup($group, $multimediaObject, false);
+                    $this->embeddedBroadcastService->deleteGroup($group, $multimediaObject, false);
                 }
             }
         }

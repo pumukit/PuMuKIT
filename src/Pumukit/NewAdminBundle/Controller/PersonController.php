@@ -192,7 +192,7 @@ class PersonController extends AdminController
      */
     public function listAutocompleteAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
-        if ($role->getCod() === $this->container->getParameter('pumukitschema.personal_scope_role_code')) {
+        if ($role->getCod() === $this->getParameter('pumukitschema.personal_scope_role_code')) {
             $this->denyAccessUnlessGranted('ROLE_ADD_OWNER');
         }
 
@@ -231,7 +231,7 @@ class PersonController extends AdminController
      */
     public function createRelationAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
-        if ($role->getCod() === $this->container->getParameter('pumukitschema.personal_scope_role_code')) {
+        if ($role->getCod() === $this->getParameter('pumukitschema.personal_scope_role_code')) {
             $this->denyAccessUnlessGranted('ROLE_MODIFY_OWNER');
         }
         $owner = $request->get('owner', false);
@@ -302,7 +302,7 @@ class PersonController extends AdminController
      */
     public function updateRelationAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
-        if ($role->getCod() === $this->container->getParameter('pumukitschema.personal_scope_role_code')) {
+        if ($role->getCod() === $this->getParameter('pumukitschema.personal_scope_role_code')) {
             $this->denyAccessUnlessGranted('ROLE_MODIFY_OWNER');
         }
         $owner = $request->get('owner', false);
@@ -371,7 +371,7 @@ class PersonController extends AdminController
      */
     public function linkAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
-        if ($role->getCod() === $this->container->getParameter('pumukitschema.personal_scope_role_code')) {
+        if ($role->getCod() === $this->getParameter('pumukitschema.personal_scope_role_code')) {
             $this->denyAccessUnlessGranted('ROLE_ADD_OWNER');
         }
 
@@ -444,7 +444,7 @@ class PersonController extends AdminController
      */
     public function upAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
-        if ($role->getCod() === $this->container->getParameter('pumukitschema.personal_scope_role_code')) {
+        if ($role->getCod() === $this->getParameter('pumukitschema.personal_scope_role_code')) {
             $this->denyAccessUnlessGranted('ROLE_ADD_OWNER');
         }
 
@@ -483,7 +483,7 @@ class PersonController extends AdminController
      */
     public function downAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
-        if ($role->getCod() === $this->container->getParameter('pumukitschema.personal_scope_role_code')) {
+        if ($role->getCod() === $this->getParameter('pumukitschema.personal_scope_role_code')) {
             $this->denyAccessUnlessGranted('ROLE_ADD_OWNER');
         }
 
@@ -524,7 +524,7 @@ class PersonController extends AdminController
     {
         $person = $this->personService->findPersonById($request->get('id'));
 
-        if ($role->getCod() === $this->container->getParameter('pumukitschema.personal_scope_role_code')) {
+        if ($role->getCod() === $this->getParameter('pumukitschema.personal_scope_role_code')) {
             $this->denyAccessUnlessGranted('ROLE_MODIFY_OWNER');
         }
         $owner = $request->get('owner', false);

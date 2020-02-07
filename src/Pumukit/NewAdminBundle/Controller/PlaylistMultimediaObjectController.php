@@ -81,7 +81,7 @@ class PlaylistMultimediaObjectController extends AbstractController
      */
     public function infoAction(MultimediaObject $mmobj, Request $request)
     {
-        $warningOnUnpublished = $this->container->getParameter('pumukit.warning_on_unpublished');
+        $warningOnUnpublished = $this->getParameter('pumukit.warning_on_unpublished');
 
         return [
             'mm' => $mmobj,
@@ -352,7 +352,7 @@ class PlaylistMultimediaObjectController extends AbstractController
             'id' => $request->get('id'),
             'ids' => $request->get('ids'),
             'num_mm' => $count,
-            'locales' => $this->container->getParameter('pumukit.locales'),
+            'locales' => $this->getParameter('pumukit.locales'),
         ];
     }
 

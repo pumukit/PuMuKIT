@@ -103,7 +103,7 @@ class SeriesController extends AdminController
 
         return [
             'series' => $resources,
-            'disable_pudenew' => !$this->container->getParameter('show_latest_with_pudenew'),
+            'disable_pudenew' => !$this->getParameter('show_latest_with_pudenew'),
         ];
     }
 
@@ -182,7 +182,7 @@ class SeriesController extends AdminController
         $this->get('session')->set('admin/series/id', $request->get('id'));
 
         $locale = $request->getLocale();
-        $disablePudenew = !$this->container->getParameter('show_latest_with_pudenew');
+        $disablePudenew = !$this->getParameter('show_latest_with_pudenew');
         $form = $this->createForm(SeriesType::class, $resource, ['translator' => $this->translationService, 'locale' => $locale, 'disable_PUDENEW' => $disablePudenew]);
 
         $method = $request->getMethod();
@@ -232,7 +232,7 @@ class SeriesController extends AdminController
         //These fields are form fields that are rendered separately, so they should be 'excluded' from the generic foreach.
         $exclude_fields = [];
         $show_later_fields = ['pumukitnewadmin_series_i18n_header', 'pumukitnewadmin_series_i18n_footer', 'pumukitnewadmin_series_i18n_line2', 'pumukitnewadmin_series_template', 'pumukitnewadmin_series_sorting', 'pumukitnewadmin_series_series_style'];
-        $showSeriesTypeTab = $this->container->hasParameter('pumukit.use_series_channels') && $this->container->getParameter('pumukit.use_series_channels');
+        $showSeriesTypeTab = $this->container->hasParameter('pumukit.use_series_channels') && $this->getParameter('pumukit.use_series_channels');
         if (!$showSeriesTypeTab) {
             $exclude_fields[] = 'pumukitnewadmin_series_series_type';
         }

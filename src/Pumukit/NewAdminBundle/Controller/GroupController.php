@@ -426,7 +426,7 @@ class GroupController extends AdminController
     public function deleteAllEmbeddedBroadcastsAction(Group $group, Request $request)
     {
         try {
-            $embeddedBroadcastService->deleteAllFromGroup($group);
+            $this->embeddedBroadcastService->deleteAllFromGroup($group);
         } catch (\Exception $e) {
             return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
