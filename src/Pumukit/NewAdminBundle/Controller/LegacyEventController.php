@@ -167,8 +167,6 @@ class LegacyEventController extends AdminController
      */
     public function updateAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
         $resourceName = $this->getResourceName();
 
         $resource = $this->findOr404($request);
@@ -178,8 +176,8 @@ class LegacyEventController extends AdminController
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 try {
-                    $dm->persist($resource);
-                    $dm->flush();
+                    $this->documentManager->persist($resource);
+                    $this->documentManager->flush();
                 } catch (\Exception $e) {
                     return new JsonResponse(['status' => $e->getMessage()], 409);
                 }

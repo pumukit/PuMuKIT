@@ -67,8 +67,6 @@ class LiveController extends AdminController
      */
     public function updateAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
         $resourceName = $this->getResourceName();
 
         $resource = $this->findOr404($request);
@@ -77,8 +75,8 @@ class LiveController extends AdminController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $dm->persist($resource);
-                $dm->flush();
+                $this->documentManager->persist($resource);
+                $this->documentManager->flush();
             } catch (\Exception $e) {
                 return new JsonResponse(['status' => $e->getMessage()], 409);
             }
@@ -143,9 +141,7 @@ class LiveController extends AdminController
         $resourceId = $resource->getId();
         $resourceName = $this->getResourceName();
 
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
-
-        $liveEvents = $dm->getRepository(MultimediaObject::class)->findOneBy(['embeddedEvent.live.$id' => new ObjectId($resourceId)]);
+        $liveEvents = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['embeddedEvent.live.$id' => new ObjectId($resourceId)]);
         if ($liveEvents) {
             return new JsonResponse(['error']);
         }
@@ -154,8 +150,8 @@ class LiveController extends AdminController
             $this->get('session')->remove('admin/'.$resourceName.'/id');
         }
 
-        $dm->remove($resource);
-        $dm->flush();
+        $this->documentManager->remove($resource);
+        $this->documentManager->flush();
 
         return new JsonResponse(['success']);
     }
@@ -200,10 +196,9 @@ class LiveController extends AdminController
     {
         $emptyChannels = true;
         $channelId = null;
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
 
         foreach ($ids as $id) {
-            $liveEvents = $dm->getRepository(MultimediaObject::class)->findOneBy(['embeddedEvent.live.$id' => new ObjectId($id)]);
+            $liveEvents = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['embeddedEvent.live.$id' => new ObjectId($id)]);
             if ($liveEvents) {
                 $emptyChannels = false;
                 $channelId = $id;

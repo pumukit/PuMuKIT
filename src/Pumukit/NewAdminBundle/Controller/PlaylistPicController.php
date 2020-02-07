@@ -103,7 +103,7 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
     {
         $picId = $request->get('id');
 
-        $repo = $this->get('doctrine_mongodb')
+        $repo = $this->documentManager
             ->getRepository(Series::class)
         ;
 
@@ -123,7 +123,7 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
     {
         $picId = $request->get('id');
 
-        $repo = $this->get('doctrine_mongodb')
+        $repo = $this->documentManager
             ->getRepository(Series::class)
         ;
 
@@ -133,9 +133,8 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
 
         $playlist->upPicById($picId);
 
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $dm->persist($playlist);
-        $dm->flush();
+        $this->documentManager->persist($playlist);
+        $this->documentManager->flush();
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_playlistpic_list', ['id' => $playlist->getId()]));
     }
@@ -147,7 +146,7 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
     {
         $picId = $request->get('id');
 
-        $repo = $this->get('doctrine_mongodb')
+        $repo = $this->documentManager
             ->getRepository(Series::class)
         ;
 
@@ -157,9 +156,8 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
 
         $playlist->downPicById($picId);
 
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $dm->persist($playlist);
-        $dm->flush();
+        $this->documentManager->persist($playlist);
+        $this->documentManager->flush();
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_playlistpic_list', ['id' => $playlist->getId()]));
     }

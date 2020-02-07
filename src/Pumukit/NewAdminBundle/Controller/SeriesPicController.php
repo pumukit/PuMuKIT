@@ -112,7 +112,7 @@ class SeriesPicController extends AbstractController implements NewAdminControll
     {
         $picId = $request->get('id');
 
-        $repo = $this->get('doctrine_mongodb')
+        $repo = $this->documentManager
             ->getRepository(Series::class)
         ;
 
@@ -134,7 +134,7 @@ class SeriesPicController extends AbstractController implements NewAdminControll
     {
         $picId = $request->get('id');
 
-        $repo = $this->get('doctrine_mongodb')
+        $repo = $this->documentManager
             ->getRepository(Series::class)
         ;
 
@@ -144,9 +144,8 @@ class SeriesPicController extends AbstractController implements NewAdminControll
 
         $series->upPicById($picId);
 
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $dm->persist($series);
-        $dm->flush();
+        $this->documentManager->persist($series);
+        $this->documentManager->flush();
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_seriespic_list', ['id' => $series->getId()]));
     }
@@ -160,7 +159,7 @@ class SeriesPicController extends AbstractController implements NewAdminControll
     {
         $picId = $request->get('id');
 
-        $repo = $this->get('doctrine_mongodb')
+        $repo = $this->documentManager
             ->getRepository(Series::class)
         ;
 
@@ -170,9 +169,8 @@ class SeriesPicController extends AbstractController implements NewAdminControll
 
         $series->downPicById($picId);
 
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $dm->persist($series);
-        $dm->flush();
+        $this->documentManager->persist($series);
+        $this->documentManager->flush();
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_seriespic_list', ['id' => $series->getId()]));
     }

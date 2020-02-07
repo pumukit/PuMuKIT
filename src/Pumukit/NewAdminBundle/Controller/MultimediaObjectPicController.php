@@ -108,7 +108,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
         $isEventPoster = $request->get('is_event_poster', false);
         $picId = $request->get('id');
 
-        $repo = $this->get('doctrine_mongodb')
+        $repo = $this->documentManager
             ->getRepository(MultimediaObject::class)
         ;
 
@@ -128,7 +128,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
     {
         $picId = $request->get('id');
 
-        $repo = $this->get('doctrine_mongodb')
+        $repo = $this->documentManager
             ->getRepository(MultimediaObject::class)
         ;
 
@@ -138,9 +138,8 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
 
         $multimediaObject->upPicById($picId);
 
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $dm->persist($multimediaObject);
-        $dm->flush();
+        $this->documentManager->persist($multimediaObject);
+        $this->documentManager->flush();
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_mmspic_list', ['id' => $multimediaObject->getId()]));
     }
@@ -152,7 +151,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
     {
         $picId = $request->get('id');
 
-        $repo = $this->get('doctrine_mongodb')
+        $repo = $this->documentManager
             ->getRepository(MultimediaObject::class)
         ;
 
@@ -162,9 +161,8 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
 
         $multimediaObject->downPicById($picId);
 
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $dm->persist($multimediaObject);
-        $dm->flush();
+        $this->documentManager->persist($multimediaObject);
+        $this->documentManager->flush();
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_mmspic_list', ['id' => $multimediaObject->getId()]));
     }

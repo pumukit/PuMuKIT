@@ -85,7 +85,6 @@ class PlaylistController extends CollectionController
         $method = $request->getMethod();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && in_array($method, ['POST', 'PUT', 'PATCH'])) {
-            $dm = $this->get('doctrine_mongodb.odm.document_manager');
             $dm->persist($series);
             $dm->flush();
             $this->get('pumukitschema.series_dispatcher')->dispatchUpdate($series);
@@ -152,10 +151,10 @@ class PlaylistController extends CollectionController
         $this->batchDeleteCollection($ids);
 
         // Removes ids on session (if the series/mmobj does not exist now, we should get rid of the stored id)
-        $seriesRepo = $this->get('doctrine_mongodb.odm.document_manager')
+        $seriesRepo = $this->documentManager
             ->getRepository(Series::class)
         ;
-        $mmobjRepo = $this->get('doctrine_mongodb.odm.document_manager')
+        $mmobjRepo = $this->documentManager
             ->getRepository(MultimediaObject::class)
         ;
 
@@ -207,7 +206,7 @@ class PlaylistController extends CollectionController
         $sorting = $this->getSorting($request);
         $criteria = $this->getCriteria($request);
         $criteria = array_merge($criteria, ['type' => Series::TYPE_PLAYLIST]);
-        $queryBuilder = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(Series::class)->createQueryBuilder();
+        $queryBuilder = $this->documentManager->getRepository(Series::class)->createQueryBuilder();
         $queryBuilder->setQueryArray($criteria);
         //Sort playlist
         $queryBuilder->sort($sorting);

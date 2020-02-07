@@ -112,8 +112,7 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function shortenerAction($id, Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['id' => $id]);
+        $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['id' => $id]);
         if (!$multimediaObject) {
             $template = 'PumukitNewAdminBundle:MultimediaObject:404notfound.html.twig';
             $options = ['id' => $id];
@@ -130,7 +129,6 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function createAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
         $session = $this->get('session');
 
         $sessionId = $session->get('admin/series/id', null);
@@ -143,17 +141,16 @@ class MultimediaObjectController extends SortableAdminController
         if ($request->attributes->has('microsite_custom_tag')) {
             $sTagCode = $request->attributes->get('microsite_custom_tag');
 
-            $dm = $this->get('doctrine_mongodb')->getManager();
-            $aTag = $dm->getRepository(Tag::class)->findOneBy(['cod' => $sTagCode]);
+            $aTag = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => $sTagCode]);
 
             if ($aTag) {
                 $mmobj->addTag($aTag);
-                $dm->flush();
+                $this->documentManager->flush();
             }
         }
 
         // After reordering the session page is updated
-        $dm->refresh($mmobj);
+        $this->documentManager->refresh($mmobj);
         $this->updateSession($mmobj);
 
         return new JsonResponse(
@@ -221,7 +218,7 @@ class MultimediaObjectController extends SortableAdminController
 
         //If the 'pudenew' tag is not being used, set the display to 'false'.
         if (!$this->container->getParameter('show_latest_with_pudenew')) {
-            $this->get('doctrine_mongodb.odm.document_manager')
+            $this->documentManager
                 ->getRepository(Tag::class)
                 ->findOneByCod('PUDENEW')
                 ->setDisplay(false)
@@ -290,9 +287,7 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function updatesocialAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
-        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($request->request->get('id'))]);
+        $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($request->request->get('id'))]);
         $method = $request->getMethod();
         if (in_array($method, ['POST', 'PUT', 'PATCH'])) {
             $social = $multimediaObject->getEmbeddedSocial();
@@ -301,11 +296,11 @@ class MultimediaObjectController extends SortableAdminController
             }
             $social->setTwitter($request->request->get('twitter'));
             $social->setEmail($request->request->get('email'));
-            $dm->persist($social);
+            $this->documentManager->persist($social);
 
             $multimediaObject->setEmbeddedSocial($social);
 
-            $dm->flush();
+            $this->documentManager->flush();
         }
 
         return ['mm' => $multimediaObject];
@@ -576,7 +571,6 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function searchTagAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
         $repo = $dm->getRepository(Tag::class);
 
         $search_text = $request->get('search_text');
@@ -734,7 +728,7 @@ class MultimediaObjectController extends SortableAdminController
             $ids = json_decode($ids, true);
         }
 
-        $tagNew = $this->get('doctrine_mongodb.odm.document_manager')
+        $tagNew = $this->documentManager
             ->getRepository(Tag::class)->findOneByCod('PUDENEW');
         foreach ($ids as $id) {
             $resource = $this->find($id);
@@ -818,7 +812,6 @@ class MultimediaObjectController extends SortableAdminController
         $sessionId = $this->get('session')->get('admin/series/id', null);
         $series = $this->factoryService->findSeriesById($seriesId, $sessionId);
 
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
         foreach ($ids as $id) {
             $multimediaObject = $dm->getRepository(MultimediaObject::class)->find($id);
 
@@ -858,7 +851,7 @@ class MultimediaObjectController extends SortableAdminController
         $series = $this->factoryService->findSeriesById($request->get('id'), $sessionId);
 
         $series->setSorting($request->get('sorting', Series::SORT_MANUAL));
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+
         $dm->persist($series);
         $dm->flush();
 
@@ -874,7 +867,7 @@ class MultimediaObjectController extends SortableAdminController
     {
         $all = $request->query->get('all');
 
-        $multimediaObjectRepo = $this->get('doctrine_mongodb.odm.document_manager')
+        $multimediaObjectRepo = $this->documentManager
             ->getRepository(MultimediaObject::class)
         ;
         $multimediaObject = $multimediaObjectRepo
@@ -923,7 +916,6 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function reloadTagsAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
         $repo = $dm->getRepository(Tag::class);
 
         $mmId = $request->get('mmId');
@@ -1130,7 +1122,6 @@ class MultimediaObjectController extends SortableAdminController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
-            $dm = $this->get('doctrine_mongodb.odm.document_manager');
             $data['url'] = urldecode($data['url']);
             $multimediaObject->setProperty('externalplayer', $data['url']);
             $dm->flush();
@@ -1150,7 +1141,6 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function deleteExternalPropertyAction(MultimediaObject $multimediaObject)
     {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $multimediaObject->removeProperty('externalplayer');
         $dm->flush();
 
@@ -1189,8 +1179,6 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function indexAllAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
         $criteria = $this->getCriteria($request->get('criteria', []));
         $resources = $this->getResources($request, $criteria);
 
@@ -1330,7 +1318,6 @@ class MultimediaObjectController extends SortableAdminController
 
     public function updatePropertyAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
         $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($request->get('id'))]);
         $method = $request->getMethod();
         if (in_array($method, ['POST'])) {
@@ -1354,8 +1341,6 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function modalSyncMedatadaAction(Request $request, MultimediaObject $multimediaObject)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
         $locale = $request->getLocale();
         $syncService = $this->container->get('pumukitnewadmin.multimedia_object_sync');
 
@@ -1535,7 +1520,6 @@ class MultimediaObjectController extends SortableAdminController
      */
     private function modifyMultimediaObjectGroups(MultimediaObject $multimediaObject, $addGroups = [], $deleteGroups = [])
     {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $groupRepo = $dm->getRepository(Group::class);
 
         foreach ($addGroups as $addGroup) {
@@ -1568,7 +1552,6 @@ class MultimediaObjectController extends SortableAdminController
      */
     private function modifyBroadcastGroups(MultimediaObject $multimediaObject, $type = EmbeddedBroadcast::TYPE_PUBLIC, $password = '', $addGroups = [], $deleteGroups = [])
     {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $groupRepo = $dm->getRepository(Group::class);
 
         $embeddedBroadcastService->updateTypeAndName($type, $multimediaObject, false);
@@ -1650,7 +1633,7 @@ class MultimediaObjectController extends SortableAdminController
         }
 
         $userInOwners = false;
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+
         $personRepo = $dm->getRepository(Person::class);
         foreach ((array) $multimediaObject->getProperty('owners') as $owner) {
             $person = $personRepo->find($owner);

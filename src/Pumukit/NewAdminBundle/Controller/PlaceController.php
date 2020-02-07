@@ -28,10 +28,8 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
      */
     public function indexAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
-        $placeTag = $dm->getRepository(Tag::class)->findOneBy(['cod' => 'PLACES']);
-        $places = $dm->getRepository(Tag::class)->findBy(['parent.$id' => new ObjectId($placeTag->getId())], ['title.'.$request->getLocale() => 1]);
+        $placeTag = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PLACES']);
+        $places = $this->documentManager->getRepository(Tag::class)->findBy(['parent.$id' => new ObjectId($placeTag->getId())], ['title.'.$request->getLocale() => 1]);
 
         return ['places' => $places];
     }
@@ -44,10 +42,8 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
      */
     public function parentAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
-        $placeTag = $dm->getRepository(Tag::class)->findOneBy(['cod' => 'PLACES']);
-        $places = $dm->getRepository(Tag::class)->findBy(['parent.$id' => new ObjectId($placeTag->getId())], ['title.'.$request->getLocale() => 1]);
+        $placeTag = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PLACES']);
+        $places = $this->documentManager->getRepository(Tag::class)->findBy(['parent.$id' => new ObjectId($placeTag->getId())], ['title.'.$request->getLocale() => 1]);
 
         return ['places' => $places];
     }
@@ -75,9 +71,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
      */
     public function previewAction(Tag $tag)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
-        $multimediaObjects = $dm->getRepository(MultimediaObject::class)->findBy(['tags._id' => new ObjectId($tag->getId())]);
+        $multimediaObjects = $this->documentManager->getRepository(MultimediaObject::class)->findBy(['tags._id' => new ObjectId($tag->getId())]);
 
         $series = [];
         foreach ($multimediaObjects as $multimediaObject) {
@@ -97,13 +91,11 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
      */
     public function createAction(Request $request, $id = null)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
         if ($id) {
-            $parent = $dm->getRepository(Tag::class)->findOneBy(['_id' => new ObjectId($id)]);
+            $parent = $this->documentManager->getRepository(Tag::class)->findOneBy(['_id' => new ObjectId($id)]);
             $isPrecinct = true;
         } else {
-            $parent = $dm->getRepository(Tag::class)->findOneBy(['cod' => 'PLACES']);
+            $parent = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PLACES']);
             $isPrecinct = false;
         }
 
@@ -118,8 +110,8 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $dm->persist($tag);
-                $dm->flush();
+                $this->documentManager->persist($tag);
+                $this->documentManager->flush();
             } catch (\Exception $e) {
                 return new JsonResponse(['status' => $e->getMessage()], JsonResponse::HTTP_CONFLICT);
             }
@@ -140,11 +132,9 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
      */
     public function deletePlaceAction(Request $request, Tag $tag)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
         try {
             $this->tagService->deleteTag($tag);
-            $dm->flush();
+            $this->documentManager->flush();
 
             return $this->redirectToRoute('pumukitnewadmin_places_index');
         } catch (\Exception $exception) {

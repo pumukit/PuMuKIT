@@ -35,9 +35,7 @@ class SeriesStylesController extends AbstractController
      */
     public function listAction()
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
-
-        $styles = $dm->getRepository(SeriesStyle::class)->findAll();
+        $styles = $this->documentManager->getRepository(SeriesStyle::class)->findAll();
 
         usort($styles, function ($a, $b) {
             return strtolower($a->getName()) > strtolower($b->getName());
@@ -53,13 +51,11 @@ class SeriesStylesController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
-
         $style = new SeriesStyle();
         $style->setName($request->query->get('name'));
         $style->setText('');
-        $dm->persist($style);
-        $dm->flush();
+        $this->documentManager->persist($style);
+        $this->documentManager->flush();
 
         $session = $this->get('session');
         $session->set('seriesstyle/id', $style->getId());
@@ -74,11 +70,9 @@ class SeriesStylesController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
-
         $id = $request->request->get('id');
         if (isset($id)) {
-            $style = $dm->getRepository(SeriesStyle::class)->findOneBy(
+            $style = $this->documentManager->getRepository(SeriesStyle::class)->findOneBy(
                 ['_id' => new ObjectId($request->request->get('id'))]
             );
         } else {
@@ -86,7 +80,7 @@ class SeriesStylesController extends AbstractController
         }
 
         $style->setText($request->request->get('style_text'));
-        $dm->flush();
+        $this->documentManager->flush();
 
         $session = $this->get('session');
         $session->set('seriesstyle/id', $style->getId());
@@ -103,20 +97,18 @@ class SeriesStylesController extends AbstractController
      */
     public function deleteAction($id)
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
-
         $session = $this->get('session');
 
-        $style = $dm->getRepository(SeriesStyle::class)->findOneBy(['_id' => new ObjectId($id)]);
+        $style = $this->documentManager->getRepository(SeriesStyle::class)->findOneBy(['_id' => new ObjectId($id)]);
 
         if ($style) {
-            $series = $dm->getRepository(Series::class)->findOneBy(
+            $series = $this->documentManager->getRepository(Series::class)->findOneBy(
                 ['series_style' => new ObjectId($style->getId())]
             );
 
             if (!$series) {
-                $dm->remove($style);
-                $dm->flush();
+                $this->documentManager->remove($style);
+                $this->documentManager->flush();
 
                 $session->set('seriesstyle/id', '');
 
@@ -139,9 +131,8 @@ class SeriesStylesController extends AbstractController
      */
     public function showAction($id = null)
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
         if (isset($id)) {
-            $style = $dm->getRepository(SeriesStyle::class)->findOneBy(
+            $style = $this->documentManager->getRepository(SeriesStyle::class)->findOneBy(
                 ['_id' => new ObjectId($id)]
             );
         } else {
