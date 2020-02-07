@@ -29,7 +29,7 @@ class LinkController extends AbstractController implements NewAdminControllerInt
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && ($request->isMethod('PUT') || $request->isMethod('POST'))) {
             try {
-                $multimediaObject = $this->get('pumukitschema.link')->addLinkToMultimediaObject($multimediaObject, $link);
+                $multimediaObject = $this->linkService->addLinkToMultimediaObject($multimediaObject, $link);
             } catch (\Exception $e) {
                 $this->get('session')->getFlashBag()->add('error', $e->getMessage());
             }
@@ -63,7 +63,7 @@ class LinkController extends AbstractController implements NewAdminControllerInt
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && ($request->isMethod('PUT') || $request->isMethod('POST'))) {
             try {
-                $multimediaObject = $this->get('pumukitschema.link')->updateLinkInMultimediaObject($multimediaObject, $link);
+                $multimediaObject = $this->linkService->updateLinkInMultimediaObject($multimediaObject, $link);
             } catch (\Exception $e) {
                 $this->get('session')->getFlashBag()->add('error', $e->getMessage());
             }
@@ -90,7 +90,7 @@ class LinkController extends AbstractController implements NewAdminControllerInt
      */
     public function deleteAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $multimediaObject = $this->get('pumukitschema.link')->removeLinkFromMultimediaObject($multimediaObject, $request->get('id'));
+        $multimediaObject = $this->linkService->removeLinkFromMultimediaObject($multimediaObject, $request->get('id'));
 
         $this->addFlash('success', 'delete');
 
@@ -106,7 +106,7 @@ class LinkController extends AbstractController implements NewAdminControllerInt
      */
     public function upAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $multimediaObject = $this->get('pumukitschema.link')->upLinkInMultimediaObject($multimediaObject, $request->get('id'));
+        $multimediaObject = $this->linkService->upLinkInMultimediaObject($multimediaObject, $request->get('id'));
 
         $this->addFlash('success', 'delete');
 
@@ -122,7 +122,7 @@ class LinkController extends AbstractController implements NewAdminControllerInt
      */
     public function downAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $multimediaObject = $this->get('pumukitschema.link')->downLinkInMultimediaObject($multimediaObject, $request->get('id'));
+        $multimediaObject = $this->linkService->downLinkInMultimediaObject($multimediaObject, $request->get('id'));
 
         $this->addFlash('success', 'delete');
 
