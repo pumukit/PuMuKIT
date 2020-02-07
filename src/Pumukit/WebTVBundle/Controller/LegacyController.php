@@ -2,19 +2,25 @@
 
 namespace Pumukit\WebTVBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\Regex;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class LegacyController.
- */
-class LegacyController extends Controller implements WebTVControllerInterface
+class LegacyController extends AbstractController implements WebTVControllerInterface
 {
+    /** @var DocumentManager */
+    private $documentManager;
+
+    public function __construct(DocumentManager $documentManager)
+    {
+        $this->documentManager = $documentManager;
+    }
+
     /**
      * @Route("/serial/index/id/{pumukit1id}.html")
      * @Route("/serial/index/id/{pumukit1id}")
@@ -27,15 +33,10 @@ class LegacyController extends Controller implements WebTVControllerInterface
      * Parameters:
      * - {_locale} matches the current locale
      * - {pumukit1id} matches series.properties("pumukit1id")
-     *
-     * @param string $pumukit1id
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function seriesAction($pumukit1id)
+    public function seriesAction(string $pumukit1id)
     {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $seriesRepo = $dm->getRepository(Series::class);
+        $seriesRepo = $this->documentManager->getRepository(Series::class);
 
         $series = $seriesRepo->createQueryBuilder()
             ->field('properties.pumukit1id')->equals($pumukit1id)
@@ -75,15 +76,10 @@ class LegacyController extends Controller implements WebTVControllerInterface
      * Parameters:
      * - {_locale} matches current locale
      * - {pumukit1id} matches multimediaObject.properties("pumukit1id")
-     *
-     * @param string $pumukit1id
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function multimediaObjectAction($pumukit1id)
+    public function multimediaObjectAction(string $pumukit1id)
     {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $mmobjRepo = $dm->getRepository(MultimediaObject::class);
+        $mmobjRepo = $this->documentManager->getRepository(MultimediaObject::class);
 
         $multimediaObject = $mmobjRepo->createQueryBuilder()
             ->field('properties.pumukit1id')->equals($pumukit1id)
@@ -93,7 +89,7 @@ class LegacyController extends Controller implements WebTVControllerInterface
         if (!$multimediaObject) {
             throw $this->createNotFoundException();
         }
-        if (MultimediaObject::STATUS_HIDDEN == $multimediaObject->getStatus()) {
+        if (MultimediaObject::STATUS_HIDDEN === $multimediaObject->getStatus()) {
             return $this->redirectToRoute(
                 'pumukit_webtv_multimediaobject_magicindex',
                 ['secret' => $multimediaObject->getSecret()],
@@ -116,15 +112,10 @@ class LegacyController extends Controller implements WebTVControllerInterface
      * Parameters:
      * - {_locale} matches the current locale
      * - {pumukit1id} matches multimediaObject.properties("pumukit1id")
-     *
-     * @param string $pumukit1id
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function multimediaObjectIframeAction($pumukit1id)
+    public function multimediaObjectIframeAction(string $pumukit1id)
     {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $mmobjRepo = $dm->getRepository(MultimediaObject::class);
+        $mmobjRepo = $this->documentManager->getRepository(MultimediaObject::class);
 
         $multimediaObject = $mmobjRepo->createQueryBuilder()
             ->field('properties.pumukit1id')->equals($pumukit1id)
@@ -148,15 +139,10 @@ class LegacyController extends Controller implements WebTVControllerInterface
      * Parameters:
      * - {_locale} matches the current locale
      * - {pumukit1id} matches the tag "pumukit1id:{pumukit1id}" in track.getTags()
-     *
-     * @param string $pumukit1id
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function trackAction($pumukit1id)
+    public function trackAction(string $pumukit1id)
     {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $mmobjRepo = $dm->getRepository(MultimediaObject::class);
+        $mmobjRepo = $this->documentManager->getRepository(MultimediaObject::class);
 
         $multimediaObject = $mmobjRepo->createQueryBuilder()
             ->field('tracks.tags')->equals(new Regex('pumukit1id:'.$pumukit1id, 'i'))
@@ -173,15 +159,10 @@ class LegacyController extends Controller implements WebTVControllerInterface
      * @Route("/serial/index/hash/{hash}")
      * Parameters:
      * - {hash} matches series.properties("pumukit1magic")
-     *
-     * @param string $hash
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function magicAction($hash)
+    public function magicAction(string $hash)
     {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $seriesRepo = $dm->getRepository(Series::class);
+        $seriesRepo = $this->documentManager->getRepository(Series::class);
 
         $series = $seriesRepo->createQueryBuilder()
             ->field('properties.pumukit1magic')->equals($hash)
@@ -196,8 +177,6 @@ class LegacyController extends Controller implements WebTVControllerInterface
 
     /**
      * @Route("/directo.html")
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function directoAction()
     {

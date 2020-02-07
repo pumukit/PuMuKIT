@@ -34,5 +34,8 @@ class PumukitBaseLivePlayerExtension extends Extension
         $container->setParameter('pumukit_live.twitter', $config['twitter']);
         $container->setParameter('pumukit_live.twitter.enable', $config['twitter']['enable']);
         $container->setParameter('pumukit_live.twitter.accounts_link_color', $config['twitter']['accounts_link_color']);
+
+        $container->setParameter('captcha_public_key', $config['captcha_public_key'] ?? '');
+        $container->setParameter('captcha_private_key', $config['captcha_private_key'] ?? '');
     }
 }

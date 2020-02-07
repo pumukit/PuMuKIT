@@ -2,12 +2,13 @@
 
 namespace Pumukit\WebTVBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\Live;
 use Pumukit\SchemaBundle\Document\Message;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,33 +16,38 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/chat")
  */
-class ChatController extends Controller
+class ChatController extends AbstractController
 {
+    private $documentManager;
+    private $pumukitLiveChatEnable;
+    private $pumukitLiveChatUpdateInterval;
+
+    public function __construct(DocumentManager $documentManager, bool $pumukitLiveChatEnable, int $pumukitLiveChatUpdateInterval)
+    {
+        $this->documentManager = $documentManager;
+        $this->pumukitLiveChatEnable = $pumukitLiveChatEnable;
+        $this->pumukitLiveChatUpdateInterval = $pumukitLiveChatUpdateInterval;
+    }
+
     /**
-     * Show chat.
-     *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "id"})
      * @Route("/show/{id}", name="pumukit_live_chat_show")
      * @Template("PumukitWebTVBundle:Live/Chat:show.html.twig")
-     *
-     * @return array
      */
-    public function showAction(MultimediaObject $multimediaObject, Request $request)
+    public function showAction(Request $request, MultimediaObject $multimediaObject): array
     {
         $username = $this->getUser();
         if (!$username) {
             $sessionCookie = $request->cookies->get('PHPSESSID');
-            $dm = $this->get('doctrine_mongodb.odm.document_manager');
-            $messageRepo = $dm->getRepository(Message::class);
-            $message = $messageRepo->findOneBy(['cookie' => $sessionCookie]);
+            $message = $this->documentManager->getRepository(Message::class)->findOneBy(['cookie' => $sessionCookie]);
             if ($message && ($author = $message->getAuthor())) {
                 $username = $author;
             }
         }
 
         return [
-            'enable_chat' => $this->container->getParameter('pumukit_live.chat.enable'),
-            'chatUpdateInterval' => $this->container->getParameter('pumukit_live.chat.update_interval'),
+            'enable_chat' => $this->pumukitLiveChatEnable,
+            'chatUpdateInterval' => $this->pumukitLiveChatUpdateInterval,
             'multimediaObject' => $multimediaObject,
             'username' => $username,
         ];
@@ -51,41 +57,31 @@ class ChatController extends Controller
      * @ParamConverter("live", class="PumukitSchemaBundle:Live", options={"id" = "id"})
      * @Route("/basic/show/{id}", name="pumukit_live_chat_basic_show")
      * @Template("PumukitWebTVBundle:Live/Chat:basicLiveShow.html.twig")
-     *
-     * @return array
      */
-    public function showBasicAction(Request $request, Live $live)
+    public function showBasicAction(Request $request, Live $live): array
     {
         $username = $this->getUser();
         if (!$username) {
             $sessionCookie = $request->cookies->get('PHPSESSID');
-            $dm = $this->get('doctrine_mongodb.odm.document_manager');
-            $messageRepo = $dm->getRepository(Message::class);
-            $message = $messageRepo->findOneBy(['cookie' => $sessionCookie]);
+            $message = $this->documentManager->getRepository(Message::class)->findOneBy(['cookie' => $sessionCookie]);
             if ($message && ($author = $message->getAuthor())) {
                 $username = $author;
             }
         }
 
         return [
-            'enable_chat' => $this->container->getParameter('pumukit_live.chat.enable'),
-            'chatUpdateInterval' => $this->container->getParameter('pumukit_live.chat.update_interval'),
+            'enable_chat' => $this->pumukitLiveChatEnable,
+            'chatUpdateInterval' => $this->pumukitLiveChatUpdateInterval,
             'live' => $live,
             'username' => $username,
         ];
     }
 
     /**
-     * Post message.
-     *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "id"})
      * @Route("/post/{id}", name="pumukit_live_chat_post")
-     *
-     * @throws \Exception
-     *
-     * @return JsonResponse
      */
-    public function postAction(MultimediaObject $multimediaObject, Request $request)
+    public function postAction(MultimediaObject $multimediaObject, Request $request): JsonResponse
     {
         $message = new Message();
         $message->setAuthor($request->get('name'));
@@ -96,9 +92,8 @@ class ChatController extends Controller
         $message->setCookie($sessionCookie);
 
         try {
-            $dm = $this->get('doctrine_mongodb.odm.document_manager');
-            $dm->persist($message);
-            $dm->flush();
+            $this->documentManager->persist($message);
+            $this->documentManager->flush();
         } catch (\Exception $e) {
             return new JsonResponse(['message' => 'Error'], 500);
         }
@@ -109,12 +104,8 @@ class ChatController extends Controller
     /**
      * @ParamConverter("live", class="PumukitSchemaBundle:Live", options={"id" = "id"})
      * @Route("/basic/post/{id}", name="pumukit_live_chat_basic_post")
-     *
-     * @throws \Exception
-     *
-     * @return JsonResponse
      */
-    public function postBasicAction(Live $live, Request $request)
+    public function postBasicAction(Live $live, Request $request): JsonResponse
     {
         $message = new Message();
         $message->setAuthor($request->get('name'));
@@ -125,9 +116,8 @@ class ChatController extends Controller
         $message->setCookie($sessionCookie);
 
         try {
-            $dm = $this->get('doctrine_mongodb.odm.document_manager');
-            $dm->persist($message);
-            $dm->flush();
+            $this->documentManager->persist($message);
+            $this->documentManager->flush();
         } catch (\Exception $e) {
             return new JsonResponse(['message' => 'Error'], 500);
         }
@@ -136,19 +126,13 @@ class ChatController extends Controller
     }
 
     /**
-     * List messages.
-     *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "id"})
      * @Route("/list/{id}", name="pumukit_live_chat_list")
      * @Template("PumukitWebTVBundle:Live/Chat:list.html.twig")
-     *
-     * @return array
      */
-    public function listAction(MultimediaObject $multimediaObject)
+    public function listAction(MultimediaObject $multimediaObject): array
     {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $repo = $dm->getRepository(Message::class);
-        $messages = $repo->findBy(
+        $messages = $this->documentManager->getRepository(Message::class)->findBy(
             ['multimediaObject' => $multimediaObject->getId()],
             ['insertDate' => 'asc']
         );
@@ -162,14 +146,10 @@ class ChatController extends Controller
      * @ParamConverter("live", class="PumukitSchemaBundle:Live", options={"id" = "id"})
      * @Route("/basic/list/{id}", name="pumukit_live_chat_basic_list")
      * @Template("PumukitWebTVBundle:Live/Chat:list.html.twig")
-     *
-     * @return array
      */
-    public function listBasicAction(Live $live)
+    public function listBasicAction(Live $live): array
     {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $repo = $dm->getRepository(Message::class);
-        $messages = $repo->findBy(
+        $messages = $this->documentManager->getRepository(Message::class)->findBy(
             ['channel' => $live->getId()],
             ['insertDate' => 'asc']
         );
