@@ -2,6 +2,7 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\Regex;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\FactoryService;
