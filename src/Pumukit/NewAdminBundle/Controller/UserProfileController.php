@@ -26,7 +26,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class UserProfileController extends AdminController
 {
     /** @var TranslatorInterface */
-    protected $this->translationService;
+    protected $translationService;
 
     /** @var UserManagerInterface */
     protected $fosUserManager;
@@ -43,11 +43,11 @@ class UserProfileController extends AdminController
         FactoryService $factoryService,
         GroupService $groupService,
         UserService $userService,
-        TranslatorInterface $translator,
+        TranslatorInterface $translationService,
         UserManagerInterface $fosUserManager,
         UserStatsService $userStatsService
     ) {
-        $this->translator = $translator;
+        $this->translationService = $translationService;
         $this->documentManager = $documentManager;
         $this->fosUserManager = $fosUserManager;
         $this->userService = $userService;
@@ -65,7 +65,7 @@ class UserProfileController extends AdminController
         $user = $this->getUser();
 
         $locale = $request->getLocale();
-        $form = $this->createForm(UserUpdateProfileType::class, $user, ['translator' => $this->translator, 'locale' => $locale]);
+        $form = $this->createForm(UserUpdateProfileType::class, $user, ['translator' => $this->translationService, 'locale' => $locale]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && $user->isLocal()) {
@@ -108,10 +108,10 @@ class UserProfileController extends AdminController
         ]);
 
         $jsonResponseStatus = -1;
-        $message = $this->translator->trans('Email already in use');
+        $message = $this->translationService->trans('Email already in use');
         if (!$user || $this->getUser()->getEmail() === $updateEmail) {
             $jsonResponseStatus = 0;
-            $message = $this->translator->trans('User info updated');
+            $message = $this->translationService->trans('User info updated');
         }
 
         return new JsonResponse(['status' => $jsonResponseStatus, 'message' => $message]);
