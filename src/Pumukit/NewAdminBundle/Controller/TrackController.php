@@ -32,7 +32,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class TrackController extends AbstractController implements NewAdminControllerInterface
 {
     private $logger;
-    private $dm;
+    private $documentManager;
     private $translator;
     private $jobService;
     private $trackService;
@@ -40,10 +40,10 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     private $inspectionService;
     private $picExtractorService;
 
-    public function __construct(LoggerInterface $logger, DocumentManager $dm, TranslatorInterface $translator, JobService $jobService, TrackService $trackService, ProfileService $profileService, InspectionFfprobeService $inspectionService, PicExtractorService $picExtractorService)
+    public function __construct(LoggerInterface $logger, DocumentManager $documentManager, TranslatorInterface $translator, JobService $jobService, TrackService $trackService, ProfileService $profileService, InspectionFfprobeService $inspectionService, PicExtractorService $picExtractorService)
     {
         $this->logger = $logger;
-        $this->dm = $dm;
+        $this->documentManager = $documentManager;
         $this->translator = $translator;
         $this->jobService = $jobService;
         $this->trackService = $trackService;
@@ -177,7 +177,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
         $job = null;
         if ($track->getPath()) {
-            $job = $this->dm->getRepository(Job::class)->findOneBy(['path_end' => $track->getPath()]);
+            $job = $this->documentManager->getRepository(Job::class)->findOneBy(['path_end' => $track->getPath()]);
         }
 
         return [
