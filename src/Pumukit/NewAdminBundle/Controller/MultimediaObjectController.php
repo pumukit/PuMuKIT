@@ -272,14 +272,13 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function linksAction(MultimediaObject $resource)
     {
-        $mmService = $this->get('pumukitschema.multimedia_object');
         $warningOnUnpublished = $this->container->getParameter('pumukit.warning_on_unpublished');
 
         return [
             'mm' => $resource,
-            'is_published' => $mmService->isPublished($resource, 'PUCHWEBTV'),
-            'is_hidden' => $mmService->isHidden($resource, 'PUCHWEBTV'),
-            'is_playable' => $mmService->hasPlayableResource($resource),
+            'is_published' => $this->multimediaObjectService->isPublished($resource, 'PUCHWEBTV'),
+            'is_hidden' => $this->multimediaObjectService->isHidden($resource, 'PUCHWEBTV'),
+            'is_playable' => $this->multimediaObjectService->hasPlayableResource($resource),
             'warning_on_unpublished' => $warningOnUnpublished,
         ];
     }
@@ -702,8 +701,8 @@ class MultimediaObjectController extends SortableAdminController
     public function generateMagicUrlAction(Request $request)
     {
         $resource = $this->findOr404($request);
-        $mmobjService = $this->get('pumukitschema.multimedia_object');
-        $response = $mmobjService->resetMagicUrl($resource);
+
+        $response = $this->multimediaObjectService->resetMagicUrl($resource);
 
         return new Response($response);
     }
@@ -1168,11 +1167,9 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function modalPreviewAction(Multimediaobject $multimediaObject)
     {
-        $mmService = $this->get('pumukitschema.multimedia_object');
-
         return [
             'multimediaObject' => $multimediaObject,
-            'is_playable' => $mmService->hasPlayableResource($multimediaObject),
+            'is_playable' => $this->multimediaObjectService->hasPlayableResource($multimediaObject),
         ];
     }
 
@@ -1541,13 +1538,13 @@ class MultimediaObjectController extends SortableAdminController
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $groupRepo = $dm->getRepository(Group::class);
-        $multimediaObjectService = $this->get('pumukitschema.multimedia_object');
+
         foreach ($addGroups as $addGroup) {
             $groupIdArray = explode('_', $addGroup);
             $groupId = end($groupIdArray);
             $group = $groupRepo->find($groupId);
             if ($group) {
-                $multimediaObjectService->addGroup($group, $multimediaObject, false);
+                $this->multimediaObjectService->addGroup($group, $multimediaObject, false);
             }
         }
         foreach ($deleteGroups as $deleteGroup) {
@@ -1555,7 +1552,7 @@ class MultimediaObjectController extends SortableAdminController
             $groupId = end($groupIdArray);
             $group = $groupRepo->find($groupId);
             if ($group) {
-                $multimediaObjectService->deleteGroup($group, $multimediaObject, false);
+                $this->multimediaObjectService->deleteGroup($group, $multimediaObject, false);
             }
         }
 
