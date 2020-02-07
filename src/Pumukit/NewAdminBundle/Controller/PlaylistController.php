@@ -85,8 +85,8 @@ class PlaylistController extends CollectionController
         $method = $request->getMethod();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && in_array($method, ['POST', 'PUT', 'PATCH'])) {
-            $dm->persist($series);
-            $dm->flush();
+            $this->documentManager->persist($series);
+            $this->documentManager->flush();
             $this->get('pumukitschema.series_dispatcher')->dispatchUpdate($series);
             $resources = $this->getResources($request);
 

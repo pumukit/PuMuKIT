@@ -365,8 +365,8 @@ class PlaylistMultimediaObjectController extends AbstractController
      */
     public function addBatchToSeveralPlaylistAction(Request $request)
     {
-        $mmobjRepo = $dm->getRepository(MultimediaObject::class);
-        $seriesRepo = $dm->getRepository(Series::class);
+        $mmobjRepo = $this->documentManager->getRepository(MultimediaObject::class);
+        $seriesRepo = $this->documentManager->getRepository(Series::class);
 
         $mmobjIds = $this->getIds($request, 'ids');
         $playlistIds = $this->getIds($request, 'series_ids');
@@ -378,9 +378,9 @@ class PlaylistMultimediaObjectController extends AbstractController
             foreach ($mmObjs as $mmObj) {
                 $playlist->getPlaylist()->addMultimediaObject($mmObj);
             }
-            $dm->persist($playlist);
+            $this->documentManager->persist($playlist);
         }
-        $dm->flush();
+        $this->documentManager->flush();
 
         return new JsonResponse([]);
     }
@@ -415,8 +415,8 @@ class PlaylistMultimediaObjectController extends AbstractController
         $actionResponse = $this->redirect($this->generateUrl('pumukitnewadmin_playlistmms_index', ['id' => $playlist->getId()]));
 
         $playlist->getPlaylist()->moveMultimediaObject($initPos, $endPos);
-        $dm->persist($playlist);
-        $dm->flush();
+        $this->documentManager->persist($playlist);
+        $this->documentManager->flush();
 
         return $actionResponse;
     }
@@ -437,8 +437,8 @@ class PlaylistMultimediaObjectController extends AbstractController
         if ($this->isGranted(PermissionProfile::SCOPE_GLOBAL)) {
             return;
         }
-        $dm->getFilterCollection()->disable('backoffice');
-        $filter = $dm->getFilterCollection()->enable('personal');
+        $this->documentManager->getFilterCollection()->disable('backoffice');
+        $filter = $this->documentManager->getFilterCollection()->enable('personal');
         $person = $this->personService->getPersonFromLoggedInUser($user);
         $people = [];
         if ((null !== $person) && (null !== ($roleCode = $this->personService->getPersonalScopeRoleCode()))) {
