@@ -90,5 +90,9 @@ services:
     tags:
       - { name: "twig.extension" }
 
+  # Controllers:
   Pumukit\NewAdminBundle\Controller\TranslateController:
     class: Pumukit\NewAdminBundle\Controller\TranslateController
+
+  Pumukit\NewAdminBundle\Controller\TrackController:
+    class: Pumukit\NewAdminBundle\Controller\TrackController
