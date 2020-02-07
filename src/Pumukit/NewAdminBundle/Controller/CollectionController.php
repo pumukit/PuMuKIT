@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CollectionController extends AbstractController implements NewAdminControllerInterface
 {
-
     /** @var DocumentManager */
     protected $documentManager;
     /** @var FactoryService */
@@ -31,7 +30,6 @@ class CollectionController extends AbstractController implements NewAdminControl
         $this->paginationService = $paginationService;
         $this->personService = $personService;
     }
-
 
     /**
      * Returns true if the user has enough permissions to delete the $resource passed.

@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdminController extends ResourceController implements NewAdminControllerInterface
 {
-
     /** @var FactoryService */
     protected $factoryService;
     /** @var GroupService */
