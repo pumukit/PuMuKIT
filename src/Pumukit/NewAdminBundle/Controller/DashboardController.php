@@ -2,7 +2,9 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Services\StatsService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -16,6 +18,17 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class DashboardController extends Controller implements NewAdminControllerInterface
 {
+    /** @var StatsService */
+    protected $statsService;
+    /** @var ProfileService */
+    protected $profileService;
+
+    public function __construct(StatsService $statsService, ProfileService $profileService)
+    {
+        $this->statsService = $statsService;
+        $this->profileService = $profileService;
+    }
+
     /**
      * @Route("/dashboard", name="pumukit_newadmin_dashboard_index")
      * @Route("/dashboard/default", name="pumukit_newadmin_dashboard_index_default")
@@ -25,20 +38,18 @@ class DashboardController extends Controller implements NewAdminControllerInterf
     {
         $data = ['stats' => false];
         if ($request->get('show_stats')) {
-            $dm = $this->get('doctrine_mongodb');
-
-            $recordsService = $this->get('pumukitschema.stats');
+            $this->documentManager = $this->documentManager;
 
             $groupBy = $request->get('group_by', 'year');
 
-            $stats = $recordsService->getGlobalStats($groupBy);
+            $stats = $this->statsService->getGlobalStats($groupBy);
 
             $data['stats'] = $stats;
 
-            $storage = $this->get('pumukitencoder.profile')->getDirOutInfo();
+            $storage = $this->profileService->getDirOutInfo();
             $data['storage'] = $storage;
 
-            $seriesRepo = $dm->getRepository(Series::class);
+            $seriesRepo = $this->documentManager->getRepository(Series::class);
 
             $data['num_series'] = $seriesRepo->count();
             $data['num_mm'] = array_sum(array_map(function ($e) {
@@ -60,7 +71,7 @@ class DashboardController extends Controller implements NewAdminControllerInterf
      */
     public function seriesTimelineAction(Request $request)
     {
-        $repo = $this->get('doctrine_mongodb')->getManager()->getRepository(Series::class);
+        $repo = $this->documentManager->getRepository(Series::class);
         $series = $repo->findAll();
 
         $XML = new \SimpleXMLElement('<data></data>');
