@@ -2,8 +2,10 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use Pagerfanta\Pagerfanta;
+use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectTemplateMetaType;
 use Pumukit\NewAdminBundle\Form\Type\SeriesType;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
@@ -12,6 +14,10 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Security\Permission;
+use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
+use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\SchemaBundle\Services\GroupService;
+use Pumukit\SchemaBundle\Services\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -22,14 +28,24 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
-class SeriesController extends AdminController implements NewAdminControllerInterface
+class SeriesController extends AdminController
 {
     public static $resourceName = 'series';
     public static $repoName = Series::class;
 
-    public function __construct(DocumentManager $documentManager, PaginationService $paginationService, FactoryService $factoryService, GroupService $groupService, UserService $userService)
-    {
+    /** @var EmbeddedBroadcastService */
+    protected $embeddedBroadcastService;
+
+    public function __construct(
+        DocumentManager $documentManager,
+        PaginationService $paginationService,
+        FactoryService $factoryService,
+        GroupService $groupService,
+        UserService $userService,
+        EmbeddedBroadcastService $embeddedBroadcastService
+    ) {
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
+        $this->embeddedBroadcastService = $embeddedBroadcastService;
     }
 
     /**
@@ -393,13 +409,6 @@ class SeriesController extends AdminController implements NewAdminControllerInte
         return $this->redirect($this->generateUrl('pumukitnewadmin_series_list'));
     }
 
-    /**
-     * Gets the criteria values.
-     *
-     * @param mixed $criteria
-     *
-     * @return array
-     */
     public function getCriteria($criteria)
     {
         $request = $this->container->get('request_stack')->getCurrentRequest();
@@ -802,23 +811,23 @@ class SeriesController extends AdminController implements NewAdminControllerInte
     {
         $groupRepo = $this->documentManager->getRepository(Group::class);
 
-        $embeddedBroadcastService->updateTypeAndName($type, $multimediaObject, false);
+        $this->embeddedBroadcastService->updateTypeAndName($type, $multimediaObject, false);
         if (EmbeddedBroadcast::TYPE_PASSWORD === $type) {
-            $embeddedBroadcastService->updatePassword($password, $multimediaObject, false);
+            $this->embeddedBroadcastService->updatePassword($password, $multimediaObject, false);
         } elseif (EmbeddedBroadcast::TYPE_GROUPS === $type) {
             $index = 3;
             foreach ($addGroups as $addGroup) {
                 $groupId = explode('_', $addGroup)[$index];
                 $group = $groupRepo->find($groupId);
                 if ($group) {
-                    $embeddedBroadcastService->addGroup($group, $multimediaObject, false);
+                    $this->embeddedBroadcastService->addGroup($group, $multimediaObject, false);
                 }
             }
             foreach ($deleteGroups as $deleteGroup) {
                 $groupId = explode('_', $deleteGroup)[$index];
                 $group = $groupRepo->find($groupId);
                 if ($group) {
-                    $embeddedBroadcastService->deleteGroup($group, $multimediaObject, false);
+                    $this->embeddedBroadcastService->deleteGroup($group, $multimediaObject, false);
                 }
             }
         }
