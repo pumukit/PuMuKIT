@@ -1,62 +1,26 @@
 sudo: false
-language: php
-dist: trusty
-
-php:
-  - "7.2"
-
-env:
-  - MONGO_VERSION=stable
 
 services:
-  - mongodb
-
-addons:
-  apt:
-    sources:
-      - mongodb-3.0-precise
-    packages:
-      - mongodb-org-server
-      - mediainfo
-      - libav-tools
-      - libavcodec-extra-54
-
-before_script:
-  - pecl install -f mongodb-${MONGO_VERSION}
-  - composer self-update
-  - php -i
-  - npm install -g pa11y
-  - pa11y -V
-  - composer -V
-  - composer validate
-  - composer install
+  - docker
 
 script:
-  - find src -type f -name "*.php" -print0 | xargs -0 -n1 -P8 php -l
-  - php bin/console lint:yaml src
-  - php bin/console lint:yaml config
-  - php bin/console lint:twig src
-  - php bin/console lint:twig templates
-  - php bin/console lint:xlif src/
-  - php bin/console lint:xlif translations/
-  - ./bin/travis_checks/check_var_dumps
-  - php bin/php-cs-fixer fix src --dry-run -v
-  - php bin/phpstan analyse -l 4 src
-  - php bin/phpstan analyse -l 7 src/Pumukit/BaseLivePlayerBundle/
-  - php bin/phpstan analyse -l 5 src/Pumukit/BasePlayerBundle/
-  - php bin/phpstan analyse -l 7 src/Pumukit/CoreBundle/
-  - php bin/phpstan analyse -l 7 src/Pumukit/InspectionBundle/
-  - php bin/phpstan analyse -l 7 src/Pumukit/JWPlayerBundle/
-  - php bin/phpstan analyse -l 5 src/Pumukit/WizardBundle/
-  - php bin/phpunit
-  - php bin/console doctrine:mongodb:schema:create
-  - php bin/console pumukit:init:repo all --force
-  - php bin/console server:start
-  - pa11y -c .pa11y.json http://localhost:8000/
-  - pa11y -c .pa11y.json http://localhost:8000/series/channel/1.html
-  - pa11y -c .pa11y.json http://localhost:8000/latestuploads
-  - pa11y -c .pa11y.json http://localhost:8000/searchmultimediaobjects
-  - pa11y -c .pa11y.json http://localhost:8000/searchseries
-  - pa11y -c .pa11y.json http://localhost:8000/mediateca
-  - pa11y -c .pa11y.json http://localhost:8000/categories
-  - php bin/console server:stop
+  - docker-compose build --build-arg APP_ENV=dev
+  - docker-compose run --rm php find src -type f -name "*.php" -print0 | xargs -0 -n1 -P8 php -l
+  - docker-compose run --rm php php bin/console lint:yaml src
+  - docker-compose run --rm php php bin/console lint:yaml config
+  - docker-compose run --rm php php bin/console lint:twig src
+  - docker-compose run --rm php php bin/console lint:twig templates
+  - docker-compose run --rm php php bin/console lint:xlif src/
+  - docker-compose run --rm php php bin/console lint:xlif translations/
+  - docker-compose run --rm php ./bin/travis_checks/check_var_dumps
+  - docker-compose run --rm php php vendor/friendsofphp/php-cs-fixer/php-cs-fixer fix src --dry-run -v
+  - docker-compose run --rm php php vendor/phpstan/phpstan/bin/phpstan analyse -l 4 src
+  - docker-compose run --rm php php vendor/phpstan/phpstan/bin/phpstan analyse -l 7 src/Pumukit/BaseLivePlayerBundle/
+  - docker-compose run --rm php php vendor/phpstan/phpstan/bin/phpstan analyse -l 5 src/Pumukit/BasePlayerBundle/
+  - docker-compose run --rm php php vendor/phpstan/phpstan/bin/phpstan analyse -l 7 src/Pumukit/CoreBundle/
+  - docker-compose run --rm php php vendor/phpstan/phpstan/bin/phpstan analyse -l 7 src/Pumukit/InspectionBundle/
+  - docker-compose run --rm php php vendor/phpstan/phpstan/bin/phpstan analyse -l 7 src/Pumukit/JWPlayerBundle/
+  - docker-compose run --rm php php vendor/phpstan/phpstan/bin/phpstan analyse -l 5 src/Pumukit/WizardBundle/
+  - docker-compose run --rm php php vendor/phpunit/phpunit/phpunit
+  - docker-compose run --rm php php bin/console doctrine:mongodb:schema:create
+  - docker-compose run --rm php php bin/console pumukit:init:repo all --force
