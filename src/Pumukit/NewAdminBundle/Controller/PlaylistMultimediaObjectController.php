@@ -158,8 +158,8 @@ class PlaylistMultimediaObjectController extends AbstractController
         //Get all multimedia objects. The filter will do the rest.
         $mmobjs = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
 
-        $paginationService = $this->get('pumukit_core.pagination_service');
-        $pager = $paginationService->createDoctrineODMMongoDBAdapter($mmobjs, $page, $limit);
+
+        $pager = $this->paginationService->createDoctrineODMMongoDBAdapter($mmobjs, $page, $limit);
 
         return [
             'my_mmobjs' => $pager,
@@ -184,8 +184,8 @@ class PlaylistMultimediaObjectController extends AbstractController
         $queryBuilder->limit($limit);
         $queryBuilder->sortMeta('score', 'textScore');
 
-        $paginationService = $this->get('pumukit_core.pagination_service');
-        $pager = $paginationService->createDoctrineODMMongoDBAdapter($queryBuilder, 0, $limit);
+
+        $pager = $this->paginationService->createDoctrineODMMongoDBAdapter($queryBuilder, 0, $limit);
 
         return ['mmobjs' => $pager];
     }
@@ -412,9 +412,9 @@ class PlaylistMultimediaObjectController extends AbstractController
         $page = $session->get('admin/playlistmms/page', 1);
         $limit = $session->get('admin/playlistmms/paginate', 10);
 
-        $paginationService = $this->get('pumukit_core.pagination_service');
 
-        return $paginationService->createDoctrineCollectionAdapter($mmsList, $page, $limit);
+
+        return $this->paginationService->createDoctrineCollectionAdapter($mmsList, $page, $limit);
     }
 
     /**

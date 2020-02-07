@@ -236,8 +236,8 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
 
     private function getPaginatedPics($urlPics, $limit, $page)
     {
-        $paginationService = $this->get('pumukit_core.pagination_service');
 
-        return $paginationService->createArrayAdapter($urlPics->toArray(), $page, $limit);
+
+        return $this->paginationService->createArrayAdapter($urlPics->toArray(), $page, $limit);
     }
 }
