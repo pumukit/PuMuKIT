@@ -8,6 +8,7 @@ use Pagerfanta\Pagerfanta;
 use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectTemplateMetaType;
 use Pumukit\NewAdminBundle\Form\Type\SeriesType;
+use Pumukit\NewAdminBundle\Services\SeriesSearchService;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -17,6 +18,10 @@ use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\GroupService;
+use Pumukit\SchemaBundle\Services\PersonService;
+use Pumukit\SchemaBundle\Services\SeriesService;
+use Pumukit\SchemaBundle\Services\SortedMultimediaObjectsService;
+use Pumukit\SchemaBundle\Services\TagService;
 use Pumukit\SchemaBundle\Services\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -24,6 +29,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
@@ -35,6 +41,18 @@ class SeriesController extends AdminController
 
     /** @var EmbeddedBroadcastService */
     protected $embeddedBroadcastService;
+    /** @var TranslatorInterface */
+    protected $translationService;
+    /** @var SortedMultimediaObjectsService */
+    protected $sortedMultimediaObjectService;
+    /** @var PersonService */
+    protected $personService;
+    /** @var TagService */
+    protected $tagService;
+    /** @var SeriesService */
+    protected $seriesService;
+    /** @var SeriesSearchService */
+    protected $seriesSearchService;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -42,10 +60,22 @@ class SeriesController extends AdminController
         FactoryService $factoryService,
         GroupService $groupService,
         UserService $userService,
-        EmbeddedBroadcastService $embeddedBroadcastService
+        EmbeddedBroadcastService $embeddedBroadcastService,
+        TranslatorInterface $translationService,
+        SortedMultimediaObjectsService $sortedMultimediaObjectService,
+        PersonService $personService,
+        TagService $tagService,
+        SeriesService $seriesService,
+        SeriesSearchService $seriesSearchService
     ) {
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
         $this->embeddedBroadcastService = $embeddedBroadcastService;
+        $this->translationService = $translationService;
+        $this->sortedMultimediaObjectService = $sortedMultimediaObjectService;
+        $this->personService = $personService;
+        $this->tagService = $tagService;
+        $this->seriesService = $seriesService;
+        $this->seriesSearchService = $seriesSearchService;
     }
 
     /**
@@ -412,7 +442,7 @@ class SeriesController extends AdminController
     public function getCriteria($criteria)
     {
         $request = $this->container->get('request_stack')->getCurrentRequest();
-        $criteria = $request->get('criteria', []);
+        //$criteria = $request->get('criteria', []);
 
         $emptySeries = [];
         if ($request->query->has('empty_series') || $this->get('session')->has('admin/series/empty_series')) {
@@ -840,10 +870,7 @@ class SeriesController extends AdminController
     {
         $mmRepo = $this->documentManager->getRepository(MultimediaObject::class);
         $all = $mmRepo->findBySeries($series);
-        foreach ($all as $multimediaObject) {
-            return $multimediaObject;
-        }
 
-        return null;
+        return $all[0] ?? null;
     }
 }
