@@ -255,8 +255,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
     public function generateMagicUrlAction(Request $request)
     {
         $resource = $this->findOr404($request);
-        $mmobjService = $this->get('pumukitschema.series');
-        $response = $this->multimediaObjectService->resetMagicUrl($resource);
+        $response = $this->seriesService->resetMagicUrl($resource);
 
         return new Response($response);
     }
@@ -574,9 +573,8 @@ class SeriesController extends AdminController implements NewAdminControllerInte
         $mmRepo = $dm->getRepository(MultimediaObject::class);
         $broadcasts = $this->embeddedBroadcastService->getAllTypes();
         $allGroups = $this->getAllGroups();
-        $seriesService = $this->get('pumukitschema.series');
         $embeddedBroadcast = false;
-        $sameBroadcast = $seriesService->sameEmbeddedBroadcast($series);
+        $sameBroadcast = $this->seriesService->sameEmbeddedBroadcast($series);
         $firstFound = $this->getFirstMultimediaObject($series);
 
         $multimediaObjects = $mmRepo->findBySeries($series);
