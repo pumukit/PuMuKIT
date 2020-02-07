@@ -2,25 +2,50 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\NewAdminBundle\Form\Type\RoleType;
 use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\SchemaBundle\Services\GroupService;
+use Pumukit\SchemaBundle\Services\PersonService;
+use Pumukit\SchemaBundle\Services\RoleService;
+use Pumukit\SchemaBundle\Services\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_ROLES')")
  */
-class RoleController extends SortableAdminController implements NewAdminControllerInterface
+class RoleController extends SortableAdminController
 {
     public static $resourceName = 'role';
     public static $repoName = Role::class;
+    /** @var PersonService */
+    protected $personService;
+    /** @var TranslatorInterface */
+    protected $translationService;
+    /** @var RoleService */
+    protected $roleService;
 
-    public function __construct(DocumentManager $documentManager, PaginationService $paginationService, FactoryService $factoryService, GroupService $groupService, UserService $userService)
-    {
+    public function __construct(
+        DocumentManager $documentManager,
+        PaginationService $paginationService,
+        FactoryService $factoryService,
+        GroupService $groupService,
+        UserService $userService,
+        PersonService $personService,
+        TranslatorInterface $translationService,
+        RoleService $roleService
+    ) {
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
+        $this->personService = $personService;
+        $this->translationService = $translationService;
+        $this->roleService = $roleService;
     }
 
     /**
