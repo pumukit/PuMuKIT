@@ -232,7 +232,7 @@ class MultimediaObjectController extends SortableAdminController
 
         $jobs = $this->jobService->getNotFinishedJobsByMultimediaObjectId($resource->getId());
 
-        $notMasterProfiles = $this->get('pumukitencoder.profile')->getProfiles(null, true, false);
+        $notMasterProfiles = $this->profileService->getProfiles(null, true, false);
 
         $template = $resource->isPrototype() ? '_template' : '';
 
