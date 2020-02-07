@@ -1,0 +1,9 @@
+services:
+  _defaults:
+    autowire:      true
+    autoconfigure: true
+    public:        true
+
+  Pumukit\StatsUIBundle\Controller\:
+    resource: '../../src/Pumukit/StatsUIBundle/Controller'
+    tags: ['controller.service_arguments']
