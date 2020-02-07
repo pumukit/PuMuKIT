@@ -191,7 +191,7 @@ class PlaylistMultimediaObjectController extends AbstractController
      */
     public function urlModalAction(Request $request)
     {
-        $broadcastService = $this->get('pumukitschema.embeddedbroadcast');
+        $broadcastService = $this->embeddedBroadcastService;
         $mmobjService = $this->get('pumukitschema.multimedia_object');
         $this->enableFilter();
         $id = $request->query->get('mmid', '');
