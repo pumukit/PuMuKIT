@@ -1262,7 +1262,7 @@ class MultimediaObjectController extends SortableAdminController
         }
         $criteria = $this->get('session')->get('admin/'.$this->getResourceName().'/criteria', []);
 
-        return $this->get('pumukitnewadmin.multimedia_object_search')->processMMOCriteria($criteria, $request->getLocale());
+        return $this->multimediaObjectSearchService->processMMOCriteria($criteria, $request->getLocale());
     }
 
     /**
