@@ -30,18 +30,18 @@ class RoleController extends SortableAdminController implements NewAdminControll
      */
     public function updateAction(Request $request)
     {
-        $personService = $this->get('pumukitschema.person');
-        $role = $personService->findRoleById($request->get('id'));
 
-        $translator = $this->get('translator');
+        $role = $this->personService->findRoleById($request->get('id'));
+
+
         $locale = $request->getLocale();
-        $form = $this->createForm(RoleType::class, $role, ['translator' => $translator, 'locale' => $locale]);
+        $form = $this->createForm(RoleType::class, $role, ['translator' => $this->translationService, 'locale' => $locale]);
 
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 try {
-                    $personService->updateRole($role);
+                    $this->personService->updateRole($role);
                 } catch (\Exception $e) {
                     return new JsonResponse(['status' => $e->getMessage()], 409);
                 }
@@ -125,7 +125,6 @@ class RoleController extends SortableAdminController implements NewAdminControll
 
         $resourceName = $this->getResourceName();
 
-        $factory = $this->get('pumukitschema.factory');
         foreach ($ids as $id) {
             $resource = $this->find($id);
             if (0 !== $resource->getNumberPeopleInMultimediaObject()) {
@@ -133,7 +132,7 @@ class RoleController extends SortableAdminController implements NewAdminControll
             }
 
             try {
-                $factory->deleteResource($resource);
+                $this->factoryService->deleteResource($resource);
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }

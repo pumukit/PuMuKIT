@@ -103,9 +103,9 @@ class UserController extends AdminController
         $userManager = $this->get('fos_user.user_manager');
 
         $user = $this->findOr404($request);
-        $translator = $this->get('translator');
+
         $locale = $request->getLocale();
-        $form = $this->createForm(UserUpdateType::class, $user, ['translator' => $translator, 'locale' => $locale]);
+        $form = $this->createForm(UserUpdateType::class, $user, ['translator' => $this->translationService, 'locale' => $locale]);
 
         if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH'])) {
             $form->handleRequest($request);

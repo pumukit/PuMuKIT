@@ -73,9 +73,9 @@ class TagController extends AbstractController implements NewAdminControllerInte
      */
     public function updateAction(Tag $tag, Request $request)
     {
-        $translator = $this->get('translator');
+
         $locale = $request->getLocale();
-        $form = $this->createForm(TagType::class, $tag, ['translator' => $translator, 'locale' => $locale]);
+        $form = $this->createForm(TagType::class, $tag, ['translator' => $this->translationService, 'locale' => $locale]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && ($request->isMethod('PUT') || $request->isMethod('POST'))) {
@@ -102,10 +102,10 @@ class TagController extends AbstractController implements NewAdminControllerInte
         $tag = new Tag();
         $tag->setParent($parent);
 
-        $translator = $this->get('translator');
+
         $locale = $request->getLocale();
 
-        $form = $this->createForm(TagType::class, $tag, ['translator' => $translator, 'locale' => $locale]);
+        $form = $this->createForm(TagType::class, $tag, ['translator' => $this->translationService, 'locale' => $locale]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && ($request->isMethod('PUT') || $request->isMethod('POST'))) {

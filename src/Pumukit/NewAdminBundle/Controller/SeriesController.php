@@ -83,8 +83,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
      */
     public function createAction(Request $request)
     {
-        $factory = $this->get('pumukitschema.factory');
-        $series = $factory->createSeries($this->getUser());
+        $series = $this->factoryService->createSeries($this->getUser());
         $this->get('session')->set('admin/series/id', $series->getId());
 
         return new JsonResponse(['seriesId' => $series->getId()]);
@@ -100,21 +99,21 @@ class SeriesController extends AdminController implements NewAdminControllerInte
     public function cloneAction($id)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
-        $translator = $this->get('translator');
+
 
         $series = $dm->getRepository(Series::class)->findOneBy(['_id' => new ObjectId($id)]);
         if (!$series) {
-            throw new \Exception($translator->trans('No series found with ID').' '.$id);
+            throw new \Exception($this->translationService->trans('No series found with ID').' '.$id);
         }
 
-        $factoryService = $this->get('pumukitschema.factory');
+
 
         try {
-            $factoryService->cloneSeries($series);
+            $this->factoryService->cloneSeries($series);
 
             return $this->redirectToRoute('pumukitnewadmin_series_list');
         } catch (\Exception $exception) {
-            throw new \Exception($translator->trans('Error while cloning series ').$exception->getMessage());
+            throw new \Exception($this->translationService->trans('Error while cloning series ').$exception->getMessage());
         }
     }
 
@@ -141,10 +140,10 @@ class SeriesController extends AdminController implements NewAdminControllerInte
         $resource = $this->findOr404($request);
         $this->get('session')->set('admin/series/id', $request->get('id'));
 
-        $translator = $this->get('translator');
+
         $locale = $request->getLocale();
         $disablePudenew = !$this->container->getParameter('show_latest_with_pudenew');
-        $form = $this->createForm(SeriesType::class, $resource, ['translator' => $translator, 'locale' => $locale, 'disable_PUDENEW' => $disablePudenew]);
+        $form = $this->createForm(SeriesType::class, $resource, ['translator' => $this->translationService, 'locale' => $locale, 'disable_PUDENEW' => $disablePudenew]);
 
         $method = $request->getMethod();
         $form->handleRequest($request);
@@ -165,33 +164,33 @@ class SeriesController extends AdminController implements NewAdminControllerInte
         }
 
         // EDIT MULTIMEDIA OBJECT TEMPLATE CONTROLLER SOURCE CODE
-        $factoryService = $this->get('pumukitschema.factory');
-        $personService = $this->get('pumukitschema.person');
 
-        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
+
+
+        $personalScopeRoleCode = $this->personService->getPersonalScopeRoleCode();
 
         $allGroups = $this->getAllGroups();
 
         try {
-            $personalScopeRole = $personService->getPersonalScopeRole();
+            $personalScopeRole = $this->personService->getPersonalScopeRole();
         } catch (\Exception $e) {
             return new Response($e, Response::HTTP_BAD_REQUEST);
         }
 
-        $roles = $personService->getRoles();
+        $roles = $this->personService->getRoles();
         if (null === $roles) {
             throw new \Exception('Not found any role.');
         }
 
-        $parentTags = $factoryService->getParentTags();
-        $mmtemplate = $factoryService->getMultimediaObjectPrototype($resource);
+        $parentTags = $this->factoryService->getParentTags();
+        $mmtemplate = $this->factoryService->getMultimediaObjectPrototype($resource);
 
-        $translator = $this->get('translator');
+
         $locale = $request->getLocale();
 
-        $formMeta = $this->createForm(MultimediaObjectTemplateMetaType::class, $mmtemplate, ['translator' => $translator, 'locale' => $locale]);
+        $formMeta = $this->createForm(MultimediaObjectTemplateMetaType::class, $mmtemplate, ['translator' => $this->translationService, 'locale' => $locale]);
 
-        $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
+        $pubDecisionsTags = $this->factoryService->getTagsByCod('PUBDECISIONS', true);
 
         //These fields are form fields that are rendered separately, so they should be 'excluded' from the generic foreach.
         $exclude_fields = [];
@@ -226,7 +225,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
      */
     public function deleteAction(Request $request)
     {
-        $factoryService = $this->get('pumukitschema.factory');
+
 
         $series = $this->findOr404($request);
         if (!$this->isUserAllowedToDelete($series)) {
@@ -242,14 +241,14 @@ class SeriesController extends AdminController implements NewAdminControllerInte
 
         $mmSessionId = $this->get('session')->get('admin/mms/id');
         if ($mmSessionId) {
-            $mm = $factoryService->findMultimediaObjectById($mmSessionId);
+            $mm = $this->factoryService->findMultimediaObjectById($mmSessionId);
             if ($seriesId === $mm->getSeries()->getId()) {
                 $this->get('session')->remove('admin/mms/id');
             }
         }
 
         try {
-            $factoryService->deleteSeries($series);
+            $this->factoryService->deleteSeries($series);
         } catch (\Exception $e) {
             return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
@@ -279,7 +278,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
      */
     public function batchDeleteAction(Request $request)
     {
-        $factoryService = $this->get('pumukitschema.factory');
+
 
         $ids = $request->get('ids');
 
@@ -302,14 +301,14 @@ class SeriesController extends AdminController implements NewAdminControllerInte
 
             $mmSessionId = $this->get('session')->get('admin/mms/id');
             if ($mmSessionId) {
-                $mm = $factoryService->findMultimediaObjectById($mmSessionId);
+                $mm = $this->factoryService->findMultimediaObjectById($mmSessionId);
                 if ($seriesId === $mm->getSeries()->getId()) {
                     $this->get('session')->remove('admin/mms/id');
                 }
             }
 
             try {
-                $factoryService->deleteSeries($series);
+                $this->factoryService->deleteSeries($series);
                 ++$deleteSeriesCount;
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
@@ -675,9 +674,9 @@ class SeriesController extends AdminController implements NewAdminControllerInte
     {
         if (!$this->isGranted(Permission::MODIFY_OWNER)) {
             $loggedInUser = $this->getUser();
-            $personService = $this->get('pumukitschema.person');
-            $person = $personService->getPersonFromLoggedInUser($loggedInUser);
-            $role = $personService->getPersonalScopeRole();
+
+            $person = $this->personService->getPersonFromLoggedInUser($loggedInUser);
+            $role = $this->personService->getPersonalScopeRole();
             if (!$person) {
                 return false;
             }

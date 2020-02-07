@@ -20,10 +20,10 @@ class PlaylistMultimediaObjectController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $factoryService = $this->get('pumukitschema.factory');
+
         $session = $this->get('session');
         $sessionId = $session->get('admin/playlist/id', null);
-        $series = $factoryService->findSeriesById($request->query->get('id'), $sessionId);
+        $series = $this->factoryService->findSeriesById($request->query->get('id'), $sessionId);
         if (!$series) {
             throw $this->createNotFoundException();
         }
@@ -99,9 +99,9 @@ class PlaylistMultimediaObjectController extends AbstractController
      */
     public function listAction(Request $request)
     {
-        $factoryService = $this->get('pumukitschema.factory');
+
         $sessionId = $this->get('session')->get('admin/playlist/id', null);
-        $series = $factoryService->findSeriesById($request->query->get('id'), $sessionId);
+        $series = $this->factoryService->findSeriesById($request->query->get('id'), $sessionId);
         if (!$series) {
             throw $this->createNotFoundException();
         }

@@ -2,9 +2,15 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\NewAdminBundle\Form\Type\PermissionProfileType;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Security\Permission;
+use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\SchemaBundle\Services\GroupService;
+use Pumukit\SchemaBundle\Services\PermissionProfileService;
+use Pumukit\SchemaBundle\Services\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -14,14 +20,24 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @Security("is_granted('ROLE_ACCESS_PERMISSION_PROFILES')")
  */
-class PermissionProfileController extends AdminController implements NewAdminControllerInterface
+class PermissionProfileController extends AdminController
 {
     public static $resourceName = 'permissionprofile';
     public static $repoName = PermissionProfile::class;
 
-    public function __construct(DocumentManager $documentManager, PaginationService $paginationService, FactoryService $factoryService, GroupService $groupService, UserService $userService)
+    /** @var PermissionProfileService */
+    protected $permissionProfileService;
+
+    public function __construct(
+        DocumentManager $documentManager,
+        PaginationService $paginationService,
+        FactoryService $factoryService,
+        GroupService $groupService,
+        UserService $userService,
+        PermissionProfileService $permissionProfileService)
     {
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
+        $this->permissionProfileService = $permissionProfileService;
     }
 
     /**
@@ -87,15 +103,13 @@ class PermissionProfileController extends AdminController implements NewAdminCon
      */
     public function createAction(Request $request)
     {
-        $permissionProfileService = $this->get('pumukitschema.permissionprofile');
-
         $permissionProfile = new PermissionProfile();
         $form = $this->getForm($permissionProfile, $request->getLocale());
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $permissionProfile = $permissionProfileService->update($permissionProfile, true);
+                $permissionProfile = $this->permissionProfileService->update($permissionProfile, true);
             } catch (\Exception $e) {
                 return new JsonResponse(['status' => $e->getMessage()], 409);
             }
@@ -121,15 +135,13 @@ class PermissionProfileController extends AdminController implements NewAdminCon
      */
     public function updateAction(Request $request)
     {
-        $permissionProfileService = $this->get('pumukitschema.permissionprofile');
-
         $permissionProfile = $this->findOr404($request);
         $form = $this->getForm($permissionProfile, $request->getLocale());
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && in_array($request->getMethod(), ['POST', 'PUT', 'PATCH'])) {
             try {
-                $permissionProfileService->update($permissionProfile);
+                $this->permissionProfileService->update($permissionProfile);
             } catch (\Exception $e) {
                 return new JsonResponse(['status' => $e->getMessage()], 409);
             }
@@ -153,9 +165,9 @@ class PermissionProfileController extends AdminController implements NewAdminCon
      */
     public function getForm($permissionProfile = null, $locale = 'en')
     {
-        $translator = $this->get('translator');
 
-        return $this->createForm(PermissionProfileType::class, $permissionProfile, ['translator' => $translator, 'locale' => $locale]);
+
+        return $this->createForm(PermissionProfileType::class, $permissionProfile, ['translator' => $this->translationService, 'locale' => $locale]);
     }
 
     /**
@@ -194,7 +206,6 @@ class PermissionProfileController extends AdminController implements NewAdminCon
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $repo = $dm->getRepository(PermissionProfile::class);
-        $permissionProfileService = $this->get('pumukitschema.permissionprofile');
 
         $selectedDefault = $request->get('selected_default');
         $selectedScopes = $request->get('selected_scopes');
@@ -211,7 +222,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         if (null !== $newDefaultPermissionProfile) {
             if (!$newDefaultPermissionProfile->isDefault()) {
                 $newDefaultPermissionProfile->setDefault(true);
-                $newDefaultPermissionProfile = $permissionProfileService->update($newDefaultPermissionProfile);
+                $newDefaultPermissionProfile = $this->permissionProfileService->update($newDefaultPermissionProfile);
             }
         }
 
@@ -226,8 +237,8 @@ class PermissionProfileController extends AdminController implements NewAdminCon
             }
 
             try {
-                $permissionProfile = $permissionProfileService->setScope($permissionProfile, $p['scope'], false);
-                $permissionProfileService->batchUpdate($permissionProfile, $p['permissions'], false);
+                $permissionProfile = $this->permissionProfileService->setScope($permissionProfile, $p['scope'], false);
+                $this->permissionProfileService->batchUpdate($permissionProfile, $p['permissions'], false);
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
@@ -237,13 +248,6 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         return $this->redirect($this->generateUrl('pumukitnewadmin_permissionprofile_list'));
     }
 
-    /**
-     * Gets the list of resources according to a criteria.
-     *
-     * Override to get 9 resources per page
-     *
-     * @param mixed $criteria
-     */
     public function getResources(Request $request, $criteria)
     {
         $sorting = $this->getSorting();
@@ -274,10 +278,8 @@ class PermissionProfileController extends AdminController implements NewAdminCon
 
     public function exportPermissionProfilesAction(): Response
     {
-        $permissionProfileService = $this->get('pumukitschema.permissionprofile');
-
         return new Response(
-            $permissionProfileService->exportAllToCsv(),
+            $this->permissionProfileService->exportAllToCsv(),
             Response::HTTP_OK,
             [
                 'Content-Disposition' => 'attachment; filename="permission_profiles.csv"',
@@ -285,17 +287,6 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         );
     }
 
-    /**
-     * Returns an array with all permissions and there newly set (if any) permissions and scope.
-     *
-     * returns $permissionProfiles = array(
-     *             'PROFILE_NAME' => array('PERM1', 'PERM2', 'PERM3', ...),
-     *             (...) ,
-     *         );
-     *
-     * @param mixed $checkedPermissions
-     * @param mixed $selectedScopes
-     */
     private function buildPermissionProfiles($checkedPermissions, $selectedScopes)
     {
         $permissionProfiles = [];

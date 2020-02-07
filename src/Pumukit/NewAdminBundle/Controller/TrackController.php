@@ -33,18 +33,18 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 {
     private $logger;
     private $documentManager;
-    private $translator;
+    private $this->translationService;
     private $jobService;
     private $trackService;
     private $profileService;
     private $inspectionService;
     private $picExtractorService;
 
-    public function __construct(LoggerInterface $logger, DocumentManager $documentManager, TranslatorInterface $translator, JobService $jobService, TrackService $trackService, ProfileService $profileService, InspectionFfprobeService $inspectionService, PicExtractorService $picExtractorService)
+    public function __construct(LoggerInterface $logger, DocumentManager $documentManager, TranslatorInterface $this->translationService, JobService $jobService, TrackService $trackService, ProfileService $profileService, InspectionFfprobeService $inspectionService, PicExtractorService $picExtractorService)
     {
         $this->logger = $logger;
         $this->documentManager = $documentManager;
-        $this->translator = $translator;
+        $this->translator = $this->translationService;
         $this->jobService = $jobService;
         $this->trackService = $trackService;
         $this->profileService = $profileService;

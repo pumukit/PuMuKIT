@@ -118,7 +118,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
             throw new NotFoundHttpException('Requested multimedia object does not exist');
         }
 
-        $multimediaObject = $this->get('pumukitschema.mmspic')->removePicFromMultimediaObject($multimediaObject, $picId);
+        $multimediaObject = $this->multimediaObjectPicService->removePicFromMultimediaObject($multimediaObject, $picId);
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_mmspic_list', ['id' => $multimediaObject->getId(), 'is_event_poster' => $isEventPoster]));
     }

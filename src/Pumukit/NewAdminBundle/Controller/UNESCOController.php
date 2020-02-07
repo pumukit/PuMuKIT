@@ -104,7 +104,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $configuredTag = $this->getConfiguredTag();
 
         $dm = $this->container->get('doctrine_mongodb')->getManager();
-        $translator = $this->get('translator');
+
         if (null !== $this->container->getParameter('pumukit_new_admin.base_catalogue_tag')) {
             $menuTags = [];
             foreach ($configuredTag->getChildren() as $child) {
@@ -126,7 +126,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
             foreach (static::$baseTags as $key => $tag) {
                 foreach ($tag as $cod) {
-                    $menuTags[$translator->trans($key)][] = $dm->getRepository(Tag::class)->findOneBy(
+                    $menuTags[$this->translationService->trans($key)][] = $dm->getRepository(Tag::class)->findOneBy(
                         ['cod' => $cod]
                     );
                 }
@@ -142,12 +142,12 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $defaultTagOptions = [
             [
                 'key' => 2,
-                'title' => $translator->trans('All'),
+                'title' => $this->translationService->trans('All'),
                 'count' => $countMultimediaObjects,
             ],
             [
                 'key' => 1,
-                'title' => $translator->trans('Without category'),
+                'title' => $this->translationService->trans('Without category'),
                 'count' => count($countMultimediaObjectsWithoutTag),
             ],
         ];
@@ -246,10 +246,10 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
      */
     public function resetSessionAction($all = true)
     {
-        $tagCatalogueService = $this->get('pumukitnewadmin.tag_catalogue');
+
         $session = $this->get('session');
 
-        $tagCatalogueService->resetSessionCriteria($session, $all);
+        $this->tagCatalogueService->resetSessionCriteria($session, $all);
 
         return new JsonResponse(
             ['success']
@@ -263,10 +263,10 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
      */
     public function addCriteriaSessionAction(Request $request)
     {
-        $tagCatalogueService = $this->get('pumukitnewadmin.tag_catalogue');
+
         $session = $this->get('session');
 
-        $tagCatalogueService->addSessionCriteria($request, $session);
+        $this->tagCatalogueService->addSessionCriteria($request, $session);
 
         return new JsonResponse(['success']);
     }
@@ -283,30 +283,30 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
      */
     public function editUNESCOAction(Request $request, MultimediaObject $multimediaObject)
     {
-        $factoryService = $this->get('pumukitschema.factory');
-        $personService = $this->get('pumukitschema.person');
 
-        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
+
+
+        $personalScopeRoleCode = $this->personService->getPersonalScopeRoleCode();
 
         try {
-            $personalScopeRole = $personService->getPersonalScopeRole();
+            $personalScopeRole = $this->personService->getPersonalScopeRole();
         } catch (\Exception $e) {
             return new Response($e, Response::HTTP_BAD_REQUEST);
         }
 
-        $roles = $personService->getRoles();
+        $roles = $this->personService->getRoles();
         if (null === $roles) {
             throw new \Exception('Not found any role.');
         }
 
-        $parentTags = $factoryService->getParentTags();
+        $parentTags = $this->factoryService->getParentTags();
 
-        $translator = $this->get('translator');
+
         $locale = $request->getLocale();
-        $formMeta = $this->createForm(MultimediaObjectMetaType::class, $multimediaObject, ['translator' => $translator, 'locale' => $locale]);
+        $formMeta = $this->createForm(MultimediaObjectMetaType::class, $multimediaObject, ['translator' => $this->translationService, 'locale' => $locale]);
         $options = [
             'not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS),
-            'translator' => $translator,
+            'translator' => $this->translationService,
             'locale' => $locale,
         ];
         $formPub = $this->createForm(MultimediaObjectPubType::class, $multimediaObject, $options);
@@ -319,8 +319,8 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
             $dm = $this->container->get('doctrine_mongodb')->getManager();
             $dm->getRepository(Tag::class)->findOneByCod('PUDENEW')->setDisplay(false);
         }
-        $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
-        $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
+        $pubChannelsTags = $this->factoryService->getTagsByCod('PUBCHANNELS', true);
+        $pubDecisionsTags = $this->factoryService->getTagsByCod('PUBDECISIONS', true);
 
         $jobs = $this->get('pumukitencoder.job')->getNotFinishedJobsByMultimediaObjectId($multimediaObject->getId());
 
@@ -409,22 +409,22 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $pudeTV = $dm->getRepository(Tag::class)->findOneByCod('PUDETV');
 
         $statusPub = [
-            MultimediaObject::STATUS_PUBLISHED => $translator->trans('Published'),
-            MultimediaObject::STATUS_BLOCKED => $translator->trans('Blocked'),
-            MultimediaObject::STATUS_HIDDEN => $translator->trans('Hidden'),
+            MultimediaObject::STATUS_PUBLISHED => $this->translationService->trans('Published'),
+            MultimediaObject::STATUS_BLOCKED => $this->translationService->trans('Blocked'),
+            MultimediaObject::STATUS_HIDDEN => $this->translationService->trans('Hidden'),
         ];
 
         $broadcasts = [
-            EmbeddedBroadcast::TYPE_PUBLIC => $translator->trans('Public'),
-            EmbeddedBroadcast::TYPE_LOGIN => $translator->trans('Login'),
-            EmbeddedBroadcast::TYPE_PASSWORD => $translator->trans('Password'),
-            EmbeddedBroadcast::TYPE_GROUPS => $translator->trans('Groups'),
+            EmbeddedBroadcast::TYPE_PUBLIC => $this->translationService->trans('Public'),
+            EmbeddedBroadcast::TYPE_LOGIN => $this->translationService->trans('Login'),
+            EmbeddedBroadcast::TYPE_PASSWORD => $this->translationService->trans('Password'),
+            EmbeddedBroadcast::TYPE_GROUPS => $this->translationService->trans('Groups'),
         ];
 
         $type = [
-            MultimediaObject::TYPE_VIDEO => $translator->trans('Video'),
-            MultimediaObject::TYPE_AUDIO => $translator->trans('Audio'),
-            MultimediaObject::TYPE_EXTERNAL => $translator->trans('External player'),
+            MultimediaObject::TYPE_VIDEO => $this->translationService->trans('Video'),
+            MultimediaObject::TYPE_AUDIO => $this->translationService->trans('Audio'),
+            MultimediaObject::TYPE_EXTERNAL => $this->translationService->trans('External player'),
         ];
 
         $genreParent = $dm->getRepository(Tag::class)->findOneByCod('GENRE');
@@ -471,7 +471,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
         $tagService = $this->container->get('pumukitschema.tag');
-        $translator = $this->get('translator');
+
 
         $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
 
@@ -484,7 +484,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         }
 
         if (empty($removedTags)) {
-            return new JsonResponse(['error' => $translator->trans("Can't delete this tag, delete first children"), JsonResponse::HTTP_BAD_REQUEST]);
+            return new JsonResponse(['error' => $this->translationService->trans("Can't delete this tag, delete first children"), JsonResponse::HTTP_BAD_REQUEST]);
         }
 
         return new JsonResponse(['success']);
@@ -533,10 +533,10 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
         switch ($option) {
         case 'delete_selected':
-            $factoryService = $this->get('pumukitschema.factory');
+
             foreach ($data as $multimediaObjectId) {
                 $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
-                $factoryService->deleteMultimediaObject($multimediaObject);
+                $this->factoryService->deleteMultimediaObject($multimediaObject);
             }
 
             break;
@@ -574,15 +574,15 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $session->remove('admin/unesco/page');
         $session->remove('admin/unesco/paginate');
         $session->remove('admin/unesco/id');
-        $translator = $this->get('translator');
-        $factoryService = $this->get('pumukitschema.factory');
+
+
 
         $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
 
         try {
-            $factoryService->deleteMultimediaObject($multimediaObject);
+            $this->factoryService->deleteMultimediaObject($multimediaObject);
         } catch (\Exception $exception) {
-            return new JsonResponse(['error' => $translator->trans("Can't delete this multimediaObject")]);
+            return new JsonResponse(['error' => $this->translationService->trans("Can't delete this multimediaObject")]);
         }
 
         return new JsonResponse(['success']);
@@ -597,15 +597,15 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     public function cloneAction($multimediaObjectId)
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
-        $translator = $this->get('translator');
-        $factoryService = $this->get('pumukitschema.factory');
+
+
 
         $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
 
         try {
-            $factoryService->cloneMultimediaObject($multimediaObject);
+            $this->factoryService->cloneMultimediaObject($multimediaObject);
         } catch (\Exception $exception) {
-            return new JsonResponse(['error' => $translator->trans("Can't clone this multimediaObject")]);
+            return new JsonResponse(['error' => $this->translationService->trans("Can't clone this multimediaObject")]);
         }
 
         return new JsonResponse(['success']);
@@ -619,7 +619,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     public function customFieldsAction(Request $request)
     {
         $session = $this->get('session');
-        $tagCatalogueService = $this->get('pumukitnewadmin.tag_catalogue');
+
 
         if (!$session->has('admin/unesco/selected_fields')) {
             $defaultSelectedFields = $tagCatalogueService->getDefaultListFields();
@@ -881,7 +881,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
      */
     private function getConfiguredTag()
     {
-        $tagCatalogueService = $this->get('pumukitnewadmin.tag_catalogue');
+
 
         return $tagCatalogueService->getConfiguredTag();
     }

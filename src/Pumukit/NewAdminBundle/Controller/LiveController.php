@@ -162,7 +162,7 @@ class LiveController extends AdminController
 
     public function batchDeleteAction(Request $request)
     {
-        $translator = $this->get('translator');
+
 
         $ids = $request->get('ids');
 
@@ -174,15 +174,14 @@ class LiveController extends AdminController
 
         $aResult = $this->checkEmptyChannels($ids);
         if (!$aResult['emptyChannels']) {
-            return new Response($translator->trans('There are associated events on channel id'.$aResult['channelId']), Response::HTTP_BAD_REQUEST);
+            return new Response($this->translationService->trans('There are associated events on channel id'.$aResult['channelId']), Response::HTTP_BAD_REQUEST);
         }
 
-        $factory = $this->get('pumukitschema.factory');
         foreach ($ids as $id) {
             $resource = $this->find($id);
 
             try {
-                $factory->deleteResource($resource);
+                $this->factoryService->deleteResource($resource);
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }

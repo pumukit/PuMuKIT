@@ -61,10 +61,10 @@ class MultimediaObjectController extends SortableAdminController
     public function indexAction(Request $request)
     {
         $session = $this->get('session');
-        $factoryService = $this->get('pumukitschema.factory');
+
 
         $sessionId = $session->get('admin/series/id', null);
-        $series = $factoryService->findSeriesById($request->query->get('id'), $sessionId);
+        $series = $this->factoryService->findSeriesById($request->query->get('id'), $sessionId);
         if (!$series) {
             throw $this->createNotFoundException();
         }
@@ -134,13 +134,13 @@ class MultimediaObjectController extends SortableAdminController
         $dm = $this->get('doctrine_mongodb')->getManager();
         $session = $this->get('session');
 
-        $factoryService = $this->get('pumukitschema.factory');
+
 
         $sessionId = $session->get('admin/series/id', null);
-        $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
+        $series = $this->factoryService->findSeriesById($request->get('id'), $sessionId);
         $session->set('admin/series/id', $series->getId());
 
-        $mmobj = $factoryService->createMultimediaObject($series, true, $this->getUser());
+        $mmobj = $this->factoryService->createMultimediaObject($series, true, $this->getUser());
         $this->get('pumukitschema.sorted_multimedia_object')->reorder($series);
 
         if ($request->attributes->has('microsite_custom_tag')) {
@@ -191,35 +191,35 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function editAction(Request $request)
     {
-        $factoryService = $this->get('pumukitschema.factory');
-        $personService = $this->get('pumukitschema.person');
 
-        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
+
+
+        $personalScopeRoleCode = $this->personService->getPersonalScopeRoleCode();
 
         try {
-            $personalScopeRole = $personService->getPersonalScopeRole();
+            $personalScopeRole = $this->personService->getPersonalScopeRole();
         } catch (\Exception $e) {
             return new Response($e, Response::HTTP_BAD_REQUEST);
         }
 
-        $roles = $personService->getRoles();
+        $roles = $this->personService->getRoles();
         if (null === $roles) {
             throw new \Exception('Not found any role.');
         }
 
-        $parentTags = $factoryService->getParentTags();
+        $parentTags = $this->factoryService->getParentTags();
 
         $resource = $this->findOr404($request);
-        $translator = $this->get('translator');
+
         $locale = $request->getLocale();
         if ($resource->isPrototype()) {
-            $formMeta = $this->createForm(MultimediaObjectTemplateMetaType::class, $resource, ['translator' => $translator, 'locale' => $locale]);
+            $formMeta = $this->createForm(MultimediaObjectTemplateMetaType::class, $resource, ['translator' => $this->translationService, 'locale' => $locale]);
         } else {
-            $formMeta = $this->createForm(MultimediaObjectMetaType::class, $resource, ['translator' => $translator, 'locale' => $locale]);
+            $formMeta = $this->createForm(MultimediaObjectMetaType::class, $resource, ['translator' => $this->translationService, 'locale' => $locale]);
         }
         $options = [
             'not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS),
-            'translator' => $translator,
+            'translator' => $this->translationService,
             'locale' => $locale,
         ];
 
@@ -233,8 +233,8 @@ class MultimediaObjectController extends SortableAdminController
                 ->setDisplay(false)
             ;
         }
-        $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
-        $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
+        $pubChannelsTags = $this->factoryService->getTagsByCod('PUBCHANNELS', true);
+        $pubDecisionsTags = $this->factoryService->getTagsByCod('PUBDECISIONS', true);
 
         $jobs = $this->get('pumukitencoder.job')->getNotFinishedJobsByMultimediaObjectId($resource->getId());
 
@@ -323,43 +323,43 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function updatemetaAction(Request $request)
     {
-        $factoryService = $this->get('pumukitschema.factory');
-        $personService = $this->get('pumukitschema.person');
 
-        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
+
+
+        $personalScopeRoleCode = $this->personService->getPersonalScopeRoleCode();
         $allGroups = $this->getAllGroups();
 
         try {
-            $personalScopeRole = $personService->getPersonalScopeRole();
+            $personalScopeRole = $this->personService->getPersonalScopeRole();
         } catch (\Exception $e) {
             return new Response($e, Response::HTTP_BAD_REQUEST);
         }
 
-        $roles = $personService->getRoles();
+        $roles = $this->personService->getRoles();
         if (null === $roles) {
             throw new \Exception('Not found any role.');
         }
 
-        $parentTags = $factoryService->getParentTags();
+        $parentTags = $this->factoryService->getParentTags();
 
         $resource = $this->findOr404($request);
         $this->get('session')->set('admin/mms/id', $resource->getId());
-        $translator = $this->get('translator');
+
         $locale = $request->getLocale();
         if ($resource->isPrototype()) {
-            $formMeta = $this->createForm(MultimediaObjectTemplateMetaType::class, $resource, ['translator' => $translator, 'locale' => $locale]);
+            $formMeta = $this->createForm(MultimediaObjectTemplateMetaType::class, $resource, ['translator' => $this->translationService, 'locale' => $locale]);
         } else {
-            $formMeta = $this->createForm(MultimediaObjectMetaType::class, $resource, ['translator' => $translator, 'locale' => $locale]);
+            $formMeta = $this->createForm(MultimediaObjectMetaType::class, $resource, ['translator' => $this->translationService, 'locale' => $locale]);
         }
         $options = [
             'not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS),
-            'translator' => $translator,
+            'translator' => $this->translationService,
             'locale' => $locale,
         ];
         $formPub = $this->createForm(MultimediaObjectPubType::class, $resource, $options);
 
-        $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
-        $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
+        $pubChannelsTags = $this->factoryService->getTagsByCod('PUBCHANNELS', true);
+        $pubDecisionsTags = $this->factoryService->getTagsByCod('PUBDECISIONS', true);
 
         $changePubChannel = $this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
 
@@ -401,41 +401,41 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function updatepubAction(Request $request)
     {
-        $factoryService = $this->get('pumukitschema.factory');
-        $personService = $this->get('pumukitschema.person');
+
+
 
         $resource = $this->findOr404($request);
 
         $sessionId = $this->get('session')->get('admin/series/id', null);
-        $series = $factoryService->findSeriesById(null, $resource->getSeries()->getId());
+        $series = $this->factoryService->findSeriesById(null, $resource->getSeries()->getId());
         if (null === $series) {
             throw new \Exception('Series with id '.$request->get('id').' or with session id '.$sessionId.' not found.');
         }
         $this->get('session')->set('admin/series/id', $series->getId());
 
-        $parentTags = $factoryService->getParentTags();
+        $parentTags = $this->factoryService->getParentTags();
 
         $this->get('session')->set('admin/mms/id', $resource->getId());
 
-        $translator = $this->get('translator');
+
         $locale = $request->getLocale();
         $previousStatus = $resource->getStatus();
 
         if ($resource->isPrototype()) {
-            $formMeta = $this->createForm(MultimediaObjectTemplateMetaType::class, $resource, ['translator' => $translator, 'locale' => $locale]);
+            $formMeta = $this->createForm(MultimediaObjectTemplateMetaType::class, $resource, ['translator' => $this->translationService, 'locale' => $locale]);
         } else {
-            $formMeta = $this->createForm(MultimediaObjectMetaType::class, $resource, ['translator' => $translator, 'locale' => $locale]);
+            $formMeta = $this->createForm(MultimediaObjectMetaType::class, $resource, ['translator' => $this->translationService, 'locale' => $locale]);
         }
         $options = [
             'not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS),
-            'translator' => $translator,
+            'translator' => $this->translationService,
             'locale' => $locale,
         ];
 
         $formPub = $this->createForm(MultimediaObjectPubType::class, $resource, $options);
 
-        $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
-        $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
+        $pubChannelsTags = $this->factoryService->getTagsByCod('PUBCHANNELS', true);
+        $pubDecisionsTags = $this->factoryService->getTagsByCod('PUBDECISIONS', true);
 
         $changePubChannel = $this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
 
@@ -482,15 +482,15 @@ class MultimediaObjectController extends SortableAdminController
             return $this->redirectToRoute('pumukitnewadmin_mms_listall', [], 301);
         }
 
-        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
+        $personalScopeRoleCode = $this->personService->getPersonalScopeRoleCode();
 
         try {
-            $personalScopeRole = $personService->getPersonalScopeRole();
+            $personalScopeRole = $this->personService->getPersonalScopeRole();
         } catch (\Exception $e) {
             return new Response($e, Response::HTTP_BAD_REQUEST);
         }
 
-        $roles = $personService->getRoles();
+        $roles = $this->personService->getRoles();
         if (null === $roles) {
             throw new \Exception('Not found any role.');
         }
@@ -694,7 +694,6 @@ class MultimediaObjectController extends SortableAdminController
             $ids = json_decode($ids, true);
         }
 
-        $factory = $this->get('pumukitschema.factory');
         foreach ($ids as $id) {
             $resource = $this->find($id);
             if (!$resource || !$this->isUserAllowedToDelete($resource)) {
@@ -702,7 +701,7 @@ class MultimediaObjectController extends SortableAdminController
             }
 
             try {
-                $factory->deleteMultimediaObject($resource);
+                $this->factoryService->deleteMultimediaObject($resource);
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
@@ -779,10 +778,10 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function listAction(Request $request)
     {
-        $factoryService = $this->get('pumukitschema.factory');
+
         $seriesId = $request->get('seriesId', null);
         $sessionId = $this->get('session')->get('admin/series/id', null);
-        $series = $factoryService->findSeriesById($seriesId, $sessionId);
+        $series = $this->factoryService->findSeriesById($seriesId, $sessionId);
 
         if (!$series) {
             throw $this->createNotFoundException('Page not found!');
@@ -835,10 +834,10 @@ class MultimediaObjectController extends SortableAdminController
 
         $ids = $this->get('session')->get('admin/mms/cut');
 
-        $factoryService = $this->get('pumukitschema.factory');
+
         $seriesId = $request->get('seriesId', null);
         $sessionId = $this->get('session')->get('admin/series/id', null);
-        $series = $factoryService->findSeriesById($seriesId, $sessionId);
+        $series = $this->factoryService->findSeriesById($seriesId, $sessionId);
 
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         foreach ($ids as $id) {
@@ -876,9 +875,9 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function reorderAction(Request $request)
     {
-        $factoryService = $this->get('pumukitschema.factory');
+
         $sessionId = $this->get('session')->get('admin/series/id', null);
-        $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
+        $series = $this->factoryService->findSeriesById($request->get('id'), $sessionId);
 
         $series->setSorting($request->get('sorting', Series::SORT_MANUAL));
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
@@ -922,8 +921,8 @@ class MultimediaObjectController extends SortableAdminController
 
             $this->get('pumukitschema.tag')->resetCategoriesForCollections($mms, $targetTags);
         } else {
-            $factoryService = $this->get('pumukitschema.factory');
-            $parentTags = $factoryService->getParentTags();
+
+            $parentTags = $this->factoryService->getParentTags();
             $parentTagsToSync = [];
 
             foreach ($parentTags as $parentTag) {
@@ -1237,7 +1236,7 @@ class MultimediaObjectController extends SortableAdminController
         $aPubChannel = $dm->getRepository(Tag::class)->findOneBy(['cod' => 'PUBCHANNELS']);
         $aChannels = $dm->getRepository(Tag::class)->findBy(['parent.$id' => new ObjectId($aPubChannel->getId())]);
 
-        $multimediaObjectLabel = $this->get('translator')->trans($this->container->getParameter('pumukit_new_admin.multimedia_object_label'));
+        $multimediaObjectLabel = $this->translationService->trans($this->container->getParameter('pumukit_new_admin.multimedia_object_label'));
         $statusPub = [
             MultimediaObject::STATUS_PUBLISHED => 'Published',
             MultimediaObject::STATUS_BLOCKED => 'Blocked',
@@ -1383,7 +1382,7 @@ class MultimediaObjectController extends SortableAdminController
     public function modalSyncMedatadaAction(Request $request, MultimediaObject $multimediaObject)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
-        $translator = $this->get('translator');
+
         $locale = $request->getLocale();
         $syncService = $this->container->get('pumukitnewadmin.multimedia_object_sync');
 
@@ -1395,11 +1394,11 @@ class MultimediaObjectController extends SortableAdminController
             ['cod' => 1]
         );
         if (!$tags) {
-            throw new \Exception($translator->trans('No tags defined with metatag'));
+            throw new \Exception($this->translationService->trans('No tags defined with metatag'));
         }
         $roles = $dm->getRepository(Role::class)->findBy([], ["name.{$locale}" => 1]);
         if (0 === count($roles)) {
-            throw new \Exception($translator->trans('No roles defined'));
+            throw new \Exception($this->translationService->trans('No roles defined'));
         }
 
         return [
@@ -1415,20 +1414,20 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function updateMultimediaObjectSyncAction(Request $request, MultimediaObject $multimediaObject)
     {
-        $translator = $this->get('translator');
-        $message = $translator->trans('Sync metadata was fail.');
+
+        $message = $this->translationService->trans('Sync metadata was fail.');
 
         $syncService = $this->container->get('pumukitnewadmin.multimedia_object_sync');
         $multimediaObjects = $syncService->getMultimediaObjectsToSync($multimediaObject);
 
         $syncFieldsSelected = $request->request->all();
         if (empty($syncFieldsSelected)) {
-            $message = $translator->trans('No fields selected to sync');
+            $message = $this->translationService->trans('No fields selected to sync');
         }
 
         if ($multimediaObjects) {
             $syncService->syncMetadata($multimediaObjects, $multimediaObject, $syncFieldsSelected);
-            $message = $translator->trans('Sync metadata was done successfully');
+            $message = $this->translationService->trans('Sync metadata was done successfully');
         }
 
         return new JsonResponse($message, JsonResponse::HTTP_OK);
@@ -1521,9 +1520,9 @@ class MultimediaObjectController extends SortableAdminController
     {
         if (!$this->isGranted(Permission::MODIFY_OWNER)) {
             $loggedInUser = $this->getUser();
-            $personService = $this->get('pumukitschema.person');
-            $person = $personService->getPersonFromLoggedInUser($loggedInUser);
-            $role = $personService->getPersonalScopeRole();
+
+            $person = $this->personService->getPersonFromLoggedInUser($loggedInUser);
+            $role = $this->personService->getPersonalScopeRole();
             if (!$person ||
                 !$resource->containsPersonWithRole($person, $role) ||
                 count($resource->getPeopleByRole($role, true)) > 1) {

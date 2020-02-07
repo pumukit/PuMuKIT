@@ -66,8 +66,7 @@ class PlaylistController extends CollectionController
      */
     public function createAction(Request $request)
     {
-        $factory = $this->get('pumukitschema.factory');
-        $collection = $factory->createPlaylist($this->getUser(), $request->request->get('playlist_title'));
+        $collection = $this->factoryService->createPlaylist($this->getUser(), $request->request->get('playlist_title'));
         $this->get('session')->set('admin/playlist/id', $collection->getId());
 
         return new JsonResponse(['playlistId' => $collection->getId(), 'title' => $collection->getTitle($request->getLocale())]);
@@ -80,9 +79,9 @@ class PlaylistController extends CollectionController
     {
         $this->get('session')->set('admin/playlist/id', $series->getId());
 
-        $translator = $this->get('translator');
+
         $locale = $request->getLocale();
-        $form = $this->createForm(PlaylistType::class, $series, ['translator' => $translator, 'locale' => $locale]);
+        $form = $this->createForm(PlaylistType::class, $series, ['translator' => $this->translationService, 'locale' => $locale]);
 
         $method = $request->getMethod();
         $form->handleRequest($request);
@@ -114,14 +113,14 @@ class PlaylistController extends CollectionController
      */
     public function deleteAction(Series $playlist, Request $request)
     {
-        $factoryService = $this->get('pumukitschema.factory');
+
 
         if (!$this->isUserAllowedToDelete($playlist)) {
             return new Response('You don\'t have enough permissions to delete this playlist. Contact your administrator.', Response::HTTP_FORBIDDEN);
         }
 
         try {
-            $factoryService->deleteSeries($playlist);
+            $this->factoryService->deleteSeries($playlist);
         } catch (\Exception $e) {
             return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
@@ -133,7 +132,7 @@ class PlaylistController extends CollectionController
         }
         $mmSessionId = $this->get('session')->get('admin/mms/id');
         if ($mmSessionId) {
-            $mm = $factoryService->findMultimediaObjectById($mmSessionId);
+            $mm = $this->factoryService->findMultimediaObjectById($mmSessionId);
             if ($playlistId === $mm->getSeries()->getId()) {
                 $this->get('session')->remove('admin/mms/id');
             }
