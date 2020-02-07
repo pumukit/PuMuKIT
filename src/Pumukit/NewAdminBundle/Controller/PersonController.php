@@ -20,6 +20,11 @@ class PersonController extends AdminController implements NewAdminControllerInte
     public static $resourceName = 'person';
     public static $repoName = Person::class;
 
+    public function __construct(DocumentManager $documentManager, PaginationService $paginationService, FactoryService $factoryService, GroupService $groupService, UserService $userService)
+    {
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
+    }
+
     /**
      * Index.
      *

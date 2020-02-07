@@ -8,6 +8,8 @@ use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\NewAdminBundle\Form\Type\UserUpdateProfileType;
 use Pumukit\NewAdminBundle\Services\UserStatsService;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\SchemaBundle\Services\GroupService;
 use Pumukit\SchemaBundle\Services\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -26,12 +28,6 @@ class UserProfileController extends AdminController
     /** @var TranslatorInterface */
     protected $translator;
 
-    /** @var DocumentManager */
-    protected $documentManager;
-
-    /** @var PaginationService */
-    protected $paginationService;
-
     /** @var UserManagerInterface */
     protected $fosUserManager;
 
@@ -42,11 +38,13 @@ class UserProfileController extends AdminController
     protected $userStatsService;
 
     public function __construct(
-        TranslatorInterface $translator,
         DocumentManager $documentManager,
         PaginationService $paginationService,
-        UserManagerInterface $fosUserManager,
+        FactoryService $factoryService,
+        GroupService $groupService,
         UserService $userService,
+        TranslatorInterface $translator,
+        UserManagerInterface $fosUserManager,
         UserStatsService $userStatsService
     ) {
         $this->translator = $translator;
@@ -55,7 +53,7 @@ class UserProfileController extends AdminController
         $this->userService = $userService;
         $this->userStatsService = $userStatsService;
 
-        parent::__construct($this->documentManager, $paginationService);
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
     }
 
     /**

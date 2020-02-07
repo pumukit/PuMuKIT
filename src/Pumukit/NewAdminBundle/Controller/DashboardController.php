@@ -2,12 +2,12 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Services\StatsService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,13 +19,18 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class DashboardController extends AbstractController implements NewAdminControllerInterface
 {
+    /** @var DocumentManager */
+    protected $documentManager;
+
     /** @var StatsService */
     protected $statsService;
+
     /** @var ProfileService */
     protected $profileService;
 
-    public function __construct(StatsService $statsService, ProfileService $profileService)
+    public function __construct(DocumentManager $documentManager, StatsService $statsService, ProfileService $profileService)
     {
+        $this->documentManager = $documentManager;
         $this->statsService = $statsService;
         $this->profileService = $profileService;
     }
@@ -39,8 +44,6 @@ class DashboardController extends AbstractController implements NewAdminControll
     {
         $data = ['stats' => false];
         if ($request->get('show_stats')) {
-            $this->documentManager = $this->documentManager;
-
             $groupBy = $request->get('group_by', 'year');
 
             $stats = $this->statsService->getGlobalStats($groupBy);

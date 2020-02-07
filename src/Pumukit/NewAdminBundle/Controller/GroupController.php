@@ -3,9 +3,13 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\SchemaBundle\Services\GroupService;
+use Pumukit\SchemaBundle\Services\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -16,16 +20,14 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @Security("is_granted('ROLE_ACCESS_GROUPS')")
  */
-class GroupController extends AdminController implements NewAdminControllerInterface
+class GroupController extends AdminController
 {
     public static $resourceName = 'group';
     public static $repoName = Group::class;
 
-    protected $groupService;
-
-    public function __construct(DocumentManager $documentManager)
+    public function __construct(DocumentManager $documentManager, PaginationService $paginationService, FactoryService $factoryService, GroupService $groupService, UserService $userService)
     {
-        parent::__construct($documentManager);
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
     }
 
     /**
@@ -206,11 +208,6 @@ class GroupController extends AdminController implements NewAdminControllerInter
         return new JsonResponse($message, $code);
     }
 
-    /**
-     * Gets the list of resources according to a criteria.
-     *
-     * @param mixed $criteria
-     */
     public function getResources(Request $request, $criteria)
     {
         $sorting = $this->getSorting($request);
@@ -236,14 +233,6 @@ class GroupController extends AdminController implements NewAdminControllerInter
         return $resources;
     }
 
-    /**
-     * Get sorting for group.
-     *
-     * @param Request    $request
-     * @param mixed|null $session_namespace
-     *
-     * @return array
-     */
     public function getSorting(Request $request = null, $session_namespace = null)
     {
         $session = $this->get('session');

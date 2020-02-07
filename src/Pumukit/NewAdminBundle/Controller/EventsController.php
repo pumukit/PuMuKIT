@@ -6,6 +6,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Regex;
 use MongoDB\BSON\UTCDateTime;
+use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\NewAdminBundle\Form\Type\EmbeddedEventSessionType;
 use Pumukit\NewAdminBundle\Form\Type\EventsType;
 use Pumukit\NewAdminBundle\Form\Type\SeriesType;
@@ -18,13 +19,13 @@ use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
 use Pumukit\SchemaBundle\Services\SeriesEventDispatcherService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -50,14 +51,27 @@ class EventsController extends AbstractController implements NewAdminControllerI
     protected $multimediaObjectPicService;
     /** @var SeriesEventDispatcherService */
     protected $seriesDispatcher;
+    /** @var PaginationService */
+    protected $paginationService;
+    /** @var EmbeddedEventSessionService */
+    protected $eventsService;
 
-    public function __construct(DocumentManager $documentManager, TranslatorInterface $translatorService, FactoryService $factoryService, MultimediaObjectPicService $multimediaObjectPicService, SeriesEventDispatcherService $seriesDispatcher)
-    {
+    public function __construct(
+        DocumentManager $documentManager,
+        TranslatorInterface $translatorService,
+        FactoryService $factoryService,
+        MultimediaObjectPicService $multimediaObjectPicService,
+        SeriesEventDispatcherService $seriesDispatcher,
+        PaginationService $paginationService,
+        EmbeddedEventSessionService $eventsService
+    ) {
         $this->documentManager = $documentManager;
         $this->translatorService = $translatorService;
         $this->factoryService = $factoryService;
         $this->multimediaObjectPicService = $multimediaObjectPicService;
         $this->seriesDispatcher = $seriesDispatcher;
+        $this->paginationService = $paginationService;
+        $this->eventsService = $eventsService;
     }
 
     /**
@@ -242,7 +256,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
             );
         }
 
-        $pager = $paginationService->createArrayAdapter($multimediaObjects, $page, 10);
+        $pager = $this->paginationService->createArrayAdapter($multimediaObjects, $page, 10);
 
         if ($pager->getNbResults() > 0) {
             $resetCache = true;
@@ -494,7 +508,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
                     }
                 }
 
-                $color = $eventsService->validateHtmlColor($data['poster_text_color']);
+                $color = $this->eventsService->validateHtmlColor($data['poster_text_color']);
                 $multimediaObject->setProperty('postertextcolor', $color);
 
                 $this->documentManager->flush();
