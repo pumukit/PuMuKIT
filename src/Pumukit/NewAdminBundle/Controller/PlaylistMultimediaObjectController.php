@@ -172,7 +172,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         $value = $request->query->get('search', '');
 
         $criteria = ['search' => $value];
-        $criteria = $this->get('pumukitnewadmin.multimedia_object_search')->processMMOCriteria($criteria, $request->getLocale());
+        $criteria = $this->multimediaObjectSearchService->processMMOCriteria($criteria, $request->getLocale());
 
         $queryBuilder = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
         $criteria = array_merge($queryBuilder->getQueryArray(), $criteria);

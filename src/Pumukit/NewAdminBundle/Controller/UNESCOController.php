@@ -722,7 +722,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
                 if (preg_match('/^[0-9a-z]{24}$/', $field)) {
                     $query->field('_id')->equals($field);
                 } else {
-                    $this->get('pumukitnewadmin.multimedia_object_search')->completeSearchQueryBuilder(
+                    $this->multimediaObjectSearchService->completeSearchQueryBuilder(
                         $field,
                         $query,
                         $request->getLocale()
