@@ -315,7 +315,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $pubChannelsTags = $this->factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $this->factoryService->getTagsByCod('PUBDECISIONS', true);
 
-        $jobs = $this->get('pumukitencoder.job')->getNotFinishedJobsByMultimediaObjectId($multimediaObject->getId());
+        $jobs = $this->jobService->getNotFinishedJobsByMultimediaObjectId($multimediaObject->getId());
 
         $notMasterProfiles = $this->get('pumukitencoder.profile')->getProfiles(null, true, false);
 
