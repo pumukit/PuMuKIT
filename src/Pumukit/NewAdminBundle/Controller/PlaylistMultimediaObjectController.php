@@ -81,14 +81,13 @@ class PlaylistMultimediaObjectController extends AbstractController
      */
     public function infoAction(MultimediaObject $mmobj, Request $request)
     {
-        $mmService = $this->get('pumukitschema.multimedia_object');
         $warningOnUnpublished = $this->container->getParameter('pumukit.warning_on_unpublished');
 
         return [
             'mm' => $mmobj,
-            'is_published' => $mmService->isPublished($mmobj, 'PUCHWEBTV'),
-            'is_hidden' => $mmService->isHidden($mmobj, 'PUCHWEBTV'),
-            'is_playable' => $mmService->hasPlayableResource($mmobj),
+            'is_published' => $this->multimediaObjectService->isPublished($mmobj, 'PUCHWEBTV'),
+            'is_hidden' => $this->multimediaObjectService->isHidden($mmobj, 'PUCHWEBTV'),
+            'is_playable' => $this->multimediaObjectService->hasPlayableResource($mmobj),
             'warning_on_unpublished' => $warningOnUnpublished,
         ];
     }
@@ -192,7 +191,7 @@ class PlaylistMultimediaObjectController extends AbstractController
     public function urlModalAction(Request $request)
     {
         $broadcastService = $this->embeddedBroadcastService;
-        $mmobjService = $this->get('pumukitschema.multimedia_object');
+
         $this->enableFilter();
         $id = $request->query->get('mmid', '');
         $mmobj = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(MultimediaObject::class)->find($id);
@@ -201,7 +200,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         $canUserPlay = null;
         if ($mmobj) {
             $canBePlayed = $broadcastService->canUserPlayMultimediaObject($mmobj, $user);
-            $canUserPlay = $mmobjService->canBeDisplayed($mmobj, 'PUCHWEBTV');
+            $canUserPlay = $this->multimediaObjectService->canBeDisplayed($mmobj, 'PUCHWEBTV');
         }
         if ($mmobj && (!$canBePlayed || !$canUserPlay)) {
             $mmobj = null;

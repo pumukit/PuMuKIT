@@ -256,7 +256,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
     {
         $resource = $this->findOr404($request);
         $mmobjService = $this->get('pumukitschema.series');
-        $response = $mmobjService->resetMagicUrl($resource);
+        $response = $this->multimediaObjectService->resetMagicUrl($resource);
 
         return new Response($response);
     }

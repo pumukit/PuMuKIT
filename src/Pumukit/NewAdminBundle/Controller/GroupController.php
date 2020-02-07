@@ -410,8 +410,7 @@ class GroupController extends AdminController
     public function deleteAllMultimediaObjectsAction(Group $group, Request $request)
     {
         try {
-            $mmsService = $this->multimediaObjectService;
-            $mmsService->deleteAllFromGroup($group);
+            $this->multimediaObjectService->deleteAllFromGroup($group);
         } catch (\Exception $e) {
             return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
