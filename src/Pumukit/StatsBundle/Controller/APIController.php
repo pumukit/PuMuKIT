@@ -3,8 +3,10 @@
 namespace Pumukit\StatsBundle\Controller;
 
 use MongoDB\BSON\ObjectId;
+use Pumukit\CoreBundle\Services\SerializerService;
 use Pumukit\NewAdminBundle\Controller\NewAdminControllerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Pumukit\StatsBundle\Services\StatsService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,16 +14,19 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/api/media")
  */
-class APIController extends Controller implements NewAdminControllerInterface
+class APIController extends AbstractController implements NewAdminControllerInterface
 {
+    /** @var SerializerService */
+    private $serializerService;
+
+    /** @var StatsService */
+    private $statsService;
+
     /**
      * @Route("/mmobj/most_viewed.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
      */
     public function mmobjMostViewedAction(Request $request)
     {
-        $serializer = $this->get('jms_serializer');
-        $viewsService = $this->get('pumukit_stats.stats');
-
         [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
 
         $options['from_date'] = $fromDate;
@@ -30,7 +35,7 @@ class APIController extends Controller implements NewAdminControllerInterface
         $options['page'] = $page;
         $options['sort'] = $sort;
 
-        [$mmobjs, $total] = $viewsService->getMmobjsMostViewedByRange($criteria, $options);
+        [$mmobjs, $total] = $this->statsService->getMmobjsMostViewedByRange($criteria, $options);
 
         $views = [
             'limit' => $limit,
@@ -43,7 +48,7 @@ class APIController extends Controller implements NewAdminControllerInterface
             'mmobjs' => $mmobjs,
         ];
 
-        $data = $serializer->serialize($views, $request->getRequestFormat());
+        $data = $this->serializerService->dataSerialize($views, $request->getRequestFormat());
 
         return new Response($data);
     }
@@ -53,9 +58,6 @@ class APIController extends Controller implements NewAdminControllerInterface
      */
     public function seriesMostViewedAction(Request $request)
     {
-        $serializer = $this->get('jms_serializer');
-        $viewsService = $this->get('pumukit_stats.stats');
-
         [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
 
         $options['from_date'] = $fromDate;
@@ -64,7 +66,7 @@ class APIController extends Controller implements NewAdminControllerInterface
         $options['page'] = $page;
         $options['sort'] = $sort;
 
-        [$series, $total] = $viewsService->getSeriesMostViewedByRange($criteria, $options);
+        [$series, $total] = $this->statsService->getSeriesMostViewedByRange($criteria, $options);
 
         $views = [
             'limit' => $limit,
@@ -77,7 +79,7 @@ class APIController extends Controller implements NewAdminControllerInterface
             'series' => $series,
         ];
 
-        $data = $serializer->serialize($views, $request->getRequestFormat());
+        $data = $this->serializerService->dataSerialize($views, $request->getRequestFormat());
 
         return new Response($data);
     }
@@ -87,14 +89,10 @@ class APIController extends Controller implements NewAdminControllerInterface
      */
     public function viewsAction(Request $request)
     {
-        $serializer = $this->get('jms_serializer');
-        $viewsService = $this->get('pumukit_stats.stats');
-
         [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
 
         $groupBy = $request->get('group_by') ?: 'month';
 
-        //NOTE: $criteria is the same as $criteria_mmobj to provide backwards compatibility.
         $criteria_mmobj = $request->get('criteria_mmobj') ?: $criteria;
         $criteria_series = $request->get('criteria_series') ?: [];
 
@@ -107,7 +105,7 @@ class APIController extends Controller implements NewAdminControllerInterface
         $options['criteria_mmobj'] = $criteria_mmobj;
         $options['criteria_series'] = $criteria_series;
 
-        [$views, $total] = $viewsService->getTotalViewedGrouped($options);
+        [$views, $total] = $this->statsService->getTotalViewedGrouped($options);
 
         $views = [
             'limit' => $limit,
@@ -124,7 +122,7 @@ class APIController extends Controller implements NewAdminControllerInterface
             'views' => $views,
         ];
 
-        $data = $serializer->serialize($views, $request->getRequestFormat());
+        $data = $this->serializerService->dataSerialize($views, $request->getRequestFormat());
 
         return new Response($data);
     }
@@ -134,9 +132,6 @@ class APIController extends Controller implements NewAdminControllerInterface
      */
     public function viewsMmobjAction(Request $request)
     {
-        $serializer = $this->get('jms_serializer');
-        $viewsService = $this->get('pumukit_stats.stats');
-
         $mmobjId = $request->get('mmobj');
 
         [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
@@ -150,7 +145,7 @@ class APIController extends Controller implements NewAdminControllerInterface
         $options['sort'] = $sort;
         $options['group_by'] = $groupBy;
 
-        [$views, $total] = $viewsService->getTotalViewedGroupedByMmobj(new ObjectId($mmobjId), $options);
+        [$views, $total] = $this->statsService->getTotalViewedGroupedByMmobj(new ObjectId($mmobjId), $options);
 
         $views = [
             'limit' => $limit,
@@ -164,7 +159,7 @@ class APIController extends Controller implements NewAdminControllerInterface
             'views' => $views,
         ];
 
-        $data = $serializer->serialize($views, $request->getRequestFormat());
+        $data = $this->serializerService->dataSerialize($views, $request->getRequestFormat());
 
         return new Response($data);
     }
@@ -174,9 +169,6 @@ class APIController extends Controller implements NewAdminControllerInterface
      */
     public function viewsSeriesAction(Request $request)
     {
-        $serializer = $this->get('jms_serializer');
-        $viewsService = $this->get('pumukit_stats.stats');
-
         $seriesId = $request->get('series');
 
         [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
@@ -190,7 +182,7 @@ class APIController extends Controller implements NewAdminControllerInterface
         $options['sort'] = $sort;
         $options['group_by'] = $groupBy;
 
-        [$views, $total] = $viewsService->getTotalViewedGroupedBySeries(new ObjectId($seriesId), $options);
+        [$views, $total] = $this->statsService->getTotalViewedGroupedBySeries(new ObjectId($seriesId), $options);
 
         $views = [
             'limit' => $limit,
@@ -204,7 +196,7 @@ class APIController extends Controller implements NewAdminControllerInterface
             'views' => $views,
         ];
 
-        $data = $serializer->serialize($views, $request->getRequestFormat());
+        $data = $this->serializerService->dataSerialize($views, $request->getRequestFormat());
 
         return new Response($data);
     }

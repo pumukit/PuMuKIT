@@ -2,12 +2,22 @@
 
 namespace Pumukit\StatsBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Pumukit\StatsBundle\Services\StatsService;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class PumukitAggregateCommand extends ContainerAwareCommand
+class PumukitAggregateCommand extends Command
 {
+    /** @var StatsService */
+    private $statsService;
+
+    public function __construct(StatsService $statsService)
+    {
+        $this->statsService = $statsService;
+        parent::__construct();
+    }
+
     protected function configure()
     {
         $this
@@ -16,49 +26,6 @@ class PumukitAggregateCommand extends ContainerAwareCommand
             ->setHelp(
                 <<<'EOT'
 Aggregate ViewsLog collections in ViewsAggregation to improve the performance of generating stats.
-
-
-db.ViewsLog.aggregate([
-[{
-        '$group': {
-            '_id': {
-                'mm': '$multimediaObject',
-                'day': {
-                    $dateToString: {
-                        format: '%Y-%m-%d',
-                        date: '$date'
-                    }
-                }
-            },
-            'multimediaObject': {
-                $first: '$multimediaObject'
-            },
-            'series': {
-                $first: '$series'
-            },
-            'date': {
-                $first: '$date'
-            },
-            'numView': {
-                '$sum': 1
-            }
-        }
-    },
-    {
-        '$project': {
-            '_id': 0,
-            'multimediaObject': 1,
-            'series': 1,
-            'date': 1,
-            'numView': 1,
-        }
-    },
-    {
-        $out: 'ViewsAggregation'
-    }
-])
-
-
 Examples:
 <info>php app/console pumukit:stats:aggregate</info>
 
@@ -69,7 +36,6 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $viewsService = $this->getContainer()->get('pumukit_stats.stats');
-        $viewsService->aggregateViewsLog();
+        $this->statsService->aggregateViewsLog();
     }
 }
