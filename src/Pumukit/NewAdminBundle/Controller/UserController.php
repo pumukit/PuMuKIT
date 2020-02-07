@@ -2,12 +2,17 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Regex;
+use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\NewAdminBundle\Form\Type\UserUpdateType;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\SchemaBundle\Services\GroupService;
+use Pumukit\SchemaBundle\Services\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,10 +22,15 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @Security("is_granted('ROLE_ACCESS_ADMIN_USERS')")
  */
-class UserController extends AdminController implements NewAdminControllerInterface
+class UserController extends AdminController
 {
     public static $resourceName = 'user';
     public static $repoName = User::class;
+
+    public function __construct(DocumentManager $documentManager, PaginationService $paginationService, FactoryService $factoryService, GroupService $groupService, UserService $userService)
+    {
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
+    }
 
     /**
      * Overwrite to check Users creation.

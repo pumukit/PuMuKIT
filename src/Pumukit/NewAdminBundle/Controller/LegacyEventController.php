@@ -2,8 +2,13 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\Regex;
+use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Document\Event;
+use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\SchemaBundle\Services\GroupService;
+use Pumukit\SchemaBundle\Services\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @Security("is_granted('ROLE_ACCESS_LIVE_EVENTS')")
  */
-class LegacyEventController extends AdminController implements NewAdminControllerInterface
+class LegacyEventController extends AdminController
 {
     public static $resourceName = 'event';
     public static $repoName = Event::class;
@@ -21,6 +26,11 @@ class LegacyEventController extends AdminController implements NewAdminControlle
      * @var array
      */
     public static $daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+    public function __construct(DocumentManager $documentManager, PaginationService $paginationService, FactoryService $factoryService, GroupService $groupService, UserService $userService)
+    {
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
+    }
 
     /**
      * Overwrite to get the calendar.

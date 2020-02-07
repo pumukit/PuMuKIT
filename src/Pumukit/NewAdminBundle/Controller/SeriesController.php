@@ -27,6 +27,11 @@ class SeriesController extends AdminController implements NewAdminControllerInte
     public static $resourceName = 'series';
     public static $repoName = Series::class;
 
+    public function __construct(DocumentManager $documentManager, PaginationService $paginationService, FactoryService $factoryService, GroupService $groupService, UserService $userService)
+    {
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
+    }
+
     /**
      * Overwrite to search criteria with date.
      *

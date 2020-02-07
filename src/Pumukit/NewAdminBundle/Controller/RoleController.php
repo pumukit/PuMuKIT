@@ -18,6 +18,11 @@ class RoleController extends SortableAdminController implements NewAdminControll
     public static $resourceName = 'role';
     public static $repoName = Role::class;
 
+    public function __construct(DocumentManager $documentManager, PaginationService $paginationService, FactoryService $factoryService, GroupService $groupService, UserService $userService)
+    {
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
+    }
+
     /**
      * Update role.
      *

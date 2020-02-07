@@ -19,6 +19,11 @@ class PermissionProfileController extends AdminController implements NewAdminCon
     public static $resourceName = 'permissionprofile';
     public static $repoName = PermissionProfile::class;
 
+    public function __construct(DocumentManager $documentManager, PaginationService $paginationService, FactoryService $factoryService, GroupService $groupService, UserService $userService)
+    {
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
+    }
+
     /**
      * Overwrite to update the criteria with Regex, and save it in the session.
      *
