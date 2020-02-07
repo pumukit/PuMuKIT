@@ -394,8 +394,8 @@ class GroupController extends AdminController
     public function deleteAllUsersAction(Group $group, Request $request)
     {
         try {
-            $userService = $this->userService;
-            $userService->deleteAllFromGroup($group);
+
+            $this->userService->deleteAllFromGroup($group);
         } catch (\Exception $e) {
             return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }

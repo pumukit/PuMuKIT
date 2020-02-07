@@ -63,15 +63,13 @@ class UserController extends AdminController
      */
     public function createAction(Request $request)
     {
-        $userService = $this->get('pumukitschema.user');
-
-        $user = $userService->instantiate();
+        $user = $this->userService->instantiate();
         $form = $this->getForm($user, $request->getLocale());
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $user = $userService->create($user);
+                $user = $this->userService->create($user);
                 $user = $this->get('pumukitschema.person')->referencePersonIntoUser($user);
             } catch (\Exception $e) {
                 throw $e;
@@ -112,7 +110,7 @@ class UserController extends AdminController
             if ($form->isSubmitted() && $form->isValid()) {
                 try {
                     if (!$user->isLocal()) {
-                        $user = $this->get('pumukitschema.user')->update($user, true, false);
+                        $user = $this->userService->update($user, true, false);
                     } else {
                         $response = $this->isAllowedToBeUpdated($user);
                         if ($response instanceof Response) {
@@ -121,7 +119,7 @@ class UserController extends AdminController
                         // false to not flush
                         $userManager->updateUser($user, false);
                         // To update aditional fields added
-                        $user = $this->get('pumukitschema.user')->update($user);
+                        $user = $this->userService->update($user);
                     }
                 } catch (\Exception $e) {
                     throw $e;
@@ -330,7 +328,7 @@ class UserController extends AdminController
             foreach ($users as $user) {
                 if (!$user->hasRole('ROLE_SUPER_ADMIN')) {
                     $user->setPermissionProfile($profile);
-                    $this->get('pumukitschema.user')->update($user, true, false);
+                    $this->userService->update($user, true, false);
                 }
             }
         } catch (\Exception $e) {
@@ -354,14 +352,14 @@ class UserController extends AdminController
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $groupRepo = $dm->getRepository(Group::class);
-        $userService = $this->get('pumukitschema.user');
+
 
         foreach ($addGroups as $addGroup) {
             $groupsIds = explode('_', $addGroup);
             $groupId = $groupsIds[2];
             $group = $groupRepo->find($groupId);
             if ($group) {
-                $userService->addGroup($group, $user, false);
+                $this->userService->addGroup($group, $user, false);
             }
         }
 
@@ -370,7 +368,7 @@ class UserController extends AdminController
             $groupId = $groupsIds[2];
             $group = $groupRepo->find($groupId);
             if ($group) {
-                $userService->deleteGroup($group, $user, false);
+                $this->userService->deleteGroup($group, $user, false);
             }
         }
 

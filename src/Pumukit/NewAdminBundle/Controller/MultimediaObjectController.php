@@ -1102,9 +1102,9 @@ class MultimediaObjectController extends SortableAdminController
     public function userLastRelationAction(Request $request)
     {
         $loggedInUser = $this->getUser();
-        $userService = $this->get('pumukitschema.user');
+
         $response = null;
-        if (!$userService->hasPersonalScope($loggedInUser)) {
+        if (!$this->userService->hasPersonalScope($loggedInUser)) {
             return new JsonResponse(false, Response::HTTP_OK);
         }
         if ($request->isMethod('POST')) {
@@ -1116,7 +1116,7 @@ class MultimediaObjectController extends SortableAdminController
                 if ('string' === gettype($addGroups)) {
                     $addGroups = json_decode($addGroups, true);
                 }
-                $response = $userService->isUserLastRelation($loggedInUser, $mmId, $personId, $owners, $addGroups);
+                $response = $this->userService->isUserLastRelation($loggedInUser, $mmId, $personId, $owners, $addGroups);
             } catch (\Exception $e) {
                 return new JsonResponse($e->getMessage(), JsonResponse::HTTP_BAD_REQUEST);
             }
@@ -1675,8 +1675,8 @@ class MultimediaObjectController extends SortableAdminController
             return true;
         }
 
-        $userService = $this->get('pumukitschema.user');
-        $globalScope = $userService->hasGlobalScope($loggedInUser);
+
+        $globalScope = $this->userService->hasGlobalScope($loggedInUser);
         if ($globalScope) {
             return true;
         }
