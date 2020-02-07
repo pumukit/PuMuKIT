@@ -1612,7 +1612,6 @@ class MultimediaObjectController extends SortableAdminController
 
     private function getResourceGroups($groups = [])
     {
-        $groupService = $this->get('pumukitschema.group');
         $addGroups = [];
         $deleteGroups = [];
         $addGroupsIds = [];
@@ -1630,7 +1629,7 @@ class MultimediaObjectController extends SortableAdminController
         foreach ($allGroups as $group) {
             $allGroupsIds[] = new ObjectId($group->getId());
         }
-        $groupsToDelete = $groupService->findByIdNotInOf($addGroupsIds, $allGroupsIds);
+        $groupsToDelete = $this->groupService->findByIdNotInOf($addGroupsIds, $allGroupsIds);
         foreach ($groupsToDelete as $group) {
             $deleteGroups[$group->getId()] = [
                 'key' => $group->getKey(),

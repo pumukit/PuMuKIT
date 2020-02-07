@@ -193,7 +193,7 @@ class UserController extends AdminController
     public function editGroupsAction(Request $request)
     {
         $user = $this->findOr404($request);
-        $groups = $this->get('pumukitschema.group')->findAll();
+        $groups = $this->groupService->findAll();
 
         return [
             'user' => $user,
@@ -238,7 +238,7 @@ class UserController extends AdminController
     public function getGroupsAction(Request $request)
     {
         $user = $this->findOr404($request);
-        $groupService = $this->get('pumukitschema.group');
+
         $addGroups = [];
         $addGroupsIds = [];
         $deleteGroups = [];
@@ -251,7 +251,7 @@ class UserController extends AdminController
                 ];
                 $addGroupsIds[] = new ObjectId($group->getId());
             }
-            $groupsToDelete = $groupService->findByIdNotIn($addGroupsIds);
+            $groupsToDelete = $this->groupService->findByIdNotIn($addGroupsIds);
             foreach ($groupsToDelete as $group) {
                 $deleteGroups[$group->getId()] = [
                     'key' => $group->getKey(),

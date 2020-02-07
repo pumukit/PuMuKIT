@@ -849,11 +849,9 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
     private function getAllGroups()
     {
-        $groupService = $this->get('pumukitschema.group');
-
         $loggedInUser = $this->getUser();
         if ($loggedInUser->isSuperAdmin() || $this->userService->hasGlobalScope($loggedInUser)) {
-            $allGroups = $groupService->findAll();
+            $allGroups = $this->groupService->findAll();
         } else {
             $allGroups = $loggedInUser->getGroups();
         }
