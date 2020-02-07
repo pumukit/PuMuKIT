@@ -45,7 +45,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && ($request->isMethod('PUT') || $request->isMethod('POST'))) {
             try {
-                $multimediaObject = $this->get('pumukitschema.material')->updateMaterialInMultimediaObject($multimediaObject, $material);
+                $multimediaObject = $this->materialService->updateMaterialInMultimediaObject($multimediaObject, $material);
             } catch (\Exception $e) {
                 $this->get('session')->getFlashBag()->add('error', $e->getMessage());
             }
@@ -71,7 +71,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
     {
         $formData = $request->get('pumukitnewadmin_material', []);
 
-        $materialService = $this->get('pumukitschema.material');
+        $materialService = $this->materialService;
 
         try {
             if (0 === $request->files->count() && 0 === $request->request->count()) {
@@ -102,7 +102,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
      */
     public function deleteAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $multimediaObject = $this->get('pumukitschema.material')->removeMaterialFromMultimediaObject($multimediaObject, $request->get('id'));
+        $multimediaObject = $this->materialService->removeMaterialFromMultimediaObject($multimediaObject, $request->get('id'));
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_material_list', ['id' => $multimediaObject->getId()]));
     }
@@ -112,7 +112,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
      */
     public function upAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $multimediaObject = $this->get('pumukitschema.material')->upMaterialInMultimediaObject($multimediaObject, $request->get('id'));
+        $multimediaObject = $this->materialService->upMaterialInMultimediaObject($multimediaObject, $request->get('id'));
 
         $this->addFlash('success', 'up');
 
@@ -124,7 +124,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
      */
     public function downAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $multimediaObject = $this->get('pumukitschema.material')->downMaterialInMultimediaObject($multimediaObject, $request->get('id'));
+        $multimediaObject = $this->materialService->downMaterialInMultimediaObject($multimediaObject, $request->get('id'));
 
         $this->addFlash('success', 'down');
 
