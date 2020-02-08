@@ -16,6 +16,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -31,6 +33,10 @@ class RoleController extends SortableAdminController
     protected $translationService;
     /** @var RoleService */
     protected $roleService;
+    /** @var SessionInterface */
+    private $session;
+    /** @var ValidatorInterface */
+    private $validator;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -40,12 +46,16 @@ class RoleController extends SortableAdminController
         UserService $userService,
         PersonService $personService,
         TranslatorInterface $translationService,
-        RoleService $roleService
+        RoleService $roleService,
+        SessionInterface $session,
+        ValidatorInterface $validator
     ) {
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
         $this->personService = $personService;
         $this->translationService = $translationService;
         $this->roleService = $roleService;
+        $this->session = $session;
+        $this->validator = $validator;
     }
 
     /**
@@ -69,7 +79,7 @@ class RoleController extends SortableAdminController
 
                 return $this->redirect($this->generateUrl('pumukitnewadmin_role_list'));
             }
-            $errors = $this->get('validator')->validate($role);
+            $errors = $this->validator->validate($role);
             $textStatus = '';
             foreach ($errors as $error) {
                 $textStatus .= $error->getPropertyPath().' value '.$error->getInvalidValue().': '.$error->getMessage().'. ';
@@ -88,7 +98,7 @@ class RoleController extends SortableAdminController
     {
         $sorting = $this->getSorting($request);
         $sorting['rank'] = 'asc';
-        $session = $this->get('session');
+        $session = $this->session;
         $session_namespace = 'admin/'.$this->getResourceName();
 
         $resources = $this->createPager($criteria, $sorting);
@@ -110,6 +120,7 @@ class RoleController extends SortableAdminController
         return $resources;
     }
 
+
     public function deleteAction(Request $request)
     {
         $resource = $this->findOr404($request);
@@ -121,8 +132,8 @@ class RoleController extends SortableAdminController
         }
 
         $this->factoryService->deleteResource($resource);
-        if ($resourceId === $this->get('session')->get('admin/'.$resourceName.'/id')) {
-            $this->get('session')->remove('admin/'.$resourceName.'/id');
+        if ($resourceId === $this->session->get('admin/'.$resourceName.'/id')) {
+            $this->session->remove('admin/'.$resourceName.'/id');
         }
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
@@ -149,8 +160,8 @@ class RoleController extends SortableAdminController
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
-            if ($id === $this->get('session')->get('admin/'.$resourceName.'/id')) {
-                $this->get('session')->remove('admin/'.$resourceName.'/id');
+            if ($id === $this->session->get('admin/'.$resourceName.'/id')) {
+                $this->session->remove('admin/'.$resourceName.'/id');
             }
         }
 

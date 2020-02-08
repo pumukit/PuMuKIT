@@ -39,6 +39,8 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     private $profileService;
     private $inspectionService;
     private $picExtractorService;
+    private $kernelEnvironment;
+    private $kernelBundles;
 
     public function __construct(
         LoggerInterface $logger,
@@ -48,7 +50,9 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         TrackService $trackService,
         ProfileService $profileService,
         InspectionFfprobeService $inspectionService,
-        PicExtractorService $picExtractorService
+        PicExtractorService $picExtractorService,
+        $kernelEnvironment,
+        $kernelBundles
     ) {
         $this->logger = $logger;
         $this->documentManager = $documentManager;
@@ -58,6 +62,8 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         $this->profileService = $profileService;
         $this->inspectionService = $inspectionService;
         $this->picExtractorService = $picExtractorService;
+        $this->kernelEnvironment = $kernelEnvironment;
+        $this->kernelBundles = $kernelBundles;
     }
 
     /**
@@ -105,7 +111,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         } catch (\Exception $e) {
             $this->logger->warning($e->getMessage());
 
-            $message = ('dev' === $this->getParameter('kernel.environment')) ? $e->getMessage() : 'The file is not a valid video or audio file';
+            $message = ('dev' === $this->kernelEnvironment) ? $e->getMessage() : 'The file is not a valid video or audio file';
 
             return [
                 'mm' => $multimediaObject,
@@ -255,8 +261,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         $jobs = $this->jobService->getNotFinishedJobsByMultimediaObjectId($multimediaObject->getId());
 
         $notMasterProfiles = $this->profileService->getProfiles(null, true, false);
-        $allBundles = $this->getParameter('kernel.bundles');
-        $opencastExists = array_key_exists('PumukitOpencastBundle', $allBundles);
+        $opencastExists = array_key_exists('PumukitOpencastBundle', $this->kernelBundles);
 
         return [
             'mm' => $multimediaObject,
