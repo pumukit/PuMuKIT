@@ -3,6 +3,7 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Pumukit\SchemaBundle\Document\Event;
+use Pumukit\SchemaBundle\Services\LegacyEventPicService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,10 +14,18 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class LegacyEventPicController extends AbstractController implements NewAdminControllerInterface
 {
+    /** @var LegacyEventPicService */
+    private $legacyEventPicService;
+
+    public function __construct(LegacyEventPicService $legacyEventPicService)
+    {
+        $this->legacyEventPicService = $legacyEventPicService;
+    }
+
     /**
      * @Template("PumukitNewAdminBundle:Pic:create.html.twig")
      */
-    public function createAction(Event $event, Request $request)
+    public function createAction(Request $request, Event $event)
     {
         return [
             'resource' => $event,
@@ -27,7 +36,7 @@ class LegacyEventPicController extends AbstractController implements NewAdminCon
     /**
      * Assign a picture from an url.
      */
-    public function updateAction(Event $event, Request $request)
+    public function updateAction(Request $request, Event $event)
     {
         if ($url = $request->get('url')) {
             $this->legacyEventPicService->addPicUrl($event, $url);
@@ -63,10 +72,7 @@ class LegacyEventPicController extends AbstractController implements NewAdminCon
         ];
     }
 
-    /**
-     * Delete pic.
-     */
-    public function deleteAction(Event $event, Request $request)
+    public function deleteAction(Request $request, Event $event)
     {
         $this->legacyEventPicService->removePicFromEvent($event);
 

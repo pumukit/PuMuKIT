@@ -40,8 +40,16 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     private $inspectionService;
     private $picExtractorService;
 
-    public function __construct(LoggerInterface $logger, DocumentManager $documentManager, TranslatorInterface $translationService, JobService $jobService, TrackService $trackService, ProfileService $profileService, InspectionFfprobeService $inspectionService, PicExtractorService $picExtractorService)
-    {
+    public function __construct(
+        LoggerInterface $logger,
+        DocumentManager $documentManager,
+        TranslatorInterface $translationService,
+        JobService $jobService,
+        TrackService $trackService,
+        ProfileService $profileService,
+        InspectionFfprobeService $inspectionService,
+        PicExtractorService $picExtractorService
+    ) {
         $this->logger = $logger;
         $this->documentManager = $documentManager;
         $this->translationService = $translationService;
@@ -57,7 +65,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
      * @Template("PumukitNewAdminBundle:Track:create.html.twig")
      */
-    public function createAction(MultimediaObject $multimediaObject, Request $request)
+    public function createAction(Request $request, MultimediaObject $multimediaObject)
     {
         $locale = $request->getLocale();
         $track = new Track();
@@ -78,7 +86,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
      * @Template("PumukitNewAdminBundle:Track:upload.html.twig")
      * @Security("is_granted('ROLE_ACCESS_ADVANCED_UPLOAD')")
      */
-    public function uploadAction(MultimediaObject $multimediaObject, Request $request)
+    public function uploadAction(Request $request, MultimediaObject $multimediaObject)
     {
         $profile = $request->get('profile');
         $priority = $request->get('priority', 2);
@@ -115,10 +123,8 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function toggleHideAction(MultimediaObject $multimediaObject, Request $request)
+    public function toggleHideAction(Request $request, MultimediaObject $multimediaObject)
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
         $track->setHide(!$track->getHide());
@@ -135,7 +141,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      */
-    public function updateAction(MultimediaObject $multimediaObject, Request $request)
+    public function updateAction(Request $request, MultimediaObject $multimediaObject)
     {
         $locale = $request->getLocale();
         $track = $multimediaObject->getTrackById($request->get('id'));
@@ -169,7 +175,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @Template("PumukitNewAdminBundle:Track:info.html.twig")
      */
-    public function infoAction(MultimediaObject $multimediaObject, Request $request)
+    public function infoAction(Request $request, MultimediaObject $multimediaObject)
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
         $isPlayable = $track->containsTag('display');
@@ -193,7 +199,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @Template("PumukitNewAdminBundle:Track:play.html.twig")
      */
-    public function playAction(MultimediaObject $multimediaObject, Request $request)
+    public function playAction(Request $request, MultimediaObject $multimediaObject)
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
 
@@ -203,7 +209,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      */
-    public function deleteAction(MultimediaObject $multimediaObject, Request $request)
+    public function deleteAction(Request $request, MultimediaObject $multimediaObject)
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
         if ($track) {
@@ -220,7 +226,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      */
-    public function upAction(MultimediaObject $multimediaObject, Request $request)
+    public function upAction(Request $request, MultimediaObject $multimediaObject)
     {
         $multimediaObject = $this->trackService->upTrackInMultimediaObject($multimediaObject, $request->get('id'));
 
@@ -232,7 +238,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      */
-    public function downAction(MultimediaObject $multimediaObject, Request $request)
+    public function downAction(Request $request, MultimediaObject $multimediaObject)
     {
         $multimediaObject = $this->trackService->downTrackInMultimediaObject($multimediaObject, $request->get('id'));
 
@@ -244,7 +250,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     /**
      * @Template("PumukitNewAdminBundle:Track:list.html.twig")
      */
-    public function listAction(MultimediaObject $multimediaObject, Request $request)
+    public function listAction(Request $request, MultimediaObject $multimediaObject)
     {
         $jobs = $this->jobService->getNotFinishedJobsByMultimediaObjectId($multimediaObject->getId());
 
@@ -269,7 +275,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("job", class="PumukitEncoderBundle:Job", options={"id" = "jobId"})
      */
-    public function retryJobAction(MultimediaObject $multimediaObject, Job $job, Request $request)
+    public function retryJobAction(MultimediaObject $multimediaObject, Job $job)
     {
         $flashMessage = $this->jobService->retryJob($job);
         $this->addFlash('success', $flashMessage);
@@ -284,7 +290,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
      * @ParamConverter("job", class="PumukitEncoderBundle:Job", options={"id" = "jobId"})
      * @Template("PumukitNewAdminBundle:Track:infoJob.html.twig")
      */
-    public function infoJobAction(MultimediaObject $multimediaObject, Job $job, Request $request)
+    public function infoJobAction(MultimediaObject $multimediaObject, Job $job)
     {
         $command = $this->jobService->renderBat($job);
 
@@ -296,7 +302,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      */
-    public function deleteJobAction(MultimediaObject $multimediaObject, Request $request)
+    public function deleteJobAction(Request $request, MultimediaObject $multimediaObject)
     {
         $this->jobService->deleteJob($request->get('jobId'));
 
@@ -320,7 +326,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      */
-    public function autocompleteAction(MultimediaObject $multimediaObject, Request $request)
+    public function autocompleteAction(Request $request, MultimediaObject $multimediaObject)
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
 
@@ -334,7 +340,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @Template("PumukitNewAdminBundle:Pic:list.html.twig")
      */
-    public function picAction(MultimediaObject $multimediaObject, Request $request)
+    public function picAction(Request $request, MultimediaObject $multimediaObject)
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
         $numframe = $request->get('numframe');
@@ -353,7 +359,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      */
-    public function downloadAction(MultimediaObject $multimediaObject, Request $request)
+    public function downloadAction(Request $request, MultimediaObject $multimediaObject)
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
 
@@ -371,7 +377,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      */
-    public function retranscodeAction(MultimediaObject $multimediaObject, Request $request)
+    public function retranscodeAction(Request $request, MultimediaObject $multimediaObject)
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
         $profile = $request->get('profile');
@@ -382,11 +388,6 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]));
     }
 
-    /**
-     * Get data in array or default values.
-     *
-     * @param mixed $formData
-     */
     private function getArrayData($formData)
     {
         $language = null;

@@ -12,12 +12,14 @@ use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\GroupService;
+use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Services\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_ADMIN_USERS')")
@@ -27,15 +29,39 @@ class UserController extends AdminController
     public static $resourceName = 'user';
     public static $repoName = User::class;
 
-    public function __construct(DocumentManager $documentManager, PaginationService $paginationService, FactoryService $factoryService, GroupService $groupService, UserService $userService)
-    {
+    /** @var DocumentManager  */
+    private $documentManager;
+    /** @var PaginationService  */
+    private $paginationService;
+    /** @var FactoryService  */
+    private $factoryService;
+    /** @var GroupService  */
+    private $groupService;
+    /** @var UserService  */
+    private $userService;
+    /** @var PersonService  */
+    private $personService;
+    /** @var TranslatorInterface */
+    private $translator;
+
+    public function __construct(
+        DocumentManager $documentManager,
+        PaginationService $paginationService,
+        FactoryService $factoryService,
+        GroupService $groupService,
+        UserService $userService,
+        PersonService $personService,
+        TranslatorInterface $translator
+    ) {
+        $this->documentManager = $documentManager;
+        $this->groupService = $groupService;
+        $this->userService = $userService;
+        $this->personService = $personService;
+        $this->translator = $translator;
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
     }
 
     /**
-     * Overwrite to check Users creation.
-     *
-     * @return array|Response
      * @Template("PumukitNewAdminBundle:User:index.html.twig")
      */
     public function indexAction(Request $request)
@@ -50,15 +76,6 @@ class UserController extends AdminController
         return ['users' => $users, 'profiles' => $profiles, 'origins' => $origins->toArray()];
     }
 
-    /**
-     * Create Action
-     * Overwrite to create Person
-     * referenced to User.
-     *
-     * @throws \Exception
-     *
-     * @return Response|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function createAction(Request $request)
     {
         $user = $this->userService->instantiate();
@@ -68,7 +85,7 @@ class UserController extends AdminController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $user = $this->userService->create($user);
-                $user = $this->personService->referencePersonIntoUser($user);
+                $this->personService->referencePersonIntoUser($user);
             } catch (\Exception $e) {
                 throw $e;
             }
@@ -85,15 +102,6 @@ class UserController extends AdminController
         );
     }
 
-    /**
-     * Update Action
-     * Overwrite to update it with user manager
-     * Checks plain password and updates encoded password.
-     *
-     * @throws \Exception
-     *
-     * @return Response|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function updateAction(Request $request)
     {
         $userManager = $this->get('fos_user.user_manager');
@@ -101,7 +109,7 @@ class UserController extends AdminController
         $user = $this->findOr404($request);
 
         $locale = $request->getLocale();
-        $form = $this->createForm(UserUpdateType::class, $user, ['translator' => $this->translationService, 'locale' => $locale]);
+        $form = $this->createForm(UserUpdateType::class, $user, ['translator' => $this->translator, 'locale' => $locale]);
 
         if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH'])) {
             $form->handleRequest($request);
@@ -117,7 +125,7 @@ class UserController extends AdminController
                         // false to not flush
                         $userManager->updateUser($user, false);
                         // To update aditional fields added
-                        $user = $this->userService->update($user);
+                        $this->userService->update($user);
                     }
                 } catch (\Exception $e) {
                     throw $e;
@@ -136,11 +144,6 @@ class UserController extends AdminController
         );
     }
 
-    /**
-     * Delete action.
-     *
-     * @return bool|Response|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function deleteAction(Request $request)
     {
         $userToDelete = $this->findOr404($request);
@@ -153,14 +156,6 @@ class UserController extends AdminController
         return parent::deleteAction($request);
     }
 
-    /**
-     * Batch Delete action.
-     *
-     * @throws \Doctrine\ODM\MongoDB\LockException
-     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
-     *
-     * @return bool|Response|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function batchDeleteAction(Request $request)
     {
         $repo = $this->documentManager->getRepository(User::class);
@@ -183,9 +178,6 @@ class UserController extends AdminController
     }
 
     /**
-     * Edit groups form.
-     *
-     * @return array
      * @Template("PumukitNewAdminBundle:User:editgroups.html.twig")
      */
     public function editGroupsAction(Request $request)
@@ -199,15 +191,6 @@ class UserController extends AdminController
         ];
     }
 
-    /**
-     * Update groups action.
-     *
-     * @throws \Doctrine\ODM\MongoDB\LockException
-     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
-     * @throws \Exception
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function updateGroupsAction(Request $request)
     {
         $user = $this->findOr404($request);
@@ -228,11 +211,6 @@ class UserController extends AdminController
         return $this->redirect($this->generateUrl('pumukitnewadmin_user_list'));
     }
 
-    /**
-     * Get user groups.
-     *
-     * @return JsonResponse
-     */
     public function getGroupsAction(Request $request)
     {
         $user = $this->findOr404($request);
@@ -267,14 +245,6 @@ class UserController extends AdminController
             ]
         );
     }
-
-    /**
-     * Gets the criteria values.
-     *
-     * @param array $criteria
-     *
-     * @return array
-     */
     public function getCriteria($criteria)
     {
         if (array_key_exists('reset', $criteria)) {
@@ -286,12 +256,12 @@ class UserController extends AdminController
 
         $new_criteria = [];
         foreach ($criteria as $property => $value) {
-            if ('permissionProfile' == $property) {
-                if ('all' != $value) {
+            if ('permissionProfile' === $property) {
+                if ('all' !== $value) {
                     $new_criteria[$property] = new ObjectId($value);
                 }
-            } elseif ('origin' == $property) {
-                if ('all' != $value) {
+            } elseif ('origin' === $property) {
+                if ('all' !== $value) {
                     $new_criteria[$property] = $value;
                 }
             } elseif ('' !== $value) {
@@ -302,11 +272,6 @@ class UserController extends AdminController
         return $new_criteria;
     }
 
-    /**
-     * Change the permission profiles of a list of users.
-     *
-     * @return JsonResponse
-     */
     public function promoteAction(Request $request)
     {
         $profileRepo = $this->documentManager->getRepository(PermissionProfile::class);
@@ -335,17 +300,7 @@ class UserController extends AdminController
         return new JsonResponse(['ok']);
     }
 
-    /**
-     * Modify User Groups.
-     *
-     * @param array $addGroups
-     * @param array $deleteGroups
-     *
-     * @throws \Doctrine\ODM\MongoDB\LockException
-     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
-     * @throws \Exception
-     */
-    private function modifyUserGroups(User $user, $addGroups = [], $deleteGroups = [])
+    private function modifyUserGroups(User $user, array $addGroups = [], array $deleteGroups = [])
     {
         $groupRepo = $this->documentManager->getRepository(Group::class);
 

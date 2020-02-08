@@ -5,17 +5,32 @@ namespace Pumukit\NewAdminBundle\Controller;
 use Pumukit\NewAdminBundle\Form\Type\LinkType;
 use Pumukit\SchemaBundle\Document\Link;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Services\LinkService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
 class LinkController extends AbstractController implements NewAdminControllerInterface
 {
+    /** @var TranslatorInterface */
+    private $translator;
+
+    /** @var LinkService */
+    private $linkService;
+
+    public function __construct(TranslatorInterface $translator, LinkService $linkService)
+    {
+        $this->translator = $translator;
+        $this->linkService = $linkService;
+    }
+
+
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
      * @Template("PumukitNewAdminBundle:Link:create.html.twig")
@@ -24,7 +39,7 @@ class LinkController extends AbstractController implements NewAdminControllerInt
     {
         $locale = $request->getLocale();
         $link = new Link();
-        $form = $this->createForm(LinkType::class, $link, ['translator' => $this->translationService, 'locale' => $locale]);
+        $form = $this->createForm(LinkType::class, $link, ['translator' => $this->translator, 'locale' => $locale]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && ($request->isMethod('PUT') || $request->isMethod('POST'))) {
@@ -58,7 +73,7 @@ class LinkController extends AbstractController implements NewAdminControllerInt
     {
         $locale = $request->getLocale();
         $link = $multimediaObject->getLinkById($request->get('id'));
-        $form = $this->createForm(LinkType::class, $link, ['translator' => $this->translationService, 'locale' => $locale]);
+        $form = $this->createForm(LinkType::class, $link, ['translator' => $this->translator, 'locale' => $locale]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && ($request->isMethod('PUT') || $request->isMethod('POST'))) {

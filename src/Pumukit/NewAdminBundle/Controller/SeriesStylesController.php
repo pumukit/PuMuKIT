@@ -2,6 +2,7 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\SeriesStyle;
@@ -11,15 +12,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * Class SeriesStylesController.
- *
  * @Route ("/series/styles")
  * @Security("is_granted('ROLE_ACCESS_SERIES_STYLE')")
  */
 class SeriesStylesController extends AbstractController
 {
+
+    /** @var DocumentManager */
+    private $documentManager;
+
+    /** @var TranslatorInterface */
+    private $translator;
+
+    public function __construct(DocumentManager $documentManager, TranslatorInterface $translator)
+    {
+        $this->documentManager = $documentManager;
+        $this->translator = $translator;
+    }
+
+
     /**
      * @Route("/", name="pumukit_newadmin_series_styles")
      * @Template("PumukitNewAdminBundle:SeriesStyle:crud.html.twig")
@@ -45,11 +59,9 @@ class SeriesStylesController extends AbstractController
     }
 
     /**
-     * @return JsonResponse
-     *
      * @Route("/create", name="pumukit_newadmin_series_styles_create")
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request): JsonResponse
     {
         $style = new SeriesStyle();
         $style->setName($request->query->get('name'));
@@ -64,11 +76,9 @@ class SeriesStylesController extends AbstractController
     }
 
     /**
-     * @return JsonResponse
-     *
      * @Route("/edit", name="pumukit_newadmin_series_styles_edit")
      */
-    public function editAction(Request $request)
+    public function editAction(Request $request): JsonResponse
     {
         $id = $request->request->get('id');
         if (isset($id)) {
@@ -89,13 +99,9 @@ class SeriesStylesController extends AbstractController
     }
 
     /**
-     * @param string $id
-     *
-     * @return JsonResponse
-     *
      * @Route("/delete/{id}", name="pumukit_newadmin_series_styles_delete")
      */
-    public function deleteAction($id)
+    public function deleteAction(string $id): JsonResponse
     {
         $session = $this->get('session');
 
@@ -112,24 +118,20 @@ class SeriesStylesController extends AbstractController
 
                 $session->set('seriesstyle/id', '');
 
-                return new JsonResponse(['success', 'msg' => $this->translationService->trans('Successfully deleted series style')]);
+                return new JsonResponse(['success', 'msg' => $this->translator->trans('Successfully deleted series style')]);
             }
 
-            return new JsonResponse(['error', 'msg' => $this->translationService->trans('There are series with this series style')]);
+            return new JsonResponse(['error', 'msg' => $this->translator->trans('There are series with this series style')]);
         }
 
-        return new JsonResponse(['error', 'msg' => $this->translationService->trans("Series style {$style->getId}() doesn't exists")]);
+        return new JsonResponse(['error', 'msg' => $this->translator->trans("Series style {$style->getId}() doesn't exists")]);
     }
 
     /**
-     * @param string $id
-     *
-     * @return array
-     *
      * @Route("/show/{id}", name="pumukit_newadmin_series_styles_show")
      * @Template("PumukitNewAdminBundle:SeriesStyle:show.html.twig")
      */
-    public function showAction($id = null)
+    public function showAction(?string $id = null): array
     {
         if (isset($id)) {
             $style = $this->documentManager->getRepository(SeriesStyle::class)->findOneBy(

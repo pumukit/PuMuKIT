@@ -2,16 +2,24 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Doctrine\ODM\MongoDB\Query\Builder;
+use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\UTCDateTime;
+use Pumukit\CoreBundle\Services\PaginationService;
+use Pumukit\EncoderBundle\Services\JobService;
+use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectPubType;
+use Pumukit\NewAdminBundle\Services\TagCatalogueService;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Security\Permission;
+use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\SchemaBundle\Services\GroupService;
+use Pumukit\SchemaBundle\Services\PersonService;
+use Pumukit\SchemaBundle\Services\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -20,6 +28,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("/unesco")
@@ -65,13 +74,67 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         ],
     ];
 
+    /** @var PaginationService */
+    private $paginationService;
+    /** @var TagCatalogueService */
+    private $tagCatalogueService;
+    /** @var PersonService */
+    private $personService;
+    /** @var FactoryService */
+    private $factoryService;
+    /** @var JobService */
+    private $jobService;
+    /** @var ProfileService */
+    private $profileService;
+    /** @var TagCatalogueService */
+    private $tagService;
+    /** @var DocumentManager */
+    private $documentManager;
+    /** @var TranslatorInterface */
+    private $translator;
+    /** @var UserService */
+    private $userService;
+    /** @var GroupService */
+    private $groupService;
+    private $showLatestWithPudeNew;
+    private $pumukitNewAdminBaseCatalogueTag;
+    private $kernelBundles;
+
+    public function __construct(
+        PaginationService $paginationService,
+        TagCatalogueService $tagCatalogueService,
+        PersonService $personService,
+        FactoryService $factoryService,
+        JobService $jobService,
+        ProfileService $profileService,
+        TagCatalogueService $tagService,
+        DocumentManager $documentManager,
+        TranslatorInterface $translator,
+        UserService $userService,
+        GroupService $groupService,
+        $showLatestWithPudeNew,
+        $pumukitNewAdminBaseCatalogueTag,
+        $kernelBundles
+    ) {
+        $this->paginationService = $paginationService;
+        $this->tagCatalogueService = $tagCatalogueService;
+        $this->personService = $personService;
+        $this->factoryService = $factoryService;
+        $this->jobService = $jobService;
+        $this->profileService = $profileService;
+        $this->tagService = $tagService;
+        $this->documentManager = $documentManager;
+        $this->translator = $translator;
+        $this->userService = $userService;
+        $this->groupService = $groupService;
+        $this->showLatestWithPudeNew = $showLatestWithPudeNew;
+        $this->pumukitNewAdminBaseCatalogueTag = $pumukitNewAdminBaseCatalogueTag;
+        $this->kernelBundles = $kernelBundles;
+    }
+
     /**
      * @Route("/", name="pumukitnewadmin_unesco_index")
      * @Template("PumukitNewAdminBundle:UNESCO:index.html.twig")
-     *
-     * @throws \Exception
-     *
-     * @return array
      */
     public function indexAction(Request $request)
     {
@@ -94,16 +157,12 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("/tags", name="pumukitnewadmin_unesco_menu_tags")
      * @Template("PumukitNewAdminBundle:UNESCO:menuTags.html.twig")
-     *
-     * @throws \Exception
-     *
-     * @return array
      */
     public function menuTagsAction()
     {
         $configuredTag = $this->getConfiguredTag();
 
-        if (null !== $this->getParameter('pumukit_new_admin.base_catalogue_tag')) {
+        if (null !== $this->pumukitNewAdminBaseCatalogueTag) {
             $menuTags = [];
             foreach ($configuredTag->getChildren() as $child) {
                 if ($child->getDisplay()) {
@@ -124,7 +183,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
             foreach (static::$baseTags as $key => $tag) {
                 foreach ($tag as $cod) {
-                    $menuTags[$this->translationService->trans($key)][] = $this->documentManager->getRepository(Tag::class)->findOneBy(
+                    $menuTags[$this->translator->trans($key)][] = $this->documentManager->getRepository(Tag::class)->findOneBy(
                         ['cod' => $cod]
                     );
                 }
@@ -140,12 +199,12 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $defaultTagOptions = [
             [
                 'key' => 2,
-                'title' => $this->translationService->trans('All'),
+                'title' => $this->translator->trans('All'),
                 'count' => $countMultimediaObjects,
             ],
             [
                 'key' => 1,
-                'title' => $this->translationService->trans('Without category'),
+                'title' => $this->translator->trans('Without category'),
                 'count' => count($countMultimediaObjectsWithoutTag),
             ],
         ];
@@ -156,12 +215,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("/list/{tag}", name="pumukitnewadmin_unesco_list")
      * @Template("PumukitNewAdminBundle:UNESCO:list.html.twig")
-     *
-     * @param null $tag
-     *
-     * @throws \Exception
-     *
-     * @return array
      */
     public function listAction($tag = null)
     {
@@ -229,16 +282,12 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
         return [
             'mms' => $pager,
-            'disable_pudenew' => !$this->getParameter('show_latest_with_pudenew'),
+            'disable_pudenew' => !$this->showLatestWithPudeNew,
         ];
     }
 
     /**
      * @Route("/remove/session/{all}", name="pumukitnewadmin_unesco_removesession")
-     *
-     * @param bool $all
-     *
-     * @return JsonResponse
      */
     public function resetSessionAction($all = true)
     {
@@ -253,8 +302,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("/add/criteria", name="pumukitnewadmin_unesco_addcriteria")
-     *
-     * @return JsonResponse
      */
     public function addCriteriaSessionAction(Request $request)
     {
@@ -266,13 +313,8 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     }
 
     /**
-     * @throws \Exception
-     *
-     * @return array|Response
-     *
      * @Route("edit/{id}", name="pumukit_new_admin_unesco_edit")
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id":
-     *                                     "id"}})
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id":"id"}})
      * @Template("PumukitNewAdminBundle:UNESCO:edit.html.twig")
      */
     public function editUNESCOAction(Request $request, MultimediaObject $multimediaObject)
@@ -293,10 +335,10 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $parentTags = $this->factoryService->getParentTags();
 
         $locale = $request->getLocale();
-        $formMeta = $this->createForm(MultimediaObjectMetaType::class, $multimediaObject, ['translator' => $this->translationService, 'locale' => $locale]);
+        $formMeta = $this->createForm(MultimediaObjectMetaType::class, $multimediaObject, ['translator' => $this->translator, 'locale' => $locale]);
         $options = [
             'not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS),
-            'translator' => $this->translationService,
+            'translator' => $this->translator,
             'locale' => $locale,
         ];
         $formPub = $this->createForm(MultimediaObjectPubType::class, $multimediaObject, $options);
@@ -305,7 +347,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $session->set('admin/unesco/id', $multimediaObject->getId());
 
         //If the 'pudenew' tag is not being used, set the display to 'false'.
-        if (!$this->getParameter('show_latest_with_pudenew')) {
+        if (!$this->showLatestWithPudeNew) {
             $this->documentManager->getRepository(Tag::class)->findOneByCod('PUDENEW')->setDisplay(false);
         }
         $pubChannelsTags = $this->factoryService->getTagsByCod('PUBCHANNELS', true);
@@ -319,8 +361,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
         $activeEditor = $this->checkHasEditor();
         $notChangePubChannel = !$this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
-        $allBundles = $this->getParameter('kernel.bundles');
-        $opencastExists = array_key_exists('PumukitOpencastBundle', $allBundles);
+        $opencastExists = array_key_exists('PumukitOpencastBundle', $this->kernelBundles);
 
         $allGroups = $this->getAllGroups();
 
@@ -348,13 +389,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("/advance/search/show/{id}", name="pumukitnewadmin_unesco_show")
      * @Template("PumukitNewAdminBundle:UNESCO:show.html.twig")
-     *
-     * @param string|null $id
-     *
-     * @throws \Exception
-     *
-     * @return array
-     * @return array
      */
     public function showAction($id = null)
     {
@@ -380,12 +414,9 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("/advance/search/form", name="pumukitnewadmin_unesco_advance_search_form")
      * @Template("PumukitNewAdminBundle:UNESCO:search_view.html.twig")
-     *
-     * @return array
      */
     public function advancedSearchFormAction(Request $request)
     {
-        $translator = $this->get('translator');
         $locale = $request->getLocale();
 
         $roles = $this->documentManager->getRepository(Role::class)->findAll();
@@ -394,22 +425,22 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $pudeTV = $this->documentManager->getRepository(Tag::class)->findOneByCod('PUDETV');
 
         $statusPub = [
-            MultimediaObject::STATUS_PUBLISHED => $this->translationService->trans('Published'),
-            MultimediaObject::STATUS_BLOCKED => $this->translationService->trans('Blocked'),
-            MultimediaObject::STATUS_HIDDEN => $this->translationService->trans('Hidden'),
+            MultimediaObject::STATUS_PUBLISHED => $this->translator->trans('Published'),
+            MultimediaObject::STATUS_BLOCKED => $this->translator->trans('Blocked'),
+            MultimediaObject::STATUS_HIDDEN => $this->translator->trans('Hidden'),
         ];
 
         $broadcasts = [
-            EmbeddedBroadcast::TYPE_PUBLIC => $this->translationService->trans('Public'),
-            EmbeddedBroadcast::TYPE_LOGIN => $this->translationService->trans('Login'),
-            EmbeddedBroadcast::TYPE_PASSWORD => $this->translationService->trans('Password'),
-            EmbeddedBroadcast::TYPE_GROUPS => $this->translationService->trans('Groups'),
+            EmbeddedBroadcast::TYPE_PUBLIC => $this->translator->trans('Public'),
+            EmbeddedBroadcast::TYPE_LOGIN => $this->translator->trans('Login'),
+            EmbeddedBroadcast::TYPE_PASSWORD => $this->translator->trans('Password'),
+            EmbeddedBroadcast::TYPE_GROUPS => $this->translator->trans('Groups'),
         ];
 
         $type = [
-            MultimediaObject::TYPE_VIDEO => $this->translationService->trans('Video'),
-            MultimediaObject::TYPE_AUDIO => $this->translationService->trans('Audio'),
-            MultimediaObject::TYPE_EXTERNAL => $this->translationService->trans('External player'),
+            MultimediaObject::TYPE_VIDEO => $this->translator->trans('Video'),
+            MultimediaObject::TYPE_AUDIO => $this->translator->trans('Audio'),
+            MultimediaObject::TYPE_EXTERNAL => $this->translator->trans('External player'),
         ];
 
         $genreParent = $this->documentManager->getRepository(Tag::class)->findOneByCod('GENRE');
@@ -423,13 +454,10 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
             $aGenre = [];
         }
 
-        $disablePudenew = !$this->getParameter('show_latest_with_pudenew');
-
         $groups = $this->getAllGroups();
 
         return [
-            //'form' => $form->createView(),
-            'disable_pudenew' => $disablePudenew,
+            'disable_pudenew' => !$this->showLatestWithPudeNew,
             'groups' => $groups,
             'genre' => $aGenre,
             'roles' => $roles,
@@ -443,19 +471,10 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     }
 
     /**
-     * @param string $tagCod
-     * @param string $multimediaObjectId
-     *
-     * @throws \Exception
-     *
-     * @return JsonResponse
-     *
      * @Route("/delete/tag/{multimediaObjectId}/{tagCod}", name="pumukitnewadmin_unesco_delete_tag")
      */
-    public function deleteTagDnDAction($tagCod, $multimediaObjectId)
+    public function deleteTagDnDAction(string $tagCod, string $multimediaObjectId)
     {
-        $tagService = $this->container->get('pumukitschema.tag');
-
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
 
         $tag = $this->documentManager->getRepository(Tag::class)->findOneByCod($tagCod);
@@ -467,23 +486,17 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         }
 
         if (empty($removedTags)) {
-            return new JsonResponse(['error' => $this->translationService->trans("Can't delete this tag, delete first children"), JsonResponse::HTTP_BAD_REQUEST]);
+            return new JsonResponse(['error' => $this->translator->trans("Can't delete this tag, delete first children"), JsonResponse::HTTP_BAD_REQUEST]);
         }
 
         return new JsonResponse(['success']);
     }
 
     /**
-     * @param string $tagCod
-     * @param string $multimediaObjectId
-     *
-     * @return JsonResponse
      * @Route("/add/tag/{multimediaObjectId}/{tagCod}", name="pumukitnewadmin_unesco_add_tag")
      */
-    public function addTagDnDAction($tagCod, $multimediaObjectId)
+    public function addTagDnDAction(string $tagCod, string $multimediaObjectId)
     {
-        $tagService = $this->container->get('pumukitschema.tag');
-
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
 
         $tag = $this->documentManager->getRepository(Tag::class)->findOneByCod($tagCod);
@@ -497,9 +510,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     }
 
     /**
-     * @param string $option
-     *
-     * @return JsonResponse
      * @Route("/option/selected/{option}", name="pumukitnewadmin_unesco_options_list")
      */
     public function optionsMultimediaObjectsAction(Request $request, $option)
@@ -522,7 +532,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
             break;
         case 'invert_announce_selected':
-            $tagService = $this->container->get('pumukitschema.tag');
             $pudeNew = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PUDENEW']);
             foreach ($data as $multimediaObjectId) {
                 $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
@@ -542,12 +551,9 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     }
 
     /**
-     * @param string $multimediaObjectId
-     *
-     * @return JsonResponse
      * @Route("/delete/mms/{multimediaObjectId}", name="pumukitnewadmin_unesco_delete")
      */
-    public function deleteAction($multimediaObjectId)
+    public function deleteAction(string $multimediaObjectId)
     {
         $session = $this->get('session');
         $session->remove('admin/unesco/tag');
@@ -560,26 +566,23 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         try {
             $this->factoryService->deleteMultimediaObject($multimediaObject);
         } catch (\Exception $exception) {
-            return new JsonResponse(['error' => $this->translationService->trans("Can't delete this multimediaObject")]);
+            return new JsonResponse(['error' => $this->translator->trans("Can't delete this multimediaObject")]);
         }
 
         return new JsonResponse(['success']);
     }
 
     /**
-     * @param string $multimediaObjectId
-     *
-     * @return JsonResponse
      * @Route("/clone/mms/{multimediaObjectId}", name="pumukitnewadmin_unesco_clone")
      */
-    public function cloneAction($multimediaObjectId)
+    public function cloneAction(string $multimediaObjectId)
     {
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
 
         try {
             $this->factoryService->cloneMultimediaObject($multimediaObject);
         } catch (\Exception $exception) {
-            return new JsonResponse(['error' => $this->translationService->trans("Can't clone this multimediaObject")]);
+            return new JsonResponse(['error' => $this->translator->trans("Can't clone this multimediaObject")]);
         }
 
         return new JsonResponse(['success']);
@@ -587,15 +590,13 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Template("PumukitNewAdminBundle:UNESCO:custom_fields.html.twig")
-     *
-     * @return array
      */
     public function customFieldsAction(Request $request)
     {
         $session = $this->get('session');
 
         if (!$session->has('admin/unesco/selected_fields')) {
-            $defaultSelectedFields = $tagCatalogueService->getDefaultListFields();
+            $defaultSelectedFields = $this->tagCatalogueService->getDefaultListFields();
             $session->set('admin/unesco/selected_fields', $defaultSelectedFields);
         }
 
@@ -606,8 +607,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("/custom/fields/add", name="pumukitnewadmin_catalogue_custom_fields")
-     *
-     * @return JsonResponse
      */
     public function setCustomFields(Request $request)
     {
@@ -628,14 +627,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         return new JsonResponse(['success']);
     }
 
-    /**
-     * @param mixed       $criteria
-     * @param string|null $tag
-     *
-     * @throws \Exception
-     *
-     * @return mixed
-     */
     private function searchMultimediaObjects($criteria, $tag = null)
     {
         $configuredTag = $this->getConfiguredTag();
@@ -681,12 +672,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         return $query;
     }
 
-    /**
-     * @param Builder $query
-     * @param array   $criteria
-     *
-     * @return mixed
-     */
     private function addCriteria($query, $criteria)
     {
         $request = $this->get('request_stack')->getMasterRequest();
@@ -768,9 +753,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         return $query;
     }
 
-    /**
-     * @return array
-     */
     private function getMmobjsYears()
     {
         $mmObjColl = $this->documentManager->getManager()->getDocumentCollection(
@@ -790,13 +772,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         return $years;
     }
 
-    /**
-     * @param Builder $query
-     * @param string  $key
-     * @param string  $field
-     *
-     * @return mixed
-     */
     private function findDuration($query, $key, $field)
     {
         if ('tracks.duration' === $key) {
@@ -845,13 +820,8 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         return $allGroups;
     }
 
-    /**
-     * @throws \Exception
-     *
-     * @return Tag
-     */
     private function getConfiguredTag()
     {
-        return $tagCatalogueService->getConfiguredTag();
+        return $this->tagCatalogueService->getConfiguredTag();
     }
 }
