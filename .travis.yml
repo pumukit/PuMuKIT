@@ -6,7 +6,6 @@ services:
 language: php
 
 before_script:
-  - composer validate
   - docker-compose build --build-arg APP_ENV=dev
 
 script:
