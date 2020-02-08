@@ -2,25 +2,81 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
+use Pumukit\CoreBundle\Services\PaginationService;
+use Pumukit\NewAdminBundle\Services\MultimediaObjectSearchService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
+use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\SchemaBundle\Services\MultimediaObjectService;
+use Pumukit\SchemaBundle\Services\PersonService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class PlaylistMultimediaObjectController extends AbstractController
 {
+    /** @var SessionInterface */
+    private $session;
+    /** @var FactoryService */
+    private $factoryService;
+    /** @var PersonService */
+    private $personService;
+    /** @var MultimediaObjectService */
+    private $multimediaObjectService;
+    /** @var DocumentManager */
+    private $documentManager;
+    /** @var PaginationService */
+    private $paginationService;
+    /** @var MultimediaObjectSearchService */
+    private $multimediaObjectSearchService;
+    /** @var EmbeddedBroadcastService */
+    private $embeddedBroadcastService;
+    /** @var RouterInterface */
+    private $router;
+    /** @var TokenStorageInterface */
+    private $securityTokenStorage;
+    private $warningOnUnpublished;
+
+    public function __construct(
+        SessionInterface $session,
+        FactoryService $factoryService,
+        PersonService $personService,
+        MultimediaObjectService $multimediaObjectService,
+        DocumentManager $documentManager,
+        PaginationService $paginationService,
+        MultimediaObjectSearchService $multimediaObjectSearchService,
+        EmbeddedBroadcastService $embeddedBroadcastService,
+        RouterInterface $router,
+        TokenStorageInterface $securityTokenStorage,
+        $warningOnUnpublished
+    ) {
+        $this->session = $session;
+        $this->factoryService = $factoryService;
+        $this->personService = $personService;
+        $this->multimediaObjectService = $multimediaObjectService;
+        $this->documentManager = $documentManager;
+        $this->paginationService = $paginationService;
+        $this->warningOnUnpublished = $warningOnUnpublished;
+        $this->multimediaObjectSearchService = $multimediaObjectSearchService;
+        $this->embeddedBroadcastService = $embeddedBroadcastService;
+        $this->router = $router;
+        $this->securityTokenStorage = $securityTokenStorage;
+    }
+
     /**
-     * Overwrite to search criteria with date.
-     *
      * @Template("PumukitNewAdminBundle:PlaylistMultimediaObject:index.html.twig")
      */
     public function indexAction(Request $request)
     {
-        $session = $this->get('session');
+        $session = $this->session;
         $sessionId = $session->get('admin/playlist/id', null);
         $series = $this->factoryService->findSeriesById($request->query->get('id'), $sessionId);
         if (!$series) {
@@ -37,7 +93,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         // Removes the session mmobj (shown on info and preview) if it does not belong to THIS playlist.
         $update_session = true;
         foreach ($mms as $mm) {
-            if ($mm->getId() == $this->get('session')->get('admin/playlistmms/id')) {
+            if ($mm->getId() == $this->session->get('admin/playlistmms/id')) {
                 $update_session = false;
 
                 break;
@@ -60,9 +116,9 @@ class PlaylistMultimediaObjectController extends AbstractController
      */
     public function showAction(MultimediaObject $mmobj, Request $request)
     {
-        $this->get('session')->set('admin/playlistmms/id', $mmobj->getId());
+        $this->session->set('admin/playlistmms/id', $mmobj->getId());
         if ($request->query->has('pos')) {
-            $this->get('session')->set('admin/playlistmms/pos', $request->query->get('pos'));
+            $this->session->set('admin/playlistmms/pos', $request->query->get('pos'));
         }
         $roles = $this->personService->getRoles();
         $activeEditor = $this->checkHasEditor();
@@ -88,7 +144,7 @@ class PlaylistMultimediaObjectController extends AbstractController
             'is_published' => $this->multimediaObjectService->isPublished($mmobj, 'PUCHWEBTV'),
             'is_hidden' => $this->multimediaObjectService->isHidden($mmobj, 'PUCHWEBTV'),
             'is_playable' => $this->multimediaObjectService->hasPlayableResource($mmobj),
-            'warning_on_unpublished' => $warningOnUnpublished,
+            'warning_on_unpublished' => $this->warningOnUnpublished,
         ];
     }
 
@@ -97,16 +153,16 @@ class PlaylistMultimediaObjectController extends AbstractController
      */
     public function listAction(Request $request)
     {
-        $sessionId = $this->get('session')->get('admin/playlist/id', null);
+        $sessionId = $this->session->get('admin/playlist/id', null);
         $series = $this->factoryService->findSeriesById($request->query->get('id'), $sessionId);
         if (!$series) {
             throw $this->createNotFoundException();
         }
 
-        $this->get('session')->set('admin/playlist/id', $series->getId());
+        $this->session->set('admin/playlist/id', $series->getId());
 
         if ($request->query->has('mmid')) {
-            $this->get('session')->set('admin/playlistmms/id', $request->query->get('mmid'));
+            $this->session->set('admin/playlistmms/id', $request->query->get('mmid'));
         }
 
         $mms = $this->getPlaylistMmobjs($series, $request);
@@ -324,12 +380,8 @@ class PlaylistMultimediaObjectController extends AbstractController
      */
     public function addModalAction(Request $request)
     {
-        $repoSeries = $this->getDoctrine()
-            ->getRepository(Series::class)
-        ;
-        $repoMms = $this->getDoctrine()
-            ->getRepository(MultimediaObject::class)
-        ;
+        $repoSeries = $this->documentManager->getRepository(Series::class);
+        $repoMms = $this->documentManager->getRepository(MultimediaObject::class);
 
         $series = $repoSeries->createQueryBuilder()
             ->field('type')->equals(Series::TYPE_PLAYLIST)
@@ -356,13 +408,6 @@ class PlaylistMultimediaObjectController extends AbstractController
         ];
     }
 
-    /**
-     * ids
-     * id.
-     *
-     * series_id
-     * series_ids
-     */
     public function addBatchToSeveralPlaylistAction(Request $request)
     {
         $mmobjRepo = $this->documentManager->getRepository(MultimediaObject::class);
@@ -389,7 +434,7 @@ class PlaylistMultimediaObjectController extends AbstractController
     {
         $mmsList = $series->getPlaylist()->getMultimediaObjects();
 
-        $session = $this->get('session');
+        $session = $this->session;
         if ($request->get('page', null)) {
             $session->set('admin/playlistmms/page', $request->get('page', 1));
         }
@@ -404,12 +449,6 @@ class PlaylistMultimediaObjectController extends AbstractController
         return $this->paginationService->createDoctrineCollectionAdapter($mmsList, $page, $limit);
     }
 
-    /**
-     * Moves the mmobj in $initPos to $endPos.
-     *
-     * @param mixed $initPos
-     * @param mixed $endPos
-     */
     protected function moveAction(Series $playlist, $initPos, $endPos)
     {
         $actionResponse = $this->redirect($this->generateUrl('pumukitnewadmin_playlistmms_index', ['id' => $playlist->getId()]));
@@ -424,16 +463,15 @@ class PlaylistMultimediaObjectController extends AbstractController
     //Workaround function to check if the VideoEditorBundle is installed.
     protected function checkHasEditor()
     {
-        $router = $this->get('router');
-        $routes = $router->getRouteCollection()->all();
+        $routes = $this->router->getRouteCollection()->all();
 
         return array_key_exists('pumukit_videoeditor_index', $routes);
     }
 
     //Disables the standard backoffice filter and enables the 'personal' filter. (Check own videos or public videos)
-    protected function enableFilter()
+    protected function enableFilter(): void
     {
-        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user = $this->securityTokenStorage->getToken()->getUser();
         if ($this->isGranted(PermissionProfile::SCOPE_GLOBAL)) {
             return;
         }
@@ -454,11 +492,6 @@ class PlaylistMultimediaObjectController extends AbstractController
         $filter->setParameter('display_track_tag', 'display');
     }
 
-    /**
-     * @param string $idsKey
-     *
-     * @return mixed
-     */
     private function getIds(Request $request, $idsKey = 'ids')
     {
         if ($request->request->has($idsKey)) {

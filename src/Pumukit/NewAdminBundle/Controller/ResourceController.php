@@ -3,6 +3,7 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pagerfanta\Pagerfanta;
 use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,17 +26,17 @@ class ResourceController extends AbstractController
         $this->paginationService = $paginationService;
     }
 
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return static::$resourceName;
     }
 
-    public function getPluralResourceName()
+    public function getPluralResourceName(): string
     {
         return static::$resourceName.'s';
     }
 
-    public function redirectToIndex()
+    public function redirectToIndex(): string
     {
         return $this->redirect($this->generateUrl($this->getRedirectRoute()));
     }
@@ -45,7 +46,7 @@ class ResourceController extends AbstractController
         return $this->documentManager->getRepository(static::$repoName);
     }
 
-    public function getSorting(Request $request = null, $session_namespace = null)
+    public function getSorting(Request $request = null, $session_namespace = null): array
     {
         return [];
     }
@@ -78,19 +79,19 @@ class ResourceController extends AbstractController
         return $resource;
     }
 
-    public function update($resource)
+    public function update($resource): void
     {
         $this->documentManager->persist($resource);
         $this->documentManager->flush();
     }
 
-    public function createNew()
+    public function createNew(): void
     {
         //trace of remove "sylius/resource-bundle" version 0.12.
         throw new \LogicException('createNew method should be overide in the final Controller.');
     }
 
-    protected function createPager($criteria, $sorting)
+    protected function createPager($criteria, $sorting): Pagerfanta
     {
         $repo = $this->getRepository();
 
@@ -102,7 +103,7 @@ class ResourceController extends AbstractController
         return $this->paginationService->createDoctrineODMMongoDBAdapter($queryBuilder);
     }
 
-    private function getRedirectRoute($routeName = 'index')
+    private function getRedirectRoute($routeName = 'index'): string
     {
         $resourceName = $this->getResourceName();
 

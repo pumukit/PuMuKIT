@@ -18,6 +18,7 @@ use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\GroupService;
 use Pumukit\SchemaBundle\Services\PersonService;
+use Pumukit\SchemaBundle\Services\SeriesEventDispatcherService;
 use Pumukit\SchemaBundle\Services\SeriesService;
 use Pumukit\SchemaBundle\Services\SortedMultimediaObjectsService;
 use Pumukit\SchemaBundle\Services\TagService;
@@ -27,7 +28,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -53,6 +56,15 @@ class SeriesController extends AdminController
     /** @var SeriesSearchService */
     protected $seriesSearchService;
 
+    /** @var RequestStack */
+    private $requestStack;
+    /** @var SeriesEventDispatcherService */
+    private $pumukitSchemaSeriesDispatcher;
+    /** @var SessionInterface */
+    private $session;
+    private $pumukitUseSerieschannels;
+    private $showLatestWithPudeNew;
+
     public function __construct(
         DocumentManager $documentManager,
         PaginationService $paginationService,
@@ -65,7 +77,12 @@ class SeriesController extends AdminController
         PersonService $personService,
         TagService $tagService,
         SeriesService $seriesService,
-        SeriesSearchService $seriesSearchService
+        SeriesSearchService $seriesSearchService,
+        RequestStack $requestStack,
+        SeriesEventDispatcherService $pumukitSchemaSeriesDispatcher,
+        SessionInterface $session,
+        $pumukitUseSeriesChannels,
+        $showLatestWithPudeNew
     ) {
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
         $this->embeddedBroadcastService = $embeddedBroadcastService;
@@ -75,6 +92,11 @@ class SeriesController extends AdminController
         $this->tagService = $tagService;
         $this->seriesService = $seriesService;
         $this->seriesSearchService = $seriesSearchService;
+        $this->requestStack = $requestStack;
+        $this->pumukitUseSerieschannels = $pumukitUseSeriesChannels;
+        $this->showLatestWithPudeNew = $showLatestWithPudeNew;
+        $this->pumukitSchemaSeriesDispatcher = $pumukitSchemaSeriesDispatcher;
+        $this->session = $session;
     }
 
     /**
@@ -87,18 +109,18 @@ class SeriesController extends AdminController
 
         $update_session = true;
         foreach ($resources as $series) {
-            if ($series->getId() == $this->get('session')->get('admin/series/id')) {
+            if ($series->getId() == $this->session->get('admin/series/id')) {
                 $update_session = false;
             }
         }
 
         if ($update_session) {
-            $this->get('session')->remove('admin/series/id');
+            $this->session->remove('admin/series/id');
         }
 
         return [
             'series' => $resources,
-            'disable_pudenew' => !$this->getParameter('show_latest_with_pudenew'),
+            'disable_pudenew' => !$this->showLatestWithPudeNew,
         ];
     }
 
@@ -117,7 +139,7 @@ class SeriesController extends AdminController
     public function createAction(Request $request)
     {
         $series = $this->factoryService->createSeries($this->getUser());
-        $this->get('session')->set('admin/series/id', $series->getId());
+        $this->session->set('admin/series/id', $series->getId());
 
         return new JsonResponse(['seriesId' => $series->getId()]);
     }
@@ -151,17 +173,17 @@ class SeriesController extends AdminController
     public function updateAction(Request $request)
     {
         $resource = $this->findOr404($request);
-        $this->get('session')->set('admin/series/id', $request->get('id'));
+        $this->session->set('admin/series/id', $request->get('id'));
 
         $locale = $request->getLocale();
-        $disablePudenew = !$this->getParameter('show_latest_with_pudenew');
+        $disablePudenew = !$this->showLatestWithPudeNew;
         $form = $this->createForm(SeriesType::class, $resource, ['translator' => $this->translationService, 'locale' => $locale, 'disable_PUDENEW' => $disablePudenew]);
 
         $method = $request->getMethod();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && in_array($method, ['POST', 'PUT', 'PATCH'])) {
             $this->update($resource);
-            $this->get('pumukitschema.series_dispatcher')->dispatchUpdate($resource);
+            $this->pumukitSchemaSeriesDispatcher->dispatchUpdate($resource);
             if (Series::SORT_MANUAL !== $resource->getSorting()) {
                 $this->sortedMultimediaObjectService->reorder($resource);
             }
@@ -204,8 +226,7 @@ class SeriesController extends AdminController
         //These fields are form fields that are rendered separately, so they should be 'excluded' from the generic foreach.
         $exclude_fields = [];
         $show_later_fields = ['pumukitnewadmin_series_i18n_header', 'pumukitnewadmin_series_i18n_footer', 'pumukitnewadmin_series_i18n_line2', 'pumukitnewadmin_series_template', 'pumukitnewadmin_series_sorting', 'pumukitnewadmin_series_series_style'];
-        $showSeriesTypeTab = $this->container->hasParameter('pumukit.use_series_channels') && $this->getParameter('pumukit.use_series_channels');
-        if (!$showSeriesTypeTab) {
+        if (!$this->pumukitUseSerieschannels) {
             $exclude_fields[] = 'pumukitnewadmin_series_series_type';
         }
 
@@ -238,16 +259,16 @@ class SeriesController extends AdminController
 
         $seriesId = $series->getId();
 
-        $seriesSessionId = $this->get('session')->get('admin/mms/id');
+        $seriesSessionId = $this->session->get('admin/mms/id');
         if ($seriesId === $seriesSessionId) {
-            $this->get('session')->remove('admin/series/id');
+            $this->session->remove('admin/series/id');
         }
 
-        $mmSessionId = $this->get('session')->get('admin/mms/id');
+        $mmSessionId = $this->session->get('admin/mms/id');
         if ($mmSessionId) {
             $mm = $this->factoryService->findMultimediaObjectById($mmSessionId);
             if ($seriesId === $mm->getSeries()->getId()) {
-                $this->get('session')->remove('admin/mms/id');
+                $this->session->remove('admin/mms/id');
             }
         }
 
@@ -284,16 +305,16 @@ class SeriesController extends AdminController
             }
             $seriesId = $series->getId();
 
-            $seriesSessionId = $this->get('session')->get('admin/mms/id');
+            $seriesSessionId = $this->session->get('admin/mms/id');
             if ($seriesId === $seriesSessionId) {
-                $this->get('session')->remove('admin/series/id');
+                $this->session->remove('admin/series/id');
             }
 
-            $mmSessionId = $this->get('session')->get('admin/mms/id');
+            $mmSessionId = $this->session->get('admin/mms/id');
             if ($mmSessionId) {
                 $mm = $this->factoryService->findMultimediaObjectById($mmSessionId);
                 if ($seriesId === $mm->getSeries()->getId()) {
-                    $this->get('session')->remove('admin/mms/id');
+                    $this->session->remove('admin/mms/id');
                 }
             }
 
@@ -383,12 +404,12 @@ class SeriesController extends AdminController
 
     public function getCriteria($criteria)
     {
-        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $request = $this->requestStack->getCurrentRequest();
         //$criteria = $request->get('criteria', []);
 
         $emptySeries = [];
-        if ($request->query->has('empty_series') || $this->get('session')->has('admin/series/empty_series')) {
-            $this->get('session')->set('admin/series/empty_series', true);
+        if ($request->query->has('empty_series') || $this->session->has('admin/series/empty_series')) {
+            $this->session->set('admin/series/empty_series', true);
 
             $mmObjColl = $this->documentManager->getDocumentCollection(MultimediaObject::class);
             $pipeline = [
@@ -401,25 +422,25 @@ class SeriesController extends AdminController
             }
             $criteria['playlist.multimedia_objects'] = ['$size' => 0];
             $criteria = array_merge($criteria, ['_id' => ['$in' => array_values($emptySeries)]]);
-            $this->get('session')->set('admin/series/criteria', $criteria);
+            $this->session->set('admin/series/criteria', $criteria);
         }
 
         if (array_key_exists('reset', $criteria)) {
-            $this->get('session')->remove('admin/series/criteria');
-            $this->get('session')->remove('admin/series/empty_series');
-            $this->get('session')->remove('admin/series/sort');
+            $this->session->remove('admin/series/criteria');
+            $this->session->remove('admin/series/empty_series');
+            $this->session->remove('admin/series/sort');
         } elseif ($criteria) {
-            $this->get('session')->set('admin/series/criteria', $criteria);
+            $this->session->set('admin/series/criteria', $criteria);
         }
 
-        $criteria = $this->get('session')->get('admin/series/criteria', []);
+        $criteria = $this->session->get('admin/series/criteria', []);
 
         return $this->seriesSearchService->processCriteria($criteria, false, $request->getLocale());
     }
 
     public function getSorting(Request $request = null, $session_namespace = null)
     {
-        $session = $this->get('session');
+        $session = $this->session;
 
         if (!$session->get('admin/series/sort') && $session->get('admin/series/criteria')) {
             $session->set('admin/series/type', 'score');
@@ -444,7 +465,7 @@ class SeriesController extends AdminController
     public function getResources(Request $request, $criteria, $selectedSeriesId = null)
     {
         $sorting = $this->getSorting($request);
-        $session = $this->get('session');
+        $session = $this->session;
         $session_namespace = 'admin/series';
         //Added TYPE_SERIES to criteria (and type null, for backwards compatibility)
         $criteria = array_merge($criteria, ['type' => ['$in' => [Series::TYPE_SERIES, null]]]);
@@ -513,7 +534,7 @@ class SeriesController extends AdminController
     public function searchAction(Request $req)
     {
         $q = $req->get('q');
-        $this->get('session')->set('admin/series/criteria', ['search' => $q]);
+        $this->session->set('admin/series/criteria', ['search' => $q]);
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_series_index'));
     }
@@ -698,7 +719,7 @@ class SeriesController extends AdminController
 
     private function compareSeries(Series $series1, Series $series2)
     {
-        $type = $this->get('session')->get('admin/series/type');
+        $type = $this->session->get('admin/series/type');
 
         $mmRepo = $this->documentManager->getRepository(MultimediaObject::class);
         $numberMultimediaObjectsInSeries1 = $mmRepo->countInSeries($series1);

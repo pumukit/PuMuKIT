@@ -2,10 +2,12 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use Pumukit\NewAdminBundle\Form\Type\TagType;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Services\TagService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -13,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_TAGS')")
@@ -20,9 +23,24 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PlaceController extends AbstractController implements NewAdminControllerInterface
 {
+    /** @var TranslatorInterface */
+    private $translator;
+    /** @var DocumentManager */
+    private $documentManager;
+    /** @var TagService */
+    private $tagService;
+
+    public function __construct(
+        TranslatorInterface $translator,
+        DocumentManager $documentManager,
+        TagService $tagService
+    ) {
+        $this->translator = $translator;
+        $this->documentManager = $documentManager;
+        $this->tagService = $tagService;
+    }
+
     /**
-     * @return array
-     *
      * @Route("/", name="pumukitnewadmin_places_index")
      * @Template("PumukitNewAdminBundle:Place:index.html.twig")
      */
@@ -35,8 +53,6 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
     }
 
     /**
-     * @return array
-     *
      * @Route("/parent/", name="pumukitnewadmin_places_parent")
      * @Template("PumukitNewAdminBundle:Place:parent_list.html.twig")
      */
@@ -49,8 +65,6 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
     }
 
     /**
-     * @return array
-     *
      * @Route("/children/{id}", name="pumukitnewadmin_places_children")
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"id": "id"}})
      * @Template("PumukitNewAdminBundle:Place:children_list.html.twig")
@@ -63,8 +77,6 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
     }
 
     /**
-     * @return array
-     *
      * @Route("/preview/{id}", name="pumukitnewadmin_places_children_preview")
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"id": "id"}})
      * @Template("PumukitNewAdminBundle:Place:preview_data.html.twig")
@@ -82,12 +94,10 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
     }
 
     /**
-     * @param string|null $id
-     *
-     * @return array|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @Route("/create/{id}", name="pumukitnewadmin_places_create")
      * @Template("PumukitNewAdminBundle:Place:create.html.twig")
+     *
+     * @param mixed|null $id
      */
     public function createAction(Request $request, $id = null)
     {
@@ -105,7 +115,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
         $tag->setCod($suggested_code);
         $tag->setParent($parent);
 
-        $form = $this->createForm(TagType::class, $tag, ['translator' => $this->translationService, 'locale' => $request->getLocale()]);
+        $form = $this->createForm(TagType::class, $tag, ['translator' => $this->translator, 'locale' => $request->getLocale()]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -123,10 +133,6 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
     }
 
     /**
-     * @throws \Exception
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @Route("/delete/{id}", name="pumukitnewadmin_places_delete")
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"id": "id"}})
      */
@@ -143,8 +149,6 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
     }
 
     /**
-     * @return array|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @Route("/update/{id}", name="pumukitnewadmin_places_update")
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"id": "id"}})
      * @Template("PumukitNewAdminBundle:Place:update.html.twig")
@@ -152,7 +156,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
     public function updateAction(Request $request, Tag $tag)
     {
         $locale = $request->getLocale();
-        $form = $this->createForm(TagType::class, $tag, ['translator' => $this->translationService, 'locale' => $locale]);
+        $form = $this->createForm(TagType::class, $tag, ['translator' => $this->translator, 'locale' => $locale]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -168,12 +172,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
         return ['tag' => $tag, 'form' => $form->createView()];
     }
 
-    /**
-     * @param bool $isPrecinct
-     *
-     * @return int|string
-     */
-    private function autogenerateCode(Tag $parent, $isPrecinct)
+    private function autogenerateCode(Tag $parent, bool $isPrecinct)
     {
         $code = [];
         $delimiter = ($isPrecinct) ? 'PRECINCT' : 'PLACE';

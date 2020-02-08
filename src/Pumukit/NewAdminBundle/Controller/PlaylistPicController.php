@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_EDIT_PLAYLIST')")
@@ -22,21 +23,25 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
     private $documentManager;
     /** @var PaginationService */
     private $paginationService;
+    /** @var SessionInterface */
+    private $session;
 
     public function __construct(
         SeriesPicService $seriesPicService,
         DocumentManager $documentManager,
-        PaginationService $paginationService
+        PaginationService $paginationService,
+        SessionInterface $session
     ) {
         $this->seriesPicService = $seriesPicService;
         $this->documentManager = $documentManager;
         $this->paginationService = $paginationService;
+        $this->session = $session;
     }
 
     /**
      * @Template("PumukitNewAdminBundle:Pic:create.html.twig")
      */
-    public function createAction(Series $playlist, Request $request)
+    public function createAction(Series $playlist)
     {
         return [
             'resource' => $playlist,
@@ -80,7 +85,7 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
     /**
      * @Template("PumukitNewAdminBundle:Pic:upload.html.twig")
      */
-    public function uploadAction(Series $playlist, Request $request)
+    public function uploadAction(Request $request, Series $playlist)
     {
         $isBanner = false;
 
@@ -166,12 +171,12 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
     /**
      * @Template("PumukitNewAdminBundle:Pic:picstoaddlist.html.twig")
      */
-    public function picstoaddlistAction(Series $playlist, Request $request)
+    public function picstoaddlistAction(Request $request, Series $playlist)
     {
         if ($request->get('page', null)) {
-            $this->get('session')->set('admin/playlistpic/page', $request->get('page', 1));
+            $this->session->set('admin/playlistpic/page', $request->get('page', 1));
         }
-        $page = (int) ($this->get('session')->get('admin/playlistpic/page', 1));
+        $page = (int) ($this->session->get('admin/playlistpic/page', 1));
         $limit = 12;
 
         $urlPics = $this->seriesPicService->getRecommendedPics($playlist);
@@ -192,7 +197,7 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
     /**
      * @Template("PumukitNewAdminBundle:Pic:banner.html.twig")
      */
-    public function bannerAction(Series $playlist, Request $request)
+    public function bannerAction(Request $request, Series $playlist)
     {
         return [
             'resource' => $playlist,
