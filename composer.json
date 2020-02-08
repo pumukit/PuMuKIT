@@ -55,6 +55,38 @@
         "post-update-cmd": [
             "@auto-scripts"
         ],
+        "lints": [
+            "docker-compose run --rm php find src -type f -name '.php' -print0 | xargs -0 -n1 -P8 php -l",
+            "docker-compose run --rm php php bin/console lint:yaml src",
+            "docker-compose run --rm php php bin/console lint:yaml config",
+            "docker-compose run --rm php php bin/console lint:twig src",
+            "docker-compose run --rm php php bin/console lint:twig templates",
+            "docker-compose run --rm php php bin/console lint:xlif src/",
+            "docker-compose run --rm php php bin/console lint:xlif translations/",
+            "docker-compose run --rm php ./bin/travis_checks/check_var_dumps"
+        ],
+        "php-cs-fixer": "docker-compose run --rm php php vendor/friendsofphp/php-cs-fixer/php-cs-fixer fix src --dry-run -v",
+        "phpstan": [
+            "docker-compose run --rm php php vendor/phpstan/phpstan/bin/phpstan analyse -l 4 src",
+            "docker-compose run --rm php php vendor/phpstan/phpstan/bin/phpstan analyse -l 7 src/Pumukit/BaseLivePlayerBundle/",
+            "docker-compose run --rm php php vendor/phpstan/phpstan/bin/phpstan analyse -l 5 src/Pumukit/BasePlayerBundle/",
+            "docker-compose run --rm php php vendor/phpstan/phpstan/bin/phpstan analyse -l 7 src/Pumukit/CoreBundle/",
+            "docker-compose run --rm php php vendor/phpstan/phpstan/bin/phpstan analyse -l 7 src/Pumukit/InspectionBundle/",
+            "docker-compose run --rm php php vendor/phpstan/phpstan/bin/phpstan analyse -l 7 src/Pumukit/JWPlayerBundle/",
+            "docker-compose run --rm php php vendor/phpstan/phpstan/bin/phpstan analyse -l 5 src/Pumukit/WizardBundle/"
+        ],
+        "tests": "docker-compose run --rm php php vendor/phpunit/phpunit/phpunit",
+        "pa11y": [
+            "docker-compose run --rm php php bin/console doctrine:mongodb:schema:create",
+            "docker-compose run --rm php php bin/console pumukit:init:repo all --force"
+        ],
+        "ci": [
+            "@lints",
+            "@php-cs-fixer",
+            "@phpstan",
+            "@tests",
+            "@pa11y"
+        ],
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
