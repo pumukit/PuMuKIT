@@ -96,8 +96,6 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
     /**
      * @Route("/create/{id}", name="pumukitnewadmin_places_create")
      * @Template("PumukitNewAdminBundle:Place:create.html.twig")
-     *
-     * @param mixed|null $id
      */
     public function createAction(Request $request, $id = null)
     {

@@ -10,12 +10,14 @@ use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\GroupService;
 use Pumukit\SchemaBundle\Services\PermissionProfileService;
+use Pumukit\SchemaBundle\Services\PermissionService;
 use Pumukit\SchemaBundle\Services\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_PERMISSION_PROFILES')")
@@ -27,6 +29,11 @@ class PermissionProfileController extends AdminController
 
     /** @var PermissionProfileService */
     protected $permissionProfileService;
+    /** @var TranslatorInterface */
+    private $translator;
+    /** @var PermissionService */
+    private $permissionService;
+    private $pumukitUseSeriesChannels;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -34,15 +41,19 @@ class PermissionProfileController extends AdminController
         FactoryService $factoryService,
         GroupService $groupService,
         UserService $userService,
-        PermissionProfileService $permissionProfileService
+        PermissionProfileService $permissionProfileService,
+        TranslatorInterface $translator,
+        PermissionService $permissionService,
+        $pumukitUseSeriesChannels
     ) {
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
         $this->permissionProfileService = $permissionProfileService;
+        $this->translator = $translator;
+        $this->permissionService = $permissionService;
+        $this->pumukitUseSeriesChannels = $pumukitUseSeriesChannels;
     }
 
     /**
-     * Overwrite to update the criteria with Regex, and save it in the session.
-     *
      * @Template("PumukitNewAdminBundle:PermissionProfile:index.html.twig")
      */
     public function indexAction(Request $request)
@@ -62,10 +73,6 @@ class PermissionProfileController extends AdminController
     }
 
     /**
-     * List action.
-     *
-     * Overwrite to have permissions list
-     *
      * @Template("PumukitNewAdminBundle:PermissionProfile:list.html.twig")
      */
     public function listAction(Request $request)
@@ -96,9 +103,6 @@ class PermissionProfileController extends AdminController
     }
 
     /**
-     * Create Action
-     * Overwrite to give PermissionProfileType name correctly.
-     *
      * @Template("PumukitNewAdminBundle:PermissionProfile:create.html.twig")
      */
     public function createAction(Request $request)
@@ -127,10 +131,6 @@ class PermissionProfileController extends AdminController
     }
 
     /**
-     * Update Action
-     * Overwrite to return list and not index
-     * and show toast message.
-     *
      * @Template("PumukitNewAdminBundle:PermissionProfile:update.html.twig")
      */
     public function updateAction(Request $request)
@@ -155,25 +155,11 @@ class PermissionProfileController extends AdminController
         ];
     }
 
-    /**
-     * Overwrite to get form with translations.
-     *
-     * @param object|null $permissionProfile
-     * @param string      $locale
-     *
-     * @return \Symfony\Component\Form\Form|\Symfony\Component\Form\FormInterface
-     */
     public function getForm($permissionProfile = null, $locale = 'en')
     {
-        return $this->createForm(PermissionProfileType::class, $permissionProfile, ['translator' => $this->translationService, 'locale' => $locale]);
+        return $this->createForm(PermissionProfileType::class, $permissionProfile, ['translator' => $this->translator, 'locale' => $locale]);
     }
 
-    /**
-     * Delete action.
-     *
-     * Overwrite to change default user permission
-     * if the default one is being deleted
-     */
     public function deleteAction(Request $request)
     {
         $permissionProfile = $this->findOr404($request);
@@ -197,9 +183,6 @@ class PermissionProfileController extends AdminController
         return $this->redirect($this->generateUrl('pumukitnewadmin_permissionprofile_list'));
     }
 
-    /**
-     * Batch update action.
-     */
     public function batchUpdateAction(Request $request)
     {
         $repo = $this->documentManager->getRepository(PermissionProfile::class);
@@ -284,7 +267,7 @@ class PermissionProfileController extends AdminController
         );
     }
 
-    private function buildPermissionProfiles($checkedPermissions, $selectedScopes)
+    private function buildPermissionProfiles($checkedPermissions, $selectedScopes): array
     {
         $permissionProfiles = [];
         //Adds scope and checked permissions to permissions.
@@ -307,7 +290,7 @@ class PermissionProfileController extends AdminController
         return $permissionProfiles;
     }
 
-    private function separateAttributePermissionProfilesIds($pair = '')
+    private function separateAttributePermissionProfilesIds($pair = ''): array
     {
         $data = ['attribute' => '', 'profileId' => ''];
         if ($pair) {
@@ -345,11 +328,11 @@ class PermissionProfileController extends AdminController
         return true;
     }
 
-    private function getPermissions()
+    private function getPermissions(): array
     {
         $permissions = $this->permissionService->getAllPermissions();
 
-        if (!$this->container->hasParameter('pumukit.use_series_channels') || !$this->getParameter('pumukit.use_series_channels')) {
+        if (!$this->pumukitUseSeriesChannels) {
             unset($permissions[Permission::ACCESS_SERIES_TYPES]);
         }
 
