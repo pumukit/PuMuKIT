@@ -2,7 +2,10 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Services\SeriesPicService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,12 +16,27 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SeriesPicController extends AbstractController implements NewAdminControllerInterface
 {
+    /** @var DocumentManager */
+    private $documentManager;
+    /** @var SeriesPicService */
+    private $seriesPicService;
+    /** @var PaginationService */
+    private $paginationService;
+
+    public function __construct(
+        DocumentManager $documentManager,
+        SeriesPicService $seriesPicService,
+        PaginationService $paginationService
+    ) {
+        $this->documentManager = $documentManager;
+        $this->seriesPicService = $seriesPicService;
+        $this->paginationService = $paginationService;
+    }
+
     /**
      * @Template("PumukitNewAdminBundle:Pic:create.html.twig")
-     *
-     * @return array
      */
-    public function createAction(Series $series, Request $request)
+    public function createAction(Series $series)
     {
         return [
             'resource' => $series,
@@ -28,8 +46,6 @@ class SeriesPicController extends AbstractController implements NewAdminControll
 
     /**
      * @Template("PumukitNewAdminBundle:Pic:list.html.twig")
-     *
-     * @return array
      */
     public function listAction(Series $series)
     {
@@ -40,11 +56,7 @@ class SeriesPicController extends AbstractController implements NewAdminControll
     }
 
     /**
-     * Assign a picture from an url or from an existing one to the series.
-     *
      * @Template("PumukitNewAdminBundle:Pic:list.html.twig")
-     *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(Series $series, Request $request)
     {
@@ -67,8 +79,6 @@ class SeriesPicController extends AbstractController implements NewAdminControll
 
     /**
      * @Template("PumukitNewAdminBundle:Pic:upload.html.twig")
-     *
-     * @return array
      */
     public function uploadAction(Series $series, Request $request)
     {
@@ -103,18 +113,11 @@ class SeriesPicController extends AbstractController implements NewAdminControll
         ];
     }
 
-    /**
-     * Delete pic.
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function deleteAction(Request $request)
     {
         $picId = $request->get('id');
 
-        $repo = $this->documentManager
-            ->getRepository(Series::class)
-        ;
+        $repo = $this->documentManager->getRepository(Series::class);
 
         if (!$series = $repo->findByPicId($picId)) {
             throw $this->createNotFoundException('Requested series does not exist');
@@ -125,18 +128,11 @@ class SeriesPicController extends AbstractController implements NewAdminControll
         return $this->redirect($this->generateUrl('pumukitnewadmin_series_update', ['id' => $series->getId()]));
     }
 
-    /**
-     * Up pic.
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function upAction(Request $request)
     {
         $picId = $request->get('id');
 
-        $repo = $this->documentManager
-            ->getRepository(Series::class)
-        ;
+        $repo = $this->documentManager->getRepository(Series::class);
 
         if (!$series = $repo->findByPicId($picId)) {
             throw $this->createNotFoundException('Requested series does not exist');
@@ -150,18 +146,11 @@ class SeriesPicController extends AbstractController implements NewAdminControll
         return $this->redirect($this->generateUrl('pumukitnewadmin_seriespic_list', ['id' => $series->getId()]));
     }
 
-    /**
-     * Down pic.
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function downAction(Request $request)
     {
         $picId = $request->get('id');
 
-        $repo = $this->documentManager
-            ->getRepository(Series::class)
-        ;
+        $repo = $this->documentManager->getRepository(Series::class);
 
         if (!$series = $repo->findByPicId($picId)) {
             throw $this->createNotFoundException('Requested series does not exist');
@@ -177,13 +166,9 @@ class SeriesPicController extends AbstractController implements NewAdminControll
 
     /**
      * @Template("PumukitNewAdminBundle:Pic:picstoaddlist.html.twig")
-     *
-     * @return array
      */
-    public function picstoaddlistAction(Series $series, Request $request)
+    public function picstoaddlistAction(Request $request, Series $series)
     {
-        $picService = $this->seriesPicService;
-
         if ($request->get('page', null)) {
             $this->get('session')->set('admin/seriespic/page', $request->get('page', 1));
         }
@@ -207,10 +192,8 @@ class SeriesPicController extends AbstractController implements NewAdminControll
 
     /**
      * @Template("PumukitNewAdminBundle:Pic:banner.html.twig")
-     *
-     * @return array
      */
-    public function bannerAction(Series $series, Request $request)
+    public function bannerAction(Series $series)
     {
         return [
             'resource' => $series,

@@ -49,8 +49,6 @@ class RoleController extends SortableAdminController
     }
 
     /**
-     * Update role.
-     *
      * @Template("PumukitNewAdminBundle:Role:update.html.twig")
      */
     public function updateAction(Request $request)
@@ -86,11 +84,6 @@ class RoleController extends SortableAdminController
         ];
     }
 
-    /**
-     * Gets the list of resources according to a criteria.
-     *
-     * @param mixed $criteria
-     */
     public function getResources(Request $request, $criteria)
     {
         $sorting = $this->getSorting($request);
@@ -117,9 +110,6 @@ class RoleController extends SortableAdminController
         return $resources;
     }
 
-    /**
-     * Delete action.
-     */
     public function deleteAction(Request $request)
     {
         $resource = $this->findOr404($request);
