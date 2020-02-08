@@ -4,7 +4,6 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
-use Pagerfanta\Pagerfanta;
 use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectTemplateMetaType;
 use Pumukit\NewAdminBundle\Form\Type\SeriesType;
@@ -79,8 +78,6 @@ class SeriesController extends AdminController
     }
 
     /**
-     * Overwrite to search criteria with date.
-     *
      * @Template("PumukitNewAdminBundle:Series:index.html.twig")
      */
     public function indexAction(Request $request)
@@ -106,8 +103,6 @@ class SeriesController extends AdminController
     }
 
     /**
-     * List action.
-     *
      * @Template("PumukitNewAdminBundle:Series:list.html.twig")
      */
     public function listAction(Request $request)
@@ -127,14 +122,7 @@ class SeriesController extends AdminController
         return new JsonResponse(['seriesId' => $series->getId()]);
     }
 
-    /**
-     * @param string $id
-     *
-     * @throws \Exception
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function cloneAction($id)
+    public function cloneAction(string $id)
     {
         $series = $this->documentManager->getRepository(Series::class)->findOneBy(['_id' => new ObjectId($id)]);
         if (!$series) {
@@ -151,7 +139,6 @@ class SeriesController extends AdminController
     }
 
     /**
-     * @return array
      * @Template("PumukitNewAdminBundle:Series:links.html.twig")
      */
     public function linksAction(Series $resource)
@@ -161,13 +148,6 @@ class SeriesController extends AdminController
         ];
     }
 
-    /**
-     * Display the form for editing or update the resource.
-     *
-     * @throws \Exception
-     *
-     * @return Response
-     */
     public function updateAction(Request $request)
     {
         $resource = $this->findOr404($request);
@@ -280,11 +260,6 @@ class SeriesController extends AdminController
         return $this->redirectToRoute('pumukitnewadmin_series_list');
     }
 
-    /**
-     * Generate Magic Url action.
-     *
-     * @return Response
-     */
     public function generateMagicUrlAction(Request $request)
     {
         $resource = $this->findOr404($request);
@@ -293,12 +268,6 @@ class SeriesController extends AdminController
         return new Response($response);
     }
 
-    /**
-     * Batch delete action
-     * Overwrite to delete multimedia objects inside series.
-     *
-     * @return Response|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function batchDeleteAction(Request $request)
     {
         $ids = $request->get('ids');
@@ -343,11 +312,6 @@ class SeriesController extends AdminController
         return $this->redirect($this->generateUrl('pumukitnewadmin_series_list', []));
     }
 
-    /**
-     * Batch invert announce selected.
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function invertAnnounceAction(Request $request)
     {
         $ids = $request->get('ids');
@@ -375,12 +339,6 @@ class SeriesController extends AdminController
         return $this->redirect($this->generateUrl('pumukitnewadmin_series_list'));
     }
 
-    /**
-     * Change publication form.
-     *
-     * @return array
-     * @Template("PumukitNewAdminBundle:Series:changepub.html.twig")
-     */
     public function changePubAction(Request $request)
     {
         $series = $this->findOr404($request);
@@ -409,11 +367,6 @@ class SeriesController extends AdminController
         ];
     }
 
-    /**
-     * Update publication form.
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function updatePubAction(Request $request)
     {
         if ('POST' === $request->getMethod()) {
@@ -464,12 +417,6 @@ class SeriesController extends AdminController
         return $this->seriesSearchService->processCriteria($criteria, false, $request->getLocale());
     }
 
-    /**
-     * @param Request    $request
-     * @param mixed|null $session_namespace
-     *
-     * @return array
-     */
     public function getSorting(Request $request = null, $session_namespace = null)
     {
         $session = $this->get('session');
@@ -494,14 +441,6 @@ class SeriesController extends AdminController
         return [$key => $value];
     }
 
-    /**
-     * Gets the list of resources according to a criteria.
-     *
-     * @param array         $criteria
-     * @param \MongoId|null $selectedSeriesId
-     *
-     * @return array|mixed|Pagerfanta
-     */
     public function getResources(Request $request, $criteria, $selectedSeriesId = null)
     {
         $sorting = $this->getSorting($request);
@@ -571,11 +510,6 @@ class SeriesController extends AdminController
         return $resources;
     }
 
-    /**
-     * Helper for the menu search form.
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function searchAction(Request $req)
     {
         $q = $req->get('q');
@@ -585,9 +519,6 @@ class SeriesController extends AdminController
     }
 
     /**
-     * Update Broadcast Action.
-     *
-     * @return array|JsonResponse
      * @ParamConverter("series", class="PumukitSchemaBundle:Series", options={"id" = "id"})
      * @Template("PumukitNewAdminBundle:Series:updatebroadcast.html.twig")
      */
@@ -661,9 +592,6 @@ class SeriesController extends AdminController
     }
 
     /**
-     * List the properties of a series in a modal.
-     *
-     * @return array
      * @Template("PumukitNewAdminBundle:Series:listProperties.html.twig")
      */
     public function listPropertiesAction(Series $series)
@@ -671,14 +599,6 @@ class SeriesController extends AdminController
         return ['series' => $series];
     }
 
-    /**
-     * Returns true if the user has enough permissions to delete the $resource passed.
-     * This function will always return true if the user has the MODIFY_ONWER permission. Otherwise,
-     * it checks if it is the owner of the object (and there are no other owners) and returns false if not.
-     * Since this is a series, that means it will check every object for ownerships.
-     *
-     * @return bool
-     */
     protected function isUserAllowedToDelete(Series $series)
     {
         if (!$this->isGranted(Permission::MODIFY_OWNER)) {
@@ -715,12 +635,7 @@ class SeriesController extends AdminController
         return true;
     }
 
-    /**
-     * Modify Multimedia Objects status.
-     *
-     * @param array $values
-     */
-    private function modifyMultimediaObjectsStatus($values)
+    private function modifyMultimediaObjectsStatus(array $values)
     {
         $repo = $this->documentManager->getRepository(MultimediaObject::class);
         $repoTags = $this->documentManager->getRepository(Tag::class);
@@ -757,14 +672,6 @@ class SeriesController extends AdminController
         }
     }
 
-    /**
-     * Used in AdminController to
-     * reorder series when sort is multimedia_objects.
-     *
-     * @param array $resources
-     *
-     * @return array $series
-     */
     private function reorderResources($resources)
     {
         $series = [];
@@ -789,17 +696,7 @@ class SeriesController extends AdminController
         return $series;
     }
 
-    /**
-     * Compare Series
-     * Compare the number of multimedia objects
-     * according to type (greater or lower than).
-     *
-     * @param Series $series1
-     * @param Series $series2
-     *
-     * @return bool
-     */
-    private function compareSeries($series1, $series2)
+    private function compareSeries(Series $series1, Series $series2)
     {
         $type = $this->get('session')->get('admin/series/type');
 
@@ -817,15 +714,6 @@ class SeriesController extends AdminController
         return false;
     }
 
-    /**
-     * Modify EmbeddedBroadcast Groups.
-     *
-     * @param string $type
-     * @param string $password
-     * @param array  $addGroups
-     * @param array  $deleteGroups
-     * @param bool   $executeFlush
-     */
     private function modifyBroadcastGroups(MultimediaObject $multimediaObject, $type = EmbeddedBroadcast::TYPE_PUBLIC, $password = '', $addGroups = [], $deleteGroups = [], $executeFlush = true)
     {
         $groupRepo = $this->documentManager->getRepository(Group::class);

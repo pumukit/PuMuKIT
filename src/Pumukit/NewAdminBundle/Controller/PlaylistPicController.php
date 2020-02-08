@@ -2,7 +2,10 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Services\SeriesPicService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,6 +16,23 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PlaylistPicController extends AbstractController implements NewAdminControllerInterface
 {
+    /** @var SeriesPicService */
+    private $seriesPicService;
+    /** @var DocumentManager */
+    private $documentManager;
+    /** @var PaginationService */
+    private $paginationService;
+
+    public function __construct(
+        SeriesPicService $seriesPicService,
+        DocumentManager $documentManager,
+        PaginationService $paginationService
+    ) {
+        $this->seriesPicService = $seriesPicService;
+        $this->documentManager = $documentManager;
+        $this->paginationService = $paginationService;
+    }
+
     /**
      * @Template("PumukitNewAdminBundle:Pic:create.html.twig")
      */
@@ -36,15 +56,12 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
     }
 
     /**
-     * Assign a picture from an url or from an existing one to the playlist.
-     *
      * @Template("PumukitNewAdminBundle:Pic:list.html.twig")
      */
-    public function updateAction(Series $playlist, Request $request)
+    public function updateAction(Request $request, Series $playlist)
     {
         $isBanner = false;
         if (($url = $request->get('url')) || ($url = $request->get('picUrl'))) {
-            $picService = $this->seriesPicService;
             $isBanner = $request->query->get('banner', false);
             $bannerTargetUrl = $request->get('url_bannerTargetUrl', null);
             $playlist = $this->seriesPicService->addPicUrl($playlist, $url, $isBanner, $bannerTargetUrl);
@@ -72,7 +89,6 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
             }
             if ($request->files->has('file')) {
-                $picService = $this->seriesPicService;
                 $isBanner = $request->query->get('banner', false);
                 $bannerTargetUrl = $request->get('file_bannerTargetUrl', null);
                 $this->seriesPicService->addPicFile($playlist, $request->files->get('file'), $isBanner, $bannerTargetUrl);
@@ -96,16 +112,11 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
         ];
     }
 
-    /**
-     * Delete pic.
-     */
     public function deleteAction(Request $request)
     {
         $picId = $request->get('id');
 
-        $repo = $this->documentManager
-            ->getRepository(Series::class)
-        ;
+        $repo = $this->documentManager->getRepository(Series::class);
 
         if (!$playlist = $repo->findByPicId($picId)) {
             throw $this->createNotFoundException('Requested playlist does not exist');
@@ -116,16 +127,11 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
         return $this->redirect($this->generateUrl('pumukitnewadmin_playlist_update', ['id' => $playlist->getId()]));
     }
 
-    /**
-     * Up pic.
-     */
     public function upAction(Request $request)
     {
         $picId = $request->get('id');
 
-        $repo = $this->documentManager
-            ->getRepository(Series::class)
-        ;
+        $repo = $this->documentManager->getRepository(Series::class);
 
         if (!$playlist = $repo->findByPicId($picId)) {
             throw $this->createNotFoundException('Requested playlist does not exist');
@@ -139,16 +145,11 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
         return $this->redirect($this->generateUrl('pumukitnewadmin_playlistpic_list', ['id' => $playlist->getId()]));
     }
 
-    /**
-     * Down pic.
-     */
     public function downAction(Request $request)
     {
         $picId = $request->get('id');
 
-        $repo = $this->documentManager
-            ->getRepository(Series::class)
-        ;
+        $repo = $this->documentManager->getRepository(Series::class);
 
         if (!$playlist = $repo->findByPicId($picId)) {
             throw $this->createNotFoundException('Requested playlist does not exist');
@@ -167,8 +168,6 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
      */
     public function picstoaddlistAction(Series $playlist, Request $request)
     {
-        $picService = $this->seriesPicService;
-
         if ($request->get('page', null)) {
             $this->get('session')->set('admin/playlistpic/page', $request->get('page', 1));
         }
