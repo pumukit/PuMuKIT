@@ -44,6 +44,7 @@ class PlaylistMultimediaObjectController extends AbstractController
     /** @var TokenStorageInterface */
     private $securityTokenStorage;
     private $warningOnUnpublished;
+    private $locales;
 
     public function __construct(
         SessionInterface $session,
@@ -56,7 +57,8 @@ class PlaylistMultimediaObjectController extends AbstractController
         EmbeddedBroadcastService $embeddedBroadcastService,
         RouterInterface $router,
         TokenStorageInterface $securityTokenStorage,
-        $warningOnUnpublished
+        $warningOnUnpublished,
+        $locales
     ) {
         $this->session = $session;
         $this->factoryService = $factoryService;
@@ -69,6 +71,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         $this->embeddedBroadcastService = $embeddedBroadcastService;
         $this->router = $router;
         $this->securityTokenStorage = $securityTokenStorage;
+        $this->locales = $locales;
     }
 
     /**
@@ -131,14 +134,10 @@ class PlaylistMultimediaObjectController extends AbstractController
     }
 
     /**
-     * Displays the 'info' tab.
-     *
      * @Template("PumukitNewAdminBundle:PlaylistMultimediaObject:info.html.twig")
      */
-    public function infoAction(MultimediaObject $mmobj, Request $request)
+    public function infoAction(MultimediaObject $mmobj, Request $request): array
     {
-        $warningOnUnpublished = $this->getParameter('pumukit.warning_on_unpublished');
-
         return [
             'mm' => $mmobj,
             'is_published' => $this->multimediaObjectService->isPublished($mmobj, 'PUCHWEBTV'),
@@ -404,7 +403,7 @@ class PlaylistMultimediaObjectController extends AbstractController
             'id' => $request->get('id'),
             'ids' => $request->get('ids'),
             'num_mm' => $count,
-            'locales' => $this->getParameter('pumukit.locales'),
+            'locales' => $this->locales,
         ];
     }
 

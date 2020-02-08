@@ -11,5 +11,4 @@ namespace Pumukit\NewAdminBundle\Controller;
  */
 interface NewAdminControllerInterface
 {
-    //...
 }

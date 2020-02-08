@@ -30,6 +30,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -44,7 +45,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /** @var DocumentManager */
     protected $documentManager;
     /** @var TranslatorInterface */
-    protected $translatorService;
+    protected $translator;
     /** @var FactoryService */
     protected $factoryService;
     /** @var MultimediaObjectPicService */
@@ -55,35 +56,39 @@ class EventsController extends AbstractController implements NewAdminControllerI
     protected $paginationService;
     /** @var EmbeddedEventSessionService */
     protected $eventsService;
+    /** @var SessionInterface */
+    private $session;
+
+    private $pumukitNewAdminAdvanceLiveEventCreateSeriesPic;
 
     public function __construct(
         DocumentManager $documentManager,
-        TranslatorInterface $translatorService,
+        TranslatorInterface $translator,
         FactoryService $factoryService,
         MultimediaObjectPicService $multimediaObjectPicService,
         SeriesEventDispatcherService $seriesDispatcher,
         PaginationService $paginationService,
-        EmbeddedEventSessionService $eventsService
+        EmbeddedEventSessionService $eventsService,
+        SessionInterface $session
     ) {
         $this->documentManager = $documentManager;
-        $this->translatorService = $translatorService;
+        $this->translator = $translator;
         $this->factoryService = $factoryService;
         $this->multimediaObjectPicService = $multimediaObjectPicService;
         $this->seriesDispatcher = $seriesDispatcher;
         $this->paginationService = $paginationService;
         $this->eventsService = $eventsService;
+        $this->session = $session;
     }
 
     /**
-     * @return array
-     *
      * @Route("index/", name="pumukit_new_admin_live_event_index")
      * @Template("PumukitNewAdminBundle:LiveEvent:index.html.twig")
      */
-    public function indexEventAction(Request $request)
+    public function indexEventAction(Request $request): array
     {
         if ($request->query->get('page')) {
-            $this->get('session')->set('admin/live/event/page', $request->query->get('page'));
+            $this->session->set('admin/live/event/page', $request->query->get('page'));
         }
 
         $aRoles = $this->documentManager->getRepository(Role::class)->findAll();
@@ -110,13 +115,9 @@ class EventsController extends AbstractController implements NewAdminControllerI
     }
 
     /**
-     * @throws \Exception
-     *
-     * @return RedirectResponse
-     *
      * @Route("create/", name="pumukit_new_admin_live_event_create")
      */
-    public function createEventAction(Request $request)
+    public function createEventAction(Request $request): RedirectResponse
     {
         $languages = $this->getParameter('pumukit.locales');
 
@@ -142,7 +143,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
                 $eventPicSeriesDefault = $series->getPic();
                 $this->multimediaObjectPicService->addPicUrl($multimediaObject, $eventPicSeriesDefault->getUrl(), false);
             } else {
-                $eventPicSeriesDefault = $this->getParameter('pumukit_new_admin.advance_live_event_create_serie_pic');
+                $eventPicSeriesDefault = $this->pumukitNewAdminAdvanceLiveEventCreateSeriesPic;
                 $this->multimediaObjectPicService->addPicUrl($multimediaObject, $eventPicSeriesDefault, false);
             }
         }
@@ -152,7 +153,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
         $event->setDate(new \DateTime());
 
         foreach ($languages as $language) {
-            $event->setName($this->translatorService->trans('New'), $language);
+            $event->setName($this->translator->trans('New'), $language);
             $event->setDescription('', $language);
         }
 
@@ -163,28 +164,22 @@ class EventsController extends AbstractController implements NewAdminControllerI
         $this->documentManager->persist($multimediaObject);
         $this->documentManager->flush();
 
-        $session = $this->get('session');
+        $session = $this->session;
         $session->set('admin/live/event/id', $multimediaObject->getId());
-        $this->get('session')->set('admin/live/event/page', 1);
+        $this->session->set('admin/live/event/page', 1);
 
         return $this->redirectToRoute('pumukit_new_admin_live_event_list');
     }
 
     /**
-     * List events.
-     *
-     * @param string|null $type
-     *
-     * @return array
-     *
      * @Route("list/event/{type}", name="pumukit_new_admin_live_event_list")
      * @Template("PumukitNewAdminBundle:LiveEvent:list.html.twig")
      */
     public function listEventAction(Request $request, $type = null)
     {
-        $session = $this->get('session');
+        $session = $this->session;
         $eventPicDefault = $this->getParameter('pumukit_new_admin.advance_live_event_create_default_pic');
-        $page = ($this->get('session')->get('admin/live/event/page')) ?: ($request->query->get('page') ?: 1);
+        $page = ($this->session->get('admin/live/event/page')) ?: ($request->query->get('page') ?: 1);
 
         $criteria['type'] = MultimediaObject::TYPE_LIVE;
         if ($type) {
@@ -282,13 +277,11 @@ class EventsController extends AbstractController implements NewAdminControllerI
     }
 
     /**
-     * @return JsonResponse
-     *
      * @Route("add/sorting/", name="pumukit_new_admin_live_event_set_sorting")
      */
-    public function addSessionSortingAction(Request $request)
+    public function addSessionSortingAction(Request $request): JsonResponse
     {
-        $session = $this->get('session');
+        $session = $this->session;
 
         if ($request->request->get('field')) {
             $field = $request->request->get('field');
@@ -310,13 +303,11 @@ class EventsController extends AbstractController implements NewAdminControllerI
     }
 
     /**
-     * @return JsonResponse
-     *
      * @Route("remove/session/", name="pumukit_newadmin_live_events_reset_session")
      */
-    public function removeCriteriaSessionAction()
+    public function removeCriteriaSessionAction(): JsonResponse
     {
-        $session = $this->get('session');
+        $session = $this->session;
         $session->remove('admin/live/event/sort/field');
         $session->remove('admin/live/event/sort/type');
         $session->remove('admin/live/event/criteria');
@@ -328,14 +319,8 @@ class EventsController extends AbstractController implements NewAdminControllerI
     }
 
     /**
-     * Event options .
-     *
-     * @param string $type
-     *
-     * @return JsonResponse
      * @Route("list/options/{type}/{id}", name="pumukit_new_admin_live_event_options")
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id":
-     *                                     "id"}})
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
      * @Template("PumukitNewAdminBundle:LiveEvent:updatemenu.html.twig")
      */
     public function menuOptionsAction($type, MultimediaObject $multimediaObject)
@@ -350,12 +335,12 @@ class EventsController extends AbstractController implements NewAdminControllerI
                 break;
             case 'delete':
                 $message = $this->deleteEvent($multimediaObject);
-                $this->container->get('session')->set('admin/live/event/id', null);
+                $this->session->set('admin/live/event/id', null);
 
                 break;
             case 'deleteAll':
                 $message = $this->deleteEventAndSeries($multimediaObject);
-                $this->container->get('session')->set('admin/live/event/id', null);
+                $this->session->set('admin/live/event/id', null);
 
                 break;
             default:
@@ -367,16 +352,13 @@ class EventsController extends AbstractController implements NewAdminControllerI
             return new JsonResponse(['status' => $e->getMessage()], 409);
         }
 
-        return new JsonResponse(['status' => $this->translatorService->trans($message)]);
+        return new JsonResponse(['status' => $this->translator->trans($message)]);
     }
 
     /**
      * @Route("delete/selected/", name="pumukit_new_admin_live_event_delete_selected")
-     *
-     * @return JsonResponse
-     * @return JsonResponse
      */
-    public function deleteSelectedEventsAction(Request $request)
+    public function deleteSelectedEventsAction(Request $request): JsonResponse
     {
         $data = $request->request->get('events_checkbox');
         foreach ($data as $multimediaObjectId) {
@@ -390,38 +372,28 @@ class EventsController extends AbstractController implements NewAdminControllerI
     }
 
     /**
-     * Edit action, opens well with event data.
-     *
-     * @return array
      * @Route("edit/{id}", name="pumukit_new_admin_live_event_edit")
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id":
-     *                                     "id"}})
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
      * @Template("PumukitNewAdminBundle:LiveEvent:edit.html.twig")
      */
     public function editEventAction(MultimediaObject $multimediaObject)
     {
-        $this->container->get('session')->set('admin/live/event/id', $multimediaObject->getId());
+        $this->session->set('admin/live/event/id', $multimediaObject->getId());
 
         return ['multimediaObject' => $multimediaObject];
     }
 
     /**
-     * Form session to create or edit.
-     *
      * @Route("event/{id}", name="pumukit_new_admin_live_event_eventtab")
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id":
-     *                                     "id"}})
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
      * @Template("PumukitNewAdminBundle:LiveEvent:updateevent.html.twig")
      *
-     * @throws \Exception
-     *
-     * @return array|jsonResponse
      */
     public function eventAction(Request $request, MultimediaObject $multimediaObject)
     {
         $locale = $request->getLocale();
 
-        $form = $this->createForm(EventsType::class, $multimediaObject->getEmbeddedEvent(), ['translator' => $this->translatorService, 'locale' => $locale]);
+        $form = $this->createForm(EventsType::class, $multimediaObject->getEmbeddedEvent(), ['translator' => $this->translator, 'locale' => $locale]);
 
         $people = [];
         $people['author'] = $multimediaObject->getEmbeddedEvent()->getAuthor();
@@ -526,15 +498,13 @@ class EventsController extends AbstractController implements NewAdminControllerI
      * @Route("series/{id}", name="pumukit_new_admin_live_event_seriestab")
      * @ParamConverter("series", class="PumukitSchemaBundle:Series", options={"mapping": {"id": "id"}})
      * @Template("PumukitNewAdminBundle:Series:updatemeta.html.twig")
-     *
-     * @return array
      */
     public function seriesAction(Request $request, Series $series)
     {
         $locale = $request->getLocale();
         $disablePudenew = !$this->getParameter('show_latest_with_pudenew');
 
-        $form = $this->createForm(SeriesType::class, $series, ['translator' => $this->translatorService, 'locale' => $locale, 'disable_PUDENEW' => $disablePudenew]);
+        $form = $this->createForm(SeriesType::class, $series, ['translator' => $this->translator, 'locale' => $locale, 'disable_PUDENEW' => $disablePudenew]);
 
         $exclude_fields = [];
         $show_later_fields = [
@@ -559,20 +529,15 @@ class EventsController extends AbstractController implements NewAdminControllerI
     }
 
     /**
-     * Form session to create or edit.
-     *
      * @Route("session/{id}", name="pumukit_new_admin_live_event_sessiontab")
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id":
-     *                                     "id"}})
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
      * @Template("PumukitNewAdminBundle:LiveEvent:updatesession.html.twig")
-     *
-     * @return array|jsonResponse
      */
     public function sessionAction(Request $request, MultimediaObject $multimediaObject)
     {
         $locale = $request->getLocale();
 
-        $form = $this->createForm(EmbeddedEventSessionType::class, null, ['translator' => $this->translatorService, 'locale' => $locale]);
+        $form = $this->createForm(EmbeddedEventSessionType::class, null, ['translator' => $this->translator, 'locale' => $locale]);
 
         $form->handleRequest($request);
         if ('POST' === $request->getMethod()) {
@@ -622,10 +587,6 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("list/session/{id}", name="pumukit_new_admin_live_event_session_list")
      * @Template("PumukitNewAdminBundle:LiveEvent:sessionlist.html.twig")
-     *
-     * @param string $id
-     *
-     * @return array
      */
     public function sessionListAction($id)
     {
@@ -637,11 +598,6 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("delete/session/{multimediaObject}/{session_id}", name="pumukit_new_admin_live_event_session_delete")
      * @Template("PumukitNewAdminBundle:LiveEvent:sessionlist.html.twig")
-     *
-     * @param string $multimediaObject
-     * @param string $session_id
-     *
-     * @return JsonResponse
      */
     public function sessionDeleteAction($multimediaObject, $session_id)
     {
@@ -660,13 +616,6 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("clone/session/{multimediaObject}/{session_id}", name="pumukit_new_admin_live_event_clone_session")
      * @Template("PumukitNewAdminBundle:LiveEvent:sessionlist.html.twig")
-     *
-     * @param string $multimediaObject
-     * @param string $session_id
-     *
-     * @throws \Exception
-     *
-     * @return JsonResponse
      */
     public function sessionCloneAction($multimediaObject, $session_id)
     {
@@ -695,19 +644,12 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("modal/{multimediaObject}/{session_id}", name="pumukit_new_admin_live_event_session_modal")
      * @Template("PumukitNewAdminBundle:LiveEvent:updatesessionmodal.html.twig")
-     *
-     * @param string $multimediaObject
-     * @param bool   $session_id
-     *
-     * @throws \Exception
-     *
-     * @return array
      */
     public function modalSessionAction(Request $request, $multimediaObject, $session_id = false)
     {
         $locale = $request->getLocale();
 
-        $form = $this->createForm(EmbeddedEventSessionType::class, null, ['translator' => $this->translatorService, 'locale' => $locale]);
+        $form = $this->createForm(EmbeddedEventSessionType::class, null, ['translator' => $this->translator, 'locale' => $locale]);
 
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObject)]);
 
@@ -739,7 +681,6 @@ class EventsController extends AbstractController implements NewAdminControllerI
     }
 
     /**
-     * @return JsonResponse
      * @Route("series/suggest/", name="pumukit_new_admin_live_event_series_suggest")
      */
     public function seriesSuggestAction(Request $request)
@@ -786,10 +727,6 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("change/series/{multimediaObject}", name="pumukitnewadmin_live_event_change_series")
      * @Template("PumukitNewAdminBundle:LiveEvent:changeSeries.html.twig")
-     *
-     * @param mixed|null $multimediaObject
-     *
-     * @return array
      */
     public function seriesChangeModalAction($multimediaObject = null)
     {
@@ -803,8 +740,6 @@ class EventsController extends AbstractController implements NewAdminControllerI
     }
 
     /**
-     * @return JsonResponse
-     *
      * @Route("edit/series/{multimediaObject}", name="pumukitnewadmin_live_event_edit_series")
      */
     public function seriesChangeAction(Request $request, MultimediaObject $multimediaObject)
@@ -826,10 +761,8 @@ class EventsController extends AbstractController implements NewAdminControllerI
     }
 
     /**
-     * @return array
      * @Route("show/{id}", name="pumukit_new_admin_live_event_show")
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id":
-     *                                     "id"}})
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
      * @Template("PumukitNewAdminBundle:LiveEvent:show.html.twig")
      */
     public function showAction(MultimediaObject $multimediaObject)
@@ -840,16 +773,12 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("autocomplete/series/with/event/data/{id}", name="pumukit_new_admin_autocomplete_series_with_event_data")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
-     *
-     * @throws \Exception
-     *
-     * @return JsonResponse
      */
     public function autocompleteSeriesWithEventDataAction(Request $request, MultimediaObject $multimediaObject)
     {
         $series = $this->documentManager->getRepository(Series::class)->findOneBy(['_id' => $multimediaObject->getSeries()->getId()]);
         if (!$series) {
-            throw new \Exception($this->translatorService->trans('Series not found'));
+            throw new \Exception($this->translator->trans('Series not found'));
         }
 
         try {
@@ -865,13 +794,6 @@ class EventsController extends AbstractController implements NewAdminControllerI
         return new JsonResponse(['success']);
     }
 
-    /**
-     * clone Event and series.
-     *
-     * @throws \Exception
-     *
-     * @return string
-     */
     private function cloneEvent(MultimediaObject $multimediaObject)
     {
         $cloneMultimediaObject = $this->factoryService->cloneMultimediaObject($multimediaObject);
@@ -904,11 +826,6 @@ class EventsController extends AbstractController implements NewAdminControllerI
         return 'Cloned event successfully';
     }
 
-    /**
-     * Delete event and multimediaObject.
-     *
-     * @return string
-     */
     private function deleteEvent(MultimediaObject $multimediaObject)
     {
         $this->factoryService->deleteMultimediaObject($multimediaObject);
@@ -916,13 +833,6 @@ class EventsController extends AbstractController implements NewAdminControllerI
         return 'Deleted event successfully';
     }
 
-    /**
-     * Delete event, multimediaObject and series if serie have just one multimediaObject.
-     *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     *
-     * @return string
-     */
     private function deleteEventAndSeries(MultimediaObject $multimediaObject)
     {
         $aggregate = $this->documentManager->getDocumentCollection(MultimediaObject::class);
@@ -942,7 +852,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
         $mmObjsNotOwner = $aggregate->aggregate($pipeline, ['cursor' => []])->toArray();
 
         if (0 !== count($mmObjsNotOwner) && $user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
-            throw new \Exception($this->translatorService->trans('Error: Series have another owners on others events'));
+            throw new \Exception($this->translator->trans('Error: Series have another owners on others events'));
         }
         $series = $multimediaObject->getSeries();
         $seriesRepo = $this->documentManager->getRepository(Series::class);
@@ -951,7 +861,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
             $this->factoryService->deleteMultimediaObject($multimediaObject);
             $this->factoryService->deleteSeries($series);
         } else {
-            throw new \Exception($this->translatorService->trans('Error: Series have some events'));
+            throw new \Exception($this->translator->trans('Error: Series have some events'));
         }
 
         return 'Delete event and series successfully';
