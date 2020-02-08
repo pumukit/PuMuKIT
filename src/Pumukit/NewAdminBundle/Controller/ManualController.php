@@ -5,7 +5,6 @@ namespace Pumukit\NewAdminBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -17,7 +16,7 @@ class ManualController extends AbstractController implements NewAdminControllerI
      * @Route("/manual")
      * @Template("PumukitNewAdminBundle:Manual:index.html.twig")
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         return [];
     }

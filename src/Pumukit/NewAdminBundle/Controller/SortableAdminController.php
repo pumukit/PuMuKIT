@@ -11,8 +11,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SortableAdminController extends AdminController
 {
-    public function __construct(DocumentManager $documentManager, PaginationService $paginationService, FactoryService $factoryService, GroupService $groupService, UserService $userService)
-    {
+    public function __construct(
+        DocumentManager $documentManager,
+        PaginationService $paginationService,
+        FactoryService $factoryService,
+        GroupService $groupService,
+        UserService $userService
+    ) {
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
     }
 

@@ -15,6 +15,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class InboxController extends AbstractController implements NewAdminControllerInterface
 {
+    private $pumukitInbox;
+
+    public function __construct($pumukitInbox)
+    {
+        $this->pumukitInbox = $pumukitInbox;
+    }
+
     /**
      * @Route("/inbox", defaults={"_format"="json"})
      */
@@ -27,7 +34,7 @@ class InboxController extends AbstractController implements NewAdminControllerIn
 
         $res = [];
 
-        if ('file' == $type) {
+        if ('file' === $type) {
             $finder->depth('< 1')->followLinks()->in($dir);
             $finder->sortByName();
             foreach ($finder as $f) {
@@ -61,16 +68,14 @@ class InboxController extends AbstractController implements NewAdminControllerIn
 
     /**
      * @Template("PumukitNewAdminBundle:Inbox:form.html.twig")
-     *
-     * @param mixed $onlyDir
      */
-    public function formAction($onlyDir = false)
+    public function formAction(bool $onlyDir = false)
     {
-        if (!$this->container->hasParameter('pumukit.inbox')) {
+        if (!$this->pumukitInbox) {
             return $this->render('@PumukitNewAdmin/Inbox/form_noconf.html.twig');
         }
 
-        $dir = realpath($this->getParameter('pumukit.inbox'));
+        $dir = realpath($this->pumukitInbox);
 
         if (!file_exists($dir)) {
             return $this->render('@PumukitNewAdmin/Inbox/form_nofile.html.twig', ['dir' => $dir]);

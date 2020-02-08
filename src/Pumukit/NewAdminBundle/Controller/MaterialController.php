@@ -5,17 +5,31 @@ namespace Pumukit\NewAdminBundle\Controller;
 use Pumukit\NewAdminBundle\Form\Type\MaterialType;
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Services\MaterialService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
 class MaterialController extends AbstractController implements NewAdminControllerInterface
 {
+    /** @var TranslatorInterface */
+    private $translator;
+
+    /** @var MaterialService */
+    private $materialService;
+
+    public function __construct(TranslatorInterface $translator, MaterialService $materialService)
+    {
+        $this->translator = $translator;
+        $this->materialService = $materialService;
+    }
+
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
      * @Template("PumukitNewAdminBundle:Material:create.html.twig")
@@ -24,7 +38,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
     {
         $locale = $request->getLocale();
         $material = new Material();
-        $form = $this->createForm(MaterialType::class, $material, ['translator' => $this->translationService, 'locale' => $locale]);
+        $form = $this->createForm(MaterialType::class, $material, ['translator' => $this->translator, 'locale' => $locale]);
 
         return [
             'material' => $material,
@@ -40,7 +54,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
     {
         $locale = $request->getLocale();
         $material = $multimediaObject->getMaterialById($request->get('id'));
-        $form = $this->createForm(MaterialType::class, $material, ['translator' => $this->translationService, 'locale' => $locale]);
+        $form = $this->createForm(MaterialType::class, $material, ['translator' => $this->translator, 'locale' => $locale]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && ($request->isMethod('PUT') || $request->isMethod('POST'))) {
