@@ -14,6 +14,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_LIVE_CHANNELS')")
@@ -23,16 +25,30 @@ class LiveController extends AdminController
     public static $resourceName = 'live';
     public static $repoName = Live::class;
 
-    public function __construct(DocumentManager $documentManager, PaginationService $paginationService, FactoryService $factoryService, GroupService $groupService, UserService $userService)
+    /** @var TranslatorInterface */
+    private $translator;
+    /** @var SessionInterface */
+    private $session;
+    private $pumukitLiveChatEnable;
+
+    public function __construct(
+        DocumentManager $documentManager,
+        PaginationService $paginationService,
+        FactoryService $factoryService,
+        GroupService $groupService,
+        UserService $userService,
+        TranslatorInterface $translator,
+        SessionInterface $session,
+        $pumukitLiveChatEnable
+
+    )
     {
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
+        $this->pumukitLiveChatEnable = $pumukitLiveChatEnable;
+        $this->translator = $translator;
+        $this->session = $session;
     }
 
-    /**
-     * Create Action
-     * Overwrite to return json response
-     * and update page.
-     */
     public function createAction(Request $request)
     {
         $resource = $this->createNew();
@@ -45,7 +61,7 @@ class LiveController extends AdminController
             if (null === $resource) {
                 return new JsonResponse(['liveId' => null]);
             }
-            $this->get('session')->set('admin/live/id', $resource->getId());
+            $this->session->set('admin/live/id', $resource->getId());
 
             return new JsonResponse(['liveId' => $resource->getId()]);
         }
@@ -53,18 +69,13 @@ class LiveController extends AdminController
         return $this->render(
             'PumukitNewAdminBundle:Live:create.html.twig',
             [
-                'enableChat' => $this->getParameter('pumukit_live.chat.enable'),
+                'enableChat' => $this->pumukitLiveChatEnable,
                 'live' => $resource,
                 'form' => $form->createView(),
             ]
         );
     }
 
-    /**
-     * Update Action
-     * Overwrite to return list and not index
-     * and show toast message.
-     */
     public function updateAction(Request $request)
     {
         $resourceName = $this->getResourceName();
@@ -87,22 +98,17 @@ class LiveController extends AdminController
         return $this->render(
             'PumukitNewAdminBundle:'.ucfirst($resourceName).':update.html.twig',
             [
-                'enableChat' => $this->getParameter('pumukit_live.chat.enable'),
+                'enableChat' => $this->pumukitLiveChatEnable,
                 'live' => $resource,
                 'form' => $form->createView(),
             ]
         );
     }
 
-    /**
-     * Gets the list of resources according to a criteria.
-     *
-     * @param mixed $criteria
-     */
     public function getResources(Request $request, $criteria)
     {
         $sorting = $this->getSorting();
-        $session = $this->get('session');
+        $session = $this->session;
         $session_namespace = 'admin/live';
 
         $newLiveId = $request->get('newLiveId');
@@ -132,9 +138,6 @@ class LiveController extends AdminController
         return $resources;
     }
 
-    /**
-     * Delete action.
-     */
     public function deleteAction(Request $request)
     {
         $resource = $this->findOr404($request);
@@ -146,8 +149,8 @@ class LiveController extends AdminController
             return new JsonResponse(['error']);
         }
 
-        if ($resourceId === $this->get('session')->get('admin/'.$resourceName.'/id')) {
-            $this->get('session')->remove('admin/'.$resourceName.'/id');
+        if ($resourceId === $this->session->get('admin/'.$resourceName.'/id')) {
+            $this->session->remove('admin/'.$resourceName.'/id');
         }
 
         $this->documentManager->remove($resource);
@@ -168,7 +171,7 @@ class LiveController extends AdminController
 
         $aResult = $this->checkEmptyChannels($ids);
         if (!$aResult['emptyChannels']) {
-            return new Response($this->translationService->trans('There are associated events on channel id'.$aResult['channelId']), Response::HTTP_BAD_REQUEST);
+            return new Response($this->translator->trans('There are associated events on channel id'.$aResult['channelId']), Response::HTTP_BAD_REQUEST);
         }
 
         foreach ($ids as $id) {
@@ -179,8 +182,8 @@ class LiveController extends AdminController
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
-            if ($id === $this->get('session')->get('admin/'.$resourceName.'/id')) {
-                $this->get('session')->remove('admin/'.$resourceName.'/id');
+            if ($id === $this->session->get('admin/'.$resourceName.'/id')) {
+                $this->session->remove('admin/'.$resourceName.'/id');
             }
         }
 
@@ -192,7 +195,7 @@ class LiveController extends AdminController
         return new Live();
     }
 
-    private function checkEmptyChannels($ids)
+    private function checkEmptyChannels($ids): array
     {
         $emptyChannels = true;
         $channelId = null;

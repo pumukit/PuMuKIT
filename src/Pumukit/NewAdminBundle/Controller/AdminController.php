@@ -11,6 +11,7 @@ use Pumukit\SchemaBundle\Services\UserService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class AdminController extends ResourceController implements NewAdminControllerInterface
 {
@@ -20,13 +21,16 @@ class AdminController extends ResourceController implements NewAdminControllerIn
     protected $groupService;
     /** @var UserService */
     protected $userService;
+    /** @var SessionInterface */
+    private $session;
 
-    public function __construct(DocumentManager $documentManager, PaginationService $paginationService, FactoryService $factoryService, GroupService $groupService, UserService $userService)
+    public function __construct(DocumentManager $documentManager, PaginationService $paginationService, FactoryService $factoryService, GroupService $groupService, UserService $userService, SessionInterface $session)
     {
         parent::__construct($documentManager, $paginationService);
         $this->factoryService = $factoryService;
         $this->groupService = $groupService;
         $this->userService = $userService;
+        $this->session = $session;
     }
 
     /**
@@ -161,8 +165,8 @@ class AdminController extends ResourceController implements NewAdminControllerIn
         $resourceName = $this->getResourceName();
 
         $this->factoryService->deleteResource($resource);
-        if ($resourceId === $this->get('session')->get('admin/'.$resourceName.'/id')) {
-            $this->get('session')->remove('admin/'.$resourceName.'/id');
+        if ($resourceId === $this->session->get('admin/'.$resourceName.'/id')) {
+            $this->session->remove('admin/'.$resourceName.'/id');
         }
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
@@ -192,7 +196,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
      */
     public function delete($resource)
     {
-        $this->get('session')->remove('admin/'.$this->getResourceName().'/id');
+        $this->session->remove('admin/'.$this->getResourceName().'/id');
 
         $this->factoryService->deleteResource($resource);
         $this->documentManager->flush();
@@ -216,8 +220,8 @@ class AdminController extends ResourceController implements NewAdminControllerIn
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
-            if ($id === $this->get('session')->get('admin/'.$resourceName.'/id')) {
-                $this->get('session')->remove('admin/'.$resourceName.'/id');
+            if ($id === $this->session->get('admin/'.$resourceName.'/id')) {
+                $this->session->remove('admin/'.$resourceName.'/id');
             }
         }
 
@@ -236,11 +240,11 @@ class AdminController extends ResourceController implements NewAdminControllerIn
     public function getCriteria($criteria)
     {
         if (array_key_exists('reset', $criteria)) {
-            $this->get('session')->remove('admin/'.$this->getResourceName().'/criteria');
+            $this->session->remove('admin/'.$this->getResourceName().'/criteria');
         } elseif ($criteria) {
-            $this->get('session')->set('admin/'.$this->getResourceName().'/criteria', $criteria);
+            $this->session->set('admin/'.$this->getResourceName().'/criteria', $criteria);
         }
-        $criteria = $this->get('session')->get('admin/'.$this->getResourceName().'/criteria', []);
+        $criteria = $this->session->get('admin/'.$this->getResourceName().'/criteria', []);
 
         $new_criteria = [];
         foreach ($criteria as $property => $value) {
@@ -257,7 +261,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
     {
         $sorting = $this->getSorting($request);
 
-        $session = $this->get('session');
+        $session = $this->session;
         $session_namespace = 'admin/'.$this->getResourceName();
 
         $resources = $this->createPager($criteria, $sorting);

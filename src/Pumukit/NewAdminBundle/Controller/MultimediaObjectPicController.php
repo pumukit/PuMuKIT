@@ -2,13 +2,17 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -16,6 +20,27 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class MultimediaObjectPicController extends AbstractController implements NewAdminControllerInterface
 {
+    /** @var DocumentManager */
+    private $documentManager;
+    /** @var PaginationService */
+    private $paginationService;
+    /** @var SessionInterface */
+    private $session;
+    /** @var MultimediaObjectPicService */
+    private $multimediaObjectPicService;
+
+    public function __construct(
+        DocumentManager $documentManager,
+        PaginationService $paginationService,
+        SessionInterface $session,
+        MultimediaObjectPicService $multimediaObjectPicService
+    ) {
+        $this->documentManager = $documentManager;
+        $this->paginationService = $paginationService;
+        $this->session = $session;
+        $this->multimediaObjectPicService = $multimediaObjectPicService;
+    }
+
     /**
      * @Template("PumukitNewAdminBundle:Pic:create.html.twig")
      */
@@ -108,9 +133,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
         $isEventPoster = $request->get('is_event_poster', false);
         $picId = $request->get('id');
 
-        $repo = $this->documentManager
-            ->getRepository(MultimediaObject::class)
-        ;
+        $repo = $this->documentManager->getRepository(MultimediaObject::class);
 
         if (!$multimediaObject = $repo->findByPicId($picId)) {
             throw new NotFoundHttpException('Requested multimedia object does not exist');
@@ -128,9 +151,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
     {
         $picId = $request->get('id');
 
-        $repo = $this->documentManager
-            ->getRepository(MultimediaObject::class)
-        ;
+        $repo = $this->documentManager->getRepository(MultimediaObject::class);
 
         if (!$multimediaObject = $repo->findByPicId($picId)) {
             throw new NotFoundHttpException('Requested multimedia object does not exist');
@@ -151,9 +172,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
     {
         $picId = $request->get('id');
 
-        $repo = $this->documentManager
-            ->getRepository(MultimediaObject::class)
-        ;
+        $repo = $this->documentManager->getRepository(MultimediaObject::class);
 
         if (!$multimediaObject = $repo->findByPicId($picId)) {
             throw new NotFoundHttpException('Requested multimedia object does not exist');
@@ -175,9 +194,9 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
         $isEventPoster = $request->get('is_event_poster', false);
 
         if ($request->get('page', null)) {
-            $this->get('session')->set('admin/mmspic/page', $request->get('page', 1));
+            $this->session->set('admin/mmspic/page', $request->get('page', 1));
         }
-        $page = (int) ($this->get('session')->get('admin/mmspic/page', 1));
+        $page = (int) ($this->session->get('admin/mmspic/page', 1));
         $limit = 12;
 
         $series = $multimediaObject->getSeries();

@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -20,14 +21,16 @@ class MaterialController extends AbstractController implements NewAdminControlle
 {
     /** @var TranslatorInterface */
     private $translator;
-
+    /** @var SessionInterface */
+    private $session;
     /** @var MaterialService */
     private $materialService;
 
-    public function __construct(TranslatorInterface $translator, MaterialService $materialService)
+    public function __construct(TranslatorInterface $translator, MaterialService $materialService, SessionInterface $session)
     {
         $this->translator = $translator;
         $this->materialService = $materialService;
+        $this->session = $session;
     }
 
     /**
@@ -61,7 +64,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
             try {
                 $multimediaObject = $this->materialService->updateMaterialInMultimediaObject($multimediaObject, $material);
             } catch (\Exception $e) {
-                $this->get('session')->getFlashBag()->add('error', $e->getMessage());
+                $this->session->getFlashBag()->add('error', $e->getMessage());
             }
 
             return $this->redirect($this->generateUrl('pumukitnewadmin_material_list', ['id' => $multimediaObject->getId()]));
