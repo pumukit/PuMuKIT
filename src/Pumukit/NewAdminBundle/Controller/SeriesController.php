@@ -44,7 +44,7 @@ class SeriesController extends AdminController
     /** @var EmbeddedBroadcastService */
     protected $embeddedBroadcastService;
     /** @var TranslatorInterface */
-    protected $translationService;
+    protected $translator;
     /** @var SortedMultimediaObjectsService */
     protected $sortedMultimediaObjectService;
     /** @var PersonService */
@@ -72,7 +72,7 @@ class SeriesController extends AdminController
         GroupService $groupService,
         UserService $userService,
         EmbeddedBroadcastService $embeddedBroadcastService,
-        TranslatorInterface $translationService,
+        TranslatorInterface $translator,
         SortedMultimediaObjectsService $sortedMultimediaObjectService,
         PersonService $personService,
         TagService $tagService,
@@ -86,7 +86,7 @@ class SeriesController extends AdminController
     ) {
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
         $this->embeddedBroadcastService = $embeddedBroadcastService;
-        $this->translationService = $translationService;
+        $this->translator = $translator;
         $this->sortedMultimediaObjectService = $sortedMultimediaObjectService;
         $this->personService = $personService;
         $this->tagService = $tagService;
@@ -148,7 +148,7 @@ class SeriesController extends AdminController
     {
         $series = $this->documentManager->getRepository(Series::class)->findOneBy(['_id' => new ObjectId($id)]);
         if (!$series) {
-            throw new \Exception($this->translationService->trans('No series found with ID').' '.$id);
+            throw new \Exception($this->translator->trans('No series found with ID').' '.$id);
         }
 
         try {
@@ -156,7 +156,7 @@ class SeriesController extends AdminController
 
             return $this->redirectToRoute('pumukitnewadmin_series_list');
         } catch (\Exception $exception) {
-            throw new \Exception($this->translationService->trans('Error while cloning series ').$exception->getMessage());
+            throw new \Exception($this->translator->trans('Error while cloning series ').$exception->getMessage());
         }
     }
 
@@ -177,7 +177,7 @@ class SeriesController extends AdminController
 
         $locale = $request->getLocale();
         $disablePudenew = !$this->showLatestWithPudeNew;
-        $form = $this->createForm(SeriesType::class, $resource, ['translator' => $this->translationService, 'locale' => $locale, 'disable_PUDENEW' => $disablePudenew]);
+        $form = $this->createForm(SeriesType::class, $resource, ['translator' => $this->translator, 'locale' => $locale, 'disable_PUDENEW' => $disablePudenew]);
 
         $method = $request->getMethod();
         $form->handleRequest($request);
@@ -219,7 +219,7 @@ class SeriesController extends AdminController
 
         $locale = $request->getLocale();
 
-        $formMeta = $this->createForm(MultimediaObjectTemplateMetaType::class, $mmtemplate, ['translator' => $this->translationService, 'locale' => $locale]);
+        $formMeta = $this->createForm(MultimediaObjectTemplateMetaType::class, $mmtemplate, ['translator' => $this->translator, 'locale' => $locale]);
 
         $pubDecisionsTags = $this->factoryService->getTagsByCod('PUBDECISIONS', true);
 

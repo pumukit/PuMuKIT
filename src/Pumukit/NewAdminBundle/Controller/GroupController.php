@@ -7,8 +7,10 @@ use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\GroupService;
+use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Pumukit\SchemaBundle\Services\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -16,6 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_GROUPS')")
@@ -25,14 +28,39 @@ class GroupController extends AdminController
     public static $resourceName = 'group';
     public static $repoName = Group::class;
 
-    public function __construct(DocumentManager $documentManager, PaginationService $paginationService, FactoryService $factoryService, GroupService $groupService, UserService $userService)
-    {
+    /** @var DocumentManager */
+    private $documentManager;
+    /** @var GroupService */
+    private $groupService;
+    /** @var SessionInterface */
+    private $session;
+    /** @var MultimediaObjectService */
+    private $multimediaObjectService;
+    /** @var EmbeddedBroadcastService */
+    private $embeddedBroadcastService;
+    /** @var UserService */
+    private $userService;
+
+    public function __construct(
+        DocumentManager $documentManager,
+        PaginationService $paginationService,
+        FactoryService $factoryService,
+        GroupService $groupService,
+        SessionInterface $session,
+        MultimediaObjectService $multimediaObjectService,
+        EmbeddedBroadcastService $embeddedBroadcastService,
+        UserService $userService
+    ) {
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
+        $this->documentManager = $documentManager;
+        $this->groupService = $groupService;
+        $this->session = $session;
+        $this->multimediaObjectService = $multimediaObjectService;
+        $this->embeddedBroadcastService = $embeddedBroadcastService;
+        $this->userService = $userService;
     }
 
     /**
-     * Index.
-     *
      * @Template("PumukitNewAdminBundle:Group:index.html.twig")
      */
     public function indexAction(Request $request)
@@ -51,8 +79,6 @@ class GroupController extends AdminController
     }
 
     /**
-     * List action.
-     *
      * @Template("PumukitNewAdminBundle:Group:list.html.twig")
      */
     public function listAction(Request $request)
@@ -63,13 +89,6 @@ class GroupController extends AdminController
         return ['groups' => $groups];
     }
 
-    /**
-     * Create Action
-     * Overwrite to use group service
-     * to check if exists and dispatch event.
-     *
-     * @return JsonResponse|Response|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function createAction(Request $request)
     {
         $group = $this->createNew();
@@ -103,14 +122,6 @@ class GroupController extends AdminController
         );
     }
 
-    /**
-     * Update Action
-     * Overwrite to avoid updating not
-     * local groups and to use group service
-     * to update group and dispatch event.
-     *
-     * @return JsonResponse|Response|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function updateAction(Request $request)
     {
         $group = $this->findOr404($request);
@@ -141,8 +152,6 @@ class GroupController extends AdminController
     }
 
     /**
-     * Delete Group.
-     *
      * @Template("PumukitNewAdminBundle:Group:list.html.twig")
      */
     public function deleteAction(Request $request)
@@ -158,10 +167,6 @@ class GroupController extends AdminController
         return $this->redirect($this->generateUrl('pumukitnewadmin_group_list'));
     }
 
-    /**
-     * Batch delete Group
-     * Overwrite to use GroupService.
-     */
     public function batchDeleteAction(Request $request)
     {
         $ids = $request->get('ids');
@@ -183,8 +188,8 @@ class GroupController extends AdminController
                     return new JsonResponse($e->getMessage(), Response::HTTP_BAD_REQUEST);
                 }
             }
-            if ($id === $this->get('session')->get('admin/group/id')) {
-                $this->get('session')->remove('admin/group/id');
+            if ($id === $this->session->get('admin/group/id')) {
+                $this->session->remove('admin/group/id');
             }
         }
         if ($notDeleted) {
@@ -211,7 +216,7 @@ class GroupController extends AdminController
     public function getResources(Request $request, $criteria)
     {
         $sorting = $this->getSorting($request);
-        $session = $this->get('session');
+        $session = $this->session;
         $sessionNamespace = 'admin/group';
 
         $resources = $this->createPager($criteria, $sorting);
@@ -233,9 +238,9 @@ class GroupController extends AdminController
         return $resources;
     }
 
-    public function getSorting(Request $request = null, $session_namespace = null)
+    public function getSorting(Request $request = null, $session_namespace = null): array
     {
-        $session = $this->get('session');
+        $session = $this->session;
         if ($sorting = $request->get('sorting')) {
             $session->set('admin/group/type', $sorting[key($sorting)]);
             $session->set('admin/group/sort', key($sorting));
@@ -247,11 +252,7 @@ class GroupController extends AdminController
     }
 
     /**
-     * Info Action.
-     *
      * @Template("PumukitNewAdminBundle:Group:info.html.twig")
-     *
-     * @return array
      */
     public function infoAction(Request $request)
     {
@@ -286,15 +287,9 @@ class GroupController extends AdminController
     }
 
     /**
-     * Data Resource Action.
-     *
      * @Template("PumukitNewAdminBundle:Group:dataresources.html.twig")
-     *
-     * @throws \Exception
-     *
-     * @return array
      */
-    public function dataResourcesAction(Group $group, Request $request)
+    public function dataResourcesAction(Group $group, Request $request): array
     {
         $action = $request->get('action', '0');
         $resourceName = $request->get('resourceName', null);
@@ -322,8 +317,6 @@ class GroupController extends AdminController
     }
 
     /**
-     * Delete User from Group action.
-     *
      * @ParamConverter("user", class="PumukitSchemaBundle:User", options={"id" = "userId"})
      */
     public function deleteUserAction(User $user, Request $request)
@@ -336,38 +329,29 @@ class GroupController extends AdminController
     }
 
     /**
-     * Delete MultimediaObject from Group action.
-     *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      */
     public function deleteMultimediaObjectAction(MultimediaObject $multimediaObject, Request $request)
     {
         $action = $request->get('action', '0');
         $group = $this->findOr404($request);
-        $multimediaobject = $this->multimediaObjectService->deleteGroup($group, $multimediaObject);
+        $this->multimediaObjectService->deleteGroup($group, $multimediaObject);
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', ['id' => $group->getId(), 'resourceName' => 'multimediaobject', 'action' => $action]));
     }
 
     /**
-     * Delete Embeddedbroadcast from Group action.
-     *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      */
     public function deleteEmbeddedBroadcastAction(MultimediaObject $multimediaObject, Request $request)
     {
         $action = $request->get('action', '0');
         $group = $this->findOr404($request);
-        $multimediaobject = $this->embeddedBroadcastService->deleteGroup($group, $multimediaObject);
+        $this->embeddedBroadcastService->deleteGroup($group, $multimediaObject);
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', ['id' => $group->getId(), 'resourceName' => 'embeddedbroadcast', 'action' => $action]));
     }
 
-    /**
-     * Can be deleted.
-     *
-     * @return JsonResponse
-     */
     public function canBeDeletedAction(Group $group, Request $request)
     {
         try {
@@ -386,12 +370,7 @@ class GroupController extends AdminController
         ]);
     }
 
-    /**
-     * Delete all users from group.
-     *
-     * @return Response
-     */
-    public function deleteAllUsersAction(Group $group, Request $request)
+    public function deleteAllUsersAction(Group $group)
     {
         try {
             $this->userService->deleteAllFromGroup($group);
@@ -402,12 +381,7 @@ class GroupController extends AdminController
         return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', ['id' => $group->getId(), 'resourceName' => 'user']));
     }
 
-    /**
-     * Delete all multimediaObjects from group.
-     *
-     * @return Response
-     */
-    public function deleteAllMultimediaObjectsAction(Group $group, Request $request)
+    public function deleteAllMultimediaObjectsAction(Group $group)
     {
         try {
             $this->multimediaObjectService->deleteAllFromGroup($group);
@@ -418,12 +392,7 @@ class GroupController extends AdminController
         return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', ['id' => $group->getId(), 'resourceName' => 'multimediaobject']));
     }
 
-    /**
-     * Delete all embeddedbroadcasts from group.
-     *
-     * @return Response
-     */
-    public function deleteAllEmbeddedBroadcastsAction(Group $group, Request $request)
+    public function deleteAllEmbeddedBroadcastsAction(Group $group)
     {
         try {
             $this->embeddedBroadcastService->deleteAllFromGroup($group);

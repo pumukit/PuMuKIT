@@ -60,6 +60,16 @@ class EventsController extends AbstractController implements NewAdminControllerI
     private $session;
 
     private $pumukitNewAdminAdvanceLiveEventCreateSeriesPic;
+    private $pumukitUseSeriesChannels;
+    private $locales;
+    private $showLatestWithPudeNew;
+    private $pumukitNewAdminAdvanceLiveEventCreateDefaultPic;
+    private $pumukitLiveChatEnable;
+    private $pumukitLiveTwitterEnable;
+    private $liveEventContactAndShare;
+    private $pumukitLiveTwitterAccountsLinkColor;
+    private $pumukitNewAdminAdvanceLiveEventAutocompleteSeries;
+    private $pumukitSchemaPersonalScopeRoleCode;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -69,8 +79,20 @@ class EventsController extends AbstractController implements NewAdminControllerI
         SeriesEventDispatcherService $seriesDispatcher,
         PaginationService $paginationService,
         EmbeddedEventSessionService $eventsService,
-        SessionInterface $session
-    ) {
+        SessionInterface $session,
+        $pumukitNewAdminAdvanceLiveEventCreateSeriesPic,
+        $pumukitUseSeriesChannels,
+        $locales,
+        $showLatestWithPudeNew,
+        $pumukitNewAdminAdvanceLiveEventCreateDefaultPic,
+        $pumukitLiveChatEnable,
+        $pumukitLiveTwitterEnable,
+        $liveEventContactAndShare,
+        $pumukitLiveTwitterAccountsLinkColor,
+        $pumukitNewAdminAdvanceLiveEventAutocompleteSeries,
+        $pumukitSchemaPersonalScopeRoleCode
+    )
+    {
         $this->documentManager = $documentManager;
         $this->translator = $translator;
         $this->factoryService = $factoryService;
@@ -79,7 +101,19 @@ class EventsController extends AbstractController implements NewAdminControllerI
         $this->paginationService = $paginationService;
         $this->eventsService = $eventsService;
         $this->session = $session;
+        $this->pumukitNewAdminAdvanceLiveEventCreateSeriesPic = $pumukitNewAdminAdvanceLiveEventCreateSeriesPic;
+        $this->pumukitUseSeriesChannels = $pumukitUseSeriesChannels;
+        $this->locales = $locales;
+        $this->showLatestWithPudeNew = $showLatestWithPudeNew;
+        $this->pumukitNewAdminAdvanceLiveEventCreateDefaultPic = $pumukitNewAdminAdvanceLiveEventCreateDefaultPic;
+        $this->pumukitLiveChatEnable = $pumukitLiveChatEnable;
+        $this->pumukitLiveTwitterEnable = $pumukitLiveTwitterEnable;
+        $this->liveEventContactAndShare = $liveEventContactAndShare;
+        $this->pumukitLiveTwitterAccountsLinkColor = $pumukitLiveTwitterAccountsLinkColor;
+        $this->pumukitNewAdminAdvanceLiveEventAutocompleteSeries = $pumukitNewAdminAdvanceLiveEventAutocompleteSeries;
+        $this->pumukitSchemaPersonalScopeRoleCode = $pumukitSchemaPersonalScopeRoleCode;
     }
+
 
     /**
      * @Route("index/", name="pumukit_new_admin_live_event_index")
@@ -107,7 +141,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
         return [
             'object' => $object,
-            'disable_pudenew' => !$this->getParameter('show_latest_with_pudenew'),
+            'disable_pudenew' => !$this->showLatestWithPudeNew,
             'roles' => $aRoles,
             'statusPub' => $statusPub,
             'pubChannels' => $aChannels,
@@ -119,9 +153,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
      */
     public function createEventAction(Request $request): RedirectResponse
     {
-        $languages = $this->getParameter('pumukit.locales');
-
-        $series = $request->request->get('seriesSuggest') ? $request->request->get('seriesSuggest') : false;
+        $series = $request->request->get('seriesSuggest') ?: false;
 
         $createSeries = false;
         if (!$series) {
@@ -152,7 +184,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
         $event = new EmbeddedEvent();
         $event->setDate(new \DateTime());
 
-        foreach ($languages as $language) {
+        foreach ($this->locales as $language) {
             $event->setName($this->translator->trans('New'), $language);
             $event->setDescription('', $language);
         }
@@ -178,7 +210,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
     public function listEventAction(Request $request, $type = null)
     {
         $session = $this->session;
-        $eventPicDefault = $this->getParameter('pumukit_new_admin.advance_live_event_create_default_pic');
+        $eventPicDefault = $this->pumukitNewAdminAdvanceLiveEventCreateDefaultPic;
         $page = ($this->session->get('admin/live/event/page')) ?: ($request->query->get('page') ?: 1);
 
         $criteria['type'] = MultimediaObject::TYPE_LIVE;
@@ -399,12 +431,12 @@ class EventsController extends AbstractController implements NewAdminControllerI
         $people['author'] = $multimediaObject->getEmbeddedEvent()->getAuthor();
         $people['producer'] = $multimediaObject->getEmbeddedEvent()->getProducer();
 
-        $enableChat = $this->getParameter('pumukit_live.chat.enable');
-        $enableTwitter = $this->getParameter('pumukit_live.twitter.enable');
-        $enableContactForm = $this->getParameter('liveevent_contact_and_share');
-        $twitterAccountsLinkColor = $this->getParameter('pumukit_live.twitter.accounts_link_color');
+        $enableChat = $this->pumukitLiveChatEnable;
+        $enableTwitter = $this->pumukitLiveTwitterEnable;
+        $enableContactForm = $this->liveEventContactAndShare;
+        $twitterAccountsLinkColor = $this->pumukitLiveTwitterAccountsLinkColor;
 
-        $autocompleteSeries = $this->getParameter('pumukit_new_admin.advance_live_event_autocomplete_series');
+        $autocompleteSeries = $this->pumukitNewAdminAdvanceLiveEventAutocompleteSeries;
 
         $form->handleRequest($request);
         if ('POST' === $request->getMethod()) {
@@ -502,7 +534,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
     public function seriesAction(Request $request, Series $series)
     {
         $locale = $request->getLocale();
-        $disablePudenew = !$this->getParameter('show_latest_with_pudenew');
+        $disablePudenew = !$this->showLatestWithPudeNew;
 
         $form = $this->createForm(SeriesType::class, $series, ['translator' => $this->translator, 'locale' => $locale, 'disable_PUDENEW' => $disablePudenew]);
 
@@ -513,10 +545,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
             'pumukitnewadmin_series_i18n_line2',
             'pumukitnewadmin_series_template',
         ];
-        $showSeriesTypeTab = $this->container->hasParameter(
-            'pumukit.use_series_channels'
-        ) && $this->getParameter('pumukit.use_series_channels');
-        if (!$showSeriesTypeTab) {
+        if (!$this->pumukitUseSeriesChannels) {
             $exclude_fields[] = 'pumukitnewadmin_series_series_type';
         }
 
@@ -839,7 +868,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
         $user = $this->getUser();
         $pipeline = [];
         $pipeline[] = ['$match' => ['series' => new ObjectId($multimediaObject->getSeries()->getId())]];
-        $ownerKey = $this->getParameter('pumukitschema.personal_scope_role_code');
+        $ownerKey = $this->pumukitSchemaPersonalScopeRoleCode;
         if ($user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
             $pipeline[] = ['$match' => ['people.people.email' => ['$ne' => $user->getEmail()]]];
             $pipeline[] = ['$match' => ['people.cod' => $ownerKey]];

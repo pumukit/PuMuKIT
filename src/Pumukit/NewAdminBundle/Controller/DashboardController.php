@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_DASHBOARD')")
@@ -28,11 +29,15 @@ class DashboardController extends AbstractController implements NewAdminControll
     /** @var ProfileService */
     protected $profileService;
 
-    public function __construct(DocumentManager $documentManager, StatsService $statsService, ProfileService $profileService)
+    /** @var RouterInterface */
+    private $router;
+
+    public function __construct(DocumentManager $documentManager, StatsService $statsService, ProfileService $profileService, RouterInterface $router)
     {
         $this->documentManager = $documentManager;
         $this->statsService = $statsService;
         $this->profileService = $profileService;
+        $this->router = $router;
     }
 
     /**
@@ -86,7 +91,7 @@ class DashboardController extends AbstractController implements NewAdminControll
             $XMLSeries = $XML->addChild('event', htmlspecialchars($s->getTitle()));
             $XMLSeries->addAttribute('start', $s->getPublicDate()->format('M j Y H:i:s \\G\\M\\TP'));
             $XMLSeries->addAttribute('title', $s->getTitle());
-            $XMLSeries->addAttribute('link', $this->get('router')->generate('pumukit_webtv_series_index', ['id' => $s->getId()], UrlGeneratorInterface::ABSOLUTE_URL));
+            $XMLSeries->addAttribute('link', $this->router->generate('pumukit_webtv_series_index', ['id' => $s->getId()], UrlGeneratorInterface::ABSOLUTE_URL));
         }
 
         return new Response($XML->asXML(), 200, ['Content-Type' => 'text/xml']);

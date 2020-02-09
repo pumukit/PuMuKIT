@@ -16,10 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class InboxController extends AbstractController implements NewAdminControllerInterface
 {
     private $pumukitInbox;
+    private $pumukitInboxDepth;
 
-    public function __construct($pumukitInbox)
+    public function __construct($pumukitInbox, $pumukitInboxDepth)
     {
         $this->pumukitInbox = $pumukitInbox;
+        $this->pumukitInboxDepth = $pumukitInboxDepth;
     }
 
     /**
@@ -50,7 +52,7 @@ class InboxController extends AbstractController implements NewAdminControllerIn
             foreach ($finder as $f) {
                 if (0 !== (count(glob("{$f}/*")))) {
                     $contentFinder = new Finder();
-                    if (!$this->getParameter('pumukit.inbox_depth')) {
+                    if (!$this->pumukitInboxDepth) {
                         $contentFinder->depth('== 0');
                     }
                     $contentFinder->files()->in($f->getRealpath());

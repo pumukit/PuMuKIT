@@ -30,7 +30,7 @@ class RoleController extends SortableAdminController
     /** @var PersonService */
     protected $personService;
     /** @var TranslatorInterface */
-    protected $translationService;
+    protected $translator;
     /** @var RoleService */
     protected $roleService;
     /** @var SessionInterface */
@@ -45,14 +45,14 @@ class RoleController extends SortableAdminController
         GroupService $groupService,
         UserService $userService,
         PersonService $personService,
-        TranslatorInterface $translationService,
+        TranslatorInterface $translator,
         RoleService $roleService,
         SessionInterface $session,
         ValidatorInterface $validator
     ) {
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
         $this->personService = $personService;
-        $this->translationService = $translationService;
+        $this->translator = $translator;
         $this->roleService = $roleService;
         $this->session = $session;
         $this->validator = $validator;
@@ -66,7 +66,7 @@ class RoleController extends SortableAdminController
         $role = $this->personService->findRoleById($request->get('id'));
 
         $locale = $request->getLocale();
-        $form = $this->createForm(RoleType::class, $role, ['translator' => $this->translationService, 'locale' => $locale]);
+        $form = $this->createForm(RoleType::class, $role, ['translator' => $this->translator, 'locale' => $locale]);
 
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
             $form->handleRequest($request);

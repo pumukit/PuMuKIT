@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\GroupService;
+use Pumukit\SchemaBundle\Services\PermissionProfileEventDispatcherService;
 use Pumukit\SchemaBundle\Services\PermissionProfileService;
 use Pumukit\SchemaBundle\Services\PermissionService;
 use Pumukit\SchemaBundle\Services\UserService;
@@ -17,6 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -33,6 +35,11 @@ class PermissionProfileController extends AdminController
     private $translator;
     /** @var PermissionService */
     private $permissionService;
+    /** @var SessionInterface */
+    private $session;
+
+    /** @var PermissionProfileEventDispatcherService */
+    private $pumukitSchemaPermissionProfileDispatcher;
     private $pumukitUseSeriesChannels;
 
     public function __construct(
@@ -44,13 +51,17 @@ class PermissionProfileController extends AdminController
         PermissionProfileService $permissionProfileService,
         TranslatorInterface $translator,
         PermissionService $permissionService,
+        SessionInterface $session,
+        PermissionProfileEventDispatcherService $pumukitSchemaPermissionProfileDispatcher,
         $pumukitUseSeriesChannels
     ) {
-        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session);
         $this->permissionProfileService = $permissionProfileService;
         $this->translator = $translator;
         $this->permissionService = $permissionService;
+        $this->session = $session;
         $this->pumukitUseSeriesChannels = $pumukitUseSeriesChannels;
+        $this->pumukitSchemaPermissionProfileDispatcher = $pumukitSchemaPermissionProfileDispatcher;
     }
 
     /**
@@ -77,7 +88,7 @@ class PermissionProfileController extends AdminController
      */
     public function listAction(Request $request)
     {
-        $session = $this->get('session');
+        $session = $this->session;
 
         $criteria = $this->getCriteria($request->get('criteria', []));
         $permissionProfiles = $this->getResources($request, $criteria);
@@ -172,9 +183,9 @@ class PermissionProfileController extends AdminController
 
         try {
             $this->factoryService->deleteResource($permissionProfile);
-            $this->get('pumukitschema.permissionprofile_dispatcher')->dispatchDelete($permissionProfile);
-            if ($permissionProfileId === $this->get('session')->get('admin/permissionprofile/id')) {
-                $this->get('session')->remove('admin/permissionprofile/id');
+            $this->pumukitSchemaPermissionProfileDispatcher->dispatchDelete($permissionProfile);
+            if ($permissionProfileId === $this->session->get('admin/permissionprofile/id')) {
+                $this->session->remove('admin/permissionprofile/id');
             }
         } catch (\Exception $e) {
             throw $e;
@@ -234,7 +245,7 @@ class PermissionProfileController extends AdminController
         if (!isset($sorting['rank'])) {
             $sorting['rank'] = 1;
         }
-        $session = $this->get('session');
+        $session = $this->session;
         $session_namespace = 'admin/permissionprofile';
 
         $resources = $this->createPager($criteria, $sorting);

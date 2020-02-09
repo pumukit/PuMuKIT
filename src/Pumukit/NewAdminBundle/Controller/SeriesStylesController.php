@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -20,19 +21,19 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class SeriesStylesController extends AbstractController
 {
-
     /** @var DocumentManager */
     private $documentManager;
-
     /** @var TranslatorInterface */
     private $translator;
+    /** @var SessionInterface */
+    private $session;
 
-    public function __construct(DocumentManager $documentManager, TranslatorInterface $translator)
+    public function __construct(DocumentManager $documentManager, TranslatorInterface $translator, SessionInterface $session)
     {
         $this->documentManager = $documentManager;
         $this->translator = $translator;
+        $this->session = $session;
     }
-
 
     /**
      * @Route("/", name="pumukit_newadmin_series_styles")
@@ -69,7 +70,7 @@ class SeriesStylesController extends AbstractController
         $this->documentManager->persist($style);
         $this->documentManager->flush();
 
-        $session = $this->get('session');
+        $session = $this->session;
         $session->set('seriesstyle/id', $style->getId());
 
         return new JsonResponse(['success', 'id' => $style->getId()]);
@@ -92,7 +93,7 @@ class SeriesStylesController extends AbstractController
         $style->setText($request->request->get('style_text'));
         $this->documentManager->flush();
 
-        $session = $this->get('session');
+        $session = $this->session;
         $session->set('seriesstyle/id', $style->getId());
 
         return new JsonResponse(['success']);
@@ -103,7 +104,7 @@ class SeriesStylesController extends AbstractController
      */
     public function deleteAction(string $id): JsonResponse
     {
-        $session = $this->get('session');
+        $session = $this->session;
 
         $style = $this->documentManager->getRepository(SeriesStyle::class)->findOneBy(['_id' => new ObjectId($id)]);
 

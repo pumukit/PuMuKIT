@@ -3,6 +3,7 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use FOS\UserBundle\Model\UserManagerInterface;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Regex;
 use Pumukit\CoreBundle\Services\PaginationService;
@@ -19,6 +20,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -43,6 +45,10 @@ class UserController extends AdminController
     private $personService;
     /** @var TranslatorInterface */
     private $translator;
+    /** @var SessionInterface */
+    private $session;
+    /** @var UserManagerInterface */
+    private $fosUserUserManager;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -51,13 +57,17 @@ class UserController extends AdminController
         GroupService $groupService,
         UserService $userService,
         PersonService $personService,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        SessionInterface $session,
+        UserManagerInterface $fosUserUserManager
     ) {
         $this->documentManager = $documentManager;
         $this->groupService = $groupService;
         $this->userService = $userService;
         $this->personService = $personService;
         $this->translator = $translator;
+        $this->session = $session;
+        $this->fosUserUserManager = $fosUserUserManager;
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
     }
 
@@ -104,7 +114,7 @@ class UserController extends AdminController
 
     public function updateAction(Request $request)
     {
-        $userManager = $this->get('fos_user.user_manager');
+        $userManager = $this->fosUserUserManager;
 
         $user = $this->findOr404($request);
 
@@ -248,11 +258,11 @@ class UserController extends AdminController
     public function getCriteria($criteria)
     {
         if (array_key_exists('reset', $criteria)) {
-            $this->get('session')->remove('admin/user/criteria');
+            $this->session->remove('admin/user/criteria');
         } elseif ($criteria) {
-            $this->get('session')->set('admin/user/criteria', $criteria);
+            $this->session->set('admin/user/criteria', $criteria);
         }
-        $criteria = $this->get('session')->get('admin/user/criteria', []);
+        $criteria = $this->session->get('admin/user/criteria', []);
 
         $new_criteria = [];
         foreach ($criteria as $property => $value) {
