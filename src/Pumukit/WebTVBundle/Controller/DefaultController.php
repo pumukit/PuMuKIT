@@ -13,6 +13,7 @@ use Pumukit\WebTVBundle\Form\Type\ContactType;
 use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use SunCat\MobileDetectBundle\DeviceDetector\MobileDetector;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,6 +43,7 @@ class DefaultController extends AbstractController
         TranslatorInterface $translator,
         LoggerInterface $logger,
         \Swift_Mailer $mailer,
+        MobileDetector $mobileDetector,
         $captchaPublicKey,
         $captchaPrivateKey,
         $pumukitLiveEventContactAndShare,
@@ -53,7 +55,7 @@ class DefaultController extends AbstractController
         $this->breadcrumbService = $breadcrumbService;
         $this->embeddedEventSessionService = $embeddedEventSessionService;
         $this->translator = $translator;
-        $this->mobileDetectorService = $this->get('mobile_detect.mobile_detector');
+        $this->mobileDetectorService = $mobileDetector;
         $this->logger = $logger;
         $this->mailer = $mailer;
         $this->captchaPublicKey = $captchaPublicKey;

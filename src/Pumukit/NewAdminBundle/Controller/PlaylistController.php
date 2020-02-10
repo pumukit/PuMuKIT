@@ -14,6 +14,7 @@ use Pumukit\SchemaBundle\Services\SeriesEventDispatcherService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -43,7 +44,7 @@ class PlaylistController extends CollectionController
         PaginationService $paginationService,
         PersonService $personService
     ) {
-        parent::__construct($documentManager, $factoryService, $paginationService, $personService);
+        parent::__construct($documentManager, $factoryService, $paginationService, $personService, $session);
         $this->session = $session;
         $this->translator = $translator;
         $this->pumukitSchemaSeriesEventDispatcher = $pumukitSchemaSeriesEventDispatcher;
@@ -53,7 +54,7 @@ class PlaylistController extends CollectionController
     /**
      * @Template("PumukitNewAdminBundle:Collection:show.html.twig")
      */
-    public function showAction(Series $collection)
+    public function showAction(Series $collection): array
     {
         $this->session->set('admin/playlist/id', $collection->getId());
 
@@ -63,7 +64,7 @@ class PlaylistController extends CollectionController
     /**
      * @Template("PumukitNewAdminBundle:Playlist:index.html.twig")
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): array
     {
         $update_session = true;
         $resources = $this->getResources($request);
@@ -84,14 +85,14 @@ class PlaylistController extends CollectionController
     /**
      * @Template("PumukitNewAdminBundle:Playlist:list.html.twig")
      */
-    public function listAction(Request $request)
+    public function listAction(Request $request): array
     {
         $resources = $this->getResources($request);
 
         return ['series' => $resources];
     }
 
-    public function createAction(Request $request)
+    public function createAction(Request $request): JsonResponse
     {
         $collection = $this->factoryService->createPlaylist($this->getUser(), $request->request->get('playlist_title'));
         $this->session->set('admin/playlist/id', $collection->getId());
@@ -99,7 +100,7 @@ class PlaylistController extends CollectionController
         return new JsonResponse(['playlistId' => $collection->getId(), 'title' => $collection->getTitle($request->getLocale())]);
     }
 
-    public function updateAction(Series $series, Request $request)
+    public function updateAction(Request $request, Series $series): Response
     {
         $this->session->set('admin/playlist/id', $series->getId());
 
@@ -158,7 +159,7 @@ class PlaylistController extends CollectionController
         return $this->redirect($this->generateUrl('pumukitnewadmin_playlist_list', []));
     }
 
-    public function batchDeleteAction(Request $request)
+    public function batchDeleteAction(Request $request): RedirectResponse
     {
         $ids = $request->get('ids');
         if ('string' === gettype($ids)) {
@@ -168,12 +169,8 @@ class PlaylistController extends CollectionController
         $this->batchDeleteCollection($ids);
 
         // Removes ids on session (if the series/mmobj does not exist now, we should get rid of the stored id)
-        $seriesRepo = $this->documentManager
-            ->getRepository(Series::class)
-        ;
-        $mmobjRepo = $this->documentManager
-            ->getRepository(MultimediaObject::class)
-        ;
+        $seriesRepo = $this->documentManager->getRepository(Series::class);
+        $mmobjRepo = $this->documentManager->getRepository(MultimediaObject::class);
 
         $playlist = $seriesRepo->find($this->session->get('admin/playlist/id'));
         if (!$playlist) {
@@ -187,7 +184,7 @@ class PlaylistController extends CollectionController
         return $this->redirect($this->generateUrl('pumukitnewadmin_playlist_list', []));
     }
 
-    public function searchAction(Request $req)
+    public function searchAction(Request $req): RedirectResponse
     {
         $q = $req->get('q');
         $this->session->set('admin/playlist/criteria', ['search' => $q]);
@@ -195,7 +192,7 @@ class PlaylistController extends CollectionController
         return $this->redirect($this->generateUrl('pumukitnewadmin_playlist_index'));
     }
 
-    public function getCriteria(Request $request)
+    public function getCriteria(Request $request): array
     {
         $criteria = $request->get('criteria', []);
 
@@ -216,28 +213,25 @@ class PlaylistController extends CollectionController
         $criteria = array_merge($criteria, ['type' => Series::TYPE_PLAYLIST]);
         $queryBuilder = $this->documentManager->getRepository(Series::class)->createQueryBuilder();
         $queryBuilder->setQueryArray($criteria);
-        //Sort playlist
         $queryBuilder->sort($sorting);
 
         return $this->createPager($queryBuilder, $request, 'admin/playlist');
     }
 
-    private function getSorting(Request $request = null, $session_namespace = null)
+    private function getSorting(Request $request = null): array
     {
-        $session = $this->session;
-
         if ($sorting = $request->get('sorting')) {
-            $session->set('admin/playlist/type', current($sorting));
-            $session->set('admin/playlist/sort', key($sorting));
+            $this->session->set('admin/playlist/type', current($sorting));
+            $this->session->set('admin/playlist/sort', key($sorting));
         }
 
-        $value = $session->get('admin/playlist/type', 'desc');
-        $key = $session->get('admin/playlist/sort', 'public_date');
+        $value = $this->session->get('admin/playlist/type', 'desc');
+        $key = $this->session->get('admin/playlist/sort', 'public_date');
 
         if ('title' == $key) {
             $key .= '.'.$request->getLocale();
         }
 
-        return  [$key => $value];
+        return [$key => $value];
     }
 }

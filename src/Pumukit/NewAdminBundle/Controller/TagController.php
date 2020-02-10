@@ -59,7 +59,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
 
     /**
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag")
-     * @Template("PumukitNewAdminBundle::Tag:children.html.twig")
+     * @Template("PumukitNewAdminBundle:Tag:children.html.twig")
      */
     public function childrenAction(Tag $tag)
     {

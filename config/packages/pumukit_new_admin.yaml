@@ -7,7 +7,7 @@ services:
     autoconfigure: true
     public:        true
     bind:
-      $pumukitNewAdminAdvanceLiveEventCreateSeriesPic: '%pumukit_new_admin  .advance_live_event_create_series_pic%'
+      $pumukitNewAdminAdvanceLiveEventCreateSeriesPic: '%pumukit_new_admin.advance_live_event_create_serie_pic%'
       $pumukitNewAdminAdvanceLiveEventCreateDefaultPic: '%pumukit_new_admin.advance_live_event_create_default_pic%'
       $pumukitUseSeriesChannels: '%pumukit.use_series_channels%'
       $locales: '%pumukit.locales%'

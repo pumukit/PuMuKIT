@@ -22,6 +22,12 @@ class APIController extends AbstractController implements NewAdminControllerInte
     /** @var StatsService */
     private $statsService;
 
+    public function __construct(SerializerService $serializerService, StatsService $statsService)
+    {
+        $this->serializerService = $serializerService;
+        $this->statsService = $statsService;
+    }
+
     /**
      * @Route("/mmobj/most_viewed.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
      */

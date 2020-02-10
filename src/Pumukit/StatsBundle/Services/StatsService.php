@@ -3,6 +3,7 @@
 namespace Pumukit\StatsBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\UTCDateTime;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
@@ -235,7 +236,7 @@ class StatsService
     /**
      * Returns an array with the number of views for a mmobj on a certain date range, grouped by hour/day/month/year.
      */
-    public function getTotalViewedGroupedByMmobj(\MongoId $mmobjId, array $options = [])
+    public function getTotalViewedGroupedByMmobj(ObjectId $mmobjId, array $options = [])
     {
         return $this->getGroupedByAggrPipeline($options, ['multimediaObject' => $mmobjId]);
     }
@@ -243,7 +244,7 @@ class StatsService
     /**
      * Returns an array with the total number of views for a series on a certain date range, grouped by hour/day/month/year.
      */
-    public function getTotalViewedGroupedBySeries(\MongoId $seriesId, array $options = [])
+    public function getTotalViewedGroupedBySeries(ObjectId $seriesId, array $options = [])
     {
         return $this->getGroupedByAggrPipeline($options, ['series' => $seriesId]);
     }

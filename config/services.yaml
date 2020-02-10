@@ -103,3 +103,7 @@ services:
         debug: '%kernel.debug%'
         metadata_cache_file: '%vipx_bot_detect.metadata.cache_file%'
         metadata_dumper_class: '%vipx_bot_detect.metadata.dumper.class%'
+
+  SunCat\MobileDetectBundle\DeviceDetector\MobileDetector:
+    class: SunCat\MobileDetectBundle\DeviceDetector\MobileDetector
+
