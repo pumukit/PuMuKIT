@@ -9,23 +9,22 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Vipx\BotDetect\BotDetectorInterface;
+use Vipx\BotDetect\BotDetector;
 
 class PumukitCleanLogCommand extends Command
 {
     /** @var DocumentManager */
     private $documentManager;
-    /** @var BotDetectorInterface */
+    /** @var BotDetector */
     private $vipxBotDetectorService;
     private $from;
 
-    public function __construct(DocumentManager $documentManager, BotDetectorInterface $vipxBotDetectorService)
+    public function __construct(DocumentManager $documentManager, BotDetector $vipxBotDetectorService)
     {
         $this->documentManager = $documentManager;
         $this->vipxBotDetectorService = $vipxBotDetectorService;
         parent::__construct();
     }
-
 
     protected function configure()
     {
