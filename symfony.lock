@@ -94,9 +94,6 @@
     "incenteev/composer-parameter-handler": {
         "version": "v2.1.3"
     },
-    "jean85/pretty-package-versions": {
-        "version": "1.2"
-    },
     "jms/metadata": {
         "version": "1.7.0"
     },
@@ -138,36 +135,6 @@
     "myclabs/deep-copy": {
         "version": "1.9.5"
     },
-    "nette/bootstrap": {
-        "version": "v3.0.1"
-    },
-    "nette/di": {
-        "version": "v3.0.3"
-    },
-    "nette/finder": {
-        "version": "v2.5.2"
-    },
-    "nette/neon": {
-        "version": "v3.1.0"
-    },
-    "nette/php-generator": {
-        "version": "v3.3.3"
-    },
-    "nette/robot-loader": {
-        "version": "v3.2.1"
-    },
-    "nette/schema": {
-        "version": "v1.0.2"
-    },
-    "nette/utils": {
-        "version": "v3.1.0"
-    },
-    "nikic/php-parser": {
-        "version": "v4.3.0"
-    },
-    "ocramius/package-versions": {
-        "version": "1.4.2"
-    },
     "pagerfanta/pagerfanta": {
         "version": "v2.1.3"
     },
@@ -203,9 +170,6 @@
     },
     "phpspec/prophecy": {
         "version": "v1.10.2"
-    },
-    "phpstan/phpdoc-parser": {
-        "version": "0.3.5"
     },
     "phpstan/phpstan": {
         "version": "0.11.19"
