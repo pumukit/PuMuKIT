@@ -32,6 +32,9 @@ services:
     resource: '../../src/Pumukit/NewAdminBundle/Controller/'
     tags: ['controller.service_arguments']
 
+  Pumukit\NewAdminBundle\Services\:
+    resource: '../../src/Pumukit/NewAdminBundle/Services/'
+
   Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType:
     class: Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType
     arguments:
@@ -79,18 +82,6 @@ services:
     class: Pumukit\NewAdminBundle\Twig\PumukitAdminExtension
     tags:
       - { name: "twig.extension" }
-
-  Pumukit\NewAdminBundle\Services\SeriesSearchService:
-    class: Pumukit\NewAdminBundle\Services\SeriesSearchService
-
-  Pumukit\NewAdminBundle\Services\MultimediaObjectSearchService:
-    class: Pumukit\NewAdminBundle\Services\MultimediaObjectSearchService
-
-  Pumukit\NewAdminBundle\Services\MultimediaObjectSyncService:
-    class: Pumukit\NewAdminBundle\Services\MultimediaObjectSyncService
-
-  Pumukit\NewAdminBundle\Services\UserStatsService:
-    class: Pumukit\NewAdminBundle\Services\UserStatsService
 
   Pumukit\NewAdminBundle\Services\TagCatalogueService:
     class: Pumukit\NewAdminBundle\Services\TagCatalogueService
