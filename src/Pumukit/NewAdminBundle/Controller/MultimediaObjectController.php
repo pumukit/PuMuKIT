@@ -40,6 +40,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -58,16 +59,6 @@ class MultimediaObjectController extends SortableAdminController
     public static $resourceName = 'mms';
     public static $repoName = MultimediaObject::class;
 
-    /** @var DocumentManager */
-    private $documentManager;
-    /** @var PaginationService */
-    private $paginationService;
-    /** @var FactoryService */
-    private $factoryService;
-    /** @var GroupService */
-    private $groupService;
-    /** @var UserService */
-    private $userService;
     /** @var TranslatorInterface */
     private $translator;
     /** @var RequestStack */
@@ -84,8 +75,6 @@ class MultimediaObjectController extends SortableAdminController
     private $jobService;
     /** @var ProfileService */
     private $profileService;
-    /** @var SessionInterface */
-    private $session;
     /** @var MultimediaObjectService */
     private $multimediaObjectService;
 
@@ -131,7 +120,7 @@ class MultimediaObjectController extends SortableAdminController
         EmbeddedBroadcastService $embeddedBroadcastService,
         SpecialTranslationService $specialTranslatorService,
         MultimediaObjectEventDispatcherService $pumukitSchemaMultimediaObjectDispatcher,
-        EventDispatcher $eventDispatcher,
+        EventDispatcherInterface $eventDispatcher,
         RouterInterface $router,
         $showLatestWithPudeNew,
         $pumukitNewAdminShowNakedPubTab,
@@ -140,11 +129,7 @@ class MultimediaObjectController extends SortableAdminController
         $pumukitNewAdminMultimediaObjectLabel
     )
     {
-        $this->documentManager = $documentManager;
-        $this->paginationService = $paginationService;
-        $this->factoryService = $factoryService;
-        $this->groupService = $groupService;
-        $this->userService = $userService;
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session);
         $this->translator = $translator;
         $this->requestStack = $requestStack;
         $this->multimediaObjectSyncService = $multimediaObjectSyncService;
@@ -153,7 +138,6 @@ class MultimediaObjectController extends SortableAdminController
         $this->sortedMultimediaObjectService = $sortedMultimediaObjectService;
         $this->jobService = $jobService;
         $this->profileService = $profileService;
-        $this->session = $session;
         $this->multimediaObjectService = $multimediaObjectService;
         $this->tagService = $tagService;
         $this->embeddedBroadcastService = $embeddedBroadcastService;

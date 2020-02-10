@@ -33,8 +33,6 @@ class RoleController extends SortableAdminController
     protected $translator;
     /** @var RoleService */
     protected $roleService;
-    /** @var SessionInterface */
-    private $session;
     /** @var ValidatorInterface */
     private $validator;
 
@@ -44,13 +42,13 @@ class RoleController extends SortableAdminController
         FactoryService $factoryService,
         GroupService $groupService,
         UserService $userService,
+        SessionInterface $session,
         PersonService $personService,
         TranslatorInterface $translator,
         RoleService $roleService,
-        SessionInterface $session,
         ValidatorInterface $validator
     ) {
-        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session);
         $this->personService = $personService;
         $this->translator = $translator;
         $this->roleService = $roleService;

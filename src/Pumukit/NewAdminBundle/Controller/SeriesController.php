@@ -55,13 +55,10 @@ class SeriesController extends AdminController
     protected $seriesService;
     /** @var SeriesSearchService */
     protected $seriesSearchService;
-
     /** @var RequestStack */
     private $requestStack;
     /** @var SeriesEventDispatcherService */
     private $pumukitSchemaSeriesDispatcher;
-    /** @var SessionInterface */
-    private $session;
     private $pumukitUseSerieschannels;
     private $showLatestWithPudeNew;
 
@@ -71,6 +68,7 @@ class SeriesController extends AdminController
         FactoryService $factoryService,
         GroupService $groupService,
         UserService $userService,
+        SessionInterface $session,
         EmbeddedBroadcastService $embeddedBroadcastService,
         TranslatorInterface $translator,
         SortedMultimediaObjectsService $sortedMultimediaObjectService,
@@ -80,11 +78,10 @@ class SeriesController extends AdminController
         SeriesSearchService $seriesSearchService,
         RequestStack $requestStack,
         SeriesEventDispatcherService $pumukitSchemaSeriesDispatcher,
-        SessionInterface $session,
         $pumukitUseSeriesChannels,
         $showLatestWithPudeNew
     ) {
-        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session);
         $this->embeddedBroadcastService = $embeddedBroadcastService;
         $this->translator = $translator;
         $this->sortedMultimediaObjectService = $sortedMultimediaObjectService;
@@ -96,7 +93,6 @@ class SeriesController extends AdminController
         $this->pumukitUseSerieschannels = $pumukitUseSeriesChannels;
         $this->showLatestWithPudeNew = $showLatestWithPudeNew;
         $this->pumukitSchemaSeriesDispatcher = $pumukitSchemaSeriesDispatcher;
-        $this->session = $session;
     }
 
     /**
@@ -438,7 +434,7 @@ class SeriesController extends AdminController
         return $this->seriesSearchService->processCriteria($criteria, false, $request->getLocale());
     }
 
-    public function getSorting(Request $request = null, $session_namespace = null)
+    public function getSorting(Request $request = null, $session_namespace = null): array
     {
         $session = $this->session;
 

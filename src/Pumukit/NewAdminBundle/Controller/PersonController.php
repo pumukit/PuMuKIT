@@ -35,8 +35,6 @@ class PersonController extends AdminController
     private $translator;
     /** @var ValidatorInterface */
     private $validator;
-    /** @var SessionInterface */
-    private $session;
     private $pumukitLdapEnable;
     private $pumukitSchemaPersonalScopeRoleCode;
 
@@ -46,12 +44,13 @@ class PersonController extends AdminController
         FactoryService $factoryService,
         GroupService $groupService,
         UserService $userService,
+        SessionInterface $session,
         PersonService $personService,
         TranslatorInterface $translator,
         $pumukitLdapEnable,
         $pumukitSchemaPersonalScopeRoleCode
     ) {
-        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session);
         $this->personService = $personService;
         $this->translator = $translator;
         $this->pumukitLdapEnable = $pumukitLdapEnable;
