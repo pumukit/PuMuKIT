@@ -13,6 +13,9 @@
                     <div class="embed-responsive embed-responsive-16by9">
                         <div class="embed-responsive-item text-center">
                             <img alt="{{ videoTitle }}" src="{{ object|first_url_pic() }}" class="img-responsive img_adapter_4_3" />
+                            {% if show_inside_video_duration|default(true) and mmobj_duration(object) %}
+                                <span class="inside-video-duration">{{ mmobj_duration(object) | duration_string }}</span>
+                            {% endif %}
                         </div>
                     </div>
                 </a>
@@ -38,9 +41,10 @@
                             </a>
                         {% endif %}
                     {% endif %}
-
+                    
                     {% if show_info|default(false) %}
-                        <div class="date_and_visits pull-right">
+                        <div class="date_and_visits pull-left">
+                        
                             {% if with_publicdate is defined and with_publicdate %}
                                 {{ object.publicDate|localizeddate('medium','none',app.request.getLocale()) }}
                             {% else %}
