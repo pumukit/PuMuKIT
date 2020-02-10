@@ -2,59 +2,69 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use Pumukit\NewAdminBundle\Form\Type\TagType;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Services\TagService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_TAGS')")
  * @Route("/places")
  */
-class PlaceController extends Controller implements NewAdminControllerInterface
+class PlaceController extends AbstractController implements NewAdminControllerInterface
 {
+    /** @var TranslatorInterface */
+    private $translator;
+    /** @var DocumentManager */
+    private $documentManager;
+    /** @var TagService */
+    private $tagService;
+
+    public function __construct(
+        TranslatorInterface $translator,
+        DocumentManager $documentManager,
+        TagService $tagService
+    ) {
+        $this->translator = $translator;
+        $this->documentManager = $documentManager;
+        $this->tagService = $tagService;
+    }
+
     /**
-     * @return array
-     *
      * @Route("/", name="pumukitnewadmin_places_index")
      * @Template("PumukitNewAdminBundle:Place:index.html.twig")
      */
     public function indexAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
-        $placeTag = $dm->getRepository(Tag::class)->findOneBy(['cod' => 'PLACES']);
-        $places = $dm->getRepository(Tag::class)->findBy(['parent.$id' => new ObjectId($placeTag->getId())], ['title.'.$request->getLocale() => 1]);
+        $placeTag = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PLACES']);
+        $places = $this->documentManager->getRepository(Tag::class)->findBy(['parent.$id' => new ObjectId($placeTag->getId())], ['title.'.$request->getLocale() => 1]);
 
         return ['places' => $places];
     }
 
     /**
-     * @return array
-     *
      * @Route("/parent/", name="pumukitnewadmin_places_parent")
      * @Template("PumukitNewAdminBundle:Place:parent_list.html.twig")
      */
     public function parentAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
-        $placeTag = $dm->getRepository(Tag::class)->findOneBy(['cod' => 'PLACES']);
-        $places = $dm->getRepository(Tag::class)->findBy(['parent.$id' => new ObjectId($placeTag->getId())], ['title.'.$request->getLocale() => 1]);
+        $placeTag = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PLACES']);
+        $places = $this->documentManager->getRepository(Tag::class)->findBy(['parent.$id' => new ObjectId($placeTag->getId())], ['title.'.$request->getLocale() => 1]);
 
         return ['places' => $places];
     }
 
     /**
-     * @return array
-     *
      * @Route("/children/{id}", name="pumukitnewadmin_places_children")
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"id": "id"}})
      * @Template("PumukitNewAdminBundle:Place:children_list.html.twig")
@@ -67,17 +77,13 @@ class PlaceController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @return array
-     *
      * @Route("/preview/{id}", name="pumukitnewadmin_places_children_preview")
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"id": "id"}})
      * @Template("PumukitNewAdminBundle:Place:preview_data.html.twig")
      */
     public function previewAction(Tag $tag)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
-        $multimediaObjects = $dm->getRepository(MultimediaObject::class)->findBy(['tags._id' => new ObjectId($tag->getId())]);
+        $multimediaObjects = $this->documentManager->getRepository(MultimediaObject::class)->findBy(['tags._id' => new ObjectId($tag->getId())]);
 
         $series = [];
         foreach ($multimediaObjects as $multimediaObject) {
@@ -88,23 +94,16 @@ class PlaceController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @param string|null $id
-     *
-     * @return array|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @Route("/create/{id}", name="pumukitnewadmin_places_create")
      * @Template("PumukitNewAdminBundle:Place:create.html.twig")
      */
     public function createAction(Request $request, $id = null)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $translator = $this->get('translator');
-
         if ($id) {
-            $parent = $dm->getRepository(Tag::class)->findOneBy(['_id' => new ObjectId($id)]);
+            $parent = $this->documentManager->getRepository(Tag::class)->findOneBy(['_id' => new ObjectId($id)]);
             $isPrecinct = true;
         } else {
-            $parent = $dm->getRepository(Tag::class)->findOneBy(['cod' => 'PLACES']);
+            $parent = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PLACES']);
             $isPrecinct = false;
         }
 
@@ -114,13 +113,13 @@ class PlaceController extends Controller implements NewAdminControllerInterface
         $tag->setCod($suggested_code);
         $tag->setParent($parent);
 
-        $form = $this->createForm(TagType::class, $tag, ['translator' => $translator, 'locale' => $request->getLocale()]);
+        $form = $this->createForm(TagType::class, $tag, ['translator' => $this->translator, 'locale' => $request->getLocale()]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $dm->persist($tag);
-                $dm->flush();
+                $this->documentManager->persist($tag);
+                $this->documentManager->flush();
             } catch (\Exception $e) {
                 return new JsonResponse(['status' => $e->getMessage()], JsonResponse::HTTP_CONFLICT);
             }
@@ -132,21 +131,14 @@ class PlaceController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @throws \Exception
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @Route("/delete/{id}", name="pumukitnewadmin_places_delete")
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"id": "id"}})
      */
     public function deletePlaceAction(Request $request, Tag $tag)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $tagService = $this->get('pumukitschema.tag');
-
         try {
-            $tagService->deleteTag($tag);
-            $dm->flush();
+            $this->tagService->deleteTag($tag);
+            $this->documentManager->flush();
 
             return $this->redirectToRoute('pumukitnewadmin_places_index');
         } catch (\Exception $exception) {
@@ -155,22 +147,19 @@ class PlaceController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @return array|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @Route("/update/{id}", name="pumukitnewadmin_places_update")
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"id": "id"}})
      * @Template("PumukitNewAdminBundle:Place:update.html.twig")
      */
     public function updateAction(Request $request, Tag $tag)
     {
-        $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $form = $this->createForm(TagType::class, $tag, ['translator' => $translator, 'locale' => $locale]);
+        $form = $this->createForm(TagType::class, $tag, ['translator' => $this->translator, 'locale' => $locale]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->get('pumukitschema.tag')->updateTag($tag);
+                $this->tagService->updateTag($tag);
             } catch (\Exception $e) {
                 return new JsonResponse(['status' => $e->getMessage()], JsonResponse::HTTP_CONFLICT);
             }
@@ -181,12 +170,7 @@ class PlaceController extends Controller implements NewAdminControllerInterface
         return ['tag' => $tag, 'form' => $form->createView()];
     }
 
-    /**
-     * @param bool $isPrecinct
-     *
-     * @return int|string
-     */
-    private function autogenerateCode(Tag $parent, $isPrecinct)
+    private function autogenerateCode(Tag $parent, bool $isPrecinct)
     {
         $code = [];
         $delimiter = ($isPrecinct) ? 'PRECINCT' : 'PLACE';

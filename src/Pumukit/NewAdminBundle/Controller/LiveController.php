@@ -2,27 +2,48 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
+use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Document\Live;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\SchemaBundle\Services\GroupService;
+use Pumukit\SchemaBundle\Services\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_LIVE_CHANNELS')")
  */
-class LiveController extends AdminController implements NewAdminControllerInterface
+class LiveController extends AdminController
 {
     public static $resourceName = 'live';
     public static $repoName = Live::class;
 
-    /**
-     * Create Action
-     * Overwrite to return json response
-     * and update page.
-     */
+    /** @var TranslatorInterface */
+    private $translator;
+    private $pumukitLiveChatEnable;
+
+    public function __construct(
+        DocumentManager $documentManager,
+        PaginationService $paginationService,
+        FactoryService $factoryService,
+        GroupService $groupService,
+        UserService $userService,
+        TranslatorInterface $translator,
+        SessionInterface $session,
+        $pumukitLiveChatEnable
+    ) {
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session);
+        $this->pumukitLiveChatEnable = $pumukitLiveChatEnable;
+        $this->translator = $translator;
+    }
+
     public function createAction(Request $request)
     {
         $resource = $this->createNew();
@@ -35,7 +56,7 @@ class LiveController extends AdminController implements NewAdminControllerInterf
             if (null === $resource) {
                 return new JsonResponse(['liveId' => null]);
             }
-            $this->get('session')->set('admin/live/id', $resource->getId());
+            $this->session->set('admin/live/id', $resource->getId());
 
             return new JsonResponse(['liveId' => $resource->getId()]);
         }
@@ -43,22 +64,15 @@ class LiveController extends AdminController implements NewAdminControllerInterf
         return $this->render(
             'PumukitNewAdminBundle:Live:create.html.twig',
             [
-                'enableChat' => $this->container->getParameter('pumukit_live.chat.enable'),
+                'enableChat' => $this->pumukitLiveChatEnable,
                 'live' => $resource,
                 'form' => $form->createView(),
             ]
         );
     }
 
-    /**
-     * Update Action
-     * Overwrite to return list and not index
-     * and show toast message.
-     */
     public function updateAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
         $resourceName = $this->getResourceName();
 
         $resource = $this->findOr404($request);
@@ -67,8 +81,8 @@ class LiveController extends AdminController implements NewAdminControllerInterf
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $dm->persist($resource);
-                $dm->flush();
+                $this->documentManager->persist($resource);
+                $this->documentManager->flush();
             } catch (\Exception $e) {
                 return new JsonResponse(['status' => $e->getMessage()], 409);
             }
@@ -79,22 +93,17 @@ class LiveController extends AdminController implements NewAdminControllerInterf
         return $this->render(
             'PumukitNewAdminBundle:'.ucfirst($resourceName).':update.html.twig',
             [
-                'enableChat' => $this->container->getParameter('pumukit_live.chat.enable'),
+                'enableChat' => $this->pumukitLiveChatEnable,
                 'live' => $resource,
                 'form' => $form->createView(),
             ]
         );
     }
 
-    /**
-     * Gets the list of resources according to a criteria.
-     *
-     * @param mixed $criteria
-     */
     public function getResources(Request $request, $criteria)
     {
         $sorting = $this->getSorting();
-        $session = $this->get('session');
+        $session = $this->session;
         $session_namespace = 'admin/live';
 
         $newLiveId = $request->get('newLiveId');
@@ -124,36 +133,29 @@ class LiveController extends AdminController implements NewAdminControllerInterf
         return $resources;
     }
 
-    /**
-     * Delete action.
-     */
     public function deleteAction(Request $request)
     {
         $resource = $this->findOr404($request);
         $resourceId = $resource->getId();
         $resourceName = $this->getResourceName();
 
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
-
-        $liveEvents = $dm->getRepository(MultimediaObject::class)->findOneBy(['embeddedEvent.live.$id' => new ObjectId($resourceId)]);
+        $liveEvents = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['embeddedEvent.live.$id' => new ObjectId($resourceId)]);
         if ($liveEvents) {
             return new JsonResponse(['error']);
         }
 
-        if ($resourceId === $this->get('session')->get('admin/'.$resourceName.'/id')) {
-            $this->get('session')->remove('admin/'.$resourceName.'/id');
+        if ($resourceId === $this->session->get('admin/'.$resourceName.'/id')) {
+            $this->session->remove('admin/'.$resourceName.'/id');
         }
 
-        $dm->remove($resource);
-        $dm->flush();
+        $this->documentManager->remove($resource);
+        $this->documentManager->flush();
 
         return new JsonResponse(['success']);
     }
 
     public function batchDeleteAction(Request $request)
     {
-        $translator = $this->get('translator');
-
         $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {
@@ -164,20 +166,19 @@ class LiveController extends AdminController implements NewAdminControllerInterf
 
         $aResult = $this->checkEmptyChannels($ids);
         if (!$aResult['emptyChannels']) {
-            return new Response($translator->trans('There are associated events on channel id'.$aResult['channelId']), Response::HTTP_BAD_REQUEST);
+            return new Response($this->translator->trans('There are associated events on channel id'.$aResult['channelId']), Response::HTTP_BAD_REQUEST);
         }
 
-        $factory = $this->get('pumukitschema.factory');
         foreach ($ids as $id) {
             $resource = $this->find($id);
 
             try {
-                $factory->deleteResource($resource);
+                $this->factoryService->deleteResource($resource);
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
-            if ($id === $this->get('session')->get('admin/'.$resourceName.'/id')) {
-                $this->get('session')->remove('admin/'.$resourceName.'/id');
+            if ($id === $this->session->get('admin/'.$resourceName.'/id')) {
+                $this->session->remove('admin/'.$resourceName.'/id');
             }
         }
 
@@ -189,14 +190,13 @@ class LiveController extends AdminController implements NewAdminControllerInterf
         return new Live();
     }
 
-    private function checkEmptyChannels($ids)
+    private function checkEmptyChannels($ids): array
     {
         $emptyChannels = true;
         $channelId = null;
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
 
         foreach ($ids as $id) {
-            $liveEvents = $dm->getRepository(MultimediaObject::class)->findOneBy(['embeddedEvent.live.$id' => new ObjectId($id)]);
+            $liveEvents = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['embeddedEvent.live.$id' => new ObjectId($id)]);
             if ($liveEvents) {
                 $emptyChannels = false;
                 $channelId = $id;
