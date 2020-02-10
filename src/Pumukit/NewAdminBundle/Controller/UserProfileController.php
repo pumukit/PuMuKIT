@@ -15,6 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -43,6 +44,7 @@ class UserProfileController extends AdminController
         FactoryService $factoryService,
         GroupService $groupService,
         UserService $userService,
+        SessionInterface $session,
         TranslatorInterface $translator,
         UserManagerInterface $fosUserManager,
         UserStatsService $userStatsService
@@ -53,7 +55,7 @@ class UserProfileController extends AdminController
         $this->userService = $userService;
         $this->userStatsService = $userStatsService;
 
-        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session);
     }
 
     /**
