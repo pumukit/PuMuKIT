@@ -22,9 +22,11 @@ RUN apk  add --no-cache \
 			py-argparse \
 			py2-pip \
 			py-gflags \
+			npm \
 ;
 
 RUN pip install google-api-python-client==1.2
+RUN npm install -g pa11y --unsafe-perm=true --allow-root
 
 COPY --from=teltek/ffmpeg /usr/local /usr/local
 

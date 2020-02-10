@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  pa11y:
+    image: dcycle/pa11y
+    command: ["--config", "/config.js"]
+    volumes:
+      # Inject your pa11y configuration. We assume you have a config.js script.
+      - ./.pa11y.json:/config.js
+      
+volumes:
+  db-data: {}
