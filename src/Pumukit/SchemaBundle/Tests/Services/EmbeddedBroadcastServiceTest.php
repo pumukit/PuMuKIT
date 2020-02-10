@@ -493,7 +493,7 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         ;
 
         $content = 'test';
-        $templating = $this->getMockBuilder('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface')
+        $templating = $this->getMockBuilder('Twig\Environment')
             ->disableOriginalConstructor()
             ->getMock()
         ;

@@ -5,7 +5,7 @@ namespace Pumukit\NotificationBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
 use Pumukit\SchemaBundle\Document\Person;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Twig\Environment as TemplatingEngine;
 use Symfony\Component\Translation\TranslatorInterface;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
@@ -38,7 +38,7 @@ class SenderService
 
     public function __construct(
         $mailer,
-        EngineInterface $templating,
+        TemplatingEngine $templating,
         TranslatorInterface $translator,
         DocumentManager $documentManager,
         LoggerInterface $logger,
