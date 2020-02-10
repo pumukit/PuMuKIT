@@ -1,8 +1,9 @@
 {
     "allowedStandards": "WCAG2AA",
     "level": "error",
-    "hideElements": ".sf-toolbar"
+    "hideElements": ".sf-toolbar",
     "chromeLaunchConfig": {
+        "ignoreHTTPSErrors": true,
         "args": [
             "--no-sandbox",
             "--disable-setuid-sandbox"

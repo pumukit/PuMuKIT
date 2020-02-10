@@ -68,24 +68,13 @@
         "php-cs-fixer": "vendor/friendsofphp/php-cs-fixer/php-cs-fixer fix src --dry-run -v",
         "phpstan": [
             "vendor/phpstan/phpstan/bin/phpstan analyse -l 4 src",
-            "vendor/phpstan/phpstan/bin/phpstan analyse -l 7 src/Pumukit/BaseLivePlayerBundle/",
-            "vendor/phpstan/phpstan/bin/phpstan analyse -l 5 src/Pumukit/BasePlayerBundle/",
-            "vendor/phpstan/phpstan/bin/phpstan analyse -l 7 src/Pumukit/CoreBundle/",
-            "vendor/phpstan/phpstan/bin/phpstan analyse -l 7 src/Pumukit/InspectionBundle/",
-            "vendor/phpstan/phpstan/bin/phpstan analyse -l 7 src/Pumukit/JWPlayerBundle/",
-            "vendor/phpstan/phpstan/bin/phpstan analyse -l 5 src/Pumukit/WizardBundle/"
         ],
         "tests": "vendor/phpunit/phpunit/phpunit",
-        "pa11y": [
-            "bin/console doctrine:mongodb:schema:create",
-            "bin/console pumukit:init:repo all --force"
-        ],
         "ci": [
             "@lints",
             "@php-cs-fixer",
             "@phpstan",
-            "@tests",
-            "@pa11y"
+            "@tests"
         ],
         "auto-scripts": {
             "cache:clear": "symfony-cmd",

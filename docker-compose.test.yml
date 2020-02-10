@@ -34,8 +34,6 @@ services:
     image: mongo:4.0
 
   pa11y:
-    image: dcycle/pa11y
-    command: ["--config", "/config.js"]
+    image: dcycle/pa11y:1
     volumes:
-      # Inject your pa11y configuration. We assume you have a config.js script.
-      - ./.pa11y.json:/config.js
+      - ./.pa11y.json:/app/config/config.json
