@@ -10,6 +10,7 @@ use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectPubType;
+use Pumukit\NewAdminBundle\Services\MultimediaObjectSearchService;
 use Pumukit\NewAdminBundle\Services\TagCatalogueService;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -19,6 +20,7 @@ use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\GroupService;
 use Pumukit\SchemaBundle\Services\PersonService;
+use Pumukit\SchemaBundle\Services\TagService;
 use Pumukit\SchemaBundle\Services\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -89,7 +91,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     private $jobService;
     /** @var ProfileService */
     private $profileService;
-    /** @var TagCatalogueService */
+    /** @var TagService */
     private $tagService;
     /** @var DocumentManager */
     private $documentManager;
@@ -105,6 +107,8 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     private $requestStack;
     /** @var RouterInterface */
     private $router;
+    /** @var MultimediaObjectSearchService */
+    private $multimediaObjectSearchService;
     private $showLatestWithPudeNew;
     private $pumukitNewAdminBaseCatalogueTag;
     private $kernelBundles;
@@ -116,7 +120,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         FactoryService $factoryService,
         JobService $jobService,
         ProfileService $profileService,
-        TagCatalogueService $tagService,
+        TagService $tagService,
         DocumentManager $documentManager,
         TranslatorInterface $translator,
         UserService $userService,
@@ -124,6 +128,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         SessionInterface $session,
         RequestStack $requestStack,
         RouterInterface $router,
+        MultimediaObjectSearchService $multimediaObjectSearchService,
         $showLatestWithPudeNew,
         $pumukitNewAdminBaseCatalogueTag,
         $kernelBundles
@@ -145,6 +150,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $this->showLatestWithPudeNew = $showLatestWithPudeNew;
         $this->pumukitNewAdminBaseCatalogueTag = $pumukitNewAdminBaseCatalogueTag;
         $this->kernelBundles = $kernelBundles;
+        $this->multimediaObjectSearchService = $multimediaObjectSearchService;
     }
 
     /**
@@ -388,7 +394,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
             'mm' => $multimediaObject,
             'form_meta' => $formMeta->createView(),
             'form_pub' => $formPub->createView(),
-            //'series' => $series,
             'roles' => $roles,
             'personal_scope_role' => $personalScopeRole,
             'personal_scope_role_code' => $personalScopeRoleCode,
@@ -778,7 +783,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
     private function getMmobjsYears()
     {
-        $mmObjColl = $this->documentManager->getManager()->getDocumentCollection(
+        $mmObjColl = $this->documentManager->getDocumentCollection(
             MultimediaObject::class
         );
         $pipeline = [
