@@ -20,8 +20,6 @@ class RoleRepository extends DocumentRepository
 
     /**
      * Find all roles in the repository order by rank.
-     *
-     * @return array
      */
     public function findAll(): array
     {
