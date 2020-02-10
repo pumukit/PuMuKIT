@@ -5,7 +5,6 @@
 
 <ul id="tagList" class="list-unstyled">
 
-
     {% for tagDefault in defaultTagOptions %}
         <li style="{% if (app.session.get('admin/unesco/tag') == tagDefault['key']) or (not app.session.get('admin/unesco/tag') and tagDefault['key'] == 2 )%}background-color:#EAEAEA{% endif %}" id="children_{{ tagDefault['key'] }}" data-tag="{{ tagDefault['key'] }}" draggable="false" data-href="{{ path('pumukitnewadmin_unesco_list', {'tag' : tagDefault['key']}) }}" class="unescoTags unescoTagsNoSave" >
             <a href="#" title="{{ tagDefault['title'] }}" style="color:rgba(0,0,0,.84); text-decoration:none;">
@@ -47,11 +46,11 @@
 
             if(id != null) {
                 var preview = "{{ path('pumukitnewadmin_unesco_show', {'id' : '__ID__' }) }}";
-                var preview = preview.replace('__ID__', id);
+                preview = preview.replace('__ID__', id);
                 $('#preview_mms').load(preview);
 
                 var edit = "{{ url('pumukit_new_admin_unesco_edit', {'id': "__MMO__" }) }}";
-                var edit = edit.replace("__MMO__", id);
+                edit = edit.replace("__MMO__", id);
                 $('#edit_mms').load(edit);
             } else {
                 $('#edit_mms').html('');
@@ -79,6 +78,8 @@
         var list_mmo = list_mmo.split(",");
         for (var value of list_mmo) {
             if(value != '') {
+                console.log(list_mmo);
+                console.log(cod);
                 updateMultimediaObjectByTag(cod, value);
             }
         }

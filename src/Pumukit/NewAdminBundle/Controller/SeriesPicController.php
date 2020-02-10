@@ -2,23 +2,46 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Services\SeriesPicService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
-class SeriesPicController extends Controller implements NewAdminControllerInterface
+class SeriesPicController extends AbstractController implements NewAdminControllerInterface
 {
+    /** @var DocumentManager */
+    private $documentManager;
+    /** @var SeriesPicService */
+    private $seriesPicService;
+    /** @var PaginationService */
+    private $paginationService;
+    /** @var SessionInterface */
+    private $session;
+
+    public function __construct(
+        DocumentManager $documentManager,
+        SeriesPicService $seriesPicService,
+        PaginationService $paginationService,
+        SessionInterface $session
+    ) {
+        $this->documentManager = $documentManager;
+        $this->seriesPicService = $seriesPicService;
+        $this->paginationService = $paginationService;
+        $this->session = $session;
+    }
+
     /**
      * @Template("PumukitNewAdminBundle:Pic:create.html.twig")
-     *
-     * @return array
      */
-    public function createAction(Series $series, Request $request)
+    public function createAction(Series $series)
     {
         return [
             'resource' => $series,
@@ -28,8 +51,6 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
 
     /**
      * @Template("PumukitNewAdminBundle:Pic:list.html.twig")
-     *
-     * @return array
      */
     public function listAction(Series $series)
     {
@@ -40,20 +61,15 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
     }
 
     /**
-     * Assign a picture from an url or from an existing one to the series.
-     *
      * @Template("PumukitNewAdminBundle:Pic:list.html.twig")
-     *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(Series $series, Request $request)
     {
         $isBanner = false;
         if (($url = $request->get('url')) || ($url = $request->get('picUrl'))) {
-            $picService = $this->get('pumukitschema.seriespic');
             $isBanner = $request->query->get('banner', false);
             $bannerTargetUrl = $request->get('url_bannerTargetUrl', null);
-            $series = $picService->addPicUrl($series, $url, $isBanner, $bannerTargetUrl);
+            $series = $this->seriesPicService->addPicUrl($series, $url, $isBanner, $bannerTargetUrl);
         }
 
         if ($isBanner) {
@@ -68,8 +84,6 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
 
     /**
      * @Template("PumukitNewAdminBundle:Pic:upload.html.twig")
-     *
-     * @return array
      */
     public function uploadAction(Series $series, Request $request)
     {
@@ -80,10 +94,10 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
             }
             if ($request->files->has('file')) {
-                $picService = $this->get('pumukitschema.seriespic');
+                $picService = $this->seriesPicService;
                 $isBanner = $request->query->get('banner', false);
                 $bannerTargetUrl = $request->get('file_bannerTargetUrl', null);
-                $picService->addPicFile($series, $request->files->get('file'), $isBanner, $bannerTargetUrl);
+                $this->seriesPicService->addPicFile($series, $request->files->get('file'), $isBanner, $bannerTargetUrl);
             }
         } catch (\Exception $e) {
             return [
@@ -104,40 +118,26 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
         ];
     }
 
-    /**
-     * Delete pic.
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function deleteAction(Request $request)
     {
         $picId = $request->get('id');
 
-        $repo = $this->get('doctrine_mongodb')
-            ->getRepository(Series::class)
-        ;
+        $repo = $this->documentManager->getRepository(Series::class);
 
         if (!$series = $repo->findByPicId($picId)) {
             throw $this->createNotFoundException('Requested series does not exist');
         }
 
-        $series = $this->get('pumukitschema.seriespic')->removePicFromSeries($series, $picId);
+        $series = $this->seriesPicService->removePicFromSeries($series, $picId);
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_series_update', ['id' => $series->getId()]));
     }
 
-    /**
-     * Up pic.
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function upAction(Request $request)
     {
         $picId = $request->get('id');
 
-        $repo = $this->get('doctrine_mongodb')
-            ->getRepository(Series::class)
-        ;
+        $repo = $this->documentManager->getRepository(Series::class);
 
         if (!$series = $repo->findByPicId($picId)) {
             throw $this->createNotFoundException('Requested series does not exist');
@@ -145,25 +145,17 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
 
         $series->upPicById($picId);
 
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $dm->persist($series);
-        $dm->flush();
+        $this->documentManager->persist($series);
+        $this->documentManager->flush();
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_seriespic_list', ['id' => $series->getId()]));
     }
 
-    /**
-     * Down pic.
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function downAction(Request $request)
     {
         $picId = $request->get('id');
 
-        $repo = $this->get('doctrine_mongodb')
-            ->getRepository(Series::class)
-        ;
+        $repo = $this->documentManager->getRepository(Series::class);
 
         if (!$series = $repo->findByPicId($picId)) {
             throw $this->createNotFoundException('Requested series does not exist');
@@ -171,29 +163,24 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
 
         $series->downPicById($picId);
 
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $dm->persist($series);
-        $dm->flush();
+        $this->documentManager->persist($series);
+        $this->documentManager->flush();
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_seriespic_list', ['id' => $series->getId()]));
     }
 
     /**
      * @Template("PumukitNewAdminBundle:Pic:picstoaddlist.html.twig")
-     *
-     * @return array
      */
-    public function picstoaddlistAction(Series $series, Request $request)
+    public function picstoaddlistAction(Request $request, Series $series)
     {
-        $picService = $this->get('pumukitschema.seriespic');
-
         if ($request->get('page', null)) {
-            $this->get('session')->set('admin/seriespic/page', $request->get('page', 1));
+            $this->session->set('admin/seriespic/page', $request->get('page', 1));
         }
-        $page = (int) ($this->get('session')->get('admin/seriespic/page', 1));
+        $page = (int) ($this->session->get('admin/seriespic/page', 1));
         $limit = 12;
 
-        $urlPics = $picService->getRecommendedPics($series);
+        $urlPics = $this->seriesPicService->getRecommendedPics($series);
 
         $total = (int) (ceil(count($urlPics) / $limit));
 
@@ -210,10 +197,8 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
 
     /**
      * @Template("PumukitNewAdminBundle:Pic:banner.html.twig")
-     *
-     * @return array
      */
-    public function bannerAction(Series $series, Request $request)
+    public function bannerAction(Series $series)
     {
         return [
             'resource' => $series,
@@ -223,8 +208,6 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
 
     private function getPaginatedPics($urlPics, $limit, $page)
     {
-        $paginationService = $this->get('pumukit_core.pagination_service');
-
-        return $paginationService->createArrayAdapter($urlPics->toArray(), $page, $limit);
+        return $this->paginationService->createArrayAdapter($urlPics->toArray(), $page, $limit);
     }
 }

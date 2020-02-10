@@ -4,6 +4,14 @@ services:
     autoconfigure: true
     public:        true
 
+  Pumukit\StatsBundle\Controller\:
+    resource: '../../src/Pumukit/StatsBundle/Controller/'
+    tags: ['controller.service_arguments']
+
+  Pumukit\StatsBundle\Command\:
+    resource: '../../src/Pumukit/StatsBundle/Command/'
+    tags: ['console.command']
+
   Pumukit\StatsBundle\EventListener\Log:
     class: Pumukit\StatsBundle\EventListener\Log
     tags:

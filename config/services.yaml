@@ -92,3 +92,18 @@ services:
       - method: setAnnotationReader
         arguments:
           - '@annotation_reader'
+
+  Vipx\BotDetect\BotDetector:
+    class: Vipx\BotDetect\BotDetector
+    arguments:
+      $loader: '@vipx_bot_detect.metadata.loader'
+      $resource: '%vipx_bot_detect.metadata.metadata_file%'
+      $options:
+        cache_dir: '%kernel.cache_dir%'
+        debug: '%kernel.debug%'
+        metadata_cache_file: '%vipx_bot_detect.metadata.cache_file%'
+        metadata_dumper_class: '%vipx_bot_detect.metadata.dumper.class%'
+
+  SunCat\MobileDetectBundle\DeviceDetector\MobileDetector:
+    class: SunCat\MobileDetectBundle\DeviceDetector\MobileDetector
+

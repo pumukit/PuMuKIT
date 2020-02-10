@@ -2,17 +2,16 @@
 
 namespace Pumukit\StatsUIBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/admin/stats")
  * @Security("is_granted('ROLE_ACCESS_STATS')")
  */
-class StatsController extends Controller
+class StatsController extends AbstractController
 {
     /**
      * @Route("/series", name="pumukit_stats_series_index")
@@ -21,7 +20,8 @@ class StatsController extends Controller
      * @Route("/objects/{id}", name="pumukit_stats_mmobj_index_id")
      * @Template("PumukitStatsUIBundle:Stats:index.html.twig")
      */
-    public function indexAction(Request $request)
+    public function indexAction(): array
     {
+        return [];
     }
 }

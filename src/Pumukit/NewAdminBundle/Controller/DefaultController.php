@@ -2,10 +2,10 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class DefaultController extends Controller implements NewAdminControllerInterface
+class DefaultController extends AbstractController implements NewAdminControllerInterface
 {
     /**
      * @Route("/", name="pumukit_newadmin_index")

@@ -2,17 +2,29 @@
 
 namespace Pumukit\StatsBundle\Command;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\Regex;
 use Pumukit\StatsBundle\Document\ViewsLog;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Vipx\BotDetect\BotDetector;
 
-class PumukitCleanLogCommand extends ContainerAwareCommand
+class PumukitCleanLogCommand extends Command
 {
-    private $dm;
+    /** @var DocumentManager */
+    private $documentManager;
+    /** @var BotDetector */
+    private $vipxBotDetectorService;
     private $from;
+
+    public function __construct(DocumentManager $documentManager, BotDetector $vipxBotDetectorService)
+    {
+        $this->documentManager = $documentManager;
+        $this->vipxBotDetectorService = $vipxBotDetectorService;
+        parent::__construct();
+    }
 
     protected function configure()
     {
@@ -36,9 +48,6 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-        $detector = $this->getContainer()->get('vipx_bot_detect.detector');
-
         $from = $input->getOption('from');
         if ($from) {
             $this->from = new \DateTimeImmutable($from);
@@ -46,7 +55,7 @@ EOT
 
         $this->execRemoveQuery('TTK Zabbix Agent');
 
-        foreach ($detector->getMetadatas() as $metadata) {
+        foreach ($this->vipxBotDetectorService->getMetadatas() as $metadata) {
             if ('' === $metadata->getAgent() && 'exact' !== $metadata->getAgentMatch()) {
                 continue;
             }
@@ -62,9 +71,9 @@ EOT
         $output->writeln('Done');
     }
 
-    private function execRemoveQuery($userAgent)
+    private function execRemoveQuery($userAgent): void
     {
-        $qb = $this->dm->createQueryBuilder(ViewsLog::class)
+        $qb = $this->documentManager->createQueryBuilder(ViewsLog::class)
             ->remove()
             ->multiple(true)
             ->field('userAgent')->equals($userAgent);
@@ -73,8 +82,6 @@ EOT
             $qb->field('date')->gte($this->from);
         }
 
-        $qb->getQuery()
-            ->execute()
-        ;
+        $qb->getQuery()->execute();
     }
 }
