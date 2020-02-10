@@ -3,7 +3,6 @@
 namespace Pumukit\EncoderBundle\Command;
 
 use Pumukit\EncoderBundle\Services\PicService;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
