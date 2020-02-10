@@ -91,8 +91,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
         $pumukitLiveTwitterAccountsLinkColor,
         $pumukitNewAdminAdvanceLiveEventAutocompleteSeries,
         $pumukitSchemaPersonalScopeRoleCode
-    )
-    {
+    ) {
         $this->documentManager = $documentManager;
         $this->translator = $translator;
         $this->factoryService = $factoryService;
@@ -113,7 +112,6 @@ class EventsController extends AbstractController implements NewAdminControllerI
         $this->pumukitNewAdminAdvanceLiveEventAutocompleteSeries = $pumukitNewAdminAdvanceLiveEventAutocompleteSeries;
         $this->pumukitSchemaPersonalScopeRoleCode = $pumukitSchemaPersonalScopeRoleCode;
     }
-
 
     /**
      * @Route("index/", name="pumukit_new_admin_live_event_index")
@@ -206,6 +204,8 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("list/event/{type}", name="pumukit_new_admin_live_event_list")
      * @Template("PumukitNewAdminBundle:LiveEvent:list.html.twig")
+     *
+     * @param mixed|null $type
      */
     public function listEventAction(Request $request, $type = null)
     {
@@ -354,6 +354,8 @@ class EventsController extends AbstractController implements NewAdminControllerI
      * @Route("list/options/{type}/{id}", name="pumukit_new_admin_live_event_options")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
      * @Template("PumukitNewAdminBundle:LiveEvent:updatemenu.html.twig")
+     *
+     * @param mixed $type
      */
     public function menuOptionsAction($type, MultimediaObject $multimediaObject)
     {
@@ -419,7 +421,6 @@ class EventsController extends AbstractController implements NewAdminControllerI
      * @Route("event/{id}", name="pumukit_new_admin_live_event_eventtab")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
      * @Template("PumukitNewAdminBundle:LiveEvent:updateevent.html.twig")
-     *
      */
     public function eventAction(Request $request, MultimediaObject $multimediaObject)
     {
@@ -527,7 +528,51 @@ class EventsController extends AbstractController implements NewAdminControllerI
     }
 
     /**
-     * @Route("series/{id}", name="pumukit_new_admin_live_event_seriestab")
+     * @Route("series/suggest/", name="pumukit_new_admin_live_event_series_suggest")
+     */
+    public function seriesSuggestAction(Request $request)
+    {
+        $value = $request->query->get('term');
+
+        $aggregate = $this->documentManager->getDocumentCollection(Series::class);
+
+        $user = $this->getUser();
+        $pipeline = [];
+        $pipeline[] = ['$match' => ['title.'.$request->getLocale() => new Regex($value, 'i')]];
+        $pipeline[] = ['$match' => ['type' => Series::TYPE_SERIES]];
+
+        if ($user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
+            $pipeline[] = ['$match' => ['properties.owners' => $user->getId()]];
+        }
+
+        $pipeline[] = [
+            '$group' => [
+                '_id' => [
+                    'id' => '$_id',
+                    'title' => '$title',
+                ],
+            ],
+        ];
+
+        $pipeline[] = ['$limit' => 100];
+
+        $series = $aggregate->aggregate($pipeline, ['cursor' => []])->toArray();
+
+        $result = [];
+        foreach ($series as $key => $dataSeries) {
+            $result[] = [
+                'id' => (string) $dataSeries['_id']['id'],
+                'title' => $dataSeries['_id']['title'][$request->getLocale()],
+                'label' => $dataSeries['_id']['title'][$request->getLocale()],
+                'value' => $dataSeries['_id']['id'].' - '.$dataSeries['_id']['title'][$request->getLocale()],
+            ];
+        }
+
+        return new JsonResponse($result);
+    }
+
+    /**
+     * @Route("series/tab/{id}", name="pumukit_new_admin_live_event_seriestab")
      * @ParamConverter("series", class="PumukitSchemaBundle:Series", options={"mapping": {"id": "id"}})
      * @Template("PumukitNewAdminBundle:Series:updatemeta.html.twig")
      */
@@ -616,6 +661,8 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("list/session/{id}", name="pumukit_new_admin_live_event_session_list")
      * @Template("PumukitNewAdminBundle:LiveEvent:sessionlist.html.twig")
+     *
+     * @param mixed $id
      */
     public function sessionListAction($id)
     {
@@ -627,6 +674,9 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("delete/session/{multimediaObject}/{session_id}", name="pumukit_new_admin_live_event_session_delete")
      * @Template("PumukitNewAdminBundle:LiveEvent:sessionlist.html.twig")
+     *
+     * @param mixed $multimediaObject
+     * @param mixed $session_id
      */
     public function sessionDeleteAction($multimediaObject, $session_id)
     {
@@ -645,6 +695,9 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("clone/session/{multimediaObject}/{session_id}", name="pumukit_new_admin_live_event_clone_session")
      * @Template("PumukitNewAdminBundle:LiveEvent:sessionlist.html.twig")
+     *
+     * @param mixed $multimediaObject
+     * @param mixed $session_id
      */
     public function sessionCloneAction($multimediaObject, $session_id)
     {
@@ -673,6 +726,9 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("modal/{multimediaObject}/{session_id}", name="pumukit_new_admin_live_event_session_modal")
      * @Template("PumukitNewAdminBundle:LiveEvent:updatesessionmodal.html.twig")
+     *
+     * @param mixed $multimediaObject
+     * @param mixed $session_id
      */
     public function modalSessionAction(Request $request, $multimediaObject, $session_id = false)
     {
@@ -710,52 +766,10 @@ class EventsController extends AbstractController implements NewAdminControllerI
     }
 
     /**
-     * @Route("series/suggest/", name="pumukit_new_admin_live_event_series_suggest")
-     */
-    public function seriesSuggestAction(Request $request)
-    {
-        $value = $request->query->get('term');
-
-        $aggregate = $this->documentManager->getDocumentCollection(Series::class);
-
-        $user = $this->getUser();
-        $pipeline = [];
-        $pipeline[] = ['$match' => ['title.'.$request->getLocale() => new Regex($value, 'i')]];
-        $pipeline[] = ['$match' => ['type' => Series::TYPE_SERIES]];
-
-        if ($user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
-            $pipeline[] = ['$match' => ['properties.owners' => $user->getId()]];
-        }
-
-        $pipeline[] = [
-            '$group' => [
-                '_id' => [
-                    'id' => '$_id',
-                    'title' => '$title',
-                ],
-            ],
-        ];
-
-        $pipeline[] = ['$limit' => 100];
-
-        $series = $aggregate->aggregate($pipeline, ['cursor' => []])->toArray();
-
-        $result = [];
-        foreach ($series as $key => $dataSeries) {
-            $result[] = [
-                'id' => (string) $dataSeries['_id']['id'],
-                'title' => $dataSeries['_id']['title'][$request->getLocale()],
-                'label' => $dataSeries['_id']['title'][$request->getLocale()],
-                'value' => $dataSeries['_id']['id'].' - '.$dataSeries['_id']['title'][$request->getLocale()],
-            ];
-        }
-
-        return new JsonResponse($result);
-    }
-
-    /**
      * @Route("change/series/{multimediaObject}", name="pumukitnewadmin_live_event_change_series")
      * @Template("PumukitNewAdminBundle:LiveEvent:changeSeries.html.twig")
+     *
+     * @param mixed|null $multimediaObject
      */
     public function seriesChangeModalAction($multimediaObject = null)
     {
