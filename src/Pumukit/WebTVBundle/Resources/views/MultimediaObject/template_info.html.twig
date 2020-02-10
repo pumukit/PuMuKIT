@@ -23,9 +23,9 @@
                     <i class="fa fa-eye"></i>
                     {{ multimediaObject.getNumview() }}
                     {% if multimediaObject.getNumview() > 1 %}
-                        {% trans %} view {% endtrans %}
+                        {% trans %}view{% endtrans %}
                     {% else %}
-                        {% trans %} views {% endtrans %}
+                        {% trans %}views{% endtrans %}
                     {% endif %}
                 </span>
                 <span class="qa-player-recording-date">
@@ -67,15 +67,9 @@
         
         <div class="row video-description">
             <div class="col-xs-12 col-sm-12">
-                <div class="collapse" id="description">
-                    <p class="qa-player-description description">
-                        {{ multimediaObject.getDescription()|nl2br }}
-                    </p>
-                </div>
-
-                <a class="show-more" role="button" data-toggle="collapse" href="#description" aria-expanded="false" aria-controls="description">
-                    {% trans %}Show more{% endtrans %}
-                </a>
+                <p class="qa-player-description description">
+                    {{ multimediaObject.getDescription()|nl2br }}
+                </p>
             </div>
         </div>
         {% include "PumukitWebTVBundle:Misc:people.html.twig" with {'object': multimediaObject} %}
