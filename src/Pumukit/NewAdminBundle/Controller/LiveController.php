@@ -27,8 +27,6 @@ class LiveController extends AdminController
 
     /** @var TranslatorInterface */
     private $translator;
-    /** @var SessionInterface */
-    private $session;
     private $pumukitLiveChatEnable;
 
     public function __construct(
@@ -40,13 +38,10 @@ class LiveController extends AdminController
         TranslatorInterface $translator,
         SessionInterface $session,
         $pumukitLiveChatEnable
-
-    )
-    {
-        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
+    ) {
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session);
         $this->pumukitLiveChatEnable = $pumukitLiveChatEnable;
         $this->translator = $translator;
-        $this->session = $session;
     }
 
     public function createAction(Request $request)

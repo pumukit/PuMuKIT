@@ -22,10 +22,16 @@ class AdminController extends ResourceController implements NewAdminControllerIn
     /** @var UserService */
     protected $userService;
     /** @var SessionInterface */
-    private $session;
+    protected $session;
 
-    public function __construct(DocumentManager $documentManager, PaginationService $paginationService, FactoryService $factoryService, GroupService $groupService, UserService $userService, SessionInterface $session)
-    {
+    public function __construct(
+        DocumentManager $documentManager,
+        PaginationService $paginationService,
+        FactoryService $factoryService,
+        GroupService $groupService,
+        UserService $userService,
+        SessionInterface $session
+    ) {
         parent::__construct($documentManager, $paginationService);
         $this->factoryService = $factoryService;
         $this->groupService = $groupService;

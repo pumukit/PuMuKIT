@@ -35,9 +35,6 @@ class PermissionProfileController extends AdminController
     private $translator;
     /** @var PermissionService */
     private $permissionService;
-    /** @var SessionInterface */
-    private $session;
-
     /** @var PermissionProfileEventDispatcherService */
     private $pumukitSchemaPermissionProfileDispatcher;
     private $pumukitUseSeriesChannels;
@@ -59,7 +56,6 @@ class PermissionProfileController extends AdminController
         $this->permissionProfileService = $permissionProfileService;
         $this->translator = $translator;
         $this->permissionService = $permissionService;
-        $this->session = $session;
         $this->pumukitUseSeriesChannels = $pumukitUseSeriesChannels;
         $this->pumukitSchemaPermissionProfileDispatcher = $pumukitSchemaPermissionProfileDispatcher;
     }

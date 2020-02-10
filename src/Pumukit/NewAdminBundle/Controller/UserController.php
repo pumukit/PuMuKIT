@@ -31,22 +31,10 @@ class UserController extends AdminController
     public static $resourceName = 'user';
     public static $repoName = User::class;
 
-    /** @var DocumentManager  */
-    private $documentManager;
-    /** @var PaginationService  */
-    private $paginationService;
-    /** @var FactoryService  */
-    private $factoryService;
-    /** @var GroupService  */
-    private $groupService;
-    /** @var UserService  */
-    private $userService;
     /** @var PersonService  */
     private $personService;
     /** @var TranslatorInterface */
     private $translator;
-    /** @var SessionInterface */
-    private $session;
     /** @var UserManagerInterface */
     private $fosUserUserManager;
 
@@ -61,14 +49,10 @@ class UserController extends AdminController
         SessionInterface $session,
         UserManagerInterface $fosUserUserManager
     ) {
-        $this->documentManager = $documentManager;
-        $this->groupService = $groupService;
-        $this->userService = $userService;
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session);
         $this->personService = $personService;
         $this->translator = $translator;
-        $this->session = $session;
         $this->fosUserUserManager = $fosUserUserManager;
-        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
     }
 
     /**

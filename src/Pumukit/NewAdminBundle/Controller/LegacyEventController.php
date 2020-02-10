@@ -25,21 +25,6 @@ class LegacyEventController extends AdminController
 
     public static $daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-    /** @var SessionInterface */
-    private $session;
-
-    public function __construct(
-        DocumentManager $documentManager,
-        PaginationService $paginationService,
-        FactoryService $factoryService,
-        GroupService $groupService,
-        UserService $userService,
-        SessionInterface $session
-    ) {
-        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
-        $this->session = $session;
-    }
-
     /**
      * @Template("PumukitNewAdminBundle:LegacyEvent:index.html.twig")
      */

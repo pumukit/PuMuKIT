@@ -28,18 +28,10 @@ class GroupController extends AdminController
     public static $resourceName = 'group';
     public static $repoName = Group::class;
 
-    /** @var DocumentManager */
-    private $documentManager;
-    /** @var GroupService */
-    private $groupService;
-    /** @var SessionInterface */
-    private $session;
     /** @var MultimediaObjectService */
     private $multimediaObjectService;
     /** @var EmbeddedBroadcastService */
     private $embeddedBroadcastService;
-    /** @var UserService */
-    private $userService;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -51,7 +43,7 @@ class GroupController extends AdminController
         EmbeddedBroadcastService $embeddedBroadcastService,
         UserService $userService
     ) {
-        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService);
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session);
         $this->documentManager = $documentManager;
         $this->groupService = $groupService;
         $this->session = $session;
