@@ -1,12 +1,41 @@
 version: '3.4'
 
 services:
+  php:
+    image: teltek/pumukit:$PUMUKIT_BASE_VERSION
+    env_file:
+      - .env
+    build:
+      context: ./
+      args:
+        - PUMUKIT_BASE_VERSION=$PUMUKIT_BASE_VERSION
+      cache_from:
+        - teltek/pumukit
+        - teltek/nginx
+    depends_on:
+      - db
+
+  h2-proxy:
+    image: teltek/nginx:$PUMUKIT_BASE_VERSION
+    env_file:
+      - .env
+    build:
+      context: ./doc/docker/nginx
+      cache_from:
+        - teltek/pumukit
+        - teltek/nginx
+    depends_on:
+      - php
+    ports:
+      - "80:80"
+      - "443:443"
+
+  db:
+    image: mongo:4.0
+
   pa11y:
     image: dcycle/pa11y
     command: ["--config", "/config.js"]
     volumes:
       # Inject your pa11y configuration. We assume you have a config.js script.
       - ./.pa11y.json:/config.js
-      
-volumes:
-  db-data: {}

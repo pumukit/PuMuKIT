@@ -6,17 +6,17 @@ services:
 language: php
 
 before_script:
-  - docker-compose build --build-arg APP_ENV=dev
-  - docker-compose up -d
-  - docker-compose exec php bin/console doctrine:mongodb:schema:create
-  - docker-compose exec php bin/console pumukit:init:repo all --force
+  - docker-compose -f docker-compose.test.yml build --build-arg APP_ENV=dev
+  - docker-compose -f docker-compose.test.yml up -d h2-proxy
 
 script:
-  - docker-compose exec php composer ci
-  - docker-compose -f docker-compose.yml -f docker-compose.test.yml run pa11y https://h2-proxy
-  - docker-compose -f docker-compose.yml -f docker-compose.test.yml run pa11y https://h2-proxy/series/channel/1.html
-  - docker-compose -f docker-compose.yml -f docker-compose.test.yml run pa11y https://h2-proxy/latestuploads
-  - docker-compose -f docker-compose.yml -f docker-compose.test.yml run pa11y https://h2-proxy/searchmultimediaobjects
-  - docker-compose -f docker-compose.yml -f docker-compose.test.yml run pa11y https://h2-proxy/searchseries
-  - docker-compose -f docker-compose.yml -f docker-compose.test.yml run pa11y https://h2-proxy/mediateca
-  - docker-compose -f docker-compose.yml -f docker-compose.test.yml run pa11y https://h2-proxy/categories
+  - docker-compose -f docker-compose.test.yml exec php composer ci
+  - docker-compose -f docker-compose.test.yml exec php bin/console doctrine:mongodb:schema:create
+  - docker-compose -f docker-compose.test.yml exec php bin/console pumukit:init:repo all --force
+  - docker-compose -f docker-compose.test.yml run pa11y https://h2-proxy
+  - docker-compose -f docker-compose.test.yml run pa11y https://h2-proxy/series/channel/1.html
+  - docker-compose -f docker-compose.test.yml run pa11y https://h2-proxy/latestuploads
+  - docker-compose -f docker-compose.test.yml run pa11y https://h2-proxy/searchmultimediaobjects
+  - docker-compose -f docker-compose.test.yml run pa11y https://h2-proxy/searchseries
+  - docker-compose -f docker-compose.test.yml run pa11y https://h2-proxy/mediateca
+  - docker-compose -f docker-compose.test.yml run pa11y https://h2-proxy/categories
