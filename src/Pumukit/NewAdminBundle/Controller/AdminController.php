@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AdminController extends ResourceController implements NewAdminControllerInterface
 {
@@ -23,6 +24,8 @@ class AdminController extends ResourceController implements NewAdminControllerIn
     protected $userService;
     /** @var SessionInterface */
     protected $session;
+    /** @var TranslatorInterface */
+    private $translator;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -30,13 +33,15 @@ class AdminController extends ResourceController implements NewAdminControllerIn
         FactoryService $factoryService,
         GroupService $groupService,
         UserService $userService,
-        SessionInterface $session
+        SessionInterface $session,
+        TranslatorInterface $translator
     ) {
         parent::__construct($documentManager, $paginationService);
         $this->factoryService = $factoryService;
         $this->groupService = $groupService;
         $this->userService = $userService;
         $this->session = $session;
+        $this->translator = $translator;
     }
 
     /**
@@ -302,7 +307,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
         $resourceName = $this->getResourceName();
         $formType = 'Pumukit\\NewAdminBundle\\Form\\Type\\'.ucfirst($resourceName).'Type';
 
-        return $this->createForm($formType, $resource, ['translator' => $this->translatorService, 'locale' => $locale]);
+        return $this->createForm($formType, $resource, ['translator' => $this->translator, 'locale' => $locale]);
     }
 
     /**

@@ -31,7 +31,7 @@ class UserController extends AdminController
     public static $resourceName = 'user';
     public static $repoName = User::class;
 
-    /** @var PersonService  */
+    /** @var PersonService */
     private $personService;
     /** @var TranslatorInterface */
     private $translator;
@@ -49,7 +49,7 @@ class UserController extends AdminController
         SessionInterface $session,
         UserManagerInterface $fosUserUserManager
     ) {
-        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session);
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
         $this->personService = $personService;
         $this->translator = $translator;
         $this->fosUserUserManager = $fosUserUserManager;
@@ -239,6 +239,7 @@ class UserController extends AdminController
             ]
         );
     }
+
     public function getCriteria($criteria)
     {
         if (array_key_exists('reset', $criteria)) {

@@ -100,6 +100,8 @@ class EventController extends AbstractController implements WebTVControllerInter
     /**
      * @Route("/event/next/session/{id}", name="pumukit_webtv_next_session_event")
      * @Template("PumukitWebTVBundle:Live:Advance/nextsessionlist.html.twig")
+     *
+     * @param mixed $id
      */
     public function nextSessionListAction($id)
     {

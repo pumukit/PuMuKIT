@@ -55,7 +55,7 @@ class UserProfileController extends AdminController
         $this->userService = $userService;
         $this->userStatsService = $userStatsService;
 
-        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session);
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
     }
 
     /**
