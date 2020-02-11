@@ -52,7 +52,7 @@ class PermissionProfileController extends AdminController
         PermissionProfileEventDispatcherService $pumukitSchemaPermissionProfileDispatcher,
         $pumukitUseSeriesChannels
     ) {
-        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session);
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
         $this->permissionProfileService = $permissionProfileService;
         $this->translator = $translator;
         $this->permissionService = $permissionService;

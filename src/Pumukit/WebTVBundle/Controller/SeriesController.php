@@ -30,8 +30,7 @@ class SeriesController extends AbstractController implements WebTVControllerInte
         BreadcrumbsService $breadcrumbsService,
         PaginationService $paginationService,
         $limitObjsSeries
-    )
-    {
+    ) {
         $this->documentManager = $documentManager;
         $this->breadcrumbsService = $breadcrumbsService;
         $this->paginationService = $paginationService;

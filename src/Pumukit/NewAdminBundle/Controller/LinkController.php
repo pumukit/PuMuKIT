@@ -35,7 +35,6 @@ class LinkController extends AbstractController implements NewAdminControllerInt
         $this->session = $session;
     }
 
-
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
      * @Template("PumukitNewAdminBundle:Link:create.html.twig")

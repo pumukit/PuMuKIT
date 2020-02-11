@@ -48,7 +48,7 @@ class RoleController extends SortableAdminController
         RoleService $roleService,
         ValidatorInterface $validator
     ) {
-        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session);
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
         $this->personService = $personService;
         $this->translator = $translator;
         $this->roleService = $roleService;
@@ -117,7 +117,6 @@ class RoleController extends SortableAdminController
 
         return $resources;
     }
-
 
     public function deleteAction(Request $request)
     {
