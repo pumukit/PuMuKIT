@@ -67,7 +67,7 @@ class UserController extends AdminController
 
         $origins = $this->documentManager->createQueryBuilder(User::class)->distinct('origin')->getQuery()->execute();
 
-        return ['users' => $users, 'profiles' => $profiles, 'origins' => $origins->toArray()];
+        return ['users' => $users, 'profiles' => $profiles, 'origins' => $origins];
     }
 
     public function createAction(Request $request)
