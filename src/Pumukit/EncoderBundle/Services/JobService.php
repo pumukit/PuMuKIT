@@ -15,12 +15,15 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\TrackService;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
 
 class JobService
 {
@@ -33,6 +36,7 @@ class JobService
     private $cpuService;
     private $inspectionService;
     private $tmpPath;
+    /** @var EventDispatcher */
     private $dispatcher;
     private $trackService;
     private $logger;
@@ -447,10 +451,10 @@ class JobService
         return $nextJobToExecute;
     }
 
-    public function executeInBackground(Job $job)
+    public function executeInBackground(Job $job): void
     {
         $command = [
-            'php', $this->binPath, 'console', sprintf('--env=%s ', $this->environment), 'pumukit:encoder:job', $job->getId(),
+            'php', "$this->binPath/console", sprintf('--env=%s', $this->environment), 'pumukit:encoder:job', $job->getId(),
         ];
 
         $process = new Process($command);
@@ -458,13 +462,6 @@ class JobService
         $command = $process->getCommandLine();
         $this->logger->info('[executeInBackground] CommandLine '.$command);
         shell_exec("nohup {$command} 1> /dev/null 2> /dev/null & echo $!");
-
-        //$process->disableOutput();
-        //$process->start();
-        //$process->run();
-        //dump($process->getOutput());
-        //dump($process->getErrorOutput());
-        //dump($process->getCommandLine());
     }
 
     /**
@@ -607,8 +604,8 @@ class JobService
             $vars['tmpfile'.$identifier] = $this->tmpPath.'/'.rand();
         }
 
-        $loader = new \Twig_Loader_Array(['bat' => $profile['bat']]);
-        $twig = new \Twig_Environment($loader);
+        $loader = new ArrayLoader(['bat' => $profile['bat']]);
+        $twig = new Environment($loader);
 
         $commandLine = $twig->render('bat', $vars);
         $this->logger->info('[renderBat] CommandLine: '.$commandLine);
@@ -915,7 +912,7 @@ class JobService
         $multimediaObject = $this->getMultimediaObject($job);
 
         $event = new JobEvent($job, $track, $multimediaObject);
-        $this->dispatcher->dispatch($success ? EncoderEvents::JOB_SUCCESS : EncoderEvents::JOB_ERROR, $event);
+        $this->dispatcher->dispatch($event, $success ? EncoderEvents::JOB_SUCCESS : EncoderEvents::JOB_ERROR);
     }
 
     /**
