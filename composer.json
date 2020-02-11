@@ -55,6 +55,27 @@
         "post-update-cmd": [
             "@auto-scripts"
         ],
+        "lints": [
+            "find src -type f -name '.php' -print0 | xargs -0 -n1 -P8 php -l",
+            "bin/console lint:yaml src",
+            "bin/console lint:yaml config",
+            "bin/console lint:twig src",
+            "bin/console lint:twig templates",
+            "bin/console lint:xlif src/",
+            "bin/console lint:xlif translations/",
+            "php ./bin/travis_checks/check_var_dumps"
+        ],
+        "php-cs-fixer": "vendor/bin/php-cs-fixer fix src --dry-run -v",
+        "phpstan": [
+            "vendor/bin/phpstan analyse -l 4 src"
+        ],
+        "tests": "vendor/bin/phpunit",
+        "ci": [
+            "@lints",
+            "@php-cs-fixer",
+            "@phpstan",
+            "@tests"
+        ],
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
