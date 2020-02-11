@@ -12,18 +12,17 @@ use Pumukit\SchemaBundle\Document\Tag;
  */
 class TagServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $tagRepo;
     private $mmobjRepo;
     private $tagService;
     private $factoryService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->dm = parent::setUp();
+        parent::setUp();
 
         $this->tagRepo = $this->dm->getRepository(Tag::class);
         $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
@@ -31,7 +30,7 @@ class TagServiceTest extends PumukitTestCase
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();

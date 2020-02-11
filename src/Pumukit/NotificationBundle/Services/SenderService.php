@@ -7,6 +7,8 @@ use Psr\Log\LoggerInterface;
 use Pumukit\SchemaBundle\Document\Person;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
 
 class SenderService
 {
@@ -197,12 +199,12 @@ class SenderService
                 continue;
             }
 
-            $twig = new \Twig_Environment(new \Twig_Loader_Array());
+            $twig = new Environment(new ArrayLoader());
             $template = $twig->createTemplate($templateString);
             $body = $template->render($parameters);
             $subjectTemplate = $twig->createTemplate($subjectString);
             $subject = $subjectTemplate->render($parameters);
-            $message = \Swift_Message::newInstance();
+            $message = new \Swift_Message();
             $message
                 ->setSubject($subject)
                 ->setSender($this->senderEmail, $this->senderName)
@@ -409,7 +411,7 @@ class SenderService
      */
     private function sendEmailTemplate($emailTo, $subject, $template, $parameters, $error, $transConfigSubject)
     {
-        $message = \Swift_Message::newInstance();
+        $message = new \Swift_Message();
         if ($error && $this->notificateErrorsToAdmin) {
             if (is_array($this->adminEmail)) {
                 foreach ($this->adminEmail as $admin) {

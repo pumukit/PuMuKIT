@@ -15,22 +15,21 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class LogTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
     private $factoryService;
     private $tokenStorage;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-        $this->dm = parent::setUp();
+        parent::setUp();
         $this->repo = $this->dm->getRepository(ViewsLog::class);
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm = null;

@@ -12,7 +12,6 @@ use Pumukit\NotificationBundle\Services\SenderService;
  */
 class SenderServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $logger;
     private $senderService;
     private $mailer;
@@ -30,11 +29,11 @@ class SenderServiceTest extends PumukitTestCase
     private $locales;
     private $subjectFailsTrans;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'dev'];
         static::bootKernel($options);
-        $this->dm = parent::setUp();
+        parent::setUp();
         $container = static::$kernel->getContainer();
         $this->logger = $this->getMockBuilder(LoggerInterface::class)
             ->disableOriginalConstructor()
@@ -58,7 +57,7 @@ class SenderServiceTest extends PumukitTestCase
         $this->senderService = new SenderService($this->mailer, $this->templating, $this->translator, $this->dm, $this->logger, $this->enable, $this->senderEmail, $this->senderName, $this->enableMultiLang, $this->locales, $this->subjectSuccessTrans, $this->subjectFailsTrans, $this->adminEmail, $this->notificateErrorsToAdmin, $this->platformName, $this->environment);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm = null;
@@ -109,7 +108,7 @@ class SenderServiceTest extends PumukitTestCase
 
     public function testSendNotification()
     {
-        $this->markTestSkipped('S');
+        static::markTestSkipped('S');
 
         $mailTo = 'receiver@pumukit.org';
         $subject = 'Test sender service';

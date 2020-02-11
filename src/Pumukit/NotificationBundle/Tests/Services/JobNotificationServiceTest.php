@@ -14,31 +14,28 @@ use Pumukit\SchemaBundle\Document\Track;
  */
 class JobNotificationServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
     private $containerHelper;
     private $jobNotificationService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         self::bootKernel($options);
-        $this->dm = parent::setUp();
+        parent::setUp();
         $this->containerHelper = self::$kernel->getContainer();
 
         if (!array_key_exists('PumukitNotificationBundle', $this->containerHelper->getParameter('kernel.bundles')) ||
             false === $this->containerHelper->getParameter('pumukit_notification.enable')) {
-            $this->markTestSkipped('NotificationBundle is not installed');
+            static::markTestSkipped('NotificationBundle is not installed');
         }
 
         $this->repo = $this->dm->getRepository(Job::class);
 
-        $this->jobNotificationService = $this->containerHelper
-            ->get('pumukit_notification.listener')
-        ;
+        $this->jobNotificationService = $this->containerHelper->get('pumukit_notification.listener');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->containerHelper = null;

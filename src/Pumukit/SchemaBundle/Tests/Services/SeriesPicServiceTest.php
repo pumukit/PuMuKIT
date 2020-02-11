@@ -2,20 +2,18 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
-use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Services\SeriesPicService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @internal
  * @coversNothing
  */
-class SeriesPicServiceTest extends WebTestCase
+class SeriesPicServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
     private $factoryService;
     private $seriesPicService;
@@ -24,39 +22,25 @@ class SeriesPicServiceTest extends WebTestCase
     private $uploadsPath;
     private $seriesDispatcher;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
+        parent::setUp();
 
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
-        $this->repo = $this->dm
-            ->getRepository(Series::class)
-        ;
-        $this->factoryService = static::$kernel->getContainer()
-            ->get('pumukitschema.factory')
-        ;
-        $this->seriesPicService = static::$kernel->getContainer()
-            ->get('pumukitschema.seriespic')
-        ;
-        $this->mmsPicService = static::$kernel->getContainer()
-            ->get('pumukitschema.mmspic')
-        ;
-        $this->seriesDispatcher = static::$kernel->getContainer()
-            ->get('pumukitschema.series_dispatcher')
-        ;
+        $this->repo = $this->dm->getRepository(Series::class);
+        $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
+        $this->seriesPicService = static::$kernel->getContainer()->get('pumukitschema.seriespic');
+        $this->mmsPicService = static::$kernel->getContainer()->get('pumukitschema.mmspic');
+        $this->seriesDispatcher = static::$kernel->getContainer()->get('pumukitschema.series_dispatcher');
 
         $this->originalPicPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'logo.png';
         $this->uploadsPath = static::$kernel->getContainer()->getParameter('pumukit.uploads_pic_dir');
-
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
-        $this->dm->flush();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->repo = null;
@@ -67,7 +51,6 @@ class SeriesPicServiceTest extends WebTestCase
         $this->originalPicPath = null;
         $this->uploadsPath = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testGetRecommendedPics()

@@ -24,15 +24,16 @@ class PumukitRefactorFileSystemCommand extends Command
     private $finder;
     private $pics;
     private $materials;
-    private $logger;
     private $force;
     private $id;
     private $regex = '/^[0-9a-z]{24}$/';
     private $allowedTypes = ['pics', 'materials'];
+    private $pumukitPublicDir;
 
-    public function __construct(DocumentManager $documentManager)
+    public function __construct(DocumentManager $documentManager, string $pumukitPublicDir)
     {
         $this->dm = $documentManager;
+        $this->pumukitPublicDir = $pumukitPublicDir;
         parent::__construct();
     }
 
@@ -192,9 +193,9 @@ EOT
         foreach ($elements as $elem) {
             $path = $elem->getPath();
             if (!isset($path) && false !== stripos($elem->getUrl(), '/uploads/pic/')) {
-                $path = realpath($this->getContainer()->getParameter('pumukit.public_dir').$elem->getUrl());
+                $path = realpath($this->pumukitPublicDir.$elem->getUrl());
                 if (!$path) {
-                    throw new \Exception('Error reading: '.$this->getContainer()->getParameter('pumukit.public_dir').$elem->getUrl());
+                    throw new \Exception('Error reading: '.$this->pumukitPublicDir.$elem->getUrl());
                 }
                 $checkFile = $this->checkFileExists($path);
                 if ($checkFile && $this->force) {
@@ -490,7 +491,7 @@ EOT
 
     private function deleteDirectory(OutputInterface $output, bool $haveChanges, string $oldDirName): bool
     {
-        if ($haveChanges && isset($oldDirName)) {
+        if ($haveChanges && $oldDirName) {
             if ($this->checkFileExists(dirname($oldDirName))) {
                 rmdir(dirname($oldDirName));
 

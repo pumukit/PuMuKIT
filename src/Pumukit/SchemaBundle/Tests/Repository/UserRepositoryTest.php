@@ -2,57 +2,40 @@
 
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\User;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class UserRepositoryTest extends WebTestCase
+class UserRepositoryTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
     private $groupRepo;
     private $factoryService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        parent::setUp();
         $this->repo = $this->dm->getRepository(User::class);
         $this->groupRepo = $this->dm->getRepository(Group::class);
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
-
-        //DELETE DATABASE
-        $this->dm->getDocumentCollection(Person::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(PermissionProfile::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(User::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(Group::class)
-            ->remove([])
-        ;
-        $this->dm->flush();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->repo = null;
         $this->factoryService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testRepositoryEmpty()

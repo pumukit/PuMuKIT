@@ -15,18 +15,17 @@ use Pumukit\SchemaBundle\Document\Tag;
  */
 class MultimediaObjectSyncServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $mmobjRepo;
     private $announceService;
     private $factoryService;
     private $tagService;
     private $syncService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-        $this->dm = parent::setUp();
+        parent::setUp();
         $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
 
         $this->syncService = static::$kernel->getContainer()->get('pumukitnewadmin.multimedia_object_sync');
@@ -34,7 +33,7 @@ class MultimediaObjectSyncServiceTest extends PumukitTestCase
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();

@@ -2,13 +2,11 @@
 
 namespace Pumukit\WorkflowBundle\Tests\EventListener;
 
-use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Services\PicExtractorService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
-use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
 use Pumukit\WorkflowBundle\EventListener\PicExtractorListener;
@@ -19,10 +17,6 @@ use Pumukit\WorkflowBundle\EventListener\PicExtractorListener;
  */
 class PicExtractorListenerTest extends PumukitTestCase
 {
-    /**
-     * @var DocumentManager
-     */
-    private $dm;
     private $repo;
     private $logger;
     private $picExtractorListener;
@@ -31,11 +25,11 @@ class PicExtractorListenerTest extends PumukitTestCase
     private $profileService;
     private $autoExtractPic = true;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-        $this->dm = parent::setUp();
+        parent::setUp();
         $this->repo = $this->dm->getRepository(MultimediaObject::class);
         $this->logger = $this->getMockBuilder(LoggerInterface::class)
             ->disableOriginalConstructor()
@@ -45,26 +39,17 @@ class PicExtractorListenerTest extends PumukitTestCase
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->profileService = static::$kernel->getContainer()->get('pumukitencoder.profile');
 
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
-
         $mmsPicService = $this->getMockBuilder(MultimediaObjectPicService::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;
-        $mmsPicService
-            ->method('addPicFile')
-            ->willReturn('multimedia object')
-        ;
+        $mmsPicService->method('addPicFile')->willReturn('multimedia object');
 
         $picExtractorService = $this->getMockBuilder(PicExtractorService::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;
-        $picExtractorService
-            ->method('extractPic')
-            ->willReturn('success')
-        ;
+        $picExtractorService->method('extractPic')->willReturn('success');
         $this->picExtractorListener = new PicExtractorListener($this->dm, $picExtractorService, $this->logger, $this->profileService, $this->autoExtractPic);
     }
 
@@ -87,7 +72,7 @@ class PicExtractorListenerTest extends PumukitTestCase
 
     public function testAddDefaultAudioPic(): void
     {
-        $this->markTestSkipped('S');
+        static::markTestSkipped('S');
 
         $this->generatePicFromFile(true);
     }
@@ -118,7 +103,7 @@ class PicExtractorListenerTest extends PumukitTestCase
 
     public function testPicExtractorAudioError(): void
     {
-        $this->markTestSkipped('S');
+        static::markTestSkipped('S');
 
         $mmsPicService = $this->getMockBuilder(MultimediaObjectPicService::class)
             ->disableOriginalConstructor()

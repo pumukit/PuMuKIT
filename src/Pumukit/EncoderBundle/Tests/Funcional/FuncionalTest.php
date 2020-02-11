@@ -17,7 +17,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class FuncionalTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
     private $profileService;
     private $cpuService;
@@ -28,12 +27,12 @@ class FuncionalTest extends PumukitTestCase
     private $propService;
     private $videoInputPath;
 
-    public function setUp()
+    public function setUp(): void
     {
-        $this->markTestSkipped('Functional tests not available. (A little better, but still broken)');
+        static::markTestSkipped('Functional tests not available. (A little better, but still broken)');
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-        $this->dm = parent::setUp();
+        parent::setUp();
         $this->repo = $this->dm->getRepository(Job::class);
 
         $this->profileService = static::$kernel->getContainer()->get('pumukitencoder.profile');
@@ -65,7 +64,7 @@ class FuncionalTest extends PumukitTestCase
 
     public function tearDown(): void
     {
-        $this->dm = parent::tearDown();
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->repo = null;

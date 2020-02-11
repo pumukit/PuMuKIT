@@ -2,60 +2,41 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\User;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class MultimediaObjectServiceTest extends WebTestCase
+class MultimediaObjectServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
     private $tagRepo;
     private $factory;
     private $mmsService;
     private $tagService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
+        parent::setUp();
 
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
-        $this->repo = $this->dm
-            ->getRepository(MultimediaObject::class)
-        ;
-        $this->tagRepo = $this->dm
-            ->getRepository(Tag::class)
-        ;
-        $this->factory = static::$kernel->getContainer()
-            ->get('pumukitschema.factory')
-        ;
-        $this->mmsService = static::$kernel->getContainer()
-            ->get('pumukitschema.multimedia_object')
-        ;
-        $this->tagService = static::$kernel->getContainer()
-            ->get('pumukitschema.tag')
-        ;
-
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
-        $this->dm->getDocumentCollection(Tag::class)->remove([]);
-        $this->dm->getDocumentCollection(Group::class)->remove([]);
-        $this->dm->getDocumentCollection(User::class)->remove([]);
-        $this->dm->flush();
+        $this->repo = $this->dm->getRepository(MultimediaObject::class);
+        $this->tagRepo = $this->dm->getRepository(Tag::class);
+        $this->factory = static::$kernel->getContainer()->get('pumukitschema.factory');
+        $this->mmsService = static::$kernel->getContainer()->get('pumukitschema.multimedia_object');
+        $this->tagService = static::$kernel->getContainer()->get('pumukitschema.tag');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->repo = null;
@@ -64,7 +45,6 @@ class MultimediaObjectServiceTest extends WebTestCase
         $this->mmsService = null;
         $this->tagService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testIsPublished()

@@ -18,22 +18,17 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
  */
 class GroupServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
     private $userRepo;
     private $groupService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-        $this->dm = parent::setUp();
-        $this->repo = $this->dm
-            ->getRepository(Group::class)
-        ;
-        $this->userRepo = $this->dm
-            ->getRepository(User::class)
-        ;
+        parent::setUp();
+        $this->repo = $this->dm->getRepository(Group::class);
+        $this->userRepo = $this->dm->getRepository(User::class);
 
         $dispatcher = new EventDispatcher();
         $groupDispatcher = new GroupEventDispatcherService($dispatcher);
@@ -42,7 +37,7 @@ class GroupServiceTest extends PumukitTestCase
         $this->groupService = new GroupService($this->dm, $groupDispatcher, $translator);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();

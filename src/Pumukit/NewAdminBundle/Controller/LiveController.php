@@ -51,7 +51,7 @@ class LiveController extends AdminController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $resource = $this->update($resource);
+            $this->update($resource);
 
             if (null === $resource) {
                 return new JsonResponse(['liveId' => null]);

@@ -26,6 +26,7 @@ class CreateMMOCommand extends Command
     private $profileService;
     private $locales;
     private $wizardSimpleDefaultMasterProfile;
+    private $locale;
 
     private $validStatuses = [
         'published' => MultimediaObject::STATUS_PUBLISHED,
@@ -33,7 +34,7 @@ class CreateMMOCommand extends Command
         'hidden' => MultimediaObject::STATUS_HIDDEN,
     ];
 
-    public function __construct(DocumentManager $documentManager, JobService $jobService, InspectionFfprobeService $inspectionService, FactoryService $factoryService, TagService $tagService, ProfileService $profileService, array $locales, ?string $wizardSimpleDefaultMasterProfile = null)
+    public function __construct(DocumentManager $documentManager, JobService $jobService, InspectionFfprobeService $inspectionService, FactoryService $factoryService, TagService $tagService, ProfileService $profileService, array $locales, string $locale = 'en', ?string $wizardSimpleDefaultMasterProfile = null)
     {
         $this->wizardSimpleDefaultMasterProfile = $wizardSimpleDefaultMasterProfile;
         $this->documentManager = $documentManager;
@@ -42,6 +43,7 @@ class CreateMMOCommand extends Command
         $this->factoryService = $factoryService;
         $this->tagService = $tagService;
         $this->profileService = $profileService;
+        $this->locale = $locale;
         $this->locales = array_unique(array_merge($locales, ['en']));
         parent::__construct();
     }
@@ -91,7 +93,7 @@ EOT
         if ('IN_CLOSE_WRITE' !== $input->getArgument('inotify_event')) {
             return -1;
         }
-        $locale = $this->getContainer()->getParameter('locale');
+        $locale = $this->locale;
 
         $path = $input->getArgument('file');
         if (!is_string($path)) {

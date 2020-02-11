@@ -13,28 +13,19 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
  */
 class SpecialTranslationServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $mmRepo;
     private $specialTranslationService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-        $this->dm = parent::setUp();
-        $this->mmRepo = $this->dm
-            ->getRepository(MultimediaObject::class)
-        ;
-        $this->specialTranslationService = static::$kernel->getContainer()
-            ->get('pumukitschema.special_translation')
-        ;
-
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Group::class)->remove([]);
-        $this->dm->flush();
+        parent::setUp();
+        $this->mmRepo = $this->dm->getRepository(MultimediaObject::class);
+        $this->specialTranslationService = static::$kernel->getContainer()->get('pumukitschema.special_translation');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();

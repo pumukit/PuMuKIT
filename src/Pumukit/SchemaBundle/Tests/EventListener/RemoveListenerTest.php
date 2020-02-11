@@ -18,7 +18,6 @@ use Pumukit\SchemaBundle\Document\User;
  */
 class RemoveListenerTest extends PumukitTestCase
 {
-    private $dm;
     private $repoJobs;
     private $repoMmobj;
     private $repoSeries;
@@ -29,12 +28,12 @@ class RemoveListenerTest extends PumukitTestCase
     private $logger;
     private $tokenStorage;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->dm = parent::setUp();
+        parent::setUp();
 
         $this->logger = $this->getMockBuilder(LoggerInterface::class)
             ->disableOriginalConstructor()
@@ -52,7 +51,7 @@ class RemoveListenerTest extends PumukitTestCase
         $this->resourcesDir = realpath(__DIR__.'/../Resources');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();

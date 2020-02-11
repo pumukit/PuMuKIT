@@ -21,21 +21,16 @@ class MultimediaObjectVoterTest extends WebTestCase
     private $voter;
     private $userService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->voter = static::$kernel->getContainer()
-            ->get('pumukitschema.multimedia_object_voter')
-        ;
-
-        $this->userService = static::$kernel->getContainer()
-            ->get('pumukitschema.user')
-        ;
+        $this->voter = static::$kernel->getContainer()->get('pumukitschema.multimedia_object_voter');
+        $this->userService = static::$kernel->getContainer()->get('pumukitschema.user');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->voter = null;
         $this->userService = null;

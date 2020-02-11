@@ -6,6 +6,7 @@ services:
     bind:
       $locale: '%locale%'
       $locales: '%pumukit.locales%'
+      $pumukitPublicDir: '%pumukit.public_dir%'
 
   Pumukit\CoreBundle\Controller\:
     resource: '../../src/Pumukit/CoreBundle/Controller'

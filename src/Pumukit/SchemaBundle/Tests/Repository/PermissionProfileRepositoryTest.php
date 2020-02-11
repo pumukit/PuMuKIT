@@ -2,41 +2,34 @@
 
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Services\PermissionService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class PermissionProfileRepositoryTest extends WebTestCase
+class PermissionProfileRepositoryTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
-    private $permissionService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        parent::setUp();
         $this->repo = $this->dm->getRepository(PermissionProfile::class);
-
-        $this->dm->getDocumentCollection(PermissionProfile::class)
-            ->remove([])
-        ;
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->repo = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testEmpty()

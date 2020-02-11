@@ -23,14 +23,12 @@ class PersonWithRoleEventDispatcherServiceTest extends WebTestCase
     private $personWithRoleDispatcher;
     private $dispatcher;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->dispatcher = static::$kernel->getContainer()
-            ->get('event_dispatcher')
-        ;
+        $this->dispatcher = static::$kernel->getContainer()->get('event_dispatcher');
 
         MockUpPersonWithRoleListener::$called = false;
         MockUpPersonWithRoleListener::$title = self::EMPTY_TITLE;
@@ -40,7 +38,7 @@ class PersonWithRoleEventDispatcherServiceTest extends WebTestCase
         $this->personWithRoleDispatcher = new PersonWithRoleEventDispatcherService($this->dispatcher);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->dispatcher = null;
         $this->personWithRoleDispatcher = null;

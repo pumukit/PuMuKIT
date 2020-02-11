@@ -4,11 +4,8 @@ namespace Pumukit\CoreBundle\EventListener;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Event\ConsoleExceptionEvent;
+use Symfony\Component\Console\Event\ConsoleErrorEvent;
 
-/**
- * From http://symfony.com/doc/2.8/cookbook/console/logging.html#enabling-automatic-exceptions-logging.
- */
 class ConsoleExceptionListener
 {
     private $logger;
@@ -18,11 +15,11 @@ class ConsoleExceptionListener
         $this->logger = $logger;
     }
 
-    public function onConsoleException(ConsoleExceptionEvent $event)
+    public function onConsoleException(ConsoleErrorEvent $event): void
     {
         /** @var Command */
         $command = $event->getCommand();
-        $exception = $event->getException();
+        $exception = $event->getError();
 
         $message = sprintf(
             '%s: %s (uncaught exception) at %s line %s while running console command `%s`',
