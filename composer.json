@@ -63,7 +63,7 @@
             "bin/console lint:twig templates",
             "bin/console lint:xlif src/",
             "bin/console lint:xlif translations/",
-            "docker-compose run --rm php ./bin/travis_checks/check_var_dumps"
+            "php ./bin/travis_checks/check_var_dumps"
         ],
         "php-cs-fixer": "vendor/bin/php-cs-fixer fix src --dry-run -v",
         "phpstan": [
