@@ -90,7 +90,7 @@ class SeriesPlaylistServiceTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->mmobjRepo = null;
         $this->seriesPlaylistService = null;
         $this->testMmobjs = null;

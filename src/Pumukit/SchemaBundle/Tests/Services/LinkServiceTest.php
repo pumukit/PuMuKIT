@@ -30,7 +30,7 @@ class LinkServiceTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->repoMmobj = null;
         $this->linkService = null;
         $this->factoryService = null;

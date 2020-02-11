@@ -38,7 +38,7 @@ class PermissionProfileEventDispatcherServiceTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->dispatcher = null;
         $this->permissionProfileDispatcher = null;
         gc_collect_cycles();

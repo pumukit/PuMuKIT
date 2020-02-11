@@ -35,7 +35,7 @@ class EventPicServiceTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->repo = null;
         $this->eventPicService = null;
         $this->originalPicPath = null;

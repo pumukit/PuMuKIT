@@ -39,7 +39,7 @@ class MaterialServiceTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->repoMmobj = null;
         $this->materialService = null;
         $this->materialDispatcher = null;

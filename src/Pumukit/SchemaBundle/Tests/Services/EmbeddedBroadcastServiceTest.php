@@ -46,7 +46,7 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->mmRepo = null;
         $this->embeddedBroadcastService = null;
         $this->mmsService = null;

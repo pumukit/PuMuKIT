@@ -38,7 +38,7 @@ class SeriesEventDispatcherServiceTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->dispatcher = null;
         $this->seriesDispatcher = null;
         gc_collect_cycles();

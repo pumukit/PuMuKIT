@@ -41,7 +41,7 @@ class GroupServiceTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->repo = null;
         $this->userRepo = null;
         $this->groupService = null;

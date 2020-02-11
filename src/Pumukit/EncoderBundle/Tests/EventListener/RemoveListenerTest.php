@@ -43,7 +43,7 @@ class RemoveListenerTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->repoJobs = null;
         $this->repoMmobj = null;
         $this->repoSeries = null;

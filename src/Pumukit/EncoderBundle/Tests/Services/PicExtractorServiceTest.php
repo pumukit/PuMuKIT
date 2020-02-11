@@ -52,7 +52,7 @@ class PicExtractorServiceTest extends PumukitTestCase
     public function tearDown(): void
     {
         parent::tearDown();
-        $this->dm = null;
+
         $this->mmobjRepo = null;
         $this->factory = null;
         $this->mmsPicService = null;

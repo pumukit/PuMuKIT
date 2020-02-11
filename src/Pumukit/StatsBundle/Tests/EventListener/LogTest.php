@@ -32,7 +32,7 @@ class LogTest extends PumukitTestCase
     public function tearDown(): void
     {
         parent::tearDown();
-        $this->dm = null;
+
         $this->repo = null;
         $this->factoryService = null;
         $this->tokenStorage = null;

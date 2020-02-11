@@ -46,7 +46,7 @@ class MultimediaObjectListenerTest extends PumukitTestCase
     public function tearDown(): void
     {
         parent::tearDown();
-        $this->dm = null;
+
         $this->mmRepo = null;
         $this->listener = null;
         $this->trackDispatcher = null;

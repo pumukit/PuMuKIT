@@ -37,7 +37,7 @@ class GroupEventDispatcherServiceTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->dispatcher = null;
         $this->groupDispatcher = null;
         gc_collect_cycles();

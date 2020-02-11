@@ -35,7 +35,7 @@ class PermissionProfileServiceTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->repo = null;
         $this->permissionProfileService = null;
         $this->dispatcher = null;

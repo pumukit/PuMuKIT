@@ -28,7 +28,7 @@ class EmbedRelationsTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->repoMmobjs = null;
         $this->repoTags = null;
         gc_collect_cycles();
