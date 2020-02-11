@@ -153,7 +153,8 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
 
         $repo = $this->documentManager->getRepository(MultimediaObject::class);
 
-        if (!$multimediaObject = $repo->findByPicId($picId)) {
+        $multimediaObject = $repo->findByPicId($picId);
+        if (!$multimediaObject instanceof MultimediaObject) {
             throw new NotFoundHttpException('Requested multimedia object does not exist');
         }
 
@@ -174,7 +175,8 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
 
         $repo = $this->documentManager->getRepository(MultimediaObject::class);
 
-        if (!$multimediaObject = $repo->findByPicId($picId)) {
+        $multimediaObject = $repo->findByPicId($picId);
+        if (!$multimediaObject instanceof MultimediaObject) {
             throw new NotFoundHttpException('Requested multimedia object does not exist');
         }
 

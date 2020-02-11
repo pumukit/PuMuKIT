@@ -34,14 +34,7 @@ class PicExtractorService
         $this->command = $command ?: 'avprobe -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"';
     }
 
-    /**
-     * Extract pics on batch.
-     *
-     * @param array $marks
-     *
-     * @return bool|string
-     */
-    public function extractPicOnBatch(MultimediaObject $multimediaObject, Track $track, array $marks = null)
+    public function extractPicOnBatch(MultimediaObject $multimediaObject, Track $track, array $marks = null): bool
     {
         if ($multimediaObject->getProperty('imagesonbatch')) {
             return false;
@@ -55,16 +48,11 @@ class PicExtractorService
         foreach ($marks as $mark) {
             $this->extractPic($multimediaObject, $track, $mark);
         }
+
+        return true;
     }
 
-    /**
-     * Extract Pic.
-     *
-     * @param int|null $numframe
-     *
-     * @return string $message
-     */
-    public function extractPic(MultimediaObject $multimediaObject, Track $track, $numframe = null)
+    public function extractPic(MultimediaObject $multimediaObject, Track $track, $numframe = null): string
     {
         if (!file_exists($track->getPath())) {
             return 'Error in data autocomplete of multimedia object.';
@@ -85,15 +73,7 @@ class PicExtractorService
         return 'Captured the FRAME '.$num.' as image.';
     }
 
-    /**
-     * Utilizando la libreria ffmpeg_php se genera un Pic que se asocia con el objeto
-     * multimedia al que pertenece el archivo.
-     *
-     * @param int $frame numero del frame donde se realiza la captura
-     *
-     * @return bool|null
-     */
-    private function createPic(MultimediaObject $multimediaObject, Track $track, $frame = 25)
+    private function createPic(MultimediaObject $multimediaObject, Track $track, int $frame = 25): bool
     {
         $absCurrentDir = $this->mmsPicService->getTargetPath($multimediaObject);
 

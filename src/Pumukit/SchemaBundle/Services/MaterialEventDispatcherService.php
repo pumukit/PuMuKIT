@@ -6,59 +6,43 @@ use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Event\MaterialEvent;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class MaterialEventDispatcherService
 {
-    /**
-     * @var EventDispatcherInterface
-     */
+    /** @var EventDispatcher */
     private $dispatcher;
 
-    /**
-     * Constructor.
-     */
     public function __construct(EventDispatcherInterface $dispatcher)
     {
         $this->dispatcher = $dispatcher;
     }
 
     /**
-     * Dispatch create.
-     *
-     * Dispatchs the event MATERIAL_CREATE
-     * 'material.create' passing
-     * the multimedia object and the material
+     * Dispatch the event MATERIAL_CREATE 'material.create' passing the multimedia object and the material.
      */
-    public function dispatchCreate(MultimediaObject $multimediaObject, Material $material)
+    public function dispatchCreate(MultimediaObject $multimediaObject, Material $material): void
     {
         $event = new MaterialEvent($multimediaObject, $material);
-        $this->dispatcher->dispatch(SchemaEvents::MATERIAL_CREATE, $event);
+        $this->dispatcher->dispatch($event, SchemaEvents::MATERIAL_CREATE);
     }
 
     /**
-     * Dispatch update.
-     *
-     * Dispatchs the event MATERIAL_UPDATE
-     * 'material.update' passing
-     * the multimedia object and the material
+     * Dispatch the event MATERIAL_UPDATE 'material.update' passing the multimedia object and the material.
      */
-    public function dispatchUpdate(MultimediaObject $multimediaObject, Material $material)
+    public function dispatchUpdate(MultimediaObject $multimediaObject, Material $material): void
     {
         $event = new MaterialEvent($multimediaObject, $material);
-        $this->dispatcher->dispatch(SchemaEvents::MATERIAL_UPDATE, $event);
+        $this->dispatcher->dispatch($event, SchemaEvents::MATERIAL_UPDATE);
     }
 
     /**
-     * Dispatch delete.
-     *
-     * Dispatchs the event MATERIAL_DELETE
-     * 'material.delete' passing
-     * the multimedia object and the material
+     * Dispatch the event MATERIAL_DELETE 'material.delete' passing the multimedia object and the material.
      */
-    public function dispatchDelete(MultimediaObject $multimediaObject, Material $material)
+    public function dispatchDelete(MultimediaObject $multimediaObject, Material $material): void
     {
         $event = new MaterialEvent($multimediaObject, $material);
-        $this->dispatcher->dispatch(SchemaEvents::MATERIAL_DELETE, $event);
+        $this->dispatcher->dispatch($event, SchemaEvents::MATERIAL_DELETE);
     }
 }

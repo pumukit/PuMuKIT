@@ -45,6 +45,8 @@ EOT
         $this->syncTags($input, $output);
         $this->syncNumberPeopleInMultimediaObjectsOnRoles($input, $output);
         $this->syncJobsInMultimediaObjectsProperties($input, $output);
+
+        return 0;
     }
 
     private function syncJobsInMultimediaObjectsProperties(InputInterface $input, OutputInterface $output)

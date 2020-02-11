@@ -83,6 +83,8 @@ EOT
         } catch (\Exception $exception) {
             throw new \Exception($exception->getMessage());
         }
+
+        return 0;
     }
 
     private function regeneratePicsOfMultimediaObjects($multimediaObjects): void

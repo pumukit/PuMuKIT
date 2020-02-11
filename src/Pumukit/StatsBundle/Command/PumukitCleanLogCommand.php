@@ -46,7 +46,7 @@ EOT
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $from = $input->getOption('from');
         if ($from) {
@@ -69,6 +69,8 @@ EOT
         }
 
         $output->writeln('Done');
+
+        return 0;
     }
 
     private function execRemoveQuery($userAgent): void

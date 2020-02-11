@@ -478,9 +478,6 @@ class SeriesController extends AdminController
             $resources = $this->paginationService->createArrayAdapter($resources);
         } else {
             $resources = $this->createPager($criteria, $sorting);
-            if (array_key_exists('textScore', $sorting)) {
-                $resources->getAdapter()->getQueryBuilder()->sortMeta('score', 'textScore');
-            }
         }
 
         if ($request->get('page', null)) {

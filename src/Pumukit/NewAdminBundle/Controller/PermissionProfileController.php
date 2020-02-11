@@ -206,14 +206,12 @@ class PermissionProfileController extends AdminController
         }
 
         $newDefaultPermissionProfile = $this->find($selectedDefault);
-        if (null !== $newDefaultPermissionProfile) {
-            if (!$newDefaultPermissionProfile->isDefault()) {
-                $newDefaultPermissionProfile->setDefault(true);
-                $newDefaultPermissionProfile = $this->permissionProfileService->update($newDefaultPermissionProfile);
-            }
+        if ((null !== $newDefaultPermissionProfile) && !$newDefaultPermissionProfile->isDefault()) {
+            $newDefaultPermissionProfile->setDefault(true);
+            $this->permissionProfileService->update($newDefaultPermissionProfile);
         }
 
-        $allPermissionProfiles = $this->isGranted('ROLE_SUPER_ADMIN') ? $repo->findAll() : $repo->findBySystem(false);
+        $allPermissionProfiles = $repo->findAll();
 
         //Doing a batch update for all checked profiles. This will remove everything except the checked permissions.
         $permissionProfiles = $this->buildPermissionProfiles($checkedPermissions, $selectedScopes);

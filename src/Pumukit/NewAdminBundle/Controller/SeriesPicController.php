@@ -138,8 +138,9 @@ class SeriesPicController extends AbstractController implements NewAdminControll
         $picId = $request->get('id');
 
         $repo = $this->documentManager->getRepository(Series::class);
+        $series = $repo->findByPicId($picId);
 
-        if (!$series = $repo->findByPicId($picId)) {
+        if (!$series instanceof Series) {
             throw $this->createNotFoundException('Requested series does not exist');
         }
 
@@ -157,7 +158,8 @@ class SeriesPicController extends AbstractController implements NewAdminControll
 
         $repo = $this->documentManager->getRepository(Series::class);
 
-        if (!$series = $repo->findByPicId($picId)) {
+        $series = $repo->findByPicId($picId);
+        if (!$series instanceof Series) {
             throw $this->createNotFoundException('Requested series does not exist');
         }
 

@@ -3,9 +3,6 @@
 namespace Pumukit\WizardBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\EncoderBundle\Services\JobService;
-use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
-use Pumukit\InspectionBundle\Services\InspectionServiceInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
@@ -14,84 +11,32 @@ use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\TagService;
 use Symfony\Component\Process\Process;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-/**
- * Class WizardService.
- */
 class WizardService
 {
-    /**
-     * @var DocumentManager
-     */
+    /** @var DocumentManager */
     private $dm;
-
-    /**
-     * @var FactoryService
-     */
+    /** @var FactoryService */
     private $factoryService;
-
-    /**
-     * @var InspectionServiceInterface
-     */
-    private $inspectionService;
-
-    /**
-     * @var FormEventDispatcherService
-     */
-    private $formEventDispatcher;
-
-    /**
-     * @var JobService
-     */
-    private $jobService;
-
-    /**
-     * @var AuthorizationCheckerInterface
-     */
-    private $authorizationChecker;
-
-    /**
-     * @var TagService
-     */
+    /** @var TagService */
     private $tagService;
-
-    /**
-     * @var User
-     */
+    /** @var User */
     private $user;
-
     private $inboxDepth;
     private $locales;
     private $basePath;
 
-    /**
-     * WizardService constructor.
-     *
-     * @param InspectionServiceInterface $inspectionService
-     * @param string                     $basePath
-     * @param array                      $locales
-     * @param bool|null                  $inboxDepth
-     */
     public function __construct(
         DocumentManager $documentManager,
         FactoryService $factoryService,
-        InspectionFfprobeService $inspectionService,
-        FormEventDispatcherService $formEventDispatcher,
-        JobService $jobService,
-        AuthorizationCheckerInterface $authorizationChecker,
         TagService $tagService,
-        $basePath,
-        $locales,
-        $inboxDepth = null
+        string $basePath,
+        array $locales,
+        bool $inboxDepth = null
     ) {
         $this->dm = $documentManager;
         $this->factoryService = $factoryService;
-        $this->inspectionService = $inspectionService;
-        $this->formEventDispatcher = $formEventDispatcher;
         $this->inboxDepth = $inboxDepth;
-        $this->jobService = $jobService;
-        $this->authorizationChecker = $authorizationChecker;
         $this->tagService = $tagService;
         $this->locales = $locales;
         $this->basePath = $basePath;

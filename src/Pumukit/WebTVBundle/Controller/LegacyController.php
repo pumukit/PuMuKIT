@@ -42,7 +42,7 @@ class LegacyController extends AbstractController implements WebTVControllerInte
             ->field('properties.pumukit1id')->equals($pumukit1id)
             ->getQuery()->getSingleResult();
 
-        if (!$series) {
+        if (!$series instanceof Series) {
             throw $this->createNotFoundException();
         }
 
@@ -86,7 +86,7 @@ class LegacyController extends AbstractController implements WebTVControllerInte
             ->field('status')->gte(MultimediaObject::STATUS_PUBLISHED)
             ->getQuery()->getSingleResult();
 
-        if (!$multimediaObject) {
+        if (!$multimediaObject instanceof MultimediaObject) {
             throw $this->createNotFoundException();
         }
         if (MultimediaObject::STATUS_HIDDEN === $multimediaObject->getStatus()) {
@@ -121,7 +121,7 @@ class LegacyController extends AbstractController implements WebTVControllerInte
             ->field('properties.pumukit1id')->equals($pumukit1id)
             ->getQuery()->getSingleResult();
 
-        if (!$multimediaObject) {
+        if (!$multimediaObject instanceof MultimediaObject) {
             throw $this->createNotFoundException();
         }
 
@@ -148,7 +148,7 @@ class LegacyController extends AbstractController implements WebTVControllerInte
             ->field('tracks.tags')->equals(new Regex('pumukit1id:'.$pumukit1id, 'i'))
             ->getQuery()->getSingleResult();
 
-        if (!$multimediaObject) {
+        if (!$multimediaObject instanceof MultimediaObject) {
             throw $this->createNotFoundException();
         }
 
@@ -168,7 +168,7 @@ class LegacyController extends AbstractController implements WebTVControllerInte
             ->field('properties.pumukit1magic')->equals($hash)
             ->getQuery()->getSingleResult();
 
-        if (null === $series) {
+        if (!$series instanceof Series) {
             throw $this->createNotFoundException();
         }
 

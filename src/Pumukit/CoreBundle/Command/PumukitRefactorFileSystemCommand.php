@@ -122,6 +122,8 @@ EOT
 
             $this->output->writeln('Refactor materials done');
         }
+
+        return 0;
     }
 
     private function checkInputs(): void

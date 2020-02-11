@@ -134,7 +134,7 @@ class TrackFileController extends AbstractController
         $mmobjRepo = $documentManager->getRepository(MultimediaObject::class);
 
         $mmobj = $mmobjRepo->findOneByTrackId($id);
-        if (!$mmobj) {
+        if (!$mmobj instanceof MultimediaObject) {
             throw $this->createNotFoundException("Not mmobj found with the track id: {$id}");
         }
 

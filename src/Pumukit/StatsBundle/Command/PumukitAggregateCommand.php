@@ -34,8 +34,10 @@ EOT
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->statsService->aggregateViewsLog();
+
+        return 0;
     }
 }
