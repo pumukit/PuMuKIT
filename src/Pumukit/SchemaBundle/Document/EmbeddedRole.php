@@ -265,44 +265,24 @@ class EmbeddedRole implements RoleInterface
         $this->locale = $locale;
     }
 
-    /**
-     * Get locale.
-     *
-     * @return string
-     */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
 
-    /**
-     * Get people.
-     */
     public function getPeople()
     {
         return $this->people;
     }
 
-    /**
-     * Add person.
-     *
-     * @param EmbeddedPerson|Person $person
-     */
-    public function addPerson($person)
+    public function addPerson($person): void
     {
         if (!($this->containsPerson($person))) {
             $this->people[] = $this->createEmbeddedPerson($person);
         }
     }
 
-    /**
-     * Remove person.
-     *
-     * @param EmbeddedPerson|Person $person
-     *
-     * @return bool TRUE if this embedded person contained the specified person, FLASE otherwise
-     */
-    public function removePerson($person)
+    public function removePerson($person): bool
     {
         $embeddedPerson = $this->getEmbeddedPerson($person);
 
@@ -317,14 +297,7 @@ class EmbeddedRole implements RoleInterface
         return $hasRemoved;
     }
 
-    /**
-     * Contains person.
-     *
-     * @param EmbeddedPerson|Person $person
-     *
-     * @return bool|EmbeddedPerson EmbeddedPerson if found, FALSE otherwise
-     */
-    public function containsPerson($person)
+    public function containsPerson($person): bool
     {
         foreach ($this->people as $embeddedPerson) {
             if ($person->getId() === $embeddedPerson->getId()) {
@@ -335,12 +308,7 @@ class EmbeddedRole implements RoleInterface
         return false;
     }
 
-    /**
-     * Contains all people.
-     *
-     * @return bool TRUE if this embedded role contains all people, FLASE otherwise
-     */
-    public function containsAllPeople(array $people)
+    public function containsAllPeople(array $people): bool
     {
         foreach ($people as $person) {
             if (!($this->containsPerson($person))) {
@@ -351,12 +319,7 @@ class EmbeddedRole implements RoleInterface
         return true;
     }
 
-    /**
-     * Contains any person.
-     *
-     * @return bool TRUE if this embedded person contains any person of the list, FLASE otherwise
-     */
-    public function containsAnyPerson(array $people)
+    public function containsAnyPerson(array $people): bool
     {
         foreach ($people as $person) {
             if (!($this->containsPerson($person))) {
@@ -367,32 +330,15 @@ class EmbeddedRole implements RoleInterface
         return false;
     }
 
-    /**
-     * Create embedded person.
-     *
-     * @param EmbeddedPerson|Person $person
-     *
-     * @return EmbeddedPerson
-     */
     public function createEmbeddedPerson($person)
     {
         if ($person instanceof EmbeddedPerson) {
             return $person;
         }
-        if ($person instanceof Person) {
-            return new EmbeddedPerson($person);
-        }
 
-        throw new \InvalidArgumentException('Only Person or EmbeddedPerson are allowed.');
+        return new EmbeddedPerson($person);
     }
 
-    /**
-     * Contained embed person.
-     *
-     * @param EmbeddedPerson|Person $person
-     *
-     * @return bool|EmbeddedPerson EmbeddedPerson if found, FALSE otherwise:
-     */
     public function getEmbeddedPerson($person)
     {
         foreach ($this->people as $embeddedPerson) {

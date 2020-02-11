@@ -75,7 +75,7 @@ EOT
         if (!$multimediaObjects) {
             $output->writeln('No multimedia objects found to regenerate pics');
 
-            return true;
+            return 0;
         }
 
         try {

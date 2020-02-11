@@ -101,7 +101,7 @@ EOT
             $this->output->writeln('No pics found');
         }
 
-        return true;
+        return 0;
     }
 
     private function checkInputOptions(): array

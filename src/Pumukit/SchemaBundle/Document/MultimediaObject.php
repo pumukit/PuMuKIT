@@ -1739,12 +1739,6 @@ class MultimediaObject
         return $aux;
     }
 
-    /**
-     * Add Person with Role.
-     *
-     * @param EmbeddedPerson|Person $person
-     * @param EmbeddedRole|Role     $role
-     */
     public function addPersonWithRole($person, $role)
     {
         if (!($this->containsPersonWithRole($person, $role))) {
@@ -1867,23 +1861,13 @@ class MultimediaObject
         return false;
     }
 
-    /**
-     * Create embedded role.
-     *
-     * @param EmbeddedRole|Role $role
-     *
-     * @return EmbeddedRole
-     */
-    public function createEmbeddedRole($role)
+    public function createEmbeddedRole(RoleInterface $role): RoleInterface
     {
         if ($role instanceof EmbeddedRole) {
             return $role;
         }
-        if ($role instanceof Role) {
-            return new EmbeddedRole($role);
-        }
 
-        throw new \InvalidArgumentException('Only Role or EmbeddedRole are allowed.');
+        return new EmbeddedRole($role);
     }
 
     /**

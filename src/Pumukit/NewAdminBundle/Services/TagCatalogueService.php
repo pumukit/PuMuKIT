@@ -156,7 +156,7 @@ class TagCatalogueService
                 } elseif ('roles' === $key) {
                     foreach ($value as $key2 => $field) {
                         if (!empty($field)) {
-                            $newCriteria['roles'][$key2] = new Regex('.*'.preg_quote($field).'.*', 'i');
+                            $newCriteria['roles'][$key2] = new Regex('.*'.$field.'.*', 'i');
                         }
                     }
                 } elseif ('group' === $key) {
@@ -241,8 +241,6 @@ class TagCatalogueService
         switch ($key) {
             case 'text':
                 return $this->textRenderField($object, $field);
-
-                break;
             case 'criteria':
                 return $this->criteriaRenderField($object, $session);
             case 'role':

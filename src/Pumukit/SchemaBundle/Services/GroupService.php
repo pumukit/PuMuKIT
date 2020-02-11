@@ -30,14 +30,7 @@ class GroupService
         $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
     }
 
-    /**
-     * Create group.
-     *
-     * @throws \Exception
-     *
-     * @return Group
-     */
-    public function create(Group $group)
+    public function create(Group $group): Group
     {
         $groupByKey = $this->repo->findOneByKey($group->getKey());
         $groupByName = $this->repo->findOneByName($group->getName());

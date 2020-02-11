@@ -95,13 +95,9 @@ class GroupController extends AdminController
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 try {
-                    $group = $this->groupService->create($group);
+                    $this->groupService->create($group);
                 } catch (\Exception $e) {
                     return new JsonResponse([$e->getMessage()], Response::HTTP_BAD_REQUEST);
-                }
-
-                if (null === $group) {
-                    return $this->redirect($this->generateUrl('pumukitnewadmin_group_list'));
                 }
 
                 return $this->redirect($this->generateUrl('pumukitnewadmin_group_list'));
