@@ -2,51 +2,38 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Services\PermissionProfileService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class PermissionProfileServiceTest extends WebTestCase
+class PermissionProfileServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
     private $permissionProfileService;
     private $dispatcher;
     private $permissionService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
+        parent::setUp();
 
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
-        $this->repo = $this->dm
-            ->getRepository(PermissionProfile::class)
-        ;
-        $this->permissionProfileService = static::$kernel->getContainer()
-            ->get('pumukitschema.permissionprofile')
-        ;
-        $this->dispatcher = static::$kernel->getContainer()
-            ->get('pumukitschema.permissionprofile_dispatcher')
-        ;
-        $this->permissionService = static::$kernel->getContainer()
-            ->get('pumukitschema.permission')
-        ;
-
-        $this->dm->getDocumentCollection(PermissionProfile::class)->remove([]);
-        $this->dm->flush();
-
+        $this->repo = $this->dm->getRepository(PermissionProfile::class);
+        $this->permissionProfileService = static::$kernel->getContainer()->get('pumukitschema.permissionprofile');
+        $this->dispatcher = static::$kernel->getContainer()->get('pumukitschema.permissionprofile_dispatcher');
+        $this->permissionService = static::$kernel->getContainer()->get('pumukitschema.permission');
         $this->permissionProfileService = new PermissionProfileService($this->dm, $this->dispatcher, $this->permissionService);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->repo = null;
@@ -55,7 +42,6 @@ class PermissionProfileServiceTest extends WebTestCase
         $this->permissionService = null;
         $this->permissionProfileService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testUpdate()

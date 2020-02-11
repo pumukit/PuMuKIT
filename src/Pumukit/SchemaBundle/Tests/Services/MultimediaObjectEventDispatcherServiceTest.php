@@ -2,31 +2,29 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Services\MultimediaObjectEventDispatcherService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class MultimediaObjectEventDispatcherServiceTest extends WebTestCase
+class MultimediaObjectEventDispatcherServiceTest extends PumukitTestCase
 {
     const EMPTY_TITLE = 'EMTPY TITLE';
 
     private $multimediaObjectDispatcher;
     private $dispatcher;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dispatcher = static::$kernel->getContainer()
-            ->get('event_dispatcher')
-        ;
+        parent::setUp();
+        $this->dispatcher = static::$kernel->getContainer()->get('event_dispatcher');
 
         MockUpMultimediaObjectListener::$called = false;
         MockUpMultimediaObjectListener::$title = self::EMPTY_TITLE;
@@ -34,12 +32,12 @@ class MultimediaObjectEventDispatcherServiceTest extends WebTestCase
         $this->multimediaObjectDispatcher = new MultimediaObjectEventDispatcherService($this->dispatcher);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dispatcher = null;
         $this->multimediaObjectDispatcher = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testDispatchCreate()

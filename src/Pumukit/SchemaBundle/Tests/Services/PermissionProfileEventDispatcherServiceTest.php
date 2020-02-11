@@ -2,37 +2,31 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Event\PermissionProfileEvent;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Services\PermissionProfileEventDispatcherService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * @internal
  * @coversNothing
  */
-class PermissionProfileEventDispatcherServiceTest extends WebTestCase
+class PermissionProfileEventDispatcherServiceTest extends PumukitTestCase
 {
     const EMPTY_NAME = 'EMTPY_NAME';
 
-    private $dm;
     private $permissionProfileDispatcher;
     private $dispatcher;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
+        parent::setUp();
 
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb.odm.document_manager')
-        ;
         $this->dispatcher = new EventDispatcher();
-
-        $this->dm->getDocumentCollection(PermissionProfile::class)->remove([]);
-        $this->dm->flush();
 
         MockUpPermissionProfileListener::$called = false;
         MockUpPermissionProfileListener::$name = self::EMPTY_NAME;
@@ -40,14 +34,14 @@ class PermissionProfileEventDispatcherServiceTest extends WebTestCase
         $this->permissionProfileDispatcher = new PermissionProfileEventDispatcherService($this->dispatcher);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->dispatcher = null;
         $this->permissionProfileDispatcher = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testDispatchCreate()

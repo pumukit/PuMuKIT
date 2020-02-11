@@ -2,6 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
@@ -9,62 +10,34 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Services\FactoryService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class FactoryServiceTest extends WebTestCase
+class FactoryServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $mmobjRepo;
     private $seriesRepo;
     private $translator;
     private $factory;
     private $locales;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
-        $this->seriesRepo = $this->dm
-            ->getRepository(Series::class)
-        ;
-        $this->mmobjRepo = $this->dm
-            ->getRepository(MultimediaObject::class)
-        ;
-        $this->translator = static::$kernel->getContainer()
-            ->get('translator')
-        ;
-        $this->factory = static::$kernel->getContainer()
-            ->get('pumukitschema.factory')
-        ;
+        parent::setUp();
+        $this->seriesRepo = $this->dm->getRepository(Series::class);
+        $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
+        $this->translator = static::$kernel->getContainer()->get('translator');
+        $this->factory = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->locales = $this->factory->getLocales();
-
-        $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(SeriesType::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(Series::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(Role::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(Tag::class)
-            ->remove([])
-        ;
-        $this->dm->flush();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
         $this->seriesRepo = null;
         $this->mmobjRepo = null;
@@ -72,7 +45,6 @@ class FactoryServiceTest extends WebTestCase
         $this->factory = null;
         $this->locales = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testCreateSeries()

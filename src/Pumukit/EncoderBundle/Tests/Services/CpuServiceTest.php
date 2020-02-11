@@ -12,24 +12,20 @@ use Pumukit\EncoderBundle\Services\CpuService;
  */
 class CpuServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
     private $cpuService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-        $this->dm = parent::setUp();
+        parent::setUp();
         $this->repo = $this->dm->getRepository(Job::class);
-
-        $this->dm->getDocumentCollection(Job::class)->remove([]);
-        $this->dm->flush();
 
         $this->cpuService = new CpuService($this->getDemoCpus(), $this->dm);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();

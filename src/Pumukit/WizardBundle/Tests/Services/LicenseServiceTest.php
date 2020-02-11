@@ -15,7 +15,7 @@ class LicenseServiceTest extends WebTestCase
     private $resourcesDir;
     private $licenseDir;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
@@ -24,7 +24,7 @@ class LicenseServiceTest extends WebTestCase
         $this->licenseDir = realpath($this->resourcesDir.'/data/license');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->translator = null;
         $this->resourcesDir = null;

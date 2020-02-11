@@ -17,7 +17,6 @@ use Pumukit\SchemaBundle\Services\TrackService;
  */
 class TrackServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $repoJobs;
     private $repoMmobj;
     private $trackService;
@@ -27,38 +26,28 @@ class TrackServiceTest extends PumukitTestCase
     private $trackDispatcher;
     private $tmpDir;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-        $this->dm = parent::setUp();
+        parent::setUp();
         $this->logger = $this->getMockBuilder(LoggerInterface::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;
-        $this->repoJobs = $this->dm
-            ->getRepository(Job::class)
-        ;
-        $this->repoMmobj = $this->dm
-            ->getRepository(MultimediaObject::class)
-        ;
-        $this->factoryService = static::$kernel->getContainer()
-            ->get('pumukitschema.factory')
-        ;
-        $this->trackDispatcher = static::$kernel->getContainer()
-            ->get('pumukitschema.track_dispatcher')
-        ;
-        $this->tokenStorage = static::$kernel->getContainer()
-            ->get('security.token_storage')
-        ;
+        $this->repoJobs = $this->dm->getRepository(Job::class);
+        $this->repoMmobj = $this->dm->getRepository(MultimediaObject::class);
+        $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
+        $this->trackDispatcher = static::$kernel->getContainer()->get('pumukitschema.track_dispatcher');
+        $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
 
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
-        $this->trackService = new TrackService($this->dm, $this->trackDispatcher, $profileService, null, true);
+        $this->trackService = new TrackService($this->dm, $this->trackDispatcher, null, true);
 
         $this->tmpDir = $this->trackService->getTempDirs()[0];
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();

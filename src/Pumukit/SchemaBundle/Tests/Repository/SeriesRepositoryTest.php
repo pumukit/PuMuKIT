@@ -2,6 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -11,62 +12,36 @@ use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\Tag;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class SeriesRepositoryTest extends WebTestCase
+class SeriesRepositoryTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
     private $personService;
     private $factoryService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        parent::setUp();
         $this->repo = $this->dm->getRepository(Series::class);
         $this->personService = static::$kernel->getContainer()->get('pumukitschema.person');
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
-
-        $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(Role::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(Person::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(Series::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(SeriesType::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(Tag::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(Group::class)
-            ->remove([])
-        ;
-        $this->dm->flush();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->repo = null;
         $this->personService = null;
         $this->factoryService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testRepositoryEmpty()
@@ -698,7 +673,7 @@ class SeriesRepositoryTest extends WebTestCase
 
     public function testMultimediaObjectsInSeries()
     {
-        $this->markTestSkipped('S');
+        static::markTestSkipped('S');
 
         $series1 = $this->createSeries('Series 1');
         $series2 = $this->createSeries('Series 2');

@@ -2,6 +2,7 @@
 
 namespace Pumukit\CoreBundle\Tests;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\EncoderBundle\Document\CpuStatus;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\SchemaBundle\Document\Annotation;
@@ -28,28 +29,25 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class PumukitTestCase extends WebTestCase
 {
-    private $dm;
+    /** @var DocumentManager */
+    protected $dm;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         self::bootKernel($options);
 
-        $this->dm = self::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $this->dm = self::$kernel->getContainer()->get('doctrine_mongodb.odm.document_manager');
 
         $this->clearBBDD();
-
-        return $this->dm;
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->clearBBDD();
-
-        return $this->dm;
     }
 
-    public function clearBBDD()
+    public function clearBBDD(): void
     {
         $this->dm->getDocumentCollection(Annotation::class)->remove([]);
         $this->dm->getDocumentCollection(CpuStatus::class)->remove([]);

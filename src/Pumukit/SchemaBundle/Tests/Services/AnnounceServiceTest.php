@@ -2,70 +2,39 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\Tag;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class AnnounceServiceTest extends WebTestCase
+class AnnounceServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $mmobjRepo;
     private $seriesRepo;
     private $announceService;
     private $factoryService;
     private $tagService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
+        parent::setUp();
+        $this->seriesRepo = $this->dm->getRepository(Series::class);
+        $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
 
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
-        $this->seriesRepo = $this->dm
-            ->getRepository(Series::class)
-        ;
-        $this->mmobjRepo = $this->dm
-            ->getRepository(MultimediaObject::class)
-        ;
-
-        $this->announceService = static::$kernel->getContainer()
-            ->get('pumukitschema.announce')
-        ;
-        $this->factoryService = static::$kernel->getContainer()
-            ->get('pumukitschema.factory')
-        ;
-        $this->tagService = static::$kernel->getContainer()
-            ->get('pumukitschema.tag')
-        ;
-
-        $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(SeriesType::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(Series::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(Role::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(Tag::class)
-            ->remove([])
-        ;
-        $this->dm->flush();
+        $this->announceService = static::$kernel->getContainer()->get('pumukitschema.announce');
+        $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
+        $this->tagService = static::$kernel->getContainer()->get('pumukitschema.tag');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
         $this->seriesRepo = null;
         $this->mmobjRepo = null;
@@ -73,7 +42,6 @@ class AnnounceServiceTest extends WebTestCase
         $this->factoryService = null;
         $this->tagService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testGetLast()

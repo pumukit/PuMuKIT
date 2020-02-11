@@ -14,6 +14,7 @@ use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use SunCat\MobileDetectBundle\DeviceDetector\MobileDetector;
+use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -292,7 +293,7 @@ class DefaultController extends AbstractController
                 $multimediaObject->getEmbeddedEvent()->getName()
             );
 
-            $message = \Swift_Message::newInstance();
+            $message = new Swift_Message();
             $message->setSubject($subject)->setSender($mail)->setFrom($mail)->setTo($to)->setBody($bodyMail, 'text/plain');
             $sent = $this->mailer->send($message);
 

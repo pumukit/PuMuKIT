@@ -2,50 +2,38 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class MultimediaObjectDurationServiceTest extends WebTestCase
+class MultimediaObjectDurationServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $mmRepo;
     private $factory;
     private $mmsService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
-        $this->mmRepo = $this->dm
-            ->getRepository(MultimediaObject::class)
-        ;
-        $this->factory = static::$kernel->getContainer()
-            ->get('pumukitschema.factory')
-        ;
-        $this->mmsService = static::$kernel->getContainer()
-            ->get('pumukitschema.mmsduration')
-        ;
-
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->flush();
+        parent::setUp();
+        $this->mmRepo = $this->dm->getRepository(MultimediaObject::class);
+        $this->factory = static::$kernel->getContainer()->get('pumukitschema.factory');
+        $this->mmsService = static::$kernel->getContainer()->get('pumukitschema.mmsduration');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->mmRepo = null;
         $this->factory = null;
         $this->mmsService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testGetDuration()

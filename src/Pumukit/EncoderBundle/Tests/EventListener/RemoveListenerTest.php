@@ -14,7 +14,6 @@ use Pumukit\SchemaBundle\Document\Track;
  */
 class RemoveListenerTest extends PumukitTestCase
 {
-    private $dm;
     private $repoJobs;
     private $repoMmobj;
     private $repoSeries;
@@ -23,12 +22,12 @@ class RemoveListenerTest extends PumukitTestCase
     private $resourcesDir;
     private $tokenStorage;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->dm = parent::setUp();
+        parent::setUp();
 
         $this->repoJobs = $this->dm->getRepository(Job::class);
         $this->repoMmobj = $this->dm->getRepository(MultimediaObject::class);
@@ -40,9 +39,9 @@ class RemoveListenerTest extends PumukitTestCase
         $this->resourcesDir = realpath(__DIR__.'/../Resources');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
-        $this->dm = parent::tearDown();
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->repoJobs = null;

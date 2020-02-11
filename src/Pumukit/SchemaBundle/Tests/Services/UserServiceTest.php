@@ -24,17 +24,16 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
  */
 class UserServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
     private $permissionProfileRepo;
     private $userService;
     private $logger;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-        $this->dm = parent::setUp();
+        parent::setUp();
         $this->logger = $this->getMockBuilder(LoggerInterface::class)
             ->disableOriginalConstructor()
             ->getMock()
@@ -64,14 +63,9 @@ class UserServiceTest extends PumukitTestCase
 
         $listener = new PermissionProfileListener($this->dm, $this->userService, $this->logger);
         $dispatcher->addListener('permissionprofile.update', [$listener, 'postUpdate']);
-
-        $this->dm->getDocumentCollection(User::class)->remove([]);
-        $this->dm->getDocumentCollection(Group::class)->remove([]);
-        $this->dm->getDocumentCollection(PermissionProfile::class)->remove([]);
-        $this->dm->flush();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();

@@ -13,7 +13,6 @@ use Pumukit\SchemaBundle\Document\Track;
  */
 class SeriesPlaylistServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $mmobjRepo;
     private $seriesRepo;
     private $seriesPlaylistService;
@@ -21,9 +20,9 @@ class SeriesPlaylistServiceTest extends PumukitTestCase
     private $testPlaylistMmobjs;
     private $testSeries;
 
-    public function setUp()
+    public function setUp(): void
     {
-        $this->dm = parent::setUp();
+        parent::setUp();
 
         $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
         $this->seriesRepo = $this->dm->getRepository(Series::class);
@@ -87,9 +86,9 @@ class SeriesPlaylistServiceTest extends PumukitTestCase
         $this->testSeries = $series;
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
-        $this->dm = parent::tearDown();
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->mmobjRepo = null;

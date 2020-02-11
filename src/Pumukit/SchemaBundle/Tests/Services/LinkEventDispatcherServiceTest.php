@@ -2,18 +2,18 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Link;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Event\LinkEvent;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Services\LinkEventDispatcherService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class LinkEventDispatcherServiceTest extends WebTestCase
+class LinkEventDispatcherServiceTest extends PumukitTestCase
 {
     const EMPTY_TITLE = 'EMTPY TITLE';
     const EMPTY_URL = 'EMTPY URL';
@@ -21,14 +21,12 @@ class LinkEventDispatcherServiceTest extends WebTestCase
     private $linkDispatcher;
     private $dispatcher;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dispatcher = static::$kernel->getContainer()
-            ->get('event_dispatcher')
-        ;
+        parent::setUp();
+        $this->dispatcher = static::$kernel->getContainer()->get('event_dispatcher');
 
         MockUpLinkListener::$called = false;
         MockUpLinkListener::$title = self::EMPTY_TITLE;
@@ -37,12 +35,12 @@ class LinkEventDispatcherServiceTest extends WebTestCase
         $this->linkDispatcher = new LinkEventDispatcherService($this->dispatcher);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dispatcher = null;
         $this->linkDispatcher = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testDispatchCreate()

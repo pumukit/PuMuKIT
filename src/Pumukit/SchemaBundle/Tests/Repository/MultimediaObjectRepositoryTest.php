@@ -27,7 +27,6 @@ use Pumukit\SchemaBundle\Document\User;
  */
 class MultimediaObjectRepositoryTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
     private $qb;
     private $factoryService;
@@ -35,29 +34,19 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
     private $tagService;
     private $groupRepo;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-        $this->dm = parent::setUp();
-        $this->repo = $this->dm
-            ->getRepository(MultimediaObject::class)
-        ;
-        $this->factoryService = static::$kernel->getContainer()
-            ->get('pumukitschema.factory')
-        ;
-        $this->mmsPicService = static::$kernel->getContainer()
-            ->get('pumukitschema.mmspic')
-        ;
-        $this->tagService = static::$kernel->getContainer()
-            ->get('pumukitschema.tag')
-        ;
-        $this->groupRepo = $this->dm
-            ->getRepository(Group::class)
-        ;
+        parent::setUp();
+        $this->repo = $this->dm->getRepository(MultimediaObject::class);
+        $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
+        $this->mmsPicService = static::$kernel->getContainer()->get('pumukitschema.mmspic');
+        $this->tagService = static::$kernel->getContainer()->get('pumukitschema.tag');
+        $this->groupRepo = $this->dm->getRepository(Group::class);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();

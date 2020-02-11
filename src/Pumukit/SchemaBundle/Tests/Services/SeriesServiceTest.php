@@ -15,33 +15,23 @@ use Pumukit\SchemaBundle\Services\SeriesService;
  */
 class SeriesServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
     private $seriesService;
     private $seriesDispatcher;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->dm = parent::setUp();
+        parent::setUp();
 
-        $this->repo = $this->dm
-            ->getRepository(Series::class)
-        ;
-        $this->seriesService = static::$kernel->getContainer()
-            ->get('pumukitschema.series')
-        ;
-        $this->seriesDispatcher = static::$kernel->getContainer()
-            ->get('pumukitschema.series_dispatcher')
-        ;
-
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
-        $this->dm->flush();
+        $this->repo = $this->dm->getRepository(Series::class);
+        $this->seriesService = static::$kernel->getContainer()->get('pumukitschema.series');
+        $this->seriesDispatcher = static::$kernel->getContainer()->get('pumukitschema.series_dispatcher');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();

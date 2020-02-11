@@ -2,53 +2,36 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\EmbeddedEvent;
 use Pumukit\SchemaBundle\Document\EmbeddedEventSession;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class EmbeddedEventSessionServiceTest extends WebTestCase
+class EmbeddedEventSessionServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $service;
     private $factoryService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
-
-        $this->service = static::$kernel->getContainer()
-            ->get('pumukitschema.eventsession')
-        ;
-        $this->factoryService = static::$kernel->getContainer()
-            ->get('pumukitschema.factory')
-        ;
-
-        $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(Series::class)
-            ->remove([])
-        ;
-        $this->dm->flush();
+        parent::setUp();
+        $this->service = static::$kernel->getContainer()->get('pumukitschema.eventsession');
+        $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
         $this->service = null;
         $this->factoryService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testToday()

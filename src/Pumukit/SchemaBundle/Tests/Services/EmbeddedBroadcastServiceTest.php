@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class EmbeddedBroadcastServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $mmRepo;
     private $embeddedBroadcastService;
     private $mmsService;
@@ -27,37 +26,23 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
     private $templating;
     private $router;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->dm = parent::setUp();
+        parent::setUp();
 
-        $this->mmRepo = $this->dm
-            ->getRepository(MultimediaObject::class)
-        ;
-        $this->embeddedBroadcastService = static::$kernel->getContainer()
-            ->get('pumukitschema.embeddedbroadcast')
-        ;
-        $this->mmsService = static::$kernel->getContainer()
-            ->get('pumukitschema.multimedia_object')
-        ;
-        $this->dispatcher = static::$kernel->getContainer()
-            ->get('pumukitschema.multimediaobject_dispatcher')
-        ;
-        $this->authorizationChecker = static::$kernel->getContainer()
-            ->get('security.authorization_checker')
-        ;
-        $this->templating = static::$kernel->getContainer()
-            ->get('templating')
-        ;
-        $this->router = static::$kernel->getContainer()
-            ->get('router')
-        ;
+        $this->mmRepo = $this->dm->getRepository(MultimediaObject::class);
+        $this->embeddedBroadcastService = static::$kernel->getContainer()->get('pumukitschema.embeddedbroadcast');
+        $this->mmsService = static::$kernel->getContainer()->get('pumukitschema.multimedia_object');
+        $this->dispatcher = static::$kernel->getContainer()->get('pumukitschema.multimediaobject_dispatcher');
+        $this->authorizationChecker = static::$kernel->getContainer()->get('security.authorization_checker');
+        $this->templating = static::$kernel->getContainer()->get('templating');
+        $this->router = static::$kernel->getContainer()->get('router');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();

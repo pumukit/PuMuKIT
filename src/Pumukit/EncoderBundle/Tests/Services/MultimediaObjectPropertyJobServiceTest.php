@@ -12,21 +12,17 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
  */
 class MultimediaObjectPropertyJobServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $service;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-        $this->dm = parent::setUp();
+        parent::setUp();
         $this->service = static::$kernel->getContainer()->get('pumukitencoder.mmpropertyjob');
-
-        $this->dm->getDocumentCollection(Job::class)->remove([]);
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();

@@ -2,41 +2,32 @@
 
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Role;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class RoleRepositoryTest extends WebTestCase
+class RoleRepositoryTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
-        $this->repo = $this->dm
-            ->getRepository(Role::class)
-        ;
-
-        //DELETE DATABASE
-        $this->dm->getDocumentCollection(Role::class)->remove([]);
-        $this->dm->flush();
+        parent::setUp();
+        $this->repo = $this->dm->getRepository(Role::class);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->repo = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testRepository()

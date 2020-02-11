@@ -19,10 +19,10 @@ class InspectionFfprobeServiceTest extends TestCase
     private $wrong_file_subtitle;
     private $vid_no_audio;
 
-    public function setUp()
+    public function setUp(): void
     {
         if (false === TestCommand::commandExists('ffprobe')) {
-            $this->markTestSkipped('FFprobe test marks skipped (No ffprobe command).');
+            static::markTestSkipped('FFprobe test marks skipped (No ffprobe command).');
         }
 
         $this->resources_dir = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR;
@@ -32,7 +32,7 @@ class InspectionFfprobeServiceTest extends TestCase
         $this->vid_no_audio = $this->resources_dir.'SCREEN.mp4';
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->resources_dir = null;
         $this->wrong_file_textfile = null;

@@ -19,23 +19,22 @@ use Pumukit\SchemaBundle\Document\Series;
  */
 class MultimediaObjectInSeriesTest extends PumukitTestCase
 {
-    private $dm;
     private $seriesRepo;
     private $mmobjRepo;
     private $factoryService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-        $this->dm = parent::setUp();
+        parent::setUp();
         $container = static::$kernel->getContainer();
         $this->factoryService = $container->get('pumukitschema.factory');
         $this->seriesRepo = $this->dm->getRepository(Series::class);
         $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();
