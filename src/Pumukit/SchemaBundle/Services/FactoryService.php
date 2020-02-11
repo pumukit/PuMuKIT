@@ -69,7 +69,7 @@ class FactoryService
      *
      * @return Series
      */
-    public function createSeries(User $loggedInUser = null, array $title = null)
+    public function createSeries(User $loggedInUser = null, array $title = null): Series
     {
         return $this->createCollection(Series::TYPE_SERIES, $loggedInUser, $title);
     }

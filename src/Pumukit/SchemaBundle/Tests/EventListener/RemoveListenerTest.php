@@ -73,15 +73,15 @@ class RemoveListenerTest extends PumukitTestCase
 
         $this->createJobWithStatus(Job::STATUS_FINISHED, $multimediaObject);
 
-        $this->assertEquals(1, count($this->repoSeries->findAll()));
-        $this->assertEquals(2, count($this->repoMmobj->findAll()));
-        $this->assertEquals(1, count($this->repoJobs->findAll()));
+        $this->assertCount(1, $this->repoSeries->findAll());
+        $this->assertCount(2, $this->repoMmobj->findAll());
+        $this->assertCount(1, $this->repoJobs->findAll());
 
         $this->factoryService->deleteMultimediaObject($multimediaObject);
 
-        $this->assertEquals(1, count($this->repoSeries->findAll()));
-        $this->assertEquals(1, count($this->repoMmobj->findAll()));
-        $this->assertEquals(0, count($this->repoJobs->findAll()));
+        $this->assertCount(1, $this->repoSeries->findAll());
+        $this->assertCount(1, $this->repoMmobj->findAll());
+        $this->assertCount(0, $this->repoJobs->findAll());
     }
 
     /**
