@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\RoleRepository")
  */
-class Role
+class Role implements RoleInterface
 {
     /**
      * @MongoDB\Id
@@ -91,22 +91,12 @@ class Role
         return $this->id;
     }
 
-    /**
-     * Set cod.
-     *
-     * @param string $cod
-     */
-    public function setCod($cod)
+    public function setCod(string $cod): void
     {
         $this->cod = $cod;
     }
 
-    /**
-     * Get cod.
-     *
-     * @return string
-     */
-    public function getCod()
+    public function getCod(): string
     {
         return $this->cod;
     }

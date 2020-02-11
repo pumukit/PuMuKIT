@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -21,7 +22,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
 {
     /** @var TranslatorInterface */
     private $translator;
-    /** @var SessionInterface */
+    /** @var Session */
     private $session;
     /** @var MaterialService */
     private $materialService;

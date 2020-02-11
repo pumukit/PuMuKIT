@@ -117,7 +117,7 @@ class UserController extends AdminController
                             return $response;
                         }
                         // false to not flush
-                        $userManager->updateUser($user, false);
+                        $userManager->updateUser($user);
                         // To update aditional fields added
                         $this->userService->update($user);
                     }

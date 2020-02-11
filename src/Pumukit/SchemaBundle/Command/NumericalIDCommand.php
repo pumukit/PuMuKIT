@@ -60,6 +60,8 @@ EOT
             default:
                 $output->writeln(' ***** Please select an valid step');
         }
+
+        return 0;
     }
 
     private function generateNewNumericalID()
@@ -158,6 +160,10 @@ EOT
                 ->getSingleResult()
             ;
 
+            if (!$series instanceof Series) {
+                throw new \Exception('Series with numerical_id not found');
+            }
+
             $lastNumericalID = $series->getNumericalID();
         } else {
             $multimediaObject = $this->dm->getRepository(MultimediaObject::class)->createQueryBuilder()
@@ -167,6 +173,9 @@ EOT
                 ->getSingleResult()
             ;
 
+            if (!$multimediaObject instanceof MultimediaObject) {
+                throw new \Exception('MultimediaObject with numerical_id not found');
+            }
             $lastNumericalID = $multimediaObject->getNumericalID();
         }
 

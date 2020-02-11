@@ -8,14 +8,13 @@ use MongoDB\BSON\ObjectId;
 use Pumukit\BasePlayerBundle\Utils\CountableAppendIterator;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Repository\MultimediaObjectRepository;
 
 class SeriesPlaylistService
 {
-    /**
-     * @var DocumentManager
-     */
+    /** @var DocumentManager */
     private $dm;
-
+    /** @var MultimediaObjectRepository */
     private $mmobjRepo;
 
     public function __construct(DocumentManager $dm)

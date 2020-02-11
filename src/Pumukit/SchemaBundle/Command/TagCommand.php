@@ -57,6 +57,8 @@ EOT
         $this->updateTag($tag, $display);
 
         $output->writeln(sprintf('<info>Tag with code "%s" has been set with display to %b.</info>', $tagCode, $display));
+
+        return 0;
     }
 
     private function updateTag(Tag $tag, bool $display): Tag

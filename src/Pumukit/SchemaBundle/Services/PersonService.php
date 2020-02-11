@@ -11,25 +11,28 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Repository\MultimediaObjectRepository;
+use Pumukit\SchemaBundle\Repository\PersonRepository;
+use Pumukit\SchemaBundle\Repository\RoleRepository;
 use Pumukit\SchemaBundle\Utils\Search\SearchUtils;
 
 class PersonService
 {
+    /** @var DocumentManager */
     private $dm;
+    /** @var PersonWithRoleEventDispatcherService */
     private $dispatcher;
+    /** @var PersonRepository */
     private $repoPerson;
+    /** @var MultimediaObjectRepository */
     private $repoMmobj;
+    /** @var UserService */
     private $userService;
     private $addUserAsPerson;
     private $personalScopeRoleCode;
+    /** @var RoleRepository */
     private $repoRole;
 
-    /**
-     * Constructor.
-     *
-     * @param bool   $addUserAsPerson
-     * @param string $personalScopeRoleCode
-     */
     public function __construct(DocumentManager $documentManager, PersonWithRoleEventDispatcherService $dispatcher, UserService $userService, $addUserAsPerson = true, $personalScopeRoleCode = 'owner')
     {
         $this->dm = $documentManager;

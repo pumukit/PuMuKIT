@@ -121,8 +121,8 @@ class FactoryServiceTest extends PumukitTestCase
 
         //Workaround to fix reference method initialization.
         $this->dm->clear(get_class($series_type1));
-        $series_type1 = $this->dm->find('PumukitSchemaBundle:SeriesType', $series_type1->getId());
-        $series_type2 = $this->dm->find('PumukitSchemaBundle:SeriesType', $series_type2->getId());
+        $series_type1 = $this->dm->getRepository(SeriesType::class)->findOneBy(['_id' => $series_type1->getId()]);
+        $series_type2 = $this->dm->getRepository(SeriesType::class)->findOneBy(['_id' => $series_type2->getId()]);
 
         $series1 = $this->factory->createSeries();
         $name1 = 'Series 1';

@@ -73,6 +73,8 @@ EOT
         }
 
         $this->findFilesOfPath($output, $this->path);
+
+        return 0;
     }
 
     private function findFilesOfPath(OutputInterface $output, string $path)

@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +18,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BasePlayerController extends BasePlayerControllero implements PersonalControllerInterface
 {
+    private $pumukitPlayerWhenDispatchViewEvent;
+
+    public function __construct(EventDispatcherInterface $eventDispatcher, string $pumukitPlayerWhenDispatchViewEvent)
+    {
+        parent::__construct($eventDispatcher);
+        $this->pumukitPlayerWhenDispatchViewEvent = $pumukitPlayerWhenDispatchViewEvent;
+    }
+
     /**
      * @Route("/videoplayer/{id}", name="pumukit_videoplayer_index", defaults={"no_channels": true} )
      * @Template("PumukitJWPlayerBundle:JWPlayer:player.html.twig")
@@ -114,7 +123,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
         return [
             'autoStart' => $request->query->get('autostart', 'false'),
             'intro' => $basePlayerIntroService->getVideoIntroduction($multimediaObject, $request->query->getBoolean('intro')),
-            'whenDispatchViewEvent' => $this->container->getParameter('pumukitplayer.when_dispatch_view_event'),
+            'whenDispatchViewEvent' => $this->pumukitPlayerWhenDispatchViewEvent,
         ];
     }
 }

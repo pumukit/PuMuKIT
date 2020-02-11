@@ -125,6 +125,8 @@ EOT
                 $output->writeln($key.' - '.$value);
             }
         }
+
+        return 0;
     }
 
     protected function executeTags(): array

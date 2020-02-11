@@ -9,6 +9,7 @@ use Pumukit\NewAdminBundle\Services\MultimediaObjectSearchService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
@@ -471,7 +472,7 @@ class PlaylistMultimediaObjectController extends AbstractController
     protected function enableFilter(): void
     {
         $user = $this->securityTokenStorage->getToken()->getUser();
-        if ($this->isGranted(PermissionProfile::SCOPE_GLOBAL)) {
+        if (!$user instanceof User || $this->isGranted(PermissionProfile::SCOPE_GLOBAL)) {
             return;
         }
         $this->documentManager->getFilterCollection()->disable('backoffice');

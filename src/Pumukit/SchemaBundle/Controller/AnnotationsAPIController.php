@@ -212,7 +212,7 @@ class AnnotationsAPIController extends AbstractController
         $annonQB->field('multimediaObject')->equals(new ObjectId($multimediaobject->getId()));
         $annonQB->remove()->getQuery()->execute();
 
-        $response = $serializer->serialize(['status' => 'ok'], 'xml');
+        $response = $serializer->dataSerialize(['status' => 'ok'], 'xml');
 
         return new Response($response);
     }
