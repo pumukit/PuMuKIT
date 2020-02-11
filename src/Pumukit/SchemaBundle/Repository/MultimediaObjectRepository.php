@@ -655,22 +655,21 @@ class MultimediaObjectRepository extends DocumentRepository
         return $qb->getQuery()->getSingleResult();
     }
 
-    /**
-     * Find multimedia objects without tag id.
-     *
-     * @param array $sort
-     * @param int   $limit
-     * @param int   $page
-     *
-     * @return mixed
-     */
-    public function findWithoutTag(Tag $tag, $sort = [], $limit = 0, $page = 0)
+    public function qbWithoutTag(Tag $tag, array $sort = [], int $limit = 0, int $page = 0)
     {
         $qb = $this->createStandardQueryBuilder()->field('tags._id')->notEqual(new ObjectId($tag->getId()));
-
         $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
+        return $qb->getQuery();
+    }
 
-        return $qb->getQuery()->execute();
+    public function findWithoutTag(Tag $tag, array $sort = [], int $limit = 0, int $page = 0)
+    {
+        return $this->qbWithoutTag($tag, $sort, $limit, $page)->execute();
+    }
+
+    public function countWithoutTag(Tag $tag, array $sort = [], int $limit = 0, int $page = 0)
+    {
+        return $this->qbWithoutTag($tag, $sort, $limit, $page)->count();
     }
 
     /**
