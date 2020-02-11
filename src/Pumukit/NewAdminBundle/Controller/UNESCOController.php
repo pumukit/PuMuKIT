@@ -213,10 +213,9 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
         $countMultimediaObjects = $this->documentManager->getRepository(MultimediaObject::class)->count();
 
-        $countMultimediaObjectsWithoutTag = $this->documentManager->getRepository(MultimediaObject::class)->findWithoutTag(
+        $countMultimediaObjectsWithoutTag = $this->documentManager->getRepository(MultimediaObject::class)->countWithoutTag(
             $configuredTag
         );
-
         $defaultTagOptions = [
             [
                 'key' => 2,
@@ -226,7 +225,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
             [
                 'key' => 1,
                 'title' => $this->translator->trans('Without category'),
-                'count' => count($countMultimediaObjectsWithoutTag),
+                'count' => $countMultimediaObjectsWithoutTag,
             ],
         ];
 
