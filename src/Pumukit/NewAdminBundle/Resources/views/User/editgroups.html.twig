@@ -21,7 +21,7 @@
                 </div>
                 <div class="pumukitnewadmin-groups-boxes">
                     <div class="tag list-group pmk-tag-tree pumukitnewadmin-groups-list-box" id="delete_groups">
-                        {% include 'PumukitNewAdminBundle:User:availablegroups.html.twig' with {'user': user, 'groups': groups} %}
+                        {% include '@PumukitNewAdmin/User/availablegroups.html.twig' with {'user': user, 'groups': groups} %}
                     </div>
                     <div class="pumukitnewadmin-groups-arrows">
                         <a href="#" onclick="$('#add_groups > a.active').trigger('dblclick'); return false;">&#8592;</a>
@@ -30,7 +30,7 @@
                     {# Groups added to the user #}
                     <div class="tag pumukitnewadmin-groups-list-box" id="select_tag">
                         <div class="tag_tree list-group" id="add_groups">
-                            {% include 'PumukitNewAdminBundle:User:selectedgroups.html.twig' with {'user': user, 'groups': groups} %}
+                            {% include '@PumukitNewAdmin/User/selectedgroups.html.twig' with {'user': user, 'groups': groups} %}
                         </div>
                     </div>
                 </div>

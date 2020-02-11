@@ -152,7 +152,7 @@ class MultimediaObjectController extends SortableAdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:MultimediaObject:index.html.twig")
+     * @Template("@PumukitNewAdmin/MultimediaObject/index.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -202,7 +202,7 @@ class MultimediaObjectController extends SortableAdminController
     {
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['id' => $id]);
         if (!$multimediaObject) {
-            $template = 'PumukitNewAdminBundle:MultimediaObject:404notfound.html.twig';
+            $template = '@PumukitNewAdmin/MultimediaObject/404notfound.html.twig';
             $options = ['id' => $id];
 
             return new Response($this->renderView($template, $options), 404);
@@ -247,7 +247,7 @@ class MultimediaObjectController extends SortableAdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:MultimediaObject:show.html.twig")
+     * @Template("@PumukitNewAdmin/MultimediaObject/show.html.twig")
      */
     public function showAction(Request $request)
     {
@@ -262,7 +262,7 @@ class MultimediaObjectController extends SortableAdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:MultimediaObject:edit.html.twig")
+     * @Template("@PumukitNewAdmin/MultimediaObject/edit.html.twig")
      */
     public function editAction(Request $request)
     {
@@ -347,7 +347,7 @@ class MultimediaObjectController extends SortableAdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:MultimediaObject:links.html.twig")
+     * @Template("@PumukitNewAdmin/MultimediaObject/links.html.twig")
      */
     public function linksAction(MultimediaObject $resource)
     {
@@ -361,7 +361,7 @@ class MultimediaObjectController extends SortableAdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:MultimediaObject:updatesocial.html.twig")
+     * @Template("@PumukitNewAdmin/MultimediaObject/updatesocial.html.twig")
      */
     public function updatesocialAction(Request $request)
     {
@@ -439,7 +439,7 @@ class MultimediaObjectController extends SortableAdminController
         }
 
         return $this->render(
-            'PumukitNewAdminBundle:MultimediaObject:edit.html.twig',
+            '@PumukitNewAdmin/MultimediaObject/edit.html.twig',
             [
                 'mm' => $resource,
                 'form_meta' => $formMeta->createView(),
@@ -524,7 +524,7 @@ class MultimediaObjectController extends SortableAdminController
             $mms = $this->getListMultimediaObjects($series);
             if (false === strpos($request->server->get('HTTP_REFERER'), 'mmslist')) {
                 return $this->render(
-                    'PumukitNewAdminBundle:MultimediaObject:list.html.twig',
+                    '@PumukitNewAdmin/MultimediaObject/list.html.twig',
                     [
                         'series' => $series,
                         'mms' => $mms,
@@ -551,7 +551,7 @@ class MultimediaObjectController extends SortableAdminController
         $allGroups = $this->getAllGroups();
 
         return $this->render(
-            'PumukitNewAdminBundle:MultimediaObject:edit.html.twig',
+            '@PumukitNewAdmin/MultimediaObject/edit.html.twig',
             [
                 'mm' => $resource,
                 'form_meta' => $formMeta->createView(),
@@ -570,7 +570,7 @@ class MultimediaObjectController extends SortableAdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:MultimediaObject:listtagsajax.html.twig")
+     * @Template("@PumukitNewAdmin/MultimediaObject/listtagsajax.html.twig")
      */
     public function getChildrenTagAction(Tag $tag, Request $request)
     {
@@ -655,7 +655,7 @@ class MultimediaObjectController extends SortableAdminController
 
         if (!$result) {
             return $this->render(
-                'PumukitNewAdminBundle:MultimediaObject:listtagsajaxnone.html.twig',
+                '@PumukitNewAdmin/MultimediaObject/listtagsajaxnone.html.twig',
                 ['mmId' => $mmId, 'parentId' => $parent->getId()]
             );
         }
@@ -672,7 +672,7 @@ class MultimediaObjectController extends SortableAdminController
         );
 
         return $this->render(
-            'PumukitNewAdminBundle:MultimediaObject:listtagsajax.html.twig',
+            '@PumukitNewAdmin/MultimediaObject/listtagsajax.html.twig',
             ['nodes' => $result, 'mmId' => $mmId, 'block_tag' => $parent->getId(), 'parent' => $parent, 'search_text' => $search_text]
         );
     }
@@ -817,7 +817,7 @@ class MultimediaObjectController extends SortableAdminController
         }
 
         return $this->render(
-            'PumukitNewAdminBundle:MultimediaObject:list.html.twig',
+            '@PumukitNewAdmin/MultimediaObject/list.html.twig',
             [
                 'series' => $series,
                 'mms' => $mms,
@@ -949,7 +949,7 @@ class MultimediaObjectController extends SortableAdminController
         $parent = $repo->findOneBy(['_id' => $request->get('parentId')]);
 
         return $this->render(
-            'PumukitNewAdminBundle:MultimediaObject:listtagsajax.html.twig',
+            '@PumukitNewAdmin/MultimediaObject/listtagsajax.html.twig',
             ['nodes' => $parent->getChildren(), 'mmId' => $mmId, 'block_tag' => $parent->getId(), 'parent' => 'root']
         );
     }
@@ -1033,7 +1033,7 @@ class MultimediaObjectController extends SortableAdminController
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "id"})
-     * @Template("PumukitNewAdminBundle:MultimediaObject:updatebroadcast.html.twig")
+     * @Template("@PumukitNewAdmin/MultimediaObject/updatebroadcast.html.twig")
      */
     public function updateBroadcastAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -1105,7 +1105,7 @@ class MultimediaObjectController extends SortableAdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:MultimediaObject:listProperties.html.twig")
+     * @Template("@PumukitNewAdmin/MultimediaObject/listProperties.html.twig")
      */
     public function listPropertiesAction(MultimediaObject $multimediaObject)
     {
@@ -1114,7 +1114,7 @@ class MultimediaObjectController extends SortableAdminController
 
     /**
      * @Security("is_granted('ROLE_ADD_EXTERNAL_PLAYER')")
-     * @Template("PumukitNewAdminBundle:MultimediaObject:listExternalPlayer.html.twig")
+     * @Template("@PumukitNewAdmin/MultimediaObject/listExternalPlayer.html.twig")
      */
     public function listExternalPlayerAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -1156,7 +1156,7 @@ class MultimediaObjectController extends SortableAdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:MultimediaObject:modalPreview.html.twig")
+     * @Template("@PumukitNewAdmin/MultimediaObject/modalPreview.html.twig")
      */
     public function modalPreviewAction(Multimediaobject $multimediaObject)
     {
@@ -1167,7 +1167,7 @@ class MultimediaObjectController extends SortableAdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:MultimediaObject:status.html.twig")
+     * @Template("@PumukitNewAdmin/MultimediaObject/status.html.twig")
      */
     public function statusAction(MultimediaObject $mm, Request $request)
     {
@@ -1175,7 +1175,7 @@ class MultimediaObjectController extends SortableAdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:MultimediaObject:indexAll.html.twig")
+     * @Template("@PumukitNewAdmin/MultimediaObject/indexAll.html.twig")
      */
     public function indexAllAction(Request $request)
     {
@@ -1220,7 +1220,7 @@ class MultimediaObjectController extends SortableAdminController
         $resources = $this->getResources($request, $criteria);
 
         return $this->render(
-            'PumukitNewAdminBundle:MultimediaObject:listAll.html.twig',
+            '@PumukitNewAdmin/MultimediaObject/listAll.html.twig',
             [
                 'mms' => $resources,
                 'disable_pudenew' => !$this->showLatestWithPudeNew,
@@ -1314,7 +1314,7 @@ class MultimediaObjectController extends SortableAdminController
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "id"})
-     * @Template("PumukitNewAdminBundle:MultimediaObject:modalsyncmetadata.html.twig")
+     * @Template("@PumukitNewAdmin/MultimediaObject/modalsyncmetadata.html.twig")
      */
     public function modalSyncMedatadaAction(Request $request, MultimediaObject $multimediaObject)
     {
@@ -1607,7 +1607,7 @@ class MultimediaObjectController extends SortableAdminController
             $mms = $this->getListMultimediaObjects($resource->getSeries());
 
             return $this->render(
-                'PumukitNewAdminBundle:MultimediaObject:list.html.twig',
+                '@PumukitNewAdmin/MultimediaObject/list.html.twig',
                 [
                     'mms' => $mms,
                     'series' => $resource->getSeries(),

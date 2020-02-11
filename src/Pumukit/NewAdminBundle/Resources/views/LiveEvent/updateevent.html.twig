@@ -1,4 +1,4 @@
-{% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
+{% form_theme form '@PumukitNewAdmin/Themes/fields.html.twig' %}
 
 <div class="well" style="overflow:hidden">
     {{ form_start(form, {'attr': {'id': 'form_event'}}) }}
@@ -70,7 +70,7 @@
             <div class="form-group">
                 <label>{% trans %}Images{% endtrans %}</label>
                 <div id="pic_mms_{{ multimediaObject.getId() }}">
-                    {% include 'PumukitNewAdminBundle:Pic:list.html.twig' with {'resource': multimediaObject, 'resource_name': 'mms'} %}
+                    {% include '@PumukitNewAdmin/Pic/list.html.twig' with {'resource': multimediaObject, 'resource_name': 'mms'} %}
                 </div>
             </div>
 
@@ -93,7 +93,7 @@
             <div class="form-group">
                 <label>{% trans %}Attachments{% endtrans %}</label>
                 <div id="materials_mms_{{ multimediaObject.id }}">
-                    {% include 'PumukitNewAdminBundle:Material:list.html.twig' with {'mmId': multimediaObject.id, 'materials': multimediaObject.getMaterials()} %}
+                    {% include '@PumukitNewAdmin/Material/list.html.twig' with {'mmId': multimediaObject.id, 'materials': multimediaObject.getMaterials()} %}
                 </div>
             </div>
 
@@ -133,7 +133,7 @@
             <div class="form-group" style="display:none" id="pumukitnewadmin_live_event_poster_image">
                 <label>{% trans %}Event poster{% endtrans %}</label>
                 <div id="pic_events_{{ multimediaObject.getId() }}">
-                    {% include 'PumukitNewAdminBundle:Pic:list.html.twig' with {'resource': multimediaObject, 'resource_name': 'mms', 'is_event_poster': true} %}
+                    {% include '@PumukitNewAdmin/Pic/list.html.twig' with {'resource': multimediaObject, 'resource_name': 'mms', 'is_event_poster': true} %}
                 </div>
             </div>
 
@@ -149,7 +149,7 @@
             <div class="form-group">
                 <label>{% trans %}Broadcast profile{% endtrans %}</label>
                 <div class="row">
-                    {% include 'PumukitNewAdminBundle:MultimediaObject:listbroadcast.html.twig' with {'mm': multimediaObject, 'template' : '' } %}
+                    {% include '@PumukitNewAdmin/MultimediaObject/listbroadcast.html.twig' with {'mm': multimediaObject, 'template' : '' } %}
                 </div>
             </div>
 

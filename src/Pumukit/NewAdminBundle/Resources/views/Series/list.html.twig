@@ -13,7 +13,7 @@
                 </th>
                 <th id="th-icons" colspan="{{ is_naked() ? 1 : 3 }}" width="4%"></th>
                 <th id="th-img" width="5%"></th>
-                {% include 'PumukitNewAdminBundle:Series:listth.html.twig' %}
+                {% include '@PumukitNewAdmin/Series/listth.html.twig' %}
             </tr>
             </thead>
 
@@ -47,10 +47,10 @@
                         </td>
                     {% endif %}
                     <td headers="th-icons">
-                        {% include 'PumukitNewAdminBundle:Series:updatemenu.html.twig' with {'oneseries': oneseries, 'numV': numV} %}
+                        {% include '@PumukitNewAdmin/Series/updatemenu.html.twig' with {'oneseries': oneseries, 'numV': numV} %}
                     </td>
                     <td headers="th-img" onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
-                        {% include "PumukitNewAdminBundle:Misc:img_list.html.twig" with {'object': oneseries, 'type' : 'series'} %}
+                        {% include "@PumukitNewAdmin/Misc/img_list.html.twig" with {'object': oneseries, 'type' : 'series'} %}
                     </td>
                     <td headers="th-title" onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
                         <a href="{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}">

@@ -18,7 +18,7 @@ class StatsController extends AbstractController
      * @Route("/objects", name="pumukit_stats_mmobj_index")
      * @Route("/series/{id}", name="pumukit_stats_series_index_id")
      * @Route("/objects/{id}", name="pumukit_stats_mmobj_index_id")
-     * @Template("PumukitStatsUIBundle:Stats:index.html.twig")
+     * @Template("@PumukitStatsUI/Stats/index.html.twig")
      */
     public function indexAction(): array
     {

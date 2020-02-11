@@ -1,4 +1,4 @@
-{% extends 'PumukitNewAdminBundle:Inbox:base.html.twig' %}
+{% extends '@PumukitNewAdmin/Inbox/base.html.twig' %}
 
 {% block inbox_body %}
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
@@ -9,7 +9,7 @@
   </span>
   <span>
     {{ dir }}
-  </span>                  
+  </span>
 </a>
 {% else %}
   {% trans %}You don't have enough permissions to access this content.{% endtrans %}

@@ -23,7 +23,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ModulesController extends AbstractController implements WebTVControllerInterface
 {
     public static $menuResponse = null;
-    private $menuTemplate = 'PumukitWebTVBundle:Modules:widget_menu.html.twig';
+    private $menuTemplate = '@PumukitWebTV/Modules/widget_menu.html.twig';
 
     /** @var TranslatorInterface */
     private $translator;
@@ -115,7 +115,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
     }
 
     /**
-     * @Template("PumukitWebTVBundle:Modules:widget_media.html.twig")
+     * @Template("@PumukitWebTV/Modules/widget_media.html.twig")
      */
     public function mostViewedAction(string $design = 'horizontal')
     {
@@ -147,7 +147,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
     /**
      * Returns all videos with PUDENEW tag.
      *
-     * @Template("PumukitWebTVBundle:Modules:widget_media.html.twig")
+     * @Template("@PumukitWebTV/Modules/widget_media.html.twig")
      */
     public function highlightAction()
     {
@@ -173,7 +173,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
     /**
      * Returns all videos without PUDENEW tag.
      *
-     * @Template("PumukitWebTVBundle:Modules:widget_media.html.twig")
+     * @Template("@PumukitWebTV/Modules/widget_media.html.twig")
      */
     public function recentlyAddedWithoutHighlightAction(string $design = 'horizontal')
     {
@@ -201,7 +201,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
     /**
      * Returns all videos without PUDENEW tag.
      *
-     * @Template("PumukitWebTVBundle:Modules:widget_media.html.twig")
+     * @Template("@PumukitWebTV/Modules/widget_media.html.twig")
      */
     public function recentlyAddedAllAction(string $design = 'horizontal')
     {
@@ -227,7 +227,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
     }
 
     /**
-     * @Template("PumukitWebTVBundle:Modules:widget_stats.html.twig")
+     * @Template("@PumukitWebTV/Modules/widget_stats.html.twig")
      */
     public function statsAction()
     {
@@ -244,7 +244,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
     }
 
     /**
-     * @Template("PumukitWebTVBundle:Modules:widget_breadcrumb.html.twig")
+     * @Template("@PumukitWebTV/Modules/widget_breadcrumb.html.twig")
      */
     public function breadcrumbsAction()
     {
@@ -252,7 +252,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
     }
 
     /**
-     * @Template("PumukitWebTVBundle:Modules:widget_language.html.twig")
+     * @Template("@PumukitWebTV/Modules/widget_language.html.twig")
      */
     public function languageAction()
     {
@@ -264,7 +264,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
     }
 
     /**
-     * @Template("PumukitWebTVBundle:Modules:widget_categories.html.twig")
+     * @Template("@PumukitWebTV/Modules/widget_categories.html.twig")
      *
      * @param mixed $categories
      */
@@ -314,7 +314,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
      * - showPudenew = true => Only videos with PUDENEW tag and announce property true
      * - showPudenew = false => Returns all videos.
      *
-     * @Template("PumukitWebTVBundle:Modules:widget_media.html.twig")
+     * @Template("@PumukitWebTV/Modules/widget_media.html.twig")
      */
     public function legacyRecentlyAdded(string $design = 'vertical')
     {
@@ -335,7 +335,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
     /**
      * This module represents old categories block of PuMuKIT. Remember fix responsive design ( depends of height of images ).
      *
-     * @Template("PumukitWebTVBundle:Modules:widget_block_categories.html.twig")
+     * @Template("@PumukitWebTV/Modules/widget_block_categories.html.twig")
      */
     public function legacyCategoriesAction()
     {
@@ -345,7 +345,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
     /**
      * This module represents old menu block of PuMuKIT ( vertical menu ). This design is just bootstrap panel example.
      *
-     * @Template("PumukitWebTVBundle:Modules:widget_menu.html.twig")
+     * @Template("@PumukitWebTV/Modules/widget_menu.html.twig")
      */
     public function legacyMenuAction()
     {
@@ -359,7 +359,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
     }
 
     /**
-     * @Template("PumukitWebTVBundle:Modules:widget_event.html.twig")
+     * @Template("@PumukitWebTV/Modules/widget_event.html.twig")
      */
     public function liveBlockAction()
     {
@@ -377,7 +377,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
     }
 
     /**
-     * @Template("PumukitWebTVBundle:Modules:widget_wall.html.twig")
+     * @Template("@PumukitWebTV/Modules/widget_wall.html.twig")
      */
     public function wallBlockAction()
     {
@@ -394,7 +394,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
     }
 
     /**
-     * @Template("PumukitWebTVBundle:Modules:widget_search.html.twig")
+     * @Template("@PumukitWebTV/Modules/widget_search.html.twig")
      */
     public function searchBlockAction()
     {
@@ -402,7 +402,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
     }
 
     /**
-     * @Template("PumukitWebTVBundle:Modules:widget_media.html.twig")
+     * @Template("@PumukitWebTV/Modules/widget_media.html.twig")
      */
     public function byTagBlockAction(string $tagCod, string $title)
     {
@@ -420,7 +420,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
     }
 
     /**
-     * @Template("PumukitWebTVBundle:Modules:widget_player.html.twig")
+     * @Template("@PumukitWebTV/Modules/widget_player.html.twig")
      */
     public function embedVideoBlockAction(string $tagCod)
     {

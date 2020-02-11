@@ -56,7 +56,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
         $resourceName = $this->getResourceName();
 
         return $this->render(
-            'PumukitNewAdminBundle:'.ucfirst($resourceName).':index.html.twig',
+            '@PumukitNewAdmin/'.ucfirst($resourceName).'/index.html.twig',
             [$pluralName => $resources]
         );
     }
@@ -92,7 +92,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
         }
 
         return $this->render(
-            'PumukitNewAdminBundle:'.ucfirst($resourceName).':create.html.twig',
+            '@PumukitNewAdmin/'.ucfirst($resourceName).'/create.html.twig',
             [
                 $resourceName => $resource,
                 'form' => $form->createView(),
@@ -127,7 +127,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
         }
 
         return $this->render(
-            'PumukitNewAdminBundle:'.ucfirst($resourceName).':update.html.twig',
+            '@PumukitNewAdmin/'.ucfirst($resourceName).'/update.html.twig',
             [
                 $resourceName => $resource,
                 'form' => $form->createView(),
@@ -161,7 +161,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
         $data = $this->findOr404($request);
 
         return $this->render(
-            'PumukitNewAdminBundle:'.ucfirst($resourceName).':show.html.twig',
+            '@PumukitNewAdmin/'.ucfirst($resourceName).'/show.html.twig',
             [$this->getResourceName() => $data]
         );
     }
@@ -195,7 +195,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
         $resources = $this->getResources($request, $criteria);
 
         return $this->render(
-            'PumukitNewAdminBundle:'.ucfirst($resourceName).':list.html.twig',
+            '@PumukitNewAdmin/'.ucfirst($resourceName).'/list.html.twig',
             [$pluralName => $resources]
         );
     }

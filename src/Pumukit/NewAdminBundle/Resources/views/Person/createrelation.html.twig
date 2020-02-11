@@ -26,7 +26,7 @@
                 });
                 return false;"
               action="{{ path('pumukitnewadmin_person_create_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}" method="POST">
-            {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
+            {% form_theme form '@PumukitNewAdmin/Themes/fields.html.twig' %}
             <input type="hidden" name="id" id="person_id" value="{{ person.id }}">
             <input type="hidden" name="roleId" id="roleId" value="{{ role.id }}">
             <input type="hidden" name="mmId" id="mmId" value="{{ mm.id }}">

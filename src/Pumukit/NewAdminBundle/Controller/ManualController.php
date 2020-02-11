@@ -14,7 +14,7 @@ class ManualController extends AbstractController implements NewAdminControllerI
 {
     /**
      * @Route("/manual")
-     * @Template("PumukitNewAdminBundle:Manual:index.html.twig")
+     * @Template("@PumukitNewAdmin/Manual/index.html.twig")
      */
     public function indexAction()
     {

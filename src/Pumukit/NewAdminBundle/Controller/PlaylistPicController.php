@@ -39,7 +39,7 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Pic:create.html.twig")
+     * @Template("@PumukitNewAdmin/Pic/create.html.twig")
      */
     public function createAction(Series $playlist)
     {
@@ -50,7 +50,7 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Pic:list.html.twig")
+     * @Template("@PumukitNewAdmin/Pic/list.html.twig")
      */
     public function listAction(Series $playlist)
     {
@@ -61,7 +61,7 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Pic:list.html.twig")
+     * @Template("@PumukitNewAdmin/Pic/list.html.twig")
      */
     public function updateAction(Request $request, Series $playlist)
     {
@@ -83,7 +83,7 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Pic:upload.html.twig")
+     * @Template("@PumukitNewAdmin/Pic/upload.html.twig")
      */
     public function uploadAction(Request $request, Series $playlist)
     {
@@ -169,7 +169,7 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Pic:picstoaddlist.html.twig")
+     * @Template("@PumukitNewAdmin/Pic/picstoaddlist.html.twig")
      */
     public function picstoaddlistAction(Request $request, Series $playlist)
     {
@@ -195,7 +195,7 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Pic:banner.html.twig")
+     * @Template("@PumukitNewAdmin/Pic/banner.html.twig")
      */
     public function bannerAction(Request $request, Series $playlist)
     {

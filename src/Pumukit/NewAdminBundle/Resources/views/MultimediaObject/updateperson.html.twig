@@ -7,7 +7,7 @@
                     <dt>{{ role.getName() }}{{ role.getDisplay()?'*':'' }}:</dt>
                     <dd>
                         <div id="{{ role.getId() }}_person_mms{{ template }}">
-                            {% include role.isReadOnly() ? 'PumukitNewAdminBundle:Person:listrelationro.html.twig' : 'PumukitNewAdminBundle:Person:listrelation.html.twig' with {'people': mm.getPeopleByRole(role, true), 'mm': mm, 'role': role} %}
+                            {% include role.isReadOnly() ? '@PumukitNewAdmin/Person/listrelationro.html.twig' : '@PumukitNewAdmin/Person/listrelation.html.twig' with {'people': mm.getPeopleByRole(role, true), 'mm': mm, 'role': role} %}
                         </div>
                     </dd>
                 </div>

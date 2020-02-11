@@ -59,7 +59,7 @@ class PersonController extends AdminController
 
     /**
      * @Security("is_granted('ROLE_ACCESS_PEOPLE')")
-     * @Template("PumukitNewAdminBundle:Person:index.html.twig")
+     * @Template("@PumukitNewAdmin/Person/index.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -80,7 +80,7 @@ class PersonController extends AdminController
 
     /**
      * @Security("is_granted('ROLE_ACCESS_PEOPLE')")
-     * @Template("PumukitNewAdminBundle:Person:create.html.twig")
+     * @Template("@PumukitNewAdmin/Person/create.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -116,7 +116,7 @@ class PersonController extends AdminController
 
     /**
      * @Security("is_granted('ROLE_ACCESS_PEOPLE')")
-     * @Template("PumukitNewAdminBundle:Person:update.html.twig")
+     * @Template("@PumukitNewAdmin/Person/update.html.twig")
      */
     public function updateAction(Request $request)
     {
@@ -153,7 +153,7 @@ class PersonController extends AdminController
 
     /**
      * @Security("is_granted('ROLE_ACCESS_PEOPLE')")
-     * @Template("PumukitNewAdminBundle:Person:show.html.twig")
+     * @Template("@PumukitNewAdmin/Person/show.html.twig")
      */
     public function showAction(Request $request)
     {
@@ -169,7 +169,7 @@ class PersonController extends AdminController
 
     /**
      * @Security("is_granted('ROLE_ACCESS_PEOPLE')")
-     * @Template("PumukitNewAdminBundle:Person:list.html.twig")
+     * @Template("@PumukitNewAdmin/Person/list.html.twig")
      */
     public function listAction(Request $request)
     {
@@ -192,7 +192,7 @@ class PersonController extends AdminController
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
-     * @Template("PumukitNewAdminBundle:Person:listautocomplete.html.twig")
+     * @Template("@PumukitNewAdmin/Person/listautocomplete.html.twig")
      */
     public function listAutocompleteAction(Request $request, MultimediaObject $multimediaObject, Role $role)
     {
@@ -229,7 +229,7 @@ class PersonController extends AdminController
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
-     * @Template("PumukitNewAdminBundle:Person:createrelation.html.twig")
+     * @Template("@PumukitNewAdmin/Person/createrelation.html.twig")
      */
     public function createRelationAction(Request $request, MultimediaObject $multimediaObject, Role $role)
     {
@@ -266,9 +266,9 @@ class PersonController extends AdminController
                 return new Response($textStatus, 409);
             }
             if ('owner' === $owner) {
-                $twigTemplate = 'PumukitNewAdminBundle:MultimediaObject:listownerrelation.html.twig';
+                $twigTemplate = '@PumukitNewAdmin/MultimediaObject/listownerrelation.html.twig';
             } else {
-                $twigTemplate = 'PumukitNewAdminBundle:Person:listrelation.html.twig';
+                $twigTemplate = '@PumukitNewAdmin/Person/listrelation.html.twig';
             }
 
             return $this->render(
@@ -296,7 +296,7 @@ class PersonController extends AdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Person:updaterelation.html.twig")
+     * @Template("@PumukitNewAdmin/Person/updaterelation.html.twig")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
      */
@@ -326,9 +326,9 @@ class PersonController extends AdminController
                 $template = $multimediaObject->isPrototype() ? '_template' : '';
 
                 if ('owner' === $owner) {
-                    $twigTemplate = 'PumukitNewAdminBundle:MultimediaObject:listownerrelation.html.twig';
+                    $twigTemplate = '@PumukitNewAdmin/MultimediaObject/listownerrelation.html.twig';
                 } else {
-                    $twigTemplate = 'PumukitNewAdminBundle:Person:listrelation.html.twig';
+                    $twigTemplate = '@PumukitNewAdmin/Person/listrelation.html.twig';
                 }
 
                 return $this->render(
@@ -387,9 +387,9 @@ class PersonController extends AdminController
         }
         $owner = $request->get('owner', false);
         if ('owner' === $owner) {
-            $twigTemplate = 'PumukitNewAdminBundle:MultimediaObject:listownerrelation.html.twig';
+            $twigTemplate = '@PumukitNewAdmin/MultimediaObject/listownerrelation.html.twig';
         } else {
-            $twigTemplate = 'PumukitNewAdminBundle:Person:listrelation.html.twig';
+            $twigTemplate = '@PumukitNewAdmin/Person/listrelation.html.twig';
         }
 
         return $this->render(
@@ -452,9 +452,9 @@ class PersonController extends AdminController
         }
         $owner = $request->get('owner', false);
         if ('owner' === $owner) {
-            $twigTemplate = 'PumukitNewAdminBundle:MultimediaObject:listownerrelation.html.twig';
+            $twigTemplate = '@PumukitNewAdmin/MultimediaObject/listownerrelation.html.twig';
         } else {
-            $twigTemplate = 'PumukitNewAdminBundle:Person:listrelation.html.twig';
+            $twigTemplate = '@PumukitNewAdmin/Person/listrelation.html.twig';
         }
 
         return $this->render(
@@ -489,9 +489,9 @@ class PersonController extends AdminController
         }
         $owner = $request->get('owner', false);
         if ('owner' === $owner) {
-            $twigTemplate = 'PumukitNewAdminBundle:MultimediaObject:listownerrelation.html.twig';
+            $twigTemplate = '@PumukitNewAdmin/MultimediaObject/listownerrelation.html.twig';
         } else {
-            $twigTemplate = 'PumukitNewAdminBundle:Person:listrelation.html.twig';
+            $twigTemplate = '@PumukitNewAdmin/Person/listrelation.html.twig';
         }
 
         return $this->render(
@@ -532,9 +532,9 @@ class PersonController extends AdminController
             $template = '_template';
         }
         if ('owner' === $owner) {
-            $twigTemplate = 'PumukitNewAdminBundle:MultimediaObject:listownerrelation.html.twig';
+            $twigTemplate = '@PumukitNewAdmin/MultimediaObject/listownerrelation.html.twig';
         } else {
-            $twigTemplate = 'PumukitNewAdminBundle:Person:listrelation.html.twig';
+            $twigTemplate = '@PumukitNewAdmin/Person/listrelation.html.twig';
         }
 
         return $this->render(
@@ -551,7 +551,7 @@ class PersonController extends AdminController
 
     /**
      * @Security("is_granted('ROLE_SCOPE_GLOBAL')")
-     * @Template("PumukitNewAdminBundle:Person:list.html.twig")
+     * @Template("@PumukitNewAdmin/Person/list.html.twig")
      */
     public function deleteAction(Request $request)
     {

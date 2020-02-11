@@ -61,7 +61,7 @@ class PermissionProfileController extends AdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:PermissionProfile:index.html.twig")
+     * @Template("@PumukitNewAdmin/PermissionProfile/index.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -80,7 +80,7 @@ class PermissionProfileController extends AdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:PermissionProfile:list.html.twig")
+     * @Template("@PumukitNewAdmin/PermissionProfile/list.html.twig")
      */
     public function listAction(Request $request)
     {
@@ -110,7 +110,7 @@ class PermissionProfileController extends AdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:PermissionProfile:create.html.twig")
+     * @Template("@PumukitNewAdmin/PermissionProfile/create.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -138,7 +138,7 @@ class PermissionProfileController extends AdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:PermissionProfile:update.html.twig")
+     * @Template("@PumukitNewAdmin/PermissionProfile/update.html.twig")
      */
     public function updateAction(Request $request)
     {

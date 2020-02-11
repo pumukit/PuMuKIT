@@ -57,7 +57,7 @@ class RoleController extends SortableAdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Role:update.html.twig")
+     * @Template("@PumukitNewAdmin/Role/update.html.twig")
      */
     public function updateAction(Request $request)
     {

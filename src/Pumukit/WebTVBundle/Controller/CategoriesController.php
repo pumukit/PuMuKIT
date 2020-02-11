@@ -35,7 +35,7 @@ class CategoriesController extends AbstractController implements WebTVController
 
     /**
      * @Route("/categories", name="pumukit_webtv_categories_index")
-     * @Template("PumukitWebTVBundle:Categories:template.html.twig")
+     * @Template("@PumukitWebTV/Categories/template.html.twig")
      */
     public function indexAction(Request $request)
     {

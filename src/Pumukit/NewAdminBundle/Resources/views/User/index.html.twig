@@ -1,4 +1,4 @@
-{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+{% extends '@PumukitNewAdmin/layout.html.twig' %}
 
 {% block body %}
 
@@ -13,7 +13,7 @@
             <div class="col-md-10">
                 <div class="well">
                     <div id="list_users">
-                        {% include 'PumukitNewAdminBundle:User:list.html.twig' %}
+                        {% include '@PumukitNewAdmin/User/list.html.twig' %}
                     </div>
                     <div class="row">
                         <div class="col-xs-4">
@@ -33,7 +33,7 @@
                 </div>
             </div>
             <div class="col-md-2 hidden-xs hidden-sm">
-                {% include 'PumukitNewAdminBundle:User:filters.html.twig' %}
+                {% include '@PumukitNewAdmin/User/filters.html.twig' %}
             </div>
         {% else %}
             <div class="col-md-12">

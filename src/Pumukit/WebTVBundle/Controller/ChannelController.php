@@ -27,7 +27,7 @@ class ChannelController extends AbstractController implements WebTVControllerInt
 
     /**
      * @Route("/series/channel/{channelNumber}.html", name="pumukit_webtv_channel_series")
-     * @Template("PumukitWebTVBundle:Channel:template.html.twig")
+     * @Template("@PumukitWebTV/Channel/template.html.twig")
      */
     public function seriesAction(string $channelNumber)
     {

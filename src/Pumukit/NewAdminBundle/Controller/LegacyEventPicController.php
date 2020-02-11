@@ -23,7 +23,7 @@ class LegacyEventPicController extends AbstractController implements NewAdminCon
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Pic:create.html.twig")
+     * @Template("@PumukitNewAdmin/Pic/create.html.twig")
      */
     public function createAction(Request $request, Event $event)
     {
@@ -46,7 +46,7 @@ class LegacyEventPicController extends AbstractController implements NewAdminCon
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Pic:upload_event.html.twig")
+     * @Template("@PumukitNewAdmin/Pic/upload_event.html.twig")
      */
     public function uploadAction(Event $event, Request $request)
     {

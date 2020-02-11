@@ -20,12 +20,12 @@
         {% endif %}
 
         {% if object.isCollection() %}
-            {% include 'PumukitWebTVBundle:Resources:template_series.html.twig' %}
+            {% include '@PumukitWebTV/Resources/template_series.html.twig' %}
         {% else %}
-            {% include 'PumukitWebTVBundle:Resources:template_video.html.twig' %}
+            {% include '@PumukitWebTV/Resources/template_video.html.twig' %}
         {% endif %}
 
-        {% include "PumukitWebTVBundle:Resources:template_clearfix.html.twig" %}
+        {% include "@PumukitWebTV/Resources/template_clearfix.html.twig" %}
         {% set clearFixIndex = clearFixIndex + 1 %}
     {% else %}
         <div class="text-center">

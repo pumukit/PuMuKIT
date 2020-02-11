@@ -13,7 +13,7 @@
                     }
                 });
               return false;" action="{{ path('pumukitnewadmin_series_update', {'id': series.id}) }}" method="POST">
-        {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
+        {% form_theme form '@PumukitNewAdmin/Themes/fields.html.twig' %}
         <input type="hidden" name="id" id="series_id_updatemeta" value="{{ series.id }}">
 
         <div class="row">
@@ -40,7 +40,7 @@
                             <dt>{% trans %}Thumbnails{% endtrans %}</dt>
                             <dd>
                                 <div id="pic_series_{{ series.id }}">
-                                    {% include 'PumukitNewAdminBundle:Pic:list.html.twig' with {'resource': series, 'resource_name': 'series'} %}
+                                    {% include '@PumukitNewAdmin/Pic/list.html.twig' with {'resource': series, 'resource_name': 'series'} %}
                                 </div>
                             </dd>
                         </dl>

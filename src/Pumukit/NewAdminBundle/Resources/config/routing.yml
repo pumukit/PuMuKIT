@@ -13,7 +13,7 @@ pumukitnewadmin_js:
     methods: [GET]
     defaults:
         _controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
-        template: 'PumukitNewAdminBundle::pumukit.js.twig'
+        template: '@PumukitNewAdmin/pumukit.js.twig'
         maxAge:       86400
         sharedAge:    86400
         _format: js
@@ -23,7 +23,7 @@ pumukitnewadmin_locale_js:
     methods: [GET]
     defaults:
         _controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
-        template: 'PumukitNewAdminBundle::pumukit.js.twig'
+        template: '@PumukitNewAdmin/pumukit.js.twig'
         maxAge:       86400
         sharedAge:    86400
         _format: js
@@ -33,7 +33,7 @@ pumukitnewadmin_css:
     methods: [GET]
     defaults:
         _controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
-        template: 'PumukitNewAdminBundle::pumukit.css.twig'
+        template: '@PumukitNewAdmin/pumukit.css.twig'
         maxAge:       86400
         sharedAge:    86400
         _format: css
@@ -44,7 +44,7 @@ pumukit_jquery_ui_autocomplete_css:
     methods: [GET]
     defaults:
         _controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
-        template: 'PumukitNewAdminBundle::jquery-ui-autocomplete.css.twig'
+        template: '@PumukitNewAdmin/jquery-ui-autocomplete.css.twig'
         maxAge:       86400
         sharedAge:    86400
         _format: css

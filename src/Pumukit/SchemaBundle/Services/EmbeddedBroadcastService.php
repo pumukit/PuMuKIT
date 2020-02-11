@@ -354,14 +354,14 @@ class EmbeddedBroadcastService
 
     private function renderErrorNotAuthenticated()
     {
-        $renderedView = $this->templating->render('PumukitWebTVBundle:Index:403forbidden.html.twig', ['show_forceauth' => true]);
+        $renderedView = $this->templating->render('@PumukitWebTV/Index/403forbidden.html.twig', ['show_forceauth' => true]);
 
         return new Response($renderedView, Response::HTTP_FORBIDDEN);
     }
 
     private function renderErrorPassword($invalidPassword = false)
     {
-        $renderedView = $this->templating->render('PumukitWebTVBundle:Index:401unauthorized.html.twig', ['show_forceauth' => true, 'invalid_password' => $invalidPassword]);
+        $renderedView = $this->templating->render('@PumukitWebTV/Index/401unauthorized.html.twig', ['show_forceauth' => true, 'invalid_password' => $invalidPassword]);
 
         return new Response($renderedView, Response::HTTP_UNAUTHORIZED);
     }

@@ -21,7 +21,7 @@
     </div>
   </div>
   <br />
-  {{ include('PumukitNewAdminBundle:Live:Players/'~live.getLiveType()~'.html.twig') }}
+  {{ include('@PumukitNewAdmin/Live/Players/'~live.getLiveType()~'.html.twig') }}
   {% else %}
   <p>
     {% trans %}Select any live channel.{% endtrans %}

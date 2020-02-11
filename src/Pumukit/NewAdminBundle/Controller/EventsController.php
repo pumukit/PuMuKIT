@@ -115,7 +115,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("index/", name="pumukit_new_admin_live_event_index")
-     * @Template("PumukitNewAdminBundle:LiveEvent:index.html.twig")
+     * @Template("@PumukitNewAdmin/LiveEvent/index.html.twig")
      */
     public function indexEventAction(Request $request): array
     {
@@ -203,7 +203,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("list/event/{type}", name="pumukit_new_admin_live_event_list")
-     * @Template("PumukitNewAdminBundle:LiveEvent:list.html.twig")
+     * @Template("@PumukitNewAdmin/LiveEvent/list.html.twig")
      *
      * @param mixed|null $type
      */
@@ -353,7 +353,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("list/options/{type}/{id}", name="pumukit_new_admin_live_event_options")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
-     * @Template("PumukitNewAdminBundle:LiveEvent:updatemenu.html.twig")
+     * @Template("@PumukitNewAdmin/LiveEvent/updatemenu.html.twig")
      *
      * @param mixed $type
      */
@@ -408,7 +408,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("edit/{id}", name="pumukit_new_admin_live_event_edit")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
-     * @Template("PumukitNewAdminBundle:LiveEvent:edit.html.twig")
+     * @Template("@PumukitNewAdmin/LiveEvent/edit.html.twig")
      */
     public function editEventAction(MultimediaObject $multimediaObject)
     {
@@ -420,7 +420,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("event/{id}", name="pumukit_new_admin_live_event_eventtab")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
-     * @Template("PumukitNewAdminBundle:LiveEvent:updateevent.html.twig")
+     * @Template("@PumukitNewAdmin/LiveEvent/updateevent.html.twig")
      */
     public function eventAction(Request $request, MultimediaObject $multimediaObject)
     {
@@ -574,7 +574,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("series/tab/{id}", name="pumukit_new_admin_live_event_seriestab")
      * @ParamConverter("series", class="PumukitSchemaBundle:Series", options={"mapping": {"id": "id"}})
-     * @Template("PumukitNewAdminBundle:Series:updatemeta.html.twig")
+     * @Template("@PumukitNewAdmin/Series/updatemeta.html.twig")
      */
     public function seriesAction(Request $request, Series $series)
     {
@@ -605,7 +605,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("session/{id}", name="pumukit_new_admin_live_event_sessiontab")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
-     * @Template("PumukitNewAdminBundle:LiveEvent:updatesession.html.twig")
+     * @Template("@PumukitNewAdmin/LiveEvent/updatesession.html.twig")
      */
     public function sessionAction(Request $request, MultimediaObject $multimediaObject)
     {
@@ -660,7 +660,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("list/session/{id}", name="pumukit_new_admin_live_event_session_list")
-     * @Template("PumukitNewAdminBundle:LiveEvent:sessionlist.html.twig")
+     * @Template("@PumukitNewAdmin/LiveEvent/sessionlist.html.twig")
      *
      * @param mixed $id
      */
@@ -673,7 +673,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("delete/session/{multimediaObject}/{session_id}", name="pumukit_new_admin_live_event_session_delete")
-     * @Template("PumukitNewAdminBundle:LiveEvent:sessionlist.html.twig")
+     * @Template("@PumukitNewAdmin/LiveEvent/sessionlist.html.twig")
      *
      * @param mixed $multimediaObject
      * @param mixed $session_id
@@ -694,7 +694,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("clone/session/{multimediaObject}/{session_id}", name="pumukit_new_admin_live_event_clone_session")
-     * @Template("PumukitNewAdminBundle:LiveEvent:sessionlist.html.twig")
+     * @Template("@PumukitNewAdmin/LiveEvent/sessionlist.html.twig")
      *
      * @param mixed $multimediaObject
      * @param mixed $session_id
@@ -725,7 +725,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("modal/{multimediaObject}/{session_id}", name="pumukit_new_admin_live_event_session_modal")
-     * @Template("PumukitNewAdminBundle:LiveEvent:updatesessionmodal.html.twig")
+     * @Template("@PumukitNewAdmin/LiveEvent/updatesessionmodal.html.twig")
      *
      * @param mixed $multimediaObject
      * @param mixed $session_id
@@ -767,7 +767,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("change/series/{multimediaObject}", name="pumukitnewadmin_live_event_change_series")
-     * @Template("PumukitNewAdminBundle:LiveEvent:changeSeries.html.twig")
+     * @Template("@PumukitNewAdmin/LiveEvent/changeSeries.html.twig")
      *
      * @param mixed|null $multimediaObject
      */
@@ -806,7 +806,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("show/{id}", name="pumukit_new_admin_live_event_show")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
-     * @Template("PumukitNewAdminBundle:LiveEvent:show.html.twig")
+     * @Template("@PumukitNewAdmin/LiveEvent/show.html.twig")
      */
     public function showAction(MultimediaObject $multimediaObject)
     {

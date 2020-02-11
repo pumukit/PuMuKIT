@@ -1,4 +1,4 @@
-{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+{% extends '@PumukitWebTV/layout.html.twig' %}
 
 {% block javascripts %}
     {{ parent() }}
@@ -22,8 +22,8 @@
                 var url_latestuploads_pager = "{{ path(scroll_list_path, { (scroll_element_key) : scroll_element_value, 'type': type}) }}";
             </script>
         {% else %}
-            {% include 'PumukitWebTVBundle:List:template_list.html.twig' %}
-            {% include 'PumukitWebTVBundle:Misc:pager.html.twig' %}
+            {% include '@PumukitWebTV/List/template_list.html.twig' %}
+            {% include '@PumukitWebTV/Misc/pager.html.twig' %}
         {% endif %}
     </div>
 {% endblock %}

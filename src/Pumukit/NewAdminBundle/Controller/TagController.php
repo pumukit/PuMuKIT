@@ -38,7 +38,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Tag:index.html.twig")
+     * @Template("@PumukitNewAdmin/Tag/index.html.twig")
      */
     public function indexAction()
     {
@@ -59,7 +59,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
 
     /**
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag")
-     * @Template("PumukitNewAdminBundle:Tag:children.html.twig")
+     * @Template("@PumukitNewAdmin/Tag/children.html.twig")
      */
     public function childrenAction(Tag $tag)
     {
@@ -91,7 +91,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
 
     /**
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag")
-     * @Template("PumukitNewAdminBundle:Tag:update.html.twig")
+     * @Template("@PumukitNewAdmin/Tag/update.html.twig")
      */
     public function updateAction(Request $request, Tag $tag)
     {
@@ -114,7 +114,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
 
     /**
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"id" = "parent"})
-     * @Template("PumukitNewAdminBundle:Tag:create.html.twig")
+     * @Template("@PumukitNewAdmin/Tag/create.html.twig")
      */
     public function createAction(Request $request, Tag $parent)
     {
@@ -141,7 +141,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Tag:list.html.twig")
+     * @Template("@PumukitNewAdmin/Tag/list.html.twig")
      */
     public function listAction()
     {

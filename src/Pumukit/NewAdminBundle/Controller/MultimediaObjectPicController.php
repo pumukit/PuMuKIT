@@ -42,7 +42,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Pic:create.html.twig")
+     * @Template("@PumukitNewAdmin/Pic/create.html.twig")
      */
     public function createAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -56,7 +56,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Pic:list.html.twig")
+     * @Template("@PumukitNewAdmin/Pic/list.html.twig")
      */
     public function listAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -73,7 +73,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
      * Assign a picture from an url or from an existing one to the multimedia object.
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
-     * @Template("PumukitNewAdminBundle:Pic:list.html.twig")
+     * @Template("@PumukitNewAdmin/Pic/list.html.twig")
      */
     public function updateAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -91,7 +91,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
-     * @Template("PumukitNewAdminBundle:Pic:upload.html.twig")
+     * @Template("@PumukitNewAdmin/Pic/upload.html.twig")
      */
     public function uploadAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -187,7 +187,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Pic:picstoaddlist.html.twig")
+     * @Template("@PumukitNewAdmin/Pic/picstoaddlist.html.twig")
      */
     public function picstoaddlistAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -218,7 +218,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Pic:generate.html.twig")
+     * @Template("@PumukitNewAdmin/Pic/generate.html.twig")
      */
     public function generateAction(MultimediaObject $multimediaObject, Request $request)
     {

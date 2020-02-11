@@ -18,14 +18,14 @@
       {% if personal_scope_role %}
       <div class="form-row">
           <div id="{{ personal_scope_role.getId() }}_person_mms{{ template }}">
-            {% include 'PumukitNewAdminBundle:MultimediaObject:listownerrelation.html.twig' with {'people': mm.getPeopleByRole(personal_scope_role, true), 'mm': mm, 'role': personal_scope_role, 'personal_scope_role': personal_scope_role, 'template': template} %}
+            {% include '@PumukitNewAdmin/MultimediaObject/listownerrelation.html.twig' with {'people': mm.getPeopleByRole(personal_scope_role, true), 'mm': mm, 'role': personal_scope_role, 'personal_scope_role': personal_scope_role, 'template': template} %}
           </div>
       </div>
       <hr class="pumukit-green"/>
       {% endif %}
       <div class="form-row">
           <div id="group_mms{{ template }}">
-            {% include 'PumukitNewAdminBundle:MultimediaObject:listgrouprelation.html.twig' with {'groups': groups, 'mm': mm, 'template': template} %}
+            {% include '@PumukitNewAdmin/MultimediaObject/listgrouprelation.html.twig' with {'groups': groups, 'mm': mm, 'template': template} %}
           </div>
       </div>
     </dl>

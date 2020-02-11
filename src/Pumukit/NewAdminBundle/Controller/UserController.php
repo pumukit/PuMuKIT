@@ -56,7 +56,7 @@ class UserController extends AdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:User:index.html.twig")
+     * @Template("@PumukitNewAdmin/User/index.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -88,7 +88,7 @@ class UserController extends AdminController
         }
 
         return $this->render(
-            'PumukitNewAdminBundle:User:create.html.twig',
+            '@PumukitNewAdmin/User/create.html.twig',
             [
                 'user' => $user,
                 'form' => $form->createView(),
@@ -130,7 +130,7 @@ class UserController extends AdminController
         }
 
         return $this->render(
-            'PumukitNewAdminBundle:User:update.html.twig',
+            '@PumukitNewAdmin/User/update.html.twig',
             [
                 'user' => $user,
                 'form' => $form->createView(),
@@ -172,7 +172,7 @@ class UserController extends AdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:User:editgroups.html.twig")
+     * @Template("@PumukitNewAdmin/User/editgroups.html.twig")
      */
     public function editGroupsAction(Request $request)
     {

@@ -75,7 +75,7 @@ default_content_background               {# content background #}
 
 default_contrast_font                    {# Font color for the contrast background #}
 default_light_font                       {# Font color for the light background #}
-default_content_font                     {# Font color for the main content #}  
+default_content_font                     {# Font color for the main content #}
 default_content_link_font                {# Font color for links in the main content #}
 default_content_link_selected_font       {# Font color for selected links in the main content #}
 
@@ -132,7 +132,7 @@ Add your HTML on `src/Pumukit/ExampleOrg/WebTVBundle/Resources/views/Layout/head
   <!-- TOPHEADER -->
 </div>
 
-{% embed 'PumukitWebTVBundle:Layout:baseheader.html.twig' %}
+{% embed '@PumukitWebTV/Layout/baseheader.html.twig' %}
   {% block logo_url %}
      <img src="{{ asset('bundles/pumukitwebtv/images/logo.png') }}" class="img-responsive" alt="{% trans %}Logo{% endtrans %}"/>
   {% endblock %}

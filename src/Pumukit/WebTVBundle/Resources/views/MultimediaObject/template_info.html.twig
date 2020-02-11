@@ -1,5 +1,5 @@
 <div class="row">
-    {% include 'PumukitWebTVBundle:MultimediaObject:template_tags.html.twig' %}
+    {% include '@PumukitWebTV/MultimediaObject/template_tags.html.twig' %}
 </div>
 
 <div class="row">
@@ -19,7 +19,7 @@
     </div>
 </div>
 
-{% include "PumukitWebTVBundle:Misc:chapter_marks.html.twig" %}
+{% include "@PumukitWebTV/Misc/chapter_marks.html.twig" %}
 
 <div class="row">
     <div class="col-xs-12 video-subtitle">
@@ -38,7 +38,7 @@
         </div>
 
         {% if not multimediaObject.getSeries().isHide() %}
-            {% if isMagicRoute and fullMagicUrl %}        
+            {% if isMagicRoute and fullMagicUrl %}
                 <div class="qa-player-series video-series">
                     {% trans %}i18n.one.Series{% endtrans %}:
                     <a href="{{ path('pumukit_webtv_series_magicindex', {secret: multimediaObject.getSeries().getSecret() }) }}">
@@ -55,7 +55,7 @@
             {% endif %}
         {% endif %}
 
-        {% include "PumukitWebTVBundle:Misc:people.html.twig" with {'object': multimediaObject} %}
+        {% include "@PumukitWebTV/Misc/people.html.twig" with {'object': multimediaObject} %}
     </div>
 </div>
 <br>
@@ -108,7 +108,7 @@
         </div>
     </div>
     <div class="col-sm-6">
-        {% include 'PumukitWebTVBundle:MultimediaObject:template_share.html.twig' %}
+        {% include '@PumukitWebTV/MultimediaObject/template_share.html.twig' %}
     </div>
 </div>
 <br>

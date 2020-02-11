@@ -69,7 +69,7 @@ class InboxController extends AbstractController implements NewAdminControllerIn
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Inbox:form.html.twig")
+     * @Template("@PumukitNewAdmin/Inbox/form.html.twig")
      */
     public function formAction(bool $onlyDir = false)
     {

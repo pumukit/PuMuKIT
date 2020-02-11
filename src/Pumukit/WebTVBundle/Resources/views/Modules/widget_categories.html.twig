@@ -1,10 +1,10 @@
 {% if objects %}
     <div class="{{ class }}">
-        {% include "PumukitWebTVBundle:Resources:template_widget_title.html.twig" %}
+        {% include "@PumukitWebTV/Resources/template_widget_title.html.twig" %}
         <div class="row">
             {% for object in objects %}
-                {% include 'PumukitWebTVBundle:Resources:template_category.html.twig' %}
-                {% include "PumukitWebTVBundle:Resources:template_clearfix.html.twig" %}
+                {% include '@PumukitWebTV/Resources/template_category.html.twig' %}
+                {% include "@PumukitWebTV/Resources/template_clearfix.html.twig" %}
             {% endfor %}
         </div>
     </div>

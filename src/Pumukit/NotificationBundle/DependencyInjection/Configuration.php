@@ -7,7 +7,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-    const TEMPLATE = 'PumukitNotificationBundle:Email:job.html.twig';
+    const TEMPLATE = '@PumukitNotification/Email/job.html.twig';
     const SENDER_EMAIL = 'notifications@pumukit.org';
     const ADMIN_EMAIL = 'admin@pumukit.org';
 

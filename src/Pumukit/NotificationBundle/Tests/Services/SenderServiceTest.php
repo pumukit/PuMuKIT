@@ -113,7 +113,7 @@ class SenderServiceTest extends PumukitTestCase
         $mailTo = 'receiver@pumukit.org';
         $subject = 'Test sender service';
         $body = 'test send notification';
-        $template = 'PumukitNotificationBundle:Email:notification.html.twig';
+        $template = '@PumukitNotification/Email/notification.html.twig';
         $parameters = ['subject' => $subject, 'body' => $body, 'sender_name' => 'Sender Pumukit'];
         $output = $this->senderService->sendNotification($mailTo, $subject, $template, $parameters, false);
         $this->assertEquals(1, $output);

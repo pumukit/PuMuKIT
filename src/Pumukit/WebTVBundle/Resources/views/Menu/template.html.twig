@@ -4,7 +4,7 @@
             <nav class="navbar navbar-default navbar-custom">
                 <div class="navbar-header">
                     <div class="visible-xs col-xs-9">
-                        {% include 'PumukitWebTVBundle:Misc:search_box.html.twig' %}
+                        {% include '@PumukitWebTV/Misc/search_box.html.twig' %}
                     </div>
 
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#horizontal-menu" aria-expanded="false">
@@ -17,7 +17,7 @@
 
                 <div id="horizontal-menu" class="collapse navbar-collapse">
                     {% block menu_links %}
-                        {% include "PumukitWebTVBundle:Menu:links.html.twig" %}
+                        {% include "@PumukitWebTV/Menu/links.html.twig" %}
                     {% endblock %}
                 </div>
             </nav>

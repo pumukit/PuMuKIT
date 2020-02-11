@@ -42,7 +42,7 @@ class AnnouncesController extends AbstractController implements WebTVControllerI
 
     /**
      * @Route("/latestuploads", name="pumukit_webtv_announces_latestuploads")
-     * @Template("PumukitWebTVBundle:Announces:template.html.twig")
+     * @Template("@PumukitWebTV/Announces/template.html.twig")
      */
     public function latestUploadsAction()
     {
@@ -98,6 +98,6 @@ class AnnouncesController extends AbstractController implements WebTVControllerI
 
     protected function getLatestUploadsPagerTemplate(): string
     {
-        return 'PumukitWebTVBundle:Announces:template_pager.html.twig';
+        return '@PumukitWebTV/Announces/template_pager.html.twig';
     }
 }

@@ -58,7 +58,7 @@ class GroupController extends AdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Group:index.html.twig")
+     * @Template("@PumukitNewAdmin/Group/index.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -76,7 +76,7 @@ class GroupController extends AdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Group:list.html.twig")
+     * @Template("@PumukitNewAdmin/Group/list.html.twig")
      */
     public function listAction(Request $request)
     {
@@ -111,7 +111,7 @@ class GroupController extends AdminController
         }
 
         return $this->render(
-            'PumukitNewAdminBundle:Group:create.html.twig',
+            '@PumukitNewAdmin/Group/create.html.twig',
             [
                 'group' => $group,
                 'form' => $form->createView(),
@@ -140,7 +140,7 @@ class GroupController extends AdminController
         }
 
         return $this->render(
-            'PumukitNewAdminBundle:Group:update.html.twig',
+            '@PumukitNewAdmin/Group/update.html.twig',
             [
                 'group' => $group,
                 'form' => $form->createView(),
@@ -149,7 +149,7 @@ class GroupController extends AdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Group:list.html.twig")
+     * @Template("@PumukitNewAdmin/Group/list.html.twig")
      */
     public function deleteAction(Request $request)
     {
@@ -249,7 +249,7 @@ class GroupController extends AdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Group:info.html.twig")
+     * @Template("@PumukitNewAdmin/Group/info.html.twig")
      */
     public function infoAction(Request $request)
     {
@@ -284,7 +284,7 @@ class GroupController extends AdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Group:dataresources.html.twig")
+     * @Template("@PumukitNewAdmin/Group/dataresources.html.twig")
      */
     public function dataResourcesAction(Group $group, Request $request): array
     {

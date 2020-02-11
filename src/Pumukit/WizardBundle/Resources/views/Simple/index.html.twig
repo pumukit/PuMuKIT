@@ -1,4 +1,4 @@
-{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+{% extends '@PumukitNewAdmin/layout.html.twig' %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -55,7 +55,7 @@
                                 </div>
                             </div>
                             {% if show_license %}
-                                {% include 'PumukitWizardBundle:Simple:license.html.twig' with {'license_text': license_text} %}
+                                {% include '@PumukitWizard/Simple/license.html.twig' with {'license_text': license_text} %}
                             {% endif %}
                         </div>
                     </fieldset>
