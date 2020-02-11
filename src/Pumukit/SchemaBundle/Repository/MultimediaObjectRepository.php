@@ -659,17 +659,17 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         $qb = $this->createStandardQueryBuilder()->field('tags._id')->notEqual(new ObjectId($tag->getId()));
         $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
-        return $qb->getQuery();
+        return $qb;
     }
 
     public function findWithoutTag(Tag $tag, array $sort = [], int $limit = 0, int $page = 0)
     {
-        return $this->qbWithoutTag($tag, $sort, $limit, $page)->execute();
+        return $this->qbWithoutTag($tag, $sort, $limit, $page)->getQuery()->execute();
     }
 
     public function countWithoutTag(Tag $tag, array $sort = [], int $limit = 0, int $page = 0)
     {
-        return $this->qbWithoutTag($tag, $sort, $limit, $page)->count();
+        return $this->qbWithoutTag($tag, $sort, $limit, $page)->count()->getQuery()->execute();
     }
 
     /**
