@@ -303,7 +303,7 @@ class PersonService
      */
     public function deletePerson(Person $person, $deleteFromUser = false)
     {
-        if (0 !== count($this->repoMmobj->findByPersonId($person->getId()))) {
+        if (0 !== $this->repoMmobj->countByPersonId($person->getId())) {
             throw new \Exception("Couldn't remove Person with id ".$person->getId().'. There are multimedia objects with this person');
         }
 
@@ -345,7 +345,7 @@ class PersonService
      */
     public function countMultimediaObjectsWithPerson($person)
     {
-        return count($this->repoMmobj->findByPersonId($person->getId()));
+        return $this->repoMmobj->countByPersonId($person->getId());
     }
 
     /**

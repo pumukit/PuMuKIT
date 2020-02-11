@@ -103,17 +103,27 @@ class MultimediaObjectRepository extends DocumentRepository
         ;
     }
 
-    /**
-     * Find multimedia objects by person id.
-     *
-     * @param string $personId
-     *
-     * @return mixed
-     */
-    public function findByPersonId($personId)
+    public function qbByPersonId($personId)
     {
         return $this->createStandardQueryBuilder()
-            ->field('people.people._id')->equals(new ObjectId($personId))->getQuery()
+            ->field('people.people._id')
+            ->equals(new ObjectId($personId))
+            ;
+    }
+
+    public function findByPersonId($personId)
+    {
+        return $this->qbByPersonId($personId)
+            ->getQuery()
+            ->execute()
+            ;
+    }
+
+    public function countByPersonId($personId)
+    {
+        return $this->qbByPersonId($personId)
+            ->count()
+            ->getQuery()
             ->execute()
         ;
     }
