@@ -10,7 +10,7 @@
                 <a class="navbar-brand" href="{{ path('pumukit_webtv_index_index') }}" style="padding:0px"><img src="{{ asset('/bundles/pumukitnewadmin/images/logo.png') }}" alt="{% trans %}Logo{% endtrans %}"/></a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                {{ knp_menu_render('@PumukitNewAdminBundle:Builder:mainMenu', {'currentClass': 'active', 'template': '@PumukitNewAdmin/Themes/menu.html.twig'}) }}
+                {{ knp_menu_render('PumukitNewAdminBundle:Builder:mainMenu', {'currentClass': 'active', 'template': '@PumukitNewAdmin/Themes/menu.html.twig'}) }}
                 {# NOTE: Temporarily commented
                 <form class="navbar-form navbar-left" action="{{ path('pumukitnewadmin_series_search') }}">
                     <input type="text" class="form-control col-lg-8" placeholder="Search series" name="q">
