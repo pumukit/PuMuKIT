@@ -46,7 +46,7 @@
                     </td>
                 {% endif %}
                 <td>
-                    {% include 'PumukitNewAdminBundle:PlaylistMultimediaObject:updatemenu.html.twig' with {'mm': mm, 'mm_pos':mm_pos} %}
+                    {% include '@PumukitNewAdmin/PlaylistMultimediaObject/updatemenu.html.twig' with {'mm': mm, 'mm_pos':mm_pos} %}
                 </td>
                 <td>
                     {% if mms.getCurrentPage() != 1 or not loop.first %}

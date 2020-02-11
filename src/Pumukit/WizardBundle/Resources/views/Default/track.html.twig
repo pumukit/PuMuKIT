@@ -1,4 +1,4 @@
-{% extends 'PumukitWizardBundle:Default:index.html.twig' %}
+{% extends '@PumukitWizard/Default/index.html.twig' %}
 {% block wizard_body %}
     {{ render(controller('PumukitWizardBundle:Default:steps', {'step': 3, 'option': form_data.type.option, 'show_series': show_series, 'same_series': same_series})) }}
     <div class="well">
@@ -6,7 +6,7 @@
               enctype="multipart/form-data" target="iframeUpload"
               action="{{ path('pumukitwizard_default_upload') }}" method="POST">
             <iframe name="iframeUpload" style="display:none" src="" title="{% trans %}Upload file{% endtrans %}"></iframe>
-            {% include 'PumukitWizardBundle:Default:hidden.html.twig' with {'step': 'track'} %}
+            {% include '@PumukitWizard/Default/hidden.html.twig' with {'step': 'track'} %}
             <fieldset class="well">
                 <legend hidden>{% trans %}File{% endtrans %}</legend>
                 <div class="col-md-10">
@@ -18,7 +18,7 @@
                                     <option value="{{ key }}" {% if key == statusSelected %}selected{% endif %}>{{ value|trans }}</option>
                                 {% endfor %}
                             </select>
-                        </div>  
+                        </div>
                     {% endif %}
                     {% if not is_granted('ROLE_DISABLED_WIZARD_TRACK_PROFILES') or is_granted('ROLE_SUPER_ADMIN') %}
                         <div class="form-group" id="pumukitwizard_track_profile">

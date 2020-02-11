@@ -1,9 +1,9 @@
-{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+{% extends '@PumukitWebTV/layout.html.twig' %}
 
 {% block body %}
     <div class="row">
         <div class="col-xs-12">
-            {% include "PumukitWebTVBundle:Misc:page_title.html.twig" %}
+            {% include "@PumukitWebTV/Misc/page_title.html.twig" %}
         </div>
 
         <div class="col-xs-12">
@@ -23,7 +23,7 @@
             </div>
             {% set objects = result.objects %}
             <div class="col-xs-12">
-                {% include 'PumukitWebTVBundle:Channel:template_list.html.twig' %}
+                {% include '@PumukitWebTV/Channel/template_list.html.twig' %}
             </div>
         {% else %}
             <div class="col-xs-12">

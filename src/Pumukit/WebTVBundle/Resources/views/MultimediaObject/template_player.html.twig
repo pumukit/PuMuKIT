@@ -4,6 +4,6 @@
             <iframe src="{{ multimediaObject.getProperty('externalplayer') }}" width="100%" class="embed-responsive-item" frameborder="0" allowfullscreen></iframe>
         </div>
     {% else %}
-        {% include 'PumukitWebTVBundle:MultimediaObject:player.html.twig' with {'responsive': true} %}
+        {% include '@PumukitWebTV/MultimediaObject/player.html.twig' with {'responsive': true} %}
     {% endif %}
 {% endif %}

@@ -60,12 +60,12 @@
     {% if show_video_elements is defined and show_video_elements %}
         <div class="col-xs-12 video-elements">
             <ul class="list-group">
-                {% include "PumukitWebTVBundle:Misc:tracks.html.twig" %}
-                {% include "PumukitWebTVBundle:Misc:materials.html.twig" %}
-                {% include "PumukitWebTVBundle:Misc:links.html.twig" %}
+                {% include "@PumukitWebTV/Misc/tracks.html.twig" %}
+                {% include "@PumukitWebTV/Misc/materials.html.twig" %}
+                {% include "@PumukitWebTV/Misc/links.html.twig" %}
             </ul>
 
-            {% include "PumukitWebTVBundle:Misc:people.html.twig" %}
+            {% include "@PumukitWebTV/Misc/people.html.twig" %}
         </div>
     {% endif %}
 </div>

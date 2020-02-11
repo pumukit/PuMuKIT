@@ -2,11 +2,11 @@
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 
         <div id="links_series_{{ series.id }}">
-            {% include 'PumukitNewAdminBundle:Series:links.html.twig' %}
+            {% include '@PumukitNewAdmin/Series/links.html.twig' %}
         </div>
 
         {% if is_naked() %}
-            {% include 'PumukitNewAdminBundle:Series:updatemeta.html.twig' %}
+            {% include '@PumukitNewAdmin/Series/updatemeta.html.twig' %}
         {% else %}
             <div role="tabpanel">
                 <ul id="seriesTab" class="nav nav-tabs" role="tablist">
@@ -22,7 +22,7 @@
 
                 <div class="tab-content">
                     <div id="editSeries" role="tabpanel" class="tab-pane active">
-                        {% include 'PumukitNewAdminBundle:Series:updatemeta.html.twig' %}
+                        {% include '@PumukitNewAdmin/Series/updatemeta.html.twig' %}
                     </div>
                     {% if mmtemplate %}
                         <div id="editTemplate" role="tabpanel" class="tab-pane">

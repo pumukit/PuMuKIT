@@ -32,7 +32,7 @@ class DefaultController extends AbstractController
     public const SERIES_LIMIT = 30;
 
     /**
-     * @Template("PumukitWizardBundle:Default:license.html.twig")
+     * @Template("@PumukitWizard/Default/license.html.twig")
      */
     public function licenseAction(Request $request, LicenseService $licenseService, bool $pumukitWizardShowTags, bool $pumukitWizardShowObjectLicense)
     {
@@ -61,7 +61,7 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Template("PumukitWizardBundle:Default:series.html.twig")
+     * @Template("@PumukitWizard/Default/series.html.twig")
      */
     public function seriesAction(Request $request, DocumentManager $documentManager, LicenseService $licenseService, bool $pumukitWizardShowTags, bool $pumukitWizardShowObjectLicense, bool $pumukitWizardMandatoryTitle, bool $pumukitWizardReuseSeries, bool $pumukitWizardReuseAdminSeries)
     {
@@ -98,7 +98,7 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Template("PumukitWizardBundle:Default:type.html.twig")
+     * @Template("@PumukitWizard/Default/type.html.twig")
      */
     public function typeAction(Request $request, DocumentManager $documentManager, LicenseService $licenseService, bool $pumukitWizardShowTags, bool $pumukitWizardShowObjectLicense, string $id)
     {
@@ -167,7 +167,7 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Template("PumukitWizardBundle:Default:multimediaobject.html.twig")
+     * @Template("@PumukitWizard/Default/multimediaobject.html.twig")
      *
      * @param mixed $pumukitNewAdminLicenses
      * @param mixed $pumukitSchemaDefaultLicense
@@ -229,7 +229,7 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Template("PumukitWizardBundle:Default:track.html.twig")
+     * @Template("@PumukitWizard/Default/track.html.twig")
      */
     public function trackAction(Request $request, LicenseService $licenseService, ProfileService $profileService, FactoryService $factoryService, TranslatorInterface $translator, array $pumukitCustomLanguages, bool $pumukitWizardShowTags, bool $pumukitWizardShowObjectLicense)
     {
@@ -287,7 +287,7 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Template("PumukitWizardBundle:Default:upload.html.twig")
+     * @Template("@PumukitWizard/Default/upload.html.twig")
      */
     public function uploadAction(Request $request, DocumentManager $documentManager, TagService $tagService, FactoryService $factoryService, WizardService $wizardService, SortedMultimediaObjectsService $pumukitSchemaSortedMultimediaObjectService, LicenseService $licenseService, ProfileService $profileService, JobService $jobService, InspectionFfprobeService $inspectionFfprobeService, FormEventDispatcherService $formEventDispatcherService, bool $pumukitWizardShowTags, bool $pumukitWizardShowObjectLicense, array $locales)
     {
@@ -496,7 +496,7 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Template("PumukitWizardBundle:Default:end.html.twig")
+     * @Template("@PumukitWizard/Default/end.html.twig")
      */
     public function endAction(Request $request, DocumentManager $documentManager, LicenseService $licenseService): array
     {
@@ -521,7 +521,7 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Template("PumukitWizardBundle:Default:error.html.twig")
+     * @Template("@PumukitWizard/Default/error.html.twig")
      */
     public function errorAction(Request $request, DocumentManager $documentManager): array
     {
@@ -542,7 +542,7 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Template("PumukitWizardBundle:Default:steps.html.twig")
+     * @Template("@PumukitWizard/Default/steps.html.twig")
      */
     public function stepsAction(Request $request, LicenseService $licenseService): array
     {

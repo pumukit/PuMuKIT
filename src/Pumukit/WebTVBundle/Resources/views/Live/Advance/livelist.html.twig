@@ -6,7 +6,7 @@
         <div class="panel-body">
             {% if events|length > 0 %}
                 {% for key, event in events %}
-                    {% include 'PumukitWebTVBundle:Resources:template_event_vertical.html.twig' with {'event': event['data'] } %}
+                    {% include '@PumukitWebTV/Resources/template_event_vertical.html.twig' with {'event': event['data'] } %}
                 {% endfor %}
             {% endif %}
         </div>

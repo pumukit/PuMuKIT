@@ -1,4 +1,4 @@
-{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+{% extends '@PumukitNewAdmin/layout.html.twig' %}
 
 {% block body %}
 
@@ -13,7 +13,7 @@
             <div class="col-md-10">
                 <div class="well">
                     <div id="list_people">
-                        {% include 'PumukitNewAdminBundle:Person:list.html.twig' %}
+                        {% include '@PumukitNewAdmin/Person/list.html.twig' %}
                     </div>
                     <div class="row">
                         <div class="col-xs-4">
@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="col-md-2 hidden-xs hidden-sm">
-                {% include 'PumukitNewAdminBundle:Person:filters.html.twig' %}
+                {% include '@PumukitNewAdmin/Person/filters.html.twig' %}
                 <div id="preview_person" class="well">
                     {% if(app.session.has('admin/person/id')) %}
                         {{ render_hinclude(url('pumukitnewadmin_person_show', {'id': app.session.get('admin/person/id')})) }}

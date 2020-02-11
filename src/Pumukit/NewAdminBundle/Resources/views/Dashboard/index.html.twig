@@ -1,4 +1,4 @@
-{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+{% extends '@PumukitNewAdmin/layout.html.twig' %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -88,6 +88,6 @@
 
 
     {% if stats %}
-        {% include "PumukitNewAdminBundle:Dashboard:stats.html.twig" %}
+        {% include "@PumukitNewAdmin/Dashboard/stats.html.twig" %}
     {% endif %}
 {% endblock %}

@@ -12,9 +12,9 @@ use Twig\Loader\ArrayLoader;
 
 class SenderService
 {
-    const TEMPLATE_JOB = 'PumukitNotificationBundle:Email:job.html.twig';
-    const TEMPLATE_NOTIFICATION = 'PumukitNotificationBundle:Email:notification.html.twig';
-    const TEMPLATE_ERROR = 'PumukitNotificationBundle:Email:error.html.twig';
+    const TEMPLATE_JOB = '@PumukitNotification/Email/job.html.twig';
+    const TEMPLATE_NOTIFICATION = '@PumukitNotification/Email/notification.html.twig';
+    const TEMPLATE_ERROR = '@PumukitNotification/Email/error.html.twig';
 
     private $mailer;
     private $templating;

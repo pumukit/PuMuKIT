@@ -9,12 +9,12 @@
         <form id="myForm" class="unesco_form" name="advance_form" method="POST" action="{{ path('pumukitnewadmin_unesco_list') }}">
             <div class="col-xs-12">
                 <div id="basic_form">
-                    {% include 'PumukitNewAdminBundle:UNESCO:basic_form.html.twig' %}
+                    {% include '@PumukitNewAdmin/UNESCO/basic_form.html.twig' %}
                 </div>
             </div>
             <div class="col-xs-12">
                 <div class="advance_form collapse {% if app.request.session.get('UNESCO/formbasic') is same as(false) %}in{% endif %}" id="collapseAdvanceForm">
-                    {% include 'PumukitNewAdminBundle:UNESCO:advance_form.html.twig' %}
+                    {% include '@PumukitNewAdmin/UNESCO/advance_form.html.twig' %}
                 </div>
             </div>
         </form>

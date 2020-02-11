@@ -26,7 +26,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class SimpleController extends AbstractController
 {
     /**
-     * @Template("PumukitWizardBundle:Simple:index.html.twig")
+     * @Template("@PumukitWizard/Simple/index.html.twig")
      */
     public function indexAction(Request $request, LicenseService $licenseService, TranslatorInterface $translator, Series $series, array $pumukitCustomLanguages): array
     {
@@ -97,7 +97,7 @@ class SimpleController extends AbstractController
     }
 
     /**
-     * @Template("PumukitWizardBundle:Simple:embedindex.html.twig")
+     * @Template("@PumukitWizard/Simple/embedindex.html.twig")
      *
      * @param mixed $pumukitWizardShowSimpleMmTitle
      * @param mixed $pumukitWizardShowSimpleSeriesTitle

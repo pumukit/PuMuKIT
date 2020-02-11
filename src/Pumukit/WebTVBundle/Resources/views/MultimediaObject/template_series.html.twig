@@ -5,7 +5,7 @@
         </div>
         <div class="panel-body">
             {% for multimediaObject in multimediaObjects %}
-                {% include 'PumukitWebTVBundle:Resources:template_video_vertical.html.twig' with {'object': multimediaObject} %}
+                {% include '@PumukitWebTV/Resources/template_video_vertical.html.twig' with {'object': multimediaObject} %}
             {% endfor %}
         </div>
     </div>

@@ -26,7 +26,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
 
     /**
      * @Route("/videoplayer/{id}", name="pumukit_videoplayer_index", defaults={"no_channels": true} )
-     * @Template("PumukitJWPlayerBundle:JWPlayer:player.html.twig")
+     * @Template("@PumukitJWPlayer/JWPlayer/player.html.twig")
      */
     public function indexAction(Request $request, EmbeddedBroadcastService $embeddedBroadcastService, MultimediaObjectService $multimediaObjectService, IntroService $basePlayerIntroService, MultimediaObject $multimediaObject)
     {
@@ -57,7 +57,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
 
     /**
      * @Route("/videoplayer/magic/{secret}", name="pumukit_videoplayer_magicindex", defaults={"show_hide": true, "no_channels": true} )
-     * @Template("PumukitJWPlayerBundle:JWPlayer:player.html.twig")
+     * @Template("@PumukitJWPlayer/JWPlayer/player.html.twig")
      */
     public function magicAction(Request $request, EmbeddedBroadcastService $embeddedBroadcastService, MultimediaObjectService $multimediaObjectService, IntroService $basePlayerIntroService, MultimediaObject $multimediaObject)
     {
@@ -66,7 +66,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
                 return $this->redirect($this->generateUrl('pumukit_videoplayer_index', ['id' => $multimediaObject->getId()]));
             }
         } elseif (!$multimediaObject->containsTagWithCod('PUCHWEBTV') || (!in_array($multimediaObject->getStatus(), [MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDDEN], true))) {
-            return $this->render('PumukitWebTVBundle:Index:404notfound.html.twig');
+            return $this->render('@PumukitWebTV/Index/404notfound.html.twig');
         }
 
         if ($response = $this->validateAccess($request, $embeddedBroadcastService, $multimediaObject)) {

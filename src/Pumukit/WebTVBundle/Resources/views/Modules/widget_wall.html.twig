@@ -1,11 +1,11 @@
 {% if objects %}
     <div class="block-wall-pmk {{ class }}">
-        {% include "PumukitWebTVBundle:Resources:template_widget_title.html.twig" %}
+        {% include "@PumukitWebTV/Resources/template_widget_title.html.twig" %}
         <div class="row wall-container">
             <div class="col-xs-12 col-md-9 wall-image">
                 <div class="row">
                     {% set object = objects|first %}
-                    {% include 'PumukitWebTVBundle:Resources:template_video.html.twig' %}
+                    {% include '@PumukitWebTV/Resources/template_video.html.twig' %}
                 </div>
             </div>
 

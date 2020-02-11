@@ -1,13 +1,13 @@
-{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+{% extends '@PumukitWebTV/layout.html.twig' %}
 
 {% block body %}
     <div class="col-xs-12">
         <div class="row">
             {% set title = "Full Catalogue"|trans %}
-            {% include "PumukitWebTVBundle:Misc:page_title.html.twig" %}
+            {% include "@PumukitWebTV/Misc/page_title.html.twig" %}
         </div>
 
-        {% include "PumukitWebTVBundle:MediaLibrary:template_sort.html.twig" %}
-        {% include "PumukitWebTVBundle:MediaLibrary:template_library.html.twig" %}
+        {% include "@PumukitWebTV/MediaLibrary/template_sort.html.twig" %}
+        {% include "@PumukitWebTV/MediaLibrary/template_library.html.twig" %}
     </div>
 {% endblock %}

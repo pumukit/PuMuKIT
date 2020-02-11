@@ -43,7 +43,7 @@ class DashboardController extends AbstractController implements NewAdminControll
     /**
      * @Route("/dashboard", name="pumukit_newadmin_dashboard_index")
      * @Route("/dashboard/default", name="pumukit_newadmin_dashboard_index_default")
-     * @Template("PumukitNewAdminBundle:Dashboard:index.html.twig")
+     * @Template("@PumukitNewAdmin/Dashboard/index.html.twig")
      */
     public function indexAction(Request $request)
     {

@@ -54,7 +54,7 @@ class MediaLibraryController extends AbstractController implements WebTVControll
 
     /**
      * @Route("/mediateca/{sort}", defaults={"sort" = "date"}, requirements={"sort" = "alphabetically|date|tags"}, name="pumukit_webtv_medialibrary_index")
-     * @Template("PumukitWebTVBundle:MediaLibrary:template.html.twig")
+     * @Template("@PumukitWebTV/MediaLibrary/template.html.twig")
      */
     public function indexAction(Request $request, string $sort)
     {

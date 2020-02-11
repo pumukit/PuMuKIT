@@ -4,7 +4,7 @@
 </div>
 <div class="modal-body">
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
-  {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
+  {% form_theme form '@PumukitNewAdmin/Themes/fields.html.twig' %}
   <form onsubmit="$('#myModal').modal('hide');
                   $.ajax({
                           url: '{{ path('pumukitnewadmin_track_update', {'id': track.id, 'mmId': mmId}) }}',

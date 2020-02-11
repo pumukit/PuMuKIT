@@ -21,7 +21,7 @@ class IndexController extends AbstractController implements WebTVControllerInter
 
     /**
      * @Route("/", name="pumukit_webtv_index_index")
-     * @Template("PumukitWebTVBundle:Index:template.html.twig")
+     * @Template("@PumukitWebTV/Index/template.html.twig")
      */
     public function indexAction()
     {

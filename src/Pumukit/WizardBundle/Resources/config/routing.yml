@@ -3,7 +3,7 @@ pumukitwizard_js:
     methods: [GET]
     defaults:
         _controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
-        template: 'PumukitWizardBundle::pumukit_wizard.js.twig'
+        template: '@PumukitWizard/pumukit_wizard.js.twig'
         maxAge:       86400
         sharedAge:    86400
         _format: js

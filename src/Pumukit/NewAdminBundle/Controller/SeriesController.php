@@ -96,7 +96,7 @@ class SeriesController extends AdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Series:index.html.twig")
+     * @Template("@PumukitNewAdmin/Series/index.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -121,7 +121,7 @@ class SeriesController extends AdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Series:list.html.twig")
+     * @Template("@PumukitNewAdmin/Series/list.html.twig")
      */
     public function listAction(Request $request)
     {
@@ -157,7 +157,7 @@ class SeriesController extends AdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Series:links.html.twig")
+     * @Template("@PumukitNewAdmin/Series/links.html.twig")
      */
     public function linksAction(Series $resource)
     {
@@ -188,7 +188,7 @@ class SeriesController extends AdminController
             $resources = $this->getResources($request, $criteria, $resource->getId());
 
             return $this->render(
-                'PumukitNewAdminBundle:Series:list.html.twig',
+                '@PumukitNewAdmin/Series/list.html.twig',
                 ['series' => $resources]
             );
         }
@@ -227,7 +227,7 @@ class SeriesController extends AdminController
         }
 
         return $this->render(
-            'PumukitNewAdminBundle:Series:update.html.twig',
+            '@PumukitNewAdmin/Series/update.html.twig',
             [
                 'series' => $resource,
                 'form' => $form->createView(),
@@ -534,7 +534,7 @@ class SeriesController extends AdminController
 
     /**
      * @ParamConverter("series", class="PumukitSchemaBundle:Series", options={"id" = "id"})
-     * @Template("PumukitNewAdminBundle:Series:updatebroadcast.html.twig")
+     * @Template("@PumukitNewAdmin/Series/updatebroadcast.html.twig")
      */
     public function updateBroadcastAction(Series $series, Request $request)
     {
@@ -606,7 +606,7 @@ class SeriesController extends AdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Series:listProperties.html.twig")
+     * @Template("@PumukitNewAdmin/Series/listProperties.html.twig")
      */
     public function listPropertiesAction(Series $series)
     {

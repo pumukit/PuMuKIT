@@ -1,4 +1,4 @@
-{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+{% extends '@PumukitNewAdmin/layout.html.twig' %}
 
 {% block body %}
 
@@ -8,8 +8,8 @@
         </ul>
     </h3>
 
-    {% include "PumukitNewAdminBundle:Place:parent.html.twig" %}
-    {% include "PumukitNewAdminBundle:Place:children.html.twig" %}
-    {% include "PumukitNewAdminBundle:Place:preview.html.twig" %}
+    {% include "@PumukitNewAdmin/Place/parent.html.twig" %}
+    {% include "@PumukitNewAdmin/Place/children.html.twig" %}
+    {% include "@PumukitNewAdmin/Place/preview.html.twig" %}
 
 {% endblock %}
