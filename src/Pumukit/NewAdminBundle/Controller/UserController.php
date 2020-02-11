@@ -329,7 +329,7 @@ class UserController extends AdminController
         if ($loggedInUser === $userToDelete) {
             return new Response("Can not delete the logged in user '".$loggedInUser->getUsername()."'", 409);
         }
-        if (1 === $repo->createQueryBuilder()->getQuery()->execute()->count()) {
+        if (1 === $repo->createQueryBuilder()->count()->getQuery()->execute()) {
             return new Response("Can not delete this unique user '".$userToDelete->getUsername()."'", 409);
         }
 
