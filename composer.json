@@ -65,11 +65,11 @@
             "bin/console lint:xlif translations/",
             "docker-compose run --rm php ./bin/travis_checks/check_var_dumps"
         ],
-        "php-cs-fixer": "vendor/friendsofphp/php-cs-fixer/php-cs-fixer fix src --dry-run -v",
+        "php-cs-fixer": "vendor/bin/php-cs-fixer fix src --dry-run -v",
         "phpstan": [
-            "vendor/phpstan/phpstan/bin/phpstan analyse -l 4 src"
+            "vendor/bin/phpstan analyse -l 4 src"
         ],
-        "tests": "vendor/phpunit/phpunit/phpunit",
+        "tests": "vendor/bin/phpunit",
         "ci": [
             "@lints",
             "@php-cs-fixer",
