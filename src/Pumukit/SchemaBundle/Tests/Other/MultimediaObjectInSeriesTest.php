@@ -39,7 +39,7 @@ class MultimediaObjectInSeriesTest extends PumukitTestCase
         parent::tearDown();
         $this->dm->close();
         $this->factoryService = null;
-        $this->dm = null;
+
         $this->seriesRepo = null;
         $this->mmobjRepo = null;
         gc_collect_cycles();

@@ -31,7 +31,7 @@ class MultimediaObjectRankTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->repo = null;
         $this->factoryService = null;
         gc_collect_cycles();

@@ -69,7 +69,7 @@ class UserServiceTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->repo = null;
         $this->permissionProfileRepo = null;
         $this->userService = null;

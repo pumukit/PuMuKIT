@@ -38,7 +38,7 @@ class UserEventDispatcherServiceTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->dispatcher = null;
         $this->userDispatcher = null;
         gc_collect_cycles();

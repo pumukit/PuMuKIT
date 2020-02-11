@@ -60,7 +60,7 @@ class SenderServiceTest extends PumukitTestCase
     public function tearDown(): void
     {
         parent::tearDown();
-        $this->dm = null;
+
         $this->logger = null;
         $this->mailer = null;
         $this->templating = null;

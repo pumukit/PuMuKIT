@@ -29,7 +29,7 @@ class CpuServiceTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->repo = null;
         $this->cpuService = null;
         gc_collect_cycles();

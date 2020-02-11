@@ -26,7 +26,7 @@ class GroupRepositoryTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->repo = null;
         gc_collect_cycles();
     }

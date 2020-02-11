@@ -38,7 +38,7 @@ class MultimediaObjectServiceTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->repo = null;
         $this->tagRepo = null;
         $this->factory = null;

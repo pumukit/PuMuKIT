@@ -67,7 +67,7 @@ class PermissionProfileListenerTest extends PumukitTestCase
     public function tearDown(): void
     {
         parent::tearDown();
-        $this->dm = null;
+
         $this->userRepo = null;
         $this->permissionProfileRepo = null;
         $this->permissionProfileService = null;
