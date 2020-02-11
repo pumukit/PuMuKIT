@@ -17,7 +17,6 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
  */
 class MultimediaObjectListenerTest extends PumukitTestCase
 {
-    private $dm;
     private $mmRepo;
     private $listener;
     private $trackDispatcher;
@@ -29,11 +28,11 @@ class MultimediaObjectListenerTest extends PumukitTestCase
     private $localhost;
     private $picService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-        $this->dm = parent::setUp();
+        parent::setUp();
         $this->mmRepo = $this->dm->getRepository(MultimediaObject::class);
 
         $dispatcher = new EventDispatcher();
@@ -41,10 +40,10 @@ class MultimediaObjectListenerTest extends PumukitTestCase
         $dispatcher->addListener('multimediaobject.update', [$this->listener, 'postUpdate']);
         $this->trackDispatcher = static::$kernel->getContainer()->get('pumukitschema.track_dispatcher');
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
-        $this->trackService = new TrackService($this->dm, $this->trackDispatcher, $profileService, null, true);
+        $this->trackService = new TrackService($this->dm, $this->trackDispatcher, null, true);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm = null;

@@ -19,21 +19,20 @@ class FormEventDispatcherServiceTest extends PumukitTestCase
     const EMPTY_TITLE = 'EMTPY TITLE';
 
     private $formDispatcher;
-    private $dm;
     private $dispatcher;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-        $this->dm = parent::setUp();
+        parent::setUp();
         $this->dispatcher = new EventDispatcher();
         MockUpFormListener::$called = false;
         MockUpFormListener::$title = self::EMPTY_TITLE;
         $this->formDispatcher = new FormEventDispatcherService($this->dispatcher);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dispatcher = null;

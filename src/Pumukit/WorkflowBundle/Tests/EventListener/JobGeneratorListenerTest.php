@@ -2,6 +2,7 @@
 
 namespace Pumukit\WorkflowBundle\Tests\EventListener;
 
+use Doctrine\Common\Annotations\Annotation\IgnoreAnnotation;
 use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Services\ProfileService;
@@ -21,19 +22,18 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
  */
 class JobGeneratorListenerTest extends PumukitTestCase
 {
-    private $dm;
     private $logger;
     private $listener;
     private $trackDispatcher;
     private $trackService;
     private $jobGeneratorListener;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->dm = parent::setUp();
+        parent::setUp();
 
         $this->logger = $this->getMockBuilder(LoggerInterface::class)
             ->disableOriginalConstructor()
@@ -65,10 +65,10 @@ class JobGeneratorListenerTest extends PumukitTestCase
         $dispatcher->addListener('multimediaobject.update', [$this->listener, 'postUpdate']);
         $this->trackDispatcher = static::$kernel->getContainer()->get('pumukitschema.track_dispatcher');
         $profileService = new ProfileService($testProfiles, $this->dm);
-        $this->trackService = new TrackService($this->dm, $this->trackDispatcher, $profileService, null, true);
+        $this->trackService = new TrackService($this->dm, $this->trackDispatcher, null, true);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();

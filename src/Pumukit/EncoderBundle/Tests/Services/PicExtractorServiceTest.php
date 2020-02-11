@@ -6,7 +6,6 @@ use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Services\PicExtractorService;
 use Pumukit\InspectionBundle\Utils\TestCommand;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
 use Symfony\Component\Filesystem\Filesystem;
@@ -17,7 +16,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class PicExtractorServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $mmobjRepo;
     private $factory;
     private $picExtractor;
@@ -28,15 +26,15 @@ class PicExtractorServiceTest extends PumukitTestCase
     private $inspectionService;
     private $mmsPicService;
 
-    public function setUp()
+    public function setUp(): void
     {
         if (false === TestCommand::commandExists('/usr/local/bin/ffmpeg')) {
-            $this->markTestSkipped('PicExtractor test marks as skipped (No ffmpeg).');
+            static::markTestSkipped('PicExtractor test marks as skipped (No ffmpeg).');
         }
 
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-        $this->dm = parent::setUp();
+        parent::setUp();
         $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
         $this->factory = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->picEventDispatcher = static::$kernel->getContainer()->get('pumukitschema.pic_dispatcher');
@@ -44,11 +42,6 @@ class PicExtractorServiceTest extends PumukitTestCase
         $this->resourcesDir = realpath(__DIR__.'/../Resources');
         $this->targetPath = $this->resourcesDir;
         $this->targetUrl = '/uploads';
-
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
-        $this->dm->flush();
-
         $mmsPicService = new MultimediaObjectPicService($this->dm, $this->picEventDispatcher, $this->targetPath, $this->targetUrl, false);
         $width = 304;
         $height = 242;
@@ -56,7 +49,7 @@ class PicExtractorServiceTest extends PumukitTestCase
         $this->picExtractor = new PicExtractorService($this->dm, $mmsPicService, $width, $height, $this->targetPath, $this->targetUrl, $command);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm = null;

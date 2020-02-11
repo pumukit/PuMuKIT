@@ -237,7 +237,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
             $data = $request->query->get('criteria');
             $session->set('admin/live/event/dataForm', $data);
             if (!empty($data['name'])) {
-                if (preg_match($this::regex, $data['name'])) {
+                if (preg_match(self::$regex, $data['name'])) {
                     $criteria['_id'] = new ObjectId($data['name']);
                 } else {
                     $criteria['embeddedEvent.name.'.$request->getLocale()] = new Regex($data['name'], 'i');

@@ -11,23 +11,20 @@ use Pumukit\SchemaBundle\Document\Tag;
  */
 class TagTest extends PumukitTestCase
 {
-    private $dm;
     private $tagRepo;
     private $tagService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-        $this->dm = parent::setUp();
-        $this->tagRepo = $this->dm
-            ->getRepository(Tag::class)
-        ;
+        parent::setUp();
+        $this->tagRepo = $this->dm->getRepository(Tag::class);
 
         $this->tagService = static::$kernel->getContainer()->get('pumukitschema.tag');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();

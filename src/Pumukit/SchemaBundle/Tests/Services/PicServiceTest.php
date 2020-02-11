@@ -4,7 +4,6 @@ namespace Pumukit\SchemaBundle\Tests\Services;
 
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Services\ProfileService;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Track;
@@ -21,7 +20,6 @@ use Symfony\Component\Routing\RequestContext;
  */
 class PicServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $factoryService;
     private $picService;
     private $context;
@@ -37,12 +35,12 @@ class PicServiceTest extends PumukitTestCase
     private $rootDir;
     private $absoluteDomain;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->dm = parent::setUp();
+        parent::setUp();
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
 
         $this->context = $this->getMockBuilder(RequestContext::class)
@@ -57,23 +55,17 @@ class PicServiceTest extends PumukitTestCase
         $this->webDir = realpath($publicDir.'/bundles/pumukitschema');
         $this->absoluteDomain = $scheme.'://'.$host;
 
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
-        $this->dm->flush();
-
         $this->picService = new PicService($scheme, $host, $this->webDir, $this->defaultSeriesPic, $this->defaultPlaylistPic, $this->defaultVideoPic, $this->defaultAudioHDPic, $this->defaultAudioSDPic);
 
         $dispatcher = new EventDispatcher();
         $this->listener = new MultimediaObjectListener($this->dm, new TextIndexService());
         $dispatcher->addListener('multimediaobject.update', [$this->listener, 'postUpdate']);
-        $this->trackDispatcher = static::$kernel->getContainer()
-            ->get('pumukitschema.track_dispatcher')
-        ;
+        $this->trackDispatcher = static::$kernel->getContainer()->get('pumukitschema.track_dispatcher');
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
-        $this->trackService = new TrackService($this->dm, $this->trackDispatcher, $profileService, null, true);
+        $this->trackService = new TrackService($this->dm, $this->trackDispatcher, null, true);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();

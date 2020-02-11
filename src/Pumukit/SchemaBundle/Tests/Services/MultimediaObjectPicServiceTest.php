@@ -2,20 +2,19 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @internal
  * @coversNothing
  */
-class MultimediaObjectPicServiceTest extends WebTestCase
+class MultimediaObjectPicServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
     private $factoryService;
     private $mmsPicService;
@@ -23,36 +22,23 @@ class MultimediaObjectPicServiceTest extends WebTestCase
     private $uploadsPath;
     private $picDispatcher;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
-        $this->repo = $this->dm
-            ->getRepository(MultimediaObject::class)
-        ;
-        $this->factoryService = static::$kernel->getContainer()
-            ->get('pumukitschema.factory')
-        ;
-        $this->mmsPicService = static::$kernel->getContainer()
-            ->get('pumukitschema.mmspic')
-        ;
-        $this->picDispatcher = static::$kernel->getContainer()
-            ->get('pumukitschema.pic_dispatcher')
-        ;
+        parent::setUp();
+        $this->repo = $this->dm->getRepository(MultimediaObject::class);
+        $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
+        $this->mmsPicService = static::$kernel->getContainer()->get('pumukitschema.mmspic');
+        $this->picDispatcher = static::$kernel->getContainer()->get('pumukitschema.pic_dispatcher');
 
         $this->originalPicPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'logo.png';
         $this->uploadsPath = static::$kernel->getContainer()->getParameter('pumukit.uploads_pic_dir');
-
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
-        $this->dm->flush();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->repo = null;
@@ -62,7 +48,6 @@ class MultimediaObjectPicServiceTest extends WebTestCase
         $this->originalPicPath = null;
         $this->uploadsPath = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testGetRecommendedPics()

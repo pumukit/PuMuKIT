@@ -15,24 +15,21 @@ use Pumukit\StatsBundle\Services\StatsService;
  */
 class StatsServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
     private $factoryService;
     private $viewsService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = parent::setUp();
-
+        parent::setUp();
         $this->repo = $this->dm->getRepository(ViewsLog::class);
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->viewsService = static::$kernel->getContainer()->get('pumukit_stats.stats');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();

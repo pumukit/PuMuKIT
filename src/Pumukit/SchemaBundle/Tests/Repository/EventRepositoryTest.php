@@ -12,18 +12,17 @@ use Pumukit\SchemaBundle\Document\Live;
  */
 class EventRepositoryTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-        $this->dm = parent::setUp();
+        parent::setUp();
         $this->repo = $this->dm->getRepository(Event::class);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();

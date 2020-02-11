@@ -11,21 +11,17 @@ use Pumukit\EncoderBundle\Document\Job;
  */
 class JobRepositoryTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-        $this->dm = parent::setUp();
+        parent::setUp();
         $this->repo = $this->dm->getRepository(Job::class);
-
-        $this->dm->getDocumentCollection(Job::class)->remove([]);
-        $this->dm->flush();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();

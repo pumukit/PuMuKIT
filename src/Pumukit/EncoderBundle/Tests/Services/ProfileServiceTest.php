@@ -12,24 +12,19 @@ use Pumukit\EncoderBundle\Services\ProfileService;
  */
 class ProfileServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
     private $profileService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-        $this->dm = parent::setUp();
+        parent::setUp();
         $this->repo = $this->dm->getRepository(Job::class);
-
-        $this->dm->getDocumentCollection(Job::class)->remove([]);
-        $this->dm->flush();
-
         $this->profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 

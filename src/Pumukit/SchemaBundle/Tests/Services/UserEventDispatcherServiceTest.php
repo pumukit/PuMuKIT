@@ -2,37 +2,31 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Event\UserEvent;
 use Pumukit\SchemaBundle\Services\UserEventDispatcherService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * @internal
  * @coversNothing
  */
-class UserEventDispatcherServiceTest extends WebTestCase
+class UserEventDispatcherServiceTest extends PumukitTestCase
 {
     const EMPTY_NAME = 'EMTPY_NAME';
 
-    private $dm;
     private $userDispatcher;
     private $dispatcher;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
+        parent::setUp();
 
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb.odm.document_manager')
-        ;
         $this->dispatcher = new EventDispatcher();
-
-        $this->dm->getDocumentCollection(User::class)->remove([]);
-        $this->dm->flush();
 
         MockUpUserListener::$called = false;
         MockUpUserListener::$name = self::EMPTY_NAME;
@@ -40,14 +34,14 @@ class UserEventDispatcherServiceTest extends WebTestCase
         $this->userDispatcher = new UserEventDispatcherService($this->dispatcher);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->dispatcher = null;
         $this->userDispatcher = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testDispatchCreate()

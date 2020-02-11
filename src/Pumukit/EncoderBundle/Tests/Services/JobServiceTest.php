@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class JobServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
     private $jobService;
     private $resourcesDir;
@@ -29,11 +28,11 @@ class JobServiceTest extends PumukitTestCase
     private $tokenStorage;
     private $propService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-        $this->dm = parent::setUp();
+        parent::setUp();
         $this->repo = $this->dm->getRepository(Job::class);
         $this->repoMmobj = $this->dm->getRepository(MultimediaObject::class);
         $this->logger = $this->getMockBuilder(LoggerInterface::class)
@@ -68,7 +67,7 @@ class JobServiceTest extends PumukitTestCase
         );
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 

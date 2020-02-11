@@ -15,20 +15,19 @@ use Pumukit\SchemaBundle\Document\Track;
 class TrackUrlServiceTest extends PumukitTestCase
 {
     private $client;
-    private $dm;
     private $trackurlService;
     private $mmobjRepo;
 
-    public function setUp()
+    public function setUp(): void
     {
-        $this->dm = parent::setUp();
+        parent::setUp();
 
         $this->client = static::createClient();
         $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
         $this->trackurlService = static::$kernel->getContainer()->get('pumukit_baseplayer.trackurl');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();

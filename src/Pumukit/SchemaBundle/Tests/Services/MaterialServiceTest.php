@@ -5,7 +5,6 @@ namespace Pumukit\SchemaBundle\Tests\Services;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Services\MaterialService;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -15,7 +14,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class MaterialServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $repoMmobj;
     private $materialService;
     private $factoryService;
@@ -23,33 +21,21 @@ class MaterialServiceTest extends PumukitTestCase
     private $uploadsPath;
     private $materialDispatcher;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-        $this->dm = parent::setUp();
-        $this->repoMmobj = $this->dm
-            ->getRepository(MultimediaObject::class)
-        ;
-        $this->materialService = static::$kernel->getContainer()
-            ->get('pumukitschema.material')
-        ;
-        $this->materialDispatcher = static::$kernel->getContainer()
-            ->get('pumukitschema.material_dispatcher')
-        ;
-        $this->factoryService = static::$kernel->getContainer()
-            ->get('pumukitschema.factory')
-        ;
+        parent::setUp();
+        $this->repoMmobj = $this->dm->getRepository(MultimediaObject::class);
+        $this->materialService = static::$kernel->getContainer()->get('pumukitschema.material');
+        $this->materialDispatcher = static::$kernel->getContainer()->get('pumukitschema.material_dispatcher');
+        $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
 
         $this->originalFilePath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'file.pdf';
         $this->uploadsPath = static::$kernel->getContainer()->getParameter('pumukit.uploads_material_dir');
-
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
-        $this->dm->flush();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();

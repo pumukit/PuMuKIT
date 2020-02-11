@@ -21,7 +21,6 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
  */
 class PermissionProfileListenerTest extends PumukitTestCase
 {
-    private $dm;
     private $userRepo;
     private $permissionProfileRepo;
     private $userService;
@@ -29,11 +28,11 @@ class PermissionProfileListenerTest extends PumukitTestCase
     private $listener;
     private $logger;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-        $this->dm = parent::setUp();
+        parent::setUp();
         $this->userRepo = $this->dm->getRepository(User::class);
         $this->permissionProfileRepo = $this->dm->getRepository(PermissionProfile::class);
 
@@ -65,7 +64,7 @@ class PermissionProfileListenerTest extends PumukitTestCase
         $dispatcher->addListener('permissionprofile.update', [$this->listener, 'postUpdate']);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm = null;

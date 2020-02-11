@@ -2,59 +2,39 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
-use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class PersonServiceTest extends WebTestCase
+class PersonServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
     private $repoMmobj;
     private $personService;
     private $factoryService;
     private $roleRepo;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
-        $this->repo = $this->dm
-            ->getRepository(Person::class)
-        ;
-        $this->roleRepo = $this->dm
-            ->getRepository(Role::class)
-        ;
-        $this->repoMmobj = $this->dm
-            ->getRepository(MultimediaObject::class)
-        ;
-        $this->personService = static::$kernel->getContainer()
-            ->get('pumukitschema.person')
-        ;
-        $this->factoryService = static::$kernel->getContainer()
-            ->get('pumukitschema.factory')
-        ;
-
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Person::class)->remove([]);
-        $this->dm->getDocumentCollection(Role::class)->remove([]);
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
-        $this->dm->getDocumentCollection(User::class)->remove([]);
-        $this->dm->flush();
+        parent::setUp();
+        $this->repo = $this->dm->getRepository(Person::class);
+        $this->roleRepo = $this->dm->getRepository(Role::class);
+        $this->repoMmobj = $this->dm->getRepository(MultimediaObject::class);
+        $this->personService = static::$kernel->getContainer()->get('pumukitschema.person');
+        $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->repo = null;
@@ -63,7 +43,6 @@ class PersonServiceTest extends WebTestCase
         $this->personService = null;
         $this->factoryService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testSavePerson()

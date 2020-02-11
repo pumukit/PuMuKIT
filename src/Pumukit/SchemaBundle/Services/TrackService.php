@@ -9,7 +9,7 @@ use Symfony\Component\Finder\Finder;
 
 class TrackService
 {
-    /** @var DocumentManager  */
+    /** @var DocumentManager */
     private $dm;
     /** @var TrackEventDispatcherService */
     private $dispatcher;

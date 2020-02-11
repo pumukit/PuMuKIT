@@ -16,19 +16,16 @@ class PermissionServiceTest extends WebTestCase
     private $permissionService;
     private $dm;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-
-        $this->permissionService = static::$kernel->getContainer()
-            ->get('pumukitschema.permission')
-        ;
+        $this->permissionService = static::$kernel->getContainer()->get('pumukitschema.permission');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->permissionService = null;
         gc_collect_cycles();

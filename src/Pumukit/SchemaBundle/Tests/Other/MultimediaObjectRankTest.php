@@ -12,23 +12,22 @@ use Pumukit\SchemaBundle\Document\Series;
  */
 class MultimediaObjectRankTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
     private $qb;
     private $factoryService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->dm = parent::setUp();
+        parent::setUp();
 
         $this->repo = $this->dm->getRepository(MultimediaObject::class);
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();

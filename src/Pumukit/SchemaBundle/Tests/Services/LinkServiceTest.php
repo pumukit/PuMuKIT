@@ -2,53 +2,39 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Link;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class LinkServiceTest extends WebTestCase
+class LinkServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $repoMmobj;
     private $linkService;
     private $factoryService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
-        $this->repoMmobj = $this->dm
-            ->getRepository(MultimediaObject::class)
-        ;
-        $this->linkService = static::$kernel->getContainer()
-            ->get('pumukitschema.link')
-        ;
-        $this->factoryService = static::$kernel->getContainer()
-            ->get('pumukitschema.factory')
-        ;
-
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
-        $this->dm->flush();
+        parent::setUp();
+        $this->repoMmobj = $this->dm->getRepository(MultimediaObject::class);
+        $this->linkService = static::$kernel->getContainer()->get('pumukitschema.link');
+        $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
         $this->dm = null;
         $this->repoMmobj = null;
         $this->linkService = null;
         $this->factoryService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testAddLinkToMultimediaObject()

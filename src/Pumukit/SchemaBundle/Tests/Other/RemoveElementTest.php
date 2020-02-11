@@ -14,7 +14,6 @@ use Pumukit\SchemaBundle\Document\User;
  */
 class RemoveElementTest extends PumukitTestCase
 {
-    private $dm;
     private $mmRepo;
     private $groupRepo;
     private $factoryService;
@@ -27,40 +26,24 @@ class RemoveElementTest extends PumukitTestCase
     private $tagService;
     private $userRepo;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->dm = parent::setUp();
+        parent::setUp();
 
-        $this->mmRepo = $this->dm
-            ->getRepository(MultimediaObject::class)
-        ;
-        $this->userRepo = $this->dm
-            ->getRepository(User::class)
-        ;
-        $this->groupRepo = $this->dm
-            ->getRepository(Group::class)
-        ;
-        $this->factoryService = static::$kernel->getContainer()
-            ->get('pumukitschema.factory')
-        ;
-        $this->mmService = static::$kernel->getContainer()
-            ->get('pumukitschema.multimedia_object')
-        ;
-        $this->userService = static::$kernel->getContainer()
-            ->get('pumukitschema.user')
-        ;
-        $this->ebService = static::$kernel->getContainer()
-            ->get('pumukitschema.embeddedbroadcast')
-        ;
-        $this->groupService = static::$kernel->getContainer()
-            ->get('pumukitschema.group')
-        ;
+        $this->mmRepo = $this->dm->getRepository(MultimediaObject::class);
+        $this->userRepo = $this->dm->getRepository(User::class);
+        $this->groupRepo = $this->dm->getRepository(Group::class);
+        $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
+        $this->mmService = static::$kernel->getContainer()->get('pumukitschema.multimedia_object');
+        $this->userService = static::$kernel->getContainer()->get('pumukitschema.user');
+        $this->ebService = static::$kernel->getContainer()->get('pumukitschema.embeddedbroadcast');
+        $this->groupService = static::$kernel->getContainer()->get('pumukitschema.group');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();

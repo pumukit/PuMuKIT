@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class RemoteHTTPExecutorTest extends WebTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
@@ -19,7 +19,7 @@ class RemoteHTTPExecutorTest extends WebTestCase
 
     public function testSimple()
     {
-        $this->markTestSkipped('Remote cpu not available in test.');
+        static::markTestSkipped('Remote cpu not available in test.');
 
         $cpu = [
             'host' => '127.0.0.1:9000',

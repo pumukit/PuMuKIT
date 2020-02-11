@@ -454,7 +454,7 @@ class JobService
     public function executeInBackground(Job $job): void
     {
         $command = [
-            'php', "$this->binPath/console", sprintf('--env=%s', $this->environment), 'pumukit:encoder:job', $job->getId(),
+            'php', "{$this->binPath}/console", sprintf('--env=%s', $this->environment), 'pumukit:encoder:job', $job->getId(),
         ];
 
         $process = new Process($command);

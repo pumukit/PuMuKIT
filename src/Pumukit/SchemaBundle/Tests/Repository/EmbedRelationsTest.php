@@ -12,25 +12,19 @@ use Pumukit\SchemaBundle\Document\Tag;
  */
 class EmbedRelationsTest extends PumukitTestCase
 {
-    private $dm;
     private $repoMmobjs;
     private $repoTags;
-    private $qb;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-        $this->dm = parent::setUp();
-        $this->repoMmobjs = $this->dm
-            ->getRepository(MultimediaObject::class)
-        ;
-        $this->repoTags = $this->dm
-            ->getRepository(Tag::class)
-        ;
+        parent::setUp();
+        $this->repoMmobjs = $this->dm->getRepository(MultimediaObject::class);
+        $this->repoTags = $this->dm->getRepository(Tag::class);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();
