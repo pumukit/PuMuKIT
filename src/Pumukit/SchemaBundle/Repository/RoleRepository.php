@@ -27,6 +27,7 @@ class RoleRepository extends DocumentRepository
             ->sort('rank', -1)
             ->getQuery()
             ->execute()
+            ->toArray()
         ;
     }
 }
