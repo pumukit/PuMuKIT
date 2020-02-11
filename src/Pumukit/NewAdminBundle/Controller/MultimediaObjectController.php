@@ -127,9 +127,8 @@ class MultimediaObjectController extends SortableAdminController
         $warningOnUnpublished,
         $kernelBundles,
         $pumukitNewAdminMultimediaObjectLabel
-    )
-    {
-        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session);
+    ) {
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
         $this->translator = $translator;
         $this->requestStack = $requestStack;
         $this->multimediaObjectSyncService = $multimediaObjectSyncService;

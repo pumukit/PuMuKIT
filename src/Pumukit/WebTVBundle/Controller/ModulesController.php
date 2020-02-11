@@ -265,6 +265,8 @@ class ModulesController extends AbstractController implements WebTVControllerInt
 
     /**
      * @Template("PumukitWebTVBundle:Modules:widget_categories.html.twig")
+     *
+     * @param mixed $categories
      */
     public function categoriesAction(Request $request, string $title, string $class, $categories, int $cols = 6, bool $sort = true)
     {

@@ -168,6 +168,10 @@ class DefaultController extends AbstractController
 
     /**
      * @Template("PumukitWizardBundle:Default:multimediaobject.html.twig")
+     *
+     * @param mixed $pumukitNewAdminLicenses
+     * @param mixed $pumukitSchemaDefaultLicense
+     * @param mixed $pumukitWizardTagParentCod
      */
     public function multimediaobjectAction(Request $request, DocumentManager $documentManager, LicenseService $licenseService, bool $pumukitWizardShowTags, $pumukitNewAdminLicenses, $pumukitSchemaDefaultLicense, bool $pumukitWizardShowObjectLicense, $pumukitWizardTagParentCod, bool $pumukitWizardMandatoryTitle)
     {

@@ -182,7 +182,7 @@ class AnnotationsAPIController extends AbstractController
         ];
         $response = $serializer->dataSerialize($data, 'xml');
         $event = new AnnotationsUpdateEvent($annotation->getMultimediaObject());
-        $eventDispatcher->dispatch( $event, AnnotationsEvents::UPDATE);
+        $eventDispatcher->dispatch($event, AnnotationsEvents::UPDATE);
 
         return new Response($response);
     }

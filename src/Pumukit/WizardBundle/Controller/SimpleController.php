@@ -98,6 +98,9 @@ class SimpleController extends AbstractController
 
     /**
      * @Template("PumukitWizardBundle:Simple:embedindex.html.twig")
+     *
+     * @param mixed $pumukitWizardShowSimpleMmTitle
+     * @param mixed $pumukitWizardShowSimpleSeriesTitle
      */
     public function embedindexAction(Request $request, DocumentManager $documentManager, LicenseService $licenseService, TranslatorInterface $translator, array $pumukitCustomLocales, $pumukitWizardShowSimpleMmTitle, $pumukitWizardShowSimpleSeriesTitle)
     {

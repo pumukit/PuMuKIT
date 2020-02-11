@@ -21,6 +21,9 @@ class TrackFileController extends AbstractController
     /**
      * @Route("/trackfile/{id}.{ext}", name="pumukit_trackfile_index")
      * @Route("/trackfile/{id}", name="pumukit_trackfile_index_no_ext")
+     *
+     * @param mixed $secret
+     * @param mixed $secureDuration
      */
     public function indexAction(string $id, Request $request, DocumentManager $documentManager, string $pumukitPlayerWhenDispatchViewEvent, $secret, $secureDuration)
     {

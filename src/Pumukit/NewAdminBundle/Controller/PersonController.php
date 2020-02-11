@@ -50,7 +50,7 @@ class PersonController extends AdminController
         $pumukitLdapEnable,
         $pumukitSchemaPersonalScopeRoleCode
     ) {
-        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session);
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
         $this->personService = $personService;
         $this->translator = $translator;
         $this->pumukitLdapEnable = $pumukitLdapEnable;

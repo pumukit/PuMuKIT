@@ -39,7 +39,7 @@ class LiveController extends AdminController
         SessionInterface $session,
         $pumukitLiveChatEnable
     ) {
-        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session);
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
         $this->pumukitLiveChatEnable = $pumukitLiveChatEnable;
         $this->translator = $translator;
     }

@@ -81,7 +81,7 @@ class SeriesController extends AdminController
         $pumukitUseSeriesChannels,
         $showLatestWithPudeNew
     ) {
-        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session);
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
         $this->embeddedBroadcastService = $embeddedBroadcastService;
         $this->translator = $translator;
         $this->sortedMultimediaObjectService = $sortedMultimediaObjectService;

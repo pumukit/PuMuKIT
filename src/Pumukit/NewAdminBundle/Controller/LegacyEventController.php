@@ -2,18 +2,12 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\Regex;
-use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Document\Event;
-use Pumukit\SchemaBundle\Services\FactoryService;
-use Pumukit\SchemaBundle\Services\GroupService;
-use Pumukit\SchemaBundle\Services\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_LIVE_EVENTS')")

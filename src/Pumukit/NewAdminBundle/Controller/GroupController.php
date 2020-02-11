@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_GROUPS')")
@@ -32,6 +33,8 @@ class GroupController extends AdminController
     private $multimediaObjectService;
     /** @var EmbeddedBroadcastService */
     private $embeddedBroadcastService;
+    /** @var TranslatorInterface */
+    private $translator;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -41,15 +44,17 @@ class GroupController extends AdminController
         SessionInterface $session,
         MultimediaObjectService $multimediaObjectService,
         EmbeddedBroadcastService $embeddedBroadcastService,
-        UserService $userService
+        UserService $userService,
+        TranslatorInterface $translator
     ) {
-        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session);
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
         $this->documentManager = $documentManager;
         $this->groupService = $groupService;
         $this->session = $session;
         $this->multimediaObjectService = $multimediaObjectService;
         $this->embeddedBroadcastService = $embeddedBroadcastService;
         $this->userService = $userService;
+        $this->translator = $translator;
     }
 
     /**
@@ -186,7 +191,7 @@ class GroupController extends AdminController
         }
         if ($notDeleted) {
             $code = Response::HTTP_BAD_REQUEST;
-            $message = $this->translatorService->trans('Not allowed to delete Groups:');
+            $message = $this->translator->trans('Not allowed to delete Groups:');
             foreach ($notDeleted as $key) {
                 if ($key === reset($notDeleted)) {
                     $message = $message.' ';
@@ -199,7 +204,7 @@ class GroupController extends AdminController
             }
         } else {
             $code = Response::HTTP_OK;
-            $message = $this->translatorService->trans('Groups successfully deleted');
+            $message = $this->translator->trans('Groups successfully deleted');
         }
 
         return new JsonResponse($message, $code);
