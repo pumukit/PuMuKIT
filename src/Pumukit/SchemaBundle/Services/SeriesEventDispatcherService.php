@@ -5,59 +5,43 @@ namespace Pumukit\SchemaBundle\Services;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Event\SeriesEvent;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class SeriesEventDispatcherService
 {
-    /**
-     * @var EventDispatcherInterface
-     */
+    /** @var EventDispatcher */
     private $dispatcher;
 
-    /**
-     * Constructor.
-     */
     public function __construct(EventDispatcherInterface $dispatcher)
     {
         $this->dispatcher = $dispatcher;
     }
 
     /**
-     * Dispatch create.
-     *
-     * Dispatchs the event SERIES_CREATE
-     * 'series.create' passing
-     * the series
+     * Dispatch the event SERIES_CREATE 'series.create' passing the series.
      */
-    public function dispatchCreate(Series $series)
+    public function dispatchCreate(Series $series): void
     {
         $event = new SeriesEvent($series);
-        $this->dispatcher->dispatch(SchemaEvents::SERIES_CREATE, $event);
+        $this->dispatcher->dispatch($event, SchemaEvents::SERIES_CREATE);
     }
 
     /**
-     * Dispatch update.
-     *
-     * Dispatchs the event SERIES_UPDATE
-     * 'series.update' passing
-     * the series
+     * Dispatch the event SERIES_UPDATE 'series.update' passing the series.
      */
-    public function dispatchUpdate(Series $series)
+    public function dispatchUpdate(Series $series): void
     {
         $event = new SeriesEvent($series);
-        $this->dispatcher->dispatch(SchemaEvents::SERIES_UPDATE, $event);
+        $this->dispatcher->dispatch($event, SchemaEvents::SERIES_UPDATE);
     }
 
     /**
-     * Dispatch delete.
-     *
-     * Dispatchs the event SERIES_DELETE
-     * 'series.delete' passing
-     * the series
+     * Dispatch the event SERIES_DELETE 'series.delete' passing the series.
      */
-    public function dispatchDelete(Series $series)
+    public function dispatchDelete(Series $series): void
     {
         $event = new SeriesEvent($series);
-        $this->dispatcher->dispatch(SchemaEvents::SERIES_DELETE, $event);
+        $this->dispatcher->dispatch($event, SchemaEvents::SERIES_DELETE);
     }
 }

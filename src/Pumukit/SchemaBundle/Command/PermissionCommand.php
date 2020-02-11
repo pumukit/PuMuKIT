@@ -63,6 +63,8 @@ EOT
             $this->permissionProfileService->addPermission($profile, $permissionName);
             $output->writeln(sprintf('Profile "%s" has been added into profile %s.', $permissionName, $profileName));
         }
+
+        return 0;
     }
 
     private function getProfile(string $profileName)

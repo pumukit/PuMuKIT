@@ -11,6 +11,7 @@ use Pumukit\SchemaBundle\Services\UserService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -22,7 +23,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
     protected $groupService;
     /** @var UserService */
     protected $userService;
-    /** @var SessionInterface */
+    /** @var Session */
     protected $session;
     /** @var TranslatorInterface */
     private $translator;

@@ -11,7 +11,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  *
  * @MongoDB\EmbeddedDocument()
  */
-class EmbeddedRole
+class EmbeddedRole implements RoleInterface
 {
     /**
      * @var string
@@ -103,22 +103,12 @@ class EmbeddedRole
         return $this->id;
     }
 
-    /**
-     * Set cod.
-     *
-     * @param string $cod
-     */
-    public function setCod($cod)
+    public function setCod(string $cod): void
     {
         $this->cod = $cod;
     }
 
-    /**
-     * Get cod.
-     *
-     * @return string
-     */
-    public function getCod()
+    public function getCod(): string
     {
         return $this->cod;
     }

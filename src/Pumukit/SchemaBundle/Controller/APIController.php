@@ -128,7 +128,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
             $criteria = $this->getCriteria($request->get('criteria'), $request->get('criteriajson'));
         } catch (\Exception $e) {
             $error = ['error' => sprintf('Invalid criteria (%s)', $e->getMessage())];
-            $data = $serializer->serialize($error, $request->getRequestFormat());
+            $data = $serializer->dataSerialize($error, $request->getRequestFormat());
 
             return new Response($data, 400);
         }

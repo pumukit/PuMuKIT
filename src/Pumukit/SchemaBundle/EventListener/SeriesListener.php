@@ -6,16 +6,17 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Event\SeriesEvent;
+use Pumukit\SchemaBundle\Repository\MultimediaObjectRepository;
 use Pumukit\SchemaBundle\Services\TextIndexService;
 
 /**
- * NOTE: This listener is to update the seriesTitle field in each
- *       MultimediaObject for MongoDB Search Index purposes.
- *       Do not modify this listener.
+ * NOTE: This listener is to update the seriesTitle field in each MultimediaObject for MongoDB Search Index purposes. Do not modify this listener.
  */
 class SeriesListener
 {
+    /** @var DocumentManager */
     private $dm;
+    /** @var MultimediaObjectRepository */
     private $mmRepo;
     private $textIndexService;
 

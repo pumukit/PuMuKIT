@@ -3,6 +3,8 @@ services:
     autowire:      true
     autoconfigure: true
     public:        true
+    bind:
+      $pumukitPlayerWhenDispatchViewEvent: '%pumukitplayer.when_dispatch_view_event%'
 
   Pumukit\JWPlayerBundle\Controller\:
     resource: '../../src/Pumukit/JWPlayerBundle/Controller/'

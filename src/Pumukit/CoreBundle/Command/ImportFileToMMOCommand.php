@@ -94,5 +94,7 @@ EOT
 
         $track = $this->jobService->createTrack($multimediaObject, $filePath, $profile, $language, $description);
         $output->writeln('<info> Track '.$track->getId().' was imported succesfully on '.$multimediaObject->getId().'</info>');
+
+        return 0;
     }
 }

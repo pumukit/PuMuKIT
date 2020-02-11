@@ -50,6 +50,8 @@ EOT
         }
 
         $this->executeJob($job);
+
+        return 0;
     }
 
     private function executeJob(Job $job): void

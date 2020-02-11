@@ -4,6 +4,7 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\CoreBundle\Services\PaginationService;
+use Pumukit\SchemaBundle\Document\Playlist;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Services\SeriesPicService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -137,8 +138,8 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
         $picId = $request->get('id');
 
         $repo = $this->documentManager->getRepository(Series::class);
-
-        if (!$playlist = $repo->findByPicId($picId)) {
+        $playlist = $repo->findByPicId($picId);
+        if (!$playlist instanceof Series) {
             throw $this->createNotFoundException('Requested playlist does not exist');
         }
 
@@ -156,7 +157,8 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
 
         $repo = $this->documentManager->getRepository(Series::class);
 
-        if (!$playlist = $repo->findByPicId($picId)) {
+        $playlist = $repo->findByPicId($picId);
+        if (!$playlist instanceof Series) {
             throw $this->createNotFoundException('Requested playlist does not exist');
         }
 

@@ -2,75 +2,48 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
-use Pumukit\SchemaBundle\Document\EmbeddedPerson;
-use Pumukit\SchemaBundle\Document\EmbeddedRole;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Person;
-use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\PersonInterface;
+use Pumukit\SchemaBundle\Document\RoleInterface;
 use Pumukit\SchemaBundle\Event\PersonWithRoleEvent;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class PersonWithRoleEventDispatcherService
 {
-    /**
-     * @var EventDispatcherInterface
-     */
+    /** @var EventDispatcher */
     private $dispatcher;
 
-    /**
-     * Constructor.
-     */
     public function __construct(EventDispatcherInterface $dispatcher)
     {
         $this->dispatcher = $dispatcher;
     }
 
     /**
-     * Dispatch create.
-     *
-     * Dispatchs the event PERSONWITHROLE_CREATE
-     * 'personwithrole.create' passing
-     * the multimedia object and the personwithrole
-     *
-     * @param embeddedPerson|Person $person
-     * @param EmbeddedRole|Role     $role
+     * Dispatch the event PERSONWITHROLE_CREATE 'personwithrole.create' passing the multimedia object and the personwithrole.
      */
-    public function dispatchCreate(MultimediaObject $multimediaObject, $person, $role)
+    public function dispatchCreate(MultimediaObject $multimediaObject, PersonInterface $person, RoleInterface $role): void
     {
         $event = new PersonWithRoleEvent($multimediaObject, $person, $role);
-        $this->dispatcher->dispatch(SchemaEvents::PERSONWITHROLE_CREATE, $event);
+        $this->dispatcher->dispatch($event, SchemaEvents::PERSONWITHROLE_CREATE);
     }
 
     /**
-     * Dispatch update.
-     *
-     * Dispatchs the event PERSONWITHROLE_UPDATE
-     * 'personwithrole.update' passing
-     * the multimedia object and the personwithrole
-     *
-     * @param EmbeddedPerson|Person $person
-     * @param EmbeddedRole|Role     $role
+     * Dispatch the event PERSONWITHROLE_UPDATE 'personwithrole.update' passing  the multimedia object and the personwithrole.
      */
-    public function dispatchUpdate(MultimediaObject $multimediaObject, $person, $role)
+    public function dispatchUpdate(MultimediaObject $multimediaObject, PersonInterface $person, RoleInterface $role): void
     {
         $event = new PersonWithRoleEvent($multimediaObject, $person, $role);
-        $this->dispatcher->dispatch(SchemaEvents::PERSONWITHROLE_UPDATE, $event);
+        $this->dispatcher->dispatch($event, SchemaEvents::PERSONWITHROLE_UPDATE);
     }
 
     /**
-     * Dispatch delete.
-     *
-     * Dispatchs the event PERSONWITHROLE_DELETE
-     * 'personwithrole.delete' passing
-     * the multimedia object and the personwithrole
-     *
-     * @param EmbeddedPerson|Person $person
-     * @param EmbeddedRole|Role     $role
+     * Dispatch the event PERSONWITHROLE_DELETE 'personwithrole.delete' passing the multimedia object and the personwithrole.
      */
-    public function dispatchDelete(MultimediaObject $multimediaObject, $person, $role)
+    public function dispatchDelete(MultimediaObject $multimediaObject, PersonInterface $person, RoleInterface $role): void
     {
         $event = new PersonWithRoleEvent($multimediaObject, $person, $role);
-        $this->dispatcher->dispatch(SchemaEvents::PERSONWITHROLE_DELETE, $event);
+        $this->dispatcher->dispatch($event, SchemaEvents::PERSONWITHROLE_DELETE);
     }
 }

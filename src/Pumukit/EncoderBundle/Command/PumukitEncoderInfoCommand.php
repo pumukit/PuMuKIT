@@ -51,6 +51,8 @@ EOT
         } else {
             $this->showList($input->getOption('all'), $output);
         }
+
+        return 0;
     }
 
     protected function showList($all, OutputInterface $output)

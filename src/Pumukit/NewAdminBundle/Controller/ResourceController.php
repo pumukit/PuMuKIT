@@ -98,12 +98,18 @@ class ResourceController extends AbstractController
         $queryBuilder = $repo->createQueryBuilder();
 
         $queryBuilder->setQueryArray($criteria);
-        $queryBuilder->sort($sorting);
+
+        if (array_key_exists('textScore', $sorting)) {
+            $queryBuilder = $queryBuilder->getQuery()->execute();
+            $queryBuilder->getAdapter()->getQueryBuilder()->sortMeta('score', 'textScore');
+        } else {
+            $queryBuilder->sort($sorting);
+        }
 
         return $this->paginationService->createDoctrineODMMongoDBAdapter($queryBuilder);
     }
 
-    private function getRedirectRoute($routeName = 'index'): string
+    private function getRedirectRoute(string $routeName = 'index'): string
     {
         $resourceName = $this->getResourceName();
 
