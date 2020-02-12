@@ -31,14 +31,14 @@ class PermissionProfileEventDispatcherServiceTest extends PumukitTestCase
         MockUpPermissionProfileListener::$called = false;
         MockUpPermissionProfileListener::$name = self::EMPTY_NAME;
 
-        $this->permissionProfileDispatcher = new PermissionProfileEventDispatcherService($this->dispatcher);
+        $this->permissionProfileDispatcher = new PermissionProfileEventDispatcherService();
     }
 
     public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->dispatcher = null;
         $this->permissionProfileDispatcher = null;
         gc_collect_cycles();

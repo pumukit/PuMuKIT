@@ -39,7 +39,7 @@ class JobNotificationServiceTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->containerHelper = null;
-        $this->dm = null;
+
         $this->repo = null;
         $this->jobNotificationService = null;
         gc_collect_cycles();

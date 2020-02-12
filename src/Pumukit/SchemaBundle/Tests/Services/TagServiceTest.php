@@ -34,7 +34,7 @@ class TagServiceTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->tagRepo = null;
         $this->mmobjRepo = null;
         $this->tagService = null;

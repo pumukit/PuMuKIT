@@ -70,18 +70,11 @@ class PicService
     }
 
     /**
-     * Get default url pic.
+     * Get the default url pic for a given resource checking if it is Series, MultimediaObject of type video or audio.
      *
-     * Get the default url pic
-     * for a given resource checking if
-     * it is Series, MultimediaObject of type
-     * video or audio
-     *
-     * @param MultimediaObject|Series $object   Object to get the url (using $object->getPics())
-     * @param bool                    $absolute Returns absolute path
-     * @param bool                    $hd       Returns pic in HD
-     *
-     * @return string
+     * @param mixed $object
+     * @param mixed $absolute
+     * @param mixed $hd
      */
     public function getDefaultUrlPicForObject($object, $absolute = false, $hd = true)
     {
@@ -204,19 +197,12 @@ class PicService
     }
 
     /**
-     * Get default path pic.
+     * Get the default path pic for a given resource checking if it is Series, MultimediaObject of type video or audio.
      *
-     * Get the default path pic
-     * for a given resource checking if
-     * it is Series, MultimediaObject of type
-     * video or audio
-     *
-     * @param MultimediaObject|Series $object Object to get the path (using $object->getPics())
-     * @param bool                    $hd     Returns pic in HD
-     *
-     * @return string
+     * @param mixed $object
+     * @param mixed $hd
      */
-    public function getDefaultPathPicForObject($object, $hd = true)
+    public function getDefaultPathPicForObject($object, $hd = true): string
     {
         if ($object instanceof Series) {
             return $this->getDefaultSeriesPathPic();
@@ -228,12 +214,7 @@ class PicService
         return $this->getDefaultMultimediaObjectPathPic(false, $hd);
     }
 
-    /**
-     * Get default series path pic.
-     *
-     * @returns string
-     */
-    public function getDefaultSeriesPathPic()
+    public function getDefaultSeriesPathPic(): string
     {
         return $this->getAbsolutePathPic($this->defaultSeriesPic);
     }

@@ -72,7 +72,7 @@ class JobGeneratorListenerTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->logger = null;
         $this->jobGeneratorListener = null;
         $this->listener = null;

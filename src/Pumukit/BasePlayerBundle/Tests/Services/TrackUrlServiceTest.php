@@ -31,7 +31,7 @@ class TrackUrlServiceTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->mmobjRepo = null;
         $this->trackurlService = null;
         $this->client = null;

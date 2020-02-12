@@ -69,7 +69,7 @@ class PicServiceTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->factoryService = null;
         $this->context = null;
         $this->rootDir = null;

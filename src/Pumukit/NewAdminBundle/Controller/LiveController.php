@@ -25,8 +25,6 @@ class LiveController extends AdminController
     public static $resourceName = 'live';
     public static $repoName = Live::class;
 
-    /** @var TranslatorInterface */
-    private $translator;
     private $pumukitLiveChatEnable;
 
     public function __construct(
@@ -41,7 +39,6 @@ class LiveController extends AdminController
     ) {
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
         $this->pumukitLiveChatEnable = $pumukitLiveChatEnable;
-        $this->translator = $translator;
     }
 
     public function createAction(Request $request)

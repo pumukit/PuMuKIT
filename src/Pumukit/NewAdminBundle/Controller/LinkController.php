@@ -11,7 +11,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -24,7 +23,7 @@ class LinkController extends AbstractController implements NewAdminControllerInt
     private $translator;
     /** @var LinkService */
     private $linkService;
-    /** @var Session */
+    /** @var SessionInterface */
     private $session;
 
     public function __construct(TranslatorInterface $translator, LinkService $linkService, SessionInterface $session)
@@ -49,7 +48,7 @@ class LinkController extends AbstractController implements NewAdminControllerInt
             try {
                 $multimediaObject = $this->linkService->addLinkToMultimediaObject($multimediaObject, $link);
             } catch (\Exception $e) {
-                $this->session->getFlashBag()->add('error', $e->getMessage());
+                $this->addFlash('error', $e->getMessage());
             }
 
             return $this->render(
@@ -83,7 +82,7 @@ class LinkController extends AbstractController implements NewAdminControllerInt
             try {
                 $multimediaObject = $this->linkService->updateLinkInMultimediaObject($multimediaObject, $link);
             } catch (\Exception $e) {
-                $this->session->getFlashBag()->add('error', $e->getMessage());
+                $this->addFlash('error', $e->getMessage());
             }
 
             return $this->render(

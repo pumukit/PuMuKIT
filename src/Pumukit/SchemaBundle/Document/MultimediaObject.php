@@ -280,104 +280,54 @@ class MultimediaObject
         return $this->getTitle();
     }
 
-    /**
-     * @return bool
-     */
-    public function isCollection()
+    public function isCollection(): bool
     {
         return false;
     }
 
-    /**
-     * Get id.
-     *
-     * @return \MongoId|string|null
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Get numerical id.
-     *
-     * @return int
-     */
-    public function getNumericalID()
+    public function getNumericalID(): int
     {
         return $this->numerical_id;
     }
 
-    /**
-     * Set numerical id.
-     *
-     * @param mixed $numericalID
-     *
-     * @return int
-     */
-    public function setNumericalID($numericalID)
+    public function setNumericalID(int $numericalID): void
     {
-        return $this->numerical_id = $numericalID;
+        $this->numerical_id = $numericalID;
     }
 
-    /**
-     * Get secret.
-     *
-     * @return string
-     */
-    public function getSecret()
+    public function getSecret(): string
     {
         return $this->secret;
     }
 
-    /**
-     * Resets secret.
-     *
-     * @return string
-     */
-    public function resetSecret()
+    public function resetSecret(): string
     {
         $this->secret = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
 
         return $this->secret;
     }
 
-    /**
-     * Set locale.
-     *
-     * @param string $locale
-     */
-    public function setLocale($locale)
+    public function setLocale(string $locale): void
     {
         $this->locale = $locale;
     }
 
-    /**
-     * Get locale.
-     *
-     * @return string
-     */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
 
-    /**
-     * Set rank.
-     *
-     * @param int $rank
-     */
-    public function setRank($rank)
+    public function setRank(int $rank): void
     {
         $this->rank = $rank;
     }
 
-    /**
-     * Get rank.
-     *
-     * @return int
-     */
-    public function getRank()
+    public function getRank(): int
     {
         return $this->rank;
     }
@@ -1632,18 +1582,10 @@ class MultimediaObject
         return false;
     }
 
-    /**
-     * Contains person with role.
-     *
-     * @param EmbeddedPerson|Person $person
-     * @param EmbeddedRole|Role     $role
-     *
-     * @return bool
-     */
-    public function containsPersonWithRole($person, $role)
+    public function containsPersonWithRole(PersonInterface $person, RoleInterface $role): bool
     {
         foreach ($this->getPeopleByRole($role, true) as $embeddedPerson) {
-            if ($person->getId() == $embeddedPerson->getId()) {
+            if ($person->getId() === $embeddedPerson->getId()) {
                 return true;
             }
         }
@@ -1651,14 +1593,7 @@ class MultimediaObject
         return false;
     }
 
-    /**
-     * Contains person with all roles.
-     *
-     * @param EmbeddedPerson|Person $person
-     *
-     * @return bool
-     */
-    public function containsPersonWithAllRoles($person, array $roles)
+    public function containsPersonWithAllRoles(PersonInterface $person, array $roles): bool
     {
         foreach ($roles as $role) {
             if (!($this->containsPersonWithRole($person, $role))) {
@@ -1669,14 +1604,7 @@ class MultimediaObject
         return true;
     }
 
-    /**
-     * Contains person with any role.
-     *
-     * @param EmbeddedPerson|Person $person
-     *
-     * @return bool
-     */
-    public function containsPersonWithAnyRole($person, array $roles)
+    public function containsPersonWithAnyRole(PersonInterface $person, array $roles): bool
     {
         foreach ($roles as $role) {
             if ($this->containsPersonWithRole($person, $role)) {
@@ -1739,13 +1667,7 @@ class MultimediaObject
         return $aux;
     }
 
-    /**
-     * Add Person with Role.
-     *
-     * @param EmbeddedPerson|Person $person
-     * @param EmbeddedRole|Role     $role
-     */
-    public function addPersonWithRole($person, $role)
+    public function addPersonWithRole(PersonInterface $person, RoleInterface $role): void
     {
         if (!($this->containsPersonWithRole($person, $role))) {
             if ($embeddedRole = $this->getEmbeddedRole($role)) {
@@ -1849,14 +1771,7 @@ class MultimediaObject
         }
     }
 
-    /**
-     * Get embedded role.
-     *
-     * @param EmbeddedRole|Role $role
-     *
-     * @return bool|EmbeddedRole EmbeddedRole if found, FALSE otherwise
-     */
-    public function getEmbeddedRole($role)
+    public function getEmbeddedRole(RoleInterface $role)
     {
         foreach ($this->people as $embeddedRole) {
             if ($role->getCod() === $embeddedRole->getCod()) {
@@ -1867,23 +1782,13 @@ class MultimediaObject
         return false;
     }
 
-    /**
-     * Create embedded role.
-     *
-     * @param EmbeddedRole|Role $role
-     *
-     * @return EmbeddedRole
-     */
-    public function createEmbeddedRole($role)
+    public function createEmbeddedRole(RoleInterface $role): EmbeddedRole
     {
         if ($role instanceof EmbeddedRole) {
             return $role;
         }
-        if ($role instanceof Role) {
-            return new EmbeddedRole($role);
-        }
 
-        throw new \InvalidArgumentException('Only Role or EmbeddedRole are allowed.');
+        return new EmbeddedRole($role);
     }
 
     /**

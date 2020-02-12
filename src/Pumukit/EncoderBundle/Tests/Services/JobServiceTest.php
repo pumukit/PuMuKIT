@@ -72,7 +72,7 @@ class JobServiceTest extends PumukitTestCase
         parent::tearDown();
 
         $this->dm->close();
-        $this->dm = null;
+
         $this->repo = null;
         $this->repoMmobj = null;
         $this->logger = null;

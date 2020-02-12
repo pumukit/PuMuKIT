@@ -50,7 +50,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->repo = null;
         $this->factoryService = null;
         $this->mmsPicService = null;
@@ -1963,8 +1963,8 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->assertEquals($nameI18n, $embeddedRole->getI18nName());
         $this->assertEquals($textI18n, $embeddedRole->getI18nText());
 
-        $name = null;
-        $text = null;
+        $name = '';
+        $text = '';
 
         $embeddedRole->setName($name);
         $embeddedRole->setText($text);

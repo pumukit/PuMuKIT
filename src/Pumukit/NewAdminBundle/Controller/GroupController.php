@@ -33,8 +33,6 @@ class GroupController extends AdminController
     private $multimediaObjectService;
     /** @var EmbeddedBroadcastService */
     private $embeddedBroadcastService;
-    /** @var TranslatorInterface */
-    private $translator;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -54,7 +52,6 @@ class GroupController extends AdminController
         $this->multimediaObjectService = $multimediaObjectService;
         $this->embeddedBroadcastService = $embeddedBroadcastService;
         $this->userService = $userService;
-        $this->translator = $translator;
     }
 
     /**
@@ -95,13 +92,9 @@ class GroupController extends AdminController
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 try {
-                    $group = $this->groupService->create($group);
+                    $this->groupService->create($group);
                 } catch (\Exception $e) {
                     return new JsonResponse([$e->getMessage()], Response::HTTP_BAD_REQUEST);
-                }
-
-                if (null === $group) {
-                    return $this->redirect($this->generateUrl('pumukitnewadmin_group_list'));
                 }
 
                 return $this->redirect($this->generateUrl('pumukitnewadmin_group_list'));

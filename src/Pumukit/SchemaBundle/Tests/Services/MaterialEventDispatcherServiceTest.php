@@ -33,7 +33,7 @@ class MaterialEventDispatcherServiceTest extends PumukitTestCase
         MockUpMaterialListener::$title = self::EMPTY_TITLE;
         MockUpMaterialListener::$url = self::EMPTY_URL;
 
-        $this->materialDispatcher = new MaterialEventDispatcherService($this->dispatcher);
+        $this->materialDispatcher = new MaterialEventDispatcherService();
     }
 
     public function tearDown(): void

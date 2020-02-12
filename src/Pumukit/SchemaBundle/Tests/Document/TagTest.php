@@ -28,7 +28,7 @@ class TagTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->tagRepo = null;
         $this->tagService = null;
         gc_collect_cycles();
