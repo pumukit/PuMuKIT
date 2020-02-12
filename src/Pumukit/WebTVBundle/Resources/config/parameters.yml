@@ -38,7 +38,7 @@ parameters:
 
   pumukit.intro:             null                   # If set to an url, plays that url before every video.
 
-  pumukit_web_tv.primary_color:   '#d66400'         # Primary color. Must be the same as in default_contrast_background in default.css.twig
+  pumukit_web_tv.primary_color:   '#c05800'         # Primary color. Must be the same as in default_contrast_background in default.css.twig
   pumukit_web_tv.secondary_color: '#fff'            # Secondary color. Must be the same as in default_content_background in default.css.twig
 
   ############ MODULES CONFIGURATION #################
