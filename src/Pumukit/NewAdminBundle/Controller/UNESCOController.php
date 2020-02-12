@@ -155,7 +155,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("/", name="pumukitnewadmin_unesco_index")
-     * @Template("PumukitNewAdminBundle:UNESCO:index.html.twig")
+     * @Template("@PumukitNewAdmin/UNESCO/index.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -177,7 +177,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("/tags", name="pumukitnewadmin_unesco_menu_tags")
-     * @Template("PumukitNewAdminBundle:UNESCO:menuTags.html.twig")
+     * @Template("@PumukitNewAdmin/UNESCO/menuTags.html.twig")
      */
     public function menuTagsAction()
     {
@@ -213,10 +213,9 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
         $countMultimediaObjects = $this->documentManager->getRepository(MultimediaObject::class)->count();
 
-        $countMultimediaObjectsWithoutTag = $this->documentManager->getRepository(MultimediaObject::class)->findWithoutTag(
+        $countMultimediaObjectsWithoutTag = $this->documentManager->getRepository(MultimediaObject::class)->countWithoutTag(
             $configuredTag
         );
-
         $defaultTagOptions = [
             [
                 'key' => 2,
@@ -226,7 +225,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
             [
                 'key' => 1,
                 'title' => $this->translator->trans('Without category'),
-                'count' => count($countMultimediaObjectsWithoutTag),
+                'count' => $countMultimediaObjectsWithoutTag,
             ],
         ];
 
@@ -235,7 +234,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("/list/{tag}", name="pumukitnewadmin_unesco_list")
-     * @Template("PumukitNewAdminBundle:UNESCO:list.html.twig")
+     * @Template("@PumukitNewAdmin/UNESCO/list.html.twig")
      *
      * @param mixed|null $tag
      */
@@ -340,7 +339,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("edit/{id}", name="pumukit_new_admin_unesco_edit")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id":"id"}})
-     * @Template("PumukitNewAdminBundle:UNESCO:edit.html.twig")
+     * @Template("@PumukitNewAdmin/UNESCO/edit.html.twig")
      */
     public function editUNESCOAction(Request $request, MultimediaObject $multimediaObject)
     {
@@ -412,7 +411,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("/advance/search/show/{id}", name="pumukitnewadmin_unesco_show")
-     * @Template("PumukitNewAdminBundle:UNESCO:show.html.twig")
+     * @Template("@PumukitNewAdmin/UNESCO/show.html.twig")
      *
      * @param mixed|null $id
      */
@@ -439,7 +438,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("/advance/search/form", name="pumukitnewadmin_unesco_advance_search_form")
-     * @Template("PumukitNewAdminBundle:UNESCO:search_view.html.twig")
+     * @Template("@PumukitNewAdmin/UNESCO/search_view.html.twig")
      */
     public function advancedSearchFormAction(Request $request)
     {
@@ -617,7 +616,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:UNESCO:custom_fields.html.twig")
+     * @Template("@PumukitNewAdmin/UNESCO/custom_fields.html.twig")
      */
     public function customFieldsAction(Request $request)
     {

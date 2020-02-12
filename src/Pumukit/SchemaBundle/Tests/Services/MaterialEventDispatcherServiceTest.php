@@ -47,7 +47,7 @@ class MaterialEventDispatcherServiceTest extends PumukitTestCase
     public function testDispatchCreate()
     {
         $this->dispatcher->addListener(SchemaEvents::MATERIAL_CREATE, function ($event, $name) {
-            $this->assertTrue($event instanceof MaterialEvent);
+            $this->assertInstanceOf(MaterialEvent::class, $event);
             $this->assertEquals(SchemaEvents::MATERIAL_CREATE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
@@ -81,7 +81,7 @@ class MaterialEventDispatcherServiceTest extends PumukitTestCase
     public function testDispatchUpdate()
     {
         $this->dispatcher->addListener(SchemaEvents::MATERIAL_UPDATE, function ($event, $name) {
-            $this->assertTrue($event instanceof MaterialEvent);
+            $this->assertInstanceOf(MaterialEvent::class, $event);
             $this->assertEquals(SchemaEvents::MATERIAL_UPDATE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
@@ -118,7 +118,7 @@ class MaterialEventDispatcherServiceTest extends PumukitTestCase
     public function testDispatchDelete()
     {
         $this->dispatcher->addListener(SchemaEvents::MATERIAL_DELETE, function ($event, $name) {
-            $this->assertTrue($event instanceof MaterialEvent);
+            $this->assertInstanceOf(MaterialEvent::class, $event);
             $this->assertEquals(SchemaEvents::MATERIAL_DELETE, $name);
 
             $multimediaObject = $event->getMultimediaObject();

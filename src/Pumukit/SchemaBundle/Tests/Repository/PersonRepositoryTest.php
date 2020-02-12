@@ -37,14 +37,14 @@ class PersonRepositoryTest extends PumukitTestCase
 
     public function testRepositoryEmpty()
     {
-        $this->assertEquals(0, count($this->repo->findAll()));
+        $this->assertCount(0, $this->repo->findAll());
     }
 
     public function testRepository()
     {
         $person = $this->createNewPerson();
 
-        $this->assertEquals(1, count($this->repo->findAll()));
+        $this->assertCount(1, $this->repo->findAll());
     }
 
     public function testUser()

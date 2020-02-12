@@ -4,7 +4,7 @@
     <h4 class="modal-title" id="myModalLabel">{% trans %}modify tag{% endtrans %}</h4>
 </div>
 <div class="modal-body">
-    {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
+    {% form_theme form '@PumukitNewAdmin/Themes/fields.html.twig' %}
     <form id="update_tag" action="{{ path('pumukitnewadmin_places_update', {'id': tag.id}) }}" method="POST">
         <fieldset>
             {% for child in form %}

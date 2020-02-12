@@ -35,7 +35,7 @@ class LinkController extends AbstractController implements NewAdminControllerInt
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
-     * @Template("PumukitNewAdminBundle:Link:create.html.twig")
+     * @Template("@PumukitNewAdmin/Link/create.html.twig")
      */
     public function createAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -52,7 +52,7 @@ class LinkController extends AbstractController implements NewAdminControllerInt
             }
 
             return $this->render(
-                'PumukitNewAdminBundle:Link:list.html.twig',
+                '@PumukitNewAdmin/Link/list.html.twig',
                 [
                     'links' => $multimediaObject->getLinks(),
                     'mmId' => $multimediaObject->getId(),
@@ -69,7 +69,7 @@ class LinkController extends AbstractController implements NewAdminControllerInt
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     * @Template("PumukitNewAdminBundle:Link:update.html.twig")
+     * @Template("@PumukitNewAdmin/Link/update.html.twig")
      */
     public function updateAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -86,7 +86,7 @@ class LinkController extends AbstractController implements NewAdminControllerInt
             }
 
             return $this->render(
-                'PumukitNewAdminBundle:Link:list.html.twig',
+                '@PumukitNewAdmin/Link/list.html.twig',
                 [
                     'links' => $multimediaObject->getLinks(),
                     'mmId' => $multimediaObject->getId(),
@@ -103,7 +103,7 @@ class LinkController extends AbstractController implements NewAdminControllerInt
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     * @Template("PumukitNewAdminBundle:Link:list.html.twig")
+     * @Template("@PumukitNewAdmin/Link/list.html.twig")
      */
     public function deleteAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -119,7 +119,7 @@ class LinkController extends AbstractController implements NewAdminControllerInt
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     * @Template("PumukitNewAdminBundle:Link:list.html.twig")
+     * @Template("@PumukitNewAdmin/Link/list.html.twig")
      */
     public function upAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -135,7 +135,7 @@ class LinkController extends AbstractController implements NewAdminControllerInt
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     * @Template("PumukitNewAdminBundle:Link:list.html.twig")
+     * @Template("@PumukitNewAdmin/Link/list.html.twig")
      */
     public function downAction(MultimediaObject $multimediaObject, Request $request)
     {

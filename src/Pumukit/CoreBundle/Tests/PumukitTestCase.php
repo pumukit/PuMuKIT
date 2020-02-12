@@ -49,24 +49,24 @@ class PumukitTestCase extends WebTestCase
 
     public function clearBBDD(): void
     {
-        $this->dm->getDocumentCollection(Annotation::class)->remove([]);
-        $this->dm->getDocumentCollection(CpuStatus::class)->remove([]);
-        $this->dm->getDocumentCollection(Event::class)->remove([]);
-        $this->dm->getDocumentCollection(Group::class)->remove([]);
-        $this->dm->getDocumentCollection(Job::class)->remove([]);
-        $this->dm->getDocumentCollection(Live::class)->remove([]);
-        $this->dm->getDocumentCollection(Message::class)->remove([]);
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(PermissionProfile::class)->remove([]);
-        $this->dm->getDocumentCollection(Person::class)->remove([]);
-        $this->dm->getDocumentCollection(Role::class)->remove([]);
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
-        $this->dm->getDocumentCollection(SeriesStyle::class)->remove([]);
-        $this->dm->getDocumentCollection(SeriesType::class)->remove([]);
-        $this->dm->getDocumentCollection(Tag::class)->remove([]);
-        $this->dm->getDocumentCollection(User::class)->remove([]);
-        $this->dm->getDocumentCollection(ViewsAggregation::class)->remove([]);
-        $this->dm->getDocumentCollection(ViewsLog::class)->remove([]);
+        $this->dm->getDocumentCollection(Annotation::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(CpuStatus::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Event::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Group::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Job::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Live::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Message::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(MultimediaObject::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(PermissionProfile::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Person::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Role::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Series::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(SeriesStyle::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(SeriesType::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(Tag::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(User::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(ViewsAggregation::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(ViewsLog::class)->deleteMany([]);
         $this->dm->flush();
     }
 }

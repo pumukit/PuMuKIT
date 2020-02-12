@@ -32,7 +32,7 @@ class FilterListener
     /**
      * @throws \MongoException
      */
-    public function onKernelController(FilterControllerEvent $event)
+    public function onKernelController(FilterControllerEvent $event): void
     {
         $canBeActivated = $this->filterService->checkFilterActivation($event);
         if (!$canBeActivated) {
@@ -55,7 +55,7 @@ class FilterListener
      *
      * @throws \MongoException
      */
-    private function enableAdminFilter()
+    private function enableAdminFilter(): void
     {
         $loggedInUser = $this->filterService->checkUserActivateFilter();
         if (!$loggedInUser) {
@@ -71,7 +71,7 @@ class FilterListener
     /**
      * Enable the "WebTV" filter.
      */
-    private function enableWebTVFilter(array $routeParams)
+    private function enableWebTVFilter(array $routeParams): void
     {
         if (!$this->dm->getFilterCollection()->isEnabled('frontend')) {
             $filter = $this->dm->getFilterCollection()->enable('frontend');
@@ -83,7 +83,7 @@ class FilterListener
     /**
      * @throws \MongoException
      */
-    private function enablePersonalFilter(array $routeParams)
+    private function enablePersonalFilter(array $routeParams): void
     {
         $loggedInUser = $this->filterService->checkUserActivateFilter();
         if (!$loggedInUser) {

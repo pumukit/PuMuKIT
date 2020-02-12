@@ -16,7 +16,7 @@ class WidgetController extends AbstractController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Widget:languageselect.html.twig")
+     * @Template("@PumukitNewAdmin/Widget/languageselect.html.twig")
      */
     public function languageSelectAction()
     {

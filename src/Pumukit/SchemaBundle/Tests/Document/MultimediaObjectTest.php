@@ -73,7 +73,7 @@ class MultimediaObjectTest extends TestCase
         $this->assertNotEquals($title.'2', $mm->getTitle());
         $this->assertEquals($subtitle, $mm->getSubtitle());
         $this->assertEquals($description, $mm->getDescription());
-        $this->assertEquals(count($mm_tags), count($mm->getTags()));
+        $this->assertCount(count($mm_tags), $mm->getTags());
         $this->assertEquals($numview, $mm->getNumview());
         $this->assertEquals($locale, $mm->getLocale());
         $this->assertEquals($line2, $mm->getLine2());
@@ -143,18 +143,18 @@ class MultimediaObjectTest extends TestCase
         $track2 = new Track();
         $track3 = new Track();
 
-        $this->assertEquals(0, count($mm->getTracks()));
+        $this->assertCount(0, $mm->getTracks());
 
         $mm->addTrack($track1);
         $mm->addTrack($track2);
         $mm->addTrack($track3);
-        $this->assertEquals(3, count($mm->getTracks()));
+        $this->assertCount(3, $mm->getTracks());
 
         $tracksArray = [$track1, $track2, $track3];
         $this->assertEquals($tracksArray, $mm->getTracks()->toArray());
 
         $mm->removeTrack($track2);
-        $this->assertEquals(2, count($mm->getTracks()));
+        $this->assertCount(2, $mm->getTracks());
 
         $this->assertTrue($mm->containsTrack($track1));
         $this->assertFalse($mm->containsTrack($track2));
@@ -173,18 +173,18 @@ class MultimediaObjectTest extends TestCase
 
         $pic4->setUrl('/url/of/pic4');
 
-        $this->assertEquals(0, count($mm->getPics()));
+        $this->assertCount(0, $mm->getPics());
 
         $mm->addPic($pic1);
         $mm->addPic($pic2);
         $mm->addPic($pic3);
-        $this->assertEquals(3, count($mm->getPics()));
+        $this->assertCount(3, $mm->getPics());
 
         $picsArray = [$pic1, $pic2, $pic3];
         $this->assertEquals($picsArray, $mm->getPics()->toArray());
 
         $mm->removePic($pic2);
-        $this->assertEquals(2, count($mm->getPics()));
+        $this->assertCount(2, $mm->getPics());
 
         $this->assertTrue($mm->containsPic($pic1));
         $this->assertFalse($mm->containsPic($pic2));
@@ -204,18 +204,18 @@ class MultimediaObjectTest extends TestCase
         $material2 = new Material();
         $material3 = new Material();
 
-        $this->assertEquals(0, count($mm->getMaterials()));
+        $this->assertCount(0, $mm->getMaterials());
 
         $mm->addMaterial($material1);
         $mm->addMaterial($material2);
         $mm->addMaterial($material3);
-        $this->assertEquals(3, count($mm->getMaterials()));
+        $this->assertCount(3, $mm->getMaterials());
 
         $materialsArray = [$material1, $material2, $material3];
         $this->assertEquals($materialsArray, $mm->getMaterials()->toArray());
 
         $mm->removeMaterial($material2);
-        $this->assertEquals(2, count($mm->getMaterials()));
+        $this->assertCount(2, $mm->getMaterials());
 
         $this->assertTrue($mm->containsMaterial($material1));
         $this->assertFalse($mm->containsMaterial($material2));
@@ -231,18 +231,18 @@ class MultimediaObjectTest extends TestCase
         $link2 = new Link();
         $link3 = new Link();
 
-        $this->assertEquals(0, count($mm->getLinks()));
+        $this->assertCount(0, $mm->getLinks());
 
         $mm->addLink($link1);
         $mm->addLink($link2);
         $mm->addLink($link3);
-        $this->assertEquals(3, count($mm->getLinks()));
+        $this->assertCount(3, $mm->getLinks());
 
         $linksArray = [$link1, $link2, $link3];
         $this->assertEquals($linksArray, $mm->getLinks()->toArray());
 
         $mm->removeLink($link2);
-        $this->assertEquals(2, count($mm->getLinks()));
+        $this->assertCount(2, $mm->getLinks());
 
         $this->assertTrue($mm->containsLink($link1));
         $this->assertFalse($mm->containsLink($link2));
@@ -297,20 +297,20 @@ class MultimediaObjectTest extends TestCase
         $this->assertEquals(null, $mm->getTrackWithTag('del_universo'));
         $this->assertEquals($t3, $mm->getTrackWithAnyTag(['master', 'pr']));
         $this->assertEquals([$t2], $mm->getTracksWithAllTags(['master', 'mosca', 'old']));
-        $this->assertTrue(in_array($mm->getTrackWithAllTags(['mosca', 'master']), [$t3, $t2]));
+        $this->assertContains($mm->getTrackWithAllTags(['mosca', 'master']), [$t3, $t2]);
         $this->assertEquals(null, $mm->getTrackWithAllTags(['mosca', 'master', 'del_universo']));
-        $this->assertEquals(4, count($mm->getTracksWithAnyTag(['master', 'webtv'])));
+        $this->assertCount(4, $mm->getTracksWithAnyTag(['master', 'webtv']));
         $this->assertEquals($t3, $mm->getTrackWithAnyTag(['master']));
         $this->assertEquals(null, $mm->getTrackWithAnyTag(['del_universo']));
 
-        $this->assertEquals(5, count($mm->getFilteredTracksWithTags()));
-        $this->assertEquals(3, count($mm->getFilteredTracksWithTags(['master'])));
-        $this->assertEquals(1, count($mm->getFilteredTracksWithTags(['master'], ['mosca', 'old'])));
-        $this->assertEquals(0, count($mm->getFilteredTracksWithTags([], ['mosca', 'old'], ['master'])));
-        $this->assertEquals(3, count($mm->getFilteredTracksWithTags([], [], ['flv'])));
-        $this->assertEquals(0, count($mm->getFilteredTracksWithTags([], [], ['flv', 'master'])));
-        $this->assertEquals(5, count($mm->getFilteredTracksWithTags([], [], [], ['flv', 'master'])));
-        $this->assertEquals(1, count($mm->getFilteredTracksWithTags(['mosca', 'old'], [], [], ['old'])));
+        $this->assertCount(5, $mm->getFilteredTracksWithTags());
+        $this->assertCount(3, $mm->getFilteredTracksWithTags(['master']));
+        $this->assertCount(1, $mm->getFilteredTracksWithTags(['master'], ['mosca', 'old']));
+        $this->assertCount(0, $mm->getFilteredTracksWithTags([], ['mosca', 'old'], ['master']));
+        $this->assertCount(3, $mm->getFilteredTracksWithTags([], [], ['flv']));
+        $this->assertCount(0, $mm->getFilteredTracksWithTags([], [], ['flv', 'master']));
+        $this->assertCount(5, $mm->getFilteredTracksWithTags([], [], [], ['flv', 'master']));
+        $this->assertCount(1, $mm->getFilteredTracksWithTags(['mosca', 'old'], [], [], ['old']));
 
         $this->assertEquals($t3, $mm->getFilteredTrackWithTags());
         $this->assertEquals($t3, $mm->getFilteredTrackWithTags(['master']));
@@ -348,20 +348,20 @@ class MultimediaObjectTest extends TestCase
         $this->assertEquals(null, $mm->getPicWithTag('del_universo'));
         $this->assertEquals($p3, $mm->getPicWithAnyTag(['master', 'pr']));
         $this->assertEquals([$p2], $mm->getPicsWithAllTags(['master', 'mosca', 'old']));
-        $this->assertTrue(in_array($mm->getPicWithAllTags(['mosca', 'master']), [$p3, $p2]));
+        $this->assertContains($mm->getPicWithAllTags(['mosca', 'master']), [$p3, $p2]);
         $this->assertEquals(null, $mm->getPicWithAllTags(['mosca', 'master', 'del_universo']));
-        $this->assertEquals(4, count($mm->getPicsWithAnyTag(['master', 'webtv'])));
+        $this->assertCount(4, $mm->getPicsWithAnyTag(['master', 'webtv']));
         $this->assertEquals($p3, $mm->getPicWithAnyTag(['master']));
         $this->assertEquals(null, $mm->getPicWithAnyTag(['del_universo']));
 
-        $this->assertEquals(5, count($mm->getFilteredPicsWithTags()));
-        $this->assertEquals(3, count($mm->getFilteredPicsWithTags(['master'])));
-        $this->assertEquals(1, count($mm->getFilteredPicsWithTags(['master'], ['mosca', 'old'])));
-        $this->assertEquals(0, count($mm->getFilteredPicsWithTags([], ['mosca', 'old'], ['master'])));
-        $this->assertEquals(3, count($mm->getFilteredPicsWithTags([], [], ['flv'])));
-        $this->assertEquals(0, count($mm->getFilteredPicsWithTags([], [], ['flv', 'master'])));
-        $this->assertEquals(5, count($mm->getFilteredPicsWithTags([], [], [], ['flv', 'master'])));
-        $this->assertEquals(1, count($mm->getFilteredPicsWithTags(['mosca', 'old'], [], [], ['old'])));
+        $this->assertCount(5, $mm->getFilteredPicsWithTags());
+        $this->assertCount(3, $mm->getFilteredPicsWithTags(['master']));
+        $this->assertCount(1, $mm->getFilteredPicsWithTags(['master'], ['mosca', 'old']));
+        $this->assertCount(0, $mm->getFilteredPicsWithTags([], ['mosca', 'old'], ['master']));
+        $this->assertCount(3, $mm->getFilteredPicsWithTags([], [], ['flv']));
+        $this->assertCount(0, $mm->getFilteredPicsWithTags([], [], ['flv', 'master']));
+        $this->assertCount(5, $mm->getFilteredPicsWithTags([], [], [], ['flv', 'master']));
+        $this->assertCount(1, $mm->getFilteredPicsWithTags(['mosca', 'old'], [], [], ['old']));
     }
 
     public function testGetMaterialsWithTag()
@@ -390,20 +390,20 @@ class MultimediaObjectTest extends TestCase
         $this->assertEquals(null, $mm->getMaterialWithTag('del_universo'));
         $this->assertEquals($m3, $mm->getMaterialWithAnyTag(['master', 'pr']));
         $this->assertEquals([$m2], $mm->getMaterialsWithAllTags(['master', 'mosca', 'old']));
-        $this->assertTrue(in_array($mm->getMaterialWithAllTags(['mosca', 'master']), [$m3, $m2]));
+        $this->assertContains($mm->getMaterialWithAllTags(['mosca', 'master']), [$m3, $m2]);
         $this->assertEquals(null, $mm->getMaterialWithAllTags(['mosca', 'master', 'del_universo']));
-        $this->assertEquals(4, count($mm->getMaterialsWithAnyTag(['master', 'webtv'])));
+        $this->assertCount(4, $mm->getMaterialsWithAnyTag(['master', 'webtv']));
         $this->assertEquals($m3, $mm->getMaterialWithAnyTag(['master']));
         $this->assertEquals(null, $mm->getMaterialWithAnyTag(['del_universo']));
 
-        $this->assertEquals(5, count($mm->getFilteredMaterialsWithTags()));
-        $this->assertEquals(3, count($mm->getFilteredMaterialsWithTags(['master'])));
-        $this->assertEquals(1, count($mm->getFilteredMaterialsWithTags(['master'], ['mosca', 'old'])));
-        $this->assertEquals(0, count($mm->getFilteredMaterialsWithTags([], ['mosca', 'old'], ['master'])));
-        $this->assertEquals(3, count($mm->getFilteredMaterialsWithTags([], [], ['flv'])));
-        $this->assertEquals(0, count($mm->getFilteredMaterialsWithTags([], [], ['flv', 'master'])));
-        $this->assertEquals(5, count($mm->getFilteredMaterialsWithTags([], [], [], ['flv', 'master'])));
-        $this->assertEquals(1, count($mm->getFilteredMaterialsWithTags(['mosca', 'old'], [], [], ['old'])));
+        $this->assertCount(5, $mm->getFilteredMaterialsWithTags());
+        $this->assertCount(3, $mm->getFilteredMaterialsWithTags(['master']));
+        $this->assertCount(1, $mm->getFilteredMaterialsWithTags(['master'], ['mosca', 'old']));
+        $this->assertCount(0, $mm->getFilteredMaterialsWithTags([], ['mosca', 'old'], ['master']));
+        $this->assertCount(3, $mm->getFilteredMaterialsWithTags([], [], ['flv']));
+        $this->assertCount(0, $mm->getFilteredMaterialsWithTags([], [], ['flv', 'master']));
+        $this->assertCount(5, $mm->getFilteredMaterialsWithTags([], [], [], ['flv', 'master']));
+        $this->assertCount(1, $mm->getFilteredMaterialsWithTags(['mosca', 'old'], [], [], ['old']));
     }
 
     public function testGetLinksWithTag()
@@ -432,20 +432,20 @@ class MultimediaObjectTest extends TestCase
         $this->assertEquals(null, $mm->getLinkWithTag('del_universo'));
         $this->assertEquals($m3, $mm->getLinkWithAnyTag(['master', 'pr']));
         $this->assertEquals([$m2], $mm->getLinksWithAllTags(['master', 'mosca', 'old']));
-        $this->assertTrue(in_array($mm->getLinkWithAllTags(['mosca', 'master']), [$m3, $m2]));
+        $this->assertContains($mm->getLinkWithAllTags(['mosca', 'master']), [$m3, $m2]);
         $this->assertEquals(null, $mm->getLinkWithAllTags(['mosca', 'master', 'del_universo']));
-        $this->assertEquals(4, count($mm->getLinksWithAnyTag(['master', 'webtv'])));
+        $this->assertCount(4, $mm->getLinksWithAnyTag(['master', 'webtv']));
         $this->assertEquals($m3, $mm->getLinkWithAnyTag(['master']));
         $this->assertEquals(null, $mm->getLinkWithAnyTag(['del_universo']));
 
-        $this->assertEquals(5, count($mm->getFilteredLinksWithTags()));
-        $this->assertEquals(3, count($mm->getFilteredLinksWithTags(['master'])));
-        $this->assertEquals(1, count($mm->getFilteredLinksWithTags(['master'], ['mosca', 'old'])));
-        $this->assertEquals(0, count($mm->getFilteredLinksWithTags([], ['mosca', 'old'], ['master'])));
-        $this->assertEquals(3, count($mm->getFilteredLinksWithTags([], [], ['flv'])));
-        $this->assertEquals(0, count($mm->getFilteredLinksWithTags([], [], ['flv', 'master'])));
-        $this->assertEquals(5, count($mm->getFilteredLinksWithTags([], [], [], ['flv', 'master'])));
-        $this->assertEquals(1, count($mm->getFilteredLinksWithTags(['mosca', 'old'], [], [], ['old'])));
+        $this->assertCount(5, $mm->getFilteredLinksWithTags());
+        $this->assertCount(3, $mm->getFilteredLinksWithTags(['master']));
+        $this->assertCount(1, $mm->getFilteredLinksWithTags(['master'], ['mosca', 'old']));
+        $this->assertCount(0, $mm->getFilteredLinksWithTags([], ['mosca', 'old'], ['master']));
+        $this->assertCount(3, $mm->getFilteredLinksWithTags([], [], ['flv']));
+        $this->assertCount(0, $mm->getFilteredLinksWithTags([], [], ['flv', 'master']));
+        $this->assertCount(5, $mm->getFilteredLinksWithTags([], [], [], ['flv', 'master']));
+        $this->assertCount(1, $mm->getFilteredLinksWithTags(['mosca', 'old'], [], [], ['old']));
     }
 
     public function testEmbeddedTag()

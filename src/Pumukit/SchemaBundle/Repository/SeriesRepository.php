@@ -49,7 +49,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return Builder
      */
-    public function createBuilderWithTag($tag, $sort = [])
+    public function createBuilderWithTag($tag, $sort = []): Builder
     {
         $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithTag($tag);
 
@@ -82,7 +82,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return ArrayCollection
      */
-    public function findWithAnyTag($tags, $sort = [], $limit = 0, $page = 0)
+    public function findWithAnyTag($tags, $sort = [], $limit = 0, $page = 0): ArrayCollection
     {
         $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithAnyTag($tags);
 
@@ -103,7 +103,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return ArrayCollection
      */
-    public function findWithAllTags($tags, $sort = [], $limit = 0, $page = 0)
+    public function findWithAllTags($tags, $sort = [], $limit = 0, $page = 0): ArrayCollection
     {
         $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithAllTags($tags);
 
@@ -138,7 +138,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return ArrayCollection
      */
-    public function findWithoutTag($tag, $sort = [], $limit = 0, $page = 0)
+    public function findWithoutTag($tag, $sort = [], $limit = 0, $page = 0): ArrayCollection
     {
         $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithTag($tag);
 
@@ -213,18 +213,9 @@ class SeriesRepository extends DocumentRepository
     }
 
     /**
-     * Create builder to Find series
-     * by person id and role cod.
-     *
      * @param \MongoId|string $personId
-     * @param string          $roleCod
-     * @param array           $sort
-     * @param int             $limit
-     * @param int             $page
-     *
-     * @return \Doctrine\MongoDB\Query\Builder
      */
-    public function createBuilderByPersonIdAndRoleCod($personId, $roleCod, $sort = [], $limit = 0, $page = 0)
+    public function createBuilderByPersonIdAndRoleCod($personId, string $roleCod, array $sort = [], int $limit = 0, int $page = 0): Builder
     {
         $repoMmobj = $this->getDocumentManager()->getRepository(MultimediaObject::class);
         $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCod($personId, $roleCod);
@@ -233,17 +224,10 @@ class SeriesRepository extends DocumentRepository
     }
 
     /**
-     * Find series by person id and role cod.
-     *
      * @param \MongoId|string $personId
-     * @param string          $roleCod
-     * @param array           $sort
-     * @param int             $limit
-     * @param int             $page
-     *
      * @return mixed
      */
-    public function findByPersonIdAndRoleCod($personId, $roleCod, $sort = [], $limit = 0, $page = 0)
+    public function findByPersonIdAndRoleCod($personId, string $roleCod, array $sort = [], int $limit = 0, int $page = 0)
     {
         $qb = $this->createBuilderByPersonIdAndRoleCod($personId, $roleCod, $sort, $limit, $page);
 

@@ -1,4 +1,4 @@
-{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+{% extends '@PumukitNewAdmin/layout.html.twig' %}
 
 {% block body %}
 
@@ -13,7 +13,7 @@
             <div class="well">
                 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_TAGS')) %}
                     <div id="list_tags">
-                        {% include 'PumukitNewAdminBundle:Tag:list.html.twig' %}
+                        {% include '@PumukitNewAdmin/Tag/list.html.twig' %}
                     </div>
                     <div class="row">
                         <div class="col-xs-4">

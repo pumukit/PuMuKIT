@@ -47,7 +47,7 @@ class PermissionProfileEventDispatcherServiceTest extends PumukitTestCase
     public function testDispatchCreate()
     {
         $this->dispatcher->addListener(SchemaEvents::PERMISSIONPROFILE_CREATE, function ($event, $name) {
-            $this->assertTrue($event instanceof PermissionProfileEvent);
+            $this->assertInstanceOf(PermissionProfileEvent::class, $event);
             $this->assertEquals(SchemaEvents::PERMISSIONPROFILE_CREATE, $name);
 
             $permissionProfile = $event->getPermissionProfile();
@@ -76,7 +76,7 @@ class PermissionProfileEventDispatcherServiceTest extends PumukitTestCase
     public function testDispatchUpdate()
     {
         $this->dispatcher->addListener(SchemaEvents::PERMISSIONPROFILE_UPDATE, function ($event, $name) {
-            $this->assertTrue($event instanceof PermissionProfileEvent);
+            $this->assertInstanceOf(PermissionProfileEvent::class, $event);
             $this->assertEquals(SchemaEvents::PERMISSIONPROFILE_UPDATE, $name);
 
             $permissionProfile = $event->getPermissionProfile();
@@ -111,7 +111,7 @@ class PermissionProfileEventDispatcherServiceTest extends PumukitTestCase
     public function testDispatchDelete()
     {
         $this->dispatcher->addListener(SchemaEvents::PERMISSIONPROFILE_DELETE, function ($event, $name) {
-            $this->assertTrue($event instanceof PermissionProfileEvent);
+            $this->assertInstanceOf(PermissionProfileEvent::class, $event);
             $this->assertEquals(SchemaEvents::PERMISSIONPROFILE_DELETE, $name);
 
             $permissionProfile = $event->getPermissionProfile();

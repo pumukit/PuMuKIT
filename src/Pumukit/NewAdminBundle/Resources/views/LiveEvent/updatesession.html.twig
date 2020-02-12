@@ -1,7 +1,7 @@
 <div class="well" style="overflow:hidden">
     <div class="col-xs-12">
         <div id="list_live_events" class="row">
-            {% include 'PumukitNewAdminBundle:LiveEvent:sessionlist.html.twig' with {'multimediaObject' : multimediaObject} %}
+            {% include '@PumukitNewAdmin/LiveEvent/sessionlist.html.twig' with {'multimediaObject' : multimediaObject} %}
         </div>
     </div>
 
@@ -19,7 +19,7 @@
 <div class="pmk-modal modal fade" id="updatesessionmodal" tabindex="-1" role="dialog" aria-labelledby="updatesessionmodalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content modal-session">
-            {% include 'PumukitNewAdminBundle:LiveEvent:updatesessionmodal.html.twig' %}
+            {% include '@PumukitNewAdmin/LiveEvent/updatesessionmodal.html.twig' %}
         </div>
     </div>
 </div>

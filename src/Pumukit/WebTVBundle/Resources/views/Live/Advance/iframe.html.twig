@@ -1,4 +1,4 @@
-{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+{% extends '@PumukitWebTV/layout.html.twig' %}
 
 {% block stylesheets %}
     <style>
@@ -14,12 +14,12 @@
     {{ parent() }}
     <script src="{{ asset('bundles/pumukitwebtv/js/jquery.countdown.js') }}" type="text/javascript"></script>
 
-    {% include('PumukitBaseLivePlayerBundle:Default:js.html.twig') %}
+    {% include('@PumukitBaseLivePlayer/Default/js.html.twig') %}
 {% endblock%}
 
 {% block title %}{{ parent() }} - {{ multimediaObject.getEmbeddedEvent().getName(app.request.getLocale()) }}{% endblock %}
 
 {% block body_base %}
     {% set event = multimediaObject.getEmbeddedEvent() %}
-    {% include('PumukitWebTVBundle:Live/Advance:liveplayer.html.twig') with {stretching: 'exactfit', aspectratio: '16:9'} %}
+    {% include('@PumukitWebTV/Live/Advance/liveplayer.html.twig') with {stretching: 'exactfit', aspectratio: '16:9'} %}
 {% endblock %}

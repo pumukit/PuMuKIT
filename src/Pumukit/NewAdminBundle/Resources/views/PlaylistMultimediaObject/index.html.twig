@@ -1,4 +1,4 @@
-{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+{% extends '@PumukitNewAdmin/layout.html.twig' %}
 {% block body %}
     <h3 class="cab_body_div">
         <a title="{% trans %}Back to playlist list{% endtrans %}" href="{{ path('pumukitnewadmin_playlist_index') }}" class="btn btn-pumukit btn-raised pull-right">
@@ -30,7 +30,7 @@
             <div id="tv_admin_content" class="col-md-10">
                 <div class="well">
                     <div id="list_playlistmms">
-                        {% include 'PumukitNewAdminBundle:PlaylistMultimediaObject:list.html.twig' %}
+                        {% include '@PumukitNewAdmin/PlaylistMultimediaObject/list.html.twig' %}
                     </div>
                     <div class="row">
                         <div class="col-xs-4">

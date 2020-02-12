@@ -1,4 +1,4 @@
-{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+{% extends '@PumukitNewAdmin/layout.html.twig' %}
 
 {% block body %}
 
@@ -23,7 +23,7 @@
             <div class="col-md-10">
                 <div class="well">
                     <div id="list_series">
-                        {% include 'PumukitNewAdminBundle:Series:list.html.twig' %}
+                        {% include '@PumukitNewAdmin/Series/list.html.twig' %}
                     </div>
                     <div class="row">
                         <div class="col-xs-4">
@@ -71,7 +71,7 @@
                         {% trans %}Select any series.{% endtrans %}
                     {% endif %}
                 </div>
-                {% include 'PumukitNewAdminBundle:Series:acordeon.html.twig' with {'name': 'series', 'broadcasts': 'broadcasts', 'seriestypes': 'seriestypes'} %}
+                {% include '@PumukitNewAdmin/Series/acordeon.html.twig' with {'name': 'series', 'broadcasts': 'broadcasts', 'seriestypes': 'seriestypes'} %}
             </div>
         {% else %}
             <div class="col-md-12">

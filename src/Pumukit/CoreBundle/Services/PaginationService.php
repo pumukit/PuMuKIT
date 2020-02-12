@@ -28,7 +28,7 @@ class PaginationService
         return $this->generatePager($adapter, $page, $limit);
     }
 
-    public function createDoctrineCollectionAdapter($objects, int $page, int $limit): Pagerfanta
+    public function createDoctrineCollectionAdapter($objects, int $page = self::DEFAULT_PAGE, int $limit = self::DEFAULT_MAX_ELEMENTS_PER_PAGE): Pagerfanta
     {
         $adapter = new DoctrineCollectionAdapter($objects);
 
@@ -40,9 +40,6 @@ class PaginationService
         $pager = new Pagerfanta($adapter);
         $pager->setMaxPerPage($limit);
         $pager->setNormalizeOutOfRangePages(true);
-        if ($page < 1) {
-            $page = self::DEFAULT_PAGE;
-        }
         $pager->setCurrentPage($page);
 
         return $pager;

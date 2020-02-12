@@ -16,7 +16,7 @@
     <td headers="th-icons">
         <span id="table_mms_status_wrapper_{{ mm.id }}" data-id="{{ mm.id }}">
             {# See Track/list for AJAX update #}
-            {% include 'PumukitNewAdminBundle:MultimediaObject:status.html.twig' with {'mm': mm} %}
+            {% include '@PumukitNewAdmin/MultimediaObject/status.html.twig' with {'mm': mm} %}
         </span>
     </td>
 
@@ -26,13 +26,13 @@
         </td>
     {% endif %}
     <td headers="th-icons">
-        {% include 'PumukitNewAdminBundle:UNESCO:updatemenu.html.twig' with {'mm': mm} %}
+        {% include '@PumukitNewAdmin/UNESCO/updatemenu.html.twig' with {'mm': mm} %}
     </td>
 
     {% for key, field in custom_fields %}
         {% if 'pics' in field %}
             <td {% if all_custom_fields[field]['render_params']['break-word'] == true %}style="word-break: break-word;"{% endif %} headers="th-{{ loop.index }}" onclick="{{ click_edit }}" ondblclick="{{ double_click_item }}">
-                {% include "PumukitNewAdminBundle:Misc:img_list.html.twig" with {'object' : mm, 'type' : 'mm'} %}
+                {% include "@PumukitNewAdmin/Misc/img_list.html.twig" with {'object' : mm, 'type' : 'mm'} %}
             </td>
         {% else %}
             {% set text = render_object_field(mm,app.request.getSession(),field) %}

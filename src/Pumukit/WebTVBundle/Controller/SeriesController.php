@@ -39,7 +39,7 @@ class SeriesController extends AbstractController implements WebTVControllerInte
 
     /**
      * @Route("/series/{id}", name="pumukit_webtv_series_index")
-     * @Template("PumukitWebTVBundle:Series:template.html.twig")
+     * @Template("@PumukitWebTV/Series/template.html.twig")
      */
     public function indexAction(Request $request, Series $series)
     {
@@ -59,7 +59,7 @@ class SeriesController extends AbstractController implements WebTVControllerInte
 
     /**
      * @Route("/series/magic/{secret}", name="pumukit_webtv_series_magicindex", defaults={"show_hide":true, "broadcast":false})
-     * @Template("PumukitWebTVBundle:Series:template.html.twig")
+     * @Template("@PumukitWebTV/Series/template.html.twig")
      */
     public function magicIndexAction(Request $request, Series $series)
     {

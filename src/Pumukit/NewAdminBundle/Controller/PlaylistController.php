@@ -52,7 +52,7 @@ class PlaylistController extends CollectionController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Collection:show.html.twig")
+     * @Template("@PumukitNewAdmin/Collection/show.html.twig")
      */
     public function showAction(Series $collection): array
     {
@@ -62,7 +62,7 @@ class PlaylistController extends CollectionController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Playlist:index.html.twig")
+     * @Template("@PumukitNewAdmin/Playlist/index.html.twig")
      */
     public function indexAction(Request $request): array
     {
@@ -83,7 +83,7 @@ class PlaylistController extends CollectionController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Playlist:list.html.twig")
+     * @Template("@PumukitNewAdmin/Playlist/list.html.twig")
      */
     public function listAction(Request $request): array
     {
@@ -116,13 +116,13 @@ class PlaylistController extends CollectionController
             $resources = $this->getResources($request);
 
             return $this->render(
-                'PumukitNewAdminBundle:Playlist:list.html.twig',
+                '@PumukitNewAdmin/Playlist/list.html.twig',
                 ['series' => $resources]
             );
         }
 
         return $this->render(
-            'PumukitNewAdminBundle:Playlist:update.html.twig',
+            '@PumukitNewAdmin/Playlist/update.html.twig',
             [
                 'series' => $series,
                 'form' => $form->createView(),

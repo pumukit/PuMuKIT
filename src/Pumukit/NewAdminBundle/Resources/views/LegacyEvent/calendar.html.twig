@@ -40,7 +40,7 @@
                     <i class="mdi-content-clear"></i>
                   </a>
                   <span class="dropdown">
-                    {% include 'PumukitNewAdminBundle:LegacyEvent:updatemenu.html.twig' with {'event': day_event} %}
+                    {% include '@PumukitNewAdmin/LegacyEvent/updatemenu.html.twig' with {'event': day_event} %}
                   </span>
                   <span onclick="click_fila_url('event', this, '{{ path('pumukitnewadmin_event_show', {'id': day_event.id}) }}')">
                     {% if day_event.getPic() is not empty %}

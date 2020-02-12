@@ -49,7 +49,7 @@ class RoleRepositoryTest extends PumukitTestCase
         $this->dm->flush();
 
         // This should pass to check the unrequired fields
-        $this->assertEquals(1, count($this->repo->findAll()));
+        $this->assertCount(1, $this->repo->findAll());
     }
 
     public function testRank()

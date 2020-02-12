@@ -1,4 +1,4 @@
-{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+{% extends '@PumukitWebTV/layout.html.twig' %}
 
 {% block title %}{{ parent() }} - {{ series.title }}{% endblock %}
 {% block keywords %}{{ parent() }} - {{ series.getKeywords()|join(',') }}{% endblock %}
@@ -17,11 +17,11 @@
     {% set last_subseriestitle = '' %}
     {% set template = series.getProperty('template')|default('date') %}
 
-    {% include 'PumukitWebTVBundle:Misc:magic_url_disclaimer.html.twig' %}
+    {% include '@PumukitWebTV/Misc/magic_url_disclaimer.html.twig' %}
     {% set precinct = precinct_of_series(multimediaObjects) %}
     <div class="row">
         <div class="col-xs-12">
-            {% include 'PumukitWebTVBundle:Series:template_header.html.twig' with { 'series_precinct' : precinct} %}
+            {% include '@PumukitWebTV/Series/template_header.html.twig' with { 'series_precinct' : precinct} %}
         </div>
     </div>
 
@@ -55,7 +55,7 @@
                 {% else %}
                     {% set typeofprecinct = 'series' %}
                 {% endif %}
-                    {% include 'PumukitWebTVBundle:Series:template_group.html.twig' with {
+                    {% include '@PumukitWebTV/Series/template_group.html.twig' with {
                         'current_date': current_date,
                         'last_date' : last_date,
                         'subserie_title': subserie_title,
@@ -66,7 +66,7 @@
                         'mm' : mm,
                         'type_precinct' : typeofprecinct
                     } %}
-                    {% include 'PumukitWebTVBundle:Resources:template_series_video.html.twig' with {'object': mm } %}
+                    {% include '@PumukitWebTV/Resources/template_series_video.html.twig' with {'object': mm } %}
                     {% set last_date = current_date %}
                     {% set last_subseriestitle =  subserie_title %}
             {% endfor %}
@@ -76,7 +76,7 @@
     {% if multimediaObjects.getMaxPerPage()|default(0) %}
         <div class="row">
             {% set objects = multimediaObjects %}
-            {% include 'PumukitWebTVBundle:Misc:pager.html.twig' %}
+            {% include '@PumukitWebTV/Misc/pager.html.twig' %}
         </div>
     {% endif %}
 

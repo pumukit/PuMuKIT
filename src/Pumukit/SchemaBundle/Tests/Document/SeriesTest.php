@@ -128,16 +128,16 @@ class SeriesTest extends TestCase
 
         $series = new Series();
 
-        $this->assertEquals(0, count($series->getPics()));
+        $this->assertCount(0, $series->getPics());
 
         $series->addPic($pic);
 
-        $this->assertEquals(1, count($series->getPics()));
+        $this->assertCount(1, $series->getPics());
         $this->assertTrue($series->containsPic($pic));
 
         $series->removePic($pic);
 
-        $this->assertEquals(0, count($series->getPics()));
+        $this->assertCount(0, $series->getPics());
         $this->assertFalse($series->containsPic($pic));
 
         $picWithoutUrl = new Pic();
@@ -145,7 +145,7 @@ class SeriesTest extends TestCase
         $series->addPic($picWithoutUrl);
         $series->addPic($pic);
 
-        $this->assertEquals(2, count($series->getPics()));
+        $this->assertCount(2, $series->getPics());
         $this->assertEquals($url, $series->getFirstUrlPic());
     }
 

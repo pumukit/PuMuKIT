@@ -25,7 +25,7 @@ pumukit_notification:
     platform_name: 'Your Platform Name'
     sender_email: no-reply@yourplatform.com
     sender_name: 'Your Team Name'
-    template: 'PumukitNotificationBundle:Email:job.html.twig'
+    template: '@PumukitNotification/Email/job.html.twig'
     subject_success: 'Subject of email on job success'
     subject_fails: 'Subject of email on job fail'
     enable_multi_lang: true

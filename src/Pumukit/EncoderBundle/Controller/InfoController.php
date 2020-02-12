@@ -25,7 +25,7 @@ class InfoController extends AbstractController
 {
     /**
      * @Route("/", name="pumukit_encoder_info")
-     * @Template("PumukitEncoderBundle:Info:index.html.twig")
+     * @Template("@PumukitEncoder/Info/index.html.twig")
      */
     public function indexAction(Request $request, DocumentManager $documentManager, CpuService $cpuService, JobService $jobService, PaginationService $paginationService): array
     {
@@ -105,7 +105,7 @@ class InfoController extends AbstractController
 
     /**
      * @Route("/job/{id}", methods="GET", name="pumukit_encoder_job")
-     * @Template("PumukitEncoderBundle:Info:infoJob.html.twig")
+     * @Template("@PumukitEncoder/Info/infoJob.html.twig")
      */
     public function infoJobAction(Job $job, Request $request, JobService $jobService): array
     {

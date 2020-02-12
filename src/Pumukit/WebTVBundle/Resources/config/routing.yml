@@ -13,7 +13,7 @@ pumukit_webtv_default_css:
     methods: [GET]
     defaults:
         _controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
-        template: 'PumukitWebTVBundle::custom.css.twig'
+        template: '@PumukitWebTV/custom.css.twig'
         maxAge:       86400
         sharedAge:    86400
         _format: css

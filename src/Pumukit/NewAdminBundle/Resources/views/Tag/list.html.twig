@@ -3,7 +3,7 @@
         <table class="table table-striped table-hover pmk-tag-tree">
             <thead>
                 <tr>
-                    {% include 'PumukitNewAdminBundle:Tag:listth.html.twig' %}
+                    {% include '@PumukitNewAdmin/Tag/listth.html.twig' %}
                 </tr>
             </thead>
             <tbody>
@@ -14,7 +14,7 @@
                         </td>
                     </tr>
                 {% else %}
-                    {% include 'PumukitNewAdminBundle:Tag:children.html.twig' %}
+                    {% include '@PumukitNewAdmin/Tag/children.html.twig' %}
                 {% endif %}
             </tbody>
             <tfoot>

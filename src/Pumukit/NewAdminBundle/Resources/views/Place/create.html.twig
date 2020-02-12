@@ -5,7 +5,7 @@
     <h4 class="modal-title" id="myModalLabel">{% trans %}Create new place{% endtrans %}</h4>
 </div>
 <div class="modal-body">
-    {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
+    {% form_theme form '@PumukitNewAdmin/Themes/fields.html.twig' %}
     <form id="create_place" action="{{ path('pumukitnewadmin_places_create') }}" method="POST">
         <fieldset>
             {% for child in form %}

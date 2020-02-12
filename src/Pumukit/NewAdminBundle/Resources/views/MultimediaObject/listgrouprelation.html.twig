@@ -29,7 +29,7 @@
       <input type="hidden" id="can_modify_groups" value="no"/>
       {% endif %}
 	  <div class="tag list-group pmk-tag-tree pumukitnewadmin-groups-list-box list-box-width" id="delete_mm{{ template }}_groups">
-        {% include 'PumukitNewAdminBundle:MultimediaObject:availablegroups.html.twig' with {'resource': mm, 'groups': groups, 'resource_name': 'mm'~template, 'can_modify_groups': can_modify_groups} %}
+        {% include '@PumukitNewAdmin/MultimediaObject/availablegroups.html.twig' with {'resource': mm, 'groups': groups, 'resource_name': 'mm'~template, 'can_modify_groups': can_modify_groups} %}
 	  </div>
       {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::MODIFY_OWNER')) %}
 	  <div class="pumukitnewadmin-groups-arrows">
@@ -45,7 +45,7 @@
       {# Groups added to the multimedia object #}
 	  <div class="tag pumukitnewadmin-groups-list-box list-box-width" id="added_mm{{ template }}_groups">
 	    <div class="tag_tree list-group" id="add_mm{{ template }}_groups" >
-          {% include 'PumukitNewAdminBundle:MultimediaObject:selectedgroups.html.twig' with {'resource': mm, 'groups': groups, 'resource_name': 'mm'~template, 'can_modify_groups': can_modify_groups} %}
+          {% include '@PumukitNewAdmin/MultimediaObject/selectedgroups.html.twig' with {'resource': mm, 'groups': groups, 'resource_name': 'mm'~template, 'can_modify_groups': can_modify_groups} %}
 	    </div>
       </div>
 	</div>

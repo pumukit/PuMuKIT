@@ -112,7 +112,7 @@ class AnnounceServiceTest extends PumukitTestCase
 
         //We check the response is correct (returns objects within the same month and doesn't return series) with not 'tagPudenew'
         [$dateEnd, $last] = $this->announceService->getNextLatestUploads($date, false);
-        $this->assertEquals([$mm33->getId() => $mm33, $mm11->getId() => $mm11], $last);
+        $this->assertEquals([$mm33, $mm11], $last);
 
         //We reuse the series and change the date
         $series2->setPublicDate(\DateTime::createFromFormat('d/m/Y', '05/04/1999'));

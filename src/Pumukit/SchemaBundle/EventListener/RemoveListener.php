@@ -37,9 +37,9 @@ class RemoveListener
         if ($document instanceof MultimediaObject) {
             $dm = $this->container->get('doctrine_mongodb.odm.document_manager');
             $jobRepo = $dm->getRepository(Job::class);
-            $executingJobs = $jobRepo->findByStatusAndMultimediaObjectId(Job::STATUS_EXECUTING, $document->getId());
+            $executingJobs = $jobRepo->findBy(['status' => Job::STATUS_EXECUTING, 'multimediaobject.id' => $document->getId()]);
 
-            if (0 !== $executingJobs->count()) {
+            if (0 !== count($executingJobs)) {
                 throw new \Exception(
                     $this->translator->trans(
                         'Can not delete Multimedia Object with id %videoId%. It has %jobsCount% jobs executing.',

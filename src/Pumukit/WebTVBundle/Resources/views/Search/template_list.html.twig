@@ -3,9 +3,9 @@
 
 <div class="col-xs-12 search-form">
     {% if type == 'series' %}
-        {% include 'PumukitWebTVBundle:Search:filtersseries.html.twig' %}
+        {% include '@PumukitWebTV/Search/filtersseries.html.twig' %}
     {% else %}
-        {% include 'PumukitWebTVBundle:Search:filtersmultimediaobjects.html.twig' %}
+        {% include '@PumukitWebTV/Search/filtersmultimediaobjects.html.twig' %}
     {% endif %}
 </div>
 
@@ -18,4 +18,4 @@
 </div>
 
 
-{% include 'PumukitWebTVBundle:Resources:template_list.html.twig' with {'template_list_class': 'custom-list-by-search'} %}
+{% include '@PumukitWebTV/Resources/template_list.html.twig' with {'template_list_class': 'custom-list-by-search'} %}

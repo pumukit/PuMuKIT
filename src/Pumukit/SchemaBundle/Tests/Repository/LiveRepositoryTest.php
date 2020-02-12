@@ -30,7 +30,7 @@ class LiveRepositoryTest extends PumukitTestCase
         gc_collect_cycles();
     }
 
-    public function testRepository()
+    public function testRepository(): void
     {
         $url = 'http://www.pumukit.com/liveo1';
         $passwd = 'password';
@@ -67,6 +67,6 @@ class LiveRepositoryTest extends PumukitTestCase
         $this->dm->persist($liveo);
         $this->dm->flush();
 
-        $this->assertEquals(1, count($this->repo->findAll()));
+        $this->assertCount(1, $this->repo->findAll());
     }
 }

@@ -225,28 +225,28 @@ class MultimediaObjectServiceTest extends PumukitTestCase
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
 
-        $this->assertEquals(0, count($multimediaObject->getGroups()));
+        $this->assertCount(0, $multimediaObject->getGroups());
         $this->assertFalse($multimediaObject->containsGroup($group1));
         $this->assertFalse($multimediaObject->containsGroup($group2));
         $this->assertFalse($multimediaObject->containsGroup($group3));
 
         $this->mmsService->addGroup($group1, $multimediaObject);
 
-        $this->assertEquals(1, count($multimediaObject->getGroups()));
+        $this->assertCount(1, $multimediaObject->getGroups());
         $this->assertTrue($multimediaObject->containsGroup($group1));
         $this->assertFalse($multimediaObject->containsGroup($group2));
         $this->assertFalse($multimediaObject->containsGroup($group3));
 
         $this->mmsService->addGroup($group2, $multimediaObject);
 
-        $this->assertEquals(2, count($multimediaObject->getGroups()));
+        $this->assertCount(2, $multimediaObject->getGroups());
         $this->assertTrue($multimediaObject->containsGroup($group1));
         $this->assertTrue($multimediaObject->containsGroup($group2));
         $this->assertFalse($multimediaObject->containsGroup($group3));
 
         $this->mmsService->addGroup($group3, $multimediaObject);
 
-        $this->assertEquals(3, count($multimediaObject->getGroups()));
+        $this->assertCount(3, $multimediaObject->getGroups());
         $this->assertTrue($multimediaObject->containsGroup($group1));
         $this->assertTrue($multimediaObject->containsGroup($group2));
         $this->assertTrue($multimediaObject->containsGroup($group3));
@@ -276,7 +276,7 @@ class MultimediaObjectServiceTest extends PumukitTestCase
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
 
-        $this->assertEquals(0, count($multimediaObject->getGroups()));
+        $this->assertCount(0, $multimediaObject->getGroups());
         $this->assertFalse($multimediaObject->containsGroup($group1));
         $this->assertFalse($multimediaObject->containsGroup($group2));
         $this->assertFalse($multimediaObject->containsGroup($group3));
@@ -285,7 +285,7 @@ class MultimediaObjectServiceTest extends PumukitTestCase
 
         $multimediaObject = $this->repo->find($multimediaObject->getId());
 
-        $this->assertEquals(1, count($multimediaObject->getGroups()));
+        $this->assertCount(1, $multimediaObject->getGroups());
         $this->assertTrue($multimediaObject->containsGroup($group1));
         $this->assertFalse($multimediaObject->containsGroup($group2));
         $this->assertFalse($multimediaObject->containsGroup($group3));
@@ -294,7 +294,7 @@ class MultimediaObjectServiceTest extends PumukitTestCase
 
         $multimediaObject = $this->repo->find($multimediaObject->getId());
 
-        $this->assertEquals(0, count($multimediaObject->getGroups()));
+        $this->assertCount(0, $multimediaObject->getGroups());
         $this->assertFalse($multimediaObject->containsGroup($group1));
         $this->assertFalse($multimediaObject->containsGroup($group2));
         $this->assertFalse($multimediaObject->containsGroup($group3));
@@ -303,7 +303,7 @@ class MultimediaObjectServiceTest extends PumukitTestCase
 
         $multimediaObject = $this->repo->find($multimediaObject->getId());
 
-        $this->assertEquals(0, count($multimediaObject->getGroups()));
+        $this->assertCount(0, $multimediaObject->getGroups());
         $this->assertFalse($multimediaObject->containsGroup($group1));
         $this->assertFalse($multimediaObject->containsGroup($group2));
         $this->assertFalse($multimediaObject->containsGroup($group3));
@@ -312,7 +312,7 @@ class MultimediaObjectServiceTest extends PumukitTestCase
 
         $multimediaObject = $this->repo->find($multimediaObject->getId());
 
-        $this->assertEquals(1, count($multimediaObject->getGroups()));
+        $this->assertCount(1, $multimediaObject->getGroups());
         $this->assertFalse($multimediaObject->containsGroup($group1));
         $this->assertFalse($multimediaObject->containsGroup($group2));
         $this->assertTrue($multimediaObject->containsGroup($group3));
@@ -321,7 +321,7 @@ class MultimediaObjectServiceTest extends PumukitTestCase
 
         $multimediaObject = $this->repo->find($multimediaObject->getId());
 
-        $this->assertEquals(1, count($multimediaObject->getGroups()));
+        $this->assertCount(1, $multimediaObject->getGroups());
         $this->assertFalse($multimediaObject->containsGroup($group1));
         $this->assertFalse($multimediaObject->containsGroup($group2));
         $this->assertTrue($multimediaObject->containsGroup($group3));
@@ -330,7 +330,7 @@ class MultimediaObjectServiceTest extends PumukitTestCase
 
         $multimediaObject = $this->repo->find($multimediaObject->getId());
 
-        $this->assertEquals(0, count($multimediaObject->getGroups()));
+        $this->assertCount(0, $multimediaObject->getGroups());
         $this->assertFalse($multimediaObject->containsGroup($group1));
         $this->assertFalse($multimediaObject->containsGroup($group2));
         $this->assertFalse($multimediaObject->containsGroup($group3));
@@ -390,7 +390,7 @@ class MultimediaObjectServiceTest extends PumukitTestCase
         $this->dm->persist($group);
         $this->dm->flush();
 
-        $this->assertEquals(0, count($this->repo->findWithGroup($group)->toArray()));
+        $this->assertCount(0, $this->repo->findWithGroup($group)->toArray());
 
         $mm1 = new MultimediaObject();
         $mm1->setNumericalID(1);
@@ -412,10 +412,10 @@ class MultimediaObjectServiceTest extends PumukitTestCase
         $this->dm->persist($mm3);
         $this->dm->flush();
 
-        $this->assertEquals(3, count($this->repo->findWithGroup($group)->toArray()));
+        $this->assertCount(3, $this->repo->findWithGroup($group)->toArray());
 
         $this->mmsService->deleteAllFromGroup($group);
-        $this->assertEquals(0, count($this->repo->findWithGroup($group)->toArray()));
+        $this->assertCount(0, $this->repo->findWithGroup($group)->toArray());
     }
 
     private function createTags()

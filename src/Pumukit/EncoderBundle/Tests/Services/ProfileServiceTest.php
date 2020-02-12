@@ -38,27 +38,27 @@ class ProfileServiceTest extends PumukitTestCase
     public function testGetProfiles()
     {
         $profiles = $this->getDemoProfiles();
-        $this->assertEquals(count($profiles), count($this->profileService->getProfiles()));
+        $this->assertCount(count($profiles), $this->profileService->getProfiles());
 
-        $this->assertEquals(0, count($this->profileService->getProfiles(true)));
-        $this->assertEquals(0, count($this->profileService->getProfiles(null, false)));
-        $this->assertEquals(2, count($this->profileService->getProfiles(null, null, true)));
-        $this->assertEquals(2, count($this->profileService->getProfiles(false, true)));
-        $this->assertEquals(0, count($this->profileService->getProfiles(null, true, false)));
-        $this->assertEquals(0, count($this->profileService->getProfiles(false, null, false)));
-        $this->assertEquals(2, count($this->profileService->getProfiles(false, true, true)));
+        $this->assertCount(0, $this->profileService->getProfiles(true));
+        $this->assertCount(0, $this->profileService->getProfiles(null, false));
+        $this->assertCount(2, $this->profileService->getProfiles(null, null, true));
+        $this->assertCount(2, $this->profileService->getProfiles(false, true));
+        $this->assertCount(0, $this->profileService->getProfiles(null, true, false));
+        $this->assertCount(0, $this->profileService->getProfiles(false, null, false));
+        $this->assertCount(2, $this->profileService->getProfiles(false, true, true));
 
-        $this->assertEquals(2, count($this->profileService->getProfilesByTags([])));
-        $this->assertEquals(2, count($this->profileService->getProfilesByTags('uno')));
-        $this->assertEquals(1, count($this->profileService->getProfilesByTags(['tres'])));
-        $this->assertEquals(1, count($this->profileService->getProfilesByTags(['uno', 'tres'])));
+        $this->assertCount(2, $this->profileService->getProfilesByTags([]));
+        $this->assertCount(2, $this->profileService->getProfilesByTags('uno'));
+        $this->assertCount(1, $this->profileService->getProfilesByTags(['tres']));
+        $this->assertCount(1, $this->profileService->getProfilesByTags(['uno', 'tres']));
     }
 
     public function testGetMasterProfiles()
     {
         $profiles = $this->getDemoProfiles();
-        $this->assertEquals(count($profiles), count($this->profileService->getMasterProfiles(true)));
-        $this->assertEquals(0, count($this->profileService->getMasterProfiles(false)));
+        $this->assertCount(count($profiles), $this->profileService->getMasterProfiles(true));
+        $this->assertCount(0, $this->profileService->getMasterProfiles(false));
     }
 
     public function testGetDefaultMasterProfile()

@@ -49,7 +49,7 @@ class PersonWithRoleEventDispatcherServiceTest extends WebTestCase
     public function testDispatchCreate()
     {
         $this->dispatcher->addListener(SchemaEvents::PERSONWITHROLE_CREATE, function ($event, $name) {
-            $this->assertTrue($event instanceof PersonWithRoleEvent);
+            $this->assertInstanceOf(PersonWithRoleEvent::class, $event);
             $this->assertEquals(SchemaEvents::PERSONWITHROLE_CREATE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
@@ -91,7 +91,7 @@ class PersonWithRoleEventDispatcherServiceTest extends WebTestCase
     public function testDispatchUpdate()
     {
         $this->dispatcher->addListener(SchemaEvents::PERSONWITHROLE_UPDATE, function ($event, $name) {
-            $this->assertTrue($event instanceof PersonWithRoleEvent);
+            $this->assertInstanceOf(PersonWithRoleEvent::class, $event);
             $this->assertEquals(SchemaEvents::PERSONWITHROLE_UPDATE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
@@ -136,7 +136,7 @@ class PersonWithRoleEventDispatcherServiceTest extends WebTestCase
     public function testDispatchDelete()
     {
         $this->dispatcher->addListener(SchemaEvents::PERSONWITHROLE_DELETE, function ($event, $name) {
-            $this->assertTrue($event instanceof PersonWithRoleEvent);
+            $this->assertInstanceOf(PersonWithRoleEvent::class, $event);
             $this->assertEquals(SchemaEvents::PERSONWITHROLE_DELETE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
