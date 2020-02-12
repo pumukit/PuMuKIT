@@ -1832,7 +1832,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $mm3 = $this->createMultimediaObjectAssignedToSeries('mm3', $series2);
         $mm4 = $this->createMultimediaObjectAssignedToSeries('mm4', $series3);
 
-        $this->assertCount(4, $this->repo->count());
+        $this->assertEquals(4, $this->repo->count());
         $this->assertEquals(492, $this->repo->countDuration());
     }
 
