@@ -15,7 +15,7 @@
         "alcaeus/mongo-php-adapter": "@stable",
         "doctrine/mongodb-odm": "~2",
         "doctrine/mongodb-odm-bundle": "~4",
-        "friendsofsymfony/user-bundle": "dev-master#a9e71b6e",
+        "friendsofsymfony/user-bundle": "dev-master",
         "gedmo/doctrine-extensions": "dev-feature/mongodb-odm-2.0#c708baa8",
         "incenteev/composer-parameter-handler": "^2.0",
         "jms/serializer-bundle": "2.4.*",
@@ -109,6 +109,12 @@
         "symfony": {
             "allow-contrib": false,
             "require": "^4.0"
+        }
+    },
+    "repositories": {
+        "teltekfosuserbundle": {
+            "type": "vcs",
+            "url": "git@github.com:teltek/FOSUserBundle.git"
         }
     }
 }
