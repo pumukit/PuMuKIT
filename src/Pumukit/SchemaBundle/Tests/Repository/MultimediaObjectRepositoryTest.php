@@ -938,21 +938,21 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
 
         $materialsArray = [$material1, $material3];
         $this->assertCount(count($materialsArray), $this->repo->find($mm->getId())->getMaterials());
-        $this->assertEquals($materialsArray, $this->repo->find($mm->getId())->getMaterials());
+        $this->assertEquals($materialsArray, $this->repo->find($mm->getId())->getMaterials()->toArray());
 
         $mm->upMaterialById($material3->getId());
         $this->dm->persist($mm);
         $this->dm->flush();
 
         $materialsArray = [$material3, $material1];
-        $this->assertEquals($materialsArray, $this->repo->find($mm->getId())->getMaterials());
+        $this->assertEquals($materialsArray, $this->repo->find($mm->getId())->getMaterials()->toArray());
 
         $mm->downMaterialById($material3->getId());
         $this->dm->persist($mm);
         $this->dm->flush();
 
         $materialsArray = [$material1, $material3];
-        $this->assertEquals($materialsArray, $this->repo->find($mm->getId())->getMaterials());
+        $this->assertEquals($materialsArray, $this->repo->find($mm->getId())->getMaterials()->toArray());
     }
 
     public function testEmbedLinksInMultimediaObject(): void
@@ -986,21 +986,21 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
 
         $linksArray = [$link1, $link3];
         $this->assertCount(count($linksArray), $this->repo->find($mm->getId())->getLinks());
-        $this->assertEquals($linksArray, $this->repo->find($mm->getId())->getLinks());
+        $this->assertEquals($linksArray, $this->repo->find($mm->getId())->getLinks()->toArray());
 
         $mm->upLinkById($link3->getId());
         $this->dm->persist($mm);
         $this->dm->flush();
 
         $linksArray = [$link3, $link1];
-        $this->assertEquals($linksArray, $this->repo->find($mm->getId())->getLinks());
+        $this->assertEquals($linksArray, $this->repo->find($mm->getId())->getLinks()->toArray());
 
         $mm->downLinkById($link3->getId());
         $this->dm->persist($mm);
         $this->dm->flush();
 
         $linksArray = [$link1, $link3];
-        $this->assertEquals($linksArray, $this->repo->find($mm->getId())->getLinks());
+        $this->assertEquals($linksArray, $this->repo->find($mm->getId())->getLinks()->toArray());
     }
 
     public function testEmbedTracksInMultimediaObject(): void
@@ -1034,21 +1034,21 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
 
         $tracksArray = [$track1, $track3];
         $this->assertCount(count($tracksArray), $this->repo->find($mm->getId())->getTracks());
-        $this->assertEquals($tracksArray, $this->repo->find($mm->getId())->getTracks());
+        $this->assertEquals($tracksArray, $this->repo->find($mm->getId())->getTracks()->toArray());
 
         $mm->upTrackById($track3->getId());
         $this->dm->persist($mm);
         $this->dm->flush();
 
         $tracksArray = [$track3, $track1];
-        $this->assertEquals($tracksArray, $this->repo->find($mm->getId())->getTracks());
+        $this->assertEquals($tracksArray, $this->repo->find($mm->getId())->getTracks()->toArray());
 
         $mm->downTrackById($track3->getId());
         $this->dm->persist($mm);
         $this->dm->flush();
 
         $tracksArray = [$track1, $track3];
-        $this->assertEquals($tracksArray, $this->repo->find($mm->getId())->getTracks());
+        $this->assertEquals($tracksArray, $this->repo->find($mm->getId())->getTracks()->toArray());
     }
 
     public function testFindMultimediaObjectsWithTags(): void
@@ -1154,9 +1154,9 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         // FIND WITH TAG (SORT)
         $page = 1;
         $arrayAsc = [$mm23, $mm31, $mm33];
-        $this->assertEquals($arrayAsc, $this->repo->findWithTag($tag1, $sortAsc, $limit, $page));
+        $this->assertEquals($arrayAsc, $this->repo->findWithTag($tag1, $sortAsc, $limit, $page)->toArray());
         $arrayDesc = [$mm23, $mm22, $mm12];
-        $this->assertEquals($arrayDesc, $this->repo->findWithTag($tag1, $sortDesc, $limit, $page));
+        $this->assertEquals($arrayDesc, $this->repo->findWithTag($tag1, $sortDesc, $limit, $page)->toArray());
 
         $this->assertCount(2, $this->repo->findWithTag($tag2));
         $limit = 1;
@@ -1169,16 +1169,16 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         //FIND WITH GENERAL TAG
         $this->assertCount(7, $this->repo->findWithGeneralTag($tag1));
         $limit = 3;
-        $this->assertEquals(3, $this->repo->findWithGeneralTag($tag1, $sort, $limit));
+        $this->assertCount(3, $this->repo->findWithGeneralTag($tag1, $sort, $limit));
         $page = 1;
         $this->assertCount(3, $this->repo->findWithGeneralTag($tag1, $sort, $limit, $page));
         $this->assertCount(2, $this->repo->findWithGeneralTag($tag2));
         $this->assertCount(0, $this->repo->findWithGeneralTag($tag3));
         //FIND WITH GENERAL TAG (SORT)
         $arrayAsc = [$mm23, $mm31, $mm33];
-        $this->assertEquals($arrayAsc, $this->repo->findWithGeneralTag($tag1, $sortAsc, $limit, $page));
+        $this->assertEquals($arrayAsc, $this->repo->findWithGeneralTag($tag1, $sortAsc, $limit, $page)->toArray());
         $arrayDesc = [$mm23, $mm22, $mm12];
-        $this->assertEquals($arrayDesc, $this->repo->findWithGeneralTag($tag1, $sortDesc, $limit, $page));
+        $this->assertEquals($arrayDesc, $this->repo->findWithGeneralTag($tag1, $sortDesc, $limit, $page)->toArray());
 
         // FIND ONE WITH TAG
         $this->assertEquals($mm11, $this->repo->findOneWithTag($tag1));
@@ -1197,29 +1197,29 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
 
         // FIND WITH ANY TAG (SORT)
         $arrayAsc = [$mm11, $mm12, $mm21, $mm22, $mm23, $mm31, $mm33, $mm34];
-        $this->assertEquals($arrayAsc, $this->repo->findWithAnyTag($arrayTags, $sortAsc));
+        $this->assertEquals($arrayAsc, $this->repo->findWithAnyTag($arrayTags, $sortAsc)->toArray());
         $limit = 3;
         $arrayAsc = [$mm11, $mm12, $mm21];
-        $this->assertEquals($arrayAsc, $this->repo->findWithAnyTag($arrayTags, $sortAsc, $limit));
+        $this->assertEquals($arrayAsc, $this->repo->findWithAnyTag($arrayTags, $sortAsc, $limit)->toArray());
         $page = 0;
         $arrayAsc = [$mm11, $mm12, $mm21];
-        $this->assertEquals($arrayAsc, $this->repo->findWithAnyTag($arrayTags, $sortAsc, $limit, $page));
+        $this->assertEquals($arrayAsc, $this->repo->findWithAnyTag($arrayTags, $sortAsc, $limit, $page)->toArray());
         $page = 1;
         $arrayAsc = [$mm22, $mm23, $mm31];
-        $this->assertEquals($arrayAsc, $this->repo->findWithAnyTag($arrayTags, $sortAsc, $limit, $page));
+        $this->assertEquals($arrayAsc, $this->repo->findWithAnyTag($arrayTags, $sortAsc, $limit, $page)->toArray());
         $page = 2;
         $arrayAsc = [$mm33, $mm34];
-        $this->assertEquals($arrayAsc, $this->repo->findWithAnyTag($arrayTags, $sortAsc, $limit, $page));
+        $this->assertEquals($arrayAsc, $this->repo->findWithAnyTag($arrayTags, $sortAsc, $limit, $page)->toArray());
 
         $arrayDesc = [$mm34, $mm33, $mm31, $mm23, $mm22, $mm21, $mm12, $mm11];
-        $this->assertEquals($arrayDesc, $this->repo->findWithAnyTag($arrayTags, $sortDesc));
+        $this->assertEquals($arrayDesc, $this->repo->findWithAnyTag($arrayTags, $sortDesc)->toArray());
         $limit = 5;
         $page = 0;
         $arrayDesc = [$mm34, $mm33, $mm31, $mm23, $mm22];
-        $this->assertEquals($arrayDesc, $this->repo->findWithAnyTag($arrayTags, $sortDesc, $limit, $page));
+        $this->assertEquals($arrayDesc, $this->repo->findWithAnyTag($arrayTags, $sortDesc, $limit, $page)->toArray());
         $page = 1;
         $arrayDesc = [$mm21, $mm12, $mm11];
-        $this->assertEquals($arrayDesc, $this->repo->findWithAnyTag($arrayTags, $sortDesc, $limit, $page));
+        $this->assertEquals($arrayDesc, $this->repo->findWithAnyTag($arrayTags, $sortDesc, $limit, $page)->toArray());
 
         // Add more tags
         $mm32->addTag($tag3);
@@ -1263,20 +1263,20 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         // FIND WITH ALL TAGS (SORT)
         $arrayTags = [$tag1, $tag2];
         $arrayAsc = [$mm11, $mm12, $mm13, $mm22];
-        $this->assertEquals($arrayAsc, $this->repo->findWithAllTags($arrayTags, $sortAsc));
+        $this->assertEquals($arrayAsc, $this->repo->findWithAllTags($arrayTags, $sortAsc)->toArray());
         $arrayDesc = [$mm22, $mm13, $mm12, $mm11];
-        $this->assertEquals($arrayDesc, $this->repo->findWithAllTags($arrayTags, $sortDesc));
+        $this->assertEquals($arrayDesc, $this->repo->findWithAllTags($arrayTags, $sortDesc)->toArray());
         $limit = 3;
         $arrayAsc = [$mm11, $mm12, $mm13];
-        $this->assertEquals($arrayAsc, $this->repo->findWithAllTags($arrayTags, $sortAsc, $limit));
+        $this->assertEquals($arrayAsc, $this->repo->findWithAllTags($arrayTags, $sortAsc, $limit)->toArray());
         $page = 1;
         $arrayAsc = [$mm22];
-        $this->assertEquals($arrayAsc, $this->repo->findWithAllTags($arrayTags, $sortAsc, $limit, $page));
+        $this->assertEquals($arrayAsc, $this->repo->findWithAllTags($arrayTags, $sortAsc, $limit, $page)->toArray());
 
         $limit = 2;
         $page = 1;
         $arrayDesc = [$mm12, $mm11];
-        $this->assertEquals($arrayDesc, $this->repo->findWithAllTags($arrayTags, $sortDesc, $limit, $page));
+        $this->assertEquals($arrayDesc, $this->repo->findWithAllTags($arrayTags, $sortDesc, $limit, $page)->toArray());
 
         // FIND ONE WITH ALL TAGS
         $arrayTags = [$tag1, $tag2];
@@ -1297,16 +1297,16 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
 
         // FIND WITHOUT TAG (SORT)
         $arrayAsc = [$mm11, $mm12, $mm13, $mm21, $mm22, $mm23, $mm31, $mm33, $mm34];
-        $this->assertEquals($arrayAsc, $this->repo->findWithoutTag($tag3, $sortAsc));
+        $this->assertEquals($arrayAsc, $this->repo->findWithoutTag($tag3, $sortAsc)->toArray());
         $limit = 6;
         $arrayAsc = [$mm11, $mm12, $mm13, $mm21, $mm22, $mm23];
-        $this->assertEquals($arrayAsc, $this->repo->findWithoutTag($tag3, $sortAsc, $limit));
+        $this->assertEquals($arrayAsc, $this->repo->findWithoutTag($tag3, $sortAsc, $limit)->toArray());
         $page = 1;
         $arrayAsc = [$mm31, $mm33, $mm34];
-        $this->assertEquals($arrayAsc, $this->repo->findWithoutTag($tag3, $sortAsc, $limit, $page));
+        $this->assertEquals($arrayAsc, $this->repo->findWithoutTag($tag3, $sortAsc, $limit, $page)->toArray());
 
         $arrayDesc = [$mm13, $mm12, $mm11];
-        $this->assertEquals($arrayDesc, $this->repo->findWithoutTag($tag3, $sortDesc, $limit, $page));
+        $this->assertEquals($arrayDesc, $this->repo->findWithoutTag($tag3, $sortDesc, $limit, $page)->toArray());
 
         // FIND ONE WITHOUT TAG
         $this->assertEquals($mm23, $this->repo->findOneWithoutTag($tag2));
@@ -1332,15 +1332,15 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         // FIND WITHOUT ALL TAGS (SORT)
         $arrayTags = [$tag2, $tag3];
         $arrayAsc = [$mm23, $mm31, $mm33, $mm34];
-        $this->assertEquals($arrayAsc, $this->repo->findWithoutAllTags($arrayTags, $sortAsc));
+        $this->assertEquals($arrayAsc, $this->repo->findWithoutAllTags($arrayTags, $sortAsc)->toArray());
         $limit = 3;
         $page = 1;
         $arrayAsc = [$mm34];
-        $this->assertEquals($arrayAsc, $this->repo->findWithoutAllTags($arrayTags, $sortAsc, $limit, $page));
+        $this->assertEquals($arrayAsc, $this->repo->findWithoutAllTags($arrayTags, $sortAsc, $limit, $page)->toArray());
 
         $page = 0;
         $arrayDesc = [$mm34, $mm33, $mm31];
-        $this->assertEquals($arrayDesc, $this->repo->findWithoutAllTags($arrayTags, $sortDesc, $limit, $page));
+        $this->assertEquals($arrayDesc, $this->repo->findWithoutAllTags($arrayTags, $sortDesc, $limit, $page)->toArray());
     }
 
     public function testFindSeriesFieldWithTags(): void
