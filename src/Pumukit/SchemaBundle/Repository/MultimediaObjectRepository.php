@@ -923,16 +923,17 @@ class MultimediaObjectRepository extends DocumentRepository
         return $qb->getQuery()->execute();
     }
 
-    /**
-     * Create standard query builder.
-     * Creates a query builder with all multimedia objects having status different than PROTOTYPE.
-     * These are the multimedia objects we need to show in series.
-     *
-     * @return \Doctrine\ODM\MongoDB\Query\Builder
-     */
-    public function createStandardQueryBuilder()
+    public function createStandardQueryBuilder(): Builder
     {
         return $this->createQueryBuilder()
+            ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
+            ->field('type')->notEqual(MultimediaObject::TYPE_LIVE);
+    }
+
+    public function createAggregationStandardQueryBuilder(): \Doctrine\ODM\MongoDB\Aggregation\Stage\Match
+    {
+        return $this->createAggregationBuilder()
+            ->match()
             ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
             ->field('type')->notEqual(MultimediaObject::TYPE_LIVE);
     }
@@ -1016,7 +1017,7 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function countDuration()
     {
-        $result = $this->createStandardQueryBuilder()->group([], ['count' => 0])->reduce('function (obj, prev) { prev.count += obj.duration; }')->getQuery()->execute();
+        $result = $this->createAggregationStandardQueryBuilder()->group([], ['count' => 0])->reduce('function (obj, prev) { prev.count += obj.duration; }')->getQuery()->execute();
 
         $singleResult = $result->getSingleResult();
 
