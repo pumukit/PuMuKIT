@@ -36,7 +36,7 @@ class PersonServiceTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->repo = null;
         $this->roleRepo = null;
         $this->repoMmobj = null;

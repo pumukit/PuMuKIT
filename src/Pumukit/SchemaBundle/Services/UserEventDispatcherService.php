@@ -6,20 +6,19 @@ use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Event\UserEvent;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class UserEventDispatcherService
 {
     /** @var EventDispatcher */
     private $dispatcher;
 
-    public function __construct(EventDispatcherInterface $dispatcher)
+    public function __construct()
     {
-        $this->dispatcher = $dispatcher;
+        $this->dispatcher = new EventDispatcher();
     }
 
     /**
-     * Dispatchs the event USER_CREATE 'user.create' passing the user.
+     * Dispatch the event USER_CREATE 'user.create' passing the user.
      */
     public function dispatchCreate(User $user)
     {
@@ -28,7 +27,7 @@ class UserEventDispatcherService
     }
 
     /**
-     * Dispatchs the event USER_UPDATE 'user.update' passing the user.
+     * Dispatch the event USER_UPDATE 'user.update' passing the user.
      */
     public function dispatchUpdate(User $user)
     {
@@ -37,7 +36,7 @@ class UserEventDispatcherService
     }
 
     /**
-     * Dispatchs the event USER_DELETE 'user.delete' passing the user.
+     * Dispatch the event USER_DELETE 'user.delete' passing the user.
      */
     public function dispatchDelete(User $user)
     {

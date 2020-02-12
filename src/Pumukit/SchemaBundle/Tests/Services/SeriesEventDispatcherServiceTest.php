@@ -31,14 +31,14 @@ class SeriesEventDispatcherServiceTest extends PumukitTestCase
         MockUpSeriesListener::$called = false;
         MockUpSeriesListener::$title = self::EMPTY_TITLE;
 
-        $this->seriesDispatcher = new SeriesEventDispatcherService($this->dispatcher);
+        $this->seriesDispatcher = new SeriesEventDispatcherService();
     }
 
     public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->dispatcher = null;
         $this->seriesDispatcher = null;
         gc_collect_cycles();

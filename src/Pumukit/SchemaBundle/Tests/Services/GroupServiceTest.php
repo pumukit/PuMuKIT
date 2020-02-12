@@ -10,7 +10,6 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\GroupEventDispatcherService;
 use Pumukit\SchemaBundle\Services\GroupService;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * @internal
@@ -30,8 +29,7 @@ class GroupServiceTest extends PumukitTestCase
         $this->repo = $this->dm->getRepository(Group::class);
         $this->userRepo = $this->dm->getRepository(User::class);
 
-        $dispatcher = new EventDispatcher();
-        $groupDispatcher = new GroupEventDispatcherService($dispatcher);
+        $groupDispatcher = new GroupEventDispatcherService();
         $translator = static::$kernel->getContainer()->get('translator');
 
         $this->groupService = new GroupService($this->dm, $groupDispatcher, $translator);
@@ -41,7 +39,7 @@ class GroupServiceTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->repo = null;
         $this->userRepo = null;
         $this->groupService = null;

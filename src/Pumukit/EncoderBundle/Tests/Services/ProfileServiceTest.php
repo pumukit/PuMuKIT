@@ -29,7 +29,7 @@ class ProfileServiceTest extends PumukitTestCase
         parent::tearDown();
 
         $this->dm->close();
-        $this->dm = null;
+
         $this->repo = null;
         $this->profileService = null;
         gc_collect_cycles();

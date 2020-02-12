@@ -16,7 +16,6 @@ use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\TrackService;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -36,8 +35,6 @@ class JobService
     private $cpuService;
     private $inspectionService;
     private $tmpPath;
-    /** @var EventDispatcher */
-    private $dispatcher;
     private $trackService;
     private $logger;
     private $environment;
@@ -46,13 +43,14 @@ class JobService
     private $inboxPath;
     private $binPath;
     private $deleteInboxFiles;
+    /** @var EventDispatcher */
+    private $eventDispatcher;
 
     public function __construct(
         DocumentManager $documentManager,
         ProfileService $profileService,
         CpuService $cpuService,
         InspectionFfprobeService $inspectionService,
-        EventDispatcherInterface $dispatcher,
         LoggerInterface $logger,
         TrackService $trackService,
         TokenStorageInterface $tokenStorage,
@@ -73,11 +71,11 @@ class JobService
         $this->logger = $logger;
         $this->trackService = $trackService;
         $this->tokenStorage = $tokenStorage;
-        $this->dispatcher = $dispatcher;
         $this->environment = $environment;
         $this->propService = $propService;
         $this->binPath = $binPath;
         $this->deleteInboxFiles = $deleteInboxFiles;
+        $this->eventDispatcher = new EventDispatcher();
     }
 
     /**
@@ -912,7 +910,7 @@ class JobService
         $multimediaObject = $this->getMultimediaObject($job);
 
         $event = new JobEvent($job, $track, $multimediaObject);
-        $this->dispatcher->dispatch($event, $success ? EncoderEvents::JOB_SUCCESS : EncoderEvents::JOB_ERROR);
+        $this->eventDispatcher->dispatch($event, $success ? EncoderEvents::JOB_SUCCESS : EncoderEvents::JOB_ERROR);
     }
 
     /**

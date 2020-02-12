@@ -30,9 +30,9 @@ class RoleTest extends TestCase
         $xml = 'string <xml>';
         $display = true;
         $name1 = 'Presenter';
-        $name2 = null;
+        $name2 = '';
         $text1 = 'Presenter Role 1';
-        $text2 = null;
+        $text2 = '';
 
         $role->setLocale($locale);
         $role->setCod($cod);

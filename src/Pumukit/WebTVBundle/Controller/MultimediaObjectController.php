@@ -16,7 +16,6 @@ use Pumukit\WebTVBundle\Services\ChapterMarkService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,38 +24,29 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class MultimediaObjectController extends AbstractController implements WebTVControllerInterface
 {
-    /** @var EventDispatcher */
-    private $eventDispatcher;
-
     /** @var ChapterMarkService */
     private $chapterMarksService;
-
     /** @var IntroService */
     private $introService;
-
     /** @var PlayerService */
     private $playerService;
-
     /** @var MultimediaObjectService */
     private $multimediaObjectService;
-
     /** @var DocumentManager */
     private $documentManager;
-
     /** @var RequestStack */
     private $requestStack;
-
     /** @var EmbeddedBroadcastService */
     private $embeddedBroadcastService;
-
     /** @var BreadcrumbsService */
     private $breadcrumbsService;
+    /** @var EventDispatcher */
+    private $eventDispatcher;
     private $limitObjsPlayerSeries;
     private $pumukitFullMagicUrl;
     private $cinemaMode;
 
     public function __construct(
-        EventDispatcherInterface $eventDispatcher,
         ChapterMarkService $chapterMarksService,
         IntroService $introService,
         PlayerService $playerService,
@@ -69,7 +59,6 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
         $pumukitFullMagicUrl,
         $cinemaMode
     ) {
-        $this->eventDispatcher = $eventDispatcher;
         $this->chapterMarksService = $chapterMarksService;
         $this->introService = $introService;
         $this->playerService = $playerService;
@@ -81,6 +70,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
         $this->limitObjsPlayerSeries = $limitObjsPlayerSeries;
         $this->pumukitFullMagicUrl = $pumukitFullMagicUrl;
         $this->cinemaMode = $cinemaMode;
+        $this->eventDispatcher = new EventDispatcher();
     }
 
     /**

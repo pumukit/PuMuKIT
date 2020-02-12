@@ -37,7 +37,7 @@ class SeriesRepositoryTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->repo = null;
         $this->personService = null;
         $this->factoryService = null;

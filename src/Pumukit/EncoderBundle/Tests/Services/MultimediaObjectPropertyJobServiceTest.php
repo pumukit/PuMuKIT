@@ -26,7 +26,7 @@ class MultimediaObjectPropertyJobServiceTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         gc_collect_cycles();
     }
 

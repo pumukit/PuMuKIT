@@ -32,7 +32,7 @@ class LinkEventDispatcherServiceTest extends PumukitTestCase
         MockUpLinkListener::$title = self::EMPTY_TITLE;
         MockUpLinkListener::$url = self::EMPTY_URL;
 
-        $this->linkDispatcher = new LinkEventDispatcherService($this->dispatcher);
+        $this->linkDispatcher = new LinkEventDispatcherService();
     }
 
     public function tearDown(): void

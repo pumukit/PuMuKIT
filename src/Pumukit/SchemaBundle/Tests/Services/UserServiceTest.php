@@ -42,8 +42,8 @@ class UserServiceTest extends PumukitTestCase
         $this->permissionProfileRepo = $this->dm->getRepository(PermissionProfile::class);
 
         $dispatcher = new EventDispatcher();
-        $userDispatcher = new UserEventDispatcherService($dispatcher);
-        $permissionProfileDispatcher = new PermissionProfileEventDispatcherService($dispatcher);
+        $userDispatcher = new UserEventDispatcherService();
+        $permissionProfileDispatcher = new PermissionProfileEventDispatcherService();
         $permissionService = new PermissionService($this->dm);
         $permissionProfileService = new PermissionProfileService(
             $this->dm,
@@ -69,7 +69,7 @@ class UserServiceTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->repo = null;
         $this->permissionProfileRepo = null;
         $this->userService = null;

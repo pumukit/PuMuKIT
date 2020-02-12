@@ -86,13 +86,15 @@ EOT
         $this->language = $input->getArgument('language');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('<info> ***** Start - Generating Job for wizard tracks ***** </info>');
 
         $this->importFiles($output);
 
         $output->writeln('<info> ***** End - Generating Job for wizard tracks ***** </info>');
+
+        return 0;
     }
 
     private function importFiles(OutputInterface $output): void
@@ -127,36 +129,34 @@ EOT
             $multimediaObject = $this->wizardService->createMultimediaObject($titleData, $series, $this->user);
             $output->writeln('Video '.$multimediaObject->getId().' importing file '.$filePath);
 
-            if ($multimediaObject) {
-                try {
-                    $multimediaObject = $this->jobService->createTrackFromInboxOnServer(
-                        $multimediaObject,
-                        $filePath,
-                        $this->profile,
-                        $this->priority,
-                        $this->language,
-                        [],
-                        [],
-                        0,
-                        JobService::ADD_JOB_UNIQUE
-                    );
-                } catch (\Exception $e) {
-                    if (!strpos($e->getMessage(), 'Unknown error')) {
-                        $this->factoryService->deleteMultimediaObject($multimediaObject);
+            try {
+                $multimediaObject = $this->jobService->createTrackFromInboxOnServer(
+                    $multimediaObject,
+                    $filePath,
+                    $this->profile,
+                    $this->priority,
+                    $this->language,
+                    [],
+                    [],
+                    0,
+                    JobService::ADD_JOB_UNIQUE
+                );
+            } catch (\Exception $e) {
+                if (!strpos($e->getMessage(), 'Unknown error')) {
+                    $this->factoryService->deleteMultimediaObject($multimediaObject);
 
-                        throw $e;
-                    }
+                    throw $e;
                 }
-                $pubChannels = explode(',', $this->channels);
-                foreach ($pubChannels as $code) {
-                    $this->wizardService->addTagToMultimediaObjectByCode($multimediaObject, $code, $this->user);
-                }
-
-                if ($multimediaObject && isset($this->status)) {
-                    $multimediaObject->setStatus((int) ($this->status));
-                }
-                $this->dm->flush();
             }
+            $pubChannels = explode(',', $this->channels);
+            foreach ($pubChannels as $code) {
+                $this->wizardService->addTagToMultimediaObjectByCode($multimediaObject, $code, $this->user);
+            }
+
+            if (isset($this->status)) {
+                $multimediaObject->setStatus((int) ($this->status));
+            }
+            $this->dm->flush();
         }
     }
 }

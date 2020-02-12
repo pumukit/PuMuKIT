@@ -30,14 +30,14 @@ class GroupEventDispatcherServiceTest extends PumukitTestCase
         MockUpGroupListener::$called = false;
         MockUpGroupListener::$name = self::EMPTY_NAME;
 
-        $this->groupDispatcher = new GroupEventDispatcherService($this->dispatcher);
+        $this->groupDispatcher = new GroupEventDispatcherService();
     }
 
     public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->dispatcher = null;
         $this->groupDispatcher = null;
         gc_collect_cycles();

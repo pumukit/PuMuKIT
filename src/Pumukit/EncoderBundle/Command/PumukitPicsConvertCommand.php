@@ -152,7 +152,7 @@ EOT
             $this->output->writeln('<info>Please set option --convert to start convert</info>');
         }
 
-        return true;
+        return 0;
     }
 
     private function checkInputOptions(): array

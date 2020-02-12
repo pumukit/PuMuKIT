@@ -29,7 +29,7 @@ class MultimediaObjectEventDispatcherServiceTest extends PumukitTestCase
         MockUpMultimediaObjectListener::$called = false;
         MockUpMultimediaObjectListener::$title = self::EMPTY_TITLE;
 
-        $this->multimediaObjectDispatcher = new MultimediaObjectEventDispatcherService($this->dispatcher);
+        $this->multimediaObjectDispatcher = new MultimediaObjectEventDispatcherService();
     }
 
     public function tearDown(): void

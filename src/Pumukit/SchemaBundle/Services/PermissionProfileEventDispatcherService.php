@@ -6,20 +6,19 @@ use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Event\PermissionProfileEvent;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class PermissionProfileEventDispatcherService
 {
     /** @var EventDispatcher */
     private $dispatcher;
 
-    public function __construct(EventDispatcherInterface $dispatcher)
+    public function __construct()
     {
-        $this->dispatcher = $dispatcher;
+        $this->dispatcher = new EventDispatcher();
     }
 
     /**
-     * Dispatchs the event PERMISSIONPROFILE_CREATE 'permissionprofile.create' passing the permissionProfile.
+     * Dispatch the event PERMISSIONPROFILE_CREATE 'permissionprofile.create' passing the permissionProfile.
      */
     public function dispatchCreate(PermissionProfile $permissionProfile)
     {
@@ -28,7 +27,7 @@ class PermissionProfileEventDispatcherService
     }
 
     /**
-     * Dispatchs the event PERMISSIONPROFILE_UPDATE 'permissionprofile.update' passing the permissionProfile.
+     * Dispatch the event PERMISSIONPROFILE_UPDATE 'permissionprofile.update' passing the permissionProfile.
      */
     public function dispatchUpdate(PermissionProfile $permissionProfile)
     {
@@ -37,7 +36,7 @@ class PermissionProfileEventDispatcherService
     }
 
     /**
-     * Dispatchs the event PERMISSIONPROFILE_DELETE 'permissionprofile.delete' passing the permissionProfile.
+     * Dispatch the event PERMISSIONPROFILE_DELETE 'permissionprofile.delete' passing the permissionProfile.
      */
     public function dispatchDelete(PermissionProfile $permissionProfile)
     {
