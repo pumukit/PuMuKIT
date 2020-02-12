@@ -313,7 +313,7 @@ class FactoryServiceTest extends PumukitTestCase
         $newTitles = $new->getI18nTitle();
         foreach ($src->getI18nTitle() as $key => $title) {
             $string = $this->translator->trans('cloned', [], null, $key);
-            $title .= ' (' . $string . ')';
+            $title .= ' ('.$string.')';
             $this->assertEquals($newTitles[$key], $title);
         }
         $this->assertTrue($src->getRank() < $new->getRank());

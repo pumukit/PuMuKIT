@@ -253,7 +253,7 @@ class MultimediaObjectRepository extends DocumentRepository
         $collection = $dm->getDocumentCollection(MultimediaObject::class);
 
         $pipeline = [
-            ['$match' => ['people.cod' => (string)($roleCode)]],
+            ['$match' => ['people.cod' => (string) ($roleCode)]],
             [
                 '$project' => [
                     '_id' => 0,
@@ -296,8 +296,8 @@ class MultimediaObjectRepository extends DocumentRepository
         $pipeline = [
             [
                 '$match' => [
-                    'people.cod' => (string)($roleCode),
-                    'people.people.email' => (string)($email),
+                    'people.cod' => (string) ($roleCode),
+                    'people.people.email' => (string) ($email),
                 ],
             ],
             [
@@ -335,6 +335,7 @@ class MultimediaObjectRepository extends DocumentRepository
                 $people[] = $person['_id'];
             }
         }
+
         return $people;
     }
 
@@ -666,8 +667,8 @@ class MultimediaObjectRepository extends DocumentRepository
     public function qbWithoutTag(Tag $tag, array $sort = [], int $limit = 0, int $page = 0)
     {
         $qb = $this->createStandardQueryBuilder()->field('tags._id')->notEqual(new ObjectId($tag->getId()));
-        $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
-        return $qb;
+
+        return $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
     }
 
     public function findWithoutTag(Tag $tag, array $sort = [], int $limit = 0, int $page = 0)
@@ -737,7 +738,8 @@ class MultimediaObjectRepository extends DocumentRepository
             ->equals(new ObjectId($tag->getId()))
             ->distinct('series')
             ->getQuery()
-            ->getSingleResult();
+            ->getSingleResult()
+        ;
     }
 
     /**
@@ -1014,7 +1016,8 @@ class MultimediaObjectRepository extends DocumentRepository
             ->group()
             ->field('id')->expression('id')
             ->field('total_duration')->sum('$duration')
-            ->execute();
+            ->execute()
+        ;
 
         return $aggregation->current()['total_duration'];
     }

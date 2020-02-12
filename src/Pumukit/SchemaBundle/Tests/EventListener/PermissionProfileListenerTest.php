@@ -35,10 +35,9 @@ class PermissionProfileListenerTest extends PumukitTestCase
         parent::setUp();
         $this->userRepo = $this->dm->getRepository(User::class);
         $this->permissionProfileRepo = $this->dm->getRepository(PermissionProfile::class);
-
         $dispatcher = new EventDispatcher();
-        $userDispatcher = new UserEventDispatcherService();
-        $permissionProfileDispatcher = new PermissionProfileEventDispatcherService();
+        $userDispatcher = new UserEventDispatcherService($dispatcher);
+        $permissionProfileDispatcher = new PermissionProfileEventDispatcherService($dispatcher);
         $permissionService = new PermissionService($this->dm);
         $this->permissionProfileService = new PermissionProfileService(
             $this->dm,

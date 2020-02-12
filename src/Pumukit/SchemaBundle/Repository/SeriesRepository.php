@@ -46,8 +46,6 @@ class SeriesRepository extends DocumentRepository
      *
      * @param Tag   $tag
      * @param array $sort
-     *
-     * @return Builder
      */
     public function createBuilderWithTag($tag, $sort = []): Builder
     {
@@ -79,8 +77,6 @@ class SeriesRepository extends DocumentRepository
      * @param array $sort
      * @param int   $limit
      * @param int   $page
-     *
-     * @return ArrayCollection
      */
     public function findWithAnyTag($tags, $sort = [], $limit = 0, $page = 0): ArrayCollection
     {
@@ -100,8 +96,6 @@ class SeriesRepository extends DocumentRepository
      * @param array $sort
      * @param int   $limit
      * @param int   $page
-     *
-     * @return ArrayCollection
      */
     public function findWithAllTags($tags, $sort = [], $limit = 0, $page = 0): ArrayCollection
     {
@@ -135,8 +129,6 @@ class SeriesRepository extends DocumentRepository
      * @param array           $sort
      * @param int             $limit
      * @param int             $page
-     *
-     * @return ArrayCollection
      */
     public function findWithoutTag($tag, $sort = [], $limit = 0, $page = 0): ArrayCollection
     {
@@ -225,6 +217,7 @@ class SeriesRepository extends DocumentRepository
 
     /**
      * @param \MongoId|string $personId
+     *
      * @return mixed
      */
     public function findByPersonIdAndRoleCod($personId, string $roleCod, array $sort = [], int $limit = 0, int $page = 0)

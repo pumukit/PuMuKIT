@@ -66,8 +66,6 @@ class FactoryService
      * Wrapper for createCollection. Creates a TYPE_SERIES collection.
      *
      * @throws \Exception
-     *
-     * @return Series
      */
     public function createSeries(User $loggedInUser = null, array $title = null): Series
     {

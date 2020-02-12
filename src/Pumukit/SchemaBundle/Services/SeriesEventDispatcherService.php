@@ -5,16 +5,16 @@ namespace Pumukit\SchemaBundle\Services;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Event\SeriesEvent;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class SeriesEventDispatcherService
 {
-    /** @var EventDispatcher */
+    /** @var EventDispatcherInterface */
     private $dispatcher;
 
-    public function __construct()
+    public function __construct(EventDispatcherInterface $dispatcher)
     {
-        $this->dispatcher = new EventDispatcher();
+        $this->dispatcher = $dispatcher;
     }
 
     /**

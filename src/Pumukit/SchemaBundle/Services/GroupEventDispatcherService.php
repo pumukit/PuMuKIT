@@ -5,16 +5,16 @@ namespace Pumukit\SchemaBundle\Services;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Event\GroupEvent;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class GroupEventDispatcherService
 {
-    /** @var EventDispatcher */
+    /** @var EventDispatcherInterface */
     private $dispatcher;
 
-    public function __construct()
+    public function __construct(EventDispatcherInterface $dispatcher)
     {
-        $this->dispatcher = new EventDispatcher();
+        $this->dispatcher = $dispatcher;
     }
 
     /**
