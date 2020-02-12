@@ -8,7 +8,6 @@ use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TrackFileController extends AbstractController
 {
-    /** @var EventDispatcherInterface  */
+    /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
     public function __construct(EventDispatcherInterface $eventDispatcher)
