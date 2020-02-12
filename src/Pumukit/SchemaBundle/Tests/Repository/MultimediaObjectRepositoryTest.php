@@ -1515,7 +1515,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->dm->flush();
 
         $arrayPics = [$pic1->getUrl(), $pic2->getUrl(), $pic3->getUrl(), $pic5->getUrl()];
-        //$this->assertEquals($arrayPics, $this->repo->findDistinctUrlPics());
+        $this->assertEquals($arrayPics, $this->repo->findDistinctUrlPics());
 
         $mm11->setPublicDate(new \DateTime('2015-01-13 15:05:16'));
         $mm12->setPublicDate(new \DateTime('2015-01-23 15:05:20'));
@@ -1526,8 +1526,8 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->dm->persist($mm21);
         $this->dm->flush();
 
-        $arrayPics = [$pic5->getUrl(), $pic1->getUrl(), $pic3->getUrl(), $pic3->getUrl()];
-        //$this->assertEquals($arrayPics, $this->repo->findDistinctUrlPics());
+        $arrayPics = [$pic1->getUrl(), $pic2->getUrl(), $pic3->getUrl(), $pic5->getUrl()];
+        $this->assertEquals($arrayPics, $this->repo->findDistinctUrlPics());
     }
 
     public function testFindOrderedBy(): void
