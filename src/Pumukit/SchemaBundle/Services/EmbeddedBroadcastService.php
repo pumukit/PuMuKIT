@@ -7,10 +7,10 @@ use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
-use Twig\Environment as TemplatingEngine;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Twig\Environment as TemplatingEngine;
 
 class EmbeddedBroadcastService
 {
@@ -29,8 +29,8 @@ class EmbeddedBroadcastService
         MultimediaObjectEventDispatcherService $dispatcher,
         AuthorizationCheckerInterface $authorizationChecker,
         TemplatingEngine $templating,
-        RouterInterface $router)
-    {
+        RouterInterface $router
+    ) {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository(MultimediaObject::class);
         $this->mmsService = $mmsService;

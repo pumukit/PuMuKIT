@@ -35,7 +35,7 @@ class PersonWithRoleEventDispatcherServiceTest extends WebTestCase
         MockUpPersonWithRoleListener::$name = self::EMPTY_NAME;
         MockUpPersonWithRoleListener::$code = self::EMPTY_CODE;
 
-        $this->personWithRoleDispatcher = new PersonWithRoleEventDispatcherService();
+        $this->personWithRoleDispatcher = new PersonWithRoleEventDispatcherService($this->dispatcher);
     }
 
     public function tearDown(): void

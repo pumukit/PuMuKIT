@@ -42,8 +42,8 @@ class UserServiceTest extends PumukitTestCase
         $this->permissionProfileRepo = $this->dm->getRepository(PermissionProfile::class);
 
         $dispatcher = new EventDispatcher();
-        $userDispatcher = new UserEventDispatcherService();
-        $permissionProfileDispatcher = new PermissionProfileEventDispatcherService();
+        $userDispatcher = new UserEventDispatcherService($dispatcher);
+        $permissionProfileDispatcher = new PermissionProfileEventDispatcherService($dispatcher);
         $permissionService = new PermissionService($this->dm);
         $permissionProfileService = new PermissionProfileService(
             $this->dm,

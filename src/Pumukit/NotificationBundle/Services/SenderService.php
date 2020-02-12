@@ -5,9 +5,9 @@ namespace Pumukit\NotificationBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
 use Pumukit\SchemaBundle\Document\Person;
-use Twig\Environment as TemplatingEngine;
 use Symfony\Component\Translation\TranslatorInterface;
 use Twig\Environment;
+use Twig\Environment as TemplatingEngine;
 use Twig\Loader\ArrayLoader;
 
 class SenderService

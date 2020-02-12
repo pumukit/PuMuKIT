@@ -31,7 +31,7 @@ class PermissionProfileEventDispatcherServiceTest extends PumukitTestCase
         MockUpPermissionProfileListener::$called = false;
         MockUpPermissionProfileListener::$name = self::EMPTY_NAME;
 
-        $this->permissionProfileDispatcher = new PermissionProfileEventDispatcherService();
+        $this->permissionProfileDispatcher = new PermissionProfileEventDispatcherService($this->dispatcher);
     }
 
     public function tearDown(): void

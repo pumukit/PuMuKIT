@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,8 +20,9 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
 {
     private $pumukitPlayerWhenDispatchViewEvent;
 
-    public function __construct(string $pumukitPlayerWhenDispatchViewEvent)
+    public function __construct(EventDispatcherInterface $eventDispatcher, string $pumukitPlayerWhenDispatchViewEvent)
     {
+        parent::__construct($eventDispatcher);
         $this->pumukitPlayerWhenDispatchViewEvent = $pumukitPlayerWhenDispatchViewEvent;
     }
 

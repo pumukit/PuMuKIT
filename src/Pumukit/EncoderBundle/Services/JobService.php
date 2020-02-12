@@ -15,7 +15,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\TrackService;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -43,7 +43,7 @@ class JobService
     private $inboxPath;
     private $binPath;
     private $deleteInboxFiles;
-    /** @var EventDispatcher */
+    /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
     public function __construct(
@@ -51,6 +51,7 @@ class JobService
         ProfileService $profileService,
         CpuService $cpuService,
         InspectionFfprobeService $inspectionService,
+        EventDispatcherInterface $dispatcher,
         LoggerInterface $logger,
         TrackService $trackService,
         TokenStorageInterface $tokenStorage,
@@ -71,11 +72,11 @@ class JobService
         $this->logger = $logger;
         $this->trackService = $trackService;
         $this->tokenStorage = $tokenStorage;
+        $this->eventDispatcher = $dispatcher;
         $this->environment = $environment;
         $this->propService = $propService;
         $this->binPath = $binPath;
         $this->deleteInboxFiles = $deleteInboxFiles;
-        $this->eventDispatcher = new EventDispatcher();
     }
 
     /**

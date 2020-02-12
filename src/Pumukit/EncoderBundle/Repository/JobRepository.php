@@ -33,11 +33,13 @@ class JobRepository extends DocumentRepository
         ;
     }
 
-    public function countWithStatus(array $status, ?array $sort = []){
+    public function countWithStatus(array $status, ?array $sort = [])
+    {
         return $this->createQueryWithStatus($status, $sort)
             ->count()
             ->getQuery()
-            ->execute();
+            ->execute()
+        ;
     }
 
     /**
