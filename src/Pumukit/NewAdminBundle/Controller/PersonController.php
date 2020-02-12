@@ -31,8 +31,6 @@ class PersonController extends AdminController
 
     /** @var PersonService */
     protected $personService;
-    /** @var TranslatorInterface */
-    private $translator;
     /** @var ValidatorInterface */
     private $validator;
     private $pumukitLdapEnable;
@@ -52,7 +50,6 @@ class PersonController extends AdminController
     ) {
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
         $this->personService = $personService;
-        $this->translator = $translator;
         $this->pumukitLdapEnable = $pumukitLdapEnable;
         $this->pumukitSchemaPersonalScopeRoleCode = $pumukitSchemaPersonalScopeRoleCode;
     }
@@ -94,7 +91,7 @@ class PersonController extends AdminController
                 try {
                     $person = $this->personService->savePerson($person);
                 } catch (\Exception $e) {
-                    $this->session->getFlashBag()->add('error', $e->getMessage());
+                    $this->addFlash('error', $e->getMessage());
                 }
 
                 return $this->redirect($this->generateUrl('pumukitnewadmin_person_list'));
@@ -131,7 +128,7 @@ class PersonController extends AdminController
                 try {
                     $person = $this->personService->updatePerson($person);
                 } catch (\Exception $e) {
-                    $this->session->getFlashBag()->add('error', $e->getMessage());
+                    $this->addFlash('error', $e->getMessage());
                 }
 
                 return $this->redirect($this->generateUrl('pumukitnewadmin_person_list'));
@@ -252,7 +249,7 @@ class PersonController extends AdminController
                 try {
                     $multimediaObject = $this->personService->createRelationPerson($person, $role, $multimediaObject);
                 } catch (\Exception $e) {
-                    $this->session->getFlashBag()->add('error', $e->getMessage());
+                    $this->addFlash('error', $e->getMessage());
                 }
 
                 $template = $multimediaObject->isPrototype() ? '_template' : '';
@@ -320,7 +317,7 @@ class PersonController extends AdminController
                 try {
                     $person = $this->personService->updatePerson($person);
                 } catch (\Exception $e) {
-                    $this->session->getFlashBag()->add('error', $e->getMessage());
+                    $this->addFlash('error', $e->getMessage());
                 }
 
                 $template = $multimediaObject->isPrototype() ? '_template' : '';

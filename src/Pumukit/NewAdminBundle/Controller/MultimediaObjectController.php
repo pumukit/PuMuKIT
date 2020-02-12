@@ -59,8 +59,6 @@ class MultimediaObjectController extends SortableAdminController
     public static $resourceName = 'mms';
     public static $repoName = MultimediaObject::class;
 
-    /** @var TranslatorInterface */
-    private $translator;
     /** @var RequestStack */
     private $requestStack;
     /** @var MultimediaObjectSyncService */
@@ -129,7 +127,6 @@ class MultimediaObjectController extends SortableAdminController
         $pumukitNewAdminMultimediaObjectLabel
     ) {
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
-        $this->translator = $translator;
         $this->requestStack = $requestStack;
         $this->multimediaObjectSyncService = $multimediaObjectSyncService;
         $this->multimediaObjectSearchService = $multimediaObjectSearchService;

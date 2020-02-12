@@ -197,7 +197,10 @@ class PicService
     }
 
     /**
-     * Get the default path pic for a given resource checking if it is Series, MultimediaObject of type video or audio
+     * Get the default path pic for a given resource checking if it is Series, MultimediaObject of type video or audio.
+     *
+     * @param mixed $object
+     * @param mixed $hd
      */
     public function getDefaultPathPicForObject($object, $hd = true): string
     {

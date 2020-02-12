@@ -23,10 +23,10 @@ class AdminController extends ResourceController implements NewAdminControllerIn
     protected $groupService;
     /** @var UserService */
     protected $userService;
-    /** @var Session */
+    /** @var SessionInterface */
     protected $session;
     /** @var TranslatorInterface */
-    private $translator;
+    protected $translator;
 
     public function __construct(
         DocumentManager $documentManager,

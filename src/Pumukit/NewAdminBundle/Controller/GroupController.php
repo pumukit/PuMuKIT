@@ -33,8 +33,6 @@ class GroupController extends AdminController
     private $multimediaObjectService;
     /** @var EmbeddedBroadcastService */
     private $embeddedBroadcastService;
-    /** @var TranslatorInterface */
-    private $translator;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -54,7 +52,6 @@ class GroupController extends AdminController
         $this->multimediaObjectService = $multimediaObjectService;
         $this->embeddedBroadcastService = $embeddedBroadcastService;
         $this->userService = $userService;
-        $this->translator = $translator;
     }
 
     /**

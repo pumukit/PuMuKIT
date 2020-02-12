@@ -1963,8 +1963,8 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->assertEquals($nameI18n, $embeddedRole->getI18nName());
         $this->assertEquals($textI18n, $embeddedRole->getI18nText());
 
-        $name = null;
-        $text = null;
+        $name = '';
+        $text = '';
 
         $embeddedRole->setName($name);
         $embeddedRole->setText($text);

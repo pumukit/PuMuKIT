@@ -33,8 +33,6 @@ class UserController extends AdminController
 
     /** @var PersonService */
     private $personService;
-    /** @var TranslatorInterface */
-    private $translator;
     /** @var UserManagerInterface */
     private $fosUserUserManager;
 
@@ -51,7 +49,6 @@ class UserController extends AdminController
     ) {
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
         $this->personService = $personService;
-        $this->translator = $translator;
         $this->fosUserUserManager = $fosUserUserManager;
     }
 

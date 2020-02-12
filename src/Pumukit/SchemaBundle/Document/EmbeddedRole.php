@@ -3,76 +3,52 @@
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * Pumukit\SchemaBundle\Document\EmbeddedRole.
- *
  * @MongoDB\EmbeddedDocument()
  */
 class EmbeddedRole implements RoleInterface
 {
     /**
-     * @var string
-     *
      * @MongoDB\Id
      */
     protected $id;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $cod = '0';
 
     /**
-     * See European Broadcasting Union Role Codes.
-     *
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $xml;
 
     /**
-     * @var bool
-     *
      * @MongoDB\Field(type="boolean")
      */
     private $display = true;
 
     /**
-     * @var array<string, string>
-     *
      * @MongoDB\Field(type="raw")
      */
     private $name = ['en' => ''];
 
     /**
-     * @var array<string, string>
-     *
      * @MongoDB\Field(type="raw")
      */
     private $text = ['en' => ''];
 
     /**
-     * @var Collection
-     *
      * @MongoDB\EmbedMany(targetDocument=EmbeddedPerson::class)
      */
     private $people;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $locale = 'en';
 
-    /**
-     * Constructor.
-     */
-    public function __construct(Role $role)
+    public function __construct(RoleInterface $role)
     {
         if (null !== $role) {
             $this->id = $role->getId();
@@ -85,19 +61,11 @@ class EmbeddedRole implements RoleInterface
         $this->people = new ArrayCollection();
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getCod();
     }
 
-    /**
-     * Get id.
-     *
-     * @return string
-     */
     public function getId()
     {
         return $this->id;
@@ -113,53 +81,27 @@ class EmbeddedRole implements RoleInterface
         return $this->cod;
     }
 
-    /**
-     * Set xml.
-     *
-     * @param string $xml
-     */
-    public function setXml($xml)
+    public function setXml(string $xml): void
     {
         $this->xml = $xml;
     }
 
-    /**
-     * Get xml.
-     *
-     * @return string
-     */
-    public function getXml()
+    public function getXml(): ?string
     {
         return $this->xml;
     }
 
-    /**
-     * Set display.
-     *
-     * @param bool $display
-     */
-    public function setDisplay($display)
+    public function setDisplay(bool $display): void
     {
         $this->display = $display;
     }
 
-    /**
-     * Get display.
-     *
-     * @return bool
-     */
-    public function getDisplay()
+    public function getDisplay(): bool
     {
         return $this->display;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string      $name
-     * @param string|null $locale
-     */
-    public function setName($name, $locale = null)
+    public function setName(string $name, ?string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -167,14 +109,7 @@ class EmbeddedRole implements RoleInterface
         $this->name[$locale] = $name;
     }
 
-    /**
-     * Get name.
-     *
-     * @param string|null $locale
-     *
-     * @return string
-     */
-    public function getName($locale = null)
+    public function getName(string $locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -186,31 +121,17 @@ class EmbeddedRole implements RoleInterface
         return $this->name[$locale];
     }
 
-    /**
-     * Set I18n name.
-     */
-    public function setI18nName(array $name)
+    public function setI18nName(array $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * Get i18n name.
-     *
-     * @return array
-     */
-    public function getI18nName()
+    public function getI18nName(): array
     {
         return $this->name;
     }
 
-    /**
-     * Set text.
-     *
-     * @param string      $text
-     * @param string|null $locale
-     */
-    public function setText($text, $locale = null)
+    public function setText(string $text, ?string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -218,14 +139,7 @@ class EmbeddedRole implements RoleInterface
         $this->text[$locale] = $text;
     }
 
-    /**
-     * Get text.
-     *
-     * @param string|null $locale
-     *
-     * @return string
-     */
-    public function getText($locale = null)
+    public function getText(?string $locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -237,30 +151,17 @@ class EmbeddedRole implements RoleInterface
         return $this->text[$locale];
     }
 
-    /**
-     * Set I18n text.
-     */
-    public function setI18nText(array $text)
+    public function setI18nText(array $text): void
     {
         $this->text = $text;
     }
 
-    /**
-     * Get i18n text.
-     *
-     * @return array
-     */
-    public function getI18nText()
+    public function getI18nText(): array
     {
         return $this->text;
     }
 
-    /**
-     * Set locale.
-     *
-     * @param string $locale
-     */
-    public function setLocale($locale)
+    public function setLocale(string $locale): void
     {
         $this->locale = $locale;
     }
@@ -286,7 +187,7 @@ class EmbeddedRole implements RoleInterface
     {
         $embeddedPerson = $this->getEmbeddedPerson($person);
 
-        $aux = $this->people->filter(function ($i) use ($embeddedPerson) {
+        $aux = $this->people->filter(static function ($i) use ($embeddedPerson) {
             return $i->getId() !== $embeddedPerson->getId();
         });
 
@@ -297,7 +198,7 @@ class EmbeddedRole implements RoleInterface
         return $hasRemoved;
     }
 
-    public function containsPerson($person): bool
+    public function containsPerson(PersonInterface $person): bool
     {
         foreach ($this->people as $embeddedPerson) {
             if ($person->getId() === $embeddedPerson->getId()) {
@@ -330,7 +231,7 @@ class EmbeddedRole implements RoleInterface
         return false;
     }
 
-    public function createEmbeddedPerson($person)
+    public function createEmbeddedPerson($person): EmbeddedPerson
     {
         if ($person instanceof EmbeddedPerson) {
             return $person;
@@ -339,7 +240,7 @@ class EmbeddedRole implements RoleInterface
         return new EmbeddedPerson($person);
     }
 
-    public function getEmbeddedPerson($person)
+    public function getEmbeddedPerson(PersonInterface $person)
     {
         foreach ($this->people as $embeddedPerson) {
             if ($person->getId() === $embeddedPerson->getId()) {
