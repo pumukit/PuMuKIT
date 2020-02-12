@@ -54,7 +54,7 @@ class MultimediaObjectInSeriesTest extends PumukitTestCase
 
         $coll_mms = $this->seriesRepo->getMultimediaObjects($series);
 
-        $this->assertEquals(1, count($coll_mms));
+        $this->assertCount(1, $coll_mms);
 
         $i = 0;
         foreach ($coll_mms as $mm) {
@@ -63,7 +63,7 @@ class MultimediaObjectInSeriesTest extends PumukitTestCase
         $this->assertEquals(1, $i);
     }
 
-    public function testRelationSimple()
+    public function testRelationSimple(): void
     {
         $series1 = $this->factoryService->createSeries();
         $this->factoryService->createMultimediaObject($series1);

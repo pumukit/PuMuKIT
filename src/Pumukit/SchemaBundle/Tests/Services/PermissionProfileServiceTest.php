@@ -66,9 +66,9 @@ class PermissionProfileServiceTest extends PumukitTestCase
         $this->assertEquals($permissionProfile1, $this->repo->findOneByDefault(true));
 
         $falseDefault = $this->repo->findByDefault(false);
-        $this->assertFalse(in_array($permissionProfile1, $falseDefault));
-        $this->assertTrue(in_array($permissionProfile2, $falseDefault));
-        $this->assertTrue(in_array($permissionProfile3, $falseDefault));
+        $this->assertNotContains($permissionProfile1, $falseDefault);
+        $this->assertContains($permissionProfile2, $falseDefault);
+        $this->assertContains($permissionProfile3, $falseDefault);
 
         $permissionProfile2->setDefault(true);
         $permissionProfile2 = $this->permissionProfileService->update($permissionProfile2);
@@ -76,9 +76,9 @@ class PermissionProfileServiceTest extends PumukitTestCase
         $this->assertEquals($permissionProfile2, $this->repo->findOneByDefault(true));
 
         $falseDefault = $this->repo->findByDefault(false);
-        $this->assertTrue(in_array($permissionProfile1, $falseDefault));
-        $this->assertFalse(in_array($permissionProfile2, $falseDefault));
-        $this->assertTrue(in_array($permissionProfile3, $falseDefault));
+        $this->assertContains($permissionProfile1, $falseDefault);
+        $this->assertNotContains($permissionProfile2, $falseDefault);
+        $this->assertContains($permissionProfile3, $falseDefault);
     }
 
     public function testAddPermission()
@@ -181,9 +181,9 @@ class PermissionProfileServiceTest extends PumukitTestCase
         $this->assertEquals($permissionProfile1, $this->repo->findOneByDefault(true));
 
         $falseDefault = $this->repo->findByDefault(false);
-        $this->assertFalse(in_array($permissionProfile1, $falseDefault));
-        $this->assertTrue(in_array($permissionProfile2, $falseDefault));
-        $this->assertTrue(in_array($permissionProfile3, $falseDefault));
+        $this->assertNotContains($permissionProfile1, $falseDefault);
+        $this->assertContains($permissionProfile2, $falseDefault);
+        $this->assertContains($permissionProfile3, $falseDefault);
 
         $permissionProfile1->setDefault(false);
         $permissionProfile1 = $this->permissionProfileService->update($permissionProfile1);
@@ -191,9 +191,9 @@ class PermissionProfileServiceTest extends PumukitTestCase
         $this->assertEquals($permissionProfile3, $this->repo->findOneByDefault(true));
 
         $falseDefault = $this->repo->findByDefault(false);
-        $this->assertTrue(in_array($permissionProfile1, $falseDefault));
-        $this->assertTrue(in_array($permissionProfile2, $falseDefault));
-        $this->assertFalse(in_array($permissionProfile3, $falseDefault));
+        $this->assertContains($permissionProfile1, $falseDefault);
+        $this->assertContains($permissionProfile2, $falseDefault);
+        $this->assertNotContains($permissionProfile3, $falseDefault);
 
         $permissionProfile4 = new PermissionProfile();
         $permissionProfile4->setName('test4');

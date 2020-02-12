@@ -43,7 +43,7 @@ class SpecialTranslationServiceTest extends PumukitTestCase
         $this->dm->persist($group);
         $this->dm->flush();
 
-        $this->assertEquals(0, count($this->mmRepo->findWithGroupInEmbeddedBroadcast($group)->toArray()));
+        $this->assertCount(0, $this->mmRepo->findWithGroupInEmbeddedBroadcast($group)->toArray());
 
         $mm1 = new MultimediaObject();
         $mm1->setNumericalID(1);

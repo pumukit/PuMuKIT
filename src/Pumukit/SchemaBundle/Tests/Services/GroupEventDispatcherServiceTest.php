@@ -46,7 +46,7 @@ class GroupEventDispatcherServiceTest extends PumukitTestCase
     public function testDispatchCreate()
     {
         $this->dispatcher->addListener(SchemaEvents::GROUP_CREATE, function ($event, $name) {
-            $this->assertTrue($event instanceof GroupEvent);
+            $this->assertInstanceOf(GroupEvent::class, $event);
             $this->assertEquals(SchemaEvents::GROUP_CREATE, $name);
 
             $group = $event->getGroup();
@@ -75,7 +75,7 @@ class GroupEventDispatcherServiceTest extends PumukitTestCase
     public function testDispatchUpdate()
     {
         $this->dispatcher->addListener(SchemaEvents::GROUP_UPDATE, function ($event, $name) {
-            $this->assertTrue($event instanceof GroupEvent);
+            $this->assertInstanceOf(GroupEvent::class, $event);
             $this->assertEquals(SchemaEvents::GROUP_UPDATE, $name);
 
             $group = $event->getGroup();
@@ -110,7 +110,7 @@ class GroupEventDispatcherServiceTest extends PumukitTestCase
     public function testDispatchDelete()
     {
         $this->dispatcher->addListener(SchemaEvents::GROUP_DELETE, function ($event, $name) {
-            $this->assertTrue($event instanceof GroupEvent);
+            $this->assertInstanceOf(GroupEvent::class, $event);
             $this->assertEquals(SchemaEvents::GROUP_DELETE, $name);
 
             $group = $event->getGroup();

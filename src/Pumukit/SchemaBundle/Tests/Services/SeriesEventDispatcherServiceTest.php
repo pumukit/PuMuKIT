@@ -47,7 +47,7 @@ class SeriesEventDispatcherServiceTest extends PumukitTestCase
     public function testDispatchCreate()
     {
         $this->dispatcher->addListener(SchemaEvents::SERIES_CREATE, function ($event, $title) {
-            $this->assertTrue($event instanceof SeriesEvent);
+            $this->assertInstanceOf(SeriesEvent::class, $event);
             $this->assertEquals(SchemaEvents::SERIES_CREATE, $title);
 
             $series = $event->getSeries();
@@ -76,7 +76,7 @@ class SeriesEventDispatcherServiceTest extends PumukitTestCase
     public function testDispatchUpdate()
     {
         $this->dispatcher->addListener(SchemaEvents::SERIES_UPDATE, function ($event, $title) {
-            $this->assertTrue($event instanceof SeriesEvent);
+            $this->assertInstanceOf(SeriesEvent::class, $event);
             $this->assertEquals(SchemaEvents::SERIES_UPDATE, $title);
 
             $series = $event->getSeries();
@@ -111,7 +111,7 @@ class SeriesEventDispatcherServiceTest extends PumukitTestCase
     public function testDispatchDelete()
     {
         $this->dispatcher->addListener(SchemaEvents::SERIES_DELETE, function ($event, $title) {
-            $this->assertTrue($event instanceof SeriesEvent);
+            $this->assertInstanceOf(SeriesEvent::class, $event);
             $this->assertEquals(SchemaEvents::SERIES_DELETE, $title);
 
             $series = $event->getSeries();

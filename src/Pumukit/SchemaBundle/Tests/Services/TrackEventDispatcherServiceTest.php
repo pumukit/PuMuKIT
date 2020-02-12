@@ -46,7 +46,7 @@ class TrackEventDispatcherServiceTest extends WebTestCase
     public function testDispatchCreate()
     {
         $this->dispatcher->addListener(SchemaEvents::TRACK_CREATE, function ($event, $name) {
-            $this->assertTrue($event instanceof TrackEvent);
+            $this->assertInstanceOf(TrackEvent::class, $event);
             $this->assertEquals(SchemaEvents::TRACK_CREATE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
@@ -80,7 +80,7 @@ class TrackEventDispatcherServiceTest extends WebTestCase
     public function testDispatchUpdate()
     {
         $this->dispatcher->addListener(SchemaEvents::TRACK_UPDATE, function ($event, $name) {
-            $this->assertTrue($event instanceof TrackEvent);
+            $this->assertInstanceOf(TrackEvent::class, $event);
             $this->assertEquals(SchemaEvents::TRACK_UPDATE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
@@ -117,7 +117,7 @@ class TrackEventDispatcherServiceTest extends WebTestCase
     public function testDispatchDelete()
     {
         $this->dispatcher->addListener(SchemaEvents::TRACK_DELETE, function ($event, $name) {
-            $this->assertTrue($event instanceof TrackEvent);
+            $this->assertInstanceOf(TrackEvent::class, $event);
             $this->assertEquals(SchemaEvents::TRACK_DELETE, $name);
 
             $multimediaObject = $event->getMultimediaObject();

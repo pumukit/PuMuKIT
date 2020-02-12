@@ -60,7 +60,7 @@ class JobNotificationServiceTest extends PumukitTestCase
         $output = $this->jobNotificationService->onJobSuccess($event);
 
         $this->assertEquals(1, $output);
-        $this->assertEquals(1, count($this->repo->findAll()));
+        $this->assertCount(1, $this->repo->findAll());
     }
 
     public function testOnJobError()
@@ -78,7 +78,7 @@ class JobNotificationServiceTest extends PumukitTestCase
         $output = $this->jobNotificationService->onJobError($event);
 
         $this->assertEquals(1, $output);
-        $this->assertEquals(1, count($this->repo->findAll()));
+        $this->assertCount(1, $this->repo->findAll());
     }
 
     private function createNewJob($status, $multimediaObject)

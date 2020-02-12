@@ -193,14 +193,14 @@ class UserServiceTest extends PumukitTestCase
         $this->assertEquals(1, $this->userService->countUsersWithPermissionProfile($permissionProfile2));
 
         $usersProfile1 = $this->userService->getUsersWithPermissionProfile($permissionProfile1)->toArray();
-        $this->assertTrue(in_array($user1, $usersProfile1));
-        $this->assertFalse(in_array($user2, $usersProfile1));
-        $this->assertTrue(in_array($user3, $usersProfile1));
+        $this->assertContains($user1, $usersProfile1);
+        $this->assertNotContains($user2, $usersProfile1);
+        $this->assertContains($user3, $usersProfile1);
 
         $usersProfile2 = $this->userService->getUsersWithPermissionProfile($permissionProfile2)->toArray();
-        $this->assertFalse(in_array($user1, $usersProfile2));
-        $this->assertTrue(in_array($user2, $usersProfile2));
-        $this->assertFalse(in_array($user3, $usersProfile2));
+        $this->assertNotContains($user1, $usersProfile2);
+        $this->assertContains($user2, $usersProfile2);
+        $this->assertNotContains($user3, $usersProfile2);
     }
 
     public function testGetUserPermissions()
@@ -235,23 +235,23 @@ class UserServiceTest extends PumukitTestCase
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertFalse(in_array(PermissionProfile::SCOPE_GLOBAL, $user->getRoles()));
-        $this->assertFalse(in_array(PermissionProfile::SCOPE_PERSONAL, $user->getRoles()));
-        $this->assertFalse(in_array(PermissionProfile::SCOPE_NONE, $user->getRoles()));
+        $this->assertNotContains(PermissionProfile::SCOPE_GLOBAL, $user->getRoles());
+        $this->assertNotContains(PermissionProfile::SCOPE_PERSONAL, $user->getRoles());
+        $this->assertNotContains(PermissionProfile::SCOPE_NONE, $user->getRoles());
 
         $user = $this->userService->addUserScope($user, PermissionProfile::SCOPE_PERSONAL);
 
-        $this->assertFalse(in_array(PermissionProfile::SCOPE_GLOBAL, $user->getRoles()));
-        $this->assertTrue(in_array(PermissionProfile::SCOPE_PERSONAL, $user->getRoles()));
-        $this->assertFalse(in_array(PermissionProfile::SCOPE_NONE, $user->getRoles()));
-        $this->assertFalse(in_array($notValidScope, $user->getRoles()));
+        $this->assertNotContains(PermissionProfile::SCOPE_GLOBAL, $user->getRoles());
+        $this->assertContains(PermissionProfile::SCOPE_PERSONAL, $user->getRoles());
+        $this->assertNotContains(PermissionProfile::SCOPE_NONE, $user->getRoles());
+        $this->assertNotContains($notValidScope, $user->getRoles());
 
         $user = $this->userService->addUserScope($user, $notValidScope);
 
-        $this->assertFalse(in_array(PermissionProfile::SCOPE_GLOBAL, $user->getRoles()));
-        $this->assertTrue(in_array(PermissionProfile::SCOPE_PERSONAL, $user->getRoles()));
-        $this->assertFalse(in_array(PermissionProfile::SCOPE_NONE, $user->getRoles()));
-        $this->assertFalse(in_array($notValidScope, $user->getRoles()));
+        $this->assertNotContains(PermissionProfile::SCOPE_GLOBAL, $user->getRoles());
+        $this->assertContains(PermissionProfile::SCOPE_PERSONAL, $user->getRoles());
+        $this->assertNotContains(PermissionProfile::SCOPE_NONE, $user->getRoles());
+        $this->assertNotContains($notValidScope, $user->getRoles());
     }
 
     public function testGetUserScope()
@@ -468,33 +468,33 @@ class UserServiceTest extends PumukitTestCase
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertEquals(0, count($user->getGroups()));
+        $this->assertCount(0, $user->getGroups());
         $this->assertFalse($user->containsGroup($group1));
         $this->assertFalse($user->containsGroup($group2));
 
         $this->userService->addGroup($group1, $user);
 
-        $this->assertEquals(1, count($user->getGroups()));
+        $this->assertCount(1, $user->getGroups());
         $this->assertTrue($user->containsGroup($group1));
         $this->assertFalse($user->containsGroup($group2));
 
         $this->userService->addGroup($group1, $user);
 
-        $this->assertEquals(1, count($user->getGroups()));
+        $this->assertCount(1, $user->getGroups());
         $this->assertTrue($user->containsGroup($group1));
         $this->assertFalse($user->containsGroup($group2));
         $this->assertFalse($user->containsGroup($group3));
 
         $this->userService->addGroup($group2, $user);
 
-        $this->assertEquals(2, count($user->getGroups()));
+        $this->assertCount(2, $user->getGroups());
         $this->assertTrue($user->containsGroup($group1));
         $this->assertTrue($user->containsGroup($group2));
         $this->assertFalse($user->containsGroup($group3));
 
         $this->userService->addGroup($group3, $user);
 
-        $this->assertEquals(3, count($user->getGroups()));
+        $this->assertCount(3, $user->getGroups());
         $this->assertTrue($user->containsGroup($group1));
         $this->assertTrue($user->containsGroup($group2));
         $this->assertTrue($user->containsGroup($group3));
@@ -524,7 +524,7 @@ class UserServiceTest extends PumukitTestCase
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertEquals(0, count($user->getGroups()));
+        $this->assertCount(0, $user->getGroups());
         $this->assertFalse($user->containsGroup($group1));
         $this->assertFalse($user->containsGroup($group2));
 
@@ -532,7 +532,7 @@ class UserServiceTest extends PumukitTestCase
 
         $user = $this->repo->find($user->getId());
 
-        $this->assertEquals(1, count($user->getGroups()));
+        $this->assertCount(1, $user->getGroups());
         $this->assertTrue($user->containsGroup($group1));
         $this->assertFalse($user->containsGroup($group2));
 
@@ -540,7 +540,7 @@ class UserServiceTest extends PumukitTestCase
 
         $user = $this->repo->find($user->getId());
 
-        $this->assertEquals(0, count($user->getGroups()));
+        $this->assertCount(0, $user->getGroups());
         $this->assertFalse($user->containsGroup($group1));
         $this->assertFalse($user->containsGroup($group2));
         $this->assertFalse($user->containsGroup($group3));
@@ -549,7 +549,7 @@ class UserServiceTest extends PumukitTestCase
 
         $user = $this->repo->find($user->getId());
 
-        $this->assertEquals(0, count($user->getGroups()));
+        $this->assertCount(0, $user->getGroups());
         $this->assertFalse($user->containsGroup($group1));
         $this->assertFalse($user->containsGroup($group2));
         $this->assertFalse($user->containsGroup($group3));
@@ -558,7 +558,7 @@ class UserServiceTest extends PumukitTestCase
 
         $user = $this->repo->find($user->getId());
 
-        $this->assertEquals(1, count($user->getGroups()));
+        $this->assertCount(1, $user->getGroups());
         $this->assertFalse($user->containsGroup($group1));
         $this->assertFalse($user->containsGroup($group2));
         $this->assertTrue($user->containsGroup($group3));
@@ -567,7 +567,7 @@ class UserServiceTest extends PumukitTestCase
 
         $user = $this->repo->find($user->getId());
 
-        $this->assertEquals(0, count($user->getGroups()));
+        $this->assertCount(0, $user->getGroups());
         $this->assertFalse($user->containsGroup($group1));
         $this->assertFalse($user->containsGroup($group2));
         $this->assertFalse($user->containsGroup($group3));
@@ -812,10 +812,10 @@ class UserServiceTest extends PumukitTestCase
 
         $usersLocalGroup = $this->userService->findWithGroup($localGroup)->toArray();
         $usersCasGroup = $this->userService->findWithGroup($casGroup)->toArray();
-        $this->assertTrue(in_array($localUser, $usersLocalGroup));
-        $this->assertFalse(in_array($casUser, $usersLocalGroup));
-        $this->assertFalse(in_array($localUser, $usersCasGroup));
-        $this->assertTrue(in_array($casUser, $usersCasGroup));
+        $this->assertContains($localUser, $usersLocalGroup);
+        $this->assertNotContains($casUser, $usersLocalGroup);
+        $this->assertNotContains($localUser, $usersCasGroup);
+        $this->assertContains($casUser, $usersCasGroup);
     }
 
     public function testDeleteAllFromGroup()
@@ -826,7 +826,7 @@ class UserServiceTest extends PumukitTestCase
         $this->dm->persist($group);
         $this->dm->flush();
 
-        $this->assertEquals(0, count($this->userService->findWithGroup($group)->toArray()));
+        $this->assertCount(0, $this->userService->findWithGroup($group)->toArray());
 
         $user1 = new User();
         $user1->setUsername('user1');
@@ -848,10 +848,10 @@ class UserServiceTest extends PumukitTestCase
         $this->dm->persist($user3);
         $this->dm->flush();
 
-        $this->assertEquals(3, count($this->userService->findWithGroup($group)->toArray()));
+        $this->assertCount(3, $this->userService->findWithGroup($group)->toArray());
 
         $this->userService->deleteAllFromGroup($group);
-        $this->assertEquals(0, count($this->userService->findWithGroup($group)->toArray()));
+        $this->assertCount(0, $this->userService->findWithGroup($group)->toArray());
     }
 
     public function testIsUserLastRelation()
