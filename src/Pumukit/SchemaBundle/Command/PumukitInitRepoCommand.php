@@ -209,17 +209,17 @@ EOT
 
     protected function removeTags(): void
     {
-        $this->dm->getDocumentCollection(Tag::class)->remove([]);
+        $this->dm->getDocumentCollection(Tag::class)->deleteMany([]);
     }
 
     protected function removeRoles(): void
     {
-        $this->dm->getDocumentCollection(Role::class)->remove([]);
+        $this->dm->getDocumentCollection(Role::class)->deleteMany([]);
     }
 
     protected function removePermissionProfiles(): void
     {
-        $this->dm->getDocumentCollection(PermissionProfile::class)->remove([]);
+        $this->dm->getDocumentCollection(PermissionProfile::class)->deleteMany([]);
     }
 
     protected function createRoot(): Tag
