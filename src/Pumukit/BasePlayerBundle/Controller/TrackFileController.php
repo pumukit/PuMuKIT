@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +19,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TrackFileController extends AbstractController
 {
+    /** @var EventDispatcherInterface  */
+    private $eventDispatcher;
+
+    public function __construct(EventDispatcherInterface $eventDispatcher)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
     /**
      * @Route("/trackfile/{id}.{ext}", name="pumukit_trackfile_index")
      * @Route("/trackfile/{id}", name="pumukit_trackfile_index_no_ext")
@@ -124,9 +133,7 @@ class TrackFileController extends AbstractController
     {
         $event = new ViewedEvent($multimediaObject, $track);
 
-        $eventDispatcher = new EventDispatcher();
-
-        $eventDispatcher->dispatch($event, BasePlayerEvents::MULTIMEDIAOBJECT_VIEW);
+        $this->eventDispatcher->dispatch($event, BasePlayerEvents::MULTIMEDIAOBJECT_VIEW);
     }
 
     private function getMmobjAndTrack(DocumentManager $documentManager, string $id): array
