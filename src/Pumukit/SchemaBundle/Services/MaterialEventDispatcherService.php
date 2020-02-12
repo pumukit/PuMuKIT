@@ -6,16 +6,16 @@ use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Event\MaterialEvent;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class MaterialEventDispatcherService
 {
-    /** @var EventDispatcher */
+    /** @var EventDispatcherInterface */
     private $dispatcher;
 
-    public function __construct()
+    public function __construct(EventDispatcherInterface $dispatcher)
     {
-        $this->dispatcher = new EventDispatcher();
+        $this->dispatcher = $dispatcher;
     }
 
     /**

@@ -15,7 +15,7 @@ use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Pumukit\WebTVBundle\Services\ChapterMarkService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,7 +40,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
     private $embeddedBroadcastService;
     /** @var BreadcrumbsService */
     private $breadcrumbsService;
-    /** @var EventDispatcher */
+    /** @var EventDispatcherInterface */
     private $eventDispatcher;
     private $limitObjsPlayerSeries;
     private $pumukitFullMagicUrl;
@@ -55,6 +55,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
         RequestStack $requestStack,
         EmbeddedBroadcastService $embeddedBroadcastService,
         BreadcrumbsService $breadcrumbsService,
+        EventDispatcherInterface $dispatcher,
         $limitObjsPlayerSeries,
         $pumukitFullMagicUrl,
         $cinemaMode
@@ -70,7 +71,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
         $this->limitObjsPlayerSeries = $limitObjsPlayerSeries;
         $this->pumukitFullMagicUrl = $pumukitFullMagicUrl;
         $this->cinemaMode = $cinemaMode;
-        $this->eventDispatcher = new EventDispatcher();
+        $this->eventDispatcher = $dispatcher;
     }
 
     /**

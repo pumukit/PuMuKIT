@@ -6,20 +6,20 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Event\TrackEvent;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class TrackEventDispatcherService
 {
-    /** @var EventDispatcher */
+    /** @var EventDispatcherInterface */
     private $dispatcher;
 
-    public function __construct()
+    public function __construct(EventDispatcherInterface $dispatcher)
     {
-        $this->dispatcher = new EventDispatcher();
+        $this->dispatcher = $dispatcher;
     }
 
     /**
-     * Dispatchs the event TRACK_CREATE 'track.create' passing the multimedia object and the track.
+     * Dispatch the event TRACK_CREATE 'track.create' passing the multimedia object and the track.
      */
     public function dispatchCreate(MultimediaObject $multimediaObject, Track $track): void
     {
@@ -28,7 +28,7 @@ class TrackEventDispatcherService
     }
 
     /**
-     * Dispatchs the event TRACK_UPDATE 'track.update' passing the multimedia object and the track.
+     * Dispatch the event TRACK_UPDATE 'track.update' passing the multimedia object and the track.
      */
     public function dispatchUpdate(MultimediaObject $multimediaObject, Track $track): void
     {
@@ -37,7 +37,7 @@ class TrackEventDispatcherService
     }
 
     /**
-     * Dispatchs the event TRACK_DELETE 'track.delete' passing the multimedia object and the track.
+     * Dispatch the event TRACK_DELETE 'track.delete' passing the multimedia object and the track.
      */
     public function dispatchDelete(MultimediaObject $multimediaObject, Track $track): void
     {

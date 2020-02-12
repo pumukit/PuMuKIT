@@ -7,16 +7,16 @@ use Pumukit\SchemaBundle\Document\PersonInterface;
 use Pumukit\SchemaBundle\Document\RoleInterface;
 use Pumukit\SchemaBundle\Event\PersonWithRoleEvent;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class PersonWithRoleEventDispatcherService
 {
-    /** @var EventDispatcher */
+    /** @var EventDispatcherInterface */
     private $dispatcher;
 
-    public function __construct()
+    public function __construct(EventDispatcherInterface $dispatcher)
     {
-        $this->dispatcher = new EventDispatcher();
+        $this->dispatcher = $dispatcher;
     }
 
     /**

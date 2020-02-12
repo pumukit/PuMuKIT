@@ -39,7 +39,7 @@ use Pumukit\SchemaBundle\Services\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -86,7 +86,7 @@ class MultimediaObjectController extends SortableAdminController
     /** @var MultimediaObjectEventDispatcherService */
     private $pumukitSchemaMultimediaObjectDispatcher;
 
-    /** @var EventDispatcher */
+    /** @var EventDispatcherInterface */
     private $eventDispatcher;
     /** @var RouterInterface */
     private $router;
@@ -117,6 +117,7 @@ class MultimediaObjectController extends SortableAdminController
         EmbeddedBroadcastService $embeddedBroadcastService,
         SpecialTranslationService $specialTranslatorService,
         MultimediaObjectEventDispatcherService $pumukitSchemaMultimediaObjectDispatcher,
+        EventDispatcherInterface $eventDispatcher,
         RouterInterface $router,
         $showLatestWithPudeNew,
         $pumukitNewAdminShowNakedPubTab,
@@ -137,7 +138,7 @@ class MultimediaObjectController extends SortableAdminController
         $this->embeddedBroadcastService = $embeddedBroadcastService;
         $this->specialTranslatorService = $specialTranslatorService;
         $this->pumukitSchemaMultimediaObjectDispatcher = $pumukitSchemaMultimediaObjectDispatcher;
-        $this->eventDispatcher = new EventDispatcher();
+        $this->eventDispatcher = $eventDispatcher;
         $this->router = $router;
         $this->showLatestWithPudeNew = $showLatestWithPudeNew;
         $this->pumukitNewAdminShowNakedPubTab = $pumukitNewAdminShowNakedPubTab;
