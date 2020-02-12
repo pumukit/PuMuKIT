@@ -35,7 +35,7 @@ class ImportFileToMMOCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('import:multimedia:file')
+            ->setName('pumukit:import:multimedia:file')
             ->setDescription('This command import file like a track on a multimedia object')
             ->addArgument('object', InputArgument::REQUIRED, 'object')
             ->addArgument('file', InputArgument::REQUIRED, 'file')
@@ -47,10 +47,10 @@ class ImportFileToMMOCommand extends Command
 This command import file like a track on a multimedia object
 
 Example complete:
-<info>php app/console import:multimedia:file %idmultimediaobject% %pathfile% --profile=%profile% --language=%language% %description%</info>
+<info>php app/console pumukit:import:multimedia:file %idmultimediaobject% %pathfile% --profile=%profile% --language=%language% %description%</info>
 
 Basic example:
-<info>php app/console import:multimedia:file 58a31ce08381165d008b456a {pathToPuMuKITStorageTempDir}/test.mp4</info>
+<info>php app/console pumukit:import:multimedia:file 58a31ce08381165d008b456a {pathToPuMuKITStorageTempDir}/test.mp4</info>
 
 EOT
             )

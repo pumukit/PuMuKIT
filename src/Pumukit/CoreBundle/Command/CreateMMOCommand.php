@@ -51,7 +51,7 @@ class CreateMMOCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('import:inbox')
+            ->setName('pumukit:import:inbox')
             ->setDescription('This command create a multimedia object from a file')
             ->addArgument('file', InputArgument::REQUIRED, 'multimedia file path')
             ->addArgument('inotify_event', InputArgument::OPTIONAL, 'inotify event, only works with IN_CLOSE_WRITE', 'IN_CLOSE_WRITE')
@@ -61,13 +61,13 @@ class CreateMMOCommand extends Command
 This command create a multimedia object from a multimedia file path
 
 Basic example:
-<info>php app/console import:inbox {pathToPuMuKITStorageTempFiles}/test.mp4</info>
+<info>php app/console pumukit:import:inbox {pathToPuMuKITStorageTempFiles}/test.mp4</info>
 
 Complete example:
-<info>php app/console import:inbox {pathToPuMuKITStorageTempFiles}/test.mp4 IN_CLOSE_WRITE</info>
+<info>php app/console pumukit:import:inbox {pathToPuMuKITStorageTempFiles}/test.mp4 IN_CLOSE_WRITE</info>
 
 Complete example with hidden status:
-<info>php app/console import:inbox {pathToPuMuKITStorageTempFiles}/test.mp4 IN_CLOSE_WRITE --status=hidden</info>
+<info>php app/console pumukit:import:inbox {pathToPuMuKITStorageTempFiles}/test.mp4 IN_CLOSE_WRITE --status=hidden</info>
 
 EOT
             )
