@@ -3,19 +3,19 @@
 
 {% if objects and selected_design == 'horizontal' %}
     <div class="block-media-pmk {{ class }}">
-        {% include "PumukitWebTVBundle:Resources:template_widget_title.html.twig" %}
+        {% include "@PumukitWebTV/Resources/template_widget_title.html.twig" %}
         <div class="row">
             {% for object in objects %}
                 {% if object.isCollection() %}
-                    {% include 'PumukitWebTVBundle:Resources:template_series.html.twig' %}
+                    {% include '@PumukitWebTV/Resources/template_series.html.twig' %}
                 {% else %}
-                    {% include 'PumukitWebTVBundle:Resources:template_video.html.twig' %}
+                    {% include '@PumukitWebTV/Resources/template_video.html.twig' %}
                 {% endif %}
-                {% include "PumukitWebTVBundle:Resources:template_clearfix.html.twig" %}
+                {% include "@PumukitWebTV/Resources/template_clearfix.html.twig" %}
             {% endfor %}
 
             {% if show_more|default(false) %}
-                {% include 'PumukitWebTVBundle:Misc:show_more.html.twig' %}
+                {% include '@PumukitWebTV/Misc/show_more.html.twig' %}
             {% endif %}
             {% if show_link|default(false) %}
                 <div class="col-xs-12 text-right">
@@ -28,13 +28,13 @@
     </div>
 {% elseif objects and selected_design == 'vertical' %}
     <div class="block-media-pmk {{ class }}">
-        {% include "PumukitWebTVBundle:Resources:template_widget_title.html.twig" %}
+        {% include "@PumukitWebTV/Resources/template_widget_title.html.twig" %}
         <div class="row">
             {% for object in objects %}
                 {% if object.isCollection() %}
-                    {% include 'PumukitWebTVBundle:Resources:template_series_old.html.twig' %}
+                    {% include '@PumukitWebTV/Resources/template_series_old.html.twig' %}
                 {% else %}
-                    {% include 'PumukitWebTVBundle:Resources:template_video_legacy.html.twig' %}
+                    {% include '@PumukitWebTV/Resources/template_video_legacy.html.twig' %}
                 {% endif %}
                 <div class="clearfix"></div>
             {% endfor %}

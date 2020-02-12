@@ -46,7 +46,7 @@ class StatsServiceTest extends PumukitTestCase
 
         $service = new StatsService($this->dm);
         $mv = $service->getMostViewed([], 1, 1);
-        $this->assertEquals(1, count($mv));
+        $this->assertCount(1, $mv);
         $this->assertEquals($mv, [$list[3]]);
 
         $mv = $service->getMostViewed([], 30, 1);
@@ -59,7 +59,7 @@ class StatsServiceTest extends PumukitTestCase
         $this->assertEquals($mv, [$list[5], $list[4], $list[3]]);
 
         $mv = $service->getMostViewed([], 30, 30);
-        $this->assertEquals(5, count($mv));
+        $this->assertCount(5, $mv);
         $this->assertEquals($mv, [$list[5], $list[4], $list[3], $list[2], $list[1]]);
     }
 
@@ -144,7 +144,7 @@ class StatsServiceTest extends PumukitTestCase
 
         [$mostViewed, $total] = $service->getMmobjsMostViewedByRange();
         $this->assertEquals($listMapped, $mostViewed);
-        $this->assertEquals($total, count($listMapped));
+        $this->assertCount($total, $listMapped);
 
         [$mostViewed, $total] = $service->getMmobjsMostViewedByRange(['title.en' => 'OTHER MMOBJ']);
         $this->assertEquals([$listMapped[4]], $mostViewed);

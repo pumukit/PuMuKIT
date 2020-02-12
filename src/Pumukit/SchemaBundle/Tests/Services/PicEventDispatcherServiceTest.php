@@ -46,7 +46,7 @@ class PicEventDispatcherServiceTest extends WebTestCase
     public function testDispatchCreate()
     {
         $this->dispatcher->addListener(SchemaEvents::PIC_CREATE, function ($event, $name) {
-            $this->assertTrue($event instanceof PicEvent);
+            $this->assertInstanceOf(PicEvent::class, $event);
             $this->assertEquals(SchemaEvents::PIC_CREATE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
@@ -80,7 +80,7 @@ class PicEventDispatcherServiceTest extends WebTestCase
     public function testDispatchUpdate()
     {
         $this->dispatcher->addListener(SchemaEvents::PIC_UPDATE, function ($event, $name) {
-            $this->assertTrue($event instanceof PicEvent);
+            $this->assertInstanceOf(PicEvent::class, $event);
             $this->assertEquals(SchemaEvents::PIC_UPDATE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
@@ -117,7 +117,7 @@ class PicEventDispatcherServiceTest extends WebTestCase
     public function testDispatchDelete()
     {
         $this->dispatcher->addListener(SchemaEvents::PIC_DELETE, function ($event, $name) {
-            $this->assertTrue($event instanceof PicEvent);
+            $this->assertInstanceOf(PicEvent::class, $event);
             $this->assertEquals(SchemaEvents::PIC_DELETE, $name);
 
             $multimediaObject = $event->getMultimediaObject();

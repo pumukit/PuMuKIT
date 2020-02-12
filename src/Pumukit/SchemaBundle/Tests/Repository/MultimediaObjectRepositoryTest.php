@@ -58,12 +58,12 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         gc_collect_cycles();
     }
 
-    public function testRepositoryEmpty()
+    public function testRepositoryEmpty(): void
     {
-        $this->assertEquals(0, count($this->repo->findAll()));
+        $this->assertCount(0, $this->repo->findAll());
     }
 
-    public function testRepository()
+    public function testRepository(): void
     {
         //$rank = 1;
         $status = MultimediaObject::STATUS_PUBLISHED;
@@ -88,7 +88,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->dm->persist($mmobj);
         $this->dm->flush();
 
-        $this->assertEquals(1, count($this->repo->findAll()));
+        $this->assertCount(1, $this->repo->findAll());
 
         $t1 = new Track();
         $t1->setTags(['master']);
@@ -122,15 +122,15 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
 
         $this->dm->flush();
 
-        $this->assertEquals(5, count($mmobj->getFilteredTracksWithTags()));
-        $this->assertEquals(3, count($mmobj->getFilteredTracksWithTags(['master'])));
-        $this->assertEquals(1, count($mmobj->getFilteredTracksWithTags(['master'], ['mosca', 'old'])));
-        $this->assertEquals(0, count($mmobj->getFilteredTracksWithTags([], ['mosca', 'old'], ['master'])));
-        $this->assertEquals(3, count($mmobj->getFilteredTracksWithTags([], [], ['flv'])));
-        $this->assertEquals(0, count($mmobj->getFilteredTracksWithTags([], [], ['flv', 'master'])));
-        $this->assertEquals(5, count($mmobj->getFilteredTracksWithTags([], [], [], ['flv', 'master'])));
-        $this->assertEquals(1, count($mmobj->getFilteredTracksWithTags(['mosca', 'old'], [], [], ['old'])));
-        $this->assertEquals(0, count($mmobj->getFilteredTracksWithTags(['track6'])));
+        $this->assertCount(5, $mmobj->getFilteredTracksWithTags());
+        $this->assertCount(3, $mmobj->getFilteredTracksWithTags(['master']));
+        $this->assertCount(1, $mmobj->getFilteredTracksWithTags(['master'], ['mosca', 'old']));
+        $this->assertCount(0, $mmobj->getFilteredTracksWithTags([], ['mosca', 'old'], ['master']));
+        $this->assertCount(3, $mmobj->getFilteredTracksWithTags([], [], ['flv']));
+        $this->assertCount(0, $mmobj->getFilteredTracksWithTags([], [], ['flv', 'master']));
+        $this->assertCount(5, $mmobj->getFilteredTracksWithTags([], [], [], ['flv', 'master']));
+        $this->assertCount(1, $mmobj->getFilteredTracksWithTags(['mosca', 'old'], [], [], ['old']));
+        $this->assertCount(0, $mmobj->getFilteredTracksWithTags(['track6']));
 
         $this->assertEquals($t3, $mmobj->getFilteredTrackWithTags());
         $this->assertEquals($t3, $mmobj->getFilteredTrackWithTags(['master']));
@@ -144,7 +144,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->assertEquals(null, $mmobj->getFilteredTrackWithTags(['track6']));
     }
 
-    public function testCreateMultimediaObjectAndFindByCriteria()
+    public function testCreateMultimediaObjectAndFindByCriteria(): void
     {
         $series_type = $this->createSeriesType('Medieval Fantasy Sitcom');
 
@@ -189,46 +189,46 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
 
         // Test find by person
         $mmobj_ned = $this->repo->findByPersonId($person_ned->getId());
-        $this->assertEquals(3, count($mmobj_ned));
+        $this->assertCount(3, $mmobj_ned);
 
         // Test find by role cod or id
-        $mmobj_lord = $this->repo->findByRoleCod($role_lord->getCod())->toArray();
-        $mmobj_ranger = $this->repo->findByRoleCod($role_ranger->getCod())->toArray();
-        $mmobj_hand = $this->repo->findByRoleCod($role_hand->getCod())->toArray();
-        $this->assertEquals(2, count($mmobj_lord));
-        $this->assertEquals(2, count($mmobj_ranger));
-        $this->assertEquals(1, count($mmobj_hand));
-        $this->assertTrue(in_array($mm1, $mmobj_lord));
-        $this->assertFalse(in_array($mm2, $mmobj_lord));
-        $this->assertTrue(in_array($mm3, $mmobj_lord));
-        $this->assertFalse(in_array($mm4, $mmobj_lord));
-        $this->assertFalse(in_array($mm1, $mmobj_ranger));
-        $this->assertTrue(in_array($mm2, $mmobj_ranger));
-        $this->assertTrue(in_array($mm3, $mmobj_ranger));
-        $this->assertFalse(in_array($mm4, $mmobj_ranger));
-        $this->assertFalse(in_array($mm1, $mmobj_hand));
-        $this->assertFalse(in_array($mm2, $mmobj_hand));
-        $this->assertFalse(in_array($mm3, $mmobj_hand));
-        $this->assertTrue(in_array($mm4, $mmobj_hand));
+        $mmobj_lord = $this->repo->findByRoleCod($role_lord->getCod());
+        $mmobj_ranger = $this->repo->findByRoleCod($role_ranger->getCod());
+        $mmobj_hand = $this->repo->findByRoleCod($role_hand->getCod());
+        $this->assertCount(2, $mmobj_lord);
+        $this->assertCount(2, $mmobj_ranger);
+        $this->assertCount(1, $mmobj_hand);
+        $this->assertContains($mm1, $mmobj_lord);
+        $this->assertNotContains($mm2, $mmobj_lord);
+        $this->assertContains($mm3, $mmobj_lord);
+        $this->assertNotContains($mm4, $mmobj_lord);
+        $this->assertNotContains($mm1, $mmobj_ranger);
+        $this->assertContains($mm2, $mmobj_ranger);
+        $this->assertContains($mm3, $mmobj_ranger);
+        $this->assertNotContains($mm4, $mmobj_ranger);
+        $this->assertNotContains($mm1, $mmobj_hand);
+        $this->assertNotContains($mm2, $mmobj_hand);
+        $this->assertNotContains($mm3, $mmobj_hand);
+        $this->assertContains($mm4, $mmobj_hand);
 
-        $mmobj_lord = $this->repo->findByRoleId($role_lord->getId())->toArray();
-        $mmobj_ranger = $this->repo->findByRoleId($role_ranger->getId())->toArray();
-        $mmobj_hand = $this->repo->findByRoleId($role_hand->getId())->toArray();
-        $this->assertEquals(2, count($mmobj_lord));
-        $this->assertEquals(2, count($mmobj_ranger));
-        $this->assertEquals(1, count($mmobj_hand));
-        $this->assertTrue(in_array($mm1, $mmobj_lord));
-        $this->assertFalse(in_array($mm2, $mmobj_lord));
-        $this->assertTrue(in_array($mm3, $mmobj_lord));
-        $this->assertFalse(in_array($mm4, $mmobj_lord));
-        $this->assertFalse(in_array($mm1, $mmobj_ranger));
-        $this->assertTrue(in_array($mm2, $mmobj_ranger));
-        $this->assertTrue(in_array($mm3, $mmobj_ranger));
-        $this->assertFalse(in_array($mm4, $mmobj_ranger));
-        $this->assertFalse(in_array($mm1, $mmobj_hand));
-        $this->assertFalse(in_array($mm2, $mmobj_hand));
-        $this->assertFalse(in_array($mm3, $mmobj_hand));
-        $this->assertTrue(in_array($mm4, $mmobj_hand));
+        $mmobj_lord = $this->repo->findByRoleId($role_lord->getId());
+        $mmobj_ranger = $this->repo->findByRoleId($role_ranger->getId());
+        $mmobj_hand = $this->repo->findByRoleId($role_hand->getId());
+        $this->assertCount(2, $mmobj_lord);
+        $this->assertCount(2, $mmobj_ranger);
+        $this->assertCount(1, $mmobj_hand);
+        $this->assertContains($mm1, $mmobj_lord);
+        $this->assertNotContains($mm2, $mmobj_lord);
+        $this->assertContains($mm3, $mmobj_lord);
+        $this->assertNotContains($mm4, $mmobj_lord);
+        $this->assertNotContains($mm1, $mmobj_ranger);
+        $this->assertContains($mm2, $mmobj_ranger);
+        $this->assertContains($mm3, $mmobj_ranger);
+        $this->assertNotContains($mm4, $mmobj_ranger);
+        $this->assertNotContains($mm1, $mmobj_hand);
+        $this->assertNotContains($mm2, $mmobj_hand);
+        $this->assertNotContains($mm3, $mmobj_hand);
+        $this->assertContains($mm4, $mmobj_hand);
 
         // Test find by person and role
         $mmobj_benjen_ranger = $this->repo->findByPersonIdWithRoleCod($person_benjen->getId(), $role_ranger->getCod());
@@ -238,24 +238,24 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $mmobj_ned_ranger = $this->repo->findByPersonIdWithRoleCod($person_ned->getId(), $role_ranger->getCod());
         $mmobj_benjen_hand = $this->repo->findByPersonIdWithRoleCod($person_benjen->getId(), $role_hand->getCod());
 
-        $this->assertEquals(2, count($mmobj_benjen_ranger));
-        $this->assertEquals(2, count($mmobj_ned_lord));
-        $this->assertEquals(1, count($mmobj_ned_hand));
+        $this->assertCount(2, $mmobj_benjen_ranger);
+        $this->assertCount(2, $mmobj_ned_lord);
+        $this->assertCount(1, $mmobj_ned_hand);
 
-        $this->assertEquals(0, count($mmobj_benjen_lord));
-        $this->assertEquals(0, count($mmobj_ned_ranger));
-        $this->assertEquals(0, count($mmobj_benjen_hand));
+        $this->assertCount(0, $mmobj_benjen_lord);
+        $this->assertCount(0, $mmobj_ned_ranger);
+        $this->assertCount(0, $mmobj_benjen_hand);
 
         $seriesBenjen = $this->repo->findSeriesFieldByPersonId($person_benjen->getId());
         $seriesNed = $this->repo->findSeriesFieldByPersonId($person_ned->getId());
 
-        $this->assertEquals(2, count($seriesBenjen));
-        $this->assertTrue(in_array($series_wall->getId(), $seriesBenjen->toArray()));
-        $this->assertTrue(in_array($series_main->getId(), $seriesBenjen->toArray()));
+        $this->assertCount(2, $seriesBenjen);
+        $this->assertContains($series_wall->getId(), $seriesBenjen);
+        $this->assertContains($series_main->getId(), $seriesBenjen);
 
-        $this->assertEquals(2, count($seriesNed));
-        $this->assertTrue(in_array($series_main->getId(), $seriesNed->toArray()));
-        $this->assertTrue(in_array($series_lhazar->getId(), $seriesNed->toArray()));
+        $this->assertCount(2, $seriesNed);
+        $this->assertContains($series_main->getId(), $seriesNed);
+        $this->assertContains($series_lhazar->getId(), $seriesNed);
 
         $seriesBenjenRanger = $this->repo->findSeriesFieldByPersonIdAndRoleCod($person_benjen->getId(), $role_ranger->getCod());
         $seriesNedRanger = $this->repo->findSeriesFieldByPersonIdAndRoleCod($person_ned->getId(), $role_ranger->getCod());
@@ -264,113 +264,113 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $seriesBenjenHand = $this->repo->findSeriesFieldByPersonIdAndRoleCod($person_benjen->getId(), $role_hand->getCod());
         $seriesNedHand = $this->repo->findSeriesFieldByPersonIdAndRoleCod($person_ned->getId(), $role_hand->getCod());
 
-        $this->assertEquals(2, count($seriesBenjenRanger));
-        $this->assertTrue(in_array($series_wall->getId(), $seriesBenjenRanger->toArray()));
-        $this->assertTrue(in_array($series_main->getId(), $seriesBenjenRanger->toArray()));
-        $this->assertFalse(in_array($series_lhazar->getId(), $seriesBenjenRanger->toArray()));
+        $this->assertCount(2, $seriesBenjenRanger);
+        $this->assertContains($series_wall->getId(), $seriesBenjenRanger);
+        $this->assertContains($series_main->getId(), $seriesBenjenRanger);
+        $this->assertNotContains($series_lhazar->getId(), $seriesBenjenRanger);
 
-        $this->assertEquals(0, count($seriesNedRanger));
-        $this->assertFalse(in_array($series_wall->getId(), $seriesNedRanger->toArray()));
-        $this->assertFalse(in_array($series_main->getId(), $seriesNedRanger->toArray()));
-        $this->assertFalse(in_array($series_lhazar->getId(), $seriesNedRanger->toArray()));
+        $this->assertCount(0, $seriesNedRanger);
+        $this->assertNotContains($series_wall->getId(), $seriesNedRanger);
+        $this->assertNotContains($series_main->getId(), $seriesNedRanger);
+        $this->assertNotContains($series_lhazar->getId(), $seriesNedRanger);
 
-        $this->assertEquals(0, count($seriesBenjenLord));
-        $this->assertFalse(in_array($series_wall->getId(), $seriesBenjenLord->toArray()));
-        $this->assertFalse(in_array($series_main->getId(), $seriesBenjenLord->toArray()));
-        $this->assertFalse(in_array($series_lhazar->getId(), $seriesBenjenLord->toArray()));
+        $this->assertCount(0, $seriesBenjenLord);
+        $this->assertNotContains($series_wall->getId(), $seriesBenjenLord);
+        $this->assertNotContains($series_main->getId(), $seriesBenjenLord);
+        $this->assertNotContains($series_lhazar->getId(), $seriesBenjenLord);
 
-        $this->assertEquals(1, count($seriesNedLord));
-        $this->assertFalse(in_array($series_wall->getId(), $seriesNedLord->toArray()));
-        $this->assertTrue(in_array($series_main->getId(), $seriesNedLord->toArray()));
-        $this->assertFalse(in_array($series_lhazar->getId(), $seriesNedLord->toArray()));
+        $this->assertCount(1, $seriesNedLord);
+        $this->assertNotContains($series_wall->getId(), $seriesNedLord);
+        $this->assertContains($series_main->getId(), $seriesNedLord);
+        $this->assertNotContains($series_lhazar->getId(), $seriesNedLord);
 
-        $this->assertEquals(0, count($seriesBenjenHand));
-        $this->assertFalse(in_array($series_wall->getId(), $seriesBenjenHand->toArray()));
-        $this->assertFalse(in_array($series_main->getId(), $seriesBenjenHand->toArray()));
-        $this->assertFalse(in_array($series_lhazar->getId(), $seriesBenjenHand->toArray()));
+        $this->assertCount(0, $seriesBenjenHand);
+        $this->assertNotContains($series_wall->getId(), $seriesBenjenHand);
+        $this->assertNotContains($series_main->getId(), $seriesBenjenHand);
+        $this->assertNotContains($series_lhazar->getId(), $seriesBenjenHand);
 
-        $this->assertEquals(1, count($seriesNedHand));
-        $this->assertFalse(in_array($series_wall->getId(), $seriesNedHand->toArray()));
-        $this->assertFalse(in_array($series_main->getId(), $seriesNedHand->toArray()));
-        $this->assertTrue(in_array($series_lhazar->getId(), $seriesNedHand->toArray()));
+        $this->assertCount(1, $seriesNedHand);
+        $this->assertNotContains($series_wall->getId(), $seriesNedHand);
+        $this->assertNotContains($series_main->getId(), $seriesNedHand);
+        $this->assertContains($series_lhazar->getId(), $seriesNedHand);
 
         $mmobjsMainNedLord = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_main, $person_ned->getId(), $role_lord->getCod());
-        $this->assertEquals(2, count($mmobjsMainNedLord));
-        $this->assertTrue(in_array($mm1, $mmobjsMainNedLord->toArray()));
-        $this->assertTrue(in_array($mm3, $mmobjsMainNedLord->toArray()));
+        $this->assertCount(2, $mmobjsMainNedLord);
+        $this->assertContains($mm1, $mmobjsMainNedLord);
+        $this->assertContains($mm3, $mmobjsMainNedLord);
 
         $mmobjsMainNedRanger = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_main, $person_ned->getId(), $role_ranger->getCod());
-        $this->assertEquals(0, count($mmobjsMainNedRanger));
-        $this->assertFalse(in_array($mm1, $mmobjsMainNedRanger->toArray()));
-        $this->assertFalse(in_array($mm3, $mmobjsMainNedRanger->toArray()));
+        $this->assertCount(0, $mmobjsMainNedRanger);
+        $this->assertNotContains($mm1, $mmobjsMainNedRanger);
+        $this->assertNotContains($mm3, $mmobjsMainNedRanger);
 
         $mmobjsMainNedHand = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_main, $person_ned->getId(), $role_hand->getCod());
-        $this->assertEquals(0, count($mmobjsMainNedHand));
-        $this->assertFalse(in_array($mm1, $mmobjsMainNedHand->toArray()));
-        $this->assertFalse(in_array($mm3, $mmobjsMainNedHand->toArray()));
+        $this->assertCount(0, $mmobjsMainNedHand);
+        $this->assertNotContains($mm1, $mmobjsMainNedHand);
+        $this->assertNotContains($mm3, $mmobjsMainNedHand);
 
         $mmobjsMainBenjenLord = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_main, $person_benjen->getId(), $role_lord->getCod());
-        $this->assertEquals(0, count($mmobjsMainBenjenLord));
-        $this->assertFalse(in_array($mm1, $mmobjsMainBenjenLord->toArray()));
-        $this->assertFalse(in_array($mm3, $mmobjsMainBenjenLord->toArray()));
+        $this->assertCount(0, $mmobjsMainBenjenLord);
+        $this->assertNotContains($mm1, $mmobjsMainBenjenLord);
+        $this->assertNotContains($mm3, $mmobjsMainBenjenLord);
 
         $mmobjsMainBenjenRanger = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_main, $person_benjen->getId(), $role_ranger->getCod());
-        $this->assertEquals(1, count($mmobjsMainBenjenRanger));
-        $this->assertFalse(in_array($mm1, $mmobjsMainBenjenRanger->toArray()));
-        $this->assertTrue(in_array($mm3, $mmobjsMainBenjenRanger->toArray()));
+        $this->assertCount(1, $mmobjsMainBenjenRanger);
+        $this->assertNotContains($mm1, $mmobjsMainBenjenRanger);
+        $this->assertContains($mm3, $mmobjsMainBenjenRanger);
 
         $mmobjsMainBenjenHand = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_main, $person_benjen->getId(), $role_hand->getCod());
-        $this->assertEquals(0, count($mmobjsMainBenjenHand));
-        $this->assertFalse(in_array($mm1, $mmobjsMainBenjenHand->toArray()));
-        $this->assertFalse(in_array($mm3, $mmobjsMainBenjenHand->toArray()));
+        $this->assertCount(0, $mmobjsMainBenjenHand);
+        $this->assertNotContains($mm1, $mmobjsMainBenjenHand);
+        $this->assertNotContains($mm3, $mmobjsMainBenjenHand);
 
         $mmobjsWallNedLord = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_wall, $person_ned->getId(), $role_lord->getCod());
-        $this->assertEquals(0, count($mmobjsWallNedLord));
-        $this->assertFalse(in_array($mm2, $mmobjsWallNedLord->toArray()));
+        $this->assertCount(0, $mmobjsWallNedLord);
+        $this->assertNotContains($mm2, $mmobjsWallNedLord);
 
         $mmobjsWallNedRanger = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_wall, $person_ned->getId(), $role_ranger->getCod());
-        $this->assertEquals(0, count($mmobjsWallNedRanger));
-        $this->assertFalse(in_array($mm2, $mmobjsWallNedRanger->toArray()));
+        $this->assertCount(0, $mmobjsWallNedRanger);
+        $this->assertNotContains($mm2, $mmobjsWallNedRanger);
 
         $mmobjsWallNedHand = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_wall, $person_ned->getId(), $role_hand->getCod());
-        $this->assertEquals(0, count($mmobjsWallNedHand));
-        $this->assertFalse(in_array($mm2, $mmobjsWallNedHand->toArray()));
+        $this->assertCount(0, $mmobjsWallNedHand);
+        $this->assertNotContains($mm2, $mmobjsWallNedHand);
 
         $mmobjsWallBenjenLord = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_wall, $person_benjen->getId(), $role_lord->getCod());
-        $this->assertEquals(0, count($mmobjsWallBenjenLord));
-        $this->assertFalse(in_array($mm2, $mmobjsWallBenjenLord->toArray()));
+        $this->assertCount(0, $mmobjsWallBenjenLord);
+        $this->assertNotContains($mm2, $mmobjsWallBenjenLord);
 
         $mmobjsWallBenjenRanger = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_wall, $person_benjen->getId(), $role_ranger->getCod());
-        $this->assertEquals(1, count($mmobjsWallBenjenRanger));
-        $this->assertTrue(in_array($mm2, $mmobjsWallBenjenRanger->toArray()));
+        $this->assertCount(1, $mmobjsWallBenjenRanger);
+        $this->assertContains($mm2, $mmobjsWallBenjenRanger);
 
         $mmobjsWallBenjenHand = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_wall, $person_benjen->getId(), $role_hand->getCod());
-        $this->assertEquals(0, count($mmobjsWallBenjenHand));
-        $this->assertFalse(in_array($mm2, $mmobjsWallBenjenHand->toArray()));
+        $this->assertCount(0, $mmobjsWallBenjenHand);
+        $this->assertNotContains($mm2, $mmobjsWallBenjenHand);
 
         $mmobjsLhazarNedLord = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_lhazar, $person_ned->getId(), $role_lord->getCod());
-        $this->assertEquals(0, count($mmobjsLhazarNedLord));
-        $this->assertFalse(in_array($mm4, $mmobjsLhazarNedLord->toArray()));
+        $this->assertCount(0, $mmobjsLhazarNedLord);
+        $this->assertNotContains($mm4, $mmobjsLhazarNedLord);
 
         $mmobjsLhazarNedRanger = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_lhazar, $person_ned->getId(), $role_ranger->getCod());
-        $this->assertEquals(0, count($mmobjsLhazarNedRanger));
-        $this->assertFalse(in_array($mm4, $mmobjsLhazarNedRanger->toArray()));
+        $this->assertCount(0, $mmobjsLhazarNedRanger);
+        $this->assertNotContains($mm4, $mmobjsLhazarNedRanger);
 
         $mmobjsLhazarNedHand = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_lhazar, $person_ned->getId(), $role_hand->getCod());
-        $this->assertEquals(1, count($mmobjsLhazarNedHand));
-        $this->assertTrue(in_array($mm4, $mmobjsLhazarNedHand->toArray()));
+        $this->assertCount(1, $mmobjsLhazarNedHand);
+        $this->assertContains($mm4, $mmobjsLhazarNedHand);
 
         $mmobjsLhazarBenjenLord = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_lhazar, $person_benjen->getId(), $role_lord->getCod());
-        $this->assertEquals(0, count($mmobjsLhazarBenjenLord));
-        $this->assertFalse(in_array($mm4, $mmobjsLhazarBenjenLord->toArray()));
+        $this->assertCount(0, $mmobjsLhazarBenjenLord);
+        $this->assertNotContains($mm4, $mmobjsLhazarBenjenLord);
 
         $mmobjsLhazarBenjenRanger = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_lhazar, $person_benjen->getId(), $role_ranger->getCod());
-        $this->assertEquals(0, count($mmobjsLhazarBenjenRanger));
-        $this->assertFalse(in_array($mm4, $mmobjsLhazarBenjenRanger->toArray()));
+        $this->assertCount(0, $mmobjsLhazarBenjenRanger);
+        $this->assertNotContains($mm4, $mmobjsLhazarBenjenRanger);
 
         $mmobjsLhazarBenjenHand = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_lhazar, $person_benjen->getId(), $role_hand->getCod());
-        $this->assertEquals(0, count($mmobjsLhazarBenjenHand));
-        $this->assertFalse(in_array($mm4, $mmobjsLhazarBenjenHand->toArray()));
+        $this->assertCount(0, $mmobjsLhazarBenjenHand);
+        $this->assertNotContains($mm4, $mmobjsLhazarBenjenHand);
 
         // Test find by person id and role cod or groups
         $group1 = new Group();
@@ -409,22 +409,22 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $mmobj_benjen_hand_group1 = $this->repo->findByPersonIdAndRoleCodOrGroups($person_benjen->getId(), $role_hand->getCod(), $groups1);
         $mmobj_benjen_hand_group2 = $this->repo->findByPersonIdAndRoleCodOrGroups($person_benjen->getId(), $role_hand->getCod(), $groups2);
 
-        $this->assertEquals(3, count($mmobj_benjen_ranger_group1));
-        $this->assertEquals(3, count($mmobj_ned_lord_group1));
-        $this->assertEquals(4, count($mmobj_ned_hand_group1));
-        $this->assertEquals(3, count($mmobj_benjen_ranger_group2));
-        $this->assertEquals(3, count($mmobj_ned_lord_group2));
-        $this->assertEquals(2, count($mmobj_ned_hand_group2));
+        $this->assertCount(3, $mmobj_benjen_ranger_group1);
+        $this->assertCount(3, $mmobj_ned_lord_group1);
+        $this->assertCount(4, $mmobj_ned_hand_group1);
+        $this->assertCount(3, $mmobj_benjen_ranger_group2);
+        $this->assertCount(3, $mmobj_ned_lord_group2);
+        $this->assertCount(2, $mmobj_ned_hand_group2);
 
-        $this->assertEquals(3, count($mmobj_benjen_lord_group1));
-        $this->assertEquals(3, count($mmobj_ned_ranger_group1));
-        $this->assertEquals(3, count($mmobj_benjen_hand_group1));
-        $this->assertEquals(2, count($mmobj_benjen_lord_group2));
-        $this->assertEquals(2, count($mmobj_ned_ranger_group2));
-        $this->assertEquals(2, count($mmobj_benjen_hand_group2));
+        $this->assertCount(3, $mmobj_benjen_lord_group1);
+        $this->assertCount(3, $mmobj_ned_ranger_group1);
+        $this->assertCount(3, $mmobj_benjen_hand_group1);
+        $this->assertCount(2, $mmobj_benjen_lord_group2);
+        $this->assertCount(2, $mmobj_ned_ranger_group2);
+        $this->assertCount(2, $mmobj_benjen_hand_group2);
     }
 
-    public function testPeopleInMultimediaObjectCollection()
+    public function testPeopleInMultimediaObjectCollection(): void
     {
         $personLucy = new Person();
         $personLucy->setName('Lucy');
@@ -455,7 +455,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
 
         $this->assertFalse($mm->containsPerson($personKate));
         $this->assertFalse($mm->containsPersonWithRole($personKate, $roleActor));
-        $this->assertEquals(0, count($mm->getPeople()));
+        $this->assertCount(0, $mm->getPeople());
         $this->assertFalse($mm->containsPersonWithAllRoles($personKate, [$roleActor, $rolePresenter, $roleDirector]));
         $this->assertFalse($mm->containsPersonWithAnyRole($personKate, [$roleActor, $rolePresenter, $roleDirector]));
 
@@ -468,7 +468,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->assertFalse($mm->containsPersonWithRole($personKate, $rolePresenter));
         $this->assertFalse($mm->containsPersonWithRole($personKate, $roleDirector));
         $this->assertFalse($mm->containsPerson($personLucy));
-        $this->assertEquals(1, count($mm->getPeople()));
+        $this->assertCount(1, $mm->getPeople());
         $this->assertEquals($personKate->getId(), $mm->getPersonWithRole($personKate, $roleActor)->getId());
 
         $mm2 = new MultimediaObject();
@@ -478,7 +478,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
 
         $this->assertFalse($mm2->containsPerson($personKate));
         $this->assertFalse($mm2->containsPersonWithRole($personKate, $roleActor));
-        $this->assertEquals(0, count($mm2->getPeople()));
+        $this->assertCount(0, $mm2->getPeople());
 
         $this->assertFalse($mm2->getPersonWithRole($personKate, $roleActor));
 
@@ -491,7 +491,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->assertFalse($mm2->containsPersonWithRole($personKate, $rolePresenter));
         $this->assertFalse($mm2->containsPersonWithRole($personKate, $roleDirector));
         $this->assertFalse($mm2->containsPerson($personLucy));
-        $this->assertEquals(1, count($mm2->getPeople()));
+        $this->assertCount(1, $mm2->getPeople());
 
         $mm->addPersonWithRole($personKate, $rolePresenter);
         $this->dm->persist($mm);
@@ -500,7 +500,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->assertTrue($mm->containsPersonWithRole($personKate, $roleActor));
         $this->assertTrue($mm->containsPersonWithRole($personKate, $rolePresenter));
         $this->assertFalse($mm->containsPersonWithRole($personKate, $roleDirector));
-        $this->assertEquals(1, count($mm->getPeople()));
+        $this->assertCount(1, $mm->getPeople());
 
         $mm->addPersonWithRole($personKate, $roleDirector);
         $this->dm->persist($mm);
@@ -511,7 +511,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->assertTrue($mm->containsPersonWithRole($personKate, $roleDirector));
         $this->assertTrue($mm->containsPersonWithAllRoles($personKate, [$roleActor, $rolePresenter, $roleDirector]));
         $this->assertTrue($mm->containsPersonWithAnyRole($personKate, [$roleActor, $rolePresenter, $roleDirector]));
-        $this->assertEquals(1, count($mm->getPeople()));
+        $this->assertCount(1, $mm->getPeople());
 
         $mm->addPersonWithRole($personLucy, $roleDirector);
         $this->dm->persist($mm);
@@ -524,14 +524,14 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $roleActor));
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $rolePresenter));
         $this->assertTrue($mm->containsPersonWithRole($personLucy, $roleDirector));
-        $this->assertEquals(2, count($mm->getPeople()));
+        $this->assertCount(2, $mm->getPeople());
 
-        $this->assertEquals(2, count($mm->getPeopleByRole(null, false)));
+        $this->assertCount(2, $mm->getPeopleByRole(null, false));
         $mm->getEmbeddedRole($roleDirector)->setDisplay(false);
         $this->dm->persist($mm);
         $this->dm->flush();
-        $this->assertEquals(2, count($mm->getPeopleByRole(null, true)));
-        $this->assertEquals(1, count($mm->getPeopleByRole(null, false)));
+        $this->assertCount(2, $mm->getPeopleByRole(null, true));
+        $this->assertCount(1, $mm->getPeopleByRole(null, false));
         $mm->getEmbeddedRole($roleDirector)->setDisplay(true);
         $this->dm->persist($mm);
         $this->dm->flush();
@@ -574,10 +574,10 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
             [$peopleDirector[0]->getId(), $peopleDirector[1]->getId()]
         );
 
-        $this->assertEquals(3, count($mm->getAllEmbeddedPeopleByPerson($personKate)));
-        $this->assertEquals(1, count($mm->getAllEmbeddedPeopleByPerson($personLucy)));
-        $this->assertEquals(1, count($mm2->getAllEmbeddedPeopleByPerson($personKate)));
-        $this->assertEquals(0, count($mm2->getAllEmbeddedPeopleByPerson($personLucy)));
+        $this->assertCount(3, $mm->getAllEmbeddedPeopleByPerson($personKate));
+        $this->assertCount(1, $mm->getAllEmbeddedPeopleByPerson($personLucy));
+        $this->assertCount(1, $mm2->getAllEmbeddedPeopleByPerson($personKate));
+        $this->assertCount(0, $mm2->getAllEmbeddedPeopleByPerson($personLucy));
 
         $this->assertTrue($mm->removePersonWithRole($personKate, $roleActor));
         $this->dm->persist($mm);
@@ -590,7 +590,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $roleActor));
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $rolePresenter));
         $this->assertTrue($mm->containsPersonWithRole($personLucy, $roleDirector));
-        $this->assertEquals(2, count($mm->getPeople()));
+        $this->assertCount(2, $mm->getPeople());
 
         $this->assertTrue($mm->removePersonWithRole($personLucy, $roleDirector));
         $this->dm->persist($mm);
@@ -603,7 +603,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $roleActor));
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $rolePresenter));
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $roleDirector));
-        $this->assertEquals(1, count($mm->getPeople()));
+        $this->assertCount(1, $mm->getPeople());
 
         $this->assertTrue($mm->removePersonWithRole($personKate, $roleDirector));
         $this->dm->persist($mm);
@@ -616,22 +616,22 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $roleActor));
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $rolePresenter));
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $roleDirector));
-        $this->assertEquals(1, count($mm->getPeople()));
+        $this->assertCount(1, $mm->getPeople());
 
         $this->assertFalse($mm->removePersonWithRole($personKate, $roleActor));
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertEquals(1, count($mm->getPeople()));
+        $this->assertCount(1, $mm->getPeople());
 
         $this->assertTrue($mm->removePersonWithRole($personKate, $rolePresenter));
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertEquals(0, count($mm->getPeople()));
+        $this->assertCount(0, $mm->getPeople());
     }
 
-    public function testGetAllEmbeddedRoleByPerson()
+    public function testGetAllEmbeddedRoleByPerson(): void
     {
         $personLucy = new Person();
         $personLucy->setName('Lucy');
@@ -675,32 +675,32 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
             $kateQueryRolesIds[] = $embeddedRole->getId();
         }
 
-        $this->assertTrue(in_array($roleActor->getId(), $kateQueryRolesIds));
-        $this->assertTrue(in_array($rolePresenter->getId(), $kateQueryRolesIds));
-        $this->assertFalse(in_array($roleDirector->getId(), $kateQueryRolesIds));
+        $this->assertContains($roleActor->getId(), $kateQueryRolesIds);
+        $this->assertContains($rolePresenter->getId(), $kateQueryRolesIds);
+        $this->assertNotContains($roleDirector->getId(), $kateQueryRolesIds);
 
         $lucyQueryRolesIds = [];
         foreach ($mm->getAllEmbeddedRolesByPerson($personLucy) as $embeddedRole) {
             $lucyQueryRolesIds[] = $embeddedRole->getId();
         }
 
-        $this->assertTrue(in_array($roleActor->getId(), $lucyQueryRolesIds));
-        $this->assertTrue(in_array($rolePresenter->getId(), $lucyQueryRolesIds));
-        $this->assertTrue(in_array($roleDirector->getId(), $lucyQueryRolesIds));
+        $this->assertContains($roleActor->getId(), $lucyQueryRolesIds);
+        $this->assertContains($rolePresenter->getId(), $lucyQueryRolesIds);
+        $this->assertContains($roleDirector->getId(), $lucyQueryRolesIds);
 
         $peteQueryRolesIds = [];
         foreach ($mm->getAllEmbeddedRolesByPerson($personPete) as $embeddedRole) {
             $peteQueryRolesIds[] = $embeddedRole->getId();
         }
 
-        $this->assertTrue(in_array($roleActor->getId(), $peteQueryRolesIds));
-        $this->assertFalse(in_array($rolePresenter->getId(), $peteQueryRolesIds));
-        $this->assertTrue(in_array($roleDirector->getId(), $peteQueryRolesIds));
+        $this->assertContains($roleActor->getId(), $peteQueryRolesIds);
+        $this->assertNotContains($rolePresenter->getId(), $peteQueryRolesIds);
+        $this->assertContains($roleDirector->getId(), $peteQueryRolesIds);
     }
 
-    public function testFindBySeries()
+    public function testFindBySeries(): void
     {
-        $this->assertEquals(0, count($this->repo->findAll()));
+        $this->assertCount(0, $this->repo->findAll());
 
         $series1 = $this->createSeries('Series 1');
         $mm11 = $this->factoryService->createMultimediaObject($series1);
@@ -714,11 +714,11 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $series1 = $this->dm->find(Series::class, $series1->getId());
         $series2 = $this->dm->find(Series::class, $series2->getId());
 
-        $this->assertEquals(4, count($this->repo->findBySeries($series1)));
-        $this->assertEquals(3, count($this->repo->findBySeries($series2)));
+        $this->assertCount(4, $this->repo->findBySeries($series1));
+        $this->assertCount(3, $this->repo->findBySeries($series2));
 
-        $this->assertEquals(3, count($this->repo->findStandardBySeries($series1)));
-        $this->assertEquals(2, count($this->repo->findStandardBySeries($series2)));
+        $this->assertCount(3, $this->repo->findStandardBySeries($series1));
+        $this->assertCount(2, $this->repo->findStandardBySeries($series2));
 
         $tag1 = new Tag();
         $tag1->setCod('tag1');
@@ -744,13 +744,13 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->dm->persist($series2);
         $this->dm->flush();
 
-        $this->assertEquals(2, count($this->repo->findBySeriesByTagCodAndStatus($series1, 'tag3')));
-        $this->assertEquals(1, count($this->repo->findBySeriesByTagCodAndStatus($series2, 'tag1')));
-        $this->assertEquals(1, count($this->repo->findBySeriesByTagCodAndStatus($series2, 'tag3')));
-        $this->assertEquals(1, count($this->repo->findBySeriesByTagCodAndStatus($series1, 'tag2')));
+        $this->assertCount(2, $this->repo->findBySeriesByTagCodAndStatus($series1, 'tag3'));
+        $this->assertCount(1, $this->repo->findBySeriesByTagCodAndStatus($series2, 'tag1'));
+        $this->assertCount(1, $this->repo->findBySeriesByTagCodAndStatus($series2, 'tag3'));
+        $this->assertCount(1, $this->repo->findBySeriesByTagCodAndStatus($series1, 'tag2'));
     }
 
-    public function testFindWithStatus()
+    public function testFindWithStatus(): void
     {
         $series = $this->createSeries('Serie prueba status');
 
@@ -772,27 +772,27 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->dm->persist($mmPublished);
         $this->dm->flush();
 
-        $this->assertEquals(1, count($this->repo->findWithStatus($series, [MultimediaObject::STATUS_PROTOTYPE])));
-        $this->assertEquals(1, count($this->repo->findWithStatus($series, [MultimediaObject::STATUS_NEW])));
-        $this->assertEquals(1, count($this->repo->findWithStatus($series, [MultimediaObject::STATUS_HIDDEN])));
-        $this->assertEquals(1, count($this->repo->findWithStatus($series, [MultimediaObject::STATUS_BLOCKED])));
-        $this->assertEquals(1, count($this->repo->findWithStatus($series, [MultimediaObject::STATUS_PUBLISHED])));
-        $this->assertEquals(2, count($this->repo->findWithStatus($series, [MultimediaObject::STATUS_PROTOTYPE, MultimediaObject::STATUS_NEW])));
-        $this->assertEquals(3, count($this->repo->findWithStatus($series, [MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_NEW, MultimediaObject::STATUS_HIDDEN])));
+        $this->assertCount(1, $this->repo->findWithStatus($series, [MultimediaObject::STATUS_PROTOTYPE]));
+        $this->assertCount(1, $this->repo->findWithStatus($series, [MultimediaObject::STATUS_NEW]));
+        $this->assertCount(1, $this->repo->findWithStatus($series, [MultimediaObject::STATUS_HIDDEN]));
+        $this->assertCount(1, $this->repo->findWithStatus($series, [MultimediaObject::STATUS_BLOCKED]));
+        $this->assertCount(1, $this->repo->findWithStatus($series, [MultimediaObject::STATUS_PUBLISHED]));
+        $this->assertCount(2, $this->repo->findWithStatus($series, [MultimediaObject::STATUS_PROTOTYPE, MultimediaObject::STATUS_NEW]));
+        $this->assertCount(3, $this->repo->findWithStatus($series, [MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_NEW, MultimediaObject::STATUS_HIDDEN]));
 
-        $mmArray = [$mmNew->getId() => $mmNew];
-        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, [MultimediaObject::STATUS_NEW])->toArray());
-        $mmArray = [$mmHide->getId() => $mmHide];
-        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, [MultimediaObject::STATUS_HIDDEN])->toArray());
-        $mmArray = [$mmBloq->getId() => $mmBloq];
-        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, [MultimediaObject::STATUS_BLOCKED])->toArray());
-        $mmArray = [$mmPublished->getId() => $mmPublished];
-        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, [MultimediaObject::STATUS_PUBLISHED])->toArray());
-        $mmArray = [$mmPublished->getId() => $mmPublished, $mmNew->getId() => $mmNew, $mmHide->getId() => $mmHide];
-        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, [MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_NEW, MultimediaObject::STATUS_HIDDEN])->toArray());
+        $mmArray = [$mmNew];
+        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, [MultimediaObject::STATUS_NEW]));
+        $mmArray = [$mmHide];
+        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, [MultimediaObject::STATUS_HIDDEN]));
+        $mmArray = [$mmBloq];
+        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, [MultimediaObject::STATUS_BLOCKED]));
+        $mmArray = [$mmPublished];
+        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, [MultimediaObject::STATUS_PUBLISHED]));
+        $mmArray = [$mmNew, $mmHide, $mmPublished];
+        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, [MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_NEW, MultimediaObject::STATUS_HIDDEN]));
     }
 
-    public function testFindPrototype()
+    public function testFindPrototype(): void
     {
         $series = $this->createSeries('Serie prueba status');
 
@@ -821,7 +821,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->assertNotEquals($mmPublished, $this->repo->findPrototype($series));
     }
 
-    public function testFindWithoutPrototype()
+    public function testFindWithoutPrototype(): void
     {
         $series = $this->createSeries('Serie prueba status');
 
@@ -843,18 +843,18 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->dm->persist($mmPublished);
         $this->dm->flush();
 
-        $this->assertEquals(4, count($this->repo->findWithoutPrototype($series)));
+        $this->assertCount(4, $this->repo->findWithoutPrototype($series));
 
         $mmArray = [
-            $mmNew->getId() => $mmNew,
-            $mmHide->getId() => $mmHide,
-            $mmBloq->getId() => $mmBloq,
-            $mmPublished->getId() => $mmPublished,
+            $mmNew,
+            $mmHide,
+            $mmBloq,
+            $mmPublished,
         ];
-        $this->assertEquals($mmArray, $this->repo->findWithoutPrototype($series)->toArray());
+        $this->assertEquals($mmArray, $this->repo->findWithoutPrototype($series));
     }
 
-    public function testEmbedPicsInMultimediaObject()
+    public function testEmbedPicsInMultimediaObject(): void
     {
         $pic1 = new Pic();
         $pic2 = new Pic();
@@ -889,25 +889,25 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->dm->flush();
 
         $picsArray = [$pic1, $pic3];
-        $this->assertEquals(count($picsArray), count($this->repo->find($mm->getId())->getPics()));
-        $this->assertEquals($picsArray, array_values($this->repo->find($mm->getId())->getPics()->toArray()));
+        $this->assertCount(count($picsArray), $this->repo->find($mm->getId())->getPics());
+        $this->assertEquals($picsArray, $this->repo->find($mm->getId())->getPics()->toArray());
 
         $mm->upPicById($pic3->getId());
         $this->dm->persist($mm);
         $this->dm->flush();
 
         $picsArray = [$pic3, $pic1];
-        $this->assertEquals($picsArray, array_values($this->repo->find($mm->getId())->getPics()->toArray()));
+        $this->assertEquals($picsArray, $this->repo->find($mm->getId())->getPics()->toArray());
 
         $mm->downPicById($pic3->getId());
         $this->dm->persist($mm);
         $this->dm->flush();
 
         $picsArray = [$pic1, $pic3];
-        $this->assertEquals($picsArray, array_values($this->repo->find($mm->getId())->getPics()->toArray()));
+        $this->assertEquals($picsArray, $this->repo->find($mm->getId())->getPics()->toArray());
     }
 
-    public function testEmbedMaterialsInMultimediaObject()
+    public function testEmbedMaterialsInMultimediaObject(): void
     {
         $material1 = new Material();
         $material2 = new Material();
@@ -937,25 +937,25 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->dm->flush();
 
         $materialsArray = [$material1, $material3];
-        $this->assertEquals(count($materialsArray), count($this->repo->find($mm->getId())->getMaterials()));
-        $this->assertEquals($materialsArray, array_values($this->repo->find($mm->getId())->getMaterials()->toArray()));
+        $this->assertCount(count($materialsArray), $this->repo->find($mm->getId())->getMaterials());
+        $this->assertEquals($materialsArray, $this->repo->find($mm->getId())->getMaterials());
 
         $mm->upMaterialById($material3->getId());
         $this->dm->persist($mm);
         $this->dm->flush();
 
         $materialsArray = [$material3, $material1];
-        $this->assertEquals($materialsArray, array_values($this->repo->find($mm->getId())->getMaterials()->toArray()));
+        $this->assertEquals($materialsArray, $this->repo->find($mm->getId())->getMaterials());
 
         $mm->downMaterialById($material3->getId());
         $this->dm->persist($mm);
         $this->dm->flush();
 
         $materialsArray = [$material1, $material3];
-        $this->assertEquals($materialsArray, array_values($this->repo->find($mm->getId())->getMaterials()->toArray()));
+        $this->assertEquals($materialsArray, $this->repo->find($mm->getId())->getMaterials());
     }
 
-    public function testEmbedLinksInMultimediaObject()
+    public function testEmbedLinksInMultimediaObject(): void
     {
         $link1 = new Link();
         $link2 = new Link();
@@ -985,25 +985,25 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->dm->flush();
 
         $linksArray = [$link1, $link3];
-        $this->assertEquals(count($linksArray), count($this->repo->find($mm->getId())->getLinks()));
-        $this->assertEquals($linksArray, array_values($this->repo->find($mm->getId())->getLinks()->toArray()));
+        $this->assertCount(count($linksArray), $this->repo->find($mm->getId())->getLinks());
+        $this->assertEquals($linksArray, $this->repo->find($mm->getId())->getLinks());
 
         $mm->upLinkById($link3->getId());
         $this->dm->persist($mm);
         $this->dm->flush();
 
         $linksArray = [$link3, $link1];
-        $this->assertEquals($linksArray, array_values($this->repo->find($mm->getId())->getLinks()->toArray()));
+        $this->assertEquals($linksArray, $this->repo->find($mm->getId())->getLinks());
 
         $mm->downLinkById($link3->getId());
         $this->dm->persist($mm);
         $this->dm->flush();
 
         $linksArray = [$link1, $link3];
-        $this->assertEquals($linksArray, array_values($this->repo->find($mm->getId())->getLinks()->toArray()));
+        $this->assertEquals($linksArray, $this->repo->find($mm->getId())->getLinks());
     }
 
-    public function testEmbedTracksInMultimediaObject()
+    public function testEmbedTracksInMultimediaObject(): void
     {
         $track1 = new Track();
         $track2 = new Track();
@@ -1033,25 +1033,25 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->dm->flush();
 
         $tracksArray = [$track1, $track3];
-        $this->assertEquals(count($tracksArray), count($this->repo->find($mm->getId())->getTracks()));
-        $this->assertEquals($tracksArray, array_values($this->repo->find($mm->getId())->getTracks()->toArray()));
+        $this->assertCount(count($tracksArray), $this->repo->find($mm->getId())->getTracks());
+        $this->assertEquals($tracksArray, $this->repo->find($mm->getId())->getTracks());
 
         $mm->upTrackById($track3->getId());
         $this->dm->persist($mm);
         $this->dm->flush();
 
         $tracksArray = [$track3, $track1];
-        $this->assertEquals($tracksArray, array_values($this->repo->find($mm->getId())->getTracks()->toArray()));
+        $this->assertEquals($tracksArray, $this->repo->find($mm->getId())->getTracks());
 
         $mm->downTrackById($track3->getId());
         $this->dm->persist($mm);
         $this->dm->flush();
 
         $tracksArray = [$track1, $track3];
-        $this->assertEquals($tracksArray, array_values($this->repo->find($mm->getId())->getTracks()->toArray()));
+        $this->assertEquals($tracksArray, $this->repo->find($mm->getId())->getTracks());
     }
 
-    public function testFindMultimediaObjectsWithTags()
+    public function testFindMultimediaObjectsWithTags(): void
     {
         $tag1 = new Tag();
         $tag1->setCod('tag1');
@@ -1139,96 +1139,96 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $sortDesc = ['public_date' => -1];
 
         // FIND WITH TAG
-        $this->assertEquals(7, count($this->repo->findWithTag($tag1)));
+        $this->assertCount(7, $this->repo->findWithTag($tag1));
         $limit = 3;
-        $this->assertEquals(3, $this->repo->findWithTag($tag1, $sort, $limit)->count(true));
+        $this->assertCount(3, $this->repo->findWithTag($tag1, $sort, $limit));
         $page = 0;
-        $this->assertEquals(3, $this->repo->findWithTag($tag1, $sort, $limit, $page)->count(true));
+        $this->assertCount(3, $this->repo->findWithTag($tag1, $sort, $limit, $page));
         $page = 1;
-        $this->assertEquals(3, $this->repo->findWithTag($tag1, $sort, $limit, $page)->count(true));
+        $this->assertCount(3, $this->repo->findWithTag($tag1, $sort, $limit, $page));
         $page = 2;
-        $this->assertEquals(1, $this->repo->findWithTag($tag1, $sort, $limit, $page)->count(true));
+        $this->assertCount(1, $this->repo->findWithTag($tag1, $sort, $limit, $page));
         $page = 3;
-        $this->assertEquals(0, $this->repo->findWithTag($tag1, $sort, $limit, $page)->count(true));
+        $this->assertCount(0, $this->repo->findWithTag($tag1, $sort, $limit, $page));
 
         // FIND WITH TAG (SORT)
         $page = 1;
         $arrayAsc = [$mm23, $mm31, $mm33];
-        $this->assertEquals($arrayAsc, array_values($this->repo->findWithTag($tag1, $sortAsc, $limit, $page)->toArray()));
+        $this->assertEquals($arrayAsc, $this->repo->findWithTag($tag1, $sortAsc, $limit, $page));
         $arrayDesc = [$mm23, $mm22, $mm12];
-        $this->assertEquals($arrayDesc, array_values($this->repo->findWithTag($tag1, $sortDesc, $limit, $page)->toArray()));
+        $this->assertEquals($arrayDesc, $this->repo->findWithTag($tag1, $sortDesc, $limit, $page));
 
-        $this->assertEquals(2, count($this->repo->findWithTag($tag2)));
+        $this->assertCount(2, $this->repo->findWithTag($tag2));
         $limit = 1;
-        $this->assertEquals(1, $this->repo->findWithTag($tag2, $sort, $limit)->count(true));
+        $this->assertCount(1, $this->repo->findWithTag($tag2, $sort, $limit));
         $page = 0;
-        $this->assertEquals(1, $this->repo->findWithTag($tag2, $sort, $limit, $page)->count(true));
+        $this->assertCount(1, $this->repo->findWithTag($tag2, $sort, $limit, $page));
         $page = 1;
-        $this->assertEquals(1, $this->repo->findWithTag($tag2, $sort, $limit, $page)->count(true));
+        $this->assertCount(1, $this->repo->findWithTag($tag2, $sort, $limit, $page));
 
         //FIND WITH GENERAL TAG
-        $this->assertEquals(7, count($this->repo->findWithGeneralTag($tag1)));
+        $this->assertCount(7, $this->repo->findWithGeneralTag($tag1));
         $limit = 3;
-        $this->assertEquals(3, $this->repo->findWithGeneralTag($tag1, $sort, $limit)->count(true));
+        $this->assertEquals(3, $this->repo->findWithGeneralTag($tag1, $sort, $limit));
         $page = 1;
-        $this->assertEquals(3, $this->repo->findWithGeneralTag($tag1, $sort, $limit, $page)->count(true));
-        $this->assertEquals(2, count($this->repo->findWithGeneralTag($tag2)));
-        $this->assertEquals(0, count($this->repo->findWithGeneralTag($tag3)));
+        $this->assertCount(3, $this->repo->findWithGeneralTag($tag1, $sort, $limit, $page));
+        $this->assertCount(2, $this->repo->findWithGeneralTag($tag2));
+        $this->assertCount(0, $this->repo->findWithGeneralTag($tag3));
         //FIND WITH GENERAL TAG (SORT)
         $arrayAsc = [$mm23, $mm31, $mm33];
-        $this->assertEquals($arrayAsc, array_values($this->repo->findWithGeneralTag($tag1, $sortAsc, $limit, $page)->toArray()));
+        $this->assertEquals($arrayAsc, $this->repo->findWithGeneralTag($tag1, $sortAsc, $limit, $page));
         $arrayDesc = [$mm23, $mm22, $mm12];
-        $this->assertEquals($arrayDesc, array_values($this->repo->findWithGeneralTag($tag1, $sortDesc, $limit, $page)->toArray()));
+        $this->assertEquals($arrayDesc, $this->repo->findWithGeneralTag($tag1, $sortDesc, $limit, $page));
 
         // FIND ONE WITH TAG
         $this->assertEquals($mm11, $this->repo->findOneWithTag($tag1));
 
         // FIND WITH ANY TAG
         $arrayTags = [$tag1, $tag2, $tag3];
-        $this->assertEquals(8, $this->repo->findWithAnyTag($arrayTags)->count(true));
+        $this->assertCount(8, $this->repo->findWithAnyTag($arrayTags));
         $limit = 3;
-        $this->assertEquals(3, $this->repo->findWithAnyTag($arrayTags, $sort, $limit)->count(true));
+        $this->assertCount(3, $this->repo->findWithAnyTag($arrayTags, $sort, $limit));
         $page = 0;
-        $this->assertEquals(3, $this->repo->findWithAnyTag($arrayTags, $sort, $limit, $page)->count(true));
+        $this->assertCount(3, $this->repo->findWithAnyTag($arrayTags, $sort, $limit, $page));
         $page = 1;
-        $this->assertEquals(3, $this->repo->findWithAnyTag($arrayTags, $sort, $limit, $page)->count(true));
+        $this->assertCount(3, $this->repo->findWithAnyTag($arrayTags, $sort, $limit, $page));
         $page = 2;
-        $this->assertEquals(2, $this->repo->findWithAnyTag($arrayTags, $sort, $limit, $page)->count(true));
+        $this->assertCount(2, $this->repo->findWithAnyTag($arrayTags, $sort, $limit, $page));
 
         // FIND WITH ANY TAG (SORT)
         $arrayAsc = [$mm11, $mm12, $mm21, $mm22, $mm23, $mm31, $mm33, $mm34];
-        $this->assertEquals($arrayAsc, array_values($this->repo->findWithAnyTag($arrayTags, $sortAsc)->toArray()));
+        $this->assertEquals($arrayAsc, $this->repo->findWithAnyTag($arrayTags, $sortAsc));
         $limit = 3;
         $arrayAsc = [$mm11, $mm12, $mm21];
-        $this->assertEquals($arrayAsc, array_values($this->repo->findWithAnyTag($arrayTags, $sortAsc, $limit)->toArray()));
+        $this->assertEquals($arrayAsc, $this->repo->findWithAnyTag($arrayTags, $sortAsc, $limit));
         $page = 0;
         $arrayAsc = [$mm11, $mm12, $mm21];
-        $this->assertEquals($arrayAsc, array_values($this->repo->findWithAnyTag($arrayTags, $sortAsc, $limit, $page)->toArray()));
+        $this->assertEquals($arrayAsc, $this->repo->findWithAnyTag($arrayTags, $sortAsc, $limit, $page));
         $page = 1;
         $arrayAsc = [$mm22, $mm23, $mm31];
-        $this->assertEquals($arrayAsc, array_values($this->repo->findWithAnyTag($arrayTags, $sortAsc, $limit, $page)->toArray()));
+        $this->assertEquals($arrayAsc, $this->repo->findWithAnyTag($arrayTags, $sortAsc, $limit, $page));
         $page = 2;
         $arrayAsc = [$mm33, $mm34];
-        $this->assertEquals($arrayAsc, array_values($this->repo->findWithAnyTag($arrayTags, $sortAsc, $limit, $page)->toArray()));
+        $this->assertEquals($arrayAsc, $this->repo->findWithAnyTag($arrayTags, $sortAsc, $limit, $page));
 
         $arrayDesc = [$mm34, $mm33, $mm31, $mm23, $mm22, $mm21, $mm12, $mm11];
-        $this->assertEquals($arrayDesc, array_values($this->repo->findWithAnyTag($arrayTags, $sortDesc)->toArray()));
+        $this->assertEquals($arrayDesc, $this->repo->findWithAnyTag($arrayTags, $sortDesc));
         $limit = 5;
         $page = 0;
         $arrayDesc = [$mm34, $mm33, $mm31, $mm23, $mm22];
-        $this->assertEquals($arrayDesc, array_values($this->repo->findWithAnyTag($arrayTags, $sortDesc, $limit, $page)->toArray()));
+        $this->assertEquals($arrayDesc, $this->repo->findWithAnyTag($arrayTags, $sortDesc, $limit, $page));
         $page = 1;
         $arrayDesc = [$mm21, $mm12, $mm11];
-        $this->assertEquals($arrayDesc, array_values($this->repo->findWithAnyTag($arrayTags, $sortDesc, $limit, $page)->toArray()));
+        $this->assertEquals($arrayDesc, $this->repo->findWithAnyTag($arrayTags, $sortDesc, $limit, $page));
 
         // Add more tags
         $mm32->addTag($tag3);
         $this->dm->persist($mm32);
         $this->dm->flush();
-        $this->assertEquals(9, $this->repo->findWithAnyTag($arrayTags)->count(true));
+        $this->assertCount(9, $this->repo->findWithAnyTag($arrayTags));
 
         $arrayTags = [$tag2, $tag3];
-        $this->assertEquals(3, $this->repo->findWithAnyTag($arrayTags)->count(true));
+        $this->assertCount(3, $this->repo->findWithAnyTag($arrayTags));
 
         // FIND WITH ALL TAGS
         $mm32->addTag($tag2);
@@ -1241,7 +1241,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->dm->flush();
 
         $arrayTags = [$tag1, $tag2];
-        $this->assertEquals(2, $this->repo->findWithAllTags($arrayTags)->count(true));
+        $this->assertCount(2, $this->repo->findWithAllTags($arrayTags));
 
         $mm12->addTag($tag2);
         $mm22->addTag($tag2);
@@ -1249,64 +1249,64 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->dm->persist($mm22);
         $this->dm->flush();
 
-        $this->assertEquals(4, $this->repo->findWithAllTags($arrayTags)->count(true));
+        $this->assertCount(4, $this->repo->findWithAllTags($arrayTags));
         $limit = 3;
-        $this->assertEquals(3, $this->repo->findWithAllTags($arrayTags, $sort, $limit)->count(true));
+        $this->assertCount(3, $this->repo->findWithAllTags($arrayTags, $sort, $limit));
         $page = 0;
-        $this->assertEquals(3, $this->repo->findWithAllTags($arrayTags, $sort, $limit, $page)->count(true));
+        $this->assertCount(3, $this->repo->findWithAllTags($arrayTags, $sort, $limit, $page));
         $page = 1;
-        $this->assertEquals(1, $this->repo->findWithAllTags($arrayTags, $sort, $limit, $page)->count(true));
+        $this->assertCount(1, $this->repo->findWithAllTags($arrayTags, $sort, $limit, $page));
 
         $arrayTags = [$tag2, $tag3];
-        $this->assertEquals(1, $this->repo->findWithAllTags($arrayTags)->count(true));
+        $this->assertCount(1, $this->repo->findWithAllTags($arrayTags));
 
         // FIND WITH ALL TAGS (SORT)
         $arrayTags = [$tag1, $tag2];
         $arrayAsc = [$mm11, $mm12, $mm13, $mm22];
-        $this->assertEquals($arrayAsc, array_values($this->repo->findWithAllTags($arrayTags, $sortAsc)->toArray()));
+        $this->assertEquals($arrayAsc, $this->repo->findWithAllTags($arrayTags, $sortAsc));
         $arrayDesc = [$mm22, $mm13, $mm12, $mm11];
-        $this->assertEquals($arrayDesc, array_values($this->repo->findWithAllTags($arrayTags, $sortDesc)->toArray()));
+        $this->assertEquals($arrayDesc, $this->repo->findWithAllTags($arrayTags, $sortDesc));
         $limit = 3;
         $arrayAsc = [$mm11, $mm12, $mm13];
-        $this->assertEquals($arrayAsc, array_values($this->repo->findWithAllTags($arrayTags, $sortAsc, $limit)->toArray()));
+        $this->assertEquals($arrayAsc, $this->repo->findWithAllTags($arrayTags, $sortAsc, $limit));
         $page = 1;
         $arrayAsc = [$mm22];
-        $this->assertEquals($arrayAsc, array_values($this->repo->findWithAllTags($arrayTags, $sortAsc, $limit, $page)->toArray()));
+        $this->assertEquals($arrayAsc, $this->repo->findWithAllTags($arrayTags, $sortAsc, $limit, $page));
 
         $limit = 2;
         $page = 1;
         $arrayDesc = [$mm12, $mm11];
-        $this->assertEquals($arrayDesc, array_values($this->repo->findWithAllTags($arrayTags, $sortDesc, $limit, $page)->toArray()));
+        $this->assertEquals($arrayDesc, $this->repo->findWithAllTags($arrayTags, $sortDesc, $limit, $page));
 
         // FIND ONE WITH ALL TAGS
         $arrayTags = [$tag1, $tag2];
         $this->assertEquals($mm11, $this->repo->findOneWithAllTags($arrayTags));
 
         // FIND WITHOUT TAG
-        $this->assertEquals(9, $this->repo->findWithoutTag($tag3)->count(true));
+        $this->assertCount(9, $this->repo->findWithoutTag($tag3));
         $limit = 4;
-        $this->assertEquals(4, $this->repo->findWithoutTag($tag3, $sort, $limit)->count(true));
+        $this->assertCount(4, $this->repo->findWithoutTag($tag3, $sort, $limit));
         $page = 0;
-        $this->assertEquals(4, $this->repo->findWithoutTag($tag3, $sort, $limit, $page)->count(true));
+        $this->assertCount(4, $this->repo->findWithoutTag($tag3, $sort, $limit, $page));
         $page = 1;
-        $this->assertEquals(4, $this->repo->findWithoutTag($tag3, $sort, $limit, $page)->count(true));
+        $this->assertCount(4, $this->repo->findWithoutTag($tag3, $sort, $limit, $page));
         $page = 2;
-        $this->assertEquals(1, $this->repo->findWithoutTag($tag3, $sort, $limit, $page)->count(true));
+        $this->assertCount(1, $this->repo->findWithoutTag($tag3, $sort, $limit, $page));
         $page = 3;
-        $this->assertEquals(0, $this->repo->findWithoutTag($tag3, $sort, $limit, $page)->count(true));
+        $this->assertCount(0, $this->repo->findWithoutTag($tag3, $sort, $limit, $page));
 
         // FIND WITHOUT TAG (SORT)
         $arrayAsc = [$mm11, $mm12, $mm13, $mm21, $mm22, $mm23, $mm31, $mm33, $mm34];
-        $this->assertEquals($arrayAsc, array_values($this->repo->findWithoutTag($tag3, $sortAsc)->toArray()));
+        $this->assertEquals($arrayAsc, $this->repo->findWithoutTag($tag3, $sortAsc));
         $limit = 6;
         $arrayAsc = [$mm11, $mm12, $mm13, $mm21, $mm22, $mm23];
-        $this->assertEquals($arrayAsc, array_values($this->repo->findWithoutTag($tag3, $sortAsc, $limit)->toArray()));
+        $this->assertEquals($arrayAsc, $this->repo->findWithoutTag($tag3, $sortAsc, $limit));
         $page = 1;
         $arrayAsc = [$mm31, $mm33, $mm34];
-        $this->assertEquals($arrayAsc, array_values($this->repo->findWithoutTag($tag3, $sortAsc, $limit, $page)->toArray()));
+        $this->assertEquals($arrayAsc, $this->repo->findWithoutTag($tag3, $sortAsc, $limit, $page));
 
         $arrayDesc = [$mm13, $mm12, $mm11];
-        $this->assertEquals($arrayDesc, array_values($this->repo->findWithoutTag($tag3, $sortDesc, $limit, $page)->toArray()));
+        $this->assertEquals($arrayDesc, $this->repo->findWithoutTag($tag3, $sortDesc, $limit, $page));
 
         // FIND ONE WITHOUT TAG
         $this->assertEquals($mm23, $this->repo->findOneWithoutTag($tag2));
@@ -1315,35 +1315,35 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
 
         // FIND WITHOUT ALL TAGS
         $arrayTags = [$tag2, $tag3];
-        $this->assertEquals(4, $this->repo->findWithoutAllTags($arrayTags)->count(true));
+        $this->assertCount(4, $this->repo->findWithoutAllTags($arrayTags));
         $limit = 3;
-        $this->assertEquals(3, $this->repo->findWithoutAllTags($arrayTags, $sort, $limit)->count(true));
+        $this->assertCount(3, $this->repo->findWithoutAllTags($arrayTags, $sort, $limit));
         $page = 0;
-        $this->assertEquals(3, $this->repo->findWithoutAllTags($arrayTags, $sort, $limit, $page)->count(true));
+        $this->assertCount(3, $this->repo->findWithoutAllTags($arrayTags, $sort, $limit, $page));
         $page = 1;
-        $this->assertEquals(1, $this->repo->findWithoutAllTags($arrayTags, $sort, $limit, $page)->count(true));
+        $this->assertCount(1, $this->repo->findWithoutAllTags($arrayTags, $sort, $limit, $page));
 
         $arrayTags = [$tag1, $tag3];
-        $this->assertEquals(1, $this->repo->findWithoutAllTags($arrayTags)->count(true));
+        $this->assertCount(1, $this->repo->findWithoutAllTags($arrayTags));
 
         $arrayTags = [$tag1, $tag2];
-        $this->assertEquals(0, $this->repo->findWithoutAllTags($arrayTags)->count(true));
+        $this->assertCount(0, $this->repo->findWithoutAllTags($arrayTags));
 
         // FIND WITHOUT ALL TAGS (SORT)
         $arrayTags = [$tag2, $tag3];
         $arrayAsc = [$mm23, $mm31, $mm33, $mm34];
-        $this->assertEquals($arrayAsc, array_values($this->repo->findWithoutAllTags($arrayTags, $sortAsc)->toArray()));
+        $this->assertEquals($arrayAsc, $this->repo->findWithoutAllTags($arrayTags, $sortAsc));
         $limit = 3;
         $page = 1;
         $arrayAsc = [$mm34];
-        $this->assertEquals($arrayAsc, array_values($this->repo->findWithoutAllTags($arrayTags, $sortAsc, $limit, $page)->toArray()));
+        $this->assertEquals($arrayAsc, $this->repo->findWithoutAllTags($arrayTags, $sortAsc, $limit, $page));
 
         $page = 0;
         $arrayDesc = [$mm34, $mm33, $mm31];
-        $this->assertEquals($arrayDesc, array_values($this->repo->findWithoutAllTags($arrayTags, $sortDesc, $limit, $page)->toArray()));
+        $this->assertEquals($arrayDesc, $this->repo->findWithoutAllTags($arrayTags, $sortDesc, $limit, $page));
     }
 
-    public function testFindSeriesFieldWithTags()
+    public function testFindSeriesFieldWithTags(): void
     {
         $tag1 = new Tag();
         $tag1->setCod('tag1');
@@ -1411,25 +1411,25 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->dm->flush();
 
         // FIND SERIES FIELD WITH TAG
-        $this->assertEquals(3, count($this->repo->findSeriesFieldWithTag($tag1)));
-        $this->assertEquals(1, count($this->repo->findSeriesFieldWithTag($tag3)));
+        $this->assertCount(3, $this->repo->findSeriesFieldWithTag($tag1));
+        $this->assertCount(1, $this->repo->findSeriesFieldWithTag($tag3));
 
         // FIND ONE SERIES FIELD WITH TAG
         $this->assertEquals($series3->getId(), $this->repo->findOneSeriesFieldWithTag($tag3));
 
         // FIND SERIES FIELD WITH ANY TAG
         $arrayTags = [$tag1, $tag2];
-        $this->assertEquals(3, $this->repo->findSeriesFieldWithAnyTag($arrayTags)->count(true));
+        $this->assertCount(3, $this->repo->findSeriesFieldWithAnyTag($arrayTags));
 
         $arrayTags = [$tag3];
-        $this->assertEquals(1, $this->repo->findSeriesFieldWithAnyTag($arrayTags)->count(true));
+        $this->assertCount(1, $this->repo->findSeriesFieldWithAnyTag($arrayTags));
 
         // FIND SERIES FIELD WITH ALL TAGS
         $arrayTags = [$tag1, $tag2];
-        $this->assertEquals(2, $this->repo->findSeriesFieldWithAllTags($arrayTags)->count(true));
+        $this->assertCount(2, $this->repo->findSeriesFieldWithAllTags($arrayTags));
 
         $arrayTags = [$tag2, $tag3];
-        $this->assertEquals(1, $this->repo->findSeriesFieldWithAllTags($arrayTags)->count(true));
+        $this->assertCount(1, $this->repo->findSeriesFieldWithAllTags($arrayTags));
 
         // FIND ONE SERIES FIELD WITH ALL TAGS
         $arrayTags = [$tag1, $tag2];
@@ -1439,7 +1439,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->assertEquals($series3->getId(), $this->repo->findOneSeriesFieldWithAllTags($arrayTags));
     }
 
-    public function testFindDistinctPics()
+    public function testFindDistinctPics(): void
     {
         $pic1 = new Pic();
         $url1 = 'http://domain.com/pic1.png';
@@ -1494,16 +1494,16 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->dm->persist($mm21);
         $this->dm->flush();
 
-        $this->assertEquals(3, count($mm11->getPics()));
-        $this->assertEquals(3, count($this->repo->find($mm11->getId())->getPics()));
-        $this->assertEquals(1, count($mm12->getPics()));
-        $this->assertEquals(1, count($this->repo->find($mm12->getId())->getPics()));
-        $this->assertEquals(1, count($mm21->getPics()));
-        $this->assertEquals(1, count($this->repo->find($mm21->getId())->getPics()));
+        $this->assertCount(3, $mm11->getPics());
+        $this->assertCount(3, $this->repo->find($mm11->getId())->getPics());
+        $this->assertCount(1, $mm12->getPics());
+        $this->assertCount(1, $this->repo->find($mm12->getId())->getPics());
+        $this->assertCount(1, $mm21->getPics());
+        $this->assertCount(1, $this->repo->find($mm21->getId())->getPics());
 
-        $this->assertEquals(3, count($this->repo->findDistinctUrlPicsInSeries($series1)));
+        $this->assertCount(3, $this->repo->findDistinctUrlPicsInSeries($series1));
 
-        $this->assertEquals(4, count($this->repo->findDistinctUrlPics()));
+        $this->assertCount(4, $this->repo->findDistinctUrlPics());
 
         $mm11->setPublicDate(new \DateTime('2015-01-03 15:05:16'));
         $mm12->setPublicDate(new \DateTime('2015-01-03 15:05:20'));
@@ -1515,7 +1515,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->dm->flush();
 
         $arrayPics = [$pic1->getUrl(), $pic2->getUrl(), $pic3->getUrl(), $pic5->getUrl()];
-        //$this->assertEquals($arrayPics, $this->repo->findDistinctUrlPics()->toArray());
+        //$this->assertEquals($arrayPics, $this->repo->findDistinctUrlPics());
 
         $mm11->setPublicDate(new \DateTime('2015-01-13 15:05:16'));
         $mm12->setPublicDate(new \DateTime('2015-01-23 15:05:20'));
@@ -1527,10 +1527,10 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->dm->flush();
 
         $arrayPics = [$pic5->getUrl(), $pic1->getUrl(), $pic3->getUrl(), $pic3->getUrl()];
-        //$this->assertEquals($arrayPics, $this->repo->findDistinctUrlPics()->toArray());
+        //$this->assertEquals($arrayPics, $this->repo->findDistinctUrlPics());
     }
 
-    public function testFindOrderedBy()
+    public function testFindOrderedBy(): void
     {
         $series = $this->createSeries('Series');
         $mm1 = $this->factoryService->createMultimediaObject($series);
@@ -1560,23 +1560,23 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $sortRecDateAsc = ['record_date' => 'asc'];
         $sortRecDateDesc = ['record_date' => 'desc'];
 
-        $this->assertEquals(3, $this->repo->findOrderedBy($series, $sort)->count(true));
-        $this->assertEquals(3, $this->repo->findOrderedBy($series, $sortPubDateAsc)->count(true));
-        $this->assertEquals(3, $this->repo->findOrderedBy($series, $sortPubDateDesc)->count(true));
-        $this->assertEquals(3, $this->repo->findOrderedBy($series, $sortRecDateAsc)->count(true));
-        $this->assertEquals(3, $this->repo->findOrderedBy($series, $sortRecDateDesc)->count(true));
+        $this->assertCount(3, $this->repo->findOrderedBy($series, $sort));
+        $this->assertCount(3, $this->repo->findOrderedBy($series, $sortPubDateAsc));
+        $this->assertCount(3, $this->repo->findOrderedBy($series, $sortPubDateDesc));
+        $this->assertCount(3, $this->repo->findOrderedBy($series, $sortRecDateAsc));
+        $this->assertCount(3, $this->repo->findOrderedBy($series, $sortRecDateDesc));
 
         $arrayMms = [$mm1, $mm2, $mm3];
-        $this->assertEquals($arrayMms, array_values($this->repo->findOrderedBy($series, $sortPubDateAsc)->toArray()));
+        $this->assertEquals($arrayMms, $this->repo->findOrderedBy($series, $sortPubDateAsc));
         $arrayMms = [$mm3, $mm2, $mm1];
-        $this->assertEquals($arrayMms, array_values($this->repo->findOrderedBy($series, $sortPubDateDesc)->toArray()));
+        $this->assertEquals($arrayMms, $this->repo->findOrderedBy($series, $sortPubDateDesc));
         $arrayMms = [$mm3, $mm1, $mm2];
-        $this->assertEquals($arrayMms, array_values($this->repo->findOrderedBy($series, $sortRecDateAsc)->toArray()));
+        $this->assertEquals($arrayMms, $this->repo->findOrderedBy($series, $sortRecDateAsc));
         $arrayMms = [$mm2, $mm1, $mm3];
-        $this->assertEquals($arrayMms, array_values($this->repo->findOrderedBy($series, $sortRecDateDesc)->toArray()));
+        $this->assertEquals($arrayMms, $this->repo->findOrderedBy($series, $sortRecDateDesc));
     }
 
-    public function testEmbeddedTagChildOfTag()
+    public function testEmbeddedTagChildOfTag(): void
     {
         $tag1 = new Tag();
         $tag1->setCod('tag1');
@@ -1630,7 +1630,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->assertFalse($embeddedTag3->isChildOf($tag4));
     }
 
-    public function testCountInSeries()
+    public function testCountInSeries(): void
     {
         $series1 = new Series();
         $series1->setNumericalID(111);
@@ -1688,7 +1688,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->assertEquals(3, $this->repo->countInSeries($series2));
     }
 
-    public function testCountPeopleWithRoleCode()
+    public function testCountPeopleWithRoleCode(): void
     {
         $series_type = $this->createSeriesType('Medieval Fantasy Sitcom');
 
@@ -1741,19 +1741,19 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->dm->flush();
 
         $peopleLord = $this->repo->findPeopleWithRoleCode($role_lord->getCod());
-        $this->assertEquals(4, count($peopleLord));
+        $this->assertCount(4, $peopleLord);
         $peopleRanger = $this->repo->findPeopleWithRoleCode($role_ranger->getCod());
-        $this->assertEquals(3, count($peopleRanger));
+        $this->assertCount(3, $peopleRanger);
         $peopleHand = $this->repo->findPeopleWithRoleCode($role_hand->getCod());
-        $this->assertEquals(2, count($peopleHand));
+        $this->assertCount(2, $peopleHand);
 
-        $person = $this->repo->findPersonWithRoleCodeAndEmail($role_ranger->getCod(), $person_mark->getEmail());
-        $this->assertEquals(1, count($person));
-        $person = $this->repo->findPersonWithRoleCodeAndEmail($role_lord->getCod(), $person_ned->getEmail());
-        $this->assertEquals(2, count($person));
+        $person = $this->repo->findPeopleWithRoleCodeAndId($role_ranger->getCod(), $person_mark->getEmail());
+        $this->assertCount(1, $person);
+        $person = $this->repo->findPeopleWithRoleCodeAndId($role_lord->getCod(), $person_ned->getEmail());
+        $this->assertCount(2, $person);
     }
 
-    public function testFindRelatedMultimediaObjects()
+    public function testFindRelatedMultimediaObjects(): void
     {
         $tagUNESCO = new Tag();
         $tagUNESCO->setCod('UNESCO');
@@ -1813,10 +1813,10 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->dm->persist($series3);
         $this->dm->flush();
 
-        $this->assertEquals(0, count($this->repo->findRelatedMultimediaObjects($mm33)));
+        $this->assertCount(0, $this->repo->findRelatedMultimediaObjects($mm33));
     }
 
-    public function testCount()
+    public function testCount(): void
     {
         $series1 = $this->createSeries('Series 1');
         $series2 = $this->createSeries('Series 2');
@@ -1832,11 +1832,11 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $mm3 = $this->createMultimediaObjectAssignedToSeries('mm3', $series2);
         $mm4 = $this->createMultimediaObjectAssignedToSeries('mm4', $series3);
 
-        $this->assertEquals(4, $this->repo->count());
+        $this->assertCount(4, $this->repo->count());
         $this->assertEquals(492, $this->repo->countDuration());
     }
 
-    public function testEmbeddedPerson()
+    public function testEmbeddedPerson(): void
     {
         $person = $this->createPerson('Person');
         $embeddedPerson = new EmbeddedPerson($person);
@@ -1921,7 +1921,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->assertEquals($bio, $embeddedPerson->getBio());
     }
 
-    public function testEmbeddedRole()
+    public function testEmbeddedRole(): void
     {
         $role = $this->createRole('Role');
         $embeddedRole = new EmbeddedRole($role);
@@ -2003,7 +2003,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         //var_dump($embeddedRole->createEmbeddedPerson($role));
     }
 
-    public function testEmbeddedTag()
+    public function testEmbeddedTag(): void
     {
         $tag = new Tag();
         $tag->setCod('tag');
@@ -2026,7 +2026,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->assertFalse($embeddedTag->isDescendantOf($tag1));
     }
 
-    public function testFindByTagCod()
+    public function testFindByTagCod(): void
     {
         $tag = new Tag();
         $tag->setCod('tag');
@@ -2041,12 +2041,12 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->assertCount(0, $this->repo->findByTagCod($tag, $sort));
 
         $addedTags = $this->tagService->addTagToMultimediaObject($multimediaObject, $tag->getId());
-        $multimediaObjects = $this->repo->findByTagCod($tag, $sort)->toArray();
+        $multimediaObjects = $this->repo->findByTagCod($tag, $sort);
         $this->assertCount(1, $multimediaObjects);
 //        $this->assertTrue(in_array($multimediaObject, $multimediaObjects));
     }
 
-    public function testFindAllByTag()
+    public function testFindAllByTag(): void
     {
         $tag = new Tag();
         $tag->setCod('tag');
@@ -2065,34 +2065,34 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $prototype = $this->repo->findPrototype($series);
         $this->tagService->addTagToMultimediaObject($prototype, $tag->getId());
 
-        $multimediaObjects = $this->repo->findAllByTag($tag, $sort)->toArray();
+        $multimediaObjects = $this->repo->findAllByTag($tag, $sort);
         $this->assertCount(2, $multimediaObjects);
-        $this->assertTrue(in_array($prototype, $multimediaObjects));
+        $this->assertContains($prototype, $multimediaObjects);
 
         $this->tagService->removeTagFromMultimediaObject($multimediaObject, $tag->getId());
 
-        $multimediaObjects = $this->repo->findAllByTag($tag, $sort)->toArray();
+        $multimediaObjects = $this->repo->findAllByTag($tag, $sort);
 
         $this->assertCount(1, $multimediaObjects);
-        $this->assertTrue(in_array($prototype, $multimediaObjects));
-        $this->assertFalse(in_array($multimediaObject, $multimediaObjects));
+        $this->assertContains($prototype, $multimediaObjects);
+        $this->assertNotContains($multimediaObject, $multimediaObjects);
     }
 
-    public function testMultimediaObjectGroups()
+    public function testMultimediaObjectGroups(): void
     {
-        $this->assertEquals(0, count($this->groupRepo->findAll()));
+        $this->assertCount(0, $this->groupRepo->findAll());
 
         $key1 = 'Group1';
         $name1 = 'Group 1';
         $group1 = $this->createGroup($key1, $name1);
 
-        $this->assertEquals(1, count($this->groupRepo->findAll()));
+        $this->assertCount(1, $this->groupRepo->findAll());
 
         $key2 = 'Group2';
         $name2 = 'Group 2';
         $group2 = $this->createGroup($key2, $name2);
 
-        $this->assertEquals(2, count($this->groupRepo->findAll()));
+        $this->assertCount(2, $this->groupRepo->findAll());
 
         $multimediaObject = new MultimediaObject();
         $multimediaObject->setNumericalID(25);
@@ -2105,7 +2105,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
 
         $this->assertTrue($multimediaObject->containsGroup($group1));
         $this->assertFalse($multimediaObject->containsGroup($group2));
-        $this->assertEquals(1, $multimediaObject->getGroups()->count());
+        $this->assertCount(1, $multimediaObject->getGroups());
 
         $multimediaObject->addGroup($group2);
 
@@ -2114,7 +2114,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
 
         $this->assertTrue($multimediaObject->containsGroup($group1));
         $this->assertTrue($multimediaObject->containsGroup($group2));
-        $this->assertEquals(2, $multimediaObject->getGroups()->count());
+        $this->assertCount(2, $multimediaObject->getGroups());
 
         $multimediaObject->removeGroup($group1);
 
@@ -2123,12 +2123,12 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
 
         $this->assertFalse($multimediaObject->containsGroup($group1));
         $this->assertTrue($multimediaObject->containsGroup($group2));
-        $this->assertEquals(1, $multimediaObject->getGroups()->count());
+        $this->assertCount(1, $multimediaObject->getGroups());
 
-        $this->assertEquals(2, count($this->groupRepo->findAll()));
+        $this->assertCount(2, $this->groupRepo->findAll());
     }
 
-    public function testFindSeriesFieldByPersonIdAndRoleCodOrGroups()
+    public function testFindSeriesFieldByPersonIdAndRoleCodOrGroups(): void
     {
         $key1 = 'Group1';
         $name1 = 'Group 1';
@@ -2234,31 +2234,31 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $seriesPerson2Role2User1 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role2->getCod(), $user1->getGroups());
         $seriesPerson2Role3User1 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role3->getCod(), $user1->getGroups());
 
-        $this->assertEquals(1, count($seriesPerson1Role1User1));
-        $this->assertEquals(0, count($seriesPerson1Role2User1));
-        $this->assertEquals(1, count($seriesPerson1Role3User1));
-        $this->assertEquals(0, count($seriesPerson2Role1User1));
-        $this->assertEquals(1, count($seriesPerson2Role2User1));
-        $this->assertEquals(0, count($seriesPerson2Role3User1));
+        $this->assertCount(1, $seriesPerson1Role1User1);
+        $this->assertCount(0, $seriesPerson1Role2User1);
+        $this->assertCount(1, $seriesPerson1Role3User1);
+        $this->assertCount(0, $seriesPerson2Role1User1);
+        $this->assertCount(1, $seriesPerson2Role2User1);
+        $this->assertCount(0, $seriesPerson2Role3User1);
 
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson1Role1User1->toArray()));
-        $this->assertFalse(in_array($series2->getId(), $seriesPerson1Role1User1->toArray()));
-        $this->assertFalse(in_array($series3->getId(), $seriesPerson1Role1User1->toArray()));
-        $this->assertFalse(in_array($series1->getId(), $seriesPerson1Role2User1->toArray()));
-        $this->assertFalse(in_array($series2->getId(), $seriesPerson1Role2User1->toArray()));
-        $this->assertFalse(in_array($series3->getId(), $seriesPerson1Role2User1->toArray()));
-        $this->assertFalse(in_array($series1->getId(), $seriesPerson1Role3User1->toArray()));
-        $this->assertFalse(in_array($series2->getId(), $seriesPerson1Role3User1->toArray()));
-        $this->assertTrue(in_array($series3->getId(), $seriesPerson1Role3User1->toArray()));
-        $this->assertFalse(in_array($series1->getId(), $seriesPerson2Role1User1->toArray()));
-        $this->assertFalse(in_array($series2->getId(), $seriesPerson2Role1User1->toArray()));
-        $this->assertFalse(in_array($series3->getId(), $seriesPerson2Role1User1->toArray()));
-        $this->assertFalse(in_array($series1->getId(), $seriesPerson2Role2User1->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $seriesPerson2Role2User1->toArray()));
-        $this->assertFalse(in_array($series3->getId(), $seriesPerson2Role2User1->toArray()));
-        $this->assertFalse(in_array($series1->getId(), $seriesPerson2Role3User1->toArray()));
-        $this->assertFalse(in_array($series2->getId(), $seriesPerson2Role3User1->toArray()));
-        $this->assertFalse(in_array($series3->getId(), $seriesPerson2Role3User1->toArray()));
+        $this->assertContains($series1->getId(), $seriesPerson1Role1User1);
+        $this->assertNotContains($series2->getId(), $seriesPerson1Role1User1);
+        $this->assertNotContains($series3->getId(), $seriesPerson1Role1User1);
+        $this->assertNotContains($series1->getId(), $seriesPerson1Role2User1);
+        $this->assertNotContains($series2->getId(), $seriesPerson1Role2User1);
+        $this->assertNotContains($series3->getId(), $seriesPerson1Role2User1);
+        $this->assertNotContains($series1->getId(), $seriesPerson1Role3User1);
+        $this->assertNotContains($series2->getId(), $seriesPerson1Role3User1);
+        $this->assertContains($series3->getId(), $seriesPerson1Role3User1);
+        $this->assertNotContains($series1->getId(), $seriesPerson2Role1User1);
+        $this->assertNotContains($series2->getId(), $seriesPerson2Role1User1);
+        $this->assertNotContains($series3->getId(), $seriesPerson2Role1User1);
+        $this->assertNotContains($series1->getId(), $seriesPerson2Role2User1);
+        $this->assertContains($series2->getId(), $seriesPerson2Role2User1);
+        $this->assertNotContains($series3->getId(), $seriesPerson2Role2User1);
+        $this->assertNotContains($series1->getId(), $seriesPerson2Role3User1);
+        $this->assertNotContains($series2->getId(), $seriesPerson2Role3User1);
+        $this->assertNotContains($series3->getId(), $seriesPerson2Role3User1);
 
         $seriesPerson1Role1User2 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role1->getCod(), $user2->getGroups());
         $seriesPerson1Role2User2 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role2->getCod(), $user2->getGroups());
@@ -2267,31 +2267,31 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $seriesPerson2Role2User2 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role2->getCod(), $user2->getGroups());
         $seriesPerson2Role3User2 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role3->getCod(), $user2->getGroups());
 
-        $this->assertEquals(1, count($seriesPerson1Role1User2));
-        $this->assertEquals(1, count($seriesPerson1Role2User2));
-        $this->assertEquals(2, count($seriesPerson1Role3User2));
-        $this->assertEquals(1, count($seriesPerson2Role1User2));
-        $this->assertEquals(2, count($seriesPerson2Role2User2));
-        $this->assertEquals(1, count($seriesPerson2Role3User2));
+        $this->assertCount(1, $seriesPerson1Role1User2);
+        $this->assertCount(1, $seriesPerson1Role2User2);
+        $this->assertCount(2, $seriesPerson1Role3User2);
+        $this->assertCount(1, $seriesPerson2Role1User2);
+        $this->assertCount(2, $seriesPerson2Role2User2);
+        $this->assertCount(1, $seriesPerson2Role3User2);
 
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson1Role1User2->toArray()));
-        $this->assertFalse(in_array($series2->getId(), $seriesPerson1Role1User2->toArray()));
-        $this->assertFalse(in_array($series3->getId(), $seriesPerson1Role1User2->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson1Role2User2->toArray()));
-        $this->assertFalse(in_array($series2->getId(), $seriesPerson1Role2User2->toArray()));
-        $this->assertFalse(in_array($series3->getId(), $seriesPerson1Role2User2->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson1Role3User2->toArray()));
-        $this->assertFalse(in_array($series2->getId(), $seriesPerson1Role3User2->toArray()));
-        $this->assertTrue(in_array($series3->getId(), $seriesPerson1Role3User2->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson2Role1User2->toArray()));
-        $this->assertFalse(in_array($series2->getId(), $seriesPerson2Role1User2->toArray()));
-        $this->assertFalse(in_array($series3->getId(), $seriesPerson2Role1User2->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson2Role2User2->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $seriesPerson2Role2User2->toArray()));
-        $this->assertFalse(in_array($series3->getId(), $seriesPerson2Role2User2->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson2Role3User2->toArray()));
-        $this->assertFalse(in_array($series2->getId(), $seriesPerson2Role3User2->toArray()));
-        $this->assertFalse(in_array($series3->getId(), $seriesPerson2Role3User2->toArray()));
+        $this->assertContains($series1->getId(), $seriesPerson1Role1User2);
+        $this->assertNotContains($series2->getId(), $seriesPerson1Role1User2);
+        $this->assertNotContains($series3->getId(), $seriesPerson1Role1User2);
+        $this->assertContains($series1->getId(), $seriesPerson1Role2User2);
+        $this->assertNotContains($series2->getId(), $seriesPerson1Role2User2);
+        $this->assertNotContains($series3->getId(), $seriesPerson1Role2User2);
+        $this->assertContains($series1->getId(), $seriesPerson1Role3User2);
+        $this->assertNotContains($series2->getId(), $seriesPerson1Role3User2);
+        $this->assertContains($series3->getId(), $seriesPerson1Role3User2);
+        $this->assertContains($series1->getId(), $seriesPerson2Role1User2);
+        $this->assertNotContains($series2->getId(), $seriesPerson2Role1User2);
+        $this->assertNotContains($series3->getId(), $seriesPerson2Role1User2);
+        $this->assertContains($series1->getId(), $seriesPerson2Role2User2);
+        $this->assertContains($series2->getId(), $seriesPerson2Role2User2);
+        $this->assertNotContains($series3->getId(), $seriesPerson2Role2User2);
+        $this->assertContains($series1->getId(), $seriesPerson2Role3User2);
+        $this->assertNotContains($series2->getId(), $seriesPerson2Role3User2);
+        $this->assertNotContains($series3->getId(), $seriesPerson2Role3User2);
 
         $seriesPerson1Role1User3 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role1->getCod(), $user3->getGroups());
         $seriesPerson1Role2User3 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role2->getCod(), $user3->getGroups());
@@ -2300,31 +2300,31 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $seriesPerson2Role2User3 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role2->getCod(), $user3->getGroups());
         $seriesPerson2Role3User3 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role3->getCod(), $user3->getGroups());
 
-        $this->assertEquals(2, count($seriesPerson1Role1User3));
-        $this->assertEquals(2, count($seriesPerson1Role2User3));
-        $this->assertEquals(2, count($seriesPerson1Role3User3));
-        $this->assertEquals(2, count($seriesPerson2Role1User3));
-        $this->assertEquals(3, count($seriesPerson2Role2User3));
-        $this->assertEquals(2, count($seriesPerson2Role3User3));
+        $this->assertCount(2, $seriesPerson1Role1User3);
+        $this->assertCount(2, $seriesPerson1Role2User3);
+        $this->assertCount(2, $seriesPerson1Role3User3);
+        $this->assertCount(2, $seriesPerson2Role1User3);
+        $this->assertCount(3, $seriesPerson2Role2User3);
+        $this->assertCount(2, $seriesPerson2Role3User3);
 
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson1Role1User3->toArray()));
-        $this->assertFalse(in_array($series2->getId(), $seriesPerson1Role1User3->toArray()));
-        $this->assertTrue(in_array($series3->getId(), $seriesPerson1Role1User3->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson1Role2User3->toArray()));
-        $this->assertFalse(in_array($series2->getId(), $seriesPerson1Role2User3->toArray()));
-        $this->assertTrue(in_array($series3->getId(), $seriesPerson1Role2User3->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson1Role3User3->toArray()));
-        $this->assertFalse(in_array($series2->getId(), $seriesPerson1Role3User3->toArray()));
-        $this->assertTrue(in_array($series3->getId(), $seriesPerson1Role3User3->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson2Role1User3->toArray()));
-        $this->assertFalse(in_array($series2->getId(), $seriesPerson2Role1User3->toArray()));
-        $this->assertTrue(in_array($series3->getId(), $seriesPerson2Role1User3->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson2Role2User3->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $seriesPerson2Role2User3->toArray()));
-        $this->assertTrue(in_array($series3->getId(), $seriesPerson2Role2User3->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson2Role3User3->toArray()));
-        $this->assertFalse(in_array($series2->getId(), $seriesPerson2Role3User3->toArray()));
-        $this->assertTrue(in_array($series3->getId(), $seriesPerson2Role3User3->toArray()));
+        $this->assertContains($series1->getId(), $seriesPerson1Role1User3);
+        $this->assertNotContains($series2->getId(), $seriesPerson1Role1User3);
+        $this->assertContains($series3->getId(), $seriesPerson1Role1User3);
+        $this->assertContains($series1->getId(), $seriesPerson1Role2User3);
+        $this->assertNotContains($series2->getId(), $seriesPerson1Role2User3);
+        $this->assertContains($series3->getId(), $seriesPerson1Role2User3);
+        $this->assertContains($series1->getId(), $seriesPerson1Role3User3);
+        $this->assertNotContains($series2->getId(), $seriesPerson1Role3User3);
+        $this->assertContains($series3->getId(), $seriesPerson1Role3User3);
+        $this->assertContains($series1->getId(), $seriesPerson2Role1User3);
+        $this->assertNotContains($series2->getId(), $seriesPerson2Role1User3);
+        $this->assertContains($series3->getId(), $seriesPerson2Role1User3);
+        $this->assertContains($series1->getId(), $seriesPerson2Role2User3);
+        $this->assertContains($series2->getId(), $seriesPerson2Role2User3);
+        $this->assertContains($series3->getId(), $seriesPerson2Role2User3);
+        $this->assertContains($series1->getId(), $seriesPerson2Role3User3);
+        $this->assertNotContains($series2->getId(), $seriesPerson2Role3User3);
+        $this->assertContains($series3->getId(), $seriesPerson2Role3User3);
 
         $seriesPerson1Role1User4 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role1->getCod(), $user4->getGroups());
         $seriesPerson1Role2User4 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role2->getCod(), $user4->getGroups());
@@ -2333,31 +2333,31 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $seriesPerson2Role2User4 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role2->getCod(), $user4->getGroups());
         $seriesPerson2Role3User4 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role3->getCod(), $user4->getGroups());
 
-        $this->assertEquals(2, count($seriesPerson1Role1User4));
-        $this->assertEquals(2, count($seriesPerson1Role2User4));
-        $this->assertEquals(3, count($seriesPerson1Role3User4));
-        $this->assertEquals(2, count($seriesPerson2Role1User4));
-        $this->assertEquals(2, count($seriesPerson2Role2User4));
-        $this->assertEquals(2, count($seriesPerson2Role3User4));
+        $this->assertCount(2, $seriesPerson1Role1User4);
+        $this->assertCount(2, $seriesPerson1Role2User4);
+        $this->assertCount(3, $seriesPerson1Role3User4);
+        $this->assertCount(2, $seriesPerson2Role1User4);
+        $this->assertCount(2, $seriesPerson2Role2User4);
+        $this->assertCount(2, $seriesPerson2Role3User4);
 
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson1Role1User4->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $seriesPerson1Role1User4->toArray()));
-        $this->assertFalse(in_array($series3->getId(), $seriesPerson1Role1User4->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson1Role2User4->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $seriesPerson1Role2User4->toArray()));
-        $this->assertFalse(in_array($series3->getId(), $seriesPerson1Role2User4->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson1Role3User4->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $seriesPerson1Role3User4->toArray()));
-        $this->assertTrue(in_array($series3->getId(), $seriesPerson1Role3User4->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson2Role1User4->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $seriesPerson2Role1User4->toArray()));
-        $this->assertFalse(in_array($series3->getId(), $seriesPerson2Role1User4->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson2Role2User4->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $seriesPerson2Role2User4->toArray()));
-        $this->assertFalse(in_array($series3->getId(), $seriesPerson2Role2User4->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson2Role3User4->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $seriesPerson2Role3User4->toArray()));
-        $this->assertFalse(in_array($series3->getId(), $seriesPerson2Role3User4->toArray()));
+        $this->assertContains($series1->getId(), $seriesPerson1Role1User4);
+        $this->assertContains($series2->getId(), $seriesPerson1Role1User4);
+        $this->assertNotContains($series3->getId(), $seriesPerson1Role1User4);
+        $this->assertContains($series1->getId(), $seriesPerson1Role2User4);
+        $this->assertContains($series2->getId(), $seriesPerson1Role2User4);
+        $this->assertNotContains($series3->getId(), $seriesPerson1Role2User4);
+        $this->assertContains($series1->getId(), $seriesPerson1Role3User4);
+        $this->assertContains($series2->getId(), $seriesPerson1Role3User4);
+        $this->assertContains($series3->getId(), $seriesPerson1Role3User4);
+        $this->assertContains($series1->getId(), $seriesPerson2Role1User4);
+        $this->assertContains($series2->getId(), $seriesPerson2Role1User4);
+        $this->assertNotContains($series3->getId(), $seriesPerson2Role1User4);
+        $this->assertContains($series1->getId(), $seriesPerson2Role2User4);
+        $this->assertContains($series2->getId(), $seriesPerson2Role2User4);
+        $this->assertNotContains($series3->getId(), $seriesPerson2Role2User4);
+        $this->assertContains($series1->getId(), $seriesPerson2Role3User4);
+        $this->assertContains($series2->getId(), $seriesPerson2Role3User4);
+        $this->assertNotContains($series3->getId(), $seriesPerson2Role3User4);
 
         $seriesPerson1Role1User5 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role1->getCod(), $user5->getGroups());
         $seriesPerson1Role2User5 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role2->getCod(), $user5->getGroups());
@@ -2366,31 +2366,31 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $seriesPerson2Role2User5 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role2->getCod(), $user5->getGroups());
         $seriesPerson2Role3User5 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role3->getCod(), $user5->getGroups());
 
-        $this->assertEquals(2, count($seriesPerson1Role1User5));
-        $this->assertEquals(2, count($seriesPerson1Role2User5));
-        $this->assertEquals(2, count($seriesPerson1Role3User5));
-        $this->assertEquals(2, count($seriesPerson2Role1User5));
-        $this->assertEquals(3, count($seriesPerson2Role2User5));
-        $this->assertEquals(2, count($seriesPerson2Role3User5));
+        $this->assertCount(2, $seriesPerson1Role1User5);
+        $this->assertCount(2, $seriesPerson1Role2User5);
+        $this->assertCount(2, $seriesPerson1Role3User5);
+        $this->assertCount(2, $seriesPerson2Role1User5);
+        $this->assertCount(3, $seriesPerson2Role2User5);
+        $this->assertCount(2, $seriesPerson2Role3User5);
 
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson1Role1User5->toArray()));
-        $this->assertFalse(in_array($series2->getId(), $seriesPerson1Role1User5->toArray()));
-        $this->assertTrue(in_array($series3->getId(), $seriesPerson1Role1User5->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson1Role2User5->toArray()));
-        $this->assertFalse(in_array($series2->getId(), $seriesPerson1Role2User5->toArray()));
-        $this->assertTrue(in_array($series3->getId(), $seriesPerson1Role2User5->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson1Role3User5->toArray()));
-        $this->assertFalse(in_array($series2->getId(), $seriesPerson1Role3User5->toArray()));
-        $this->assertTrue(in_array($series3->getId(), $seriesPerson1Role3User5->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson2Role1User5->toArray()));
-        $this->assertFalse(in_array($series2->getId(), $seriesPerson2Role1User5->toArray()));
-        $this->assertTrue(in_array($series3->getId(), $seriesPerson2Role1User5->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson2Role2User5->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $seriesPerson2Role2User5->toArray()));
-        $this->assertTrue(in_array($series3->getId(), $seriesPerson2Role2User5->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson2Role3User5->toArray()));
-        $this->assertFalse(in_array($series2->getId(), $seriesPerson2Role3User5->toArray()));
-        $this->assertTrue(in_array($series3->getId(), $seriesPerson2Role3User5->toArray()));
+        $this->assertContains($series1->getId(), $seriesPerson1Role1User5);
+        $this->assertNotContains($series2->getId(), $seriesPerson1Role1User5);
+        $this->assertContains($series3->getId(), $seriesPerson1Role1User5);
+        $this->assertContains($series1->getId(), $seriesPerson1Role2User5);
+        $this->assertNotContains($series2->getId(), $seriesPerson1Role2User5);
+        $this->assertContains($series3->getId(), $seriesPerson1Role2User5);
+        $this->assertContains($series1->getId(), $seriesPerson1Role3User5);
+        $this->assertNotContains($series2->getId(), $seriesPerson1Role3User5);
+        $this->assertContains($series3->getId(), $seriesPerson1Role3User5);
+        $this->assertContains($series1->getId(), $seriesPerson2Role1User5);
+        $this->assertNotContains($series2->getId(), $seriesPerson2Role1User5);
+        $this->assertContains($series3->getId(), $seriesPerson2Role1User5);
+        $this->assertContains($series1->getId(), $seriesPerson2Role2User5);
+        $this->assertContains($series2->getId(), $seriesPerson2Role2User5);
+        $this->assertContains($series3->getId(), $seriesPerson2Role2User5);
+        $this->assertContains($series1->getId(), $seriesPerson2Role3User5);
+        $this->assertNotContains($series2->getId(), $seriesPerson2Role3User5);
+        $this->assertContains($series3->getId(), $seriesPerson2Role3User5);
 
         $seriesPerson1Role1User6 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role1->getCod(), $user6->getGroups());
         $seriesPerson1Role2User6 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role2->getCod(), $user6->getGroups());
@@ -2399,31 +2399,31 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $seriesPerson2Role2User6 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role2->getCod(), $user6->getGroups());
         $seriesPerson2Role3User6 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role3->getCod(), $user6->getGroups());
 
-        $this->assertEquals(2, count($seriesPerson1Role1User6));
-        $this->assertEquals(2, count($seriesPerson1Role2User6));
-        $this->assertEquals(3, count($seriesPerson1Role3User6));
-        $this->assertEquals(2, count($seriesPerson2Role1User6));
-        $this->assertEquals(2, count($seriesPerson2Role2User6));
-        $this->assertEquals(2, count($seriesPerson2Role3User6));
+        $this->assertCount(2, $seriesPerson1Role1User6);
+        $this->assertCount(2, $seriesPerson1Role2User6);
+        $this->assertCount(3, $seriesPerson1Role3User6);
+        $this->assertCount(2, $seriesPerson2Role1User6);
+        $this->assertCount(2, $seriesPerson2Role2User6);
+        $this->assertCount(2, $seriesPerson2Role3User6);
 
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson1Role1User6->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $seriesPerson1Role1User6->toArray()));
-        $this->assertFalse(in_array($series3->getId(), $seriesPerson1Role1User6->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson1Role2User6->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $seriesPerson1Role2User6->toArray()));
-        $this->assertFalse(in_array($series3->getId(), $seriesPerson1Role2User6->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson1Role3User6->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $seriesPerson1Role3User6->toArray()));
-        $this->assertTrue(in_array($series3->getId(), $seriesPerson1Role3User6->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson2Role1User6->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $seriesPerson2Role1User6->toArray()));
-        $this->assertFalse(in_array($series3->getId(), $seriesPerson2Role1User6->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson2Role2User6->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $seriesPerson2Role2User6->toArray()));
-        $this->assertFalse(in_array($series3->getId(), $seriesPerson2Role2User6->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson2Role3User6->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $seriesPerson2Role3User6->toArray()));
-        $this->assertFalse(in_array($series3->getId(), $seriesPerson2Role3User6->toArray()));
+        $this->assertContains($series1->getId(), $seriesPerson1Role1User6);
+        $this->assertContains($series2->getId(), $seriesPerson1Role1User6);
+        $this->assertNotContains($series3->getId(), $seriesPerson1Role1User6);
+        $this->assertContains($series1->getId(), $seriesPerson1Role2User6);
+        $this->assertContains($series2->getId(), $seriesPerson1Role2User6);
+        $this->assertNotContains($series3->getId(), $seriesPerson1Role2User6);
+        $this->assertContains($series1->getId(), $seriesPerson1Role3User6);
+        $this->assertContains($series2->getId(), $seriesPerson1Role3User6);
+        $this->assertContains($series3->getId(), $seriesPerson1Role3User6);
+        $this->assertContains($series1->getId(), $seriesPerson2Role1User6);
+        $this->assertContains($series2->getId(), $seriesPerson2Role1User6);
+        $this->assertNotContains($series3->getId(), $seriesPerson2Role1User6);
+        $this->assertContains($series1->getId(), $seriesPerson2Role2User6);
+        $this->assertContains($series2->getId(), $seriesPerson2Role2User6);
+        $this->assertNotContains($series3->getId(), $seriesPerson2Role2User6);
+        $this->assertContains($series1->getId(), $seriesPerson2Role3User6);
+        $this->assertContains($series2->getId(), $seriesPerson2Role3User6);
+        $this->assertNotContains($series3->getId(), $seriesPerson2Role3User6);
 
         $seriesPerson1Role1User7 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role1->getCod(), $user7->getGroups());
         $seriesPerson1Role2User7 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role2->getCod(), $user7->getGroups());
@@ -2432,31 +2432,31 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $seriesPerson2Role2User7 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role2->getCod(), $user7->getGroups());
         $seriesPerson2Role3User7 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role3->getCod(), $user7->getGroups());
 
-        $this->assertEquals(3, count($seriesPerson1Role1User7));
-        $this->assertEquals(3, count($seriesPerson1Role2User7));
-        $this->assertEquals(3, count($seriesPerson1Role3User7));
-        $this->assertEquals(3, count($seriesPerson2Role1User7));
-        $this->assertEquals(3, count($seriesPerson2Role2User7));
-        $this->assertEquals(3, count($seriesPerson2Role3User7));
+        $this->assertCount(3, $seriesPerson1Role1User7);
+        $this->assertCount(3, $seriesPerson1Role2User7);
+        $this->assertCount(3, $seriesPerson1Role3User7);
+        $this->assertCount(3, $seriesPerson2Role1User7);
+        $this->assertCount(3, $seriesPerson2Role2User7);
+        $this->assertCount(3, $seriesPerson2Role3User7);
 
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson1Role1User7->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $seriesPerson1Role1User7->toArray()));
-        $this->assertTrue(in_array($series3->getId(), $seriesPerson1Role1User7->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson1Role2User7->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $seriesPerson1Role2User7->toArray()));
-        $this->assertTrue(in_array($series3->getId(), $seriesPerson1Role2User7->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson1Role3User7->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $seriesPerson1Role3User7->toArray()));
-        $this->assertTrue(in_array($series3->getId(), $seriesPerson1Role3User7->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson2Role1User7->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $seriesPerson2Role1User7->toArray()));
-        $this->assertTrue(in_array($series3->getId(), $seriesPerson2Role1User7->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson2Role2User7->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $seriesPerson2Role2User7->toArray()));
-        $this->assertTrue(in_array($series3->getId(), $seriesPerson2Role2User7->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson2Role3User7->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $seriesPerson2Role3User7->toArray()));
-        $this->assertTrue(in_array($series3->getId(), $seriesPerson2Role3User7->toArray()));
+        $this->assertContains($series1->getId(), $seriesPerson1Role1User7);
+        $this->assertContains($series2->getId(), $seriesPerson1Role1User7);
+        $this->assertContains($series3->getId(), $seriesPerson1Role1User7);
+        $this->assertContains($series1->getId(), $seriesPerson1Role2User7);
+        $this->assertContains($series2->getId(), $seriesPerson1Role2User7);
+        $this->assertContains($series3->getId(), $seriesPerson1Role2User7);
+        $this->assertContains($series1->getId(), $seriesPerson1Role3User7);
+        $this->assertContains($series2->getId(), $seriesPerson1Role3User7);
+        $this->assertContains($series3->getId(), $seriesPerson1Role3User7);
+        $this->assertContains($series1->getId(), $seriesPerson2Role1User7);
+        $this->assertContains($series2->getId(), $seriesPerson2Role1User7);
+        $this->assertContains($series3->getId(), $seriesPerson2Role1User7);
+        $this->assertContains($series1->getId(), $seriesPerson2Role2User7);
+        $this->assertContains($series2->getId(), $seriesPerson2Role2User7);
+        $this->assertContains($series3->getId(), $seriesPerson2Role2User7);
+        $this->assertContains($series1->getId(), $seriesPerson2Role3User7);
+        $this->assertContains($series2->getId(), $seriesPerson2Role3User7);
+        $this->assertContains($series3->getId(), $seriesPerson2Role3User7);
 
         $seriesPerson1Role1User8 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role1->getCod(), $user8->getGroups());
         $seriesPerson1Role2User8 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role2->getCod(), $user8->getGroups());
@@ -2465,34 +2465,34 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $seriesPerson2Role2User8 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role2->getCod(), $user8->getGroups());
         $seriesPerson2Role3User8 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role3->getCod(), $user8->getGroups());
 
-        $this->assertEquals(3, count($seriesPerson1Role1User8));
-        $this->assertEquals(3, count($seriesPerson1Role2User8));
-        $this->assertEquals(3, count($seriesPerson1Role3User8));
-        $this->assertEquals(3, count($seriesPerson2Role1User8));
-        $this->assertEquals(3, count($seriesPerson2Role2User8));
-        $this->assertEquals(3, count($seriesPerson2Role3User8));
+        $this->assertCount(3, $seriesPerson1Role1User8);
+        $this->assertCount(3, $seriesPerson1Role2User8);
+        $this->assertCount(3, $seriesPerson1Role3User8);
+        $this->assertCount(3, $seriesPerson2Role1User8);
+        $this->assertCount(3, $seriesPerson2Role2User8);
+        $this->assertCount(3, $seriesPerson2Role3User8);
 
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson1Role1User8->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $seriesPerson1Role1User8->toArray()));
-        $this->assertTrue(in_array($series3->getId(), $seriesPerson1Role1User8->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson1Role2User8->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $seriesPerson1Role2User8->toArray()));
-        $this->assertTrue(in_array($series3->getId(), $seriesPerson1Role2User8->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson1Role3User8->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $seriesPerson1Role3User8->toArray()));
-        $this->assertTrue(in_array($series3->getId(), $seriesPerson1Role3User8->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson2Role1User8->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $seriesPerson2Role1User8->toArray()));
-        $this->assertTrue(in_array($series3->getId(), $seriesPerson2Role1User8->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson2Role2User8->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $seriesPerson2Role2User8->toArray()));
-        $this->assertTrue(in_array($series3->getId(), $seriesPerson2Role2User8->toArray()));
-        $this->assertTrue(in_array($series1->getId(), $seriesPerson2Role3User8->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $seriesPerson2Role3User8->toArray()));
-        $this->assertTrue(in_array($series3->getId(), $seriesPerson2Role3User8->toArray()));
+        $this->assertContains($series1->getId(), $seriesPerson1Role1User8);
+        $this->assertContains($series2->getId(), $seriesPerson1Role1User8);
+        $this->assertContains($series3->getId(), $seriesPerson1Role1User8);
+        $this->assertContains($series1->getId(), $seriesPerson1Role2User8);
+        $this->assertContains($series2->getId(), $seriesPerson1Role2User8);
+        $this->assertContains($series3->getId(), $seriesPerson1Role2User8);
+        $this->assertContains($series1->getId(), $seriesPerson1Role3User8);
+        $this->assertContains($series2->getId(), $seriesPerson1Role3User8);
+        $this->assertContains($series3->getId(), $seriesPerson1Role3User8);
+        $this->assertContains($series1->getId(), $seriesPerson2Role1User8);
+        $this->assertContains($series2->getId(), $seriesPerson2Role1User8);
+        $this->assertContains($series3->getId(), $seriesPerson2Role1User8);
+        $this->assertContains($series1->getId(), $seriesPerson2Role2User8);
+        $this->assertContains($series2->getId(), $seriesPerson2Role2User8);
+        $this->assertContains($series3->getId(), $seriesPerson2Role2User8);
+        $this->assertContains($series1->getId(), $seriesPerson2Role3User8);
+        $this->assertContains($series2->getId(), $seriesPerson2Role3User8);
+        $this->assertContains($series3->getId(), $seriesPerson2Role3User8);
     }
 
-    public function testFindWithGroup()
+    public function testFindWithGroup(): void
     {
         $key1 = 'Group1';
         $name1 = 'Group 1';
@@ -2518,25 +2518,25 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->dm->persist($mm2);
         $this->dm->flush();
 
-        $this->assertEquals(2, count($mm1->getGroups()));
-        $this->assertEquals(1, count($mm2->getGroups()));
-        $this->assertTrue(in_array($group1, $mm1->getGroups()->toArray()));
-        $this->assertTrue(in_array($group2, $mm1->getGroups()->toArray()));
-        $this->assertFalse(in_array($group1, $mm2->getGroups()->toArray()));
-        $this->assertTrue(in_array($group2, $mm2->getGroups()->toArray()));
+        $this->assertCount(2, $mm1->getGroups());
+        $this->assertCount(1, $mm2->getGroups());
+        $this->assertContains($group1, $mm1->getGroups());
+        $this->assertContains($group2, $mm1->getGroups());
+        $this->assertNotContains($group1, $mm2->getGroups());
+        $this->assertContains($group2, $mm2->getGroups());
 
         $mmsGroup1 = $this->repo->findWithGroup($group1);
         $mmsGroup2 = $this->repo->findWithGroup($group2);
 
-        $this->assertEquals(1, count($mmsGroup1));
-        $this->assertEquals(2, count($mmsGroup2));
-        $this->assertTrue(in_array($mm1, $mmsGroup1->toArray()));
-        $this->assertFalse(in_array($mm2, $mmsGroup1->toArray()));
-        $this->assertTrue(in_array($mm1, $mmsGroup2->toArray()));
-        $this->assertTrue(in_array($mm2, $mmsGroup2->toArray()));
+        $this->assertCount(1, $mmsGroup1);
+        $this->assertCount(2, $mmsGroup2);
+        $this->assertContains($mm1, $mmsGroup1);
+        $this->assertNotContains($mm2, $mmsGroup1);
+        $this->assertContains($mm1, $mmsGroup2);
+        $this->assertContains($mm2, $mmsGroup2);
     }
 
-    public function testFindWithGroupInEmbeddedBroadcast()
+    public function testFindWithGroupInEmbeddedBroadcast(): void
     {
         $key1 = 'Group1';
         $name1 = 'Group 1';
@@ -2574,25 +2574,25 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->dm->persist($mm2);
         $this->dm->flush();
 
-        $this->assertEquals(2, count($embeddedBroadcast1->getGroups()));
-        $this->assertEquals(1, count($embeddedBroadcast2->getGroups()));
-        $this->assertTrue(in_array($group1, $embeddedBroadcast1->getGroups()->toArray()));
-        $this->assertTrue(in_array($group2, $embeddedBroadcast1->getGroups()->toArray()));
-        $this->assertFalse(in_array($group1, $embeddedBroadcast2->getGroups()->toArray()));
-        $this->assertTrue(in_array($group2, $embeddedBroadcast2->getGroups()->toArray()));
+        $this->assertCount(2, $embeddedBroadcast1->getGroups());
+        $this->assertCount(1, $embeddedBroadcast2->getGroups());
+        $this->assertContains($group1, $embeddedBroadcast1->getGroups());
+        $this->assertContains($group2, $embeddedBroadcast1->getGroups());
+        $this->assertNotContains($group1, $embeddedBroadcast2->getGroups());
+        $this->assertContains($group2, $embeddedBroadcast2->getGroups());
 
         $mmsGroup1 = $this->repo->findWithGroupInEmbeddedBroadcast($group1);
         $mmsGroup2 = $this->repo->findWithGroupInEmbeddedBroadcast($group2);
 
-        $this->assertEquals(1, count($mmsGroup1));
-        $this->assertEquals(2, count($mmsGroup2));
-        $this->assertTrue(in_array($mm1, $mmsGroup1->toArray()));
-        $this->assertFalse(in_array($mm2, $mmsGroup1->toArray()));
-        $this->assertTrue(in_array($mm1, $mmsGroup2->toArray()));
-        $this->assertTrue(in_array($mm2, $mmsGroup2->toArray()));
+        $this->assertCount(1, $mmsGroup1);
+        $this->assertCount(2, $mmsGroup2);
+        $this->assertContains($mm1, $mmsGroup1);
+        $this->assertNotContains($mm2, $mmsGroup1);
+        $this->assertContains($mm1, $mmsGroup2);
+        $this->assertContains($mm2, $mmsGroup2);
     }
 
-    public function testCountWithGroup()
+    public function testCountWithGroup(): void
     {
         $key1 = 'Group1';
         $name1 = 'Group 1';
@@ -2622,7 +2622,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->assertEquals(2, $this->repo->countWithGroup($group2));
     }
 
-    public function testCountWithGroupInEmbeddedBroadcast()
+    public function testCountWithGroupInEmbeddedBroadcast(): void
     {
         $key1 = 'Group1';
         $name1 = 'Group 1';
@@ -2664,7 +2664,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->assertEquals(2, $this->repo->countWithGroupInEmbeddedBroadcast($group2));
     }
 
-    public function testEmbeddedBroadcast()
+    public function testEmbeddedBroadcast(): void
     {
         $key1 = 'Group1';
         $name1 = 'Group 1';
@@ -2731,7 +2731,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->assertFalse($embBroad->containsGroup($group2));
     }
 
-    public function testFindByEmbeddedBroadcast()
+    public function testFindByEmbeddedBroadcast(): void
     {
         $mm1 = new MultimediaObject();
         $mm1->setNumericalID(3);
@@ -2769,12 +2769,12 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->dm->persist($mm2);
         $this->dm->flush();
 
-        $this->assertEquals(1, count($this->repo->findByEmbeddedBroadcast($mm1->getEmbeddedBroadcast())));
-        $this->assertEquals(1, count($this->repo->findByEmbeddedBroadcast($mm2->getEmbeddedBroadcast())));
-        $this->assertEquals(1, count($this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_PASSWORD)));
-        $this->assertEquals(1, count($this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_PUBLIC)));
-        $this->assertEquals(0, count($this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_LOGIN)));
-        $this->assertEquals(0, count($this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_GROUPS)));
+        $this->assertCount(1, $this->repo->findByEmbeddedBroadcast($mm1->getEmbeddedBroadcast()));
+        $this->assertCount(1, $this->repo->findByEmbeddedBroadcast($mm2->getEmbeddedBroadcast()));
+        $this->assertCount(1, $this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_PASSWORD));
+        $this->assertCount(1, $this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_PUBLIC));
+        $this->assertCount(0, $this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_LOGIN));
+        $this->assertCount(0, $this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_GROUPS));
 
         $series1 = new Series();
         $series1->setNumericalID(1);
@@ -2798,20 +2798,20 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $publicSeriesField = $this->repo->findSeriesFieldByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_PUBLIC);
         $loginSeriesField = $this->repo->findSeriesFieldByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_LOGIN);
         $groupsSeriesField = $this->repo->findSeriesFieldByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_GROUPS);
-        $this->assertEquals(1, count($passwordSeriesField));
-        $this->assertEquals(1, count($publicSeriesField));
-        $this->assertEquals(0, count($loginSeriesField));
-        $this->assertEquals(0, count($groupsSeriesField));
+        $this->assertCount(1, $passwordSeriesField);
+        $this->assertCount(1, $publicSeriesField);
+        $this->assertCount(0, $loginSeriesField);
+        $this->assertCount(0, $groupsSeriesField);
 
-        $this->assertTrue(in_array($series1->getId(), $passwordSeriesField->toArray()));
-        $this->assertFalse(in_array($series1->getId(), $publicSeriesField->toArray()));
-        $this->assertFalse(in_array($series1->getId(), $loginSeriesField->toArray()));
-        $this->assertFalse(in_array($series1->getId(), $groupsSeriesField->toArray()));
+        $this->assertContains($series1->getId(), $passwordSeriesField);
+        $this->assertNotContains($series1->getId(), $publicSeriesField);
+        $this->assertNotContains($series1->getId(), $loginSeriesField);
+        $this->assertNotContains($series1->getId(), $groupsSeriesField);
 
-        $this->assertFalse(in_array($series2->getId(), $passwordSeriesField->toArray()));
-        $this->assertTrue(in_array($series2->getId(), $publicSeriesField->toArray()));
-        $this->assertFalse(in_array($series2->getId(), $loginSeriesField->toArray()));
-        $this->assertFalse(in_array($series2->getId(), $groupsSeriesField->toArray()));
+        $this->assertNotContains($series2->getId(), $passwordSeriesField);
+        $this->assertContains($series2->getId(), $publicSeriesField);
+        $this->assertNotContains($series2->getId(), $loginSeriesField);
+        $this->assertNotContains($series2->getId(), $groupsSeriesField);
 
         $group1 = new Group();
         $group1->setKey('group1');
@@ -2835,19 +2835,19 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $seriesGroups1 = $this->repo->findSeriesFieldByEmbeddedBroadcastTypeAndGroups(EmbeddedBroadcast::TYPE_GROUPS, $groups1);
         $seriesGroups2 = $this->repo->findSeriesFieldByEmbeddedBroadcastTypeAndGroups(EmbeddedBroadcast::TYPE_GROUPS, $groups2);
         $seriesGroups12 = $this->repo->findSeriesFieldByEmbeddedBroadcastTypeAndGroups(EmbeddedBroadcast::TYPE_GROUPS, $groups12);
-        $this->assertEquals(1, count($seriesGroups1));
-        $this->assertEquals(0, count($seriesGroups2));
-        $this->assertEquals(0, count($seriesGroups12));
+        $this->assertCount(1, $seriesGroups1);
+        $this->assertCount(0, $seriesGroups2);
+        $this->assertCount(0, $seriesGroups12);
 
-        $this->assertTrue(in_array($series1->getId(), $seriesGroups1->toArray()));
-        $this->assertFalse(in_array($series2->getId(), $seriesGroups1->toArray()));
-        $this->assertFalse(in_array($series1->getId(), $seriesGroups2->toArray()));
-        $this->assertFalse(in_array($series2->getId(), $seriesGroups2->toArray()));
-        $this->assertFalse(in_array($series1->getId(), $seriesGroups12->toArray()));
-        $this->assertFalse(in_array($series2->getId(), $seriesGroups12->toArray()));
+        $this->assertContains($series1->getId(), $seriesGroups1);
+        $this->assertNotContains($series2->getId(), $seriesGroups1);
+        $this->assertNotContains($series1->getId(), $seriesGroups2);
+        $this->assertNotContains($series2->getId(), $seriesGroups2);
+        $this->assertNotContains($series1->getId(), $seriesGroups12);
+        $this->assertNotContains($series2->getId(), $seriesGroups12);
     }
 
-    public function testCountInSeriesWithPrototype()
+    public function testCountInSeriesWithPrototype(): void
     {
         $series1 = new Series();
         $series1->setNumericalID(1);
@@ -2905,7 +2905,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->assertEquals(4, $this->repo->countInSeriesWithPrototype($series2));
     }
 
-    public function testCountInSeriesWithEmbeddedBroadcast()
+    public function testCountInSeriesWithEmbeddedBroadcast(): void
     {
         $series1 = new Series();
         $series1->setNumericalID(1);
@@ -3079,7 +3079,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->assertEquals(0, $this->repo->countInSeriesWithEmbeddedBroadcastGroups($series2, $typeGroups, $groups5));
     }
 
-    private function createPerson($name)
+    private function createPerson($name): Person
     {
         $email = $name.'@mail.es';
         $web = 'http://www.url.com';
@@ -3105,7 +3105,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         return $person;
     }
 
-    private function createRole($name)
+    private function createRole($name): Role
     {
         $cod = $name; // string (20)
         $rank = strlen($name); // Quick and dirty way to keep it unique
@@ -3174,7 +3174,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         return $series;
     }
 
-    private function createSeriesType($name)
+    private function createSeriesType($name): SeriesType
     {
         $description = 'description';
         $series_type = new SeriesType();
@@ -3188,7 +3188,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         return $series_type;
     }
 
-    private function createGroup($key = 'Group1', $name = 'Group 1')
+    private function createGroup($key = 'Group1', $name = 'Group 1'): Group
     {
         $group = new Group();
 

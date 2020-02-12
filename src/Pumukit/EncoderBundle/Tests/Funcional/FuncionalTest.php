@@ -87,7 +87,7 @@ class FuncionalTest extends PumukitTestCase
 
         $this->jobService->execute($job);
 
-        $this->assertEquals(1, count($mm->getTracks()));
+        $this->assertCount(1, $mm->getTracks());
         $this->assertEquals($job->getDuration(), $mm->getDuration());
     }
 

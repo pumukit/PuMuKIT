@@ -6,7 +6,7 @@
                 <div class="panel-body" id="tag{{ parent.id }}_mms">
                     <div class="row">
                         <div class="col-xs-12">
-                            {% include 'PumukitNewAdminBundle:MultimediaObject:tagfilter.html.twig' with {'parentId': parent.id, 'mmId': mm.id} %}
+                            {% include '@PumukitNewAdmin/MultimediaObject/tagfilter.html.twig' with {'parentId': parent.id, 'mmId': mm.id} %}
                         </div>
                     </div>
 
@@ -14,7 +14,7 @@
                         {# Available tags #}
                         <div style="width:40%; max-width:400px; float: left; height: 260px; border: 1px solid #bbb; overflow-x: hidden; overflow-y: scroll" class="tag list-group pmk-tag-tree" id="all_tag_{{ parent.id }}">
                             {% if (0 != parent.getChildren()|length) %}
-                                {% include 'PumukitNewAdminBundle:MultimediaObject:listtagsajax.html.twig' with {'mmId': mm.id, 'parent': 'root', 'block_tag': parent.id, 'nodes': parent.getChildren()} %}
+                                {% include '@PumukitNewAdmin/MultimediaObject/listtagsajax.html.twig' with {'mmId': mm.id, 'parent': 'root', 'block_tag': parent.id, 'nodes': parent.getChildren()} %}
                             {% endif %}
                         </div>
 

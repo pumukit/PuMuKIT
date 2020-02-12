@@ -75,7 +75,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
 
     /**
      * @Route("/video/{id}", name="pumukit_webtv_multimediaobject_index" )
-     * @Template("PumukitWebTVBundle:MultimediaObject:template.html.twig")
+     * @Template("@PumukitWebTV/MultimediaObject/template.html.twig")
      */
     public function indexAction(Request $request, MultimediaObject $multimediaObject)
     {
@@ -126,7 +126,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
 
     /**
      * @Route("/video/magic/{secret}", name="pumukit_webtv_multimediaobject_magicindex", defaults={"show_hide": true})
-     * @Template("PumukitWebTVBundle:MultimediaObject:template.html.twig")
+     * @Template("@PumukitWebTV/MultimediaObject/template.html.twig")
      */
     public function magicIndexAction(Request $request, MultimediaObject $multimediaObject)
     {
@@ -135,7 +135,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
                 return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_index', ['id' => $multimediaObject->getId()]));
             }
         } elseif ((MultimediaObject::STATUS_PUBLISHED != $multimediaObject->getStatus() && MultimediaObject::STATUS_HIDDEN != $multimediaObject->getStatus()) || !$multimediaObject->containsTagWithCod('PUCHWEBTV')) {
-            return $this->render('PumukitWebTVBundle:Index:404notfound.html.twig');
+            return $this->render('@PumukitWebTV/Index/404notfound.html.twig');
         }
 
         $request->attributes->set('noindex', true);
@@ -183,7 +183,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
     }
 
     /**
-     * @Template("PumukitWebTVBundle:MultimediaObject:template_series.html.twig")
+     * @Template("@PumukitWebTV/MultimediaObject/template_series.html.twig")
      */
     public function seriesAction(Request $request, MultimediaObject $multimediaObject)
     {
@@ -222,7 +222,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
     }
 
     /**
-     * @Template("PumukitWebTVBundle:MultimediaObject:template_related.html.twig")
+     * @Template("@PumukitWebTV/MultimediaObject/template_related.html.twig")
      */
     public function relatedAction(MultimediaObject $multimediaObject)
     {
@@ -233,7 +233,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
 
     /**
      * @Route("/video/{id}/info", name="pumukit_webtv_multimediaobject_info" )
-     * @Template("PumukitWebTVBundle:MultimediaObject:template_info.html.twig")
+     * @Template("@PumukitWebTV/MultimediaObject/template_info.html.twig")
      */
     public function multimediaInfoAction(Request $request, MultimediaObject $multimediaObject)
     {

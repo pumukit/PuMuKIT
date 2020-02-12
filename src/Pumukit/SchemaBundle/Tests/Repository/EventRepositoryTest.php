@@ -31,7 +31,7 @@ class EventRepositoryTest extends PumukitTestCase
         gc_collect_cycles();
     }
 
-    public function testRepository()
+    public function testRepository(): void
     {
         $live = new Live();
         $this->dm->persist($live);
@@ -59,10 +59,10 @@ class EventRepositoryTest extends PumukitTestCase
         $this->dm->persist($event);
         $this->dm->flush();
 
-        $this->assertEquals(1, count($this->repo->findAll()));
+        $this->assertCount(1, $this->repo->findAll());
     }
 
-    public function testFindFutureAndNotFinished()
+    public function testFindFutureAndNotFinished(): void
     {
         $live1 = new Live();
         $live2 = new Live();
@@ -136,7 +136,7 @@ class EventRepositoryTest extends PumukitTestCase
         $this->assertEquals($events, array_values($this->repo->findFutureAndNotFinished(4, $date, $live2)->toArray()));
     }
 
-    public function testFindByHoursEvent()
+    public function testFindByHoursEvent(): void
     {
         $date = new \DateTime('15-12-2015 9:00:00');
         $date1 = new \DateTime('18-12-2015 9:00:00');
@@ -184,72 +184,72 @@ class EventRepositoryTest extends PumukitTestCase
         $this->assertEquals($event4, $this->repo->findOneByHoursEvent(3, $date));
     }
 
-    public function testFindCurrentEvents()
+    public function testFindCurrentEvents(): void
     {
-        $this->assertEquals(0, count($this->repo->findCurrentEvents()));
+        $this->assertCount(0, $this->repo->findCurrentEvents());
 
         $this->createEvent('PAST', new \DateTime('-3 minute'), 2);
         $events = $this->repo->findCurrentEvents();
-        $this->assertEquals(0, count($events));
+        $this->assertCount(0, $events);
 
         $this->createEvent('LONG PAST', new \DateTime('yesterday'), 2);
         $events = $this->repo->findCurrentEvents();
-        $this->assertEquals(0, count($events));
+        $this->assertCount(0, $events);
 
         $this->createEvent('FUTURE', new \DateTime('+1 minute'), 2);
         $events = $this->repo->findCurrentEvents();
-        $this->assertEquals(0, count($events));
+        $this->assertCount(0, $events);
 
         $this->createEvent('LONG FUTURE', new \DateTime('tomorrow'), 2);
         $events = $this->repo->findCurrentEvents();
-        $this->assertEquals(0, count($events));
+        $this->assertCount(0, $events);
 
         $this->createEvent('ONE', new \DateTime('1 minute ago'), 2);
         $events = $this->repo->findCurrentEvents();
-        $this->assertEquals(1, count($events));
+        $this->assertCount(1, $events);
         $this->assertEquals('ONE', $events->getSingleResult()->getName());
 
         $this->createEvent('TWO', new \DateTime('2 minute ago'), 4);
         $events = $this->repo->findCurrentEvents();
-        $this->assertEquals(2, count($events));
+        $this->assertCount(2, $events);
 
         $this->createEvent('THREE', new \DateTime('3 minute ago'), 6);
         $events = $this->repo->findCurrentEvents();
-        $this->assertEquals(3, count($events));
+        $this->assertCount(3, $events);
 
         $events = $this->repo->findCurrentEvents(1);
-        $this->assertEquals(1, count($events));
+        $this->assertCount(1, $events);
     }
 
-    public function testFindCurrentEventsWithMargin()
+    public function testFindCurrentEventsWithMargin(): void
     {
-        $this->assertEquals(0, count($this->repo->findCurrentEvents()));
+        $this->assertCount(0, $this->repo->findCurrentEvents());
 
         $this->createEvent('ONE', new \DateTime('+1 minute'), 2);
         $events = $this->repo->findCurrentEvents();
-        $this->assertEquals(0, count($events));
+        $this->assertCount(0, $events);
 
         $events = $this->repo->findCurrentEvents(null, 2);
-        $this->assertEquals(1, count($events));
+        $this->assertCount(1, $events);
 
         $events = $this->repo->findCurrentEvents(null, 22);
-        $this->assertEquals(1, count($events));
+        $this->assertCount(1, $events);
 
         $this->createEvent('ONE', new \DateTime('-2 minute'), 1);
         $events = $this->repo->findCurrentEvents();
-        $this->assertEquals(0, count($events));
+        $this->assertCount(0, $events);
 
         $events = $this->repo->findCurrentEvents(null, 0, 1);
-        $this->assertEquals(1, count($events));
+        $this->assertCount(1, $events);
 
         $events = $this->repo->findCurrentEvents(null, 0, 11);
-        $this->assertEquals(1, count($events));
+        $this->assertCount(1, $events);
 
         $events = $this->repo->findCurrentEvents(null, 2, 1);
-        $this->assertEquals(2, count($events));
+        $this->assertCount(2, $events);
     }
 
-    private function createEvent($name, $datetime, $duration)
+    private function createEvent($name, $datetime, $duration): void
     {
         $event = new Event();
         $event->setName($name);

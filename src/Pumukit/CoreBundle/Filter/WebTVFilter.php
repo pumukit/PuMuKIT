@@ -12,10 +12,7 @@ use Pumukit\SchemaBundle\Document\Series;
  */
 class WebTVFilter extends BsonFilter
 {
-    /**
-     * @return array|void
-     */
-    public function addFilterCriteria(ClassMetadata $targetDocument)
+    public function addFilterCriteria(ClassMetadata $targetDocument): array
     {
         if (MultimediaObject::class === $targetDocument->reflClass->name) {
             return $this->getMultimediaObjectCriteria();
@@ -23,12 +20,11 @@ class WebTVFilter extends BsonFilter
         if (Series::class === $targetDocument->reflClass->name) {
             return $this->getSeriesCriteria();
         }
+
+        return [];
     }
 
-    /**
-     * @return array
-     */
-    protected function getMultimediaObjectCriteria()
+    protected function getMultimediaObjectCriteria(): array
     {
         $criteria = [];
         if ($this->hasParameter('pub_channel_tag')) {
@@ -67,22 +63,14 @@ class WebTVFilter extends BsonFilter
         return $criteria;
     }
 
-    /**
-     * @return array
-     */
-    protected function getSeriesCriteria()
+    protected function getSeriesCriteria(): array
     {
         return [
             'hide' => false,
         ];
     }
 
-    /**
-     * @param string $name
-     *
-     * @return bool
-     */
-    private function hasParameter($name)
+    private function hasParameter(string $name): bool
     {
         return isset($this->parameters[$name]);
     }

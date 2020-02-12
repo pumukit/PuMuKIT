@@ -46,7 +46,7 @@ class SeriesRepositoryTest extends PumukitTestCase
 
     public function testRepositoryEmpty()
     {
-        $this->assertEquals(0, count($this->repo->findAll()));
+        $this->assertCount(0, $this->repo->findAll());
     }
 
     public function testRepository()
@@ -59,7 +59,7 @@ class SeriesRepositoryTest extends PumukitTestCase
         $this->dm->persist($series);
         $this->dm->flush();
 
-        $this->assertEquals(1, count($this->repo->findAll()));
+        $this->assertCount(1, $this->repo->findAll());
         $this->assertEquals($series, $this->repo->find($series->getId()));
 
         $pic1 = new Pic();
@@ -156,7 +156,7 @@ class SeriesRepositoryTest extends PumukitTestCase
         $sortDesc = ['title' => -1];
 
         // FIND SERIES WITH TAG
-        $this->assertEquals(3, count($this->repo->findWithTag($tag1)));
+        $this->assertCount(3, $this->repo->findWithTag($tag1));
         $limit = 2;
         $this->assertEquals(2, $this->repo->findWithTag($tag1, $sort, $limit)->count(true));
         $page = 0;
@@ -432,10 +432,10 @@ class SeriesRepositoryTest extends PumukitTestCase
         $sortAsc = ['title' => 1];
         $sortDesc = ['title' => -1];
 
-        $this->assertEquals(2, count($this->repo->createBuilderWithTag($tag1)->getQuery()->execute()));
-        $this->assertEquals(2, count($this->repo->createBuilderWithTag($tag1, $sort)->getQuery()->execute()));
-        $this->assertEquals(2, count($this->repo->createBuilderWithTag($tag2, $sortAsc)->getQuery()->execute()));
-        $this->assertEquals(2, count($this->repo->createBuilderWithTag($tag3, $sortDesc)->getQuery()->execute()));
+        $this->assertCount(2, $this->repo->createBuilderWithTag($tag1)->getQuery()->execute());
+        $this->assertCount(2, $this->repo->createBuilderWithTag($tag1, $sort)->getQuery()->execute());
+        $this->assertCount(2, $this->repo->createBuilderWithTag($tag2, $sortAsc)->getQuery()->execute());
+        $this->assertCount(2, $this->repo->createBuilderWithTag($tag3, $sortDesc)->getQuery()->execute());
     }
 
     public function testFindByPicId()
@@ -549,15 +549,15 @@ class SeriesRepositoryTest extends PumukitTestCase
         $this->dm->flush();
 
         $seriesKate = $this->repo->findSeriesByPersonId($personKate->getId());
-        $this->assertEquals(2, count($seriesKate));
+        $this->assertCount(2, $seriesKate);
         $this->assertEquals([$series1, $series2], array_values($seriesKate->toArray()));
 
         $seriesJohn = $this->repo->findSeriesByPersonId($personJohn->getId());
-        $this->assertEquals(2, count($seriesJohn));
+        $this->assertCount(2, $seriesJohn);
         $this->assertEquals([$series1, $series3], array_values($seriesJohn->toArray()));
 
         $seriesBob = $this->repo->findSeriesByPersonId($personBob->getId());
-        $this->assertEquals(2, count($seriesBob));
+        $this->assertCount(2, $seriesBob);
         $this->assertEquals([$series1, $series3], array_values($seriesBob->toArray()));
 
         $seriesJohnActor = $this->repo->findByPersonIdAndRoleCod($personJohn->getId(), $roleActor->getCod());
@@ -567,35 +567,35 @@ class SeriesRepositoryTest extends PumukitTestCase
         $seriesKateActor = $this->repo->findByPersonIdAndRoleCod($personKate->getId(), $roleActor->getCod());
         $seriesKatePresenter = $this->repo->findByPersonIdAndRoleCod($personKate->getId(), $rolePresenter->getCod());
 
-        $this->assertEquals(2, count($seriesJohnActor));
-        $this->assertTrue(in_array($series1, $seriesJohnActor->toArray()));
-        $this->assertFalse(in_array($series2, $seriesJohnActor->toArray()));
-        $this->assertTrue(in_array($series3, $seriesJohnActor->toArray()));
+        $this->assertCount(2, $seriesJohnActor);
+        $this->assertContains($series1, $seriesJohnActor->toArray());
+        $this->assertNotContains($series2, $seriesJohnActor->toArray());
+        $this->assertContains($series3, $seriesJohnActor->toArray());
 
-        $this->assertEquals(2, count($seriesJohnPresenter));
-        $this->assertTrue(in_array($series1, $seriesJohnPresenter->toArray()));
-        $this->assertFalse(in_array($series2, $seriesJohnPresenter->toArray()));
-        $this->assertTrue(in_array($series3, $seriesJohnPresenter->toArray()));
+        $this->assertCount(2, $seriesJohnPresenter);
+        $this->assertContains($series1, $seriesJohnPresenter->toArray());
+        $this->assertNotContains($series2, $seriesJohnPresenter->toArray());
+        $this->assertContains($series3, $seriesJohnPresenter->toArray());
 
-        $this->assertEquals(2, count($seriesBobActor));
-        $this->assertTrue(in_array($series1, $seriesBobActor->toArray()));
-        $this->assertFalse(in_array($series2, $seriesBobActor->toArray()));
-        $this->assertTrue(in_array($series3, $seriesBobActor->toArray()));
+        $this->assertCount(2, $seriesBobActor);
+        $this->assertContains($series1, $seriesBobActor->toArray());
+        $this->assertNotContains($series2, $seriesBobActor->toArray());
+        $this->assertContains($series3, $seriesBobActor->toArray());
 
-        $this->assertEquals(1, count($seriesBobPresenter));
-        $this->assertTrue(in_array($series1, $seriesBobPresenter->toArray()));
-        $this->assertFalse(in_array($series2, $seriesBobPresenter->toArray()));
-        $this->assertFalse(in_array($series3, $seriesBobPresenter->toArray()));
+        $this->assertCount(1, $seriesBobPresenter);
+        $this->assertContains($series1, $seriesBobPresenter->toArray());
+        $this->assertNotContains($series2, $seriesBobPresenter->toArray());
+        $this->assertNotContains($series3, $seriesBobPresenter->toArray());
 
-        $this->assertEquals(2, count($seriesKateActor));
-        $this->assertTrue(in_array($series1, $seriesKateActor->toArray()));
-        $this->assertTrue(in_array($series2, $seriesKateActor->toArray()));
-        $this->assertFalse(in_array($series3, $seriesKateActor->toArray()));
+        $this->assertCount(2, $seriesKateActor);
+        $this->assertContains($series1, $seriesKateActor->toArray());
+        $this->assertContains($series2, $seriesKateActor->toArray());
+        $this->assertNotContains($series3, $seriesKateActor->toArray());
 
-        $this->assertEquals(1, count($seriesKatePresenter));
-        $this->assertFalse(in_array($series1, $seriesKatePresenter->toArray()));
-        $this->assertTrue(in_array($series2, $seriesKatePresenter->toArray()));
-        $this->assertFalse(in_array($series3, $seriesKatePresenter->toArray()));
+        $this->assertCount(1, $seriesKatePresenter);
+        $this->assertNotContains($series1, $seriesKatePresenter->toArray());
+        $this->assertContains($series2, $seriesKatePresenter->toArray());
+        $this->assertNotContains($series3, $seriesKatePresenter->toArray());
 
         $group1 = new Group();
         $group1->setKey('group1');
@@ -615,15 +615,15 @@ class SeriesRepositoryTest extends PumukitTestCase
         $groups = [$group2->getId()];
         $seriesJohnActor2 = $this->repo->findByPersonIdAndRoleCodOrGroups($personJohn->getId(), $roleActor->getCod(), $groups);
 
-        $this->assertEquals(3, count($seriesJohnActor1));
-        $this->assertTrue(in_array($series1, $seriesJohnActor1->toArray()));
-        $this->assertTrue(in_array($series2, $seriesJohnActor1->toArray()));
-        $this->assertTrue(in_array($series3, $seriesJohnActor1->toArray()));
+        $this->assertCount(3, $seriesJohnActor1);
+        $this->assertContains($series1, $seriesJohnActor1->toArray());
+        $this->assertContains($series2, $seriesJohnActor1->toArray());
+        $this->assertContains($series3, $seriesJohnActor1->toArray());
 
-        $this->assertEquals(2, count($seriesJohnActor2));
-        $this->assertTrue(in_array($series1, $seriesJohnActor2->toArray()));
-        $this->assertFalse(in_array($series2, $seriesJohnActor2->toArray()));
-        $this->assertTrue(in_array($series3, $seriesJohnActor2->toArray()));
+        $this->assertCount(2, $seriesJohnActor2);
+        $this->assertContains($series1, $seriesJohnActor2->toArray());
+        $this->assertNotContains($series2, $seriesJohnActor2->toArray());
+        $this->assertContains($series3, $seriesJohnActor2->toArray());
     }
 
     public function testFindBySeriesType()
@@ -655,9 +655,9 @@ class SeriesRepositoryTest extends PumukitTestCase
 
         $this->dm->flush();
 
-        $this->assertEquals(2, count($this->repo->findBySeriesType($seriesType1)));
-        $this->assertEquals(1, count($this->repo->findBySeriesType($seriesType2)));
-        $this->assertEquals(2, count($this->repo->findBySeriesType($seriesType3)));
+        $this->assertCount(2, $this->repo->findBySeriesType($seriesType1));
+        $this->assertCount(1, $this->repo->findBySeriesType($seriesType2));
+        $this->assertCount(2, $this->repo->findBySeriesType($seriesType3));
     }
 
     public function testSimpleMultimediaObjectsInSeries()
@@ -668,7 +668,7 @@ class SeriesRepositoryTest extends PumukitTestCase
         $mm12 = $this->factoryService->createMultimediaObject($series1);
         $mm13 = $this->factoryService->createMultimediaObject($series1);
 
-        $this->assertEquals(3, count($this->repo->getMultimediaObjects($series1)));
+        $this->assertCount(3, $this->repo->getMultimediaObjects($series1));
     }
 
     public function testMultimediaObjectsInSeries()
@@ -682,8 +682,8 @@ class SeriesRepositoryTest extends PumukitTestCase
         $series1 = $this->repo->find($this->repo->getId());
         $series2 = $this->repo->find($series2->getId());
 
-        $this->assertEquals(0, count($this->repo->getMultimediaObjects($series1)));
-        $this->assertEquals(0, count($this->repo->getMultimediaObjects($series2)));
+        $this->assertCount(0, $this->repo->getMultimediaObjects($series1));
+        $this->assertCount(0, $this->repo->getMultimediaObjects($series2));
 
         $mm11 = $this->factoryService->createMultimediaObject($series1);
         $mm12 = $this->factoryService->createMultimediaObject($series1);
@@ -692,14 +692,14 @@ class SeriesRepositoryTest extends PumukitTestCase
         $mm21 = $this->factoryService->createMultimediaObject($series2);
         $mm22 = $this->factoryService->createMultimediaObject($series2);
 
-        $this->assertEquals(3, count($this->repo->getMultimediaObjects($series1)));
-        $this->assertEquals(2, count($this->repo->getMultimediaObjects($series2)));
+        $this->assertCount(3, $this->repo->getMultimediaObjects($series1));
+        $this->assertCount(2, $this->repo->getMultimediaObjects($series2));
 
         $this->dm->remove($mm11);
         $this->dm->flush();
 
-        $this->assertEquals(2, count($this->repo->getMultimediaObjects($series1)));
-        $this->assertEquals(2, count($this->repo->getMultimediaObjects($series2)));
+        $this->assertCount(2, $this->repo->getMultimediaObjects($series1));
+        $this->assertCount(2, $this->repo->getMultimediaObjects($series2));
 
         $this->assertTrue($series1->containsMultimediaObject($mm12));
         $this->assertFalse($series1->containsMultimediaObject($mm11));
@@ -708,7 +708,7 @@ class SeriesRepositoryTest extends PumukitTestCase
     public function testRankInAddMultimediaObject()
     {
         $series1 = $this->createSeries('Series 1');
-        $this->assertEquals(0, count($this->repo->getMultimediaObjects($series1)));
+        $this->assertCount(0, $this->repo->getMultimediaObjects($series1));
 
         $mm11 = $this->factoryService->createMultimediaObject($series1);
         $mm12 = $this->factoryService->createMultimediaObject($series1);
@@ -723,7 +723,7 @@ class SeriesRepositoryTest extends PumukitTestCase
         $this->assertEquals(5, $mm15->getRank());
 
         $series2 = $this->createSeries('Series 2');
-        $this->assertEquals(0, count($this->repo->getMultimediaObjects($series2)));
+        $this->assertCount(0, $this->repo->getMultimediaObjects($series2));
 
         $mm21 = $this->factoryService->createMultimediaObject($series2);
         $mm22 = $this->factoryService->createMultimediaObject($series2);
@@ -758,7 +758,7 @@ class SeriesRepositoryTest extends PumukitTestCase
         $this->dm->persist($series);
         $this->dm->flush();
 
-        $this->assertEquals(3, count($this->repo->find($series->getId())->getPics()));
+        $this->assertCount(3, $this->repo->find($series->getId())->getPics());
         $this->assertEquals($pic2, $this->repo->find($series->getId())->getPicById($pic2->getId()));
 
         $arrayPics = [$pic1, $pic2, $pic3];
@@ -868,12 +868,12 @@ class SeriesRepositoryTest extends PumukitTestCase
         $this->dm->persist($series3);
         $this->dm->flush();
 
-        $this->assertEquals(2, count($this->repo->findWithTagAndSeriesType($tag1, $seriesType1)));
-        $this->assertEquals(2, count($this->repo->findWithTagAndSeriesType($tag2, $seriesType1)));
-        $this->assertEquals(0, count($this->repo->findWithTagAndSeriesType($tag3, $seriesType1)));
-        $this->assertEquals(1, count($this->repo->findWithTagAndSeriesType($tag1, $seriesType2)));
-        $this->assertEquals(1, count($this->repo->findWithTagAndSeriesType($tag2, $seriesType2)));
-        $this->assertEquals(1, count($this->repo->findWithTagAndSeriesType($tag3, $seriesType2)));
+        $this->assertCount(2, $this->repo->findWithTagAndSeriesType($tag1, $seriesType1));
+        $this->assertCount(2, $this->repo->findWithTagAndSeriesType($tag2, $seriesType1));
+        $this->assertCount(0, $this->repo->findWithTagAndSeriesType($tag3, $seriesType1));
+        $this->assertCount(1, $this->repo->findWithTagAndSeriesType($tag1, $seriesType2));
+        $this->assertCount(1, $this->repo->findWithTagAndSeriesType($tag2, $seriesType2));
+        $this->assertCount(1, $this->repo->findWithTagAndSeriesType($tag3, $seriesType2));
     }
 
     public function testFindOneBySeriesProperty()
@@ -989,20 +989,20 @@ class SeriesRepositoryTest extends PumukitTestCase
         $publicSeries = $this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_PUBLIC);
         $loginSeries = $this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_LOGIN);
         $groupsSeries = $this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_GROUPS);
-        $this->assertEquals(1, count($passwordSeries));
-        $this->assertEquals(1, count($publicSeries));
-        $this->assertEquals(0, count($loginSeries));
-        $this->assertEquals(0, count($groupsSeries));
+        $this->assertCount(1, $passwordSeries);
+        $this->assertCount(1, $publicSeries);
+        $this->assertCount(0, $loginSeries);
+        $this->assertCount(0, $groupsSeries);
 
-        $this->assertTrue(in_array($series1, $passwordSeries->toArray()));
-        $this->assertFalse(in_array($series1, $publicSeries->toArray()));
-        $this->assertFalse(in_array($series1, $loginSeries->toArray()));
-        $this->assertFalse(in_array($series1, $groupsSeries->toArray()));
+        $this->assertContains($series1, $passwordSeries->toArray());
+        $this->assertNotContains($series1, $publicSeries->toArray());
+        $this->assertNotContains($series1, $loginSeries->toArray());
+        $this->assertNotContains($series1, $groupsSeries->toArray());
 
-        $this->assertFalse(in_array($series2, $passwordSeries->toArray()));
-        $this->assertTrue(in_array($series2, $publicSeries->toArray()));
-        $this->assertFalse(in_array($series2, $loginSeries->toArray()));
-        $this->assertFalse(in_array($series2, $groupsSeries->toArray()));
+        $this->assertNotContains($series2, $passwordSeries->toArray());
+        $this->assertContains($series2, $publicSeries->toArray());
+        $this->assertNotContains($series2, $loginSeries->toArray());
+        $this->assertNotContains($series2, $groupsSeries->toArray());
 
         $group1 = new Group();
         $group1->setKey('group1');
@@ -1026,16 +1026,16 @@ class SeriesRepositoryTest extends PumukitTestCase
         $seriesGroups1 = $this->repo->findByEmbeddedBroadcastTypeAndGroups(EmbeddedBroadcast::TYPE_GROUPS, $groups1);
         $seriesGroups2 = $this->repo->findByEmbeddedBroadcastTypeAndGroups(EmbeddedBroadcast::TYPE_GROUPS, $groups2);
         $seriesGroups12 = $this->repo->findByEmbeddedBroadcastTypeAndGroups(EmbeddedBroadcast::TYPE_GROUPS, $groups12);
-        $this->assertEquals(1, count($seriesGroups1));
-        $this->assertEquals(0, count($seriesGroups2));
-        $this->assertEquals(0, count($seriesGroups12));
+        $this->assertCount(1, $seriesGroups1);
+        $this->assertCount(0, $seriesGroups2);
+        $this->assertCount(0, $seriesGroups12);
 
-        $this->assertTrue(in_array($series1, $seriesGroups1->toArray()));
-        $this->assertFalse(in_array($series2, $seriesGroups1->toArray()));
-        $this->assertFalse(in_array($series1, $seriesGroups2->toArray()));
-        $this->assertFalse(in_array($series2, $seriesGroups2->toArray()));
-        $this->assertFalse(in_array($series1, $seriesGroups12->toArray()));
-        $this->assertFalse(in_array($series2, $seriesGroups12->toArray()));
+        $this->assertContains($series1, $seriesGroups1->toArray());
+        $this->assertNotContains($series2, $seriesGroups1->toArray());
+        $this->assertNotContains($series1, $seriesGroups2->toArray());
+        $this->assertNotContains($series2, $seriesGroups2->toArray());
+        $this->assertNotContains($series1, $seriesGroups12->toArray());
+        $this->assertNotContains($series2, $seriesGroups12->toArray());
     }
 
     public function testFindByPersonIdAndRoleCodOrGroupsSorted()
@@ -1103,57 +1103,57 @@ class SeriesRepositoryTest extends PumukitTestCase
         $seriesPerson2Role3Group1 = $this->repo->findByPersonIdAndRoleCodOrGroupsSorted($person2->getId(), $role3->getCod(), $groups1);
         $seriesPerson2Role3Group2 = $this->repo->findByPersonIdAndRoleCodOrGroupsSorted($person2->getId(), $role3->getCod(), $groups2);
 
-        $this->assertEquals(2, count($seriesPerson1Role1Group1));
-        $this->assertEquals(2, count($seriesPerson1Role1Group2));
-        $this->assertEquals(2, count($seriesPerson1Role2Group1));
-        $this->assertEquals(2, count($seriesPerson1Role2Group2));
-        $this->assertEquals(3, count($seriesPerson1Role3Group1));
-        $this->assertEquals(2, count($seriesPerson1Role3Group2));
-        $this->assertEquals(2, count($seriesPerson2Role1Group1));
-        $this->assertEquals(2, count($seriesPerson2Role1Group2));
-        $this->assertEquals(2, count($seriesPerson2Role2Group1));
-        $this->assertEquals(3, count($seriesPerson2Role2Group2));
-        $this->assertEquals(2, count($seriesPerson2Role3Group1));
-        $this->assertEquals(2, count($seriesPerson2Role3Group2));
+        $this->assertCount(2, $seriesPerson1Role1Group1);
+        $this->assertCount(2, $seriesPerson1Role1Group2);
+        $this->assertCount(2, $seriesPerson1Role2Group1);
+        $this->assertCount(2, $seriesPerson1Role2Group2);
+        $this->assertCount(3, $seriesPerson1Role3Group1);
+        $this->assertCount(2, $seriesPerson1Role3Group2);
+        $this->assertCount(2, $seriesPerson2Role1Group1);
+        $this->assertCount(2, $seriesPerson2Role1Group2);
+        $this->assertCount(2, $seriesPerson2Role2Group1);
+        $this->assertCount(3, $seriesPerson2Role2Group2);
+        $this->assertCount(2, $seriesPerson2Role3Group1);
+        $this->assertCount(2, $seriesPerson2Role3Group2);
 
-        $this->assertTrue(in_array($series1, $seriesPerson1Role1Group1->toArray()));
-        $this->assertTrue(in_array($series1, $seriesPerson1Role1Group2->toArray()));
-        $this->assertTrue(in_array($series1, $seriesPerson1Role2Group1->toArray()));
-        $this->assertTrue(in_array($series1, $seriesPerson1Role2Group2->toArray()));
-        $this->assertTrue(in_array($series1, $seriesPerson1Role3Group1->toArray()));
-        $this->assertTrue(in_array($series1, $seriesPerson1Role3Group2->toArray()));
-        $this->assertTrue(in_array($series1, $seriesPerson2Role1Group1->toArray()));
-        $this->assertTrue(in_array($series1, $seriesPerson2Role1Group2->toArray()));
-        $this->assertTrue(in_array($series1, $seriesPerson2Role2Group1->toArray()));
-        $this->assertTrue(in_array($series1, $seriesPerson2Role2Group2->toArray()));
-        $this->assertTrue(in_array($series1, $seriesPerson2Role3Group1->toArray()));
-        $this->assertTrue(in_array($series1, $seriesPerson2Role3Group2->toArray()));
+        $this->assertContains($series1, $seriesPerson1Role1Group1->toArray());
+        $this->assertContains($series1, $seriesPerson1Role1Group2->toArray());
+        $this->assertContains($series1, $seriesPerson1Role2Group1->toArray());
+        $this->assertContains($series1, $seriesPerson1Role2Group2->toArray());
+        $this->assertContains($series1, $seriesPerson1Role3Group1->toArray());
+        $this->assertContains($series1, $seriesPerson1Role3Group2->toArray());
+        $this->assertContains($series1, $seriesPerson2Role1Group1->toArray());
+        $this->assertContains($series1, $seriesPerson2Role1Group2->toArray());
+        $this->assertContains($series1, $seriesPerson2Role2Group1->toArray());
+        $this->assertContains($series1, $seriesPerson2Role2Group2->toArray());
+        $this->assertContains($series1, $seriesPerson2Role3Group1->toArray());
+        $this->assertContains($series1, $seriesPerson2Role3Group2->toArray());
 
-        $this->assertTrue(in_array($series2, $seriesPerson1Role1Group1->toArray()));
-        $this->assertFalse(in_array($series2, $seriesPerson1Role1Group2->toArray()));
-        $this->assertTrue(in_array($series2, $seriesPerson1Role2Group1->toArray()));
-        $this->assertFalse(in_array($series2, $seriesPerson1Role2Group2->toArray()));
-        $this->assertTrue(in_array($series2, $seriesPerson1Role3Group1->toArray()));
-        $this->assertFalse(in_array($series2, $seriesPerson1Role3Group2->toArray()));
-        $this->assertTrue(in_array($series2, $seriesPerson2Role1Group1->toArray()));
-        $this->assertFalse(in_array($series2, $seriesPerson2Role1Group2->toArray()));
-        $this->assertTrue(in_array($series2, $seriesPerson2Role2Group1->toArray()));
-        $this->assertTrue(in_array($series2, $seriesPerson2Role2Group2->toArray()));
-        $this->assertTrue(in_array($series2, $seriesPerson2Role3Group1->toArray()));
-        $this->assertFalse(in_array($series2, $seriesPerson2Role3Group2->toArray()));
+        $this->assertContains($series2, $seriesPerson1Role1Group1->toArray());
+        $this->assertNotContains($series2, $seriesPerson1Role1Group2->toArray());
+        $this->assertContains($series2, $seriesPerson1Role2Group1->toArray());
+        $this->assertNotContains($series2, $seriesPerson1Role2Group2->toArray());
+        $this->assertContains($series2, $seriesPerson1Role3Group1->toArray());
+        $this->assertNotContains($series2, $seriesPerson1Role3Group2->toArray());
+        $this->assertContains($series2, $seriesPerson2Role1Group1->toArray());
+        $this->assertNotContains($series2, $seriesPerson2Role1Group2->toArray());
+        $this->assertContains($series2, $seriesPerson2Role2Group1->toArray());
+        $this->assertContains($series2, $seriesPerson2Role2Group2->toArray());
+        $this->assertContains($series2, $seriesPerson2Role3Group1->toArray());
+        $this->assertNotContains($series2, $seriesPerson2Role3Group2->toArray());
 
-        $this->assertFalse(in_array($series3, $seriesPerson1Role1Group1->toArray()));
-        $this->assertTrue(in_array($series3, $seriesPerson1Role1Group2->toArray()));
-        $this->assertFalse(in_array($series3, $seriesPerson1Role2Group1->toArray()));
-        $this->assertTrue(in_array($series3, $seriesPerson1Role2Group2->toArray()));
-        $this->assertTrue(in_array($series3, $seriesPerson1Role3Group1->toArray()));
-        $this->assertTrue(in_array($series3, $seriesPerson1Role3Group2->toArray()));
-        $this->assertFalse(in_array($series3, $seriesPerson2Role1Group1->toArray()));
-        $this->assertTrue(in_array($series3, $seriesPerson2Role1Group2->toArray()));
-        $this->assertFalse(in_array($series3, $seriesPerson2Role2Group1->toArray()));
-        $this->assertTrue(in_array($series3, $seriesPerson2Role2Group2->toArray()));
-        $this->assertFalse(in_array($series3, $seriesPerson2Role3Group1->toArray()));
-        $this->assertTrue(in_array($series3, $seriesPerson2Role3Group2->toArray()));
+        $this->assertNotContains($series3, $seriesPerson1Role1Group1->toArray());
+        $this->assertContains($series3, $seriesPerson1Role1Group2->toArray());
+        $this->assertNotContains($series3, $seriesPerson1Role2Group1->toArray());
+        $this->assertContains($series3, $seriesPerson1Role2Group2->toArray());
+        $this->assertContains($series3, $seriesPerson1Role3Group1->toArray());
+        $this->assertContains($series3, $seriesPerson1Role3Group2->toArray());
+        $this->assertNotContains($series3, $seriesPerson2Role1Group1->toArray());
+        $this->assertContains($series3, $seriesPerson2Role1Group2->toArray());
+        $this->assertNotContains($series3, $seriesPerson2Role2Group1->toArray());
+        $this->assertContains($series3, $seriesPerson2Role2Group2->toArray());
+        $this->assertNotContains($series3, $seriesPerson2Role3Group1->toArray());
+        $this->assertContains($series3, $seriesPerson2Role3Group2->toArray());
     }
 
     public function testfindByTitleWithLocale()
@@ -1187,23 +1187,23 @@ class SeriesRepositoryTest extends PumukitTestCase
         $seriesPrueba2En = $this->repo->findByTitleWithLocale($prueba2, $enLocale)->toArray();
         $seriesPrueba2Es = $this->repo->findByTitleWithLocale($prueba2, $esLocale)->toArray();
 
-        $this->assertTrue(in_array($series1, $seriesTest1En));
-        $this->assertFalse(in_array($series1, $seriesTest1Es));
-        $this->assertFalse(in_array($series1, $seriesPrueba1En));
-        $this->assertTrue(in_array($series1, $seriesPrueba1Es));
-        $this->assertFalse(in_array($series1, $seriesTest2En));
-        $this->assertFalse(in_array($series1, $seriesTest2Es));
-        $this->assertFalse(in_array($series1, $seriesPrueba2En));
-        $this->assertFalse(in_array($series1, $seriesPrueba2Es));
+        $this->assertContains($series1, $seriesTest1En);
+        $this->assertNotContains($series1, $seriesTest1Es);
+        $this->assertNotContains($series1, $seriesPrueba1En);
+        $this->assertContains($series1, $seriesPrueba1Es);
+        $this->assertNotContains($series1, $seriesTest2En);
+        $this->assertNotContains($series1, $seriesTest2Es);
+        $this->assertNotContains($series1, $seriesPrueba2En);
+        $this->assertNotContains($series1, $seriesPrueba2Es);
 
-        $this->assertFalse(in_array($series2, $seriesTest1En));
-        $this->assertFalse(in_array($series2, $seriesTest1Es));
-        $this->assertFalse(in_array($series2, $seriesPrueba1En));
-        $this->assertFalse(in_array($series2, $seriesPrueba1Es));
-        $this->assertTrue(in_array($series2, $seriesTest2En));
-        $this->assertFalse(in_array($series2, $seriesTest2Es));
-        $this->assertFalse(in_array($series2, $seriesPrueba2En));
-        $this->assertTrue(in_array($series2, $seriesPrueba2Es));
+        $this->assertNotContains($series2, $seriesTest1En);
+        $this->assertNotContains($series2, $seriesTest1Es);
+        $this->assertNotContains($series2, $seriesPrueba1En);
+        $this->assertNotContains($series2, $seriesPrueba1Es);
+        $this->assertContains($series2, $seriesTest2En);
+        $this->assertNotContains($series2, $seriesTest2Es);
+        $this->assertNotContains($series2, $seriesPrueba2En);
+        $this->assertContains($series2, $seriesPrueba2Es);
     }
 
     private function createSeriesType($name)

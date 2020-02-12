@@ -46,7 +46,7 @@ class LinkEventDispatcherServiceTest extends PumukitTestCase
     public function testDispatchCreate()
     {
         $this->dispatcher->addListener(SchemaEvents::LINK_CREATE, function ($event, $name) {
-            $this->assertTrue($event instanceof LinkEvent);
+            $this->assertInstanceOf(LinkEvent::class, $event);
             $this->assertEquals(SchemaEvents::LINK_CREATE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
@@ -80,7 +80,7 @@ class LinkEventDispatcherServiceTest extends PumukitTestCase
     public function testDispatchUpdate()
     {
         $this->dispatcher->addListener(SchemaEvents::LINK_UPDATE, function ($event, $name) {
-            $this->assertTrue($event instanceof LinkEvent);
+            $this->assertInstanceOf(LinkEvent::class, $event);
             $this->assertEquals(SchemaEvents::LINK_UPDATE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
@@ -117,7 +117,7 @@ class LinkEventDispatcherServiceTest extends PumukitTestCase
     public function testDispatchDelete()
     {
         $this->dispatcher->addListener(SchemaEvents::LINK_DELETE, function ($event, $name) {
-            $this->assertTrue($event instanceof LinkEvent);
+            $this->assertInstanceOf(LinkEvent::class, $event);
             $this->assertEquals(SchemaEvents::LINK_DELETE, $name);
 
             $multimediaObject = $event->getMultimediaObject();

@@ -68,9 +68,9 @@
                                 {% endif %}
                             </div>
                             {% if broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PASSWORD') %}
-                              {% include 'PumukitNewAdminBundle:Series:broadcastpassword.html.twig' %}
+                              {% include '@PumukitNewAdmin/Series/broadcastpassword.html.twig' %}
                             {% elseif broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_GROUPS') %}
-                              {% include 'PumukitNewAdminBundle:Series:broadcastgroups.html.twig' with {'groups': groups} %}
+                              {% include '@PumukitNewAdmin/Series/broadcastgroups.html.twig' with {'groups': groups} %}
                             {% endif %}
                         {% endfor %}
                     </div>
@@ -83,4 +83,4 @@
         </form>
     </div>
 </div>
-{% include 'PumukitNewAdminBundle:MultimediaObject:updatebroadcast.js.twig' %}
+{% include '@PumukitNewAdmin/MultimediaObject/updatebroadcast.js.twig' %}

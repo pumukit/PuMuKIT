@@ -20,7 +20,7 @@ class LegacyEventController extends AdminController
     public static $daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
     /**
-     * @Template("PumukitNewAdminBundle:LegacyEvent:index.html.twig")
+     * @Template("@PumukitNewAdmin/LegacyEvent/index.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -68,7 +68,7 @@ class LegacyEventController extends AdminController
         }
 
         return $this->render(
-            'PumukitNewAdminBundle:LegacyEvent:create.html.twig',
+            '@PumukitNewAdmin/LegacyEvent/create.html.twig',
             [
                 'event' => $resource,
                 'form' => $form->createView(),
@@ -77,7 +77,7 @@ class LegacyEventController extends AdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:LegacyEvent:list.html.twig")
+     * @Template("@PumukitNewAdmin/LegacyEvent/list.html.twig")
      */
     public function listAction(Request $request)
     {
@@ -117,7 +117,7 @@ class LegacyEventController extends AdminController
         $data = $this->findOr404($request);
 
         return $this->render(
-            'PumukitNewAdminBundle:LegacyEvent:show.html.twig',
+            '@PumukitNewAdmin/LegacyEvent/show.html.twig',
             [$this->getResourceName() => $data]
         );
     }
@@ -144,7 +144,7 @@ class LegacyEventController extends AdminController
         }
 
         return $this->render(
-            'PumukitNewAdminBundle:LegacyEvent:update.html.twig',
+            '@PumukitNewAdmin/LegacyEvent/update.html.twig',
             [
                 $resourceName => $resource,
                 'form' => $form->createView(),

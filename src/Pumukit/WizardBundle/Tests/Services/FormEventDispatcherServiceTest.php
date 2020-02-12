@@ -43,15 +43,15 @@ class FormEventDispatcherServiceTest extends PumukitTestCase
     public function testDispatchSubmit()
     {
         $this->dispatcher->addListener(WizardEvents::FORM_SUBMIT, function ($event, $title) {
-            $this->assertTrue($event instanceof FormEvent);
+            $this->assertInstanceOf(FormEvent::class, $event);
             $this->assertEquals(WizardEvents::FORM_SUBMIT, $title);
             $form = $event->getForm();
             MockUpFormListener::$called = true;
             MockUpFormListener::$title = $form['title'];
             $user = $event->getUser();
-            $this->assertTrue($user instanceof User);
+            $this->assertInstanceOf(User::class, $user);
             $multimediaObject = $event->getMultimediaObject();
-            $this->assertTrue($multimediaObject instanceof MultimediaObject);
+            $this->assertInstanceOf(MultimediaObject::class, $multimediaObject);
         });
         $this->assertFalse(MockUpFormListener::$called);
         $this->assertEquals(self::EMPTY_TITLE, MockUpFormListener::$title);

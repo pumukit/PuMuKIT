@@ -36,7 +36,7 @@ class MultimediaObjectRepository extends DocumentRepository
 
         $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
 
-        return $qb->getQuery()->execute();
+        return $qb->getQuery()->execute()->toArray();
     }
 
     /**
@@ -68,6 +68,7 @@ class MultimediaObjectRepository extends DocumentRepository
             ->sort('rank', 1)
             ->getQuery()
             ->execute()
+            ->toArray()
         ;
     }
 
@@ -103,17 +104,27 @@ class MultimediaObjectRepository extends DocumentRepository
         ;
     }
 
-    /**
-     * Find multimedia objects by person id.
-     *
-     * @param string $personId
-     *
-     * @return mixed
-     */
-    public function findByPersonId($personId)
+    public function qbByPersonId($personId)
     {
         return $this->createStandardQueryBuilder()
-            ->field('people.people._id')->equals(new ObjectId($personId))->getQuery()
+            ->field('people.people._id')
+            ->equals(new ObjectId($personId))
+            ;
+    }
+
+    public function findByPersonId($personId)
+    {
+        return $this->qbByPersonId($personId)
+            ->getQuery()
+            ->execute()
+            ;
+    }
+
+    public function countByPersonId($personId)
+    {
+        return $this->qbByPersonId($personId)
+            ->count()
+            ->getQuery()
             ->execute()
         ;
     }
@@ -242,7 +253,7 @@ class MultimediaObjectRepository extends DocumentRepository
         $collection = $dm->getDocumentCollection(MultimediaObject::class);
 
         $pipeline = [
-            ['$match' => ['people.cod' => "{$roleCode}"]],
+            ['$match' => ['people.cod' => (string)($roleCode)]],
             [
                 '$project' => [
                     '_id' => 0,
@@ -256,35 +267,28 @@ class MultimediaObjectRepository extends DocumentRepository
         $aggregation = $collection->aggregate($pipeline, ['cursor' => []]);
 
         $people = [];
-
         foreach ($aggregation as $element) {
-            if (null !== $element['people']) {
-                if ((null !== $element['people']['cod']) && (null !== $element['people']['people'])) {
-                    if (0 === strpos($element['people']['cod'], $roleCode)) {
-                        foreach ($element['people']['people'] as $person) {
-                            if (!in_array($person['_id']->{'$id'}, $people)) {
-                                $people[] = $person['_id']->{'$id'};
-                            }
-                        }
-                    }
+            if (null === $element['people']) {
+                continue;
+            }
+            if ((null === $element['people']['cod']) || (null === $element['people']['people'])) {
+                continue;
+            }
+            if (0 !== strpos($element['people']['cod'], $roleCode)) {
+                continue;
+            }
+            foreach ($element['people']['people'] as $person) {
+                if (in_array($person['_id'], $people, false)) {
+                    continue;
                 }
+                $people[] = $person['_id'];
             }
         }
 
         return $people;
     }
 
-    /**
-     * Find person in multimedia objects with given role and given email.
-     *
-     * @param string $roleCode
-     * @param string $email
-     *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     *
-     * @return array
-     */
-    public function findPersonWithRoleCodeAndEmail($roleCode, $email)
+    public function findPeopleWithRoleCodeAndId(string $roleCode, string $email): array
     {
         $dm = $this->getDocumentManager();
         $collection = $dm->getDocumentCollection(MultimediaObject::class);
@@ -292,8 +296,8 @@ class MultimediaObjectRepository extends DocumentRepository
         $pipeline = [
             [
                 '$match' => [
-                    'people.cod' => "{$roleCode}",
-                    'people.people.email' => "{$email}",
+                    'people.cod' => (string)($roleCode),
+                    'people.people.email' => (string)($email),
                 ],
             ],
             [
@@ -309,25 +313,29 @@ class MultimediaObjectRepository extends DocumentRepository
 
         $aggregation = $collection->aggregate($pipeline, ['cursor' => []]);
 
-        $persons = [];
-
+        $people = [];
         foreach ($aggregation as $element) {
-            if (null !== $element['people']) {
-                if ((null !== $element['people']['cod']) && (null !== $element['people']['people'])) {
-                    if ((0 === strpos($element['people']['cod'], $roleCode))) {
-                        foreach ($element['people']['people'] as $person) {
-                            if ($person['email'] === $email) {
-                                if (!in_array($person['_id']->{'$id'}, $persons)) {
-                                    $persons[] = $person['_id']->{'$id'};
-                                }
-                            }
-                        }
-                    }
+            if (null === $element['people']) {
+                continue;
+            }
+            if ((null === $element['people']['cod']) || (null === $element['people']['people'])) {
+                continue;
+            }
+            if (0 !== strpos($element['people']['cod'], $roleCode)) {
+                continue;
+            }
+
+            foreach ($element['people']['people'] as $person) {
+                if ($person['email'] !== $email) {
+                    continue;
                 }
+                if (in_array($person['_id'], $people, false)) {
+                    continue;
+                }
+                $people[] = $person['_id'];
             }
         }
-
-        return $persons;
+        return $people;
     }
 
     /**
@@ -655,22 +663,21 @@ class MultimediaObjectRepository extends DocumentRepository
         return $qb->getQuery()->getSingleResult();
     }
 
-    /**
-     * Find multimedia objects without tag id.
-     *
-     * @param array $sort
-     * @param int   $limit
-     * @param int   $page
-     *
-     * @return mixed
-     */
-    public function findWithoutTag(Tag $tag, $sort = [], $limit = 0, $page = 0)
+    public function qbWithoutTag(Tag $tag, array $sort = [], int $limit = 0, int $page = 0)
     {
         $qb = $this->createStandardQueryBuilder()->field('tags._id')->notEqual(new ObjectId($tag->getId()));
-
         $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
+        return $qb;
+    }
 
-        return $qb->getQuery()->execute();
+    public function findWithoutTag(Tag $tag, array $sort = [], int $limit = 0, int $page = 0)
+    {
+        return $this->qbWithoutTag($tag, $sort, $limit, $page)->getQuery()->execute();
+    }
+
+    public function countWithoutTag(Tag $tag, array $sort = [], int $limit = 0, int $page = 0)
+    {
+        return $this->qbWithoutTag($tag, $sort, $limit, $page)->count()->getQuery()->execute();
     }
 
     /**
@@ -725,7 +732,12 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function findOneSeriesFieldWithTag(Tag $tag)
     {
-        return $this->createStandardQueryBuilder()->field('tags._id')->equals(new ObjectId($tag->getId()))->distinct('series')->getQuery()->getSingleResult();
+        return $this->createStandardQueryBuilder()
+            ->field('tags._id')
+            ->equals(new ObjectId($tag->getId()))
+            ->distinct('series')
+            ->getQuery()
+            ->getSingleResult();
     }
 
     /**
@@ -911,19 +923,20 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         $qb = $this->getQueryBuilderOrderedBy($series, $sort);
 
-        return $qb->getQuery()->execute();
+        return $qb->getQuery()->execute()->toArray();
     }
 
-    /**
-     * Create standard query builder.
-     * Creates a query builder with all multimedia objects having status different than PROTOTYPE.
-     * These are the multimedia objects we need to show in series.
-     *
-     * @return \Doctrine\ODM\MongoDB\Query\Builder
-     */
-    public function createStandardQueryBuilder()
+    public function createStandardQueryBuilder(): Builder
     {
         return $this->createQueryBuilder()
+            ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
+            ->field('type')->notEqual(MultimediaObject::TYPE_LIVE);
+    }
+
+    public function createAggregationStandardQueryBuilder(): \Doctrine\ODM\MongoDB\Aggregation\Stage\Match
+    {
+        return $this->createAggregationBuilder()
+            ->match()
             ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
             ->field('type')->notEqual(MultimediaObject::TYPE_LIVE);
     }
@@ -990,38 +1003,23 @@ class MultimediaObjectRepository extends DocumentRepository
         return $qb->getQuery()->execute();
     }
 
-    /**
-     * Count number of standard (not prototype) multimedia objects in the repo.
-     *
-     * @return mixed
-     */
-    public function count()
+    public function count(): int
     {
         return $this->createStandardQueryBuilder()->count()->getQuery()->execute();
     }
 
-    /**
-     * Count total duration of standard (not prototype) multimedia objects.
-     *
-     * @return mixed
-     */
-    public function countDuration()
+    public function countDuration(): int
     {
-        $result = $this->createStandardQueryBuilder()->group([], ['count' => 0])->reduce('function (obj, prev) { prev.count += obj.duration; }')->getQuery()->execute();
+        $aggregation = $this->createAggregationStandardQueryBuilder()
+            ->group()
+            ->field('id')->expression('id')
+            ->field('total_duration')->sum('$duration')
+            ->execute();
 
-        $singleResult = $result->getSingleResult();
-
-        return $singleResult['count'];
+        return $aggregation->current()['total_duration'];
     }
 
-    /**
-     * Count number of standard (not prototype) multimedia objects in a Series.
-     *
-     * @param Series $series
-     *
-     * @return mixed
-     */
-    public function countInSeries($series)
+    public function countInSeries($series): int
     {
         return $this->createStandardQueryBuilder()->field('series')->references($series)->count()->getQuery()->execute();
     }

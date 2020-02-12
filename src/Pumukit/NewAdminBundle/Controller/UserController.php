@@ -53,7 +53,7 @@ class UserController extends AdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:User:index.html.twig")
+     * @Template("@PumukitNewAdmin/User/index.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -64,7 +64,7 @@ class UserController extends AdminController
 
         $origins = $this->documentManager->createQueryBuilder(User::class)->distinct('origin')->getQuery()->execute();
 
-        return ['users' => $users, 'profiles' => $profiles, 'origins' => $origins->toArray()];
+        return ['users' => $users, 'profiles' => $profiles, 'origins' => $origins];
     }
 
     public function createAction(Request $request)
@@ -85,7 +85,7 @@ class UserController extends AdminController
         }
 
         return $this->render(
-            'PumukitNewAdminBundle:User:create.html.twig',
+            '@PumukitNewAdmin/User/create.html.twig',
             [
                 'user' => $user,
                 'form' => $form->createView(),
@@ -127,7 +127,7 @@ class UserController extends AdminController
         }
 
         return $this->render(
-            'PumukitNewAdminBundle:User:update.html.twig',
+            '@PumukitNewAdmin/User/update.html.twig',
             [
                 'user' => $user,
                 'form' => $form->createView(),
@@ -169,7 +169,7 @@ class UserController extends AdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:User:editgroups.html.twig")
+     * @Template("@PumukitNewAdmin/User/editgroups.html.twig")
      */
     public function editGroupsAction(Request $request)
     {
@@ -326,7 +326,7 @@ class UserController extends AdminController
         if ($loggedInUser === $userToDelete) {
             return new Response("Can not delete the logged in user '".$loggedInUser->getUsername()."'", 409);
         }
-        if (1 === $repo->createQueryBuilder()->getQuery()->execute()->count()) {
+        if (1 === $repo->createQueryBuilder()->count()->getQuery()->execute()) {
             return new Response("Can not delete this unique user '".$userToDelete->getUsername()."'", 409);
         }
 

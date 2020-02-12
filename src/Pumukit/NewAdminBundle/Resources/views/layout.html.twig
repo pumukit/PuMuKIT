@@ -1,4 +1,4 @@
-{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+{% extends '@PumukitWebTV/layout.html.twig' %}
 {% block meta %}
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,7 +44,7 @@
 {% endblock %}
 {% block body_base %}
     {% block naked_menu %}
-        {% include is_naked() ? 'PumukitNewAdminBundle::naked_menu.html.twig' : 'PumukitNewAdminBundle::menu.html.twig' %}
+        {% include is_naked() ? '@PumukitNewAdmin/naked_menu.html.twig' : '@PumukitNewAdmin/menu.html.twig' %}
     {% endblock %}
     <div class="container-fluid main">
         {% block body %}{% endblock %}
@@ -55,5 +55,5 @@
             </div>
         </div>
     </div>
-    {% include 'PumukitNewAdminBundle::footer.html.twig' %}
+    {% include '@PumukitNewAdmin/footer.html.twig' %}
 {% endblock body_base %}

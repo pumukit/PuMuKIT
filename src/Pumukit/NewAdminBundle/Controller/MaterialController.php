@@ -35,7 +35,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
-     * @Template("PumukitNewAdminBundle:Material:create.html.twig")
+     * @Template("@PumukitNewAdmin/Material/create.html.twig")
      */
     public function createAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -71,7 +71,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
         }
 
         return $this->render(
-            'PumukitNewAdminBundle:Material:update.html.twig',
+            '@PumukitNewAdmin/Material/update.html.twig',
             [
                 'material' => $material,
                 'form' => $form->createView(),
@@ -82,7 +82,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
-     * @Template("PumukitNewAdminBundle:Material:upload.html.twig")
+     * @Template("@PumukitNewAdmin/Material/upload.html.twig")
      */
     public function uploadAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -149,7 +149,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Material:list.html.twig")
+     * @Template("@PumukitNewAdmin/Material/list.html.twig")
      */
     public function listAction(MultimediaObject $multimediaObject)
     {

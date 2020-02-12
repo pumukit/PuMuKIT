@@ -32,7 +32,7 @@ class ChatController extends AbstractController
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "id"})
      * @Route("/show/{id}", name="pumukit_live_chat_show")
-     * @Template("PumukitWebTVBundle:Live/Chat:show.html.twig")
+     * @Template("@PumukitWebTV/Live/Chat/show.html.twig")
      */
     public function showAction(Request $request, MultimediaObject $multimediaObject): array
     {
@@ -56,7 +56,7 @@ class ChatController extends AbstractController
     /**
      * @ParamConverter("live", class="PumukitSchemaBundle:Live", options={"id" = "id"})
      * @Route("/basic/show/{id}", name="pumukit_live_chat_basic_show")
-     * @Template("PumukitWebTVBundle:Live/Chat:basicLiveShow.html.twig")
+     * @Template("@PumukitWebTV/Live/Chat/basicLiveShow.html.twig")
      */
     public function showBasicAction(Request $request, Live $live): array
     {
@@ -128,7 +128,7 @@ class ChatController extends AbstractController
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "id"})
      * @Route("/list/{id}", name="pumukit_live_chat_list")
-     * @Template("PumukitWebTVBundle:Live/Chat:list.html.twig")
+     * @Template("@PumukitWebTV/Live/Chat/list.html.twig")
      */
     public function listAction(MultimediaObject $multimediaObject): array
     {
@@ -145,7 +145,7 @@ class ChatController extends AbstractController
     /**
      * @ParamConverter("live", class="PumukitSchemaBundle:Live", options={"id" = "id"})
      * @Route("/basic/list/{id}", name="pumukit_live_chat_basic_list")
-     * @Template("PumukitWebTVBundle:Live/Chat:list.html.twig")
+     * @Template("@PumukitWebTV/Live/Chat/list.html.twig")
      */
     public function listBasicAction(Live $live): array
     {

@@ -12,7 +12,7 @@
           </div>
         </th>
         <th colspan="3" width="5%" id="th-icons"></th>
-        {% include 'PumukitNewAdminBundle:Group:listth.html.twig' %}
+        {% include '@PumukitNewAdmin/Group/listth.html.twig' %}
       </tr>
     </thead>
 
@@ -73,7 +73,7 @@
         <td colspan="9" class="foot-td">
             {% set column = ((groups.getNbPages/5)|round(0, 'floor')) %}
             <div class="col-md-8">
-              {{ groups.getNbResults }} 
+              {{ groups.getNbResults }}
               {% transchoice groups.getNbResults %}
 	          {0} groups|{1} group|]1,Inf] groups
 	          {% endtranschoice %}

@@ -19,7 +19,7 @@
         {% else %}
         {% set resource_groups = [] %}
         {% endif %}
-        {% include 'PumukitNewAdminBundle:Series:availablegroups.html.twig' with {'resource_groups': resource_groups, 'groups': groups, 'resource_name': 'broadcast'} %}
+        {% include '@PumukitNewAdmin/Series/availablegroups.html.twig' with {'resource_groups': resource_groups, 'groups': groups, 'resource_name': 'broadcast'} %}
 	  </div>
 	  <div class="pumukitnewadmin-groups-arrows">
 	    <a href="#" onclick="$('#add_broadcast_groups > a.active').trigger('dblclick'); return false;">&#8592;</a>
@@ -29,7 +29,7 @@
 	  <div class="tag pumukitnewadmin-groups-list-box" id="added_broadcast_groups">
 	    <div class="tag_tree list-group" id="add_broadcast_groups" >
           {% if embeddedBroadcast %}
-          {% include 'PumukitNewAdminBundle:Series:selectedgroups.html.twig' with {'resource': embeddedBroadcast, 'groups': groups, 'resource_name': 'broadcast'} %}
+          {% include '@PumukitNewAdmin/Series/selectedgroups.html.twig' with {'resource': embeddedBroadcast, 'groups': groups, 'resource_name': 'broadcast'} %}
           {% endif %}
 	    </div>
       </div>

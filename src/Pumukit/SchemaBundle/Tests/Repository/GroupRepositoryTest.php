@@ -31,12 +31,12 @@ class GroupRepositoryTest extends PumukitTestCase
         gc_collect_cycles();
     }
 
-    public function testRepositoryEmpty()
+    public function testRepositoryEmpty(): void
     {
-        $this->assertEquals(0, count($this->repo->findAll()));
+        $this->assertCount(0, $this->repo->findAll());
     }
 
-    public function testRepository()
+    public function testRepository(): void
     {
         $group = new Group();
 
@@ -46,10 +46,10 @@ class GroupRepositoryTest extends PumukitTestCase
         $this->dm->persist($group);
         $this->dm->flush();
 
-        $this->assertEquals(1, count($this->repo->findAll()));
+        $this->assertCount(1, $this->repo->findAll());
     }
 
-    public function testFindByIdNotIn()
+    public function testFindByIdNotIn(): void
     {
         $group1 = new Group();
         $group1->setKey('Group1');
@@ -70,12 +70,12 @@ class GroupRepositoryTest extends PumukitTestCase
 
         $ids = [new ObjectId($group1->getId()), new ObjectId($group3->getId())];
         $groups = $this->repo->findByIdNotIn($ids)->toArray();
-        $this->assertFalse(in_array($group1, $groups));
-        $this->assertTrue(in_array($group2, $groups));
-        $this->assertFalse(in_array($group3, $groups));
+        $this->assertNotContains($group1, $groups);
+        $this->assertContains($group2, $groups);
+        $this->assertNotContains($group3, $groups);
     }
 
-    public function testFindByIdNotInOf()
+    public function testFindByIdNotInOf(): void
     {
         $group1 = new Group();
         $group1->setKey('Group1');
@@ -102,33 +102,33 @@ class GroupRepositoryTest extends PumukitTestCase
         $ids = [new ObjectId($group1->getId()), new ObjectId($group3->getId())];
         $total = [new ObjectId($group1->getId()), new ObjectId($group3->getId()), new ObjectId($group4->getId())];
         $groups = $this->repo->findByIdNotInOf($ids, $total)->toArray();
-        $this->assertFalse(in_array($group1, $groups));
-        $this->assertFalse(in_array($group2, $groups));
-        $this->assertFalse(in_array($group3, $groups));
-        $this->assertTrue(in_array($group4, $groups));
+        $this->assertNotContains($group1, $groups);
+        $this->assertNotContains($group2, $groups);
+        $this->assertNotContains($group3, $groups);
+        $this->assertContains($group4, $groups);
 
         $ids = [];
         $total = [new ObjectId($group1->getId()), new ObjectId($group3->getId()), new ObjectId($group4->getId())];
         $groups = $this->repo->findByIdNotInOf($ids, $total)->toArray();
-        $this->assertTrue(in_array($group1, $groups));
-        $this->assertFalse(in_array($group2, $groups));
-        $this->assertTrue(in_array($group3, $groups));
-        $this->assertTrue(in_array($group4, $groups));
+        $this->assertContains($group1, $groups);
+        $this->assertNotContains($group2, $groups);
+        $this->assertContains($group3, $groups);
+        $this->assertContains($group4, $groups);
 
         $ids = [new ObjectId($group1->getId()), new ObjectId($group3->getId())];
         $total = [];
         $groups = $this->repo->findByIdNotInOf($ids, $total)->toArray();
-        $this->assertFalse(in_array($group1, $groups));
-        $this->assertFalse(in_array($group2, $groups));
-        $this->assertFalse(in_array($group3, $groups));
-        $this->assertFalse(in_array($group4, $groups));
+        $this->assertNotContains($group1, $groups);
+        $this->assertNotContains($group2, $groups);
+        $this->assertNotContains($group3, $groups);
+        $this->assertNotContains($group4, $groups);
 
         $ids = [];
         $total = [];
         $groups = $this->repo->findByIdNotInOf($ids, $total)->toArray();
-        $this->assertFalse(in_array($group1, $groups));
-        $this->assertFalse(in_array($group2, $groups));
-        $this->assertFalse(in_array($group3, $groups));
-        $this->assertFalse(in_array($group4, $groups));
+        $this->assertNotContains($group1, $groups);
+        $this->assertNotContains($group2, $groups);
+        $this->assertNotContains($group3, $groups);
+        $this->assertNotContains($group4, $groups);
     }
 }

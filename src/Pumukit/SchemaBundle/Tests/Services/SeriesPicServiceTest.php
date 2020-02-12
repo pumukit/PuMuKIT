@@ -105,35 +105,35 @@ class SeriesPicServiceTest extends PumukitTestCase
         $this->dm->persist($mm21);
         $this->dm->flush();
 
-        $this->assertEquals(3, count($this->seriesPicService->getRecommendedPics($series1)));
-        $this->assertEquals(1, count($this->seriesPicService->getRecommendedPics($series2)));
+        $this->assertCount(3, $this->seriesPicService->getRecommendedPics($series1));
+        $this->assertCount(1, $this->seriesPicService->getRecommendedPics($series2));
     }
 
     public function testAddPicUrl()
     {
         $series = $this->factoryService->createSeries();
 
-        $this->assertEquals(0, count($series->getPics()));
+        $this->assertCount(0, $series->getPics());
 
         $url = 'http://domain.com/pic.png';
         $bannerTargetUrl = 'http://domain.com/banner';
 
         $series = $this->seriesPicService->addPicUrl($series, $url);
 
-        $this->assertEquals(1, count($series->getPics()));
-        $this->assertEquals(1, count($this->repo->findAll()[0]->getPics()));
+        $this->assertCount(1, $series->getPics());
+        $this->assertCount(1, $this->repo->findAll()[0]->getPics());
 
         $series = $this->seriesPicService->addPicUrl($series, $url, true, $bannerTargetUrl);
 
-        $this->assertEquals(2, count($series->getPics()));
-        $this->assertEquals(2, count($this->repo->findAll()[0]->getPics()));
+        $this->assertCount(2, $series->getPics());
+        $this->assertCount(2, $this->repo->findAll()[0]->getPics());
     }
 
     public function testAddPicFile()
     {
         $series = $this->factoryService->createSeries();
 
-        $this->assertEquals(0, count($series->getPics()));
+        $this->assertCount(0, $series->getPics());
 
         $picPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'picCopy.png';
         if (copy($this->originalPicPath, $picPath)) {
@@ -141,7 +141,7 @@ class SeriesPicServiceTest extends PumukitTestCase
             $series = $this->seriesPicService->addPicFile($series, $picFile);
             $series = $this->repo->find($series->getId());
 
-            $this->assertEquals(1, count($series->getPics()));
+            $this->assertCount(1, $series->getPics());
 
             $pic = $series->getPics()[0];
             $this->assertTrue($series->containsPic($pic));
@@ -157,7 +157,7 @@ class SeriesPicServiceTest extends PumukitTestCase
             $bannerTargetUrl = 'http://domain.com/banner';
             $series = $this->seriesPicService->addPicFile($series, $picFile, true, $bannerTargetUrl);
 
-            $this->assertEquals(2, count($series->getPics()));
+            $this->assertCount(2, $series->getPics());
         }
 
         $this->deleteCreatedFiles();
@@ -167,7 +167,7 @@ class SeriesPicServiceTest extends PumukitTestCase
     {
         $series = $this->factoryService->createSeries();
 
-        $this->assertEquals(0, count($series->getPics()));
+        $this->assertCount(0, $series->getPics());
 
         $pic = new Pic();
         $url = 'http://domain.com/pic.png';
@@ -182,10 +182,10 @@ class SeriesPicServiceTest extends PumukitTestCase
         $this->dm->flush();
 
         $series->addPic($pic);
-        $this->assertEquals(1, count($series->getPics()));
+        $this->assertCount(1, $series->getPics());
 
         $series = $this->seriesPicService->removePicFromSeries($series, $pic->getId());
-        $this->assertEquals(0, count($series->getPics()));
+        $this->assertCount(0, $series->getPics());
 
         $picPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'picCopy2.png';
         if (copy($this->originalPicPath, $picPath)) {
@@ -195,13 +195,13 @@ class SeriesPicServiceTest extends PumukitTestCase
             $series = $this->seriesPicService->addPicFile($series, $picFile, true, $bannerTargetUrl);
             $series = $this->repo->find($series->getId());
 
-            $this->assertEquals(1, count($series->getPics()));
+            $this->assertCount(1, $series->getPics());
 
             $pic = $series->getPics()[0];
             $this->assertTrue($series->containsPic($pic));
 
             $series = $this->seriesPicService->removePicFromSeries($series, $pic->getId());
-            $this->assertEquals(0, count($series->getPics()));
+            $this->assertCount(0, $series->getPics());
         }
     }
 

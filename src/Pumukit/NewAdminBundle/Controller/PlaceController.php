@@ -42,7 +42,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
 
     /**
      * @Route("/", name="pumukitnewadmin_places_index")
-     * @Template("PumukitNewAdminBundle:Place:index.html.twig")
+     * @Template("@PumukitNewAdmin/Place/index.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -54,7 +54,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
 
     /**
      * @Route("/parent/", name="pumukitnewadmin_places_parent")
-     * @Template("PumukitNewAdminBundle:Place:parent_list.html.twig")
+     * @Template("@PumukitNewAdmin/Place/parent_list.html.twig")
      */
     public function parentAction(Request $request)
     {
@@ -67,7 +67,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
     /**
      * @Route("/children/{id}", name="pumukitnewadmin_places_children")
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"id": "id"}})
-     * @Template("PumukitNewAdminBundle:Place:children_list.html.twig")
+     * @Template("@PumukitNewAdmin/Place/children_list.html.twig")
      */
     public function childrenAction(Tag $tag)
     {
@@ -79,7 +79,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
     /**
      * @Route("/preview/{id}", name="pumukitnewadmin_places_children_preview")
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"id": "id"}})
-     * @Template("PumukitNewAdminBundle:Place:preview_data.html.twig")
+     * @Template("@PumukitNewAdmin/Place/preview_data.html.twig")
      */
     public function previewAction(Tag $tag)
     {
@@ -95,7 +95,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
 
     /**
      * @Route("/create/{id}", name="pumukitnewadmin_places_create")
-     * @Template("PumukitNewAdminBundle:Place:create.html.twig")
+     * @Template("@PumukitNewAdmin/Place/create.html.twig")
      *
      * @param mixed|null $id
      */
@@ -151,7 +151,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
     /**
      * @Route("/update/{id}", name="pumukitnewadmin_places_update")
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"id": "id"}})
-     * @Template("PumukitNewAdminBundle:Place:update.html.twig")
+     * @Template("@PumukitNewAdmin/Place/update.html.twig")
      */
     public function updateAction(Request $request, Tag $tag)
     {

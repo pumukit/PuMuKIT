@@ -59,7 +59,7 @@ class LiveController extends AdminController
         }
 
         return $this->render(
-            'PumukitNewAdminBundle:Live:create.html.twig',
+            '@PumukitNewAdmin/Live/create.html.twig',
             [
                 'enableChat' => $this->pumukitLiveChatEnable,
                 'live' => $resource,
@@ -88,7 +88,7 @@ class LiveController extends AdminController
         }
 
         return $this->render(
-            'PumukitNewAdminBundle:'.ucfirst($resourceName).':update.html.twig',
+            '@PumukitNewAdmin/'.ucfirst($resourceName).'/update.html.twig',
             [
                 'enableChat' => $this->pumukitLiveChatEnable,
                 'live' => $resource,

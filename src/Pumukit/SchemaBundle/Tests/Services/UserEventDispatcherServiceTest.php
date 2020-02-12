@@ -47,7 +47,7 @@ class UserEventDispatcherServiceTest extends PumukitTestCase
     public function testDispatchCreate()
     {
         $this->dispatcher->addListener(SchemaEvents::USER_CREATE, function ($event, $name) {
-            $this->assertTrue($event instanceof UserEvent);
+            $this->assertInstanceOf(UserEvent::class, $event);
             $this->assertEquals(SchemaEvents::USER_CREATE, $name);
 
             $user = $event->getUser();
@@ -76,7 +76,7 @@ class UserEventDispatcherServiceTest extends PumukitTestCase
     public function testDispatchUpdate()
     {
         $this->dispatcher->addListener(SchemaEvents::USER_UPDATE, function ($event, $name) {
-            $this->assertTrue($event instanceof UserEvent);
+            $this->assertInstanceOf(UserEvent::class, $event);
             $this->assertEquals(SchemaEvents::USER_UPDATE, $name);
 
             $user = $event->getUser();
@@ -111,7 +111,7 @@ class UserEventDispatcherServiceTest extends PumukitTestCase
     public function testDispatchDelete()
     {
         $this->dispatcher->addListener(SchemaEvents::USER_DELETE, function ($event, $name) {
-            $this->assertTrue($event instanceof UserEvent);
+            $this->assertInstanceOf(UserEvent::class, $event);
             $this->assertEquals(SchemaEvents::USER_DELETE, $name);
 
             $user = $event->getUser();

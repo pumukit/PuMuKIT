@@ -20,15 +20,14 @@ class RoleRepository extends DocumentRepository
 
     /**
      * Find all roles in the repository order by rank.
-     *
-     * @return array
      */
-    public function findAll()
+    public function findAll(): array
     {
         return $this->createQueryBuilder()
             ->sort('rank', -1)
             ->getQuery()
             ->execute()
+            ->toArray()
         ;
     }
 }

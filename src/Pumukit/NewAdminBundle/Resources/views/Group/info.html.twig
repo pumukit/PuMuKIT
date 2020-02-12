@@ -13,17 +13,17 @@
 <div class="modal-body">
   <div class="col-md-4">
     <div id="group_users" class="panel panel-default" style="margin-top: 20px;">
-      {% include 'PumukitNewAdminBundle:Group:inforesources.html.twig' with {'resources': users, 'title': 'USERS'|trans, 'resource_name': 'user', 'count': countResources['users']} %}
+      {% include '@PumukitNewAdmin/Group/inforesources.html.twig' with {'resources': users, 'title': 'USERS'|trans, 'resource_name': 'user', 'count': countResources['users']} %}
     </div>
   </div>
   <div class="col-md-4">
     <div id="group_mms" class="panel panel-default" style="margin-top: 20px;">
-      {% include 'PumukitNewAdminBundle:Group:inforesources.html.twig' with {'resources': admin_multimedia_objects, 'title': 'ADMIN MULTIMEDIA OBJECTS'|trans, 'resource_name': 'multimediaobject', 'count': countResources['adminMultimediaObjects']} %}
+      {% include '@PumukitNewAdmin/Group/inforesources.html.twig' with {'resources': admin_multimedia_objects, 'title': 'ADMIN MULTIMEDIA OBJECTS'|trans, 'resource_name': 'multimediaobject', 'count': countResources['adminMultimediaObjects']} %}
     </div>
   </div>
   <div class="col-md-4">
     <div id="group_broadcasts" class="panel panel-default" style="margin-top: 20px;">
-      {% include 'PumukitNewAdminBundle:Group:inforesources.html.twig' with {'resources': viewer_multimedia_objects, 'title': 'PLAY MULTIMEDIA OBJECTS'|trans, 'resource_name': 'embeddedbroadcast', 'count': countResources['playMultimediaObjects']} %}
+      {% include '@PumukitNewAdmin/Group/inforesources.html.twig' with {'resources': viewer_multimedia_objects, 'title': 'PLAY MULTIMEDIA OBJECTS'|trans, 'resource_name': 'embeddedbroadcast', 'count': countResources['playMultimediaObjects']} %}
     </div>
   </div>
   <div class="modal-footer">

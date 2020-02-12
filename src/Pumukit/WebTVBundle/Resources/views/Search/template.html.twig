@@ -1,4 +1,4 @@
-{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+{% extends '@PumukitWebTV/layout.html.twig' %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -13,7 +13,7 @@
 {% endblock %}
 
 {% block body %}
-    {% include 'PumukitWebTVBundle:Search:template_title.html.twig'  %}
-    {% include 'PumukitWebTVBundle:Search:template_list.html.twig' %}
-    {% include 'PumukitWebTVBundle:Misc:pager.html.twig' %}
+    {% include '@PumukitWebTV/Search/template_title.html.twig'  %}
+    {% include '@PumukitWebTV/Search/template_list.html.twig' %}
+    {% include '@PumukitWebTV/Misc/pager.html.twig' %}
 {% endblock %}

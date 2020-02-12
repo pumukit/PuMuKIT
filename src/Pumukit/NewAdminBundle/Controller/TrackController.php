@@ -69,7 +69,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     /**
      * @Security("is_granted('ROLE_ACCESS_ADVANCED_UPLOAD')")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
-     * @Template("PumukitNewAdminBundle:Track:create.html.twig")
+     * @Template("@PumukitNewAdmin/Track/create.html.twig")
      */
     public function createAction(Request $request, MultimediaObject $multimediaObject)
     {
@@ -89,7 +89,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
-     * @Template("PumukitNewAdminBundle:Track:upload.html.twig")
+     * @Template("@PumukitNewAdmin/Track/upload.html.twig")
      * @Security("is_granted('ROLE_ACCESS_ADVANCED_UPLOAD')")
      */
     public function uploadAction(Request $request, MultimediaObject $multimediaObject)
@@ -168,7 +168,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         }
 
         return $this->render(
-            'PumukitNewAdminBundle:Track:update.html.twig',
+            '@PumukitNewAdmin/Track/update.html.twig',
             [
                 'track' => $track,
                 'form' => $form->createView(),
@@ -180,7 +180,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     * @Template("PumukitNewAdminBundle:Track:info.html.twig")
+     * @Template("@PumukitNewAdmin/Track/info.html.twig")
      */
     public function infoAction(Request $request, MultimediaObject $multimediaObject)
     {
@@ -204,7 +204,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     * @Template("PumukitNewAdminBundle:Track:play.html.twig")
+     * @Template("@PumukitNewAdmin/Track/play.html.twig")
      */
     public function playAction(Request $request, MultimediaObject $multimediaObject)
     {
@@ -255,7 +255,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Track:list.html.twig")
+     * @Template("@PumukitNewAdmin/Track/list.html.twig")
      */
     public function listAction(Request $request, MultimediaObject $multimediaObject)
     {
@@ -294,7 +294,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("job", class="PumukitEncoderBundle:Job", options={"id" = "jobId"})
-     * @Template("PumukitNewAdminBundle:Track:infoJob.html.twig")
+     * @Template("@PumukitNewAdmin/Track/infoJob.html.twig")
      */
     public function infoJobAction(MultimediaObject $multimediaObject, Job $job)
     {
@@ -344,7 +344,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     * @Template("PumukitNewAdminBundle:Pic:list.html.twig")
+     * @Template("@PumukitNewAdmin/Pic/list.html.twig")
      */
     public function picAction(Request $request, MultimediaObject $multimediaObject)
     {

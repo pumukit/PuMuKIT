@@ -32,9 +32,9 @@
                             <i class="mdi-action-info pumukitnewadmin-broadcast-info" data-toggle="tooltip" data-placement="right" title="{{ broadcast_description(broadcast_type, template, mm.isLive()) }}"></i>
                         </div>
                         {% if broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PASSWORD') %}
-                            {% include 'PumukitNewAdminBundle:MultimediaObject:broadcastpassword.html.twig' with {'embeddedBroadcast': mm.getEmbeddedBroadcast()} %}
+                            {% include '@PumukitNewAdmin/MultimediaObject/broadcastpassword.html.twig' with {'embeddedBroadcast': mm.getEmbeddedBroadcast()} %}
                         {% elseif broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_GROUPS') %}
-                            {% include 'PumukitNewAdminBundle:MultimediaObject:broadcastgroups.html.twig' with {'embeddedBroadcast': mm.getEmbeddedBroadcast(), 'groups': groups} %}
+                            {% include '@PumukitNewAdmin/MultimediaObject/broadcastgroups.html.twig' with {'embeddedBroadcast': mm.getEmbeddedBroadcast(), 'groups': groups} %}
                         {% endif %}
                     {% endfor %}
                 </div>
@@ -53,4 +53,4 @@
         </div>
     </form>
 </div>
-{% include 'PumukitNewAdminBundle:MultimediaObject:updatebroadcast.js.twig' %}
+{% include '@PumukitNewAdmin/MultimediaObject/updatebroadcast.js.twig' %}

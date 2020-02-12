@@ -3,7 +3,7 @@
         <p>{{ multimediaObject.getEmbeddedEvent().getName(app.request.getLocale()) }}</p>
         <div class="well">
             {% if multimediaObject.getEmbeddedEvent().getLive() is not null and (multimediaObject.getEmbeddedEvent().getUrl() is not defined or multimediaObject.getEmbeddedEvent().getUrl() is empty) %}
-                {% include('PumukitNewAdminBundle:Live:Players/'~multimediaObject.getEmbeddedEvent().getLive().getLiveType()~'.html.twig') with {'live': multimediaObject.getEmbeddedEvent().getLive()} %}
+                {% include('@PumukitNewAdmin/Live/Players/'~multimediaObject.getEmbeddedEvent().getLive().getLiveType()~'.html.twig') with {'live': multimediaObject.getEmbeddedEvent().getLive()} %}
             {% elseif multimediaObject.getEmbeddedEvent().getUrl() is not null and multimediaObject.getEmbeddedEvent().getUrl() is not empty %}
                 <p><strong>{% trans %}URL external{% endtrans %}:</strong></p>
                 <input type="text" value="{{ multimediaObject.getEmbeddedEvent().getUrl() }}" disabled/>

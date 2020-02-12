@@ -107,30 +107,30 @@ class PermissionProfileListenerTest extends PumukitTestCase
         $user3 = $this->userService->create($user3);
 
         $user1Roles = $user1->getRoles();
-        $this->assertTrue(in_array('ROLE_USER', $user1Roles));
-        $this->assertFalse(in_array(Permission::ACCESS_DASHBOARD, $user1Roles));
+        $this->assertContains('ROLE_USER', $user1Roles);
+        $this->assertNotContains(Permission::ACCESS_DASHBOARD, $user1Roles);
 
         $user2Roles = $user2->getRoles();
-        $this->assertTrue(in_array('ROLE_USER', $user2Roles));
-        $this->assertFalse(in_array(Permission::ACCESS_DASHBOARD, $user2Roles));
+        $this->assertContains('ROLE_USER', $user2Roles);
+        $this->assertNotContains(Permission::ACCESS_DASHBOARD, $user2Roles);
 
         $user3Roles = $user3->getRoles();
-        $this->assertTrue(in_array('ROLE_USER', $user3Roles));
-        $this->assertFalse(in_array(Permission::ACCESS_DASHBOARD, $user3Roles));
+        $this->assertContains('ROLE_USER', $user3Roles);
+        $this->assertNotContains(Permission::ACCESS_DASHBOARD, $user3Roles);
 
         $permissionProfile1->addPermission(Permission::ACCESS_DASHBOARD);
         $this->permissionProfileService->update($permissionProfile1);
 
         $user1Roles = $user1->getRoles();
-        $this->assertTrue(in_array('ROLE_USER', $user1Roles));
-        $this->assertTrue(in_array(Permission::ACCESS_DASHBOARD, $user1Roles));
+        $this->assertContains('ROLE_USER', $user1Roles);
+        $this->assertContains(Permission::ACCESS_DASHBOARD, $user1Roles);
 
         $user2Roles = $user2->getRoles();
-        $this->assertTrue(in_array('ROLE_USER', $user2Roles));
-        $this->assertFalse(in_array(Permission::ACCESS_DASHBOARD, $user2Roles));
+        $this->assertContains('ROLE_USER', $user2Roles);
+        $this->assertNotContains(Permission::ACCESS_DASHBOARD, $user2Roles);
 
         $user3Roles = $user3->getRoles();
-        $this->assertTrue(in_array('ROLE_USER', $user3Roles));
-        $this->assertTrue(in_array(Permission::ACCESS_DASHBOARD, $user3Roles));
+        $this->assertContains('ROLE_USER', $user3Roles);
+        $this->assertContains(Permission::ACCESS_DASHBOARD, $user3Roles);
     }
 }

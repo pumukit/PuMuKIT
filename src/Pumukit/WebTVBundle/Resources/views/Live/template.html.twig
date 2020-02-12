@@ -1,8 +1,8 @@
-{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+{% extends '@PumukitWebTV/layout.html.twig' %}
 
 {% block body %}
         {% set title = "Events"|trans %}
-        {% include "PumukitWebTVBundle:Misc:page_title.html.twig" %}
+        {% include "@PumukitWebTV/Misc/page_title.html.twig" %}
 
         {% if eventsNow is empty and eventsToday is empty and eventsFuture is empty %}
             <div class="row">
@@ -24,8 +24,8 @@
                                 <div class="categories_list_block">
                                     <h3>{% trans %}Now events{% endtrans %}</h3>
                                     {% for eventNow in eventsNow %}
-                                        {% include 'PumukitWebTVBundle:Resources:template_event.html.twig' with {'cols': objectByCol, 'event': eventNow['data'], 'defaultPic' : defaultPic, active: true} %}
-                                        {% include "PumukitWebTVBundle:Resources:template_clearfix.html.twig" %}
+                                        {% include '@PumukitWebTV/Resources/template_event.html.twig' with {'cols': objectByCol, 'event': eventNow['data'], 'defaultPic' : defaultPic, active: true} %}
+                                        {% include "@PumukitWebTV/Resources/template_clearfix.html.twig" %}
                                     {% endfor %}
                                 </div>
                                 <div class="clearfix"></div>
@@ -43,8 +43,8 @@
                                 <div class="categories_list_block">
                                     <h3>{% trans %}Today events{% endtrans %}</h3>
                                     {% for eventToday in eventsToday %}
-                                        {% include 'PumukitWebTVBundle:Resources:template_event.html.twig' with {'cols': objectByCol, 'event': eventToday['data'], 'defaultPic' : defaultPic, active: false} %}
-                                        {% include "PumukitWebTVBundle:Resources:template_clearfix.html.twig" %}
+                                        {% include '@PumukitWebTV/Resources/template_event.html.twig' with {'cols': objectByCol, 'event': eventToday['data'], 'defaultPic' : defaultPic, active: false} %}
+                                        {% include "@PumukitWebTV/Resources/template_clearfix.html.twig" %}
                                     {% endfor %}
                                 </div>
                                 <div class="clearfix"></div>
@@ -62,8 +62,8 @@
                                 <div class="categories_list_block">
                                     <h3>{% trans %}Future events{% endtrans %}</h3>
                                     {% for eventFuture in eventsFuture %}
-                                        {% include 'PumukitWebTVBundle:Resources:template_event.html.twig' with {'cols': objectByCol, 'event': eventFuture['data'], 'defaultPic' : defaultPic, active: false} %}
-                                        {% include "PumukitWebTVBundle:Resources:template_clearfix.html.twig" %}
+                                        {% include '@PumukitWebTV/Resources/template_event.html.twig' with {'cols': objectByCol, 'event': eventFuture['data'], 'defaultPic' : defaultPic, active: false} %}
+                                        {% include "@PumukitWebTV/Resources/template_clearfix.html.twig" %}
                                     {% endfor %}
                                 </div>
                                 <div class="clearfix"></div>

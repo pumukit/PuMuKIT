@@ -51,13 +51,13 @@ class EventController extends AbstractController implements WebTVControllerInter
 
     /**
      * @Route ("/events/", defaults={"filter": false}, name="pumukit_webtv_events")
-     * @Template("PumukitWebTVBundle:Live:template.html.twig")
+     * @Template("@PumukitWebTV/Live/template.html.twig")
      */
     public function indexAction(Request $request)
     {
         $advanceEvents = $this->checkAdvanceEvents();
         if (!$advanceEvents) {
-            return $this->render('PumukitWebTVBundle:Index:404notfound.html.twig');
+            return $this->render('@PumukitWebTV/Index/404notfound.html.twig');
         }
 
         $this->updateBreadcrumbs($this->translator->trans('Live events'), 'pumukit_webtv_events');
@@ -85,7 +85,7 @@ class EventController extends AbstractController implements WebTVControllerInter
     }
 
     /**
-     * @Template("PumukitWebTVBundle:Live:Advance/livelist.html.twig")
+     * @Template("@PumukitWebTV/Live/Advance/livelist.html.twig")
      */
     public function liveListAction()
     {
@@ -99,7 +99,7 @@ class EventController extends AbstractController implements WebTVControllerInter
 
     /**
      * @Route("/event/next/session/{id}", name="pumukit_webtv_next_session_event")
-     * @Template("PumukitWebTVBundle:Live:Advance/nextsessionlist.html.twig")
+     * @Template("@PumukitWebTV/Live/Advance/nextsessionlist.html.twig")
      *
      * @param mixed $id
      */
@@ -121,7 +121,7 @@ class EventController extends AbstractController implements WebTVControllerInter
 
     /**
      * @Route("/event/twitter/{id}", name="pumukit_webtv_event_twitter")
-     * @Template("PumukitWebTVBundle:Live:Advance/twitter.html.twig")
+     * @Template("@PumukitWebTV/Live/Advance/twitter.html.twig")
      */
     public function twitterAction(string $id)
     {

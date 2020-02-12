@@ -11,10 +11,10 @@
     </ul>
     <div class="tab-content">
       <div id="listEvent" role="tabpanel" class="tab-pane{{ app.session.get('admin/event/tab')?'':' active' }}">
-        {% include 'PumukitNewAdminBundle:LegacyEvent:array.html.twig' %}
+        {% include '@PumukitNewAdmin/LegacyEvent/array.html.twig' %}
       </div>
       <div id="calEvent" role="tabpanel" class="tab-pane{{ app.session.get('admin/event/tab')?' active':'' }}">
-        {% include 'PumukitNewAdminBundle:LegacyEvent:calendar.html.twig' %}
+        {% include '@PumukitNewAdmin/LegacyEvent/calendar.html.twig' %}
       </div>
     </div>
   </div>

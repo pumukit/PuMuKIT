@@ -1,4 +1,4 @@
-{% extends 'PumukitWizardBundle:Default:index.html.twig' %}
+{% extends '@PumukitWizard/Default/index.html.twig' %}
 {% block wizard_body %}
 {{ render(controller('PumukitWizardBundle:Default:steps', {'step': -1, 'option': 'single', 'show_series': show_series, 'same_series': same_series})) }}
 <div class="well">
@@ -9,7 +9,7 @@
   <form id="pumukitwizard_license_form"
         action="{{ path('pumukitwizard_default_series') }}" method="POST">
   {% endif %}
-    {% include 'PumukitWizardBundle:Default:hidden.html.twig' with {'step': 'license'} %}
+    {% include '@PumukitWizard/Default/hidden.html.twig' with {'step': 'license'} %}
     <fieldset class="well">
       <legend hidden>{% trans %}License{% endtrans %}</legend>
       <div class="col-md-12">

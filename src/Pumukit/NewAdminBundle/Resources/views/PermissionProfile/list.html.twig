@@ -46,7 +46,7 @@
         <tr>
           <th width="20%">{% trans %}Permissions{% endtrans %}</th>
           {% for permissionprofile in permissionprofiles %}
-          <th width="1%">{% if not permissionprofile.system %}{% include 'PumukitNewAdminBundle:PermissionProfile:updatemenu.html.twig' %}{% endif %}</th>
+          <th width="1%">{% if not permissionprofile.system %}{% include '@PumukitNewAdmin/PermissionProfile/updatemenu.html.twig' %}{% endif %}</th>
           <th width="8%">{{ permissionprofile.name }}</th>
           {% else %}
           <th>{% trans %}There are no user permissions with those values.{% endtrans %}</th>
@@ -69,7 +69,7 @@
           {% for permissionprofile in permissionprofiles %}
           <td></td>
           <td>
-            {% include 'PumukitNewAdminBundle:PermissionProfile:updatedefault.html.twig' %}
+            {% include '@PumukitNewAdmin/PermissionProfile/updatedefault.html.twig' %}
           </td>
           {% endfor %}
         </tr>
@@ -78,7 +78,7 @@
           {% for permissionprofile in permissionprofiles %}
           <td></td>
           <td>
-            {% include 'PumukitNewAdminBundle:PermissionProfile:updatescope.html.twig' %}
+            {% include '@PumukitNewAdmin/PermissionProfile/updatescope.html.twig' %}
           </td>
           {% endfor %}
         </tr>

@@ -5,16 +5,16 @@ namespace Pumukit\NotificationBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
 use Pumukit\SchemaBundle\Document\Person;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Twig\Environment as TemplatingEngine;
 use Symfony\Component\Translation\TranslatorInterface;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 
 class SenderService
 {
-    const TEMPLATE_JOB = 'PumukitNotificationBundle:Email:job.html.twig';
-    const TEMPLATE_NOTIFICATION = 'PumukitNotificationBundle:Email:notification.html.twig';
-    const TEMPLATE_ERROR = 'PumukitNotificationBundle:Email:error.html.twig';
+    const TEMPLATE_JOB = '@PumukitNotification/Email/job.html.twig';
+    const TEMPLATE_NOTIFICATION = '@PumukitNotification/Email/notification.html.twig';
+    const TEMPLATE_ERROR = '@PumukitNotification/Email/error.html.twig';
 
     private $mailer;
     private $templating;
@@ -38,7 +38,7 @@ class SenderService
 
     public function __construct(
         $mailer,
-        EngineInterface $templating,
+        TemplatingEngine $templating,
         TranslatorInterface $translator,
         DocumentManager $documentManager,
         LoggerInterface $logger,

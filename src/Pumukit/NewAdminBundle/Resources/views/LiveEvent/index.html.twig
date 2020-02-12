@@ -1,8 +1,8 @@
-{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+{% extends '@PumukitNewAdmin/layout.html.twig' %}
 
 {% block javascripts %}
     {{ parent() }}
-    {% include('PumukitBaseLivePlayerBundle:Default:js.html.twig') %}
+    {% include('@PumukitBaseLivePlayer/Default/js.html.twig') %}
 {% endblock %}
 
 {% block body %}
@@ -53,7 +53,7 @@
                     {% trans %}Select any live event.{% endtrans %}
                 {% endif %}
             </div>
-            {% include 'PumukitNewAdminBundle:LiveEvent:filters.html.twig' %}
+            {% include '@PumukitNewAdmin/LiveEvent/filters.html.twig' %}
         </div>
     </div>
 

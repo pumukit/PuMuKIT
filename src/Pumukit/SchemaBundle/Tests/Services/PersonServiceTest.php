@@ -328,16 +328,16 @@ class PersonServiceTest extends PumukitTestCase
         $seriesBob = $this->personService->findSeriesWithPerson($personBob);
         $seriesKate = $this->personService->findSeriesWithPerson($personKate);
 
-        $this->assertEquals(2, count($seriesJohn));
-        $this->assertEquals(2, count($seriesBob));
-        $this->assertEquals(2, count($seriesKate));
+        $this->assertCount(2, $seriesJohn);
+        $this->assertCount(2, $seriesBob);
+        $this->assertCount(2, $seriesKate);
 
-        $this->assertTrue(in_array($series1, $seriesJohn->toArray(), true));
-        $this->assertTrue(in_array($series3, $seriesJohn->toArray(), true));
-        $this->assertTrue(in_array($series1, $seriesBob->toArray(), true));
-        $this->assertTrue(in_array($series3, $seriesBob->toArray(), true));
-        $this->assertTrue(in_array($series1, $seriesKate->toArray(), true));
-        $this->assertTrue(in_array($series2, $seriesKate->toArray(), true));
+        $this->assertContains($series1, $seriesJohn->toArray());
+        $this->assertContains($series3, $seriesJohn->toArray());
+        $this->assertContains($series1, $seriesBob->toArray());
+        $this->assertContains($series3, $seriesBob->toArray());
+        $this->assertContains($series1, $seriesKate->toArray());
+        $this->assertContains($series2, $seriesKate->toArray());
 
         $seriesKate1 = $this->personService->findSeriesWithPerson($personKate, 1);
         $this->assertEquals([$series1], $seriesKate1->toArray());
@@ -362,16 +362,16 @@ class PersonServiceTest extends PumukitTestCase
         $nameJohn = 'John Smith';
         $personJohn->setName($nameJohn);
 
-        $this->assertEquals(0, count($mm->getPeopleByRole($roleActor)));
+        $this->assertCount(0, $mm->getPeopleByRole($roleActor));
 
         $mm = $this->personService->createRelationPerson($personJohn, $roleActor, $mm);
 
-        $this->assertEquals(1, count($mm->getPeopleByRole($roleActor)));
+        $this->assertCount(1, $mm->getPeopleByRole($roleActor));
     }
 
     public function testAutoCompletePeopleByName()
     {
-        $this->assertEquals(0, count($this->personService->autoCompletePeopleByName('john')));
+        $this->assertCount(0, $this->personService->autoCompletePeopleByName('john'));
 
         $personJohn = new Person();
         $nameJohn = 'John Smith';
@@ -396,19 +396,19 @@ class PersonServiceTest extends PumukitTestCase
         $this->dm->flush();
 
         $peopleJohn = array_values($this->personService->autoCompletePeopleByName('john')->toArray());
-        $this->assertEquals(1, count($peopleJohn));
+        $this->assertCount(1, $peopleJohn);
         $this->assertEquals($personJohn, $peopleJohn[0]);
 
         $peopleBob = array_values($this->personService->autoCompletePeopleByName('bob')->toArray());
-        $this->assertEquals(2, count($peopleBob));
+        $this->assertCount(2, $peopleBob);
         $this->assertEquals([$personBob, $personBobby], $peopleBob);
 
         $peopleKat = array_values($this->personService->autoCompletePeopleByName('kat')->toArray());
-        $this->assertEquals(1, count($peopleKat));
+        $this->assertCount(1, $peopleKat);
         $this->assertEquals($personKate, $peopleKat[0]);
 
         $peopleSm = array_values($this->personService->autoCompletePeopleByName('sm')->toArray());
-        $this->assertEquals(2, count($peopleSm));
+        $this->assertCount(2, $peopleSm);
         $this->assertEquals([$personJohn, $personBobby], $peopleSm);
     }
 
@@ -439,12 +439,12 @@ class PersonServiceTest extends PumukitTestCase
 
         $personBobId = $personBob->getId();
 
-        $this->assertEquals(1, count($this->repoMmobj->findByPersonId($personBobId)));
+        $this->assertCount(1, $this->repoMmobj->findByPersonId($personBobId));
         $this->assertEquals($personBob, $this->repo->find($personBobId));
 
         $this->personService->deleteRelation($personBob, $roleActor, $mm1);
 
-        $this->assertEquals(0, count($this->repoMmobj->findByPersonId($personBobId)));
+        $this->assertCount(0, $this->repoMmobj->findByPersonId($personBobId));
     }
 
     public function testBatchDeletePerson()
@@ -501,22 +501,22 @@ class PersonServiceTest extends PumukitTestCase
         $personBobId = $personBob->getId();
         $personJohnId = $personJohn->getId();
 
-        $this->assertEquals(2, count($this->repoMmobj->findByPersonId($personBobId)));
-        $this->assertEquals(3, count($this->repoMmobj->findByPersonId($personJohnId)));
+        $this->assertCount(2, $this->repoMmobj->findByPersonId($personBobId));
+        $this->assertCount(3, $this->repoMmobj->findByPersonId($personJohnId));
         $this->assertEquals($personBob, $this->repo->find($personBobId));
         $this->assertEquals($personJohn, $this->repo->find($personJohnId));
 
         $this->personService->batchDeletePerson($personBob);
 
-        $this->assertEquals(0, count($this->repoMmobj->findByPersonId($personBobId)));
-        $this->assertEquals(3, count($this->repoMmobj->findByPersonId($personJohnId)));
+        $this->assertCount(0, $this->repoMmobj->findByPersonId($personBobId));
+        $this->assertCount(3, $this->repoMmobj->findByPersonId($personJohnId));
         $this->assertNull($this->repo->find($personBobId));
         $this->assertEquals($personJohn, $this->repo->find($personJohnId));
 
         $this->personService->batchDeletePerson($personJohn);
 
-        $this->assertEquals(0, count($this->repoMmobj->findByPersonId($personBobId)));
-        $this->assertEquals(0, count($this->repoMmobj->findByPersonId($personJohnId)));
+        $this->assertCount(0, $this->repoMmobj->findByPersonId($personBobId));
+        $this->assertCount(0, $this->repoMmobj->findByPersonId($personJohnId));
         $this->assertNull($this->repo->find($personBobId));
         $this->assertNull($this->repo->find($personJohnId));
     }
@@ -643,18 +643,18 @@ class PersonServiceTest extends PumukitTestCase
      */
     public function testDeletePerson()
     {
-        $this->assertEquals(0, count($this->repo->findAll()));
+        $this->assertCount(0, $this->repo->findAll());
 
         $person = new Person();
         $person->setName('Person');
         $this->dm->persist($person);
         $this->dm->flush();
 
-        $this->assertEquals(1, count($this->repo->findAll()));
+        $this->assertCount(1, $this->repo->findAll());
 
         $this->personService->deletePerson($person);
 
-        $this->assertEquals(0, count($this->repo->findAll()));
+        $this->assertCount(0, $this->repo->findAll());
 
         $personBob = new Person();
         $personBob->setName('Bob');
@@ -677,16 +677,16 @@ class PersonServiceTest extends PumukitTestCase
         $this->dm->persist($series);
         $this->dm->flush();
 
-        $this->assertEquals(1, count($this->repo->findAll()));
+        $this->assertCount(1, $this->repo->findAll());
 
         $this->personService->deletePerson($personBob);
 
-        $this->assertEquals(1, count($this->repo->findAll()));
+        $this->assertCount(1, $this->repo->findAll());
     }
 
     public function testReferencePersonIntoUser()
     {
-        $this->assertEquals(0, count($this->repo->findAll()));
+        $this->assertCount(0, $this->repo->findAll());
 
         $username = 'user1';
         $fullname = 'User fullname';
@@ -703,7 +703,7 @@ class PersonServiceTest extends PumukitTestCase
         $user = $this->personService->referencePersonIntoUser($user);
 
         $people = $this->repo->findAll();
-        $this->assertEquals(1, count($people));
+        $this->assertCount(1, $people);
 
         $person = $people[0];
 
@@ -718,7 +718,7 @@ class PersonServiceTest extends PumukitTestCase
 
         $user = $this->personService->referencePersonIntoUser($user);
         $people = $this->repo->findAll();
-        $this->assertEquals(1, count($people));
+        $this->assertCount(1, $people);
 
         $username2 = 'user2';
         $fullname2 = 'User fullname 2';
@@ -735,7 +735,7 @@ class PersonServiceTest extends PumukitTestCase
         $user2 = $this->personService->referencePersonIntoUser($user2);
 
         $people = $this->repo->findAll();
-        $this->assertEquals(2, count($people));
+        $this->assertCount(2, $people);
 
         $person = $people[1];
 
@@ -759,7 +759,7 @@ class PersonServiceTest extends PumukitTestCase
         $this->dm->persist($role3);
         $this->dm->flush();
 
-        $this->assertEquals(3, count($this->personService->getRoles()));
+        $this->assertCount(3, $this->personService->getRoles());
     }
 
     public function testRemoveUserFromPerson()

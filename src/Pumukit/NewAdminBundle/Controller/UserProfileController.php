@@ -60,7 +60,7 @@ class UserProfileController extends AdminController
 
     /**
      * @Route("/", name="pumukitnewadmin_profile_user_index")
-     * @Template("PumukitNewAdminBundle:UserProfile:template.html.twig")
+     * @Template("@PumukitNewAdmin/UserProfile/template.html.twig")
      */
     public function profileAction(Request $request): array
     {
@@ -82,7 +82,7 @@ class UserProfileController extends AdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:UserProfile:template_user_stats.html.twig")
+     * @Template("@PumukitNewAdmin/UserProfile/template_user_stats.html.twig")
      */
     public function userStatsAction(): array
     {

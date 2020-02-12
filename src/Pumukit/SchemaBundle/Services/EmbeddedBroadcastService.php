@@ -7,7 +7,7 @@ use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Twig\Environment as TemplatingEngine;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -23,7 +23,13 @@ class EmbeddedBroadcastService
     private $router;
     private $templating;
 
-    public function __construct(DocumentManager $documentManager, MultimediaObjectService $mmsService, MultimediaObjectEventDispatcherService $dispatcher, AuthorizationCheckerInterface $authorizationChecker, EngineInterface $templating, RouterInterface $router)
+    public function __construct(
+        DocumentManager $documentManager,
+        MultimediaObjectService $mmsService,
+        MultimediaObjectEventDispatcherService $dispatcher,
+        AuthorizationCheckerInterface $authorizationChecker,
+        TemplatingEngine $templating,
+        RouterInterface $router)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository(MultimediaObject::class);
@@ -348,14 +354,14 @@ class EmbeddedBroadcastService
 
     private function renderErrorNotAuthenticated()
     {
-        $renderedView = $this->templating->render('PumukitWebTVBundle:Index:403forbidden.html.twig', ['show_forceauth' => true]);
+        $renderedView = $this->templating->render('@PumukitWebTV/Index/403forbidden.html.twig', ['show_forceauth' => true]);
 
         return new Response($renderedView, Response::HTTP_FORBIDDEN);
     }
 
     private function renderErrorPassword($invalidPassword = false)
     {
-        $renderedView = $this->templating->render('PumukitWebTVBundle:Index:401unauthorized.html.twig', ['show_forceauth' => true, 'invalid_password' => $invalidPassword]);
+        $renderedView = $this->templating->render('@PumukitWebTV/Index/401unauthorized.html.twig', ['show_forceauth' => true, 'invalid_password' => $invalidPassword]);
 
         return new Response($renderedView, Response::HTTP_UNAUTHORIZED);
     }

@@ -76,7 +76,7 @@ class PlaylistMultimediaObjectController extends AbstractController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:PlaylistMultimediaObject:index.html.twig")
+     * @Template("@PumukitNewAdmin/PlaylistMultimediaObject/index.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -116,7 +116,7 @@ class PlaylistMultimediaObjectController extends AbstractController
     /**
      * Displays the preview.
      *
-     * @Template("PumukitNewAdminBundle:MultimediaObject:show.html.twig")
+     * @Template("@PumukitNewAdmin/MultimediaObject/show.html.twig")
      */
     public function showAction(MultimediaObject $mmobj, Request $request)
     {
@@ -135,7 +135,7 @@ class PlaylistMultimediaObjectController extends AbstractController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:PlaylistMultimediaObject:info.html.twig")
+     * @Template("@PumukitNewAdmin/PlaylistMultimediaObject/info.html.twig")
      */
     public function infoAction(MultimediaObject $mmobj, Request $request): array
     {
@@ -149,7 +149,7 @@ class PlaylistMultimediaObjectController extends AbstractController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:PlaylistMultimediaObject:list.html.twig")
+     * @Template("@PumukitNewAdmin/PlaylistMultimediaObject/list.html.twig")
      */
     public function listAction(Request $request)
     {
@@ -178,7 +178,7 @@ class PlaylistMultimediaObjectController extends AbstractController
      *
      * It is meant to be used through ajax.
      *
-     * @Template("PumukitNewAdminBundle:PlaylistMultimediaObject:modal.html.twig")
+     * @Template("@PumukitNewAdmin/PlaylistMultimediaObject/modal.html.twig")
      */
     public function modalAction(Series $playlist, Request $request)
     {
@@ -200,7 +200,7 @@ class PlaylistMultimediaObjectController extends AbstractController
      *
      * It is meant to be used through ajax.
      *
-     * @Template("PumukitNewAdminBundle:PlaylistMultimediaObject:modal_myvideos_list.html.twig")
+     * @Template("@PumukitNewAdmin/PlaylistMultimediaObject/modal_myvideos_list.html.twig")
      */
     public function modalMyMmobjsAction(Series $playlist, Request $request)
     {
@@ -217,7 +217,7 @@ class PlaylistMultimediaObjectController extends AbstractController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:PlaylistMultimediaObject:modal_search_list.html.twig")
+     * @Template("@PumukitNewAdmin/PlaylistMultimediaObject/modal_search_list.html.twig")
      */
     public function searchModalAction(Request $request)
     {
@@ -240,7 +240,7 @@ class PlaylistMultimediaObjectController extends AbstractController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:PlaylistMultimediaObject:modal_url_list.html.twig")
+     * @Template("@PumukitNewAdmin/PlaylistMultimediaObject/modal_url_list.html.twig")
      */
     public function urlModalAction(Request $request)
     {
@@ -376,7 +376,7 @@ class PlaylistMultimediaObjectController extends AbstractController
     /**
      * Show modal to add one or more mmobjs to a playlist.
      *
-     * @Template("PumukitNewAdminBundle:PlaylistMultimediaObject:addModal.html.twig")
+     * @Template("@PumukitNewAdmin/PlaylistMultimediaObject/addModal.html.twig")
      */
     public function addModalAction(Request $request)
     {

@@ -77,7 +77,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
     /**
      * @Route("/multimediaobjects/tag/{tagCod}", name="pumukit_webtv_bytag_multimediaobjects", defaults={"tagCod": null})
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"tagCod": "cod"}})
-     * @Template("PumukitWebTVBundle:List:template.html.twig")
+     * @Template("@PumukitWebTV/List/template.html.twig")
      */
     public function multimediaObjectsByTagAction(Request $request, Tag $tag)
     {
@@ -120,7 +120,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
     /**
      * @Route("/series/tag/{tagCod}",  name="pumukit_webtv_bytag_series", defaults={"tagCod": null})
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"tagCod": "cod"}})
-     * @Template("PumukitWebTVBundle:List:template.html.twig")
+     * @Template("@PumukitWebTV/List/template.html.twig")
      */
     public function seriesByTagAction(Request $request, Tag $tag)
     {
@@ -154,7 +154,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
     /**
      * @Route("/users/{username}", name="pumukit_webtv_byuser_multimediaobjects", defaults={"username": null})
      * @ParamConverter("user", class="PumukitSchemaBundle:User", options={"mapping": {"username": "username"}})
-     * @Template("PumukitWebTVBundle:List:template.html.twig")
+     * @Template("@PumukitWebTV/List/template.html.twig")
      */
     public function multimediaObjectsByUserAction(Request $request, User $user)
     {
@@ -188,7 +188,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
     /**
      * @Route("/users/{username}/series",  name="pumukit_webtv_byuser_series", defaults={"username": null})
      * @ParamConverter("user", class="PumukitSchemaBundle:User", options={"mapping": {"username": "username"}})
-     * @Template("PumukitWebTVBundle:List:template.html.twig")
+     * @Template("@PumukitWebTV/List/template.html.twig")
      */
     public function seriesByUserAction(Request $request, User $user)
     {
@@ -281,7 +281,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
 
     protected function getPagerTemplate(): string
     {
-        return 'PumukitWebTVBundle:List:template_pager.html.twig';
+        return '@PumukitWebTV/List/template_pager.html.twig';
     }
 
     protected function getParametersByUser(): array

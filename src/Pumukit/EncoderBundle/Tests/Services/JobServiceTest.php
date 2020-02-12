@@ -89,8 +89,8 @@ class JobServiceTest extends PumukitTestCase
         $series = $this->factory->createSeries();
         $multimediaObject = $this->factory->createMultimediaObject($series);
 
-        $this->assertEquals(0, count($multimediaObject->getTracks()));
-        $this->assertEquals(0, count($this->repo->findAll()));
+        $this->assertCount(0, $multimediaObject->getTracks());
+        $this->assertCount(0, $this->repo->findAll());
 
         $originalFile = $this->resourcesDir.'CAMERA.mp4';
 
@@ -108,8 +108,8 @@ class JobServiceTest extends PumukitTestCase
 
             $multimediaObject = $this->jobService->createTrackFromLocalHardDrive($multimediaObject, $file, $profile, $priority, $language, $description);
 
-            $this->assertEquals(0, count($multimediaObject->getTracks()));
-            $this->assertEquals(1, count($this->repo->findAll()));
+            $this->assertCount(0, $multimediaObject->getTracks());
+            $this->assertCount(1, $this->repo->findAll());
         }
 
         $this->deleteCreatedFiles();
@@ -120,8 +120,8 @@ class JobServiceTest extends PumukitTestCase
         $series = $this->factory->createSeries();
         $multimediaObject = $this->factory->createMultimediaObject($series);
 
-        $this->assertEquals(0, count($multimediaObject->getTracks()));
-        $this->assertEquals(0, count($this->repo->findAll()));
+        $this->assertCount(0, $multimediaObject->getTracks());
+        $this->assertCount(0, $this->repo->findAll());
 
         $originalFile = $this->resourcesDir.'CAMERA.mp4';
 
@@ -137,8 +137,8 @@ class JobServiceTest extends PumukitTestCase
 
             $multimediaObject = $this->jobService->createTrackFromInboxOnServer($multimediaObject, $filePath, $profile, $priority, $language, $description);
 
-            $this->assertEquals(0, count($multimediaObject->getTracks()));
-            $this->assertEquals(1, count($this->repo->findAll()));
+            $this->assertCount(0, $multimediaObject->getTracks());
+            $this->assertCount(1, $this->repo->findAll());
         }
 
         $this->deleteCreatedFiles();
@@ -166,7 +166,7 @@ class JobServiceTest extends PumukitTestCase
         try {
             $this->jobService->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description);
         } catch (\Exception $exception) {
-            $this->assertEquals(0, count($this->repo->findAll()));
+            $this->assertCount(0, $this->repo->findAll());
         }
 
         $pathFile2 = $this->resourcesDir.'test2.txt';
@@ -179,7 +179,7 @@ class JobServiceTest extends PumukitTestCase
         try {
             $this->jobService->addJob($pathFile2, $profile2, $priority2, $multimediaObject, $language2, $description2);
         } catch (\Exception $exception) {
-            $this->assertEquals(0, count($this->repo->findAll()));
+            $this->assertCount(0, $this->repo->findAll());
         }
     }
 
@@ -204,12 +204,12 @@ class JobServiceTest extends PumukitTestCase
     public function testCancelJob()
     {
         $job = $this->createNewJob();
-        $this->assertEquals(1, count($this->repo->findAll()));
+        $this->assertCount(1, $this->repo->findAll());
         $this->jobService->cancelJob($job->getId());
         $this->assertEquals([], $this->repo->findAll());
 
         $job = $this->createNewJob();
-        $this->assertEquals(1, count($this->repo->findAll()));
+        $this->assertCount(1, $this->repo->findAll());
         $this->jobService->pauseJob($job->getId());
         $this->jobService->resumeJob($job->getId());
         $this->jobService->cancelJob($job->getId());
@@ -217,9 +217,9 @@ class JobServiceTest extends PumukitTestCase
 
         $job1 = $this->createNewJob();
         $job2 = $this->createNewJob();
-        $this->assertEquals(2, count($this->repo->findAll()));
+        $this->assertCount(2, $this->repo->findAll());
         $this->jobService->cancelJob($job1->getId());
-        $this->assertEquals(1, count($this->repo->findAll()));
+        $this->assertCount(1, $this->repo->findAll());
         $this->assertEquals($job2, $this->repo->findAll()[0]);
     }
 
@@ -348,8 +348,8 @@ class JobServiceTest extends PumukitTestCase
         $this->dm->persist($job3);
         $this->dm->flush();
 
-        $this->assertEquals(2, count($this->jobService->getNotFinishedJobsByMultimediaObjectId($mm_id1)));
-        $this->assertEquals(1, count($this->jobService->getNotFinishedJobsByMultimediaObjectId($mm_id2)));
+        $this->assertCount(2, $this->jobService->getNotFinishedJobsByMultimediaObjectId($mm_id1));
+        $this->assertCount(1, $this->jobService->getNotFinishedJobsByMultimediaObjectId($mm_id2));
     }
 
     public function testGetStatusError()
