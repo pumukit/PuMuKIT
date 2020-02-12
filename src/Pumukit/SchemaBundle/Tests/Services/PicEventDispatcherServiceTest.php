@@ -32,7 +32,7 @@ class PicEventDispatcherServiceTest extends WebTestCase
         MockUpPicListener::$title = self::EMPTY_TITLE;
         MockUpPicListener::$url = self::EMPTY_URL;
 
-        $this->picDispatcher = new PicEventDispatcherService($this->dispatcher);
+        $this->picDispatcher = new PicEventDispatcherService();
     }
 
     public function tearDown(): void

@@ -7,16 +7,15 @@ use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Event\PicEvent;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class PicEventDispatcherService
 {
     /** @var EventDispatcher */
     private $dispatcher;
 
-    public function __construct(EventDispatcherInterface $dispatcher)
+    public function __construct()
     {
-        $this->dispatcher = $dispatcher;
+        $this->dispatcher = new EventDispatcher();
     }
 
     /**

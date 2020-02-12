@@ -29,7 +29,7 @@ class FormEventDispatcherServiceTest extends PumukitTestCase
         $this->dispatcher = new EventDispatcher();
         MockUpFormListener::$called = false;
         MockUpFormListener::$title = self::EMPTY_TITLE;
-        $this->formDispatcher = new FormEventDispatcherService($this->dispatcher);
+        $this->formDispatcher = new FormEventDispatcherService();
     }
 
     public function tearDown(): void

@@ -31,7 +31,7 @@ class UserEventDispatcherServiceTest extends PumukitTestCase
         MockUpUserListener::$called = false;
         MockUpUserListener::$name = self::EMPTY_NAME;
 
-        $this->userDispatcher = new UserEventDispatcherService($this->dispatcher);
+        $this->userDispatcher = new UserEventDispatcherService();
     }
 
     public function tearDown(): void

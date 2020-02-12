@@ -40,7 +40,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -118,7 +117,6 @@ class MultimediaObjectController extends SortableAdminController
         EmbeddedBroadcastService $embeddedBroadcastService,
         SpecialTranslationService $specialTranslatorService,
         MultimediaObjectEventDispatcherService $pumukitSchemaMultimediaObjectDispatcher,
-        EventDispatcherInterface $eventDispatcher,
         RouterInterface $router,
         $showLatestWithPudeNew,
         $pumukitNewAdminShowNakedPubTab,
@@ -139,7 +137,7 @@ class MultimediaObjectController extends SortableAdminController
         $this->embeddedBroadcastService = $embeddedBroadcastService;
         $this->specialTranslatorService = $specialTranslatorService;
         $this->pumukitSchemaMultimediaObjectDispatcher = $pumukitSchemaMultimediaObjectDispatcher;
-        $this->eventDispatcher = $eventDispatcher;
+        $this->eventDispatcher = new EventDispatcher();
         $this->router = $router;
         $this->showLatestWithPudeNew = $showLatestWithPudeNew;
         $this->pumukitNewAdminShowNakedPubTab = $pumukitNewAdminShowNakedPubTab;

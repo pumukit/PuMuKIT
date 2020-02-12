@@ -32,7 +32,7 @@ class TrackEventDispatcherServiceTest extends WebTestCase
         MockUpTrackListener::$title = self::EMPTY_TITLE;
         MockUpTrackListener::$url = self::EMPTY_URL;
 
-        $this->trackDispatcher = new TrackEventDispatcherService($this->dispatcher);
+        $this->trackDispatcher = new TrackEventDispatcherService();
     }
 
     public function tearDown(): void
