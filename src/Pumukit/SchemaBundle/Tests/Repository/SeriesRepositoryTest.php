@@ -909,7 +909,7 @@ class SeriesRepositoryTest extends PumukitTestCase
         $this->dm->persist($series3);
         $this->dm->flush();
 
-        static::assertCount(3, $this->repo);
+        static::assertEquals(3, $this->repo->count());
     }
 
     public function testCountPublic()
