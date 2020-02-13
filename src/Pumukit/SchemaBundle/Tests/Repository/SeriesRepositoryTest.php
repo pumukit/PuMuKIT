@@ -158,13 +158,13 @@ class SeriesRepositoryTest extends PumukitTestCase
         // FIND SERIES WITH TAG
         static::assertCount(3, $this->repo->findWithTag($tag1));
         $limit = 2;
-        static::assertEquals(2, $this->repo->findWithTag($tag1, $sort, $limit)->count(true));
+        static::assertCount(2, $this->repo->findWithTag($tag1, $sort, $limit));
         $page = 0;
-        static::assertEquals(2, $this->repo->findWithTag($tag1, $sort, $limit, $page)->count(true));
+        static::assertCount(2, $this->repo->findWithTag($tag1, $sort, $limit, $page));
         $page = 1;
-        static::assertEquals(1, $this->repo->findWithTag($tag1, $sort, $limit, $page)->count(true));
+        static::assertCount(1, $this->repo->findWithTag($tag1, $sort, $limit, $page));
 
-        static::assertEquals(1, $this->repo->findWithTag($tag3)->count(true));
+        static::assertCount(1, $this->repo->findWithTag($tag3));
 
         // FIND SERIES WITH TAG (SORT)
         $arrayAsc = [$series1, $series2, $series3];
@@ -176,7 +176,7 @@ class SeriesRepositoryTest extends PumukitTestCase
         $page = 1;
         $arrayAsc = [$series3];
         $arrayAscResult = array_values($this->repo->findWithTag($tag1, $sortAsc, $limit, $page)->toArray());
-        static::assertEquals(1, $this->repo->findWithTag($tag1, $sortAsc, $limit, $page)->count(true));
+        static::assertCount(1, $this->repo->findWithTag($tag1, $sortAsc, $limit, $page));
         foreach ($arrayAsc as $i => $series) {
             static::assertEquals($series->getId(), $arrayAscResult[$i]->getId());
         }
@@ -200,16 +200,16 @@ class SeriesRepositoryTest extends PumukitTestCase
 
         // FIND SERIES WITH ANY TAG
         $arrayTags = [$tag1, $tag2];
-        static::assertEquals(3, $this->repo->findWithAnyTag($arrayTags)->count(true));
+        static::assertCount(3, $this->repo->findWithAnyTag($arrayTags));
         $limit = 2;
-        static::assertEquals(2, $this->repo->findWithAnyTag($arrayTags, $sort, $limit)->count(true));
+        static::assertCount(2, $this->repo->findWithAnyTag($arrayTags, $sort, $limit));
         $page = 0;
-        static::assertEquals(2, $this->repo->findWithAnyTag($arrayTags, $sort, $limit, $page)->count(true));
+        static::assertCount(2, $this->repo->findWithAnyTag($arrayTags, $sort, $limit, $page));
         $page = 1;
-        static::assertEquals(1, $this->repo->findWithAnyTag($arrayTags, $sort, $limit, $page)->count(true));
+        static::assertCount(1, $this->repo->findWithAnyTag($arrayTags, $sort, $limit, $page));
 
         $arrayTags = [$tag3];
-        static::assertEquals(1, $this->repo->findWithAnyTag($arrayTags)->count(true));
+        static::assertCount(1, $this->repo->findWithAnyTag($arrayTags));
 
         // FIND SERIES WITH ANY TAG (SORT)
         $arrayTags = [$tag1, $tag2];
@@ -243,16 +243,16 @@ class SeriesRepositoryTest extends PumukitTestCase
 
         // FIND SERIES WITH ALL TAGS
         $arrayTags = [$tag1, $tag2];
-        static::assertEquals(2, $this->repo->findWithAllTags($arrayTags)->count(true));
+        static::assertCount(2, $this->repo->findWithAllTags($arrayTags));
         $limit = 1;
-        static::assertEquals(1, $this->repo->findWithAllTags($arrayTags, $sort, $limit)->count(true));
+        static::assertCount(1, $this->repo->findWithAllTags($arrayTags, $sort, $limit));
         $page = 0;
-        static::assertEquals(1, $this->repo->findWithAllTags($arrayTags, $sort, $limit, $page)->count(true));
+        static::assertCount(1, $this->repo->findWithAllTags($arrayTags, $sort, $limit, $page));
         $page = 1;
-        static::assertEquals(1, $this->repo->findWithAllTags($arrayTags, $sort, $limit, $page)->count(true));
+        static::assertCount(1, $this->repo->findWithAllTags($arrayTags, $sort, $limit, $page));
 
         $arrayTags = [$tag2, $tag3];
-        static::assertEquals(1, $this->repo->findWithAllTags($arrayTags)->count(true));
+        static::assertCount(1, $this->repo->findWithAllTags($arrayTags));
 
         // FIND SERIES WITH ALL TAGS (SORT)
         $arrayTags = [$tag1, $tag2];
@@ -294,13 +294,13 @@ class SeriesRepositoryTest extends PumukitTestCase
         static::assertEquals($series3, $this->repo->findOneWithAllTags($arrayTags));
 
         // FIND SERIES WITHOUT TAG
-        static::assertEquals(2, $this->repo->findWithoutTag($tag3)->count(true));
+        static::assertCount(2, $this->repo->findWithoutTag($tag3));
         $limit = 1;
-        static::assertEquals(1, $this->repo->findWithoutTag($tag3, $sort, $limit)->count(true));
+        static::assertCount(1, $this->repo->findWithoutTag($tag3, $sort, $limit));
         $page = 0;
-        static::assertEquals(1, $this->repo->findWithoutTag($tag3, $sort, $limit, $page)->count(true));
+        static::assertCount(1, $this->repo->findWithoutTag($tag3, $sort, $limit, $page));
         $page = 1;
-        static::assertEquals(1, $this->repo->findWithoutTag($tag3, $sort, $limit, $page)->count(true));
+        static::assertCount(1, $this->repo->findWithoutTag($tag3, $sort, $limit, $page));
 
         // FIND SERIES WITHOUT TAG (SORT)
         $arrayAsc = [$series1, $series2];
@@ -345,11 +345,11 @@ class SeriesRepositoryTest extends PumukitTestCase
         $this->dm->flush();
 
         $arrayTags = [$tag1, $tag2, $tag3];
-        static::assertEquals(2, $this->repo->findWithoutAllTags($arrayTags)->count(true));
+        static::assertCount(2, $this->repo->findWithoutAllTags($arrayTags));
         $limit = 1;
-        static::assertEquals(1, $this->repo->findWithoutAllTags($arrayTags, $sort, $limit)->count(true));
+        static::assertCount(1, $this->repo->findWithoutAllTags($arrayTags, $sort, $limit));
         $page = 1;
-        static::assertEquals(1, $this->repo->findWithoutAllTags($arrayTags, $sort, $limit, $page)->count(true));
+        static::assertCount(1, $this->repo->findWithoutAllTags($arrayTags, $sort, $limit, $page));
 
         // FIND SERIES WITHOUT ALL TAGS (SORT)
         $arrayAsc = [$series2, $series3];
@@ -909,7 +909,7 @@ class SeriesRepositoryTest extends PumukitTestCase
         $this->dm->persist($series3);
         $this->dm->flush();
 
-        static::assertEquals(3, $this->repo->count());
+        static::assertCount(3, $this->repo);
     }
 
     public function testCountPublic()
