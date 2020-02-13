@@ -99,7 +99,6 @@ class StatsService
 
         $options = $this->parseOptions($options);
 
-        $pipeline = [];
         $pipeline = $this->aggrPipeAddMatch($options['from_date'], $options['to_date'], $matchExtra);
         $pipeline[] = ['$group' => ['_id' => '$multimediaObject', 'numView' => ['$sum' => $this->sumValue]]];
         $pipeline[] = ['$sort' => ['numView' => $options['sort']]];
@@ -123,28 +122,29 @@ class StatsService
         }
 
         //Add mmobj with zero views
-        if (count($aggregation) < $options['limit']) {
-            if (0 == count($aggregation)) {
-                $max = min((1 + $options['page']) * $options['limit'], $total);
-                for ($i = ($options['page'] * $options['limit']); $i < $max; ++$i) {
-                    $multimediaObject = $this->repo->find($mmobjIds[$i - $totalInAggegation]);
+        if (count($aggregation) >= $options['limit']) {
+            return [$mostViewed, $total];
+        }
+        if (0 == count($aggregation)) {
+            $max = min((1 + $options['page']) * $options['limit'], $total);
+            for ($i = ($options['page'] * $options['limit']); $i < $max; ++$i) {
+                $multimediaObject = $this->repo->find($mmobjIds[$i - $totalInAggegation]);
+                if ($multimediaObject) {
+                    $mostViewed[] = ['mmobj' => $multimediaObject,
+                        'num_viewed' => 0,
+                    ];
+                }
+            }
+        } else {
+            foreach ($mmobjIds as $element) {
+                if (!in_array($element, $ids)) {
+                    $multimediaObject = $this->repo->find($element);
                     if ($multimediaObject) {
                         $mostViewed[] = ['mmobj' => $multimediaObject,
                             'num_viewed' => 0,
                         ];
-                    }
-                }
-            } else {
-                foreach ($mmobjIds as $element) {
-                    if (!in_array($element, $ids)) {
-                        $multimediaObject = $this->repo->find($element);
-                        if ($multimediaObject) {
-                            $mostViewed[] = ['mmobj' => $multimediaObject,
-                                'num_viewed' => 0,
-                            ];
-                            if (count($mostViewed) == $options['limit']) {
-                                break;
-                            }
+                        if (count($mostViewed) == $options['limit']) {
+                            break;
                         }
                     }
                 }
@@ -169,16 +169,15 @@ class StatsService
 
         $options = $this->parseOptions($options);
 
-        $pipeline = [];
         $pipeline = $this->aggrPipeAddMatch($options['from_date'], $options['to_date'], $matchExtra);
         $pipeline[] = ['$group' => ['_id' => '$series', 'numView' => ['$sum' => $this->sumValue]]];
         $pipeline[] = ['$sort' => ['numView' => $options['sort']]];
 
         $aggregation = $viewsLogColl->aggregate($pipeline, ['cursor' => []]);
-
+        $aggregation = $aggregation->toArray();
         $totalInAggegation = count($aggregation);
         $total = count($seriesIds);
-        $aggregation = $this->getPagedAggregation($aggregation->toArray(), $options['page'], $options['limit']);
+        $aggregation = $this->getPagedAggregation($aggregation, $options['page'], $options['limit']);
 
         $mostViewed = [];
         foreach ($aggregation as $element) {
@@ -443,7 +442,7 @@ class StatsService
             $qb->addAnd($criteria);
         }
 
-        return $qb->distinct('_id')->getQuery()->execute()->toArray();
+        return $qb->distinct('_id')->getQuery()->execute();
     }
 
     /**
