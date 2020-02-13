@@ -56,7 +56,7 @@ class EmbedRelationsTest extends PumukitTestCase
     {
         $this->createTestTree();
 
-        $tag = $this->repoTags->findOneByCod('ROOT');
+        $tag = $this->repoTags->findOneBy(['cod' => 'ROOT']);
         $tree = $this->repoTags->getTree($tag);
         static::assertCount(6, $tree);
         $children = $this->repoTags->getChildren($tag);
@@ -65,7 +65,7 @@ class EmbedRelationsTest extends PumukitTestCase
         $directChildren = $this->repoTags->getChildren($tag, true);
         static::assertCount(2, $directChildren);
 
-        $tag = $this->repoTags->findOneByCod('B');
+        $tag = $this->repoTags->findOneBy(['cod' => 'B']);
         $tree = $this->repoTags->getTree($tag);
         static::assertCount(4, $tree);
         $children = $this->repoTags->getChildren($tag);
@@ -87,7 +87,7 @@ class EmbedRelationsTest extends PumukitTestCase
     {
         $this->createTestMultimediaObject();
 
-        static::assertCount(0, $this->repoMmobjs->findOneByDuration(300)->getTags());
+        static::assertCount(0, $this->repoMmobjs->findOneBy(['duration' => 300])->getTags());
     }
 
     public function testAddTagToMultimediaObject(): void
@@ -96,8 +96,8 @@ class EmbedRelationsTest extends PumukitTestCase
         $this->createTestMultimediaObject();
         $this->addTagToMultimediaObject();
 
-        static::assertCount(1, $this->repoMmobjs->findOneByDuration(300)->getTags());
-        static::assertEquals('B2A', $this->repoTags->findOneByCod('B2A')->getCod());
+        static::assertCount(1, $this->repoMmobjs->findOneBy(['duration' => 300])->getTags());
+        static::assertEquals('B2A', $this->repoTags->findOneBy(['cod' => 'B2A'])->getCod());
     }
 
     public function testAddAndRemoveTagToMultimediaObject(): void
@@ -107,8 +107,8 @@ class EmbedRelationsTest extends PumukitTestCase
         $this->addTagToMultimediaObject();
         $this->removeTagFromMultimediaObject();
 
-        static::assertCount(0, $this->repoMmobjs->findOneByDuration(300)->getTags());
-        static::assertEquals('B2A', $this->repoTags->findOneByCod('B2A')->getCod());
+        static::assertCount(0, $this->repoMmobjs->findOneBy(['duration' => 300])->getTags());
+        static::assertEquals('B2A', $this->repoTags->findOneBy(['cod' => 'B2A'])->getCod());
     }
 
     private function createTestTree(): void
@@ -172,8 +172,8 @@ class EmbedRelationsTest extends PumukitTestCase
 
     private function addTagToMultimediaObject(): void
     {
-        $tagB2A = $this->repoTags->findOneByCod('B2A');
-        $mmobj = $this->repoMmobjs->findOneByDuration(300);
+        $tagB2A = $this->repoTags->findOneBy(['cod' => 'B2A']);
+        $mmobj = $this->repoMmobjs->findOneBy(['duration' => 300]);
 
         $mmobj->addTag($tagB2A);
         $this->dm->persist($mmobj);
@@ -182,8 +182,8 @@ class EmbedRelationsTest extends PumukitTestCase
 
     private function removeTagFromMultimediaObject(): void
     {
-        $tagB2A = $this->repoTags->findOneByCod('B2A');
-        $mmobj = $this->repoMmobjs->findOneByDuration(300);
+        $tagB2A = $this->repoTags->findOneBy(['cod' => 'B2A']);
+        $mmobj = $this->repoMmobjs->findOneBy(['duration' => 300]);
 
         $hasRemoved = $mmobj->removeTag($tagB2A);
 
