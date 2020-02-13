@@ -45,12 +45,7 @@ class PersonService
         $this->personalScopeRoleCode = $personalScopeRoleCode;
     }
 
-    /**
-     * Save Person.
-     *
-     * @return Person
-     */
-    public function savePerson(Person $person)
+    public function savePerson(Person $person): Person
     {
         $this->dm->persist($person);
         $this->dm->flush();
@@ -58,12 +53,7 @@ class PersonService
         return $person;
     }
 
-    /**
-     * Save Role.
-     *
-     * @return Role
-     */
-    public function saveRole(Role $role)
+    public function saveRole(Role $role): Role
     {
         $this->dm->persist($role);
         $this->dm->flush();
@@ -71,48 +61,22 @@ class PersonService
         return $role;
     }
 
-    /**
-     * Find person by id.
-     *
-     * @param string $id
-     *
-     * @return Person
-     */
-    public function findPersonById($id)
+    public function findPersonById(string $id)
     {
         return $this->repoPerson->find($id);
     }
 
-    /**
-     * Find role by id.
-     *
-     * @param string $id
-     *
-     * @return Role
-     */
-    public function findRoleById($id)
+    public function findRoleById(string $id)
     {
         return $this->repoRole->find($id);
     }
 
-    /**
-     * Find person by email.
-     *
-     * @param string $email
-     *
-     * @return Person
-     */
-    public function findPersonByEmail($email)
+    public function findPersonByEmail(string $email)
     {
-        return $this->repoPerson->findOneByEmail($email);
+        return $this->repoPerson->findOneBy(['email' => $email]);
     }
 
-    /**
-     * Update update person.
-     *
-     * @return Person
-     */
-    public function updatePerson(Person $person)
+    public function updatePerson(Person $person): Person
     {
         $person = $this->savePerson($person);
 
@@ -131,12 +95,7 @@ class PersonService
         return $person;
     }
 
-    /**
-     * Update update role.
-     *
-     * @return Role
-     */
-    public function updateRole(Role $role)
+    public function updateRole(Role $role): Role
     {
         $role = $this->saveRole($role);
 
@@ -144,7 +103,6 @@ class PersonService
 
         $query = $qb
             ->updateMany()
-            ->multiple(true)
             ->field('people._id')->equals(new ObjectId($role->getId()))
             ->field('people.$.cod')->set($role->getCod())
             ->field('people.$.xml')->set($role->getXml())
@@ -160,14 +118,7 @@ class PersonService
         return $role;
     }
 
-    /**
-     * Find series with person.
-     *
-     * @param int $limit Number of series, all by default
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function findSeriesWithPerson(Person $person, $limit = 0)
+    public function findSeriesWithPerson(Person $person, int $limit = 0): ArrayCollection
     {
         $mmobjs = $this->repoMmobj->findByPersonId($person->getId());
 
@@ -189,15 +140,7 @@ class PersonService
         return $seriesCollection;
     }
 
-    /**
-     * Create relation person.
-     *
-     * @param mixed $flush
-     * @param mixed $dispatch
-     *
-     * @return MultimediaObject
-     */
-    public function createRelationPerson(Person $person, Role $role, MultimediaObject $multimediaObject, $flush = true, $dispatch = true)
+    public function createRelationPerson(Person $person, Role $role, MultimediaObject $multimediaObject, bool $flush = true, bool $dispatch = true): MultimediaObject
     {
         $this->dm->persist($person);
         $multimediaObject->addPersonWithRole($person, $role);
@@ -219,17 +162,7 @@ class PersonService
         return $multimediaObject;
     }
 
-    /**
-     * Auto complete.
-     *
-     * Returns people with partial name in it
-     *
-     * @param string $name
-     * @param bool   $checkAccents
-     *
-     * @return ArrayCollection
-     */
-    public function autoCompletePeopleByName($name, array $exclude = [], $checkAccents = false)
+    public function autoCompletePeopleByName(string $name, array $exclude = [], bool $checkAccents = false)
     {
         if ($checkAccents) {
             //Wating for Mongo 4 and https://docs.mongodb.com/manual/reference/collation/
@@ -248,12 +181,7 @@ class PersonService
         ;
     }
 
-    /**
-     * Up person with role.
-     *
-     * @return MultimediaObject
-     */
-    public function upPersonWithRole(Person $person, Role $role, MultimediaObject $multimediaObject)
+    public function upPersonWithRole(Person $person, Role $role, MultimediaObject $multimediaObject): MultimediaObject
     {
         $multimediaObject->upPersonWithRole($person, $role);
         $this->dm->persist($multimediaObject);
@@ -262,12 +190,7 @@ class PersonService
         return $multimediaObject;
     }
 
-    /**
-     * Down person with role.
-     *
-     * @return MultimediaObject
-     */
-    public function downPersonWithRole(Person $person, Role $role, MultimediaObject $multimediaObject)
+    public function downPersonWithRole(Person $person, Role $role, MultimediaObject $multimediaObject): MultimediaObject
     {
         $multimediaObject->downPersonWithRole($person, $role);
         $this->dm->persist($multimediaObject);
@@ -276,12 +199,7 @@ class PersonService
         return $multimediaObject;
     }
 
-    /**
-     * Delete relation of embedded person with role in multimedia object.
-     *
-     * @return MultimediaObject $multimediaObject
-     */
-    public function deleteRelation(Person $person, Role $role, MultimediaObject $multimediaObject)
+    public function deleteRelation(Person $person, Role $role, MultimediaObject $multimediaObject): MultimediaObject
     {
         $hasBeenRemoved = $multimediaObject->removePersonWithRole($person, $role);
         if ($hasBeenRemoved) {
@@ -299,12 +217,7 @@ class PersonService
         return $multimediaObject;
     }
 
-    /**
-     * Delete Person.
-     *
-     * @param mixed $deleteFromUser
-     */
-    public function deletePerson(Person $person, $deleteFromUser = false)
+    public function deletePerson(Person $person, bool $deleteFromUser = false): void
     {
         if (0 !== $this->repoMmobj->countByPersonId($person->getId())) {
             throw new \Exception("Couldn't remove Person with id ".$person->getId().'. There are multimedia objects with this person');
@@ -318,10 +231,7 @@ class PersonService
         $this->dm->flush();
     }
 
-    /**
-     * Batch delete person.
-     */
-    public function batchDeletePerson(Person $person)
+    public function batchDeletePerson(Person $person): void
     {
         foreach ($this->repoMmobj->findByPersonId($person->getId()) as $mmobj) {
             foreach ($mmobj->getRoles() as $embeddedRole) {
@@ -339,24 +249,12 @@ class PersonService
         $this->dm->flush();
     }
 
-    /**
-     * Count multimedia objects with person.
-     *
-     * @param Person $person
-     *
-     * @return int
-     */
-    public function countMultimediaObjectsWithPerson($person)
+    public function countMultimediaObjectsWithPerson(Person $person)
     {
         return $this->repoMmobj->countByPersonId($person->getId());
     }
 
-    /**
-     * Reference Person into User.
-     *
-     * @return User
-     */
-    public function referencePersonIntoUser(User $user)
+    public function referencePersonIntoUser(User $user): User
     {
         if ($this->addUserAsPerson && (null === $person = $user->getPerson())) {
             $person = $this->createFromUser($user);
@@ -372,16 +270,7 @@ class PersonService
         return $user;
     }
 
-    /**
-     * Get Person from logged in User.
-     *
-     * Get the Person referenced
-     * in the logged in User
-     * It there is none, it creates it
-     *
-     * @return Person|null
-     */
-    public function getPersonFromLoggedInUser(User $loggedInUser = null)
+    public function getPersonFromLoggedInUser(User $loggedInUser = null): ?Person
     {
         if (null !== $loggedInUser) {
             if (null === $person = $loggedInUser->getPerson()) {
@@ -395,18 +284,9 @@ class PersonService
         return null;
     }
 
-    /**
-     * Get Personal Scope Role.
-     *
-     * Gets the default role
-     * to add the User as Person
-     * to MultimediaObject
-     *
-     * @return Role|null
-     */
-    public function getPersonalScopeRole()
+    public function getPersonalScopeRole(): ?Role
     {
-        $personalScopeRole = $this->dm->getRepository(Role::class)->findOneByCod($this->personalScopeRoleCode);
+        $personalScopeRole = $this->dm->getRepository(Role::class)->findOneBy(['cod' => $this->personalScopeRoleCode]);
         if ($this->addUserAsPerson && (null === $personalScopeRole)) {
             throw new \Exception('Invalid Personal Scope Role Code: "'.$this->personalScopeRoleCode
                                  .'". There is no Role with this data. '
@@ -418,23 +298,11 @@ class PersonService
         return $personalScopeRole;
     }
 
-    /**
-     * Get Personal Scope Role.
-     *
-     * Gets the default role code
-     * to add the User as Person
-     * to MultimediaObject
-     *
-     * @return string
-     */
-    public function getPersonalScopeRoleCode()
+    public function getPersonalScopeRoleCode(): string
     {
         return $this->personalScopeRoleCode;
     }
 
-    /**
-     * Get all roles.
-     */
     public function getRoles()
     {
         $criteria = [];
@@ -443,12 +311,7 @@ class PersonService
         return $this->repoRole->findBy($criteria, $sort);
     }
 
-    /**
-     * Remove User from Person.
-     *
-     * @param bool $executeFlush
-     */
-    public function removeUserFromPerson(User $user, Person $person, $executeFlush = true)
+    public function removeUserFromPerson(User $user, Person $person, bool $executeFlush = true): void
     {
         $person->setUser(null);
         $this->dm->persist($person);
@@ -457,21 +320,14 @@ class PersonService
         }
     }
 
-    /**
-     * Create from User.
-     *
-     * @return Person
-     */
     private function createFromUser(User $user)
     {
         if ($user->getEmail()) {
-            if ($person = $this->repoPerson->findOneByEmail($user->getEmail())) {
+            if ($person = $this->repoPerson->findOneBy(['email' => $user->getEmail()])) {
                 return $person;
             }
-        } else {
-            if ($person = $this->repoPerson->findOneByEmail('')) {
-                return $person;
-            }
+        } elseif ($person = $this->repoPerson->findOneBy(['email' => ''])) {
+            return $person;
         }
 
         $person = new Person();
@@ -485,12 +341,7 @@ class PersonService
         return $person;
     }
 
-    /**
-     * Update embedded person.
-     *
-     * @return EmbeddedPerson
-     */
-    private function updateEmbeddedPerson(Person $person, EmbeddedPerson $embeddedPerson)
+    private function updateEmbeddedPerson(Person $person, EmbeddedPerson $embeddedPerson): EmbeddedPerson
     {
         if (null !== $person) {
             $embeddedPerson->setName($person->getName());
