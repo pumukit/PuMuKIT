@@ -18,40 +18,40 @@ class MultimediaObjectPropertyJobService
         $this->dm = $documentManager;
     }
 
-    public function addJob(MultimediaObject $multimediaObject, Job $job)
+    public function addJob(MultimediaObject $multimediaObject, Job $job): void
     {
         $this->addPropertyInArray($multimediaObject, 'pending_jobs', $job->getId());
     }
 
-    public function executeJob(MultimediaObject $multimediaObject, Job $job)
+    public function executeJob(MultimediaObject $multimediaObject, Job $job): void
     {
         if ($this->delPropertyInArray($multimediaObject, 'pending_jobs', $job->getId())) {
             $this->addPropertyInArray($multimediaObject, 'executing_jobs', $job->getId());
         }
     }
 
-    public function finishJob(MultimediaObject $multimediaObject, Job $job)
+    public function finishJob(MultimediaObject $multimediaObject, Job $job): void
     {
         if ($this->delPropertyInArray($multimediaObject, 'executing_jobs', $job->getId())) {
             $this->addPropertyInArray($multimediaObject, 'finished_jobs', $job->getId());
         }
     }
 
-    public function errorJob(MultimediaObject $multimediaObject, Job $job)
+    public function errorJob(MultimediaObject $multimediaObject, Job $job): void
     {
         if ($this->delPropertyInArray($multimediaObject, 'executing_jobs', $job->getId())) {
             $this->addPropertyInArray($multimediaObject, 'error_jobs', $job->getId());
         }
     }
 
-    public function retryJob(MultimediaObject $multimediaObject, Job $job)
+    public function retryJob(MultimediaObject $multimediaObject, Job $job): void
     {
         if ($this->delPropertyInArray($multimediaObject, 'error_jobs', $job->getId())) {
             $this->addPropertyInArray($multimediaObject, 'pending_jobs', $job->getId());
         }
     }
 
-    private function addPropertyInArray(MultimediaObject $multimediaObject, $key, $value)
+    private function addPropertyInArray(MultimediaObject $multimediaObject, $key, $value): void
     {
         $this->dm->createQueryBuilder(MultimediaObject::class)
             ->updateMany()
@@ -62,7 +62,7 @@ class MultimediaObjectPropertyJobService
         ;
     }
 
-    private function delPropertyInArray(MultimediaObject $multimediaObject, $key, $value)
+    private function delPropertyInArray(MultimediaObject $multimediaObject, $key, $value): bool
     {
         //Try to delete all the property if is the last job in this state.
         $out = $this->dm->createQueryBuilder(MultimediaObject::class)
@@ -74,7 +74,7 @@ class MultimediaObjectPropertyJobService
             ->execute()
         ;
 
-        if ((isset($out['nModified']) && 1 == $out['nModified']) || (isset($out['n']) && 1 == $out['n'])) {
+        if ($out->getModifiedCount() > 1) {
             return true;
         }
 
@@ -88,10 +88,6 @@ class MultimediaObjectPropertyJobService
             ->execute()
         ;
 
-        if ((isset($out['nModified']) && 1 == $out['nModified']) || (isset($out['n']) && 1 == $out['n'])) {
-            return true;
-        }
-
-        return false;
+        return $out->getModifiedCount() > 1;
     }
 }
