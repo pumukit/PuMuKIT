@@ -27,7 +27,7 @@ class StatsService
         $this->sumValue = $useAggregation ? '$numView' : 1;
     }
 
-    public function doGetMostViewed(array $criteria = [], $days = 30, $limit = 3)
+    public function doGetMostViewed(array $criteria = [], $days = 30, $limit = 3): array
     {
         $ids = [];
         $fromDate = new \DateTime(sprintf('-%s days', $days));
@@ -67,7 +67,7 @@ class StatsService
         return $mostViewed;
     }
 
-    public function getMostViewed(array $tags, $days = 30, $limit = 3)
+    public function getMostViewed(array $tags, $days = 30, $limit = 3): array
     {
         $criteria = [];
         if ($tags) {
@@ -77,7 +77,7 @@ class StatsService
         return $this->doGetMostViewed($criteria, $days, $limit);
     }
 
-    public function getMostViewedUsingFilters($days = 30, $limit = 3)
+    public function getMostViewedUsingFilters($days = 30, $limit = 3): array
     {
         $filters = $this->dm->getFilterCollection()->getFilterCriteria($this->repo->getClassMetadata());
 
@@ -87,7 +87,7 @@ class StatsService
     /**
      * Returns an array of mmobj viewed on the given range and its number of views on that range.
      */
-    public function getMmobjsMostViewedByRange(array $criteria = [], array $options = [])
+    public function getMmobjsMostViewedByRange(array $criteria = [], array $options = []): array
     {
         $ids = [];
 
@@ -106,9 +106,10 @@ class StatsService
 
         $aggregation = $viewsLogColl->aggregate($pipeline, ['cursor' => []]);
 
+        $aggregation = $aggregation->toArray();
         $totalInAggegation = count($aggregation);
         $total = count($mmobjIds);
-        $aggregation = $this->getPagedAggregation($aggregation->toArray(), $options['page'], $options['limit']);
+        $aggregation = $this->getPagedAggregation($aggregation, $options['page'], $options['limit']);
 
         $mostViewed = [];
         foreach ($aggregation as $element) {
@@ -156,7 +157,7 @@ class StatsService
     /**
      * Returns an array of series viewed on the given range and its number of views on that range.
      */
-    public function getSeriesMostViewedByRange(array $criteria = [], array $options = [])
+    public function getSeriesMostViewedByRange(array $criteria = [], array $options = []): array
     {
         $ids = [];
         $viewsLogColl = $this->dm->getDocumentCollection($this->collectionName);
@@ -228,7 +229,7 @@ class StatsService
      * If $options['criteria_mmobj'] exists, a query will be executed to filter using the resulting mmobj ids.
      * If $options['criteria_series'] exists, a query will be executed to filter using the resulting series ids.
      */
-    public function getTotalViewedGrouped(array $options = [])
+    public function getTotalViewedGrouped(array $options = []): array
     {
         return $this->getGroupedByAggrPipeline($options);
     }
@@ -432,7 +433,7 @@ class StatsService
             $qb->addAnd($criteria);
         }
 
-        return $qb->distinct('_id')->getQuery()->execute()->toArray();
+        return $qb->distinct('_id')->getQuery()->execute();
     }
 
     private function getSeriesIdsWithCriteria($criteria)
