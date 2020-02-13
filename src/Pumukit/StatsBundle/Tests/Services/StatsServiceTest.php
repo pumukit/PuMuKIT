@@ -173,8 +173,52 @@ class StatsServiceTest extends PumukitTestCase
 
     public function testGetSeriesMostViewedByRange(): void
     {
+        //Init Context (but series)
+        $seriesList = [];
+        $seriesList[0] = [];
+        $seriesList[0][0] = $this->factoryService->createSeries();
+        $seriesList[0][1] = $this->factoryService->createMultimediaObject($seriesList[0][0]);
+        $seriesList[0][2] = $this->factoryService->createMultimediaObject($seriesList[0][0]);
+        $seriesList[0][3] = $this->factoryService->createMultimediaObject($seriesList[0][0]);
+
+        $seriesList[1] = [];
+        $seriesList[1][0] = $this->factoryService->createSeries();
+        $seriesList[1][1] = $this->factoryService->createMultimediaObject($seriesList[1][0]);
+
+        $this->logView(new \DateTime('now'), $seriesList[0][1]);
+        $this->logView(new \DateTime('now'), $seriesList[0][1]);
+        $this->logView(new \DateTime('now'), $seriesList[0][2]);
+        $this->logView(new \DateTime('now'), $seriesList[0][3]);
+        $this->logView(new \DateTime('-20 days'), $seriesList[0][1]);
+        $this->logView(new \DateTime('-20 days'), $seriesList[0][1]);
+
+        $this->logView(new \DateTime('-10 days'), $seriesList[1][1]);
+        $this->logView(new \DateTime('-20 days'), $seriesList[1][1]);
+        $this->logView(new \DateTime('-20 days'), $seriesList[1][1]);
+
         $service = new StatsService($this->dm);
         [$mostViewed, $total] = $service->getSeriesMostViewedByRange();
+
+        static::assertEquals(2, $total);
+        static::assertCount($total, $mostViewed);
+        static::assertEquals(6, $mostViewed[0]['num_viewed']);
+        static::assertEquals(3, $mostViewed[1]['num_viewed']);
+
+        [$mostViewed, $total] = $service->getSeriesMostViewedByRange([], ['from_date' => new \DateTime('-21 days'), 'to_date' => new \DateTime('-9 days')]);
+
+        static::assertEquals(2, $total);
+        static::assertCount($total, $mostViewed);
+        static::assertEquals($seriesList[1][0], $mostViewed[0]['series']);
+        static::assertEquals(3, $mostViewed[0]['num_viewed']);
+        static::assertEquals($seriesList[0][0], $mostViewed[1]['series']);
+        static::assertEquals(2, $mostViewed[1]['num_viewed']);
+
+        [$mostViewed, $total] = $service->getSeriesMostViewedByRange([], ['from_date' => new \DateTime('-19 days'), 'to_date' => new \DateTime('-9 days')]);
+
+        static::assertEquals(2, $total);
+        static::assertCount($total, $mostViewed);
+        static::assertEquals(1, $mostViewed[0]['num_viewed']);
+        static::assertEquals(0, $mostViewed[1]['num_viewed']);
     }
 
     private function logView($when, MultimediaObject $multimediaObject, Track $track = null)
@@ -198,6 +242,7 @@ class StatsServiceTest extends PumukitTestCase
         $list[3] = $this->factoryService->createMultimediaObject($series);
         $list[4] = $this->factoryService->createMultimediaObject($series);
         $list[5] = $this->factoryService->createMultimediaObject($series);
+
 
         foreach ($list as $i => $mm) {
             $mm->setStatus(MultimediaObject::STATUS_PUBLISHED);
