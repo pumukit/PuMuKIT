@@ -808,7 +808,7 @@ class EmbeddedEventSessionService
                 foreach ($eventData['event']['embeddedEventSession'] as $embeddedSession) {
                     $startDate = $embeddedSession['start']->toDateTime();
                     if ($startDate > $now) {
-                        $orderSession = $this->addElementWithSessionSec($orderSession, $element, $embeddedSession['start']->sec);
+                        $orderSession = $this->addElementWithSessionSec($orderSession, $element, $embeddedSession['start']->toDateTime()->format('U'));
 
                         break;
                     }
@@ -913,7 +913,7 @@ class EmbeddedEventSessionService
                 foreach ($eventData['event']['embeddedEventSession'] as $embeddedSession) {
                     $startDate = $embeddedSession['start']->toDateTime();
                     if ($startDate > $now) {
-                        $orderSession = $this->addElementWithSessionSec($orderSession, $element, $embeddedSession['start']->sec);
+                        $orderSession = $this->addElementWithSessionSec($orderSession, $element, $embeddedSession['start']->toDateTime()->format('U'));
 
                         break;
                     }
