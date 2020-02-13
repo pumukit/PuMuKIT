@@ -18,8 +18,8 @@ class PicService
 
     public function __construct($scheme, $host, $webDir = '', $defaultSeriesPic = '', $defaultPlaylistPic = '', $defaultVideoPic = '', $defaultAudioHDPic = '', $defaultAudioSDPic = '')
     {
-        $this->scheme = $scheme;
-        $this->host = $host;
+        $this->scheme = str_replace("'", '',$scheme);
+        $this->host = str_replace("'", '',$host);
         $this->webDir = $webDir;
         $this->defaultSeriesPic = $defaultSeriesPic;
         $this->defaultPlaylistPic = $defaultPlaylistPic;
@@ -275,13 +275,7 @@ class PicService
         return $picUrl;
     }
 
-    /**
-     * @param object $object
-     * @param bool   $absolute
-     *
-     * @return string|null
-     */
-    public function getDynamicPic($object, $absolute = false)
+    public function getDynamicPic($object, bool $absolute = false): ?string
     {
         $pics = $object->getPics();
         $picUrl = null;
@@ -304,17 +298,10 @@ class PicService
         return $picUrl;
     }
 
-    /**
-     * Get absolute path of a given pic url.
-     *
-     * @param string $picUrl
-     *
-     * @return string
-     */
-    protected function getAbsoluteUrlPic($picUrl = '')
+    protected function getAbsoluteUrlPic(?string $picUrl): string
     {
-        if (!$picUrl || '/' != $picUrl[0]) {
-            return $picUrl;
+        if (!$picUrl || '/' !== $picUrl[0]) {
+            return '';
         }
 
         return $this->scheme.'://'.$this->host.$picUrl;

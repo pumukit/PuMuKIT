@@ -12,50 +12,28 @@ use Symfony\Component\Process\Process;
 
 class DynamicPicExtractorService
 {
-    /**
-     * @var DocumentManager
-     */
+    /** @var DocumentManager */
     private $documentManager;
 
-    /**
-     * @var MultimediaObjectPicService
-     */
+    /** @var MultimediaObjectPicService */
     private $mmsPicService;
-
-    private $targetPath;
-    private $targetUrl;
     private $command;
-
     private $predefinedTags = [
         'auto',
         'dynamic',
     ];
 
-    /**
-     * DynamicPicExtractorService constructor.
-     *
-     * @param string $targetPath
-     * @param string $targetUrl
-     * @param string $command
-     */
-    public function __construct(DocumentManager $documentManager, MultimediaObjectPicService $mmsPicService, $targetPath, $targetUrl, $command)
+    public function __construct(DocumentManager $documentManager, MultimediaObjectPicService $mmsPicService, string $targetPath, string $command)
     {
         $this->documentManager = $documentManager;
         $this->mmsPicService = $mmsPicService;
-        $this->targetPath = realpath($targetPath);
-        if (!$this->targetPath) {
+        if (!realpath($targetPath)) {
             throw new \InvalidArgumentException("The path '".$targetPath."' for storing dynamic pic does not exist.");
         }
-        $this->targetUrl = $targetUrl;
         $this->command = $command;
     }
 
-    /**
-     * @throws \Exception
-     *
-     * @return bool
-     */
-    public function extract(MultimediaObject $multimediaObject, Track $track)
+    public function extract(MultimediaObject $multimediaObject, Track $track): bool
     {
         if (!file_exists($track->getPath())) {
             throw new \Exception("Path doesn't exists for multimedia object ".$multimediaObject->getId());
@@ -80,10 +58,7 @@ class DynamicPicExtractorService
         return true;
     }
 
-    /**
-     * @return string
-     */
-    private function createDir(MultimediaObject $multimediaObject)
+    private function createDir(MultimediaObject $multimediaObject): string
     {
         $absCurrentDir = $this->mmsPicService->getTargetPath($multimediaObject);
 
@@ -93,12 +68,7 @@ class DynamicPicExtractorService
         return $absCurrentDir;
     }
 
-    /**
-     * @param string $absCurrentDir
-     *
-     * @return mixed
-     */
-    private function generateFileName($absCurrentDir)
+    private function generateFileName(string $absCurrentDir): string
     {
         $extension = '.webp';
         $fileName = date('ymdGis').$extension;
@@ -109,10 +79,7 @@ class DynamicPicExtractorService
         return $fileName;
     }
 
-    /**
-     * @param string $commandLine
-     */
-    private function executeProcess($commandLine)
+    private function executeProcess($commandLine): void
     {
         $process = new Process($commandLine);
         $process->setTimeout(60);
@@ -122,15 +89,10 @@ class DynamicPicExtractorService
         }
     }
 
-    /**
-     * @param string $fileUrl
-     *
-     * @return mixed|null
-     */
-    private function checkFileExists(MultimediaObject $multimediaObject, $fileUrl)
+    private function checkFileExists(MultimediaObject $multimediaObject, string $fileUrl)
     {
         foreach ($multimediaObject->getPics() as $pic) {
-            if ($fileUrl == $pic->getUrl()) {
+            if (($pic instanceof Pic) && $fileUrl === $pic->getUrl()) {
                 return $pic;
             }
         }
@@ -138,12 +100,7 @@ class DynamicPicExtractorService
         return null;
     }
 
-    /**
-     * @param string $filePath
-     *
-     * @return MultimediaObject
-     */
-    private function completeFileMetadata(MultimediaObject $multimediaObject, Pic $file, $filePath = '')
+    private function completeFileMetadata(MultimediaObject $multimediaObject, Pic $file, string $filePath = ''): MultimediaObject
     {
         $file->setPath($filePath);
         foreach ($this->predefinedTags as $tag) {

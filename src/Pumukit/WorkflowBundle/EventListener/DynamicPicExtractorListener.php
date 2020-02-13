@@ -2,66 +2,37 @@
 
 namespace Pumukit\WorkflowBundle\EventListener;
 
-use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
 use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\EncoderBundle\Services\DynamicPicExtractorService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 
-/**
- * Class DynamicPicExtractorListener.
- */
 class DynamicPicExtractorListener
 {
-    /**
-     * @var DocumentManager
-     */
-    private $documentManager;
-
-    /**
-     * @var LoggerInterface
-     */
+    /** @var LoggerInterface */
     private $logger;
-    /**
-     * @var DynamicPicExtractorService
-     */
+    /** @var DynamicPicExtractorService */
     private $dynamicPicExtractorService;
-
     private $enableDynamicPicExtract;
     private $trackTagAllowed;
 
-    /**
-     * DynamicPicExtractorListener constructor.
-     *
-     * @param bool   $enableDynamicPicExtract
-     * @param string $trackTagAllowed
-     */
-    public function __construct(DocumentManager $documentManager, DynamicPicExtractorService $dynamicPicExtractorService, LoggerInterface $logger, $enableDynamicPicExtract = true, $trackTagAllowed = 'master')
+    public function __construct(DynamicPicExtractorService $dynamicPicExtractorService, LoggerInterface $logger, bool $enableDynamicPicExtract = true, string $trackTagAllowed = 'master')
     {
-        $this->documentManager = $documentManager;
         $this->dynamicPicExtractorService = $dynamicPicExtractorService;
         $this->logger = $logger;
         $this->enableDynamicPicExtract = $enableDynamicPicExtract;
         $this->trackTagAllowed = $trackTagAllowed;
     }
 
-    /**
-     * @throws \Exception
-     */
-    public function onJobSuccess(JobEvent $event)
+    public function onJobSuccess(JobEvent $event): void
     {
         if ($this->enableDynamicPicExtract) {
             $this->generateDynamicPic($event->getMultimediaObject(), $event->getTrack());
         }
     }
 
-    /**
-     * @throws \Exception
-     *
-     * @return bool
-     */
-    public function generateDynamicPic(MultimediaObject $multimediaObject, Track $track)
+    public function generateDynamicPic(MultimediaObject $multimediaObject, Track $track): bool
     {
         if (!$track->containsTag($this->trackTagAllowed) || $track->isOnlyAudio()) {
             return false;
@@ -70,12 +41,7 @@ class DynamicPicExtractorListener
         return $this->generateDynamicPicFromTrack($multimediaObject, $track);
     }
 
-    /**
-     * @throws \Exception
-     *
-     * @return bool
-     */
-    private function generateDynamicPicFromTrack(MultimediaObject $multimediaObject, Track $track)
+    private function generateDynamicPicFromTrack(MultimediaObject $multimediaObject, Track $track): bool
     {
         $outputMessage = $this->dynamicPicExtractorService->extract($multimediaObject, $track);
         if (!$outputMessage) {
