@@ -101,10 +101,10 @@ class RemoveElementTest extends PumukitTestCase
         static::assertFalse($mm3->containsGroup($group2));
         static::assertTrue($mm4->containsGroup($group1));
         static::assertTrue($mm4->containsGroup($group2));
-        static::assertEquals(1, $mm1->getGroups()->count());
-        static::assertEquals(2, $mm2->getGroups()->count());
-        static::assertEquals(1, $mm3->getGroups()->count());
-        static::assertEquals(2, $mm4->getGroups()->count());
+        static::assertCount(1, $mm1->getGroups());
+        static::assertCount(2, $mm2->getGroups());
+        static::assertCount(1, $mm3->getGroups());
+        static::assertCount(2, $mm4->getGroups());
 
         $this->dm->clear();
 
@@ -134,10 +134,10 @@ class RemoveElementTest extends PumukitTestCase
         static::assertFalse($mm3->containsGroup($group2));
         static::assertFalse($mm4->containsGroup($group1));
         static::assertTrue($mm4->containsGroup($group2));
-        static::assertEquals(0, $mm1->getGroups()->count());
-        static::assertEquals(1, $mm2->getGroups()->count());
-        static::assertEquals(0, $mm3->getGroups()->count());
-        static::assertEquals(1, $mm4->getGroups()->count());
+        static::assertCount(0, $mm1->getGroups());
+        static::assertCount(1, $mm2->getGroups());
+        static::assertCount(0, $mm3->getGroups());
+        static::assertCount(1, $mm4->getGroups());
 
         $this->dm->clear();
 
@@ -167,10 +167,10 @@ class RemoveElementTest extends PumukitTestCase
         static::assertFalse($mm3->containsGroup($group2));
         static::assertTrue($mm4->containsGroup($group1));
         static::assertTrue($mm4->containsGroup($group2));
-        static::assertEquals(1, $mm1->getGroups()->count());
-        static::assertEquals(2, $mm2->getGroups()->count());
-        static::assertEquals(1, $mm3->getGroups()->count());
-        static::assertEquals(2, $mm4->getGroups()->count());
+        static::assertCount(1, $mm1->getGroups());
+        static::assertCount(2, $mm2->getGroups());
+        static::assertCount(1, $mm3->getGroups());
+        static::assertCount(2, $mm4->getGroups());
 
         $this->dm->clear();
 
@@ -200,10 +200,10 @@ class RemoveElementTest extends PumukitTestCase
         static::assertFalse($mm3->containsGroup($group2));
         static::assertFalse($mm4->containsGroup($group1));
         static::assertTrue($mm4->containsGroup($group2));
-        static::assertEquals(0, $mm1->getGroups()->count());
-        static::assertEquals(1, $mm2->getGroups()->count());
-        static::assertEquals(0, $mm3->getGroups()->count());
-        static::assertEquals(1, $mm4->getGroups()->count());
+        static::assertCount(0, $mm1->getGroups());
+        static::assertCount(1, $mm2->getGroups());
+        static::assertCount(0, $mm3->getGroups());
+        static::assertCount(1, $mm4->getGroups());
     }
 
     public function testMultimediaObjectRemoveGroupService()
@@ -284,10 +284,10 @@ class RemoveElementTest extends PumukitTestCase
         static::assertFalse($mm3->containsGroup($group2));
         static::assertTrue($mm4->containsGroup($group1));
         static::assertTrue($mm4->containsGroup($group2));
-        static::assertEquals(1, $mm1->getGroups()->count());
-        static::assertEquals(2, $mm2->getGroups()->count());
-        static::assertEquals(1, $mm3->getGroups()->count());
-        static::assertEquals(2, $mm4->getGroups()->count());
+        static::assertCount(1, $mm1->getGroups());
+        static::assertCount(2, $mm2->getGroups());
+        static::assertCount(1, $mm3->getGroups());
+        static::assertCount(2, $mm4->getGroups());
 
         $this->dm->clear();
 
@@ -358,10 +358,10 @@ class RemoveElementTest extends PumukitTestCase
         static::assertFalse($mm3->containsGroup($group2));
         static::assertFalse($mm4->containsGroup($group1));
         static::assertTrue($mm4->containsGroup($group2));
-        static::assertEquals(0, $mm1->getGroups()->count());
-        static::assertEquals(1, $mm2->getGroups()->count());
-        static::assertEquals(0, $mm3->getGroups()->count());
-        static::assertEquals(1, $mm4->getGroups()->count());
+        static::assertCount(0, $mm1->getGroups());
+        static::assertCount(1, $mm2->getGroups());
+        static::assertCount(0, $mm3->getGroups());
+        static::assertCount(1, $mm4->getGroups());
 
         $this->dm->clear();
 
@@ -432,10 +432,10 @@ class RemoveElementTest extends PumukitTestCase
         static::assertFalse($mm3->containsGroup($group2));
         static::assertTrue($mm4->containsGroup($group1));
         static::assertTrue($mm4->containsGroup($group2));
-        static::assertEquals(1, $mm1->getGroups()->count());
-        static::assertEquals(2, $mm2->getGroups()->count());
-        static::assertEquals(1, $mm3->getGroups()->count());
-        static::assertEquals(2, $mm4->getGroups()->count());
+        static::assertCount(1, $mm1->getGroups());
+        static::assertCount(2, $mm2->getGroups());
+        static::assertCount(1, $mm3->getGroups());
+        static::assertCount(2, $mm4->getGroups());
 
         $this->dm->clear();
 
@@ -514,10 +514,10 @@ class RemoveElementTest extends PumukitTestCase
         // This test should fail using removeElement from ArrayCollection
         // Solved with strategy="setArray"
         static::assertTrue($mm4->containsGroup($group2));
-        static::assertEquals(0, $mm1->getGroups()->count());
-        static::assertEquals(1, $mm2->getGroups()->count());
-        static::assertEquals(0, $mm3->getGroups()->count());
-        static::assertEquals(1, $mm4->getGroups()->count());
+        static::assertCount(0, $mm1->getGroups());
+        static::assertCount(1, $mm2->getGroups());
+        static::assertCount(0, $mm3->getGroups());
+        static::assertCount(1, $mm4->getGroups());
     }
 
     public function testUserRemoveGroupService()
@@ -602,10 +602,10 @@ class RemoveElementTest extends PumukitTestCase
         static::assertFalse($user3->containsGroup($group2));
         static::assertTrue($user4->containsGroup($group1));
         static::assertTrue($user4->containsGroup($group2));
-        static::assertEquals(1, $user1->getGroups()->count());
-        static::assertEquals(2, $user2->getGroups()->count());
-        static::assertEquals(1, $user3->getGroups()->count());
-        static::assertEquals(2, $user4->getGroups()->count());
+        static::assertCount(1, $user1->getGroups());
+        static::assertCount(2, $user2->getGroups());
+        static::assertCount(1, $user3->getGroups());
+        static::assertCount(2, $user4->getGroups());
 
         $this->dm->clear();
 
@@ -676,10 +676,10 @@ class RemoveElementTest extends PumukitTestCase
         static::assertFalse($user3->containsGroup($group2));
         static::assertFalse($user4->containsGroup($group1));
         static::assertTrue($user4->containsGroup($group2));
-        static::assertEquals(0, $user1->getGroups()->count());
-        static::assertEquals(1, $user2->getGroups()->count());
-        static::assertEquals(0, $user3->getGroups()->count());
-        static::assertEquals(1, $user4->getGroups()->count());
+        static::assertCount(0, $user1->getGroups());
+        static::assertCount(1, $user2->getGroups());
+        static::assertCount(0, $user3->getGroups());
+        static::assertCount(1, $user4->getGroups());
 
         $this->dm->clear();
 
@@ -750,10 +750,10 @@ class RemoveElementTest extends PumukitTestCase
         static::assertFalse($user3->containsGroup($group2));
         static::assertTrue($user4->containsGroup($group1));
         static::assertTrue($user4->containsGroup($group2));
-        static::assertEquals(1, $user1->getGroups()->count());
-        static::assertEquals(2, $user2->getGroups()->count());
-        static::assertEquals(1, $user3->getGroups()->count());
-        static::assertEquals(2, $user4->getGroups()->count());
+        static::assertCount(1, $user1->getGroups());
+        static::assertCount(2, $user2->getGroups());
+        static::assertCount(1, $user3->getGroups());
+        static::assertCount(2, $user4->getGroups());
 
         $this->dm->clear();
 
@@ -832,10 +832,10 @@ class RemoveElementTest extends PumukitTestCase
         // This test should fail using removeElement from ArrayCollection
         // Solved with strategy="setArray"
         static::assertTrue($user4->containsGroup($group2));
-        static::assertEquals(0, $user1->getGroups()->count());
-        static::assertEquals(1, $user2->getGroups()->count());
-        static::assertEquals(0, $user3->getGroups()->count());
-        static::assertEquals(1, $user4->getGroups()->count());
+        static::assertCount(0, $user1->getGroups());
+        static::assertCount(1, $user2->getGroups());
+        static::assertCount(0, $user3->getGroups());
+        static::assertCount(1, $user4->getGroups());
     }
 
     public function testEmbeddedBroadcastRemoveGroupService()
@@ -937,10 +937,10 @@ class RemoveElementTest extends PumukitTestCase
         static::assertFalse($eb3->containsGroup($group2));
         static::assertTrue($eb4->containsGroup($group1));
         static::assertTrue($eb4->containsGroup($group2));
-        static::assertEquals(1, $eb1->getGroups()->count());
-        static::assertEquals(2, $eb2->getGroups()->count());
-        static::assertEquals(1, $eb3->getGroups()->count());
-        static::assertEquals(2, $eb4->getGroups()->count());
+        static::assertCount(1, $eb1->getGroups());
+        static::assertCount(2, $eb2->getGroups());
+        static::assertCount(1, $eb3->getGroups());
+        static::assertCount(2, $eb4->getGroups());
 
         $this->dm->clear();
 
@@ -1031,10 +1031,10 @@ class RemoveElementTest extends PumukitTestCase
         static::assertFalse($eb3->containsGroup($group2));
         static::assertFalse($eb4->containsGroup($group1));
         static::assertTrue($eb4->containsGroup($group2));
-        static::assertEquals(0, $eb1->getGroups()->count());
-        static::assertEquals(1, $eb2->getGroups()->count());
-        static::assertEquals(0, $eb3->getGroups()->count());
-        static::assertEquals(1, $eb4->getGroups()->count());
+        static::assertCount(0, $eb1->getGroups());
+        static::assertCount(1, $eb2->getGroups());
+        static::assertCount(0, $eb3->getGroups());
+        static::assertCount(1, $eb4->getGroups());
 
         $this->dm->clear();
 
@@ -1125,10 +1125,10 @@ class RemoveElementTest extends PumukitTestCase
         static::assertFalse($eb3->containsGroup($group2));
         static::assertTrue($eb4->containsGroup($group1));
         static::assertTrue($eb4->containsGroup($group2));
-        static::assertEquals(1, $eb1->getGroups()->count());
-        static::assertEquals(2, $eb2->getGroups()->count());
-        static::assertEquals(1, $eb3->getGroups()->count());
-        static::assertEquals(2, $eb4->getGroups()->count());
+        static::assertCount(1, $eb1->getGroups());
+        static::assertCount(2, $eb2->getGroups());
+        static::assertCount(1, $eb3->getGroups());
+        static::assertCount(2, $eb4->getGroups());
 
         $this->dm->clear();
 
@@ -1227,10 +1227,10 @@ class RemoveElementTest extends PumukitTestCase
         // This test should fail using removeElement from ArrayCollection
         // Solved with strategy="setArray"
         static::assertTrue($eb4->containsGroup($group2));
-        static::assertEquals(0, $eb1->getGroups()->count());
-        static::assertEquals(1, $eb2->getGroups()->count());
-        static::assertEquals(0, $eb3->getGroups()->count());
-        static::assertEquals(1, $eb4->getGroups()->count());
+        static::assertCount(0, $eb1->getGroups());
+        static::assertCount(1, $eb2->getGroups());
+        static::assertCount(0, $eb3->getGroups());
+        static::assertCount(1, $eb4->getGroups());
     }
 
     private function createGroup($key = 'Group1', $name = 'Group 1', $persist = true)
