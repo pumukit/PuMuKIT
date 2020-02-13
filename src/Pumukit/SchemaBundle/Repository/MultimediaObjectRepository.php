@@ -1504,7 +1504,8 @@ class MultimediaObjectRepository extends DocumentRepository
         foreach ($result as $key => $element) {
             $orderSession = [];
             foreach ($element['data'] as $eventData) {
-                $orderSession[$eventData['session']['start']->sec] = $eventData;
+                $seconds = $eventData['session']['start']->toDateTime()->format('U');
+                $orderSession[$seconds] = $eventData;
             }
             ksort($orderSession);
             $result[$key]['data'] = array_values($orderSession);
