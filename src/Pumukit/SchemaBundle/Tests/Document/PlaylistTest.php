@@ -28,7 +28,7 @@ class PlaylistTest extends WebTestCase
         $mmobjA->setSeries($playlist);
         $mmobjB->setSeries($playlist);
         $mmobjC->setSeries($playlist);
-        static::assertEquals(0, $playlist->getPlaylist()->getMultimediaObjects()->count());
+        static::assertCount(0, $playlist->getPlaylist()->getMultimediaObjects());
         $playlist->getPlaylist()->addMultimediaObject($mmobjA);
         $playlist->getPlaylist()->addMultimediaObject($mmobjB);
         $playlist->getPlaylist()->addMultimediaObject($mmobjC);
