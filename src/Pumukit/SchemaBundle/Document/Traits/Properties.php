@@ -37,8 +37,6 @@ trait Properties
      * Get property, null if none.
      *
      * @param string $key
-     *
-     * @return string|null
      */
     public function getProperty($key)
     {
