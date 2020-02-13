@@ -46,8 +46,8 @@ class LinkEventDispatcherServiceTest extends PumukitTestCase
     public function testDispatchCreate()
     {
         $this->dispatcher->addListener(SchemaEvents::LINK_CREATE, function ($event, $name) {
-            $this->assertInstanceOf(LinkEvent::class, $event);
-            $this->assertEquals(SchemaEvents::LINK_CREATE, $name);
+            static::assertInstanceOf(LinkEvent::class, $event);
+            static::assertEquals(SchemaEvents::LINK_CREATE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
             $link = $event->getLink();
@@ -57,9 +57,9 @@ class LinkEventDispatcherServiceTest extends PumukitTestCase
             MockUpLinkListener::$url = $link->getUrl();
         });
 
-        $this->assertFalse(MockUpLinkListener::$called);
-        $this->assertEquals(self::EMPTY_TITLE, MockUpLinkListener::$title);
-        $this->assertEquals(self::EMPTY_URL, MockUpLinkListener::$url);
+        static::assertFalse(MockUpLinkListener::$called);
+        static::assertEquals(self::EMPTY_TITLE, MockUpLinkListener::$title);
+        static::assertEquals(self::EMPTY_URL, MockUpLinkListener::$url);
 
         $title = 'test title';
         $url = 'http://testlink.com';
@@ -72,16 +72,16 @@ class LinkEventDispatcherServiceTest extends PumukitTestCase
 
         $this->linkDispatcher->dispatchCreate($multimediaObject, $link);
 
-        $this->assertTrue(MockUpLinkListener::$called);
-        $this->assertEquals($title, MockUpLinkListener::$title);
-        $this->assertEquals($url, MockUpLinkListener::$url);
+        static::assertTrue(MockUpLinkListener::$called);
+        static::assertEquals($title, MockUpLinkListener::$title);
+        static::assertEquals($url, MockUpLinkListener::$url);
     }
 
     public function testDispatchUpdate()
     {
         $this->dispatcher->addListener(SchemaEvents::LINK_UPDATE, function ($event, $name) {
-            $this->assertInstanceOf(LinkEvent::class, $event);
-            $this->assertEquals(SchemaEvents::LINK_UPDATE, $name);
+            static::assertInstanceOf(LinkEvent::class, $event);
+            static::assertEquals(SchemaEvents::LINK_UPDATE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
             $link = $event->getLink();
@@ -91,9 +91,9 @@ class LinkEventDispatcherServiceTest extends PumukitTestCase
             MockUpLinkListener::$url = $link->getUrl();
         });
 
-        $this->assertFalse(MockUpLinkListener::$called);
-        $this->assertEquals(self::EMPTY_TITLE, MockUpLinkListener::$title);
-        $this->assertEquals(self::EMPTY_URL, MockUpLinkListener::$url);
+        static::assertFalse(MockUpLinkListener::$called);
+        static::assertEquals(self::EMPTY_TITLE, MockUpLinkListener::$title);
+        static::assertEquals(self::EMPTY_URL, MockUpLinkListener::$url);
 
         $title = 'test title';
         $url = 'http://testlink.com';
@@ -109,16 +109,16 @@ class LinkEventDispatcherServiceTest extends PumukitTestCase
 
         $this->linkDispatcher->dispatchUpdate($multimediaObject, $link);
 
-        $this->assertTrue(MockUpLinkListener::$called);
-        $this->assertEquals($title, MockUpLinkListener::$title);
-        $this->assertEquals($updateUrl, MockUpLinkListener::$url);
+        static::assertTrue(MockUpLinkListener::$called);
+        static::assertEquals($title, MockUpLinkListener::$title);
+        static::assertEquals($updateUrl, MockUpLinkListener::$url);
     }
 
     public function testDispatchDelete()
     {
         $this->dispatcher->addListener(SchemaEvents::LINK_DELETE, function ($event, $name) {
-            $this->assertInstanceOf(LinkEvent::class, $event);
-            $this->assertEquals(SchemaEvents::LINK_DELETE, $name);
+            static::assertInstanceOf(LinkEvent::class, $event);
+            static::assertEquals(SchemaEvents::LINK_DELETE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
             $link = $event->getLink();
@@ -128,9 +128,9 @@ class LinkEventDispatcherServiceTest extends PumukitTestCase
             MockUpLinkListener::$url = $link->getUrl();
         });
 
-        $this->assertFalse(MockUpLinkListener::$called);
-        $this->assertEquals(self::EMPTY_TITLE, MockUpLinkListener::$title);
-        $this->assertEquals(self::EMPTY_URL, MockUpLinkListener::$url);
+        static::assertFalse(MockUpLinkListener::$called);
+        static::assertEquals(self::EMPTY_TITLE, MockUpLinkListener::$title);
+        static::assertEquals(self::EMPTY_URL, MockUpLinkListener::$url);
 
         $title = 'test title';
         $url = 'http://testlink.com';
@@ -143,9 +143,9 @@ class LinkEventDispatcherServiceTest extends PumukitTestCase
 
         $this->linkDispatcher->dispatchDelete($multimediaObject, $link);
 
-        $this->assertTrue(MockUpLinkListener::$called);
-        $this->assertEquals($title, MockUpLinkListener::$title);
-        $this->assertEquals($url, MockUpLinkListener::$url);
+        static::assertTrue(MockUpLinkListener::$called);
+        static::assertEquals($title, MockUpLinkListener::$title);
+        static::assertEquals($url, MockUpLinkListener::$url);
     }
 }
 

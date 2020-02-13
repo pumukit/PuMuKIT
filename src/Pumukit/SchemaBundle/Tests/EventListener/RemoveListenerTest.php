@@ -73,15 +73,15 @@ class RemoveListenerTest extends PumukitTestCase
 
         $this->createJobWithStatus(Job::STATUS_FINISHED, $multimediaObject);
 
-        $this->assertCount(1, $this->repoSeries->findAll());
-        $this->assertCount(2, $this->repoMmobj->findAll());
-        $this->assertCount(1, $this->repoJobs->findAll());
+        static::assertCount(1, $this->repoSeries->findAll());
+        static::assertCount(2, $this->repoMmobj->findAll());
+        static::assertCount(1, $this->repoJobs->findAll());
 
         $this->factoryService->deleteMultimediaObject($multimediaObject);
 
-        $this->assertCount(1, $this->repoSeries->findAll());
-        $this->assertCount(1, $this->repoMmobj->findAll());
-        $this->assertCount(0, $this->repoJobs->findAll());
+        static::assertCount(1, $this->repoSeries->findAll());
+        static::assertCount(1, $this->repoMmobj->findAll());
+        static::assertCount(0, $this->repoJobs->findAll());
     }
 
     /**
@@ -95,15 +95,15 @@ class RemoveListenerTest extends PumukitTestCase
 
         $this->createJobWithStatus(Job::STATUS_EXECUTING, $multimediaObject);
 
-        $this->assertCount(1, $this->repoSeries->findAll());
-        $this->assertCount(2, $this->repoMmobj->findAll());
-        $this->assertCount(1, $this->repoJobs->findAll());
+        static::assertCount(1, $this->repoSeries->findAll());
+        static::assertCount(2, $this->repoMmobj->findAll());
+        static::assertCount(1, $this->repoJobs->findAll());
 
         $this->factoryService->deleteMultimediaObject($multimediaObject);
 
-        $this->assertCount(1, $this->repoSeries->findAll());
-        $this->assertCount(2, $this->repoMmobj->findAll());
-        $this->assertCount(1, $this->repoJobs->findAll());
+        static::assertCount(1, $this->repoSeries->findAll());
+        static::assertCount(2, $this->repoMmobj->findAll());
+        static::assertCount(1, $this->repoJobs->findAll());
 
         $this->deleteCreatedFiles();
     }
@@ -144,19 +144,19 @@ class RemoveListenerTest extends PumukitTestCase
         $embeddedBroadcast1 = $mm1->getEmbeddedBroadcast();
         $embeddedBroadcast2 = $mm2->getEmbeddedBroadcast();
 
-        $this->assertCount(2, $mm1->getGroups());
-        $this->assertCount(1, $mm2->getGroups());
-        $this->assertContains($group1, $mm1->getGroups()->toArray());
-        $this->assertContains($group2, $mm1->getGroups()->toArray());
-        $this->assertNotContains($group1, $mm2->getGroups()->toArray());
-        $this->assertContains($group2, $mm2->getGroups()->toArray());
+        static::assertCount(2, $mm1->getGroups());
+        static::assertCount(1, $mm2->getGroups());
+        static::assertContains($group1, $mm1->getGroups()->toArray());
+        static::assertContains($group2, $mm1->getGroups()->toArray());
+        static::assertNotContains($group1, $mm2->getGroups()->toArray());
+        static::assertContains($group2, $mm2->getGroups()->toArray());
 
-        $this->assertCount(2, $embeddedBroadcast1->getGroups());
-        $this->assertCount(1, $embeddedBroadcast2->getGroups());
-        $this->assertContains($group1, $embeddedBroadcast1->getGroups()->toArray());
-        $this->assertContains($group2, $embeddedBroadcast1->getGroups()->toArray());
-        $this->assertNotContains($group1, $embeddedBroadcast2->getGroups()->toArray());
-        $this->assertContains($group2, $embeddedBroadcast2->getGroups()->toArray());
+        static::assertCount(2, $embeddedBroadcast1->getGroups());
+        static::assertCount(1, $embeddedBroadcast2->getGroups());
+        static::assertContains($group1, $embeddedBroadcast1->getGroups()->toArray());
+        static::assertContains($group2, $embeddedBroadcast1->getGroups()->toArray());
+        static::assertNotContains($group1, $embeddedBroadcast2->getGroups()->toArray());
+        static::assertContains($group2, $embeddedBroadcast2->getGroups()->toArray());
 
         $this->dm->remove($group1);
         $this->dm->flush();
@@ -164,19 +164,19 @@ class RemoveListenerTest extends PumukitTestCase
         $mm1 = $this->repoMmobj->find($mm1->getId());
         $mm2 = $this->repoMmobj->find($mm2->getId());
 
-        $this->assertCount(1, $mm1->getGroups());
-        $this->assertCount(1, $mm2->getGroups());
-        $this->assertNotContains($group1, $mm1->getGroups()->toArray());
-        $this->assertContains($group2, $mm1->getGroups()->toArray());
-        $this->assertNotContains($group1, $mm2->getGroups()->toArray());
-        $this->assertContains($group2, $mm2->getGroups()->toArray());
+        static::assertCount(1, $mm1->getGroups());
+        static::assertCount(1, $mm2->getGroups());
+        static::assertNotContains($group1, $mm1->getGroups()->toArray());
+        static::assertContains($group2, $mm1->getGroups()->toArray());
+        static::assertNotContains($group1, $mm2->getGroups()->toArray());
+        static::assertContains($group2, $mm2->getGroups()->toArray());
 
-        $this->assertCount(1, $embeddedBroadcast1->getGroups());
-        $this->assertCount(1, $embeddedBroadcast2->getGroups());
-        $this->assertNotContains($group1, $embeddedBroadcast1->getGroups()->toArray());
-        $this->assertContains($group2, $embeddedBroadcast1->getGroups()->toArray());
-        $this->assertNotContains($group1, $embeddedBroadcast2->getGroups()->toArray());
-        $this->assertContains($group2, $embeddedBroadcast2->getGroups()->toArray());
+        static::assertCount(1, $embeddedBroadcast1->getGroups());
+        static::assertCount(1, $embeddedBroadcast2->getGroups());
+        static::assertNotContains($group1, $embeddedBroadcast1->getGroups()->toArray());
+        static::assertContains($group2, $embeddedBroadcast1->getGroups()->toArray());
+        static::assertNotContains($group1, $embeddedBroadcast2->getGroups()->toArray());
+        static::assertContains($group2, $embeddedBroadcast2->getGroups()->toArray());
 
         $this->dm->remove($group2);
         $this->dm->flush();
@@ -184,19 +184,19 @@ class RemoveListenerTest extends PumukitTestCase
         $mm1 = $this->repoMmobj->find($mm1->getId());
         $mm2 = $this->repoMmobj->find($mm2->getId());
 
-        $this->assertCount(0, $mm1->getGroups());
-        $this->assertCount(0, $mm2->getGroups());
-        $this->assertNotContains($group1, $mm1->getGroups()->toArray());
-        $this->assertNotContains($group2, $mm1->getGroups()->toArray());
-        $this->assertNotContains($group1, $mm2->getGroups()->toArray());
-        $this->assertNotContains($group2, $mm2->getGroups()->toArray());
+        static::assertCount(0, $mm1->getGroups());
+        static::assertCount(0, $mm2->getGroups());
+        static::assertNotContains($group1, $mm1->getGroups()->toArray());
+        static::assertNotContains($group2, $mm1->getGroups()->toArray());
+        static::assertNotContains($group1, $mm2->getGroups()->toArray());
+        static::assertNotContains($group2, $mm2->getGroups()->toArray());
 
-        $this->assertCount(0, $embeddedBroadcast1->getGroups());
-        $this->assertCount(0, $embeddedBroadcast2->getGroups());
-        $this->assertNotContains($group1, $embeddedBroadcast1->getGroups()->toArray());
-        $this->assertNotContains($group2, $embeddedBroadcast1->getGroups()->toArray());
-        $this->assertNotContains($group1, $embeddedBroadcast2->getGroups()->toArray());
-        $this->assertNotContains($group2, $embeddedBroadcast2->getGroups()->toArray());
+        static::assertCount(0, $embeddedBroadcast1->getGroups());
+        static::assertCount(0, $embeddedBroadcast2->getGroups());
+        static::assertNotContains($group1, $embeddedBroadcast1->getGroups()->toArray());
+        static::assertNotContains($group2, $embeddedBroadcast1->getGroups()->toArray());
+        static::assertNotContains($group1, $embeddedBroadcast2->getGroups()->toArray());
+        static::assertNotContains($group2, $embeddedBroadcast2->getGroups()->toArray());
 
         $key1 = 'Group1';
         $name1 = 'Group 1';
@@ -214,32 +214,32 @@ class RemoveListenerTest extends PumukitTestCase
         $this->dm->persist($user1);
         $this->dm->persist($user2);
         $this->dm->flush();
-        $this->assertCount(2, $user1->getGroups());
-        $this->assertCount(1, $user2->getGroups());
-        $this->assertContains($group1, $user1->getGroups()->toArray());
-        $this->assertContains($group2, $user1->getGroups()->toArray());
-        $this->assertNotContains($group1, $user2->getGroups()->toArray());
-        $this->assertContains($group2, $user2->getGroups()->toArray());
+        static::assertCount(2, $user1->getGroups());
+        static::assertCount(1, $user2->getGroups());
+        static::assertContains($group1, $user1->getGroups()->toArray());
+        static::assertContains($group2, $user1->getGroups()->toArray());
+        static::assertNotContains($group1, $user2->getGroups()->toArray());
+        static::assertContains($group2, $user2->getGroups()->toArray());
         $this->dm->remove($group1);
         $this->dm->flush();
         $user1 = $this->repoUser->find($user1->getId());
         $user2 = $this->repoUser->find($user2->getId());
-        $this->assertCount(1, $user1->getGroups());
-        $this->assertCount(1, $user2->getGroups());
-        $this->assertNotContains($group1, $user1->getGroups()->toArray());
-        $this->assertContains($group2, $user1->getGroups()->toArray());
-        $this->assertNotContains($group1, $user2->getGroups()->toArray());
-        $this->assertContains($group2, $user2->getGroups()->toArray());
+        static::assertCount(1, $user1->getGroups());
+        static::assertCount(1, $user2->getGroups());
+        static::assertNotContains($group1, $user1->getGroups()->toArray());
+        static::assertContains($group2, $user1->getGroups()->toArray());
+        static::assertNotContains($group1, $user2->getGroups()->toArray());
+        static::assertContains($group2, $user2->getGroups()->toArray());
         $this->dm->remove($group2);
         $this->dm->flush();
         $user1 = $this->repoUser->find($user1->getId());
         $user2 = $this->repoUser->find($user2->getId());
-        $this->assertCount(0, $user1->getGroups());
-        $this->assertCount(0, $user2->getGroups());
-        $this->assertNotContains($group1, $user1->getGroups()->toArray());
-        $this->assertNotContains($group2, $user1->getGroups()->toArray());
-        $this->assertNotContains($group1, $user2->getGroups()->toArray());
-        $this->assertNotContains($group2, $user2->getGroups()->toArray());
+        static::assertCount(0, $user1->getGroups());
+        static::assertCount(0, $user2->getGroups());
+        static::assertNotContains($group1, $user1->getGroups()->toArray());
+        static::assertNotContains($group2, $user1->getGroups()->toArray());
+        static::assertNotContains($group1, $user2->getGroups()->toArray());
+        static::assertNotContains($group2, $user2->getGroups()->toArray());
     }
 
     private function createJobWithStatus($status, $multimediaObject)

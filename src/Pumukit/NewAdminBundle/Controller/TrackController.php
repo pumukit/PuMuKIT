@@ -370,7 +370,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         $track = $multimediaObject->getTrackById($request->get('id'));
 
         $response = new BinaryFileResponse($track->getPath());
-        $response->trustXSendfileTypeHeader();
+        $response::trustXSendfileTypeHeader();
         $response->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
             basename($track->getPath()),

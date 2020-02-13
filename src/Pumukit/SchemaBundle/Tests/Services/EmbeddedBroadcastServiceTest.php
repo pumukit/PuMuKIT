@@ -66,16 +66,16 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         $publicBroadcast = $embeddedBroadcastService->createEmbeddedBroadcastByType(EmbeddedBroadcast::TYPE_PUBLIC);
         $defaultBroadcast = $embeddedBroadcastService->createEmbeddedBroadcastByType();
 
-        $this->assertEquals(EmbeddedBroadcast::TYPE_PASSWORD, $passwordBroadcast->getType());
-        $this->assertEquals(EmbeddedBroadcast::NAME_PASSWORD, $passwordBroadcast->getName());
-        $this->assertEquals(EmbeddedBroadcast::TYPE_LOGIN, $ldapBroadcast->getType());
-        $this->assertEquals(EmbeddedBroadcast::NAME_LOGIN, $ldapBroadcast->getName());
-        $this->assertEquals(EmbeddedBroadcast::TYPE_GROUPS, $groupsBroadcast->getType());
-        $this->assertEquals(EmbeddedBroadcast::NAME_GROUPS, $groupsBroadcast->getName());
-        $this->assertEquals(EmbeddedBroadcast::TYPE_PUBLIC, $publicBroadcast->getType());
-        $this->assertEquals(EmbeddedBroadcast::NAME_PUBLIC, $publicBroadcast->getName());
-        $this->assertEquals(EmbeddedBroadcast::TYPE_PUBLIC, $defaultBroadcast->getType());
-        $this->assertEquals(EmbeddedBroadcast::NAME_PUBLIC, $defaultBroadcast->getName());
+        static::assertEquals(EmbeddedBroadcast::TYPE_PASSWORD, $passwordBroadcast->getType());
+        static::assertEquals(EmbeddedBroadcast::NAME_PASSWORD, $passwordBroadcast->getName());
+        static::assertEquals(EmbeddedBroadcast::TYPE_LOGIN, $ldapBroadcast->getType());
+        static::assertEquals(EmbeddedBroadcast::NAME_LOGIN, $ldapBroadcast->getName());
+        static::assertEquals(EmbeddedBroadcast::TYPE_GROUPS, $groupsBroadcast->getType());
+        static::assertEquals(EmbeddedBroadcast::NAME_GROUPS, $groupsBroadcast->getName());
+        static::assertEquals(EmbeddedBroadcast::TYPE_PUBLIC, $publicBroadcast->getType());
+        static::assertEquals(EmbeddedBroadcast::NAME_PUBLIC, $publicBroadcast->getName());
+        static::assertEquals(EmbeddedBroadcast::TYPE_PUBLIC, $defaultBroadcast->getType());
+        static::assertEquals(EmbeddedBroadcast::NAME_PUBLIC, $defaultBroadcast->getName());
     }
 
     public function testSetByType()
@@ -88,32 +88,32 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         $mm = $this->embeddedBroadcastService->setByType($mm, EmbeddedBroadcast::TYPE_PASSWORD);
         $mm = $this->mmRepo->find($mm->getId());
 
-        $this->assertEquals(EmbeddedBroadcast::TYPE_PASSWORD, $mm->getEmbeddedBroadcast()->getType());
-        $this->assertEquals(EmbeddedBroadcast::NAME_PASSWORD, $mm->getEmbeddedBroadcast()->getName());
+        static::assertEquals(EmbeddedBroadcast::TYPE_PASSWORD, $mm->getEmbeddedBroadcast()->getType());
+        static::assertEquals(EmbeddedBroadcast::NAME_PASSWORD, $mm->getEmbeddedBroadcast()->getName());
 
         $mm = $this->embeddedBroadcastService->setByType($mm, EmbeddedBroadcast::TYPE_LOGIN);
         $mm = $this->mmRepo->find($mm->getId());
 
-        $this->assertEquals(EmbeddedBroadcast::TYPE_LOGIN, $mm->getEmbeddedBroadcast()->getType());
-        $this->assertEquals(EmbeddedBroadcast::NAME_LOGIN, $mm->getEmbeddedBroadcast()->getName());
+        static::assertEquals(EmbeddedBroadcast::TYPE_LOGIN, $mm->getEmbeddedBroadcast()->getType());
+        static::assertEquals(EmbeddedBroadcast::NAME_LOGIN, $mm->getEmbeddedBroadcast()->getName());
 
         $mm = $this->embeddedBroadcastService->setByType($mm, EmbeddedBroadcast::TYPE_PUBLIC);
         $mm = $this->mmRepo->find($mm->getId());
 
-        $this->assertEquals(EmbeddedBroadcast::TYPE_PUBLIC, $mm->getEmbeddedBroadcast()->getType());
-        $this->assertEquals(EmbeddedBroadcast::NAME_PUBLIC, $mm->getEmbeddedBroadcast()->getName());
+        static::assertEquals(EmbeddedBroadcast::TYPE_PUBLIC, $mm->getEmbeddedBroadcast()->getType());
+        static::assertEquals(EmbeddedBroadcast::NAME_PUBLIC, $mm->getEmbeddedBroadcast()->getName());
 
         $mm = $this->embeddedBroadcastService->setByType($mm, EmbeddedBroadcast::TYPE_GROUPS);
         $mm = $this->mmRepo->find($mm->getId());
 
-        $this->assertEquals(EmbeddedBroadcast::TYPE_GROUPS, $mm->getEmbeddedBroadcast()->getType());
-        $this->assertEquals(EmbeddedBroadcast::NAME_GROUPS, $mm->getEmbeddedBroadcast()->getName());
+        static::assertEquals(EmbeddedBroadcast::TYPE_GROUPS, $mm->getEmbeddedBroadcast()->getType());
+        static::assertEquals(EmbeddedBroadcast::NAME_GROUPS, $mm->getEmbeddedBroadcast()->getName());
 
         $mm = $this->embeddedBroadcastService->setByType($mm);
         $mm = $this->mmRepo->find($mm->getId());
 
-        $this->assertEquals(EmbeddedBroadcast::TYPE_PUBLIC, $mm->getEmbeddedBroadcast()->getType());
-        $this->assertEquals(EmbeddedBroadcast::NAME_PUBLIC, $mm->getEmbeddedBroadcast()->getName());
+        static::assertEquals(EmbeddedBroadcast::TYPE_PUBLIC, $mm->getEmbeddedBroadcast()->getType());
+        static::assertEquals(EmbeddedBroadcast::NAME_PUBLIC, $mm->getEmbeddedBroadcast()->getName());
     }
 
     public function testCloneResource()
@@ -140,7 +140,7 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         $ldapBroadcast->addGroup($group2);
 
         $clonedLdapBroadcast = $this->embeddedBroadcastService->cloneResource($ldapBroadcast);
-        $this->assertEquals($ldapBroadcast, $clonedLdapBroadcast);
+        static::assertEquals($ldapBroadcast, $clonedLdapBroadcast);
     }
 
     public function testGetAllBroadcastTypes()
@@ -152,15 +152,15 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
             EmbeddedBroadcast::TYPE_LOGIN => EmbeddedBroadcast::NAME_LOGIN,
             EmbeddedBroadcast::TYPE_GROUPS => EmbeddedBroadcast::NAME_GROUPS,
         ];
-        $this->assertEquals($broadcasts, $embeddedBroadcastService->getAllTypes());
+        static::assertEquals($broadcasts, $embeddedBroadcastService->getAllTypes());
     }
 
     public function testCreatePublicEmbeddedBroadcast()
     {
         $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $this->authorizationChecker, $this->templating, $this->router);
         $publicBroadcast = $embeddedBroadcastService->createPublicEmbeddedBroadcast();
-        $this->assertEquals(EmbeddedBroadcast::TYPE_PUBLIC, $publicBroadcast->getType());
-        $this->assertEquals(EmbeddedBroadcast::NAME_PUBLIC, $publicBroadcast->getName());
+        static::assertEquals(EmbeddedBroadcast::TYPE_PUBLIC, $publicBroadcast->getType());
+        static::assertEquals(EmbeddedBroadcast::NAME_PUBLIC, $publicBroadcast->getName());
     }
 
     public function testUpdateTypeAndName()
@@ -174,17 +174,17 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         $mm = $this->embeddedBroadcastService->setByType($multimediaObject, EmbeddedBroadcast::TYPE_PASSWORD);
         $embeddedBroadcast = $mm->getEmbeddedBroadcast();
 
-        $this->assertEquals(EmbeddedBroadcast::TYPE_PASSWORD, $embeddedBroadcast->getType());
-        $this->assertEquals(EmbeddedBroadcast::NAME_PASSWORD, $embeddedBroadcast->getName());
-        $this->assertNotEquals(EmbeddedBroadcast::TYPE_LOGIN, $embeddedBroadcast->getType());
-        $this->assertNotEquals(EmbeddedBroadcast::NAME_LOGIN, $embeddedBroadcast->getName());
+        static::assertEquals(EmbeddedBroadcast::TYPE_PASSWORD, $embeddedBroadcast->getType());
+        static::assertEquals(EmbeddedBroadcast::NAME_PASSWORD, $embeddedBroadcast->getName());
+        static::assertNotEquals(EmbeddedBroadcast::TYPE_LOGIN, $embeddedBroadcast->getType());
+        static::assertNotEquals(EmbeddedBroadcast::NAME_LOGIN, $embeddedBroadcast->getName());
 
         $mm = $this->embeddedBroadcastService->updateTypeAndName(EmbeddedBroadcast::TYPE_LOGIN, $multimediaObject);
 
-        $this->assertNotEquals(EmbeddedBroadcast::TYPE_PASSWORD, $embeddedBroadcast->getType());
-        $this->assertNotEquals(EmbeddedBroadcast::NAME_PASSWORD, $embeddedBroadcast->getName());
-        $this->assertEquals(EmbeddedBroadcast::TYPE_LOGIN, $embeddedBroadcast->getType());
-        $this->assertEquals(EmbeddedBroadcast::NAME_LOGIN, $embeddedBroadcast->getName());
+        static::assertNotEquals(EmbeddedBroadcast::TYPE_PASSWORD, $embeddedBroadcast->getType());
+        static::assertNotEquals(EmbeddedBroadcast::NAME_PASSWORD, $embeddedBroadcast->getName());
+        static::assertEquals(EmbeddedBroadcast::TYPE_LOGIN, $embeddedBroadcast->getType());
+        static::assertEquals(EmbeddedBroadcast::NAME_LOGIN, $embeddedBroadcast->getName());
     }
 
     public function testUpdatePassword()
@@ -198,12 +198,12 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         $mm = $this->embeddedBroadcastService->setByType($multimediaObject, EmbeddedBroadcast::TYPE_PASSWORD);
         $embeddedBroadcast = $mm->getEmbeddedBroadcast();
 
-        $this->assertNull($embeddedBroadcast->getPassword());
+        static::assertNull($embeddedBroadcast->getPassword());
 
         $password = 'testing_password';
         $mm = $this->embeddedBroadcastService->updatePassword($password, $multimediaObject);
 
-        $this->assertEquals($password, $embeddedBroadcast->getPassword());
+        static::assertEquals($password, $embeddedBroadcast->getPassword());
     }
 
     public function testAddGroup()
@@ -232,31 +232,31 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         $mm = $this->embeddedBroadcastService->setByType($multimediaObject, EmbeddedBroadcast::TYPE_PASSWORD);
         $embeddedBroadcast = $mm->getEmbeddedBroadcast();
 
-        $this->assertCount(0, $embeddedBroadcast->getGroups());
-        $this->assertFalse($embeddedBroadcast->containsGroup($group1));
-        $this->assertFalse($embeddedBroadcast->containsGroup($group2));
-        $this->assertFalse($embeddedBroadcast->containsGroup($group3));
+        static::assertCount(0, $embeddedBroadcast->getGroups());
+        static::assertFalse($embeddedBroadcast->containsGroup($group1));
+        static::assertFalse($embeddedBroadcast->containsGroup($group2));
+        static::assertFalse($embeddedBroadcast->containsGroup($group3));
 
         $this->embeddedBroadcastService->addGroup($group1, $multimediaObject);
 
-        $this->assertCount(1, $embeddedBroadcast->getGroups());
-        $this->assertTrue($embeddedBroadcast->containsGroup($group1));
-        $this->assertFalse($embeddedBroadcast->containsGroup($group2));
-        $this->assertFalse($embeddedBroadcast->containsGroup($group3));
+        static::assertCount(1, $embeddedBroadcast->getGroups());
+        static::assertTrue($embeddedBroadcast->containsGroup($group1));
+        static::assertFalse($embeddedBroadcast->containsGroup($group2));
+        static::assertFalse($embeddedBroadcast->containsGroup($group3));
 
         $this->embeddedBroadcastService->addGroup($group2, $multimediaObject);
 
-        $this->assertCount(2, $embeddedBroadcast->getGroups());
-        $this->assertTrue($embeddedBroadcast->containsGroup($group1));
-        $this->assertTrue($embeddedBroadcast->containsGroup($group2));
-        $this->assertFalse($embeddedBroadcast->containsGroup($group3));
+        static::assertCount(2, $embeddedBroadcast->getGroups());
+        static::assertTrue($embeddedBroadcast->containsGroup($group1));
+        static::assertTrue($embeddedBroadcast->containsGroup($group2));
+        static::assertFalse($embeddedBroadcast->containsGroup($group3));
 
         $this->embeddedBroadcastService->addGroup($group3, $multimediaObject);
 
-        $this->assertCount(3, $embeddedBroadcast->getGroups());
-        $this->assertTrue($embeddedBroadcast->containsGroup($group1));
-        $this->assertTrue($embeddedBroadcast->containsGroup($group2));
-        $this->assertTrue($embeddedBroadcast->containsGroup($group3));
+        static::assertCount(3, $embeddedBroadcast->getGroups());
+        static::assertTrue($embeddedBroadcast->containsGroup($group1));
+        static::assertTrue($embeddedBroadcast->containsGroup($group2));
+        static::assertTrue($embeddedBroadcast->containsGroup($group3));
     }
 
     public function testDeleteGroup()
@@ -285,52 +285,52 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         $mm = $this->embeddedBroadcastService->setByType($multimediaObject, EmbeddedBroadcast::TYPE_PASSWORD);
         $embeddedBroadcast = $mm->getEmbeddedBroadcast();
 
-        $this->assertCount(0, $embeddedBroadcast->getGroups());
-        $this->assertFalse($embeddedBroadcast->containsGroup($group1));
-        $this->assertFalse($embeddedBroadcast->containsGroup($group2));
-        $this->assertFalse($embeddedBroadcast->containsGroup($group3));
+        static::assertCount(0, $embeddedBroadcast->getGroups());
+        static::assertFalse($embeddedBroadcast->containsGroup($group1));
+        static::assertFalse($embeddedBroadcast->containsGroup($group2));
+        static::assertFalse($embeddedBroadcast->containsGroup($group3));
 
         $this->embeddedBroadcastService->addGroup($group1, $multimediaObject);
 
-        $this->assertCount(1, $embeddedBroadcast->getGroups());
-        $this->assertTrue($embeddedBroadcast->containsGroup($group1));
-        $this->assertFalse($embeddedBroadcast->containsGroup($group2));
-        $this->assertFalse($embeddedBroadcast->containsGroup($group3));
+        static::assertCount(1, $embeddedBroadcast->getGroups());
+        static::assertTrue($embeddedBroadcast->containsGroup($group1));
+        static::assertFalse($embeddedBroadcast->containsGroup($group2));
+        static::assertFalse($embeddedBroadcast->containsGroup($group3));
 
         $this->embeddedBroadcastService->deleteGroup($group1, $multimediaObject);
 
-        $this->assertCount(0, $embeddedBroadcast->getGroups());
-        $this->assertFalse($embeddedBroadcast->containsGroup($group1));
-        $this->assertFalse($embeddedBroadcast->containsGroup($group2));
-        $this->assertFalse($embeddedBroadcast->containsGroup($group3));
+        static::assertCount(0, $embeddedBroadcast->getGroups());
+        static::assertFalse($embeddedBroadcast->containsGroup($group1));
+        static::assertFalse($embeddedBroadcast->containsGroup($group2));
+        static::assertFalse($embeddedBroadcast->containsGroup($group3));
 
         $this->embeddedBroadcastService->deleteGroup($group2, $multimediaObject);
 
-        $this->assertCount(0, $embeddedBroadcast->getGroups());
-        $this->assertFalse($embeddedBroadcast->containsGroup($group1));
-        $this->assertFalse($embeddedBroadcast->containsGroup($group2));
-        $this->assertFalse($embeddedBroadcast->containsGroup($group3));
+        static::assertCount(0, $embeddedBroadcast->getGroups());
+        static::assertFalse($embeddedBroadcast->containsGroup($group1));
+        static::assertFalse($embeddedBroadcast->containsGroup($group2));
+        static::assertFalse($embeddedBroadcast->containsGroup($group3));
 
         $this->embeddedBroadcastService->addGroup($group3, $multimediaObject);
 
-        $this->assertCount(1, $embeddedBroadcast->getGroups());
-        $this->assertFalse($embeddedBroadcast->containsGroup($group1));
-        $this->assertFalse($embeddedBroadcast->containsGroup($group2));
-        $this->assertTrue($embeddedBroadcast->containsGroup($group3));
+        static::assertCount(1, $embeddedBroadcast->getGroups());
+        static::assertFalse($embeddedBroadcast->containsGroup($group1));
+        static::assertFalse($embeddedBroadcast->containsGroup($group2));
+        static::assertTrue($embeddedBroadcast->containsGroup($group3));
 
         $this->embeddedBroadcastService->deleteGroup($group1, $multimediaObject);
 
-        $this->assertCount(1, $embeddedBroadcast->getGroups());
-        $this->assertFalse($embeddedBroadcast->containsGroup($group1));
-        $this->assertFalse($embeddedBroadcast->containsGroup($group2));
-        $this->assertTrue($embeddedBroadcast->containsGroup($group3));
+        static::assertCount(1, $embeddedBroadcast->getGroups());
+        static::assertFalse($embeddedBroadcast->containsGroup($group1));
+        static::assertFalse($embeddedBroadcast->containsGroup($group2));
+        static::assertTrue($embeddedBroadcast->containsGroup($group3));
 
         $this->embeddedBroadcastService->deleteGroup($group3, $multimediaObject);
 
-        $this->assertCount(0, $embeddedBroadcast->getGroups());
-        $this->assertFalse($embeddedBroadcast->containsGroup($group1));
-        $this->assertFalse($embeddedBroadcast->containsGroup($group2));
-        $this->assertFalse($embeddedBroadcast->containsGroup($group3));
+        static::assertCount(0, $embeddedBroadcast->getGroups());
+        static::assertFalse($embeddedBroadcast->containsGroup($group1));
+        static::assertFalse($embeddedBroadcast->containsGroup($group2));
+        static::assertFalse($embeddedBroadcast->containsGroup($group3));
     }
 
     public function testIsUserRelatedToMultimediaObject()
@@ -346,21 +346,21 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertFalse($this->embeddedBroadcastService->isUserRelatedToMultimediaObject($mm, $user));
+        static::assertFalse($this->embeddedBroadcastService->isUserRelatedToMultimediaObject($mm, $user));
 
         $owners1 = [$user->getId()];
         $mm->setProperty('owners', $owners1);
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertTrue($this->embeddedBroadcastService->isUserRelatedToMultimediaObject($mm, $user));
+        static::assertTrue($this->embeddedBroadcastService->isUserRelatedToMultimediaObject($mm, $user));
 
         $owners2 = [];
         $mm->setProperty('owners', $owners2);
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertFalse($this->embeddedBroadcastService->isUserRelatedToMultimediaObject($mm, $user));
+        static::assertFalse($this->embeddedBroadcastService->isUserRelatedToMultimediaObject($mm, $user));
 
         $group1 = new Group();
         $group1->setKey('key1');
@@ -385,19 +385,19 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertFalse($this->embeddedBroadcastService->isUserRelatedToMultimediaObject($mm, $user));
+        static::assertFalse($this->embeddedBroadcastService->isUserRelatedToMultimediaObject($mm, $user));
 
         $user->addGroup($group2);
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertTrue($this->embeddedBroadcastService->isUserRelatedToMultimediaObject($mm, $user));
+        static::assertTrue($this->embeddedBroadcastService->isUserRelatedToMultimediaObject($mm, $user));
 
         $user->removeGroup($group2);
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertFalse($this->embeddedBroadcastService->isUserRelatedToMultimediaObject($mm, $user));
+        static::assertFalse($this->embeddedBroadcastService->isUserRelatedToMultimediaObject($mm, $user));
 
         $embeddedBroadcast = new EmbeddedBroadcast();
         $embeddedBroadcast->setType(EmbeddedBroadcast::TYPE_GROUPS);
@@ -406,40 +406,40 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertFalse($this->embeddedBroadcastService->isUserRelatedToMultimediaObject($mm, $user));
+        static::assertFalse($this->embeddedBroadcastService->isUserRelatedToMultimediaObject($mm, $user));
 
         $embeddedBroadcast = $mm->getEmbeddedBroadcast();
         $embeddedBroadcast->addGroup($group3);
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertFalse($this->embeddedBroadcastService->isUserRelatedToMultimediaObject($mm, $user));
+        static::assertFalse($this->embeddedBroadcastService->isUserRelatedToMultimediaObject($mm, $user));
 
         $user->addGroup($group3);
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertTrue($this->embeddedBroadcastService->isUserRelatedToMultimediaObject($mm, $user));
+        static::assertTrue($this->embeddedBroadcastService->isUserRelatedToMultimediaObject($mm, $user));
 
         $user->removeGroup($group3);
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertFalse($this->embeddedBroadcastService->isUserRelatedToMultimediaObject($mm, $user));
+        static::assertFalse($this->embeddedBroadcastService->isUserRelatedToMultimediaObject($mm, $user));
 
         $user->addGroup($group2);
         $user->addGroup($group3);
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertTrue($this->embeddedBroadcastService->isUserRelatedToMultimediaObject($mm, $user));
+        static::assertTrue($this->embeddedBroadcastService->isUserRelatedToMultimediaObject($mm, $user));
 
         $owners1 = [$user->getId()];
         $mm->setProperty('owners', $owners1);
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertTrue($this->embeddedBroadcastService->isUserRelatedToMultimediaObject($mm, $user));
+        static::assertTrue($this->embeddedBroadcastService->isUserRelatedToMultimediaObject($mm, $user));
     }
 
     public function testCanUserPlayMultimediaObject()
@@ -462,7 +462,7 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
 
         // Test No EmbeddedBroadcast
 
-        $this->assertTrue($this->embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, ''));
+        static::assertTrue($this->embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, ''));
 
         // Test TYPE_PUBLIC
 
@@ -473,7 +473,7 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertTrue($this->embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, ''));
+        static::assertTrue($this->embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, ''));
 
         // Test TYPE_LOGIN
 
@@ -487,7 +487,7 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
             ->disableOriginalConstructor()
             ->getMock()
         ;
-        $authorizationChecker->expects($this->any())
+        $authorizationChecker->expects(static::any())
             ->method('isGranted')
             ->willReturn(false)
         ;
@@ -497,7 +497,7 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
             ->disableOriginalConstructor()
             ->getMock()
         ;
-        $templating->expects($this->any())
+        $templating->expects(static::any())
             ->method('render')
             ->willReturn($content)
         ;
@@ -505,27 +505,27 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $authorizationChecker, $templating, $this->router);
 
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, null, '');
-        $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
-        $this->assertEquals($content, $response->getContent());
+        static::assertInstanceOf(Response::class, $response);
+        static::assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        static::assertEquals($content, $response->getContent());
 
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '');
-        $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
-        $this->assertEquals($content, $response->getContent());
+        static::assertInstanceOf(Response::class, $response);
+        static::assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        static::assertEquals($content, $response->getContent());
 
         $authorizationChecker = $this->getMockBuilder('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface')
             ->disableOriginalConstructor()
             ->getMock()
         ;
-        $authorizationChecker->expects($this->any())
+        $authorizationChecker->expects(static::any())
             ->method('isGranted')
             ->willReturn(true)
         ;
 
         $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $authorizationChecker, $templating, $this->router);
 
-        $this->assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, ''));
+        static::assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, ''));
 
         // Test TYPE_GROUPS
 
@@ -556,9 +556,9 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         $this->dm->flush();
 
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '');
-        $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
-        $this->assertEquals($content, $response->getContent());
+        static::assertInstanceOf(Response::class, $response);
+        static::assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        static::assertEquals($content, $response->getContent());
 
         $embeddedBroadcast = $mm->getEmbeddedBroadcast();
         $embeddedBroadcast->addGroup($group3);
@@ -566,48 +566,48 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         $this->dm->flush();
 
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '');
-        $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
-        $this->assertEquals($content, $response->getContent());
+        static::assertInstanceOf(Response::class, $response);
+        static::assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        static::assertEquals($content, $response->getContent());
 
         $user->setPermissionProfile($permissionProfile);
         $this->dm->persist($user);
         $this->dm->flush();
 
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '');
-        $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
-        $this->assertEquals($content, $response->getContent());
+        static::assertInstanceOf(Response::class, $response);
+        static::assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        static::assertEquals($content, $response->getContent());
 
         $permissionProfile->setScope(PermissionProfile::SCOPE_PERSONAL);
         $this->dm->persist($permissionProfile);
         $this->dm->flush();
 
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '');
-        $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
-        $this->assertEquals($content, $response->getContent());
+        static::assertInstanceOf(Response::class, $response);
+        static::assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        static::assertEquals($content, $response->getContent());
 
         $permissionProfile->setScope(PermissionProfile::SCOPE_GLOBAL);
         $this->dm->persist($permissionProfile);
         $this->dm->flush();
 
-        $this->assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, ''));
+        static::assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, ''));
 
         $permissionProfile->setScope(PermissionProfile::SCOPE_PERSONAL);
         $this->dm->persist($permissionProfile);
         $this->dm->flush();
 
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '');
-        $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
-        $this->assertEquals($content, $response->getContent());
+        static::assertInstanceOf(Response::class, $response);
+        static::assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        static::assertEquals($content, $response->getContent());
 
         $mm->addGroup($group1);
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, ''));
+        static::assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, ''));
 
         $mm->removeGroup($group1);
         $mm->addGroup($group3);
@@ -615,16 +615,16 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         $this->dm->flush();
 
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '');
-        $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
-        $this->assertEquals($content, $response->getContent());
+        static::assertInstanceOf(Response::class, $response);
+        static::assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        static::assertEquals($content, $response->getContent());
 
         $embeddedBroadcast = $mm->getEmbeddedBroadcast();
         $embeddedBroadcast->addGroup($group1);
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, ''));
+        static::assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, ''));
 
         $embeddedBroadcast = $mm->getEmbeddedBroadcast();
         $embeddedBroadcast->removeGroup($group1);
@@ -633,29 +633,29 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         $this->dm->flush();
 
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '');
-        $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
-        $this->assertEquals($content, $response->getContent());
+        static::assertInstanceOf(Response::class, $response);
+        static::assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        static::assertEquals($content, $response->getContent());
 
         $owners = [$user->getId()];
         $mm->setProperty('owners', $owners);
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, ''));
+        static::assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, ''));
 
         $mm->addGroup($group1);
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, ''));
+        static::assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, ''));
 
         $embeddedBroadcast = $mm->getEmbeddedBroadcast();
         $embeddedBroadcast->addGroup($group1);
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, ''));
+        static::assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, ''));
 
         // Test TYPE_PASSWORD
 
@@ -674,21 +674,21 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
 
         $password = '';
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, $password);
-        $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals(Response::HTTP_UNAUTHORIZED, $response->getStatusCode());
+        static::assertInstanceOf(Response::class, $response);
+        static::assertEquals(Response::HTTP_UNAUTHORIZED, $response->getStatusCode());
 
         $embeddedBroadcast = $mm->getEmbeddedBroadcast();
         $embeddedBroadcast->setPassword($password);
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals(Response::HTTP_UNAUTHORIZED, $response->getStatusCode());
+        static::assertInstanceOf(Response::class, $response);
+        static::assertEquals(Response::HTTP_UNAUTHORIZED, $response->getStatusCode());
 
         $password = 'password';
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, $password);
-        $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals(Response::HTTP_UNAUTHORIZED, $response->getStatusCode());
+        static::assertInstanceOf(Response::class, $response);
+        static::assertEquals(Response::HTTP_UNAUTHORIZED, $response->getStatusCode());
 
         $embeddedBroadcast = $mm->getEmbeddedBroadcast();
         $embeddedBroadcast->setPassword('not matching password');
@@ -696,15 +696,15 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         $this->dm->flush();
 
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, $password);
-        $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals(Response::HTTP_UNAUTHORIZED, $response->getStatusCode());
+        static::assertInstanceOf(Response::class, $response);
+        static::assertEquals(Response::HTTP_UNAUTHORIZED, $response->getStatusCode());
 
         $embeddedBroadcast = $mm->getEmbeddedBroadcast();
         $embeddedBroadcast->setPassword($password);
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, $password));
+        static::assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, $password));
     }
 
     public function testDeleteAllFromGroup()
@@ -715,7 +715,7 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         $this->dm->persist($group);
         $this->dm->flush();
 
-        $this->assertCount(0, $this->mmRepo->findWithGroupInEmbeddedBroadcast($group)->toArray());
+        static::assertCount(0, $this->mmRepo->findWithGroupInEmbeddedBroadcast($group)->toArray());
 
         $mm1 = new MultimediaObject();
         $mm1->setNumericalID(1);
@@ -744,9 +744,9 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         $this->dm->persist($mm3);
         $this->dm->flush();
 
-        $this->assertCount(3, $this->mmRepo->findWithGroupInEmbeddedBroadcast($group)->toArray());
+        static::assertCount(3, $this->mmRepo->findWithGroupInEmbeddedBroadcast($group)->toArray());
 
         $this->embeddedBroadcastService->deleteAllFromGroup($group);
-        $this->assertCount(0, $this->mmRepo->findWithGroupInEmbeddedBroadcast($group)->toArray());
+        static::assertCount(0, $this->mmRepo->findWithGroupInEmbeddedBroadcast($group)->toArray());
     }
 }

@@ -39,12 +39,12 @@ class LicenseServiceTest extends WebTestCase
         $licenseDir = '';
         $locales = [];
         $licenseService = new LicenseService($showLicense, $licenseDir, $locales, $this->translator);
-        $this->assertFalse($licenseService->isEnabled());
+        static::assertFalse($licenseService->isEnabled());
 
         $showLicense = true;
         $locales = ['en'];
         $licenseService = new LicenseService($showLicense, $this->licenseDir, $locales, $this->translator);
-        $this->assertTrue($licenseService->isEnabled());
+        static::assertTrue($licenseService->isEnabled());
     }
 
     public function testIsLicenseEnabledAndAccepted()
@@ -55,17 +55,17 @@ class LicenseServiceTest extends WebTestCase
         $content = 'test';
         $licenseService = new LicenseService($showLicense, $this->licenseDir, $locales, $this->translator);
         $formData = [];
-        $this->assertTrue($licenseService->isLicenseEnabledAndAccepted($formData, $locale));
+        static::assertTrue($licenseService->isLicenseEnabledAndAccepted($formData, $locale));
 
         $showLicense = true;
         $licenseService = new LicenseService($showLicense, $this->licenseDir, $locales, $this->translator);
-        $this->assertFalse($licenseService->isLicenseEnabledAndAccepted($formData, $locale));
+        static::assertFalse($licenseService->isLicenseEnabledAndAccepted($formData, $locale));
 
         $formData = ['license' => ['accept' => true]];
-        $this->assertTrue($licenseService->isLicenseEnabledAndAccepted($formData, $locale));
+        static::assertTrue($licenseService->isLicenseEnabledAndAccepted($formData, $locale));
 
         $formData = ['license' => ['accept' => false]];
-        $this->assertFalse($licenseService->isLicenseEnabledAndAccepted($formData, $locale));
+        static::assertFalse($licenseService->isLicenseEnabledAndAccepted($formData, $locale));
     }
 
     public function testGetLicenseContent()
@@ -76,7 +76,7 @@ class LicenseServiceTest extends WebTestCase
 
         $licenseFile = realpath($this->licenseDir.'/en.txt');
         $licenseContent = @file_get_contents($licenseFile);
-        $this->assertEquals($licenseContent, $licenseService->getLicenseContent());
-        $this->assertEquals($licenseContent, $licenseService->getLicenseContent('en'));
+        static::assertEquals($licenseContent, $licenseService->getLicenseContent());
+        static::assertEquals($licenseContent, $licenseService->getLicenseContent('en'));
     }
 }

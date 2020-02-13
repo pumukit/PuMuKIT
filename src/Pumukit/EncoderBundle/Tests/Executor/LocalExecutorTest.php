@@ -21,6 +21,6 @@ class LocalExecutorTest extends WebTestCase
     {
         $executor = new LocalExecutor();
         $out = $executor->execute('sleep 1 && echo a');
-        $this->assertEquals("a\n\n", "{$out}");
+        static::assertEquals("a\n\n", "{$out}");
     }
 }

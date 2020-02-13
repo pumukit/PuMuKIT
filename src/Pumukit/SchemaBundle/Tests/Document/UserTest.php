@@ -22,13 +22,13 @@ class UserTest extends TestCase
         $user->setUsername($username);
         $user->setFullname($fullname);
         $user->setOrigin($origin1);
-        $this->assertEquals($fullname, $user->getFullname());
-        $this->assertEquals($origin1, $user->getOrigin());
-        $this->assertTrue($user->isLocal());
+        static::assertEquals($fullname, $user->getFullname());
+        static::assertEquals($origin1, $user->getOrigin());
+        static::assertTrue($user->isLocal());
 
         $origin2 = 'ldap';
         $user->setOrigin($origin2);
-        $this->assertEquals($origin2, $user->getOrigin());
-        $this->assertFalse($user->isLocal());
+        static::assertEquals($origin2, $user->getOrigin());
+        static::assertFalse($user->isLocal());
     }
 }

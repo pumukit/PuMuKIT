@@ -46,8 +46,8 @@ class GroupEventDispatcherServiceTest extends PumukitTestCase
     public function testDispatchCreate()
     {
         $this->dispatcher->addListener(SchemaEvents::GROUP_CREATE, function ($event, $name) {
-            $this->assertInstanceOf(GroupEvent::class, $event);
-            $this->assertEquals(SchemaEvents::GROUP_CREATE, $name);
+            static::assertInstanceOf(GroupEvent::class, $event);
+            static::assertEquals(SchemaEvents::GROUP_CREATE, $name);
 
             $group = $event->getGroup();
 
@@ -55,8 +55,8 @@ class GroupEventDispatcherServiceTest extends PumukitTestCase
             MockUpGroupListener::$name = $group->getName();
         });
 
-        $this->assertFalse(MockUpGroupListener::$called);
-        $this->assertEquals(self::EMPTY_NAME, MockUpGroupListener::$name);
+        static::assertFalse(MockUpGroupListener::$called);
+        static::assertEquals(self::EMPTY_NAME, MockUpGroupListener::$name);
 
         $name = 'test_name';
 
@@ -68,15 +68,15 @@ class GroupEventDispatcherServiceTest extends PumukitTestCase
 
         $this->groupDispatcher->dispatchCreate($group);
 
-        $this->assertTrue(MockUpGroupListener::$called);
-        $this->assertEquals($name, MockUpGroupListener::$name);
+        static::assertTrue(MockUpGroupListener::$called);
+        static::assertEquals($name, MockUpGroupListener::$name);
     }
 
     public function testDispatchUpdate()
     {
         $this->dispatcher->addListener(SchemaEvents::GROUP_UPDATE, function ($event, $name) {
-            $this->assertInstanceOf(GroupEvent::class, $event);
-            $this->assertEquals(SchemaEvents::GROUP_UPDATE, $name);
+            static::assertInstanceOf(GroupEvent::class, $event);
+            static::assertEquals(SchemaEvents::GROUP_UPDATE, $name);
 
             $group = $event->getGroup();
 
@@ -84,8 +84,8 @@ class GroupEventDispatcherServiceTest extends PumukitTestCase
             MockUpGroupListener::$name = $group->getName();
         });
 
-        $this->assertFalse(MockUpGroupListener::$called);
-        $this->assertEquals(self::EMPTY_NAME, MockUpGroupListener::$name);
+        static::assertFalse(MockUpGroupListener::$called);
+        static::assertEquals(self::EMPTY_NAME, MockUpGroupListener::$name);
 
         $name = 'test_name';
 
@@ -103,15 +103,15 @@ class GroupEventDispatcherServiceTest extends PumukitTestCase
 
         $this->groupDispatcher->dispatchUpdate($group);
 
-        $this->assertTrue(MockUpGroupListener::$called);
-        $this->assertEquals($updateName, MockUpGroupListener::$name);
+        static::assertTrue(MockUpGroupListener::$called);
+        static::assertEquals($updateName, MockUpGroupListener::$name);
     }
 
     public function testDispatchDelete()
     {
         $this->dispatcher->addListener(SchemaEvents::GROUP_DELETE, function ($event, $name) {
-            $this->assertInstanceOf(GroupEvent::class, $event);
-            $this->assertEquals(SchemaEvents::GROUP_DELETE, $name);
+            static::assertInstanceOf(GroupEvent::class, $event);
+            static::assertEquals(SchemaEvents::GROUP_DELETE, $name);
 
             $group = $event->getGroup();
 
@@ -119,8 +119,8 @@ class GroupEventDispatcherServiceTest extends PumukitTestCase
             MockUpGroupListener::$name = $group->getName();
         });
 
-        $this->assertFalse(MockUpGroupListener::$called);
-        $this->assertEquals(self::EMPTY_NAME, MockUpGroupListener::$name);
+        static::assertFalse(MockUpGroupListener::$called);
+        static::assertEquals(self::EMPTY_NAME, MockUpGroupListener::$name);
 
         $name = 'test_name';
 
@@ -132,8 +132,8 @@ class GroupEventDispatcherServiceTest extends PumukitTestCase
 
         $this->groupDispatcher->dispatchDelete($group);
 
-        $this->assertTrue(MockUpGroupListener::$called);
-        $this->assertEquals($name, MockUpGroupListener::$name);
+        static::assertTrue(MockUpGroupListener::$called);
+        static::assertEquals($name, MockUpGroupListener::$name);
     }
 }
 

@@ -15,10 +15,10 @@ class RoleTest extends TestCase
     {
         $role = new Role();
 
-        $this->assertEquals('0', $role->getCod());
-        $this->assertTrue($role->getDisplay());
-        $this->assertEquals(0, $role->getNumberPeopleInMultimediaObject());
-        $this->assertEquals($role, $role->cloneResource());
+        static::assertEquals('0', $role->getCod());
+        static::assertTrue($role->getDisplay());
+        static::assertEquals(0, $role->getNumberPeopleInMultimediaObject());
+        static::assertEquals($role, $role->cloneResource());
     }
 
     public function testGetterAndSetter()
@@ -41,18 +41,18 @@ class RoleTest extends TestCase
         $role->setName($name1);
         $role->setText($text1);
 
-        $this->assertEquals($locale, $role->getLocale());
-        $this->assertEquals($cod, $role->getCod());
-        $this->assertEquals($xml, $role->getXml());
-        $this->assertEquals($display, $role->getDisplay());
-        $this->assertEquals($name1, $role->getName());
-        $this->assertEquals($text1, $role->getText());
+        static::assertEquals($locale, $role->getLocale());
+        static::assertEquals($cod, $role->getCod());
+        static::assertEquals($xml, $role->getXml());
+        static::assertEquals($display, $role->getDisplay());
+        static::assertEquals($name1, $role->getName());
+        static::assertEquals($text1, $role->getText());
 
         $role->setName($name2);
         $role->setText($text2);
 
-        $this->assertEquals($name2, $role->getName());
-        $this->assertEquals($text2, $role->getText());
+        static::assertEquals($name2, $role->getName());
+        static::assertEquals($text2, $role->getText());
 
         $nameEs = 'Presentador';
         $textEs = 'Rol de presentador 1';
@@ -63,27 +63,27 @@ class RoleTest extends TestCase
         $role->setI18nName($i18nName);
         $role->setI18nText($i18nText);
 
-        $this->assertEquals($i18nName, $role->getI18nName());
-        $this->assertEquals($i18nText, $role->getI18nText());
+        static::assertEquals($i18nName, $role->getI18nName());
+        static::assertEquals($i18nText, $role->getI18nText());
     }
 
     public function testNumberPeopleInMultimediaObject()
     {
         $role = new Role();
 
-        $this->assertEquals(0, $role->getNumberPeopleInMultimediaObject());
+        static::assertEquals(0, $role->getNumberPeopleInMultimediaObject());
 
         $role->increaseNumberPeopleInMultimediaObject();
-        $this->assertEquals(1, $role->getNumberPeopleInMultimediaObject());
+        static::assertEquals(1, $role->getNumberPeopleInMultimediaObject());
 
         $role->increaseNumberPeopleInMultimediaObject();
         $role->increaseNumberPeopleInMultimediaObject();
-        $this->assertEquals(3, $role->getNumberPeopleInMultimediaObject());
+        static::assertEquals(3, $role->getNumberPeopleInMultimediaObject());
 
         $role->decreaseNumberPeopleInMultimediaObject();
-        $this->assertEquals(2, $role->getNumberPeopleInMultimediaObject());
+        static::assertEquals(2, $role->getNumberPeopleInMultimediaObject());
 
         $role->setNumberPeopleInMultimediaObject(3);
-        $this->assertEquals(3, $role->getNumberPeopleInMultimediaObject());
+        static::assertEquals(3, $role->getNumberPeopleInMultimediaObject());
     }
 }

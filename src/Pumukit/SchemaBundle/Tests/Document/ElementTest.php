@@ -31,23 +31,23 @@ class ElementTest extends TestCase
         $element->setHide($hide);
         $element->setDescription($description);
 
-        $this->assertEquals($tags, $element->getTags());
-        $this->assertEquals($locale, $element->getLocale());
-        $this->assertEquals($url, $element->getUrl());
-        $this->assertEquals($path, $element->getPath());
-        $this->assertEquals($mime, $element->getMimeType());
-        $this->assertFalse($hide, $element->getHide());
-        $this->assertEquals($description, $element->getDescription());
+        static::assertEquals($tags, $element->getTags());
+        static::assertEquals($locale, $element->getLocale());
+        static::assertEquals($url, $element->getUrl());
+        static::assertEquals($path, $element->getPath());
+        static::assertEquals($mime, $element->getMimeType());
+        static::assertFalse($hide, $element->getHide());
+        static::assertEquals($description, $element->getDescription());
 
         $description = null;
         $element->setDescription($description);
-        $this->assertEquals($description, $element->getDescription());
+        static::assertEquals($description, $element->getDescription());
 
         $description = 'description';
         $descriptionEs = 'descripción';
         $descriptionI18n = [$locale => $description, $localeEs => $descriptionEs];
         $element->setI18nDescription($descriptionI18n);
-        $this->assertEquals($descriptionI18n, $element->getI18nDescription());
+        static::assertEquals($descriptionI18n, $element->getI18nDescription());
     }
 
     public function testMaxSize()
@@ -56,37 +56,37 @@ class ElementTest extends TestCase
 
         $element = new Element();
         $element->setSize($size);
-        $this->assertEquals($size, $element->getSize());
+        static::assertEquals($size, $element->getSize());
     }
 
     public function testTagCollection()
     {
         $element = new Element();
-        $this->assertFalse($element->containsTag('t'));
+        static::assertFalse($element->containsTag('t'));
         $element->addTag('t');
-        $this->assertTrue($element->containsTag('t'));
+        static::assertTrue($element->containsTag('t'));
         $element->removeTag('t');
-        $this->assertFalse($element->containsTag('t'));
+        static::assertFalse($element->containsTag('t'));
 
         //Repeat Tag
-        $this->assertFalse($element->containsTag('t'));
+        static::assertFalse($element->containsTag('t'));
         $element->addTag('t');
         $element->addTag('t');
-        $this->assertTrue($element->containsTag('t'));
+        static::assertTrue($element->containsTag('t'));
         $element->removeTag('t');
-        $this->assertFalse($element->containsTag('t'));
-        $this->assertFalse($element->removeTag('t'));
+        static::assertFalse($element->containsTag('t'));
+        static::assertFalse($element->removeTag('t'));
 
         //containsAllTag and containsAnyTag
         $element->addTag('t1');
         $element->addTag('t2');
         $element->addTag('t3');
-        $this->assertTrue($element->containsAnyTag(['t0', 't2']));
-        $this->assertTrue($element->containsAnyTag(['t2', 't3']));
-        $this->assertFalse($element->containsAnyTag(['t0', 't4']));
-        $this->assertTrue($element->containsAllTags(['t1', 't2']));
-        $this->assertTrue($element->containsAllTags(['t1']));
-        $this->assertFalse($element->containsAllTags(['t0', 't2']));
-        $this->assertFalse($element->containsAllTags(['t0', 't1', 't2', 't3']));
+        static::assertTrue($element->containsAnyTag(['t0', 't2']));
+        static::assertTrue($element->containsAnyTag(['t2', 't3']));
+        static::assertFalse($element->containsAnyTag(['t0', 't4']));
+        static::assertTrue($element->containsAllTags(['t1', 't2']));
+        static::assertTrue($element->containsAllTags(['t1']));
+        static::assertFalse($element->containsAllTags(['t0', 't2']));
+        static::assertFalse($element->containsAllTags(['t0', 't1', 't2', 't3']));
     }
 }

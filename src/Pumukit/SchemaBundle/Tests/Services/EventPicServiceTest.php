@@ -48,14 +48,14 @@ class EventPicServiceTest extends PumukitTestCase
         $live = $this->createLiveChannel();
         $event = $this->createLiveEvent($live);
 
-        $this->assertNull($event->getPic());
+        static::assertNull($event->getPic());
 
         $url = 'http://domain.com/pic.png';
 
         $event = $this->eventPicService->addPicUrl($event, $url);
 
-        $this->assertEquals($url, $event->getPic()->getUrl());
-        $this->assertEquals($url, $this->repo->find($event->getId())->getPic()->getUrl());
+        static::assertEquals($url, $event->getPic()->getUrl());
+        static::assertEquals($url, $this->repo->find($event->getId())->getPic()->getUrl());
     }
 
     public function testAddPicFile()
@@ -63,7 +63,7 @@ class EventPicServiceTest extends PumukitTestCase
         $live = $this->createLiveChannel();
         $event = $this->createLiveEvent($live);
 
-        $this->assertNull($event->getPic());
+        static::assertNull($event->getPic());
 
         $picPath = realpath(__DIR__.'/../Resources').'/picCopy.png';
         if (copy($this->originalPicPath, $picPath)) {
@@ -73,7 +73,7 @@ class EventPicServiceTest extends PumukitTestCase
 
             $pic = $event->getPic();
             $uploadedPic = '/uploads/pic/'.$event->getId().'/'.$picFile->getClientOriginalName();
-            $this->assertEquals($uploadedPic, $pic->getUrl());
+            static::assertEquals($uploadedPic, $pic->getUrl());
         }
 
         $this->deleteCreatedFiles();
@@ -84,7 +84,7 @@ class EventPicServiceTest extends PumukitTestCase
         $live = $this->createLiveChannel();
         $event = $this->createLiveEvent($live);
 
-        $this->assertNull($event->getPic());
+        static::assertNull($event->getPic());
 
         $picPath = realpath(__DIR__.'/../Resources').'/picCopy.png';
         if (copy($this->originalPicPath, $picPath)) {
@@ -94,10 +94,10 @@ class EventPicServiceTest extends PumukitTestCase
 
             $pic = $event->getPic();
             $uploadedPic = '/uploads/pic/'.$event->getId().'/'.$picFile->getClientOriginalName();
-            $this->assertEquals($uploadedPic, $pic->getUrl());
+            static::assertEquals($uploadedPic, $pic->getUrl());
 
             $event = $this->eventPicService->removePicFromEvent($event);
-            $this->assertNull($event->getPic());
+            static::assertNull($event->getPic());
         }
 
         $this->deleteCreatedFiles();

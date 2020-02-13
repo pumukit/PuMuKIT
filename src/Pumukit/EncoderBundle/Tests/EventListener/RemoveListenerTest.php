@@ -70,15 +70,15 @@ class RemoveListenerTest extends PumukitTestCase
 
         $this->createJobWithStatusAndPathEnd(Job::STATUS_FINISHED, $multimediaObject, $pathEnd);
 
-        $this->assertCount(1, $this->repoSeries->findAll());
-        $this->assertCount(2, $this->repoMmobj->findAll());
-        $this->assertCount(1, $this->repoJobs->findAll());
+        static::assertCount(1, $this->repoSeries->findAll());
+        static::assertCount(2, $this->repoMmobj->findAll());
+        static::assertCount(1, $this->repoJobs->findAll());
 
         $this->trackService->removeTrackFromMultimediaObject($multimediaObject, $track->getId());
 
-        $this->assertCount(1, $this->repoSeries->findAll());
-        $this->assertCount(2, $this->repoMmobj->findAll());
-        $this->assertCount(0, $this->repoJobs->findAll());
+        static::assertCount(1, $this->repoSeries->findAll());
+        static::assertCount(2, $this->repoMmobj->findAll());
+        static::assertCount(0, $this->repoJobs->findAll());
     }
 
     private function createJobWithStatusAndPathEnd($status, $multimediaObject, $pathEnd)

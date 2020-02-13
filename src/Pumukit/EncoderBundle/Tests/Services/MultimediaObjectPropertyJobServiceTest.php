@@ -43,79 +43,79 @@ class MultimediaObjectPropertyJobServiceTest extends PumukitTestCase
         $this->dm->flush();
         $mmId = $mm->getId();
 
-        $this->assertEquals(null, $mm->getProperty('pending_jobs'));
-        $this->assertEquals(null, $mm->getProperty('executing_jobs'));
-        $this->assertEquals(null, $mm->getProperty('finished_jobs'));
-        $this->assertEquals(null, $mm->getProperty('error_jobs'));
+        static::assertEquals(null, $mm->getProperty('pending_jobs'));
+        static::assertEquals(null, $mm->getProperty('executing_jobs'));
+        static::assertEquals(null, $mm->getProperty('finished_jobs'));
+        static::assertEquals(null, $mm->getProperty('error_jobs'));
 
         $this->service->addJob($mm, $job);
 
         $this->dm->clear('Pumukit\SchemaBundle\Document\MultimediaObject');
         $mm = $this->dm->getRepository(MultimediaObject::class)->find($mmId);
 
-        $this->assertEquals([$job->getId()], $mm->getProperty('pending_jobs'));
-        $this->assertEquals(null, $mm->getProperty('executing_jobs'));
-        $this->assertEquals(null, $mm->getProperty('finished_jobs'));
-        $this->assertEquals(null, $mm->getProperty('error_jobs'));
+        static::assertEquals([$job->getId()], $mm->getProperty('pending_jobs'));
+        static::assertEquals(null, $mm->getProperty('executing_jobs'));
+        static::assertEquals(null, $mm->getProperty('finished_jobs'));
+        static::assertEquals(null, $mm->getProperty('error_jobs'));
 
         $this->service->addJob($mm, $otherJob);
 
         $this->dm->clear('Pumukit\SchemaBundle\Document\MultimediaObject');
         $mm = $this->dm->getRepository(MultimediaObject::class)->find($mmId);
 
-        $this->assertEquals([$job->getId(), $otherJob->getId()], $mm->getProperty('pending_jobs'));
-        $this->assertEquals(null, $mm->getProperty('executing_jobs'));
-        $this->assertEquals(null, $mm->getProperty('finished_jobs'));
-        $this->assertEquals(null, $mm->getProperty('error_jobs'));
+        static::assertEquals([$job->getId(), $otherJob->getId()], $mm->getProperty('pending_jobs'));
+        static::assertEquals(null, $mm->getProperty('executing_jobs'));
+        static::assertEquals(null, $mm->getProperty('finished_jobs'));
+        static::assertEquals(null, $mm->getProperty('error_jobs'));
 
         $this->service->executeJob($mm, $job);
 
         $this->dm->clear('Pumukit\SchemaBundle\Document\MultimediaObject');
         $mm = $this->dm->getRepository(MultimediaObject::class)->find($mmId);
 
-        $this->assertEquals([$otherJob->getId()], $mm->getProperty('pending_jobs'));
-        $this->assertEquals([$job->getId()], $mm->getProperty('executing_jobs'));
-        $this->assertEquals(null, $mm->getProperty('finished_jobs'));
-        $this->assertEquals(null, $mm->getProperty('error_jobs'));
+        static::assertEquals([$otherJob->getId()], $mm->getProperty('pending_jobs'));
+        static::assertEquals([$job->getId()], $mm->getProperty('executing_jobs'));
+        static::assertEquals(null, $mm->getProperty('finished_jobs'));
+        static::assertEquals(null, $mm->getProperty('error_jobs'));
 
         $this->service->finishJob($mm, $job);
 
         $this->dm->clear('Pumukit\SchemaBundle\Document\MultimediaObject');
         $mm = $this->dm->getRepository(MultimediaObject::class)->find($mmId);
 
-        $this->assertEquals([$otherJob->getId()], $mm->getProperty('pending_jobs'));
-        $this->assertEquals(null, $mm->getProperty('executing_jobs'));
-        $this->assertEquals([$job->getId()], $mm->getProperty('finished_jobs'));
-        $this->assertEquals(null, $mm->getProperty('error_jobs'));
+        static::assertEquals([$otherJob->getId()], $mm->getProperty('pending_jobs'));
+        static::assertEquals(null, $mm->getProperty('executing_jobs'));
+        static::assertEquals([$job->getId()], $mm->getProperty('finished_jobs'));
+        static::assertEquals(null, $mm->getProperty('error_jobs'));
 
         $this->service->finishJob($mm, $otherJob); //Invalid step. No properties change.
 
         $this->dm->clear('Pumukit\SchemaBundle\Document\MultimediaObject');
         $mm = $this->dm->getRepository(MultimediaObject::class)->find($mmId);
 
-        $this->assertEquals([$otherJob->getId()], $mm->getProperty('pending_jobs'));
-        $this->assertEquals(null, $mm->getProperty('executing_jobs'));
-        $this->assertEquals([$job->getId()], $mm->getProperty('finished_jobs'));
-        $this->assertEquals(null, $mm->getProperty('error_jobs'));
+        static::assertEquals([$otherJob->getId()], $mm->getProperty('pending_jobs'));
+        static::assertEquals(null, $mm->getProperty('executing_jobs'));
+        static::assertEquals([$job->getId()], $mm->getProperty('finished_jobs'));
+        static::assertEquals(null, $mm->getProperty('error_jobs'));
 
         $this->service->executeJob($mm, $otherJob);
 
         $this->dm->clear('Pumukit\SchemaBundle\Document\MultimediaObject');
         $mm = $this->dm->getRepository(MultimediaObject::class)->find($mmId);
 
-        $this->assertEquals(null, $mm->getProperty('pending_jobs'));
-        $this->assertEquals([$otherJob->getId()], $mm->getProperty('executing_jobs'));
-        $this->assertEquals([$job->getId()], $mm->getProperty('finished_jobs'));
-        $this->assertEquals(null, $mm->getProperty('error_jobs'));
+        static::assertEquals(null, $mm->getProperty('pending_jobs'));
+        static::assertEquals([$otherJob->getId()], $mm->getProperty('executing_jobs'));
+        static::assertEquals([$job->getId()], $mm->getProperty('finished_jobs'));
+        static::assertEquals(null, $mm->getProperty('error_jobs'));
 
         $this->service->errorJob($mm, $otherJob);
 
         $this->dm->clear('Pumukit\SchemaBundle\Document\MultimediaObject');
         $mm = $this->dm->getRepository(MultimediaObject::class)->find($mmId);
 
-        $this->assertEquals(null, $mm->getProperty('pending_jobs'));
-        $this->assertEquals(null, $mm->getProperty('executing_jobs'));
-        $this->assertEquals([$job->getId()], $mm->getProperty('finished_jobs'));
-        $this->assertEquals([$otherJob->getId()], $mm->getProperty('error_jobs'));
+        static::assertEquals(null, $mm->getProperty('pending_jobs'));
+        static::assertEquals(null, $mm->getProperty('executing_jobs'));
+        static::assertEquals([$job->getId()], $mm->getProperty('finished_jobs'));
+        static::assertEquals([$otherJob->getId()], $mm->getProperty('error_jobs'));
     }
 }

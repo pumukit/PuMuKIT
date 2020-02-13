@@ -46,7 +46,7 @@ class MultimediaObjectTest extends TestCase
         $mm_tags = [$tag1, $tag2, $tag3];
 
         $mm = new MultimediaObject();
-        $this->assertInstanceOf('DateTime', $mm->getPropertyAsDateTime('created'));
+        static::assertInstanceOf('DateTime', $mm->getPropertyAsDateTime('created'));
         $mm->setRank($rank);
         $mm->setStatus($status);
         $mm->setSeries($series);
@@ -64,21 +64,21 @@ class MultimediaObjectTest extends TestCase
         $mm->setKeyword($keyword);
         $mm->setProperties($properties);
 
-        $this->assertEquals($series, $mm->getSeries());
-        $this->assertEquals($rank, $mm->getRank());
-        $this->assertEquals($status, $mm->getStatus());
-        $this->assertEquals($record_date, $mm->getRecordDate());
-        $this->assertEquals($public_date, $mm->getPublicDate());
-        $this->assertEquals($title, $mm->getTitle());
-        $this->assertNotEquals($title.'2', $mm->getTitle());
-        $this->assertEquals($subtitle, $mm->getSubtitle());
-        $this->assertEquals($description, $mm->getDescription());
-        $this->assertCount(count($mm_tags), $mm->getTags());
-        $this->assertEquals($numview, $mm->getNumview());
-        $this->assertEquals($locale, $mm->getLocale());
-        $this->assertEquals($line2, $mm->getLine2());
-        $this->assertEquals($keyword, $mm->getKeyword());
-        $this->assertEquals($properties, $mm->getProperties());
+        static::assertEquals($series, $mm->getSeries());
+        static::assertEquals($rank, $mm->getRank());
+        static::assertEquals($status, $mm->getStatus());
+        static::assertEquals($record_date, $mm->getRecordDate());
+        static::assertEquals($public_date, $mm->getPublicDate());
+        static::assertEquals($title, $mm->getTitle());
+        static::assertNotEquals($title.'2', $mm->getTitle());
+        static::assertEquals($subtitle, $mm->getSubtitle());
+        static::assertEquals($description, $mm->getDescription());
+        static::assertCount(count($mm_tags), $mm->getTags());
+        static::assertEquals($numview, $mm->getNumview());
+        static::assertEquals($locale, $mm->getLocale());
+        static::assertEquals($line2, $mm->getLine2());
+        static::assertEquals($keyword, $mm->getKeyword());
+        static::assertEquals($properties, $mm->getProperties());
 
         $title = null;
         $subtitle = null;
@@ -92,27 +92,27 @@ class MultimediaObjectTest extends TestCase
         $mm->setLine2($line2);
         $mm->setKeyword($keyword);
 
-        $this->assertEquals(null, $mm->getTitle());
-        $this->assertEquals(null, $mm->getSubtitle());
-        $this->assertEquals(null, $mm->getDescription());
-        $this->assertEquals(null, $mm->getLine2());
-        $this->assertEquals(null, $mm->getKeyword());
+        static::assertEquals(null, $mm->getTitle());
+        static::assertEquals(null, $mm->getSubtitle());
+        static::assertEquals(null, $mm->getDescription());
+        static::assertEquals(null, $mm->getLine2());
+        static::assertEquals(null, $mm->getKeyword());
 
         $properties = ['prop2' => 'property2'];
         $mm->setProperties($properties);
         $key = 'prop2';
 
-        $this->assertEquals($properties[$key], $mm->getProperty($key));
+        static::assertEquals($properties[$key], $mm->getProperty($key));
 
         $property3 = 'property3';
         $value3 = 'value3';
         $mm->setProperty($property3, $value3);
 
-        $this->assertEquals($value3, $mm->getProperty($property3));
+        static::assertEquals($value3, $mm->getProperty($property3));
 
         $mm->removeProperty($property3);
 
-        $this->assertNull($mm->getProperty($property3));
+        static::assertNull($mm->getProperty($property3));
     }
 
     public function testPropertiesDateTime()
@@ -121,19 +121,19 @@ class MultimediaObjectTest extends TestCase
         $date = new \DateTime();
 
         $series->setPropertyAsDateTime('test_date', $date);
-        $this->assertEquals($date->getTimestamp(), $series->getPropertyAsDateTime('test_date')->getTimestamp());
+        static::assertEquals($date->getTimestamp(), $series->getPropertyAsDateTime('test_date')->getTimestamp());
     }
 
     public function testToString()
     {
         $mm = new MultimediaObject();
-        $this->assertEquals($mm->getTitle(), $mm->__toString());
+        static::assertEquals($mm->getTitle(), $mm->__toString());
     }
 
     public function testDefaultState()
     {
         $mm = new MultimediaObject();
-        $this->assertEquals(MultimediaObject::STATUS_NEW, $mm->getStatus());
+        static::assertEquals(MultimediaObject::STATUS_NEW, $mm->getStatus());
     }
 
     public function testTracksInMultimediaObject()
@@ -143,24 +143,24 @@ class MultimediaObjectTest extends TestCase
         $track2 = new Track();
         $track3 = new Track();
 
-        $this->assertCount(0, $mm->getTracks());
+        static::assertCount(0, $mm->getTracks());
 
         $mm->addTrack($track1);
         $mm->addTrack($track2);
         $mm->addTrack($track3);
-        $this->assertCount(3, $mm->getTracks());
+        static::assertCount(3, $mm->getTracks());
 
         $tracksArray = [$track1, $track2, $track3];
-        $this->assertEquals($tracksArray, $mm->getTracks()->toArray());
+        static::assertEquals($tracksArray, $mm->getTracks()->toArray());
 
         $mm->removeTrack($track2);
-        $this->assertCount(2, $mm->getTracks());
+        static::assertCount(2, $mm->getTracks());
 
-        $this->assertTrue($mm->containsTrack($track1));
-        $this->assertFalse($mm->containsTrack($track2));
+        static::assertTrue($mm->containsTrack($track1));
+        static::assertFalse($mm->containsTrack($track2));
 
         $tracksArray = [$track1, $track3];
-        $this->assertEquals($tracksArray, array_values($mm->getTracks()->toArray()));
+        static::assertEquals($tracksArray, array_values($mm->getTracks()->toArray()));
     }
 
     public function testPicsInMultimediaObject()
@@ -173,28 +173,28 @@ class MultimediaObjectTest extends TestCase
 
         $pic4->setUrl('/url/of/pic4');
 
-        $this->assertCount(0, $mm->getPics());
+        static::assertCount(0, $mm->getPics());
 
         $mm->addPic($pic1);
         $mm->addPic($pic2);
         $mm->addPic($pic3);
-        $this->assertCount(3, $mm->getPics());
+        static::assertCount(3, $mm->getPics());
 
         $picsArray = [$pic1, $pic2, $pic3];
-        $this->assertEquals($picsArray, $mm->getPics()->toArray());
+        static::assertEquals($picsArray, $mm->getPics()->toArray());
 
         $mm->removePic($pic2);
-        $this->assertCount(2, $mm->getPics());
+        static::assertCount(2, $mm->getPics());
 
-        $this->assertTrue($mm->containsPic($pic1));
-        $this->assertFalse($mm->containsPic($pic2));
+        static::assertTrue($mm->containsPic($pic1));
+        static::assertFalse($mm->containsPic($pic2));
 
         $picsArray = [$pic1, $pic3];
-        $this->assertEquals($picsArray, array_values($mm->getPics()->toArray()));
-        $this->assertEquals($pic1, $mm->getPic());
+        static::assertEquals($picsArray, array_values($mm->getPics()->toArray()));
+        static::assertEquals($pic1, $mm->getPic());
 
         $mm->addPic($pic4);
-        $this->assertEquals('/url/of/pic4', $mm->getFirstUrlPic());
+        static::assertEquals('/url/of/pic4', $mm->getFirstUrlPic());
     }
 
     public function testMaterialsInMultimediaObject()
@@ -204,24 +204,24 @@ class MultimediaObjectTest extends TestCase
         $material2 = new Material();
         $material3 = new Material();
 
-        $this->assertCount(0, $mm->getMaterials());
+        static::assertCount(0, $mm->getMaterials());
 
         $mm->addMaterial($material1);
         $mm->addMaterial($material2);
         $mm->addMaterial($material3);
-        $this->assertCount(3, $mm->getMaterials());
+        static::assertCount(3, $mm->getMaterials());
 
         $materialsArray = [$material1, $material2, $material3];
-        $this->assertEquals($materialsArray, $mm->getMaterials()->toArray());
+        static::assertEquals($materialsArray, $mm->getMaterials()->toArray());
 
         $mm->removeMaterial($material2);
-        $this->assertCount(2, $mm->getMaterials());
+        static::assertCount(2, $mm->getMaterials());
 
-        $this->assertTrue($mm->containsMaterial($material1));
-        $this->assertFalse($mm->containsMaterial($material2));
+        static::assertTrue($mm->containsMaterial($material1));
+        static::assertFalse($mm->containsMaterial($material2));
 
         $materialsArray = [$material1, $material3];
-        $this->assertEquals($materialsArray, array_values($mm->getMaterials()->toArray()));
+        static::assertEquals($materialsArray, array_values($mm->getMaterials()->toArray()));
     }
 
     public function testLinksInMultimediaObject()
@@ -231,24 +231,24 @@ class MultimediaObjectTest extends TestCase
         $link2 = new Link();
         $link3 = new Link();
 
-        $this->assertCount(0, $mm->getLinks());
+        static::assertCount(0, $mm->getLinks());
 
         $mm->addLink($link1);
         $mm->addLink($link2);
         $mm->addLink($link3);
-        $this->assertCount(3, $mm->getLinks());
+        static::assertCount(3, $mm->getLinks());
 
         $linksArray = [$link1, $link2, $link3];
-        $this->assertEquals($linksArray, $mm->getLinks()->toArray());
+        static::assertEquals($linksArray, $mm->getLinks()->toArray());
 
         $mm->removeLink($link2);
-        $this->assertCount(2, $mm->getLinks());
+        static::assertCount(2, $mm->getLinks());
 
-        $this->assertTrue($mm->containsLink($link1));
-        $this->assertFalse($mm->containsLink($link2));
+        static::assertTrue($mm->containsLink($link1));
+        static::assertFalse($mm->containsLink($link2));
 
         $linksArray = [$link1, $link3];
-        $this->assertEquals($linksArray, array_values($mm->getLinks()->toArray()));
+        static::assertEquals($linksArray, array_values($mm->getLinks()->toArray()));
     }
 
     public function testUpdateMmDurationWhenAddTracks()
@@ -262,13 +262,13 @@ class MultimediaObjectTest extends TestCase
         $t3 = new Track();
         $t3->setDuration(1);
 
-        $this->assertEquals(0, $mm->getDuration());
+        static::assertEquals(0, $mm->getDuration());
         $mm->addTrack($t1);
-        $this->assertEquals(2, $mm->getDuration());
+        static::assertEquals(2, $mm->getDuration());
         $mm->addTrack($t2);
-        $this->assertEquals(3, $mm->getDuration());
+        static::assertEquals(3, $mm->getDuration());
         $mm->addTrack($t3);
-        $this->assertEquals(3, $mm->getDuration());
+        static::assertEquals(3, $mm->getDuration());
     }
 
     public function testGetTracksWithTag()
@@ -292,34 +292,34 @@ class MultimediaObjectTest extends TestCase
         $mm->addTrack($t4);
         $mm->addTrack($t5);
 
-        $this->assertEquals([$t3, $t2, $t1], $mm->getTracksWithTag('master'));
-        $this->assertEquals($t3, $mm->getTrackWithTag('master'));
-        $this->assertEquals(null, $mm->getTrackWithTag('del_universo'));
-        $this->assertEquals($t3, $mm->getTrackWithAnyTag(['master', 'pr']));
-        $this->assertEquals([$t2], $mm->getTracksWithAllTags(['master', 'mosca', 'old']));
-        $this->assertContains($mm->getTrackWithAllTags(['mosca', 'master']), [$t3, $t2]);
-        $this->assertEquals(null, $mm->getTrackWithAllTags(['mosca', 'master', 'del_universo']));
-        $this->assertCount(4, $mm->getTracksWithAnyTag(['master', 'webtv']));
-        $this->assertEquals($t3, $mm->getTrackWithAnyTag(['master']));
-        $this->assertEquals(null, $mm->getTrackWithAnyTag(['del_universo']));
+        static::assertEquals([$t3, $t2, $t1], $mm->getTracksWithTag('master'));
+        static::assertEquals($t3, $mm->getTrackWithTag('master'));
+        static::assertEquals(null, $mm->getTrackWithTag('del_universo'));
+        static::assertEquals($t3, $mm->getTrackWithAnyTag(['master', 'pr']));
+        static::assertEquals([$t2], $mm->getTracksWithAllTags(['master', 'mosca', 'old']));
+        static::assertContains($mm->getTrackWithAllTags(['mosca', 'master']), [$t3, $t2]);
+        static::assertEquals(null, $mm->getTrackWithAllTags(['mosca', 'master', 'del_universo']));
+        static::assertCount(4, $mm->getTracksWithAnyTag(['master', 'webtv']));
+        static::assertEquals($t3, $mm->getTrackWithAnyTag(['master']));
+        static::assertEquals(null, $mm->getTrackWithAnyTag(['del_universo']));
 
-        $this->assertCount(5, $mm->getFilteredTracksWithTags());
-        $this->assertCount(3, $mm->getFilteredTracksWithTags(['master']));
-        $this->assertCount(1, $mm->getFilteredTracksWithTags(['master'], ['mosca', 'old']));
-        $this->assertCount(0, $mm->getFilteredTracksWithTags([], ['mosca', 'old'], ['master']));
-        $this->assertCount(3, $mm->getFilteredTracksWithTags([], [], ['flv']));
-        $this->assertCount(0, $mm->getFilteredTracksWithTags([], [], ['flv', 'master']));
-        $this->assertCount(5, $mm->getFilteredTracksWithTags([], [], [], ['flv', 'master']));
-        $this->assertCount(1, $mm->getFilteredTracksWithTags(['mosca', 'old'], [], [], ['old']));
+        static::assertCount(5, $mm->getFilteredTracksWithTags());
+        static::assertCount(3, $mm->getFilteredTracksWithTags(['master']));
+        static::assertCount(1, $mm->getFilteredTracksWithTags(['master'], ['mosca', 'old']));
+        static::assertCount(0, $mm->getFilteredTracksWithTags([], ['mosca', 'old'], ['master']));
+        static::assertCount(3, $mm->getFilteredTracksWithTags([], [], ['flv']));
+        static::assertCount(0, $mm->getFilteredTracksWithTags([], [], ['flv', 'master']));
+        static::assertCount(5, $mm->getFilteredTracksWithTags([], [], [], ['flv', 'master']));
+        static::assertCount(1, $mm->getFilteredTracksWithTags(['mosca', 'old'], [], [], ['old']));
 
-        $this->assertEquals($t3, $mm->getFilteredTrackWithTags());
-        $this->assertEquals($t3, $mm->getFilteredTrackWithTags(['master']));
-        $this->assertEquals($t2, $mm->getFilteredTrackWithTags(['master'], ['mosca', 'old']));
-        $this->assertEquals(null, $mm->getFilteredTrackWithTags([], ['mosca', 'old'], ['master']));
-        $this->assertEquals($t3, $mm->getFilteredTrackWithTags([], [], ['flv']));
-        $this->assertEquals(null, $mm->getFilteredTrackWithTags([], [], ['flv', 'master']));
-        $this->assertEquals($t3, $mm->getFilteredTrackWithTags([], [], [], ['flv', 'master']));
-        $this->assertEquals($t3, $mm->getFilteredTrackWithTags(['mosca', 'old'], [], [], ['old']));
+        static::assertEquals($t3, $mm->getFilteredTrackWithTags());
+        static::assertEquals($t3, $mm->getFilteredTrackWithTags(['master']));
+        static::assertEquals($t2, $mm->getFilteredTrackWithTags(['master'], ['mosca', 'old']));
+        static::assertEquals(null, $mm->getFilteredTrackWithTags([], ['mosca', 'old'], ['master']));
+        static::assertEquals($t3, $mm->getFilteredTrackWithTags([], [], ['flv']));
+        static::assertEquals(null, $mm->getFilteredTrackWithTags([], [], ['flv', 'master']));
+        static::assertEquals($t3, $mm->getFilteredTrackWithTags([], [], [], ['flv', 'master']));
+        static::assertEquals($t3, $mm->getFilteredTrackWithTags(['mosca', 'old'], [], [], ['old']));
     }
 
     public function testGetPicsWithTag()
@@ -343,25 +343,25 @@ class MultimediaObjectTest extends TestCase
         $mm->addPic($p4);
         $mm->addPic($p5);
 
-        $this->assertEquals([$p3, $p2, $p1], $mm->getPicsWithTag('master'));
-        $this->assertEquals($p3, $mm->getPicWithTag('master'));
-        $this->assertEquals(null, $mm->getPicWithTag('del_universo'));
-        $this->assertEquals($p3, $mm->getPicWithAnyTag(['master', 'pr']));
-        $this->assertEquals([$p2], $mm->getPicsWithAllTags(['master', 'mosca', 'old']));
-        $this->assertContains($mm->getPicWithAllTags(['mosca', 'master']), [$p3, $p2]);
-        $this->assertEquals(null, $mm->getPicWithAllTags(['mosca', 'master', 'del_universo']));
-        $this->assertCount(4, $mm->getPicsWithAnyTag(['master', 'webtv']));
-        $this->assertEquals($p3, $mm->getPicWithAnyTag(['master']));
-        $this->assertEquals(null, $mm->getPicWithAnyTag(['del_universo']));
+        static::assertEquals([$p3, $p2, $p1], $mm->getPicsWithTag('master'));
+        static::assertEquals($p3, $mm->getPicWithTag('master'));
+        static::assertEquals(null, $mm->getPicWithTag('del_universo'));
+        static::assertEquals($p3, $mm->getPicWithAnyTag(['master', 'pr']));
+        static::assertEquals([$p2], $mm->getPicsWithAllTags(['master', 'mosca', 'old']));
+        static::assertContains($mm->getPicWithAllTags(['mosca', 'master']), [$p3, $p2]);
+        static::assertEquals(null, $mm->getPicWithAllTags(['mosca', 'master', 'del_universo']));
+        static::assertCount(4, $mm->getPicsWithAnyTag(['master', 'webtv']));
+        static::assertEquals($p3, $mm->getPicWithAnyTag(['master']));
+        static::assertEquals(null, $mm->getPicWithAnyTag(['del_universo']));
 
-        $this->assertCount(5, $mm->getFilteredPicsWithTags());
-        $this->assertCount(3, $mm->getFilteredPicsWithTags(['master']));
-        $this->assertCount(1, $mm->getFilteredPicsWithTags(['master'], ['mosca', 'old']));
-        $this->assertCount(0, $mm->getFilteredPicsWithTags([], ['mosca', 'old'], ['master']));
-        $this->assertCount(3, $mm->getFilteredPicsWithTags([], [], ['flv']));
-        $this->assertCount(0, $mm->getFilteredPicsWithTags([], [], ['flv', 'master']));
-        $this->assertCount(5, $mm->getFilteredPicsWithTags([], [], [], ['flv', 'master']));
-        $this->assertCount(1, $mm->getFilteredPicsWithTags(['mosca', 'old'], [], [], ['old']));
+        static::assertCount(5, $mm->getFilteredPicsWithTags());
+        static::assertCount(3, $mm->getFilteredPicsWithTags(['master']));
+        static::assertCount(1, $mm->getFilteredPicsWithTags(['master'], ['mosca', 'old']));
+        static::assertCount(0, $mm->getFilteredPicsWithTags([], ['mosca', 'old'], ['master']));
+        static::assertCount(3, $mm->getFilteredPicsWithTags([], [], ['flv']));
+        static::assertCount(0, $mm->getFilteredPicsWithTags([], [], ['flv', 'master']));
+        static::assertCount(5, $mm->getFilteredPicsWithTags([], [], [], ['flv', 'master']));
+        static::assertCount(1, $mm->getFilteredPicsWithTags(['mosca', 'old'], [], [], ['old']));
     }
 
     public function testGetMaterialsWithTag()
@@ -385,25 +385,25 @@ class MultimediaObjectTest extends TestCase
         $mm->addMaterial($m4);
         $mm->addMaterial($m5);
 
-        $this->assertEquals([$m3, $m2, $m1], $mm->getMaterialsWithTag('master'));
-        $this->assertEquals($m3, $mm->getMaterialWithTag('master'));
-        $this->assertEquals(null, $mm->getMaterialWithTag('del_universo'));
-        $this->assertEquals($m3, $mm->getMaterialWithAnyTag(['master', 'pr']));
-        $this->assertEquals([$m2], $mm->getMaterialsWithAllTags(['master', 'mosca', 'old']));
-        $this->assertContains($mm->getMaterialWithAllTags(['mosca', 'master']), [$m3, $m2]);
-        $this->assertEquals(null, $mm->getMaterialWithAllTags(['mosca', 'master', 'del_universo']));
-        $this->assertCount(4, $mm->getMaterialsWithAnyTag(['master', 'webtv']));
-        $this->assertEquals($m3, $mm->getMaterialWithAnyTag(['master']));
-        $this->assertEquals(null, $mm->getMaterialWithAnyTag(['del_universo']));
+        static::assertEquals([$m3, $m2, $m1], $mm->getMaterialsWithTag('master'));
+        static::assertEquals($m3, $mm->getMaterialWithTag('master'));
+        static::assertEquals(null, $mm->getMaterialWithTag('del_universo'));
+        static::assertEquals($m3, $mm->getMaterialWithAnyTag(['master', 'pr']));
+        static::assertEquals([$m2], $mm->getMaterialsWithAllTags(['master', 'mosca', 'old']));
+        static::assertContains($mm->getMaterialWithAllTags(['mosca', 'master']), [$m3, $m2]);
+        static::assertEquals(null, $mm->getMaterialWithAllTags(['mosca', 'master', 'del_universo']));
+        static::assertCount(4, $mm->getMaterialsWithAnyTag(['master', 'webtv']));
+        static::assertEquals($m3, $mm->getMaterialWithAnyTag(['master']));
+        static::assertEquals(null, $mm->getMaterialWithAnyTag(['del_universo']));
 
-        $this->assertCount(5, $mm->getFilteredMaterialsWithTags());
-        $this->assertCount(3, $mm->getFilteredMaterialsWithTags(['master']));
-        $this->assertCount(1, $mm->getFilteredMaterialsWithTags(['master'], ['mosca', 'old']));
-        $this->assertCount(0, $mm->getFilteredMaterialsWithTags([], ['mosca', 'old'], ['master']));
-        $this->assertCount(3, $mm->getFilteredMaterialsWithTags([], [], ['flv']));
-        $this->assertCount(0, $mm->getFilteredMaterialsWithTags([], [], ['flv', 'master']));
-        $this->assertCount(5, $mm->getFilteredMaterialsWithTags([], [], [], ['flv', 'master']));
-        $this->assertCount(1, $mm->getFilteredMaterialsWithTags(['mosca', 'old'], [], [], ['old']));
+        static::assertCount(5, $mm->getFilteredMaterialsWithTags());
+        static::assertCount(3, $mm->getFilteredMaterialsWithTags(['master']));
+        static::assertCount(1, $mm->getFilteredMaterialsWithTags(['master'], ['mosca', 'old']));
+        static::assertCount(0, $mm->getFilteredMaterialsWithTags([], ['mosca', 'old'], ['master']));
+        static::assertCount(3, $mm->getFilteredMaterialsWithTags([], [], ['flv']));
+        static::assertCount(0, $mm->getFilteredMaterialsWithTags([], [], ['flv', 'master']));
+        static::assertCount(5, $mm->getFilteredMaterialsWithTags([], [], [], ['flv', 'master']));
+        static::assertCount(1, $mm->getFilteredMaterialsWithTags(['mosca', 'old'], [], [], ['old']));
     }
 
     public function testGetLinksWithTag()
@@ -427,25 +427,25 @@ class MultimediaObjectTest extends TestCase
         $mm->addLink($m4);
         $mm->addLink($m5);
 
-        $this->assertEquals([$m3, $m2, $m1], $mm->getLinksWithTag('master'));
-        $this->assertEquals($m3, $mm->getLinkWithTag('master'));
-        $this->assertEquals(null, $mm->getLinkWithTag('del_universo'));
-        $this->assertEquals($m3, $mm->getLinkWithAnyTag(['master', 'pr']));
-        $this->assertEquals([$m2], $mm->getLinksWithAllTags(['master', 'mosca', 'old']));
-        $this->assertContains($mm->getLinkWithAllTags(['mosca', 'master']), [$m3, $m2]);
-        $this->assertEquals(null, $mm->getLinkWithAllTags(['mosca', 'master', 'del_universo']));
-        $this->assertCount(4, $mm->getLinksWithAnyTag(['master', 'webtv']));
-        $this->assertEquals($m3, $mm->getLinkWithAnyTag(['master']));
-        $this->assertEquals(null, $mm->getLinkWithAnyTag(['del_universo']));
+        static::assertEquals([$m3, $m2, $m1], $mm->getLinksWithTag('master'));
+        static::assertEquals($m3, $mm->getLinkWithTag('master'));
+        static::assertEquals(null, $mm->getLinkWithTag('del_universo'));
+        static::assertEquals($m3, $mm->getLinkWithAnyTag(['master', 'pr']));
+        static::assertEquals([$m2], $mm->getLinksWithAllTags(['master', 'mosca', 'old']));
+        static::assertContains($mm->getLinkWithAllTags(['mosca', 'master']), [$m3, $m2]);
+        static::assertEquals(null, $mm->getLinkWithAllTags(['mosca', 'master', 'del_universo']));
+        static::assertCount(4, $mm->getLinksWithAnyTag(['master', 'webtv']));
+        static::assertEquals($m3, $mm->getLinkWithAnyTag(['master']));
+        static::assertEquals(null, $mm->getLinkWithAnyTag(['del_universo']));
 
-        $this->assertCount(5, $mm->getFilteredLinksWithTags());
-        $this->assertCount(3, $mm->getFilteredLinksWithTags(['master']));
-        $this->assertCount(1, $mm->getFilteredLinksWithTags(['master'], ['mosca', 'old']));
-        $this->assertCount(0, $mm->getFilteredLinksWithTags([], ['mosca', 'old'], ['master']));
-        $this->assertCount(3, $mm->getFilteredLinksWithTags([], [], ['flv']));
-        $this->assertCount(0, $mm->getFilteredLinksWithTags([], [], ['flv', 'master']));
-        $this->assertCount(5, $mm->getFilteredLinksWithTags([], [], [], ['flv', 'master']));
-        $this->assertCount(1, $mm->getFilteredLinksWithTags(['mosca', 'old'], [], [], ['old']));
+        static::assertCount(5, $mm->getFilteredLinksWithTags());
+        static::assertCount(3, $mm->getFilteredLinksWithTags(['master']));
+        static::assertCount(1, $mm->getFilteredLinksWithTags(['master'], ['mosca', 'old']));
+        static::assertCount(0, $mm->getFilteredLinksWithTags([], ['mosca', 'old'], ['master']));
+        static::assertCount(3, $mm->getFilteredLinksWithTags([], [], ['flv']));
+        static::assertCount(0, $mm->getFilteredLinksWithTags([], [], ['flv', 'master']));
+        static::assertCount(5, $mm->getFilteredLinksWithTags([], [], [], ['flv', 'master']));
+        static::assertCount(1, $mm->getFilteredLinksWithTags(['mosca', 'old'], [], [], ['old']));
     }
 
     public function testEmbeddedTag()
@@ -486,25 +486,25 @@ class MultimediaObjectTest extends TestCase
 
         // TEST GETTERS
 
-        $this->assertEquals($locale, $mm->getTags()[0]->getLocale());
-        $this->assertEquals($title, $mm->getTags()[0]->getTitle());
-        $this->assertEquals($description, $mm->getTags()[0]->getDescription());
-        $this->assertEquals($slug, $mm->getTags()[0]->getSlug());
-        $this->assertEquals($cod, $mm->getTags()[0]->getCod());
-        $this->assertEquals($metatag, $mm->getTags()[0]->getMetatag());
-        $this->assertEquals($created, $mm->getTags()[0]->getCreated());
-        $this->assertEquals($updated, $mm->getTags()[0]->getUpdated());
-        $this->assertEquals($display, $mm->getTags()[0]->getDisplay());
-        $this->assertEquals($tag->getPath(), $mm->getTags()[0]->getPath());
-        $this->assertEquals($tag->getLevel(), $mm->getTags()[0]->getLevel());
+        static::assertEquals($locale, $mm->getTags()[0]->getLocale());
+        static::assertEquals($title, $mm->getTags()[0]->getTitle());
+        static::assertEquals($description, $mm->getTags()[0]->getDescription());
+        static::assertEquals($slug, $mm->getTags()[0]->getSlug());
+        static::assertEquals($cod, $mm->getTags()[0]->getCod());
+        static::assertEquals($metatag, $mm->getTags()[0]->getMetatag());
+        static::assertEquals($created, $mm->getTags()[0]->getCreated());
+        static::assertEquals($updated, $mm->getTags()[0]->getUpdated());
+        static::assertEquals($display, $mm->getTags()[0]->getDisplay());
+        static::assertEquals($tag->getPath(), $mm->getTags()[0]->getPath());
+        static::assertEquals($tag->getLevel(), $mm->getTags()[0]->getLevel());
 
-        $this->assertEquals('', $mm->getTags()[0]->getTitle('fr'));
-        $this->assertEquals('', $mm->getTags()[0]->getDescription('fr'));
+        static::assertEquals('', $mm->getTags()[0]->getTitle('fr'));
+        static::assertEquals('', $mm->getTags()[0]->getDescription('fr'));
 
-        $this->assertEquals($titleArray, $mm->getTags()[0]->getI18nTitle());
-        $this->assertEquals($descriptionArray, $mm->getTags()[0]->getI18nDescription());
+        static::assertEquals($titleArray, $mm->getTags()[0]->getI18nTitle());
+        static::assertEquals($descriptionArray, $mm->getTags()[0]->getI18nDescription());
 
-        $this->assertEquals($mm->getTags()[0]->getTitle(), $mm->getTags()[0]->__toString());
+        static::assertEquals($mm->getTags()[0]->getTitle(), $mm->getTags()[0]->__toString());
 
         // TEST SETTERS
 
@@ -534,27 +534,27 @@ class MultimediaObjectTest extends TestCase
         $mm->getTags()[0]->setI18nTitle($titleArray);
         $mm->getTags()[0]->setI18nDescription($descriptionArray);
 
-        $this->assertEquals($title, $mm->getTags()[0]->getTitle());
-        $this->assertEquals($description, $mm->getTags()[0]->getDescription());
-        $this->assertEquals($slug, $mm->getTags()[0]->getSlug());
-        $this->assertEquals($cod, $mm->getTags()[0]->getCod());
-        $this->assertEquals($metatag, $mm->getTags()[0]->getMetatag());
-        $this->assertEquals($created, $mm->getTags()[0]->getCreated());
-        $this->assertEquals($updated, $mm->getTags()[0]->getUpdated());
-        $this->assertEquals($display, $mm->getTags()[0]->getDisplay());
+        static::assertEquals($title, $mm->getTags()[0]->getTitle());
+        static::assertEquals($description, $mm->getTags()[0]->getDescription());
+        static::assertEquals($slug, $mm->getTags()[0]->getSlug());
+        static::assertEquals($cod, $mm->getTags()[0]->getCod());
+        static::assertEquals($metatag, $mm->getTags()[0]->getMetatag());
+        static::assertEquals($created, $mm->getTags()[0]->getCreated());
+        static::assertEquals($updated, $mm->getTags()[0]->getUpdated());
+        static::assertEquals($display, $mm->getTags()[0]->getDisplay());
 
-        $this->assertEquals('', $mm->getTags()[0]->getTitle('fr'));
-        $this->assertEquals('', $mm->getTags()[0]->getDescription('fr'));
+        static::assertEquals('', $mm->getTags()[0]->getTitle('fr'));
+        static::assertEquals('', $mm->getTags()[0]->getDescription('fr'));
 
-        $this->assertEquals($titleArray, $mm->getTags()[0]->getI18nTitle());
-        $this->assertEquals($descriptionArray, $mm->getTags()[0]->getI18nDescription());
+        static::assertEquals($titleArray, $mm->getTags()[0]->getI18nTitle());
+        static::assertEquals($descriptionArray, $mm->getTags()[0]->getI18nDescription());
 
-        $this->assertEquals($mm->getTags()[0]->getTitle(), $mm->getTags()[0]->__toString());
+        static::assertEquals($mm->getTags()[0]->getTitle(), $mm->getTags()[0]->__toString());
 
         $locale = 'es';
         $mm->getTags()[0]->setLocale($locale);
-        $this->assertEquals($titleEs, $mm->getTags()[0]->getTitle());
-        $this->assertEquals($descriptionEs, $mm->getTags()[0]->getDescription());
+        static::assertEquals($titleEs, $mm->getTags()[0]->getTitle());
+        static::assertEquals($descriptionEs, $mm->getTags()[0]->getDescription());
     }
 
     public function testTagCollection()
@@ -572,38 +572,38 @@ class MultimediaObjectTest extends TestCase
         $tag4 = new Tag();
         $tag4->setCod('cod4');
 
-        $this->assertFalse($mm->containsTag($tag1));
+        static::assertFalse($mm->containsTag($tag1));
         $mm->addTag($tag1);
-        $this->assertTrue($mm->containsTag($tag1));
+        static::assertTrue($mm->containsTag($tag1));
         $mm->removeTag($tag1);
-        $this->assertFalse($mm->containsTag($tag1));
+        static::assertFalse($mm->containsTag($tag1));
 
-        $this->assertFalse($mm->containsTagWithCod($tag1->getCod()));
+        static::assertFalse($mm->containsTagWithCod($tag1->getCod()));
         $mm->addTag($tag1);
-        $this->assertTrue($mm->containsTagWithCod($tag1->getCod()));
+        static::assertTrue($mm->containsTagWithCod($tag1->getCod()));
         $mm->removeTag($tag1);
-        $this->assertFalse($mm->containsTagWithCod($tag1->getCod()));
+        static::assertFalse($mm->containsTagWithCod($tag1->getCod()));
 
         //Repeat Tag
-        $this->assertFalse($mm->containsTag($tag1));
+        static::assertFalse($mm->containsTag($tag1));
         $mm->addTag($tag1);
         $mm->addTag($tag1);
-        $this->assertTrue($mm->containsTag($tag1));
+        static::assertTrue($mm->containsTag($tag1));
         $mm->removeTag($tag1);
-        $this->assertFalse($mm->containsTag($tag1));
-        $this->assertFalse($mm->removeTag($tag1));
+        static::assertFalse($mm->containsTag($tag1));
+        static::assertFalse($mm->removeTag($tag1));
 
         //containsAllTag and containsAnyTag
         $mm->addTag($tag1);
         $mm->addTag($tag2);
         $mm->addTag($tag3);
-        $this->assertTrue($mm->containsAnyTag([$tag0, $tag2]));
-        $this->assertTrue($mm->containsAnyTag([$tag2, $tag3]));
-        $this->assertFalse($mm->containsAnyTag([$tag0, $tag4]));
-        $this->assertTrue($mm->containsAllTags([$tag1, $tag2]));
-        $this->assertTrue($mm->containsAllTags([$tag1]));
-        $this->assertFalse($mm->containsAllTags([$tag0, $tag2]));
-        $this->assertFalse($mm->containsAllTags([$tag0, $tag1, $tag2, $tag3]));
+        static::assertTrue($mm->containsAnyTag([$tag0, $tag2]));
+        static::assertTrue($mm->containsAnyTag([$tag2, $tag3]));
+        static::assertFalse($mm->containsAnyTag([$tag0, $tag4]));
+        static::assertTrue($mm->containsAllTags([$tag1, $tag2]));
+        static::assertTrue($mm->containsAllTags([$tag1]));
+        static::assertFalse($mm->containsAllTags([$tag0, $tag2]));
+        static::assertFalse($mm->containsAllTags([$tag0, $tag1, $tag2, $tag3]));
 
         //containsAllTagsWithCodes and containsAnyTagWithCodes
         $mm->removeTag($tag1);
@@ -611,18 +611,18 @@ class MultimediaObjectTest extends TestCase
         $mm->removeTag($tag3);
         $mm->addTag($tag1);
         $mm->addTag($tag4);
-        $this->assertTrue($mm->containsAllTagsWithCodes([$tag1->getCod(), $tag4->getCod()]));
+        static::assertTrue($mm->containsAllTagsWithCodes([$tag1->getCod(), $tag4->getCod()]));
         $mm->removeTag($tag4);
-        $this->assertFalse($mm->containsAllTagsWithCodes([$tag4->getCod()]));
-        $this->assertTrue($mm->containsAllTagsWithCodes([$tag1->getCod()]));
-        $this->assertFalse($mm->containsAnyTagWithCodes([$tag4->getCod()]));
-        $this->assertTrue($mm->containsAnyTagWithCodes([$tag1->getCod()]));
+        static::assertFalse($mm->containsAllTagsWithCodes([$tag4->getCod()]));
+        static::assertTrue($mm->containsAllTagsWithCodes([$tag1->getCod()]));
+        static::assertFalse($mm->containsAnyTagWithCodes([$tag4->getCod()]));
+        static::assertTrue($mm->containsAnyTagWithCodes([$tag1->getCod()]));
     }
 
     public function testIsCollection()
     {
         $mm = new MultimediaObject();
-        $this->assertEquals(false, $mm->isCollection());
+        static::assertEquals(false, $mm->isCollection());
     }
 
     public function testGetDurationString()
@@ -634,11 +634,11 @@ class MultimediaObjectTest extends TestCase
         $mm = new MultimediaObject();
 
         $mm->setDuration($duration2);
-        $this->assertEquals("0''", $mm->getDurationString());
+        static::assertEquals("0''", $mm->getDurationString());
         $mm->setDuration($duration1);
-        $this->assertEquals("2' 00''", $mm->getDurationString());
+        static::assertEquals("2' 00''", $mm->getDurationString());
         $mm->setDuration($duration3);
-        $this->assertEquals("30''", $mm->getDurationString());
+        static::assertEquals("30''", $mm->getDurationString());
     }
 
     public function testIncNumview()
@@ -648,7 +648,7 @@ class MultimediaObjectTest extends TestCase
         $mm->setNumview(5);
         $mm->incNumview();
 
-        $this->assertEquals(6, $mm->getNumview());
+        static::assertEquals(6, $mm->getNumview());
     }
 
     public function testDurationInMinutesAndSeconds()
@@ -660,9 +660,9 @@ class MultimediaObjectTest extends TestCase
         $mm = new MultimediaObject();
         $mm->setDuration($duration);
 
-        $this->assertEquals($duration_in_minutes_and_seconds1, $mm->getDurationInMinutesAndSeconds());
+        static::assertEquals($duration_in_minutes_and_seconds1, $mm->getDurationInMinutesAndSeconds());
 
         $mm->setDurationInMinutesAndSeconds($duration_in_minutes_and_seconds2);
-        $this->assertEquals($duration_in_minutes_and_seconds2, $mm->getDurationInMinutesAndSeconds());
+        static::assertEquals($duration_in_minutes_and_seconds2, $mm->getDurationInMinutesAndSeconds());
     }
 }

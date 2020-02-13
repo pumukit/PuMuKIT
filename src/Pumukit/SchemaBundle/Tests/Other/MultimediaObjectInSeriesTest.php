@@ -54,13 +54,13 @@ class MultimediaObjectInSeriesTest extends PumukitTestCase
 
         $coll_mms = $this->seriesRepo->getMultimediaObjects($series);
 
-        $this->assertCount(1, $coll_mms);
+        static::assertCount(1, $coll_mms);
 
         $i = 0;
         foreach ($coll_mms as $mm) {
             ++$i;
         }
-        $this->assertEquals(1, $i);
+        static::assertEquals(1, $i);
     }
 
     public function testRelationSimple(): void
@@ -78,6 +78,6 @@ class MultimediaObjectInSeriesTest extends PumukitTestCase
                 ++$i;
             }
         }
-        $this->assertEquals(3, $i);
+        static::assertEquals(3, $i);
     }
 }

@@ -55,7 +55,7 @@ class MaterialServiceTest extends PumukitTestCase
         $series = $this->factoryService->createSeries();
         $mm = $this->factoryService->createMultimediaObject($series);
 
-        $this->assertCount(0, $mm->getMaterials());
+        static::assertCount(0, $mm->getMaterials());
 
         $url = 'http://domain.com/material.pdf';
 
@@ -66,7 +66,7 @@ class MaterialServiceTest extends PumukitTestCase
         $mm = $this->materialService->addMaterialUrl($mm, $url, $formData);
         $mm = $this->repoMmobj->find($mm->getId());
 
-        $this->assertCount(1, $mm->getMaterials());
+        static::assertCount(1, $mm->getMaterials());
     }
 
     public function testUpdateMaterialInMultimediaObject()
@@ -86,7 +86,7 @@ class MaterialServiceTest extends PumukitTestCase
         $materials = $mm->getMaterials();
         $material = $materials[0];
 
-        $this->assertEquals($formData['i18n_name'], $material->getI18nName());
+        static::assertEquals($formData['i18n_name'], $material->getI18nName());
 
         $newI18nName = ['en' => 'Material', 'es' => 'Material'];
         $material->setI18nName($newI18nName);
@@ -97,7 +97,7 @@ class MaterialServiceTest extends PumukitTestCase
         $materials = $mm->getMaterials();
         $material = $materials[0];
 
-        $this->assertEquals($newI18nName, $material->getI18nName());
+        static::assertEquals($newI18nName, $material->getI18nName());
     }
 
     public function testAddMaterialFile()
@@ -106,7 +106,7 @@ class MaterialServiceTest extends PumukitTestCase
         $mm = $this->factoryService->createMultimediaObject($series);
         $mm = $this->repoMmobj->findAll()[0];
 
-        $this->assertCount(0, $mm->getMaterials());
+        static::assertCount(0, $mm->getMaterials());
 
         $filePath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'fileCopy.pdf';
 
@@ -120,13 +120,13 @@ class MaterialServiceTest extends PumukitTestCase
             $mm = $this->materialService->addMaterialFile($mm, $file, $formData);
             $mm = $this->repoMmobj->find($mm->getId());
 
-            $this->assertCount(1, $mm->getMaterials());
+            static::assertCount(1, $mm->getMaterials());
 
             $material = $mm->getMaterials()[0];
-            $this->assertTrue($mm->containsMaterial($material));
+            static::assertTrue($mm->containsMaterial($material));
 
             $uploadedFile = '/uploads/material/'.$mm->getId().DIRECTORY_SEPARATOR.$file->getClientOriginalName();
-            $this->assertEquals($uploadedFile, $material->getUrl());
+            static::assertEquals($uploadedFile, $material->getUrl());
         }
 
         $this->deleteCreatedFiles();
@@ -137,7 +137,7 @@ class MaterialServiceTest extends PumukitTestCase
         $series = $this->factoryService->createSeries();
         $mm = $this->factoryService->createMultimediaObject($series);
 
-        $this->assertCount(0, $mm->getMaterials());
+        static::assertCount(0, $mm->getMaterials());
 
         $url = 'http://domain.com/material.pdf';
 
@@ -148,7 +148,7 @@ class MaterialServiceTest extends PumukitTestCase
         $mm = $this->materialService->addMaterialUrl($mm, $url, $formData);
         $mm = $this->repoMmobj->find($mm->getId());
 
-        $this->assertCount(1, $mm->getMaterials());
+        static::assertCount(1, $mm->getMaterials());
 
         $materials = $mm->getMaterials();
         $material = $materials[0];
@@ -159,13 +159,13 @@ class MaterialServiceTest extends PumukitTestCase
             $mm = $this->materialService->addMaterialFile($mm, $materialFile, $formData);
             $mm = $this->repoMmobj->find($mm->getId());
 
-            $this->assertCount(2, $mm->getMaterials());
+            static::assertCount(2, $mm->getMaterials());
 
             $material = $mm->getMaterials()[1];
-            $this->assertTrue($mm->containsMaterial($material));
+            static::assertTrue($mm->containsMaterial($material));
 
             $mm = $this->materialService->removeMaterialFromMultimediaObject($mm, $material->getId());
-            $this->assertCount(1, $mm->getMaterials());
+            static::assertCount(1, $mm->getMaterials());
         }
     }
 
@@ -174,7 +174,7 @@ class MaterialServiceTest extends PumukitTestCase
         $series = $this->factoryService->createSeries();
         $mm = $this->factoryService->createMultimediaObject($series);
 
-        $this->assertCount(0, $mm->getMaterials());
+        static::assertCount(0, $mm->getMaterials());
 
         $url1 = 'http://domain.com/material1.pdf';
 
@@ -209,19 +209,19 @@ class MaterialServiceTest extends PumukitTestCase
         $material3 = $materials[2];
         $arrayMaterials = [$material1, $material2, $material3];
 
-        $this->assertEquals($arrayMaterials, $mm->getMaterials()->toArray());
+        static::assertEquals($arrayMaterials, $mm->getMaterials()->toArray());
 
         $mm = $this->materialService->upMaterialInMultimediaObject($mm, $material2->getId());
         $mm = $this->repoMmobj->find($mm->getId());
 
         $arrayMaterials = [$material2, $material1, $material3];
-        $this->assertEquals($arrayMaterials, $mm->getMaterials()->toArray());
+        static::assertEquals($arrayMaterials, $mm->getMaterials()->toArray());
 
         $mm = $this->materialService->downMaterialInMultimediaObject($mm, $material1->getId());
         $mm = $this->repoMmobj->find($mm->getId());
 
         $arrayMaterials = [$material2, $material3, $material1];
-        $this->assertEquals($arrayMaterials, $mm->getMaterials()->toArray());
+        static::assertEquals($arrayMaterials, $mm->getMaterials()->toArray());
     }
 
     /**
@@ -241,7 +241,7 @@ class MaterialServiceTest extends PumukitTestCase
         $this->dm->flush();
 
         $captions = $this->materialService->getCaptions($mm)->toArray();
-        $this->assertCount(0, $captions);
+        static::assertCount(0, $captions);
 
         $material1 = new Material();
         $material2 = new Material();
@@ -265,13 +265,13 @@ class MaterialServiceTest extends PumukitTestCase
         $this->dm->flush();
 
         $captions = $this->materialService->getCaptions($mm)->toArray();
-        $this->assertCount(3, $captions);
+        static::assertCount(3, $captions);
 
-        $this->assertNotContains($material1, $captions);
-        $this->assertContains($material2, $captions);
-        $this->assertContains($material3, $captions);
-        $this->assertNotContains($material4, $captions);
-        $this->assertContains($material5, $captions);
+        static::assertNotContains($material1, $captions);
+        static::assertContains($material2, $captions);
+        static::assertContains($material3, $captions);
+        static::assertNotContains($material4, $captions);
+        static::assertContains($material5, $captions);
     }
 
     private function deleteCreatedFiles()

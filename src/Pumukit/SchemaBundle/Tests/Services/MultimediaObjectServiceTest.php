@@ -55,25 +55,25 @@ class MultimediaObjectServiceTest extends PumukitTestCase
         $mm = $this->factory->createMultimediaObject($series);
 
         $webTVCode = 'PUCHWEBTV';
-        $this->assertFalse($this->mmsService->isPublished($mm, $webTVCode));
+        static::assertFalse($this->mmsService->isPublished($mm, $webTVCode));
 
         $webTVTag = $this->tagRepo->findOneByCod($webTVCode);
         $this->tagService->addTagToMultimediaObject($mm, $webTVTag->getId());
 
-        $this->assertFalse($this->mmsService->isPublished($mm, $webTVCode));
+        static::assertFalse($this->mmsService->isPublished($mm, $webTVCode));
 
         $mm->setStatus(MultimediaObject::STATUS_PUBLISHED);
 
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertTrue($this->mmsService->isPublished($mm, $webTVCode));
+        static::assertTrue($this->mmsService->isPublished($mm, $webTVCode));
 
         $mm->setStatus(MultimediaObject::STATUS_HIDDEN);
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertFalse($this->mmsService->isPublished($mm, $webTVCode));
+        static::assertFalse($this->mmsService->isPublished($mm, $webTVCode));
     }
 
     public function testIsHidden()
@@ -84,30 +84,30 @@ class MultimediaObjectServiceTest extends PumukitTestCase
         $mm = $this->factory->createMultimediaObject($series);
 
         $webTVCode = 'PUCHWEBTV';
-        $this->assertFalse($this->mmsService->isHidden($mm, $webTVCode));
+        static::assertFalse($this->mmsService->isHidden($mm, $webTVCode));
 
         $webTVTag = $this->tagRepo->findOneByCod($webTVCode);
         $this->tagService->addTagToMultimediaObject($mm, $webTVTag->getId());
 
-        $this->assertFalse($this->mmsService->isHidden($mm, $webTVCode));
+        static::assertFalse($this->mmsService->isHidden($mm, $webTVCode));
 
         $mm->setStatus(MultimediaObject::STATUS_PUBLISHED);
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertTrue($this->mmsService->isHidden($mm, $webTVCode));
+        static::assertTrue($this->mmsService->isHidden($mm, $webTVCode));
 
         $mm->setStatus(MultimediaObject::STATUS_HIDDEN);
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertTrue($this->mmsService->isHidden($mm, $webTVCode));
+        static::assertTrue($this->mmsService->isHidden($mm, $webTVCode));
 
         $mm->setStatus(MultimediaObject::STATUS_BLOCKED);
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertFalse($this->mmsService->isHidden($mm, $webTVCode));
+        static::assertFalse($this->mmsService->isHidden($mm, $webTVCode));
     }
 
     public function testHasPlayableResource()
@@ -120,7 +120,7 @@ class MultimediaObjectServiceTest extends PumukitTestCase
         $this->dm->persist($mm1);
         $this->dm->flush();
 
-        $this->assertFalse($this->mmsService->hasPlayableResource($mm1));
+        static::assertFalse($this->mmsService->hasPlayableResource($mm1));
 
         $track2 = new Track();
         $track2->addTag('display');
@@ -128,18 +128,18 @@ class MultimediaObjectServiceTest extends PumukitTestCase
         $this->dm->persist($mm1);
         $this->dm->flush();
 
-        $this->assertTrue($this->mmsService->hasPlayableResource($mm1));
+        static::assertTrue($this->mmsService->hasPlayableResource($mm1));
 
         $mm2 = $this->factory->createMultimediaObject($series);
 
-        $this->assertFalse($this->mmsService->hasPlayableResource($mm2));
+        static::assertFalse($this->mmsService->hasPlayableResource($mm2));
 
         $track2->addTag('presenter/delivery');
         $mm2->addTrack($track2);
         $this->dm->persist($mm2);
         $this->dm->flush();
 
-        $this->assertTrue($this->mmsService->hasPlayableResource($mm2));
+        static::assertTrue($this->mmsService->hasPlayableResource($mm2));
     }
 
     public function testCanBeDisplayed()
@@ -159,7 +159,7 @@ class MultimediaObjectServiceTest extends PumukitTestCase
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertFalse($this->mmsService->canBeDisplayed($mm, $webTVCode));
+        static::assertFalse($this->mmsService->canBeDisplayed($mm, $webTVCode));
     }
 
     public function testResetMagicUrl()
@@ -169,7 +169,7 @@ class MultimediaObjectServiceTest extends PumukitTestCase
 
         $secret = $mm->getSecret();
 
-        $this->assertNotEquals($secret, $this->mmsService->resetMagicUrl($mm));
+        static::assertNotEquals($secret, $this->mmsService->resetMagicUrl($mm));
     }
 
     public function testUpdateMultimediaObject()
@@ -187,7 +187,7 @@ class MultimediaObjectServiceTest extends PumukitTestCase
         $mm = $this->mmsService->updateMultimediaObject($mm);
 
         $multimediaObject = $this->repo->find($mm->getId());
-        $this->assertEquals($newTitle, $multimediaObject->getTitle());
+        static::assertEquals($newTitle, $multimediaObject->getTitle());
     }
 
     public function testIncNumView()
@@ -195,10 +195,10 @@ class MultimediaObjectServiceTest extends PumukitTestCase
         $series = $this->factory->createSeries();
         $mm = $this->factory->createMultimediaObject($series);
 
-        $this->assertEquals(0, $mm->getNumView());
+        static::assertEquals(0, $mm->getNumView());
 
         $this->mmsService->incNumView($mm);
-        $this->assertEquals(1, $mm->getNumView());
+        static::assertEquals(1, $mm->getNumView());
     }
 
     public function testAddGroup()
@@ -225,31 +225,31 @@ class MultimediaObjectServiceTest extends PumukitTestCase
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
 
-        $this->assertCount(0, $multimediaObject->getGroups());
-        $this->assertFalse($multimediaObject->containsGroup($group1));
-        $this->assertFalse($multimediaObject->containsGroup($group2));
-        $this->assertFalse($multimediaObject->containsGroup($group3));
+        static::assertCount(0, $multimediaObject->getGroups());
+        static::assertFalse($multimediaObject->containsGroup($group1));
+        static::assertFalse($multimediaObject->containsGroup($group2));
+        static::assertFalse($multimediaObject->containsGroup($group3));
 
         $this->mmsService->addGroup($group1, $multimediaObject);
 
-        $this->assertCount(1, $multimediaObject->getGroups());
-        $this->assertTrue($multimediaObject->containsGroup($group1));
-        $this->assertFalse($multimediaObject->containsGroup($group2));
-        $this->assertFalse($multimediaObject->containsGroup($group3));
+        static::assertCount(1, $multimediaObject->getGroups());
+        static::assertTrue($multimediaObject->containsGroup($group1));
+        static::assertFalse($multimediaObject->containsGroup($group2));
+        static::assertFalse($multimediaObject->containsGroup($group3));
 
         $this->mmsService->addGroup($group2, $multimediaObject);
 
-        $this->assertCount(2, $multimediaObject->getGroups());
-        $this->assertTrue($multimediaObject->containsGroup($group1));
-        $this->assertTrue($multimediaObject->containsGroup($group2));
-        $this->assertFalse($multimediaObject->containsGroup($group3));
+        static::assertCount(2, $multimediaObject->getGroups());
+        static::assertTrue($multimediaObject->containsGroup($group1));
+        static::assertTrue($multimediaObject->containsGroup($group2));
+        static::assertFalse($multimediaObject->containsGroup($group3));
 
         $this->mmsService->addGroup($group3, $multimediaObject);
 
-        $this->assertCount(3, $multimediaObject->getGroups());
-        $this->assertTrue($multimediaObject->containsGroup($group1));
-        $this->assertTrue($multimediaObject->containsGroup($group2));
-        $this->assertTrue($multimediaObject->containsGroup($group3));
+        static::assertCount(3, $multimediaObject->getGroups());
+        static::assertTrue($multimediaObject->containsGroup($group1));
+        static::assertTrue($multimediaObject->containsGroup($group2));
+        static::assertTrue($multimediaObject->containsGroup($group3));
     }
 
     public function testDeleteGroup()
@@ -276,64 +276,64 @@ class MultimediaObjectServiceTest extends PumukitTestCase
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
 
-        $this->assertCount(0, $multimediaObject->getGroups());
-        $this->assertFalse($multimediaObject->containsGroup($group1));
-        $this->assertFalse($multimediaObject->containsGroup($group2));
-        $this->assertFalse($multimediaObject->containsGroup($group3));
+        static::assertCount(0, $multimediaObject->getGroups());
+        static::assertFalse($multimediaObject->containsGroup($group1));
+        static::assertFalse($multimediaObject->containsGroup($group2));
+        static::assertFalse($multimediaObject->containsGroup($group3));
 
         $this->mmsService->addGroup($group1, $multimediaObject);
 
         $multimediaObject = $this->repo->find($multimediaObject->getId());
 
-        $this->assertCount(1, $multimediaObject->getGroups());
-        $this->assertTrue($multimediaObject->containsGroup($group1));
-        $this->assertFalse($multimediaObject->containsGroup($group2));
-        $this->assertFalse($multimediaObject->containsGroup($group3));
+        static::assertCount(1, $multimediaObject->getGroups());
+        static::assertTrue($multimediaObject->containsGroup($group1));
+        static::assertFalse($multimediaObject->containsGroup($group2));
+        static::assertFalse($multimediaObject->containsGroup($group3));
 
         $this->mmsService->deleteGroup($group1, $multimediaObject);
 
         $multimediaObject = $this->repo->find($multimediaObject->getId());
 
-        $this->assertCount(0, $multimediaObject->getGroups());
-        $this->assertFalse($multimediaObject->containsGroup($group1));
-        $this->assertFalse($multimediaObject->containsGroup($group2));
-        $this->assertFalse($multimediaObject->containsGroup($group3));
+        static::assertCount(0, $multimediaObject->getGroups());
+        static::assertFalse($multimediaObject->containsGroup($group1));
+        static::assertFalse($multimediaObject->containsGroup($group2));
+        static::assertFalse($multimediaObject->containsGroup($group3));
 
         $this->mmsService->deleteGroup($group2, $multimediaObject);
 
         $multimediaObject = $this->repo->find($multimediaObject->getId());
 
-        $this->assertCount(0, $multimediaObject->getGroups());
-        $this->assertFalse($multimediaObject->containsGroup($group1));
-        $this->assertFalse($multimediaObject->containsGroup($group2));
-        $this->assertFalse($multimediaObject->containsGroup($group3));
+        static::assertCount(0, $multimediaObject->getGroups());
+        static::assertFalse($multimediaObject->containsGroup($group1));
+        static::assertFalse($multimediaObject->containsGroup($group2));
+        static::assertFalse($multimediaObject->containsGroup($group3));
 
         $this->mmsService->addGroup($group3, $multimediaObject);
 
         $multimediaObject = $this->repo->find($multimediaObject->getId());
 
-        $this->assertCount(1, $multimediaObject->getGroups());
-        $this->assertFalse($multimediaObject->containsGroup($group1));
-        $this->assertFalse($multimediaObject->containsGroup($group2));
-        $this->assertTrue($multimediaObject->containsGroup($group3));
+        static::assertCount(1, $multimediaObject->getGroups());
+        static::assertFalse($multimediaObject->containsGroup($group1));
+        static::assertFalse($multimediaObject->containsGroup($group2));
+        static::assertTrue($multimediaObject->containsGroup($group3));
 
         $this->mmsService->deleteGroup($group1, $multimediaObject);
 
         $multimediaObject = $this->repo->find($multimediaObject->getId());
 
-        $this->assertCount(1, $multimediaObject->getGroups());
-        $this->assertFalse($multimediaObject->containsGroup($group1));
-        $this->assertFalse($multimediaObject->containsGroup($group2));
-        $this->assertTrue($multimediaObject->containsGroup($group3));
+        static::assertCount(1, $multimediaObject->getGroups());
+        static::assertFalse($multimediaObject->containsGroup($group1));
+        static::assertFalse($multimediaObject->containsGroup($group2));
+        static::assertTrue($multimediaObject->containsGroup($group3));
 
         $this->mmsService->deleteGroup($group3, $multimediaObject);
 
         $multimediaObject = $this->repo->find($multimediaObject->getId());
 
-        $this->assertCount(0, $multimediaObject->getGroups());
-        $this->assertFalse($multimediaObject->containsGroup($group1));
-        $this->assertFalse($multimediaObject->containsGroup($group2));
-        $this->assertFalse($multimediaObject->containsGroup($group3));
+        static::assertCount(0, $multimediaObject->getGroups());
+        static::assertFalse($multimediaObject->containsGroup($group1));
+        static::assertFalse($multimediaObject->containsGroup($group2));
+        static::assertFalse($multimediaObject->containsGroup($group3));
     }
 
     public function testIsUserOwner()
@@ -374,12 +374,12 @@ class MultimediaObjectServiceTest extends PumukitTestCase
         $this->dm->persist($mm3);
         $this->dm->flush();
 
-        $this->assertFalse($this->mmsService->isUserOwner($user1, $mm1));
-        $this->assertFalse($this->mmsService->isUserOwner($user2, $mm1));
-        $this->assertTrue($this->mmsService->isUserOwner($user1, $mm2));
-        $this->assertFalse($this->mmsService->isUserOwner($user2, $mm2));
-        $this->assertTrue($this->mmsService->isUserOwner($user1, $mm3));
-        $this->assertTrue($this->mmsService->isUserOwner($user2, $mm3));
+        static::assertFalse($this->mmsService->isUserOwner($user1, $mm1));
+        static::assertFalse($this->mmsService->isUserOwner($user2, $mm1));
+        static::assertTrue($this->mmsService->isUserOwner($user1, $mm2));
+        static::assertFalse($this->mmsService->isUserOwner($user2, $mm2));
+        static::assertTrue($this->mmsService->isUserOwner($user1, $mm3));
+        static::assertTrue($this->mmsService->isUserOwner($user2, $mm3));
     }
 
     public function testDeleteAllFromGroup()
@@ -390,7 +390,7 @@ class MultimediaObjectServiceTest extends PumukitTestCase
         $this->dm->persist($group);
         $this->dm->flush();
 
-        $this->assertCount(0, $this->repo->findWithGroup($group)->toArray());
+        static::assertCount(0, $this->repo->findWithGroup($group)->toArray());
 
         $mm1 = new MultimediaObject();
         $mm1->setNumericalID(1);
@@ -412,10 +412,10 @@ class MultimediaObjectServiceTest extends PumukitTestCase
         $this->dm->persist($mm3);
         $this->dm->flush();
 
-        $this->assertCount(3, $this->repo->findWithGroup($group)->toArray());
+        static::assertCount(3, $this->repo->findWithGroup($group)->toArray());
 
         $this->mmsService->deleteAllFromGroup($group);
-        $this->assertCount(0, $this->repo->findWithGroup($group)->toArray());
+        static::assertCount(0, $this->repo->findWithGroup($group)->toArray());
     }
 
     private function createTags()

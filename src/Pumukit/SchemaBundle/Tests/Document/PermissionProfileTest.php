@@ -34,11 +34,11 @@ class PermissionProfileTest extends TestCase
         $permissionProfile->setDefault($default);
         $permissionProfile->setScope($scope);
 
-        $this->assertEquals($name, $permissionProfile->getName());
-        $this->assertEquals($permissions, $permissionProfile->getPermissions());
-        $this->assertEquals($system, $permissionProfile->getSystem());
-        $this->assertEquals($default, $permissionProfile->getDefault());
-        $this->assertEquals($scope, $permissionProfile->getScope());
+        static::assertEquals($name, $permissionProfile->getName());
+        static::assertEquals($permissions, $permissionProfile->getPermissions());
+        static::assertEquals($system, $permissionProfile->getSystem());
+        static::assertEquals($default, $permissionProfile->getDefault());
+        static::assertEquals($scope, $permissionProfile->getScope());
     }
 
     public function testPermissionsCollection()
@@ -63,12 +63,12 @@ class PermissionProfileTest extends TestCase
         $permissionProfile->setDefault($default);
         $permissionProfile->setScope($scope);
 
-        $this->assertEquals($permissions, $permissionProfile->getPermissions());
+        static::assertEquals($permissions, $permissionProfile->getPermissions());
 
-        $this->assertTrue($permissionProfile->containsPermission(Permission::ACCESS_DASHBOARD));
-        $this->assertFalse($permissionProfile->containsPermission(Permission::ACCESS_ADMIN_USERS));
+        static::assertTrue($permissionProfile->containsPermission(Permission::ACCESS_DASHBOARD));
+        static::assertFalse($permissionProfile->containsPermission(Permission::ACCESS_ADMIN_USERS));
 
-        $this->assertTrue($permissionProfile->containsAllPermissions($permissions));
+        static::assertTrue($permissionProfile->containsAllPermissions($permissions));
 
         $morePermissions = [
             Permission::ACCESS_DASHBOARD,
@@ -86,11 +86,11 @@ class PermissionProfileTest extends TestCase
             Permission::ACCESS_ROLES,
         ];
 
-        $this->assertFalse($permissionProfile->containsAllPermissions($morePermissions));
-        $this->assertTrue($permissionProfile->containsAllPermissions($fewerPermissions));
-        $this->assertTrue($permissionProfile->containsAnyPermission($fewerPermissions));
-        $this->assertTrue($permissionProfile->containsAnyPermission($morePermissions));
-        $this->assertFalse($permissionProfile->containsAnyPermission($notPermissions));
+        static::assertFalse($permissionProfile->containsAllPermissions($morePermissions));
+        static::assertTrue($permissionProfile->containsAllPermissions($fewerPermissions));
+        static::assertTrue($permissionProfile->containsAnyPermission($fewerPermissions));
+        static::assertTrue($permissionProfile->containsAnyPermission($morePermissions));
+        static::assertFalse($permissionProfile->containsAnyPermission($notPermissions));
 
         $newPermissions = [
             Permission::ACCESS_DASHBOARD,
@@ -101,13 +101,13 @@ class PermissionProfileTest extends TestCase
             Permission::ACCESS_ADMIN_USERS,
         ];
 
-        $this->assertEquals($newPermissions, $permissionProfile->addPermission(Permission::ACCESS_ADMIN_USERS));
-        $this->assertTrue($permissionProfile->containsPermission(Permission::ACCESS_ADMIN_USERS));
+        static::assertEquals($newPermissions, $permissionProfile->addPermission(Permission::ACCESS_ADMIN_USERS));
+        static::assertTrue($permissionProfile->containsPermission(Permission::ACCESS_ADMIN_USERS));
 
-        $this->assertTrue($permissionProfile->removePermission(Permission::ACCESS_DASHBOARD));
-        $this->assertFalse($permissionProfile->containsPermission(Permission::ACCESS_DASHBOARD));
+        static::assertTrue($permissionProfile->removePermission(Permission::ACCESS_DASHBOARD));
+        static::assertFalse($permissionProfile->containsPermission(Permission::ACCESS_DASHBOARD));
 
-        $this->assertFalse($permissionProfile->removePermission(Permission::ACCESS_WIZARD_UPLOAD));
+        static::assertFalse($permissionProfile->removePermission(Permission::ACCESS_WIZARD_UPLOAD));
     }
 
     public function testIsScope()
@@ -132,9 +132,9 @@ class PermissionProfileTest extends TestCase
         $permissionProfile->setDefault($default);
         $permissionProfile->setScope($scope);
 
-        $this->assertTrue($permissionProfile->isGlobal());
-        $this->assertFalse($permissionProfile->isPersonal());
-        $this->assertFalse($permissionProfile->isNone());
+        static::assertTrue($permissionProfile->isGlobal());
+        static::assertFalse($permissionProfile->isPersonal());
+        static::assertFalse($permissionProfile->isNone());
     }
 
     public function testIsDefault()
@@ -147,7 +147,7 @@ class PermissionProfileTest extends TestCase
         $permissionProfile->setName($name);
         $permissionProfile->setDefault($default);
 
-        $this->assertTrue($permissionProfile->isDefault());
+        static::assertTrue($permissionProfile->isDefault());
 
         $name = 'User Test Permission 2';
         $default = false;
@@ -157,7 +157,7 @@ class PermissionProfileTest extends TestCase
         $permissionProfile2->setName($name);
         $permissionProfile2->setDefault($default);
 
-        $this->assertFalse($permissionProfile2->isDefault());
+        static::assertFalse($permissionProfile2->isDefault());
     }
 
     public function testIsSystem()
@@ -170,7 +170,7 @@ class PermissionProfileTest extends TestCase
         $permissionProfile->setName($name);
         $permissionProfile->setSystem($system);
 
-        $this->assertTrue($permissionProfile->isSystem());
+        static::assertTrue($permissionProfile->isSystem());
 
         $name = 'User Test Permission 2';
         $system = false;
@@ -180,7 +180,7 @@ class PermissionProfileTest extends TestCase
         $permissionProfile2->setName($name);
         $permissionProfile2->setSystem($system);
 
-        $this->assertFalse($permissionProfile2->isSystem());
+        static::assertFalse($permissionProfile2->isSystem());
     }
 
     public function testToString()
@@ -191,6 +191,6 @@ class PermissionProfileTest extends TestCase
 
         $permissionProfile->setName($name);
 
-        $this->assertEquals($name, $permissionProfile->__toString());
+        static::assertEquals($name, $permissionProfile->__toString());
     }
 }

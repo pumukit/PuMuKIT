@@ -39,7 +39,7 @@ class CpuServiceTest extends PumukitTestCase
     {
         $cpus = $this->getDemoCpus();
 
-        $this->assertEquals('CPU_REMOTE', $this->cpuService->getFreeCpu('video_h264'));
+        static::assertEquals('CPU_REMOTE', $this->cpuService->getFreeCpu('video_h264'));
 
         $job = new Job();
         $job->setCpu('CPU_REMOTE');
@@ -47,7 +47,7 @@ class CpuServiceTest extends PumukitTestCase
         $this->dm->persist($job);
         $this->dm->flush();
 
-        $this->assertEquals('CPU_LOCAL', $this->cpuService->getFreeCpu('video_h264'));
+        static::assertEquals('CPU_LOCAL', $this->cpuService->getFreeCpu('video_h264'));
 
         $job2 = new Job();
         $job2->setCpu('CPU_LOCAL');
@@ -55,7 +55,7 @@ class CpuServiceTest extends PumukitTestCase
         $this->dm->persist($job2);
         $this->dm->flush();
 
-        $this->assertEquals('CPU_CLOUD', $this->cpuService->getFreeCpu('video_h264'));
+        static::assertEquals('CPU_CLOUD', $this->cpuService->getFreeCpu('video_h264'));
 
         $job3 = new Job();
         $job3->setCpu('CPU_CLOUD');
@@ -63,7 +63,7 @@ class CpuServiceTest extends PumukitTestCase
         $this->dm->persist($job3);
         $this->dm->flush();
 
-        $this->assertEquals('CPU_REMOTE', $this->cpuService->getFreeCpu('video_h264'));
+        static::assertEquals('CPU_REMOTE', $this->cpuService->getFreeCpu('video_h264'));
 
         $job4 = new Job();
         $job4->setCpu('CPU_REMOTE');
@@ -71,29 +71,29 @@ class CpuServiceTest extends PumukitTestCase
         $this->dm->persist($job4);
         $this->dm->flush();
 
-        $this->assertNull($this->cpuService->getFreeCpu('video_h264'));
-        $this->assertEquals('CPU_WEBM', $this->cpuService->getFreeCpu('master_webm'));
-        $this->assertEquals('CPU_WEBM', $this->cpuService->getFreeCpu('video_webm'));
-        $this->assertEquals('CPU_WEBM', $this->cpuService->getFreeCpu());
+        static::assertNull($this->cpuService->getFreeCpu('video_h264'));
+        static::assertEquals('CPU_WEBM', $this->cpuService->getFreeCpu('master_webm'));
+        static::assertEquals('CPU_WEBM', $this->cpuService->getFreeCpu('video_webm'));
+        static::assertEquals('CPU_WEBM', $this->cpuService->getFreeCpu());
     }
 
     public function testGetCpus()
     {
         $cpus = $this->getDemoCpus();
 
-        $this->assertCount(4, $this->cpuService->getCpus());
-        $this->assertCount(count($cpus), $this->cpuService->getCpus());
+        static::assertCount(4, $this->cpuService->getCpus());
+        static::assertCount(count($cpus), $this->cpuService->getCpus());
     }
 
     public function testGetCpuByName()
     {
         $cpus = $this->getDemoCpus();
 
-        $this->assertEquals($cpus['CPU_LOCAL'], $this->cpuService->getCpuByName('CPU_LOCAL'));
-        $this->assertEquals($cpus['CPU_REMOTE'], $this->cpuService->getCpuByName('CPU_REMOTE'));
-        $this->assertEquals($cpus['CPU_CLOUD'], $this->cpuService->getCpuByName('CPU_CLOUD'));
-        $this->assertNull($this->cpuService->getCpuByName('CPU_local')); //Case sensitive
-        $this->assertNull($this->cpuService->getCpuByName('CPU_LO'));
+        static::assertEquals($cpus['CPU_LOCAL'], $this->cpuService->getCpuByName('CPU_LOCAL'));
+        static::assertEquals($cpus['CPU_REMOTE'], $this->cpuService->getCpuByName('CPU_REMOTE'));
+        static::assertEquals($cpus['CPU_CLOUD'], $this->cpuService->getCpuByName('CPU_CLOUD'));
+        static::assertNull($this->cpuService->getCpuByName('CPU_local')); //Case sensitive
+        static::assertNull($this->cpuService->getCpuByName('CPU_LO'));
     }
 
     private function getDemoCpus()

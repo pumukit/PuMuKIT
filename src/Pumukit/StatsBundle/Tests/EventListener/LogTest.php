@@ -46,7 +46,7 @@ class LogTest extends PumukitTestCase
 
         $event = $this->createEvent();
         $service->onMultimediaObjectViewed($event);
-        $this->assertCount(1, $this->repo->findAll());
+        static::assertCount(1, $this->repo->findAll());
     }
 
     public function testonMultimediaObjectWithoutTrackViewed()
@@ -56,14 +56,14 @@ class LogTest extends PumukitTestCase
 
         $event = $this->createEvent(false);
         $service->onMultimediaObjectViewed($event);
-        $this->assertCount(1, $this->repo->findAll());
+        static::assertCount(1, $this->repo->findAll());
     }
 
     private function createMockRequestStack()
     {
         $request = Request::create('/');
         $requestStack = $this->getMockBuilder('Symfony\Component\HttpFoundation\RequestStack')->getMock();
-        $requestStack->expects($this->once())->method('getMasterRequest')->willReturn($request);
+        $requestStack->expects(static::once())->method('getMasterRequest')->willReturn($request);
 
         return $requestStack;
     }

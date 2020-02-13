@@ -60,8 +60,8 @@ class MultimediaObjectMaxDurationTest extends PumukitTestCase
         $mm = $this->repo->find($id);
         $track = $mm->getTrackById($trackId);
 
-        $this->assertEquals($size, $track->getSize());
-        $this->assertEquals($duration, $track->getDuration());
+        static::assertEquals($size, $track->getSize());
+        static::assertEquals($duration, $track->getDuration());
     }
 
     private function createMultimediaObject()
