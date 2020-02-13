@@ -2,22 +2,11 @@
 
 namespace Pumukit\CoreBundle\Filter;
 
-use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 
 class PersonalFilter extends WebTVFilter
 {
-    public function addFilterCriteria(ClassMetadata $targetDocument): array
-    {
-        if (MultimediaObject::class === $targetDocument->reflClass->name) {
-            return $this->getMultimediaObjectCriteria();
-        }
-        if (Series::class === $targetDocument->reflClass->name) {
-            return $this->getSeriesCriteria();
-        }
-    }
-
     protected function getMultimediaObjectCriteria(): array
     {
         $criteria = [];
@@ -53,11 +42,8 @@ class PersonalFilter extends WebTVFilter
     }
 
     /**
-     * Get series mongo query
-     * Match the Series
-     * with given ids.
-     * Query in MongoDB:
-     * db.Series.find({ "_id": { "$in": [ ObjectId("__id_1__"), ObjectId("__id_2__")... ] } });.
+     * Get series mongo query Match the Series with given ids.
+     * Query in MongoDB: db.Series.find({ "_id": { "$in": [ ObjectId("__id_1__"), ObjectId("__id_2__")... ] } });.
      */
     private function getSeriesMongoQuery(?string $personId, ?string $roleCode, array $groups): array
     {
