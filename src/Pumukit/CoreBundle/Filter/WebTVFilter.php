@@ -7,9 +7,6 @@ use Doctrine\ODM\MongoDB\Query\Filter\BsonFilter;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 
-/**
- * Class WebTVFilter.
- */
 class WebTVFilter extends BsonFilter
 {
     public function addFilterCriteria(ClassMetadata $targetDocument): array
