@@ -171,6 +171,12 @@ class StatsServiceTest extends PumukitTestCase
         static::assertEquals(5, $total);
     }
 
+    public function testGetSeriesMostViewedByRange(): void
+    {
+        $service = new StatsService($this->dm);
+        [$mostViewed, $total] = $service->getSeriesMostViewedByRange();
+    }
+
     private function logView($when, MultimediaObject $multimediaObject, Track $track = null)
     {
         $log = new ViewsLog('/', '8.8.8.8', 'test', '', $multimediaObject->getId(), $multimediaObject->getSeries()->getId(), null);
