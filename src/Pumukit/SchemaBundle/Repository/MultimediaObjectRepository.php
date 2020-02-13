@@ -717,20 +717,15 @@ class MultimediaObjectRepository extends DocumentRepository
         ;
     }
 
-    /**
-     * Find one series with tag.
-     *
-     * @return array|object|null
-     */
-    public function findOneSeriesFieldWithTag(Tag $tag)
+    public function findOneSeriesFieldWithTag(Tag $tag): ?ObjectId
     {
-        return $this->createStandardQueryBuilder()
+        $series = $this->createStandardQueryBuilder()
             ->field('tags._id')
             ->equals(new ObjectId($tag->getId()))
             ->distinct('series')
             ->getQuery()
-            ->getSingleResult()
-        ;
+            ->execute();
+        return $series[0] ?? null;
     }
 
     /**
@@ -761,18 +756,16 @@ class MultimediaObjectRepository extends DocumentRepository
         return $this->createStandardQueryBuilder()->field('tags._id')->all($mongoIds)->distinct('series')->getQuery()->execute();
     }
 
-    /**
-     * Find one series with all tags.
-     *
-     * @param array $tags
-     *
-     * @return array|object|null
-     */
-    public function findOneSeriesFieldWithAllTags($tags)
+    public function findOneSeriesFieldWithAllTags(array $tags): ?ObjectId
     {
         $mongoIds = $this->getMongoIds($tags);
-
-        return $this->createStandardQueryBuilder()->field('tags._id')->all($mongoIds)->distinct('series')->getQuery()->getSingleResult();
+        $series = $this->createStandardQueryBuilder()
+            ->field('tags._id')
+            ->all($mongoIds)
+            ->distinct('series')
+            ->getQuery()
+            ->execute();
+        return $series[0] ?? null;
     }
 
     /**
