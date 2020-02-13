@@ -15,7 +15,7 @@
         "doctrine/mongodb-odm": "~2",
         "doctrine/mongodb-odm-bundle": "~4",
         "friendsofsymfony/user-bundle": "dev-master",
-        "gedmo/doctrine-extensions": "dev-feature/mongodb-odm-2.0#c708baa8",
+        "gedmo/doctrine-extensions": "dev-master",
         "incenteev/composer-parameter-handler": "^2.0",
         "jms/serializer-bundle": "2.4.*",
         "knplabs/knp-menu-bundle": "~2.0",
@@ -113,6 +113,10 @@
         "teltekfosuserbundle": {
             "type": "vcs",
             "url": "git@github.com:teltek/FOSUserBundle.git"
+        },
+        "teltekdoctrineextensions": {
+            "type": "vcs",
+            "url": "git@github.com:teltek/DoctrineExtensions.git"
         }
     }
 }
