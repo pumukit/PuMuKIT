@@ -62,14 +62,9 @@ class GroupController extends AdminController
         $criteria = $this->getCriteria($request->get('criteria', []));
         $groups = $this->getResources($request, $criteria);
 
-        $origins = $this->documentManager
-            ->createQueryBuilder(Group::class)
-            ->distinct('origin')
-            ->getQuery()
-            ->execute()
-                 ;
+        $origins = $this->documentManager->createQueryBuilder(Group::class)->distinct('origin')->getQuery()->execute();
 
-        return ['groups' => $groups, 'origins' => $origins->toArray()];
+        return ['groups' => $groups, 'origins' => $origins];
     }
 
     /**
