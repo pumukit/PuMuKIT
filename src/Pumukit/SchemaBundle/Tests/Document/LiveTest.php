@@ -47,58 +47,58 @@ class LiveTest extends TestCase
         $liveo->setDescription($description, $locale);
         $liveo->setResolution($resolution);
 
-        $this->assertEquals($url, $liveo->getUrl());
-        $this->assertEquals($passwd, $liveo->getPasswd());
-        $this->assertEquals($live_type, $liveo->getLiveType());
-        $this->assertEquals($width, $liveo->getWidth());
-        $this->assertEquals($height, $liveo->getHeight());
-        $this->assertEquals($qualities, $liveo->getQualities());
-        $this->assertEquals($ip_source, $liveo->getIpSource());
-        $this->assertEquals($source_name, $liveo->getSourceName());
-        $this->assertEquals($index_play, $liveo->getIndexPlay());
-        $this->assertEquals($broadcasting, $liveo->getBroadcasting());
-        $this->assertEquals($debug, $liveo->getDebug());
-        $this->assertEquals($locale, $liveo->getLocale());
-        $this->assertEquals($name, $liveo->getName($liveo->getLocale()));
-        $this->assertEquals($name, $liveo->getName());
-        $this->assertEquals($description, $liveo->getDescription($liveo->getLocale()));
-        $this->assertEquals($description, $liveo->getDescription());
-        $this->assertEquals($resolution, $liveo->getResolution());
+        static::assertEquals($url, $liveo->getUrl());
+        static::assertEquals($passwd, $liveo->getPasswd());
+        static::assertEquals($live_type, $liveo->getLiveType());
+        static::assertEquals($width, $liveo->getWidth());
+        static::assertEquals($height, $liveo->getHeight());
+        static::assertEquals($qualities, $liveo->getQualities());
+        static::assertEquals($ip_source, $liveo->getIpSource());
+        static::assertEquals($source_name, $liveo->getSourceName());
+        static::assertEquals($index_play, $liveo->getIndexPlay());
+        static::assertEquals($broadcasting, $liveo->getBroadcasting());
+        static::assertEquals($debug, $liveo->getDebug());
+        static::assertEquals($locale, $liveo->getLocale());
+        static::assertEquals($name, $liveo->getName($liveo->getLocale()));
+        static::assertEquals($name, $liveo->getName());
+        static::assertEquals($description, $liveo->getDescription($liveo->getLocale()));
+        static::assertEquals($description, $liveo->getDescription());
+        static::assertEquals($resolution, $liveo->getResolution());
 
         $liveo->setDescription($description);
-        $this->assertEquals($description, $liveo->getDescription($liveo->getLocale()));
+        static::assertEquals($description, $liveo->getDescription($liveo->getLocale()));
 
         $nameEs = 'directo 1';
         $i18nName = ['en' => $name, 'es' => $nameEs];
         $liveo->setI18nName($i18nName);
-        $this->assertEquals($i18nName, $liveo->getI18nName());
+        static::assertEquals($i18nName, $liveo->getI18nName());
 
         $descriptionEs = 'canal de directos';
         $i18nDescription = ['en' => $description, 'es' => $descriptionEs];
         $liveo->setI18nDescription($i18nDescription);
-        $this->assertEquals($i18nDescription, $liveo->getI18nDescription());
+        static::assertEquals($i18nDescription, $liveo->getI18nDescription());
 
         $name = null;
         $liveo->setName($name, $locale);
-        $this->assertEquals(null, $liveo->getName($liveo->getLocale()));
+        static::assertEquals(null, $liveo->getName($liveo->getLocale()));
 
         $description = null;
         $liveo->setDescription($description, $locale);
-        $this->assertEquals(null, $liveo->getDescription($liveo->getLocale()));
+        static::assertEquals(null, $liveo->getDescription($liveo->getLocale()));
     }
 
     public function testCloneResource()
     {
         $live = new Live();
 
-        $this->assertEquals($live, $live->cloneResource());
+        static::assertEquals($live, $live->cloneResource());
     }
 
     public function testToString()
     {
         $live = new Live();
 
-        $this->assertEquals($live->getName(), $live->__toString());
+        static::assertEquals($live->getName(), $live->__toString());
     }
 
     public function testIsValidLiveType()
@@ -108,6 +108,6 @@ class LiveTest extends TestCase
         $live_type = Live::LIVE_TYPE_FMS;
         $live->setLiveType($live_type);
 
-        $this->assertTrue($live->isValidLiveType());
+        static::assertTrue($live->isValidLiveType());
     }
 }

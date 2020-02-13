@@ -34,12 +34,12 @@ class PermissionProfileRepositoryTest extends PumukitTestCase
 
     public function testEmpty()
     {
-        $this->assertEmpty($this->repo->findAll());
+        static::assertEmpty($this->repo->findAll());
     }
 
     public function testRepository()
     {
-        $this->assertCount(0, $this->repo->findAll());
+        static::assertCount(0, $this->repo->findAll());
 
         $permissionProfile = new PermissionProfile();
         $permissionProfile->setName('test');
@@ -47,15 +47,15 @@ class PermissionProfileRepositoryTest extends PumukitTestCase
         $this->dm->persist($permissionProfile);
         $this->dm->flush();
 
-        $this->assertCount(1, $this->repo->findAll());
+        static::assertCount(1, $this->repo->findAll());
 
-        $this->assertEquals($permissionProfile, $this->repo->find($permissionProfile->getId()));
+        static::assertEquals($permissionProfile, $this->repo->find($permissionProfile->getId()));
     }
 
     public function testChangeDefault()
     {
-        $this->assertCount(0, $this->repo->findByDefault(true));
-        $this->assertCount(0, $this->repo->findByDefault(false));
+        static::assertCount(0, $this->repo->findByDefault(true));
+        static::assertCount(0, $this->repo->findByDefault(false));
 
         $permissionProfile1 = new PermissionProfile();
         $permissionProfile1->setName('test1');
@@ -77,9 +77,9 @@ class PermissionProfileRepositoryTest extends PumukitTestCase
         $this->dm->persist($permissionProfile3);
         $this->dm->flush();
 
-        $this->assertCount(1, $this->repo->findByDefault(true));
-        $this->assertCount(2, $this->repo->findByDefault(false));
-        $this->assertEquals($permissionProfile1, $this->repo->findOneByDefault(true));
+        static::assertCount(1, $this->repo->findByDefault(true));
+        static::assertCount(2, $this->repo->findByDefault(false));
+        static::assertEquals($permissionProfile1, $this->repo->findOneByDefault(true));
 
         $permissionProfile4 = new PermissionProfile();
         $permissionProfile4->setName('test4');
@@ -91,9 +91,9 @@ class PermissionProfileRepositoryTest extends PumukitTestCase
 
         $this->repo->changeDefault($permissionProfile4);
 
-        $this->assertCount(1, $this->repo->findByDefault(true));
-        $this->assertCount(3, $this->repo->findByDefault(false));
-        $this->assertEquals($permissionProfile4, $this->repo->findOneByDefault(true));
+        static::assertCount(1, $this->repo->findByDefault(true));
+        static::assertCount(3, $this->repo->findByDefault(false));
+        static::assertEquals($permissionProfile4, $this->repo->findOneByDefault(true));
     }
 
     public function testFindDefaultCandidate()
@@ -107,7 +107,7 @@ class PermissionProfileRepositoryTest extends PumukitTestCase
         $permissionService = new PermissionService($this->dm, $externalPermissions);
         $totalPermissions = count($permissionService->getAllPermissions());
 
-        $this->assertNull($this->repo->findDefaultCandidate($totalPermissions));
+        static::assertNull($this->repo->findDefaultCandidate($totalPermissions));
 
         $permissions1 = [Permission::ACCESS_DASHBOARD, Permission::ACCESS_LIVE_CHANNELS];
         $permissionProfile1 = new PermissionProfile();
@@ -129,10 +129,10 @@ class PermissionProfileRepositoryTest extends PumukitTestCase
         $this->dm->persist($permissionProfile3);
         $this->dm->flush();
 
-        $this->assertEmpty($this->repo->findByDefault(true));
-        $this->assertNotEmpty($this->repo->findByDefault(false));
+        static::assertEmpty($this->repo->findByDefault(true));
+        static::assertNotEmpty($this->repo->findByDefault(false));
 
-        $this->assertEquals($permissionProfile2, $this->repo->findDefaultCandidate($totalPermissions));
+        static::assertEquals($permissionProfile2, $this->repo->findDefaultCandidate($totalPermissions));
     }
 
     public function testRank()
@@ -157,8 +157,8 @@ class PermissionProfileRepositoryTest extends PumukitTestCase
         $this->dm->persist($permissionProfile3);
         $this->dm->flush();
 
-        $this->assertEquals(0, $permissionProfile1->getRank());
-        $this->assertEquals(1, $permissionProfile2->getRank());
-        $this->assertEquals(2, $permissionProfile3->getRank());
+        static::assertEquals(0, $permissionProfile1->getRank());
+        static::assertEquals(1, $permissionProfile2->getRank());
+        static::assertEquals(2, $permissionProfile3->getRank());
     }
 }

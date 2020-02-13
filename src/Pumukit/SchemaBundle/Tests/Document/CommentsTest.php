@@ -23,8 +23,8 @@ class CommentsTest extends TestCase
         $comment->setText($text);
         $comment->setMultimediaObjectId($multimedia_object_id);
 
-        $this->assertEquals($date, $comment->getDate());
-        $this->assertEquals($text, $comment->getText());
-        $this->assertEquals($multimedia_object_id, $comment->getMultimediaObjectId());
+        static::assertEquals($date, $comment->getDate());
+        static::assertEquals($text, $comment->getText());
+        static::assertEquals($multimedia_object_id, $comment->getMultimediaObjectId());
     }
 }

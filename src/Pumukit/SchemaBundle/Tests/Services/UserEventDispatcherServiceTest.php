@@ -47,8 +47,8 @@ class UserEventDispatcherServiceTest extends PumukitTestCase
     public function testDispatchCreate()
     {
         $this->dispatcher->addListener(SchemaEvents::USER_CREATE, function ($event, $name) {
-            $this->assertInstanceOf(UserEvent::class, $event);
-            $this->assertEquals(SchemaEvents::USER_CREATE, $name);
+            static::assertInstanceOf(UserEvent::class, $event);
+            static::assertEquals(SchemaEvents::USER_CREATE, $name);
 
             $user = $event->getUser();
 
@@ -56,8 +56,8 @@ class UserEventDispatcherServiceTest extends PumukitTestCase
             MockUpUserListener::$name = $user->getUsername();
         });
 
-        $this->assertFalse(MockUpUserListener::$called);
-        $this->assertEquals(self::EMPTY_NAME, MockUpUserListener::$name);
+        static::assertFalse(MockUpUserListener::$called);
+        static::assertEquals(self::EMPTY_NAME, MockUpUserListener::$name);
 
         $name = 'test_name';
 
@@ -69,15 +69,15 @@ class UserEventDispatcherServiceTest extends PumukitTestCase
 
         $this->userDispatcher->dispatchCreate($user);
 
-        $this->assertTrue(MockUpUserListener::$called);
-        $this->assertEquals($name, MockUpUserListener::$name);
+        static::assertTrue(MockUpUserListener::$called);
+        static::assertEquals($name, MockUpUserListener::$name);
     }
 
     public function testDispatchUpdate()
     {
         $this->dispatcher->addListener(SchemaEvents::USER_UPDATE, function ($event, $name) {
-            $this->assertInstanceOf(UserEvent::class, $event);
-            $this->assertEquals(SchemaEvents::USER_UPDATE, $name);
+            static::assertInstanceOf(UserEvent::class, $event);
+            static::assertEquals(SchemaEvents::USER_UPDATE, $name);
 
             $user = $event->getUser();
 
@@ -85,8 +85,8 @@ class UserEventDispatcherServiceTest extends PumukitTestCase
             MockUpUserListener::$name = $user->getUsername();
         });
 
-        $this->assertFalse(MockUpUserListener::$called);
-        $this->assertEquals(self::EMPTY_NAME, MockUpUserListener::$name);
+        static::assertFalse(MockUpUserListener::$called);
+        static::assertEquals(self::EMPTY_NAME, MockUpUserListener::$name);
 
         $name = 'test_name';
 
@@ -104,15 +104,15 @@ class UserEventDispatcherServiceTest extends PumukitTestCase
 
         $this->userDispatcher->dispatchUpdate($user);
 
-        $this->assertTrue(MockUpUserListener::$called);
-        $this->assertEquals($updateUsername, MockUpUserListener::$name);
+        static::assertTrue(MockUpUserListener::$called);
+        static::assertEquals($updateUsername, MockUpUserListener::$name);
     }
 
     public function testDispatchDelete()
     {
         $this->dispatcher->addListener(SchemaEvents::USER_DELETE, function ($event, $name) {
-            $this->assertInstanceOf(UserEvent::class, $event);
-            $this->assertEquals(SchemaEvents::USER_DELETE, $name);
+            static::assertInstanceOf(UserEvent::class, $event);
+            static::assertEquals(SchemaEvents::USER_DELETE, $name);
 
             $user = $event->getUser();
 
@@ -120,8 +120,8 @@ class UserEventDispatcherServiceTest extends PumukitTestCase
             MockUpUserListener::$name = $user->getUsername();
         });
 
-        $this->assertFalse(MockUpUserListener::$called);
-        $this->assertEquals(self::EMPTY_NAME, MockUpUserListener::$name);
+        static::assertFalse(MockUpUserListener::$called);
+        static::assertEquals(self::EMPTY_NAME, MockUpUserListener::$name);
 
         $name = 'test_name';
 
@@ -133,8 +133,8 @@ class UserEventDispatcherServiceTest extends PumukitTestCase
 
         $this->userDispatcher->dispatchDelete($user);
 
-        $this->assertTrue(MockUpUserListener::$called);
-        $this->assertEquals($name, MockUpUserListener::$name);
+        static::assertTrue(MockUpUserListener::$called);
+        static::assertEquals($name, MockUpUserListener::$name);
     }
 }
 

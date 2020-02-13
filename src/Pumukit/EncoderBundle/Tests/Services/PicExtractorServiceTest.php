@@ -81,17 +81,17 @@ class PicExtractorServiceTest extends PumukitTestCase
 
         $output = $this->picExtractor->extractPic($multimediaObject, $track, '25%');
 
-        $this->assertStringStartsWith('Captured the FRAME', $output);
+        static::assertStringStartsWith('Captured the FRAME', $output);
 
         $multimediaObject = $this->mmobjRepo->find($multimediaObject->getId());
         $pic = $multimediaObject->getPics()[0];
 
-        $this->assertNotNull($pic->getWidth());
-        $this->assertNotNull($pic->getHeight());
+        static::assertNotNull($pic->getWidth());
+        static::assertNotNull($pic->getHeight());
 
-        $this->assertStringStartsWith($this->resourcesDir, $pic->getPath());
+        static::assertStringStartsWith($this->resourcesDir, $pic->getPath());
 
-        $this->assertStringStartsWith($this->targetUrl, $pic->getUrl());
+        static::assertStringStartsWith($this->targetUrl, $pic->getUrl());
 
         $this->deleteCreatedFiles();
     }

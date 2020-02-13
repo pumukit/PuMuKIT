@@ -47,8 +47,8 @@ class MaterialEventDispatcherServiceTest extends PumukitTestCase
     public function testDispatchCreate()
     {
         $this->dispatcher->addListener(SchemaEvents::MATERIAL_CREATE, function ($event, $name) {
-            $this->assertInstanceOf(MaterialEvent::class, $event);
-            $this->assertEquals(SchemaEvents::MATERIAL_CREATE, $name);
+            static::assertInstanceOf(MaterialEvent::class, $event);
+            static::assertEquals(SchemaEvents::MATERIAL_CREATE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
             $material = $event->getMaterial();
@@ -58,9 +58,9 @@ class MaterialEventDispatcherServiceTest extends PumukitTestCase
             MockUpMaterialListener::$url = $material->getUrl();
         });
 
-        $this->assertFalse(MockUpMaterialListener::$called);
-        $this->assertEquals(self::EMPTY_TITLE, MockUpMaterialListener::$title);
-        $this->assertEquals(self::EMPTY_URL, MockUpMaterialListener::$url);
+        static::assertFalse(MockUpMaterialListener::$called);
+        static::assertEquals(self::EMPTY_TITLE, MockUpMaterialListener::$title);
+        static::assertEquals(self::EMPTY_URL, MockUpMaterialListener::$url);
 
         $title = 'test title';
         $url = 'http://testmaterial.com';
@@ -73,16 +73,16 @@ class MaterialEventDispatcherServiceTest extends PumukitTestCase
 
         $this->materialDispatcher->dispatchCreate($multimediaObject, $material);
 
-        $this->assertTrue(MockUpMaterialListener::$called);
-        $this->assertEquals($title, MockUpMaterialListener::$title);
-        $this->assertEquals($url, MockUpMaterialListener::$url);
+        static::assertTrue(MockUpMaterialListener::$called);
+        static::assertEquals($title, MockUpMaterialListener::$title);
+        static::assertEquals($url, MockUpMaterialListener::$url);
     }
 
     public function testDispatchUpdate()
     {
         $this->dispatcher->addListener(SchemaEvents::MATERIAL_UPDATE, function ($event, $name) {
-            $this->assertInstanceOf(MaterialEvent::class, $event);
-            $this->assertEquals(SchemaEvents::MATERIAL_UPDATE, $name);
+            static::assertInstanceOf(MaterialEvent::class, $event);
+            static::assertEquals(SchemaEvents::MATERIAL_UPDATE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
             $material = $event->getMaterial();
@@ -92,9 +92,9 @@ class MaterialEventDispatcherServiceTest extends PumukitTestCase
             MockUpMaterialListener::$url = $material->getUrl();
         });
 
-        $this->assertFalse(MockUpMaterialListener::$called);
-        $this->assertEquals(self::EMPTY_TITLE, MockUpMaterialListener::$title);
-        $this->assertEquals(self::EMPTY_URL, MockUpMaterialListener::$url);
+        static::assertFalse(MockUpMaterialListener::$called);
+        static::assertEquals(self::EMPTY_TITLE, MockUpMaterialListener::$title);
+        static::assertEquals(self::EMPTY_URL, MockUpMaterialListener::$url);
 
         $title = 'test title';
         $url = 'http://testmaterial.com';
@@ -110,16 +110,16 @@ class MaterialEventDispatcherServiceTest extends PumukitTestCase
 
         $this->materialDispatcher->dispatchUpdate($multimediaObject, $material);
 
-        $this->assertTrue(MockUpMaterialListener::$called);
-        $this->assertEquals($title, MockUpMaterialListener::$title);
-        $this->assertEquals($updateUrl, MockUpMaterialListener::$url);
+        static::assertTrue(MockUpMaterialListener::$called);
+        static::assertEquals($title, MockUpMaterialListener::$title);
+        static::assertEquals($updateUrl, MockUpMaterialListener::$url);
     }
 
     public function testDispatchDelete()
     {
         $this->dispatcher->addListener(SchemaEvents::MATERIAL_DELETE, function ($event, $name) {
-            $this->assertInstanceOf(MaterialEvent::class, $event);
-            $this->assertEquals(SchemaEvents::MATERIAL_DELETE, $name);
+            static::assertInstanceOf(MaterialEvent::class, $event);
+            static::assertEquals(SchemaEvents::MATERIAL_DELETE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
             $material = $event->getMaterial();
@@ -129,9 +129,9 @@ class MaterialEventDispatcherServiceTest extends PumukitTestCase
             MockUpMaterialListener::$url = $material->getUrl();
         });
 
-        $this->assertFalse(MockUpMaterialListener::$called);
-        $this->assertEquals(self::EMPTY_TITLE, MockUpMaterialListener::$title);
-        $this->assertEquals(self::EMPTY_URL, MockUpMaterialListener::$url);
+        static::assertFalse(MockUpMaterialListener::$called);
+        static::assertEquals(self::EMPTY_TITLE, MockUpMaterialListener::$title);
+        static::assertEquals(self::EMPTY_URL, MockUpMaterialListener::$url);
 
         $title = 'test title';
         $url = 'http://testmaterial.com';
@@ -144,9 +144,9 @@ class MaterialEventDispatcherServiceTest extends PumukitTestCase
 
         $this->materialDispatcher->dispatchDelete($multimediaObject, $material);
 
-        $this->assertTrue(MockUpMaterialListener::$called);
-        $this->assertEquals($title, MockUpMaterialListener::$title);
-        $this->assertEquals($url, MockUpMaterialListener::$url);
+        static::assertTrue(MockUpMaterialListener::$called);
+        static::assertEquals($title, MockUpMaterialListener::$title);
+        static::assertEquals($url, MockUpMaterialListener::$url);
     }
 }
 

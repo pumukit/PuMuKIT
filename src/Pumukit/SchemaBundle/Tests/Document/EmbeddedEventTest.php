@@ -48,20 +48,20 @@ class EmbeddedEventTest extends TestCase
         $embeddedEvent->setNotYetHeldMessage($notYetHeldMessage);
         $embeddedEvent->setLocale($locale);
 
-        $this->assertEquals($name, $embeddedEvent->getName());
-        $this->assertEquals($description, $embeddedEvent->getDescription());
-        $this->assertEquals($author, $embeddedEvent->getAuthor());
-        $this->assertEquals($producer, $embeddedEvent->getProducer());
-        $this->assertEquals($place, $embeddedEvent->getPlace());
-        $this->assertEquals($date, $embeddedEvent->getDate());
-        $this->assertEquals($duration, $embeddedEvent->getDuration());
-        $this->assertEquals($display, $embeddedEvent->isDisplay());
-        $this->assertEquals($create_serial, $embeddedEvent->isCreateSerial());
-        $this->assertEquals($embeddedEventSession->toArray(), $embeddedEvent->getEmbeddedEventSession());
-        $this->assertEquals($live, $embeddedEvent->getLive());
-        $this->assertEquals($url, $embeddedEvent->getUrl());
-        $this->assertEquals($alreadyHeldMessage, $embeddedEvent->getAlreadyHeldMessage());
-        $this->assertEquals($notYetHeldMessage, $embeddedEvent->getNotYetHeldMessage());
-        $this->assertEquals($locale, $embeddedEvent->getLocale());
+        static::assertEquals($name, $embeddedEvent->getName());
+        static::assertEquals($description, $embeddedEvent->getDescription());
+        static::assertEquals($author, $embeddedEvent->getAuthor());
+        static::assertEquals($producer, $embeddedEvent->getProducer());
+        static::assertEquals($place, $embeddedEvent->getPlace());
+        static::assertEquals($date, $embeddedEvent->getDate());
+        static::assertEquals($duration, $embeddedEvent->getDuration());
+        static::assertEquals($display, $embeddedEvent->isDisplay());
+        static::assertEquals($create_serial, $embeddedEvent->isCreateSerial());
+        static::assertEquals($embeddedEventSession->toArray(), $embeddedEvent->getEmbeddedEventSession());
+        static::assertEquals($live, $embeddedEvent->getLive());
+        static::assertEquals($url, $embeddedEvent->getUrl());
+        static::assertEquals($alreadyHeldMessage, $embeddedEvent->getAlreadyHeldMessage());
+        static::assertEquals($notYetHeldMessage, $embeddedEvent->getNotYetHeldMessage());
+        static::assertEquals($locale, $embeddedEvent->getLocale());
     }
 }

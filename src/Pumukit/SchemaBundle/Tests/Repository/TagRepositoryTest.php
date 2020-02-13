@@ -76,7 +76,7 @@ class TagRepositoryTest extends PumukitTestCase
         $this->dm->flush();
 
         // This should pass to check the unrequired fields
-        $this->assertCount(1, $this->repo->findAll());
+        static::assertCount(1, $this->repo->findAll());
     }
 
     public function testGetChildren()
@@ -85,21 +85,21 @@ class TagRepositoryTest extends PumukitTestCase
 
         $tag = $this->repo->findOneByCod('ROOT');
         $tree = $this->repo->getTree($tag);
-        $this->assertCount(6, $tree);
+        static::assertCount(6, $tree);
         $children = $this->repo->getChildren($tag);
-        $this->assertCount(5, $children);
-        $this->assertEquals(5, $this->repo->childCount($tag));
+        static::assertCount(5, $children);
+        static::assertEquals(5, $this->repo->childCount($tag));
         $directChildren = $this->repo->getChildren($tag, true);
-        $this->assertCount(2, $directChildren);
+        static::assertCount(2, $directChildren);
 
         $tag = $this->repo->findOneByCod('B');
         $tree = $this->repo->getTree($tag);
-        $this->assertCount(4, $tree);
+        static::assertCount(4, $tree);
         $children = $this->repo->getChildren($tag);
-        $this->assertCount(3, $children);
-        $this->assertEquals(3, $this->repo->childCount($tag));
+        static::assertCount(3, $children);
+        static::assertEquals(3, $this->repo->childCount($tag));
         $directChildren = $this->repo->getChildren($tag, true);
-        $this->assertCount(2, $directChildren);
+        static::assertCount(2, $directChildren);
     }
 
     public function testGetRootNodes()
@@ -107,7 +107,7 @@ class TagRepositoryTest extends PumukitTestCase
         $this->createTestTree();
 
         $tree = $this->repo->getRootNodes();
-        $this->assertCount(1, $tree);
+        static::assertCount(1, $tree);
     }
 
     public function testIsChildrenOrDescendantOf()
@@ -120,20 +120,20 @@ class TagRepositoryTest extends PumukitTestCase
         $tagB2 = $this->repo->findOneByCod('B2');
         $tagB2A = $this->repo->findOneByCod('B2A');
 
-        $this->assertTrue($tagB2->isChildOf($tagB));
-        $this->assertFalse($tagB->isChildOf($tagB2));
-        $this->assertFalse($tagB2A->isChildOf($tagB));
-        $this->assertFalse($tagA->isChildOf($tagB));
-        $this->assertFalse($tagB->isChildOf($tagB));
+        static::assertTrue($tagB2->isChildOf($tagB));
+        static::assertFalse($tagB->isChildOf($tagB2));
+        static::assertFalse($tagB2A->isChildOf($tagB));
+        static::assertFalse($tagA->isChildOf($tagB));
+        static::assertFalse($tagB->isChildOf($tagB));
 
-        $this->assertTrue($tagB2->isDescendantOf($tagB));
-        $this->assertFalse($tagB->isDescendantOf($tagB2));
-        $this->assertTrue($tagB2A->isDescendantOf($tagB));
-        $this->assertTrue($tagB2A->isDescendantOf($tagB2));
-        $this->assertTrue($tagB2A->isDescendantOf($root));
-        $this->assertFalse($root->isDescendantOf($tagB2A));
-        $this->assertFalse($tagA->isDescendantOf($tagB));
-        $this->assertFalse($tagB->isDescendantOf($tagB));
+        static::assertTrue($tagB2->isDescendantOf($tagB));
+        static::assertFalse($tagB->isDescendantOf($tagB2));
+        static::assertTrue($tagB2A->isDescendantOf($tagB));
+        static::assertTrue($tagB2A->isDescendantOf($tagB2));
+        static::assertTrue($tagB2A->isDescendantOf($root));
+        static::assertFalse($root->isDescendantOf($tagB2A));
+        static::assertFalse($tagA->isDescendantOf($tagB));
+        static::assertFalse($tagB->isDescendantOf($tagB));
     }
 
     public function testGetChildrenFromDocument()
@@ -142,14 +142,14 @@ class TagRepositoryTest extends PumukitTestCase
         $this->dm->clear();
 
         $tag = $this->repo->findOneByCod('ROOT');
-        $this->assertCount(2, $tag->getChildren());
+        static::assertCount(2, $tag->getChildren());
     }
 
     public function testCRUDRepository()
     {
         $this->createTestTree();
 
-        $this->assertCount(6, $this->repo->findAll());
+        static::assertCount(6, $this->repo->findAll());
 
         $tag = $this->repo->findOneByCod('ROOT');
         $tagA = $this->repo->findOneByCod('A');
@@ -160,19 +160,19 @@ class TagRepositoryTest extends PumukitTestCase
         $tag->setCod('ROOT2');
         $this->dm->persist($tag);
         $this->dm->flush();
-        $this->assertEquals(4, $tagB2A->getLevel());
-        $this->assertCount(6, $this->repo->findAll());
+        static::assertEquals(4, $tagB2A->getLevel());
+        static::assertCount(6, $this->repo->findAll());
 
         //Test move
         $tagB->setParent($tagA);
         $this->dm->persist($tag);
         $this->dm->flush();
-        $this->assertEquals(5, $tagB2A->getLevel());
-        $this->assertCount(6, $this->repo->findAll());
+        static::assertEquals(5, $tagB2A->getLevel());
+        static::assertCount(6, $this->repo->findAll());
 
         //Test delete
         $this->dm->remove($tagB);
         $this->dm->flush();
-        $this->assertCount(2, $this->repo->findAll()); //When a parent is deleted all the descendant.
+        static::assertCount(2, $this->repo->findAll()); //When a parent is deleted all the descendant.
     }
 }

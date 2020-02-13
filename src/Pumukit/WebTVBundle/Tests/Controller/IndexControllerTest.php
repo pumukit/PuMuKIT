@@ -17,9 +17,9 @@ class IndexControllerTest extends WebTestCase
         $client = static::createClient();
         $crawler = $client->request('GET', '/');
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertTrue($crawler->filter('html')->count() > 0);
-        $this->assertTrue($crawler->filter('title')->count() > 0);
-        $this->assertTrue($crawler->filter('body')->count() > 0);
+        static::assertEquals(200, $client->getResponse()->getStatusCode());
+        static::assertTrue($crawler->filter('html')->count() > 0);
+        static::assertTrue($crawler->filter('title')->count() > 0);
+        static::assertTrue($crawler->filter('body')->count() > 0);
     }
 }

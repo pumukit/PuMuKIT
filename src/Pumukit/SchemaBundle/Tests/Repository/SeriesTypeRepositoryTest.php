@@ -35,7 +35,7 @@ class SeriesTypeRepositoryTest extends PumukitTestCase
 
     public function testRepositoryEmpty()
     {
-        $this->assertCount(0, $this->repo->findAll());
+        static::assertCount(0, $this->repo->findAll());
     }
 
     public function testRepository()
@@ -53,8 +53,8 @@ class SeriesTypeRepositoryTest extends PumukitTestCase
         $this->dm->persist($seriesType);
         $this->dm->flush();
 
-        $this->assertCount(1, $this->repo->findAll());
-        $this->assertEquals($seriesType, $this->repo->find($seriesType->getId()));
+        static::assertCount(1, $this->repo->findAll());
+        static::assertEquals($seriesType, $this->repo->find($seriesType->getId()));
     }
 
     public function testContainsSeries()
@@ -71,6 +71,6 @@ class SeriesTypeRepositoryTest extends PumukitTestCase
         $this->dm->persist($seriesType);
         $this->dm->flush();
 
-        $this->assertTrue($seriesType->containsSeries($series));
+        static::assertTrue($seriesType->containsSeries($series));
     }
 }

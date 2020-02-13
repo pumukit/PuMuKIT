@@ -58,60 +58,60 @@ class MultimediaObjectRankTest extends PumukitTestCase
         $this->dm->persist($otherMm);
         $this->dm->flush();
 
-        $this->assertEquals(1, $mm1->getRank());
-        $this->assertEquals(2, $mm2->getRank());
-        $this->assertEquals(3, $mm3->getRank());
-        $this->assertEquals(4, $mm4->getRank());
+        static::assertEquals(1, $mm1->getRank());
+        static::assertEquals(2, $mm2->getRank());
+        static::assertEquals(3, $mm3->getRank());
+        static::assertEquals(4, $mm4->getRank());
 
         $mm1->setRank(2);
 
         $this->dm->persist($mm1);
         $this->dm->flush();
 
-        $this->assertEquals(2, $mm1->getRank());
-        $this->assertEquals(1, $mm2->getRank());
-        $this->assertEquals(3, $mm3->getRank());
-        $this->assertEquals(4, $mm4->getRank());
+        static::assertEquals(2, $mm1->getRank());
+        static::assertEquals(1, $mm2->getRank());
+        static::assertEquals(3, $mm3->getRank());
+        static::assertEquals(4, $mm4->getRank());
 
         $mm1->setRank(3);
 
         $this->dm->persist($mm1);
         $this->dm->flush();
 
-        $this->assertEquals(3, $mm1->getRank());
-        $this->assertEquals(1, $mm2->getRank());
-        $this->assertEquals(2, $mm3->getRank());
-        $this->assertEquals(4, $mm4->getRank());
+        static::assertEquals(3, $mm1->getRank());
+        static::assertEquals(1, $mm2->getRank());
+        static::assertEquals(2, $mm3->getRank());
+        static::assertEquals(4, $mm4->getRank());
 
         $mm1->setRank(4);
 
         $this->dm->persist($mm1);
         $this->dm->flush();
 
-        $this->assertEquals(4, $mm1->getRank());
-        $this->assertEquals(1, $mm2->getRank());
-        $this->assertEquals(2, $mm3->getRank());
-        $this->assertEquals(3, $mm4->getRank());
+        static::assertEquals(4, $mm1->getRank());
+        static::assertEquals(1, $mm2->getRank());
+        static::assertEquals(2, $mm3->getRank());
+        static::assertEquals(3, $mm4->getRank());
 
         $mm1->setRank(1);
 
         $this->dm->persist($mm1);
         $this->dm->flush();
 
-        $this->assertEquals(1, $mm1->getRank());
-        $this->assertEquals(2, $mm2->getRank());
-        $this->assertEquals(3, $mm3->getRank());
-        $this->assertEquals(4, $mm4->getRank());
+        static::assertEquals(1, $mm1->getRank());
+        static::assertEquals(2, $mm2->getRank());
+        static::assertEquals(3, $mm3->getRank());
+        static::assertEquals(4, $mm4->getRank());
 
         $mm1->setRank(-1);
 
         $this->dm->persist($mm1);
         $this->dm->flush();
 
-        $this->assertEquals(4, $mm1->getRank());
-        $this->assertEquals(1, $mm2->getRank());
-        $this->assertEquals(2, $mm3->getRank());
-        $this->assertEquals(3, $mm4->getRank());
+        static::assertEquals(4, $mm1->getRank());
+        static::assertEquals(1, $mm2->getRank());
+        static::assertEquals(2, $mm3->getRank());
+        static::assertEquals(3, $mm4->getRank());
     }
 
     private function createMultimediaObjectAssignedToSeries($title, Series $series)

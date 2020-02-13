@@ -43,7 +43,7 @@ class SpecialTranslationServiceTest extends PumukitTestCase
         $this->dm->persist($group);
         $this->dm->flush();
 
-        $this->assertCount(0, $this->mmRepo->findWithGroupInEmbeddedBroadcast($group)->toArray());
+        static::assertCount(0, $this->mmRepo->findWithGroupInEmbeddedBroadcast($group)->toArray());
 
         $mm1 = new MultimediaObject();
         $mm1->setNumericalID(1);
@@ -82,15 +82,15 @@ class SpecialTranslationServiceTest extends PumukitTestCase
         $this->dm->flush();
 
         $locale = 'en';
-        $this->assertEquals((string) $emb1, $this->specialTranslationService->getI18nEmbeddedBroadcast($emb1, $locale));
-        $this->assertEquals((string) $emb2, $this->specialTranslationService->getI18nEmbeddedBroadcast($emb2, $locale));
-        $this->assertEquals((string) $emb3, $this->specialTranslationService->getI18nEmbeddedBroadcast($emb3, $locale));
-        $this->assertEquals((string) $emb4, $this->specialTranslationService->getI18nEmbeddedBroadcast($emb4, $locale));
+        static::assertEquals((string) $emb1, $this->specialTranslationService->getI18nEmbeddedBroadcast($emb1, $locale));
+        static::assertEquals((string) $emb2, $this->specialTranslationService->getI18nEmbeddedBroadcast($emb2, $locale));
+        static::assertEquals((string) $emb3, $this->specialTranslationService->getI18nEmbeddedBroadcast($emb3, $locale));
+        static::assertEquals((string) $emb4, $this->specialTranslationService->getI18nEmbeddedBroadcast($emb4, $locale));
 
         $locale = 'es';
-        $this->assertNotEquals((string) $emb1, $this->specialTranslationService->getI18nEmbeddedBroadcast($emb1, $locale));
-        $this->assertNotEquals((string) $emb2, $this->specialTranslationService->getI18nEmbeddedBroadcast($emb2, $locale));
-        $this->assertNotEquals((string) $emb3, $this->specialTranslationService->getI18nEmbeddedBroadcast($emb3, $locale));
-        $this->assertNotEquals((string) $emb4, $this->specialTranslationService->getI18nEmbeddedBroadcast($emb4, $locale));
+        static::assertNotEquals((string) $emb1, $this->specialTranslationService->getI18nEmbeddedBroadcast($emb1, $locale));
+        static::assertNotEquals((string) $emb2, $this->specialTranslationService->getI18nEmbeddedBroadcast($emb2, $locale));
+        static::assertNotEquals((string) $emb3, $this->specialTranslationService->getI18nEmbeddedBroadcast($emb3, $locale));
+        static::assertNotEquals((string) $emb4, $this->specialTranslationService->getI18nEmbeddedBroadcast($emb4, $locale));
     }
 }

@@ -89,8 +89,8 @@ class JobServiceTest extends PumukitTestCase
         $series = $this->factory->createSeries();
         $multimediaObject = $this->factory->createMultimediaObject($series);
 
-        $this->assertCount(0, $multimediaObject->getTracks());
-        $this->assertCount(0, $this->repo->findAll());
+        static::assertCount(0, $multimediaObject->getTracks());
+        static::assertCount(0, $this->repo->findAll());
 
         $originalFile = $this->resourcesDir.'CAMERA.mp4';
 
@@ -108,8 +108,8 @@ class JobServiceTest extends PumukitTestCase
 
             $multimediaObject = $this->jobService->createTrackFromLocalHardDrive($multimediaObject, $file, $profile, $priority, $language, $description);
 
-            $this->assertCount(0, $multimediaObject->getTracks());
-            $this->assertCount(1, $this->repo->findAll());
+            static::assertCount(0, $multimediaObject->getTracks());
+            static::assertCount(1, $this->repo->findAll());
         }
 
         $this->deleteCreatedFiles();
@@ -120,8 +120,8 @@ class JobServiceTest extends PumukitTestCase
         $series = $this->factory->createSeries();
         $multimediaObject = $this->factory->createMultimediaObject($series);
 
-        $this->assertCount(0, $multimediaObject->getTracks());
-        $this->assertCount(0, $this->repo->findAll());
+        static::assertCount(0, $multimediaObject->getTracks());
+        static::assertCount(0, $this->repo->findAll());
 
         $originalFile = $this->resourcesDir.'CAMERA.mp4';
 
@@ -137,8 +137,8 @@ class JobServiceTest extends PumukitTestCase
 
             $multimediaObject = $this->jobService->createTrackFromInboxOnServer($multimediaObject, $filePath, $profile, $priority, $language, $description);
 
-            $this->assertCount(0, $multimediaObject->getTracks());
-            $this->assertCount(1, $this->repo->findAll());
+            static::assertCount(0, $multimediaObject->getTracks());
+            static::assertCount(1, $this->repo->findAll());
         }
 
         $this->deleteCreatedFiles();
@@ -166,7 +166,7 @@ class JobServiceTest extends PumukitTestCase
         try {
             $this->jobService->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description);
         } catch (\Exception $exception) {
-            $this->assertCount(0, $this->repo->findAll());
+            static::assertCount(0, $this->repo->findAll());
         }
 
         $pathFile2 = $this->resourcesDir.'test2.txt';
@@ -179,7 +179,7 @@ class JobServiceTest extends PumukitTestCase
         try {
             $this->jobService->addJob($pathFile2, $profile2, $priority2, $multimediaObject, $language2, $description2);
         } catch (\Exception $exception) {
-            $this->assertCount(0, $this->repo->findAll());
+            static::assertCount(0, $this->repo->findAll());
         }
     }
 
@@ -188,7 +188,7 @@ class JobServiceTest extends PumukitTestCase
         $job = $this->createNewJob();
         $this->jobService->pauseJob($job->getId());
 
-        $this->assertEquals(Job::STATUS_PAUSED, $job->getStatus());
+        static::assertEquals(Job::STATUS_PAUSED, $job->getStatus());
     }
 
     public function testResumeJob()
@@ -198,29 +198,29 @@ class JobServiceTest extends PumukitTestCase
         $this->jobService->pauseJob($job->getId());
         $this->jobService->resumeJob($job->getId());
 
-        $this->assertEquals(Job::STATUS_WAITING, $job->getStatus());
+        static::assertEquals(Job::STATUS_WAITING, $job->getStatus());
     }
 
     public function testCancelJob()
     {
         $job = $this->createNewJob();
-        $this->assertCount(1, $this->repo->findAll());
+        static::assertCount(1, $this->repo->findAll());
         $this->jobService->cancelJob($job->getId());
-        $this->assertEquals([], $this->repo->findAll());
+        static::assertEquals([], $this->repo->findAll());
 
         $job = $this->createNewJob();
-        $this->assertCount(1, $this->repo->findAll());
+        static::assertCount(1, $this->repo->findAll());
         $this->jobService->pauseJob($job->getId());
         $this->jobService->resumeJob($job->getId());
         $this->jobService->cancelJob($job->getId());
-        $this->assertEquals([], $this->repo->findAll());
+        static::assertEquals([], $this->repo->findAll());
 
         $job1 = $this->createNewJob();
         $job2 = $this->createNewJob();
-        $this->assertCount(2, $this->repo->findAll());
+        static::assertCount(2, $this->repo->findAll());
         $this->jobService->cancelJob($job1->getId());
-        $this->assertCount(1, $this->repo->findAll());
-        $this->assertEquals($job2, $this->repo->findAll()[0]);
+        static::assertCount(1, $this->repo->findAll());
+        static::assertEquals($job2, $this->repo->findAll()[0]);
     }
 
     public function testGetAllJobsStatus()
@@ -248,11 +248,11 @@ class JobServiceTest extends PumukitTestCase
 
         $allJobsStatus = $this->jobService->getAllJobsStatus();
 
-        $this->assertEquals(0, $allJobsStatus['error']);
-        $this->assertEquals(2, $allJobsStatus['paused']);
-        $this->assertEquals(7, $allJobsStatus['waiting']);
-        $this->assertEquals(2, $allJobsStatus['executing']);
-        $this->assertEquals(9, $allJobsStatus['finished']);
+        static::assertEquals(0, $allJobsStatus['error']);
+        static::assertEquals(2, $allJobsStatus['paused']);
+        static::assertEquals(7, $allJobsStatus['waiting']);
+        static::assertEquals(2, $allJobsStatus['executing']);
+        static::assertEquals(9, $allJobsStatus['finished']);
     }
 
     public function testGetNextJob()
@@ -265,28 +265,28 @@ class JobServiceTest extends PumukitTestCase
         $job6 = $this->createNewJob(null, 3, 5);
         $job7 = $this->createNewJob(null, 1, 6);
 
-        $this->assertEquals($job4, $this->jobService->getNextJob());
+        static::assertEquals($job4, $this->jobService->getNextJob());
 
         $this->jobService->cancelJob($job4->getId());
-        $this->assertEquals($job6, $this->jobService->getNextJob());
+        static::assertEquals($job6, $this->jobService->getNextJob());
 
         $this->jobService->cancelJob($job6->getId());
-        $this->assertEquals($job2, $this->jobService->getNextJob());
+        static::assertEquals($job2, $this->jobService->getNextJob());
 
         $this->jobService->cancelJob($job2->getId());
-        $this->assertEquals($job5, $this->jobService->getNextJob());
+        static::assertEquals($job5, $this->jobService->getNextJob());
 
         $this->jobService->cancelJob($job5->getId());
-        $this->assertEquals($job1, $this->jobService->getNextJob());
+        static::assertEquals($job1, $this->jobService->getNextJob());
 
         $this->jobService->cancelJob($job1->getId());
-        $this->assertEquals($job3, $this->jobService->getNextJob());
+        static::assertEquals($job3, $this->jobService->getNextJob());
 
         $this->jobService->cancelJob($job3->getId());
-        $this->assertEquals($job7, $this->jobService->getNextJob());
+        static::assertEquals($job7, $this->jobService->getNextJob());
 
         $this->jobService->cancelJob($job7->getId());
-        $this->assertNull($this->jobService->getNextJob());
+        static::assertNull($this->jobService->getNextJob());
     }
 
     /**
@@ -348,13 +348,13 @@ class JobServiceTest extends PumukitTestCase
         $this->dm->persist($job3);
         $this->dm->flush();
 
-        $this->assertCount(2, $this->jobService->getNotFinishedJobsByMultimediaObjectId($mm_id1));
-        $this->assertCount(1, $this->jobService->getNotFinishedJobsByMultimediaObjectId($mm_id2));
+        static::assertCount(2, $this->jobService->getNotFinishedJobsByMultimediaObjectId($mm_id1));
+        static::assertCount(1, $this->jobService->getNotFinishedJobsByMultimediaObjectId($mm_id2));
     }
 
     public function testGetStatusError()
     {
-        $this->assertEquals(Job::STATUS_ERROR, $this->jobService->getStatusError());
+        static::assertEquals(Job::STATUS_ERROR, $this->jobService->getStatusError());
     }
 
     private function createNewJob($status = null, $priority = null, $timeadd = 0)

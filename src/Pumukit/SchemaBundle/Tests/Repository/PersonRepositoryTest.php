@@ -37,14 +37,14 @@ class PersonRepositoryTest extends PumukitTestCase
 
     public function testRepositoryEmpty()
     {
-        $this->assertCount(0, $this->repo->findAll());
+        static::assertCount(0, $this->repo->findAll());
     }
 
     public function testRepository()
     {
         $person = $this->createNewPerson();
 
-        $this->assertCount(1, $this->repo->findAll());
+        static::assertCount(1, $this->repo->findAll());
     }
 
     public function testUser()
@@ -65,7 +65,7 @@ class PersonRepositoryTest extends PumukitTestCase
 
         $person = $this->repo->find($person->getId());
 
-        $this->assertEquals($user, $person->getUser());
+        static::assertEquals($user, $person->getUser());
     }
 
     public function testFindByRoleCodAndEmail()
@@ -114,15 +114,15 @@ class PersonRepositoryTest extends PumukitTestCase
         $this->dm->persist($mm4);
         $this->dm->flush();
 
-        $this->assertEquals($person_ned, $this->repo->findByRoleCodAndEmail($role_lord->getCod(), $email_ned));
-        $this->assertEquals($person_mark, $this->repo->findByRoleCodAndEmail($role_lord->getCod(), $email_mark));
-        $this->assertEquals($person_benjen, $this->repo->findByRoleCodAndEmail($role_lord->getCod(), $email_benjen));
-        $this->assertEquals($person_ned, $this->repo->findByRoleCodAndEmail($role_ranger->getCod(), $email_ned));
-        $this->assertEquals($person_mark, $this->repo->findByRoleCodAndEmail($role_ranger->getCod(), $email_mark));
-        $this->assertEquals($person_benjen, $this->repo->findByRoleCodAndEmail($role_ranger->getCod(), $email_benjen));
-        $this->assertEquals($person_ned, $this->repo->findByRoleCodAndEmail($role_hand->getCod(), $email_ned));
-        $this->assertEquals($person_mark, $this->repo->findByRoleCodAndEmail($role_hand->getCod(), $email_mark));
-        $this->assertNull($this->repo->findByRoleCodAndEmail($role_hand->getCod(), $email_benjen));
+        static::assertEquals($person_ned, $this->repo->findByRoleCodAndEmail($role_lord->getCod(), $email_ned));
+        static::assertEquals($person_mark, $this->repo->findByRoleCodAndEmail($role_lord->getCod(), $email_mark));
+        static::assertEquals($person_benjen, $this->repo->findByRoleCodAndEmail($role_lord->getCod(), $email_benjen));
+        static::assertEquals($person_ned, $this->repo->findByRoleCodAndEmail($role_ranger->getCod(), $email_ned));
+        static::assertEquals($person_mark, $this->repo->findByRoleCodAndEmail($role_ranger->getCod(), $email_mark));
+        static::assertEquals($person_benjen, $this->repo->findByRoleCodAndEmail($role_ranger->getCod(), $email_benjen));
+        static::assertEquals($person_ned, $this->repo->findByRoleCodAndEmail($role_hand->getCod(), $email_ned));
+        static::assertEquals($person_mark, $this->repo->findByRoleCodAndEmail($role_hand->getCod(), $email_mark));
+        static::assertNull($this->repo->findByRoleCodAndEmail($role_hand->getCod(), $email_benjen));
     }
 
     private function createNewPerson($name = 'name', $email = 'email@email.com')

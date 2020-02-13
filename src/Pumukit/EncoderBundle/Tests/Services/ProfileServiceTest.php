@@ -38,55 +38,55 @@ class ProfileServiceTest extends PumukitTestCase
     public function testGetProfiles()
     {
         $profiles = $this->getDemoProfiles();
-        $this->assertCount(count($profiles), $this->profileService->getProfiles());
+        static::assertCount(count($profiles), $this->profileService->getProfiles());
 
-        $this->assertCount(0, $this->profileService->getProfiles(true));
-        $this->assertCount(0, $this->profileService->getProfiles(null, false));
-        $this->assertCount(2, $this->profileService->getProfiles(null, null, true));
-        $this->assertCount(2, $this->profileService->getProfiles(false, true));
-        $this->assertCount(0, $this->profileService->getProfiles(null, true, false));
-        $this->assertCount(0, $this->profileService->getProfiles(false, null, false));
-        $this->assertCount(2, $this->profileService->getProfiles(false, true, true));
+        static::assertCount(0, $this->profileService->getProfiles(true));
+        static::assertCount(0, $this->profileService->getProfiles(null, false));
+        static::assertCount(2, $this->profileService->getProfiles(null, null, true));
+        static::assertCount(2, $this->profileService->getProfiles(false, true));
+        static::assertCount(0, $this->profileService->getProfiles(null, true, false));
+        static::assertCount(0, $this->profileService->getProfiles(false, null, false));
+        static::assertCount(2, $this->profileService->getProfiles(false, true, true));
 
-        $this->assertCount(2, $this->profileService->getProfilesByTags([]));
-        $this->assertCount(2, $this->profileService->getProfilesByTags('uno'));
-        $this->assertCount(1, $this->profileService->getProfilesByTags(['tres']));
-        $this->assertCount(1, $this->profileService->getProfilesByTags(['uno', 'tres']));
+        static::assertCount(2, $this->profileService->getProfilesByTags([]));
+        static::assertCount(2, $this->profileService->getProfilesByTags('uno'));
+        static::assertCount(1, $this->profileService->getProfilesByTags(['tres']));
+        static::assertCount(1, $this->profileService->getProfilesByTags(['uno', 'tres']));
     }
 
     public function testGetMasterProfiles()
     {
         $profiles = $this->getDemoProfiles();
-        $this->assertCount(count($profiles), $this->profileService->getMasterProfiles(true));
-        $this->assertCount(0, $this->profileService->getMasterProfiles(false));
+        static::assertCount(count($profiles), $this->profileService->getMasterProfiles(true));
+        static::assertCount(0, $this->profileService->getMasterProfiles(false));
     }
 
     public function testGetDefaultMasterProfile()
     {
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
-        $this->assertEquals('MASTER_VIDEO_H264', $profileService->getDefaultMasterProfile());
+        static::assertEquals('MASTER_VIDEO_H264', $profileService->getDefaultMasterProfile());
 
         $profiles = ['MASTER_COPY' => $this->getDemoProfiles()['MASTER_COPY']];
         $profileService = new ProfileService($profiles, $this->dm);
-        $this->assertEquals('MASTER_COPY', $profileService->getDefaultMasterProfile());
+        static::assertEquals('MASTER_COPY', $profileService->getDefaultMasterProfile());
 
         $profile = $this->getDemoProfiles()['MASTER_VIDEO_H264'];
         $profile['master'] = false;
         $profiles = ['VIDEO_H264' => $profile];
         $profileService = new ProfileService($profiles, $this->dm);
-        $this->assertNull($profileService->getDefaultMasterProfile());
+        static::assertNull($profileService->getDefaultMasterProfile());
 
         $profileService = new ProfileService([], $this->dm);
-        $this->assertNull($profileService->getDefaultMasterProfile());
+        static::assertNull($profileService->getDefaultMasterProfile());
     }
 
     public function testGetProfile()
     {
         $profiles = $this->getDemoProfiles();
-        $this->assertEquals($profiles['MASTER_COPY'], $this->profileService->getProfile('MASTER_COPY'));
-        $this->assertEquals($profiles['MASTER_VIDEO_H264'], $this->profileService->getProfile('MASTER_VIDEO_H264'));
-        $this->assertNull($this->profileService->getProfile('master_COPY')); //Case sensitive
-        $this->assertNull($this->profileService->getProfile('master'));
+        static::assertEquals($profiles['MASTER_COPY'], $this->profileService->getProfile('MASTER_COPY'));
+        static::assertEquals($profiles['MASTER_VIDEO_H264'], $this->profileService->getProfile('MASTER_VIDEO_H264'));
+        static::assertNull($this->profileService->getProfile('master_COPY')); //Case sensitive
+        static::assertNull($this->profileService->getProfile('master'));
     }
 
     /**

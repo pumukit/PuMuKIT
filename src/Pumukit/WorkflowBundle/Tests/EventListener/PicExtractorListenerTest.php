@@ -140,9 +140,9 @@ class PicExtractorListenerTest extends PumukitTestCase
     {
         [$mm, $track] = $this->createMultimediaObjectAndTrack($isAudio);
 
-        $this->assertTrue($mm->getPics()->isEmpty());
-        $this->assertCount(0, $mm->getPics()->toArray());
-        $this->assertTrue($this->invokeMethod($this->picExtractorListener, 'generatePic', [$mm, $track]));
+        static::assertTrue($mm->getPics()->isEmpty());
+        static::assertCount(0, $mm->getPics()->toArray());
+        static::assertTrue($this->invokeMethod($this->picExtractorListener, 'generatePic', [$mm, $track]));
 
         $pic = new Pic();
         $mm->addPic($pic);
@@ -150,18 +150,18 @@ class PicExtractorListenerTest extends PumukitTestCase
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertFalse($mm->getPics()->isEmpty());
-        $this->assertCount(1, $mm->getPics()->toArray());
-        $this->assertFalse($this->invokeMethod($this->picExtractorListener, 'generatePic', [$mm, $track]));
+        static::assertFalse($mm->getPics()->isEmpty());
+        static::assertCount(1, $mm->getPics()->toArray());
+        static::assertFalse($this->invokeMethod($this->picExtractorListener, 'generatePic', [$mm, $track]));
     }
 
     private function generatePicFromFileError(PicExtractorListener $picExtractorListener, bool $isAudio = false): void
     {
         [$mm, $track] = $this->createMultimediaObjectAndTrack($isAudio);
 
-        $this->assertTrue($mm->getPics()->isEmpty());
-        $this->assertCount(0, $mm->getPics()->toArray());
-        $this->assertFalse($this->invokeMethod($picExtractorListener, 'generatePic', [$mm, $track]));
+        static::assertTrue($mm->getPics()->isEmpty());
+        static::assertCount(0, $mm->getPics()->toArray());
+        static::assertFalse($this->invokeMethod($picExtractorListener, 'generatePic', [$mm, $track]));
     }
 
     private function createMultimediaObjectAndTrack(bool $isAudio): array

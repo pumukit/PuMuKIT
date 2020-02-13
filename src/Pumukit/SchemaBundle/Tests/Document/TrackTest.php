@@ -52,24 +52,24 @@ class TrackTest extends TestCase
         $track->setNumview($numview);
         $track->setResolution($resolution);
 
-        $this->assertEquals($tags, $track->getTags());
-        $this->assertEquals($language, $track->getLanguage());
-        $this->assertEquals($url, $track->getUrl());
-        $this->assertEquals($path, $track->getPath());
-        $this->assertEquals($mime, $track->getMimeType());
-        $this->assertEquals($duration, $track->getDuration());
-        $this->assertEquals($acodec, $track->getAcodec());
-        $this->assertEquals($vcodec, $track->getVcodec());
-        $this->assertEquals($bitrate, $track->getBitrate());
-        $this->assertEquals($framerate, $track->getFramerate());
-        $this->assertFalse($only_audio, $track->getOnlyAudio());
-        $this->assertEquals($channels, $track->getChannels());
-        $this->assertEquals($duration, $track->getDuration());
-        $this->assertEquals($width, $track->getWidth());
-        $this->assertEquals($height, $track->getHeight());
-        $this->assertFalse($hide, $track->getHide());
-        $this->assertEquals($numview, $track->getNumview());
-        $this->assertEquals($resolution, $track->getResolution());
+        static::assertEquals($tags, $track->getTags());
+        static::assertEquals($language, $track->getLanguage());
+        static::assertEquals($url, $track->getUrl());
+        static::assertEquals($path, $track->getPath());
+        static::assertEquals($mime, $track->getMimeType());
+        static::assertEquals($duration, $track->getDuration());
+        static::assertEquals($acodec, $track->getAcodec());
+        static::assertEquals($vcodec, $track->getVcodec());
+        static::assertEquals($bitrate, $track->getBitrate());
+        static::assertEquals($framerate, $track->getFramerate());
+        static::assertFalse($only_audio, $track->getOnlyAudio());
+        static::assertEquals($channels, $track->getChannels());
+        static::assertEquals($duration, $track->getDuration());
+        static::assertEquals($width, $track->getWidth());
+        static::assertEquals($height, $track->getHeight());
+        static::assertFalse($hide, $track->getHide());
+        static::assertEquals($numview, $track->getNumview());
+        static::assertEquals($resolution, $track->getResolution());
     }
 
     public function testMaxSize()
@@ -78,38 +78,38 @@ class TrackTest extends TestCase
 
         $track = new Track();
         $track->setSize($size);
-        $this->assertEquals($size, $track->getSize());
+        static::assertEquals($size, $track->getSize());
     }
 
     public function testTagCollection()
     {
         $track = new Track();
-        $this->assertFalse($track->containsTag('t'));
+        static::assertFalse($track->containsTag('t'));
         $track->addTag('t');
-        $this->assertTrue($track->containsTag('t'));
+        static::assertTrue($track->containsTag('t'));
         $track->removeTag('t');
-        $this->assertFalse($track->containsTag('t'));
+        static::assertFalse($track->containsTag('t'));
 
         //Repeat Tag
-        $this->assertFalse($track->containsTag('t'));
+        static::assertFalse($track->containsTag('t'));
         $track->addTag('t');
         $track->addTag('t');
-        $this->assertTrue($track->containsTag('t'));
+        static::assertTrue($track->containsTag('t'));
         $track->removeTag('t');
-        $this->assertFalse($track->containsTag('t'));
-        $this->assertFalse($track->removeTag('t'));
+        static::assertFalse($track->containsTag('t'));
+        static::assertFalse($track->removeTag('t'));
 
         //containsAllTag and containsAnyTag
         $track->addTag('t1');
         $track->addTag('t2');
         $track->addTag('t3');
-        $this->assertTrue($track->containsAnyTag(['t0', 't2']));
-        $this->assertTrue($track->containsAnyTag(['t2', 't3']));
-        $this->assertFalse($track->containsAnyTag(['t0', 't4']));
-        $this->assertTrue($track->containsAllTags(['t1', 't2']));
-        $this->assertTrue($track->containsAllTags(['t1']));
-        $this->assertFalse($track->containsAllTags(['t0', 't2']));
-        $this->assertFalse($track->containsAllTags(['t0', 't1', 't2', 't3']));
+        static::assertTrue($track->containsAnyTag(['t0', 't2']));
+        static::assertTrue($track->containsAnyTag(['t2', 't3']));
+        static::assertFalse($track->containsAnyTag(['t0', 't4']));
+        static::assertTrue($track->containsAllTags(['t1', 't2']));
+        static::assertTrue($track->containsAllTags(['t1']));
+        static::assertFalse($track->containsAllTags(['t0', 't2']));
+        static::assertFalse($track->containsAllTags(['t0', 't1', 't2', 't3']));
     }
 
     public function testIsOnlyAudio()
@@ -117,9 +117,9 @@ class TrackTest extends TestCase
         $t1 = new Track();
         $t1->setOnlyAudio(true);
 
-        $this->assertTrue($t1->isOnlyAudio());
+        static::assertTrue($t1->isOnlyAudio());
         $t1->setOnlyAudio(false);
-        $this->assertFalse($t1->isOnlyAudio());
+        static::assertFalse($t1->isOnlyAudio());
     }
 
     public function testIncNumview()
@@ -128,7 +128,7 @@ class TrackTest extends TestCase
         $t1->setNumview(5);
         $t1->incNumview();
 
-        $this->assertEquals(6, $t1->getNumview());
+        static::assertEquals(6, $t1->getNumview());
     }
 
     public function testDurationInMinutesAndSeconds()
@@ -140,10 +140,10 @@ class TrackTest extends TestCase
         $t1 = new Track();
         $t1->setDuration($duration);
 
-        $this->assertEquals($duration_in_minutes_and_seconds1, $t1->getDurationInMinutesAndSeconds());
+        static::assertEquals($duration_in_minutes_and_seconds1, $t1->getDurationInMinutesAndSeconds());
 
         $t1->setDurationInMinutesAndSeconds($duration_in_minutes_and_seconds2);
-        $this->assertEquals($duration_in_minutes_and_seconds2, $t1->getDurationInMinutesAndSeconds());
+        static::assertEquals($duration_in_minutes_and_seconds2, $t1->getDurationInMinutesAndSeconds());
     }
 
     public function testIsMaster()
@@ -151,10 +151,10 @@ class TrackTest extends TestCase
         $t1 = new Track();
         $t1->addTag('master');
 
-        $this->assertTrue($t1->isMaster());
+        static::assertTrue($t1->isMaster());
 
         $t1->removeTag('master');
-        $this->assertFalse($t1->isMaster());
+        static::assertFalse($t1->isMaster());
     }
 
     /*public function testRef()

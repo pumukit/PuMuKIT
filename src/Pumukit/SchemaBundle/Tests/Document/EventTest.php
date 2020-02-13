@@ -42,15 +42,15 @@ class EventTest extends TestCase
         $event->setLocale($locale);
         $event->setSchedule($schedule);
 
-        $this->assertEquals($live, $event->getLive());
-        $this->assertEquals($name, $event->getName());
-        $this->assertEquals($place, $event->getPlace());
-        $this->assertEquals($date, $event->getDate());
-        $this->assertEquals($duration, $event->getDuration());
-        $this->assertEquals($display, $event->getDisplay());
-        $this->assertEquals($create_serial, $event->getCreateSerial());
-        $this->assertEquals($locale, $event->getLocale());
-        $this->assertEquals($pic, $event->getPic());
-        $this->assertEquals($schedule, $event->getSchedule());
+        static::assertEquals($live, $event->getLive());
+        static::assertEquals($name, $event->getName());
+        static::assertEquals($place, $event->getPlace());
+        static::assertEquals($date, $event->getDate());
+        static::assertEquals($duration, $event->getDuration());
+        static::assertEquals($display, $event->getDisplay());
+        static::assertEquals($create_serial, $event->getCreateSerial());
+        static::assertEquals($locale, $event->getLocale());
+        static::assertEquals($pic, $event->getPic());
+        static::assertEquals($schedule, $event->getSchedule());
     }
 }

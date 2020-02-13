@@ -47,8 +47,8 @@ class SeriesEventDispatcherServiceTest extends PumukitTestCase
     public function testDispatchCreate()
     {
         $this->dispatcher->addListener(SchemaEvents::SERIES_CREATE, function ($event, $title) {
-            $this->assertInstanceOf(SeriesEvent::class, $event);
-            $this->assertEquals(SchemaEvents::SERIES_CREATE, $title);
+            static::assertInstanceOf(SeriesEvent::class, $event);
+            static::assertEquals(SchemaEvents::SERIES_CREATE, $title);
 
             $series = $event->getSeries();
 
@@ -56,8 +56,8 @@ class SeriesEventDispatcherServiceTest extends PumukitTestCase
             MockUpSeriesListener::$title = $series->getTitle();
         });
 
-        $this->assertFalse(MockUpSeriesListener::$called);
-        $this->assertEquals(self::EMPTY_TITLE, MockUpSeriesListener::$title);
+        static::assertFalse(MockUpSeriesListener::$called);
+        static::assertEquals(self::EMPTY_TITLE, MockUpSeriesListener::$title);
 
         $title = 'test_title';
 
@@ -69,15 +69,15 @@ class SeriesEventDispatcherServiceTest extends PumukitTestCase
 
         $this->seriesDispatcher->dispatchCreate($series);
 
-        $this->assertTrue(MockUpSeriesListener::$called);
-        $this->assertEquals($title, MockUpSeriesListener::$title);
+        static::assertTrue(MockUpSeriesListener::$called);
+        static::assertEquals($title, MockUpSeriesListener::$title);
     }
 
     public function testDispatchUpdate()
     {
         $this->dispatcher->addListener(SchemaEvents::SERIES_UPDATE, function ($event, $title) {
-            $this->assertInstanceOf(SeriesEvent::class, $event);
-            $this->assertEquals(SchemaEvents::SERIES_UPDATE, $title);
+            static::assertInstanceOf(SeriesEvent::class, $event);
+            static::assertEquals(SchemaEvents::SERIES_UPDATE, $title);
 
             $series = $event->getSeries();
 
@@ -85,8 +85,8 @@ class SeriesEventDispatcherServiceTest extends PumukitTestCase
             MockUpSeriesListener::$title = $series->getTitle();
         });
 
-        $this->assertFalse(MockUpSeriesListener::$called);
-        $this->assertEquals(self::EMPTY_TITLE, MockUpSeriesListener::$title);
+        static::assertFalse(MockUpSeriesListener::$called);
+        static::assertEquals(self::EMPTY_TITLE, MockUpSeriesListener::$title);
 
         $title = 'test_title';
 
@@ -104,15 +104,15 @@ class SeriesEventDispatcherServiceTest extends PumukitTestCase
 
         $this->seriesDispatcher->dispatchUpdate($series);
 
-        $this->assertTrue(MockUpSeriesListener::$called);
-        $this->assertEquals($updateTitle, MockUpSeriesListener::$title);
+        static::assertTrue(MockUpSeriesListener::$called);
+        static::assertEquals($updateTitle, MockUpSeriesListener::$title);
     }
 
     public function testDispatchDelete()
     {
         $this->dispatcher->addListener(SchemaEvents::SERIES_DELETE, function ($event, $title) {
-            $this->assertInstanceOf(SeriesEvent::class, $event);
-            $this->assertEquals(SchemaEvents::SERIES_DELETE, $title);
+            static::assertInstanceOf(SeriesEvent::class, $event);
+            static::assertEquals(SchemaEvents::SERIES_DELETE, $title);
 
             $series = $event->getSeries();
 
@@ -120,8 +120,8 @@ class SeriesEventDispatcherServiceTest extends PumukitTestCase
             MockUpSeriesListener::$title = $series->getTitle();
         });
 
-        $this->assertFalse(MockUpSeriesListener::$called);
-        $this->assertEquals(self::EMPTY_TITLE, MockUpSeriesListener::$title);
+        static::assertFalse(MockUpSeriesListener::$called);
+        static::assertEquals(self::EMPTY_TITLE, MockUpSeriesListener::$title);
 
         $title = 'test_title';
 
@@ -133,8 +133,8 @@ class SeriesEventDispatcherServiceTest extends PumukitTestCase
 
         $this->seriesDispatcher->dispatchDelete($series);
 
-        $this->assertTrue(MockUpSeriesListener::$called);
-        $this->assertEquals($title, MockUpSeriesListener::$title);
+        static::assertTrue(MockUpSeriesListener::$called);
+        static::assertEquals($title, MockUpSeriesListener::$title);
     }
 }
 
