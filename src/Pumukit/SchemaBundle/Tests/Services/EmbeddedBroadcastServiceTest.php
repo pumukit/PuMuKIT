@@ -11,6 +11,7 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
 use Symfony\Component\HttpFoundation\Response;
+use Twig\Environment;
 
 /**
  * @internal
@@ -38,7 +39,8 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         $this->mmsService = static::$kernel->getContainer()->get('pumukitschema.multimedia_object');
         $this->dispatcher = static::$kernel->getContainer()->get('pumukitschema.multimediaobject_dispatcher');
         $this->authorizationChecker = static::$kernel->getContainer()->get('security.authorization_checker');
-        $this->templating = static::$kernel->getContainer()->get('templating');
+        $this->templating = $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock();
+
         $this->router = static::$kernel->getContainer()->get('router');
     }
 
