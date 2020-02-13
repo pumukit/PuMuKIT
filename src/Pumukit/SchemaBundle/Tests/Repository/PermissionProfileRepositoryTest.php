@@ -54,8 +54,8 @@ class PermissionProfileRepositoryTest extends PumukitTestCase
 
     public function testChangeDefault()
     {
-        static::assertCount(0, $this->repo->findByDefault(true));
-        static::assertCount(0, $this->repo->findByDefault(false));
+        static::assertCount(0, $this->repo->findBy(['default' => true]));
+        static::assertCount(0, $this->repo->findBy(['default' => false]));
 
         $permissionProfile1 = new PermissionProfile();
         $permissionProfile1->setName('test1');
@@ -77,9 +77,9 @@ class PermissionProfileRepositoryTest extends PumukitTestCase
         $this->dm->persist($permissionProfile3);
         $this->dm->flush();
 
-        static::assertCount(1, $this->repo->findByDefault(true));
-        static::assertCount(2, $this->repo->findByDefault(false));
-        static::assertEquals($permissionProfile1, $this->repo->findOneByDefault(true));
+        static::assertCount(1, $this->repo->findBy(['default' => true]));
+        static::assertCount(2, $this->repo->findBy(['default' => false]));
+        static::assertEquals($permissionProfile1, $this->repo->findOneBy(['default' => true]));
 
         $permissionProfile4 = new PermissionProfile();
         $permissionProfile4->setName('test4');
@@ -91,9 +91,9 @@ class PermissionProfileRepositoryTest extends PumukitTestCase
 
         $this->repo->changeDefault($permissionProfile4);
 
-        static::assertCount(1, $this->repo->findByDefault(true));
-        static::assertCount(3, $this->repo->findByDefault(false));
-        static::assertEquals($permissionProfile4, $this->repo->findOneByDefault(true));
+        static::assertCount(1, $this->repo->findBy(['default' => true]));
+        static::assertCount(3, $this->repo->findBy(['default' => false]));
+        static::assertEquals($permissionProfile4, $this->repo->findOneBy(['default' => true]));
     }
 
     public function testFindDefaultCandidate()
@@ -129,8 +129,8 @@ class PermissionProfileRepositoryTest extends PumukitTestCase
         $this->dm->persist($permissionProfile3);
         $this->dm->flush();
 
-        static::assertEmpty($this->repo->findByDefault(true));
-        static::assertNotEmpty($this->repo->findByDefault(false));
+        static::assertEmpty($this->repo->findBy(['default' => true]));
+        static::assertNotEmpty($this->repo->findBy(['default' => false]));
 
         static::assertEquals($permissionProfile2, $this->repo->findDefaultCandidate($totalPermissions));
     }
