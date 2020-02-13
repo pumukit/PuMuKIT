@@ -213,7 +213,6 @@ class TagService
 
         $query = $qb
             ->updateMany()
-            ->multiple(true)
             ->field('tags._id')->equals(new ObjectId($tag->getId()))
             ->field('tags.$.title')->set($tag->getI18nTitle())
             ->field('tags.$.description')->set($tag->getI18nDescription())
@@ -263,7 +262,6 @@ class TagService
 
             $query = $qb
                 ->updateMany()
-                ->multiple(true)
                 ->field('tags')->pull($qb->expr()->field('_id')->equals($tag->getId()))
                 ->getQuery()
             ;

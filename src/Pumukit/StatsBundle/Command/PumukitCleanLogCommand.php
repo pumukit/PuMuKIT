@@ -76,8 +76,7 @@ EOT
     private function execRemoveQuery($userAgent): void
     {
         $qb = $this->documentManager->createQueryBuilder(ViewsLog::class)
-            ->remove()
-            ->multiple(true)
+            ->findAndRemove()
             ->field('userAgent')->equals($userAgent);
 
         if ($this->from) {
