@@ -70,15 +70,7 @@ class SeriesRepository extends DocumentRepository
         return $this->createQueryBuilder()->field('_id')->equals($referencedOneSeries)->getQuery()->getSingleResult();
     }
 
-    /**
-     * Find series with any tag.
-     *
-     * @param array $tags
-     * @param array $sort
-     * @param int   $limit
-     * @param int   $page
-     */
-    public function findWithAnyTag($tags, $sort = [], $limit = 0, $page = 0): ArrayCollection
+    public function findWithAnyTag(array $tags, array $sort = [], int $limit = 0, int $page = 0)
     {
         $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithAnyTag($tags);
 
@@ -89,15 +81,7 @@ class SeriesRepository extends DocumentRepository
         return $qb->getQuery()->execute();
     }
 
-    /**
-     * Find series with all tags.
-     *
-     * @param array $tags
-     * @param array $sort
-     * @param int   $limit
-     * @param int   $page
-     */
-    public function findWithAllTags($tags, $sort = [], $limit = 0, $page = 0): ArrayCollection
+    public function findWithAllTags(array $tags, array $sort = [], int $limit = 0, int $page = 0)
     {
         $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithAllTags($tags);
 
@@ -109,13 +93,9 @@ class SeriesRepository extends DocumentRepository
     }
 
     /**
-     * Find one series with all tags.
-     *
-     * @param array $tags
-     *
      * @return array|object|Series|null
      */
-    public function findOneWithAllTags($tags)
+    public function findOneWithAllTags(array $tags)
     {
         $referencedOneSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findOneSeriesFieldWithAllTags($tags);
 
@@ -123,14 +103,9 @@ class SeriesRepository extends DocumentRepository
     }
 
     /**
-     * Find series without tag.
-     *
      * @param EmbeddedTag|Tag $tag
-     * @param array           $sort
-     * @param int             $limit
-     * @param int             $page
      */
-    public function findWithoutTag($tag, $sort = [], $limit = 0, $page = 0): ArrayCollection
+    public function findWithoutTag($tag, array $sort = [], int $limit = 0, int $page = 0)
     {
         $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithTag($tag);
 
