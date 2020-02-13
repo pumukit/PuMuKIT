@@ -49,8 +49,8 @@ class PersonWithRoleEventDispatcherServiceTest extends WebTestCase
     public function testDispatchCreate()
     {
         $this->dispatcher->addListener(SchemaEvents::PERSONWITHROLE_CREATE, function ($event, $name) {
-            $this->assertInstanceOf(PersonWithRoleEvent::class, $event);
-            $this->assertEquals(SchemaEvents::PERSONWITHROLE_CREATE, $name);
+            static::assertInstanceOf(PersonWithRoleEvent::class, $event);
+            static::assertEquals(SchemaEvents::PERSONWITHROLE_CREATE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
             $person = $event->getPerson();
@@ -62,10 +62,10 @@ class PersonWithRoleEventDispatcherServiceTest extends WebTestCase
             MockUpPersonWithRoleListener::$code = $role->getCod();
         });
 
-        $this->assertFalse(MockUpPersonWithRoleListener::$called);
-        $this->assertEquals(self::EMPTY_TITLE, MockUpPersonWithRoleListener::$title);
-        $this->assertEquals(self::EMPTY_NAME, MockUpPersonWithRoleListener::$name);
-        $this->assertEquals(self::EMPTY_CODE, MockUpPersonWithRoleListener::$code);
+        static::assertFalse(MockUpPersonWithRoleListener::$called);
+        static::assertEquals(self::EMPTY_TITLE, MockUpPersonWithRoleListener::$title);
+        static::assertEquals(self::EMPTY_NAME, MockUpPersonWithRoleListener::$name);
+        static::assertEquals(self::EMPTY_CODE, MockUpPersonWithRoleListener::$code);
 
         $title = 'test title';
         $name = 'Bob';
@@ -82,17 +82,17 @@ class PersonWithRoleEventDispatcherServiceTest extends WebTestCase
 
         $this->personWithRoleDispatcher->dispatchCreate($multimediaObject, $person, $role);
 
-        $this->assertTrue(MockUpPersonWithRoleListener::$called);
-        $this->assertEquals($title, MockUpPersonWithRoleListener::$title);
-        $this->assertEquals($name, MockUpPersonWithRoleListener::$name);
-        $this->assertEquals($code, MockUpPersonWithRoleListener::$code);
+        static::assertTrue(MockUpPersonWithRoleListener::$called);
+        static::assertEquals($title, MockUpPersonWithRoleListener::$title);
+        static::assertEquals($name, MockUpPersonWithRoleListener::$name);
+        static::assertEquals($code, MockUpPersonWithRoleListener::$code);
     }
 
     public function testDispatchUpdate()
     {
         $this->dispatcher->addListener(SchemaEvents::PERSONWITHROLE_UPDATE, function ($event, $name) {
-            $this->assertInstanceOf(PersonWithRoleEvent::class, $event);
-            $this->assertEquals(SchemaEvents::PERSONWITHROLE_UPDATE, $name);
+            static::assertInstanceOf(PersonWithRoleEvent::class, $event);
+            static::assertEquals(SchemaEvents::PERSONWITHROLE_UPDATE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
             $person = $event->getPerson();
@@ -104,10 +104,10 @@ class PersonWithRoleEventDispatcherServiceTest extends WebTestCase
             MockUpPersonWithRoleListener::$code = $role->getCod();
         });
 
-        $this->assertFalse(MockUpPersonWithRoleListener::$called);
-        $this->assertEquals(self::EMPTY_TITLE, MockUpPersonWithRoleListener::$title);
-        $this->assertEquals(self::EMPTY_NAME, MockUpPersonWithRoleListener::$name);
-        $this->assertEquals(self::EMPTY_CODE, MockUpPersonWithRoleListener::$code);
+        static::assertFalse(MockUpPersonWithRoleListener::$called);
+        static::assertEquals(self::EMPTY_TITLE, MockUpPersonWithRoleListener::$title);
+        static::assertEquals(self::EMPTY_NAME, MockUpPersonWithRoleListener::$name);
+        static::assertEquals(self::EMPTY_CODE, MockUpPersonWithRoleListener::$code);
 
         $title = 'test title';
         $name = 'Bob';
@@ -127,17 +127,17 @@ class PersonWithRoleEventDispatcherServiceTest extends WebTestCase
 
         $this->personWithRoleDispatcher->dispatchUpdate($multimediaObject, $person, $role);
 
-        $this->assertTrue(MockUpPersonWithRoleListener::$called);
-        $this->assertEquals($title, MockUpPersonWithRoleListener::$title);
-        $this->assertEquals($updateName, MockUpPersonWithRoleListener::$name);
-        $this->assertEquals($code, MockUpPersonWithRoleListener::$code);
+        static::assertTrue(MockUpPersonWithRoleListener::$called);
+        static::assertEquals($title, MockUpPersonWithRoleListener::$title);
+        static::assertEquals($updateName, MockUpPersonWithRoleListener::$name);
+        static::assertEquals($code, MockUpPersonWithRoleListener::$code);
     }
 
     public function testDispatchDelete()
     {
         $this->dispatcher->addListener(SchemaEvents::PERSONWITHROLE_DELETE, function ($event, $name) {
-            $this->assertInstanceOf(PersonWithRoleEvent::class, $event);
-            $this->assertEquals(SchemaEvents::PERSONWITHROLE_DELETE, $name);
+            static::assertInstanceOf(PersonWithRoleEvent::class, $event);
+            static::assertEquals(SchemaEvents::PERSONWITHROLE_DELETE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
             $person = $event->getPerson();
@@ -149,10 +149,10 @@ class PersonWithRoleEventDispatcherServiceTest extends WebTestCase
             MockUpPersonWithRoleListener::$code = $role->getCod();
         });
 
-        $this->assertFalse(MockUpPersonWithRoleListener::$called);
-        $this->assertEquals(self::EMPTY_TITLE, MockUpPersonWithRoleListener::$title);
-        $this->assertEquals(self::EMPTY_NAME, MockUpPersonWithRoleListener::$name);
-        $this->assertEquals(self::EMPTY_CODE, MockUpPersonWithRoleListener::$code);
+        static::assertFalse(MockUpPersonWithRoleListener::$called);
+        static::assertEquals(self::EMPTY_TITLE, MockUpPersonWithRoleListener::$title);
+        static::assertEquals(self::EMPTY_NAME, MockUpPersonWithRoleListener::$name);
+        static::assertEquals(self::EMPTY_CODE, MockUpPersonWithRoleListener::$code);
 
         $title = 'test title';
         $name = 'Bob';
@@ -169,10 +169,10 @@ class PersonWithRoleEventDispatcherServiceTest extends WebTestCase
 
         $this->personWithRoleDispatcher->dispatchDelete($multimediaObject, $person, $role);
 
-        $this->assertTrue(MockUpPersonWithRoleListener::$called);
-        $this->assertEquals($title, MockUpPersonWithRoleListener::$title);
-        $this->assertEquals($name, MockUpPersonWithRoleListener::$name);
-        $this->assertEquals($code, MockUpPersonWithRoleListener::$code);
+        static::assertTrue(MockUpPersonWithRoleListener::$called);
+        static::assertEquals($title, MockUpPersonWithRoleListener::$title);
+        static::assertEquals($name, MockUpPersonWithRoleListener::$name);
+        static::assertEquals($code, MockUpPersonWithRoleListener::$code);
     }
 }
 

@@ -27,12 +27,12 @@ class GroupTest extends TestCase
         $group->setOrigin($origin);
         $group->setUpdatedAt($updatedAt);
 
-        $this->assertEquals($key, $group->getKey());
-        $this->assertEquals($key, (string) $group);
-        $this->assertEquals($name, $group->getName());
-        $this->assertEquals($comments, $group->getComments());
-        $this->assertEquals($origin, $group->getOrigin());
-        $this->assertEquals($updatedAt, $group->getUpdatedAt());
+        static::assertEquals($key, $group->getKey());
+        static::assertEquals($key, (string) $group);
+        static::assertEquals($name, $group->getName());
+        static::assertEquals($comments, $group->getComments());
+        static::assertEquals($origin, $group->getOrigin());
+        static::assertEquals($updatedAt, $group->getUpdatedAt());
     }
 
     public function testGroupInterface()
@@ -45,10 +45,10 @@ class GroupTest extends TestCase
         $group->setKey($key);
         $group->setName($name);
 
-        $this->assertEquals($group, $group->addRole('role_test'));
-        $this->assertFalse($group->hasRole('role_test'));
-        $this->assertEquals([], $group->getRoles());
-        $this->assertEquals($group, $group->removeRole('role_test'));
-        $this->assertEquals($group, $group->setRoles([]));
+        static::assertEquals($group, $group->addRole('role_test'));
+        static::assertFalse($group->hasRole('role_test'));
+        static::assertEquals([], $group->getRoles());
+        static::assertEquals($group, $group->removeRole('role_test'));
+        static::assertEquals($group, $group->setRoles([]));
     }
 }

@@ -16,9 +16,9 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('pumukit_encoder');
         $rootNode = $treeBuilder->getRootNode();
 
-        $this->addGlobalConfig($rootNode);
+        static::addGlobalConfig($rootNode);
         $this->addCpusSection($rootNode);
-        $this->addProfilesSection($rootNode);
+        static::addProfilesSection($rootNode);
         $this->addThumbnailSection($rootNode);
         $this->addTargetDefaultProfiles($rootNode);
 

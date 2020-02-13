@@ -52,14 +52,14 @@ class SeriesServiceTest extends PumukitTestCase
         $secret = $series->getSecret();
 
         $series = $this->repo->find($series->getId());
-        $this->assertEquals($secret, $series->getSecret());
+        static::assertEquals($secret, $series->getSecret());
 
         $seriesService = new SeriesService($this->dm, $this->seriesDispatcher);
 
         $newSecret = $seriesService->resetMagicUrl($series);
 
-        $this->assertNotEquals($secret, $series->getSecret());
-        $this->assertEquals($newSecret, $series->getSecret());
+        static::assertNotEquals($secret, $series->getSecret());
+        static::assertEquals($newSecret, $series->getSecret());
     }
 
     public function testSameEmbeddedBroadcast()
@@ -148,7 +148,7 @@ class SeriesServiceTest extends PumukitTestCase
         $this->dm->persist($mm14);
         $this->dm->flush();
 
-        $this->assertFalse($this->seriesService->sameEmbeddedBroadcast($series1));
+        static::assertFalse($this->seriesService->sameEmbeddedBroadcast($series1));
 
         $embeddedBroadcast11 = $mm11->getEmbeddedBroadcast();
         $embeddedBroadcast12 = $mm12->getEmbeddedBroadcast();
@@ -164,7 +164,7 @@ class SeriesServiceTest extends PumukitTestCase
         $this->dm->persist($mm14);
         $this->dm->flush();
 
-        $this->assertTrue($this->seriesService->sameEmbeddedBroadcast($series1));
+        static::assertTrue($this->seriesService->sameEmbeddedBroadcast($series1));
 
         $embeddedBroadcast11->setType($typePassword);
         $embeddedBroadcast12->setType($typePassword);
@@ -176,7 +176,7 @@ class SeriesServiceTest extends PumukitTestCase
         $this->dm->persist($mm14);
         $this->dm->flush();
 
-        $this->assertFalse($this->seriesService->sameEmbeddedBroadcast($series1));
+        static::assertFalse($this->seriesService->sameEmbeddedBroadcast($series1));
 
         $embeddedBroadcast11->setPassword($password2);
         $embeddedBroadcast12->setPassword($password2);
@@ -188,7 +188,7 @@ class SeriesServiceTest extends PumukitTestCase
         $this->dm->persist($mm14);
         $this->dm->flush();
 
-        $this->assertTrue($this->seriesService->sameEmbeddedBroadcast($series1));
+        static::assertTrue($this->seriesService->sameEmbeddedBroadcast($series1));
 
         $embeddedBroadcast11->setType($typeGroups);
         $embeddedBroadcast12->setType($typeGroups);
@@ -200,7 +200,7 @@ class SeriesServiceTest extends PumukitTestCase
         $this->dm->persist($mm14);
         $this->dm->flush();
 
-        $this->assertFalse($this->seriesService->sameEmbeddedBroadcast($series1));
+        static::assertFalse($this->seriesService->sameEmbeddedBroadcast($series1));
 
         $embeddedBroadcast11 = $this->removeGroups($embeddedBroadcast11);
         $embeddedBroadcast11->addGroup($group1);
@@ -220,7 +220,7 @@ class SeriesServiceTest extends PumukitTestCase
         $this->dm->persist($mm14);
         $this->dm->flush();
 
-        $this->assertTrue($this->seriesService->sameEmbeddedBroadcast($series1));
+        static::assertTrue($this->seriesService->sameEmbeddedBroadcast($series1));
     }
 
     private function createGroup($key = 'Group1', $name = 'Group 1')

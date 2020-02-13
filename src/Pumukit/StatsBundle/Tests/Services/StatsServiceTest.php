@@ -46,21 +46,21 @@ class StatsServiceTest extends PumukitTestCase
 
         $service = new StatsService($this->dm);
         $mv = $service->getMostViewed([], 1, 1);
-        $this->assertCount(1, $mv);
-        $this->assertEquals($mv, [$list[3]]);
+        static::assertCount(1, $mv);
+        static::assertEquals($mv, [$list[3]]);
 
         $mv = $service->getMostViewed([], 30, 1);
-        $this->assertEquals($mv, [$list[5]]);
+        static::assertEquals($mv, [$list[5]]);
 
         $mv = $service->getMostViewed([], 1, 3);
-        $this->assertEquals($mv, [$list[3], $list[2], $list[1]]);
+        static::assertEquals($mv, [$list[3], $list[2], $list[1]]);
 
         $mv = $service->getMostViewed([], 30, 3);
-        $this->assertEquals($mv, [$list[5], $list[4], $list[3]]);
+        static::assertEquals($mv, [$list[5], $list[4], $list[3]]);
 
         $mv = $service->getMostViewed([], 30, 30);
-        $this->assertCount(5, $mv);
-        $this->assertEquals($mv, [$list[5], $list[4], $list[3], $list[2], $list[1]]);
+        static::assertCount(5, $mv);
+        static::assertEquals($mv, [$list[5], $list[4], $list[3], $list[2], $list[1]]);
     }
 
     public function testStatsServiceWithBlockedVideos()
@@ -70,7 +70,7 @@ class StatsServiceTest extends PumukitTestCase
 
         $service = new StatsService($this->dm);
         $mv = $service->getMostViewed(['tv'], 30, 3);
-        $this->assertEquals($mv, [$list[5], $list[4], $list[3]]);
+        static::assertEquals($mv, [$list[5], $list[4], $list[3]]);
 
         $mm = $list[5];
         foreach ($mm->getTags() as $tag) {
@@ -80,7 +80,7 @@ class StatsServiceTest extends PumukitTestCase
         $this->dm->flush();
 
         $mv = $service->getMostViewed(['tv'], 30, 3);
-        $this->assertEquals($mv, [$list[4], $list[3], $list[2]]);
+        static::assertEquals($mv, [$list[4], $list[3], $list[2]]);
     }
 
     public function testStatsServiceWithTags()
@@ -91,13 +91,13 @@ class StatsServiceTest extends PumukitTestCase
         $service = new StatsService($this->dm);
 
         $mv = $service->getMostViewed(['1'], 30, 30);
-        $this->assertEquals($mv, [$list[1]]);
+        static::assertEquals($mv, [$list[1]]);
 
         $mv = $service->getMostViewed(['11'], 30, 30);
-        $this->assertEquals($mv, []);
+        static::assertEquals($mv, []);
 
         $mv = $service->getMostViewed(['1'], 1, 3);
-        $this->assertEquals($mv, [$list[1]]);
+        static::assertEquals($mv, [$list[1]]);
     }
 
     public function testStatsServiceUsingFilters()
@@ -113,7 +113,7 @@ class StatsServiceTest extends PumukitTestCase
         $service = new StatsService($this->dm);
 
         $mv = $service->getMostViewedUsingFilters(30, 30);
-        $this->assertEquals($mv, [$list[1]]);
+        static::assertEquals($mv, [$list[1]]);
     }
 
     public function testGetMmobjsMostViewedByRange()
@@ -135,7 +135,7 @@ class StatsServiceTest extends PumukitTestCase
 
         [$mostViewed, $total] = $service->getMmobjsMostViewedByRange([], ['sort' => 1]);
 
-        $this->assertEquals($listMapped, $mostViewed);
+        static::assertEquals($listMapped, $mostViewed);
 
         //Sorts by most viewed
         usort($listMapped, function ($a, $b) {
@@ -143,32 +143,32 @@ class StatsServiceTest extends PumukitTestCase
         });
 
         [$mostViewed, $total] = $service->getMmobjsMostViewedByRange();
-        $this->assertEquals($listMapped, $mostViewed);
-        $this->assertCount($total, $listMapped);
+        static::assertEquals($listMapped, $mostViewed);
+        static::assertCount($total, $listMapped);
 
         [$mostViewed, $total] = $service->getMmobjsMostViewedByRange(['title.en' => 'OTHER MMOBJ']);
-        $this->assertEquals([$listMapped[4]], $mostViewed);
-        $this->assertEquals($total, 1);
+        static::assertEquals([$listMapped[4]], $mostViewed);
+        static::assertEquals($total, 1);
 
         [$mostViewed, $total] = $service->getMmobjsMostViewedByRange([], ['limit' => 0]);
-        $this->assertEquals([], $mostViewed);
-        $this->assertEquals($total, 5);
+        static::assertEquals([], $mostViewed);
+        static::assertEquals($total, 5);
         [$mostViewed, $total] = $service->getMmobjsMostViewedByRange(['not_a_parameter' => 'not_a_value']);
-        $this->assertEquals($total, 0);
+        static::assertEquals($total, 0);
         [$mostViewed, $total] = $service->getMmobjsMostViewedByRange(['title.en' => 'New'], ['limit' => 2, 'from_date' => new \DateTime('-11 days')]);
-        $this->assertEquals([$listMapped[1], $listMapped[2]], $mostViewed);
-        $this->assertEquals(4, $total);
+        static::assertEquals([$listMapped[1], $listMapped[2]], $mostViewed);
+        static::assertEquals(4, $total);
         [$mostViewed, $total] = $service->getMmobjsMostViewedByRange(['title.en' => 'New'], ['limit' => 2, 'from_date' => new \DateTime('-11 days'), 'page' => 1]);
-        $this->assertEquals([$listMapped[3], ['mmobj' => $list[3], 'num_viewed' => 0]], $mostViewed);
-        $this->assertEquals(4, $total);
+        static::assertEquals([$listMapped[3], ['mmobj' => $list[3], 'num_viewed' => 0]], $mostViewed);
+        static::assertEquals(4, $total);
 
         [$mostViewed, $total] = $service->getMmobjsMostViewedByRange([], ['from_date' => new \DateTime('-21 days'), 'to_date' => new \DateTime('-9 days')]);
 
-        $this->assertEquals([$listMapped[0], $listMapped[1]], array_slice($mostViewed, 0, 2));
-        $this->assertEquals(0, $mostViewed[2]['num_viewed']);
-        $this->assertEquals(0, $mostViewed[3]['num_viewed']);
-        $this->assertEquals(0, $mostViewed[4]['num_viewed']);
-        $this->assertEquals(5, $total);
+        static::assertEquals([$listMapped[0], $listMapped[1]], array_slice($mostViewed, 0, 2));
+        static::assertEquals(0, $mostViewed[2]['num_viewed']);
+        static::assertEquals(0, $mostViewed[3]['num_viewed']);
+        static::assertEquals(0, $mostViewed[4]['num_viewed']);
+        static::assertEquals(5, $total);
     }
 
     private function logView($when, MultimediaObject $multimediaObject, Track $track = null)

@@ -102,7 +102,7 @@ class MultimediaObjectPicServiceTest extends PumukitTestCase
         $this->dm->persist($mm21);
         $this->dm->flush();
 
-        $this->assertCount(4, $this->mmsPicService->getRecommendedPics($series1));
+        static::assertCount(4, $this->mmsPicService->getRecommendedPics($series1));
     }
 
     public function testAddPicUrl()
@@ -110,14 +110,14 @@ class MultimediaObjectPicServiceTest extends PumukitTestCase
         $series = $this->factoryService->createSeries();
         $mm = $this->factoryService->createMultimediaObject($series);
 
-        $this->assertCount(0, $mm->getPics());
+        static::assertCount(0, $mm->getPics());
 
         $url = 'http://domain.com/pic.png';
 
         $mm = $this->mmsPicService->addPicUrl($mm, $url);
 
-        $this->assertCount(1, $mm->getPics());
-        $this->assertCount(1, $this->repo->find($mm->getId())->getPics());
+        static::assertCount(1, $mm->getPics());
+        static::assertCount(1, $this->repo->find($mm->getId())->getPics());
     }
 
     public function testAddPicFile()
@@ -125,7 +125,7 @@ class MultimediaObjectPicServiceTest extends PumukitTestCase
         $series = $this->factoryService->createSeries();
         $mm = $this->factoryService->createMultimediaObject($series);
 
-        $this->assertCount(0, $mm->getPics());
+        static::assertCount(0, $mm->getPics());
 
         $picPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'picCopy.png';
         if (copy($this->originalPicPath, $picPath)) {
@@ -133,13 +133,13 @@ class MultimediaObjectPicServiceTest extends PumukitTestCase
             $mm = $this->mmsPicService->addPicFile($mm, $picFile);
             $mm = $this->repo->find($mm->getId());
 
-            $this->assertCount(1, $mm->getPics());
+            static::assertCount(1, $mm->getPics());
 
             $pic = $mm->getPics()[0];
-            $this->assertTrue($mm->containsPic($pic));
+            static::assertTrue($mm->containsPic($pic));
 
             $uploadedPic = '/uploads/pic/series/'.$mm->getSeries()->getId().'/video/'.$mm->getId().DIRECTORY_SEPARATOR.$picFile->getClientOriginalName();
-            $this->assertEquals($uploadedPic, $pic->getUrl());
+            static::assertEquals($uploadedPic, $pic->getUrl());
         }
 
         $this->deleteCreatedFiles();
@@ -155,12 +155,12 @@ class MultimediaObjectPicServiceTest extends PumukitTestCase
             $picFile = new UploadedFile($picPath, 'pic.png', null, null, null, true);
             $mm = $this->mmsPicService->addPicFile($mm, $picFile);
 
-            $this->assertCount(1, $mm->getPics());
+            static::assertCount(1, $mm->getPics());
 
             $pic = $mm->getPics()[0];
             $mm = $this->mmsPicService->removePicFromMultimediaObject($mm, $pic->getId());
 
-            $this->assertCount(0, $mm->getPics());
+            static::assertCount(0, $mm->getPics());
         }
 
         $this->deleteCreatedFiles();

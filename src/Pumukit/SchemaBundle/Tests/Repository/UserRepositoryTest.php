@@ -40,7 +40,7 @@ class UserRepositoryTest extends PumukitTestCase
 
     public function testRepositoryEmpty()
     {
-        $this->assertCount(0, $this->repo->findAll());
+        static::assertCount(0, $this->repo->findAll());
     }
 
     public function testRepository()
@@ -53,7 +53,7 @@ class UserRepositoryTest extends PumukitTestCase
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertCount(1, $this->repo->findAll());
+        static::assertCount(1, $this->repo->findAll());
     }
 
     public function testPerson()
@@ -74,7 +74,7 @@ class UserRepositoryTest extends PumukitTestCase
 
         $user = $this->repo->find($user->getId());
 
-        $this->assertEquals($person, $user->getPerson());
+        static::assertEquals($person, $user->getPerson());
     }
 
     public function testPermissionProfile()
@@ -94,24 +94,24 @@ class UserRepositoryTest extends PumukitTestCase
 
         $user = $this->repo->find($user->getId());
 
-        $this->assertEquals($permissionProfile, $user->getPermissionProfile());
+        static::assertEquals($permissionProfile, $user->getPermissionProfile());
     }
 
     public function testUserGroups()
     {
-        $this->assertCount(0, $this->groupRepo->findAll());
+        static::assertCount(0, $this->groupRepo->findAll());
 
         $key1 = 'Group1';
         $name1 = 'Group 1';
         $group1 = $this->createGroup($key1, $name1);
 
-        $this->assertCount(1, $this->groupRepo->findAll());
+        static::assertCount(1, $this->groupRepo->findAll());
 
         $key2 = 'Group2';
         $name2 = 'Group 2';
         $group2 = $this->createGroup($key2, $name2);
 
-        $this->assertCount(2, $this->groupRepo->findAll());
+        static::assertCount(2, $this->groupRepo->findAll());
 
         $user = new User();
         $user->setEmail('testgroup@mail.com');
@@ -121,29 +121,29 @@ class UserRepositoryTest extends PumukitTestCase
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertTrue($user->containsGroup($group1));
-        $this->assertFalse($user->containsGroup($group2));
-        $this->assertEquals(1, $user->getGroups()->count());
+        static::assertTrue($user->containsGroup($group1));
+        static::assertFalse($user->containsGroup($group2));
+        static::assertEquals(1, $user->getGroups()->count());
 
         $user->addGroup($group2);
 
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertTrue($user->containsGroup($group1));
-        $this->assertTrue($user->containsGroup($group2));
-        $this->assertEquals(2, $user->getGroups()->count());
+        static::assertTrue($user->containsGroup($group1));
+        static::assertTrue($user->containsGroup($group2));
+        static::assertEquals(2, $user->getGroups()->count());
 
         $user->removeGroup($group1);
 
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertFalse($user->containsGroup($group1));
-        $this->assertTrue($user->containsGroup($group2));
-        $this->assertEquals(1, $user->getGroups()->count());
+        static::assertFalse($user->containsGroup($group1));
+        static::assertTrue($user->containsGroup($group2));
+        static::assertEquals(1, $user->getGroups()->count());
 
-        $this->assertCount(2, $this->groupRepo->findAll());
+        static::assertCount(2, $this->groupRepo->findAll());
     }
 
     public function testGetGroupsIds()
@@ -163,21 +163,21 @@ class UserRepositoryTest extends PumukitTestCase
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertCount(0, $user->getGroupsIds());
+        static::assertCount(0, $user->getGroupsIds());
 
         $user->addGroup($group1);
 
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertCount(1, $user->getGroupsIds());
+        static::assertCount(1, $user->getGroupsIds());
 
         $user->addGroup($group2);
 
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertCount(2, $user->getGroupsIds());
+        static::assertCount(2, $user->getGroupsIds());
     }
 
     private function createGroup($key = 'Group1', $name = 'Group 1')

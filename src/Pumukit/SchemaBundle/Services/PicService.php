@@ -18,8 +18,8 @@ class PicService
 
     public function __construct($scheme, $host, $webDir = '', $defaultSeriesPic = '', $defaultPlaylistPic = '', $defaultVideoPic = '', $defaultAudioHDPic = '', $defaultAudioSDPic = '')
     {
-        $this->scheme = str_replace("'", '',$scheme);
-        $this->host = str_replace("'", '',$host);
+        $this->scheme = str_replace("'", '', $scheme);
+        $this->host = str_replace("'", '', $host);
         $this->webDir = $webDir;
         $this->defaultSeriesPic = $defaultSeriesPic;
         $this->defaultPlaylistPic = $defaultPlaylistPic;

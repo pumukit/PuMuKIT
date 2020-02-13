@@ -102,7 +102,7 @@ class SeriesPlaylistServiceTest extends PumukitTestCase
     public function testGetPlaylistMmobjs()
     {
         $playlistMmobjs = $this->seriesPlaylistService->getPlaylistMmobjs($this->testSeries);
-        $this->assertEquals([
+        static::assertEquals([
             $this->testMmobjs['published'],
             $this->testMmobjs['hidden'],
             $this->testMmobjs['blocked'],
@@ -113,12 +113,12 @@ class SeriesPlaylistServiceTest extends PumukitTestCase
     public function testGetPlaylistFirstMmobj()
     {
         $playlistMmobj = $this->seriesPlaylistService->getPlaylistFirstMmobj($this->testSeries);
-        $this->assertEquals($this->testMmobjs['published'], $playlistMmobj);
+        static::assertEquals($this->testMmobjs['published'], $playlistMmobj);
     }
 
     public function testGetMmobjFromIdAndPlaylist()
     {
         $playlistMmobj = $this->seriesPlaylistService->getMmobjFromIdAndPlaylist($this->testMmobjs['published']->getId(), $this->testSeries);
-        $this->assertEquals($this->testMmobjs['published'], $playlistMmobj);
+        static::assertEquals($this->testMmobjs['published'], $playlistMmobj);
     }
 }

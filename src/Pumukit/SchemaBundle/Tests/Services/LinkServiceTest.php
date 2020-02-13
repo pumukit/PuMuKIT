@@ -42,13 +42,13 @@ class LinkServiceTest extends PumukitTestCase
         $series = $this->factoryService->createSeries();
         $mm = $this->factoryService->createMultimediaObject($series);
 
-        $this->assertCount(0, $mm->getLinks());
+        static::assertCount(0, $mm->getLinks());
 
         $link = new Link();
         $mm = $this->linkService->addLinkToMultimediaObject($mm, $link);
         $mm = $this->repoMmobj->find($mm->getId());
 
-        $this->assertCount(1, $mm->getLinks());
+        static::assertCount(1, $mm->getLinks());
     }
 
     public function testUpdateLinkInMultimediaObject()
@@ -56,7 +56,7 @@ class LinkServiceTest extends PumukitTestCase
         $series = $this->factoryService->createSeries();
         $mm = $this->factoryService->createMultimediaObject($series);
 
-        $this->assertCount(0, $mm->getLinks());
+        static::assertCount(0, $mm->getLinks());
 
         $link = new Link();
         $name = 'Original link name';
@@ -64,8 +64,8 @@ class LinkServiceTest extends PumukitTestCase
         $mm = $this->linkService->addLinkToMultimediaObject($mm, $link);
         $mm = $this->repoMmobj->find($mm->getId());
 
-        $this->assertCount(1, $mm->getLinks());
-        $this->assertEquals($name, $mm->getLinkById($link->getId())->getName());
+        static::assertCount(1, $mm->getLinks());
+        static::assertEquals($name, $mm->getLinkById($link->getId())->getName());
 
         $newName = 'New link name';
         $link = $mm->getLinkById($link->getId());
@@ -73,7 +73,7 @@ class LinkServiceTest extends PumukitTestCase
         $mm = $this->linkService->updateLinkInMultimediaObject($mm, $link);
         $mm = $this->repoMmobj->find($mm->getId());
 
-        $this->assertEquals($newName, $mm->getLinkById($link->getId())->getName());
+        static::assertEquals($newName, $mm->getLinkById($link->getId())->getName());
     }
 
     public function testRemoveLinkFromMultimediaObject()
@@ -81,7 +81,7 @@ class LinkServiceTest extends PumukitTestCase
         $series = $this->factoryService->createSeries();
         $mm = $this->factoryService->createMultimediaObject($series);
 
-        $this->assertCount(0, $mm->getLinks());
+        static::assertCount(0, $mm->getLinks());
 
         $link1 = new Link();
         $mm = $this->linkService->addLinkToMultimediaObject($mm, $link1);
@@ -91,17 +91,17 @@ class LinkServiceTest extends PumukitTestCase
         $mm = $this->linkService->addLinkToMultimediaObject($mm, $link2);
         $mm = $this->repoMmobj->find($mm->getId());
 
-        $this->assertCount(2, $mm->getLinks());
+        static::assertCount(2, $mm->getLinks());
 
         $mm = $this->linkService->removeLinkFromMultimediaObject($mm, $link1->getId());
         $mm = $this->repoMmobj->find($mm->getId());
 
-        $this->assertCount(1, $mm->getLinks());
+        static::assertCount(1, $mm->getLinks());
 
         $mm = $this->linkService->removeLinkFromMultimediaObject($mm, $link2->getId());
         $mm = $this->repoMmobj->find($mm->getId());
 
-        $this->assertCount(0, $mm->getLinks());
+        static::assertCount(0, $mm->getLinks());
     }
 
     public function testUpAndDownLinkInMultimediaObject()
@@ -119,22 +119,22 @@ class LinkServiceTest extends PumukitTestCase
         $mm = $this->linkService->addLinkToMultimediaObject($mm, $link3);
 
         $links = [$link1, $link2, $link3];
-        $this->assertEquals($links, $mm->getLinks()->toArray());
+        static::assertEquals($links, $mm->getLinks()->toArray());
 
         $mm = $this->repoMmobj->find($mm->getId());
 
         $this->linkService->upLinkInMultimediaObject($mm, $link2->getId());
         $links = [$link2, $link1, $link3];
-        $this->assertEquals($links, $mm->getLinks()->toArray());
+        static::assertEquals($links, $mm->getLinks()->toArray());
 
         $mm = $this->repoMmobj->find($mm->getId());
         $this->linkService->upLinkInMultimediaObject($mm, $link3->getId());
         $links = [$link2, $link3, $link1];
-        $this->assertEquals($links, $mm->getLinks()->toArray());
+        static::assertEquals($links, $mm->getLinks()->toArray());
 
         $mm = $this->repoMmobj->find($mm->getId());
         $this->linkService->downLinkInMultimediaObject($mm, $link2->getId());
         $links = [$link3, $link2, $link1];
-        $this->assertEquals($links, $mm->getLinks()->toArray());
+        static::assertEquals($links, $mm->getLinks()->toArray());
     }
 }

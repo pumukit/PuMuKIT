@@ -47,8 +47,8 @@ class PermissionProfileEventDispatcherServiceTest extends PumukitTestCase
     public function testDispatchCreate()
     {
         $this->dispatcher->addListener(SchemaEvents::PERMISSIONPROFILE_CREATE, function ($event, $name) {
-            $this->assertInstanceOf(PermissionProfileEvent::class, $event);
-            $this->assertEquals(SchemaEvents::PERMISSIONPROFILE_CREATE, $name);
+            static::assertInstanceOf(PermissionProfileEvent::class, $event);
+            static::assertEquals(SchemaEvents::PERMISSIONPROFILE_CREATE, $name);
 
             $permissionProfile = $event->getPermissionProfile();
 
@@ -56,8 +56,8 @@ class PermissionProfileEventDispatcherServiceTest extends PumukitTestCase
             MockUpPermissionProfileListener::$name = $permissionProfile->getName();
         });
 
-        $this->assertFalse(MockUpPermissionProfileListener::$called);
-        $this->assertEquals(self::EMPTY_NAME, MockUpPermissionProfileListener::$name);
+        static::assertFalse(MockUpPermissionProfileListener::$called);
+        static::assertEquals(self::EMPTY_NAME, MockUpPermissionProfileListener::$name);
 
         $name = 'test_name';
 
@@ -69,15 +69,15 @@ class PermissionProfileEventDispatcherServiceTest extends PumukitTestCase
 
         $this->permissionProfileDispatcher->dispatchCreate($permissionProfile);
 
-        $this->assertTrue(MockUpPermissionProfileListener::$called);
-        $this->assertEquals($name, MockUpPermissionProfileListener::$name);
+        static::assertTrue(MockUpPermissionProfileListener::$called);
+        static::assertEquals($name, MockUpPermissionProfileListener::$name);
     }
 
     public function testDispatchUpdate()
     {
         $this->dispatcher->addListener(SchemaEvents::PERMISSIONPROFILE_UPDATE, function ($event, $name) {
-            $this->assertInstanceOf(PermissionProfileEvent::class, $event);
-            $this->assertEquals(SchemaEvents::PERMISSIONPROFILE_UPDATE, $name);
+            static::assertInstanceOf(PermissionProfileEvent::class, $event);
+            static::assertEquals(SchemaEvents::PERMISSIONPROFILE_UPDATE, $name);
 
             $permissionProfile = $event->getPermissionProfile();
 
@@ -85,8 +85,8 @@ class PermissionProfileEventDispatcherServiceTest extends PumukitTestCase
             MockUpPermissionProfileListener::$name = $permissionProfile->getName();
         });
 
-        $this->assertFalse(MockUpPermissionProfileListener::$called);
-        $this->assertEquals(self::EMPTY_NAME, MockUpPermissionProfileListener::$name);
+        static::assertFalse(MockUpPermissionProfileListener::$called);
+        static::assertEquals(self::EMPTY_NAME, MockUpPermissionProfileListener::$name);
 
         $name = 'test_name';
 
@@ -104,15 +104,15 @@ class PermissionProfileEventDispatcherServiceTest extends PumukitTestCase
 
         $this->permissionProfileDispatcher->dispatchUpdate($permissionProfile);
 
-        $this->assertTrue(MockUpPermissionProfileListener::$called);
-        $this->assertEquals($updateName, MockUpPermissionProfileListener::$name);
+        static::assertTrue(MockUpPermissionProfileListener::$called);
+        static::assertEquals($updateName, MockUpPermissionProfileListener::$name);
     }
 
     public function testDispatchDelete()
     {
         $this->dispatcher->addListener(SchemaEvents::PERMISSIONPROFILE_DELETE, function ($event, $name) {
-            $this->assertInstanceOf(PermissionProfileEvent::class, $event);
-            $this->assertEquals(SchemaEvents::PERMISSIONPROFILE_DELETE, $name);
+            static::assertInstanceOf(PermissionProfileEvent::class, $event);
+            static::assertEquals(SchemaEvents::PERMISSIONPROFILE_DELETE, $name);
 
             $permissionProfile = $event->getPermissionProfile();
 
@@ -120,8 +120,8 @@ class PermissionProfileEventDispatcherServiceTest extends PumukitTestCase
             MockUpPermissionProfileListener::$name = $permissionProfile->getName();
         });
 
-        $this->assertFalse(MockUpPermissionProfileListener::$called);
-        $this->assertEquals(self::EMPTY_NAME, MockUpPermissionProfileListener::$name);
+        static::assertFalse(MockUpPermissionProfileListener::$called);
+        static::assertEquals(self::EMPTY_NAME, MockUpPermissionProfileListener::$name);
 
         $name = 'test_name';
 
@@ -133,8 +133,8 @@ class PermissionProfileEventDispatcherServiceTest extends PumukitTestCase
 
         $this->permissionProfileDispatcher->dispatchDelete($permissionProfile);
 
-        $this->assertTrue(MockUpPermissionProfileListener::$called);
-        $this->assertEquals($name, MockUpPermissionProfileListener::$name);
+        static::assertTrue(MockUpPermissionProfileListener::$called);
+        static::assertEquals($name, MockUpPermissionProfileListener::$name);
     }
 }
 

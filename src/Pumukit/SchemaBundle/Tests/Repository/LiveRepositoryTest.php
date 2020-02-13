@@ -67,6 +67,6 @@ class LiveRepositoryTest extends PumukitTestCase
         $this->dm->persist($liveo);
         $this->dm->flush();
 
-        $this->assertCount(1, $this->repo->findAll());
+        static::assertCount(1, $this->repo->findAll());
     }
 }

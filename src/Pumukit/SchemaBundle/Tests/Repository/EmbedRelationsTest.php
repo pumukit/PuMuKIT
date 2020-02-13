@@ -36,8 +36,8 @@ class EmbedRelationsTest extends PumukitTestCase
 
     public function testRepositoryEmpty(): void
     {
-        $this->assertCount(0, $this->repoMmobjs->findAll());
-        $this->assertCount(0, $this->repoTags->findAll());
+        static::assertCount(0, $this->repoMmobjs->findAll());
+        static::assertCount(0, $this->repoTags->findAll());
     }
 
     public function testCreateRootTag(): void
@@ -49,7 +49,7 @@ class EmbedRelationsTest extends PumukitTestCase
         $this->dm->flush();
 
         // This should pass to check the unrequired fields
-        $this->assertCount(1, $this->repoTags->findAll());
+        static::assertCount(1, $this->repoTags->findAll());
     }
 
     public function testGetChildren(): void
@@ -58,21 +58,21 @@ class EmbedRelationsTest extends PumukitTestCase
 
         $tag = $this->repoTags->findOneByCod('ROOT');
         $tree = $this->repoTags->getTree($tag);
-        $this->assertCount(6, $tree);
+        static::assertCount(6, $tree);
         $children = $this->repoTags->getChildren($tag);
-        $this->assertCount(5, $children);
-        $this->assertEquals(5, $this->repoTags->childCount($tag));
+        static::assertCount(5, $children);
+        static::assertEquals(5, $this->repoTags->childCount($tag));
         $directChildren = $this->repoTags->getChildren($tag, true);
-        $this->assertCount(2, $directChildren);
+        static::assertCount(2, $directChildren);
 
         $tag = $this->repoTags->findOneByCod('B');
         $tree = $this->repoTags->getTree($tag);
-        $this->assertCount(4, $tree);
+        static::assertCount(4, $tree);
         $children = $this->repoTags->getChildren($tag);
-        $this->assertCount(3, $children);
-        $this->assertEquals(3, $this->repoTags->childCount($tag));
+        static::assertCount(3, $children);
+        static::assertEquals(3, $this->repoTags->childCount($tag));
         $directChildren = $this->repoTags->getChildren($tag, true);
-        $this->assertCount(2, $directChildren);
+        static::assertCount(2, $directChildren);
     }
 
     public function testGetRootNodes(): void
@@ -80,14 +80,14 @@ class EmbedRelationsTest extends PumukitTestCase
         $this->createTestTree();
 
         $tree = $this->repoTags->getRootNodes();
-        $this->assertCount(1, $tree);
+        static::assertCount(1, $tree);
     }
 
     public function testTagEmptyInMultimediaObject(): void
     {
         $this->createTestMultimediaObject();
 
-        $this->assertCount(0, $this->repoMmobjs->findOneByDuration(300)->getTags());
+        static::assertCount(0, $this->repoMmobjs->findOneByDuration(300)->getTags());
     }
 
     public function testAddTagToMultimediaObject(): void
@@ -96,8 +96,8 @@ class EmbedRelationsTest extends PumukitTestCase
         $this->createTestMultimediaObject();
         $this->addTagToMultimediaObject();
 
-        $this->assertCount(1, $this->repoMmobjs->findOneByDuration(300)->getTags());
-        $this->assertEquals('B2A', $this->repoTags->findOneByCod('B2A')->getCod());
+        static::assertCount(1, $this->repoMmobjs->findOneByDuration(300)->getTags());
+        static::assertEquals('B2A', $this->repoTags->findOneByCod('B2A')->getCod());
     }
 
     public function testAddAndRemoveTagToMultimediaObject(): void
@@ -107,8 +107,8 @@ class EmbedRelationsTest extends PumukitTestCase
         $this->addTagToMultimediaObject();
         $this->removeTagFromMultimediaObject();
 
-        $this->assertCount(0, $this->repoMmobjs->findOneByDuration(300)->getTags());
-        $this->assertEquals('B2A', $this->repoTags->findOneByCod('B2A')->getCod());
+        static::assertCount(0, $this->repoMmobjs->findOneByDuration(300)->getTags());
+        static::assertEquals('B2A', $this->repoTags->findOneByCod('B2A')->getCod());
     }
 
     private function createTestTree(): void

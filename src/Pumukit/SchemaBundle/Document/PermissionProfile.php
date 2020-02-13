@@ -97,8 +97,9 @@ class PermissionProfile
     public function removePermission(string $permission): bool
     {
         $permissionKey = array_search($permission, $this->permissions, true);
-        if(is_int($permissionKey)) {
+        if (is_int($permissionKey)) {
             unset($this->permissions[$permissionKey]);
+
             return true;
         }
 

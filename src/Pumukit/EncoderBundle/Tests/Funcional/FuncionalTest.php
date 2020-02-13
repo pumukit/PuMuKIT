@@ -87,8 +87,8 @@ class FuncionalTest extends PumukitTestCase
 
         $this->jobService->execute($job);
 
-        $this->assertCount(1, $mm->getTracks());
-        $this->assertEquals($job->getDuration(), $mm->getDuration());
+        static::assertCount(1, $mm->getTracks());
+        static::assertEquals($job->getDuration(), $mm->getDuration());
     }
 
     private function createMultimediaObjectAssignedToSeries($title, Series $series)

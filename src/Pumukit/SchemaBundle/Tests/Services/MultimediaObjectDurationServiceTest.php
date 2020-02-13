@@ -46,6 +46,6 @@ class MultimediaObjectDurationServiceTest extends PumukitTestCase
         $mm->setDuration(100);
 
         $duration = $this->mmsService->getMmobjDuration($mm);
-        $this->assertEquals(100, $duration);
+        static::assertEquals(100, $duration);
     }
 }

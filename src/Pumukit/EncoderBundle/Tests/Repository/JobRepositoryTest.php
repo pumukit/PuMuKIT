@@ -31,7 +31,7 @@ class JobRepositoryTest extends PumukitTestCase
 
     public function testRepositoryEmpty()
     {
-        $this->assertCount(0, $this->repo->findAll());
+        static::assertCount(0, $this->repo->findAll());
     }
 
     public function testRepository()
@@ -41,7 +41,7 @@ class JobRepositoryTest extends PumukitTestCase
 
         $job = $this->newJob($mm_id, $name);
 
-        $this->assertCount(1, $this->repo->findAll());
+        static::assertCount(1, $this->repo->findAll());
     }
 
     public function testFindWithStatus()
@@ -92,48 +92,48 @@ class JobRepositoryTest extends PumukitTestCase
         $pausedAndWaitingJobs = $this->repo->findWithStatus([Job::STATUS_PAUSED, Job::STATUS_WAITING])->toArray();
         $pausedFinishedAndErrorJobs = $this->repo->findWithStatus([Job::STATUS_PAUSED, Job::STATUS_FINISHED, Job::STATUS_ERROR])->toArray();
 
-        $this->assertCount(1, $pausedJobs);
-        $this->assertCount(1, $waitingJobs);
-        $this->assertCount(2, $executingJobs);
-        $this->assertCount(1, $finishedJobs);
-        $this->assertCount(1, $errorJobs);
-        $this->assertCount(2, $pausedAndWaitingJobs);
-        $this->assertCount(3, $pausedFinishedAndErrorJobs);
+        static::assertCount(1, $pausedJobs);
+        static::assertCount(1, $waitingJobs);
+        static::assertCount(2, $executingJobs);
+        static::assertCount(1, $finishedJobs);
+        static::assertCount(1, $errorJobs);
+        static::assertCount(2, $pausedAndWaitingJobs);
+        static::assertCount(3, $pausedFinishedAndErrorJobs);
 
-        $this->assertContains($pausedJob, $pausedJobs);
-        $this->assertNotContains($waitingJob, $pausedJobs);
-        $this->assertNotContains($executingJob, $pausedJobs);
-        $this->assertNotContains($executingJob2, $pausedJobs);
-        $this->assertNotContains($finishedJob, $pausedJobs);
-        $this->assertNotContains($errorJob, $pausedJobs);
+        static::assertContains($pausedJob, $pausedJobs);
+        static::assertNotContains($waitingJob, $pausedJobs);
+        static::assertNotContains($executingJob, $pausedJobs);
+        static::assertNotContains($executingJob2, $pausedJobs);
+        static::assertNotContains($finishedJob, $pausedJobs);
+        static::assertNotContains($errorJob, $pausedJobs);
 
-        $this->assertNotContains($pausedJob, $waitingJobs);
-        $this->assertContains($waitingJob, $waitingJobs);
-        $this->assertNotContains($executingJob, $waitingJobs);
-        $this->assertNotContains($executingJob2, $waitingJobs);
-        $this->assertNotContains($finishedJob, $waitingJobs);
-        $this->assertNotContains($errorJob, $waitingJobs);
+        static::assertNotContains($pausedJob, $waitingJobs);
+        static::assertContains($waitingJob, $waitingJobs);
+        static::assertNotContains($executingJob, $waitingJobs);
+        static::assertNotContains($executingJob2, $waitingJobs);
+        static::assertNotContains($finishedJob, $waitingJobs);
+        static::assertNotContains($errorJob, $waitingJobs);
 
-        $this->assertNotContains($pausedJob, $executingJobs);
-        $this->assertNotContains($waitingJob, $executingJobs);
-        $this->assertContains($executingJob, $executingJobs);
-        $this->assertContains($executingJob2, $executingJobs);
-        $this->assertNotContains($finishedJob, $executingJobs);
-        $this->assertNotContains($errorJob, $executingJobs);
+        static::assertNotContains($pausedJob, $executingJobs);
+        static::assertNotContains($waitingJob, $executingJobs);
+        static::assertContains($executingJob, $executingJobs);
+        static::assertContains($executingJob2, $executingJobs);
+        static::assertNotContains($finishedJob, $executingJobs);
+        static::assertNotContains($errorJob, $executingJobs);
 
-        $this->assertNotContains($pausedJob, $finishedJobs);
-        $this->assertNotContains($waitingJob, $finishedJobs);
-        $this->assertNotContains($executingJob, $finishedJobs);
-        $this->assertNotContains($executingJob2, $finishedJobs);
-        $this->assertContains($finishedJob, $finishedJobs);
-        $this->assertNotContains($errorJob, $finishedJobs);
+        static::assertNotContains($pausedJob, $finishedJobs);
+        static::assertNotContains($waitingJob, $finishedJobs);
+        static::assertNotContains($executingJob, $finishedJobs);
+        static::assertNotContains($executingJob2, $finishedJobs);
+        static::assertContains($finishedJob, $finishedJobs);
+        static::assertNotContains($errorJob, $finishedJobs);
 
-        $this->assertNotContains($pausedJob, $errorJobs);
-        $this->assertNotContains($waitingJob, $errorJobs);
-        $this->assertNotContains($executingJob, $errorJobs);
-        $this->assertNotContains($executingJob2, $errorJobs);
-        $this->assertNotContains($finishedJob, $errorJobs);
-        $this->assertContains($errorJob, $errorJobs);
+        static::assertNotContains($pausedJob, $errorJobs);
+        static::assertNotContains($waitingJob, $errorJobs);
+        static::assertNotContains($executingJob, $errorJobs);
+        static::assertNotContains($executingJob2, $errorJobs);
+        static::assertNotContains($finishedJob, $errorJobs);
+        static::assertContains($errorJob, $errorJobs);
     }
 
     public function testFindHigherPriorityWithStatus()
@@ -190,7 +190,7 @@ class JobRepositoryTest extends PumukitTestCase
         $this->dm->persist($job6);
         $this->dm->flush();
 
-        $this->assertEquals($job3, $this->repo->findHigherPriorityWithStatus([Job::STATUS_WAITING]));
+        static::assertEquals($job3, $this->repo->findHigherPriorityWithStatus([Job::STATUS_WAITING]));
 
         $mm_id = '54ad3f5e6e4cd68a278b4578';
         $name = 'video7';
@@ -201,10 +201,10 @@ class JobRepositoryTest extends PumukitTestCase
         $this->dm->persist($job7);
         $this->dm->flush();
 
-        $this->assertEquals($job3, $this->repo->findHigherPriorityWithStatus([Job::STATUS_WAITING]));
-        $this->assertNotEquals($job7, $this->repo->findHigherPriorityWithStatus([Job::STATUS_WAITING]));
+        static::assertEquals($job3, $this->repo->findHigherPriorityWithStatus([Job::STATUS_WAITING]));
+        static::assertNotEquals($job7, $this->repo->findHigherPriorityWithStatus([Job::STATUS_WAITING]));
 
-        $this->assertEquals($job0, $this->repo->findHigherPriorityWithStatus([Job::STATUS_PAUSED]));
+        static::assertEquals($job0, $this->repo->findHigherPriorityWithStatus([Job::STATUS_PAUSED]));
     }
 
     public function testFindNotFinishedByMultimediaObjectId()
@@ -229,8 +229,8 @@ class JobRepositoryTest extends PumukitTestCase
         $this->dm->persist($job3);
         $this->dm->flush();
 
-        $this->assertCount(1, $this->repo->findNotFinishedByMultimediaObjectId($mm_id1));
-        $this->assertCount(1, $this->repo->findNotFinishedByMultimediaObjectId($mm_id2));
+        static::assertCount(1, $this->repo->findNotFinishedByMultimediaObjectId($mm_id1));
+        static::assertCount(1, $this->repo->findNotFinishedByMultimediaObjectId($mm_id2));
     }
 
     public function testFindByStatusAndMultimediaObjectId()
@@ -259,10 +259,10 @@ class JobRepositoryTest extends PumukitTestCase
         $this->dm->persist($job4);
         $this->dm->flush();
 
-        $this->assertCount(1, $this->repo->findByStatusAndMultimediaObjectId(Job::STATUS_FINISHED, $mm_id1));
-        $this->assertCount(2, $this->repo->findByStatusAndMultimediaObjectId(Job::STATUS_WAITING, $mm_id1));
-        $this->assertCount(0, $this->repo->findByStatusAndMultimediaObjectId(Job::STATUS_WAITING, $mm_id2));
-        $this->assertCount(1, $this->repo->findByStatusAndMultimediaObjectId(Job::STATUS_EXECUTING, $mm_id2));
+        static::assertCount(1, $this->repo->findByStatusAndMultimediaObjectId(Job::STATUS_FINISHED, $mm_id1));
+        static::assertCount(2, $this->repo->findByStatusAndMultimediaObjectId(Job::STATUS_WAITING, $mm_id1));
+        static::assertCount(0, $this->repo->findByStatusAndMultimediaObjectId(Job::STATUS_WAITING, $mm_id2));
+        static::assertCount(1, $this->repo->findByStatusAndMultimediaObjectId(Job::STATUS_EXECUTING, $mm_id2));
     }
 
     public function testFindByMultimediaObjectId()
@@ -291,8 +291,8 @@ class JobRepositoryTest extends PumukitTestCase
         $this->dm->persist($job4);
         $this->dm->flush();
 
-        $this->assertCount(3, $this->repo->findByMultimediaObjectId($mm_id1));
-        $this->assertCount(1, $this->repo->findByMultimediaObjectId($mm_id2));
+        static::assertCount(3, $this->repo->findByMultimediaObjectId($mm_id1));
+        static::assertCount(1, $this->repo->findByMultimediaObjectId($mm_id2));
     }
 
     public function testFindByMultimediaObjectIdAndProfile()
@@ -329,10 +329,10 @@ class JobRepositoryTest extends PumukitTestCase
         $masterProfile = 'master';
         $videoH264Profile = 'video_h264';
 
-        $this->assertCount(2, $this->repo->findByMultimediaObjectIdAndProfile($mm_id1, $masterProfile));
-        $this->assertCount(1, $this->repo->findByMultimediaObjectIdAndProfile($mm_id1, $videoH264Profile));
-        $this->assertCount(0, $this->repo->findByMultimediaObjectIdAndProfile($mm_id2, $masterProfile));
-        $this->assertCount(1, $this->repo->findByMultimediaObjectIdAndProfile($mm_id2, $videoH264Profile));
+        static::assertCount(2, $this->repo->findByMultimediaObjectIdAndProfile($mm_id1, $masterProfile));
+        static::assertCount(1, $this->repo->findByMultimediaObjectIdAndProfile($mm_id1, $videoH264Profile));
+        static::assertCount(0, $this->repo->findByMultimediaObjectIdAndProfile($mm_id2, $masterProfile));
+        static::assertCount(1, $this->repo->findByMultimediaObjectIdAndProfile($mm_id2, $videoH264Profile));
     }
 
     private function newJob($mm_id, $name)

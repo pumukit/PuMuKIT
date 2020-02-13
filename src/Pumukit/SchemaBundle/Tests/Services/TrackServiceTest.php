@@ -73,7 +73,7 @@ class TrackServiceTest extends PumukitTestCase
 
         $multimediaObject = $this->repoMmobj->find($multimediaObject->getId());
         $embeddedTrack = $multimediaObject->getTrackById($track->getId());
-        $this->assertEquals($track, $embeddedTrack);
+        static::assertEquals($track, $embeddedTrack);
     }
 
     public function testUpdateTrackInMultimediaObject()
@@ -93,7 +93,7 @@ class TrackServiceTest extends PumukitTestCase
 
         $multimediaObject = $this->repoMmobj->find($multimediaObject->getId());
         $track = $multimediaObject->getTracks()[0];
-        $this->assertEquals($url, $track->getUrl());
+        static::assertEquals($url, $track->getUrl());
 
         $newUrl = 'uploads/tracks/track2.mp4';
         $track->setUrl($newUrl);
@@ -101,7 +101,7 @@ class TrackServiceTest extends PumukitTestCase
         $this->trackService->updateTrackInMultimediaObject($multimediaObject, $track);
         $multimediaObject = $this->repoMmobj->find($multimediaObject->getId());
         $track = $multimediaObject->getTracks()[0];
-        $this->assertEquals($newUrl, $track->getUrl());
+        static::assertEquals($newUrl, $track->getUrl());
     }
 
     public function testRemoveTrackFromMultimediaObject()
@@ -109,8 +109,8 @@ class TrackServiceTest extends PumukitTestCase
         $series = $this->factoryService->createSeries();
         $multimediaObject = $this->factoryService->createMultimediaObject($series);
 
-        $this->assertCount(0, $multimediaObject->getTracks());
-        $this->assertCount(0, $this->repoJobs->findAll());
+        static::assertCount(0, $multimediaObject->getTracks());
+        static::assertCount(0, $this->repoJobs->findAll());
 
         $job = new Job();
         $job->setMmId($multimediaObject->getId());
@@ -125,16 +125,16 @@ class TrackServiceTest extends PumukitTestCase
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
 
-        $this->assertCount(1, $multimediaObject->getTracks());
-        $this->assertCount(1, $this->repoJobs->findAll());
+        static::assertCount(1, $multimediaObject->getTracks());
+        static::assertCount(1, $this->repoJobs->findAll());
 
         $multimediaObject = $this->repoMmobj->find($multimediaObject->getId());
         $track = $multimediaObject->getTracks()[0];
 
         $this->trackService->removeTrackFromMultimediaObject($multimediaObject, $track->getId());
 
-        $this->assertCount(0, $multimediaObject->getTracks());
-        $this->assertCount(0, $this->repoJobs->findAll());
+        static::assertCount(0, $multimediaObject->getTracks());
+        static::assertCount(0, $this->repoJobs->findAll());
     }
 
     public function testUpAndDownTrackInMultimediaObject()
@@ -142,7 +142,7 @@ class TrackServiceTest extends PumukitTestCase
         $series = $this->factoryService->createSeries();
         $multimediaObject = $this->factoryService->createMultimediaObject($series);
 
-        $this->assertCount(0, $multimediaObject->getTracks());
+        static::assertCount(0, $multimediaObject->getTracks());
 
         $track1 = new Track();
         $track2 = new Track();
@@ -167,22 +167,22 @@ class TrackServiceTest extends PumukitTestCase
         $track4 = $tracks[3];
         $track5 = $tracks[4];
 
-        $this->assertCount(5, $multimediaObject->getTracks());
+        static::assertCount(5, $multimediaObject->getTracks());
 
         $arrayTracks = [$track1, $track2, $track3, $track4, $track5];
-        $this->assertEquals($arrayTracks, $multimediaObject->getTracks()->toArray());
+        static::assertEquals($arrayTracks, $multimediaObject->getTracks()->toArray());
 
         $multimediaObject = $this->trackService->upTrackInMultimediaObject($multimediaObject, $track3->getId());
         $multimediaObject = $this->repoMmobj->find($multimediaObject->getId());
 
         $arrayTracks = [$track1, $track3, $track2, $track4, $track5];
-        $this->assertEquals($arrayTracks, $multimediaObject->getTracks()->toArray());
+        static::assertEquals($arrayTracks, $multimediaObject->getTracks()->toArray());
 
         $multimediaObject = $this->trackService->downTrackInMultimediaObject($multimediaObject, $track4->getId());
         $multimediaObject = $this->repoMmobj->find($multimediaObject->getId());
 
         $arrayTracks = [$track1, $track3, $track2, $track5, $track4];
-        $this->assertEquals($arrayTracks, $multimediaObject->getTracks()->toArray());
+        static::assertEquals($arrayTracks, $multimediaObject->getTracks()->toArray());
     }
 
     private function createFormData($number)

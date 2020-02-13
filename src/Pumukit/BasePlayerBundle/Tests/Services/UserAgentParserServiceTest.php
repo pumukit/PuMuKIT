@@ -45,7 +45,7 @@ class UserAgentParserServiceTest extends WebTestCase
     public function testIsOldBrowser()
     {
         foreach ($this->agentStrings as $userAgent) {
-            $this->assertEquals($userAgent['old'], $this->agentService->isOldBrowser($userAgent['string']));
+            static::assertEquals($userAgent['old'], $this->agentService->isOldBrowser($userAgent['string']));
         }
     }
 }

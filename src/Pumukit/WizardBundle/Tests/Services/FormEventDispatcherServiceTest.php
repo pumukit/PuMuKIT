@@ -43,26 +43,26 @@ class FormEventDispatcherServiceTest extends PumukitTestCase
     public function testDispatchSubmit()
     {
         $this->dispatcher->addListener(WizardEvents::FORM_SUBMIT, function ($event, $title) {
-            $this->assertInstanceOf(FormEvent::class, $event);
-            $this->assertEquals(WizardEvents::FORM_SUBMIT, $title);
+            static::assertInstanceOf(FormEvent::class, $event);
+            static::assertEquals(WizardEvents::FORM_SUBMIT, $title);
             $form = $event->getForm();
             MockUpFormListener::$called = true;
             MockUpFormListener::$title = $form['title'];
             $user = $event->getUser();
-            $this->assertInstanceOf(User::class, $user);
+            static::assertInstanceOf(User::class, $user);
             $multimediaObject = $event->getMultimediaObject();
-            $this->assertInstanceOf(MultimediaObject::class, $multimediaObject);
+            static::assertInstanceOf(MultimediaObject::class, $multimediaObject);
         });
-        $this->assertFalse(MockUpFormListener::$called);
-        $this->assertEquals(self::EMPTY_TITLE, MockUpFormListener::$title);
+        static::assertFalse(MockUpFormListener::$called);
+        static::assertEquals(self::EMPTY_TITLE, MockUpFormListener::$title);
         $title = 'test title';
         $multimediaObject = new MultimediaObject();
         $multimediaObject->setTitle($title);
         $form = ['title' => $title];
         $user = new User();
         $this->formDispatcher->dispatchSubmit($user, $multimediaObject, $form);
-        $this->assertTrue(MockUpFormListener::$called);
-        $this->assertEquals($title, MockUpFormListener::$title);
+        static::assertTrue(MockUpFormListener::$called);
+        static::assertEquals($title, MockUpFormListener::$title);
     }
 }
 

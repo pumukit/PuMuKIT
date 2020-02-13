@@ -80,15 +80,15 @@ class GroupServiceTest extends PumukitTestCase
         $this->dm->persist($user3);
         $this->dm->flush();
 
-        $this->assertEquals(0, $this->groupService->countUsersInGroup($group1));
-        $this->assertEquals(0, $this->groupService->countUsersInGroup($group2));
+        static::assertEquals(0, $this->groupService->countUsersInGroup($group1));
+        static::assertEquals(0, $this->groupService->countUsersInGroup($group2));
 
         $user1->addGroup($group1);
         $this->dm->persist($user1);
         $this->dm->flush();
 
-        $this->assertEquals(1, $this->groupService->countUsersInGroup($group1));
-        $this->assertEquals(0, $this->groupService->countUsersInGroup($group2));
+        static::assertEquals(1, $this->groupService->countUsersInGroup($group1));
+        static::assertEquals(0, $this->groupService->countUsersInGroup($group2));
     }
 
     public function testFindUsersInGroup()
@@ -126,12 +126,12 @@ class GroupServiceTest extends PumukitTestCase
         $usersGroup1 = $this->groupService->findUsersInGroup($group1)->toArray();
         $usersGroup2 = $this->groupService->findUsersInGroup($group2)->toArray();
 
-        $this->assertNotContains($user1, $usersGroup1);
-        $this->assertNotContains($user2, $usersGroup1);
-        $this->assertNotContains($user3, $usersGroup1);
-        $this->assertNotContains($user1, $usersGroup2);
-        $this->assertNotContains($user2, $usersGroup2);
-        $this->assertNotContains($user3, $usersGroup2);
+        static::assertNotContains($user1, $usersGroup1);
+        static::assertNotContains($user2, $usersGroup1);
+        static::assertNotContains($user3, $usersGroup1);
+        static::assertNotContains($user1, $usersGroup2);
+        static::assertNotContains($user2, $usersGroup2);
+        static::assertNotContains($user3, $usersGroup2);
 
         $user1->addGroup($group1);
         $this->dm->persist($user1);
@@ -140,12 +140,12 @@ class GroupServiceTest extends PumukitTestCase
         $usersGroup1 = $this->groupService->findUsersInGroup($group1)->toArray();
         $usersGroup2 = $this->groupService->findUsersInGroup($group2)->toArray();
 
-        $this->assertContains($user1, $usersGroup1);
-        $this->assertNotContains($user2, $usersGroup1);
-        $this->assertNotContains($user3, $usersGroup1);
-        $this->assertNotContains($user1, $usersGroup2);
-        $this->assertNotContains($user2, $usersGroup2);
-        $this->assertNotContains($user3, $usersGroup2);
+        static::assertContains($user1, $usersGroup1);
+        static::assertNotContains($user2, $usersGroup1);
+        static::assertNotContains($user3, $usersGroup1);
+        static::assertNotContains($user1, $usersGroup2);
+        static::assertNotContains($user2, $usersGroup2);
+        static::assertNotContains($user3, $usersGroup2);
 
         // sort
 
@@ -161,13 +161,13 @@ class GroupServiceTest extends PumukitTestCase
         $sort_1 = ['username' => -1];
         $users_1Group1 = $this->groupService->findUsersInGroup($group1, $sort_1)->toArray();
 
-        $this->assertEquals([$user1, $user2, $user3], array_values($users1Group1));
-        $this->assertEquals([$user3, $user2, $user1], array_values($users_1Group1));
+        static::assertEquals([$user1, $user2, $user3], array_values($users1Group1));
+        static::assertEquals([$user3, $user2, $user1], array_values($users_1Group1));
     }
 
     public function testCreate()
     {
-        $this->assertCount(0, $this->repo->findAll());
+        static::assertCount(0, $this->repo->findAll());
 
         $key = 'key';
         $name = 'name';
@@ -178,10 +178,10 @@ class GroupServiceTest extends PumukitTestCase
 
         $group = $this->groupService->create($group);
 
-        $this->assertCount(1, $this->repo->findAll());
-        $this->assertEquals($group, $this->repo->findOneBy(['key' => $key]));
-        $this->assertEquals($group, $this->repo->findOneBy(['name' => $name]));
-        $this->assertEquals($group, $this->repo->find($group->getId()));
+        static::assertCount(1, $this->repo->findAll());
+        static::assertEquals($group, $this->repo->findOneBy(['key' => $key]));
+        static::assertEquals($group, $this->repo->findOneBy(['name' => $name]));
+        static::assertEquals($group, $this->repo->find($group->getId()));
     }
 
     /**
@@ -256,7 +256,7 @@ class GroupServiceTest extends PumukitTestCase
 
     public function testUpdate()
     {
-        $this->assertCount(0, $this->repo->findAll());
+        static::assertCount(0, $this->repo->findAll());
 
         $key1 = 'key1';
         $name1 = 'name1';
@@ -269,34 +269,34 @@ class GroupServiceTest extends PumukitTestCase
 
         $group = $this->groupService->create($group);
 
-        $this->assertCount(1, $this->repo->findAll());
-        $this->assertEquals($group, $this->repo->findOneBy(['key' => $key1]));
-        $this->assertEquals($group, $this->repo->findOneBy(['name' => $name1]));
+        static::assertCount(1, $this->repo->findAll());
+        static::assertEquals($group, $this->repo->findOneBy(['key' => $key1]));
+        static::assertEquals($group, $this->repo->findOneBy(['name' => $name1]));
 
         $createdGroup = $this->repo->find($group->getId());
 
-        $this->assertEquals($group, $createdGroup);
-        $this->assertEquals($key1, $createdGroup->getKey());
-        $this->assertEquals($name1, $createdGroup->getName());
-        $this->assertNotEquals($key2, $createdGroup->getKey());
-        $this->assertNotEquals($name2, $createdGroup->getName());
+        static::assertEquals($group, $createdGroup);
+        static::assertEquals($key1, $createdGroup->getKey());
+        static::assertEquals($name1, $createdGroup->getName());
+        static::assertNotEquals($key2, $createdGroup->getKey());
+        static::assertNotEquals($name2, $createdGroup->getName());
 
         $group->setKey($key2);
         $group->setName($name2);
 
         $group = $this->groupService->update($group);
 
-        $this->assertCount(1, $this->repo->findAll());
-        $this->assertEquals($group, $this->repo->findOneBy(['key' => $key2]));
-        $this->assertEquals($group, $this->repo->findOneBy(['name' => $name2]));
+        static::assertCount(1, $this->repo->findAll());
+        static::assertEquals($group, $this->repo->findOneBy(['key' => $key2]));
+        static::assertEquals($group, $this->repo->findOneBy(['name' => $name2]));
 
         $updatedGroup = $this->repo->find($group->getId());
 
-        $this->assertEquals($group, $updatedGroup);
-        $this->assertNotEquals($key1, $updatedGroup->getKey());
-        $this->assertNotEquals($name1, $updatedGroup->getName());
-        $this->assertEquals($key2, $updatedGroup->getKey());
-        $this->assertEquals($name2, $updatedGroup->getName());
+        static::assertEquals($group, $updatedGroup);
+        static::assertNotEquals($key1, $updatedGroup->getKey());
+        static::assertNotEquals($name1, $updatedGroup->getName());
+        static::assertEquals($key2, $updatedGroup->getKey());
+        static::assertEquals($name2, $updatedGroup->getName());
     }
 
     /**
@@ -357,7 +357,7 @@ class GroupServiceTest extends PumukitTestCase
 
     public function testDelete()
     {
-        $this->assertCount(0, $this->repo->findAll());
+        static::assertCount(0, $this->repo->findAll());
 
         $key = 'key';
         $name = 'name';
@@ -370,14 +370,14 @@ class GroupServiceTest extends PumukitTestCase
 
         $group = $this->groupService->create($group);
 
-        $this->assertCount(1, $this->repo->findAll());
-        $this->assertEquals($group, $this->repo->findOneBy(['key' => $key]));
-        $this->assertEquals($group, $this->repo->findOneBy(['name' => $name]));
-        $this->assertEquals($group, $this->repo->find($group->getId()));
+        static::assertCount(1, $this->repo->findAll());
+        static::assertEquals($group, $this->repo->findOneBy(['key' => $key]));
+        static::assertEquals($group, $this->repo->findOneBy(['name' => $name]));
+        static::assertEquals($group, $this->repo->find($group->getId()));
 
         $group = $this->groupService->delete($group);
 
-        $this->assertCount(0, $this->repo->findAll());
+        static::assertCount(0, $this->repo->findAll());
     }
 
     /**
@@ -386,7 +386,7 @@ class GroupServiceTest extends PumukitTestCase
      */
     public function testDeleteException()
     {
-        $this->assertCount(0, $this->repo->findAll());
+        static::assertCount(0, $this->repo->findAll());
 
         $key = 'key';
         $name = 'name';
@@ -399,11 +399,11 @@ class GroupServiceTest extends PumukitTestCase
 
         $group = $this->groupService->create($group);
 
-        $this->assertCount(1, $this->repo->findAll());
+        static::assertCount(1, $this->repo->findAll());
 
         $group = $this->groupService->delete($group);
 
-        $this->assertCount(1, $this->repo->findAll());
+        static::assertCount(1, $this->repo->findAll());
     }
 
     public function testFindById()
@@ -414,7 +414,7 @@ class GroupServiceTest extends PumukitTestCase
         $this->dm->persist($group);
         $this->dm->flush();
 
-        $this->assertEquals($group, $this->groupService->findById($group->getId()));
+        static::assertEquals($group, $this->groupService->findById($group->getId()));
     }
 
     public function testFindAll()
@@ -436,7 +436,7 @@ class GroupServiceTest extends PumukitTestCase
         $this->dm->persist($group3);
         $this->dm->flush();
 
-        $this->assertCount(3, $this->groupService->findAll());
+        static::assertCount(3, $this->groupService->findAll());
     }
 
     public function testFindByIdNotIn()
@@ -460,9 +460,9 @@ class GroupServiceTest extends PumukitTestCase
 
         $ids = [new ObjectId($group1->getId()), new ObjectId($group3->getId())];
         $groups = $this->groupService->findByIdNotIn($ids)->toArray();
-        $this->assertNotContains($group1, $groups);
-        $this->assertContains($group2, $groups);
-        $this->assertNotContains($group3, $groups);
+        static::assertNotContains($group1, $groups);
+        static::assertContains($group2, $groups);
+        static::assertNotContains($group3, $groups);
     }
 
     public function testFindByIdNotInOf()
@@ -492,34 +492,34 @@ class GroupServiceTest extends PumukitTestCase
         $ids = [new ObjectId($group1->getId()), new ObjectId($group3->getId())];
         $total = [new ObjectId($group1->getId()), new ObjectId($group3->getId()), new ObjectId($group4->getId())];
         $groups = $this->groupService->findByIdNotInOf($ids, $total)->toArray();
-        $this->assertNotContains($group1, $groups);
-        $this->assertNotContains($group2, $groups);
-        $this->assertNotContains($group3, $groups);
-        $this->assertContains($group4, $groups);
+        static::assertNotContains($group1, $groups);
+        static::assertNotContains($group2, $groups);
+        static::assertNotContains($group3, $groups);
+        static::assertContains($group4, $groups);
 
         $ids = [];
         $total = [new ObjectId($group1->getId()), new ObjectId($group3->getId()), new ObjectId($group4->getId())];
         $groups = $this->groupService->findByIdNotInOf($ids, $total)->toArray();
-        $this->assertContains($group1, $groups);
-        $this->assertNotContains($group2, $groups);
-        $this->assertContains($group3, $groups);
-        $this->assertContains($group4, $groups);
+        static::assertContains($group1, $groups);
+        static::assertNotContains($group2, $groups);
+        static::assertContains($group3, $groups);
+        static::assertContains($group4, $groups);
 
         $ids = [new ObjectId($group1->getId()), new ObjectId($group3->getId())];
         $total = [];
         $groups = $this->groupService->findByIdNotInOf($ids, $total)->toArray();
-        $this->assertNotContains($group1, $groups);
-        $this->assertNotContains($group2, $groups);
-        $this->assertNotContains($group3, $groups);
-        $this->assertNotContains($group4, $groups);
+        static::assertNotContains($group1, $groups);
+        static::assertNotContains($group2, $groups);
+        static::assertNotContains($group3, $groups);
+        static::assertNotContains($group4, $groups);
 
         $ids = [];
         $total = [];
         $groups = $this->groupService->findByIdNotInOf($ids, $total)->toArray();
-        $this->assertNotContains($group1, $groups);
-        $this->assertNotContains($group2, $groups);
-        $this->assertNotContains($group3, $groups);
-        $this->assertNotContains($group4, $groups);
+        static::assertNotContains($group1, $groups);
+        static::assertNotContains($group2, $groups);
+        static::assertNotContains($group3, $groups);
+        static::assertNotContains($group4, $groups);
     }
 
     public function testCountAdminMultimediaObjectsInGroup()
@@ -552,8 +552,8 @@ class GroupServiceTest extends PumukitTestCase
         $this->dm->persist($mm2);
         $this->dm->flush();
 
-        $this->assertEquals(1, $this->groupService->countAdminMultimediaObjectsInGroup($group1));
-        $this->assertEquals(2, $this->groupService->countAdminMultimediaObjectsInGroup($group2));
+        static::assertEquals(1, $this->groupService->countAdminMultimediaObjectsInGroup($group1));
+        static::assertEquals(2, $this->groupService->countAdminMultimediaObjectsInGroup($group2));
     }
 
     public function testCountPlayMultimediaObjectsInGroup()
@@ -602,8 +602,8 @@ class GroupServiceTest extends PumukitTestCase
         $this->dm->persist($mm2);
         $this->dm->flush();
 
-        $this->assertEquals(1, $this->groupService->countPlayMultimediaObjectsInGroup($group1));
-        $this->assertEquals(2, $this->groupService->countPlayMultimediaObjectsInGroup($group2));
+        static::assertEquals(1, $this->groupService->countPlayMultimediaObjectsInGroup($group1));
+        static::assertEquals(2, $this->groupService->countPlayMultimediaObjectsInGroup($group2));
     }
 
     public function testCountResources()
@@ -636,8 +636,8 @@ class GroupServiceTest extends PumukitTestCase
         $this->dm->persist($mm2);
         $this->dm->flush();
 
-        $this->assertEquals(1, $this->groupService->countAdminMultimediaObjectsInGroup($group1));
-        $this->assertEquals(2, $this->groupService->countAdminMultimediaObjectsInGroup($group2));
+        static::assertEquals(1, $this->groupService->countAdminMultimediaObjectsInGroup($group1));
+        static::assertEquals(2, $this->groupService->countAdminMultimediaObjectsInGroup($group2));
 
         $type = EmbeddedBroadcast::TYPE_GROUPS;
         $name = EmbeddedBroadcast::NAME_GROUPS;
@@ -659,8 +659,8 @@ class GroupServiceTest extends PumukitTestCase
         $this->dm->persist($mm2);
         $this->dm->flush();
 
-        $this->assertEquals(1, $this->groupService->countPlayMultimediaObjectsInGroup($group1));
-        $this->assertEquals(2, $this->groupService->countPlayMultimediaObjectsInGroup($group2));
+        static::assertEquals(1, $this->groupService->countPlayMultimediaObjectsInGroup($group1));
+        static::assertEquals(2, $this->groupService->countPlayMultimediaObjectsInGroup($group2));
 
         $user1 = new User();
         $user1->setUsername('test1');
@@ -686,28 +686,28 @@ class GroupServiceTest extends PumukitTestCase
         $this->dm->persist($user1);
         $this->dm->flush();
 
-        $this->assertEquals(1, $this->groupService->countUsersInGroup($group1));
-        $this->assertEquals(0, $this->groupService->countUsersInGroup($group2));
+        static::assertEquals(1, $this->groupService->countUsersInGroup($group1));
+        static::assertEquals(0, $this->groupService->countUsersInGroup($group2));
 
         $resourcesInGroup1 = $this->groupService->countResourcesInGroup($group1);
         $resourcesInGroup2 = $this->groupService->countResourcesInGroup($group2);
 
-        $this->assertEquals(1, $resourcesInGroup1['adminMultimediaObjects']);
-        $this->assertEquals(2, $resourcesInGroup2['adminMultimediaObjects']);
-        $this->assertEquals(1, $resourcesInGroup1['playMultimediaObjects']);
-        $this->assertEquals(2, $resourcesInGroup2['playMultimediaObjects']);
-        $this->assertEquals(1, $resourcesInGroup1['users']);
-        $this->assertEquals(0, $resourcesInGroup2['users']);
+        static::assertEquals(1, $resourcesInGroup1['adminMultimediaObjects']);
+        static::assertEquals(2, $resourcesInGroup2['adminMultimediaObjects']);
+        static::assertEquals(1, $resourcesInGroup1['playMultimediaObjects']);
+        static::assertEquals(2, $resourcesInGroup2['playMultimediaObjects']);
+        static::assertEquals(1, $resourcesInGroup1['users']);
+        static::assertEquals(0, $resourcesInGroup2['users']);
 
         $groups = $this->repo->findAll();
         $resources = $this->groupService->countResources($groups);
 
-        $this->assertEquals(1, $resources[$group1->getId()]['adminMultimediaObjects']);
-        $this->assertEquals(2, $resources[$group2->getId()]['adminMultimediaObjects']);
-        $this->assertEquals(1, $resources[$group1->getId()]['playMultimediaObjects']);
-        $this->assertEquals(2, $resources[$group2->getId()]['playMultimediaObjects']);
-        $this->assertEquals(1, $resources[$group1->getId()]['users']);
-        $this->assertEquals(0, $resources[$group2->getId()]['users']);
+        static::assertEquals(1, $resources[$group1->getId()]['adminMultimediaObjects']);
+        static::assertEquals(2, $resources[$group2->getId()]['adminMultimediaObjects']);
+        static::assertEquals(1, $resources[$group1->getId()]['playMultimediaObjects']);
+        static::assertEquals(2, $resources[$group2->getId()]['playMultimediaObjects']);
+        static::assertEquals(1, $resources[$group1->getId()]['users']);
+        static::assertEquals(0, $resources[$group2->getId()]['users']);
     }
 
     public function testCanBeDeleted()
@@ -719,7 +719,7 @@ class GroupServiceTest extends PumukitTestCase
         $this->dm->persist($externalGroup);
         $this->dm->flush();
 
-        $this->assertFalse($this->groupService->canBeDeleted($externalGroup));
+        static::assertFalse($this->groupService->canBeDeleted($externalGroup));
 
         $group = new Group();
         $group->setKey('key1');
@@ -736,7 +736,7 @@ class GroupServiceTest extends PumukitTestCase
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertFalse($this->groupService->canBeDeleted($group));
+        static::assertFalse($this->groupService->canBeDeleted($group));
 
         $user->removeGroup($group);
 
@@ -749,7 +749,7 @@ class GroupServiceTest extends PumukitTestCase
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertFalse($this->groupService->canBeDeleted($group));
+        static::assertFalse($this->groupService->canBeDeleted($group));
 
         $mm->removeGroup($group);
         $embeddedBroadcast = new EmbeddedBroadcast();
@@ -760,13 +760,13 @@ class GroupServiceTest extends PumukitTestCase
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertFalse($this->groupService->canBeDeleted($group));
+        static::assertFalse($this->groupService->canBeDeleted($group));
 
         $embeddedBroadcast = $mm->getEmbeddedBroadcast();
         $embeddedBroadcast->removeGroup($group);
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertTrue($this->groupService->canBeDeleted($group));
+        static::assertTrue($this->groupService->canBeDeleted($group));
     }
 }

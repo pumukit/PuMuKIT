@@ -85,13 +85,13 @@ class MultimediaObjectListenerTest extends PumukitTestCase
         $this->trackService->addTrackToMultimediaObject($mm, $t4, false);
         $this->trackService->addTrackToMultimediaObject($mm, $t5, true);
 
-        $this->assertTrue($mm->isOnlyAudio());
+        static::assertTrue($mm->isOnlyAudio());
 
         $t5->setOnlyAudio(false);
 
         $this->trackService->updateTrackInMultimediaObject($mm, $t5);
 
-        $this->assertFalse($mm->isOnlyAudio());
+        static::assertFalse($mm->isOnlyAudio());
 
         // TEST GET MASTER
         $mm = new MultimediaObject();
@@ -104,16 +104,16 @@ class MultimediaObjectListenerTest extends PumukitTestCase
         $track1 = new Track();
         $track1->setOnlyAudio(true);
 
-        $this->assertEquals(null, $mm->getMaster());
+        static::assertEquals(null, $mm->getMaster());
         $this->trackService->addTrackToMultimediaObject($mm, $track1, true);
-        $this->assertEquals($track1, $mm->getMaster());
-        $this->assertEquals(null, $mm->getMaster(false));
+        static::assertEquals($track1, $mm->getMaster());
+        static::assertEquals(null, $mm->getMaster(false));
         $this->trackService->addTrackToMultimediaObject($mm, $track2, true);
-        $this->assertEquals($track2, $mm->getMaster());
-        $this->assertEquals(null, $mm->getMaster(false));
+        static::assertEquals($track2, $mm->getMaster());
+        static::assertEquals(null, $mm->getMaster(false));
         $this->trackService->addTrackToMultimediaObject($mm, $track3, true);
-        $this->assertEquals($track3, $mm->getMaster());
-        $this->assertEquals($track3, $mm->getMaster(false));
+        static::assertEquals($track3, $mm->getMaster());
+        static::assertEquals($track3, $mm->getMaster(false));
     }
 
     private function getDemoProfiles()

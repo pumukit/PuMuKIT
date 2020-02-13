@@ -29,6 +29,6 @@ class RemoteHTTPExecutorTest extends WebTestCase
 
         $executor = new RemoteHTTPExecutor();
         $out = $executor->execute('sleep 1 && echo a', $cpu);
-        $this->assertEquals("a\n", "{$out}");
+        static::assertEquals("a\n", "{$out}");
     }
 }

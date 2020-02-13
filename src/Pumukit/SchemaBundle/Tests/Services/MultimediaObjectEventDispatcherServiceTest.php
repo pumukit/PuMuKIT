@@ -43,8 +43,8 @@ class MultimediaObjectEventDispatcherServiceTest extends PumukitTestCase
     public function testDispatchCreate()
     {
         $this->dispatcher->addListener(SchemaEvents::MULTIMEDIAOBJECT_CREATE, function ($event, $name) {
-            $this->assertInstanceOf(MultimediaObjectEvent::class, $event);
-            $this->assertEquals(SchemaEvents::MULTIMEDIAOBJECT_CREATE, $name);
+            static::assertInstanceOf(MultimediaObjectEvent::class, $event);
+            static::assertEquals(SchemaEvents::MULTIMEDIAOBJECT_CREATE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
 
@@ -52,8 +52,8 @@ class MultimediaObjectEventDispatcherServiceTest extends PumukitTestCase
             MockUpMultimediaObjectListener::$title = $multimediaObject->getTitle();
         });
 
-        $this->assertFalse(MockUpMultimediaObjectListener::$called);
-        $this->assertEquals(self::EMPTY_TITLE, MockUpMultimediaObjectListener::$title);
+        static::assertFalse(MockUpMultimediaObjectListener::$called);
+        static::assertEquals(self::EMPTY_TITLE, MockUpMultimediaObjectListener::$title);
 
         $title = 'test title';
 
@@ -62,15 +62,15 @@ class MultimediaObjectEventDispatcherServiceTest extends PumukitTestCase
 
         $this->multimediaObjectDispatcher->dispatchCreate($multimediaObject);
 
-        $this->assertTrue(MockUpMultimediaObjectListener::$called);
-        $this->assertEquals($title, MockUpMultimediaObjectListener::$title);
+        static::assertTrue(MockUpMultimediaObjectListener::$called);
+        static::assertEquals($title, MockUpMultimediaObjectListener::$title);
     }
 
     public function testDispatchUpdate()
     {
         $this->dispatcher->addListener(SchemaEvents::MULTIMEDIAOBJECT_UPDATE, function ($event, $name) {
-            $this->assertInstanceOf(MultimediaObjectEvent::class, $event);
-            $this->assertEquals(SchemaEvents::MULTIMEDIAOBJECT_UPDATE, $name);
+            static::assertInstanceOf(MultimediaObjectEvent::class, $event);
+            static::assertEquals(SchemaEvents::MULTIMEDIAOBJECT_UPDATE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
 
@@ -78,8 +78,8 @@ class MultimediaObjectEventDispatcherServiceTest extends PumukitTestCase
             MockUpMultimediaObjectListener::$title = $multimediaObject->getTitle();
         });
 
-        $this->assertFalse(MockUpMultimediaObjectListener::$called);
-        $this->assertEquals(self::EMPTY_TITLE, MockUpMultimediaObjectListener::$title);
+        static::assertFalse(MockUpMultimediaObjectListener::$called);
+        static::assertEquals(self::EMPTY_TITLE, MockUpMultimediaObjectListener::$title);
 
         $title = 'test title';
 
@@ -91,15 +91,15 @@ class MultimediaObjectEventDispatcherServiceTest extends PumukitTestCase
 
         $this->multimediaObjectDispatcher->dispatchUpdate($multimediaObject);
 
-        $this->assertTrue(MockUpMultimediaObjectListener::$called);
-        $this->assertEquals($updateTitle, MockUpMultimediaObjectListener::$title);
+        static::assertTrue(MockUpMultimediaObjectListener::$called);
+        static::assertEquals($updateTitle, MockUpMultimediaObjectListener::$title);
     }
 
     public function testDispatchDelete()
     {
         $this->dispatcher->addListener(SchemaEvents::MULTIMEDIAOBJECT_DELETE, function ($event, $name) {
-            $this->assertInstanceOf(MultimediaObjectEvent::class, $event);
-            $this->assertEquals(SchemaEvents::MULTIMEDIAOBJECT_DELETE, $name);
+            static::assertInstanceOf(MultimediaObjectEvent::class, $event);
+            static::assertEquals(SchemaEvents::MULTIMEDIAOBJECT_DELETE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
 
@@ -107,8 +107,8 @@ class MultimediaObjectEventDispatcherServiceTest extends PumukitTestCase
             MockUpMultimediaObjectListener::$title = $multimediaObject->getTitle();
         });
 
-        $this->assertFalse(MockUpMultimediaObjectListener::$called);
-        $this->assertEquals(self::EMPTY_TITLE, MockUpMultimediaObjectListener::$title);
+        static::assertFalse(MockUpMultimediaObjectListener::$called);
+        static::assertEquals(self::EMPTY_TITLE, MockUpMultimediaObjectListener::$title);
 
         $title = 'test title';
 
@@ -117,8 +117,8 @@ class MultimediaObjectEventDispatcherServiceTest extends PumukitTestCase
 
         $this->multimediaObjectDispatcher->dispatchDelete($multimediaObject);
 
-        $this->assertTrue(MockUpMultimediaObjectListener::$called);
-        $this->assertEquals($title, MockUpMultimediaObjectListener::$title);
+        static::assertTrue(MockUpMultimediaObjectListener::$called);
+        static::assertEquals($title, MockUpMultimediaObjectListener::$title);
     }
 }
 
