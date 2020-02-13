@@ -51,7 +51,7 @@ class SeriesRepository extends DocumentRepository
     {
         $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithTag($tag);
 
-        $qb = $this->createQueryBuilder()->field('_id')->in($referencedSeries->toArray());
+        $qb = $this->createQueryBuilder()->field('_id')->in($referencedSeries);
 
         return $this->addSortToQueryBuilder($qb, $sort);
     }
@@ -82,7 +82,7 @@ class SeriesRepository extends DocumentRepository
     {
         $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithAnyTag($tags);
 
-        $qb = $this->createQueryBuilder()->field('_id')->in($referencedSeries->toArray());
+        $qb = $this->createQueryBuilder()->field('_id')->in($referencedSeries);
 
         $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
 
@@ -101,7 +101,7 @@ class SeriesRepository extends DocumentRepository
     {
         $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithAllTags($tags);
 
-        $qb = $this->createQueryBuilder()->field('_id')->in($referencedSeries->toArray());
+        $qb = $this->createQueryBuilder()->field('_id')->in($referencedSeries);
 
         $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
 
@@ -134,7 +134,7 @@ class SeriesRepository extends DocumentRepository
     {
         $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithTag($tag);
 
-        $qb = $this->createQueryBuilder()->field('_id')->notIn($referencedSeries->toArray());
+        $qb = $this->createQueryBuilder()->field('_id')->notIn($referencedSeries);
 
         $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
 
@@ -152,7 +152,7 @@ class SeriesRepository extends DocumentRepository
     {
         $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithTag($tag);
 
-        return $this->createQueryBuilder()->field('_id')->notIn($referencedSeries->toArray())->getQuery()->getSingleResult();
+        return $this->createQueryBuilder()->field('_id')->notIn($referencedSeries)->getQuery()->getSingleResult();
     }
 
     /**
@@ -169,7 +169,7 @@ class SeriesRepository extends DocumentRepository
     {
         $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithAllTags($tags);
 
-        $qb = $this->createQueryBuilder()->field('_id')->notIn($referencedSeries->toArray());
+        $qb = $this->createQueryBuilder()->field('_id')->notIn($referencedSeries);
 
         $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
 
@@ -201,7 +201,7 @@ class SeriesRepository extends DocumentRepository
 
         $referencedSeries = $repoMmobj->findSeriesFieldByPersonId($personId);
 
-        return $this->createQueryBuilder()->field('_id')->in($referencedSeries->toArray())->getQuery()->execute();
+        return $this->createQueryBuilder()->field('_id')->in($referencedSeries)->getQuery()->execute();
     }
 
     /**
@@ -212,7 +212,7 @@ class SeriesRepository extends DocumentRepository
         $repoMmobj = $this->getDocumentManager()->getRepository(MultimediaObject::class);
         $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCod($personId, $roleCod);
 
-        return $this->createQueryBuilder()->field('_id')->in($referencedSeries->toArray());
+        return $this->createQueryBuilder()->field('_id')->in($referencedSeries);
     }
 
     /**
@@ -241,7 +241,7 @@ class SeriesRepository extends DocumentRepository
         $repoMmobj = $this->getDocumentManager()->getRepository(MultimediaObject::class);
         $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCodOrGroups($personId, $roleCod, $groups);
 
-        return $this->createQueryBuilder()->field('_id')->in($referencedSeries->toArray())->getQuery()->execute();
+        return $this->createQueryBuilder()->field('_id')->in($referencedSeries)->getQuery()->execute();
     }
 
     /**
@@ -261,7 +261,7 @@ class SeriesRepository extends DocumentRepository
         $repoMmobj = $this->getDocumentManager()->getRepository(MultimediaObject::class);
         $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCodOrGroups($personId, $roleCod, $groups);
 
-        $qb = $this->createQueryBuilder()->field('_id')->in($referencedSeries->toArray());
+        $qb = $this->createQueryBuilder()->field('_id')->in($referencedSeries);
 
         return $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
     }
@@ -333,7 +333,13 @@ class SeriesRepository extends DocumentRepository
      */
     public function countPublic()
     {
-        return $this->getDocumentManager()->getRepository(MultimediaObject::class)->createStandardQueryBuilder()->distinct('series')->getQuery()->execute()->count();
+        return $this->getDocumentManager()
+            ->getRepository(MultimediaObject::class)
+            ->createStandardQueryBuilder()
+            ->distinct('series')
+            ->count()
+            ->getQuery()
+            ->execute();
     }
 
     /**
@@ -369,7 +375,7 @@ class SeriesRepository extends DocumentRepository
     {
         $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithTag($tag);
 
-        $qb = $this->createQueryBuilder()->field('_id')->in($referencedSeries->toArray())->field('series_type')->references($seriesType);
+        $qb = $this->createQueryBuilder()->field('_id')->in($referencedSeries)->field('series_type')->references($seriesType);
 
         return $this->addSortToQueryBuilder($qb, $sort);
     }
@@ -402,7 +408,7 @@ class SeriesRepository extends DocumentRepository
         $repoMmobj = $this->getDocumentManager()->getRepository(MultimediaObject::class);
         $referencedSeries = $repoMmobj->findSeriesFieldByEmbeddedBroadcastType($type);
 
-        $qb = $this->createQueryBuilder()->field('_id')->in($referencedSeries->toArray());
+        $qb = $this->createQueryBuilder()->field('_id')->in($referencedSeries);
 
         return $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
     }
@@ -457,7 +463,7 @@ class SeriesRepository extends DocumentRepository
         $repoMmobj = $this->getDocumentManager()->getRepository(MultimediaObject::class);
         $referencedSeries = $repoMmobj->findSeriesFieldByEmbeddedBroadcastTypeAndGroups($type, $groups);
 
-        $qb = $this->createQueryBuilder()->field('_id')->in($referencedSeries->toArray());
+        $qb = $this->createQueryBuilder()->field('_id')->in($referencedSeries);
 
         return $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
     }
@@ -595,7 +601,7 @@ class SeriesRepository extends DocumentRepository
         $group = ['_id' => ['id' => '$series', 'title' => '$seriesTitle']];
 
         $command = [$unwind, ['$match' => $match], ['$group' => $group]];
-        $aMMO = $mmoCollection->aggregate($command, ['cursor' => []])->toArray();
+        $aMMO = $mmoCollection->aggregate($command, ['cursor' => []]);
 
         $aSeries = array_merge($aSeries, $aMMO);
         usort($aSeries, function ($a, $b) {
