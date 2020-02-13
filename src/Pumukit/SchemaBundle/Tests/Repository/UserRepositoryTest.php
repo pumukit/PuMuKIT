@@ -123,7 +123,7 @@ class UserRepositoryTest extends PumukitTestCase
 
         static::assertTrue($user->containsGroup($group1));
         static::assertFalse($user->containsGroup($group2));
-        static::assertEquals(1, $user->getGroups()->count());
+        static::assertCount(1, $user->getGroups());
 
         $user->addGroup($group2);
 
@@ -132,7 +132,7 @@ class UserRepositoryTest extends PumukitTestCase
 
         static::assertTrue($user->containsGroup($group1));
         static::assertTrue($user->containsGroup($group2));
-        static::assertEquals(2, $user->getGroups()->count());
+        static::assertCount(2, $user->getGroups());
 
         $user->removeGroup($group1);
 
@@ -141,7 +141,7 @@ class UserRepositoryTest extends PumukitTestCase
 
         static::assertFalse($user->containsGroup($group1));
         static::assertTrue($user->containsGroup($group2));
-        static::assertEquals(1, $user->getGroups()->count());
+        static::assertCount(1, $user->getGroups());
 
         static::assertCount(2, $this->groupRepo->findAll());
     }
