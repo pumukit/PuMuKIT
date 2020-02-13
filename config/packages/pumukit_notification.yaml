@@ -18,7 +18,6 @@ services:
       $adminEmail:              '%pumukit_notification.admin_email%'
       $notificateErrorsToAdmin: '%pumukit_notification.notificate_errors_to_admin%'
       $platformName:            '%pumukit_notification.platform_name%'
-      $environment:             '%kernel.environment%'
 
   Pumukit\NotificationBundle\Services\JobNotificationService:
     class: Pumukit\NotificationBundle\Services\JobNotificationService
