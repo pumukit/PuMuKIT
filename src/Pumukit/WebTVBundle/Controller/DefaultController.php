@@ -171,7 +171,7 @@ class DefaultController extends AbstractController
         $firstNowSessionEnds = $firstNowSessionEnds->getTimestamp();
         $firstNowSessionRemainingDuration = 0;
         foreach ($nowSessions as $session) {
-            $firstNowSessionEnds = ($session['data'][0]['session']['start']->sec + $session['data'][0]['session']['duration']) * 1000;
+            $firstNowSessionEnds = ($session['data'][0]['session']['start']->toDateTime()->format('U') + $session['data'][0]['session']['duration']) * 1000;
             $firstNowSessionRemainingDuration = $firstNowSessionEnds - ($now->getTimeStamp() * 1000);
 
             break;
