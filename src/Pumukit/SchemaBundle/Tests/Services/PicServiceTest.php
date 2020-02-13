@@ -53,7 +53,7 @@ class PicServiceTest extends PumukitTestCase
         $scheme = static::$kernel->getContainer()->getParameter('router.request_context.scheme');
         $host = static::$kernel->getContainer()->getParameter('router.request_context.host');
         $this->webDir = realpath($publicDir.'/bundles/pumukitschema');
-        $this->absoluteDomain = $scheme.'://'.$host;
+        $this->absoluteDomain = str_replace("'",'', $scheme).'://'.str_replace("'",'', $host);
 
         $this->picService = new PicService($scheme, $host, $this->webDir, $this->defaultSeriesPic, $this->defaultPlaylistPic, $this->defaultVideoPic, $this->defaultAudioHDPic, $this->defaultAudioSDPic);
 
