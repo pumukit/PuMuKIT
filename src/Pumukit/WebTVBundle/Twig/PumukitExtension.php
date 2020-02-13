@@ -109,13 +109,7 @@ class PumukitExtension extends AbstractExtension
         return $this->picService->getFirstUrlPic($object, $absolute, $hd);
     }
 
-    /**
-     * @param mixed $object
-     * @param bool  $absolute
-     *
-     * @return string|null
-     */
-    public function getDynamicPic($object, $absolute = false)
+    public function getDynamicPic($object, bool  $absolute = false): ?string
     {
         return $this->picService->getDynamicPic($object, $absolute);
     }

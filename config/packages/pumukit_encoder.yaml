@@ -58,5 +58,4 @@ services:
     class: Pumukit\EncoderBundle\Services\DynamicPicExtractorService
     arguments:
       $targetPath: '%pumukit.uploads_dir%/pic'
-      $targetUrl:  '%pumukit.uploads_url%/pic'
       $command:    '%pumukit.dynamicpicextractor.command%'
