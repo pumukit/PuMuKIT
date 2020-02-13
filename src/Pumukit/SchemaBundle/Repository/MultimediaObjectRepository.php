@@ -201,36 +201,27 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
-     * Find multimedia objects by person id with given role.
-     *
-     * @param string $personId
-     * @param string $roleCod
-     * @param array  $sort
-     * @param int    $limit
-     * @param int    $page
-     *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
      * @return mixed
      */
-    public function findByPersonIdWithRoleCod($personId, $roleCod, $sort = [], $limit = 0, $page = 0)
+    public function findByPersonIdWithRoleCod(string $personId, string $roleCod, array $sort = [], int $limit = 0, int $page = 0)
     {
         $qb = $this->createBuilderByPersonIdWithRoleCod($personId, $roleCod, $sort, $limit, $page);
 
         return $qb->getQuery()->execute();
     }
 
+    public function countByPersonIdWithRoleCod(string $personId, string $roleCod, array $sort = [], int $limit = 0, int $page = 0): int
+    {
+        $qb = $this->createBuilderByPersonIdWithRoleCod($personId, $roleCod, $sort, $limit, $page);
+        return $qb->count()->getQuery()->execute();
+    }
+
     /**
-     * Find multimedia objects by person id
-     * with given role in given series.
-     *
-     * @param Series $series
-     * @param string $personId
-     * @param string $roleCod
-     *
      * @return mixed
      */
-    public function findBySeriesAndPersonIdWithRoleCod($series, $personId, $roleCod)
+    public function findBySeriesAndPersonIdWithRoleCod(Series $series, string $personId, string $roleCod)
     {
         $qb = $this->createStandardQueryBuilder()->field('series')->references($series);
         $qb->field('people')->elemMatch($qb->expr()->field('people._id')->equals(new ObjectId($personId))->field('cod')->equals($roleCod));
