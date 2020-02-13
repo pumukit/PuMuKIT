@@ -125,7 +125,7 @@ class SeriesStylesController extends AbstractController
             return new JsonResponse(['error', 'msg' => $this->translator->trans('There are series with this series style')]);
         }
 
-        return new JsonResponse(['error', 'msg' => $this->translator->trans("Series style {$style->getId}() doesn't exists")]);
+        return new JsonResponse(['error', 'msg' => $this->translator->trans("Series style {$id}() doesn't exists")]);
     }
 
     /**
