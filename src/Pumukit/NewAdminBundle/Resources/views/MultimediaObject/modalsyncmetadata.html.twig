@@ -42,7 +42,7 @@
                 </h4>
                 <hr/>
                 <div class="row">
-                    {% for tag in tags if tag.cod != 'ROOT' %}
+                    {% for tag in tags | filter(tag => tag.cod != 'ROOT') %}
                         <div class="col-md-12">
                             <div class="checkbox" style="display:table-row">
                                 <label for="metadata_tag_{{ tag.getId() }}">
@@ -60,7 +60,7 @@
                 </h4>
                 <hr/>
                 <div class="row">
-                    {% for role in roles if role.cod != 'owner' %}
+                    {% for role in roles |filter(role => role.cod != 'owner') %}
                         <div class="col-md-12">
                             <div class="checkbox" style="display:table-row">
                                 <label for="metadata_role_{{ role.getId() }}">

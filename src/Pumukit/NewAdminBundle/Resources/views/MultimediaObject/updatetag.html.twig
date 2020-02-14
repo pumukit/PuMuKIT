@@ -1,6 +1,6 @@
 <div id="tv_admin_container_tag" class="well">
     <div style="max-height:800px;overflow-y:auto;padding: 7px;">
-        {% for parent in parent_tags if parent.getDisplay() and parent.getChildren()|length != 0 and not parent.getProperty('hide_in_tag_group') %}
+        {% for parent in parent_tags | filter(parent => parent.getDisplay() and parent.getChildren()|length != 0 and not parent.getProperty('hide_in_tag_group')) %}
             <div class="panel panel-default panel-tag-{{ parent.cod }}">
                 <div class="panel-heading">{{ parent.title }}</div>
                 <div class="panel-body" id="tag{{ parent.id }}_mms">
@@ -31,7 +31,7 @@
                         {# Added tags#}
                         <div style="width:40%; max-width:400px; height:260px; border: 1px solid #bbb; float: left; overflow-x: hidden; overflow-y: scroll" class="tag" id="select_tag_{{ parent.id }}">
                             <div class="tag_tree list-group" id="select_ul_tag_cod_{{ parent.cod }}">
-                                {% for embedded_tag in mm.getTags() if embedded_tag.isDescendantOf(parent) %}
+                                {% for embedded_tag in mm.getTags() | filter(embedded_tag => embedded_tag.isDescendantOf(parent)) %}
                                     <a href="#" class="list-group-item tag-rm-{{ embedded_tag.cod }}"
                                        id="select_li_{{ embedded_tag.id }}"
                                        onclick="javascript:return select_tree_tag(this);"
