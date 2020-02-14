@@ -39,7 +39,7 @@
       </trans-unit>
       <trans-unit id="Ab4wu0o" resname="reset">
         <source>reset</source>
-        <target state="needs-translation">reset</target>
+        <target state="translated">restablecer</target>
       </trans-unit>
       <trans-unit id="38M3a4J" resname="filter">
         <source>filter</source>
@@ -247,7 +247,7 @@
       </trans-unit>
       <trans-unit id="jIzdvYg" resname="min.">
         <source>min.</source>
-        <target state="needs-translation">min.</target>
+        <target state="translated">min.</target>
       </trans-unit>
       <trans-unit id="preRnFs" resname="Select or create any live event.">
         <source>Select or create any live event.</source>
@@ -390,7 +390,7 @@
       </trans-unit>
       <trans-unit id="VlM5vE0" resname="OK">
         <source>OK</source>
-        <target state="needs-translation">OK</target>
+        <target state="translated">OK</target>
       </trans-unit>
       <trans-unit id="8iT6pMv" resname="Edit file of multimedia object">
         <source>Edit file of multimedia object</source>
@@ -418,7 +418,7 @@
       </trans-unit>
       <trans-unit id="56JB3rr" resname="URL">
         <source>URL</source>
-        <target state="needs-translation">URL</target>
+        <target state="translated">URL</target>
       </trans-unit>
       <trans-unit id="1AVfr6N" resname="Resolution">
         <source>Resolution</source>
@@ -589,7 +589,7 @@
       </trans-unit>
       <trans-unit id="M.Z9z4s" resname="Multimedia">
         <source>Multimedia</source>
-        <target state="needs-translation">Multimedia</target>
+        <target state="translated">Multimedia</target>
       </trans-unit>
       <trans-unit id="d9YkHEs" resname="Media Edition">
         <source>Media Edition</source>
@@ -817,7 +817,7 @@
       </trans-unit>
       <trans-unit id="2u52BrM" resname="Reset">
         <source>Reset</source>
-        <target state="needs-translation">Reset</target>
+        <target state="translated">Restablecer</target>
       </trans-unit>
       <trans-unit id="adcjyWa" resname="Press OK for changes to take effect">
         <source>Press OK for changes to take effect</source>
@@ -1041,7 +1041,7 @@
       </trans-unit>
       <trans-unit id="EhVukhv" resname="Id">
         <source>Id</source>
-        <target state="needs-translation">Id</target>
+        <target state="translated">Id</target>
       </trans-unit>
       <trans-unit id="Y9zriAC" resname="Phone">
         <source>Phone</source>
@@ -1049,11 +1049,11 @@
       </trans-unit>
       <trans-unit id="zaFNCy2" resname="INFO">
         <source>INFO</source>
-        <target state="needs-translation">INFO</target>
+        <target state="translated">INFO</target>
       </trans-unit>
       <trans-unit id="KGDhGAr" resname="SERIES">
         <source>SERIES</source>
-        <target state="needs-translation">SERIES</target>
+        <target state="translated">SERIES</target>
       </trans-unit>
       <trans-unit id="GyokaI7" resname="Select any person">
         <source>Select any person</source>
@@ -1229,7 +1229,7 @@
       </trans-unit>
       <trans-unit id="aNA2dZe" resname="Id:">
         <source>Id:</source>
-        <target state="needs-translation">Id:</target>
+        <target state="translated">Id:</target>
       </trans-unit>
       <trans-unit id="dZVMX02" resname="Preview:">
         <source>Preview:</source>
@@ -1285,7 +1285,7 @@
       </trans-unit>
       <trans-unit id="FwMioy8" resname="Info">
         <source>Info</source>
-        <target state="needs-translation">Info</target>
+        <target state="translated">Información</target>
       </trans-unit>
       <trans-unit id="MksTT1f" resname="Preview">
         <source>Preview</source>
@@ -1332,11 +1332,11 @@
       </trans-unit>
       <trans-unit id=".Yjgpj8" resname="Cod">
         <source>Cod</source>
-        <target state="needs-translation">Cod</target>
+        <target state="translated">Cod</target>
       </trans-unit>
       <trans-unit id="wlM3BVR" resname="Roles">
         <source>Roles</source>
-        <target state="needs-translation">Roles</target>
+        <target state="translated">Roles</target>
       </trans-unit>
       <trans-unit id="NOEIwIl" resname="Display">
         <source>Display</source>
@@ -1512,7 +1512,7 @@
       </trans-unit>
       <trans-unit id="qCleCP9" resname="Series">
         <source>Series</source>
-        <target state="needs-translation">Series</target>
+        <target state="translated">Series</target>
       </trans-unit>
       <trans-unit id="PEN92mY" resname="There are no series types with those values.">
         <source>There are no series types with those values.</source>
@@ -1658,11 +1658,11 @@
       </trans-unit>
       <trans-unit id="I0S1ntK" resname="Mm">
         <source>Mm</source>
-        <target state="needs-translation">Mm</target>
+        <target state="translated">Mm</target>
       </trans-unit>
       <trans-unit id="gCuh9lB" resname="Cpu">
         <source>Cpu</source>
-        <target state="needs-translation">Cpu</target>
+        <target state="translated">Cpu</target>
       </trans-unit>
       <trans-unit id="m7clAFB" resname="Before">
         <source>Before</source>
@@ -2393,7 +2393,7 @@
       </trans-unit>
       <trans-unit id="wDUpbl_" resname="Subseries">
         <source>Subseries</source>
-        <target state="needs-translation">Subseries</target>
+        <target state="translated">Subseries</target>
       </trans-unit>
       <trans-unit id="U_Z_uFz" resname="USERS">
         <source>USERS</source>
@@ -2481,7 +2481,7 @@
       </trans-unit>
       <trans-unit id="3y.zuwr" resname="STREAM">
         <source>STREAM</source>
-        <target state="needs-translation">STREAM</target>
+        <target state="translated">STREAM</target>
       </trans-unit>
       <trans-unit id="MWnOZEK" resname="Technology">
         <source>Technology</source>
@@ -2565,7 +2565,7 @@
       </trans-unit>
       <trans-unit id="SvMvKSS" resname="IFRAME">
         <source>IFRAME</source>
-        <target state="needs-translation">IFRAME</target>
+        <target state="translated">IFRAME</target>
       </trans-unit>
       <trans-unit id="sXY1cJs" resname="Successfully updated groups in User.">
         <source>Successfully updated groups in User.</source>
@@ -2629,7 +2629,7 @@
       </trans-unit>
       <trans-unit id="sLn_JP_" resname="Manual">
         <source>Manual</source>
-        <target state="needs-translation">Manual</target>
+        <target state="translated">Manual</target>
       </trans-unit>
       <trans-unit id="XqGUv5j" resname="Series picture">
         <source>Series picture</source>
@@ -2721,7 +2721,7 @@
       </trans-unit>
       <trans-unit id="k2oWHDk" resname="Editor">
         <source>Editor</source>
-        <target state="needs-translation">Editor</target>
+        <target state="translated">Editor</target>
       </trans-unit>
       <trans-unit id="UUVDL8u" resname="Relations list">
         <source>Relations list</source>
@@ -2733,7 +2733,7 @@
       </trans-unit>
       <trans-unit id="V_Ek1jl" resname="Person with Role list">
         <source>Person with Role list</source>
-        <target state="needs-translation">Person with Role list</target>
+        <target state="translated">Listado de roles da persoa</target>
       </trans-unit>
       <trans-unit id=".RFyz_P" resname="Spinner">
         <source>Spinner</source>
@@ -2961,11 +2961,11 @@
       </trans-unit>
       <trans-unit id="oMGVBn6" resname="Take image">
         <source>Take image</source>
-        <target state="needs-translation">Take image</target>
+        <target state="translated">Tomar imaxe</target>
       </trans-unit>
       <trans-unit id="d65Q53N" resname="Take burst">
         <source>Take burst</source>
-        <target state="needs-translation">Take burst</target>
+        <target state="translated">Tomar ráfaga</target>
       </trans-unit>
       <trans-unit id="bmF4ejF" resname="Upload a local file.">
         <source>Upload a local file.</source>
@@ -2977,11 +2977,11 @@
       </trans-unit>
       <trans-unit id="mNfVhoI" resname="Move up thumbnail">
         <source>Move up thumbnail</source>
-        <target state="needs-translation">Move up thumbnail</target>
+        <target state="translated">Subir unha posición a miniatura</target>
       </trans-unit>
       <trans-unit id="OkMRVlK" resname="Move down thumbnail">
         <source>Move down thumbnail</source>
-        <target state="needs-translation">Move down thumbnail</target>
+        <target state="translated">Baixar unha posición a miniatura</target>
       </trans-unit>
       <trans-unit id="8FhetqB" resname="Generate thumbnail">
         <source>Generate thumbnail</source>
@@ -3026,24 +3026,23 @@
       <trans-unit id="lKPkOKY" resname="Publishing&#10;                        Decisions">
         <source>Publishing
                         Decisions</source>
-        <target state="needs-translation">Publishing
-                        Decisions</target>
+        <target state="translated">Decisións de publicación</target>
       </trans-unit>
       <trans-unit id="OEOXHc." resname="ID">
         <source>ID</source>
-        <target state="needs-translation">ID</target>
+        <target state="translated">ID</target>
       </trans-unit>
       <trans-unit id="uBc67J6" resname="Multimedia object ID">
         <source>Multimedia object ID</source>
-        <target state="needs-translation">Multimedia object ID</target>
+        <target state="translated">ID do obxecto multimedia</target>
       </trans-unit>
       <trans-unit id="vhe1K.B" resname="Series ID">
         <source>Series ID</source>
-        <target state="needs-translation">Series ID</target>
+        <target state="translated">Id da serie</target>
       </trans-unit>
       <trans-unit id="cZiMTY4" resname="Text">
         <source>Text</source>
-        <target state="needs-translation">Text</target>
+        <target state="translated">Texto</target>
       </trans-unit>
       <trans-unit id="5GhbOgo" resname="Search by title, subtitle or description">
         <source>Search by title, subtitle or description</source>
@@ -3083,11 +3082,11 @@
       </trans-unit>
       <trans-unit id="Z.qmImw" resname="Format YYYY-MM-DD">
         <source>Format YYYY-MM-DD</source>
-        <target state="needs-translation">Format YYYY-MM-DD</target>
+        <target state="translated">Formato YYYY-MM-DD</target>
       </trans-unit>
       <trans-unit id="F7yReDQ" resname="Broadcast">
         <source>Broadcast</source>
-        <target state="needs-translation">Broadcast</target>
+        <target state="translated">Difusión</target>
       </trans-unit>
       <trans-unit id="9vRoj.I" resname="Send">
         <source>Send</source>
@@ -3111,7 +3110,7 @@
       </trans-unit>
       <trans-unit id="tcEgsxb" resname="Saved">
         <source>Saved</source>
-        <target state="needs-translation">Saved</target>
+        <target state="translated">Gardar</target>
       </trans-unit>
       <trans-unit id="baeVqGZ" resname="Genre">
         <source>Genre</source>
@@ -3119,11 +3118,11 @@
       </trans-unit>
       <trans-unit id="nwiNvr1" resname="Advanced">
         <source>Advanced</source>
-        <target state="needs-translation">Advanced</target>
+        <target state="translated">Avanzado</target>
       </trans-unit>
       <trans-unit id="pPs.mWz" resname="UNESCO catalogue">
         <source>UNESCO catalogue</source>
-        <target state="needs-translation">UNESCO catalogue</target>
+        <target state="translated">Catalogador UNESCO</target>
       </trans-unit>
       <trans-unit id="zkaD5wE" resname="Channel">
         <source>Channel</source>
@@ -3135,59 +3134,59 @@
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target state="needs-translation">date</target>
+        <target state="translated">data</target>
       </trans-unit>
       <trans-unit id="N3biNWj" resname="date_all">
         <source>date_all</source>
-        <target state="needs-translation">date_all</target>
+        <target state="translated">data_todos</target>
       </trans-unit>
       <trans-unit id="1GF1slj" resname="date_subserial">
         <source>date_subserial</source>
-        <target state="needs-translation">date_subserial</target>
+        <target state="translated">data_subserie</target>
       </trans-unit>
       <trans-unit id="YSQOpvl" resname="subserial">
         <source>subserial</source>
-        <target state="needs-translation">subserial</target>
+        <target state="translated">subserie</target>
       </trans-unit>
       <trans-unit id="LA.rmuv" resname="multisubserial">
         <source>multisubserial</source>
-        <target state="needs-translation">multisubserial</target>
+        <target state="translated">multi subserie</target>
       </trans-unit>
       <trans-unit id="Nr3mbyi" resname="manual">
         <source>manual</source>
-        <target state="needs-translation">manual</target>
+        <target state="translated">manual</target>
       </trans-unit>
       <trans-unit id="n17fyKD" resname="publication date ascending">
         <source>publication date ascending</source>
-        <target state="needs-translation">publication date ascending</target>
+        <target state="translated">data de publicación ascendente</target>
       </trans-unit>
       <trans-unit id="fAXffnN" resname="publication date descending">
         <source>publication date descending</source>
-        <target state="needs-translation">publication date descending</target>
+        <target state="translated">data de publicación descendente</target>
       </trans-unit>
       <trans-unit id="8a3nLp_" resname="recording date descending">
         <source>recording date descending</source>
-        <target state="needs-translation">recording date descending</target>
+        <target state="translated">data de grabación descendente</target>
       </trans-unit>
       <trans-unit id="6LtPTFc" resname="recording date ascending">
         <source>recording date ascending</source>
-        <target state="needs-translation">recording date ascending</target>
+        <target state="translated">data de grabación ascendente</target>
       </trans-unit>
       <trans-unit id="qvIyBkY" resname="title">
         <source>title</source>
-        <target state="needs-translation">title</target>
+        <target state="translated">título</target>
       </trans-unit>
       <trans-unit id="bG.WfVj" resname="WebTV">
         <source>WebTV</source>
-        <target state="needs-translation">WebTV</target>
+        <target state="translated">WebTV</target>
       </trans-unit>
       <trans-unit id="e1wLqeS" resname="Health Sciences">
         <source>Health Sciences</source>
-        <target state="needs-translation">Health Sciences</target>
+        <target state="translated">Ciencias da Saude</target>
       </trans-unit>
       <trans-unit id="txAs3w2" resname="Sciences">
         <source>Sciences</source>
-        <target state="needs-translation">Sciences</target>
+        <target state="translated">Ciencia</target>
       </trans-unit>
       <trans-unit id="R4fq98k" resname="Legal">
         <source>Legal</source>
@@ -3415,11 +3414,11 @@
       </trans-unit>
       <trans-unit id="NmSJVXn" resname="Export">
         <source>Export</source>
-        <target state="needs-translation">Export</target>
+        <target state="translated">Exportar</target>
       </trans-unit>
       <trans-unit id="9NseSEd" resname="End">
         <source>End</source>
-        <target state="needs-translation">End</target>
+        <target state="translated">Finalizar</target>
       </trans-unit>
       <trans-unit id="k8lPtsu" resname="Show configuration for Twitter.">
         <source>Show configuration for Twitter.</source>
@@ -3427,31 +3426,32 @@
       </trans-unit>
       <trans-unit id="xdpjUyN" resname="Click to edit Twitter configuration">
         <source>Click to edit Twitter configuration</source>
-        <target state="needs-translation">Click to edit Twitter configuration</target>
+        <target state="translated">Pulse para editar a configuración do Twitter</target>
       </trans-unit>
       <trans-unit id="vxAMoZK" resname="Twitter hashtag">
         <source>Twitter hashtag</source>
-        <target state="needs-translation">Twitter hashtag</target>
+        <target state="translated">Twitter hashtag</target>
       </trans-unit>
       <trans-unit id="Fw.2IIO" resname="Twitter hashtag without #">
         <source>Twitter hashtag without #</source>
-        <target state="needs-translation">Twitter hashtag without #</target>
+        <target state="translated">Twitter hashtag sen #</target>
       </trans-unit>
       <trans-unit id="FQ6Rm8C" resname="Twitter widget id">
         <source>Twitter widget id</source>
-        <target state="needs-translation">Twitter widget id</target>
+        <target state="translated">Twitter widget id</target>
       </trans-unit>
       <trans-unit id="Ckcd5Ax" resname="Create a search Widget in your Twitter account. Configure it with the defined hashtag and recommended color %twitterAccountsLinkColor% for link color. Place here the 'data-widget-id' of the HTML generated code.">
         <source>Create a search Widget in your Twitter account. Configure it with the defined hashtag and recommended color %twitterAccountsLinkColor% for link color. Place here the 'data-widget-id' of the HTML generated code.</source>
-        <target state="needs-translation">Create a search Widget in your Twitter account. Configure it with the defined hashtag and recommended color %twitterAccountsLinkColor% for link color. Place here the 'data-widget-id' of the HTML generated code.</target>
+        <target state="translated">Crea un widget de busca na túa conta de Twitter. Configúrao co hashtag definido e a cor recomendada %twitterAccountsLinkColor% 
+ para a cor da ligazón. Coloca aquí o 'widget-id data' do código xerado HTML.</target>
       </trans-unit>
       <trans-unit id="0IXPFt9" resname="Publish to LMS">
         <source>Publish to LMS</source>
-        <target state="needs-translation">Publish to LMS</target>
+        <target state="translated">Publicar en LMS</target>
       </trans-unit>
       <trans-unit id="Vk6hwWC" resname="Enable Chat">
         <source>Enable Chat</source>
-        <target state="needs-translation">Enable Chat</target>
+        <target state="translated">Activar o chat</target>
       </trans-unit>
       <trans-unit id="4.X08dn" resname="Click on the color bar to change color. A pop-up window will be shown.">
         <source>Click on the color bar to change color. A pop-up window will be shown.</source>
@@ -3459,31 +3459,31 @@
       </trans-unit>
       <trans-unit id="hgHl3nd" resname="Show tag on WebTV portal and edit categories on multimedia objects">
         <source>Show tag on WebTV portal and edit categories on multimedia objects</source>
-        <target state="needs-translation">Show tag on WebTV portal and edit categories on multimedia objects</target>
+        <target state="translated">Vela categoria no portal web e en editar categorias do obxecto multimedia</target>
       </trans-unit>
       <trans-unit id="9A6g70f" resname="Not valid to tagged objets">
         <source>Not valid to tagged objets</source>
-        <target state="needs-translation">Not valid to tagged objets</target>
+        <target state="translated">Non válido para os obxectos marcados</target>
       </trans-unit>
       <trans-unit id="SMIii47" resname="Clone series">
         <source>Clone series</source>
-        <target state="needs-translation">Clone series</target>
+        <target state="translated">Clonar series</target>
       </trans-unit>
       <trans-unit id="9yX0Jhr" resname="Are you sure you want to clone this series?">
         <source>Are you sure you want to clone this series?</source>
-        <target state="needs-translation">Are you sure you want to clone this series?</target>
+        <target state="translated">Está vostede seguro de querer clonarla serie?</target>
       </trans-unit>
       <trans-unit id="xCcnCNf" resname="Series successfully cloned.">
         <source>Series successfully cloned.</source>
-        <target state="needs-translation">Series successfully cloned.</target>
+        <target state="translated">Serie clonada correctamente.</target>
       </trans-unit>
       <trans-unit id="S1iJNW7" resname="No people.">
         <source>No people.</source>
-        <target state="needs-translation">No people.</target>
+        <target state="translated">Sen persoas.</target>
       </trans-unit>
       <trans-unit id="ndCL6K3" resname="Multimedia object picture">
         <source>Multimedia object picture</source>
-        <target state="needs-translation">Multimedia object picture</target>
+        <target state="translated">Imaxe do obxecto multimedia</target>
       </trans-unit>
       <trans-unit id="t3844f0" resname="Playlist picture">
         <source>Playlist picture</source>
@@ -3492,6 +3492,9 @@
       <trans-unit id="ZyykMeP" resname="Event picture">
         <source>Event picture</source>
         <target state="needs-translation">Event picture</target>
+        <alt-trans>
+          <target>Imaxe do evento</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="yObHKax" resname="Places and precinct">
         <source>Places and precinct</source>
