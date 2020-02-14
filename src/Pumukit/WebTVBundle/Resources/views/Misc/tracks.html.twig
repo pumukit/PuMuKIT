@@ -14,7 +14,7 @@
     </li>
 {% else %}
     {% set tracks = object.getFilteredTracksWithTags(['display'], [], [], []) %}
-    {% for track in tracks if not track.getHide() %}
+    {% for track in tracks | filter(track => not track.getHide()) %}
         {% if magic_url is defined %}
             {% set url_track = url('pumukit_webtv_multimediaobject_magicindex', {secret: object.secret, 'track_id': track.id}) %}
         {% else %}

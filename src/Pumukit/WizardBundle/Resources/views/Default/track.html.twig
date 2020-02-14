@@ -40,7 +40,7 @@
                             <label for="pumukitwizard_track_pubchannel" class="control-label">
                                 {% trans %}Publication Channels{% endtrans %}:
                             </label>
-                            {% for pub in pub_channels if not pub.getProperty('modal_path') %}
+                            {% for pub in pub_channels | filter(pub => not pub.getProperty('modal_path')) %}
                                 {% if not pub.getDisplay() or is_granted('ROLE_TAG_DISABLE_' ~ pub.cod|upper) %}
                                     <div style="color: grey" class="checkbox">
                                         <label>

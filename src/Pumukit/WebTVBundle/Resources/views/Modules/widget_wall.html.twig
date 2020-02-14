@@ -20,7 +20,7 @@
                 </div>
 
                 <div class="wall-labels">
-                    {% for tag in object.getTags() if tag.display %}
+                    {% for tag in object.getTags() | filter(tag => tag.display) %}
                         <a href="{{ path('pumukit_webtv_search_multimediaobjects', {'tagCod' : tag.getCod() }) }}" title="{{ tag.getTitle() }}">
                             <span class="label label-default label-pmk">
                                 {{ tag.getTitle() }}

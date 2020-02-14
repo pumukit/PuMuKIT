@@ -1,4 +1,4 @@
-{% for material in object.getMaterials() if not material.getHide() and showDownloads|default(false) %}
+{% for material in object.getMaterials() | filter(material => not material.getHide() and showDownloads|default(false)) %}
     <div class="material">
         <span class="glyphicon glyphicon-paperclip"></span>
         <a target="_blank" href="{{ material.getUrl() }}" title="{{ material.getName() }}">
