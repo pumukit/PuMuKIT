@@ -9,15 +9,16 @@
 
     <div class="col-md-2">
         <div class="well" id="tag_list_unesco">
-            {{ render(controller('PumukitNewAdminBundle:UNESCO:menuTags')) }}
+            {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\UNESCOController::menuTagsAction')) }}
         </div>
     </div>
     <div class="col-md-8">
         <div id="advance_search">
-            {{ render(controller('PumukitNewAdminBundle:UNESCO:advancedSearchForm')) }}
+            {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\UNESCOController::advancedSearchFormAction')) }}
+
         </div>
         <div id="list_mms">
-            {{ render(controller('PumukitNewAdminBundle:UNESCO:list')) }}
+            {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\UNESCOController::listAction')) }}
         </div>
         <div id="edit_mms">
             {% if(app.session.has('admin/unesco/id')) %}
@@ -28,9 +29,9 @@
     <div class="col-md-2">
         <div id="preview_mms">
             {% if app.session.has('admin/unesco/id') %}
-                {{ render(controller('PumukitNewAdminBundle:UNESCO:show', {'id' : app.session.get('admin/unesco/id')})) }}
+                {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\UNESCOController::showAction', {'id' : app.session.get('admin/unesco/id')})) }}
             {% else %}
-                {{ render(controller('PumukitNewAdminBundle:UNESCO:show')) }}
+                {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\UNESCOController::showAction')) }}
             {% endif %}
         </div>
     </div>
