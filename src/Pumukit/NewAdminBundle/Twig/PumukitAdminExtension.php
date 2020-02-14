@@ -137,6 +137,13 @@ class PumukitAdminExtension extends AbstractExtension
     {
         $addonLanguages = CustomLanguageType::$addonLanguages;
 
+        if ($code === 'zh-CN') {
+            return '简体中文';
+        }
+        if ($code === 'zh-TW') {
+            return '繁體中文';
+        }
+
         if (isset($this->languages[$code])) {
             $name = $translate ?
                   $this->languages[$code] :
