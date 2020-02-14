@@ -356,6 +356,9 @@ class SeriesController extends AdminController
         return $this->redirect($this->generateUrl('pumukitnewadmin_series_list'));
     }
 
+    /**
+     * @Template("@PumukitNewAdmin/Series/changepub.html.twig")
+     */
     public function changePubAction(Request $request)
     {
         $series = $this->findOr404($request);
