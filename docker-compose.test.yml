@@ -4,7 +4,7 @@ services:
   php:
     image: teltek/pumukit:$PUMUKIT_BASE_VERSION
     env_file:
-      - .env
+      - .env.travis
     build:
       context: ./
       args:
@@ -18,7 +18,7 @@ services:
   h2-proxy:
     image: teltek/nginx:$PUMUKIT_BASE_VERSION
     env_file:
-      - .env
+      - .env.travis
     build:
       context: ./doc/docker/nginx
       cache_from:
