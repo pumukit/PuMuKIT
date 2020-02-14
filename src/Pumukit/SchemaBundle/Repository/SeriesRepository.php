@@ -2,7 +2,6 @@
 
 namespace Pumukit\SchemaBundle\Repository;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Query\Builder;
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 use MongoDB\BSON\ObjectId;
@@ -219,19 +218,7 @@ class SeriesRepository extends DocumentRepository
         return $this->createQueryBuilder()->field('_id')->in($referencedSeries)->getQuery()->execute();
     }
 
-    /**
-     * Find series by person id and role cod or groups sorted Query Builder.
-     *
-     * @param \MongoId|string $personId
-     * @param string          $roleCod
-     * @param array           $groups
-     * @param array           $sort
-     * @param int             $limit
-     * @param int             $page
-     *
-     * @return Builder
-     */
-    public function findByPersonIdAndRoleCodOrGroupsSortedQueryBuilder($personId, $roleCod, $groups, $sort = [], $limit = 0, $page = 0)
+    public function findByPersonIdAndRoleCodOrGroupsSortedQueryBuilder(string $personId, string $roleCod, array $groups, array $sort = [], int $limit = 0, int $page = 0)
     {
         $repoMmobj = $this->getDocumentManager()->getRepository(MultimediaObject::class);
         $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCodOrGroups($personId, $roleCod, $groups);
@@ -241,71 +228,30 @@ class SeriesRepository extends DocumentRepository
         return $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
     }
 
-    /**
-     * Find series by person id and role cod or groups sorted Query.
-     *
-     * @param \MongoId|string $personId
-     * @param string          $roleCod
-     * @param array           $groups
-     * @param array           $sort
-     * @param int             $limit
-     * @param int             $page
-     *
-     * @return \Doctrine\MongoDB\Query\Query
-     */
-    public function findByPersonIdAndRoleCodOrGroupsSortedQuery($personId, $roleCod, $groups, $sort = [], $limit = 0, $page = 0)
+    public function findByPersonIdAndRoleCodOrGroupsSortedQuery(string $personId, string $roleCod, array $groups, array $sort = [], int $limit = 0, int $page = 0)
     {
         $qb = $this->findByPersonIdAndRoleCodOrGroupsSortedQueryBuilder($personId, $roleCod, $groups, $sort, $limit, $page);
 
         return $qb->getQuery();
     }
 
-    /**
-     * Find series by person id and role cod or groups sorted.
-     *
-     * @param \MongoId|string $personId
-     * @param string          $roleCod
-     * @param array           $groups
-     * @param array           $sort
-     * @param int             $limit
-     * @param int             $page
-     *
-     * @return mixed
-     */
-    public function findByPersonIdAndRoleCodOrGroupsSorted($personId, $roleCod, $groups, $sort = [], $limit = 0, $page = 0)
+    public function findByPersonIdAndRoleCodOrGroupsSorted(string $personId, string $roleCod, array $groups, array $sort = [], int $limit = 0, int $page = 0)
     {
         $query = $this->findByPersonIdAndRoleCodOrGroupsSortedQuery($personId, $roleCod, $groups, $sort, $limit, $page);
 
         return $query->execute();
     }
 
-    /**
-     * Find series with given series type.
-     *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     *
-     * @return mixed
-     */
     public function findBySeriesType(SeriesType $series_type)
     {
         return $this->createQueryBuilder()->field('series_type')->references($series_type)->getQuery()->execute();
     }
 
-    /**
-     * Count number of series in the repo.
-     *
-     * @return mixed
-     */
     public function count()
     {
         return $this->createQueryBuilder()->count()->getQuery()->execute();
     }
 
-    /**
-     * Count number of series in the repo.
-     *
-     * @return mixed
-     */
     public function countPublic()
     {
         return $this->getDocumentManager()
@@ -314,21 +260,11 @@ class SeriesRepository extends DocumentRepository
             ->distinct('series')
             ->count()
             ->getQuery()
-            ->execute();
+            ->execute()
+        ;
     }
 
-    /**
-     * Find series with tag and series type.
-     *
-     * @param Tag    $tag
-     * @param object $seriesType
-     * @param array  $sort
-     * @param int    $limit
-     * @param int    $page
-     *
-     * @return mixed
-     */
-    public function findWithTagAndSeriesType($tag, $seriesType, $sort = [], $limit = 0, $page = 0)
+    public function findWithTagAndSeriesType(Tag $tag, SeriesType $seriesType, array $sort = [], int $limit = 0, int $page = 0)
     {
         $qb = $this->createBuilderWithTagAndSeriesType($tag, $seriesType, $sort);
 
@@ -368,17 +304,7 @@ class SeriesRepository extends DocumentRepository
         return $this->createQueryBuilder()->field('properties.'.$propertyName)->equals($propertyValue)->getQuery()->getSingleResult();
     }
 
-    /**
-     * Find by EmbeddedBroadcast type Query Builder.
-     *
-     * @param string $type
-     * @param array  $sort
-     * @param int    $limit
-     * @param int    $page
-     *
-     * @return Builder
-     */
-    public function findByEmbeddedBroadcastTypeQueryBuilder($type = '', $sort = [], $limit = 0, $page = 0)
+    public function findByEmbeddedBroadcastTypeQueryBuilder(string $type = '', array $sort = [], int $limit = 0, int $page = 0)
     {
         $repoMmobj = $this->getDocumentManager()->getRepository(MultimediaObject::class);
         $referencedSeries = $repoMmobj->findSeriesFieldByEmbeddedBroadcastType($type);
@@ -388,52 +314,21 @@ class SeriesRepository extends DocumentRepository
         return $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
     }
 
-    /**
-     * Find by EmbeddedBroadcast type Query.
-     *
-     * @param string $type
-     * @param array  $sort
-     * @param int    $limit
-     * @param int    $page
-     *
-     * @return \Doctrine\MongoDB\Query\Query
-     */
-    public function findByEmbeddedBroadcastTypeQuery($type = '', $sort = [], $limit = 0, $page = 0)
+    public function findByEmbeddedBroadcastTypeQuery(string $type = '', array $sort = [], int $limit = 0, int $page = 0)
     {
         $qb = $this->findByEmbeddedBroadcastTypeQueryBuilder($type, $sort, $limit, $page);
 
         return $qb->getQuery();
     }
 
-    /**
-     * Find by EmbeddedBroadcast type.
-     *
-     * @param string $type
-     * @param array  $sort
-     * @param int    $limit
-     * @param int    $page
-     *
-     * @return mixed
-     */
-    public function findByEmbeddedBroadcastType($type = '', $sort = [], $limit = 0, $page = 0)
+    public function findByEmbeddedBroadcastType(string $type = '', array $sort = [], int $limit = 0, int $page = 0)
     {
         $query = $this->findByEmbeddedBroadcastTypeQuery($type, $sort, $limit, $page);
 
         return $query->execute();
     }
 
-    /**
-     * Find by embedded broadcast type and groups Query Builder.
-     *
-     * @param string $type
-     * @param array  $groups
-     * @param array  $sort
-     * @param int    $limit
-     * @param int    $page
-     *
-     * @return Builder
-     */
-    public function findByEmbeddedBroadcastTypeAndGroupsQueryBuilder($type = '', $groups = [], $sort = [], $limit = 0, $page = 0)
+    public function findByEmbeddedBroadcastTypeAndGroupsQueryBuilder(string $type = '', array $groups = [], array $sort = [], int $limit = 0, int $page = 0)
     {
         $repoMmobj = $this->getDocumentManager()->getRepository(MultimediaObject::class);
         $referencedSeries = $repoMmobj->findSeriesFieldByEmbeddedBroadcastTypeAndGroups($type, $groups);
@@ -443,90 +338,35 @@ class SeriesRepository extends DocumentRepository
         return $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
     }
 
-    /**
-     * Find by embedded broadcast type and groups Query.
-     *
-     * @param string $type
-     * @param array  $groups
-     * @param array  $sort
-     * @param int    $limit
-     * @param int    $page
-     *
-     * @return \Doctrine\MongoDB\Query\Query
-     */
-    public function findByEmbeddedBroadcastTypeAndGroupsQuery($type = '', $groups = [], $sort = [], $limit = 0, $page = 0)
+    public function findByEmbeddedBroadcastTypeAndGroupsQuery(string $type = '', array $groups = [], array $sort = [], int $limit = 0, int $page = 0)
     {
         $qb = $this->findByEmbeddedBroadcastTypeAndGroupsQueryBuilder($type, $groups, $sort, $limit, $page);
 
         return $qb->getQuery();
     }
 
-    /**
-     * Find by embedded broadcast type and groups.
-     *
-     * @param string $type
-     * @param array  $groups
-     * @param array  $sort
-     * @param int    $limit
-     * @param int    $page
-     *
-     * @return mixed
-     */
-    public function findByEmbeddedBroadcastTypeAndGroups($type = '', $groups = [], $sort = [], $limit = 0, $page = 0)
+    public function findByEmbeddedBroadcastTypeAndGroups(string $type = '', array $groups = [], array $sort = [], int $limit = 0, int $page = 0)
     {
         $query = $this->findByEmbeddedBroadcastTypeAndGroupsQuery($type, $groups, $sort, $limit, $page);
 
         return $query->execute();
     }
 
-    /**
-     * Find by title with locale query builder.
-     *
-     * @param string $title
-     * @param string $locale
-     * @param array  $sort
-     * @param int    $limit
-     * @param int    $page
-     *
-     * @return Builder
-     */
-    public function findByTitleWithLocaleQueryBuilder($title = '', $locale = 'en', $sort = [], $limit = 0, $page = 0)
+    public function findByTitleWithLocaleQueryBuilder(string $title = '', string $locale = 'en', array $sort = [], int $limit = 0, int $page = 0)
     {
         $qb = $this->createQueryBuilder()->field('title.'.$locale)->equals(new Regex($title, 'i'));
 
         return $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
     }
 
-    /**
-     * Find by title with locale query.
-     *
-     * @param string $title
-     * @param string $locale
-     * @param array  $sort
-     * @param int    $limit
-     * @param int    $page
-     *
-     * @return \Doctrine\MongoDB\Query\Query
-     */
-    public function findByTitleWithLocaleQuery($title = '', $locale = 'en', $sort = [], $limit = 0, $page = 0)
+    public function findByTitleWithLocaleQuery(string $title = '', string $locale = 'en', array $sort = [], int $limit = 0, int $page = 0): \Doctrine\ODM\MongoDB\Query\Query
     {
         $qb = $this->findByTitleWithLocaleQueryBuilder($title, $locale, $sort, $limit, $page);
 
         return $qb->getQuery();
     }
 
-    /**
-     * Find by title with locale.
-     *
-     * @param string $title
-     * @param string $locale
-     * @param array  $sort
-     * @param int    $limit
-     * @param int    $page
-     *
-     * @return mixed
-     */
-    public function findByTitleWithLocale($title = '', $locale = 'en', $sort = [], $limit = 0, $page = 0)
+    public function findByTitleWithLocale(string $title = '', string $locale = 'en', array $sort = [], int $limit = 0, int $page = 0)
     {
         $query = $this->findByTitleWithLocaleQuery($title, $locale, $sort, $limit, $page);
 
@@ -552,7 +392,7 @@ class SeriesRepository extends DocumentRepository
             $group = ['_id' => ['id' => '$_id', 'title' => '$title']];
             $command = [['$group' => $group]];
 
-            return $seriesCollection->aggregate($command, ['cursor' => []])->toArray();
+            return iterator_to_array($seriesCollection->aggregate($command, ['cursor' => []]));
         }
 
         $match = [];
@@ -560,7 +400,7 @@ class SeriesRepository extends DocumentRepository
         $group = ['_id' => ['id' => '$_id', 'title' => '$title']];
 
         $command = [['$match' => $match], ['$group' => $group]];
-        $aSeries = $seriesCollection->aggregate($command, ['cursor' => []])->toArray();
+        $aSeries = iterator_to_array($seriesCollection->aggregate($command, ['cursor' => []]));
 
         // Find mmo user groups
         $mmoCollection = $dm->getDocumentCollection(MultimediaObject::class);

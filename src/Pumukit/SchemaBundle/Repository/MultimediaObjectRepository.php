@@ -7,7 +7,6 @@ use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Regex;
 use MongoDB\BSON\UTCDateTime;
-use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -68,24 +67,18 @@ class MultimediaObjectRepository extends DocumentRepository
             ->sort('rank', 1)
             ->getQuery()
             ->execute()
-            ->toArray()
         ;
     }
 
-    /**
-     * Count multimedia objects in a series
-     * without the template (prototype).
-     *
-     * @return int
-     */
     public function countWithoutPrototype(Series $series)
     {
         return $this->createQueryBuilder()
             ->field('series')->references($series)
             ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
             ->sort('rank', 1)
-            ->getQuery()
             ->count()
+            ->getQuery()
+            ->execute()
         ;
     }
 
@@ -215,6 +208,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function countByPersonIdWithRoleCod(string $personId, string $roleCod, array $sort = [], int $limit = 0, int $page = 0): int
     {
         $qb = $this->createBuilderByPersonIdWithRoleCod($personId, $roleCod, $sort, $limit, $page);
+
         return $qb->count()->getQuery()->execute();
     }
 
@@ -445,18 +439,7 @@ class MultimediaObjectRepository extends DocumentRepository
         return $qb;
     }
 
-    /**
-     * Find by person id
-     * and role code or groups
-     * query.
-     *
-     * @param string $personId
-     * @param string $roleCod
-     * @param array  $groups
-     *
-     * @return \Doctrine\ODM\MongoDB\Query\Query
-     */
-    public function findByPersonIdAndRoleCodOrGroupsQuery($personId, $roleCod, $groups)
+    public function findByPersonIdAndRoleCodOrGroupsQuery(string $personId, string $roleCod, array $groups)
     {
         $qb = $this->findByPersonIdAndRoleCodOrGroupsQueryBuilder($personId, $roleCod, $groups);
 
@@ -724,7 +707,9 @@ class MultimediaObjectRepository extends DocumentRepository
             ->equals(new ObjectId($tag->getId()))
             ->distinct('series')
             ->getQuery()
-            ->execute();
+            ->execute()
+        ;
+
         return $series[0] ?? null;
     }
 
@@ -764,7 +749,9 @@ class MultimediaObjectRepository extends DocumentRepository
             ->all($mongoIds)
             ->distinct('series')
             ->getQuery()
-            ->execute();
+            ->execute()
+        ;
+
         return $series[0] ?? null;
     }
 
@@ -848,26 +835,12 @@ class MultimediaObjectRepository extends DocumentRepository
         return $this->createQueryBuilder()->field('embeddedBroadcast._id')->equals(new ObjectId($embeddedBroadcast->getId()))->getQuery()->execute();
     }
 
-    /**
-     * Find by embedded broadcast type query builder.
-     *
-     * @param string $type
-     *
-     * @return \Doctrine\MongoDB\Query\Builder
-     */
-    public function findByEmbeddedBroadcastTypeQueryBuilder($type)
+    public function findByEmbeddedBroadcastTypeQueryBuilder(string $type): Builder
     {
         return $this->createQueryBuilder()->field('embeddedBroadcast.type')->equals($type);
     }
 
-    /**
-     * Find by embedded broadcast type query.
-     *
-     * @param string $type
-     *
-     * @return \Doctrine\MongoDB\Query\Query
-     */
-    public function findByEmbeddedBroadcastTypeQuery($type)
+    public function findByEmbeddedBroadcastTypeQuery(string $type): \Doctrine\ODM\MongoDB\Query\Query
     {
         return $this->findByEmbeddedBroadcastTypeQueryBuilder($type)->getQuery();
     }
@@ -941,7 +914,7 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         $criteria['status'] = MultimediaObject::STATUS_PUBLISHED;
 
-        return $this->getDocumentPersister()->loadAll($criteria, $sort, $limit, $skip)->toArray(false);
+        return $this->getDocumentPersister()->loadAll($criteria, $sort, $limit, $skip)->toArray();
     }
 
     /**
@@ -1011,14 +984,7 @@ class MultimediaObjectRepository extends DocumentRepository
         return $this->createStandardQueryBuilder()->field('series')->references($series)->count()->getQuery()->execute();
     }
 
-    /**
-     * Find by tag query builder.
-     *
-     * @param Tag $tag
-     *
-     * @return \Doctrine\MongoDB\Query\Builder
-     */
-    public function findByTagCodQueryBuilder($tag)
+    public function findByTagCodQueryBuilder(Tag $tag): Builder
     {
         return $this->createStandardQueryBuilder()->field('tags.cod')->equals($tag->getCod());
     }
@@ -1052,14 +1018,7 @@ class MultimediaObjectRepository extends DocumentRepository
         return $this->findByTagCodQuery($tag, $sort)->execute();
     }
 
-    /**
-     * Find all by tag query builder.
-     *
-     * @param Tag $tag
-     *
-     * @return \Doctrine\MongoDB\Query\Builder
-     */
-    public function findAllByTagQueryBuilder($tag)
+    public function findAllByTagQueryBuilder(Tag $tag): Builder
     {
         return $this->createQueryBuilder()->field('tags._id')->equals(new ObjectId($tag->getId()));
     }
@@ -1268,34 +1227,14 @@ class MultimediaObjectRepository extends DocumentRepository
         return $this->createQueryBuilder()->field('series')->references($series)->count()->getQuery()->execute();
     }
 
-    /**
-     * Find Series field by EmbeddedBroadcast type Query Builder.
-     *
-     * @param string $type
-     * @param array  $sort
-     * @param int    $limit
-     * @param int    $page
-     *
-     * @return \Doctrine\MongoDB\Query\Builder|mixed
-     */
-    public function findSeriesFieldByEmbeddedBroadcastTypeQueryBuilder($type = '', $sort = [], $limit = 0, $page = 0)
+    public function findSeriesFieldByEmbeddedBroadcastTypeQueryBuilder(string $type = '', array $sort = [], int $limit = 0, int $page = 0)
     {
         $qb = $this->findByEmbeddedBroadcastTypeQueryBuilder($type)->distinct('series');
 
         return $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
     }
 
-    /**
-     * Find Series field by EmbeddedBroadcast type Query.
-     *
-     * @param string $type
-     * @param array  $sort
-     * @param int    $limit
-     * @param int    $page
-     *
-     * @return \Doctrine\MongoDB\Query\Query
-     */
-    public function findSeriesFieldByEmbeddedBroadcastTypeQuery($type = '', $sort = [], $limit = 0, $page = 0)
+    public function findSeriesFieldByEmbeddedBroadcastTypeQuery(string $type = '', array $sort = [], int $limit = 0, int $page = 0)
     {
         $qb = $this->findSeriesFieldByEmbeddedBroadcastTypeQueryBuilder($type, $sort, $limit, $page);
 
@@ -1319,18 +1258,7 @@ class MultimediaObjectRepository extends DocumentRepository
         return $query->execute();
     }
 
-    /**
-     * Find series field with embedded broadcast type and groups Query Builder.
-     *
-     * @param string $type
-     * @param array  $groups
-     * @param array  $sort
-     * @param int    $limit
-     * @param int    $page
-     *
-     * @return \Doctrine\MongoDB\Query\Builder|mixed
-     */
-    public function findSeriesFieldByEmbeddedBroadcastTypeAndGroupsQueryBuilder($type = '', $groups = [], $sort = [], $limit = 0, $page = 0)
+    public function findSeriesFieldByEmbeddedBroadcastTypeAndGroupsQueryBuilder(string $type = '', array $groups = [], array $sort = [], int $limit = 0, int $page = 0)
     {
         $groupsIds = $this->getGroupsIdsArray($groups);
 
@@ -1339,36 +1267,14 @@ class MultimediaObjectRepository extends DocumentRepository
         return $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
     }
 
-    /**
-     * Find series field with embedded broadcast type and groups Query.
-     *
-     * @param string $type
-     * @param array  $groups
-     * @param array  $sort
-     * @param int    $limit
-     * @param int    $page
-     *
-     * @return \Doctrine\MongoDB\Query\Query
-     */
-    public function findSeriesFieldByEmbeddedBroadcastTypeAndGroupsQuery($type = '', $groups = [], $sort = [], $limit = 0, $page = 0)
+    public function findSeriesFieldByEmbeddedBroadcastTypeAndGroupsQuery(string $type = '', array $groups = [], array $sort = [], int $limit = 0, int $page = 0)
     {
         $qb = $this->findSeriesFieldByEmbeddedBroadcastTypeAndGroupsQueryBuilder($type, $groups, $sort, $limit, $page);
 
         return $qb->getQuery();
     }
 
-    /**
-     * Find series field with embedded broadcast type and groups.
-     *
-     * @param string $type
-     * @param array  $groups
-     * @param array  $sort
-     * @param int    $limit
-     * @param int    $page
-     *
-     * @return \Doctrine\MongoDB\Query\Query
-     */
-    public function findSeriesFieldByEmbeddedBroadcastTypeAndGroups($type = '', $groups = [], $sort = [], $limit = 0, $page = 0)
+    public function findSeriesFieldByEmbeddedBroadcastTypeAndGroups(string $type = '', array $groups = [], array $sort = [], int $limit = 0, int $page = 0)
     {
         $query = $this->findSeriesFieldByEmbeddedBroadcastTypeAndGroupsQuery($type, $groups, $sort, $limit, $page);
 
@@ -1483,7 +1389,7 @@ class MultimediaObjectRepository extends DocumentRepository
             ],
         ];
 
-        $result = $collection->aggregate($pipeline, ['cursor' => []])->toArray();
+        $result = iterator_to_array($collection->aggregate($pipeline, ['cursor' => []]));
 
         foreach ($result as $key => $element) {
             $orderSession = [];
@@ -1596,7 +1502,7 @@ class MultimediaObjectRepository extends DocumentRepository
             $pipeline[] = ['$limit' => $limit];
         }
 
-        return $collection->aggregate($pipeline, ['cursor' => []])->toArray();
+        return iterator_to_array($collection->aggregate($pipeline, ['cursor' => []]));
     }
 
     /**

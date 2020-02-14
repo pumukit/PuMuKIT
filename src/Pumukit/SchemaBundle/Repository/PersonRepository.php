@@ -35,6 +35,7 @@ class PersonRepository extends DocumentRepository
             if ($numberMms <= 0) {
                 continue;
             }
+
             return $person;
         }
 

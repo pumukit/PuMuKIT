@@ -30,7 +30,7 @@ class UserStatsService
             ],
         ];
 
-        return $collection->aggregate($pipeline, ['cursor' => []])->toArray();
+        return iterator_to_array($collection->aggregate($pipeline, ['cursor' => []]));
     }
 
     public function getUserMultimediaObjectsGroupByRole(UserInterface $user): array
@@ -46,7 +46,7 @@ class UserStatsService
                     'multimediaObjects' => ['$addToSet' => '$_id'],
                 ],
             ];
-            $result[$role->getCod()] = $multimediaObjectCollection->aggregate($pipeline, ['cursor' => []])->toArray();
+            $result[$role->getCod()] = iterator_to_array($multimediaObjectCollection->aggregate($pipeline, ['cursor' => []]));
         }
 
         return $result;
@@ -69,7 +69,7 @@ class UserStatsService
                 'size' => ['$sum' => '$size'],
             ],
         ];
-        $result = $collection->aggregate($pipeline, ['cursor' => []])->toArray();
+        $result = iterator_to_array($collection->aggregate($pipeline, ['cursor' => []]));
 
         return reset($result)['size'] / 1048576;
     }
@@ -91,7 +91,7 @@ class UserStatsService
                 'duration' => ['$sum' => '$duration'],
             ],
         ];
-        $result = $collection->aggregate($pipeline, ['cursor' => []])->toArray();
+        $result = iterator_to_array($collection->aggregate($pipeline, ['cursor' => []]));
         $seconds = reset($result)['duration'];
 
         return gmdate('H:i:s', $seconds);

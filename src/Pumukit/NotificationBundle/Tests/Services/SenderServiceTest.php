@@ -29,6 +29,7 @@ class SenderServiceTest extends PumukitTestCase
     private $subjectSuccessTrans;
     private $locales;
     private $subjectFailsTrans;
+    private $session;
 
     public function setUp(): void
     {
@@ -40,6 +41,7 @@ class SenderServiceTest extends PumukitTestCase
         $this->templating = $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock();
         $this->mailer = $container->get('mailer');
         $this->translator = $container->get('translator');
+        $this->session = $container->get('session');
         $this->enable = true;
         $this->senderEmail = 'sender@pumukit.org';
         $this->senderName = 'Sender Pumukit';
@@ -52,7 +54,7 @@ class SenderServiceTest extends PumukitTestCase
         $this->platformName = 'Pumukit tv';
         $this->environment = 'dev';
 
-        $this->senderService = new SenderService($this->mailer, $this->templating, $this->translator, $this->dm, $this->logger, $this->enable, $this->senderEmail, $this->senderName, $this->enableMultiLang, $this->locales, $this->subjectSuccessTrans, $this->subjectFailsTrans, $this->adminEmail, $this->notificateErrorsToAdmin, $this->platformName);
+        $this->senderService = new SenderService($this->mailer, $this->templating, $this->translator, $this->dm, $this->logger, $this->session, $this->enable, $this->senderEmail, $this->senderName, $this->enableMultiLang, $this->locales, $this->subjectSuccessTrans, $this->subjectFailsTrans, $this->adminEmail, $this->notificateErrorsToAdmin, $this->platformName);
     }
 
     public function tearDown(): void

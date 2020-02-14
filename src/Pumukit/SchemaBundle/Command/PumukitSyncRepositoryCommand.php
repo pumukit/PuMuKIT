@@ -74,15 +74,17 @@ EOT
                 ['$group' => ['_id' => null, 'count' => ['$sum' => 1]]],
             ],
             ['cursor' => []]
-        )->toArray();
+        );
 
+        $jobsPendingInMmObjResult = iterator_to_array($jobsPendingInMmObjResult);
         $jobsPendingInMmObj = $jobsPendingInMmObjResult[0]['count'] ?? 0;
 
         $jobsExecutingInMmObjResult = $mmObjColl->aggregate([
             ['$unwind' => '$properties.executing_jobs'],
             ['$group' => ['_id' => null, 'count' => ['$sum' => 1]]],
-        ], ['cursor' => []])->toArray();
+        ], ['cursor' => []]);
 
+        $jobsExecutingInMmObjResult = iterator_to_array($jobsExecutingInMmObjResult);
         $jobsExecutingInMmObj = $jobsExecutingInMmObjResult[0]['count'] ?? 0;
 
         if ($jobsPending != $jobsPendingInMmObj && 0 != $jobsPendingInMmObj) {
@@ -118,7 +120,6 @@ EOT
             ->field('status')->in($statuses)
             ->getQuery()
             ->execute()
-            ->toArray()
         ;
 
         $qb = $mmObjRepo->createStandardQueryBuilder()

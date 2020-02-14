@@ -556,7 +556,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
         $pipeline[] = ['$limit' => 100];
 
-        $series = $aggregate->aggregate($pipeline, ['cursor' => []])->toArray();
+        $series = iterator_to_array($aggregate->aggregate($pipeline, ['cursor' => []]));
 
         $result = [];
         foreach ($series as $key => $dataSeries) {
@@ -892,7 +892,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
                 '_id' => ['id' => '$_id'],
             ],
         ];
-        $mmObjsNotOwner = $aggregate->aggregate($pipeline, ['cursor' => []])->toArray();
+        $mmObjsNotOwner = iterator_to_array($aggregate->aggregate($pipeline, ['cursor' => []]));
 
         if (0 !== count($mmObjsNotOwner) && $user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
             throw new \Exception($this->translator->trans('Error: Series have another owners on others events'));

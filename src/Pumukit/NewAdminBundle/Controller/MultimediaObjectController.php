@@ -647,7 +647,7 @@ class MultimediaObjectController extends SortableAdminController
             ->getQuery()
             ->execute()
         ;
-        $result = $children->toArray();
+        $result = $children;
 
         if (!$result) {
             return $this->render(
@@ -656,7 +656,7 @@ class MultimediaObjectController extends SortableAdminController
             );
         }
 
-        foreach ($children->toArray() as $tag) {
+        foreach ($children as $tag) {
             $result = $this->getAllParents($tag, $result, $parent->getId());
         }
 
@@ -909,8 +909,8 @@ class MultimediaObjectController extends SortableAdminController
             ->field('_id')->notEqual($multimediaObject->getId())
             ->field('type')->notEqual(MultimediaObject::TYPE_LIVE)
             ->field('series')->references($multimediaObject->getSeries())
-            ->getQuery()->execute()
-            ->toArray()
+            ->getQuery()
+            ->execute()
         ;
 
         if ($all) {
