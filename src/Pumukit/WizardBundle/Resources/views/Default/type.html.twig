@@ -32,13 +32,13 @@
     </fieldset>
     <div class="row">
       <div class="col-md-4">
-          {% spaceless %}
+          {% apply spaceless %}
           {% if same_series and series_id is defined and series_id is not null %}
           <a href="{{ path('pumukitnewadmin_mms_index', {'id': series_id}) }}" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</a>
           {% else %}
           <a href="{{ path('pumukitnewadmin_series_index') }}" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</a>
           {% endif %}
-          {% endspaceless %}
+          {% endapply %}
       </div>
       <div class="col-md-8">
         <div class="text-right">

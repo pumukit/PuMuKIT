@@ -257,10 +257,10 @@
     {% if need_reload_status %}
         <script type="text/javascript">
             {% if 'XMLHttpRequest' == app.request.headers.get('X-Requested-With')  %}
-                $('#table_mms_status_wrapper_{{ mm.id }}').html('<i class="mdi-navigation-refresh pmk-job-animate table_mms_job_animate" data-toggle="tooltip" data-placement="right" title="{% spaceless %}
+                $('#table_mms_status_wrapper_{{ mm.id }}').html('<i class="mdi-navigation-refresh pmk-job-animate table_mms_job_animate" data-toggle="tooltip" data-placement="right" title="{% apply spaceless %}
                 {{ "{0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs."|trans({'%count%':  mm.getProperty('pending_jobs')|length}) }}
                 {{ "{0} |{1} 1 executing job. |]1,Inf[ %count% executing jobs."|trans({'%count%':  mm.getProperty('executing_jobs')|length}) }}
-                {% endspaceless %}"></i>');
+                {% endapply %}"></i>');
             {% endif %}
             setTimeout(function(){
                 $('#tracks_mms_{{ mm.id }}').load('{{ url('pumukitnewadmin_track_list', {'id': mm.id})}}');
