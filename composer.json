@@ -66,7 +66,7 @@
         "phpstan": [
             "vendor/bin/phpstan analyse -l 4 src"
         ],
-        "tests": "vendor/bin/phpunit",
+        "tests": "bin/phpunit",
         "ci": [
             "@lints",
             "@php-cs-fixer",
@@ -111,11 +111,11 @@
     "repositories": {
         "teltekfosuserbundle": {
             "type": "vcs",
-            "url": "git@github.com:teltek/FOSUserBundle.git"
+            "url": "https://github.com/teltek/FOSUserBundle.git"
         },
         "teltekdoctrineextensions": {
             "type": "vcs",
-            "url": "git@github.com:teltek/DoctrineExtensions.git"
+            "url": "https://github.com/teltek/DoctrineExtensions.git"
         }
     }
 }
