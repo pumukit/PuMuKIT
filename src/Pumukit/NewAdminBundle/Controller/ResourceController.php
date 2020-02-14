@@ -100,8 +100,7 @@ class ResourceController extends AbstractController
         $queryBuilder->setQueryArray($criteria);
 
         if (array_key_exists('textScore', $sorting)) {
-            $queryBuilder = $queryBuilder->getQuery()->execute();
-            $queryBuilder->getAdapter()->getQueryBuilder()->sortMeta('score', 'textScore');
+            $queryBuilder = $queryBuilder->sortMeta('score', 'textScore');
         } else {
             $queryBuilder->sort($sorting);
         }
