@@ -108,7 +108,7 @@ class PicService
         array_push($pipeline, $group);
 
         $pics = $collection->aggregate($pipeline, ['cursor' => []]);
-        $data = $pics->toArray();
+        $data = iterator_to_array($pics);
         $pics = reset($data);
 
         if ($pics) {

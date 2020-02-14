@@ -77,7 +77,7 @@ class FactoryServiceTest extends PumukitTestCase
 
         static::assertCount(1, $this->multimediaObjectRepo->findWithoutPrototype($series));
         static::assertCount(1, $this->seriesRepo->getMultimediaObjects($series));
-        static::assertEquals($multimediaObject, $this->seriesRepo->getMultimediaObjects($series)[0]);
+        static::assertEquals($multimediaObject, $this->seriesRepo->getMultimediaObjects($series)->toArray()[0]);
 
         static::assertEquals($multimediaObject->getStatus(), MultimediaObject::STATUS_BLOCKED);
     }

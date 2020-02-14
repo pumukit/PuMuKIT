@@ -62,8 +62,8 @@ class APIKeywordsController extends AbstractController
             $pipeline[] = ['$limit' => $limit];
         }
 
-        $kws = $coll->aggregate($pipeline, ['cursor' => []]);
-        $data = $serializer->dataSerialize($kws->toArray(), $format);
+        $kws = iterator_to_array($coll->aggregate($pipeline, ['cursor' => []]));
+        $data = $serializer->dataSerialize($kws, $format);
 
         return new Response($data);
     }

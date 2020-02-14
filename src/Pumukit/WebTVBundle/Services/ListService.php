@@ -255,6 +255,6 @@ class ListService
     {
         $qb->field('public_date')->range($dateStart, $dateEnd);
 
-        return $qb->sort(['public_date' => -1])->getQuery()->execute()->toArray();
+        return $qb->sort(['public_date' => -1])->getQuery()->execute();
     }
 }

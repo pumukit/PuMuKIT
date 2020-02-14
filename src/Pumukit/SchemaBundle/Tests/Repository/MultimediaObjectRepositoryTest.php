@@ -851,7 +851,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
             $mmBloq,
             $mmPublished,
         ];
-        static::assertEquals($mmArray, $this->repo->findWithoutPrototype($series));
+        static::assertEquals($mmArray, iterator_to_array($this->repo->findWithoutPrototype($series)));
     }
 
     public function testEmbedPicsInMultimediaObject(): void
