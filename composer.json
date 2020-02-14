@@ -44,7 +44,8 @@
         "phpunit/phpunit": "7.*",
         "symfony/browser-kit": "^4.0",
         "symfony/phpunit-bridge": "^4.0",
-        "symfony/profiler-pack": "^1.0"
+        "symfony/profiler-pack": "^1.0",
+        "jakub-onderka/php-var-dump-check": "~0.3"
     },
     "scripts": {
         "post-install-cmd": [
@@ -60,7 +61,7 @@
             "bin/console lint:twig src",
             "bin/console lint:twig templates",
             "bin/console lint:xlif translations/",
-            "./bin/travis_checks/check_var_dumps"
+            "vendor/bin/var-dump-check --symfony src"
         ],
         "php-cs-fixer": "vendor/bin/php-cs-fixer fix src --dry-run -v",
         "phpstan": [
@@ -111,11 +112,11 @@
     "repositories": {
         "teltekfosuserbundle": {
             "type": "vcs",
-            "url": "https://github.com/teltek/FOSUserBundle.git"
+            "url": "https://github.com/teltek/FOSUserBundle"
         },
         "teltekdoctrineextensions": {
             "type": "vcs",
-            "url": "https://github.com/teltek/DoctrineExtensions.git"
+            "url": "https://github.com/teltek/DoctrineExtensions"
         }
     }
 }
