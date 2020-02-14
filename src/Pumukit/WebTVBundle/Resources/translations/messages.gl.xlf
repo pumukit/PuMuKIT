@@ -261,11 +261,11 @@
       </trans-unit>
       <trans-unit id="c0.XezY" resname="URL:">
         <source>URL:</source>
-        <target state="needs-translation">URL:</target>
+        <target state="translated">URL:</target>
       </trans-unit>
       <trans-unit id="Qw_p6ul" resname="IFRAME:">
         <source>IFRAME:</source>
-        <target state="needs-translation">IFRAME:</target>
+        <target state="translated">IFRAME:</target>
       </trans-unit>
       <trans-unit id="pP5lJk7" resname="Language">
         <source>Language</source>
@@ -369,7 +369,7 @@
       </trans-unit>
       <trans-unit id="lpzL089" resname="Email">
         <source>Email</source>
-        <target state="needs-translation">Email</target>
+        <target state="translated">Email</target>
       </trans-unit>
       <trans-unit id="fWDZgc4" resname="Search by multimedia objects">
         <source>Search by multimedia objects</source>
@@ -465,7 +465,7 @@
       </trans-unit>
       <trans-unit id="ltvt7Kf" resname="Starts">
         <source>Starts</source>
-        <target state="needs-translation">Starts</target>
+        <target state="translated">Comezo</target>
       </trans-unit>
       <trans-unit id="tTs1Fj9" resname="Next session">
         <source>Next session</source>
@@ -473,7 +473,7 @@
       </trans-unit>
       <trans-unit id="9LBu9tP" resname="To">
         <source>To</source>
-        <target state="needs-translation">To</target>
+        <target state="translated">Ata</target>
       </trans-unit>
       <trans-unit id="mnIiGid" resname="Questions">
         <source>Questions</source>
@@ -497,7 +497,7 @@
       </trans-unit>
       <trans-unit id="swD5G4y" resname="There are no scheduled live events. You will find ended live events in the series catalogue or through the media portal search.">
         <source>There are no scheduled live events. You will find ended live events in the series catalogue or through the media portal search.</source>
-        <target state="needs-translation">There are no scheduled live events. You will find ended live events in the series catalogue or through the media portal search.</target>
+        <target state="translated">Non hai eventos en directo programados. Atoparás eventos en directo no catálogo da serie ou a través da busca do portal.</target>
       </trans-unit>
       <trans-unit id="JIfvQBZ" resname="This page isn't available. Sorry about that.">
         <source>This page isn't available. Sorry about that.</source>
@@ -505,7 +505,7 @@
       </trans-unit>
       <trans-unit id="kw0lAFO" resname="Try searching for something else:">
         <source>Try searching for something else:</source>
-        <target state="needs-translation">Try searching for something else:</target>
+        <target state="translated">Intenta buscar outra cousa:</target>
       </trans-unit>
       <trans-unit id="OnhpU4i" resname="Home">
         <source>Home</source>
@@ -513,7 +513,7 @@
       </trans-unit>
       <trans-unit id="pITMFRb" resname="By subject catalogue">
         <source>By subject catalogue</source>
-        <target state="needs-translation">By subject catalogue</target>
+        <target state="translated">Por catálogo de temas</target>
       </trans-unit>
       <trans-unit id="nThEPiI" resname="University">
         <source>University</source>
@@ -529,7 +529,7 @@
       </trans-unit>
       <trans-unit id="Z0fvRV9" resname="Health &amp; Medicine">
         <source>Health &amp; Medicine</source>
-        <target state="needs-translation">Health &amp; Medicine</target>
+        <target state="translated">Salud &amp; Mediciña</target>
       </trans-unit>
       <trans-unit id="t4wWGP2" resname="Law">
         <source>Law</source>
@@ -537,11 +537,11 @@
       </trans-unit>
       <trans-unit id="HPPfeB0" resname="Social Matters &amp; Education">
         <source>Social Matters &amp; Education</source>
-        <target state="needs-translation">Social Matters &amp; Education</target>
+        <target state="translated">Asuntos sociais &amp; Educación</target>
       </trans-unit>
       <trans-unit id="GnUpqxT" resname="Subjects">
         <source>Subjects</source>
-        <target state="needs-translation">Subjects</target>
+        <target state="translated">Asuntos</target>
       </trans-unit>
       <trans-unit id="jW3vDbZ" resname="Now events">
         <source>Now events</source>
@@ -561,11 +561,11 @@
       </trans-unit>
       <trans-unit id="56JB3rr" resname="URL">
         <source>URL</source>
-        <target state="needs-translation">URL</target>
+        <target state="translated">URL</target>
       </trans-unit>
       <trans-unit id="F_V94dr" resname="Iframe">
         <source>Iframe</source>
-        <target state="needs-translation">Iframe</target>
+        <target state="translated">Iframe</target>
       </trans-unit>
       <trans-unit id="GoAAU4B" resname="Twitter icon">
         <source>Twitter icon</source>
@@ -605,7 +605,7 @@
       </trans-unit>
       <trans-unit id=".cXS6UE" resname="Powered by">
         <source>Powered by</source>
-        <target state="needs-translation">Powered by</target>
+        <target state="translated">Desenvolvido por</target>
       </trans-unit>
       <trans-unit id="OEjvXg." resname="Full catalogue">
         <source>Full catalogue</source>
@@ -621,7 +621,7 @@
       </trans-unit>
       <trans-unit id="5mpwcGU" resname="Url track">
         <source>Url track</source>
-        <target state="needs-translation">Url track</target>
+        <target state="translated">Url da pista</target>
       </trans-unit>
       <trans-unit id="PWlKoNH" resname="Edit multimedia object">
         <source>Edit multimedia object</source>
@@ -629,7 +629,7 @@
       </trans-unit>
       <trans-unit id="tkrAXxf" resname="Live">
         <source>Live</source>
-        <target state="needs-translation">Live</target>
+        <target state="translated">Directos</target>
       </trans-unit>
       <trans-unit id="Xypi4__" resname="The event has not been held yet">
         <source>The event has not been held yet</source>
@@ -649,7 +649,7 @@
       </trans-unit>
       <trans-unit id="RoN3Re7" resname="Current live event">
         <source>Current live event</source>
-        <target state="needs-translation">Current live event</target>
+        <target state="translated">Transmisión en directo actual</target>
       </trans-unit>
       <trans-unit id="QcHoioP" resname="Next live event">
         <source>Next live event</source>
@@ -713,15 +713,15 @@
       </trans-unit>
       <trans-unit id="926pIe3" resname="Wall">
         <source>Wall</source>
-        <target state="needs-translation">Wall</target>
+        <target state="translated">Mural</target>
       </trans-unit>
       <trans-unit id="xj62cgx" resname="Private">
         <source>Private</source>
-        <target state="needs-translation">Private</target>
+        <target state="translated">Privado</target>
       </trans-unit>
       <trans-unit id="Ewpvcv4" resname="Advanced search">
         <source>Advanced search</source>
-        <target state="needs-translation">Advanced search</target>
+        <target state="translated">Búsqueda avanzada</target>
       </trans-unit>
     </body>
   </file>
