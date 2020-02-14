@@ -3190,27 +3190,27 @@
       </trans-unit>
       <trans-unit id="R4fq98k" resname="Legal">
         <source>Legal</source>
-        <target state="needs-translation">Legal</target>
+        <target state="translated">Legal</target>
       </trans-unit>
       <trans-unit id="p2zJo2w" resname="Humanities">
         <source>Humanities</source>
-        <target state="needs-translation">Humanities</target>
+        <target state="translated">Humanidades</target>
       </trans-unit>
       <trans-unit id="GFQHGWn" resname="Without category">
         <source>Without category</source>
-        <target state="needs-translation">Without category</target>
+        <target state="translated">Sen categoría</target>
       </trans-unit>
       <trans-unit id="nWMiwfT" resname="Login">
         <source>Login</source>
-        <target state="needs-translation">Login</target>
+        <target state="translated">Inicio da sesión</target>
       </trans-unit>
       <trans-unit id="588_9PF" resname="Password">
         <source>Password</source>
-        <target state="needs-translation">Password</target>
+        <target state="translated">Contrasinal</target>
       </trans-unit>
       <trans-unit id="3oRX_Sy" resname="Live management">
         <source>Live management</source>
-        <target state="needs-translation">Live management</target>
+        <target state="translated">Xestión dos directos</target>
       </trans-unit>
       <trans-unit id="x0S6SCF" resname="Channel configuration">
         <source>Channel configuration</source>
@@ -3218,31 +3218,31 @@
       </trans-unit>
       <trans-unit id="nBHDWlo" resname="Videos VOD">
         <source>Videos VOD</source>
-        <target state="needs-translation">Videos VOD</target>
+        <target state="translated">Vídeos VOD</target>
       </trans-unit>
       <trans-unit id="Jbye.t_" resname="Event name">
         <source>Event name</source>
-        <target state="needs-translation">Event name</target>
+        <target state="translated">Nome do evento</target>
       </trans-unit>
       <trans-unit id="WOU_q8H" resname="Sessions number">
         <source>Sessions number</source>
-        <target state="needs-translation">Sessions number</target>
+        <target state="translated">Número de sesións</target>
       </trans-unit>
       <trans-unit id="SmNkdOW" resname="Broadcasting date">
         <source>Broadcasting date</source>
-        <target state="needs-translation">Broadcasting date</target>
+        <target state="translated">Data de difusión</target>
       </trans-unit>
       <trans-unit id="EiWubBr" resname="sessions">
         <source>sessions</source>
-        <target state="needs-translation">sessions</target>
+        <target state="translated">sesións</target>
       </trans-unit>
       <trans-unit id="Do2jr40" resname="No future sessions">
         <source>No future sessions</source>
-        <target state="needs-translation">No future sessions</target>
+        <target state="translated">Sen sesións futuras</target>
       </trans-unit>
       <trans-unit id="0A9SRUQ" resname="Filter by">
         <source>Filter by</source>
-        <target state="needs-translation">Filter by</target>
+        <target state="translated">Filtrar por</target>
       </trans-unit>
       <trans-unit id="jLTwKVQ" resname="Show video on WebTV">
         <source>Show video on WebTV</source>
@@ -3250,33 +3250,30 @@
       </trans-unit>
       <trans-unit id="t6n1UY2" resname="Live events">
         <source>Live events</source>
-        <target state="needs-translation">Live events</target>
+        <target state="translated">Eventos en Directo</target>
       </trans-unit>
       <trans-unit id="8wIYotR" resname="Future events">
         <source>Future events</source>
-        <target state="needs-translation">Future events</target>
+        <target state="translated">Eventos futuros</target>
       </trans-unit>
       <trans-unit id="13YPWbA" resname="Session must start before ends">
         <source>Session must start before ends</source>
-        <target state="needs-translation">Session must start before ends</target>
+        <target state="translated">A sesión debe comezar antes de que termine</target>
       </trans-unit>
       <trans-unit id="3ezDLKK" resname="Modify broadcast profile of videos&#10;            template">
         <source>Modify broadcast profile of videos
             template</source>
-        <target state="needs-translation">Modify broadcast profile of videos
-            template</target>
+        <target state="translated">Modificar perfil de difusión das plantillas de vídeo</target>
       </trans-unit>
       <trans-unit id="XSCyDE4" resname="Modify broadcast profile of live&#10;                event">
         <source>Modify broadcast profile of live
                 event</source>
-        <target state="needs-translation">Modify broadcast profile of live
-                event</target>
+        <target state="translated">Modificar perfil de difusión dos eventos en directo</target>
       </trans-unit>
       <trans-unit id="MYtL_2h" resname="Modify broadcast profile of multimedia&#10;                object">
         <source>Modify broadcast profile of multimedia
                 object</source>
-        <target state="needs-translation">Modify broadcast profile of multimedia
-                object</target>
+        <target state="translated">Modificar perfil de difusión do obxecto multimedia</target>
       </trans-unit>
       <trans-unit id="pRKIi6a" resname="Delete error. Live channel channel is associated to live event.">
         <source>Delete error. Live channel channel is associated to live event.</source>
@@ -3284,133 +3281,130 @@
       </trans-unit>
       <trans-unit id="OAkgrj1" resname="No downloadable">
         <source>No downloadable</source>
-        <target state="needs-translation">No downloadable</target>
+        <target state="translated">Non descargable</target>
       </trans-unit>
       <trans-unit id="nlf3UXX" resname="Choose style">
         <source>Choose style</source>
-        <target state="needs-translation">Choose style</target>
+        <target state="translated">Escoller un estilo</target>
       </trans-unit>
       <trans-unit id="CZ35h9X" resname="There aren't defined styles">
         <source>There aren't defined styles</source>
-        <target state="needs-translation">There aren't defined styles</target>
+        <target state="translated">Non hay estilos definidos</target>
       </trans-unit>
       <trans-unit id="OEIShCi" resname="Style created ERROR">
         <source>Style created ERROR</source>
-        <target state="needs-translation">Style created ERROR</target>
+        <target state="translated">Erro na creación de estilo</target>
       </trans-unit>
       <trans-unit id="DW7tat2" resname="Style created OK">
         <source>Style created OK</source>
-        <target state="needs-translation">Style created OK</target>
+        <target state="translated">Estilo creado correctamente</target>
       </trans-unit>
       <trans-unit id="w_fEXUL" resname="Style edited ERROR">
         <source>Style edited ERROR</source>
-        <target state="needs-translation">Style edited ERROR</target>
+        <target state="translated">Error editando o estilo</target>
       </trans-unit>
       <trans-unit id="VEtupgs" resname="Live event">
         <source>Live event</source>
-        <target state="needs-translation">Live event</target>
+        <target state="translated">Eventos en Directo</target>
       </trans-unit>
       <trans-unit id="S3Wcefc" resname="Add the name of the series you want to use.&#10;            In case this series already exists in the database, a pull-down list will be shown,&#10;            where you can select it and use it. If it doesn't exist in the database,&#10;            create a new entrance with the written name.">
         <source>Add the name of the series you want to use.
             In case this series already exists in the database, a pull-down list will be shown,
             where you can select it and use it. If it doesn't exist in the database,
             create a new entrance with the written name.</source>
-        <target state="needs-translation">Add the name of the series you want to use.
-            In case this series already exists in the database, a pull-down list will be shown,
-            where you can select it and use it. If it doesn't exist in the database,
-            create a new entrance with the written name.</target>
+        <target state="translated">Escriba o nome da serie que desexa utilizar. No caso de que xa exista na base de datos aparecerá nunha lista despregable, onde vostede pode seleccionala e usala. Se non existe na base de datos, crearase unha nova entrada co nome escrito.</target>
       </trans-unit>
       <trans-unit id="aQYMdYn" resname="Create date">
         <source>Create date</source>
-        <target state="needs-translation">Create date</target>
+        <target state="translated">Crear data</target>
       </trans-unit>
       <trans-unit id="LQTakPE" resname="Series style">
         <source>Series style</source>
-        <target state="needs-translation">Series style</target>
+        <target state="translated">Estilos de serie</target>
       </trans-unit>
       <trans-unit id="YClQDPb" resname="Series Style">
         <source>Series Style</source>
-        <target state="needs-translation">Series Style</target>
+        <target state="translated">Estilos de serie</target>
       </trans-unit>
       <trans-unit id="r.xKBXc" resname="Create series">
         <source>Create series</source>
-        <target state="needs-translation">Create series</target>
+        <target state="translated">Crear serie</target>
       </trans-unit>
       <trans-unit id="7EYXAPJ" resname="Edit Templates">
         <source>Edit Templates</source>
-        <target state="needs-translation">Edit Templates</target>
+        <target state="translated">Editar Modelo</target>
       </trans-unit>
       <trans-unit id="CtFB2lw" resname="Allow download">
         <source>Allow download</source>
-        <target state="needs-translation">Allow download</target>
+        <target state="translated">Permitir a descarga</target>
       </trans-unit>
       <trans-unit id="Ven4ga9" resname="Show empty series">
         <source>Show empty series</source>
-        <target state="needs-translation">Show empty series</target>
+        <target state="translated">Ver series baleiras</target>
       </trans-unit>
       <trans-unit id="5qRihdT" resname="Today events list">
         <source>Today events list</source>
-        <target state="needs-translation">Today events list</target>
+        <target state="translated">Listado dos eventos de hoxe</target>
       </trans-unit>
       <trans-unit id="zn8l2PA" resname="Select objects">
         <source>Select objects</source>
-        <target state="needs-translation">Select objects</target>
+        <target state="translated">Seleccione obxectos</target>
       </trans-unit>
       <trans-unit id="CdEyLPz" resname="Modify all multimedia objects status">
         <source>Modify all multimedia objects status</source>
-        <target state="needs-translation">Modify all multimedia objects status</target>
+        <target state="translated">Modificar todos os estados dos obxectos multimedia</target>
       </trans-unit>
       <trans-unit id="mu9cynW" resname="Already held event message">
         <source>Already held event message</source>
-        <target state="needs-translation">Already held event message</target>
+        <target state="translated">Mensaxe de evento xa realizado</target>
       </trans-unit>
       <trans-unit id="FSGhq88" resname="Not yet held event message">
         <source>Not yet held event message</source>
-        <target state="needs-translation">Not yet held event message</target>
+        <target state="translated">Mensaxe de evento non realizada aínda</target>
       </trans-unit>
       <trans-unit id="p2OXRg4" resname="Default live screen image">
         <source>Default live screen image</source>
-        <target state="needs-translation">Default live screen image</target>
+        <target state="translated">Imaxe de pantalla do directo predeterminada</target>
       </trans-unit>
       <trans-unit id="28ZRGqO" resname="New poster">
         <source>New poster</source>
-        <target state="needs-translation">New poster</target>
+        <target state="translated">Novo póster</target>
       </trans-unit>
       <trans-unit id="fsvs6_1" resname="Go to page">
         <source>Go to page</source>
-        <target state="needs-translation">Go to page</target>
+        <target state="translated">Ir a páxina</target>
       </trans-unit>
       <trans-unit id="X7wPySq" resname="Event poster">
         <source>Event poster</source>
-        <target state="needs-translation">Event poster</target>
+        <target state="translated">Poster do evento</target>
       </trans-unit>
       <trans-unit id="WQydVj0" resname="Poster text color">
         <source>Poster text color</source>
-        <target state="needs-translation">Poster text color</target>
+        <target state="translated">Color do texto do póster</target>
       </trans-unit>
       <trans-unit id="c2P0Qyt" resname="Source Name">
         <source>Source Name</source>
-        <target state="needs-translation">Source Name</target>
+        <target state="translated">Nome do orixe</target>
       </trans-unit>
       <trans-unit id="DWXTLFi" resname="Are you sure you want to delete this event poster?">
         <source>Are you sure you want to delete this event poster?</source>
-        <target state="needs-translation">Are you sure you want to delete this event poster?</target>
+        <target state="translated">¿ Está seguro de querer eliminar este póster do evento?</target>
       </trans-unit>
       <trans-unit id="YVvIcSO" resname="Event poster removed.">
         <source>Event poster removed.</source>
-        <target state="needs-translation">Event poster removed.</target>
+        <target state="translated">Póster do evento eliminado.</target>
       </trans-unit>
       <trans-unit id="PGFKnNX" resname="Publish to Moodle">
         <source>Publish to Moodle</source>
-        <target state="needs-translation">Publish to Moodle</target>
+        <target state="translated">Publicar en Moodle</target>
       </trans-unit>
       <trans-unit id="pjllafE" resname="Show configuration for messages, poster image and color text.">
         <source>Show configuration for messages, poster image and color text.</source>
-        <target state="needs-translation">Show configuration for messages, poster image and color text.</target>
+        <target state="translated">Mostrar a configuración das mensaxes, a imaxe do cartel e o texto en cor.</target>
       </trans-unit>
       <trans-unit id="pwTeQK9" resname="Click to edit messages, poster image and color text">
         <source>Click to edit messages, poster image and color text</source>
-        <target state="needs-translation">Click to edit messages, poster image and color text</target>
+        <target state="translated">Pulse para editar as mensaxes, o poster e o color do texto</target>
       </trans-unit>
       <trans-unit id="NmSJVXn" resname="Export">
         <source>Export</source>
@@ -3637,11 +3631,11 @@
       </trans-unit>
       <trans-unit id="blSiCW2" resname="There was an error sync up metadata.">
         <source>There was an error sync up metadata.</source>
-        <target state="needs-translation">There was an error sync up metadata.</target>
+        <target state="translated">Houbo un error o actualizada os datos.</target>
       </trans-unit>
       <trans-unit id="kYZr.e4" resname="Sync up metadata was successfully.">
         <source>Sync up metadata was successfully.</source>
-        <target state="needs-translation">Sync up metadata was successfully.</target>
+        <target state="translated">Actualización de datos correcta.</target>
       </trans-unit>
       <trans-unit id="DfbxytN" resname="Show">
         <source>Show</source>
