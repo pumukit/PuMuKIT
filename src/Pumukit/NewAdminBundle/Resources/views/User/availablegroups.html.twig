@@ -1,5 +1,5 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADMIN_USERS')) %}
-    {% for group in groups if (group not in user.getGroups()) %}
+    {% for group in groups | filter(group => group not in user.getGroups()) %}
         {% if (group.isLocal() and user.isLocal()) or (group.isLocal() and not user.isLocal()) or (not group.isLocal() and user.isLocal()) %}
             <a href="#"
                id="delete_group_{{ group.id }}"

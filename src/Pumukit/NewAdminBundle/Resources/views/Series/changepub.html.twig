@@ -67,7 +67,7 @@
                 {% endfor %}
               </tr>
 
-              {% for mm in multimediaObjects if not mm.isLive() %}
+              {% for mm in multimediaObjects | filter(mm => not mm.isLive()) %}
               <tr {{ (mm.status == mm_status.published) ? '' : ' style="background-color: rgb(242, 242, 242)" ' }}>
                 <td>
                   <div class="checkbox">

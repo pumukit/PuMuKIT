@@ -14,10 +14,12 @@
   {% else %}
     <input type="hidden" name="pumukitwizard_form_data[series][id]" id="pumukitwizard_series_id" value="">
   {% endif %}
-  {% for field, locales in form_data.series if step != 'series' %}
-    {% for locale, value in locales %}
-      <input type="hidden" name="pumukitwizard_form_data[series][{{ field }}][{{ locale }}]" id="pumukitwizard_track_series_{{ field }}_{{ locale }}" value="{{ value }}" class="pumukitwizard_track_series_{{ field }} locale-{{ locale }}">
-    {% endfor %}
+  {% for field, locales in form_data.series %}
+      {% if  step != 'series' %}
+        {% for locale, value in locales %}
+          <input type="hidden" name="pumukitwizard_form_data[series][{{ field }}][{{ locale }}]" id="pumukitwizard_track_series_{{ field }}_{{ locale }}" value="{{ value }}" class="pumukitwizard_track_series_{{ field }} locale-{{ locale }}">
+        {% endfor %}
+      {% endif %}
   {% endfor %}
 {% endif %}
 

@@ -7,13 +7,13 @@
         </div>
 
         <div class="col-xs-12">
-            {% for result in results if result.numMmobjs > 0 %}
+            {% for result in results | filter(result => result.numMmobjs > 0) %}
                 - {{ result.tag.title }}
                 [{% transchoice result.numMmobjs %}{0}0 Videos|{1}%count% Video|]1,Inf[%count% Videos{% endtranschoice %}]
             {% endfor %}
         </div>
 
-        {% for result in results if result.numMmobjs > 0 %}
+        {% for result in results | filter(result => result.numMmobjs > 0) %}
             <div class="col-xs-12">
                 <h2>{{ result.tag.title }}
                     <a href="{{ path_to_tag(result.tag.cod) }}" {{ result.numMmobjs > 0?'':'style="pointer-events:none"' }}>

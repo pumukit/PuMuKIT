@@ -156,7 +156,7 @@
                     - {{ track.getDuration()|duration_string }}
                     - {{ (track.getSize() / 1048576)|number_format(2) }} MB
                     {% if track.getWidth() and track.getHeight() %}- {{ track.getWidth() }}x{{ track.getHeight() }}{% endif %}
-                    {% for tag in track.getTags() if tag[0:8] != "profile:" and tag[0:11] != "pumukit1id:" and tag[0:8] != "ENCODED_" %}
+                    {% for tag in track.getTags() | filter(tag => tag[0:8] != "profile:" and tag[0:11] != "pumukit1id:" and tag[0:8] != "ENCODED_") %}
                         <span class="label label-primary">{{ tag }}</span>
                     {% endfor %}
                     {% if not track.getAllowDownload() %}

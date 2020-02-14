@@ -1,4 +1,4 @@
-{% for group in groups if group not in resource_groups %}
+{% for group in groups | filter(group => group not in resource_groups) %}
 <a href="#"
    id="delete_{{ resource_name }}_group_{{ group.id }}"
    onclick="javascript:return select_group(this);"

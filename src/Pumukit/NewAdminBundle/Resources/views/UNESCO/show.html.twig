@@ -33,7 +33,7 @@
                 </div>
                 <div class="panel-body-preview panel-body">
                     <div id="list_unesco" draggable="false" onDrop="dropItem(this, event)" onDragEnter="return false" onDragOver="return false">
-                        {% for mtag in mm.tags if mtag.isDescendantOfByCod(configuredTag.getCod()) %}
+                        {% for mtag in mm.tags | filter(mtag => mtag.isDescendantOfByCod(configuredTag.getCod())) %}
                             <div id="taglist_{{ mtag.getCod() }}" class="unesco_tags" draggable="false">
                                 <span class="label label-default">{{ mtag.title }} |
                                     <a href="#" data-cod="{{ mtag.getCod() }}" data-href="{{ path('pumukitnewadmin_unesco_delete_tag', {'tagCod': mtag.getCod(), "multimediaObjectId": mm.getId() }) }}" class="delete_tag_unesco">
@@ -59,7 +59,7 @@
                 </div>
                 <div class="panel-body-preview panel-body">
                     <ul class="list-unstyled">
-                        {% for role in mm.getRoles() if role.getDisplay() %}
+                        {% for role in mm.getRoles() | filter(child => role.getDisplay()) %}
                             {% set actors = mm.getPeopleByRole(role, true) %}
                             {% if actors|length != 0 %}
                                 <li><u>{{ role.name }}</u></li>
