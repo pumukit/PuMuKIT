@@ -495,7 +495,7 @@ class PumukitAdminExtension extends AbstractExtension
             ['$group' => ['_id' => '$status',
                 'count' => ['$sum' => 1], ]],
         ];
-        $mmobjCounts = $seriesColl->aggregate($aggrPipe, ['cursor' => []])->toArray();
+        $mmobjCounts = iterator_to_array($seriesColl->aggregate($aggrPipe, ['cursor' => []]));
 
         foreach ($mmobjCounts as $mmobjCount) {
             switch ($mmobjCount['_id']) {

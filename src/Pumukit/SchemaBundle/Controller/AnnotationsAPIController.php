@@ -57,7 +57,7 @@ class AnnotationsAPIController extends AbstractController
         $total = $total->count()->getQuery()->execute();
 
         $annonQB->limit($limit)->skip($offset);
-        $resAnnotations = $annonQB->getQuery()->execute()->toArray();
+        $resAnnotations = $annonQB->getQuery()->execute();
         $annotations = [];
         foreach ($resAnnotations as $ann) {
             $annotations[] = $ann;

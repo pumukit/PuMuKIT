@@ -87,7 +87,7 @@ class EventRepository extends DocumentRepository
             $pipeline[] = ['$limit' => $limit];
         }
         $aggregation = $dmColl->aggregate($pipeline, ['cursor' => []]);
-        $aggregation = $aggregation->toArray();
+        $aggregation = iterator_to_array($aggregation);
         if (0 === count($aggregation)) {
             return [];
         }

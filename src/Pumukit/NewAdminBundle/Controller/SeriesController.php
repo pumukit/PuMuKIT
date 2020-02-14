@@ -412,7 +412,7 @@ class SeriesController extends AdminController
                 ['$group' => ['_id' => '$series', 'count' => ['$sum' => 1]]],
                 ['$match' => ['count' => 1]],
             ];
-            $allSeries = $mmObjColl->aggregate($pipeline, ['cursor' => []])->toArray();
+            $allSeries = iterator_to_array($mmObjColl->aggregate($pipeline, ['cursor' => []]));
             foreach ($allSeries as $series) {
                 $emptySeries[] = $series['_id'];
             }

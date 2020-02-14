@@ -24,6 +24,10 @@ class PermissionProfileRepository extends DocumentRepository
         $count = 0;
         $size = -1;
         do {
+            if (!is_int($count)) {
+                break;
+            }
+
             if ($count > 0) {
                 break;
             }
@@ -35,6 +39,10 @@ class PermissionProfileRepository extends DocumentRepository
                 ->execute()
             ;
         } while ($size <= $totalPermissions);
+
+        if (!is_int($count)) {
+            return null;
+        }
 
         if ($count > 0) {
             return $this->createQueryBuilder()

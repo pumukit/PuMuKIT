@@ -243,7 +243,6 @@ class StatsServiceTest extends PumukitTestCase
         $list[4] = $this->factoryService->createMultimediaObject($series);
         $list[5] = $this->factoryService->createMultimediaObject($series);
 
-
         foreach ($list as $i => $mm) {
             $mm->setStatus(MultimediaObject::STATUS_PUBLISHED);
             $this->dm->persist($mm);

@@ -98,7 +98,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
         ;
 
         $total = $qb->count()->getQuery()->execute();
-        $mmobjs = $qb_mmobjs->getQuery()->execute()->toArray();
+        $mmobjs = $qb_mmobjs->getQuery()->execute();
 
         $counts = [
             'total' => $total,
@@ -158,7 +158,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
         ;
 
         $total = $qb->count()->getQuery()->execute();
-        $series = $qb_series->getQuery()->execute()->toArray();
+        $series = $qb_series->getQuery()->execute();
 
         $counts = [
             'total' => $total,
@@ -211,7 +211,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
         $qb_live = clone $qb;
 
         $total = $qb->count()->getQuery()->execute();
-        $live = $qb_live->getQuery()->execute()->toArray();
+        $live = $qb_live->getQuery()->execute();
 
         $counts = [
             'total' => $total,

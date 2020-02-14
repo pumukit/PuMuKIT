@@ -5,6 +5,8 @@ namespace Pumukit\NotificationBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
 use Pumukit\SchemaBundle\Document\Person;
+use Pumukit\SchemaBundle\Repository\PersonRepository;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
@@ -30,8 +32,10 @@ class SenderService
     private $subject = "Can't send email to this address.";
     private $template = self::TEMPLATE_ERROR;
     private $logger;
+    /** @var PersonRepository */
     private $personRepo;
     private $enable;
+    private $session;
 
     public function __construct(
         \Swift_Mailer $mailer,
@@ -39,6 +43,7 @@ class SenderService
         TranslatorInterface $translator,
         DocumentManager $documentManager,
         LoggerInterface $logger,
+        SessionInterface $session,
         $enable,
         $senderEmail,
         $senderName,
@@ -65,6 +70,7 @@ class SenderService
         $this->notificateErrorsToAdmin = $notificateErrorsToAdmin;
         $this->platformName = $platformName;
         $this->personRepo = $documentManager->getRepository(Person::class);
+        $this->session = $session;
     }
 
     public function isEnabled()
@@ -210,16 +216,16 @@ class SenderService
             return $this->templating->render($template, $parameters);
         }
 
-        $sessionLocale = $this->translator->getLocale();
+        $sessionLocale = $this->session->get('_locale');
         $body = '';
         foreach ($this->locales as $locale) {
-            $this->translator->setLocale($locale);
+            $this->session->set('_locale', $locale);
             $parameters = $this->transConfigurationSubject($parameters, $locale, $error, $transConfigSubject);
             $parameters['locale'] = $locale;
             $bodyLocale = $this->templating->render($template, $parameters);
             $body .= $bodyLocale;
         }
-        $this->translator->setLocale($sessionLocale);
+        $this->session->set('_locale', $sessionLocale);
 
         return $body;
     }
