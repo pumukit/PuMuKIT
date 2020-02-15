@@ -6,17 +6,18 @@
     "description": "Media Portal",
     "require": {
         "php": ">=7.2.0",
+        "ext-curl": "*",
         "ext-fileinfo": "*",
         "ext-gd": "*",
         "ext-json": "*",
         "ext-mongodb": "*",
         "ext-sysvsem": "*",
-        "ext-curl": "*",
         "doctrine/mongodb-odm": "~2",
         "doctrine/mongodb-odm-bundle": "~4",
         "friendsofsymfony/user-bundle": "dev-master",
         "gedmo/doctrine-extensions": "dev-master",
         "incenteev/composer-parameter-handler": "^2.0",
+        "jakub-onderka/php-var-dump-check": "~0.3",
         "jms/serializer-bundle": "2.4.*",
         "knplabs/knp-menu-bundle": "~2.0",
         "sensio/framework-extra-bundle": "^5.5",
@@ -44,8 +45,7 @@
         "phpunit/phpunit": "7.*",
         "symfony/browser-kit": "^4.0",
         "symfony/phpunit-bridge": "^4.0",
-        "symfony/profiler-pack": "^1.0",
-        "jakub-onderka/php-var-dump-check": "~0.3"
+        "symfony/profiler-pack": "^1.0"
     },
     "scripts": {
         "post-install-cmd": [
@@ -61,7 +61,8 @@
             "bin/console lint:twig src",
             "bin/console lint:twig templates",
             "bin/console lint:xlif translations/",
-            "vendor/bin/var-dump-check --symfony src"
+            "vendor/bin/var-dump-check --symfony src",
+            "bin/travis_checks/check_var_dumps"
         ],
         "php-cs-fixer": "vendor/bin/php-cs-fixer fix src --dry-run -v",
         "phpstan": [

@@ -88,6 +88,9 @@
     "incenteev/composer-parameter-handler": {
         "version": "v2.1.3"
     },
+    "jakub-onderka/php-var-dump-check": {
+        "version": "v0.3"
+    },
     "jms/metadata": {
         "version": "1.7.0"
     },
