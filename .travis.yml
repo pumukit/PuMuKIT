@@ -16,10 +16,10 @@ script:
   - docker-compose -f docker-compose.test.yml exec php composer phpstan
   - docker-compose -f docker-compose.test.yml exec php composer tests
   - docker-compose -f docker-compose.test.yml exec php bin/console pumukit:init:repo all --force
-  - docker-compose -f docker-compose.test.yml --rm run pa11y https://h2-proxy
-  - docker-compose -f docker-compose.test.yml --rm run pa11y https://h2-proxy/series/channel/1.html
-  - docker-compose -f docker-compose.test.yml --rm run pa11y https://h2-proxy/latestuploads
-  - docker-compose -f docker-compose.test.yml --rm run pa11y https://h2-proxy/searchmultimediaobjects
-  - docker-compose -f docker-compose.test.yml --rm run pa11y https://h2-proxy/searchseries
-  - docker-compose -f docker-compose.test.yml --rm run pa11y https://h2-proxy/mediateca
-  - docker-compose -f docker-compose.test.yml --rm run pa11y https://h2-proxy/categories
+  - docker-compose -f docker-compose.test.yml run --rm pa11y https://h2-proxy
+  - docker-compose -f docker-compose.test.yml run --rm pa11y https://h2-proxy/series/channel/1.html
+  - docker-compose -f docker-compose.test.yml run --rm pa11y https://h2-proxy/latestuploads
+  - docker-compose -f docker-compose.test.yml run --rm pa11y https://h2-proxy/searchmultimediaobjects
+  - docker-compose -f docker-compose.test.yml run --rm pa11y https://h2-proxy/searchseries
+  - docker-compose -f docker-compose.test.yml run --rm pa11y https://h2-proxy/mediateca
+  - docker-compose -f docker-compose.test.yml run --rm pa11y https://h2-proxy/categories
