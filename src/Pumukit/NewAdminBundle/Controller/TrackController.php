@@ -104,7 +104,6 @@ class TrackController extends AbstractController implements NewAdminControllerIn
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
             }
             if (($request->files->has('resource')) && ('file' === $request->get('file_type'))) {
-                dump('llega');
                 $multimediaObject = $this->jobService->createTrackFromLocalHardDrive($multimediaObject, $request->files->get('resource'), $profile, $priority, $language, $description);
             } elseif (($request->get('file')) && ('inbox' === $request->get('file_type'))) {
                 $multimediaObject = $this->jobService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description);

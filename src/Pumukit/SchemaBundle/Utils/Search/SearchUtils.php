@@ -102,8 +102,6 @@ class SearchUtils
      */
     private static function completeRegexExpression($regexString)
     {
-        $regexString = implode($regexString, self::$glue);
-
-        return $regexString;
+        return implode($regexString, self::$glue);
     }
 }
