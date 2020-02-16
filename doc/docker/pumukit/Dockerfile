@@ -22,6 +22,7 @@ RUN apk  add --no-cache \
 			py-argparse \
 			py2-pip \
 			py-gflags \
+			grep \
 ;
 
 RUN pip install google-api-python-client==1.2
