@@ -46,7 +46,7 @@
         </div>
 
         {% if app.request.get('_route') != 'pumukit_webtv_index_index' %}
-            {{ render(controller('PumukitWebTVBundle:Modules:breadcrumbs')) }}
+            {{ render(controller('Pumukit\\WebTVBundle\\Controller\\ModulesController::breadcrumbsAction')) }}
         {% endif %}
 
         {% block custom_block_before_body %}{% endblock %}

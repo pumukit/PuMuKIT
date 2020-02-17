@@ -17,13 +17,13 @@
         </ul>
         <div class="tab-content">
             <div id="event" role="tabpanel" class="tab-pane active">
-                {{ render(controller('PumukitNewAdminBundle:Events:event', {'id': multimediaObject.getId() })) }}
+                {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\EventsController::eventAction', {'id': multimediaObject.getId() })) }}
             </div>
             <div id="session" role="tabpanel" class="tab-pane">
-                {{ render(controller('PumukitNewAdminBundle:Events:session', {'id': multimediaObject.getId() })) }}
+                {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\EventsController::sessionAction', {'id': multimediaObject.getId() })) }}
             </div>
             <div id="series" role="tabpanel" class="tab-pane">
-                {{ render(controller('PumukitNewAdminBundle:Events:series', {'id' : multimediaObject.getSeries().getId() })) }}
+                {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\EventsController::seriesAction', {'id' : multimediaObject.getSeries().getId() })) }}
             </div>
         </div>
     </div>

@@ -1,7 +1,8 @@
 {% extends '@PumukitWizard/Default/index.html.twig' %}
 {% block wizard_body %}
 {% set access_inbox = (app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX'))) %}
-{{ render(controller('PumukitWizardBundle:Default:steps', {'step': 2, 'option': form_data.type.option, 'show_series': show_series, 'same_series': same_series})) }}
+    {{ render(controller('Pumukit\\WizardBundle\\Controller\\DefaultController::stepsAction', {'step': 2, 'option': form_data.type.option, 'show_series': show_series, 'same_series': same_series})) }}
+    {{ render(controller('Pumukit\\WizardBundle\\Controller\\DefaultController::stepsAction', {'step': 2, 'option': form_data.type.option, 'show_series': show_series, 'same_series': same_series})) }}
 <div class="well">
   <form id="pumukitwizard_multimediaobject_form"
         action="{{ path('pumukitwizard_default_track') }}" method="POST">
