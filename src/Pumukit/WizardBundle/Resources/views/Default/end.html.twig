@@ -1,5 +1,5 @@
 {% block wizard_body %}
-{{ render(controller('PumukitWizardBundle:Default:steps', {'step': 4, 'option': option, 'show_series': show_series, 'same_series': same_series})) }}
+    {{ render(controller('Pumukit\\WizardBundle\\Controller\\DefaultController::stepsAction', {'step': 4, 'option': option, 'show_series': show_series, 'same_series': same_series})) }}
 <div class="well">
   <div class="well">
     <h3>{% trans %}Audio/Video uploaded successfully{% endtrans %}</h3>

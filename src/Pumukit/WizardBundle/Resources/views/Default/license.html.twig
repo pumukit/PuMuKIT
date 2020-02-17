@@ -1,6 +1,6 @@
 {% extends '@PumukitWizard/Default/index.html.twig' %}
 {% block wizard_body %}
-{{ render(controller('PumukitWizardBundle:Default:steps', {'step': -1, 'option': 'single', 'show_series': show_series, 'same_series': same_series})) }}
+    {{ render(controller('Pumukit\\WizardBundle\\Controller\\DefaultController::stepsAction', {'step': -1, 'option': 'single', 'show_series': show_series, 'same_series': same_series})) }}
 <div class="well">
   {% if same_series %}
   <form id="pumukitwizard_license_form"

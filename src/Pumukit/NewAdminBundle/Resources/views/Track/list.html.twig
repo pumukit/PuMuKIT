@@ -166,7 +166,7 @@
             </tr>
         {% endfor %}
         {% if mm.getProperty('opencast') and opencast_exists %}
-            {{ render(controller('PumukitOpencastBundle:MultimediaObject:index', {'id': mm.id })) }}
+            {{ render(controller('Pumukit\\OpencastBundle\\Controller\\MultimediaObjectController::indexAction', {'id': mm.id })) }}
         {% endif %}
 
         {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADVANCED_UPLOAD')) %}

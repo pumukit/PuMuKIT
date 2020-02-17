@@ -23,7 +23,7 @@
                 </div>
                 {% if chat %}
                     <div class="col-xs-12 col-md-6">
-                        {{ render(controller('PumukitWebTVBundle:Chat:showBasic', {'id': live.id })) }}
+                        {{ render(controller('Pumukit\\WebTVBundle\\Controller\\ChatController::showBasicAction', {'id': live.id })) }}
                     </div>
                 {% endif %}
             </div>

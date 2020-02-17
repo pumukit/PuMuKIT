@@ -1,6 +1,6 @@
 <br />
-{{ render(controller('PumukitWebTVBundle:Event:twitter', {'id': multimediaObject.id})) }}
-{{ render(controller('PumukitWebTVBundle:Event:liveList')) }}
+{{ render(controller('Pumukit\\WebTVBundle\\Controller\\EventController::twitterAction', {'id': multimediaObject.id})) }}
+{{ render(controller('Pumukit\\WebTVBundle\\Controller\\EventController::liveListAction')) }}
 <br />
-{{ render(controller('PumukitWebTVBundle:Event:nextSessionList', {'id': multimediaObject.id})) }}
+{{ render(controller('Pumukit\\WebTVBundle\\Controller\\EventController::nextSessionListAction', {'id': multimediaObject.id})) }}
 <br />
