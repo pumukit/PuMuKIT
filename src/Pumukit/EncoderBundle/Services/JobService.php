@@ -452,6 +452,9 @@ class JobService
 
     public function executeInBackground(Job $job): void
     {
+        $multimediaObject = $this->getMultimediaObject($job);
+        $this->propService->setJobAsExecuting($multimediaObject, $job);
+
         $command = [
             'php', "{$this->binPath}/console", sprintf('--env=%s', $this->environment), 'pumukit:encoder:job', $job->getId(),
         ];
@@ -483,7 +486,6 @@ class JobService
 
             //Throws exception when the multimedia object is not found.
             $multimediaObject = $this->getMultimediaObject($job);
-            //This does not 'executes' the job. This adds the 'executing job' property to the mmobj.
             $this->propService->setJobAsExecuting($multimediaObject, $job);
             //Executes the job. It can throw exceptions if the executor has issues.
             $out = $executor->execute($commandLine, $cpu);
