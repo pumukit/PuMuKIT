@@ -62,9 +62,7 @@
           {% set column = ((seriestypes.getNbPages/5)|round(0, 'floor')) %}
           <div class="col-md-8">
             {{ seriestypes.getNbResults }}
-            {% transchoice seriestypes.getNbResults %}
-            {0} series types|{1} series type |]1,Inf] series types
-            {% endtranschoice %}
+              {{ "{0} series types|{1} series type |]1,Inf] series types"|trans({'%count%':  seriestypes.getNbResults}) }}
             {% if app.session.get('admin/seriestype/criteria')|length != 0%}
             <a class="cancel-search-button" title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
             {% endif %}

@@ -71,9 +71,7 @@
           {% set column = ((events.getNbPages/5)|round(0, 'floor')) %}
           <div class="col-md-8">
             {{ events.getNbResults }}
-            {% transchoice events.getNbResults %}
-            {0} live events|{1} live event|]1,Inf] live events
-            {% endtranschoice %}
+              {{ "{0} live events|{1} live event|]1,Inf] live events"|trans({'%count%': events.getNbResults}) }}
             {% if app.session.get('admin/event/criteria')|length != 0%}
             <a class="cancel-search-button" title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
             {% endif %}
