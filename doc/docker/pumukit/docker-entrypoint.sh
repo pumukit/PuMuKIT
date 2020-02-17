@@ -14,7 +14,7 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
     setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var/cache var/log var/sessions public/storage public/uploads
 
     if [ "$APP_ENV" != 'prod' ]; then
-        composer install --prefer-dist --no-scripts --no-progress --no-suggest --classmap-authoritative --no-interaction
+        composer install --prefer-source --no-progress --no-suggest --classmap-authoritative --no-interaction
         bin/console doctrine:mongodb:schema:create
         set +e
         if [ "$RUN_INIT_COMMANDS" == 'true' ]; then
@@ -23,7 +23,7 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
 
     	if [ "$AUTOCREATE_PUMUKIT_USER" == 'true' ]; then
 	            php bin/console fos:user:create $PUMUKIT_USER $PUMUKIT_USER_MAIL $PUMUKIT_PASS --super-admin || true
-	        
+
 	    fi
         set -e
     fi
