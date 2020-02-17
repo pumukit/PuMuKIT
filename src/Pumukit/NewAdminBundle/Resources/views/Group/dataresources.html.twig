@@ -1,5 +1,5 @@
 {% for resource in resources %}
-    {% if loop.index == resources.count(true) and resources.count(true) > 100 %}
+    {% if loop.index == resources|length and resources|length > 100 %}
         <p>&#8226;&nbsp;...</p>
     {% else %}
         {% if 'user' == resource_name and not group.isLocal() %}
