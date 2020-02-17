@@ -112,18 +112,11 @@ class DefaultController extends AbstractController
         $qb = $this->getMultimediaObjects($series->getId());
         $multimediaObjects = $qb->getQuery()->execute()->toArray();
 
-        if (1 === count($multimediaObjects)) {
-            $singleMultimediaObject = $multimediaObjects[0];
-
-            if ($singleMultimediaObject->getDisplayTrack()) {
-                return $this->redirectToRoute('pumukit_webtv_multimediaobject_index', ['id' => $singleMultimediaObject->getId()]);
-            }
-        } elseif (count($multimediaObjects) > 1) {
-            if (!$series->isHide()) {
-                return $this->redirectToRoute('pumukit_webtv_series_index', ['id' => $series->getId()]);
-            }
-
-            return $this->iframeEventAction($multimediaObject, $request, false);
+        if (1 === count($multimediaObjects) && $multimediaObjects[0]->getDisplayTrack()) {
+            return $this->redirectToRoute('pumukit_webtv_multimediaobject_index', ['id' => $multimediaObjects[0]->getId()]);
+        }
+        if (count($multimediaObjects) > 1 && !$series->isHide()) {
+            return $this->redirectToRoute('pumukit_webtv_series_index', ['id' => $series->getId()]);
         }
 
         return $this->iframeEventAction($multimediaObject, $request, false);
