@@ -68,7 +68,7 @@ class MultimediaObjectPropertyJobServiceTest extends PumukitTestCase
         static::assertEquals(null, $mm->getProperty('finished_jobs'));
         static::assertEquals(null, $mm->getProperty('error_jobs'));
 
-        $this->service->executeJob($mm, $job);
+        $this->service->setJobAsExecuting($mm, $job);
 
         $this->dm->clear('Pumukit\SchemaBundle\Document\MultimediaObject');
         $mm = $this->dm->getRepository(MultimediaObject::class)->find($mmId);
@@ -98,7 +98,7 @@ class MultimediaObjectPropertyJobServiceTest extends PumukitTestCase
         static::assertEquals([$job->getId()], $mm->getProperty('finished_jobs'));
         static::assertEquals(null, $mm->getProperty('error_jobs'));
 
-        $this->service->executeJob($mm, $otherJob);
+        $this->service->setJobAsExecuting($mm, $otherJob);
 
         $this->dm->clear('Pumukit\SchemaBundle\Document\MultimediaObject');
         $mm = $this->dm->getRepository(MultimediaObject::class)->find($mmId);
