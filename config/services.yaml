@@ -18,8 +18,6 @@ parameters:
     - eu
     - lse
     - lsi
-  env(MONGODB_URL):                    ''
-  env(MONGODB_DB):                     ''
   locale:                              "%env(PUMUKIT_LOCALE)%"
   secret:                              "%env(PUMUKIT_SECRET)%"
   debug_toolbar:                       true
