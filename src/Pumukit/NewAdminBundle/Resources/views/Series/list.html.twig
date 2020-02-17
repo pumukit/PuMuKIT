@@ -31,10 +31,10 @@
 
                     {% if not is_naked() %}
                         <td headers="th-icons">
-                            {% spaceless %}
+                            {% apply spaceless %}
                                 <i class="{{ oneseries|series_announce_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|series_announce_text }}"></i>
                                 <i class="{{ oneseries|mms_announce_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|mms_announce_text }}"></i>
-                            {% endspaceless %}
+                            {% endapply %}
                         </td>
                         <td headers="th-icons">
                             {% if app.user and is_granted('ROLE_ACCESS_PUBLICATION_TAB') %}
