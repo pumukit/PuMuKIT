@@ -34,7 +34,7 @@
             <div class="qa-player-share-iframe share_url share_iframe">
                 <span>{% trans %} IFRAME: {% endtrans %}</span>
                 {% set trackid = (track.id is defined)?track.id:null %}
-                {% set iframe_value %}{% spaceless %}
+                {% set iframe_value %}{% apply spaceless %}
                     <iframe src='{{ urlIframe }}'
                             {{- " id='pumukitiframe'" -}}
                             {{- " frameborder='0'" -}}
@@ -43,7 +43,7 @@
                             {{- " height='315'" -}}
                             {{- " allowfullscreen" -}}
                     ></iframe>
-                {% endspaceless %}{% endset %}
+                {% endapply %}{% endset %}
                 <input type="text" value="{{ iframe_value }}" aria-label="share-iframe" onclick="this.select()" style="width: 70%; border: 1px solid #ccc; float:right; padding: 0; margin: 0;" readonly="readonly" />
             </div>
         </li>
