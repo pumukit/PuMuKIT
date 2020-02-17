@@ -110,14 +110,13 @@ class DefaultController extends AbstractController
         $series = $multimediaObject->getSeries();
 
         $qb = $this->getMultimediaObjects($series->getId());
-        $multimediaObjects = $qb->getQuery()->execute();
+        $multimediaObjects = $qb->getQuery()->execute()->toArray();
 
         if (1 === count($multimediaObjects)) {
-            $multimediaObjects->next();
-            $mm = $multimediaObjects->current();
+            $singleMultimediaObject = $multimediaObjects[0];
 
-            if ($mm->getDisplayTrack()) {
-                return $this->redirectToRoute('pumukit_webtv_multimediaobject_index', ['id' => $mm->getId()]);
+            if ($singleMultimediaObject->getDisplayTrack()) {
+                return $this->redirectToRoute('pumukit_webtv_multimediaobject_index', ['id' => $singleMultimediaObject->getId()]);
             }
         } elseif (count($multimediaObjects) > 1) {
             if (!$series->isHide()) {
