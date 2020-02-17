@@ -79,9 +79,7 @@
           <td colspan="10" class="foot-td">
             <div class="col-md-8">
               {{ roles.getNbResults }}
-              {% transchoice roles.getNbResults %}
-                {0} roles|{1} role|]1,Inf] roles
-                {% endtranschoice %}
+                {{ "{0} roles|{1} role|]1,Inf] roles"|trans({'%count%':  roles.getNbResults}) }}
                 {% if app.session.get('admin/role/criteria')|length != 0%}
                 <a class="cancel-search-button" title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
                 {% endif %}

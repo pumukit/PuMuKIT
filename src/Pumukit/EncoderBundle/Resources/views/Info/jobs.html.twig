@@ -59,9 +59,7 @@
         <div class="row">
           <div class="col-md-8" id="numberJobs">
             {{ jobs.total }}
-            {% transchoice jobs.total %}
-  	          {0} jobs|{1} job|]1,Inf] jobs
-	          {% endtranschoice %}
+              {{ "{0} jobs|{1} job|]1,Inf] jobs"|trans({'%count%':  jobs.total}) }}
           </div>
           <div class="col-md-4 text-right">
             <div class="pagerfanta">
