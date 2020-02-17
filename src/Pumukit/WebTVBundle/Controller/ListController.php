@@ -303,7 +303,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
         ];
     }
 
-    private function updateBreadcrumbs(string $title, string $routeName, array $routeParameters = []): void
+    private function updateBreadcrumbs(?string $title, string $routeName, array $routeParameters = []): void
     {
         $this->breadcrumbsService->add($title, $routeName, $routeParameters);
     }
