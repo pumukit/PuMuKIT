@@ -12,9 +12,7 @@
       <div class="col-md-2">
         <p style="font-weight:bold;">
         {{ permissionprofiles.getNbResults }}
-        {% transchoice permissionprofiles.getNbResults %}
-        {0} permission profiles|{1} permission profile|]1,Inf] permission profiles
-        {% endtranschoice %}
+            {{ "{0} permission profiles|{1} permission profile|]1,Inf] permission profiles"|trans({'%count%': permissionprofiles.getNbResults}) }}
         </p>
         {% if app.session.get('admin/permissionprofile/criteria')|length != 0%}
         <a class="cancel-search-button" title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>

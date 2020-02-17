@@ -21,9 +21,7 @@
                 <li>
                     <strong>{% trans %}Viewed{% endtrans %}:</strong>
                     {{ multimediaObject.numview|default(0) }}
-                    {% transchoice multimediaObject.getNumview() %}
-                        {0}times|{1}time|]1,Inf]times
-                    {% endtranschoice %}
+                    {{ "{0}times|{1}time|]1,Inf]times"|trans({'%count%':  multimediaObject.getNumview()}) }}
                 </li>
             </ul>
         </div>

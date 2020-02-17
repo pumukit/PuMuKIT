@@ -70,9 +70,7 @@
         {% set column = ((lives.getNbPages/5)|round(0, 'floor')) %}
         <div class="col-md-8">
           {{ lives.getNbResults }}
-          {% transchoice lives.getNbResults %}
-          {0} live channels|{1} live channel|]1,Inf] live channels
-          {% endtranschoice %}
+            {{ "{0} live channels|{1} live channel|]1,Inf] live channels"|trans({'%count%':  lives.getNbResults}) }}
           {% if app.session.get('admin/live/criteria')|length != 0%}
           <a class="cancel-search-button" title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
           {% endif %}
