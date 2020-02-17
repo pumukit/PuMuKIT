@@ -484,7 +484,7 @@ class JobService
             //Throws exception when the multimedia object is not found.
             $multimediaObject = $this->getMultimediaObject($job);
             //This does not 'executes' the job. This adds the 'executing job' property to the mmobj.
-            $this->propService->executeJob($multimediaObject, $job);
+            $this->propService->setJobAsExecuting($multimediaObject, $job);
             //Executes the job. It can throw exceptions if the executor has issues.
             $out = $executor->execute($commandLine, $cpu);
             $job->setOutput($out);
