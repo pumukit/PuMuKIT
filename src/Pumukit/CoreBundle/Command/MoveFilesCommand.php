@@ -48,7 +48,7 @@ EOT
         $this->origin = $input->getOption('origin');
         $this->destiny = $input->getOption('destiny');
         $this->limit = $input->getOption('limit');
-        $this->limit = abs(intval($this->limit));
+        $this->limit = abs((int) ($this->limit));
 
         $this->logger = $this->getContainer()->get('logger');
 
