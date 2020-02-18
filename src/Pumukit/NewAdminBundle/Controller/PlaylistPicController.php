@@ -209,6 +209,6 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
 
     private function getPaginatedPics($urlPics, $limit, $page)
     {
-        return $this->paginationService->createArrayAdapter($urlPics->toArray(), $page, $limit);
+        return $this->paginationService->createArrayAdapter($urlPics, $page, $limit);
     }
 }
