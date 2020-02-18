@@ -5,8 +5,6 @@ FROM teltek/pumukit-base:${PUMUKIT_BASE_VERSION}
 ARG APP_ENV=prod
 ARG PHP_MEMORY_LIMIT=512M
 
-ENV RUN_INIT_COMMANDS=false
-
 # copy the code into the docker
 COPY --chown=www-data:www-data . ./
 
