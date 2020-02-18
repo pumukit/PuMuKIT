@@ -640,14 +640,14 @@ class MultimediaObjectController extends SortableAdminController
         $parent_path = str_replace('|', '\\|', $parent->getPath());
 
         $qb = $this->documentManager->createQueryBuilder(Tag::class);
-        $children = $qb->addOr($qb->expr()->field('title.'.$lang)->equals(new Regex('.*'.$search_text.'.*', 'i')))
+        $children = $qb
+            ->addOr($qb->expr()->field('title.'.$lang)->equals(new Regex('.*'.$search_text.'.*', 'i')))
             ->addOr($qb->expr()->field('cod')->equals(new Regex('.*'.$search_text.'.*', 'i')))
             ->addAnd($qb->expr()->field('path')->equals(new Regex($parent_path)))
-                  //->limit(20)
             ->getQuery()
             ->execute()
         ;
-        $result = $children;
+        $result = $children->toArray();
 
         if (!$result) {
             return $this->render(
@@ -662,7 +662,7 @@ class MultimediaObjectController extends SortableAdminController
 
         usort(
             $result,
-            function ($x, $y) {
+            static function ($x, $y) {
                 return strcasecmp($x->getCod(), $y->getCod());
             }
         );
@@ -1434,28 +1434,22 @@ class MultimediaObjectController extends SortableAdminController
         return true;
     }
 
-    private function getAllParents($element, $tags, $top_parent)
+    private function getAllParents(Tag $element, array $tags, string $top_parent): array
     {
-        if (null !== $element->getParent()) {
-            $parentMissing = true;
-            foreach ($tags as $tag) {
-                if ($element->getParent() == $tag) {
-                    $parentMissing = false;
+        if ($element->getId() === $top_parent) {
+            return $tags;
+        }
 
-                    break;
-                }
-            }
-
-            if ($parentMissing) {
-                $parent = $element->getParent();
-                if ($parent->getId() != $top_parent) {
-                    $tags[] = $parent;
-                    $tags = $this->getAllParents($parent, $tags, $top_parent);
-                }
+        $parent = $element->getParent();
+        foreach ($tags as $tag) {
+            if ($parent === $tag) {
+                return $tags;
             }
         }
 
-        return $tags;
+        $tags[] = $parent;
+
+        return $this->getAllParents($parent, $tags, $top_parent);
     }
 
     private function modifyMultimediaObjectGroups(MultimediaObject $multimediaObject, $addGroups = [], $deleteGroups = [])
