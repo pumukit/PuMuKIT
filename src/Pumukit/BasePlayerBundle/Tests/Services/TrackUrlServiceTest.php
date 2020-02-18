@@ -67,7 +67,7 @@ class TrackUrlServiceTest extends PumukitTestCase
         //Reload mmobj to check for new views.
         $this->dm->clear();
         $mmobj = $this->mmobjRepo->find($mmobj->getId());
-        static::assertEquals(0, $mmobj->getNumview());
+        static::assertEquals(1, $mmobj->getNumview());
         $this->client->request('GET', $genUrl, [], [], ['HTTP_RANGE' => 'bytes=123-246']);
         $this->dm->clear();
         $mmobj = $this->mmobjRepo->find($mmobj->getId());
