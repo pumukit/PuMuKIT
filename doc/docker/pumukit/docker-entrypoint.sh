@@ -17,7 +17,7 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
         composer install --prefer-dist --no-scripts --no-progress --no-suggest --classmap-authoritative --no-interaction
         set +e
         bin/console doctrine:mongodb:schema:create || true
-        bin/console pumukit:init:repo all --force
+        bin/console pumukit:init:repo all
     	if [ "$AUTOCREATE_PUMUKIT_USER" == 'true' ]; then
 	        php bin/console fos:user:create $PUMUKIT_USER $PUMUKIT_USER_MAIL $PUMUKIT_PASS --super-admin || true
 	    fi
