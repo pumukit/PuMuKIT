@@ -259,7 +259,7 @@ class ModulesController extends Controller implements WebTVControllerInterface
             'objectByCol' => $cols,
             'objects' => $tags,
             'objectsData' => $categories,
-            'title' => $title,
+            'title' => $this->get('translator')->trans($title),
             'class' => $class,
         ];
     }
