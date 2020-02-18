@@ -34,6 +34,8 @@ services:
     image: mongo:4.0
 
   pa11y:
-    image: dcycle/pa11y:1
-    volumes:
-      - ./.pa11y.json:/app/config/config.json
+    image: teltek/pumukit:latest
+    env_file:
+      - .env.travis
+    build:
+      context: ./doc/docker/pa11y
