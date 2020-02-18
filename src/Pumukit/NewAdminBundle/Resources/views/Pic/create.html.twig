@@ -33,7 +33,8 @@
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
         {% if resource_name != 'event' %}
             <div id="pics_to_add_list">
-                {% set picstoaddlistaction = "Pumukit\\NewAdminBundle\\Controller\\:"~(resource_name == 'mms' ? 'MultimediaObject'~(resource_name|capitalize))~"PicController::picstoaddlistAction" %}
+                {% set resourceName = (resource_name == 'mms' ? 'MultimediaObject' : (resource_name|capitalize)) %}
+                {% set picstoaddlistaction = "Pumukit\\NewAdminBundle\\Controller\\"~resourceName~"PicController::picstoaddlistAction" %}
                 {{ render(controller(picstoaddlistaction, {'id': resource.id, 'page':1, 'is_event_poster': event_poster})) }}
             </div>
         {% endif %}

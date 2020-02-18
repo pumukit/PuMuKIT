@@ -255,6 +255,6 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
 
     private function getPaginatedPics($urlPics, $limit, $page)
     {
-        return $this->paginationService->createArrayAdapter($urlPics->toArray(), $page, $limit);
+        return $this->paginationService->createArrayAdapter($urlPics, $page, $limit);
     }
 }
