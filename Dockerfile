@@ -1,4 +1,4 @@
-ARG PUMUKIT_BASE_VERSION=latest
+ARG PUMUKIT_BASE_VERSION=${SOURCE_BRANCH}
 FROM teltek/pumukit-base:${PUMUKIT_BASE_VERSION}
 
 # default build for production
