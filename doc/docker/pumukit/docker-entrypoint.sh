@@ -15,9 +15,9 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
 
     if [ "$APP_ENV" != 'prod' ]; then
         composer install --prefer-source --no-progress --no-suggest --classmap-authoritative --no-interaction
-        bin/console doctrine:mongodb:schema:create
         set +e
         if [ "$RUN_INIT_COMMANDS" == 'true' ]; then
+            bin/console doctrine:mongodb:schema:create || true
             bin/console pumukit:init:repo all --force || true
         fi
 
