@@ -16,13 +16,10 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
     if [ "$APP_ENV" != 'prod' ]; then
         composer install --prefer-dist --no-scripts --no-progress --no-suggest --classmap-authoritative --no-interaction
         set +e
-        if [ "$RUN_INIT_COMMANDS" == 'true' ]; then
-            bin/console doctrine:mongodb:schema:create
-            bin/console pumukit:init:repo all --force || true
-        fi
-
+        bin/console doctrine:mongodb:schema:create || true
+        bin/console pumukit:init:repo all --force
     	if [ "$AUTOCREATE_PUMUKIT_USER" == 'true' ]; then
-	            php bin/console fos:user:create $PUMUKIT_USER $PUMUKIT_USER_MAIL $PUMUKIT_PASS --super-admin || true
+	        php bin/console fos:user:create $PUMUKIT_USER $PUMUKIT_USER_MAIL $PUMUKIT_PASS --super-admin || true
 	    fi
         set -e
     fi
