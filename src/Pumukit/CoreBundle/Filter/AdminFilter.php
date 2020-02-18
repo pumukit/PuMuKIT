@@ -55,8 +55,7 @@ class AdminFilter extends BsonFilter
         $seriesIds = [];
         if ((null !== $personId) && (null !== $roleCode)) {
             $repoMmobj = $this->dm->getRepository(MultimediaObject::class);
-            $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCodOrGroups($personId, $roleCode, $groups);
-            $seriesIds['$in'] = $referencedSeries->toArray();
+            $seriesIds['$in'] = $repoMmobj->findSeriesFieldByPersonIdAndRoleCodOrGroups($personId, $roleCode, $groups);
         }
 
         return $seriesIds;

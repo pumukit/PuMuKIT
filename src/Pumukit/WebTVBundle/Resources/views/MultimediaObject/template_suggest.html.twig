@@ -1,9 +1,9 @@
 <div class="same-series">
     {% if multimediaObject.getSeriesTitle() %}
-        {{ render(controller('PumukitWebTVBundle:MultimediaObject:series', {'multimediaObject': multimediaObject, 'magicUrl': magic_url is defined ? magic_url : false})) }}
+        {{ render(controller('Pumukit\\WebTVBundle\\Controller\\MultimediaObjectController::seriesAction', {'multimediaObject': multimediaObject, 'magicUrl': magic_url is defined ? magic_url : false})) }}
     {% endif %}
 </div>
 
 <div class="related-videos">
-    {{ render(controller('PumukitWebTVBundle:MultimediaObject:related', {'multimediaObject': multimediaObject})) }}
+    {{ render(controller('Pumukit\\WebTVBundle\\Controller\\MultimediaObjectController::relatedAction', {'multimediaObject': multimediaObject})) }}
 </div>

@@ -14,7 +14,7 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
     setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var/cache var/log var/sessions public/storage public/uploads
 
     if [ "$APP_ENV" != 'prod' ]; then
-        composer install --prefer-dist --no-scripts --no-progress --no-suggest --classmap-authoritative --no-interaction
+        composer install --prefer-dist --no-progress --no-suggest --classmap-authoritative --no-interaction
         set +e
         bin/console doctrine:mongodb:schema:create || true
         bin/console pumukit:init:repo all --force

@@ -1,16 +1,16 @@
 <td headers="th-icons">
   {% if mms.getCurrentPage() != 1 or not loop.first %}
-  {% spaceless %}
+  {% apply spaceless %}
   <a href="{{ path('pumukitnewadmin_mms_down', {'id': mm.id}) }}" title="{% trans %}Move one position up{% endtrans %}" style="color:#00786d;">&#8593;</a>
   <a href="{{ path('pumukitnewadmin_mms_bottom', {'id': mm.id}) }}" title="{% trans %}Move to the beginning of the list{% endtrans %}"><i class="mdi-editor-vertical-align-top"></i></a>
-  {% endspaceless %}
+  {% endapply %}
   {% endif %}
 </td>
 <td headers="th-icons">
   {% if (mms.getCurrentPage() != mms.getNbPages()) or (loop.index + ((mms.getCurrentPage() - 1 ) * mms.getMaxPerPage()) != mms.getNbResults())  %}
-  {% spaceless %}
+  {% apply spaceless %}
   <a href="{{ path('pumukitnewadmin_mms_up', {'id': mm.id}) }}" title="{% trans %}Move one position down{% endtrans %}" style="color:#00786d;">&#8595;</a>
   <a href="{{ path('pumukitnewadmin_mms_top', {'id': mm.id}) }}" title="{% trans %}Move to the end of the list{% endtrans %}"><i class="mdi-editor-vertical-align-bottom"></i></a>
-  {% endspaceless %}
+  {% endapply %}
   {% endif %}
 </td>

@@ -1,17 +1,17 @@
-{% set series_title %}{% spaceless %}
+{% set series_title %}{% apply spaceless %}
     {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}
         {% trans %}My Series{% endtrans %}
     {% else %}
         {% trans %}Multimedia Series{% endtrans %}
     {% endif %}
-{% endspaceless %}{% endset %}
-{% set playlist_title %}{% spaceless %}
+{% endapply %}{% endset %}
+{% set playlist_title %}{% apply spaceless %}
     {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}
         {% trans %}My Playlists{% endtrans %}
     {% else %}
         {% trans %}Moodle Playlists{% endtrans %}
     {% endif %}
-{% endspaceless %}{% endset %}
+{% endapply %}{% endset %}
 
 {% set route_name = app.request.get('_route') %}
 {% set series_routes = ['pumukitnewadmin_series_index', 'pumukitnewadmin_mms_index', 'pumukitwizard_default_multimediaobject', 'pumukitwizard_default_track', 'pumukitwizard_default_series'] %}

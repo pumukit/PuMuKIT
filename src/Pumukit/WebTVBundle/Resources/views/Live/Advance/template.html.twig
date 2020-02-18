@@ -29,9 +29,9 @@
         </div>
 
         <div class="col-xs-12 col-sm-4 col-md-4">
-            {{ render(controller('PumukitWebTVBundle:Event:twitter', {'id': multimediaObject.id})) }}
-            {{ render(controller('PumukitWebTVBundle:Event:liveList')) }}
-            {{ render(controller('PumukitWebTVBundle:Event:nextSessionList', {'id': multimediaObject.id})) }}
+            {{ render(controller('Pumukit\\WebTVBundle\\Controller\\EventController::twitterAction', {'id': multimediaObject.id})) }}
+            {{ render(controller('Pumukit\\WebTVBundle\\Controller\\EventController::liveListAction')) }}
+            {{ render(controller('Pumukit\\WebTVBundle\\Controller\\EventController::nextSessionListAction', {'id': multimediaObject.id})) }}
         </div>
     </div>
 

@@ -18,7 +18,7 @@
         </fieldset>
         <div class="modal-footer">
             {% if ldap_enabled  and role.cod != personal_scope_role_code %}
-                {{ render(controller('PumukitLDAPBundle:Person:button', {'mmId': mm.id, 'roleId': role.id})) }}
+                {{ render(controller('Pumukit\\LDAPBundle\\Controller\\PersonController::buttonAction', {'mmId': mm.id, 'roleId': role.id})) }}
             {% endif %}
             <button type="button" class="btn btn-primary btn-raised"
                     onclick="if('' != $('#person_id').val()){

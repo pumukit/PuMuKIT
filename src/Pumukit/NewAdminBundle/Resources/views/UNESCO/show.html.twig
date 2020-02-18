@@ -59,7 +59,7 @@
                 </div>
                 <div class="panel-body-preview panel-body">
                     <ul class="list-unstyled">
-                        {% for role in mm.getRoles() | filter(child => role.getDisplay()) %}
+                        {% for role in mm.getRoles() | filter(role => role.getDisplay()) %}
                             {% set actors = mm.getPeopleByRole(role, true) %}
                             {% if actors|length != 0 %}
                                 <li><u>{{ role.name }}</u></li>

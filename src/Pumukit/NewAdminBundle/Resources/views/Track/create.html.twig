@@ -62,7 +62,7 @@
                 </div>
                 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
                     <div class="form-group" id="pumukitnewadmin_track_inbox" style="display: none">
-                        {{ render(controller('PumukitNewAdminBundle:Inbox:Form')) }}
+                        {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\InboxController::FormAction')) }}
                     </div>
                 {% endif %}
                 <span id="error_file" style="display:none;color:red;" class="error">{% trans %}Empty file field{% endtrans %}</span>

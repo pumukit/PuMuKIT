@@ -24,7 +24,7 @@
                       <ul class="dropdown-menu">
                         <li class="dropdown-header">{% trans %}Login since{% endtrans %}: {{ app.user.lastLogin|localizeddate('medium','medium',app.request.getLocale()) }}</li>
                         <li class="dropdown-header">{{ app.user.email }}</li>
-                        {{ render( controller( 'PumukitNewAdminBundle:Widget:languageselect') ) }}
+                          {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\WidgetController::languageselectAction') ) }}
                         <li class="divider"></li>
                         <li><a href="{{ path('fos_user_security_logout') }}" class="login-menu-button" style="background-color: #fff;">{% trans %}Logout{% endtrans %}</a></li>
                       </ul>

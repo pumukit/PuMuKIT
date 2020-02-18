@@ -23,7 +23,7 @@ class MultimediaObjectPropertyJobService
         $this->addPropertyInArray($multimediaObject, 'pending_jobs', $job->getId());
     }
 
-    public function executeJob(MultimediaObject $multimediaObject, Job $job): void
+    public function setJobAsExecuting(MultimediaObject $multimediaObject, Job $job): void
     {
         if ($this->delPropertyInArray($multimediaObject, 'pending_jobs', $job->getId())) {
             $this->addPropertyInArray($multimediaObject, 'executing_jobs', $job->getId());

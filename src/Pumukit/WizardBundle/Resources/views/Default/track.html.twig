@@ -1,6 +1,6 @@
 {% extends '@PumukitWizard/Default/index.html.twig' %}
 {% block wizard_body %}
-    {{ render(controller('PumukitWizardBundle:Default:steps', {'step': 3, 'option': form_data.type.option, 'show_series': show_series, 'same_series': same_series})) }}
+    {{ render(controller('Pumukit\\WizardBundle\\Controller\\DefaultController::stepsAction', {'step': 3, 'option': form_data.type.option, 'show_series': show_series, 'same_series': same_series})) }}
     <div class="well">
         <form id="pumukitwizard_track_form"
               enctype="multipart/form-data" target="iframeUpload"
@@ -143,12 +143,12 @@
                         </div>
                         {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
                             <div class="form-group" id="pumukitwizard_track_inbox" style="display: none">
-                                {{ render(controller('PumukitNewAdminBundle:Inbox:Form')) }}
+                                {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\InboxController::FormAction')) }}
                             </div>
                         {% endif %}
                     {% elseif ('multiple' == form_data.type.option) and app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
                         <div class="form-group" id="pumukitwizard_track_directory">
-                            {{ render(controller('PumukitNewAdminBundle:Inbox:Form', {'onlyDir': true})) }}
+                            {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\InboxController::FormAction', {'onlyDir': true})) }}
                         </div>
                     {% endif %}
                     <span id="error_file" style="display:none;color:red;" class="error">{% trans %}Empty file field{% endtrans %}</span>
@@ -156,13 +156,13 @@
             </fieldset>
             <div class="row">
                 <div class="col-md-4">
-                    {% spaceless %}
+                    {% apply spaceless %}
                         {% if same_series and form_data.series.id is defined and form_data.series.id is not null %}
                             <a href="{{ path('pumukitnewadmin_mms_index', {'id': form_data.series.id}) }}" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</a>
                         {% else %}
                             <a href="{{ path('pumukitnewadmin_series_index') }}" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</a>
                         {% endif %}
-                    {% endspaceless %}
+                    {% endapply %}
                 </div>
                 <div class="col-md-8">
                     <div class="text-right">
