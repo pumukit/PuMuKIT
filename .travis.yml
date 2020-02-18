@@ -26,4 +26,3 @@ script:
   - docker-compose -f docker-compose.test.yml run --rm pa11y https://h2-proxy/series/channel/1.html
   - docker-compose -f docker-compose.test.yml run --rm pa11y https://h2-proxy/multimediaobjects/tag/ROOT
   - docker-compose -f docker-compose.test.yml run --rm pa11y https://h2-proxy/series/tag/ROOT
-  - docker-compose -f docker-compose.test.yml run --rm pa11y https://h2-proxy/users/admin
