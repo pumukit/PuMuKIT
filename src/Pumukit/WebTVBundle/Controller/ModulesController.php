@@ -228,6 +228,8 @@ class ModulesController extends Controller implements WebTVControllerInterface
 
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
 
+        $translator = $this->get('translator');
+
         if ($sort) {
             if (is_array($categories)) {
                 $tags = $dm->createQueryBuilder(Tag::class)
@@ -259,7 +261,7 @@ class ModulesController extends Controller implements WebTVControllerInterface
             'objectByCol' => $cols,
             'objects' => $tags,
             'objectsData' => $categories,
-            'title' => $title,
+            'title' => $translator->trans($title),
             'class' => $class,
         ];
     }
