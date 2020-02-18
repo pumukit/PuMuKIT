@@ -1,9 +1,20 @@
 {% if multimediaObject %}
+    <script>
+        function resizeFrame(elem) {
+            var width = $(elem).width();
+            var height = width / 16 * 9;
+            $(elem).height(height);
+        }
+
+        $(window).resize(function () {
+            resizeFrame($('#paellaiframe'));
+        });
+    </script>
+
     {% if multimediaObject.getProperty('externalplayer') and not app.request.get('track_id') %}
-        <div class="embed-responsive embed-responsive-16by9">
-            <iframe src="{{ multimediaObject.getProperty('externalplayer') }}" width="100%" class="embed-responsive-item" frameborder="0" allowfullscreen></iframe>
-        </div>
+        <iframe id="paellaiframe" onload="resizeFrame(this)" src="{{ multimediaObject.getProperty('externalplayer') }}" width="100%" class="embed-responsive-item" allowfullscreen></iframe>
     {% else %}
         {% include '@PumukitWebTV/MultimediaObject/player.html.twig' with {'responsive': true} %}
     {% endif %}
 {% endif %}
+

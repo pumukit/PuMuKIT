@@ -1,15 +1,3 @@
-<script>
-    function resizeFrame(elem) {
-        var width = $(elem).width();
-        var height = width / 16 * 9;
-        $(elem).height(height);
-    }
-
-    $(window).resize(function () {
-        resizeFrame($('#paellaiframe'));
-    });
-</script>
-
 {% set iframe_route = 'pumukit_videoplayer_index' %}
 {% set iframe_parameters = {'id':multimediaObject.id, 'autostart': autostart} | merge(app.request.query.all) %}
 
