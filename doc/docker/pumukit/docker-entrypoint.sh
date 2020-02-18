@@ -18,7 +18,7 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
         set +e
         if [ "$RUN_INIT_COMMANDS" == 'true' ]; then
             bin/console doctrine:mongodb:schema:create || true
-            bin/console pumukit:init:repo all --force || true
+            bin/console pumukit:init:repo all || true
         fi
 
     	if [ "$AUTOCREATE_PUMUKIT_USER" == 'true' ]; then

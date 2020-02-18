@@ -34,7 +34,7 @@ services:
     image: mongo:4.0
 
   pa11y:
-    image: teltek/pumukit:latest
+    image: teltek/pa11y:latest
     env_file:
       - .env.travis
     build:
