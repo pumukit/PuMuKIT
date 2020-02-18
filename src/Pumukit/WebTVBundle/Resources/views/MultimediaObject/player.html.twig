@@ -1,15 +1,32 @@
-{% set iframe_route = 'pumukit_videoplayer_index' %}
-{% set iframe_parameters = {'id':multimediaObject.id, 'autostart': autostart} | merge(app.request.query.all) %}
+<script>
+    function resizeFrame(elem) {
+        var width = $(elem).width();
+        var height = width / 16 * 9;
+        $(elem).height(height);
+    }
 
-{% if magic_url is defined and magic_url %}
-    {% set iframe_route = 'pumukit_videoplayer_magicindex' %}
-    {% set iframe_parameters = {'secret':multimediaObject.secret, 'autostart': autostart} | merge(app.request.query.all) %} {# Does adding the id as well break anything? If not, do a merge of secret instead#}
-{% elseif track is defined and track %}
-    {% set iframe_parameters = iframe_parameters | merge({'track_id':track.id}) %}
+    $(window).resize(function () {
+        resizeFrame($('#paellaiframe'));
+    });
+</script>
+
+{% if multimediaObject.getProperty('externalplayer') and not app.request.get('track_id') %}
+    {% set url_iframe = multimediaObject.getProperty('externalplayer') %}
+{% else %}
+    {% set iframe_route = 'pumukit_videoplayer_index' %}
+    {% set iframe_parameters = {'id':multimediaObject.id, 'autostart': autostart} | merge(app.request.query.all) %}
+
+    {% if magic_url is defined and magic_url %}
+        {% set iframe_route = 'pumukit_videoplayer_magicindex' %}
+        {% set iframe_parameters = {'secret':multimediaObject.secret, 'autostart': autostart} | merge(app.request.query.all) %} {# Does adding the id as well break anything? If not, do a merge of secret instead#}
+    {% elseif track is defined and track %}
+        {% set iframe_parameters = iframe_parameters | merge({'track_id':track.id}) %}
+    {% endif %}
+
+    {% set url_iframe = path(iframe_route, iframe_parameters)|raw %}
 {% endif %}
 
-{% set url_iframe = path(iframe_route, iframe_parameters) %}
-<iframe src="{{ url_iframe|raw }}"
+<iframe src="{{ url_iframe }}"
         id="paellaiframe"
         frameborder="0"
         width="100%"
