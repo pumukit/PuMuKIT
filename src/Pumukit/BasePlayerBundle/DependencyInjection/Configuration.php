@@ -25,7 +25,7 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->enumNode('when_dispatch_view_event')
             ->values(['on_load', 'on_play'])
-            ->defaultValue('on_load')
+            ->defaultValue('on_play')
             ->info('When dispatch a view event, on load the track file or on play the video (via AJAX request).')
             ->end()
             ->end()
