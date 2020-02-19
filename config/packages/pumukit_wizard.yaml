@@ -12,6 +12,8 @@ services:
       $pumukitWizardMandatoryTitle: '%pumukit_wizard.mandatory_title%'
       $pumukitCustomLanguages: '%pumukit.customlanguages%'
       $locales: '%pumukit.locales%'
+      $pumukitWizardReuseSeries: '%pumukit_wizard.reuse_series%'
+      $pumukitWizardReuseAdminSeries: '%pumukit_wizard.reuse_admin_series%'
 
   Pumukit\WizardBundle\Controller\:
     resource: '../../src/Pumukit/WizardBundle/Controller/'
