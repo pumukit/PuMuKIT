@@ -244,7 +244,7 @@ class DefaultController extends AbstractController
 
     /**
      * @Route("/live/playlist/{id}", name="pumukit_live_playlist_id", defaults={"_format": "xml"})
-     * @Template("PumukitWebTVBundle:Live/Basic:playlist.xml.twig")
+     * @Template("@PumukitWebTV/Live/Basic/playlist.xml.twig")
      */
     public function playlistAction(Live $live): array
     {
