@@ -234,7 +234,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         $queryBuilder->limit($limit);
         $queryBuilder->sortMeta('score', 'textScore');
 
-        $pager = $this->paginationService->createDoctrineODMMongoDBAdapter($queryBuilder, 0, $limit);
+        $pager = $this->paginationService->createDoctrineODMMongoDBAdapter($queryBuilder, 1, $limit);
 
         return ['mmobjs' => $pager];
     }
