@@ -27,21 +27,21 @@ class UserStatsService
         $pipelinePublished = $pipeline;
         $pipelinePublished[] = ['$match' => ['status' => MultimediaObject::STATUS_PUBLISHED]];
 
-        $published = $collection->aggregate($pipelinePublished, ['cursor' => []])->toArray();
+        $published = $collection->aggregate($pipelinePublished, ['cursor' => []]);
 
         $pipelineBlocked = $pipeline;
         $pipelineBlocked[] = ['$match' => ['status' => MultimediaObject::STATUS_BLOCKED]];
 
-        $blocked = $collection->aggregate($pipelineBlocked, ['cursor' => []])->toArray();
+        $blocked = $collection->aggregate($pipelineBlocked, ['cursor' => []]);
 
         $pipelineHidden = $pipeline;
         $pipelineHidden[] = ['$match' => ['status' => MultimediaObject::STATUS_HIDDEN]];
-        $hidden = $collection->aggregate($pipelineHidden, ['cursor' => []])->toArray();
+        $hidden = $collection->aggregate($pipelineHidden, ['cursor' => []]);
 
         return [
-            count($published),
-            count($blocked),
-            count($hidden),
+            iterator_count($published),
+            iterator_count($blocked),
+            iterator_count($hidden),
         ];
     }
 
