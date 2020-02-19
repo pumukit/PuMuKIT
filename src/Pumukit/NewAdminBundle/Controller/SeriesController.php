@@ -765,6 +765,6 @@ class SeriesController extends AdminController
         $mmRepo = $this->documentManager->getRepository(MultimediaObject::class);
         $all = $mmRepo->findBySeries($series);
 
-        return $all[0] ?? null;
+        return $all->current() ?? $all[0] ?? null;
     }
 }
