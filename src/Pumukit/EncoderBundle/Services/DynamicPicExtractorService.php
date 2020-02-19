@@ -12,6 +12,9 @@ use Symfony\Component\Process\Process;
 
 class DynamicPicExtractorService
 {
+    public const DEFAULT_WIDTH = 768;
+    public const DEFAULT_HEIGHT = 432;
+
     /** @var DocumentManager */
     private $documentManager;
 
@@ -38,11 +41,18 @@ class DynamicPicExtractorService
         if (!file_exists($track->getPath())) {
             throw new \Exception("Path doesn't exists for multimedia object ".$multimediaObject->getId());
         }
+
+        if (number_format($track->getWidth() / $track->getHeight(), 2) !== number_format(self::DEFAULT_WIDTH / self::DEFAULT_HEIGHT, 2)) {
+            throw new \Exception('Webp needs 16:9 video '.$multimediaObject->getId());
+        }
+
         $absCurrentDir = $this->createDir($multimediaObject);
         $fileName = $this->generateFileName($absCurrentDir);
         $vars = [
             '{{input}}' => $track->getPath(),
             '{{output}}' => $absCurrentDir.'/'.$fileName,
+            '{{width}}' => self::DEFAULT_WIDTH,
+            '{{height}}' => self::DEFAULT_HEIGHT,
         ];
         $commandLine = str_replace(array_keys($vars), array_values($vars), $this->command);
         $this->executeProcess($commandLine);
