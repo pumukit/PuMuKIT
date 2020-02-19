@@ -247,8 +247,7 @@ class WizardService
     {
         $command = [
             'php',
-            $this->basePath,
-            'bin/console',
+            $this->basePath.'bin/console',
             'pumukit:wizard:import',
         ];
 
