@@ -481,7 +481,7 @@ class FactoryService
         $new->setProperty('subseries', $src->getProperty('subseries'));
         $new->setProperty('subseriestitle', $src->getProperty('subseriestitle'));
         $new->setProperty('owners', $src->getProperty('owners'));
-
+        $new->setProperty('externalplayer', $src->getProperty('externalplayer'));
         $new->setProperty('clonedfrom', $src->getId());
 
         foreach ($src->getTags() as $tag) {
