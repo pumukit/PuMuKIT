@@ -7,22 +7,21 @@ use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 
 class MultimediaObjectViews
 {
-    private $dm;
+    /** @var DocumentManager */
+    private $documentManager;
 
     public function __construct(DocumentManager $documentManager)
     {
-        $this->dm = $documentManager;
+        $this->documentManager = $documentManager;
     }
 
-    public function onMultimediaObjectViewed(ViewedEvent $event)
+    public function onMultimediaObjectViewed(ViewedEvent $event): void
     {
         $track = $event->getTrack();
         $multimediaObject = $event->getMultimediaObject();
 
         $multimediaObject->incNumview();
         $track && $track->incNumview();
-
-        $this->dm->persist($multimediaObject);
-        $this->dm->flush();
+        $this->documentManager->flush();
     }
 }
