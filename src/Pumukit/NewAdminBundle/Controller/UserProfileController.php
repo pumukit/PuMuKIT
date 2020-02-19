@@ -2,6 +2,7 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Pumukit\NewAdminBundle\Form\Type\UserUpdateProfileType;
 use Pumukit\NewAdminBundle\Services\UserStatsService;
@@ -22,6 +23,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class UserProfileController extends AbstractController
 {
+    /** @var DocumentManager */
+    protected $documentManager;
+
     /** @var TranslatorInterface */
     protected $translator;
 
@@ -35,11 +39,13 @@ class UserProfileController extends AbstractController
     protected $userStatsService;
 
     public function __construct(
+        DocumentManager $documentManager,
         UserService $userService,
         TranslatorInterface $translator,
         UserManagerInterface $fosUserManager,
         UserStatsService $userStatsService
     ) {
+        $this->documentManager = $documentManager;
         $this->translator = $translator;
         $this->fosUserManager = $fosUserManager;
         $this->userService = $userService;
