@@ -7,6 +7,7 @@ use Pagerfanta\Pagerfanta;
 use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -36,7 +37,7 @@ class ResourceController extends AbstractController
         return static::$resourceName.'s';
     }
 
-    public function redirectToIndex(): string
+    public function redirectToIndex(): RedirectResponse
     {
         return $this->redirect($this->generateUrl($this->getRedirectRoute()));
     }
