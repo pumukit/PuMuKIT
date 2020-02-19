@@ -475,7 +475,9 @@ class PlaylistMultimediaObjectController extends AbstractController
         if (!$user instanceof User || $this->isGranted(PermissionProfile::SCOPE_GLOBAL)) {
             return;
         }
-        $this->documentManager->getFilterCollection()->disable('backoffice');
+        if ($this->documentManager->getFilterCollection()->isEnabled('backoffice')) {
+            $this->documentManager->getFilterCollection()->disable('backoffice');
+        }
         $filter = $this->documentManager->getFilterCollection()->enable('personal');
         $person = $this->personService->getPersonFromLoggedInUser($user);
         $people = [];
