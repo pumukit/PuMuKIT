@@ -2,20 +2,16 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Doctrine\ODM\MongoDB\DocumentManager;
 use FOS\UserBundle\Model\UserManagerInterface;
-use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\NewAdminBundle\Form\Type\UserUpdateProfileType;
 use Pumukit\NewAdminBundle\Services\UserStatsService;
 use Pumukit\SchemaBundle\Document\User;
-use Pumukit\SchemaBundle\Services\FactoryService;
-use Pumukit\SchemaBundle\Services\GroupService;
 use Pumukit\SchemaBundle\Services\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -24,7 +20,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  *
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
-class UserProfileController extends AdminController
+class UserProfileController extends AbstractController
 {
     /** @var TranslatorInterface */
     protected $translator;
@@ -39,23 +35,15 @@ class UserProfileController extends AdminController
     protected $userStatsService;
 
     public function __construct(
-        DocumentManager $documentManager,
-        PaginationService $paginationService,
-        FactoryService $factoryService,
-        GroupService $groupService,
         UserService $userService,
-        SessionInterface $session,
         TranslatorInterface $translator,
         UserManagerInterface $fosUserManager,
         UserStatsService $userStatsService
     ) {
         $this->translator = $translator;
-        $this->documentManager = $documentManager;
         $this->fosUserManager = $fosUserManager;
         $this->userService = $userService;
         $this->userStatsService = $userStatsService;
-
-        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
     }
 
     /**

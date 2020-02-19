@@ -23,14 +23,26 @@ class UserStatsService
         $collection = $this->documentManager->getDocumentCollection(MultimediaObject::class);
         $code = 'owner';
         $pipeline = $this->generateUserFilterPipeline($user, $code);
-        $pipeline[] = [
-            '$group' => [
-                '_id' => '$status',
-                'multimediaObjects' => ['$addToSet' => '$_id'],
-            ],
-        ];
 
-        return iterator_to_array($collection->aggregate($pipeline, ['cursor' => []]));
+        $pipelinePublished = $pipeline;
+        $pipelinePublished[] = ['$match' => ['status' => MultimediaObject::STATUS_PUBLISHED]];
+
+        $published = $collection->aggregate($pipelinePublished, ['cursor' => []])->toArray();
+
+        $pipelineBlocked = $pipeline;
+        $pipelineBlocked[] = ['$match' => ['status' => MultimediaObject::STATUS_BLOCKED]];
+
+        $blocked = $collection->aggregate($pipelineBlocked, ['cursor' => []])->toArray();
+
+        $pipelineHidden = $pipeline;
+        $pipelineHidden[] = ['$match' => ['status' => MultimediaObject::STATUS_HIDDEN]];
+        $hidden = $collection->aggregate($pipelineHidden, ['cursor' => []])->toArray();
+
+        return [
+            count($published),
+            count($blocked),
+            count($hidden),
+        ];
     }
 
     public function getUserMultimediaObjectsGroupByRole(UserInterface $user): array
