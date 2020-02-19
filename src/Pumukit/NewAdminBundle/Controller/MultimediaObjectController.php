@@ -647,7 +647,11 @@ class MultimediaObjectController extends SortableAdminController
             ->getQuery()
             ->execute()
         ;
-        $result = $children->toArray();
+        if (is_object($children)) {
+            $result = $children->toArray();
+        } else {
+            $result = $children;
+        }
 
         if (!$result) {
             return $this->render(
