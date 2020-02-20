@@ -138,13 +138,13 @@ class JobGeneratorListener
 
                 $master = $multimediaObject->getTrackWithTag('master');
                 $this->logger->info(sprintf('JobGeneratorListener creates new job (%s) for multimedia object %s using standard target', $targetProfile, $multimediaObject->getId()));
-                $jobs[] = $this->jobService->addUniqueJob($master->getPath(), $targetProfile, 2, $multimediaObject, $master->getLanguage());
+                $jobs[] = $this->jobService->addJob($master->getPath(), $targetProfile, 2, $multimediaObject, $master->getLanguage(), JobService::ADD_JOB_UNIQUE);
             }
 
             if (in_array($pubChannelCod, $targets['force'])) {
                 $master = $multimediaObject->getTrackWithTag('master');
                 $this->logger->info(sprintf('JobGeneratorListener creates new job (%s) for multimedia object %s using forced target', $targetProfile, $multimediaObject->getId()));
-                $jobs[] = $this->jobService->addUniqueJob($master->getPath(), $targetProfile, 2, $multimediaObject, $master->getLanguage());
+                $jobs[] = $this->jobService->addJob($master->getPath(), $targetProfile, 2, $multimediaObject, $master->getLanguage(), JobService::ADD_JOB_UNIQUE);
             }
         }
 
