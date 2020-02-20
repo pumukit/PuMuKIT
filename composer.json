@@ -18,7 +18,7 @@
         "gedmo/doctrine-extensions": "dev-master",
         "incenteev/composer-parameter-handler": "^2.0",
         "jms/serializer-bundle": "2.4.*",
-        "knplabs/knp-menu-bundle": "~2.0",
+        "knplabs/knp-menu-bundle": "^3.0",
         "sensio/framework-extra-bundle": "^5.5",
         "suncat/mobile-detect-bundle": "1.1.*",
         "symfony/asset": "^4.0",
