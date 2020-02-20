@@ -19,9 +19,11 @@
             {% trans %}Search{% endtrans %}
         </a>
     </li>
-    <li>
-        <a href="{{ path('pumukit_webtv_events') }}" title="{% trans %}Events{% endtrans %}">
-            {% trans %}Events{% endtrans %}
-        </a>
-    </li>
+    {% if is_activated_advance_live_event %}
+        <li>
+            <a href="{{ path('pumukit_webtv_events') }}" title="{% trans %}Events{% endtrans %}">
+                {% trans %}Events{% endtrans %}
+            </a>
+        </li>
+    {% endif %}
 </ul>

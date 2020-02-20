@@ -12,11 +12,13 @@ class IndexController extends AbstractController implements WebTVControllerInter
 {
     private $breadcrumbsService;
     private $menuShowStats;
+    private $pumukitNewAdminAdvanceLiveEvent;
 
-    public function __construct(BreadcrumbsService $breadcrumbsService, bool $menuShowStats)
+    public function __construct(BreadcrumbsService $breadcrumbsService, bool $menuShowStats, bool $pumukitNewAdminAdvanceLiveEvent)
     {
         $this->breadcrumbsService = $breadcrumbsService;
         $this->menuShowStats = $menuShowStats;
+        $this->pumukitNewAdminAdvanceLiveEvent = $pumukitNewAdminAdvanceLiveEvent;
     }
 
     /**
@@ -29,6 +31,7 @@ class IndexController extends AbstractController implements WebTVControllerInter
 
         return [
             'menu_stats' => $this->menuShowStats,
+            'is_activated_advance_live_event' => $this->pumukitNewAdminAdvanceLiveEvent,
         ];
     }
 }
