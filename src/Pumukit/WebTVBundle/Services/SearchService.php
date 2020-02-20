@@ -232,7 +232,7 @@ class SearchService
 
     public function addLicenseQueryBuilder(Builder $queryBuilder, ?string $license): Builder
     {
-        if (null !== $license && '' !== $license) {
+        if (null === $license || '' === $license) {
             return $queryBuilder;
         }
 
