@@ -13,7 +13,6 @@
                         <div class="form-group">
                             <label for="custom_field_{{ i }}">{{ "Custom field"|trans }} {{ i }}:</label>
                             <select id="custom_field_{{ i }}" name="custom_field_{{ i }}" class="form-control">
-                                <option value="-1">{{ "Default"|trans }}</option>
                                 {% for key, field in allFields %}
                                     <option value="{{ key }}" {% if key == selectedFields['custom_field_'~i]%}selected{% endif %}>
                                         {{ field['label'] }}
