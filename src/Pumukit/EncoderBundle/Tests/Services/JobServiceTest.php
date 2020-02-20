@@ -96,7 +96,7 @@ class JobServiceTest extends PumukitTestCase
 
         $filePath = $this->resourcesDir.'CAMERACopy.mp4';
         if (copy($originalFile, $filePath)) {
-            $file = new UploadedFile($filePath, 'CAMERA.mp4', null, null, null, true);
+            $file = $this->generateNewUploadedFile($filePath, 'CAMERA.mp4');
 
             $profile = 'MASTER_COPY';
             $priority = 2;

@@ -67,7 +67,7 @@ class EventPicServiceTest extends PumukitTestCase
 
         $picPath = realpath(__DIR__.'/../Resources').'/picCopy.png';
         if (copy($this->originalPicPath, $picPath)) {
-            $picFile = new UploadedFile($picPath, 'pic.png', null, null, null, true);
+            $picFile = $this->generateNewUploadedFile($picPath, 'pic.png');
             $event = $this->eventPicService->addPicFile($event, $picFile);
             $event = $this->repo->find($event->getId());
 
@@ -88,7 +88,7 @@ class EventPicServiceTest extends PumukitTestCase
 
         $picPath = realpath(__DIR__.'/../Resources').'/picCopy.png';
         if (copy($this->originalPicPath, $picPath)) {
-            $picFile = new UploadedFile($picPath, 'pic.png', null, null, null, true);
+            $picFile = $this->generateNewUploadedFile($picPath, 'pic.png');
             $event = $this->eventPicService->addPicFile($event, $picFile);
             $event = $this->repo->find($event->getId());
 

@@ -137,7 +137,7 @@ class SeriesPicServiceTest extends PumukitTestCase
 
         $picPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'picCopy.png';
         if (copy($this->originalPicPath, $picPath)) {
-            $picFile = new UploadedFile($picPath, 'pic.png', null, null, null, true);
+            $picFile = $this->generateNewUploadedFile($picPath, 'pic.png');
             $series = $this->seriesPicService->addPicFile($series, $picFile);
             $series = $this->repo->find($series->getId());
 
@@ -152,7 +152,7 @@ class SeriesPicServiceTest extends PumukitTestCase
 
         $picPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'picCopy2.png';
         if (copy($this->originalPicPath, $picPath)) {
-            $picFile = new UploadedFile($picPath, 'pic2.png', null, null, null, true);
+            $picFile = $this->generateNewUploadedFile($picPath, 'pic2.png');
 
             $bannerTargetUrl = 'http://domain.com/banner';
             $series = $this->seriesPicService->addPicFile($series, $picFile, true, $bannerTargetUrl);
@@ -189,7 +189,7 @@ class SeriesPicServiceTest extends PumukitTestCase
 
         $picPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'picCopy2.png';
         if (copy($this->originalPicPath, $picPath)) {
-            $picFile = new UploadedFile($picPath, 'pic2.png', null, null, null, true);
+            $picFile = $this->generateNewUploadedFile($picPath, 'pic2.png');
 
             $bannerTargetUrl = 'http://domain.com/banner';
             $series = $this->seriesPicService->addPicFile($series, $picFile, true, $bannerTargetUrl);

@@ -111,7 +111,7 @@ class MaterialServiceTest extends PumukitTestCase
         $filePath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'fileCopy.pdf';
 
         if (copy($this->originalFilePath, $filePath)) {
-            $file = new UploadedFile($filePath, 'file.pdf', null, null, null, true);
+            $file = $this->generateNewUploadedFile($filePath, 'file.pdf');
 
             $formData['i18n_name'] = ['en' => 'Material'];
             $formData['hide'] = false;
@@ -155,7 +155,7 @@ class MaterialServiceTest extends PumukitTestCase
 
         $materialPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'materialCopy';
         if (copy($this->originalFilePath, $materialPath)) {
-            $materialFile = new UploadedFile($materialPath, 'material', null, null, null, true);
+            $materialFile = $this->generateNewUploadedFile($materialPath, 'material');
             $mm = $this->materialService->addMaterialFile($mm, $materialFile, $formData);
             $mm = $this->repoMmobj->find($mm->getId());
 

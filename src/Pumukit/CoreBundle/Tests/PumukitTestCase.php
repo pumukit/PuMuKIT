@@ -22,6 +22,7 @@ use Pumukit\SchemaBundle\Document\User;
 use Pumukit\StatsBundle\Document\ViewsAggregation;
 use Pumukit\StatsBundle\Document\ViewsLog;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @internal
@@ -68,5 +69,10 @@ class PumukitTestCase extends WebTestCase
         $this->dm->getDocumentCollection(ViewsAggregation::class)->deleteMany([]);
         $this->dm->getDocumentCollection(ViewsLog::class)->deleteMany([]);
         $this->dm->flush();
+    }
+
+    public function generateNewUploadedFile(string $filePath, string $fileName): UploadedFile
+    {
+        return new UploadedFile($filePath, $fileName, null, null, true);
     }
 }
