@@ -60,5 +60,8 @@ services:
   Pumukit\CoreBundle\Services\PaginationService:
     class: Pumukit\CoreBundle\Services\PaginationService
 
+  Pumukit\CoreBundle\Services\ProcessService:
+    class: Pumukit\CoreBundle\Services\ProcessService
+
   Pumukit\CoreBundle\Services\SerializerService:
     class: Pumukit\CoreBundle\Services\SerializerService
