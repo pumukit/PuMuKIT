@@ -18,6 +18,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class APIController extends AbstractController implements NewAdminControllerInterface
 {
+    public const API_SKIP = 1000;
+
     /**
      * @Route("/stats.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
      */
@@ -57,7 +59,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
 
         $limit = $request->get('limit');
         $page = $request->get('page');
-        $skip = $request->get('skip');
+        $skip = $request->get('skip') ?? self::API_SKIP;
 
         try {
             $criteria = $this->getMultimediaObjectCriteria($request->get('criteria'), $request->get('criteriajson'));
@@ -122,7 +124,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
         $seriesRepo = $documentManager->getRepository(Series::class);
         $limit = $request->get('limit');
         $page = $request->get('page');
-        $skip = $request->get('skip');
+        $skip = $request->get('skip') ?? self::API_SKIP;
 
         try {
             $criteria = $this->getCriteria($request->get('criteria'), $request->get('criteriajson'));
