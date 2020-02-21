@@ -35,7 +35,7 @@ parameters:
     primary_color:       "%env(string:PUMUKIT_PRIMARY_COLOR)%"
     font_color:          "%env(string:PUMUKIT_FONT_COLOR)%"
 
-  pumukit.locales:                     "%env(json:PUMUKIT_LOCALES)%"
+  pumukit.locales:                     "%env(csv:PUMUKIT_LOCALES)%"
   pumukit.public_dir:                  "%env(string:PUMUKIT_PUBLIC_DIR)%"
   pumukit.storage_dir:                 "%env(string:PUMUKIT_STORAGE_DIR)%"
   pumukit.uploads_dir:                 "%env(string:PUMUKIT_UPLOADS_DIR)%"
