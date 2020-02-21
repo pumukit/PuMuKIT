@@ -1,6 +1,4 @@
-ARG PUMUKIT_BASE_VERSION=${SOURCE_BRANCH}
-FROM teltek/pumukit-base:${PUMUKIT_BASE_VERSION}
-
+FROM teltek/pumukit-base:4.x
 # default build for production
 ARG APP_ENV=prod
 ARG PHP_MEMORY_LIMIT=512M

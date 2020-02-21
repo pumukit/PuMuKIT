@@ -2,13 +2,11 @@ version: '3.4'
 
 services:
   php:
-    image: teltek/pumukit:$PUMUKIT_BASE_VERSION
+    image: teltek/pumukit
     env_file:
       - .env.travis
     build:
       context: ./
-      args:
-        - PUMUKIT_BASE_VERSION=$PUMUKIT_BASE_VERSION
       cache_from:
         - teltek/pumukit
         - teltek/nginx
@@ -16,7 +14,7 @@ services:
       - db
 
   h2-proxy:
-    image: teltek/nginx:$PUMUKIT_BASE_VERSION
+    image: teltek/nginx
     env_file:
       - .env.travis
     build:

@@ -23,8 +23,8 @@ services:
   Pumukit\SchemaBundle\Services\LegacyEventPicService:
     class: Pumukit\SchemaBundle\Services\LegacyEventPicService
     arguments:
-      $targetPath:        '%pumukit.uploads_dir%/pic'
-      $targetUrl:         '%pumukit.uploads_url%/pic'
+      $targetPath:        '%pumukit.uploads_pic_dir%'
+      $targetUrl:         '%pumukit.uploads_pic_url%'
       $forceDeleteOnDisk: '%pumukit.delete_on_disk%'
 
   Pumukit\SchemaBundle\EventListener\LocaleListener:
@@ -75,15 +75,15 @@ services:
   Pumukit\SchemaBundle\Services\SeriesPicService:
     class: Pumukit\SchemaBundle\Services\SeriesPicService
     arguments:
-      $targetPath:        '%pumukit.uploads_dir%/pic/'
-      $targetUrl:         '%pumukit.uploads_url%/pic'
+      $targetPath:        '%pumukit.uploads_pic_dir%'
+      $targetUrl:         '%pumukit.uploads_pic_url%'
       $forceDeleteOnDisk: '%pumukit.delete_on_disk%'
 
   Pumukit\SchemaBundle\Services\MultimediaObjectPicService:
     class: Pumukit\SchemaBundle\Services\MultimediaObjectPicService
     arguments:
-      $targetPath:        '%pumukit.uploads_dir%/pic/'
-      $targetUrl:         '%pumukit.uploads_url%/pic'
+      $targetPath:        '%pumukit.uploads_pic_dir%'
+      $targetUrl:         '%pumukit.uploads_pic_url%'
       $forceDeleteOnDisk: '%pumukit.delete_on_disk%'
 
   Pumukit\SchemaBundle\Services\MultimediaObjectDurationService:
@@ -158,8 +158,8 @@ services:
   Pumukit\SchemaBundle\Services\MaterialService:
     class: Pumukit\SchemaBundle\Services\MaterialService
     arguments:
-      $targetPath:        '%pumukit.uploads_dir%/material'
-      $targetUrl:         '%pumukit.uploads_url%/material'
+      $targetPath:        '%pumukit.uploads_material_dir%'
+      $targetUrl:         '%pumukit.uploads_material_url%'
       $forceDeleteOnDisk: '%pumukit.delete_on_disk%'
 
   Pumukit\SchemaBundle\Services\CaptionService:

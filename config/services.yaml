@@ -18,46 +18,37 @@ parameters:
     - eu
     - lse
     - lsi
-  locale:                              "%env(PUMUKIT_LOCALE)%"
-  secret:                              "%env(PUMUKIT_SECRET)%"
+  locale:                              "%env(string:PUMUKIT_LOCALE)%"
+  secret:                              "%env(string:PUMUKIT_SECRET)%"
   debug_toolbar:                       true
   debug_redirects:                     false
   use_assetic_controller:              true
-  router.request_context.scheme:       "%env(PUMUKIT_SCHEME)%"
-  router.request_context.host:         "%env(PUMUKIT_HOST)%"
+  router.request_context.scheme:       "%env(string:PUMUKIT_SCHEME)%"
+  router.request_context.host:         "%env(string:PUMUKIT_HOST)%"
 
   pumukit.info:
-    title:               "%env(PUMUKIT_TITLE)%"
-    description:         "%env(PUMUKIT_DESCRIPTION)%"
-    keywords:            "%env(PUMUKIT_KEYWORDS)%"
-    email:               "%env(PUMUKIT_EMAIL)%"
-    logo:                "%env(PUMUKIT_LOGO)%"
-    primary_color:       "%env(PUMUKIT_PRIMARY_COLOR)%"
-    font_color:          "%env(PUMUKIT_FONT_COLOR)%"
+    title:               "%env(string:PUMUKIT_TITLE)%"
+    description:         "%env(string:PUMUKIT_DESCRIPTION)%"
+    keywords:            "%env(string:PUMUKIT_KEYWORDS)%"
+    email:               "%env(string:PUMUKIT_EMAIL)%"
+    logo:                "%env(string:PUMUKIT_LOGO)%"
+    primary_color:       "%env(string:PUMUKIT_PRIMARY_COLOR)%"
+    font_color:          "%env(string:PUMUKIT_FONT_COLOR)%"
 
-  pumukit.locales:                     "%env(json:PUMUKIT_LOCALES)%"
-  #  pumukit.public_dir:                  "%env(PUMUKIT_PUBLIC_DIR)%"
-  pumukit.public_dir:                  '%kernel.project_dir%/public/'
-  #  pumukit.storage_dir:                 "%env(PUMUKIT_STORAGE_DIR)%"
-  pumukit.storage_dir:                 '%kernel.project_dir%/public/storage'
-  #  pumukit.uploads_dir:                 "%env(PUMUKIT_UPLOADS_DIR)%"
-  pumukit.uploads_dir:                 '%kernel.project_dir%/public/uploads'
-  #  pumukit.uploads_url:                 "%env(PUMUKIT_UPLOADS_URL)%"
-  pumukit.uploads_url:                 "/uploads"
-  #  pumukit.uploads_material_dir:        "%env(PUMUKIT_UPLOADS_MATERIAL_DIR)%"
-  pumukit.uploads_material_dir:        '%kernel.project_dir%/public/uploads/material'
-  #  pumukit.uploads_pic_dir:             "%env(PUMUKIT_UPLOADS_PIC_DIR)%"
-  pumukit.uploads_pic_dir:             '%kernel.project_dir%/public/uploads/pic'
-  #  pumukit.inbox:                       "%env(PUMUKIT_INBOX)%"
-  pumukit.inbox:                       '%kernel.project_dir%/public/storage/inbox'
-  #  pumukit.tmp:                         "%env(PUMUKIT_TMP)%"
-  pumukit.tmp:                         '%kernel.project_dir%/public/storage/tmp'
-  #  pumukit.downloads:                   "%env(PUMUKIT_DOWNLOADS)%"
-  pumukit.downloads:                   '%kernel.project_dir%/public/storage/downloads'
-  #  pumukit.masters:                     "%env(PUMUKIT_MASTERS)%"
-  pumukit.masters:                     '%kernel.project_dir%/public/storage/masters'
-  #  pumukit.delete_on_disk:              "%env(bool:PUMUKIT_DELETE_ON_DISK)%"
-  pumukit.delete_on_disk:              false
+  pumukit.locales:                     "%env(csv:PUMUKIT_LOCALES)%"
+  pumukit.public_dir:                  "%env(string:PUMUKIT_PUBLIC_DIR)%"
+  pumukit.storage_dir:                 "%env(string:PUMUKIT_STORAGE_DIR)%"
+  pumukit.uploads_dir:                 "%env(string:PUMUKIT_UPLOADS_DIR)%"
+  pumukit.uploads_url:                 "%env(string:PUMUKIT_UPLOADS_URL)%"
+  pumukit.uploads_material_dir:        "%env(string:PUMUKIT_UPLOADS_MATERIAL_DIR)%"
+  pumukit.uploads_material_url:        "%env(string:PUMUKIT_UPLOADS_MATERIAL_URL)%"
+  pumukit.uploads_pic_dir:             "%env(string:PUMUKIT_UPLOADS_PIC_DIR)%"
+  pumukit.uploads_pic_url:             "%env(string:PUMUKIT_UPLOADS_PIC_URL)%"
+  pumukit.inbox:                       "%env(string:PUMUKIT_INBOX)%"
+  pumukit.tmp:                         "%env(string:PUMUKIT_TMP)%"
+  pumukit.masters:                     "%env(string:PUMUKIT_MASTERS)%"
+  pumukit.downloads:                   "%env(string:PUMUKIT_DOWNLOADS)%"
+  pumukit.delete_on_disk:              "%env(bool:PUMUKIT_DELETE_ON_DISK)%"
 
 services:
   _defaults:
