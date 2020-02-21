@@ -13,7 +13,7 @@ RUN openssl req -new -passout pass:NotSecure -key cert.key -out cert.csr \
     -subj '/C=ES/ST=PO/L=Vigo/O=PuMuKIT Dev/CN=localhost'
 RUN openssl x509 -req -sha256 -days 365 -in cert.csr -signkey cert.key -out cert.crt
 
-FROM teltek/pumukit:${PUMUKIT_BASE_VERSION} as pumukit
+FROM teltek/pumukit:4.x as pumukit
 
 FROM nginx:${NGINX_VERSION}-alpine
 
