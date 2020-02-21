@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class APIController extends AbstractController implements NewAdminControllerInterface
 {
-    public const API_SKIP = 1000;
+    public const API_SKIP = 0;
 
     /**
      * @Route("/stats.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
