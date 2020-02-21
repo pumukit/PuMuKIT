@@ -1,30 +1,27 @@
 {% for resource in resources %}
-    {% if loop.index == resources|length and resources|length > 100 %}
-        <p>&#8226;&nbsp;...</p>
+    {% if 'user' == resource_name and not group.isLocal() %}
+        <p>
+            <a href="#">
+                <i data-toggle="tooltip" data-placement="right" title="{% trans %}External defined users and groups can not be edited here, contact your directory service administrator.{% endtrans %}" class="mdi-action-info" style="color:#009587"></i>
+            </a>&nbsp;{{ resource.username }}
+        </p>
     {% else %}
-        {% if 'user' == resource_name and not group.isLocal() %}
-            <p>
-                <a href="#">
-                    <i data-toggle="tooltip" data-placement="right" title="{% trans %}External defined users and groups can not be edited here, contact your directory service administrator.{% endtrans %}" class="mdi-action-info" style="color:#009587"></i>
-                </a>&nbsp;{{ resource.username }}</p>
-        {% else %}
-                <p>
-                    {% if action %}
-                        <a href="#" onclick="delete_{{ resource_name }}_from_group('{{ resource.id }}', '{{ group.id }}', '{{ loop.length }}', '{{ action }}');">
-                            <i class="mdi-content-clear"/>
-                        </a>
-                    {% else %}
-                        &#8226;
-                    {% endif %}
-                    &nbsp;
-                    {% if (resource_name == 'user') %}
-                        {{ resource.username }}
-                    {% elseif (resource.isPrototype()) %}
-                        {{ resource.getTitle() }}&nbsp;({% trans %}Video Template of Series{% endtrans %}:&nbsp;{{ resource.getSeries().getTitle() }})
-                    {% else %}
-                        {{ resource.getTitle() }}
-                    {% endif %}
-                </p>
-        {% endif %}
+        <p>
+            {% if action %}
+                <a href="#" onclick="delete_{{ resource_name }}_from_group('{{ resource.id }}', '{{ group.id }}', '{{ loop.length }}', '{{ action }}');">
+                    <i class="mdi-content-clear"/>
+                </a>
+            {% else %}
+                &#8226;
+            {% endif %}
+            &nbsp;
+            {% if (resource_name == 'user') %}
+                {{ resource.username }}
+            {% elseif (resource.isPrototype()) %}
+                {{ resource.getTitle() }}&nbsp;({% trans %}Video Template of Series{% endtrans %}:&nbsp;{{ resource.getSeries().getTitle() }})
+            {% else %}
+                {{ resource.getTitle() }}
+            {% endif %}
+            </p>
     {% endif %}
 {% endfor %}
