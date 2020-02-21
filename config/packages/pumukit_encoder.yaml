@@ -42,8 +42,8 @@ services:
     arguments:
       $width:      '%pumukitencode.thumbnail.width%'
       $height:     '%pumukitencode.thumbnail.height%'
-      $targetPath: '%pumukit.uploads_dir%/pic'
-      $targetUrl:  '%pumukit.uploads_url%/pic'
+      $targetPath: '%pumukit.uploads_pic_dir%'
+      $targetUrl:  '%pumukit.uploads_pic_url%'
       $command:    '%pumukit.picextractor.command%'
 
   Pumukit\EncoderBundle\Services\PicService:
@@ -57,5 +57,5 @@ services:
   Pumukit\EncoderBundle\Services\DynamicPicExtractorService:
     class: Pumukit\EncoderBundle\Services\DynamicPicExtractorService
     arguments:
-      $targetPath: '%pumukit.uploads_dir%/pic'
+      $targetPath: '%pumukit.uploads_pic_dir%'
       $command:    '%pumukit.dynamicpicextractor.command%'

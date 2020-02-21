@@ -2,7 +2,6 @@
 
 namespace Pumukit\EncoderBundle\DependencyInjection;
 
-use Pumukit\EncoderBundle\Services\ProfileService;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
@@ -20,12 +19,6 @@ class PumukitEncoderExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-
-        $env = $container->getParameter('kernel.environment');
-
-        if ('dev' !== $env) {
-            ProfileService::validateProfilesDir($config['profiles']);
-        }
 
         $container->setParameter('pumukitencode.delete_inbox_files', $config['delete_inbox_files']);
         $container->setParameter('pumukitencode.cpulist', $config['cpus']);
