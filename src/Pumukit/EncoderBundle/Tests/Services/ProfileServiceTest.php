@@ -95,8 +95,8 @@ class ProfileServiceTest extends PumukitTestCase
      */
     public function testInvalidTargetPath()
     {
-        $profileService = new ProfileService($this->getDemoProfilesWithNonExistingPath(), $this->dm);
-        $profileService->validateProfilesDirOut();
+//        $profileService = new ProfileService($this->getDemoProfilesWithNonExistingPath(), $this->dm);
+        ProfileService::validateProfilesDir($this->getDemoProfilesWithNonExistingPath());
     }
 
     private function getDemoProfiles()
