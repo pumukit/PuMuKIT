@@ -1,5 +1,4 @@
 ARG NGINX_VERSION=1.15
-ARG PUMUKIT_BASE_VERSION=migration_sf4
 
 FROM alpine:latest
 
