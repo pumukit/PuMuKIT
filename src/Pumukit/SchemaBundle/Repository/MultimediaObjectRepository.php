@@ -976,7 +976,7 @@ class MultimediaObjectRepository extends DocumentRepository
             ->execute()
         ;
 
-        return $aggregation->current()['total_duration'];
+        return $aggregation->current()['total_duration'] ?? 0;
     }
 
     public function countInSeries($series): int
