@@ -3,6 +3,10 @@ api_platform:
     description: 'PuMuKIT API documentation'
     version:     '0.1'
     show_webby:  false
+    enable_fos_user: true
+    doctrine:
+      enabled: false
+    doctrine_mongodb_odm: true
     mapping:
         paths: [
           '%kernel.project_dir%/src/Pumukit/EncoderBundle/Document',
