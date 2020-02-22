@@ -2,7 +2,8 @@
     "allowedStandards": "WCAG2AA",
     "level": "error",
     "hideElements": [
-        ".sf-toolbar-value"
+        ".sf-toolbar-value",
+        ".sf-toolbar"
     ],
     "chromeLaunchConfig": {
         "ignoreHTTPSErrors": true,
