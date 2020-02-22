@@ -7,22 +7,22 @@ language: php
 
 before_script:
   - composer validate
-  - docker-compose -f docker-compose.test.yml build --build-arg APP_ENV=dev
-  - docker-compose -f docker-compose.test.yml up -d h2-proxy
+  - docker-compose -f docker-compose.travis.yml build --build-arg APP_ENV=dev
+  - docker-compose -f docker-compose.travis.yml up -d h2-proxy
 
 script:
-  - docker-compose -f docker-compose.test.yml exec php composer lints
-  - docker-compose -f docker-compose.test.yml exec php composer php-cs-fixer
-  - docker-compose -f docker-compose.test.yml exec php composer phpstan
-  - docker-compose -f docker-compose.test.yml exec php composer tests
-  - docker-compose -f docker-compose.test.yml exec php bin/console pumukit:init:repo all --force
-  - docker-compose -f docker-compose.test.yml run --rm pa11y https://h2-proxy
-  - docker-compose -f docker-compose.test.yml run --rm pa11y https://h2-proxy/latestuploads
-  - docker-compose -f docker-compose.test.yml run --rm pa11y https://h2-proxy/mediateca
-  - docker-compose -f docker-compose.test.yml run --rm pa11y https://h2-proxy/searchmultimediaobjects
-  - docker-compose -f docker-compose.test.yml run --rm pa11y https://h2-proxy/searchseries
-  - docker-compose -f docker-compose.test.yml run --rm pa11y https://h2-proxy/events
-  - docker-compose -f docker-compose.test.yml run --rm pa11y https://h2-proxy/categories
-  - docker-compose -f docker-compose.test.yml run --rm pa11y https://h2-proxy/series/channel/1.html
-  - docker-compose -f docker-compose.test.yml run --rm pa11y https://h2-proxy/multimediaobjects/tag/ROOT
-  - docker-compose -f docker-compose.test.yml run --rm pa11y https://h2-proxy/series/tag/ROOT
+  - docker-compose -f docker-compose.travis.yml exec php composer lints
+  - docker-compose -f docker-compose.travis.yml exec php composer php-cs-fixer
+  - docker-compose -f docker-compose.travis.yml exec php composer phpstan
+  - docker-compose -f docker-compose.travis.yml exec php composer tests
+  - docker-compose -f docker-compose.travis.yml exec php bin/console pumukit:init:repo all --force
+  - docker-compose -f docker-compose.travis.yml run --rm pa11y https://h2-proxy
+  - docker-compose -f docker-compose.travis.yml run --rm pa11y https://h2-proxy/latestuploads
+  - docker-compose -f docker-compose.travis.yml run --rm pa11y https://h2-proxy/mediateca
+  - docker-compose -f docker-compose.travis.yml run --rm pa11y https://h2-proxy/searchmultimediaobjects
+  - docker-compose -f docker-compose.travis.yml run --rm pa11y https://h2-proxy/searchseries
+  - docker-compose -f docker-compose.travis.yml run --rm pa11y https://h2-proxy/events
+  - docker-compose -f docker-compose.travis.yml run --rm pa11y https://h2-proxy/categories
+  - docker-compose -f docker-compose.travis.yml run --rm pa11y https://h2-proxy/series/channel/1.html
+  - docker-compose -f docker-compose.travis.yml run --rm pa11y https://h2-proxy/multimediaobjects/tag/ROOT
+  - docker-compose -f docker-compose.travis.yml run --rm pa11y https://h2-proxy/series/tag/ROOT
