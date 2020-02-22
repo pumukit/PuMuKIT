@@ -1,4 +1,21 @@
 {
+    "api-platform/api-pack": {
+        "version": "v1.2.1"
+    },
+    "api-platform/core": {
+        "version": "2.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "2.5",
+            "ref": "a93061567140e386f107be75340ac2aee3f86cbf"
+        },
+        "files": [
+            "config/packages/api_platform.yaml",
+            "config/routes/api_platform.yaml",
+            "src/Entity/.gitignore"
+        ]
+    },
     "behat/transliterator": {
         "version": "v1.3.0"
     },
@@ -29,6 +46,9 @@
     "doctrine/common": {
         "version": "2.12.0"
     },
+    "doctrine/dbal": {
+        "version": "v2.10.1"
+    },
     "doctrine/event-manager": {
         "version": "1.1.0"
     },
@@ -58,6 +78,9 @@
             "src/Document/.gitignore"
         ]
     },
+    "doctrine/orm": {
+        "version": "v2.7.1"
+    },
     "doctrine/persistence": {
         "version": "1.3.6"
     },
@@ -66,6 +89,9 @@
     },
     "egulias/email-validator": {
         "version": "2.1.17"
+    },
+    "fig/link-util": {
+        "version": "1.1.0"
     },
     "friendsofphp/php-cs-fixer": {
         "version": "2.2",
@@ -127,6 +153,9 @@
     "jakub-onderka/php-var-dump-check": {
         "version": "v0.3"
     },
+    "jdorn/sql-formatter": {
+        "version": "v1.2.17"
+    },
     "jms/metadata": {
         "version": "1.7.0"
     },
@@ -164,6 +193,18 @@
     },
     "myclabs/deep-copy": {
         "version": "1.9.5"
+    },
+    "nelmio/cors-bundle": {
+        "version": "1.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.5",
+            "ref": "6388de23860284db9acce0a7a5d9d13153bcb571"
+        },
+        "files": [
+            "config/packages/nelmio_cors.yaml"
+        ]
     },
     "ocramius/package-versions": {
         "version": "1.4.2"
@@ -243,6 +284,9 @@
         "version": "1.0.1"
     },
     "psr/container": {
+        "version": "1.0.0"
+    },
+    "psr/link": {
         "version": "1.0.0"
     },
     "psr/log": {
@@ -503,6 +547,9 @@
     "symfony/property-access": {
         "version": "v4.4.4"
     },
+    "symfony/property-info": {
+        "version": "v4.4.4"
+    },
     "symfony/routing": {
         "version": "4.2",
         "recipe": {
@@ -619,6 +666,9 @@
     "symfony/var-exporter": {
         "version": "v4.4.4"
     },
+    "symfony/web-link": {
+        "version": "v4.4.4"
+    },
     "symfony/web-profiler-bundle": {
         "version": "3.3",
         "recipe": {
@@ -665,6 +715,9 @@
     },
     "white-october/pagerfanta-bundle": {
         "version": "v1.3.2"
+    },
+    "willdurand/negotiation": {
+        "version": "v2.3.1"
     },
     "zendframework/zend-code": {
         "version": "3.4.1"
