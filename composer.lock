@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b660a0e5c5486e9b270e41b28dfb3d0c",
+    "content-hash": "ddc05e6ae1be5dbea01a0a2b62d89c9e",
     "packages": [
         {
             "name": "api-platform/api-pack",
@@ -2585,16 +2585,16 @@
         },
         {
             "name": "jms/serializer",
-            "version": "3.4.0",
+            "version": "3.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/serializer.git",
-                "reference": "e2d3c49d9322a08ee32221a5623c898160dada79"
+                "reference": "0e286681396d8139406e596c6c802d37ab0b2124"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/e2d3c49d9322a08ee32221a5623c898160dada79",
-                "reference": "e2d3c49d9322a08ee32221a5623c898160dada79",
+                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/0e286681396d8139406e596c6c802d37ab0b2124",
+                "reference": "0e286681396d8139406e596c6c802d37ab0b2124",
                 "shasum": ""
             },
             "require": {
@@ -2616,7 +2616,7 @@
                 "ext-pdo_sqlite": "*",
                 "jackalope/jackalope-doctrine-dbal": "^1.1.5",
                 "ocramius/proxy-manager": "^1.0|^2.0",
-                "phpunit/phpunit": "^7.5||^8.0",
+                "phpunit/phpunit": "^7.5||^8.0||^9.0",
                 "psr/container": "^1.0",
                 "symfony/dependency-injection": "^3.0|^4.0|^5.0",
                 "symfony/expression-language": "^3.0|^4.0|^5.0",
@@ -2635,7 +2635,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.4-dev"
+                    "dev-master": "3.5-dev"
                 }
             },
             "autoload": {
@@ -2666,7 +2666,7 @@
                 "serialization",
                 "xml"
             ],
-            "time": "2019-12-14T20:49:23+00:00"
+            "time": "2020-02-22T21:06:01+00:00"
         },
         {
             "name": "jms/serializer-bundle",
@@ -7587,6 +7587,52 @@
             "time": "2020-01-21T11:12:16+00:00"
         },
         {
+            "name": "teltek/pumukit-stats-ui-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/teltek/PumukitStatsUIBundle.git",
+                "reference": "430ea87b67d2e06dcbe28da2b91665427cdfb420"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/teltek/PumukitStatsUIBundle/zipball/430ea87b67d2e06dcbe28da2b91665427cdfb420",
+                "reference": "430ea87b67d2e06dcbe28da2b91665427cdfb420",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2",
+                "pumukit/pumukit": ">=3.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Pumukit\\StatsUIBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Teltek Team",
+                    "homepage": "http://teltek.es"
+                }
+            ],
+            "description": "Stats UI for PuMuKIT",
+            "homepage": "https://github.com/teltek/PumukitStatsUIBundle",
+            "keywords": [
+                "Symfony2",
+                "bundle",
+                "pumukit",
+                "stats",
+                "teltek",
+                "ui"
+            ],
+            "time": "2020-02-21T10:29:01+00:00"
+        },
+        {
             "name": "twig/extensions",
             "version": "v1.5.4",
             "source": {
@@ -10212,7 +10258,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "friendsofsymfony/user-bundle": 20,
-        "gedmo/doctrine-extensions": 20
+        "gedmo/doctrine-extensions": 20,
+        "teltek/pumukit-stats-ui-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
