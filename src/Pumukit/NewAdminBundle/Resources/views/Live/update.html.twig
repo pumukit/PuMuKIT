@@ -29,7 +29,7 @@
               action="{{ path('pumukitnewadmin_live_update', {'id': live.id}) }}" method="POST">
             <fieldset>
                 {% for key, child in form %}
-                    {% if key == 'chat' and not enableChat %}
+                    {% if key == 'chat' and (not enableChat or advanceLiveEvent) %}
                         <div style="display:none">
                             {{ form_row(child) }}
                         </div>

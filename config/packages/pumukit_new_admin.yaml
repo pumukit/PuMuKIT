@@ -17,6 +17,7 @@ services:
       $liveEventContactAndShare: '%liveevent_contact_and_share%'
       $pumukitLiveTwitterAccountsLinkColor: '%pumukit_live.twitter.accounts_link_color%'
       $pumukitNewAdminAdvanceLiveEventAutocompleteSeries: '%pumukit_new_admin.advance_live_event_autocomplete_series%'
+      $advanceLiveEvent: '%pumukit_new_admin.advance_live_event%'
       $pumukitSchemaPersonalScopeRoleCode: '%pumukitschema.personal_scope_role_code%'
       $pumukitInbox: '%pumukit.inbox%'
       $pumukitInboxDepth: '%pumukit.inbox_depth%'
