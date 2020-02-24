@@ -12,6 +12,7 @@ use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -47,6 +48,15 @@ class EventController extends AbstractController implements WebTVControllerInter
         $this->paginationService = $paginationService;
         $this->pumukitLiveTwitterEnable = $pumukitLiveTwitterEnable;
         $this->pumukitNewAdminAdvanceLiveEvent = $pumukitNewAdminAdvanceLiveEvent;
+    }
+
+    public function advanceLiveEventMenuAction(): Response
+    {
+        if ($this->pumukitNewAdminAdvanceLiveEvent) {
+            return  new Response($this->renderView('@PumukitWebTV/Menu/advance_event_link.html.twig'));
+        }
+
+        return new Response();
     }
 
     /**
