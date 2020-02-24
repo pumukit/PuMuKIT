@@ -27,6 +27,7 @@ class MoveFilesCommand extends Command
     {
         $this->dm = $documentManager;
         $this->logger = $logger;
+        parent::__construct();
     }
 
     protected function configure(): void
