@@ -2,40 +2,71 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+use FOS\UserBundle\Model\UserManagerInterface;
 use Pumukit\NewAdminBundle\Form\Type\UserUpdateProfileType;
+use Pumukit\NewAdminBundle\Services\UserStatsService;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Services\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("/user_profile")
  *
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
-class UserProfileController extends AdminController
+class UserProfileController extends AbstractController
 {
+    /** @var DocumentManager */
+    protected $documentManager;
+
+    /** @var TranslatorInterface */
+    protected $translator;
+
+    /** @var UserManagerInterface */
+    protected $fosUserManager;
+
+    /** @var UserService */
+    protected $userService;
+
+    /** @var UserStatsService */
+    protected $userStatsService;
+
+    public function __construct(
+        DocumentManager $documentManager,
+        UserService $userService,
+        TranslatorInterface $translator,
+        UserManagerInterface $fosUserManager,
+        UserStatsService $userStatsService
+    ) {
+        $this->documentManager = $documentManager;
+        $this->translator = $translator;
+        $this->fosUserManager = $fosUserManager;
+        $this->userService = $userService;
+        $this->userStatsService = $userStatsService;
+    }
+
     /**
      * @Route("/", name="pumukitnewadmin_profile_user_index")
-     * @Template("PumukitNewAdminBundle:UserProfile:template.html.twig")
-     *
-     * @throws \Exception
+     * @Template("@PumukitNewAdmin/UserProfile/template.html.twig")
      */
     public function profileAction(Request $request): array
     {
         $user = $this->getUser();
 
-        $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $userManager = $this->get('fos_user.user_manager');
-        $form = $this->createForm(UserUpdateProfileType::class, $user, ['translator' => $translator, 'locale' => $locale]);
+        $form = $this->createForm(UserUpdateProfileType::class, $user, ['translator' => $this->translator, 'locale' => $locale]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && $user->isLocal()) {
-            $userManager->updateUser($user, false);
-            $this->get('pumukitschema.user')->update($user);
+            $this->fosUserManager->updateUser($user);
+            $this->userService->update($user);
         }
 
         return [
@@ -45,14 +76,14 @@ class UserProfileController extends AdminController
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:UserProfile:template_user_stats.html.twig")
+     * @Template("@PumukitNewAdmin/UserProfile/template_user_stats.html.twig")
      */
     public function userStatsAction(): array
     {
-        $objectsByStatus = $this->get('pumukitnewadmin.user_stats')->getUserMultimediaObjectsGroupByStats($this->getUser());
-        $objectsByRole = $this->get('pumukitnewadmin.user_stats')->getUserMultimediaObjectsGroupByRole($this->getUser());
-        $userStorage = $this->get('pumukitnewadmin.user_stats')->getUserStorageMB($this->getUser());
-        $userDuration = $this->get('pumukitnewadmin.user_stats')->getUserUploadedHours($this->getUser());
+        $objectsByStatus = $this->userStatsService->getUserMultimediaObjectsGroupByStats($this->getUser());
+        $objectsByRole = $this->userStatsService->getUserMultimediaObjectsGroupByRole($this->getUser());
+        $userStorage = $this->userStatsService->getUserStorageMB($this->getUser());
+        $userDuration = $this->userStatsService->getUserUploadedHours($this->getUser());
 
         return [
             'objectsByStatus' => $objectsByStatus,
@@ -67,18 +98,16 @@ class UserProfileController extends AdminController
      */
     public function checkEmailToUseOnUser(string $updateEmail): JsonResponse
     {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-
-        $user = $dm->getRepository(User::class)->findOneBy([
+        $user = $this->documentManager->getRepository(User::class)->findOneBy([
             'email' => $updateEmail,
             'username' => ['$ne' => $this->getUser()->getUsername()],
         ]);
 
         $jsonResponseStatus = -1;
-        $message = $this->get('translator')->trans('Email already in use');
+        $message = $this->translator->trans('Email already in use');
         if (!$user || $this->getUser()->getEmail() === $updateEmail) {
             $jsonResponseStatus = 0;
-            $message = $this->get('translator')->trans('User info updated');
+            $message = $this->translator->trans('User info updated');
         }
 
         return new JsonResponse(['status' => $jsonResponseStatus, 'message' => $message]);

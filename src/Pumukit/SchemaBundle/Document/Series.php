@@ -325,8 +325,6 @@ class Series
 
     /**
      * Set series_type.
-     *
-     * @param SeriesType $series_type
      */
     public function setSeriesType(SeriesType $series_type)
     {
@@ -364,51 +362,7 @@ class Series
     }
 
     /**
-     * Contains multimedia_object.
-     *
-     * @throws \Exception
-     */
-    public function containsMultimediaObject()
-    {
-        throw new \Exception('PMK2.5 PHP7 use service');
-    }
-
-    /**
-     * Add multimedia object.
-     *
-     * @throws \Exception
-     */
-    public function addMultimediaObject()
-    {
-        throw new \Exception('PMK2.5 PHP7 use service');
-    }
-
-    /**
-     * Remove multimedia object.
-     *
-     * @throws \Exception
-     */
-    public function removeMultimediaObject()
-    {
-        throw new \Exception('PMK2.5 PHP7 use service');
-    }
-
-    /**
-     * Get multimedia_objects.
-     *
-     * @throws \Exception
-     *
-     * @return mixed
-     */
-    public function getMultimediaObjects()
-    {
-        throw new \Exception('PMK2.5 PHP7 use service');
-    }
-
-    /**
      * Set playlist.
-     *
-     * @param Playlist $playlist
      */
     public function setPlaylist(Playlist $playlist)
     {
@@ -540,8 +494,6 @@ class Series
 
     /**
      * Set I18n title.
-     *
-     * @param array $title
      */
     public function setI18nTitle(array $title)
     {
@@ -593,8 +545,6 @@ class Series
 
     /**
      * Set I18n subtitle.
-     *
-     * @param array $subtitle
      */
     public function setI18nSubtitle(array $subtitle)
     {
@@ -666,8 +616,6 @@ class Series
 
     /**
      * Set I18n description.
-     *
-     * @param array $description
      */
     public function setI18nDescription(array $description)
     {
@@ -719,8 +667,6 @@ class Series
 
     /**
      * Set I18n header.
-     *
-     * @param array $header
      */
     public function setI18nHeader(array $header)
     {
@@ -772,8 +718,6 @@ class Series
 
     /**
      * Set I18n footer.
-     *
-     * @param array $footer
      */
     public function setI18nFooter(array $footer)
     {
@@ -873,8 +817,6 @@ class Series
 
     /**
      * Set I18n line2.
-     *
-     * @param array $line2
      */
     public function setI18nLine2(array $line2)
     {
@@ -909,86 +851,6 @@ class Series
     public function getLocale()
     {
         return $this->locale;
-    }
-
-    /**
-     * Contains multimediaobject with tags.
-     *
-     * @throws \Exception
-     */
-    public function containsMultimediaObjectWithTag()
-    {
-        throw new \Exception('PMK2.5 PHP7 use service');
-    }
-
-    /**
-     * Get multimediaobjects with a tag.
-     *
-     * @throws \Exception
-     */
-    public function getMultimediaObjectsWithTag()
-    {
-        throw new \Exception('PMK2.5 PHP7 use service');
-    }
-
-    /**
-     * Get one multimedia object with tag.
-     *
-     * @throws \Exception
-     */
-    public function getMultimediaObjectWithTag()
-    {
-        throw new \Exception('PMK2.5 PHP7 use service');
-    }
-
-    /**
-     * Get multimediaobjects with all tags.
-     *
-     * @throws \Exception
-     */
-    public function getMultimediaObjectsWithAllTags()
-    {
-        throw new \Exception('PMK2.5 PHP7 use service');
-    }
-
-    /**
-     * Get multimediaobject with all tags.
-     *
-     * @throws \Exception
-     */
-    public function getMultimediaObjectWithAllTags()
-    {
-        throw new \Exception('PMK2.5 PHP7 use service');
-    }
-
-    /**
-     * Get multimediaobjects with any tag.
-     *
-     * @throws \Exception
-     */
-    public function getMultimediaObjectsWithAnyTag()
-    {
-        throw new \Exception('PMK2.5 PHP7 use service');
-    }
-
-    /**
-     * Get multimediaobject with any tag.
-     *
-     * @throws \Exception
-     */
-    public function getMultimediaObjectWithAnyTag()
-    {
-        throw new \Exception('PMK2.5 PHP7 use service');
-    }
-
-    /**
-     * Get filtered multimedia objects with tags.
-     *
-     * @throws \Exception
-     */
-    public function getFilteredMultimediaObjectsWithTags()
-    {
-        throw new \Exception('PMK2.5 PHP7 use service');
     }
 
     /**

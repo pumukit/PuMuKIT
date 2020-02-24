@@ -12,9 +12,6 @@ use Pumukit\SchemaBundle\Utils\Search\SearchUtils;
 class MultimediaObjectSearchService
 {
     /**
-     * @param array  $reqCriteria
-     * @param string $locale
-     *
      * @return array
      */
     public function processMMOCriteria(array $reqCriteria, string $locale = 'en')
@@ -70,7 +67,7 @@ class MultimediaObjectSearchService
                 $new_criteria += ['$and' => [['tags.cod' => $sChannelValue]]];
             } elseif ($bAnnounce) {
                 $new_criteria += ['$and' => [['tags.cod' => 'PUDENEW']]];
-            } elseif (!$bAnnounce) {
+            } else {
                 $new_criteria += ['$and' => [['tags.cod' => ['$nin' => ['PUDENEW']]]]];
             }
         } elseif (('' !== $bChannel)) {

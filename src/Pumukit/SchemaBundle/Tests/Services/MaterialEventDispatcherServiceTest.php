@@ -2,18 +2,18 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Event\MaterialEvent;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Services\MaterialEventDispatcherService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class MaterialEventDispatcherServiceTest extends WebTestCase
+class MaterialEventDispatcherServiceTest extends PumukitTestCase
 {
     const EMPTY_TITLE = 'EMTPY TITLE';
     const EMPTY_URL = 'EMTPY URL';
@@ -22,14 +22,12 @@ class MaterialEventDispatcherServiceTest extends WebTestCase
     private $dispatcher;
     private $linkDispatcher;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dispatcher = static::$kernel->getContainer()
-            ->get('event_dispatcher')
-        ;
+        parent::setUp();
+        $this->dispatcher = static::$kernel->getContainer()->get('event_dispatcher');
 
         MockUpMaterialListener::$called = false;
         MockUpMaterialListener::$title = self::EMPTY_TITLE;
@@ -38,19 +36,19 @@ class MaterialEventDispatcherServiceTest extends WebTestCase
         $this->materialDispatcher = new MaterialEventDispatcherService($this->dispatcher);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dispatcher = null;
         $this->linkDispatcher = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testDispatchCreate()
     {
         $this->dispatcher->addListener(SchemaEvents::MATERIAL_CREATE, function ($event, $name) {
-            $this->assertTrue($event instanceof MaterialEvent);
-            $this->assertEquals(SchemaEvents::MATERIAL_CREATE, $name);
+            static::assertInstanceOf(MaterialEvent::class, $event);
+            static::assertEquals(SchemaEvents::MATERIAL_CREATE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
             $material = $event->getMaterial();
@@ -60,9 +58,9 @@ class MaterialEventDispatcherServiceTest extends WebTestCase
             MockUpMaterialListener::$url = $material->getUrl();
         });
 
-        $this->assertFalse(MockUpMaterialListener::$called);
-        $this->assertEquals(self::EMPTY_TITLE, MockUpMaterialListener::$title);
-        $this->assertEquals(self::EMPTY_URL, MockUpMaterialListener::$url);
+        static::assertFalse(MockUpMaterialListener::$called);
+        static::assertEquals(self::EMPTY_TITLE, MockUpMaterialListener::$title);
+        static::assertEquals(self::EMPTY_URL, MockUpMaterialListener::$url);
 
         $title = 'test title';
         $url = 'http://testmaterial.com';
@@ -75,16 +73,16 @@ class MaterialEventDispatcherServiceTest extends WebTestCase
 
         $this->materialDispatcher->dispatchCreate($multimediaObject, $material);
 
-        $this->assertTrue(MockUpMaterialListener::$called);
-        $this->assertEquals($title, MockUpMaterialListener::$title);
-        $this->assertEquals($url, MockUpMaterialListener::$url);
+        static::assertTrue(MockUpMaterialListener::$called);
+        static::assertEquals($title, MockUpMaterialListener::$title);
+        static::assertEquals($url, MockUpMaterialListener::$url);
     }
 
     public function testDispatchUpdate()
     {
         $this->dispatcher->addListener(SchemaEvents::MATERIAL_UPDATE, function ($event, $name) {
-            $this->assertTrue($event instanceof MaterialEvent);
-            $this->assertEquals(SchemaEvents::MATERIAL_UPDATE, $name);
+            static::assertInstanceOf(MaterialEvent::class, $event);
+            static::assertEquals(SchemaEvents::MATERIAL_UPDATE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
             $material = $event->getMaterial();
@@ -94,9 +92,9 @@ class MaterialEventDispatcherServiceTest extends WebTestCase
             MockUpMaterialListener::$url = $material->getUrl();
         });
 
-        $this->assertFalse(MockUpMaterialListener::$called);
-        $this->assertEquals(self::EMPTY_TITLE, MockUpMaterialListener::$title);
-        $this->assertEquals(self::EMPTY_URL, MockUpMaterialListener::$url);
+        static::assertFalse(MockUpMaterialListener::$called);
+        static::assertEquals(self::EMPTY_TITLE, MockUpMaterialListener::$title);
+        static::assertEquals(self::EMPTY_URL, MockUpMaterialListener::$url);
 
         $title = 'test title';
         $url = 'http://testmaterial.com';
@@ -112,16 +110,16 @@ class MaterialEventDispatcherServiceTest extends WebTestCase
 
         $this->materialDispatcher->dispatchUpdate($multimediaObject, $material);
 
-        $this->assertTrue(MockUpMaterialListener::$called);
-        $this->assertEquals($title, MockUpMaterialListener::$title);
-        $this->assertEquals($updateUrl, MockUpMaterialListener::$url);
+        static::assertTrue(MockUpMaterialListener::$called);
+        static::assertEquals($title, MockUpMaterialListener::$title);
+        static::assertEquals($updateUrl, MockUpMaterialListener::$url);
     }
 
     public function testDispatchDelete()
     {
         $this->dispatcher->addListener(SchemaEvents::MATERIAL_DELETE, function ($event, $name) {
-            $this->assertTrue($event instanceof MaterialEvent);
-            $this->assertEquals(SchemaEvents::MATERIAL_DELETE, $name);
+            static::assertInstanceOf(MaterialEvent::class, $event);
+            static::assertEquals(SchemaEvents::MATERIAL_DELETE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
             $material = $event->getMaterial();
@@ -131,9 +129,9 @@ class MaterialEventDispatcherServiceTest extends WebTestCase
             MockUpMaterialListener::$url = $material->getUrl();
         });
 
-        $this->assertFalse(MockUpMaterialListener::$called);
-        $this->assertEquals(self::EMPTY_TITLE, MockUpMaterialListener::$title);
-        $this->assertEquals(self::EMPTY_URL, MockUpMaterialListener::$url);
+        static::assertFalse(MockUpMaterialListener::$called);
+        static::assertEquals(self::EMPTY_TITLE, MockUpMaterialListener::$title);
+        static::assertEquals(self::EMPTY_URL, MockUpMaterialListener::$url);
 
         $title = 'test title';
         $url = 'http://testmaterial.com';
@@ -146,9 +144,9 @@ class MaterialEventDispatcherServiceTest extends WebTestCase
 
         $this->materialDispatcher->dispatchDelete($multimediaObject, $material);
 
-        $this->assertTrue(MockUpMaterialListener::$called);
-        $this->assertEquals($title, MockUpMaterialListener::$title);
-        $this->assertEquals($url, MockUpMaterialListener::$url);
+        static::assertTrue(MockUpMaterialListener::$called);
+        static::assertEquals($title, MockUpMaterialListener::$title);
+        static::assertEquals($url, MockUpMaterialListener::$url);
     }
 }
 

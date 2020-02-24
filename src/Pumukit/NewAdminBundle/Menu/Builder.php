@@ -107,7 +107,7 @@ class Builder implements ContainerAwareInterface
 
             //Voters are a way to check if a menu item is the current one. Now we are just checking the routes and setting the Current element manually
             $route = $this->container->get('request_stack')->getMasterRequest()->attributes->get('_route');
-            $statsRoutes = ['pumukit_stats_series_index', 'pumukit_stats_mmobj_index', 'pumukit_stats_series_index_id', 'pumukit_stats_mmobj_index_id', 'pumukit_stats_versions'];
+            $statsRoutes = ['pumukit_stats_series_index', 'pumukit_stats_mmobj_index', 'pumukit_stats_series_index_id', 'pumukit_stats_mmobj_index_id'];
             if (in_array($route, $statsRoutes)) {
                 $stats->setCurrent(true);
             }

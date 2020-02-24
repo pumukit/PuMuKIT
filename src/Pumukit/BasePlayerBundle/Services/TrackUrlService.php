@@ -23,8 +23,7 @@ class TrackUrlService
     }
 
     /**
-     * @param Track $track
-     * @param int   $reference_type
+     * @param int $reference_type
      *
      * @return string
      */
@@ -44,9 +43,6 @@ class TrackUrlService
     }
 
     /**
-     * @param Track   $track
-     * @param Request $request
-     *
      * @throws \Exception
      *
      * @return string
@@ -60,7 +56,6 @@ class TrackUrlService
     }
 
     /**
-     * @param Track     $track
      * @param float|int $timestamp
      * @param string    $secret
      * @param string    $ip

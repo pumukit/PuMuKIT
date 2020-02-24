@@ -161,9 +161,8 @@ class EmbeddedEventSessionService
     /**
      * EmbeddedEventSessionService constructor.
      *
-     * @param DocumentManager $documentManager
-     * @param string          $defaultPoster
-     * @param string          $defaultThumbnail
+     * @param string $defaultPoster
+     * @param string $defaultThumbnail
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
@@ -428,7 +427,8 @@ class EmbeddedEventSessionService
         foreach ($result as $key => $element) {
             $orderSession = [];
             foreach ($element['data'] as $eventData) {
-                $orderSession[$eventData['session']['start']->sec] = $eventData;
+                $seconds = $eventData['session']['start']->toDateTime()->format('U');
+                $orderSession[$seconds] = $eventData;
             }
             ksort($orderSession);
             $result[$key]['data'] = array_values($orderSession);
@@ -442,8 +442,7 @@ class EmbeddedEventSessionService
     /**
      * Get sessions to show on menu of WebTV.
      *
-     * @param array $criteria
-     * @param int   $limit
+     * @param int $limit
      *
      * @return array
      */
@@ -534,8 +533,6 @@ class EmbeddedEventSessionService
      *
      * @deprecated: Use getEventPicPoster
      *
-     * @param EmbeddedEvent $event
-     *
      * @return string
      */
     public function getEventPoster(EmbeddedEvent $event)
@@ -547,8 +544,6 @@ class EmbeddedEventSessionService
 
     /**
      * Get event poster.
-     *
-     * @param MultimediaObject $multimediaObject
      *
      * @return string
      */
@@ -573,8 +568,6 @@ class EmbeddedEventSessionService
 
     /**
      * Get event thumbnail.
-     *
-     * @param EmbeddedEvent $event
      *
      * @return string
      */
@@ -628,8 +621,6 @@ class EmbeddedEventSessionService
      *
      * @deprecated NOTE: Use multimediaObject.getProperty('postertextcolor') to get text color and getDefaultPosterTextColor
      *
-     * @param MultimediaObject $multimediaObject
-     *
      * @return string
      */
     public function getPicPosterTextColor(MultimediaObject $multimediaObject)
@@ -646,8 +637,6 @@ class EmbeddedEventSessionService
      * Get poster text color.
      *
      * @deprecated Use getPicPosterTextColor
-     *
-     * @param EmbeddedEvent $event
      *
      * @return string
      */
@@ -688,8 +677,7 @@ class EmbeddedEventSessionService
     /**
      * Get current session date.
      *
-     * @param EmbeddedEvent $event
-     * @param bool          $start
+     * @param bool $start
      *
      * @return \DateTime
      */
@@ -710,8 +698,7 @@ class EmbeddedEventSessionService
     /**
      * Get first session date.
      *
-     * @param EmbeddedEvent $event
-     * @param bool          $start
+     * @param bool $start
      *
      * @return \DateTime
      */
@@ -773,8 +760,7 @@ class EmbeddedEventSessionService
     /**
      * Get current session date.
      *
-     * @param EmbeddedEvent $event
-     * @param bool          $start
+     * @param bool $start
      *
      * @return bool
      */
@@ -822,7 +808,7 @@ class EmbeddedEventSessionService
                 foreach ($eventData['event']['embeddedEventSession'] as $embeddedSession) {
                     $startDate = $embeddedSession['start']->toDateTime();
                     if ($startDate > $now) {
-                        $orderSession = $this->addElementWithSessionSec($orderSession, $element, $embeddedSession['start']->sec);
+                        $orderSession = $this->addElementWithSessionSec($orderSession, $element, $embeddedSession['start']->toDateTime()->format('U'));
 
                         break;
                     }
@@ -927,7 +913,7 @@ class EmbeddedEventSessionService
                 foreach ($eventData['event']['embeddedEventSession'] as $embeddedSession) {
                     $startDate = $embeddedSession['start']->toDateTime();
                     if ($startDate > $now) {
-                        $orderSession = $this->addElementWithSessionSec($orderSession, $element, $embeddedSession['start']->sec);
+                        $orderSession = $this->addElementWithSessionSec($orderSession, $element, $embeddedSession['start']->toDateTime()->format('U'));
 
                         break;
                     }
@@ -1174,8 +1160,6 @@ class EmbeddedEventSessionService
      *
      * @deprecated: Use getPicPoster
      *
-     * @param array $pics
-     *
      * @return string
      */
     private function getPoster(array $pics)
@@ -1193,8 +1177,6 @@ class EmbeddedEventSessionService
 
     /**
      * Get poster.
-     *
-     * @param MultimediaObject $multimediaObject
      *
      * @return string
      */

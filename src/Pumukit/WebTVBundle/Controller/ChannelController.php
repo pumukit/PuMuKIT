@@ -3,48 +3,46 @@
 namespace Pumukit\WebTVBundle\Controller;
 
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
+use Pumukit\WebTVBundle\Services\BreadcrumbsService;
+use Pumukit\WebTVBundle\Services\ChannelService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class ChannelController.
- */
-class ChannelController extends Controller implements WebTVControllerInterface
+class ChannelController extends AbstractController implements WebTVControllerInterface
 {
+    private $breadcrumbService;
+    private $channelService;
+    private $columnsObjsByTag;
+
+    public function __construct(
+        BreadcrumbsService $breadcrumbService,
+        ChannelService $channelService,
+        $columnsObjsByTag
+    ) {
+        $this->breadcrumbService = $breadcrumbService;
+        $this->channelService = $channelService;
+        $this->columnsObjsByTag = $columnsObjsByTag;
+    }
+
     /**
      * @Route("/series/channel/{channelNumber}.html", name="pumukit_webtv_channel_series")
-     * @Template("PumukitWebTVBundle:Channel:template.html.twig")
-     *
-     * @param string $channelNumber
-     *
-     * @return array
+     * @Template("@PumukitWebTV/Channel/template.html.twig")
      */
-    public function seriesAction($channelNumber)
+    public function seriesAction(string $channelNumber)
     {
-        $numberCols = $this->container->getParameter('columns_objs_bytag');
-        $limit = $this->container->getParameter('limit_objs_bytag');
+        $channelTitle = $this->channelService->getChannelTitle($channelNumber);
+        $channelTags = $this->channelService->getTagsForChannel($channelNumber);
+        $results = $this->channelService->getChannelSeriesByTags($channelTags);
 
-        $channelService = $this->get('pumukit_web_tv.channels');
-        $channelTitle = $channelService->getChannelTitle($channelNumber);
-        $channelTags = $channelService->getTagsForChannel($channelNumber);
-
-        $results = $channelService->getChannelSeriesByTags($channelTags);
-
-        $this->updateBreadcrumbs($channelTitle, 'pumukit_webtv_channel_series', ['channelNumber' => $channelNumber]);
+        $this->breadcrumbService->add($channelTitle, 'pumukit_webtv_channel_series', ['channelNumber' => $channelNumber]);
 
         return [
             'title' => $channelTitle,
             'results' => $results,
-            'objectByCol' => $numberCols,
+            'objectByCol' => $this->columnsObjsByTag,
             'show_info' => true,
             'show_description' => true,
         ];
-    }
-
-    private function updateBreadcrumbs($title, $routeName, array $routeParameters = [])
-    {
-        $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
-        $breadcrumbs->add($title, $routeName, $routeParameters);
     }
 }

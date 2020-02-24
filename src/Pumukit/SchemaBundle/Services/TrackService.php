@@ -3,38 +3,32 @@
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Symfony\Component\Finder\Finder;
 
 class TrackService
 {
+    /** @var DocumentManager */
     private $dm;
+    /** @var TrackEventDispatcherService */
     private $dispatcher;
     private $tmpPath;
-    private $profileService;
     private $forceDeleteOnDisk;
 
-    public function __construct(DocumentManager $documentManager, TrackEventDispatcherService $dispatcher, ProfileService $profileService, $tmpPath = null, $forceDeleteOnDisk = true)
-    {
+    public function __construct(
+        DocumentManager $documentManager,
+        TrackEventDispatcherService $dispatcher,
+        ?string $tmpPath = null,
+        bool $forceDeleteOnDisk = true
+    ) {
         $this->dm = $documentManager;
         $this->dispatcher = $dispatcher;
-        $this->profileService = $profileService;
         $this->tmpPath = $tmpPath ? realpath($tmpPath) : sys_get_temp_dir();
         $this->forceDeleteOnDisk = $forceDeleteOnDisk;
     }
 
-    /**
-     * Add track to multimedia object.
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Track            $track
-     * @param bool             $executeFlush
-     *
-     * @return MultimediaObject
-     */
-    public function addTrackToMultimediaObject(MultimediaObject $multimediaObject, Track $track, $executeFlush = true)
+    public function addTrackToMultimediaObject(MultimediaObject $multimediaObject, Track $track, bool $executeFlush = true): MultimediaObject
     {
         $multimediaObject->addTrack($track);
 
@@ -48,10 +42,7 @@ class TrackService
         return $multimediaObject;
     }
 
-    /**
-     * Update Track in Multimedia Object.
-     */
-    public function updateTrackInMultimediaObject(MultimediaObject $multimediaObject, Track $track)
+    public function updateTrackInMultimediaObject(MultimediaObject $multimediaObject, Track $track): MultimediaObject
     {
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
@@ -61,12 +52,7 @@ class TrackService
         return $multimediaObject;
     }
 
-    /**
-     * Remove Track from Multimedia Object.
-     *
-     * @param mixed $trackId
-     */
-    public function removeTrackFromMultimediaObject(MultimediaObject $multimediaObject, $trackId)
+    public function removeTrackFromMultimediaObject(MultimediaObject $multimediaObject, string $trackId): MultimediaObject
     {
         $track = $multimediaObject->getTrackById($trackId);
         $trackPath = $track->getPath();
@@ -80,7 +66,7 @@ class TrackService
         if ($this->forceDeleteOnDisk && $trackPath && $isNotOpencast) {
             $countOtherTracks = $this->countMultimediaObjectWithTrack($trackPath);
 
-            if (0 == $countOtherTracks) {
+            if (0 === $countOtherTracks) {
                 $this->deleteFileOnDisk($trackPath);
             }
         }
@@ -90,12 +76,7 @@ class TrackService
         return $multimediaObject;
     }
 
-    /**
-     * Up Track in Multimedia Object.
-     *
-     * @param mixed $trackId
-     */
-    public function upTrackInMultimediaObject(MultimediaObject $multimediaObject, $trackId)
+    public function upTrackInMultimediaObject(MultimediaObject $multimediaObject, string $trackId): MultimediaObject
     {
         $multimediaObject->upTrackById($trackId);
         $this->dm->persist($multimediaObject);
@@ -104,12 +85,7 @@ class TrackService
         return $multimediaObject;
     }
 
-    /**
-     * Down Track in Multimedia Object.
-     *
-     * @param mixed $trackId
-     */
-    public function downTrackInMultimediaObject(MultimediaObject $multimediaObject, $trackId)
+    public function downTrackInMultimediaObject(MultimediaObject $multimediaObject, string $trackId): MultimediaObject
     {
         $multimediaObject->downTrackById($trackId);
         $this->dm->persist($multimediaObject);
@@ -118,15 +94,12 @@ class TrackService
         return $multimediaObject;
     }
 
-    /**
-     * Get temp directories.
-     */
-    public function getTempDirs()
+    public function getTempDirs(): array
     {
         return [$this->tmpPath];
     }
 
-    private function deleteFileOnDisk($path)
+    private function deleteFileOnDisk(string $path): void
     {
         $dirname = pathinfo($path, PATHINFO_DIRNAME);
 
@@ -148,18 +121,17 @@ class TrackService
         }
     }
 
-    private function countMultimediaObjectWithTrack($trackPath)
+    private function countMultimediaObjectWithTrack(string $trackPath): int
     {
         $enableFilter = false;
         if ($this->dm->getFilterCollection()->isEnabled('backoffice')) {
             $enableFilter = true;
-            $filter = $this->dm->getFilterCollection()->disable('backoffice');
+            $this->dm->getFilterCollection()->disable('backoffice');
         }
 
-        $mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
-        $otherTracks = $mmobjRepo->findBy(['tracks.path' => $trackPath]);
+        $otherTracks = $this->dm->getRepository(MultimediaObject::class)->findBy(['tracks.path' => $trackPath]);
         if ($enableFilter) {
-            $filter = $this->dm->getFilterCollection()->enable('backoffice');
+            $this->dm->getFilterCollection()->enable('backoffice');
         }
 
         return count($otherTracks);

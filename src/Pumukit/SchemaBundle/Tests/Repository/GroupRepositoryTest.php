@@ -3,48 +3,40 @@
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
 use MongoDB\BSON\ObjectId;
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Group;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class GroupRepositoryTest extends WebTestCase
+class GroupRepositoryTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        parent::setUp();
         $this->repo = $this->dm->getRepository(Group::class);
-
-        //DELETE DATABASE
-        $this->dm->getDocumentCollection(Group::class)
-            ->remove([])
-        ;
-        $this->dm->flush();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->repo = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
-    public function testRepositoryEmpty()
+    public function testRepositoryEmpty(): void
     {
-        $this->assertEquals(0, count($this->repo->findAll()));
+        static::assertCount(0, $this->repo->findAll());
     }
 
-    public function testRepository()
+    public function testRepository(): void
     {
         $group = new Group();
 
@@ -54,10 +46,10 @@ class GroupRepositoryTest extends WebTestCase
         $this->dm->persist($group);
         $this->dm->flush();
 
-        $this->assertEquals(1, count($this->repo->findAll()));
+        static::assertCount(1, $this->repo->findAll());
     }
 
-    public function testFindByIdNotIn()
+    public function testFindByIdNotIn(): void
     {
         $group1 = new Group();
         $group1->setKey('Group1');
@@ -78,12 +70,12 @@ class GroupRepositoryTest extends WebTestCase
 
         $ids = [new ObjectId($group1->getId()), new ObjectId($group3->getId())];
         $groups = $this->repo->findByIdNotIn($ids)->toArray();
-        $this->assertFalse(in_array($group1, $groups));
-        $this->assertTrue(in_array($group2, $groups));
-        $this->assertFalse(in_array($group3, $groups));
+        static::assertNotContains($group1, $groups);
+        static::assertContains($group2, $groups);
+        static::assertNotContains($group3, $groups);
     }
 
-    public function testFindByIdNotInOf()
+    public function testFindByIdNotInOf(): void
     {
         $group1 = new Group();
         $group1->setKey('Group1');
@@ -110,33 +102,33 @@ class GroupRepositoryTest extends WebTestCase
         $ids = [new ObjectId($group1->getId()), new ObjectId($group3->getId())];
         $total = [new ObjectId($group1->getId()), new ObjectId($group3->getId()), new ObjectId($group4->getId())];
         $groups = $this->repo->findByIdNotInOf($ids, $total)->toArray();
-        $this->assertFalse(in_array($group1, $groups));
-        $this->assertFalse(in_array($group2, $groups));
-        $this->assertFalse(in_array($group3, $groups));
-        $this->assertTrue(in_array($group4, $groups));
+        static::assertNotContains($group1, $groups);
+        static::assertNotContains($group2, $groups);
+        static::assertNotContains($group3, $groups);
+        static::assertContains($group4, $groups);
 
         $ids = [];
         $total = [new ObjectId($group1->getId()), new ObjectId($group3->getId()), new ObjectId($group4->getId())];
         $groups = $this->repo->findByIdNotInOf($ids, $total)->toArray();
-        $this->assertTrue(in_array($group1, $groups));
-        $this->assertFalse(in_array($group2, $groups));
-        $this->assertTrue(in_array($group3, $groups));
-        $this->assertTrue(in_array($group4, $groups));
+        static::assertContains($group1, $groups);
+        static::assertNotContains($group2, $groups);
+        static::assertContains($group3, $groups);
+        static::assertContains($group4, $groups);
 
         $ids = [new ObjectId($group1->getId()), new ObjectId($group3->getId())];
         $total = [];
         $groups = $this->repo->findByIdNotInOf($ids, $total)->toArray();
-        $this->assertFalse(in_array($group1, $groups));
-        $this->assertFalse(in_array($group2, $groups));
-        $this->assertFalse(in_array($group3, $groups));
-        $this->assertFalse(in_array($group4, $groups));
+        static::assertNotContains($group1, $groups);
+        static::assertNotContains($group2, $groups);
+        static::assertNotContains($group3, $groups);
+        static::assertNotContains($group4, $groups);
 
         $ids = [];
         $total = [];
         $groups = $this->repo->findByIdNotInOf($ids, $total)->toArray();
-        $this->assertFalse(in_array($group1, $groups));
-        $this->assertFalse(in_array($group2, $groups));
-        $this->assertFalse(in_array($group3, $groups));
-        $this->assertFalse(in_array($group4, $groups));
+        static::assertNotContains($group1, $groups);
+        static::assertNotContains($group2, $groups);
+        static::assertNotContains($group3, $groups);
+        static::assertNotContains($group4, $groups);
     }
 }

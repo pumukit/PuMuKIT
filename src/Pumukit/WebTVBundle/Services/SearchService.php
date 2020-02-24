@@ -12,30 +12,22 @@ use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
 
 class SearchService
 {
-    const MULTIMEDIA_OBJECT = 0;
-    const SERIES = 1;
+    public const MULTIMEDIA_OBJECT = 0;
+    public const SERIES = 1;
 
-    /**
-     * @var DocumentManager
-     */
+    /** @var DocumentManager */
     private $documentManager;
-
     private $parentTagCod;
     private $parentTagCodOptional;
 
-    public function __construct(DocumentManager $documentManager, $parentTagCod, $parentTagCodOptional)
+    public function __construct(DocumentManager $documentManager, string $parentTagCod, ?string $parentTagCodOptional)
     {
         $this->documentManager = $documentManager;
         $this->parentTagCod = $parentTagCod;
         $this->parentTagCodOptional = $parentTagCodOptional;
     }
 
-    /**
-     * @throws \Exception
-     *
-     * @return array
-     */
-    public function getSearchTags()
+    public function getSearchTags(): array
     {
         return [
             $this->getParentTag(),
@@ -43,12 +35,7 @@ class SearchService
         ];
     }
 
-    /**
-     * @throws \Exception
-     *
-     * @return object|Tag|null
-     */
-    public function getParentTag()
+    public function getParentTag(): Tag
     {
         $parentTag = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => $this->parentTagCod]);
         if (!isset($parentTag)) {
@@ -63,10 +50,7 @@ class SearchService
         return $parentTag;
     }
 
-    /**
-     * @return object|Tag|null
-     */
-    public function getOptionalParentTag()
+    public function getOptionalParentTag(): ?Tag
     {
         $parentTagOptional = null;
         if ($this->parentTagCodOptional) {
@@ -76,14 +60,7 @@ class SearchService
         return $parentTagOptional;
     }
 
-    /**
-     * @param int $type
-     *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     *
-     * @return array
-     */
-    public function getYears($type = self::MULTIMEDIA_OBJECT)
+    public function getYears(int $type = self::MULTIMEDIA_OBJECT): array
     {
         if (self::MULTIMEDIA_OBJECT === $type) {
             $pipeline = [
@@ -110,9 +87,6 @@ class SearchService
         return $years;
     }
 
-    /**
-     * @return mixed
-     */
     public function getLanguages()
     {
         return $this->documentManager->getRepository(MultimediaObject::class)
@@ -123,13 +97,7 @@ class SearchService
         ;
     }
 
-    /**
-     * @param Builder $queryBuilder
-     * @param string  $typeFound
-     *
-     * @return Builder
-     */
-    public function addTypeQueryBuilder(Builder $queryBuilder, $typeFound)
+    public function addTypeQueryBuilder(Builder $queryBuilder, ?string $typeFound): Builder
     {
         $type = '';
         switch ($typeFound) {
@@ -154,120 +122,83 @@ class SearchService
         return $queryBuilder;
     }
 
-    /**
-     * @param Builder $queryBuilder
-     * @param string  $durationFound
-     *
-     * @return Builder
-     */
-    public function addDurationQueryBuilder(Builder $queryBuilder, $durationFound)
+    public function addDurationQueryBuilder(Builder $queryBuilder, ?string $durationFound): Builder
     {
-        if ('' != $durationFound) {
-            if ('-5' == $durationFound) {
-                $queryBuilder->field('tracks.duration')->lte(300);
-            }
-            if ('-10' == $durationFound) {
-                $queryBuilder->field('tracks.duration')->lte(600);
-            }
-            if ('-30' == $durationFound) {
-                $queryBuilder->field('tracks.duration')->lte(1800);
-            }
-            if ('-60' == $durationFound) {
-                $queryBuilder->field('tracks.duration')->lte(3600);
-            }
-            if ('+60' == $durationFound) {
-                $queryBuilder->field('tracks.duration')->gt(3600);
-            }
+        if ('' === $durationFound) {
+            return $queryBuilder;
+        }
+
+        if ('-5' === $durationFound) {
+            $queryBuilder->field('tracks.duration')->lte(300);
+        }
+        if ('-10' === $durationFound) {
+            $queryBuilder->field('tracks.duration')->lte(600);
+        }
+        if ('-30' === $durationFound) {
+            $queryBuilder->field('tracks.duration')->lte(1800);
+        }
+        if ('-60' === $durationFound) {
+            $queryBuilder->field('tracks.duration')->lte(3600);
+        }
+        if ('+60' === $durationFound) {
+            $queryBuilder->field('tracks.duration')->gt(3600);
         }
 
         return $queryBuilder;
     }
 
-    /**
-     * @param Builder $queryBuilder
-     * @param string  $locale
-     * @param string  $searchFound
-     *
-     * @throws \MongoException
-     *
-     * @return Builder
-     */
-    public function addSearchQueryBuilder(Builder $queryBuilder, $locale, $searchFound)
+    public function addSearchQueryBuilder(Builder $queryBuilder, string $locale, ?string $searchFound): Builder
     {
         $searchFound = trim($searchFound);
 
         if ((false !== strpos($searchFound, '*')) && (false === strpos($searchFound, ' '))) {
             $searchFound = str_replace('*', '.*', $searchFound);
-            $mRegex = new Regex("{$searchFound}", 'i');
+            $mRegex = new Regex($searchFound, 'i');
             $queryBuilder->addOr($queryBuilder->expr()->field('title.'.$locale)->equals($mRegex));
             $queryBuilder->addOr($queryBuilder->expr()->field('people.people.name')->equals($mRegex));
-        } elseif ('' != $searchFound) {
-            $queryBuilder->field('$text')->equals([
-                '$search' => TextIndexUtils::cleanTextIndex($searchFound),
-                '$language' => TextIndexUtils::getCloseLanguage($locale),
-            ]);
+        } elseif ('' !== $searchFound) {
+            $queryBuilder->text(TextIndexUtils::cleanTextIndex($searchFound));
+            $queryBuilder->language(TextIndexUtils::getCloseLanguage($locale));
         }
 
         return $queryBuilder;
     }
 
-    /**
-     * @param Builder $queryBuilder
-     * @param string  $startFound
-     * @param string  $endFound
-     * @param string  $yearFound
-     * @param string  $dateField
-     *
-     * @return mixed
-     */
-    public function addDateQueryBuilder(Builder $queryBuilder, $startFound, $endFound, $yearFound, $dateField = 'record_date')
+    public function addDateQueryBuilder(Builder $queryBuilder, ?string $startFound, ?string $endFound, ?string $yearFound, string $dateField = 'record_date'): Builder
     {
         if (null !== $yearFound && '' !== $yearFound) {
             $start = \DateTime::createFromFormat('d/m/Y:H:i:s', sprintf('01/01/%s:00:00:00', $yearFound));
             $end = \DateTime::createFromFormat('d/m/Y:H:i:s', sprintf('01/01/%s:00:00:00', (int) $yearFound + 1));
             $queryBuilder->field($dateField)->gte($start);
             $queryBuilder->field($dateField)->lt($end);
-        } else {
-            if ('' != $startFound) {
-                $start = \DateTime::createFromFormat('!Y-m-d', $startFound);
-                $queryBuilder->field($dateField)->gt($start);
-            }
-            if ('' != $endFound) {
-                $end = \DateTime::createFromFormat('!Y-m-d', $endFound);
-                $end->modify('+1 day');
-                $queryBuilder->field($dateField)->lt($end);
-            }
+
+            return $queryBuilder;
+        }
+
+        if (null !== $startFound && '' !== $startFound) {
+            $start = \DateTime::createFromFormat('!Y-m-d', $startFound);
+            $queryBuilder->field($dateField)->gt($start);
+        }
+
+        if (null !== $endFound && '' !== $endFound) {
+            $end = \DateTime::createFromFormat('!Y-m-d', $endFound);
+            $end->modify('+1 day');
+            $queryBuilder->field($dateField)->lt($end);
         }
 
         return $queryBuilder;
     }
 
-    /**
-     * @param Builder $queryBuilder
-     * @param string  $languageFound
-     *
-     * @return Builder
-     */
-    public function addLanguageQueryBuilder(Builder $queryBuilder, $languageFound)
+    public function addLanguageQueryBuilder(Builder $queryBuilder, ?string $languageFound): Builder
     {
-        if ('' != $languageFound) {
+        if (null !== $languageFound && '' !== $languageFound) {
             $queryBuilder->field('tracks.language')->equals($languageFound);
         }
 
         return $queryBuilder;
     }
 
-    /**
-     * @param Builder    $queryBuilder
-     * @param array|null $tagsFound
-     * @param Tag|null   $blockedTag
-     * @param bool       $useTagAsGeneral
-     *
-     * @throws \MongoException
-     *
-     * @return Builder
-     */
-    public function addTagsQueryBuilder(Builder $queryBuilder, array $tagsFound = null, Tag $blockedTag = null, $useTagAsGeneral = false)
+    public function addTagsQueryBuilder(Builder $queryBuilder, array $tagsFound = null, Tag $blockedTag = null, bool $useTagAsGeneral = false): Builder
     {
         if (null !== $blockedTag) {
             $tagsFound[] = $blockedTag->getCod();
@@ -281,39 +212,27 @@ class SearchService
         }
 
         if ($useTagAsGeneral && null !== $blockedTag) {
-            $queryBuilder->field('tags.path')->notIn([new Regex(preg_quote($blockedTag->getPath()).'.*\|/')]);
+            $queryBuilder->field('tags.path')->notIn([new Regex($blockedTag->getPath().'.*\|/')]);
         }
 
         return $queryBuilder;
     }
 
-    /**
-     * @param Builder $queryBuilder
-     *
-     * @return Builder
-     */
-    public function addValidSeriesQueryBuilder(Builder $queryBuilder)
+    public function addValidSeriesQueryBuilder(Builder $queryBuilder): Builder
     {
         $validSeries = $this->documentManager->getRepository(MultimediaObject::class)
             ->createStandardQueryBuilder()
             ->distinct('series')
             ->getQuery()
             ->execute()
-            ->toArray()
         ;
 
         return $queryBuilder->field('_id')->in($validSeries);
     }
 
-    /**
-     * @param Builder $queryBuilder
-     * @param string  $license
-     *
-     * @return Builder
-     */
-    public function addLicenseQueryBuilder(Builder $queryBuilder, $license)
+    public function addLicenseQueryBuilder(Builder $queryBuilder, ?string $license): Builder
     {
-        if ('' === $license || !$license) {
+        if (null === $license || '' === $license) {
             return $queryBuilder;
         }
 

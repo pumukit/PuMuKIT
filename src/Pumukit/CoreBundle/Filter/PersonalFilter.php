@@ -2,23 +2,12 @@
 
 namespace Pumukit\CoreBundle\Filter;
 
-use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 
 class PersonalFilter extends WebTVFilter
 {
-    public function addFilterCriteria(ClassMetadata $targetDocument)
-    {
-        if (MultimediaObject::class === $targetDocument->reflClass->name) {
-            return $this->getMultimediaObjectCriteria();
-        }
-        if (Series::class === $targetDocument->reflClass->name) {
-            return $this->getSeriesCriteria();
-        }
-    }
-
-    protected function getMultimediaObjectCriteria()
+    protected function getMultimediaObjectCriteria(): array
     {
         $criteria = [];
         $criteria_portal = parent::getMultimediaObjectCriteria();
@@ -38,7 +27,7 @@ class PersonalFilter extends WebTVFilter
         return $criteria;
     }
 
-    protected function getSeriesCriteria()
+    protected function getSeriesCriteria(): array
     {
         $criteria = [];
         if (isset($this->parameters['person_id'], $this->parameters['role_code'], $this->parameters['series_groups'])) {
@@ -53,19 +42,10 @@ class PersonalFilter extends WebTVFilter
     }
 
     /**
-     * Get series mongo query
-     * Match the Series
-     * with given ids.
-     * Query in MongoDB:
-     * db.Series.find({ "_id": { "$in": [ ObjectId("__id_1__"), ObjectId("__id_2__")... ] } });.
-     *
-     * @param string|null $personId
-     * @param string|null $roleCode
-     * @param array       $groups
-     *
-     * @return array
+     * Get series mongo query Match the Series with given ids.
+     * Query in MongoDB: db.Series.find({ "_id": { "$in": [ ObjectId("__id_1__"), ObjectId("__id_2__")... ] } });.
      */
-    private function getSeriesMongoQuery($personId, $roleCode, $groups)
+    private function getSeriesMongoQuery(?string $personId, ?string $roleCode, array $groups): array
     {
         $seriesIds = [];
         if ((null !== $personId) && (null !== $roleCode)) {

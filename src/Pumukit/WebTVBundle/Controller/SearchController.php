@@ -2,75 +2,105 @@
 
 namespace Pumukit\WebTVBundle\Controller;
 
-use Doctrine\ODM\MongoDB\Query\Builder;
-use Pagerfanta\Pagerfanta;
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
+use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Pumukit\WebTVBundle\Services\SearchService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * Class SearchController.
- */
-class SearchController extends Controller implements WebTVControllerInterface
+class SearchController extends AbstractController implements WebTVControllerInterface
 {
+    /** @var TranslatorInterface */
+    private $translator;
+
+    /** @var BreadcrumbsService */
+    private $breadcrumbsService;
+
+    /** @var SearchService */
+    private $searchService;
+
+    /** @var DocumentManager */
+    private $documentManager;
+
+    /** @var RequestStack */
+    private $requestStack;
+
+    /** @var PaginationService */
+    private $paginationService;
+
+    private $menuSearchTitle;
+    private $columnsObjsSearch;
+    private $pumukitNewAdminLicenses;
+    private $limitObjsSearch;
+
+    public function __construct(
+        TranslatorInterface $translator,
+        BreadcrumbsService $breadcrumbsService,
+        SearchService $searchService,
+        DocumentManager $documentManager,
+        RequestStack $requestStack,
+        PaginationService $paginationService,
+        $menuSearchTitle,
+        $columnsObjsSearch,
+        $pumukitNewAdminLicenses,
+        $limitObjsSearch
+    ) {
+        $this->translator = $translator;
+        $this->breadcrumbsService = $breadcrumbsService;
+        $this->searchService = $searchService;
+        $this->documentManager = $documentManager;
+        $this->requestStack = $requestStack;
+        $this->paginationService = $paginationService;
+        $this->menuSearchTitle = $menuSearchTitle;
+        $this->columnsObjsSearch = $columnsObjsSearch;
+        $this->pumukitNewAdminLicenses = $pumukitNewAdminLicenses;
+        $this->limitObjsSearch = $limitObjsSearch;
+    }
+
     /**
      * @Route("/searchseries", name="pumukit_webtv_search_series")
-     * @Template("PumukitWebTVBundle:Search:template.html.twig")
-     *
-     * @param Request $request
-     *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     * @throws \MongoException
-     *
-     * @return array
+     * @Template("@PumukitWebTV/Search/template.html.twig")
      */
     public function seriesAction(Request $request)
     {
-        // Setting breadcrumb
-        $templateTitle = 'Series search';
-        $templateTitle = $this->get('translator')->trans($templateTitle);
-        $this->get('pumukit_web_tv.breadcrumbs')->addList($templateTitle, 'pumukit_webtv_search_series');
+        $this->breadcrumbsService->addList($this->translator->trans('Series search'), 'pumukit_webtv_search_series');
 
-        // Get selecting data form
-        $searchYears = $this->get('pumukit_web_tv.search_service')->getYears(SearchService::SERIES);
-        $numberCols = $this->container->getParameter('columns_objs_search');
+        $searchYears = $this->searchService->getYears(SearchService::SERIES);
 
-        // Generate QueryBuilder search
         $searchFound = $request->query->get('search');
         $startFound = $request->query->get('start');
         $endFound = $request->query->get('end');
         $yearFound = $request->query->get('year');
 
-        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $request = $this->requestStack->getCurrentRequest();
         $queryBuilder = $this->createSeriesQueryBuilder();
-        $queryBuilder = $this->get('pumukit_web_tv.search_service')->addValidSeriesQueryBuilder($queryBuilder);
-        $queryBuilder = $this->get('pumukit_web_tv.search_service')->addSearchQueryBuilder($queryBuilder, $request->getLocale(), $searchFound);
-        $queryBuilder = $this->get('pumukit_web_tv.search_service')->addDateQueryBuilder($queryBuilder, $startFound, $endFound, $yearFound, 'public_date');
-        if ('' == $searchFound) {
+        $queryBuilder = $this->searchService->addValidSeriesQueryBuilder($queryBuilder);
+        $queryBuilder = $this->searchService->addSearchQueryBuilder($queryBuilder, $request->getLocale(), $searchFound);
+        $queryBuilder = $this->searchService->addDateQueryBuilder($queryBuilder, $startFound, $endFound, $yearFound, 'public_date');
+        if ('' === $searchFound) {
             $queryBuilder = $queryBuilder->sort('public_date', 'desc');
         } else {
             $queryBuilder = $queryBuilder->sortMeta('score', 'textScore');
         }
 
-        // --- END Create QueryBuilder ---
-
-        // --- Execute QueryBuilder and get paged results ---
         [$pager, $totalObjects] = $this->createPager($queryBuilder, $request->query->get('page', 1));
 
-        // --- RETURN ---
         return [
             'type' => 'series',
             'objects' => $pager,
             'search_years' => $searchYears,
-            'objectByCol' => $numberCols,
+            'objectByCol' => $this->columnsObjsSearch,
             'total_objects' => $totalObjects,
             'show_info' => true,
             'with_publicdate' => true,
@@ -81,32 +111,17 @@ class SearchController extends Controller implements WebTVControllerInterface
     /**
      * @Route("/searchmultimediaobjects/{tagCod}/{useTagAsGeneral}", defaults={"tagCod": null, "useTagAsGeneral": false}, name="pumukit_webtv_search_multimediaobjects")
      * @ParamConverter("blockedTag", class="PumukitSchemaBundle:Tag", options={"mapping": {"tagCod": "cod"}})
-     * @Template("PumukitWebTVBundle:Search:template.html.twig")
-     *
-     * @param Request  $request
-     * @param Tag|null $blockedTag
-     * @param bool     $useTagAsGeneral
-     *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     * @throws \MongoException
-     *
-     * @return array
+     * @Template("@PumukitWebTV/Search/template.html.twig")
      */
-    public function multimediaObjectsAction(Request $request, Tag $blockedTag = null, $useTagAsGeneral = false)
+    public function multimediaObjectsAction(Request $request, Tag $blockedTag = null, bool $useTagAsGeneral = false)
     {
-        // Setting breadcrumb
-        $templateTitle = $this->container->getParameter('menu.search_title') ?: 'Multimedia objects search';
-        $templateTitle = $this->get('translator')->trans($templateTitle);
-        $this->get('pumukit_web_tv.breadcrumbs')->addList($blockedTag ? $blockedTag->getTitle() : $templateTitle, 'pumukit_webtv_search_multimediaobjects');
+        $templateTitle = $this->menuSearchTitle ?? 'Multimedia objects search';
+        $this->breadcrumbsService->addList($blockedTag ? $blockedTag->getTitle() : $this->translator->trans($templateTitle), 'pumukit_webtv_search_multimediaobjects');
 
-        // Get selecting data form
-        [$parentTag, $parentTagOptional] = $this->get('pumukit_web_tv.search_service')->getSearchTags();
-        $searchLanguages = $this->get('pumukit_web_tv.search_service')->getLanguages();
-        $searchYears = $this->get('pumukit_web_tv.search_service')->getYears(SearchService::MULTIMEDIA_OBJECT);
-        $numberCols = $this->container->getParameter('columns_objs_search');
-        $licenses = $this->container->getParameter('pumukit_new_admin.licenses');
+        [$parentTag, $parentTagOptional] = $this->searchService->getSearchTags();
+        $searchLanguages = $this->searchService->getLanguages();
+        $searchYears = $this->searchService->getYears(SearchService::MULTIMEDIA_OBJECT);
 
-        // Generate QueryBuilder search
         $searchFound = $request->query->get('search');
         $tagsFound = $request->query->get('tags');
         $typeFound = $request->query->get('type');
@@ -117,18 +132,18 @@ class SearchController extends Controller implements WebTVControllerInterface
         $languageFound = $request->query->get('language');
         $license = $request->query->get('license');
 
-        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $request = $this->requestStack->getCurrentRequest();
         $queryBuilder = $this->createMultimediaObjectQueryBuilder();
-        $queryBuilder = $this->get('pumukit_web_tv.search_service')->addSearchQueryBuilder($queryBuilder, $request->getLocale(), $searchFound);
-        $queryBuilder = $this->get('pumukit_web_tv.search_service')->addTypeQueryBuilder($queryBuilder, $typeFound);
-        $queryBuilder = $this->get('pumukit_web_tv.search_service')->addDurationQueryBuilder($queryBuilder, $durationFound);
-        $queryBuilder = $this->get('pumukit_web_tv.search_service')->addDateQueryBuilder($queryBuilder, $startFound, $endFound, $yearFound);
-        $queryBuilder = $this->get('pumukit_web_tv.search_service')->addLanguageQueryBuilder($queryBuilder, $languageFound);
-        $queryBuilder = $this->get('pumukit_web_tv.search_service')->addTagsQueryBuilder($queryBuilder, $tagsFound, $blockedTag, $useTagAsGeneral);
-        $queryBuilder = $this->get('pumukit_web_tv.search_service')->addLicenseQueryBuilder($queryBuilder, $license);
+        $queryBuilder = $this->searchService->addSearchQueryBuilder($queryBuilder, $request->getLocale(), $searchFound);
+        $queryBuilder = $this->searchService->addTypeQueryBuilder($queryBuilder, $typeFound);
+        $queryBuilder = $this->searchService->addDurationQueryBuilder($queryBuilder, $durationFound);
+        $queryBuilder = $this->searchService->addDateQueryBuilder($queryBuilder, $startFound, $endFound, $yearFound);
+        $queryBuilder = $this->searchService->addLanguageQueryBuilder($queryBuilder, $languageFound);
+        $queryBuilder = $this->searchService->addTagsQueryBuilder($queryBuilder, $tagsFound, $blockedTag, $useTagAsGeneral);
+        $queryBuilder = $this->searchService->addLicenseQueryBuilder($queryBuilder, $license);
 
         $templateListGrouped = false;
-        if ('' == $searchFound) {
+        if ('' === $searchFound) {
             $queryBuilder = $queryBuilder->sort('record_date', 'desc');
             $templateListGrouped = true;
         } else {
@@ -149,8 +164,8 @@ class SearchController extends Controller implements WebTVControllerInterface
             'parent_tag' => $parentTag,
             'parent_tag_optional' => $parentTagOptional,
             'tags_found' => $tagsFound,
-            'objectByCol' => $numberCols,
-            'licenses' => $licenses,
+            'objectByCol' => $this->columnsObjsSearch,
+            'licenses' => $this->pumukitNewAdminLicenses,
             'languages' => $searchLanguages,
             'blocked_tag' => $blockedTag,
             'search_years' => $searchYears,
@@ -161,20 +176,11 @@ class SearchController extends Controller implements WebTVControllerInterface
         ];
     }
 
-    /**
-     * @param array $objects
-     * @param int   $page
-     *
-     * @throws \Exception
-     *
-     * @return mixed|Pagerfanta
-     */
     protected function createPager($objects, $page)
     {
-        $limit = $this->container->getParameter('limit_objs_search');
-        $pager = $this->get('pumukit_core.pagination_service')->createDoctrineODMMongoDBAdapter($objects, $page, $limit);
+        $pager = $this->paginationService->createDoctrineODMMongoDBAdapter($objects, $page, $this->limitObjsSearch);
 
-        $pager->getCurrentPageResults(); // TTK-17149 force the complete search query to avoid a new query to count
+        $pager->getCurrentPageResults();
         $totalObjects = $pager->getNbResults();
 
         return [
@@ -183,23 +189,13 @@ class SearchController extends Controller implements WebTVControllerInterface
         ];
     }
 
-    /**
-     * @return Builder
-     */
     protected function createSeriesQueryBuilder()
     {
-        $repo = $this->get('doctrine_mongodb')->getRepository(Series::class);
-
-        return $repo->createQueryBuilder();
+        return $this->documentManager->getRepository(Series::class)->createQueryBuilder();
     }
 
-    /**
-     * @return Builder
-     */
     protected function createMultimediaObjectQueryBuilder()
     {
-        $repo = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
-
-        return $repo->createStandardQueryBuilder();
+        return $this->documentManager->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
     }
 }

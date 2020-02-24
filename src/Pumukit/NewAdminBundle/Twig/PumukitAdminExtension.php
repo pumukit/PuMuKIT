@@ -14,7 +14,7 @@ use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Pumukit\SchemaBundle\Services\SpecialTranslationService;
-use Symfony\Component\Intl\Intl;
+use Symfony\Component\Intl\Languages;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Twig\Environment;
@@ -38,7 +38,7 @@ class PumukitAdminExtension extends AbstractExtension
     public function __construct(ProfileService $profileService, DocumentManager $documentManager, TranslatorInterface $translator, RouterInterface $router, MultimediaObjectService $mmobjService, SpecialTranslationService $specialTranslationService, EmbeddedEventSessionService $eventService)
     {
         $this->dm = $documentManager;
-        $this->languages = Intl::getLanguageBundle()->getLanguageNames();
+        $this->languages = Languages::getNames();
         $this->profileService = $profileService;
         $this->translator = $translator;
         $this->router = $router;
@@ -137,10 +137,17 @@ class PumukitAdminExtension extends AbstractExtension
     {
         $addonLanguages = CustomLanguageType::$addonLanguages;
 
+        if ('zh-CN' === $code) {
+            return '简体中文';
+        }
+        if ('zh-TW' === $code) {
+            return '繁體中文';
+        }
+
         if (isset($this->languages[$code])) {
             $name = $translate ?
                   $this->languages[$code] :
-                  Intl::getLanguageBundle()->getLanguageName($code, null, $code);
+                  Languages::getName($code);
 
             return ucfirst($name);
         }
@@ -495,7 +502,7 @@ class PumukitAdminExtension extends AbstractExtension
             ['$group' => ['_id' => '$status',
                 'count' => ['$sum' => 1], ]],
         ];
-        $mmobjCounts = $seriesColl->aggregate($aggrPipe, ['cursor' => []])->toArray();
+        $mmobjCounts = iterator_to_array($seriesColl->aggregate($aggrPipe, ['cursor' => []]));
 
         foreach ($mmobjCounts as $mmobjCount) {
             switch ($mmobjCount['_id']) {

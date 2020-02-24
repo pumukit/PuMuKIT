@@ -2,22 +2,20 @@
 
 namespace Pumukit\EncoderBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Services\PicExtractorService;
 use Pumukit\InspectionBundle\Utils\TestCommand;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * @internal
  * @coversNothing
  */
-class PicExtractorServiceTest extends WebTestCase
+class PicExtractorServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $mmobjRepo;
     private $factory;
     private $picExtractor;
@@ -28,16 +26,15 @@ class PicExtractorServiceTest extends WebTestCase
     private $inspectionService;
     private $mmsPicService;
 
-    public function setUp()
+    public function setUp(): void
     {
         if (false === TestCommand::commandExists('/usr/local/bin/ffmpeg')) {
-            $this->markTestSkipped('PicExtractor test marks as skipped (No ffmpeg).');
+            static::markTestSkipped('PicExtractor test marks as skipped (No ffmpeg).');
         }
 
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        parent::setUp();
         $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
         $this->factory = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->picEventDispatcher = static::$kernel->getContainer()->get('pumukitschema.pic_dispatcher');
@@ -45,11 +42,6 @@ class PicExtractorServiceTest extends WebTestCase
         $this->resourcesDir = realpath(__DIR__.'/../Resources');
         $this->targetPath = $this->resourcesDir;
         $this->targetUrl = '/uploads';
-
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
-        $this->dm->flush();
-
         $mmsPicService = new MultimediaObjectPicService($this->dm, $this->picEventDispatcher, $this->targetPath, $this->targetUrl, false);
         $width = 304;
         $height = 242;
@@ -57,12 +49,10 @@ class PicExtractorServiceTest extends WebTestCase
         $this->picExtractor = new PicExtractorService($this->dm, $mmsPicService, $width, $height, $this->targetPath, $this->targetUrl, $command);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
-        if (isset($this->dm)) {
-            $this->dm->close();
-        }
-        $this->dm = null;
+        parent::tearDown();
+
         $this->mmobjRepo = null;
         $this->factory = null;
         $this->mmsPicService = null;
@@ -72,7 +62,6 @@ class PicExtractorServiceTest extends WebTestCase
         $this->targetUrl = null;
         $this->picExtractor = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testExtractPic()
@@ -92,17 +81,17 @@ class PicExtractorServiceTest extends WebTestCase
 
         $output = $this->picExtractor->extractPic($multimediaObject, $track, '25%');
 
-        $this->assertStringStartsWith('Captured the FRAME', $output);
+        static::assertStringStartsWith('Captured the FRAME', $output);
 
         $multimediaObject = $this->mmobjRepo->find($multimediaObject->getId());
         $pic = $multimediaObject->getPics()[0];
 
-        $this->assertNotNull($pic->getWidth());
-        $this->assertNotNull($pic->getHeight());
+        static::assertNotNull($pic->getWidth());
+        static::assertNotNull($pic->getHeight());
 
-        $this->assertStringStartsWith($this->resourcesDir, $pic->getPath());
+        static::assertStringStartsWith($this->resourcesDir, $pic->getPath());
 
-        $this->assertStringStartsWith($this->targetUrl, $pic->getUrl());
+        static::assertStringStartsWith($this->targetUrl, $pic->getUrl());
 
         $this->deleteCreatedFiles();
     }

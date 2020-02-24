@@ -65,8 +65,6 @@ trait Keywords
 
     /**
      * Set I18n keyword.
-     *
-     * @param array $keyword
      */
     public function setI18nKeyword(array $keyword)
     {
@@ -167,7 +165,6 @@ trait Keywords
     /**
      * Set keywords.
      *
-     * @param array       $keywords
      * @param string|null $locale
      */
     public function setKeywords(array $keywords, $locale = null)
@@ -199,8 +196,6 @@ trait Keywords
 
     /**
      * Set I18n keywords.
-     *
-     * @param array $keywords
      */
     public function setI18nKeywords(array $keywords)
     {

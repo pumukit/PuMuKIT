@@ -6,6 +6,8 @@ interface TagInterface
 {
     public function __toString(): string;
 
+    public function getId();
+
     public function getTitle(string $locale = null): string;
 
     public function setTitle(string $title, string $locale = null): void;

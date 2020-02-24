@@ -13,12 +13,7 @@ use Pumukit\EncoderBundle\Document\Job;
  */
 class JobRepository extends DocumentRepository
 {
-    /**
-     * Create query builder for all jobs with given status.
-     *
-     * @param mixed $sort
-     */
-    public function createQueryWithStatus(array $status, $sort = [])
+    public function createQueryWithStatus(array $status, ?array $sort = [])
     {
         $qb = $this->createQueryBuilder()
             ->field('status')->in($status);
@@ -30,14 +25,18 @@ class JobRepository extends DocumentRepository
         return $qb;
     }
 
-    /**
-     * Find all jobs with given status.
-     *
-     * @param mixed $sort
-     */
-    public function findWithStatus(array $status, $sort = [])
+    public function findWithStatus(array $status, ?array $sort = [])
     {
         return $this->createQueryWithStatus($status, $sort)
+            ->getQuery()
+            ->execute()
+        ;
+    }
+
+    public function countWithStatus(array $status, ?array $sort = [])
+    {
+        return $this->createQueryWithStatus($status, $sort)
+            ->count()
             ->getQuery()
             ->execute()
         ;

@@ -21,14 +21,12 @@ class TrackEventDispatcherServiceTest extends WebTestCase
     private $trackDispatcher;
     private $dispatcher;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->dispatcher = static::$kernel->getContainer()
-            ->get('event_dispatcher')
-        ;
+        $this->dispatcher = static::$kernel->getContainer()->get('event_dispatcher');
 
         MockUpTrackListener::$called = false;
         MockUpTrackListener::$title = self::EMPTY_TITLE;
@@ -37,7 +35,7 @@ class TrackEventDispatcherServiceTest extends WebTestCase
         $this->trackDispatcher = new TrackEventDispatcherService($this->dispatcher);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->dispatcher = null;
         $this->trackDispatcher = null;
@@ -48,8 +46,8 @@ class TrackEventDispatcherServiceTest extends WebTestCase
     public function testDispatchCreate()
     {
         $this->dispatcher->addListener(SchemaEvents::TRACK_CREATE, function ($event, $name) {
-            $this->assertTrue($event instanceof TrackEvent);
-            $this->assertEquals(SchemaEvents::TRACK_CREATE, $name);
+            static::assertInstanceOf(TrackEvent::class, $event);
+            static::assertEquals(SchemaEvents::TRACK_CREATE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
             $track = $event->getTrack();
@@ -59,9 +57,9 @@ class TrackEventDispatcherServiceTest extends WebTestCase
             MockUpTrackListener::$url = $track->getUrl();
         });
 
-        $this->assertFalse(MockUpTrackListener::$called);
-        $this->assertEquals(self::EMPTY_TITLE, MockUpTrackListener::$title);
-        $this->assertEquals(self::EMPTY_URL, MockUpTrackListener::$url);
+        static::assertFalse(MockUpTrackListener::$called);
+        static::assertEquals(self::EMPTY_TITLE, MockUpTrackListener::$title);
+        static::assertEquals(self::EMPTY_URL, MockUpTrackListener::$url);
 
         $title = 'test title';
         $url = 'http://testtrack.com';
@@ -74,16 +72,16 @@ class TrackEventDispatcherServiceTest extends WebTestCase
 
         $this->trackDispatcher->dispatchCreate($multimediaObject, $track);
 
-        $this->assertTrue(MockUpTrackListener::$called);
-        $this->assertEquals($title, MockUpTrackListener::$title);
-        $this->assertEquals($url, MockUpTrackListener::$url);
+        static::assertTrue(MockUpTrackListener::$called);
+        static::assertEquals($title, MockUpTrackListener::$title);
+        static::assertEquals($url, MockUpTrackListener::$url);
     }
 
     public function testDispatchUpdate()
     {
         $this->dispatcher->addListener(SchemaEvents::TRACK_UPDATE, function ($event, $name) {
-            $this->assertTrue($event instanceof TrackEvent);
-            $this->assertEquals(SchemaEvents::TRACK_UPDATE, $name);
+            static::assertInstanceOf(TrackEvent::class, $event);
+            static::assertEquals(SchemaEvents::TRACK_UPDATE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
             $track = $event->getTrack();
@@ -93,9 +91,9 @@ class TrackEventDispatcherServiceTest extends WebTestCase
             MockUpTrackListener::$url = $track->getUrl();
         });
 
-        $this->assertFalse(MockUpTrackListener::$called);
-        $this->assertEquals(self::EMPTY_TITLE, MockUpTrackListener::$title);
-        $this->assertEquals(self::EMPTY_URL, MockUpTrackListener::$url);
+        static::assertFalse(MockUpTrackListener::$called);
+        static::assertEquals(self::EMPTY_TITLE, MockUpTrackListener::$title);
+        static::assertEquals(self::EMPTY_URL, MockUpTrackListener::$url);
 
         $title = 'test title';
         $url = 'http://testtrack.com';
@@ -111,16 +109,16 @@ class TrackEventDispatcherServiceTest extends WebTestCase
 
         $this->trackDispatcher->dispatchUpdate($multimediaObject, $track);
 
-        $this->assertTrue(MockUpTrackListener::$called);
-        $this->assertEquals($title, MockUpTrackListener::$title);
-        $this->assertEquals($updateUrl, MockUpTrackListener::$url);
+        static::assertTrue(MockUpTrackListener::$called);
+        static::assertEquals($title, MockUpTrackListener::$title);
+        static::assertEquals($updateUrl, MockUpTrackListener::$url);
     }
 
     public function testDispatchDelete()
     {
         $this->dispatcher->addListener(SchemaEvents::TRACK_DELETE, function ($event, $name) {
-            $this->assertTrue($event instanceof TrackEvent);
-            $this->assertEquals(SchemaEvents::TRACK_DELETE, $name);
+            static::assertInstanceOf(TrackEvent::class, $event);
+            static::assertEquals(SchemaEvents::TRACK_DELETE, $name);
 
             $multimediaObject = $event->getMultimediaObject();
             $track = $event->getTrack();
@@ -130,9 +128,9 @@ class TrackEventDispatcherServiceTest extends WebTestCase
             MockUpTrackListener::$url = $track->getUrl();
         });
 
-        $this->assertFalse(MockUpTrackListener::$called);
-        $this->assertEquals(self::EMPTY_TITLE, MockUpTrackListener::$title);
-        $this->assertEquals(self::EMPTY_URL, MockUpTrackListener::$url);
+        static::assertFalse(MockUpTrackListener::$called);
+        static::assertEquals(self::EMPTY_TITLE, MockUpTrackListener::$title);
+        static::assertEquals(self::EMPTY_URL, MockUpTrackListener::$url);
 
         $title = 'test title';
         $url = 'http://testtrack.com';
@@ -145,9 +143,9 @@ class TrackEventDispatcherServiceTest extends WebTestCase
 
         $this->trackDispatcher->dispatchDelete($multimediaObject, $track);
 
-        $this->assertTrue(MockUpTrackListener::$called);
-        $this->assertEquals($title, MockUpTrackListener::$title);
-        $this->assertEquals($url, MockUpTrackListener::$url);
+        static::assertTrue(MockUpTrackListener::$called);
+        static::assertEquals($title, MockUpTrackListener::$title);
+        static::assertEquals($url, MockUpTrackListener::$url);
     }
 }
 

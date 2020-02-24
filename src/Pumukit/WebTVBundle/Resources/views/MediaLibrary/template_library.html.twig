@@ -10,10 +10,10 @@
                     {% set object = serie %}
                     {% set num_mmobjs = aggregated_num_mmobjs[serie.id] | default(0) %}
                     {% if catalogue_thumbnails | default(false) %}
-                        {% include 'PumukitWebTVBundle:Resources:template_series.html.twig' %}
-                        {% include "PumukitWebTVBundle:Resources:template_clearfix.html.twig" %}
+                        {% include '@PumukitWebTV/Resources/template_series.html.twig' %}
+                        {% include "@PumukitWebTV/Resources/template_clearfix.html.twig" %}
                     {% else %}
-                        {% include 'PumukitWebTVBundle:Misc:series_text.html.twig' with {'cols': number_cols, 'num_mmobjs': num_mmobjs } %}
+                        {% include '@PumukitWebTV/Misc/series_text.html.twig' with {'cols': number_cols, 'num_mmobjs': num_mmobjs } %}
                     {% endif %}
                 {% endfor %}
             </div>

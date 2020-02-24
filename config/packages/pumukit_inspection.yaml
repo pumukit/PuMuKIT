@@ -1,0 +1,13 @@
+services:
+  _defaults:
+    autowire:      true
+    autoconfigure: true
+    public:        true
+
+  Pumukit\InspectionBundle\Services\InspectionServiceInterface:
+    class: Pumukit\InspectionBundle\Services\InspectionServiceInterface
+
+  Pumukit\InspectionBundle\Services\InspectionFfprobeService:
+    class: Pumukit\InspectionBundle\Services\InspectionFfprobeService
+    arguments:
+      $command: '%pumukit.inspection.command%'

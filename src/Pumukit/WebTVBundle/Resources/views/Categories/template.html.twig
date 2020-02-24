@@ -1,4 +1,4 @@
-{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+{% extends '@PumukitWebTV/layout.html.twig' %}
 
 {% block body %}
     <h1 class="title-for-crumbs">{{ title|trans }}</h1>
@@ -9,9 +9,7 @@
                     {{ parent.title }}
                     {% set count = parent.num_mmobjs %}
                     <small>
-                        ({% transchoice count %}
-                        {0}no videos yet|{1}1 video|]1,Inf[%count% videos
-                        {% endtranschoice %})
+                        {{ "{0}no videos yet|{1}1 video|]1,Inf[%count% videos"|trans({'%count%':  count}) }}
                     </small>
                 </h2>
             </a>

@@ -2,37 +2,31 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Event\PermissionProfileEvent;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Services\PermissionProfileEventDispatcherService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * @internal
  * @coversNothing
  */
-class PermissionProfileEventDispatcherServiceTest extends WebTestCase
+class PermissionProfileEventDispatcherServiceTest extends PumukitTestCase
 {
     const EMPTY_NAME = 'EMTPY_NAME';
 
-    private $dm;
     private $permissionProfileDispatcher;
     private $dispatcher;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
+        parent::setUp();
 
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb.odm.document_manager')
-        ;
         $this->dispatcher = new EventDispatcher();
-
-        $this->dm->getDocumentCollection(PermissionProfile::class)->remove([]);
-        $this->dm->flush();
 
         MockUpPermissionProfileListener::$called = false;
         MockUpPermissionProfileListener::$name = self::EMPTY_NAME;
@@ -40,21 +34,21 @@ class PermissionProfileEventDispatcherServiceTest extends WebTestCase
         $this->permissionProfileDispatcher = new PermissionProfileEventDispatcherService($this->dispatcher);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->dispatcher = null;
         $this->permissionProfileDispatcher = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testDispatchCreate()
     {
         $this->dispatcher->addListener(SchemaEvents::PERMISSIONPROFILE_CREATE, function ($event, $name) {
-            $this->assertTrue($event instanceof PermissionProfileEvent);
-            $this->assertEquals(SchemaEvents::PERMISSIONPROFILE_CREATE, $name);
+            static::assertInstanceOf(PermissionProfileEvent::class, $event);
+            static::assertEquals(SchemaEvents::PERMISSIONPROFILE_CREATE, $name);
 
             $permissionProfile = $event->getPermissionProfile();
 
@@ -62,8 +56,8 @@ class PermissionProfileEventDispatcherServiceTest extends WebTestCase
             MockUpPermissionProfileListener::$name = $permissionProfile->getName();
         });
 
-        $this->assertFalse(MockUpPermissionProfileListener::$called);
-        $this->assertEquals(self::EMPTY_NAME, MockUpPermissionProfileListener::$name);
+        static::assertFalse(MockUpPermissionProfileListener::$called);
+        static::assertEquals(self::EMPTY_NAME, MockUpPermissionProfileListener::$name);
 
         $name = 'test_name';
 
@@ -75,15 +69,15 @@ class PermissionProfileEventDispatcherServiceTest extends WebTestCase
 
         $this->permissionProfileDispatcher->dispatchCreate($permissionProfile);
 
-        $this->assertTrue(MockUpPermissionProfileListener::$called);
-        $this->assertEquals($name, MockUpPermissionProfileListener::$name);
+        static::assertTrue(MockUpPermissionProfileListener::$called);
+        static::assertEquals($name, MockUpPermissionProfileListener::$name);
     }
 
     public function testDispatchUpdate()
     {
         $this->dispatcher->addListener(SchemaEvents::PERMISSIONPROFILE_UPDATE, function ($event, $name) {
-            $this->assertTrue($event instanceof PermissionProfileEvent);
-            $this->assertEquals(SchemaEvents::PERMISSIONPROFILE_UPDATE, $name);
+            static::assertInstanceOf(PermissionProfileEvent::class, $event);
+            static::assertEquals(SchemaEvents::PERMISSIONPROFILE_UPDATE, $name);
 
             $permissionProfile = $event->getPermissionProfile();
 
@@ -91,8 +85,8 @@ class PermissionProfileEventDispatcherServiceTest extends WebTestCase
             MockUpPermissionProfileListener::$name = $permissionProfile->getName();
         });
 
-        $this->assertFalse(MockUpPermissionProfileListener::$called);
-        $this->assertEquals(self::EMPTY_NAME, MockUpPermissionProfileListener::$name);
+        static::assertFalse(MockUpPermissionProfileListener::$called);
+        static::assertEquals(self::EMPTY_NAME, MockUpPermissionProfileListener::$name);
 
         $name = 'test_name';
 
@@ -110,15 +104,15 @@ class PermissionProfileEventDispatcherServiceTest extends WebTestCase
 
         $this->permissionProfileDispatcher->dispatchUpdate($permissionProfile);
 
-        $this->assertTrue(MockUpPermissionProfileListener::$called);
-        $this->assertEquals($updateName, MockUpPermissionProfileListener::$name);
+        static::assertTrue(MockUpPermissionProfileListener::$called);
+        static::assertEquals($updateName, MockUpPermissionProfileListener::$name);
     }
 
     public function testDispatchDelete()
     {
         $this->dispatcher->addListener(SchemaEvents::PERMISSIONPROFILE_DELETE, function ($event, $name) {
-            $this->assertTrue($event instanceof PermissionProfileEvent);
-            $this->assertEquals(SchemaEvents::PERMISSIONPROFILE_DELETE, $name);
+            static::assertInstanceOf(PermissionProfileEvent::class, $event);
+            static::assertEquals(SchemaEvents::PERMISSIONPROFILE_DELETE, $name);
 
             $permissionProfile = $event->getPermissionProfile();
 
@@ -126,8 +120,8 @@ class PermissionProfileEventDispatcherServiceTest extends WebTestCase
             MockUpPermissionProfileListener::$name = $permissionProfile->getName();
         });
 
-        $this->assertFalse(MockUpPermissionProfileListener::$called);
-        $this->assertEquals(self::EMPTY_NAME, MockUpPermissionProfileListener::$name);
+        static::assertFalse(MockUpPermissionProfileListener::$called);
+        static::assertEquals(self::EMPTY_NAME, MockUpPermissionProfileListener::$name);
 
         $name = 'test_name';
 
@@ -139,8 +133,8 @@ class PermissionProfileEventDispatcherServiceTest extends WebTestCase
 
         $this->permissionProfileDispatcher->dispatchDelete($permissionProfile);
 
-        $this->assertTrue(MockUpPermissionProfileListener::$called);
-        $this->assertEquals($name, MockUpPermissionProfileListener::$name);
+        static::assertTrue(MockUpPermissionProfileListener::$called);
+        static::assertEquals($name, MockUpPermissionProfileListener::$name);
     }
 }
 

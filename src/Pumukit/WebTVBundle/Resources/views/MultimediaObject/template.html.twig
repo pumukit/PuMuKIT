@@ -1,4 +1,4 @@
-{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+{% extends '@PumukitWebTV/layout.html.twig' %}
 
 {% set hide_slidebar = true %}
 
@@ -29,15 +29,15 @@
         </div>
 
         <div class="col-xs-12 col-md-7 col-lg-8">
-            {% include 'PumukitWebTVBundle:Misc:magic_url_disclaimer.html.twig' %}
+            {% include '@PumukitWebTV/Misc/magic_url_disclaimer.html.twig' %}
 
-            {% include 'PumukitWebTVBundle:MultimediaObject:template_player.html.twig' %}
+            {% include '@PumukitWebTV/MultimediaObject/template_player.html.twig' %}
 
-            {{ render(controller('PumukitWebTVBundle:MultimediaObject:multimediaInfo', {'multimediaObject': multimediaObject})) }}
+            {{ render(controller('Pumukit\\WebTVBundle\\Controller\\MultimediaObjectController::multimediaInfoAction', {'multimediaObject': multimediaObject})) }}
         </div>
 
         <div class="col-xs-12 col-md-5 col-lg-4">
-            {% include "PumukitWebTVBundle:MultimediaObject:template_suggest.html.twig" %}
+            {% include "@PumukitWebTV/MultimediaObject/template_suggest.html.twig" %}
         </div>
     </div>
 

@@ -62,7 +62,7 @@
                     </div>
                 </td>
                 <td headers="th-icons" width="1%">
-                    {% include 'PumukitNewAdminBundle:LiveEvent:updatemenu.html.twig' %}
+                    {% include '@PumukitNewAdmin/LiveEvent/updatemenu.html.twig' %}
                 </td>
                 <td headers="th-videos-vod" width="12%">
                     <a href="{{ path('pumukitnewadmin_mms_index', {'id' : series.getId() }) }}" title="{% trans %}Videos VOD{% endtrans %}">
@@ -70,7 +70,7 @@
                     </a>
                 </td>
                 <td headers="th-image" style="cursor: pointer" width="3%" onclick="click_fila_edit_urls('events', this, '{{ showPath }}', '{{ loadPath }}')"  id="event_{{ multimediaObject.getId() }}">
-                    {% include "PumukitNewAdminBundle:Misc:img_list.html.twig" with {'object' : multimediaObject, 'type' : 'event'} %}
+                    {% include "@PumukitNewAdmin/Misc/img_list.html.twig" with {'object' : multimediaObject, 'type' : 'event'} %}
                 </td>
                 <td headers="th-title" style="cursor: pointer" onclick="click_fila_edit_urls('events', this, '{{ showPath  }}', '{{ loadPath }}')">
                     {{ multimediaObject.getEmbeddedEvent().getName(app.request.getLocale()) }}

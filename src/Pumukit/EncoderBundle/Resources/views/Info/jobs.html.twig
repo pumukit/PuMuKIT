@@ -1,6 +1,6 @@
-{% import "PumukitEncoderBundle::macros.html.twig" as macros %}
+{% import "@PumukitEncoder/macros.html.twig" as macros %}
 
-<h3>{{ title|default("Jobs"|trans)}}</h3> 
+<h3>{{ title|default("Jobs"|trans)}}</h3>
 
 {% if jobs.total == 0%}
 <div>
@@ -39,7 +39,7 @@
         </a>
       </td>
       <td style="padding-top: 12px; color: {{ macros.job_status_color(job.getStatus()) }}">
-        <i class="{{ macros.job_status_icon(job.getStatus()) }}" 
+        <i class="{{ macros.job_status_icon(job.getStatus()) }}"
            style="color: #FFF; font-size: 16px; padding: 8px; border-radius: 100%; background: {{ macros.job_status_color(job.getStatus()) }}"></i>
         {{ job.getStatusText()|trans }}
       </td>
@@ -59,9 +59,7 @@
         <div class="row">
           <div class="col-md-8" id="numberJobs">
             {{ jobs.total }}
-            {% transchoice jobs.total %}
-  	          {0} jobs|{1} job|]1,Inf] jobs
-	          {% endtranschoice %}
+              {{ "{0} jobs|{1} job|]1,Inf] jobs"|trans({'%count%':  jobs.total}) }}
           </div>
           <div class="col-md-4 text-right">
             <div class="pagerfanta">
@@ -69,11 +67,11 @@
               "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukit_encoder_info",
               "pageParameter": pageParameter, "routeParams": app.request.query.all}) }}
             </div>
-          </div>                
+          </div>
         </div>
       </th>
     </tr>
   </tfoot>
-  
+
 </table>
 {% endif %}

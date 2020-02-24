@@ -2,34 +2,48 @@
 
 namespace Pumukit\WebTVBundle\Controller;
 
-use Pagerfanta\Pagerfanta;
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
+use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class SeriesController.
- */
-class SeriesController extends Controller implements WebTVControllerInterface
+class SeriesController extends AbstractController implements WebTVControllerInterface
 {
+    /** @var DocumentManager */
+    private $documentManager;
+
+    /** @var BreadcrumbsService */
+    private $breadcrumbsService;
+
+    /** @var PaginationService */
+    private $paginationService;
+    private $limitObjsSeries;
+
+    public function __construct(
+        DocumentManager $documentManager,
+        BreadcrumbsService $breadcrumbsService,
+        PaginationService $paginationService,
+        $limitObjsSeries
+    ) {
+        $this->documentManager = $documentManager;
+        $this->breadcrumbsService = $breadcrumbsService;
+        $this->paginationService = $paginationService;
+        $this->limitObjsSeries = $limitObjsSeries;
+    }
+
     /**
      * @Route("/series/{id}", name="pumukit_webtv_series_index")
-     * @Template("PumukitWebTVBundle:Series:template.html.twig")
-     *
-     * @param Series  $series
-     * @param Request $request
-     *
-     * @throws \Exception
-     *
-     * @return array
+     * @Template("@PumukitWebTV/Series/template.html.twig")
      */
-    public function indexAction(Series $series, Request $request)
+    public function indexAction(Request $request, Series $series)
     {
-        $mmobjRepo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(MultimediaObject::class);
+        $mmobjRepo = $this->documentManager->getRepository(MultimediaObject::class);
 
         $objects = $mmobjRepo->createBuilderWithSeriesAndStatus($series, [MultimediaObject::STATUS_PUBLISHED], ['rank' => 1]);
 
@@ -45,22 +59,15 @@ class SeriesController extends Controller implements WebTVControllerInterface
 
     /**
      * @Route("/series/magic/{secret}", name="pumukit_webtv_series_magicindex", defaults={"show_hide":true, "broadcast":false})
-     * @Template("PumukitWebTVBundle:Series:template.html.twig")
-     *
-     * @param Series  $series
-     * @param Request $request
-     *
-     * @throws \Exception
-     *
-     * @return array
+     * @Template("@PumukitWebTV/Series/template.html.twig")
      */
-    public function magicIndexAction(Series $series, Request $request)
+    public function magicIndexAction(Request $request, Series $series)
     {
         $request->attributes->set('noindex', true);
-
-        $mmobjRepo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(MultimediaObject::class);
-
-        $objects = $mmobjRepo->createBuilderWithSeries($series, ['rank' => 1]);
+        $objects = $this->documentManager->getRepository(MultimediaObject::class)->createBuilderWithSeries(
+            $series,
+            ['rank' => 1]
+        );
 
         $pager = $this->createPager($objects, $request->query->get('page', 1));
 
@@ -73,27 +80,13 @@ class SeriesController extends Controller implements WebTVControllerInterface
         ];
     }
 
-    /**
-     * @param Series $series
-     */
     private function updateBreadcrumbs(Series $series)
     {
-        $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
-        $breadcrumbs->addSeries($series);
+        $this->breadcrumbsService->addSeries($series);
     }
 
-    /**
-     * @param array $objects
-     * @param int   $page
-     *
-     * @throws \Exception
-     *
-     * @return mixed|Pagerfanta
-     */
     private function createPager($objects, $page)
     {
-        $limit = $this->container->getParameter('limit_objs_series');
-
-        return $this->get('pumukit_core.pagination_service')->createDoctrineODMMongoDBAdapter($objects, $page, $limit);
+        return $this->paginationService->createDoctrineODMMongoDBAdapter($objects, $page, $this->limitObjsSeries);
     }
 }

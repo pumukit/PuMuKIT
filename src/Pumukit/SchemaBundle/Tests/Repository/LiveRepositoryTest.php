@@ -2,40 +2,35 @@
 
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Live;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class LiveRepositoryTest extends WebTestCase
+class LiveRepositoryTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        parent::setUp();
         $this->repo = $this->dm->getRepository(Live::class);
-
-        $this->dm->getDocumentCollection(Live::class)->remove([]);
-        $this->dm->flush();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->repo = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
-    public function testRepository()
+    public function testRepository(): void
     {
         $url = 'http://www.pumukit.com/liveo1';
         $passwd = 'password';
@@ -72,6 +67,6 @@ class LiveRepositoryTest extends WebTestCase
         $this->dm->persist($liveo);
         $this->dm->flush();
 
-        $this->assertEquals(1, count($this->repo->findAll()));
+        static::assertCount(1, $this->repo->findAll());
     }
 }

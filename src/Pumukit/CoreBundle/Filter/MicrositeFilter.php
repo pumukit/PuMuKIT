@@ -8,7 +8,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class MicrositeFilter extends BsonFilter
 {
-    public function addFilterCriteria(ClassMetadata $targetDocument)
+    public function addFilterCriteria(ClassMetadata $targetDocument): array
     {
         if (MultimediaObject::class === $targetDocument->reflClass->name) {
             return ['tags.cod' => $this->getParameter('microsite_tag')];

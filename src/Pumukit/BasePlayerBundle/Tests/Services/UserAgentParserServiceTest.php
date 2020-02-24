@@ -5,8 +5,6 @@ namespace Pumukit\BasePlayerBundle\Tests\Services;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
- * Class UserAgentParserServiceTest.
- *
  * @internal
  * @coversNothing
  */
@@ -15,7 +13,7 @@ class UserAgentParserServiceTest extends WebTestCase
     private $agentStrings;
     private $agentService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
@@ -36,7 +34,7 @@ class UserAgentParserServiceTest extends WebTestCase
         ];
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->agentService = null;
         $this->agentStrings = null;
@@ -47,7 +45,7 @@ class UserAgentParserServiceTest extends WebTestCase
     public function testIsOldBrowser()
     {
         foreach ($this->agentStrings as $userAgent) {
-            $this->assertEquals($userAgent['old'], $this->agentService->isOldBrowser($userAgent['string']));
+            static::assertEquals($userAgent['old'], $this->agentService->isOldBrowser($userAgent['string']));
         }
     }
 }

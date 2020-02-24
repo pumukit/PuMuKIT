@@ -2,27 +2,17 @@
 
 namespace Pumukit\SchemaBundle\Repository;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 use MongoDB\BSON\ObjectId;
+use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\User;
 
-/**
- * UserRepository.
- */
 class UserRepository extends DocumentRepository
 {
-    /**
-     * Find all people belonging to any of the given groups.
-     *
-     * @param array $groups
-     *
-     * @return ArrayCollection
-     */
-    public function findUsersInAnyGroups($groups)
+    public function findUsersInAnyGroups(array $groups)
     {
         $userRepo = $this->getDocumentManager()->getRepository(User::class);
-        $groupsIds = array_map(function ($group) {
+        $groupsIds = array_map(static function (Group $group) {
             return new ObjectId($group->getId());
         }, $groups);
 
@@ -31,6 +21,7 @@ class UserRepository extends DocumentRepository
             ->field('groups')
             ->in($groupsIds)
             ->getQuery()
-            ->execute()->toArray();
+            ->execute()
+        ;
     }
 }

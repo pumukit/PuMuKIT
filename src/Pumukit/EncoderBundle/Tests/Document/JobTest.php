@@ -15,11 +15,11 @@ class JobTest extends TestCase
     {
         $job = new Job();
 
-        $this->assertEquals(Job::STATUS_WAITING, $job->getStatus());
-        $this->assertEquals(['en' => ''], $job->getI18nName());
-        $this->assertEquals(0, $job->getDuration());
-        $this->assertEquals('0', $job->getSize());
-        $this->assertEquals('en', $job->getLocale());
+        static::assertEquals(Job::STATUS_WAITING, $job->getStatus());
+        static::assertEquals(['en' => ''], $job->getI18nName());
+        static::assertEquals(0, $job->getDuration());
+        static::assertEquals('0', $job->getSize());
+        static::assertEquals('en', $job->getLocale());
     }
 
     public function testGetterAndSetter()
@@ -72,28 +72,28 @@ class JobTest extends TestCase
         $job->setEmail($email);
         $job->setInitVars($initVars);
 
-        $this->assertEquals($mm_id, $job->getMmId());
-        $this->assertEquals($language_id, $job->getLanguageId());
-        $this->assertEquals($profile, $job->getProfile());
-        $this->assertEquals($cpu, $job->getCpu());
-        $this->assertEquals($url, $job->getUrl());
-        $this->assertEquals($status, $job->getStatus());
-        $this->assertEquals($priority, $job->getPriority());
-        $this->assertEquals($name, $job->getName());
-        $this->assertEquals($description, $job->getDescription());
-        $this->assertEquals($timeini, $job->getTimeini());
-        $this->assertEquals($timestart, $job->getTimestart());
-        $this->assertEquals($timeend, $job->getTimeend());
-        $this->assertEquals($pid, $job->getPid());
-        $this->assertEquals($path_ini, $job->getPathIni());
-        $this->assertEquals($path_end, $job->getPathEnd());
-        $this->assertEquals($ext_ini, $job->getExtIni());
-        $this->assertEquals($ext_end, $job->getExtEnd());
-        $this->assertEquals($duration, $job->getDuration());
-        $this->assertEquals($size, $job->getSize());
-        $this->assertEquals($email, $job->getEmail());
-        $this->assertEquals($initVars, $job->getInitVars());
-        $this->assertEquals($locale, $job->getLocale());
+        static::assertEquals($mm_id, $job->getMmId());
+        static::assertEquals($language_id, $job->getLanguageId());
+        static::assertEquals($profile, $job->getProfile());
+        static::assertEquals($cpu, $job->getCpu());
+        static::assertEquals($url, $job->getUrl());
+        static::assertEquals($status, $job->getStatus());
+        static::assertEquals($priority, $job->getPriority());
+        static::assertEquals($name, $job->getName());
+        static::assertEquals($description, $job->getDescription());
+        static::assertEquals($timeini, $job->getTimeini());
+        static::assertEquals($timestart, $job->getTimestart());
+        static::assertEquals($timeend, $job->getTimeend());
+        static::assertEquals($pid, $job->getPid());
+        static::assertEquals($path_ini, $job->getPathIni());
+        static::assertEquals($path_end, $job->getPathEnd());
+        static::assertEquals($ext_ini, $job->getExtIni());
+        static::assertEquals($ext_end, $job->getExtEnd());
+        static::assertEquals($duration, $job->getDuration());
+        static::assertEquals($size, $job->getSize());
+        static::assertEquals($email, $job->getEmail());
+        static::assertEquals($initVars, $job->getInitVars());
+        static::assertEquals($locale, $job->getLocale());
 
         $descriptionI18n = ['en' => 'description', 'es' => 'descripción'];
         $nameI18n = ['en' => 'name', 'es' => 'nombre'];
@@ -101,9 +101,9 @@ class JobTest extends TestCase
         $job->setI18nDescription($descriptionI18n);
         $job->setI18nName($nameI18n);
 
-        $this->assertEquals($descriptionI18n, $job->getI18nDescription());
-        $this->assertEquals($nameI18n, $job->getI18nName());
+        static::assertEquals($descriptionI18n, $job->getI18nDescription());
+        static::assertEquals($nameI18n, $job->getI18nName());
 
-        $this->assertEquals('Waiting', $job->getStatusText());
+        static::assertEquals('Waiting', $job->getStatusText());
     }
 }

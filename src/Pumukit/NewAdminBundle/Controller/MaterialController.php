@@ -5,27 +5,43 @@ namespace Pumukit\NewAdminBundle\Controller;
 use Pumukit\NewAdminBundle\Form\Type\MaterialType;
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Services\MaterialService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
-class MaterialController extends Controller implements NewAdminControllerInterface
+class MaterialController extends AbstractController implements NewAdminControllerInterface
 {
+    /** @var TranslatorInterface */
+    private $translator;
+    /** @var SessionInterface */
+    private $session;
+    /** @var MaterialService */
+    private $materialService;
+
+    public function __construct(TranslatorInterface $translator, MaterialService $materialService, SessionInterface $session)
+    {
+        $this->translator = $translator;
+        $this->materialService = $materialService;
+        $this->session = $session;
+    }
+
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
-     * @Template("PumukitNewAdminBundle:Material:create.html.twig")
+     * @Template("@PumukitNewAdmin/Material/create.html.twig")
      */
     public function createAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $translator = $this->get('translator');
         $locale = $request->getLocale();
         $material = new Material();
-        $form = $this->createForm(MaterialType::class, $material, ['translator' => $translator, 'locale' => $locale]);
+        $form = $this->createForm(MaterialType::class, $material, ['translator' => $this->translator, 'locale' => $locale]);
 
         return [
             'material' => $material,
@@ -39,24 +55,23 @@ class MaterialController extends Controller implements NewAdminControllerInterfa
      */
     public function updateAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $translator = $this->get('translator');
         $locale = $request->getLocale();
         $material = $multimediaObject->getMaterialById($request->get('id'));
-        $form = $this->createForm(MaterialType::class, $material, ['translator' => $translator, 'locale' => $locale]);
+        $form = $this->createForm(MaterialType::class, $material, ['translator' => $this->translator, 'locale' => $locale]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && ($request->isMethod('PUT') || $request->isMethod('POST'))) {
             try {
-                $multimediaObject = $this->get('pumukitschema.material')->updateMaterialInMultimediaObject($multimediaObject, $material);
+                $multimediaObject = $this->materialService->updateMaterialInMultimediaObject($multimediaObject, $material);
             } catch (\Exception $e) {
-                $this->get('session')->getFlashBag()->add('error', $e->getMessage());
+                $this->addFlash('error', $e->getMessage());
             }
 
             return $this->redirect($this->generateUrl('pumukitnewadmin_material_list', ['id' => $multimediaObject->getId()]));
         }
 
         return $this->render(
-            'PumukitNewAdminBundle:Material:update.html.twig',
+            '@PumukitNewAdmin/Material/update.html.twig',
             [
                 'material' => $material,
                 'form' => $form->createView(),
@@ -67,13 +82,13 @@ class MaterialController extends Controller implements NewAdminControllerInterfa
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
-     * @Template("PumukitNewAdminBundle:Material:upload.html.twig")
+     * @Template("@PumukitNewAdmin/Material/upload.html.twig")
      */
     public function uploadAction(MultimediaObject $multimediaObject, Request $request)
     {
         $formData = $request->get('pumukitnewadmin_material', []);
 
-        $materialService = $this->get('pumukitschema.material');
+        $materialService = $this->materialService;
 
         try {
             if (0 === $request->files->count() && 0 === $request->request->count()) {
@@ -104,7 +119,7 @@ class MaterialController extends Controller implements NewAdminControllerInterfa
      */
     public function deleteAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $multimediaObject = $this->get('pumukitschema.material')->removeMaterialFromMultimediaObject($multimediaObject, $request->get('id'));
+        $multimediaObject = $this->materialService->removeMaterialFromMultimediaObject($multimediaObject, $request->get('id'));
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_material_list', ['id' => $multimediaObject->getId()]));
     }
@@ -114,7 +129,7 @@ class MaterialController extends Controller implements NewAdminControllerInterfa
      */
     public function upAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $multimediaObject = $this->get('pumukitschema.material')->upMaterialInMultimediaObject($multimediaObject, $request->get('id'));
+        $multimediaObject = $this->materialService->upMaterialInMultimediaObject($multimediaObject, $request->get('id'));
 
         $this->addFlash('success', 'up');
 
@@ -126,7 +141,7 @@ class MaterialController extends Controller implements NewAdminControllerInterfa
      */
     public function downAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $multimediaObject = $this->get('pumukitschema.material')->downMaterialInMultimediaObject($multimediaObject, $request->get('id'));
+        $multimediaObject = $this->materialService->downMaterialInMultimediaObject($multimediaObject, $request->get('id'));
 
         $this->addFlash('success', 'down');
 
@@ -134,7 +149,7 @@ class MaterialController extends Controller implements NewAdminControllerInterfa
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Material:list.html.twig")
+     * @Template("@PumukitNewAdmin/Material/list.html.twig")
      */
     public function listAction(MultimediaObject $multimediaObject)
     {

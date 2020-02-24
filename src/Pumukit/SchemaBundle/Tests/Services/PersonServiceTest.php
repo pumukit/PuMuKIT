@@ -2,68 +2,47 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
-use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class PersonServiceTest extends WebTestCase
+class PersonServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
     private $repoMmobj;
     private $personService;
     private $factoryService;
     private $roleRepo;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
-        $this->repo = $this->dm
-            ->getRepository(Person::class)
-        ;
-        $this->roleRepo = $this->dm
-            ->getRepository(Role::class)
-        ;
-        $this->repoMmobj = $this->dm
-            ->getRepository(MultimediaObject::class)
-        ;
-        $this->personService = static::$kernel->getContainer()
-            ->get('pumukitschema.person')
-        ;
-        $this->factoryService = static::$kernel->getContainer()
-            ->get('pumukitschema.factory')
-        ;
-
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Person::class)->remove([]);
-        $this->dm->getDocumentCollection(Role::class)->remove([]);
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
-        $this->dm->getDocumentCollection(User::class)->remove([]);
-        $this->dm->flush();
+        parent::setUp();
+        $this->repo = $this->dm->getRepository(Person::class);
+        $this->roleRepo = $this->dm->getRepository(Role::class);
+        $this->repoMmobj = $this->dm->getRepository(MultimediaObject::class);
+        $this->personService = static::$kernel->getContainer()->get('pumukitschema.person');
+        $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->repo = null;
         $this->roleRepo = null;
         $this->repoMmobj = null;
         $this->personService = null;
         $this->factoryService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testSavePerson()
@@ -75,7 +54,7 @@ class PersonServiceTest extends WebTestCase
 
         $person = $this->personService->savePerson($person);
 
-        $this->assertNotNull($person->getId());
+        static::assertNotNull($person->getId());
     }
 
     public function testSaveRole()
@@ -87,7 +66,7 @@ class PersonServiceTest extends WebTestCase
 
         $role = $this->personService->saveRole($role);
 
-        $this->assertNotNull($role->getId());
+        static::assertNotNull($role->getId());
     }
 
     public function testFindPersonById()
@@ -99,7 +78,7 @@ class PersonServiceTest extends WebTestCase
 
         $person = $this->personService->savePerson($person);
 
-        $this->assertEquals($person, $this->personService->findPersonById($person->getId()));
+        static::assertEquals($person, $this->personService->findPersonById($person->getId()));
     }
 
     public function testFindRoleById()
@@ -111,7 +90,7 @@ class PersonServiceTest extends WebTestCase
 
         $role = $this->personService->saveRole($role);
 
-        $this->assertEquals($role, $this->personService->findRoleById($role->getId()));
+        static::assertEquals($role, $this->personService->findRoleById($role->getId()));
     }
 
     public function testFindPersonByEmail()
@@ -125,7 +104,7 @@ class PersonServiceTest extends WebTestCase
 
         $person = $this->personService->savePerson($person);
 
-        $this->assertEquals($person, $this->personService->findPersonByEmail($email));
+        static::assertEquals($person, $this->personService->findPersonByEmail($email));
     }
 
     public function testUpdatePersonAndUpdateRole()
@@ -179,30 +158,30 @@ class PersonServiceTest extends WebTestCase
         $this->dm->persist($mm3);
         $this->dm->flush();
 
-        $this->assertEquals($this->personService->findPersonById($personJohn->getId())->getEmail(), '');
-        $this->assertEquals($this->personService->findPersonById($personBob->getId())->getEmail(), '');
-        $this->assertEquals($mm1->getPersonWithRole($personJohn, $roleActor)->getEmail(), '');
-        $this->assertEquals($mm1->getPersonWithRole($personJohn, $rolePresenter)->getEmail(), '');
-        $this->assertEquals($mm1->getPersonWithRole($personBob, $roleActor)->getEmail(), '');
-        $this->assertEquals($mm2->getPersonWithRole($personJohn, $roleActor)->getEmail(), '');
-        $this->assertEquals($mm2->getPersonWithRole($personBob, $rolePresenter)->getEmail(), '');
-        $this->assertEquals($mm2->getPersonWithRole($personJohn, $rolePresenter)->getEmail(), '');
-        $this->assertEquals($mm3->getPersonWithRole($personJohn, $roleActor)->getEmail(), '');
+        static::assertEquals($this->personService->findPersonById($personJohn->getId())->getEmail(), '');
+        static::assertEquals($this->personService->findPersonById($personBob->getId())->getEmail(), '');
+        static::assertEquals($mm1->getPersonWithRole($personJohn, $roleActor)->getEmail(), '');
+        static::assertEquals($mm1->getPersonWithRole($personJohn, $rolePresenter)->getEmail(), '');
+        static::assertEquals($mm1->getPersonWithRole($personBob, $roleActor)->getEmail(), '');
+        static::assertEquals($mm2->getPersonWithRole($personJohn, $roleActor)->getEmail(), '');
+        static::assertEquals($mm2->getPersonWithRole($personBob, $rolePresenter)->getEmail(), '');
+        static::assertEquals($mm2->getPersonWithRole($personJohn, $rolePresenter)->getEmail(), '');
+        static::assertEquals($mm3->getPersonWithRole($personJohn, $roleActor)->getEmail(), '');
 
         $emailJohn = 'johnsmith@mail.com';
         $personJohn->setEmail($emailJohn);
 
         $personJohn = $this->personService->updatePerson($personJohn);
 
-        $this->assertEquals($emailJohn, $this->personService->findPersonById($personJohn->getId())->getEmail());
-        $this->assertEquals($this->personService->findPersonById($personBob->getId())->getEmail(), '');
-        $this->assertEquals($emailJohn, $mm1->getPersonWithRole($personJohn, $roleActor)->getEmail());
-        $this->assertEquals($emailJohn, $mm1->getPersonWithRole($personJohn, $rolePresenter)->getEmail());
-        $this->assertEquals($mm1->getPersonWithRole($personBob, $roleActor)->getEmail(), '');
-        $this->assertEquals($emailJohn, $mm2->getPersonWithRole($personJohn, $roleActor)->getEmail());
-        $this->assertEquals($mm2->getPersonWithRole($personBob, $rolePresenter)->getEmail(), '');
-        $this->assertEquals($emailJohn, $mm2->getPersonWithRole($personJohn, $rolePresenter)->getEmail());
-        $this->assertEquals($emailJohn, $mm3->getPersonWithRole($personJohn, $roleActor)->getEmail());
+        static::assertEquals($emailJohn, $this->personService->findPersonById($personJohn->getId())->getEmail());
+        static::assertEquals($this->personService->findPersonById($personBob->getId())->getEmail(), '');
+        static::assertEquals($emailJohn, $mm1->getPersonWithRole($personJohn, $roleActor)->getEmail());
+        static::assertEquals($emailJohn, $mm1->getPersonWithRole($personJohn, $rolePresenter)->getEmail());
+        static::assertEquals($mm1->getPersonWithRole($personBob, $roleActor)->getEmail(), '');
+        static::assertEquals($emailJohn, $mm2->getPersonWithRole($personJohn, $roleActor)->getEmail());
+        static::assertEquals($mm2->getPersonWithRole($personBob, $rolePresenter)->getEmail(), '');
+        static::assertEquals($emailJohn, $mm2->getPersonWithRole($personJohn, $rolePresenter)->getEmail());
+        static::assertEquals($emailJohn, $mm3->getPersonWithRole($personJohn, $roleActor)->getEmail());
 
         // Test update embedded person
         $emailBob = 'bobclark@mail.com';
@@ -210,15 +189,15 @@ class PersonServiceTest extends WebTestCase
 
         $personBob = $this->personService->updatePerson($personBob);
 
-        $this->assertEquals($emailJohn, $this->personService->findPersonById($personJohn->getId())->getEmail());
-        $this->assertEquals($emailBob, $this->personService->findPersonById($personBob->getId())->getEmail());
-        $this->assertEquals($emailJohn, $mm1->getPersonWithRole($personJohn, $roleActor)->getEmail());
-        $this->assertEquals($emailJohn, $mm1->getPersonWithRole($personJohn, $rolePresenter)->getEmail());
-        $this->assertEquals($emailBob, $mm1->getPersonWithRole($personBob, $roleActor)->getEmail());
-        $this->assertEquals($emailJohn, $mm2->getPersonWithRole($personJohn, $roleActor)->getEmail());
-        $this->assertEquals($emailBob, $mm2->getPersonWithRole($personBob, $rolePresenter)->getEmail());
-        $this->assertEquals($emailJohn, $mm2->getPersonWithRole($personJohn, $rolePresenter)->getEmail());
-        $this->assertEquals($emailJohn, $mm3->getPersonWithRole($personJohn, $roleActor)->getEmail());
+        static::assertEquals($emailJohn, $this->personService->findPersonById($personJohn->getId())->getEmail());
+        static::assertEquals($emailBob, $this->personService->findPersonById($personBob->getId())->getEmail());
+        static::assertEquals($emailJohn, $mm1->getPersonWithRole($personJohn, $roleActor)->getEmail());
+        static::assertEquals($emailJohn, $mm1->getPersonWithRole($personJohn, $rolePresenter)->getEmail());
+        static::assertEquals($emailBob, $mm1->getPersonWithRole($personBob, $roleActor)->getEmail());
+        static::assertEquals($emailJohn, $mm2->getPersonWithRole($personJohn, $roleActor)->getEmail());
+        static::assertEquals($emailBob, $mm2->getPersonWithRole($personBob, $rolePresenter)->getEmail());
+        static::assertEquals($emailJohn, $mm2->getPersonWithRole($personJohn, $rolePresenter)->getEmail());
+        static::assertEquals($emailJohn, $mm3->getPersonWithRole($personJohn, $roleActor)->getEmail());
 
         // Test update embedded role
         $newActorCode = 'NewActor';
@@ -230,10 +209,10 @@ class PersonServiceTest extends WebTestCase
         $this->dm->refresh($mm2);
         $this->dm->refresh($mm3);
 
-        $this->assertEquals($newActorCode, $this->roleRepo->find($roleActor->getId())->getCod());
-        $this->assertEquals($newActorCode, $mm1->getEmbeddedRole($roleActor)->getCod());
-        $this->assertEquals($newActorCode, $mm2->getEmbeddedRole($roleActor)->getCod());
-        $this->assertEquals($newActorCode, $mm3->getEmbeddedRole($roleActor)->getCod());
+        static::assertEquals($newActorCode, $this->roleRepo->find($roleActor->getId())->getCod());
+        static::assertEquals($newActorCode, $mm1->getEmbeddedRole($roleActor)->getCod());
+        static::assertEquals($newActorCode, $mm2->getEmbeddedRole($roleActor)->getCod());
+        static::assertEquals($newActorCode, $mm3->getEmbeddedRole($roleActor)->getCod());
 
         $newPresenterCode = 'NewPresenter';
         $rolePresenter->setCod($newPresenterCode);
@@ -244,10 +223,10 @@ class PersonServiceTest extends WebTestCase
         $this->dm->refresh($mm2);
         $this->dm->refresh($mm3);
 
-        $this->assertEquals($newPresenterCode, $this->roleRepo->find($rolePresenter->getId())->getCod());
-        $this->assertEquals($newPresenterCode, $mm1->getEmbeddedRole($rolePresenter)->getCod());
-        $this->assertEquals($newPresenterCode, $mm2->getEmbeddedRole($rolePresenter)->getCod());
-        $this->assertFalse($mm3->getEmbeddedRole($rolePresenter));
+        static::assertEquals($newPresenterCode, $this->roleRepo->find($rolePresenter->getId())->getCod());
+        static::assertEquals($newPresenterCode, $mm1->getEmbeddedRole($rolePresenter)->getCod());
+        static::assertEquals($newPresenterCode, $mm2->getEmbeddedRole($rolePresenter)->getCod());
+        static::assertFalse($mm3->getEmbeddedRole($rolePresenter));
     }
 
     public function testFindSeriesWithPerson()
@@ -349,19 +328,19 @@ class PersonServiceTest extends WebTestCase
         $seriesBob = $this->personService->findSeriesWithPerson($personBob);
         $seriesKate = $this->personService->findSeriesWithPerson($personKate);
 
-        $this->assertEquals(2, count($seriesJohn));
-        $this->assertEquals(2, count($seriesBob));
-        $this->assertEquals(2, count($seriesKate));
+        static::assertCount(2, $seriesJohn);
+        static::assertCount(2, $seriesBob);
+        static::assertCount(2, $seriesKate);
 
-        $this->assertTrue(in_array($series1, $seriesJohn->toArray(), true));
-        $this->assertTrue(in_array($series3, $seriesJohn->toArray(), true));
-        $this->assertTrue(in_array($series1, $seriesBob->toArray(), true));
-        $this->assertTrue(in_array($series3, $seriesBob->toArray(), true));
-        $this->assertTrue(in_array($series1, $seriesKate->toArray(), true));
-        $this->assertTrue(in_array($series2, $seriesKate->toArray(), true));
+        static::assertContains($series1, $seriesJohn->toArray());
+        static::assertContains($series3, $seriesJohn->toArray());
+        static::assertContains($series1, $seriesBob->toArray());
+        static::assertContains($series3, $seriesBob->toArray());
+        static::assertContains($series1, $seriesKate->toArray());
+        static::assertContains($series2, $seriesKate->toArray());
 
         $seriesKate1 = $this->personService->findSeriesWithPerson($personKate, 1);
-        $this->assertEquals([$series1], $seriesKate1->toArray());
+        static::assertEquals([$series1], $seriesKate1->toArray());
     }
 
     public function testCreateRelationPerson()
@@ -383,16 +362,16 @@ class PersonServiceTest extends WebTestCase
         $nameJohn = 'John Smith';
         $personJohn->setName($nameJohn);
 
-        $this->assertEquals(0, count($mm->getPeopleByRole($roleActor)));
+        static::assertCount(0, $mm->getPeopleByRole($roleActor));
 
         $mm = $this->personService->createRelationPerson($personJohn, $roleActor, $mm);
 
-        $this->assertEquals(1, count($mm->getPeopleByRole($roleActor)));
+        static::assertCount(1, $mm->getPeopleByRole($roleActor));
     }
 
     public function testAutoCompletePeopleByName()
     {
-        $this->assertEquals(0, count($this->personService->autoCompletePeopleByName('john')));
+        static::assertCount(0, $this->personService->autoCompletePeopleByName('john'));
 
         $personJohn = new Person();
         $nameJohn = 'John Smith';
@@ -417,20 +396,20 @@ class PersonServiceTest extends WebTestCase
         $this->dm->flush();
 
         $peopleJohn = array_values($this->personService->autoCompletePeopleByName('john')->toArray());
-        $this->assertEquals(1, count($peopleJohn));
-        $this->assertEquals($personJohn, $peopleJohn[0]);
+        static::assertCount(1, $peopleJohn);
+        static::assertEquals($personJohn, $peopleJohn[0]);
 
         $peopleBob = array_values($this->personService->autoCompletePeopleByName('bob')->toArray());
-        $this->assertEquals(2, count($peopleBob));
-        $this->assertEquals([$personBob, $personBobby], $peopleBob);
+        static::assertCount(2, $peopleBob);
+        static::assertEquals([$personBob, $personBobby], $peopleBob);
 
         $peopleKat = array_values($this->personService->autoCompletePeopleByName('kat')->toArray());
-        $this->assertEquals(1, count($peopleKat));
-        $this->assertEquals($personKate, $peopleKat[0]);
+        static::assertCount(1, $peopleKat);
+        static::assertEquals($personKate, $peopleKat[0]);
 
         $peopleSm = array_values($this->personService->autoCompletePeopleByName('sm')->toArray());
-        $this->assertEquals(2, count($peopleSm));
-        $this->assertEquals([$personJohn, $personBobby], $peopleSm);
+        static::assertCount(2, $peopleSm);
+        static::assertEquals([$personJohn, $personBobby], $peopleSm);
     }
 
     public function testDeleteRelation()
@@ -460,12 +439,12 @@ class PersonServiceTest extends WebTestCase
 
         $personBobId = $personBob->getId();
 
-        $this->assertEquals(1, count($this->repoMmobj->findByPersonId($personBobId)));
-        $this->assertEquals($personBob, $this->repo->find($personBobId));
+        static::assertCount(1, $this->repoMmobj->findByPersonId($personBobId));
+        static::assertEquals($personBob, $this->repo->find($personBobId));
 
         $this->personService->deleteRelation($personBob, $roleActor, $mm1);
 
-        $this->assertEquals(0, count($this->repoMmobj->findByPersonId($personBobId)));
+        static::assertCount(0, $this->repoMmobj->findByPersonId($personBobId));
     }
 
     public function testBatchDeletePerson()
@@ -522,24 +501,24 @@ class PersonServiceTest extends WebTestCase
         $personBobId = $personBob->getId();
         $personJohnId = $personJohn->getId();
 
-        $this->assertEquals(2, count($this->repoMmobj->findByPersonId($personBobId)));
-        $this->assertEquals(3, count($this->repoMmobj->findByPersonId($personJohnId)));
-        $this->assertEquals($personBob, $this->repo->find($personBobId));
-        $this->assertEquals($personJohn, $this->repo->find($personJohnId));
+        static::assertCount(2, $this->repoMmobj->findByPersonId($personBobId));
+        static::assertCount(3, $this->repoMmobj->findByPersonId($personJohnId));
+        static::assertEquals($personBob, $this->repo->find($personBobId));
+        static::assertEquals($personJohn, $this->repo->find($personJohnId));
 
         $this->personService->batchDeletePerson($personBob);
 
-        $this->assertEquals(0, count($this->repoMmobj->findByPersonId($personBobId)));
-        $this->assertEquals(3, count($this->repoMmobj->findByPersonId($personJohnId)));
-        $this->assertNull($this->repo->find($personBobId));
-        $this->assertEquals($personJohn, $this->repo->find($personJohnId));
+        static::assertCount(0, $this->repoMmobj->findByPersonId($personBobId));
+        static::assertCount(3, $this->repoMmobj->findByPersonId($personJohnId));
+        static::assertNull($this->repo->find($personBobId));
+        static::assertEquals($personJohn, $this->repo->find($personJohnId));
 
         $this->personService->batchDeletePerson($personJohn);
 
-        $this->assertEquals(0, count($this->repoMmobj->findByPersonId($personBobId)));
-        $this->assertEquals(0, count($this->repoMmobj->findByPersonId($personJohnId)));
-        $this->assertNull($this->repo->find($personBobId));
-        $this->assertNull($this->repo->find($personJohnId));
+        static::assertCount(0, $this->repoMmobj->findByPersonId($personBobId));
+        static::assertCount(0, $this->repoMmobj->findByPersonId($personJohnId));
+        static::assertNull($this->repo->find($personBobId));
+        static::assertNull($this->repo->find($personJohnId));
     }
 
     public function testCountMultimediaObjectsWithPerson()
@@ -565,7 +544,7 @@ class PersonServiceTest extends WebTestCase
         $this->dm->persist($mm1);
         $this->dm->flush();
 
-        $this->assertEquals(1, $this->personService->countMultimediaObjectsWithPerson($personJohn));
+        static::assertEquals(1, $this->personService->countMultimediaObjectsWithPerson($personJohn));
     }
 
     public function testUpAndDownPersonWithRole()
@@ -620,14 +599,14 @@ class PersonServiceTest extends WebTestCase
         $this->dm->flush();
 
         $mm1PeopleActor = $mm1->getPeopleByRole($roleActor);
-        $this->assertEquals($personJohn->getId(), $mm1PeopleActor[0]->getId());
-        $this->assertEquals($personBob->getId(), $mm1PeopleActor[1]->getId());
+        static::assertEquals($personJohn->getId(), $mm1PeopleActor[0]->getId());
+        static::assertEquals($personBob->getId(), $mm1PeopleActor[1]->getId());
 
         $this->personService->upPersonWithRole($personBob, $roleActor, $mm1);
 
         $mm1PeopleActor = $mm1->getPeopleByRole($roleActor);
-        $this->assertEquals($personBob->getId(), $mm1PeopleActor[0]->getId());
-        $this->assertEquals($personJohn->getId(), $mm1PeopleActor[1]->getId());
+        static::assertEquals($personBob->getId(), $mm1PeopleActor[0]->getId());
+        static::assertEquals($personJohn->getId(), $mm1PeopleActor[1]->getId());
 
         $personKate = new Person();
         $nameKate = 'Kate Simmons';
@@ -639,23 +618,23 @@ class PersonServiceTest extends WebTestCase
         $this->dm->flush();
 
         $mm1PeopleActor = $mm1->getPeopleByRole($roleActor);
-        $this->assertEquals($personBob->getId(), $mm1PeopleActor[0]->getId());
-        $this->assertEquals($personJohn->getId(), $mm1PeopleActor[1]->getId());
-        $this->assertEquals($personKate->getId(), $mm1PeopleActor[2]->getId());
+        static::assertEquals($personBob->getId(), $mm1PeopleActor[0]->getId());
+        static::assertEquals($personJohn->getId(), $mm1PeopleActor[1]->getId());
+        static::assertEquals($personKate->getId(), $mm1PeopleActor[2]->getId());
 
         $this->personService->downPersonWithRole($personBob, $roleActor, $mm1);
 
         $mm1PeopleActor = $mm1->getPeopleByRole($roleActor);
-        $this->assertEquals($personJohn->getId(), $mm1PeopleActor[0]->getId());
-        $this->assertEquals($personBob->getId(), $mm1PeopleActor[1]->getId());
-        $this->assertEquals($personKate->getId(), $mm1PeopleActor[2]->getId());
+        static::assertEquals($personJohn->getId(), $mm1PeopleActor[0]->getId());
+        static::assertEquals($personBob->getId(), $mm1PeopleActor[1]->getId());
+        static::assertEquals($personKate->getId(), $mm1PeopleActor[2]->getId());
 
         $this->personService->downPersonWithRole($personBob, $roleActor, $mm1);
 
         $mm1PeopleActor = $mm1->getPeopleByRole($roleActor);
-        $this->assertEquals($personJohn->getId(), $mm1PeopleActor[0]->getId());
-        $this->assertEquals($personKate->getId(), $mm1PeopleActor[1]->getId());
-        $this->assertEquals($personBob->getId(), $mm1PeopleActor[2]->getId());
+        static::assertEquals($personJohn->getId(), $mm1PeopleActor[0]->getId());
+        static::assertEquals($personKate->getId(), $mm1PeopleActor[1]->getId());
+        static::assertEquals($personBob->getId(), $mm1PeopleActor[2]->getId());
     }
 
     /**
@@ -664,18 +643,18 @@ class PersonServiceTest extends WebTestCase
      */
     public function testDeletePerson()
     {
-        $this->assertEquals(0, count($this->repo->findAll()));
+        static::assertCount(0, $this->repo->findAll());
 
         $person = new Person();
         $person->setName('Person');
         $this->dm->persist($person);
         $this->dm->flush();
 
-        $this->assertEquals(1, count($this->repo->findAll()));
+        static::assertCount(1, $this->repo->findAll());
 
         $this->personService->deletePerson($person);
 
-        $this->assertEquals(0, count($this->repo->findAll()));
+        static::assertCount(0, $this->repo->findAll());
 
         $personBob = new Person();
         $personBob->setName('Bob');
@@ -698,16 +677,16 @@ class PersonServiceTest extends WebTestCase
         $this->dm->persist($series);
         $this->dm->flush();
 
-        $this->assertEquals(1, count($this->repo->findAll()));
+        static::assertCount(1, $this->repo->findAll());
 
         $this->personService->deletePerson($personBob);
 
-        $this->assertEquals(1, count($this->repo->findAll()));
+        static::assertCount(1, $this->repo->findAll());
     }
 
     public function testReferencePersonIntoUser()
     {
-        $this->assertEquals(0, count($this->repo->findAll()));
+        static::assertCount(0, $this->repo->findAll());
 
         $username = 'user1';
         $fullname = 'User fullname';
@@ -724,22 +703,22 @@ class PersonServiceTest extends WebTestCase
         $user = $this->personService->referencePersonIntoUser($user);
 
         $people = $this->repo->findAll();
-        $this->assertEquals(1, count($people));
+        static::assertCount(1, $people);
 
         $person = $people[0];
 
-        $this->assertEquals($person, $user->getPerson());
-        $this->assertEquals($user, $person->getUser());
+        static::assertEquals($person, $user->getPerson());
+        static::assertEquals($user, $person->getUser());
 
-        $this->assertEquals($fullname, $user->getFullname());
-        $this->assertEquals($fullname, $person->getName());
+        static::assertEquals($fullname, $user->getFullname());
+        static::assertEquals($fullname, $person->getName());
 
-        $this->assertEquals($email, $user->getEmail());
-        $this->assertEquals($email, $person->getEmail());
+        static::assertEquals($email, $user->getEmail());
+        static::assertEquals($email, $person->getEmail());
 
         $user = $this->personService->referencePersonIntoUser($user);
         $people = $this->repo->findAll();
-        $this->assertEquals(1, count($people));
+        static::assertCount(1, $people);
 
         $username2 = 'user2';
         $fullname2 = 'User fullname 2';
@@ -756,12 +735,12 @@ class PersonServiceTest extends WebTestCase
         $user2 = $this->personService->referencePersonIntoUser($user2);
 
         $people = $this->repo->findAll();
-        $this->assertEquals(2, count($people));
+        static::assertCount(2, $people);
 
         $person = $people[1];
 
-        $this->assertEquals($person, $user2->getPerson());
-        $this->assertEquals($user2, $person->getUser());
+        static::assertEquals($person, $user2->getPerson());
+        static::assertEquals($user2, $person->getUser());
     }
 
     public function testGetRoles()
@@ -780,7 +759,7 @@ class PersonServiceTest extends WebTestCase
         $this->dm->persist($role3);
         $this->dm->flush();
 
-        $this->assertEquals(3, count($this->personService->getRoles()));
+        static::assertCount(3, $this->personService->getRoles());
     }
 
     public function testRemoveUserFromPerson()
@@ -802,12 +781,12 @@ class PersonServiceTest extends WebTestCase
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertEquals($person, $user->getPerson());
-        $this->assertEquals($user, $person->getUser());
+        static::assertEquals($person, $user->getPerson());
+        static::assertEquals($user, $person->getUser());
 
         $this->personService->removeUserFromPerson($user, $person, true);
 
-        $this->assertEquals($person, $user->getPerson());
-        $this->assertEquals(null, $person->getUser());
+        static::assertEquals($person, $user->getPerson());
+        static::assertEquals(null, $person->getUser());
     }
 }

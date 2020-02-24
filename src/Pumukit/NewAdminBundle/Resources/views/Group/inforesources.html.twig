@@ -1,15 +1,17 @@
 <div class="panel-heading" style="text-align:center;">{{ title }}</div>
 <div class="panel-body" id="group_list_users">
-  <div class="row" style="margin-right: 0px; margin-left: 0px;">
-	<div style="width:100%; height:220px; border: 1px solid #bbb; float: left; overflow-x: hidden; overflow-y: scroll" class="tag" id="list_of_{{ resource_name }}s">
-	  <div class="tag_tree list-group" id="pumukitnewadmin_group_added_{{ resource_name }}s" >
-        {% include 'PumukitNewAdminBundle:Group:dataresources.html.twig' %}
-      </div>
+    <div class="row" style="margin-right: 0px; margin-left: 0px;">
+        <div style="width:100%; height:220px; border: 1px solid #bbb; float: left; overflow-x: hidden; overflow-y: scroll" class="tag" id="list_of_{{ resource_name }}s">
+            <div class="tag_tree list-group" id="pumukitnewadmin_group_added_{{ resource_name }}s">
+                {% include '@PumukitNewAdmin/Group/dataresources.html.twig' %}
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 {% if action %}
-<div class="col-md-12 text-center">
-  <button id="pumukitnewadmin_group_delete_all_relation_{{ resource_name }}" type="button" class="btn btn-pumukit btn-raised btn-xs" style="margin-top: 20px; margin-bottom:40px;"{{ ((count == 0) or ((resource_name == 'user') and ( not group.isLocal()))) ? ' disabled="disabled"': '' }}>{% trans %}Delete All{% endtrans %}</button>
-</div>
+    <div class="col-md-12 text-center">
+        <button id="pumukitnewadmin_group_delete_all_relation_{{ resource_name }}" type="button" class="btn btn-pumukit btn-raised btn-xs" style="margin-top: 20px; margin-bottom:40px;"{{ ((count == 0) or ((resource_name == 'user') and ( not group.isLocal()))) ? ' disabled="disabled"': '' }}>
+            {% trans %}Delete All{% endtrans %}
+        </button>
+    </div>
 {% endif %}

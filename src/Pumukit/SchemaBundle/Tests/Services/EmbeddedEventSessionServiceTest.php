@@ -2,53 +2,36 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\EmbeddedEvent;
 use Pumukit\SchemaBundle\Document\EmbeddedEventSession;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class EmbeddedEventSessionServiceTest extends WebTestCase
+class EmbeddedEventSessionServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $service;
     private $factoryService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
-
-        $this->service = static::$kernel->getContainer()
-            ->get('pumukitschema.eventsession')
-        ;
-        $this->factoryService = static::$kernel->getContainer()
-            ->get('pumukitschema.factory')
-        ;
-
-        $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(Series::class)
-            ->remove([])
-        ;
-        $this->dm->flush();
+        parent::setUp();
+        $this->service = static::$kernel->getContainer()->get('pumukitschema.eventsession');
+        $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
         $this->service = null;
         $this->factoryService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testToday()
@@ -79,11 +62,11 @@ class EmbeddedEventSessionServiceTest extends WebTestCase
         $this->dm->flush();
 
         $now = $this->service->findEventsNow();
-        $this->assertEquals(1, count($now));
+        static::assertCount(1, $now);
         $today = $this->service->findEventsToday();
-        $this->assertEquals(1, count($today));
+        static::assertCount(1, $today);
         $next = $this->service->findNextEvents();
-        $this->assertEquals(0, count($next));
+        static::assertCount(0, $next);
 
         //Add session yesterday
         $start = new \DateTime('-33 hour');
@@ -99,11 +82,11 @@ class EmbeddedEventSessionServiceTest extends WebTestCase
         $this->dm->flush();
 
         $now = $this->service->findEventsNow();
-        $this->assertEquals(1, count($now));
+        static::assertCount(1, $now);
         $today = $this->service->findEventsToday();
-        $this->assertEquals(1, count($today));
+        static::assertCount(1, $today);
         $next = $this->service->findNextEvents();
-        $this->assertEquals(0, count($next));
+        static::assertCount(0, $next);
 
         //Add session tomorrow
         $start = new \DateTime('+33 hour');
@@ -119,11 +102,11 @@ class EmbeddedEventSessionServiceTest extends WebTestCase
         $this->dm->flush();
 
         $now = $this->service->findEventsNow();
-        $this->assertEquals(1, count($now));
+        static::assertCount(1, $now);
         $today = $this->service->findEventsToday();
-        $this->assertEquals(1, count($today));
+        static::assertCount(1, $today);
         $next = $this->service->findNextEvents();
-        $this->assertEquals(1, count($next));
+        static::assertCount(1, $next);
 
         //Other today object
         $mm12 = $this->factoryService->createMultimediaObject($series);
@@ -146,16 +129,16 @@ class EmbeddedEventSessionServiceTest extends WebTestCase
         $this->dm->flush();
 
         $now = $this->service->findEventsNow();
-        $this->assertEquals(2, count($now));
+        static::assertCount(2, $now);
 
-        $this->assertTrue(
+        static::assertTrue(
             $now[0]['data']['session']['start'] <
             $now[1]['data']['session']['start']
         );
         $today = $this->service->findEventsToday();
-        $this->assertEquals(2, count($today));
+        static::assertCount(2, $today);
         $next = $this->service->findNextEvents();
-        $this->assertEquals(1, count($next));
+        static::assertCount(1, $next);
 
         //Other future object
         $mm12 = $this->factoryService->createMultimediaObject($series);
@@ -178,13 +161,13 @@ class EmbeddedEventSessionServiceTest extends WebTestCase
         $this->dm->flush();
 
         $now = $this->service->findEventsNow();
-        $this->assertEquals(2, count($now));
+        static::assertCount(2, $now);
         $today = $this->service->findEventsToday();
-        $this->assertEquals(2, count($today));
+        static::assertCount(2, $today);
         $next = $this->service->findNextEvents();
-        $this->assertEquals(2, count($next));
+        static::assertCount(2, $next);
 
-        $this->assertTrue(
+        static::assertTrue(
             $next[0]['data']['session']['start'] <
             $next[1]['data']['session']['start']
         );
@@ -210,18 +193,18 @@ class EmbeddedEventSessionServiceTest extends WebTestCase
         $this->dm->flush();
 
         $now = $this->service->findEventsNow();
-        $this->assertEquals(2, count($now));
+        static::assertCount(2, $now);
         $today = $this->service->findEventsToday();
-        $this->assertEquals(2, count($today));
+        static::assertCount(2, $today);
         $next = $this->service->findNextEvents();
-        $this->assertEquals(3, count($next));
+        static::assertCount(3, $next);
 
-        $this->assertTrue(
+        static::assertTrue(
             $next[0]['data']['session']['start'] <
             $next[1]['data']['session']['start']
         );
 
-        $this->assertTrue(
+        static::assertTrue(
             $next[1]['data']['session']['start'] <
             $next[2]['data']['session']['start']
         );

@@ -10,9 +10,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class PermissionProfile
 {
-    const SCOPE_GLOBAL = 'ROLE_SCOPE_GLOBAL';
-    const SCOPE_PERSONAL = 'ROLE_SCOPE_PERSONAL';
-    const SCOPE_NONE = 'ROLE_SCOPE_NONE';
+    public const SCOPE_GLOBAL = 'ROLE_SCOPE_GLOBAL';
+    public const SCOPE_PERSONAL = 'ROLE_SCOPE_PERSONAL';
+    public const SCOPE_NONE = 'ROLE_SCOPE_NONE';
 
     public static $scopeDescription = [
         self::SCOPE_GLOBAL => 'Global Scope',
@@ -21,139 +21,84 @@ class PermissionProfile
     ];
 
     /**
-     * @var string
-     *
      * @MongoDB\Id
      */
     private $id;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      * @MongoDB\UniqueIndex(order="asc")
      */
     private $name = '';
 
     /**
-     * @var array
-     *
      * @MongoDB\Field(type="collection")
      */
     private $permissions = [];
 
     /**
-     * @var bool
-     *
      * @MongoDB\Field(type="boolean")
      */
     private $system = false;
 
     /**
-     * @var bool
-     *
      * @MongoDB\Field(type="boolean")
      */
     private $default = false;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $scope = self::SCOPE_PERSONAL;
 
     /**
-     * @var int
-     *
      * @MongoDB\Field(type="int")
      * @Gedmo\SortablePosition
      */
     private $rank;
 
-    /**
-     * To String.
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getName();
     }
 
-    /**
-     * Get id.
-     *
-     * @return string
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * Set permissions.
-     *
-     * @param array $permissions
-     */
-    public function setPermissions(array $permissions)
+    public function setPermissions(array $permissions): void
     {
         $this->permissions = $permissions;
     }
 
-    /**
-     * Get permissions.
-     *
-     * @return array
-     */
-    public function getPermissions()
+    public function getPermissions(): array
     {
         return $this->permissions;
     }
 
-    /**
-     * Add permission.
-     *
-     * @param string $permission
-     */
-    public function addPermission($permission)
+    public function addPermission(string $permission): array
     {
         $this->permissions[] = $permission;
 
         return $this->permissions = array_unique($this->permissions);
     }
 
-    /**
-     * Remove permission.
-     *
-     * @param string $permission
-     *
-     * @return bool TRUE if this PermissionProfile contains the specified permission, FALSE otherwise
-     */
-    public function removePermission($permission)
+    public function removePermission(string $permission): bool
     {
-        $permission = array_search($permission, $this->permissions, true);
-
-        if (false !== $permission) {
-            unset($this->permissions[$permission]);
+        $permissionKey = array_search($permission, $this->permissions, true);
+        if (is_int($permissionKey)) {
+            unset($this->permissions[$permissionKey]);
 
             return true;
         }
@@ -161,171 +106,82 @@ class PermissionProfile
         return false;
     }
 
-    /**
-     * Contains permission.
-     *
-     * @param string $permission
-     *
-     * @return bool TRUE if this PermissionProfile contains the specified permission, FALSE otherwise
-     */
-    public function containsPermission($permission)
+    public function containsPermission(string $permission): bool
     {
         return in_array($permission, $this->permissions, true);
     }
 
-    /**
-     * Contains all permissions.
-     *
-     * @param array $permissions
-     *
-     * @return bool TRUE if this PermissionProfile contains all permissions, FALSE otherwise
-     */
-    public function containsAllPermissions(array $permissions)
+    public function containsAllPermissions(array $permissions): bool
     {
         return count(array_intersect($permissions, $this->permissions)) === count($permissions);
     }
 
-    /**
-     * Contains any permissions.
-     *
-     * @param array $permissions
-     *
-     * @return bool TRUE if this PermissionProfile contains any permission of the list, FALSE otherwise
-     */
-    public function containsAnyPermission(array $permissions)
+    public function containsAnyPermission(array $permissions): bool
     {
-        return 0 != count(array_intersect($permissions, $this->permissions));
+        return 0 !== count(array_intersect($permissions, $this->permissions));
     }
 
-    /**
-     * Set system.
-     *
-     * @param bool $system
-     */
-    public function setSystem($system)
+    public function setSystem(bool $system): void
     {
         $this->system = $system;
     }
 
-    /**
-     * Get system.
-     *
-     * @return bool
-     */
-    public function getSystem()
+    public function getSystem(): bool
     {
         return $this->system;
     }
 
-    /**
-     * Set default.
-     *
-     * @param bool $default
-     */
-    public function setDefault($default)
+    public function setDefault(bool $default): void
     {
         $this->default = $default;
     }
 
-    /**
-     * Get default.
-     *
-     * @return bool
-     */
-    public function getDefault()
+    public function getDefault(): bool
     {
         return $this->default;
     }
 
-    /**
-     * Set scope.
-     *
-     * @param string $scope
-     */
-    public function setScope($scope)
+    public function setScope(string $scope): void
     {
         $this->scope = $scope;
     }
 
-    /**
-     * Get scope.
-     *
-     * @return string
-     */
-    public function getScope()
+    public function getScope(): string
     {
         return $this->scope;
     }
 
-    /**
-     * Set rank.
-     *
-     * @param int $rank
-     */
-    public function setRank($rank)
+    public function setRank(int $rank): void
     {
         $this->rank = $rank;
     }
 
-    /**
-     * Get rank.
-     *
-     * @return int
-     */
     public function getRank()
     {
         return $this->rank;
     }
 
-    /**
-     * Helper function to know if the
-     * PermissionProfile is a global scope.
-     *
-     * @return bool
-     */
-    public function isGlobal()
+    public function isGlobal(): bool
     {
         return self::SCOPE_GLOBAL === $this->getScope();
     }
 
-    /**
-     * Helper function to know if the
-     * PermissionProfile is a personal scope.
-     *
-     * @return bool
-     */
-    public function isPersonal()
+    public function isPersonal(): bool
     {
         return self::SCOPE_PERSONAL === $this->getScope();
     }
 
-    /**
-     * Helper function to know if the
-     * PermissionProfile is a none scope.
-     *
-     * @return bool
-     */
-    public function isNone()
+    public function isNone(): bool
     {
         return self::SCOPE_NONE === $this->getScope();
     }
 
-    /**
-     * Is system.
-     *
-     * @return bool
-     */
-    public function isSystem()
+    public function isSystem(): bool
     {
         return $this->system;
     }
 
-    /**
-     * Is default.
-     *
-     * @return bool
-     */
-    public function isDefault()
+    public function isDefault(): bool
     {
         return $this->default;
     }

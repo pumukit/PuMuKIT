@@ -7,7 +7,6 @@ use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Regex;
 use MongoDB\BSON\UTCDateTime;
-use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -25,10 +24,8 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find all multimedia objects in a series with given status.
      *
-     * @param Series $series
-     * @param array  $status
-     * @param int    $limit
-     * @param int    $page
+     * @param int $limit
+     * @param int $page
      *
      * @return mixed
      */
@@ -38,13 +35,11 @@ class MultimediaObjectRepository extends DocumentRepository
 
         $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
 
-        return $qb->getQuery()->execute();
+        return $qb->getQuery()->execute()->toArray();
     }
 
     /**
      * Find multimedia object prototype.
-     *
-     * @param Series $series
      *
      * @return array|object|null
      */
@@ -62,8 +57,6 @@ class MultimediaObjectRepository extends DocumentRepository
      * Find multimedia objects in a series
      * without the template (prototype).
      *
-     * @param Series $series
-     *
      * @return mixed
      */
     public function findWithoutPrototype(Series $series)
@@ -77,22 +70,15 @@ class MultimediaObjectRepository extends DocumentRepository
         ;
     }
 
-    /**
-     * Count multimedia objects in a series
-     * without the template (prototype).
-     *
-     * @param Series $series
-     *
-     * @return int
-     */
     public function countWithoutPrototype(Series $series)
     {
         return $this->createQueryBuilder()
             ->field('series')->references($series)
             ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
             ->sort('rank', 1)
-            ->getQuery()
             ->count()
+            ->getQuery()
+            ->execute()
         ;
     }
 
@@ -111,17 +97,27 @@ class MultimediaObjectRepository extends DocumentRepository
         ;
     }
 
-    /**
-     * Find multimedia objects by person id.
-     *
-     * @param string $personId
-     *
-     * @return mixed
-     */
-    public function findByPersonId($personId)
+    public function qbByPersonId($personId)
     {
         return $this->createStandardQueryBuilder()
-            ->field('people.people._id')->equals(new ObjectId($personId))->getQuery()
+            ->field('people.people._id')
+            ->equals(new ObjectId($personId))
+            ;
+    }
+
+    public function findByPersonId($personId)
+    {
+        return $this->qbByPersonId($personId)
+            ->getQuery()
+            ->execute()
+            ;
+    }
+
+    public function countByPersonId($personId)
+    {
+        return $this->qbByPersonId($personId)
+            ->count()
+            ->getQuery()
             ->execute()
         ;
     }
@@ -198,36 +194,28 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
-     * Find multimedia objects by person id with given role.
-     *
-     * @param string $personId
-     * @param string $roleCod
-     * @param array  $sort
-     * @param int    $limit
-     * @param int    $page
-     *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
      * @return mixed
      */
-    public function findByPersonIdWithRoleCod($personId, $roleCod, $sort = [], $limit = 0, $page = 0)
+    public function findByPersonIdWithRoleCod(string $personId, string $roleCod, array $sort = [], int $limit = 0, int $page = 0)
     {
         $qb = $this->createBuilderByPersonIdWithRoleCod($personId, $roleCod, $sort, $limit, $page);
 
         return $qb->getQuery()->execute();
     }
 
+    public function countByPersonIdWithRoleCod(string $personId, string $roleCod, array $sort = [], int $limit = 0, int $page = 0): int
+    {
+        $qb = $this->createBuilderByPersonIdWithRoleCod($personId, $roleCod, $sort, $limit, $page);
+
+        return $qb->count()->getQuery()->execute();
+    }
+
     /**
-     * Find multimedia objects by person id
-     * with given role in given series.
-     *
-     * @param Series $series
-     * @param string $personId
-     * @param string $roleCod
-     *
      * @return mixed
      */
-    public function findBySeriesAndPersonIdWithRoleCod($series, $personId, $roleCod)
+    public function findBySeriesAndPersonIdWithRoleCod(Series $series, string $personId, string $roleCod)
     {
         $qb = $this->createStandardQueryBuilder()->field('series')->references($series);
         $qb->field('people')->elemMatch($qb->expr()->field('people._id')->equals(new ObjectId($personId))->field('cod')->equals($roleCod));
@@ -250,7 +238,7 @@ class MultimediaObjectRepository extends DocumentRepository
         $collection = $dm->getDocumentCollection(MultimediaObject::class);
 
         $pipeline = [
-            ['$match' => ['people.cod' => "{$roleCode}"]],
+            ['$match' => ['people.cod' => (string) ($roleCode)]],
             [
                 '$project' => [
                     '_id' => 0,
@@ -264,35 +252,28 @@ class MultimediaObjectRepository extends DocumentRepository
         $aggregation = $collection->aggregate($pipeline, ['cursor' => []]);
 
         $people = [];
-
         foreach ($aggregation as $element) {
-            if (null !== $element['people']) {
-                if ((null !== $element['people']['cod']) && (null !== $element['people']['people'])) {
-                    if (0 === strpos($element['people']['cod'], $roleCode)) {
-                        foreach ($element['people']['people'] as $person) {
-                            if (!in_array($person['_id']->{'$id'}, $people)) {
-                                $people[] = $person['_id']->{'$id'};
-                            }
-                        }
-                    }
+            if (null === $element['people']) {
+                continue;
+            }
+            if ((null === $element['people']['cod']) || (null === $element['people']['people'])) {
+                continue;
+            }
+            if (0 !== strpos($element['people']['cod'], $roleCode)) {
+                continue;
+            }
+            foreach ($element['people']['people'] as $person) {
+                if (in_array($person['_id'], $people, false)) {
+                    continue;
                 }
+                $people[] = $person['_id'];
             }
         }
 
         return $people;
     }
 
-    /**
-     * Find person in multimedia objects with given role and given email.
-     *
-     * @param string $roleCode
-     * @param string $email
-     *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     *
-     * @return array
-     */
-    public function findPersonWithRoleCodeAndEmail($roleCode, $email)
+    public function findPeopleWithRoleCodeAndId(string $roleCode, string $email): array
     {
         $dm = $this->getDocumentManager();
         $collection = $dm->getDocumentCollection(MultimediaObject::class);
@@ -300,8 +281,8 @@ class MultimediaObjectRepository extends DocumentRepository
         $pipeline = [
             [
                 '$match' => [
-                    'people.cod' => "{$roleCode}",
-                    'people.people.email' => "{$email}",
+                    'people.cod' => (string) ($roleCode),
+                    'people.people.email' => (string) ($email),
                 ],
             ],
             [
@@ -317,25 +298,30 @@ class MultimediaObjectRepository extends DocumentRepository
 
         $aggregation = $collection->aggregate($pipeline, ['cursor' => []]);
 
-        $persons = [];
-
+        $people = [];
         foreach ($aggregation as $element) {
-            if (null !== $element['people']) {
-                if ((null !== $element['people']['cod']) && (null !== $element['people']['people'])) {
-                    if ((0 === strpos($element['people']['cod'], $roleCode))) {
-                        foreach ($element['people']['people'] as $person) {
-                            if ($person['email'] === $email) {
-                                if (!in_array($person['_id']->{'$id'}, $persons)) {
-                                    $persons[] = $person['_id']->{'$id'};
-                                }
-                            }
-                        }
-                    }
+            if (null === $element['people']) {
+                continue;
+            }
+            if ((null === $element['people']['cod']) || (null === $element['people']['people'])) {
+                continue;
+            }
+            if (0 !== strpos($element['people']['cod'], $roleCode)) {
+                continue;
+            }
+
+            foreach ($element['people']['people'] as $person) {
+                if ($person['email'] !== $email) {
+                    continue;
                 }
+                if (in_array($person['_id'], $people, false)) {
+                    continue;
+                }
+                $people[] = $person['_id'];
             }
         }
 
-        return $persons;
+        return $people;
     }
 
     /**
@@ -453,18 +439,7 @@ class MultimediaObjectRepository extends DocumentRepository
         return $qb;
     }
 
-    /**
-     * Find by person id
-     * and role code or groups
-     * query.
-     *
-     * @param string $personId
-     * @param string $roleCod
-     * @param array  $groups
-     *
-     * @return \Doctrine\ODM\MongoDB\Query\Query
-     */
-    public function findByPersonIdAndRoleCodOrGroupsQuery($personId, $roleCod, $groups)
+    public function findByPersonIdAndRoleCodOrGroupsQuery(string $personId, string $roleCod, array $groups)
     {
         $qb = $this->findByPersonIdAndRoleCodOrGroupsQueryBuilder($personId, $roleCod, $groups);
 
@@ -508,7 +483,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find multimedia objects by tag id.
      *
-     * @param Tag   $tag
      * @param array $sort
      * @param int   $limit
      * @param int   $page
@@ -527,7 +501,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find multimedia objects by tag id without tag children.
      *
-     * @param Tag   $tag
      * @param array $sort
      * @param int   $limit
      * @param int   $page
@@ -546,7 +519,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Create QueryBuilder to find multimedia objects by tag id.
      *
-     * @param Tag   $tag
      * @param array $sort
      *
      * @return \Doctrine\MongoDB\Query\Builder|mixed
@@ -561,8 +533,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Create QueryBuilder to find multimedia objects by series.
      *
-     * @param Series $series
-     * @param array  $sort
+     * @param array $sort
      *
      * @return mixed
      */
@@ -576,9 +547,8 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Create QueryBuilder to find multimedia objects by series and status.
      *
-     * @param Series $series
-     * @param array  $status
-     * @param array  $sort
+     * @param array $status
+     * @param array $sort
      *
      * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
@@ -592,7 +562,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Create QueryBuilder to find multimedia objects with Tag and without any Tag children.
      *
-     * @param Tag   $tag
      * @param array $sort
      *
      * @return \Doctrine\MongoDB\Query\Builder|mixed
@@ -606,8 +575,6 @@ class MultimediaObjectRepository extends DocumentRepository
 
     /**
      * Find one multimedia object by tag id.
-     *
-     * @param Tag $tag
      *
      * @return array|object|null
      */
@@ -671,29 +638,25 @@ class MultimediaObjectRepository extends DocumentRepository
         return $qb->getQuery()->getSingleResult();
     }
 
-    /**
-     * Find multimedia objects without tag id.
-     *
-     * @param Tag   $tag
-     * @param array $sort
-     * @param int   $limit
-     * @param int   $page
-     *
-     * @return mixed
-     */
-    public function findWithoutTag(Tag $tag, $sort = [], $limit = 0, $page = 0)
+    public function qbWithoutTag(Tag $tag, array $sort = [], int $limit = 0, int $page = 0)
     {
         $qb = $this->createStandardQueryBuilder()->field('tags._id')->notEqual(new ObjectId($tag->getId()));
 
-        $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
+        return $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
+    }
 
-        return $qb->getQuery()->execute();
+    public function findWithoutTag(Tag $tag, array $sort = [], int $limit = 0, int $page = 0)
+    {
+        return $this->qbWithoutTag($tag, $sort, $limit, $page)->getQuery()->execute();
+    }
+
+    public function countWithoutTag(Tag $tag, array $sort = [], int $limit = 0, int $page = 0)
+    {
+        return $this->qbWithoutTag($tag, $sort, $limit, $page)->count()->getQuery()->execute();
     }
 
     /**
      * Find one multimedia object without tag id.
-     *
-     * @param Tag $tag
      *
      * @return array|object|null
      */
@@ -725,8 +688,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find series with tag.
      *
-     * @param Tag $tag
-     *
      * @return mixed
      */
     public function findSeriesFieldWithTag(Tag $tag)
@@ -739,16 +700,17 @@ class MultimediaObjectRepository extends DocumentRepository
         ;
     }
 
-    /**
-     * Find one series with tag.
-     *
-     * @param Tag $tag
-     *
-     * @return array|object|null
-     */
-    public function findOneSeriesFieldWithTag(Tag $tag)
+    public function findOneSeriesFieldWithTag(Tag $tag): ?ObjectId
     {
-        return $this->createStandardQueryBuilder()->field('tags._id')->equals(new ObjectId($tag->getId()))->distinct('series')->getQuery()->getSingleResult();
+        $series = $this->createStandardQueryBuilder()
+            ->field('tags._id')
+            ->equals(new ObjectId($tag->getId()))
+            ->distinct('series')
+            ->getQuery()
+            ->execute()
+        ;
+
+        return $series[0] ?? null;
     }
 
     /**
@@ -779,24 +741,22 @@ class MultimediaObjectRepository extends DocumentRepository
         return $this->createStandardQueryBuilder()->field('tags._id')->all($mongoIds)->distinct('series')->getQuery()->execute();
     }
 
-    /**
-     * Find one series with all tags.
-     *
-     * @param array $tags
-     *
-     * @return array|object|null
-     */
-    public function findOneSeriesFieldWithAllTags($tags)
+    public function findOneSeriesFieldWithAllTags(array $tags): ?ObjectId
     {
         $mongoIds = $this->getMongoIds($tags);
+        $series = $this->createStandardQueryBuilder()
+            ->field('tags._id')
+            ->all($mongoIds)
+            ->distinct('series')
+            ->getQuery()
+            ->execute()
+        ;
 
-        return $this->createStandardQueryBuilder()->field('tags._id')->all($mongoIds)->distinct('series')->getQuery()->getSingleResult();
+        return $series[0] ?? null;
     }
 
     /**
      * Find distinct url pics in series.
-     *
-     * @param Series $series
      *
      * @return mixed
      */
@@ -818,8 +778,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find by series.
      *
-     * @param Series $series
-     *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
      * @return mixed
@@ -832,9 +790,8 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find by series.
      *
-     * @param Series $series
-     * @param int    $limit
-     * @param int    $page
+     * @param int $limit
+     * @param int $page
      *
      * @return mixed
      */
@@ -850,7 +807,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find by series, tag code and status. Not needed (Using findBySeries and filter).
      *
-     * @param Series $series
      * @param string $tagCod
      * @param array  $status
      *
@@ -872,8 +828,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find by embedded broadcast.
      *
-     * @param EmbeddedBroadcast $embeddedBroadcast
-     *
      * @return mixed
      */
     public function findByEmbeddedBroadcast(EmbeddedBroadcast $embeddedBroadcast)
@@ -881,26 +835,12 @@ class MultimediaObjectRepository extends DocumentRepository
         return $this->createQueryBuilder()->field('embeddedBroadcast._id')->equals(new ObjectId($embeddedBroadcast->getId()))->getQuery()->execute();
     }
 
-    /**
-     * Find by embedded broadcast type query builder.
-     *
-     * @param string $type
-     *
-     * @return \Doctrine\MongoDB\Query\Builder
-     */
-    public function findByEmbeddedBroadcastTypeQueryBuilder($type)
+    public function findByEmbeddedBroadcastTypeQueryBuilder(string $type): Builder
     {
         return $this->createQueryBuilder()->field('embeddedBroadcast.type')->equals($type);
     }
 
-    /**
-     * Find by embedded broadcast type query.
-     *
-     * @param string $type
-     *
-     * @return \Doctrine\MongoDB\Query\Query
-     */
-    public function findByEmbeddedBroadcastTypeQuery($type)
+    public function findByEmbeddedBroadcastTypeQuery(string $type): \Doctrine\ODM\MongoDB\Query\Query
     {
         return $this->findByEmbeddedBroadcastTypeQueryBuilder($type)->getQuery();
     }
@@ -920,8 +860,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find ordered by fieldName: asc/desc.
      *
-     * @param Series $series
-     * @param array  $sort
+     * @param array $sort
      *
      * @return mixed
      */
@@ -935,8 +874,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find ordered by fieldName: asc/desc.
      *
-     * @param Series $series
-     * @param array  $sort
+     * @param array $sort
      *
      * @return mixed
      */
@@ -944,19 +882,20 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         $qb = $this->getQueryBuilderOrderedBy($series, $sort);
 
-        return $qb->getQuery()->execute();
+        return $qb->getQuery()->execute()->toArray();
     }
 
-    /**
-     * Create standard query builder.
-     * Creates a query builder with all multimedia objects having status different than PROTOTYPE.
-     * These are the multimedia objects we need to show in series.
-     *
-     * @return \Doctrine\ODM\MongoDB\Query\Builder
-     */
-    public function createStandardQueryBuilder()
+    public function createStandardQueryBuilder(): Builder
     {
         return $this->createQueryBuilder()
+            ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
+            ->field('type')->notEqual(MultimediaObject::TYPE_LIVE);
+    }
+
+    public function createAggregationStandardQueryBuilder(): \Doctrine\ODM\MongoDB\Aggregation\Stage\Match
+    {
+        return $this->createAggregationBuilder()
+            ->match()
             ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
             ->field('type')->notEqual(MultimediaObject::TYPE_LIVE);
     }
@@ -975,13 +914,11 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         $criteria['status'] = MultimediaObject::STATUS_PUBLISHED;
 
-        return $this->getDocumentPersister()->loadAll($criteria, $sort, $limit, $skip)->toArray(false);
+        return $this->getDocumentPersister()->loadAll($criteria, $sort, $limit, $skip)->toArray();
     }
 
     /**
      * Finds a single standard MultimediaObject (not prototype) by a set of criteria.
-     *
-     * @param array $criteria
      *
      * @throws \Doctrine\ODM\MongoDB\LockException
      *
@@ -998,8 +935,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * Find similar multimedia objects to a given one with same tags, from different series,
      * broadcast public, status normal, maximum 20 and random.
      *
-     * @param MultimediaObject $multimediaObject
-     * @param string           $tagBase
+     * @param string $tagBase
      *
      * @return mixed
      */
@@ -1026,50 +962,29 @@ class MultimediaObjectRepository extends DocumentRepository
         return $qb->getQuery()->execute();
     }
 
-    /**
-     * Count number of standard (not prototype) multimedia objects in the repo.
-     *
-     * @return mixed
-     */
-    public function count()
+    public function count(): int
     {
         return $this->createStandardQueryBuilder()->count()->getQuery()->execute();
     }
 
-    /**
-     * Count total duration of standard (not prototype) multimedia objects.
-     *
-     * @return mixed
-     */
-    public function countDuration()
+    public function countDuration(): int
     {
-        $result = $this->createStandardQueryBuilder()->group([], ['count' => 0])->reduce('function (obj, prev) { prev.count += obj.duration; }')->getQuery()->execute();
+        $aggregation = $this->createAggregationStandardQueryBuilder()
+            ->group()
+            ->field('id')->expression('id')
+            ->field('total_duration')->sum('$duration')
+            ->execute()
+        ;
 
-        $singleResult = $result->getSingleResult();
-
-        return $singleResult['count'];
+        return $aggregation->current()['total_duration'] ?? 0;
     }
 
-    /**
-     * Count number of standard (not prototype) multimedia objects in a Series.
-     *
-     * @param Series $series
-     *
-     * @return mixed
-     */
-    public function countInSeries($series)
+    public function countInSeries($series): int
     {
         return $this->createStandardQueryBuilder()->field('series')->references($series)->count()->getQuery()->execute();
     }
 
-    /**
-     * Find by tag query builder.
-     *
-     * @param Tag $tag
-     *
-     * @return \Doctrine\MongoDB\Query\Builder
-     */
-    public function findByTagCodQueryBuilder($tag)
+    public function findByTagCodQueryBuilder(Tag $tag): Builder
     {
         return $this->createStandardQueryBuilder()->field('tags.cod')->equals($tag->getCod());
     }
@@ -1103,14 +1018,7 @@ class MultimediaObjectRepository extends DocumentRepository
         return $this->findByTagCodQuery($tag, $sort)->execute();
     }
 
-    /**
-     * Find all by tag query builder.
-     *
-     * @param Tag $tag
-     *
-     * @return \Doctrine\MongoDB\Query\Builder
-     */
-    public function findAllByTagQueryBuilder($tag)
+    public function findAllByTagQueryBuilder(Tag $tag): Builder
     {
         return $this->createQueryBuilder()->field('tags._id')->equals(new ObjectId($tag->getId()));
     }
@@ -1171,7 +1079,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Create QueryBuilder to find multimedia objects with group.
      *
-     * @param Group $group
      * @param array $sort
      *
      * @return \Doctrine\MongoDB\Query\Builder|mixed
@@ -1186,7 +1093,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find multimedia objects with group.
      *
-     * @param Group $group
      * @param array $sort
      * @param int   $limit
      * @param int   $page
@@ -1205,7 +1111,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Count multimedia objects with group.
      *
-     * @param Group $group
      * @param array $sort
      * @param int   $limit
      * @param int   $page
@@ -1224,7 +1129,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Create QueryBuilder to find multimedia objects with group.
      *
-     * @param Group $group
      * @param array $sort
      *
      * @return \Doctrine\MongoDB\Query\Builder|mixed
@@ -1239,7 +1143,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find multimedia objects with group.
      *
-     * @param Group $group
      * @param array $sort
      * @param int   $limit
      * @param int   $page
@@ -1258,7 +1161,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Count multimedia objects with group in embedded broadcast.
      *
-     * @param Group $group
      * @param array $sort
      * @param int   $limit
      * @param int   $page
@@ -1277,7 +1179,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Count in series with embedded broadcast type.
      *
-     * @param Series $series
      * @param string $type
      *
      * @return mixed
@@ -1290,7 +1191,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Count in series with embedded broadcast password.
      *
-     * @param Series $series
      * @param string $type
      * @param string $password
      *
@@ -1304,7 +1204,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Count in series with embedded broadcast groups.
      *
-     * @param Series $series
      * @param string $type
      * @param array  $groups
      *
@@ -1321,8 +1220,6 @@ class MultimediaObjectRepository extends DocumentRepository
      * Count number of all multimedia objects in a Series
      * (including prototype).
      *
-     * @param Series $series
-     *
      * @return mixed
      */
     public function countInSeriesWithPrototype(Series $series)
@@ -1330,34 +1227,14 @@ class MultimediaObjectRepository extends DocumentRepository
         return $this->createQueryBuilder()->field('series')->references($series)->count()->getQuery()->execute();
     }
 
-    /**
-     * Find Series field by EmbeddedBroadcast type Query Builder.
-     *
-     * @param string $type
-     * @param array  $sort
-     * @param int    $limit
-     * @param int    $page
-     *
-     * @return \Doctrine\MongoDB\Query\Builder|mixed
-     */
-    public function findSeriesFieldByEmbeddedBroadcastTypeQueryBuilder($type = '', $sort = [], $limit = 0, $page = 0)
+    public function findSeriesFieldByEmbeddedBroadcastTypeQueryBuilder(string $type = '', array $sort = [], int $limit = 0, int $page = 0)
     {
         $qb = $this->findByEmbeddedBroadcastTypeQueryBuilder($type)->distinct('series');
 
         return $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
     }
 
-    /**
-     * Find Series field by EmbeddedBroadcast type Query.
-     *
-     * @param string $type
-     * @param array  $sort
-     * @param int    $limit
-     * @param int    $page
-     *
-     * @return \Doctrine\MongoDB\Query\Query
-     */
-    public function findSeriesFieldByEmbeddedBroadcastTypeQuery($type = '', $sort = [], $limit = 0, $page = 0)
+    public function findSeriesFieldByEmbeddedBroadcastTypeQuery(string $type = '', array $sort = [], int $limit = 0, int $page = 0)
     {
         $qb = $this->findSeriesFieldByEmbeddedBroadcastTypeQueryBuilder($type, $sort, $limit, $page);
 
@@ -1381,18 +1258,7 @@ class MultimediaObjectRepository extends DocumentRepository
         return $query->execute();
     }
 
-    /**
-     * Find series field with embedded broadcast type and groups Query Builder.
-     *
-     * @param string $type
-     * @param array  $groups
-     * @param array  $sort
-     * @param int    $limit
-     * @param int    $page
-     *
-     * @return \Doctrine\MongoDB\Query\Builder|mixed
-     */
-    public function findSeriesFieldByEmbeddedBroadcastTypeAndGroupsQueryBuilder($type = '', $groups = [], $sort = [], $limit = 0, $page = 0)
+    public function findSeriesFieldByEmbeddedBroadcastTypeAndGroupsQueryBuilder(string $type = '', array $groups = [], array $sort = [], int $limit = 0, int $page = 0)
     {
         $groupsIds = $this->getGroupsIdsArray($groups);
 
@@ -1401,36 +1267,14 @@ class MultimediaObjectRepository extends DocumentRepository
         return $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
     }
 
-    /**
-     * Find series field with embedded broadcast type and groups Query.
-     *
-     * @param string $type
-     * @param array  $groups
-     * @param array  $sort
-     * @param int    $limit
-     * @param int    $page
-     *
-     * @return \Doctrine\MongoDB\Query\Query
-     */
-    public function findSeriesFieldByEmbeddedBroadcastTypeAndGroupsQuery($type = '', $groups = [], $sort = [], $limit = 0, $page = 0)
+    public function findSeriesFieldByEmbeddedBroadcastTypeAndGroupsQuery(string $type = '', array $groups = [], array $sort = [], int $limit = 0, int $page = 0)
     {
         $qb = $this->findSeriesFieldByEmbeddedBroadcastTypeAndGroupsQueryBuilder($type, $groups, $sort, $limit, $page);
 
         return $qb->getQuery();
     }
 
-    /**
-     * Find series field with embedded broadcast type and groups.
-     *
-     * @param string $type
-     * @param array  $groups
-     * @param array  $sort
-     * @param int    $limit
-     * @param int    $page
-     *
-     * @return \Doctrine\MongoDB\Query\Query
-     */
-    public function findSeriesFieldByEmbeddedBroadcastTypeAndGroups($type = '', $groups = [], $sort = [], $limit = 0, $page = 0)
+    public function findSeriesFieldByEmbeddedBroadcastTypeAndGroups(string $type = '', array $groups = [], array $sort = [], int $limit = 0, int $page = 0)
     {
         $query = $this->findSeriesFieldByEmbeddedBroadcastTypeAndGroupsQuery($type, $groups, $sort, $limit, $page);
 
@@ -1545,12 +1389,13 @@ class MultimediaObjectRepository extends DocumentRepository
             ],
         ];
 
-        $result = $collection->aggregate($pipeline, ['cursor' => []])->toArray();
+        $result = iterator_to_array($collection->aggregate($pipeline, ['cursor' => []]));
 
         foreach ($result as $key => $element) {
             $orderSession = [];
             foreach ($element['data'] as $eventData) {
-                $orderSession[$eventData['session']['start']->sec] = $eventData;
+                $seconds = $eventData['session']['start']->toDateTime()->format('U');
+                $orderSession[$seconds] = $eventData;
             }
             ksort($orderSession);
             $result[$key]['data'] = array_values($orderSession);
@@ -1657,7 +1502,7 @@ class MultimediaObjectRepository extends DocumentRepository
             $pipeline[] = ['$limit' => $limit];
         }
 
-        return $collection->aggregate($pipeline, ['cursor' => []])->toArray();
+        return iterator_to_array($collection->aggregate($pipeline, ['cursor' => []]));
     }
 
     /**
@@ -1746,8 +1591,6 @@ class MultimediaObjectRepository extends DocumentRepository
 
     /**
      * Get mongo ids.
-     *
-     * @param array $documents
      *
      * @return array
      */

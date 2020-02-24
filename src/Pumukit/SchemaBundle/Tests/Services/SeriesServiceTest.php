@@ -2,82 +2,72 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Services\SeriesService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class SeriesServiceTest extends WebTestCase
+class SeriesServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
     private $seriesService;
     private $seriesDispatcher;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
-        $this->repo = $this->dm
-            ->getRepository(Series::class)
-        ;
-        $this->seriesService = static::$kernel->getContainer()
-            ->get('pumukitschema.series')
-        ;
-        $this->seriesDispatcher = static::$kernel->getContainer()
-            ->get('pumukitschema.series_dispatcher')
-        ;
+        parent::setUp();
 
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
-        $this->dm->flush();
+        $this->repo = $this->dm->getRepository(Series::class);
+        $this->seriesService = static::$kernel->getContainer()->get('pumukitschema.series');
+        $this->seriesDispatcher = static::$kernel->getContainer()->get('pumukitschema.series_dispatcher');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->repo = null;
         $this->seriesService = null;
         $this->seriesDispatcher = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testResetMagicUrl()
     {
         $series = new Series();
+        $series->setNumericalID(1);
 
         $this->dm->persist($series);
-        $this->dm->flush();
 
         $secret = $series->getSecret();
 
         $series = $this->repo->find($series->getId());
-        $this->assertEquals($secret, $series->getSecret());
+        static::assertEquals($secret, $series->getSecret());
 
         $seriesService = new SeriesService($this->dm, $this->seriesDispatcher);
 
         $newSecret = $seriesService->resetMagicUrl($series);
 
-        $this->assertNotEquals($secret, $series->getSecret());
-        $this->assertEquals($newSecret, $series->getSecret());
+        static::assertNotEquals($secret, $series->getSecret());
+        static::assertEquals($newSecret, $series->getSecret());
     }
 
     public function testSameEmbeddedBroadcast()
     {
         $series1 = new Series();
+        $series1->setNumericalID(1);
 
         $this->dm->persist($series1);
-        $this->dm->flush();
 
         $key1 = 'Group1';
         $name1 = 'Group 1';
@@ -130,9 +120,13 @@ class SeriesServiceTest extends WebTestCase
         $embeddedBroadcast14->addGroup($group2);
 
         $mm11 = new MultimediaObject();
+        $mm11->setNumericalID(11);
         $mm12 = new MultimediaObject();
+        $mm12->setNumericalID(12);
         $mm13 = new MultimediaObject();
+        $mm13->setNumericalID(13);
         $mm14 = new MultimediaObject();
+        $mm14->setNumericalID(14);
 
         $mm11->setSeries($series1);
         $mm12->setSeries($series1);
@@ -154,7 +148,7 @@ class SeriesServiceTest extends WebTestCase
         $this->dm->persist($mm14);
         $this->dm->flush();
 
-        $this->assertFalse($this->seriesService->sameEmbeddedBroadcast($series1));
+        static::assertFalse($this->seriesService->sameEmbeddedBroadcast($series1));
 
         $embeddedBroadcast11 = $mm11->getEmbeddedBroadcast();
         $embeddedBroadcast12 = $mm12->getEmbeddedBroadcast();
@@ -170,7 +164,7 @@ class SeriesServiceTest extends WebTestCase
         $this->dm->persist($mm14);
         $this->dm->flush();
 
-        $this->assertTrue($this->seriesService->sameEmbeddedBroadcast($series1));
+        static::assertTrue($this->seriesService->sameEmbeddedBroadcast($series1));
 
         $embeddedBroadcast11->setType($typePassword);
         $embeddedBroadcast12->setType($typePassword);
@@ -182,7 +176,7 @@ class SeriesServiceTest extends WebTestCase
         $this->dm->persist($mm14);
         $this->dm->flush();
 
-        $this->assertFalse($this->seriesService->sameEmbeddedBroadcast($series1));
+        static::assertFalse($this->seriesService->sameEmbeddedBroadcast($series1));
 
         $embeddedBroadcast11->setPassword($password2);
         $embeddedBroadcast12->setPassword($password2);
@@ -194,7 +188,7 @@ class SeriesServiceTest extends WebTestCase
         $this->dm->persist($mm14);
         $this->dm->flush();
 
-        $this->assertTrue($this->seriesService->sameEmbeddedBroadcast($series1));
+        static::assertTrue($this->seriesService->sameEmbeddedBroadcast($series1));
 
         $embeddedBroadcast11->setType($typeGroups);
         $embeddedBroadcast12->setType($typeGroups);
@@ -206,7 +200,7 @@ class SeriesServiceTest extends WebTestCase
         $this->dm->persist($mm14);
         $this->dm->flush();
 
-        $this->assertFalse($this->seriesService->sameEmbeddedBroadcast($series1));
+        static::assertFalse($this->seriesService->sameEmbeddedBroadcast($series1));
 
         $embeddedBroadcast11 = $this->removeGroups($embeddedBroadcast11);
         $embeddedBroadcast11->addGroup($group1);
@@ -226,7 +220,7 @@ class SeriesServiceTest extends WebTestCase
         $this->dm->persist($mm14);
         $this->dm->flush();
 
-        $this->assertTrue($this->seriesService->sameEmbeddedBroadcast($series1));
+        static::assertTrue($this->seriesService->sameEmbeddedBroadcast($series1));
     }
 
     private function createGroup($key = 'Group1', $name = 'Group 1')

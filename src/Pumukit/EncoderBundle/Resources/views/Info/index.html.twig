@@ -1,4 +1,4 @@
-{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+{% extends '@PumukitNewAdmin/layout.html.twig' %}
 
 {% block body %}
 
@@ -10,7 +10,7 @@
 
     <div class="row stats_jobs">
         {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_JOBS')) %}
-            {% include 'PumukitEncoderBundle:Info:stats.html.twig' %}
+            {% include '@PumukitEncoder/Info/stats.html.twig' %}
         {% endif %}
     </div>
 
@@ -18,14 +18,14 @@
         {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_JOBS')) %}
             <div class="col-md-9">
                 <div class="well" id="list_jobs">
-                    {% include 'PumukitEncoderBundle:Info:jobs.html.twig' with {'pageParameter': '[page_pending]', 'title': 'Pending jobs (paused & waiting)'|trans, 'jobs': jobs.pending } %}
-                    {% include 'PumukitEncoderBundle:Info:jobs.html.twig' with {'pageParameter': '[page_executing]', 'title': 'Executing jobs'|trans, 'jobs': jobs.executing } %}
-                    {% include 'PumukitEncoderBundle:Info:jobs.html.twig' with {'pageParameter': '[page_executed]', 'title': 'Executed jobs'|trans, 'jobs': jobs.executed } %}
+                    {% include '@PumukitEncoder/Info/jobs.html.twig' with {'pageParameter': '[page_pending]', 'title': 'Pending jobs (paused & waiting)'|trans, 'jobs': jobs.pending } %}
+                    {% include '@PumukitEncoder/Info/jobs.html.twig' with {'pageParameter': '[page_executing]', 'title': 'Executing jobs'|trans, 'jobs': jobs.executing } %}
+                    {% include '@PumukitEncoder/Info/jobs.html.twig' with {'pageParameter': '[page_executed]', 'title': 'Executed jobs'|trans, 'jobs': jobs.executed } %}
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="well" id="list_cpus">
-                    {% include 'PumukitEncoderBundle:Info:cpus.html.twig' %}
+                    {% include '@PumukitEncoder/Info/cpus.html.twig' %}
                 </div>
             </div>
         {% else %}

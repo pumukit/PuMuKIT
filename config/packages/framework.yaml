@@ -1,0 +1,24 @@
+framework:
+  #esi:             ~
+  translator:      { fallback: "%locale%" }
+  secret:          "%secret%"
+  form:            ~
+  csrf_protection: ~
+  validation:      { enable_annotations: true }
+    #assets_version: SomeVersionScheme
+  default_locale:  "%locale%"
+  trusted_hosts:   ~
+  session:
+    # handler_id set to null will use default session handler from php.ini
+    name: pumukit
+    handler_id:  ~
+  fragments:       ~
+  http_method_override: true
+
+sensio_framework_extra:
+  router:      { annotations: false } # Deprecated; use routing annotations of Symfony core instead
+  request:     { converters: true, auto_convert: true }
+  view:        { annotations: true }
+  cache:       { annotations: true }
+  security:    { annotations: true }
+  psr_message: { enabled: false } # Defaults to true if the PSR-7 bridge is installed

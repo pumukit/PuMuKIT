@@ -2,40 +2,82 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Psr\Log\LoggerInterface;
 use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\EncoderBundle\Services\JobService;
+use Pumukit\EncoderBundle\Services\PicExtractorService;
+use Pumukit\EncoderBundle\Services\ProfileService;
+use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
 use Pumukit\NewAdminBundle\Form\Type\TrackType;
 use Pumukit\NewAdminBundle\Form\Type\TrackUpdateType;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Security\Permission;
+use Pumukit\SchemaBundle\Services\TrackService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
-class TrackController extends Controller implements NewAdminControllerInterface
+class TrackController extends AbstractController implements NewAdminControllerInterface
 {
+    private $logger;
+    private $documentManager;
+    private $translator;
+    private $jobService;
+    private $trackService;
+    private $profileService;
+    private $inspectionService;
+    private $picExtractorService;
+    private $kernelEnvironment;
+    private $kernelBundles;
+
+    public function __construct(
+        LoggerInterface $logger,
+        DocumentManager $documentManager,
+        TranslatorInterface $translator,
+        JobService $jobService,
+        TrackService $trackService,
+        ProfileService $profileService,
+        InspectionFfprobeService $inspectionService,
+        PicExtractorService $picExtractorService,
+        $kernelEnvironment,
+        $kernelBundles
+    ) {
+        $this->logger = $logger;
+        $this->documentManager = $documentManager;
+        $this->translator = $translator;
+        $this->jobService = $jobService;
+        $this->trackService = $trackService;
+        $this->profileService = $profileService;
+        $this->inspectionService = $inspectionService;
+        $this->picExtractorService = $picExtractorService;
+        $this->kernelEnvironment = $kernelEnvironment;
+        $this->kernelBundles = $kernelBundles;
+    }
+
     /**
      * @Security("is_granted('ROLE_ACCESS_ADVANCED_UPLOAD')")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
-     * @Template("PumukitNewAdminBundle:Track:create.html.twig")
+     * @Template("@PumukitNewAdmin/Track/create.html.twig")
      */
-    public function createAction(MultimediaObject $multimediaObject, Request $request)
+    public function createAction(Request $request, MultimediaObject $multimediaObject)
     {
-        $translator = $this->get('translator');
         $locale = $request->getLocale();
         $track = new Track();
-        $form = $this->createForm(TrackType::class, $track, ['translator' => $translator, 'locale' => $locale]);
+        $form = $this->createForm(TrackType::class, $track, ['translator' => $this->translator, 'locale' => $locale]);
 
-        $masterProfiles = $this->get('pumukitencoder.profile')->getMasterProfiles(true);
+        $masterProfiles = $this->profileService->getMasterProfiles(true);
 
         return [
             'track' => $track,
@@ -47,32 +89,29 @@ class TrackController extends Controller implements NewAdminControllerInterface
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
-     * @Template("PumukitNewAdminBundle:Track:upload.html.twig")
+     * @Template("@PumukitNewAdmin/Track/upload.html.twig")
      * @Security("is_granted('ROLE_ACCESS_ADVANCED_UPLOAD')")
      */
-    public function uploadAction(MultimediaObject $multimediaObject, Request $request)
+    public function uploadAction(Request $request, MultimediaObject $multimediaObject)
     {
         $profile = $request->get('profile');
         $priority = $request->get('priority', 2);
         $formData = $request->get('pumukitnewadmin_track', []);
         [$language, $description] = $this->getArrayData($formData);
 
-        $jobService = $this->get('pumukitencoder.job');
-
         try {
             if (0 === $request->files->count() && 0 === $request->request->count()) {
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
             }
-            if (($request->files->has('resource')) && ('file' == $request->get('file_type'))) {
-                $multimediaObject = $jobService->createTrackFromLocalHardDrive($multimediaObject, $request->files->get('resource'), $profile, $priority, $language, $description);
-            } elseif (($request->get('file', null)) && ('inbox' == $request->get('file_type'))) {
-                $multimediaObject = $jobService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description);
+            if (($request->files->has('resource')) && ('file' === $request->get('file_type'))) {
+                $multimediaObject = $this->jobService->createTrackFromLocalHardDrive($multimediaObject, $request->files->get('resource'), $profile, $priority, $language, $description);
+            } elseif (($request->get('file')) && ('inbox' === $request->get('file_type'))) {
+                $multimediaObject = $this->jobService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description);
             }
         } catch (\Exception $e) {
-            $logger = $this->container->get('logger');
-            $logger->warning($e->getMessage());
+            $this->logger->warning($e->getMessage());
 
-            $message = ('dev' === $this->getParameter('kernel.environment')) ? $e->getMessage() : 'The file is not a valid video or audio file';
+            $message = ('dev' === $this->kernelEnvironment) ? $e->getMessage() : 'The file is not a valid video or audio file';
 
             return [
                 'mm' => $multimediaObject,
@@ -90,19 +129,14 @@ class TrackController extends Controller implements NewAdminControllerInterface
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Request          $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function toggleHideAction(MultimediaObject $multimediaObject, Request $request)
+    public function toggleHideAction(Request $request, MultimediaObject $multimediaObject)
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
         $track->setHide(!$track->getHide());
 
         try {
-            $multimediaObject = $this->get('pumukitschema.track')->updateTrackInMultimediaObject($multimediaObject, $track);
+            $multimediaObject = $this->trackService->updateTrackInMultimediaObject($multimediaObject, $track);
         } catch (\Exception $e) {
             return new Response($e->getMessage(), 400);
         }
@@ -113,19 +147,18 @@ class TrackController extends Controller implements NewAdminControllerInterface
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      */
-    public function updateAction(MultimediaObject $multimediaObject, Request $request)
+    public function updateAction(Request $request, MultimediaObject $multimediaObject)
     {
-        $translator = $this->get('translator');
         $locale = $request->getLocale();
         $track = $multimediaObject->getTrackById($request->get('id'));
-        $form = $this->createForm(TrackUpdateType::class, $track, ['translator' => $translator, 'locale' => $locale, 'is_super_admin' => $this->isGranted('ROLE_SUPER_ADMIN')]);
+        $form = $this->createForm(TrackUpdateType::class, $track, ['translator' => $this->translator, 'locale' => $locale, 'is_super_admin' => $this->isGranted('ROLE_SUPER_ADMIN')]);
 
-        $profiles = $this->get('pumukitencoder.profile')->getProfiles();
+        $profiles = $this->profileService->getProfiles();
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && ($request->isMethod('PUT') || $request->isMethod('POST'))) {
             try {
-                $multimediaObject = $this->get('pumukitschema.track')->updateTrackInMultimediaObject($multimediaObject, $track);
+                $multimediaObject = $this->trackService->updateTrackInMultimediaObject($multimediaObject, $track);
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), 400);
             }
@@ -134,7 +167,7 @@ class TrackController extends Controller implements NewAdminControllerInterface
         }
 
         return $this->render(
-            'PumukitNewAdminBundle:Track:update.html.twig',
+            '@PumukitNewAdmin/Track/update.html.twig',
             [
                 'track' => $track,
                 'form' => $form->createView(),
@@ -146,19 +179,17 @@ class TrackController extends Controller implements NewAdminControllerInterface
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     * @Template("PumukitNewAdminBundle:Track:info.html.twig")
+     * @Template("@PumukitNewAdmin/Track/info.html.twig")
      */
-    public function infoAction(MultimediaObject $multimediaObject, Request $request)
+    public function infoAction(Request $request, MultimediaObject $multimediaObject)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
         $track = $multimediaObject->getTrackById($request->get('id'));
         $isPlayable = $track->containsTag('display');
         $isPublished = $multimediaObject->containsTagWithCod('PUCHWEBTV') && MultimediaObject::STATUS_PUBLISHED == $multimediaObject->getStatus();
 
         $job = null;
         if ($track->getPath()) {
-            $job = $dm->getRepository(Job::class)->findOneBy(['path_end' => $track->getPath()]);
+            $job = $this->documentManager->getRepository(Job::class)->findOneBy(['path_end' => $track->getPath()]);
         }
 
         return [
@@ -172,9 +203,9 @@ class TrackController extends Controller implements NewAdminControllerInterface
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     * @Template("PumukitNewAdminBundle:Track:play.html.twig")
+     * @Template("@PumukitNewAdmin/Track/play.html.twig")
      */
-    public function playAction(MultimediaObject $multimediaObject, Request $request)
+    public function playAction(Request $request, MultimediaObject $multimediaObject)
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
 
@@ -184,7 +215,7 @@ class TrackController extends Controller implements NewAdminControllerInterface
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      */
-    public function deleteAction(MultimediaObject $multimediaObject, Request $request)
+    public function deleteAction(Request $request, MultimediaObject $multimediaObject)
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
         if ($track) {
@@ -192,7 +223,7 @@ class TrackController extends Controller implements NewAdminControllerInterface
                 ($track->isMaster() && !$this->isGranted(Permission::ACCESS_ADVANCED_UPLOAD))) {
                 return new Response('You don\'t have enough permissions to delete this track. Contact your administrator.', Response::HTTP_FORBIDDEN);
             }
-            $multimediaObject = $this->get('pumukitschema.track')->removeTrackFromMultimediaObject($multimediaObject, $request->get('id'));
+            $multimediaObject = $this->trackService->removeTrackFromMultimediaObject($multimediaObject, $request->get('id'));
         }
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]));
@@ -201,9 +232,9 @@ class TrackController extends Controller implements NewAdminControllerInterface
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      */
-    public function upAction(MultimediaObject $multimediaObject, Request $request)
+    public function upAction(Request $request, MultimediaObject $multimediaObject)
     {
-        $multimediaObject = $this->get('pumukitschema.track')->upTrackInMultimediaObject($multimediaObject, $request->get('id'));
+        $multimediaObject = $this->trackService->upTrackInMultimediaObject($multimediaObject, $request->get('id'));
 
         $this->addFlash('success', 'up');
 
@@ -213,9 +244,9 @@ class TrackController extends Controller implements NewAdminControllerInterface
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      */
-    public function downAction(MultimediaObject $multimediaObject, Request $request)
+    public function downAction(Request $request, MultimediaObject $multimediaObject)
     {
-        $multimediaObject = $this->get('pumukitschema.track')->downTrackInMultimediaObject($multimediaObject, $request->get('id'));
+        $multimediaObject = $this->trackService->downTrackInMultimediaObject($multimediaObject, $request->get('id'));
 
         $this->addFlash('success', 'down');
 
@@ -223,15 +254,14 @@ class TrackController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Track:list.html.twig")
+     * @Template("@PumukitNewAdmin/Track/list.html.twig")
      */
-    public function listAction(MultimediaObject $multimediaObject, Request $request)
+    public function listAction(Request $request, MultimediaObject $multimediaObject)
     {
-        $jobs = $this->get('pumukitencoder.job')->getNotFinishedJobsByMultimediaObjectId($multimediaObject->getId());
+        $jobs = $this->jobService->getNotFinishedJobsByMultimediaObjectId($multimediaObject->getId());
 
-        $notMasterProfiles = $this->get('pumukitencoder.profile')->getProfiles(null, true, false);
-        $allBundles = $this->container->getParameter('kernel.bundles');
-        $opencastExists = array_key_exists('PumukitOpencastBundle', $allBundles);
+        $notMasterProfiles = $this->profileService->getProfiles(null, true, false);
+        $opencastExists = array_key_exists('PumukitOpencastBundle', $this->kernelBundles);
 
         return [
             'mm' => $multimediaObject,
@@ -250,9 +280,9 @@ class TrackController extends Controller implements NewAdminControllerInterface
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("job", class="PumukitEncoderBundle:Job", options={"id" = "jobId"})
      */
-    public function retryJobAction(MultimediaObject $multimediaObject, Job $job, Request $request)
+    public function retryJobAction(MultimediaObject $multimediaObject, Job $job)
     {
-        $flashMessage = $this->get('pumukitencoder.job')->retryJob($job);
+        $flashMessage = $this->jobService->retryJob($job);
         $this->addFlash('success', $flashMessage);
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]));
@@ -263,11 +293,11 @@ class TrackController extends Controller implements NewAdminControllerInterface
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("job", class="PumukitEncoderBundle:Job", options={"id" = "jobId"})
-     * @Template("PumukitNewAdminBundle:Track:infoJob.html.twig")
+     * @Template("@PumukitNewAdmin/Track/infoJob.html.twig")
      */
-    public function infoJobAction(MultimediaObject $multimediaObject, Job $job, Request $request)
+    public function infoJobAction(MultimediaObject $multimediaObject, Job $job)
     {
-        $command = $this->get('pumukitencoder.job')->renderBat($job);
+        $command = $this->jobService->renderBat($job);
 
         return ['multimediaObject' => $multimediaObject, 'job' => $job, 'command' => $command];
     }
@@ -277,9 +307,9 @@ class TrackController extends Controller implements NewAdminControllerInterface
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      */
-    public function deleteJobAction(MultimediaObject $multimediaObject, Request $request)
+    public function deleteJobAction(Request $request, MultimediaObject $multimediaObject)
     {
-        $this->get('pumukitencoder.job')->deleteJob($request->get('jobId'));
+        $this->jobService->deleteJob($request->get('jobId'));
 
         $this->addFlash('success', 'delete job');
 
@@ -293,7 +323,7 @@ class TrackController extends Controller implements NewAdminControllerInterface
     {
         $priority = $request->get('priority');
         $jobId = $request->get('jobId');
-        $this->get('pumukitencoder.job')->updateJobPriority($jobId, $priority);
+        $this->jobService->updateJobPriority($jobId, $priority);
 
         return new JsonResponse(['jobId' => $jobId, 'priority' => $priority]);
     }
@@ -301,28 +331,28 @@ class TrackController extends Controller implements NewAdminControllerInterface
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      */
-    public function autocompleteAction(MultimediaObject $multimediaObject, Request $request)
+    public function autocompleteAction(Request $request, MultimediaObject $multimediaObject)
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
 
-        $this->get('pumukit.inspection')->autocompleteTrack($track);
-        $this->get('pumukitschema.track')->updateTrackInMultimediaObject($multimediaObject, $track);
+        $this->inspectionService->autocompleteTrack($track);
+        $this->trackService->updateTrackInMultimediaObject($multimediaObject, $track);
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]));
     }
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     * @Template("PumukitNewAdminBundle:Pic:list.html.twig")
+     * @Template("@PumukitNewAdmin/Pic/list.html.twig")
      */
-    public function picAction(MultimediaObject $multimediaObject, Request $request)
+    public function picAction(Request $request, MultimediaObject $multimediaObject)
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
         $numframe = $request->get('numframe');
 
-        $flagTrue = $this->get('pumukitencoder.picextractor')->extractPic($multimediaObject, $track, $numframe);
+        $flagTrue = $this->picExtractorService->extractPic($multimediaObject, $track, $numframe);
         if ($flagTrue) {
-            $this->get('pumukitschema.track')->updateTrackInMultimediaObject($multimediaObject, $track);
+            $this->trackService->updateTrackInMultimediaObject($multimediaObject, $track);
         }
 
         return [
@@ -334,12 +364,12 @@ class TrackController extends Controller implements NewAdminControllerInterface
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      */
-    public function downloadAction(MultimediaObject $multimediaObject, Request $request)
+    public function downloadAction(Request $request, MultimediaObject $multimediaObject)
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
 
         $response = new BinaryFileResponse($track->getPath());
-        $response->trustXSendfileTypeHeader();
+        $response::trustXSendfileTypeHeader();
         $response->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
             basename($track->getPath()),
@@ -352,22 +382,17 @@ class TrackController extends Controller implements NewAdminControllerInterface
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      */
-    public function retranscodeAction(MultimediaObject $multimediaObject, Request $request)
+    public function retranscodeAction(Request $request, MultimediaObject $multimediaObject)
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
         $profile = $request->get('profile');
         $priority = 2;
 
-        $this->get('pumukitencoder.job')->addJob($track->getPath(), $profile, $priority, $multimediaObject, $track->getLanguage(), $track->getI18nDescription());
+        $this->jobService->addJob($track->getPath(), $profile, $priority, $multimediaObject, $track->getLanguage(), $track->getI18nDescription());
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]));
     }
 
-    /**
-     * Get data in array or default values.
-     *
-     * @param mixed $formData
-     */
     private function getArrayData($formData)
     {
         $language = null;

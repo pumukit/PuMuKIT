@@ -44,8 +44,6 @@ class SeriesService
     /**
      * Same Embedded Broadcast.
      *
-     * @param Series $series
-     *
      * @return bool
      */
     public function sameEmbeddedBroadcast(Series $series)
@@ -94,7 +92,6 @@ class SeriesService
      * with owner role code or share groups
      * with the multimedia object.
      *
-     * @param User   $user
      * @param bool   $onlyAdminSeries
      * @param string $roleOwnerCode
      * @param array  $sort

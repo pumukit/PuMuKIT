@@ -1,5 +1,5 @@
 <style>
-    {% include "PumukitWebTVBundle:Css:template_stats.css.twig" %}
+    {% include "@PumukitWebTV/Css/template_stats.css.twig" %}
     .user_profile_video_info_block {
         margin-top:10px;
     }
@@ -28,7 +28,7 @@
                 {% set text = status_string_text_by_value(key) %}
                 <div class="col-xs-4 col-sm-4 col-md-4">
                     <div class="stats-circle stats-circle-{{ loop.index }} text-center center-block">
-                        <span>{{ value['multimediaObjects']|length }}</span>
+                        <span>{{ value }}</span>
                         <div class="stats-label">{{ text|trans }}</div>
                     </div>
                 </div>

@@ -9,7 +9,7 @@ use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RemoveListener
 {
@@ -37,15 +37,16 @@ class RemoveListener
         if ($document instanceof MultimediaObject) {
             $dm = $this->container->get('doctrine_mongodb.odm.document_manager');
             $jobRepo = $dm->getRepository(Job::class);
-            $executingJobs = $jobRepo->findByStatusAndMultimediaObjectId(Job::STATUS_EXECUTING, $document->getId());
+            $executingJobs = $jobRepo->findBy(['status' => Job::STATUS_EXECUTING, 'mm_id' => $document->getId()]);
 
-            if (0 !== $executingJobs->count()) {
+            $countExecutingJobs = count($executingJobs);
+            if (0 !== $countExecutingJobs) {
                 throw new \Exception(
                     $this->translator->trans(
                         'Can not delete Multimedia Object with id %videoId%. It has %jobsCount% jobs executing.',
                         [
                             '%videoId%' => $document->getId(),
-                            '%jobsCount%' => $executingJobs->count(),
+                            '%jobsCount%' => $countExecutingJobs,
                         ]
                     )
                 );

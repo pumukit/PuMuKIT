@@ -2,52 +2,77 @@
 
 namespace Pumukit\WebTVBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\WebTVBundle\Services\BreadcrumbsService;
+use Pumukit\WebTVBundle\Services\ListService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * Class MediaLibraryController.
- */
-class MediaLibraryController extends Controller implements WebTVControllerInterface
+class MediaLibraryController extends AbstractController implements WebTVControllerInterface
 {
+    /** @var DocumentManager */
+    private $documentManager;
+
+    /** @var BreadcrumbsService */
+    private $breadcrumbsService;
+
+    /** @var TranslatorInterface */
+    private $translator;
+
+    /** @var ListService */
+    private $listService;
+
+    private $menuMediatecaTitle;
+    private $pumukitWebTVMediaLibraryFilterTags;
+    private $catalogueThumbnails;
+    private $columnsObjsCatalogue;
+
+    public function __construct(
+        DocumentManager $documentManager,
+        BreadcrumbsService $breadcrumbsService,
+        TranslatorInterface $translator,
+        ListService $listService,
+        $menuMediatecaTitle,
+        $pumukitWebTVMediaLibraryFilterTags,
+        $catalogueThumbnails,
+        $columnsObjsCatalogue
+    ) {
+        $this->documentManager = $documentManager;
+        $this->breadcrumbsService = $breadcrumbsService;
+        $this->translator = $translator;
+        $this->listService = $listService;
+        $this->menuMediatecaTitle = $menuMediatecaTitle;
+        $this->pumukitWebTVMediaLibraryFilterTags = $pumukitWebTVMediaLibraryFilterTags;
+        $this->catalogueThumbnails = $catalogueThumbnails;
+        $this->columnsObjsCatalogue = $columnsObjsCatalogue;
+    }
+
     /**
      * @Route("/mediateca/{sort}", defaults={"sort" = "date"}, requirements={"sort" = "alphabetically|date|tags"}, name="pumukit_webtv_medialibrary_index")
-     * @Template("PumukitWebTVBundle:MediaLibrary:template.html.twig")
-     *
-     * @param Request $request
-     * @param string  $sort
-     *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     *
-     * @return array
+     * @Template("@PumukitWebTV/MediaLibrary/template.html.twig")
      */
-    public function indexAction(Request $request, $sort)
+    public function indexAction(Request $request, string $sort)
     {
-        $templateTitle = $this->container->getParameter('menu.mediateca_title');
-        $templateTitle = $this->get('translator')->trans($templateTitle);
-        $this->get('pumukit_web_tv.breadcrumbs')->addList($templateTitle, 'pumukit_webtv_medialibrary_index', ['sort' => $sort]);
+        $templateTitle = $this->translator->trans($this->menuMediatecaTitle);
+        $this->breadcrumbsService->addList($templateTitle, 'pumukit_webtv_medialibrary_index', ['sort' => $sort]);
 
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $array_tags = $this->container->getParameter('pumukit_web_tv.media_library.filter_tags');
-        $tagRepository = $dm->getRepository(Tag::class);
-        $selectionTags = $tagRepository->findBy(['cod' => ['$in' => $array_tags]]);
+        $selectionTags = $this->documentManager->getRepository(Tag::class)->findBy(['cod' => ['$in' => $this->pumukitWebTVMediaLibraryFilterTags]]);
 
-        $hasCatalogueThumbnails = $this->container->getParameter('catalogue_thumbnails');
-
-        [$objects, $aggregatedNumMmobjs] = $this->get('pumukit_web_tv.list_service')->getMediaLibrary([], $sort, $request->getLocale(), $request->query->get('p_tag'));
+        [$objects, $aggregatedNumMmobjs] = $this->listService->getMediaLibrary([], $sort, $request->getLocale(), $request->query->get('p_tag'));
 
         return [
             'objects' => $objects,
             'sort' => $sort,
             'tags' => $selectionTags,
-            'objectByCol' => $this->container->getParameter('columns_objs_catalogue'),
+            'objectByCol' => $this->columnsObjsCatalogue,
             'show_info' => false,
             'show_more' => false,
-            'catalogue_thumbnails' => $hasCatalogueThumbnails,
+            'catalogue_thumbnails' => $this->catalogueThumbnails,
             'aggregated_num_mmobjs' => $aggregatedNumMmobjs,
         ];
     }

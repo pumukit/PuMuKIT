@@ -2,6 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
@@ -9,131 +10,102 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Services\FactoryService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class FactoryServiceTest extends WebTestCase
+class FactoryServiceTest extends PumukitTestCase
 {
-    private $dm;
-    private $mmobjRepo;
+    private $multimediaObjectRepo;
     private $seriesRepo;
     private $translator;
     private $factory;
     private $locales;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
-        $this->seriesRepo = $this->dm
-            ->getRepository(Series::class)
-        ;
-        $this->mmobjRepo = $this->dm
-            ->getRepository(MultimediaObject::class)
-        ;
-        $this->translator = static::$kernel->getContainer()
-            ->get('translator')
-        ;
-        $this->factory = static::$kernel->getContainer()
-            ->get('pumukitschema.factory')
-        ;
+        parent::setUp();
+        $this->seriesRepo = $this->dm->getRepository(Series::class);
+        $this->multimediaObjectRepo = $this->dm->getRepository(MultimediaObject::class);
+        $this->translator = static::$kernel->getContainer()->get('translator');
+        $this->factory = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->locales = $this->factory->getLocales();
-
-        $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(SeriesType::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(Series::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(Role::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(Tag::class)
-            ->remove([])
-        ;
-        $this->dm->flush();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
         $this->seriesRepo = null;
-        $this->mmobjRepo = null;
+        $this->multimediaObjectRepo = null;
         $this->translator = null;
         $this->factory = null;
         $this->locales = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
-    public function testCreateSeries()
+    public function testCreateSeries(): void
     {
         $series = $this->factory->createSeries();
 
-        $this->assertEquals(1, count($this->seriesRepo->findAll()));
-        $this->assertEquals(1, count($this->mmobjRepo->findAll()));
-        $this->assertEquals($series, $this->mmobjRepo->findAll()[0]->getSeries());
+        static::assertCount(1, $this->seriesRepo->findAll());
+        static::assertCount(1, $this->multimediaObjectRepo->findAll());
+        static::assertEquals($series, $this->multimediaObjectRepo->findAll()[0]->getSeries());
         //NOTE getMultimediaObjects gives us all multimedia objects in the series except prototype
-        $this->assertEquals($series, $this->seriesRepo->findAll()[0]);
-        $this->assertEquals(0, count($this->seriesRepo->getMultimediaObjects($series)));
+        static::assertEquals($series, $this->seriesRepo->findAll()[0]);
+        static::assertCount(0, $this->seriesRepo->getMultimediaObjects($series));
 
         //NOTE series.multimedia_objects have diferent internal initialized value.
         //$this->assertEquals($series, $this->mmobjRepo->findAll()[0]->getSeries());
-        $this->assertEquals($series->getId(), $this->mmobjRepo->findAll()[0]->getSeries()->getId());
-        $this->assertTrue($this->mmobjRepo->findAll()[0]->isPrototype());
+        static::assertEquals($series->getId(), $this->multimediaObjectRepo->findAll()[0]->getSeries()->getId());
+        static::assertTrue($this->multimediaObjectRepo->findAll()[0]->isPrototype());
     }
 
-    public function testCreateMultimediaObject()
+    public function testCreateMultimediaObject(): void
     {
         $series = $this->factory->createSeries();
-        $mmobj = $this->factory->createMultimediaObject($series);
+        $multimediaObject = $this->factory->createMultimediaObject($series);
 
-        $this->assertEquals(1, count($this->seriesRepo->findAll()));
-        $this->assertEquals(2, count($this->mmobjRepo->findAll()));
-        $this->assertEquals($series, $this->seriesRepo->findAll()[0]);
-        $this->assertEquals($series->getId(), $this->mmobjRepo->findAll()[0]->getSeries()->getId());
-        $this->assertEquals($series->getId(), $this->mmobjRepo->find($mmobj->getId())->getSeries()->getId());
+        static::assertCount(1, $this->seriesRepo->findAll());
+        static::assertCount(2, $this->multimediaObjectRepo->findAll());
+        static::assertEquals($series, $this->seriesRepo->findAll()[0]);
+        static::assertEquals($series->getId(), $this->multimediaObjectRepo->findAll()[0]->getSeries()->getId());
+        static::assertEquals($series->getId(), $this->multimediaObjectRepo->find($multimediaObject->getId())->getSeries()->getId());
 
-        $this->assertEquals(1, count($this->mmobjRepo->findWithoutPrototype($series)));
-        $this->assertEquals(1, count($this->seriesRepo->getMultimediaObjects($series)));
-        $this->assertEquals($mmobj, $this->seriesRepo->getMultimediaObjects($series)->getSingleResult());
+        static::assertCount(1, $this->multimediaObjectRepo->findWithoutPrototype($series));
+        static::assertCount(1, $this->seriesRepo->getMultimediaObjects($series));
+        static::assertEquals($multimediaObject, $this->seriesRepo->getMultimediaObjects($series)->toArray()[0]);
 
-        $this->assertEquals($mmobj->getStatus(), MultimediaObject::STATUS_BLOCKED);
+        static::assertEquals($multimediaObject->getStatus(), MultimediaObject::STATUS_BLOCKED);
     }
 
-    public function testUpdateMultimediaObjectTemplate()
+    public function testUpdateMultimediaObjectTemplate(): void
     {
         $series = $this->factory->createSeries();
 
-        $mmobj = $this->factory->createMultimediaObject($series);
+        $multimediaObject = $this->factory->createMultimediaObject($series);
 
-        $mmobjTemplate = $this->mmobjRepo->findPrototype($series);
+        $multimediaObjectTemplate = $this->multimediaObjectRepo->findPrototype($series);
         foreach ($this->locales as $locale) {
             $keyword = $this->translator->trans('keytest', [], null, $locale);
-            $mmobjTemplate->setKeyword($keyword, $locale);
+            $multimediaObjectTemplate->setKeyword($keyword, $locale);
         }
-        $this->dm->persist($mmobjTemplate);
+        $this->dm->persist($multimediaObjectTemplate);
 
-        $mmobj2 = $this->factory->createMultimediaObject($series);
-        $this->dm->persist($mmobj2);
+        $multimediaObject2 = $this->factory->createMultimediaObject($series);
+        $this->dm->persist($multimediaObject2);
         $this->dm->flush();
 
         foreach ($this->locales as $locale) {
-            $this->assertNotEquals($mmobj->getKeyword($locale), $this->mmobjRepo->findPrototype($series)->getKeyword($locale));
-            $this->assertEquals($mmobj2->getKeyword($locale), $this->mmobjRepo->findPrototype($series)->getKeyword($locale));
+            static::assertNotEquals($multimediaObject->getKeyword($locale), $this->multimediaObjectRepo->findPrototype($series)->getKeyword($locale));
+            static::assertEquals($multimediaObject2->getKeyword($locale), $this->multimediaObjectRepo->findPrototype($series)->getKeyword($locale));
         }
     }
 
-    public function testSeriesType()
+    public function testSeriesType(): void
     {
         $series_type1 = new SeriesType();
         $name_type1 = 'Series type 1';
@@ -149,8 +121,8 @@ class FactoryServiceTest extends WebTestCase
 
         //Workaround to fix reference method initialization.
         $this->dm->clear(get_class($series_type1));
-        $series_type1 = $this->dm->find('PumukitSchemaBundle:SeriesType', $series_type1->getId());
-        $series_type2 = $this->dm->find('PumukitSchemaBundle:SeriesType', $series_type2->getId());
+        $series_type1 = $this->dm->getRepository(SeriesType::class)->findOneBy(['_id' => $series_type1->getId()]);
+        $series_type2 = $this->dm->getRepository(SeriesType::class)->findOneBy(['_id' => $series_type2->getId()]);
 
         $series1 = $this->factory->createSeries();
         $name1 = 'Series 1';
@@ -178,28 +150,28 @@ class FactoryServiceTest extends WebTestCase
         $this->dm->persist($series3);
         $this->dm->flush();
 
-        $this->assertEquals(2, count($series_type1->getSeries()));
-        $this->assertEquals(1, count($series_type2->getSeries()));
+        static::assertCount(2, $series_type1->getSeries());
+        static::assertCount(1, $series_type2->getSeries());
     }
 
     public function testFindSeriesById()
     {
         $series = $this->factory->createSeries();
 
-        $this->assertEquals($series, $this->factory->findSeriesById($series->getId(), null));
-        $this->assertEquals($series, $this->factory->findSeriesById(null, $series->getId()));
-        $this->assertEquals(null, $this->factory->findSeriesById(null, null));
+        static::assertEquals($series, $this->factory->findSeriesById($series->getId(), null));
+        static::assertEquals($series, $this->factory->findSeriesById(null, $series->getId()));
+        static::assertEquals(null, $this->factory->findSeriesById(null, null));
     }
 
-    public function testFindMultimediaObjectById()
+    public function testFindMultimediaObjectById(): void
     {
         $series = $this->factory->createSeries();
         $mm = $this->factory->createMultimediaObject($series);
 
-        $this->assertEquals($mm, $this->factory->findMultimediaObjectById($mm->getId()));
+        static::assertEquals($mm, $this->factory->findMultimediaObjectById($mm->getId()));
     }
 
-    public function testGetParentTags()
+    public function testGetParentTags(): void
     {
         $tag = new Tag();
         $tag->setCod('ROOT');
@@ -234,14 +206,14 @@ class FactoryServiceTest extends WebTestCase
 
         $this->dm->flush();
 
-        $this->assertEquals(2, count($this->factory->getParentTags()));
+        static::assertCount(2, $this->factory->getParentTags());
     }
 
     public function testGetMultimediaObjectTemplate()
     {
         $series = $this->factory->createSeries();
 
-        $this->assertTrue($this->factory->getMultimediaObjectPrototype($series)->isPrototype());
+        static::assertTrue($this->factory->getMultimediaObjectPrototype($series)->isPrototype());
     }
 
     public function testGetTagsByCod()
@@ -261,53 +233,53 @@ class FactoryServiceTest extends WebTestCase
         $this->dm->persist($tagC);
         $this->dm->flush();
 
-        $this->assertEquals($tagA, $this->factory->getTagsByCod('A', false));
+        static::assertEquals($tagA, $this->factory->getTagsByCod('A', false));
 
         $tagB->setParent($tagA);
         $tagC->setParent($tagA);
 
-        $this->assertEquals(2, count($this->factory->getTagsByCod('A', true)));
+        static::assertCount(2, $this->factory->getTagsByCod('A', true));
     }
 
-    public function testDeleteSeries()
+    public function testDeleteSeries(): void
     {
         $series = $this->factory->createSeries();
-        $mmobj = $this->factory->createMultimediaObject($series);
+        $multimediaObject = $this->factory->createMultimediaObject($series);
 
-        $this->assertEquals(1, count($this->seriesRepo->findAll()));
-        $this->assertEquals(2, count($this->mmobjRepo->findAll()));
+        static::assertCount(1, $this->seriesRepo->findAll());
+        static::assertCount(2, $this->multimediaObjectRepo->findAll());
 
         $this->factory->deleteSeries($series);
 
-        $this->assertEquals(0, count($this->seriesRepo->findAll()));
-        $this->assertEquals(0, count($this->mmobjRepo->findAll()));
+        static::assertCount(0, $this->seriesRepo->findAll());
+        static::assertCount(0, $this->multimediaObjectRepo->findAll());
     }
 
-    public function testDeleteResource()
+    public function testDeleteResource(): void
     {
         $series = $this->factory->createSeries();
-        $mmobj = $this->factory->createMultimediaObject($series);
+        $multimediaObject = $this->factory->createMultimediaObject($series);
 
-        $this->assertEquals(1, count($this->seriesRepo->findAll()));
-        $this->assertEquals(2, count($this->mmobjRepo->findAll()));
+        static::assertCount(1, $this->seriesRepo->findAll());
+        static::assertCount(2, $this->multimediaObjectRepo->findAll());
 
-        $this->factory->deleteMultimediaObject($mmobj);
+        $this->factory->deleteMultimediaObject($multimediaObject);
 
-        $this->assertEquals(1, count($this->mmobjRepo->findAll()));
+        static::assertCount(1, $this->multimediaObjectRepo->findAll());
 
         $this->factory->deleteSeries($series);
 
-        $this->assertEquals(0, count($this->seriesRepo->findAll()));
-        $this->assertEquals(0, count($this->mmobjRepo->findAll()));
+        static::assertCount(0, $this->seriesRepo->findAll());
+        static::assertCount(0, $this->multimediaObjectRepo->findAll());
 
         $role = new Role();
         $role->setCod('role');
         $this->dm->persist($role);
         $this->dm->flush();
 
-        $this->assertEquals(1, count($this->dm->getRepository(Role::class)->findAll()));
+        static::assertCount(1, $this->dm->getRepository(Role::class)->findAll());
         $this->factory->deleteResource($role);
-        $this->assertEquals(0, count($this->dm->getRepository(Role::class)->findAll()));
+        static::assertCount(0, $this->dm->getRepository(Role::class)->findAll());
     }
 
     public function testClone()
@@ -341,47 +313,47 @@ class FactoryServiceTest extends WebTestCase
         $newTitles = $new->getI18nTitle();
         foreach ($src->getI18nTitle() as $key => $title) {
             $string = $this->translator->trans('cloned', [], null, $key);
-            $title = $title.' ('.$string.')';
-            $this->assertEquals($newTitles[$key], $title);
+            $title .= ' ('.$string.')';
+            static::assertEquals($newTitles[$key], $title);
         }
-        $this->assertTrue($src->getRank() < $new->getRank());
-        $this->assertEquals($new->getI18nSubtitle(), $src->getI18nSubtitle());
-        $this->assertEquals($new->getI18nDescription(), $src->getI18nDescription());
-        $this->assertEquals($new->getI18nLine2(), $src->getI18nLine2());
-        $this->assertEquals($new->getI18nKeyword(), $src->getI18nKeyword());
-        $this->assertEquals($new->getCopyright(), $src->getCopyright());
-        $this->assertEquals($new->getLicense(), $src->getLicense());
-        $this->assertEquals($new->getPublicDate(), $src->getPublicDate());
-        $this->assertEquals($new->getRecordDate(), $src->getRecordDate());
-        $this->assertEquals($new->getStatus(), MultimediaObject::STATUS_BLOCKED);
-        $this->assertEquals($new->getEmbeddedBroadcast()->getType(), $src->getEmbeddedBroadcast()->getType());
-        $this->assertEquals($new->getEmbeddedBroadcast()->getName(), $src->getEmbeddedBroadcast()->getName());
-        $this->assertEquals($new->getEmbeddedBroadcast()->getPassword(), $src->getEmbeddedBroadcast()->getPassword());
-        $this->assertEquals(count($new->getEmbeddedBroadcast()->getGroups()), count($src->getEmbeddedBroadcast()->getGroups()));
+        static::assertTrue($src->getRank() < $new->getRank());
+        static::assertEquals($new->getI18nSubtitle(), $src->getI18nSubtitle());
+        static::assertEquals($new->getI18nDescription(), $src->getI18nDescription());
+        static::assertEquals($new->getI18nLine2(), $src->getI18nLine2());
+        static::assertEquals($new->getI18nKeyword(), $src->getI18nKeyword());
+        static::assertEquals($new->getCopyright(), $src->getCopyright());
+        static::assertEquals($new->getLicense(), $src->getLicense());
+        static::assertEquals($new->getPublicDate(), $src->getPublicDate());
+        static::assertEquals($new->getRecordDate(), $src->getRecordDate());
+        static::assertEquals($new->getStatus(), MultimediaObject::STATUS_BLOCKED);
+        static::assertEquals($new->getEmbeddedBroadcast()->getType(), $src->getEmbeddedBroadcast()->getType());
+        static::assertEquals($new->getEmbeddedBroadcast()->getName(), $src->getEmbeddedBroadcast()->getName());
+        static::assertEquals($new->getEmbeddedBroadcast()->getPassword(), $src->getEmbeddedBroadcast()->getPassword());
+        static::assertCount(count($new->getEmbeddedBroadcast()->getGroups()), $src->getEmbeddedBroadcast()->getGroups());
         foreach ($src->getEmbeddedBroadcast()->getGroups() as $group) {
-            $this->assertTrue($new->getEmbeddedBroadcast()->containsGroup($group));
+            static::assertTrue($new->getEmbeddedBroadcast()->containsGroup($group));
         }
-        $this->assertEquals(count($new->getRoles()), count($src->getRoles()));
-        $this->assertEquals(count($new->getTags()), count($src->getTags()));
+        static::assertCount(count($new->getRoles()), $src->getRoles());
+        static::assertCount(count($new->getTags()), $src->getTags());
     }
 
-    public function testGetDefaultMultimediaObjectI18nTitle()
+    public function testGetDefaultMultimediaObjectI18nTitle(): void
     {
         $i18nTitle = [];
         foreach ($this->factory->getLocales() as $locale) {
             $i18nTitle[$locale] = FactoryService::DEFAULT_MULTIMEDIAOBJECT_TITLE;
         }
 
-        $this->assertEquals($i18nTitle, $this->factory->getDefaultMultimediaObjectI18nTitle());
+        static::assertEquals($i18nTitle, $this->factory->getDefaultMultimediaObjectI18nTitle());
     }
 
-    public function testGetDefaultSeriesI18nTitle()
+    public function testGetDefaultSeriesI18nTitle(): void
     {
         $i18nTitle = [];
         foreach ($this->factory->getLocales() as $locale) {
             $i18nTitle[$locale] = FactoryService::DEFAULT_SERIES_TITLE;
         }
 
-        $this->assertEquals($i18nTitle, $this->factory->getDefaultSeriesI18nTitle());
+        static::assertEquals($i18nTitle, $this->factory->getDefaultSeriesI18nTitle());
     }
 }

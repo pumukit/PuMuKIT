@@ -1,5 +1,5 @@
 {% if can_modify_groups %}
-    {% for group in groups if group not in resource.getGroups() %}
+    {% for group in groups | filter( group => group not in resource.getGroups()) %}
         <a href="#"
            id="delete_{{ resource_name }}_group_{{ group.id }}"
            onclick="javascript:return select_group(this);"
@@ -14,7 +14,7 @@
         </a>
     {% endfor %}
 {% else %}
-    {% for group in groups if group not in resource.getGroups() %}
+    {% for group in groups | filter(group => group not in resource.getGroups()) %}
         <a href="#"
            id="delete_{{ resource_name }}_group_{{ group.id }}"
            onclick="return false;"

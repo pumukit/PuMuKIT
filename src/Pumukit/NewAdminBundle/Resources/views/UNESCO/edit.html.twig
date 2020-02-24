@@ -42,40 +42,40 @@
         <div class="tab-content">
             {% if not is_naked() and  is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %}
                 <div id="pubMm" role="tabpanel" class="tab-pane{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %} active{% endif %}">
-                    {% include 'PumukitNewAdminBundle:UNESCO:updatepub.html.twig' with {'mm': mm, 'pub_channels': pub_channels, 'pub_decisions': pub_decisions} %}
+                    {% include '@PumukitNewAdmin/UNESCO/updatepub.html.twig' with {'mm': mm, 'pub_channels': pub_channels, 'pub_decisions': pub_decisions} %}
                 </div>
             {% endif %}
 
             <div id="metaMm" role="tabpanel" class="tab-pane{% if is_naked() or not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %} active{% endif %}">
-                {% include 'PumukitNewAdminBundle:UNESCO:updatemeta.html.twig' with {'mm': mm} %}
+                {% include '@PumukitNewAdmin/UNESCO/updatemeta.html.twig' with {'mm': mm} %}
             </div>
 
             {% if not is_naked() %}
                  <div id="tagMm" role="tabpanel" class="tab-pane">
-                     {% include 'PumukitNewAdminBundle:UNESCO:updatetag.html.twig' with {'mm': mm, 'parent_tags': parent_tags, 'template': false} %}
+                     {% include '@PumukitNewAdmin/UNESCO/updatetag.html.twig' with {'mm': mm, 'parent_tags': parent_tags, 'template': false} %}
                  </div>
              {% endif %}
 
             {% if not is_naked() %}
                 <div id="groupMm" role="tabpanel" class="tab-pane">
-                    {% include 'PumukitNewAdminBundle:MultimediaObject:updategroup.html.twig' with {'mm': mm, 'personal_scope_role': personal_scope_role} %}
+                    {% include '@PumukitNewAdmin/MultimediaObject/updategroup.html.twig' with {'mm': mm, 'personal_scope_role': personal_scope_role} %}
                 </div>
             {% endif %}
 
              <div id="personMm" role="tabpanel" class="tab-pane">
-                {% include 'PumukitNewAdminBundle:MultimediaObject:updateperson.html.twig' with {'mm': mm, 'roles': roles} %}
+                {% include '@PumukitNewAdmin/MultimediaObject/updateperson.html.twig' with {'mm': mm, 'roles': roles} %}
             </div>
 
             <div id="mediaMm" role="tabpanel" class="tab-pane">
-                {% include 'PumukitNewAdminBundle:MultimediaObject:updatemedia.html.twig' with {'mm': mm, 'jobs': jobs} %}
+                {% include '@PumukitNewAdmin/MultimediaObject/updatemedia.html.twig' with {'mm': mm, 'jobs': jobs} %}
             </div>
             {% if active_editor %}
                 <div id="editorMm" role="tabpanel" class="tab-pane">
-                    {% include 'PumukitNewAdminBundle:MultimediaObject:editor.html.twig' with {'mm': mm, 'jobs': jobs} %}
+                    {% include '@PumukitNewAdmin/MultimediaObject/editor.html.twig' with {'mm': mm, 'jobs': jobs} %}
                 </div>
             {% endif %}
             {#<div id="socialMm" role="tabpanel" class="tab-pane">
-                {% include 'PumukitNewAdminBundle:MultimediaObject:updatesocial.html.twig' with {'mm': mm} %}
+                {% include '@PumukitNewAdmin/MultimediaObject/updatesocial.html.twig' with {'mm': mm} %}
             </div>#}
         </div>
     </div>

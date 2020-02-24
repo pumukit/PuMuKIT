@@ -2,54 +2,46 @@
 
 namespace Pumukit\NewAdminBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Tag;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class MultimediaObjectSyncServiceTest extends WebTestCase
+class MultimediaObjectSyncServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $mmobjRepo;
     private $announceService;
     private $factoryService;
     private $tagService;
     private $syncService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-
+        parent::setUp();
         $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
 
         $this->syncService = static::$kernel->getContainer()->get('pumukitnewadmin.multimedia_object_sync');
         $this->tagService = static::$kernel->getContainer()->get('pumukitschema.tag');
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
-
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Role::class)->remove([]);
-        $this->dm->getDocumentCollection(Tag::class)->remove([]);
-        $this->dm->flush();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
         $this->mmobjRepo = null;
         $this->announceService = null;
         $this->factoryService = null;
         $this->tagService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testSyncMetadata()
@@ -173,19 +165,19 @@ class MultimediaObjectSyncServiceTest extends WebTestCase
 
         $this->syncService->syncMetadata([$multimediaObject2], $multimediaObject, $syncFields);
 
-        $this->assertEquals($multimediaObject->getComments(), $multimediaObject2->getComments());
-        $this->assertEquals($multimediaObject->getCopyright(), $multimediaObject2->getCopyright());
-        $this->assertEquals($multimediaObject->getI18nDescription(), $multimediaObject2->getI18nDescription());
-        $this->assertEquals($multimediaObject->getI18nLine2(), $multimediaObject2->getI18nLine2());
-        $this->assertEquals($multimediaObject->getI18nKeywords(), $multimediaObject2->getI18nKeywords());
-        $this->assertEquals($multimediaObject->getLicense(), $multimediaObject2->getLicense());
-        $this->assertEquals($multimediaObject->getEmbeddedRole($role), $multimediaObject2->getEmbeddedRole($role));
-        $this->assertEquals($multimediaObject->getPublicDate(), $multimediaObject2->getPublicDate());
-        $this->assertEquals($multimediaObject->getRecordDate(), $multimediaObject2->getRecordDate());
-        $this->assertEquals($multimediaObject->containsTag($tag2), $multimediaObject2->containsTag($tag2));
-        $this->assertEquals($multimediaObject->getProperty('subseriestitle'), $multimediaObject2->getProperty('subseriestitle'));
-        $this->assertEquals($multimediaObject->getProperty('subseries'), $multimediaObject2->getProperty('subseries'));
-        $this->assertEquals($multimediaObject->getEmbeddedRole($roleAuthor), $multimediaObject2->getEmbeddedRole($roleAuthor));
-        $this->assertEquals($multimediaObject->containsTag($tag3), $multimediaObject2->containsTag($tag3));
+        static::assertEquals($multimediaObject->getComments(), $multimediaObject2->getComments());
+        static::assertEquals($multimediaObject->getCopyright(), $multimediaObject2->getCopyright());
+        static::assertEquals($multimediaObject->getI18nDescription(), $multimediaObject2->getI18nDescription());
+        static::assertEquals($multimediaObject->getI18nLine2(), $multimediaObject2->getI18nLine2());
+        static::assertEquals($multimediaObject->getI18nKeywords(), $multimediaObject2->getI18nKeywords());
+        static::assertEquals($multimediaObject->getLicense(), $multimediaObject2->getLicense());
+        static::assertEquals($multimediaObject->getEmbeddedRole($role), $multimediaObject2->getEmbeddedRole($role));
+        static::assertEquals($multimediaObject->getPublicDate(), $multimediaObject2->getPublicDate());
+        static::assertEquals($multimediaObject->getRecordDate(), $multimediaObject2->getRecordDate());
+        static::assertEquals($multimediaObject->containsTag($tag2), $multimediaObject2->containsTag($tag2));
+        static::assertEquals($multimediaObject->getProperty('subseriestitle'), $multimediaObject2->getProperty('subseriestitle'));
+        static::assertEquals($multimediaObject->getProperty('subseries'), $multimediaObject2->getProperty('subseries'));
+        static::assertEquals($multimediaObject->getEmbeddedRole($roleAuthor), $multimediaObject2->getEmbeddedRole($roleAuthor));
+        static::assertEquals($multimediaObject->containsTag($tag3), $multimediaObject2->containsTag($tag3));
     }
 }

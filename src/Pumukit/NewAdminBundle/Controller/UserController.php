@@ -2,71 +2,81 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+use FOS\UserBundle\Model\UserManagerInterface;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Regex;
+use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\NewAdminBundle\Form\Type\UserUpdateType;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\SchemaBundle\Services\GroupService;
+use Pumukit\SchemaBundle\Services\PersonService;
+use Pumukit\SchemaBundle\Services\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_ADMIN_USERS')")
  */
-class UserController extends AdminController implements NewAdminControllerInterface
+class UserController extends AdminController
 {
     public static $resourceName = 'user';
     public static $repoName = User::class;
 
-    /**
-     * Overwrite to check Users creation.
-     *
-     * @param Request $request
-     *
-     * @return array|Response
-     * @Template("PumukitNewAdminBundle:User:index.html.twig")
-     */
-    public function indexAction(Request $request)
-    {
-        $dm = $this->get('doctrine_mongodb')->getManager();
+    /** @var PersonService */
+    private $personService;
+    /** @var UserManagerInterface */
+    private $fosUserUserManager;
 
-        $criteria = $this->getCriteria($request->get('criteria', []));
-        $users = $this->getResources($request, $criteria);
-        $repo = $dm->getRepository(PermissionProfile::class);
-        $profiles = $repo->findAll();
-
-        $origins = $dm->createQueryBuilder(User::class)->distinct('origin')->getQuery()->execute();
-
-        return ['users' => $users, 'profiles' => $profiles, 'origins' => $origins->toArray()];
+    public function __construct(
+        DocumentManager $documentManager,
+        PaginationService $paginationService,
+        FactoryService $factoryService,
+        GroupService $groupService,
+        UserService $userService,
+        PersonService $personService,
+        TranslatorInterface $translator,
+        SessionInterface $session,
+        UserManagerInterface $fosUserUserManager
+    ) {
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
+        $this->personService = $personService;
+        $this->fosUserUserManager = $fosUserUserManager;
     }
 
     /**
-     * Create Action
-     * Overwrite to create Person
-     * referenced to User.
-     *
-     * @param Request $request
-     *
-     * @throws \Exception
-     *
-     * @return Response|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @Template("@PumukitNewAdmin/User/index.html.twig")
      */
+    public function indexAction(Request $request)
+    {
+        $criteria = $this->getCriteria($request->get('criteria', []));
+        $users = $this->getResources($request, $criteria);
+        $repo = $this->documentManager->getRepository(PermissionProfile::class);
+        $profiles = $repo->findAll();
+
+        $origins = $this->documentManager->createQueryBuilder(User::class)->distinct('origin')->getQuery()->execute();
+
+        return ['users' => $users, 'profiles' => $profiles, 'origins' => $origins];
+    }
+
     public function createAction(Request $request)
     {
-        $userService = $this->get('pumukitschema.user');
-
-        $user = $userService->instantiate();
+        $user = $this->userService->instantiate();
         $form = $this->getForm($user, $request->getLocale());
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $user = $userService->create($user);
-                $user = $this->get('pumukitschema.person')->referencePersonIntoUser($user);
+                $user = $this->userService->create($user);
+                $this->personService->referencePersonIntoUser($user);
             } catch (\Exception $e) {
                 throw $e;
             }
@@ -75,7 +85,7 @@ class UserController extends AdminController implements NewAdminControllerInterf
         }
 
         return $this->render(
-            'PumukitNewAdminBundle:User:create.html.twig',
+            '@PumukitNewAdmin/User/create.html.twig',
             [
                 'user' => $user,
                 'form' => $form->createView(),
@@ -83,41 +93,30 @@ class UserController extends AdminController implements NewAdminControllerInterf
         );
     }
 
-    /**
-     * Update Action
-     * Overwrite to update it with user manager
-     * Checks plain password and updates encoded password.
-     *
-     * @param Request $request
-     *
-     * @throws \Exception
-     *
-     * @return Response|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function updateAction(Request $request)
     {
-        $userManager = $this->get('fos_user.user_manager');
+        $userManager = $this->fosUserUserManager;
 
         $user = $this->findOr404($request);
-        $translator = $this->get('translator');
+
         $locale = $request->getLocale();
-        $form = $this->createForm(UserUpdateType::class, $user, ['translator' => $translator, 'locale' => $locale]);
+        $form = $this->createForm(UserUpdateType::class, $user, ['translator' => $this->translator, 'locale' => $locale]);
 
         if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH'])) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 try {
                     if (!$user->isLocal()) {
-                        $user = $this->get('pumukitschema.user')->update($user, true, false);
+                        $user = $this->userService->update($user, true, false);
                     } else {
                         $response = $this->isAllowedToBeUpdated($user);
                         if ($response instanceof Response) {
                             return $response;
                         }
                         // false to not flush
-                        $userManager->updateUser($user, false);
+                        $userManager->updateUser($user);
                         // To update aditional fields added
-                        $user = $this->get('pumukitschema.user')->update($user);
+                        $this->userService->update($user);
                     }
                 } catch (\Exception $e) {
                     throw $e;
@@ -128,7 +127,7 @@ class UserController extends AdminController implements NewAdminControllerInterf
         }
 
         return $this->render(
-            'PumukitNewAdminBundle:User:update.html.twig',
+            '@PumukitNewAdmin/User/update.html.twig',
             [
                 'user' => $user,
                 'form' => $form->createView(),
@@ -136,13 +135,6 @@ class UserController extends AdminController implements NewAdminControllerInterf
         );
     }
 
-    /**
-     * Delete action.
-     *
-     * @param Request $request
-     *
-     * @return bool|Response|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function deleteAction(Request $request)
     {
         $userToDelete = $this->findOr404($request);
@@ -155,19 +147,9 @@ class UserController extends AdminController implements NewAdminControllerInterf
         return parent::deleteAction($request);
     }
 
-    /**
-     * Batch Delete action.
-     *
-     * @param Request $request
-     *
-     * @throws \Doctrine\ODM\MongoDB\LockException
-     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
-     *
-     * @return bool|Response|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function batchDeleteAction(Request $request)
     {
-        $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(User::class);
+        $repo = $this->documentManager->getRepository(User::class);
 
         $ids = $request->get('ids');
 
@@ -187,17 +169,12 @@ class UserController extends AdminController implements NewAdminControllerInterf
     }
 
     /**
-     * Edit groups form.
-     *
-     * @param Request $request
-     *
-     * @return array
-     * @Template("PumukitNewAdminBundle:User:editgroups.html.twig")
+     * @Template("@PumukitNewAdmin/User/editgroups.html.twig")
      */
     public function editGroupsAction(Request $request)
     {
         $user = $this->findOr404($request);
-        $groups = $this->get('pumukitschema.group')->findAll();
+        $groups = $this->groupService->findAll();
 
         return [
             'user' => $user,
@@ -205,17 +182,6 @@ class UserController extends AdminController implements NewAdminControllerInterf
         ];
     }
 
-    /**
-     * Update groups action.
-     *
-     * @param Request $request
-     *
-     * @throws \Doctrine\ODM\MongoDB\LockException
-     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
-     * @throws \Exception
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function updateGroupsAction(Request $request)
     {
         $user = $this->findOr404($request);
@@ -236,17 +202,10 @@ class UserController extends AdminController implements NewAdminControllerInterf
         return $this->redirect($this->generateUrl('pumukitnewadmin_user_list'));
     }
 
-    /**
-     * Get user groups.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     public function getGroupsAction(Request $request)
     {
         $user = $this->findOr404($request);
-        $groupService = $this->get('pumukitschema.group');
+
         $addGroups = [];
         $addGroupsIds = [];
         $deleteGroups = [];
@@ -259,7 +218,7 @@ class UserController extends AdminController implements NewAdminControllerInterf
                 ];
                 $addGroupsIds[] = new ObjectId($group->getId());
             }
-            $groupsToDelete = $groupService->findByIdNotIn($addGroupsIds);
+            $groupsToDelete = $this->groupService->findByIdNotIn($addGroupsIds);
             foreach ($groupsToDelete as $group) {
                 $deleteGroups[$group->getId()] = [
                     'key' => $group->getKey(),
@@ -278,30 +237,23 @@ class UserController extends AdminController implements NewAdminControllerInterf
         );
     }
 
-    /**
-     * Gets the criteria values.
-     *
-     * @param array $criteria
-     *
-     * @return array
-     */
     public function getCriteria($criteria)
     {
         if (array_key_exists('reset', $criteria)) {
-            $this->get('session')->remove('admin/user/criteria');
+            $this->session->remove('admin/user/criteria');
         } elseif ($criteria) {
-            $this->get('session')->set('admin/user/criteria', $criteria);
+            $this->session->set('admin/user/criteria', $criteria);
         }
-        $criteria = $this->get('session')->get('admin/user/criteria', []);
+        $criteria = $this->session->get('admin/user/criteria', []);
 
         $new_criteria = [];
         foreach ($criteria as $property => $value) {
-            if ('permissionProfile' == $property) {
-                if ('all' != $value) {
+            if ('permissionProfile' === $property) {
+                if ('all' !== $value) {
                     $new_criteria[$property] = new ObjectId($value);
                 }
-            } elseif ('origin' == $property) {
-                if ('all' != $value) {
+            } elseif ('origin' === $property) {
+                if ('all' !== $value) {
                     $new_criteria[$property] = $value;
                 }
             } elseif ('' !== $value) {
@@ -312,18 +264,10 @@ class UserController extends AdminController implements NewAdminControllerInterf
         return $new_criteria;
     }
 
-    /**
-     * Change the permission profiles of a list of users.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     public function promoteAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $profileRepo = $dm->getRepository(PermissionProfile::class);
-        $usersRepo = $dm->getRepository(User::class);
+        $profileRepo = $this->documentManager->getRepository(PermissionProfile::class);
+        $usersRepo = $this->documentManager->getRepository(User::class);
 
         $ids = $request->request->get('ids');
         $profile = $profileRepo->find($request->request->get('profile'));
@@ -338,7 +282,7 @@ class UserController extends AdminController implements NewAdminControllerInterf
             foreach ($users as $user) {
                 if (!$user->hasRole('ROLE_SUPER_ADMIN')) {
                     $user->setPermissionProfile($profile);
-                    $this->get('pumukitschema.user')->update($user, true, false);
+                    $this->userService->update($user, true, false);
                 }
             }
         } catch (\Exception $e) {
@@ -348,29 +292,16 @@ class UserController extends AdminController implements NewAdminControllerInterf
         return new JsonResponse(['ok']);
     }
 
-    /**
-     * Modify User Groups.
-     *
-     * @param User  $user
-     * @param array $addGroups
-     * @param array $deleteGroups
-     *
-     * @throws \Doctrine\ODM\MongoDB\LockException
-     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
-     * @throws \Exception
-     */
-    private function modifyUserGroups(User $user, $addGroups = [], $deleteGroups = [])
+    private function modifyUserGroups(User $user, array $addGroups = [], array $deleteGroups = [])
     {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $groupRepo = $dm->getRepository(Group::class);
-        $userService = $this->get('pumukitschema.user');
+        $groupRepo = $this->documentManager->getRepository(Group::class);
 
         foreach ($addGroups as $addGroup) {
             $groupsIds = explode('_', $addGroup);
             $groupId = $groupsIds[2];
             $group = $groupRepo->find($groupId);
             if ($group) {
-                $userService->addGroup($group, $user, false);
+                $this->userService->addGroup($group, $user, false);
             }
         }
 
@@ -379,23 +310,23 @@ class UserController extends AdminController implements NewAdminControllerInterf
             $groupId = $groupsIds[2];
             $group = $groupRepo->find($groupId);
             if ($group) {
-                $userService->deleteGroup($group, $user, false);
+                $this->userService->deleteGroup($group, $user, false);
             }
         }
 
-        $dm->flush();
+        $this->documentManager->flush();
     }
 
     private function isAllowedToBeDeleted(User $userToDelete)
     {
-        $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(User::class);
+        $repo = $this->documentManager->getRepository(User::class);
 
         $loggedInUser = $this->getUser();
 
         if ($loggedInUser === $userToDelete) {
             return new Response("Can not delete the logged in user '".$loggedInUser->getUsername()."'", 409);
         }
-        if (1 === $repo->createQueryBuilder()->getQuery()->execute()->count()) {
+        if (1 === $repo->createQueryBuilder()->count()->getQuery()->execute()) {
             return new Response("Can not delete this unique user '".$userToDelete->getUsername()."'", 409);
         }
 
@@ -407,7 +338,7 @@ class UserController extends AdminController implements NewAdminControllerInterf
 
         if (null !== $person = $userToDelete->getPerson()) {
             try {
-                $this->get('pumukitschema.person')->removeUserFromPerson($userToDelete, $person, true);
+                $this->personService->removeUserFromPerson($userToDelete, $person, true);
             } catch (\Exception $e) {
                 return new Response(
                     "Can not delete the user '".$userToDelete->getUsername()."'. ".$e->getMessage(),
@@ -448,7 +379,7 @@ class UserController extends AdminController implements NewAdminControllerInterf
 
     private function getNumberAdminUsers()
     {
-        $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(User::class);
+        $repo = $this->documentManager->getRepository(User::class);
 
         return $repo->createQueryBuilder()->where(
             "function(){for ( var k in this.roles ) { if ( this.roles[k] == 'ROLE_SUPER_ADMIN' ) return true;}}"
@@ -457,7 +388,7 @@ class UserController extends AdminController implements NewAdminControllerInterf
 
     private function getUniqueAdminUser()
     {
-        $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(User::class);
+        $repo = $this->documentManager->getRepository(User::class);
 
         return $repo->createQueryBuilder()->where(
             "function(){for ( var k in this.roles ) { if ( this.roles[k] == 'ROLE_SUPER_ADMIN' ) return true;}}"

@@ -11,19 +11,19 @@
         </div>
     {% endif %}
     <div style="max-height:800px;overflow-y:auto;padding: 7px;">
-        {% for parent in parent_tags if parent.getDisplay() and parent.getChildren()|length != 0 and not parent.getProperty('hide_in_tag_group') %}
+        {% for parent in parent_tags | filter(parent => parent.getDisplay() and parent.getChildren()|length != 0 and not parent.getProperty('hide_in_tag_group')) %}
             <div class="panel panel-default panel-tag-{{ parent.cod }}">
                 <div class="panel-heading">{{ parent.title }}</div>
                 <div class="panel-body" id="tag{{ parent.id }}_mms">
                     <div class="row"><div class="col-xs-12">
-                            {% include 'PumukitNewAdminBundle:MultimediaObject:tagfilter.html.twig' with {'parentId': parent.id, 'mmId': mm.id} %}
+                            {% include '@PumukitNewAdmin/MultimediaObject/tagfilter.html.twig' with {'parentId': parent.id, 'mmId': mm.id} %}
                         </div></div>
 
                     <div class="col-xs-12" style="overflow:hidden;height: 270px">
                         {# Available tags #}
                         <div style="width:40%; max-width:400px; float: left; height: 260px; border: 1px solid #bbb; overflow-x: hidden; overflow-y: scroll" class="tag list-group pmk-tag-tree" id="all_tag_{{ parent.id }}">
                             {% if (0 != parent.getChildren()|length) %}
-                                {% include 'PumukitNewAdminBundle:UNESCO:listtagsajax.html.twig' with {'mmId': mm.id, 'parent': 'root', 'block_tag': parent.id, 'nodes': parent.getChildren()} %}
+                                {% include '@PumukitNewAdmin/UNESCO/listtagsajax.html.twig' with {'mmId': mm.id, 'parent': 'root', 'block_tag': parent.id, 'nodes': parent.getChildren()} %}
                             {% endif %}
                         </div>
 
@@ -40,7 +40,7 @@
                         {# Added tags#}
                         <div style="width:40%; max-width:400px; height:260px; border: 1px solid #bbb; float: left; overflow-x: hidden; overflow-y: scroll" class="tag" id="select_tag_{{ parent.id }}">
                             <div class="tag_tree list-group" id="select_ul_tag_cod_{{ parent.cod }}" >
-                                {% for embedded_tag in mm.getTags() if embedded_tag.isDescendantOf(parent) %}
+                                {% for embedded_tag in mm.getTags() | filter(embedded_tag => embedded_tag.isDescendantOf(parent)) %}
                                     <a href="#" class="list-group-item tag-rm-{{ embedded_tag.cod }}"
                                        id="select_li_{{ embedded_tag.id }}"
                                        onclick="javascript:return select_tree_tag(this);"

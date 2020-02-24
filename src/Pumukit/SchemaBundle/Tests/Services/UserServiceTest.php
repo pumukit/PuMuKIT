@@ -2,6 +2,8 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Psr\Log\LoggerInterface;
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
@@ -14,27 +16,28 @@ use Pumukit\SchemaBundle\Services\PermissionProfileService;
 use Pumukit\SchemaBundle\Services\PermissionService;
 use Pumukit\SchemaBundle\Services\UserEventDispatcherService;
 use Pumukit\SchemaBundle\Services\UserService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * @internal
  * @coversNothing
  */
-class UserServiceTest extends WebTestCase
+class UserServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
     private $permissionProfileRepo;
     private $userService;
     private $logger;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        parent::setUp();
+        $this->logger = $this->getMockBuilder(LoggerInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
         $this->repo = $this->dm->getRepository(User::class);
         $this->permissionProfileRepo = $this->dm->getRepository(PermissionProfile::class);
 
@@ -47,9 +50,6 @@ class UserServiceTest extends WebTestCase
             $permissionProfileDispatcher,
             $permissionService
         );
-        $this->logger = static::$kernel->getContainer()
-            ->get('logger')
-        ;
 
         $personalScopeDeleteOwners = false;
 
@@ -63,22 +63,17 @@ class UserServiceTest extends WebTestCase
 
         $listener = new PermissionProfileListener($this->dm, $this->userService, $this->logger);
         $dispatcher->addListener('permissionprofile.update', [$listener, 'postUpdate']);
-
-        $this->dm->getDocumentCollection(User::class)->remove([]);
-        $this->dm->getDocumentCollection(Group::class)->remove([]);
-        $this->dm->getDocumentCollection(PermissionProfile::class)->remove([]);
-        $this->dm->flush();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->repo = null;
         $this->permissionProfileRepo = null;
         $this->userService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testCreateAndUpdate()
@@ -103,13 +98,13 @@ class UserServiceTest extends WebTestCase
         $user = $this->repo->find($user->getId());
         $permissionProfile1 = $this->permissionProfileRepo->find($permissionProfile1->getId());
 
-        $this->assertEquals($permissionProfile1, $user->getPermissionProfile());
-        $this->assertTrue($user->hasRole(Permission::ACCESS_DASHBOARD));
-        $this->assertTrue($user->hasRole(Permission::ACCESS_ROLES));
-        $this->assertFalse($user->hasRole(Permission::ACCESS_TAGS));
-        $this->assertFalse($user->hasRole(PermissionProfile::SCOPE_GLOBAL));
-        $this->assertTrue($user->hasRole(PermissionProfile::SCOPE_PERSONAL));
-        $this->assertFalse($user->hasRole(PermissionProfile::SCOPE_NONE));
+        static::assertEquals($permissionProfile1, $user->getPermissionProfile());
+        static::assertTrue($user->hasRole(Permission::ACCESS_DASHBOARD));
+        static::assertTrue($user->hasRole(Permission::ACCESS_ROLES));
+        static::assertFalse($user->hasRole(Permission::ACCESS_TAGS));
+        static::assertFalse($user->hasRole(PermissionProfile::SCOPE_GLOBAL));
+        static::assertTrue($user->hasRole(PermissionProfile::SCOPE_PERSONAL));
+        static::assertFalse($user->hasRole(PermissionProfile::SCOPE_NONE));
 
         $permissions2 = [Permission::ACCESS_TAGS];
         $permissionProfile2 = new PermissionProfile();
@@ -126,14 +121,14 @@ class UserServiceTest extends WebTestCase
         $user = $this->repo->find($user->getId());
         $permissionProfile2 = $this->permissionProfileRepo->find($permissionProfile2->getId());
 
-        $this->assertNotEquals($permissionProfile1, $user->getPermissionProfile());
-        $this->assertEquals($permissionProfile2, $user->getPermissionProfile());
-        $this->assertFalse($user->hasRole(Permission::ACCESS_DASHBOARD));
-        $this->assertFalse($user->hasRole(Permission::ACCESS_ROLES));
-        $this->assertTrue($user->hasRole(Permission::ACCESS_TAGS));
-        $this->assertTrue($user->hasRole(PermissionProfile::SCOPE_GLOBAL));
-        $this->assertFalse($user->hasRole(PermissionProfile::SCOPE_PERSONAL));
-        $this->assertFalse($user->hasRole(PermissionProfile::SCOPE_NONE));
+        static::assertNotEquals($permissionProfile1, $user->getPermissionProfile());
+        static::assertEquals($permissionProfile2, $user->getPermissionProfile());
+        static::assertFalse($user->hasRole(Permission::ACCESS_DASHBOARD));
+        static::assertFalse($user->hasRole(Permission::ACCESS_ROLES));
+        static::assertTrue($user->hasRole(Permission::ACCESS_TAGS));
+        static::assertTrue($user->hasRole(PermissionProfile::SCOPE_GLOBAL));
+        static::assertFalse($user->hasRole(PermissionProfile::SCOPE_PERSONAL));
+        static::assertFalse($user->hasRole(PermissionProfile::SCOPE_NONE));
     }
 
     public function testAddAndRemoveRoles()
@@ -150,18 +145,18 @@ class UserServiceTest extends WebTestCase
 
         $user = $this->repo->find($user->getId());
 
-        $this->assertTrue($user->hasRole(Permission::ACCESS_DASHBOARD));
-        $this->assertTrue($user->hasRole(Permission::ACCESS_ROLES));
-        $this->assertFalse($user->hasRole(Permission::ACCESS_TAGS));
+        static::assertTrue($user->hasRole(Permission::ACCESS_DASHBOARD));
+        static::assertTrue($user->hasRole(Permission::ACCESS_ROLES));
+        static::assertFalse($user->hasRole(Permission::ACCESS_TAGS));
 
         $permissions2 = [Permission::ACCESS_TAGS, Permission::ACCESS_ROLES];
         $user = $this->userService->removeRoles($user, $permissions2);
 
         $user = $this->repo->find($user->getId());
 
-        $this->assertTrue($user->hasRole(Permission::ACCESS_DASHBOARD));
-        $this->assertFalse($user->hasRole(Permission::ACCESS_ROLES));
-        $this->assertFalse($user->hasRole(Permission::ACCESS_TAGS));
+        static::assertTrue($user->hasRole(Permission::ACCESS_DASHBOARD));
+        static::assertFalse($user->hasRole(Permission::ACCESS_ROLES));
+        static::assertFalse($user->hasRole(Permission::ACCESS_TAGS));
     }
 
     public function testCountAndGetUsersWithPermissionProfile()
@@ -194,18 +189,18 @@ class UserServiceTest extends WebTestCase
         $user3->setPermissionProfile($permissionProfile1);
         $user3 = $this->userService->create($user3);
 
-        $this->assertEquals(2, $this->userService->countUsersWithPermissionProfile($permissionProfile1));
-        $this->assertEquals(1, $this->userService->countUsersWithPermissionProfile($permissionProfile2));
+        static::assertEquals(2, $this->userService->countUsersWithPermissionProfile($permissionProfile1));
+        static::assertEquals(1, $this->userService->countUsersWithPermissionProfile($permissionProfile2));
 
         $usersProfile1 = $this->userService->getUsersWithPermissionProfile($permissionProfile1)->toArray();
-        $this->assertTrue(in_array($user1, $usersProfile1));
-        $this->assertFalse(in_array($user2, $usersProfile1));
-        $this->assertTrue(in_array($user3, $usersProfile1));
+        static::assertContains($user1, $usersProfile1);
+        static::assertNotContains($user2, $usersProfile1);
+        static::assertContains($user3, $usersProfile1);
 
         $usersProfile2 = $this->userService->getUsersWithPermissionProfile($permissionProfile2)->toArray();
-        $this->assertFalse(in_array($user1, $usersProfile2));
-        $this->assertTrue(in_array($user2, $usersProfile2));
-        $this->assertFalse(in_array($user3, $usersProfile2));
+        static::assertNotContains($user1, $usersProfile2);
+        static::assertContains($user2, $usersProfile2);
+        static::assertNotContains($user3, $usersProfile2);
     }
 
     public function testGetUserPermissions()
@@ -226,8 +221,8 @@ class UserServiceTest extends WebTestCase
 
         $user = $this->userService->addRoles($user, $permissionProfile->getPermissions());
 
-        $this->assertNotEquals($permissions, $user->getRoles());
-        $this->assertEquals($permissions, $this->userService->getUserPermissions($user->getRoles()));
+        static::assertNotEquals($permissions, $user->getRoles());
+        static::assertEquals($permissions, $this->userService->getUserPermissions($user->getRoles()));
     }
 
     public function testAddUserScope()
@@ -240,23 +235,23 @@ class UserServiceTest extends WebTestCase
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertFalse(in_array(PermissionProfile::SCOPE_GLOBAL, $user->getRoles()));
-        $this->assertFalse(in_array(PermissionProfile::SCOPE_PERSONAL, $user->getRoles()));
-        $this->assertFalse(in_array(PermissionProfile::SCOPE_NONE, $user->getRoles()));
+        static::assertNotContains(PermissionProfile::SCOPE_GLOBAL, $user->getRoles());
+        static::assertNotContains(PermissionProfile::SCOPE_PERSONAL, $user->getRoles());
+        static::assertNotContains(PermissionProfile::SCOPE_NONE, $user->getRoles());
 
         $user = $this->userService->addUserScope($user, PermissionProfile::SCOPE_PERSONAL);
 
-        $this->assertFalse(in_array(PermissionProfile::SCOPE_GLOBAL, $user->getRoles()));
-        $this->assertTrue(in_array(PermissionProfile::SCOPE_PERSONAL, $user->getRoles()));
-        $this->assertFalse(in_array(PermissionProfile::SCOPE_NONE, $user->getRoles()));
-        $this->assertFalse(in_array($notValidScope, $user->getRoles()));
+        static::assertNotContains(PermissionProfile::SCOPE_GLOBAL, $user->getRoles());
+        static::assertContains(PermissionProfile::SCOPE_PERSONAL, $user->getRoles());
+        static::assertNotContains(PermissionProfile::SCOPE_NONE, $user->getRoles());
+        static::assertNotContains($notValidScope, $user->getRoles());
 
         $user = $this->userService->addUserScope($user, $notValidScope);
 
-        $this->assertFalse(in_array(PermissionProfile::SCOPE_GLOBAL, $user->getRoles()));
-        $this->assertTrue(in_array(PermissionProfile::SCOPE_PERSONAL, $user->getRoles()));
-        $this->assertFalse(in_array(PermissionProfile::SCOPE_NONE, $user->getRoles()));
-        $this->assertFalse(in_array($notValidScope, $user->getRoles()));
+        static::assertNotContains(PermissionProfile::SCOPE_GLOBAL, $user->getRoles());
+        static::assertContains(PermissionProfile::SCOPE_PERSONAL, $user->getRoles());
+        static::assertNotContains(PermissionProfile::SCOPE_NONE, $user->getRoles());
+        static::assertNotContains($notValidScope, $user->getRoles());
     }
 
     public function testGetUserScope()
@@ -278,21 +273,21 @@ class UserServiceTest extends WebTestCase
 
         $userScope = $this->userService->getUserScope($user->getRoles());
 
-        $this->assertNotEquals(PermissionProfile::SCOPE_GLOBAL, $userScope);
-        $this->assertNotEquals(PermissionProfile::SCOPE_PERSONAL, $userScope);
-        $this->assertNotEquals(PermissionProfile::SCOPE_NONE, $userScope);
-        $this->assertCount(1, $user->getRoles());
+        static::assertNotEquals(PermissionProfile::SCOPE_GLOBAL, $userScope);
+        static::assertNotEquals(PermissionProfile::SCOPE_PERSONAL, $userScope);
+        static::assertNotEquals(PermissionProfile::SCOPE_NONE, $userScope);
+        static::assertCount(1, $user->getRoles());
 
         $user = $this->userService->addRoles($user, $permissionProfile->getPermissions());
-        $this->assertCount(3, $user->getRoles());
+        static::assertCount(3, $user->getRoles());
         $user = $this->userService->addUserScope($user, PermissionProfile::SCOPE_PERSONAL);
-        $this->assertCount(4, $user->getRoles());
+        static::assertCount(4, $user->getRoles());
 
         $userScope = $this->userService->getUserScope($user->getRoles());
 
-        $this->assertNotEquals(PermissionProfile::SCOPE_GLOBAL, $userScope);
-        $this->assertEquals(PermissionProfile::SCOPE_PERSONAL, $userScope);
-        $this->assertNotEquals(PermissionProfile::SCOPE_NONE, $userScope);
+        static::assertNotEquals(PermissionProfile::SCOPE_GLOBAL, $userScope);
+        static::assertEquals(PermissionProfile::SCOPE_PERSONAL, $userScope);
+        static::assertNotEquals(PermissionProfile::SCOPE_NONE, $userScope);
     }
 
     public function testSetUserScope()
@@ -312,26 +307,26 @@ class UserServiceTest extends WebTestCase
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertCount(1, $user->getRoles());
+        static::assertCount(1, $user->getRoles());
         $user = $this->userService->addRoles($user, $permissionProfile->getPermissions());
-        $this->assertCount(3, $user->getRoles());
+        static::assertCount(3, $user->getRoles());
         $user = $this->userService->addUserScope($user, PermissionProfile::SCOPE_PERSONAL);
-        $this->assertCount(4, $user->getRoles());
+        static::assertCount(4, $user->getRoles());
 
         $userScope = $this->userService->getUserScope($user->getRoles());
 
-        $this->assertNotEquals(PermissionProfile::SCOPE_GLOBAL, $userScope);
-        $this->assertEquals(PermissionProfile::SCOPE_PERSONAL, $userScope);
-        $this->assertNotEquals(PermissionProfile::SCOPE_NONE, $userScope);
+        static::assertNotEquals(PermissionProfile::SCOPE_GLOBAL, $userScope);
+        static::assertEquals(PermissionProfile::SCOPE_PERSONAL, $userScope);
+        static::assertNotEquals(PermissionProfile::SCOPE_NONE, $userScope);
 
         $user = $this->userService->setUserScope($user, $userScope, PermissionProfile::SCOPE_GLOBAL);
 
         $newUserScope = $this->userService->getUserScope($user->getRoles());
 
-        $this->assertEquals(PermissionProfile::SCOPE_GLOBAL, $newUserScope);
-        $this->assertNotEquals(PermissionProfile::SCOPE_PERSONAL, $newUserScope);
-        $this->assertNotEquals(PermissionProfile::SCOPE_NONE, $newUserScope);
-        $this->assertCount(4, $user->getRoles());
+        static::assertEquals(PermissionProfile::SCOPE_GLOBAL, $newUserScope);
+        static::assertNotEquals(PermissionProfile::SCOPE_PERSONAL, $newUserScope);
+        static::assertNotEquals(PermissionProfile::SCOPE_NONE, $newUserScope);
+        static::assertCount(4, $user->getRoles());
     }
 
     public function testDelete()
@@ -344,11 +339,11 @@ class UserServiceTest extends WebTestCase
 
         $user = $this->userService->create($user);
 
-        $this->assertCount(1, $this->repo->findAll());
+        static::assertCount(1, $this->repo->findAll());
 
         $user = $this->userService->delete($user);
 
-        $this->assertCount(0, $this->repo->findAll());
+        static::assertCount(0, $this->repo->findAll());
     }
 
     public function testInstantiate()
@@ -367,11 +362,11 @@ class UserServiceTest extends WebTestCase
 
         $user1 = $this->userService->instantiate();
 
-        $this->assertNull($user1->getUsername());
-        $this->assertNull($user1->getEmail());
-        $this->assertTrue($user1->isEnabled());
-        $this->assertNotEquals($permissionProfile1, $user1->getPermissionProfile());
-        $this->assertEquals($permissionProfile2, $user1->getPermissionProfile());
+        static::assertNull($user1->getUsername());
+        static::assertNull($user1->getEmail());
+        static::assertTrue($user1->isEnabled());
+        static::assertNotEquals($permissionProfile1, $user1->getPermissionProfile());
+        static::assertEquals($permissionProfile2, $user1->getPermissionProfile());
 
         $userName = 'test';
         $email = 'test@mail.com';
@@ -385,11 +380,11 @@ class UserServiceTest extends WebTestCase
 
         $user2 = $this->userService->instantiate($userName, $email, $enabled);
 
-        $this->assertEquals($userName, $user2->getUsername());
-        $this->assertEquals($email, $user2->getEmail());
-        $this->assertFalse($user2->isEnabled());
-        $this->assertEquals($permissionProfile1, $user2->getPermissionProfile());
-        $this->assertNotEquals($permissionProfile2, $user2->getPermissionProfile());
+        static::assertEquals($userName, $user2->getUsername());
+        static::assertEquals($email, $user2->getEmail());
+        static::assertFalse($user2->isEnabled());
+        static::assertEquals($permissionProfile1, $user2->getPermissionProfile());
+        static::assertNotEquals($permissionProfile2, $user2->getPermissionProfile());
     }
 
     /**
@@ -428,25 +423,25 @@ class UserServiceTest extends WebTestCase
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertTrue($this->userService->hasGlobalScope($user));
-        $this->assertFalse($this->userService->hasPersonalScope($user));
-        $this->assertFalse($this->userService->hasNoneScope($user));
+        static::assertTrue($this->userService->hasGlobalScope($user));
+        static::assertFalse($this->userService->hasPersonalScope($user));
+        static::assertFalse($this->userService->hasNoneScope($user));
 
         $user->setPermissionProfile($personalProfile);
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertFalse($this->userService->hasGlobalScope($user));
-        $this->assertTrue($this->userService->hasPersonalScope($user));
-        $this->assertFalse($this->userService->hasNoneScope($user));
+        static::assertFalse($this->userService->hasGlobalScope($user));
+        static::assertTrue($this->userService->hasPersonalScope($user));
+        static::assertFalse($this->userService->hasNoneScope($user));
 
         $user->setPermissionProfile($noneProfile);
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertFalse($this->userService->hasGlobalScope($user));
-        $this->assertFalse($this->userService->hasPersonalScope($user));
-        $this->assertTrue($this->userService->hasNoneScope($user));
+        static::assertFalse($this->userService->hasGlobalScope($user));
+        static::assertFalse($this->userService->hasPersonalScope($user));
+        static::assertTrue($this->userService->hasNoneScope($user));
     }
 
     public function testAddGroup()
@@ -473,36 +468,36 @@ class UserServiceTest extends WebTestCase
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertEquals(0, count($user->getGroups()));
-        $this->assertFalse($user->containsGroup($group1));
-        $this->assertFalse($user->containsGroup($group2));
+        static::assertCount(0, $user->getGroups());
+        static::assertFalse($user->containsGroup($group1));
+        static::assertFalse($user->containsGroup($group2));
 
         $this->userService->addGroup($group1, $user);
 
-        $this->assertEquals(1, count($user->getGroups()));
-        $this->assertTrue($user->containsGroup($group1));
-        $this->assertFalse($user->containsGroup($group2));
+        static::assertCount(1, $user->getGroups());
+        static::assertTrue($user->containsGroup($group1));
+        static::assertFalse($user->containsGroup($group2));
 
         $this->userService->addGroup($group1, $user);
 
-        $this->assertEquals(1, count($user->getGroups()));
-        $this->assertTrue($user->containsGroup($group1));
-        $this->assertFalse($user->containsGroup($group2));
-        $this->assertFalse($user->containsGroup($group3));
+        static::assertCount(1, $user->getGroups());
+        static::assertTrue($user->containsGroup($group1));
+        static::assertFalse($user->containsGroup($group2));
+        static::assertFalse($user->containsGroup($group3));
 
         $this->userService->addGroup($group2, $user);
 
-        $this->assertEquals(2, count($user->getGroups()));
-        $this->assertTrue($user->containsGroup($group1));
-        $this->assertTrue($user->containsGroup($group2));
-        $this->assertFalse($user->containsGroup($group3));
+        static::assertCount(2, $user->getGroups());
+        static::assertTrue($user->containsGroup($group1));
+        static::assertTrue($user->containsGroup($group2));
+        static::assertFalse($user->containsGroup($group3));
 
         $this->userService->addGroup($group3, $user);
 
-        $this->assertEquals(3, count($user->getGroups()));
-        $this->assertTrue($user->containsGroup($group1));
-        $this->assertTrue($user->containsGroup($group2));
-        $this->assertTrue($user->containsGroup($group3));
+        static::assertCount(3, $user->getGroups());
+        static::assertTrue($user->containsGroup($group1));
+        static::assertTrue($user->containsGroup($group2));
+        static::assertTrue($user->containsGroup($group3));
     }
 
     public function testDeleteGroup()
@@ -529,53 +524,53 @@ class UserServiceTest extends WebTestCase
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertEquals(0, count($user->getGroups()));
-        $this->assertFalse($user->containsGroup($group1));
-        $this->assertFalse($user->containsGroup($group2));
+        static::assertCount(0, $user->getGroups());
+        static::assertFalse($user->containsGroup($group1));
+        static::assertFalse($user->containsGroup($group2));
 
         $this->userService->addGroup($group1, $user);
 
         $user = $this->repo->find($user->getId());
 
-        $this->assertEquals(1, count($user->getGroups()));
-        $this->assertTrue($user->containsGroup($group1));
-        $this->assertFalse($user->containsGroup($group2));
+        static::assertCount(1, $user->getGroups());
+        static::assertTrue($user->containsGroup($group1));
+        static::assertFalse($user->containsGroup($group2));
 
         $this->userService->deleteGroup($group1, $user);
 
         $user = $this->repo->find($user->getId());
 
-        $this->assertEquals(0, count($user->getGroups()));
-        $this->assertFalse($user->containsGroup($group1));
-        $this->assertFalse($user->containsGroup($group2));
-        $this->assertFalse($user->containsGroup($group3));
+        static::assertCount(0, $user->getGroups());
+        static::assertFalse($user->containsGroup($group1));
+        static::assertFalse($user->containsGroup($group2));
+        static::assertFalse($user->containsGroup($group3));
 
         $this->userService->deleteGroup($group2, $user);
 
         $user = $this->repo->find($user->getId());
 
-        $this->assertEquals(0, count($user->getGroups()));
-        $this->assertFalse($user->containsGroup($group1));
-        $this->assertFalse($user->containsGroup($group2));
-        $this->assertFalse($user->containsGroup($group3));
+        static::assertCount(0, $user->getGroups());
+        static::assertFalse($user->containsGroup($group1));
+        static::assertFalse($user->containsGroup($group2));
+        static::assertFalse($user->containsGroup($group3));
 
         $this->userService->addGroup($group3, $user);
 
         $user = $this->repo->find($user->getId());
 
-        $this->assertEquals(1, count($user->getGroups()));
-        $this->assertFalse($user->containsGroup($group1));
-        $this->assertFalse($user->containsGroup($group2));
-        $this->assertTrue($user->containsGroup($group3));
+        static::assertCount(1, $user->getGroups());
+        static::assertFalse($user->containsGroup($group1));
+        static::assertFalse($user->containsGroup($group2));
+        static::assertTrue($user->containsGroup($group3));
 
         $this->userService->deleteGroup($group3, $user);
 
         $user = $this->repo->find($user->getId());
 
-        $this->assertEquals(0, count($user->getGroups()));
-        $this->assertFalse($user->containsGroup($group1));
-        $this->assertFalse($user->containsGroup($group2));
-        $this->assertFalse($user->containsGroup($group3));
+        static::assertCount(0, $user->getGroups());
+        static::assertFalse($user->containsGroup($group1));
+        static::assertFalse($user->containsGroup($group2));
+        static::assertFalse($user->containsGroup($group3));
     }
 
     public function testIsAllowedToModifyUserGroup()
@@ -606,10 +601,10 @@ class UserServiceTest extends WebTestCase
         $this->dm->persist($casUser);
         $this->dm->flush();
 
-        $this->assertTrue($this->userService->isAllowedToModifyUserGroup($localUser, $localGroup));
-        $this->assertFalse($this->userService->isAllowedToModifyUserGroup($casUser, $casGroup));
-        $this->assertTrue($this->userService->isAllowedToModifyUserGroup($localUser, $casGroup));
-        $this->assertTrue($this->userService->isAllowedToModifyUserGroup($casUser, $localGroup));
+        static::assertTrue($this->userService->isAllowedToModifyUserGroup($localUser, $localGroup));
+        static::assertFalse($this->userService->isAllowedToModifyUserGroup($casUser, $casGroup));
+        static::assertTrue($this->userService->isAllowedToModifyUserGroup($localUser, $casGroup));
+        static::assertTrue($this->userService->isAllowedToModifyUserGroup($casUser, $localGroup));
     }
 
     /**
@@ -657,7 +652,7 @@ class UserServiceTest extends WebTestCase
 
         $this->userService->addGroup($localGroup, $casUser);
 
-        $this->assertTrue($casUser->containsGroup($localGroup));
+        static::assertTrue($casUser->containsGroup($localGroup));
     }
 
     public function testAddGroupCasLocal()
@@ -678,7 +673,7 @@ class UserServiceTest extends WebTestCase
 
         $this->userService->addGroup($casGroup, $localUser);
 
-        $this->assertTrue($localUser->containsGroup($casGroup));
+        static::assertTrue($localUser->containsGroup($casGroup));
     }
 
     /**
@@ -724,11 +719,11 @@ class UserServiceTest extends WebTestCase
         $this->dm->persist($casUser);
         $this->dm->flush();
 
-        $this->assertTrue($casUser->containsGroup($localGroup));
+        static::assertTrue($casUser->containsGroup($localGroup));
 
         $this->userService->deleteGroup($localGroup, $casUser);
 
-        $this->assertFalse($casUser->containsGroup($localGroup));
+        static::assertFalse($casUser->containsGroup($localGroup));
     }
 
     public function testDeleteGroupCasLocal()
@@ -751,11 +746,11 @@ class UserServiceTest extends WebTestCase
         $this->dm->persist($localUser);
         $this->dm->flush();
 
-        $this->assertTrue($localUser->containsGroup($casGroup));
+        static::assertTrue($localUser->containsGroup($casGroup));
 
         $this->userService->deleteGroup($casGroup, $localUser);
 
-        $this->assertFalse($localUser->containsGroup($casGroup));
+        static::assertFalse($localUser->containsGroup($casGroup));
     }
 
     /**
@@ -817,10 +812,10 @@ class UserServiceTest extends WebTestCase
 
         $usersLocalGroup = $this->userService->findWithGroup($localGroup)->toArray();
         $usersCasGroup = $this->userService->findWithGroup($casGroup)->toArray();
-        $this->assertTrue(in_array($localUser, $usersLocalGroup));
-        $this->assertFalse(in_array($casUser, $usersLocalGroup));
-        $this->assertFalse(in_array($localUser, $usersCasGroup));
-        $this->assertTrue(in_array($casUser, $usersCasGroup));
+        static::assertContains($localUser, $usersLocalGroup);
+        static::assertNotContains($casUser, $usersLocalGroup);
+        static::assertNotContains($localUser, $usersCasGroup);
+        static::assertContains($casUser, $usersCasGroup);
     }
 
     public function testDeleteAllFromGroup()
@@ -831,7 +826,7 @@ class UserServiceTest extends WebTestCase
         $this->dm->persist($group);
         $this->dm->flush();
 
-        $this->assertEquals(0, count($this->userService->findWithGroup($group)->toArray()));
+        static::assertCount(0, $this->userService->findWithGroup($group)->toArray());
 
         $user1 = new User();
         $user1->setUsername('user1');
@@ -853,10 +848,10 @@ class UserServiceTest extends WebTestCase
         $this->dm->persist($user3);
         $this->dm->flush();
 
-        $this->assertEquals(3, count($this->userService->findWithGroup($group)->toArray()));
+        static::assertCount(3, $this->userService->findWithGroup($group)->toArray());
 
         $this->userService->deleteAllFromGroup($group);
-        $this->assertEquals(0, count($this->userService->findWithGroup($group)->toArray()));
+        static::assertCount(0, $this->userService->findWithGroup($group)->toArray());
     }
 
     public function testIsUserLastRelation()
@@ -907,29 +902,29 @@ class UserServiceTest extends WebTestCase
         $owners2 = [$aux.$person1->getId(), $aux.$person2->getId(), $aux.$person3->getId()];
         $groups = [$aux.$group1->getId(), $aux.$group2->getId()];
 
-        $this->assertFalse($this->userService->isUserLastRelation($user, null, $person1->getId(), $owners1, $groups));
-        $this->assertFalse($this->userService->isUserLastRelation($user, null, $person2->getId(), $owners1, $groups));
-        $this->assertFalse($this->userService->isUserLastRelation($user, null, $person3->getId(), $owners1, $groups));
+        static::assertFalse($this->userService->isUserLastRelation($user, null, $person1->getId(), $owners1, $groups));
+        static::assertFalse($this->userService->isUserLastRelation($user, null, $person2->getId(), $owners1, $groups));
+        static::assertFalse($this->userService->isUserLastRelation($user, null, $person3->getId(), $owners1, $groups));
 
         $permissionProfile1->setScope(PermissionProfile::SCOPE_PERSONAL);
         $this->dm->persist($permissionProfile1);
         $this->dm->flush();
 
-        $this->assertFalse($this->userService->isUserLastRelation($user, null, $person1->getId(), $owners1, $groups));
-        $this->assertTrue($this->userService->isUserLastRelation($user, null, $person2->getId(), $owners1, $groups));
-        $this->assertFalse($this->userService->isUserLastRelation($user, null, $person3->getId(), $owners1, $groups));
+        static::assertFalse($this->userService->isUserLastRelation($user, null, $person1->getId(), $owners1, $groups));
+        static::assertTrue($this->userService->isUserLastRelation($user, null, $person2->getId(), $owners1, $groups));
+        static::assertFalse($this->userService->isUserLastRelation($user, null, $person3->getId(), $owners1, $groups));
 
         $user->addGroup($group2);
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertFalse($this->userService->isUserLastRelation($user, null, $person1->getId(), $owners1, $groups));
-        $this->assertFalse($this->userService->isUserLastRelation($user, null, $person2->getId(), $owners1, $groups));
-        $this->assertFalse($this->userService->isUserLastRelation($user, null, $person3->getId(), $owners1, $groups));
+        static::assertFalse($this->userService->isUserLastRelation($user, null, $person1->getId(), $owners1, $groups));
+        static::assertFalse($this->userService->isUserLastRelation($user, null, $person2->getId(), $owners1, $groups));
+        static::assertFalse($this->userService->isUserLastRelation($user, null, $person3->getId(), $owners1, $groups));
 
-        $this->assertTrue($this->userService->isUserLastRelation($user, null, $person1->getId(), [], []));
-        $this->assertTrue($this->userService->isUserLastRelation($user, null, $person2->getId(), [], []));
-        $this->assertTrue($this->userService->isUserLastRelation($user, null, $person3->getId(), [], []));
+        static::assertTrue($this->userService->isUserLastRelation($user, null, $person1->getId(), [], []));
+        static::assertTrue($this->userService->isUserLastRelation($user, null, $person2->getId(), [], []));
+        static::assertTrue($this->userService->isUserLastRelation($user, null, $person3->getId(), [], []));
     }
 
     public function testIsLoggedPersonToRemoveFromOwner()
@@ -968,17 +963,17 @@ class UserServiceTest extends WebTestCase
         $this->dm->persist($person2);
         $this->dm->flush();
 
-        $this->assertFalse($this->userService->isLoggedPersonToRemoveFromOwner($user, $person1->getId()));
-        $this->assertFalse($this->userService->isLoggedPersonToRemoveFromOwner($user, $person2->getId()));
-        $this->assertFalse($this->userService->isLoggedPersonToRemoveFromOwner($user, $person3->getId()));
+        static::assertFalse($this->userService->isLoggedPersonToRemoveFromOwner($user, $person1->getId()));
+        static::assertFalse($this->userService->isLoggedPersonToRemoveFromOwner($user, $person2->getId()));
+        static::assertFalse($this->userService->isLoggedPersonToRemoveFromOwner($user, $person3->getId()));
 
         $permissionProfile1->setScope(PermissionProfile::SCOPE_PERSONAL);
         $this->dm->persist($permissionProfile1);
         $this->dm->flush();
 
-        $this->assertFalse($this->userService->isLoggedPersonToRemoveFromOwner($user, $person1->getId()));
-        $this->assertTrue($this->userService->isLoggedPersonToRemoveFromOwner($user, $person2->getId()));
-        $this->assertFalse($this->userService->isLoggedPersonToRemoveFromOwner($user, $person3->getId()));
+        static::assertFalse($this->userService->isLoggedPersonToRemoveFromOwner($user, $person1->getId()));
+        static::assertTrue($this->userService->isLoggedPersonToRemoveFromOwner($user, $person2->getId()));
+        static::assertFalse($this->userService->isLoggedPersonToRemoveFromOwner($user, $person3->getId()));
     }
 
     public function testIsUserInOwners()
@@ -1011,10 +1006,10 @@ class UserServiceTest extends WebTestCase
         $aux = 'first_second_';
 
         $owners1 = [$aux.$person2->getId(), $aux.$person3->getId()];
-        $this->assertFalse($this->userService->isUserInOwners($user, $owners1));
+        static::assertFalse($this->userService->isUserInOwners($user, $owners1));
 
         $owners2 = [$aux.$person1->getId(), $aux.$person2->getId(), $aux.$person3->getId()];
-        $this->assertTrue($this->userService->isUserInOwners($user, $owners2));
+        static::assertTrue($this->userService->isUserInOwners($user, $owners2));
     }
 
     public function testIsUserInGroups()
@@ -1036,13 +1031,13 @@ class UserServiceTest extends WebTestCase
         $aux = 'first_second_';
         $groups = [$aux.$group1->getId(), $aux.$group2->getId()];
 
-        $this->assertFalse($this->userService->isUserInGroups($user, null, null, $groups));
+        static::assertFalse($this->userService->isUserInGroups($user, null, null, $groups));
 
         $user->addGroup($group2);
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertTrue($this->userService->isUserInGroups($user, null, null, $groups));
+        static::assertTrue($this->userService->isUserInGroups($user, null, null, $groups));
 
         $person = new Person();
         $person->setName('person test');
@@ -1055,19 +1050,19 @@ class UserServiceTest extends WebTestCase
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertFalse($this->userService->isUserInGroups($user, $mm->getId(), $person->getId(), $groups));
+        static::assertFalse($this->userService->isUserInGroups($user, $mm->getId(), $person->getId(), $groups));
 
         $mm->addGroup($group1);
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertFalse($this->userService->isUserInGroups($user, $mm->getId(), $person->getId(), $groups));
+        static::assertFalse($this->userService->isUserInGroups($user, $mm->getId(), $person->getId(), $groups));
 
         $mm->addGroup($group2);
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertTrue($this->userService->isUserInGroups($user, $mm->getId(), $person->getId(), $groups));
+        static::assertTrue($this->userService->isUserInGroups($user, $mm->getId(), $person->getId(), $groups));
     }
 
     public function testAddGroupCasCas()
@@ -1088,7 +1083,7 @@ class UserServiceTest extends WebTestCase
 
         $this->userService->addGroup($casGroup, $casUser, true, false);
 
-        $this->assertTrue($casUser->containsGroup($casGroup));
+        static::assertTrue($casUser->containsGroup($casGroup));
     }
 
     public function testDeleteGroupCasCas()
@@ -1111,10 +1106,10 @@ class UserServiceTest extends WebTestCase
         $this->dm->persist($casUser);
         $this->dm->flush();
 
-        $this->assertTrue($casUser->containsGroup($casGroup));
+        static::assertTrue($casUser->containsGroup($casGroup));
 
         $this->userService->deleteGroup($casGroup, $casUser, true, false);
 
-        $this->assertFalse($casUser->containsGroup($casGroup));
+        static::assertFalse($casUser->containsGroup($casGroup));
     }
 }

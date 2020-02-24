@@ -3,12 +3,12 @@
         <div class="header-logo">
             <div class="col-xs-6 col-sm-4 col-md-4">
                 {% block logo_url %}
-                    {% include 'PumukitWebTVBundle:Misc:logo.html.twig' %}
+                    {% include '@PumukitWebTV/Misc/logo.html.twig' %}
                 {% endblock %}
             </div>
 
             <div class="hidden-xs col-sm-4 col-md-4 pull-right">
-                {% include 'PumukitWebTVBundle:Misc:search_box.html.twig' with {'id': 'desktop' } %}
+                {% include '@PumukitWebTV/Misc/search_box.html.twig' with {'id': 'desktop' } %}
             </div>
         </div>
     </div>

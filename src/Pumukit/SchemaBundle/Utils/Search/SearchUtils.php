@@ -66,7 +66,7 @@ class SearchUtils
 
         $regexString = self::completeRegexExpression($elements);
 
-        return new Regex($regexString);
+        return new Regex($regexString, 'i');
     }
 
     /**
@@ -102,8 +102,6 @@ class SearchUtils
      */
     private static function completeRegexExpression($regexString)
     {
-        $regexString = implode($regexString, self::$glue);
-
-        return '/('.$regexString.')/i';
+        return implode($regexString, self::$glue);
     }
 }

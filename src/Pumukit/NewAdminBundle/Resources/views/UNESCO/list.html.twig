@@ -1,15 +1,15 @@
 <div class="table-responsive well" style="overflow:visible;">
     <div class="collapse" id="collapseCustomFields">
-        {{ render(controller('PumukitNewAdminBundle:UNESCO:customFields')) }}
+        {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\UNESCOController::customFieldsAction')) }}
     </div>
     <table class="table table-striped table-hover">
         <thead>
-            {% include "PumukitNewAdminBundle:UNESCO:listth.html.twig" %}
+            {% include "@PumukitNewAdmin/UNESCO/listth.html.twig" %}
         </thead>
 
         <tbody>
         {% for mm in mms %}
-            {% include "PumukitNewAdminBundle:UNESCO:listbody.html.twig" %}
+            {% include "@PumukitNewAdmin/UNESCO/listbody.html.twig" %}
         {% else %}
             <tr>
                 <td colspan="13" headers="th-checkbox th-icons th-icons th-icons th-video th-img th-series th-title th-duration th-rec-date th-pub-date">

@@ -2,51 +2,140 @@
 
 namespace Pumukit\WebTVBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Services\AnnounceService;
+use Pumukit\StatsBundle\Services\StatsService;
+use Pumukit\WebTVBundle\Services\BreadcrumbsService;
+use Pumukit\WebTVBundle\Services\ListService;
+use Pumukit\WebTVBundle\Services\MenuService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * Class ModulesController.
- */
-class ModulesController extends Controller implements WebTVControllerInterface
+class ModulesController extends AbstractController implements WebTVControllerInterface
 {
     public static $menuResponse = null;
-    private $menuTemplate = 'PumukitWebTVBundle:Modules:widget_menu.html.twig';
+    private $menuTemplate = '@PumukitWebTV/Modules/widget_menu.html.twig';
+
+    /** @var TranslatorInterface */
+    private $translator;
+    /** @var StatsService */
+    private $statService;
+    /** @var AnnounceService */
+    private $pumukitSchemaAnnounce;
+    /** @var MenuService */
+    private $menuService;
+    /** @var ListService */
+    private $listService;
+    /** @var DocumentManager */
+    private $documentManager;
+    /** @var RequestStack */
+    private $requestStack;
+    /** @var BreadcrumbsService */
+    private $breadcrumbService;
+
+    private $byTagBlockObjectsByCol;
+    private $limitObjsMostViewed;
+    private $showMostViewedLastMonth;
+    private $mostViewedObjectsByCol;
+    private $showLatestWithPudeNew;
+    private $limitObjsHightlight;
+    private $hightlightObjectsByCol;
+    private $menuHomeTitle;
+    private $menuAnnouncesTitle;
+    private $menuSearchTitle;
+    private $menuMediatecaTitle;
+    private $menuCategoriesTitle;
+    private $limitObjsLiveBlock;
+    private $liveBlockObjectsByCol;
+    private $locales;
+    private $limitObjsRecentlyAdded;
+    private $recentlyAddedObjectsByCol;
+
+    public function __construct(
+        TranslatorInterface $translator,
+        StatsService $statService,
+        AnnounceService $pumukitSchemaAnnounce,
+        MenuService $menuService,
+        ListService $listService,
+        DocumentManager $documentManager,
+        RequestStack $requestStack,
+        BreadcrumbsService $breadcrumbService,
+        $byTagBlockObjectsByCol,
+        $limitObjsMostViewed,
+        $showMostViewedLastMonth,
+        $mostViewedObjectsByCol,
+        $showLatestWithPudeNew,
+        $limitObjsHightlight,
+        $hightlightObjectsByCol,
+        $menuHomeTitle,
+        $menuAnnouncesTitle,
+        $menuSearchTitle,
+        $menuMediatecaTitle,
+        $menuCategoriesTitle,
+        $limitObjsLiveBlock,
+        $liveBlockObjectsByCol,
+        $locales,
+        $limitObjsRecentlyAdded,
+        $recentlyAddedObjectsByCol
+    ) {
+        $this->translator = $translator;
+        $this->statService = $statService;
+        $this->pumukitSchemaAnnounce = $pumukitSchemaAnnounce;
+        $this->menuService = $menuService;
+        $this->listService = $listService;
+        $this->documentManager = $documentManager;
+        $this->requestStack = $requestStack;
+        $this->breadcrumbService = $breadcrumbService;
+        $this->byTagBlockObjectsByCol = $byTagBlockObjectsByCol;
+        $this->limitObjsMostViewed = $limitObjsMostViewed;
+        $this->showMostViewedLastMonth = $showMostViewedLastMonth;
+        $this->mostViewedObjectsByCol = $mostViewedObjectsByCol;
+        $this->showLatestWithPudeNew = $showLatestWithPudeNew;
+        $this->limitObjsHightlight = $limitObjsHightlight;
+        $this->hightlightObjectsByCol = $hightlightObjectsByCol;
+        $this->menuHomeTitle = $menuHomeTitle;
+        $this->menuAnnouncesTitle = $menuAnnouncesTitle;
+        $this->menuSearchTitle = $menuSearchTitle;
+        $this->menuMediatecaTitle = $menuMediatecaTitle;
+        $this->menuCategoriesTitle = $menuCategoriesTitle;
+        $this->limitObjsLiveBlock = $limitObjsLiveBlock;
+        $this->liveBlockObjectsByCol = $liveBlockObjectsByCol;
+        $this->locales = $locales;
+        $this->limitObjsRecentlyAdded = $limitObjsRecentlyAdded;
+        $this->recentlyAddedObjectsByCol = $recentlyAddedObjectsByCol;
+    }
 
     /**
-     * @Template("PumukitWebTVBundle:Modules:widget_media.html.twig")
-     *
-     * @param string $design
-     *
-     * @return array
+     * @Template("@PumukitWebTV/Modules/widget_media.html.twig")
      */
-    public function mostViewedAction($design = 'horizontal')
+    public function mostViewedAction(string $design = 'horizontal')
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
-        $limit = $this->container->getParameter('limit_objs_mostviewed');
-        $showLastMonth = $this->container->getParameter('show_mostviewed_lastmonth');
-        $translator = $this->get('translator');
-
-        if ($showLastMonth) {
-            $objects = $this->get('pumukit_stats.stats')->getMostViewedUsingFilters(30, $limit);
-            $title = $translator->trans('Most viewed on the last month');
+        if ($this->showMostViewedLastMonth) {
+            $objects = $this->statService->getMostViewedUsingFilters(30, $this->limitObjsMostViewed);
+            $title = $this->translator->trans('Most viewed on the last month');
         } else {
-            $objects = $dm->getRepository(MultimediaObject::class)->findStandardBy([], ['numview' => -1], $limit, 0);
-            $title = $translator->trans('Most viewed');
+            $objects = $this->documentManager->getRepository(MultimediaObject::class)->findStandardBy(
+                [],
+                ['numview' => -1],
+                $this->limitObjsMostViewed,
+                0
+            );
+            $title = $this->translator->trans('Most viewed');
         }
 
         return [
             'design' => $design,
             'objects' => $objects,
-            'objectByCol' => $this->container->getParameter('mostviewed.objects_by_col'),
+            'objectByCol' => $this->mostViewedObjectsByCol,
             'title' => $title,
             'class' => 'mostviewed',
             'show_info' => true,
@@ -58,28 +147,21 @@ class ModulesController extends Controller implements WebTVControllerInterface
     /**
      * Returns all videos with PUDENEW tag.
      *
-     * @Template("PumukitWebTVBundle:Modules:widget_media.html.twig")
-     *
-     * @throws \Exception
-     *
-     * @return array
+     * @Template("@PumukitWebTV/Modules/widget_media.html.twig")
      */
     public function highlightAction()
     {
-        if (!$this->container->getParameter('show_latest_with_pudenew')) {
+        if (!$this->showLatestWithPudeNew) {
             throw new \Exception('Show latest with pudenew parameters must be true to use this module');
         }
 
-        $translator = $this->get('translator');
-        $title = $translator->trans('Hightlight');
+        $title = $this->translator->trans('Hightlight');
 
-        $limit = $this->container->getParameter('limit_objs_hightlight');
-
-        $last = $this->get('pumukitschema.announce')->getLast($limit, true);
+        $last = $this->pumukitSchemaAnnounce->getLast($this->limitObjsHightlight);
 
         return [
             'objects' => $last,
-            'objectByCol' => $this->container->getParameter('hightlight.objects_by_col'),
+            'objectByCol' => $this->hightlightObjectsByCol,
             'class' => 'highlight',
             'title' => $title,
             'show_info' => true,
@@ -91,34 +173,24 @@ class ModulesController extends Controller implements WebTVControllerInterface
     /**
      * Returns all videos without PUDENEW tag.
      *
-     * @Template("PumukitWebTVBundle:Modules:widget_media.html.twig")
-     *
-     * @param string $design
-     *
-     * @return array
+     * @Template("@PumukitWebTV/Modules/widget_media.html.twig")
      */
-    public function recentlyAddedWithoutHighlightAction($design = 'horizontal')
+    public function recentlyAddedWithoutHighlightAction(string $design = 'horizontal')
     {
-        $translator = $this->get('translator');
-        $title = $translator->trans('Recently added');
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-
-        $limit = $this->container->getParameter('limit_objs_recentlyadded');
-
-        $last = $dm->getRepository(MultimediaObject::class)->findStandardBy(
+        $last = $this->documentManager->getRepository(MultimediaObject::class)->findStandardBy(
             ['tags.cod' => ['$ne' => 'PUDENEW']],
             [
                 'public_date' => -1,
             ],
-            $limit,
+            $this->limitObjsRecentlyAdded,
             0
         );
 
         return [
             'design' => $design,
             'objects' => $last,
-            'objectByCol' => $this->container->getParameter('recentlyadded.objects_by_col'),
-            'title' => $title,
+            'objectByCol' => $this->recentlyAddedObjectsByCol,
+            'title' => $this->translator->trans('Recently added'),
             'class' => 'recently',
             'show_info' => true,
             'show_more' => false,
@@ -129,34 +201,24 @@ class ModulesController extends Controller implements WebTVControllerInterface
     /**
      * Returns all videos without PUDENEW tag.
      *
-     * @Template("PumukitWebTVBundle:Modules:widget_media.html.twig")
-     *
-     * @param string $design
-     *
-     * @return array
+     * @Template("@PumukitWebTV/Modules/widget_media.html.twig")
      */
-    public function recentlyAddedAllAction($design = 'horizontal')
+    public function recentlyAddedAllAction(string $design = 'horizontal')
     {
-        $translator = $this->get('translator');
-        $title = $translator->trans('Recently added');
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-
-        $limit = $this->container->getParameter('limit_objs_recentlyadded');
-
-        $last = $dm->getRepository(MultimediaObject::class)->findStandardBy(
+        $last = $this->documentManager->getRepository(MultimediaObject::class)->findStandardBy(
             [],
             [
                 'public_date' => -1,
             ],
-            $limit,
+            $this->limitObjsRecentlyAdded,
             0
         );
 
         return [
             'design' => $design,
             'objects' => $last,
-            'objectByCol' => $this->container->getParameter('recentlyadded.objects_by_col'),
-            'title' => $title,
+            'objectByCol' => $this->recentlyAddedObjectsByCol,
+            'title' => $this->translator->trans('Recently added'),
             'class' => 'recently',
             'show_info' => true,
             'show_more' => false,
@@ -165,14 +227,12 @@ class ModulesController extends Controller implements WebTVControllerInterface
     }
 
     /**
-     * @Template("PumukitWebTVBundle:Modules:widget_stats.html.twig")
-     *
-     * @return array
+     * @Template("@PumukitWebTV/Modules/widget_stats.html.twig")
      */
     public function statsAction()
     {
-        $mmRepo = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
-        $seriesRepo = $this->get('doctrine_mongodb')->getRepository(Series::class);
+        $mmRepo = $this->documentManager->getRepository(MultimediaObject::class);
+        $seriesRepo = $this->documentManager->getRepository(Series::class);
 
         $counts = [
             'series' => $seriesRepo->countPublic(),
@@ -184,65 +244,49 @@ class ModulesController extends Controller implements WebTVControllerInterface
     }
 
     /**
-     * @Template("PumukitWebTVBundle:Modules:widget_breadcrumb.html.twig")
+     * @Template("@PumukitWebTV/Modules/widget_breadcrumb.html.twig")
      */
     public function breadcrumbsAction()
     {
-        $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
-
-        return ['breadcrumbs' => $breadcrumbs->getBreadcrumbs()];
+        return ['breadcrumbs' => $this->breadcrumbService->getBreadcrumbs()];
     }
 
     /**
-     * @Template("PumukitWebTVBundle:Modules:widget_language.html.twig")
+     * @Template("@PumukitWebTV/Modules/widget_language.html.twig")
      */
     public function languageAction()
     {
-        $array_locales = $this->container->getParameter('pumukit.locales');
-        if (count($array_locales) <= 1) {
+        if (count($this->locales) <= 1) {
             return new Response('');
         }
 
-        return ['languages' => $array_locales];
+        return ['languages' => $this->locales];
     }
 
     /**
-     * @Template("PumukitWebTVBundle:Modules:widget_categories.html.twig")
+     * @Template("@PumukitWebTV/Modules/widget_categories.html.twig")
      *
-     * @param Request      $request
-     * @param string       $title
-     * @param string       $class
-     * @param array|string $categories
-     * @param int          $cols
-     * @param bool         $sort
-     *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     *
-     * @return array
+     * @param mixed $categories
      */
-    public function categoriesAction(Request $request, $title, $class, $categories, $cols = 6, $sort = true)
+    public function categoriesAction(Request $request, string $title, string $class, $categories, int $cols = 6, bool $sort = true)
     {
         if (!$categories) {
             throw new NotFoundHttpException('Categories not found');
         }
 
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-
         if ($sort) {
             if (is_array($categories)) {
-                $tags = $dm->createQueryBuilder(Tag::class)
+                $tags = $this->documentManager->createQueryBuilder(Tag::class)
                     ->field('cod')->in($categories)
                     ->field('display')->equals(true)
-                    ->sort('title.'.$request->getLocale(), 1)
+                    ->sort('title.'.$request->getLocale())
                     ->getQuery()
                     ->execute()
                 ;
             } else {
-                $tag = $dm->getRepository(Tag::class)->findOneBy(
-                    [
-                        'cod' => $categories,
-                    ]
-                );
+                $tag = $this->documentManager->getRepository(Tag::class)->findOneBy([
+                    'cod' => $categories,
+                ]);
                 if (!$tag) {
                     throw new NotFoundHttpException('Category not found');
                 }
@@ -251,7 +295,7 @@ class ModulesController extends Controller implements WebTVControllerInterface
         } else {
             $tags = [];
             foreach ($categories as $categoryCod) {
-                $tags[] = $dm->getRepository(Tag::class)->findOneBy(['cod' => $categoryCod, 'display' => true]);
+                $tags[] = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => $categoryCod, 'display' => true]);
             }
         }
 
@@ -270,27 +314,17 @@ class ModulesController extends Controller implements WebTVControllerInterface
      * - showPudenew = true => Only videos with PUDENEW tag and announce property true
      * - showPudenew = false => Returns all videos.
      *
-     * @Template("PumukitWebTVBundle:Modules:widget_media.html.twig")
-     *
-     * @param string $design
-     *
-     * @return array
+     * @Template("@PumukitWebTV/Modules/widget_media.html.twig")
      */
-    public function legacyRecentlyAdded($design = 'vertical')
+    public function legacyRecentlyAdded(string $design = 'vertical')
     {
-        $translator = $this->get('translator');
-        $title = $translator->trans('Recently added');
-
-        $limit = $this->container->getParameter('limit_objs_recentlyadded');
-
-        $showPudenew = $this->container->getParameter('show_latest_with_pudenew');
-        $last = $this->get('pumukitschema.announce')->getLast($limit, $showPudenew);
+        $last = $this->pumukitSchemaAnnounce->getLast($this->limitObjsRecentlyAdded, $this->showLatestWithPudeNew);
 
         return [
             'design' => $design,
             'objects' => $last,
-            'objectByCol' => $this->container->getParameter('recentlyadded.objects_by_col'),
-            'title' => $title,
+            'objectByCol' => $this->recentlyAddedObjectsByCol,
+            'title' => $this->translator->trans('Recently added'),
             'class' => 'recently',
             'show_info' => true,
             'show_more' => false,
@@ -301,9 +335,7 @@ class ModulesController extends Controller implements WebTVControllerInterface
     /**
      * This module represents old categories block of PuMuKIT. Remember fix responsive design ( depends of height of images ).
      *
-     * @Template("PumukitWebTVBundle:Modules:widget_block_categories.html.twig")
-     *
-     * @return array
+     * @Template("@PumukitWebTV/Modules/widget_block_categories.html.twig")
      */
     public function legacyCategoriesAction()
     {
@@ -313,11 +345,7 @@ class ModulesController extends Controller implements WebTVControllerInterface
     /**
      * This module represents old menu block of PuMuKIT ( vertical menu ). This design is just bootstrap panel example.
      *
-     * @Template("PumukitWebTVBundle:Modules:widget_menu.html.twig")
-     *
-     * @throws \Exception
-     *
-     * @return Response|null
+     * @Template("@PumukitWebTV/Modules/widget_menu.html.twig")
      */
     public function legacyMenuAction()
     {
@@ -331,22 +359,16 @@ class ModulesController extends Controller implements WebTVControllerInterface
     }
 
     /**
-     * @Template("PumukitWebTVBundle:Modules:widget_event.html.twig")
-     *
-     * @return array
+     * @Template("@PumukitWebTV/Modules/widget_event.html.twig")
      */
     public function liveBlockAction()
     {
-        $listService = $this->get('pumukit_web_tv.list_service');
-        $title = $this->get('translator')->trans('Live events');
-        $limit = $this->container->getParameter('limit_objs_live_block');
-
-        $objects = $listService->getLives($limit);
+        $objects = $this->listService->getLives($this->limitObjsLiveBlock);
 
         return [
             'objects' => $objects,
-            'objectByCol' => $this->container->getParameter('live_block.objects_by_col'),
-            'title' => $title,
+            'objectByCol' => $this->liveBlockObjectsByCol,
+            'title' => $this->translator->trans('Live events'),
             'class' => 'live_events',
             'show_info' => false,
             'show_more' => false,
@@ -355,23 +377,16 @@ class ModulesController extends Controller implements WebTVControllerInterface
     }
 
     /**
-     * @Template("PumukitWebTVBundle:Modules:widget_wall.html.twig")
-     *
-     * @throws \Exception
-     *
-     * @return array
+     * @Template("@PumukitWebTV/Modules/widget_wall.html.twig")
      */
     public function wallBlockAction()
     {
-        $listService = $this->get('pumukit_web_tv.list_service');
-        $title = $this->get('translator')->trans('Wall');
-
-        $objects = $listService->getWallVideos();
+        $objects = $this->listService->getWallVideos();
 
         return [
             'objects' => $objects,
             'objectByCol' => 1,
-            'title' => $title,
+            'title' => $this->translator->trans('Wall'),
             'class' => 'wall_block',
             'show_info' => false,
             'show_more' => false,
@@ -379,11 +394,7 @@ class ModulesController extends Controller implements WebTVControllerInterface
     }
 
     /**
-     * @Template("PumukitWebTVBundle:Modules:widget_search.html.twig")
-     *
-     * @throws \Exception
-     *
-     * @return array
+     * @Template("@PumukitWebTV/Modules/widget_search.html.twig")
      */
     public function searchBlockAction()
     {
@@ -391,28 +402,16 @@ class ModulesController extends Controller implements WebTVControllerInterface
     }
 
     /**
-     * @Template("PumukitWebTVBundle:Modules:widget_media.html.twig")
-     *
-     * @param string $tagCod
-     * @param string $title
-     *
-     * @throws \Exception
-     *
-     * @return array
+     * @Template("@PumukitWebTV/Modules/widget_media.html.twig")
      */
-    public function byTagBlockAction($tagCod, $title)
+    public function byTagBlockAction(string $tagCod, string $title)
     {
-        $translator = $this->get('translator');
-        $title = $translator->trans($title);
-
-        $listService = $this->get('pumukit_web_tv.list_service');
-        $limit = $this->container->getParameter('bytagblock.objects_by_col');
-        $objects = $listService->getVideosByTag($tagCod, $limit);
+        $objects = $this->listService->getVideosByTag($tagCod, $this->byTagBlockObjectsByCol);
 
         return [
             'objects' => $objects,
-            'objectByCol' => $limit,
-            'title' => $title,
+            'objectByCol' => $this->byTagBlockObjectsByCol,
+            'title' => $this->translator->trans($title),
             'class' => 'by-tag-block',
             'show_info' => true,
             'show_more' => false,
@@ -421,18 +420,11 @@ class ModulesController extends Controller implements WebTVControllerInterface
     }
 
     /**
-     * @Template("PumukitWebTVBundle:Modules:widget_player.html.twig")
-     *
-     * @param string $tagCod
-     *
-     * @throws \Exception
-     *
-     * @return array
+     * @Template("@PumukitWebTV/Modules/widget_player.html.twig")
      */
-    public function embedVideoBlockAction($tagCod)
+    public function embedVideoBlockAction(string $tagCod)
     {
-        $listService = $this->get('pumukit_web_tv.list_service');
-        $object = $listService->getEmbedVideoBlock($tagCod);
+        $object = $this->listService->getEmbedVideoBlock($tagCod);
 
         return [
             'object' => $object,
@@ -440,32 +432,20 @@ class ModulesController extends Controller implements WebTVControllerInterface
         ];
     }
 
-    /**
-     * @throws \Exception
-     *
-     * @return array
-     */
     private function getLegacyMenuElements()
     {
-        $menuService = $this->get('pumukit_web_tv.menu_service');
-        [$events, $channels, $liveEventTypeSession] = $menuService->getMenuEventsElement();
-        $selected = $this->get('request_stack')->getMasterRequest()->get('_route');
-        $homeTitle = $this->container->getParameter('menu.home_title');
-        $announcesTitle = $this->container->getParameter('menu.announces_title');
-        $searchTitle = $this->container->getParameter('menu.search_title');
-        $catalogueTitle = $this->container->getParameter('menu.mediateca_title');
-        $categoriesTitle = $this->container->getParameter('menu.categories_title');
+        [$events, $channels, $liveEventTypeSession] = $this->menuService->getMenuEventsElement();
 
         return [
             'events' => $events,
             'channels' => $channels,
             'type' => $liveEventTypeSession,
-            'menu_selected' => $selected,
-            'home_title' => $homeTitle,
-            'announces_title' => $announcesTitle,
-            'search_title' => $searchTitle,
-            'catalogue_title' => $catalogueTitle,
-            'categories_title' => $categoriesTitle,
+            'menu_selected' => $this->requestStack->getMasterRequest()->get('_route'),
+            'home_title' => $this->menuHomeTitle,
+            'announces_title' => $this->menuAnnouncesTitle,
+            'search_title' => $this->menuSearchTitle,
+            'catalogue_title' => $this->menuMediatecaTitle,
+            'categories_title' => $this->menuCategoriesTitle,
         ];
     }
 }

@@ -1,6 +1,6 @@
 <div class="form-group" id="pumukitwizard_series_new_i18n_title">
   <label for="pumukitwizard_series_i18n_title" class="control-label">{% trans %}Series title{% endtrans %}</label>
-  {% for locale in locales if series_i18n_title[locale] is defined %}
+  {% for locale in locales | filter(locale => series_i18n_title[locale] is defined) %}
   <div class="input-group">
     <input type="text" id="pumukitwizard_series_i18n_title_{{ locale }}" name="series_i18n_title[{{ locale }}]" class="form-control pumukitwizard_series_i18n_title locale-{{ locale }}" value="{{ series_i18n_title[locale] }}" disabled="disabled">
     <span class="input-group-addon">{{ locale }}</span>

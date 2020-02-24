@@ -2,70 +2,67 @@
 
 namespace Pumukit\WizardBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\WizardBundle\Event\FormEvent;
 use Pumukit\WizardBundle\Event\WizardEvents;
 use Pumukit\WizardBundle\Services\FormEventDispatcherService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * @internal
  * @coversNothing
  */
-class FormEventDispatcherServiceTest extends WebTestCase
+class FormEventDispatcherServiceTest extends PumukitTestCase
 {
     const EMPTY_TITLE = 'EMTPY TITLE';
 
     private $formDispatcher;
-    private $dm;
     private $dispatcher;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb.odm.document_manager')
-        ;
+        parent::setUp();
         $this->dispatcher = new EventDispatcher();
         MockUpFormListener::$called = false;
         MockUpFormListener::$title = self::EMPTY_TITLE;
         $this->formDispatcher = new FormEventDispatcherService($this->dispatcher);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dispatcher = null;
         $this->formDispatcher = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testDispatchSubmit()
     {
         $this->dispatcher->addListener(WizardEvents::FORM_SUBMIT, function ($event, $title) {
-            $this->assertTrue($event instanceof FormEvent);
-            $this->assertEquals(WizardEvents::FORM_SUBMIT, $title);
+            static::assertInstanceOf(FormEvent::class, $event);
+            static::assertEquals(WizardEvents::FORM_SUBMIT, $title);
             $form = $event->getForm();
             MockUpFormListener::$called = true;
             MockUpFormListener::$title = $form['title'];
             $user = $event->getUser();
-            $this->assertTrue($user instanceof User);
+            static::assertInstanceOf(User::class, $user);
             $multimediaObject = $event->getMultimediaObject();
-            $this->assertTrue($multimediaObject instanceof MultimediaObject);
+            static::assertInstanceOf(MultimediaObject::class, $multimediaObject);
         });
-        $this->assertFalse(MockUpFormListener::$called);
-        $this->assertEquals(self::EMPTY_TITLE, MockUpFormListener::$title);
+        static::assertFalse(MockUpFormListener::$called);
+        static::assertEquals(self::EMPTY_TITLE, MockUpFormListener::$title);
         $title = 'test title';
         $multimediaObject = new MultimediaObject();
         $multimediaObject->setTitle($title);
         $form = ['title' => $title];
         $user = new User();
         $this->formDispatcher->dispatchSubmit($user, $multimediaObject, $form);
-        $this->assertTrue(MockUpFormListener::$called);
-        $this->assertEquals($title, MockUpFormListener::$title);
+        static::assertTrue(MockUpFormListener::$called);
+        static::assertEquals($title, MockUpFormListener::$title);
     }
 }
 

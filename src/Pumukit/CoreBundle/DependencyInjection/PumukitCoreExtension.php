@@ -13,9 +13,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class PumukitCoreExtension extends Extension
 {
     /**
-     * @param array            $configs
-     * @param ContainerBuilder $container
-     *
      * @throws \Exception
      */
     public function load(array $configs, ContainerBuilder $container)
@@ -25,10 +22,16 @@ class PumukitCoreExtension extends Extension
 
         $container->setParameter('pumukit.info', $config['info']);
         $container->setParameter('pumukit.locales', $config['locales']);
+        $container->setParameter('pumukit.public_dir', $config['public_dir']);
+        $container->setParameter('pumukit.storage_dir', $config['storage_dir']);
         $container->setParameter('pumukit.uploads_dir', $config['uploads_dir']);
         $container->setParameter('pumukit.uploads_url', $config['uploads_url']);
+        $container->setParameter('pumukit.uploads_material_dir', $config['uploads_material_dir']);
+        $container->setParameter('pumukit.uploads_pic_dir', $config['uploads_pic_dir']);
         $container->setParameter('pumukit.inbox', $config['inbox']);
         $container->setParameter('pumukit.tmp', $config['tmp']);
+        $container->setParameter('pumukit.downloads', $config['downloads']);
+        $container->setParameter('pumukit.masters', $config['masters']);
         $container->setParameter('pumukit.delete_on_disk', $config['delete_on_disk']);
         $container->setParameter('pumukit.use_series_channels', $config['use_series_channels']);
         $container->setParameter('pumukit.full_magic_url', $config['full_magic_url']);

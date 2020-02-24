@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,14 +18,20 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BasePlayerController extends BasePlayerControllero implements PersonalControllerInterface
 {
+    private $pumukitPlayerWhenDispatchViewEvent;
+
+    public function __construct(EventDispatcherInterface $eventDispatcher, string $pumukitPlayerWhenDispatchViewEvent)
+    {
+        parent::__construct($eventDispatcher);
+        $this->pumukitPlayerWhenDispatchViewEvent = $pumukitPlayerWhenDispatchViewEvent;
+    }
+
     /**
      * @Route("/videoplayer/{id}", name="pumukit_videoplayer_index", defaults={"no_channels": true} )
-     * @Template("PumukitJWPlayerBundle:JWPlayer:player.html.twig")
+     * @Template("@PumukitJWPlayer/JWPlayer/player.html.twig")
      */
-    public function indexAction(MultimediaObject $multimediaObject, Request $request)
+    public function indexAction(Request $request, EmbeddedBroadcastService $embeddedBroadcastService, MultimediaObjectService $multimediaObjectService, IntroService $basePlayerIntroService, MultimediaObject $multimediaObject)
     {
-        /** @var EmbeddedBroadcastService */
-        $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
         $password = $request->get('broadcast_password');
         /** @var User|null $user */
         $user = $this->getUser();
@@ -38,7 +45,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
             return $track;
         }
 
-        $playerParameters = $this->getPlayerParameters($request, $multimediaObject);
+        $playerParameters = $this->getPlayerParameters($request, $basePlayerIntroService, $multimediaObject);
 
         return [
             'autostart' => $playerParameters['autoStart'],
@@ -52,21 +59,19 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
 
     /**
      * @Route("/videoplayer/magic/{secret}", name="pumukit_videoplayer_magicindex", defaults={"show_hide": true, "no_channels": true} )
-     * @Template("PumukitJWPlayerBundle:JWPlayer:player.html.twig")
+     * @Template("@PumukitJWPlayer/JWPlayer/player.html.twig")
      */
-    public function magicAction(MultimediaObject $multimediaObject, Request $request)
+    public function magicAction(Request $request, EmbeddedBroadcastService $embeddedBroadcastService, MultimediaObjectService $multimediaObjectService, IntroService $basePlayerIntroService, MultimediaObject $multimediaObject)
     {
-        /** @var MultimediaObjectService */
-        $mmobjService = $this->get('pumukitschema.multimedia_object');
-        if ($mmobjService->isPublished($multimediaObject, 'PUCHWEBTV')) {
-            if ($mmobjService->hasPlayableResource($multimediaObject) && $multimediaObject->isPublicEmbeddedBroadcast()) {
+        if ($multimediaObjectService->isPublished($multimediaObject, 'PUCHWEBTV')) {
+            if ($multimediaObjectService->hasPlayableResource($multimediaObject) && $multimediaObject->isPublicEmbeddedBroadcast()) {
                 return $this->redirect($this->generateUrl('pumukit_videoplayer_index', ['id' => $multimediaObject->getId()]));
             }
-        } elseif ((!in_array($multimediaObject->getStatus(), [MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDDEN], true)) || !$multimediaObject->containsTagWithCod('PUCHWEBTV')) {
-            return $this->render('PumukitWebTVBundle:Index:404notfound.html.twig');
+        } elseif (!$multimediaObject->containsTagWithCod('PUCHWEBTV') || (!in_array($multimediaObject->getStatus(), [MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDDEN], true))) {
+            return $this->render('@PumukitWebTV/Index/404notfound.html.twig');
         }
 
-        if ($response = $this->validateAccess($request, $multimediaObject)) {
+        if ($response = $this->validateAccess($request, $embeddedBroadcastService, $multimediaObject)) {
             return $response;
         }
 
@@ -75,7 +80,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
             return $track;
         }
 
-        $playerParameters = $this->getPlayerParameters($request, $multimediaObject);
+        $playerParameters = $this->getPlayerParameters($request, $basePlayerIntroService, $multimediaObject);
 
         return [
             'autostart' => $playerParameters['autoStart'],
@@ -87,10 +92,8 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
         ];
     }
 
-    private function validateAccess(Request $request, MultimediaObject $multimediaObject)
+    private function validateAccess(Request $request, EmbeddedBroadcastService $embeddedBroadcastService, MultimediaObject $multimediaObject)
     {
-        /** @var EmbeddedBroadcastService */
-        $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
         $password = $request->get('broadcast_password');
         /** @var User|null $user */
         $user = $this->getUser();
@@ -115,15 +118,12 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
         return $track;
     }
 
-    private function getPlayerParameters(Request $request, MultimediaObject $multimediaObject): array
+    private function getPlayerParameters(Request $request, IntroService $basePlayerIntroService, MultimediaObject $multimediaObject): array
     {
-        /** @var IntroService */
-        $basePlayerIntroService = $this->get('pumukit_baseplayer.intro');
-
         return [
             'autoStart' => $request->query->get('autostart', 'false'),
             'intro' => $basePlayerIntroService->getVideoIntroduction($multimediaObject, $request->query->getBoolean('intro')),
-            'whenDispatchViewEvent' => $this->container->getParameter('pumukitplayer.when_dispatch_view_event'),
+            'whenDispatchViewEvent' => $this->pumukitPlayerWhenDispatchViewEvent,
         ];
     }
 }

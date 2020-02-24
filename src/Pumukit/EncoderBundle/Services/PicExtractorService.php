@@ -34,16 +34,7 @@ class PicExtractorService
         $this->command = $command ?: 'avprobe -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"';
     }
 
-    /**
-     * Extract pics on batch.
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Track            $track
-     * @param array            $marks
-     *
-     * @return bool|string
-     */
-    public function extractPicOnBatch(MultimediaObject $multimediaObject, Track $track, array $marks = null)
+    public function extractPicOnBatch(MultimediaObject $multimediaObject, Track $track, array $marks = null): bool
     {
         if ($multimediaObject->getProperty('imagesonbatch')) {
             return false;
@@ -57,18 +48,11 @@ class PicExtractorService
         foreach ($marks as $mark) {
             $this->extractPic($multimediaObject, $track, $mark);
         }
+
+        return true;
     }
 
-    /**
-     * Extract Pic.
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Track            $track
-     * @param int|null         $numframe
-     *
-     * @return string $message
-     */
-    public function extractPic(MultimediaObject $multimediaObject, Track $track, $numframe = null)
+    public function extractPic(MultimediaObject $multimediaObject, Track $track, $numframe = null): string
     {
         if (!file_exists($track->getPath())) {
             return 'Error in data autocomplete of multimedia object.';
@@ -89,17 +73,7 @@ class PicExtractorService
         return 'Captured the FRAME '.$num.' as image.';
     }
 
-    /**
-     * Utilizando la libreria ffmpeg_php se genera un Pic que se asocia con el objeto
-     * multimedia al que pertenece el archivo.
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Track            $track
-     * @param int              $frame            numero del frame donde se realiza la captura
-     *
-     * @return bool|null
-     */
-    private function createPic(MultimediaObject $multimediaObject, Track $track, $frame = 25)
+    private function createPic(MultimediaObject $multimediaObject, Track $track, int $frame = 25): bool
     {
         $absCurrentDir = $this->mmsPicService->getTargetPath($multimediaObject);
 
@@ -156,8 +130,6 @@ class PicExtractorService
      * Get aspect
      * Return aspect ratio. Check is not zero.
      *
-     * @param Track $track
-     *
      * @return float|int aspect ratio
      */
     private function getAspect(Track $track)
@@ -193,8 +165,7 @@ class PicExtractorService
      * Private method needed because MmsPicService::addPicUrl doesn't return
      * the Pic instance (#9065).
      *
-     * @param MultimediaObject $multimediaObject
-     * @param string           $picUrl
+     * @param string $picUrl
      *
      * @return Pic|null
      */

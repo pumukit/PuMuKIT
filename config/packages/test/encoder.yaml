@@ -1,0 +1,49 @@
+pumukit_encoder:
+  cpus:
+    local:
+      host: 127.0.0.1
+  profiles:
+    master_copy:
+      display: false
+      wizard: true
+      master: true
+      resolution_hor: 0
+      resolution_ver: 0
+      framerate: 0
+      channels: 1
+      audio: false
+      bat: 'cp "{{input}}" "{{output}}"'
+      streamserver:
+        name: Localmaster
+        type: store
+        host: 127.0.0.1
+        description: Local master server
+        dir_out: '%kernel.root_dir%/../src/Pumukit/EncoderBundle/Tests/Resources/dir_out'
+      app: cp
+      rel_duration_size: 1
+      rel_duration_trans: 1
+    master_video_h264:
+      display: false
+      wizard: true
+      master: true
+      format: mp4
+      codec: h264
+      mime_type: 'video/x-mp4'
+      extension: mp4
+      resolution_hor: 0
+      resolution_ver: 0
+      bitrate: 1 Mbps
+      framerate: 25
+      channels: 1
+      audio: false
+      bat: |
+        ffmpeg -y -i "{{input}}" -acodec aac -vcodec libx264 -threads 0 "{{output}}"
+      streamserver:
+        name: Localmaster
+        type: store
+        host: 127.0.0.1
+        description: Local master server
+        dir_out: '%kernel.root_dir%/../src/Pumukit/EncoderBundle/Tests/Resources/dir_out'
+      app: ffmpeg
+      rel_duration_size: 1
+      rel_duration_trans: 1

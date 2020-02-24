@@ -15,7 +15,7 @@
     <div class="pumukitnewadmin-groups-boxes">
 	  <div class="tag list-group pmk-tag-tree pumukitnewadmin-groups-list-box" id="delete_broadcast_groups">
         {% if embeddedBroadcast %}
-        {% include 'PumukitNewAdminBundle:MultimediaObject:availablegroups.html.twig' with {'resource': embeddedBroadcast, 'groups': groups, 'resource_name': 'broadcast', 'can_modify_groups': true} %}
+        {% include '@PumukitNewAdmin/MultimediaObject/availablegroups.html.twig' with {'resource': embeddedBroadcast, 'groups': groups, 'resource_name': 'broadcast', 'can_modify_groups': true} %}
         {% endif %}
 	  </div>
 	  <div class="pumukitnewadmin-groups-arrows">
@@ -26,7 +26,7 @@
 	  <div class="tag pumukitnewadmin-groups-list-box" id="added_broadcast_groups">
 	    <div class="tag_tree list-group" id="add_broadcast_groups" >
           {% if embeddedBroadcast %}
-          {% include 'PumukitNewAdminBundle:MultimediaObject:selectedgroups.html.twig' with {'resource': embeddedBroadcast, 'groups': groups, 'resource_name': 'broadcast', 'can_modify_groups': true} %}
+          {% include '@PumukitNewAdmin/MultimediaObject/selectedgroups.html.twig' with {'resource': embeddedBroadcast, 'groups': groups, 'resource_name': 'broadcast', 'can_modify_groups': true} %}
           {% endif %}
 	    </div>
       </div>

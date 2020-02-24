@@ -5,25 +5,27 @@ namespace Pumukit\CoreBundle\Command;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 
-/**
- * Class DeleteOrphanFilesCommand.
- */
-class DeleteOrphanFilesCommand extends ContainerAwareCommand
+class DeleteOrphanFilesCommand extends Command
 {
-    private $dm;
+    private $documentManager;
     private $output;
     private $input;
     private $path;
     private $delete;
-    private $logger;
 
-    protected function configure()
+    public function __construct(DocumentManager $documentManager)
+    {
+        $this->documentManager = $documentManager;
+        parent::__construct();
+    }
+
+    protected function configure(): void
     {
         $this
             ->setName('pumukit:files:delete:orphan')
@@ -46,23 +48,17 @@ class DeleteOrphanFilesCommand extends ContainerAwareCommand
                 Example to use:
 
                 1. List orphan files
-                    php app/console pumukit:files:delete:orphan --path="{pathToPuMuKIT}/web/uploads/material"
+                    php app/console pumukit:files:delete:orphan --path="{pathToPuMuKITUploadsMaterialDir}"
                 2. Delete orphan files
-                    php app/console pumukit:files:delete:orphan --path="{pathToPuMuKIT}/web/uploads/material" --delete
+                    php app/console pumukit:files:delete:orphan --path="{pathToPuMuKITUploadsMaterialDir}" --delete
 
 EOT
             )
         ;
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        $this->dm = $this->getContainer()->get('doctrine_mongodb.odm.document_manager');
-        $this->logger = $this->getContainer()->get('logger');
         $this->output = $output;
         $this->input = $input;
 
@@ -70,29 +66,18 @@ EOT
         $this->delete = $this->input->getOption('delete');
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @throws \Exception
-     *
-     * @return int|void|null
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if (!file_exists($this->path)) {
             throw new \Exception('Path doesnt exists');
         }
 
-        $this->findFilesOfPath($output, $this->dm, $this->path);
+        $this->findFilesOfPath($output, $this->path);
+
+        return 0;
     }
 
-    /**
-     * @param OutputInterface $output
-     * @param DocumentManager $documentManager
-     * @param string          $path
-     */
-    private function findFilesOfPath(OutputInterface $output, DocumentManager $documentManager, $path)
+    private function findFilesOfPath(OutputInterface $output, string $path)
     {
         $finder = new Finder();
         $files = $finder->files()->in($path);
@@ -102,7 +87,7 @@ EOT
             $filePath = $file->getRelativePathName();
             $absoluteFilePath = $file->getPathName();
 
-            $existsInMongoDB = $this->findInMongoDB($documentManager, $filePath);
+            $existsInMongoDB = $this->findInMongoDB($filePath);
             if (!$existsInMongoDB) {
                 $output->writeln('No document found in MongoDB: <info>'.$this->path.'/'.$filePath.'</info>');
 
@@ -116,57 +101,46 @@ EOT
         }
     }
 
-    /**
-     * @param DocumentManager $documentManager
-     * @param string          $filePath
-     *
-     * @return bool
-     */
-    private function findInMongoDB(DocumentManager $documentManager, $filePath)
+    private function findInMongoDB(string $filePath): bool
     {
-        $mmobjPic = $documentManager->getRepository(MultimediaObject::class)->findOneBy([
+        $mmobjPic = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy([
             'pics.path' => [
                 '$regex' => $filePath,
                 '$options' => 'i',
             ],
         ]);
-        $mmobjMaterial = $documentManager->getRepository(MultimediaObject::class)->findOneBy([
+        $mmobjMaterial = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy([
             'materials.path' => [
                 '$regex' => $filePath,
                 '$options' => 'i',
             ],
         ]);
 
-        $mmobjTracks = $documentManager->getRepository(MultimediaObject::class)->findOneBy([
+        $mmobjTracks = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy([
             'tracks.path' => [
                 '$regex' => $filePath,
                 '$options' => 'i',
             ],
         ]);
 
-        $seriesPic = $documentManager->getRepository(Series::class)->findOneBy([
+        $seriesPic = $this->documentManager->getRepository(Series::class)->findOneBy([
             'pic.path' => [
                 '$regex' => $filePath,
                 '$options' => 'i',
             ],
         ]);
-        $seriesMaterial = $documentManager->getRepository(Series::class)->findOneBy([
+        $seriesMaterial = $this->documentManager->getRepository(Series::class)->findOneBy([
             'materials.path' => [
                 '$regex' => $filePath,
                 '$options' => 'i',
             ],
         ]);
 
-        if (!$mmobjPic && !$mmobjMaterial && !$mmobjTracks && !$seriesPic && !$seriesMaterial) {
-            return false;
-        }
-
-        return true;
+        return !(!$mmobjPic && !$mmobjMaterial && !$mmobjTracks && !$seriesPic && !$seriesMaterial);
     }
 
     /**
-     * @param OutputInterface $output
-     * @param string          $directoryPath
+     * @param string $directoryPath
      */
     private function isEmptyDirectory(OutputInterface $output, $directoryPath)
     {

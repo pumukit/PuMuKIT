@@ -1,4 +1,4 @@
-{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+{% extends '@PumukitWebTV/layout.html.twig' %}
 
 {% block stylesheets %}
     <style>
@@ -10,11 +10,11 @@
 {% endblock %}
 
 {% block javascripts %}
-  {% include('PumukitBaseLivePlayerBundle:Default:js.html.twig') %}
+  {% include('@PumukitBaseLivePlayer/Default/js.html.twig') %}
 {% endblock%}
 
 {% block title %}{{ parent() }} - {{ live.name }}{% endblock %}
 
 {% block body_base %}
-    {% include('PumukitWebTVBundle:Live:Basic/liveplayer.html.twig') with {stretching: 'exactfit', aspectratio: '16:9'} %}
+    {% include('@PumukitWebTV/Live/Basic/liveplayer.html.twig') with {stretching: 'exactfit', aspectratio: '16:9'} %}
 {% endblock %}

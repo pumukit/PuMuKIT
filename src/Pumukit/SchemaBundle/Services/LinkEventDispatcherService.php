@@ -10,66 +10,38 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class LinkEventDispatcherService
 {
-    /**
-     * @var EventDispatcherInterface
-     */
+    /** @var EventDispatcherInterface */
     private $dispatcher;
 
-    /**
-     * Constructor.
-     *
-     * @param EventDispatcherInterface $dispatcher
-     */
     public function __construct(EventDispatcherInterface $dispatcher)
     {
         $this->dispatcher = $dispatcher;
     }
 
     /**
-     * Dispatch create.
-     *
-     * Dispatchs the event LINK_CREATE
-     * 'link.create' passing
-     * the multimedia object and the link
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Link             $link
+     * Dispatch the event LINK_CREATE 'link.create' passing the multimedia object and the link.
      */
-    public function dispatchCreate(MultimediaObject $multimediaObject, Link $link)
+    public function dispatchCreate(MultimediaObject $multimediaObject, Link $link): void
     {
         $event = new LinkEvent($multimediaObject, $link);
-        $this->dispatcher->dispatch(SchemaEvents::LINK_CREATE, $event);
+        $this->dispatcher->dispatch($event, SchemaEvents::LINK_CREATE);
     }
 
     /**
-     * Dispatch update.
-     *
-     * Dispatchs the event LINK_UPDATE
-     * 'link.update' passing
-     * the multimedia object and the link
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Link             $link
+     * Dispatch the event LINK_UPDATE 'link.update' passing the multimedia object and the link.
      */
-    public function dispatchUpdate(MultimediaObject $multimediaObject, Link $link)
+    public function dispatchUpdate(MultimediaObject $multimediaObject, Link $link): void
     {
         $event = new LinkEvent($multimediaObject, $link);
-        $this->dispatcher->dispatch(SchemaEvents::LINK_UPDATE, $event);
+        $this->dispatcher->dispatch($event, SchemaEvents::LINK_UPDATE);
     }
 
     /**
-     * Dispatch delete.
-     *
-     * Dispatchs the event LINK_DELETE
-     * 'link.delete' passing
-     * the multimedia object and the link
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Link             $link
+     * Dispatch the event LINK_DELETE 'link.delete' passing the multimedia object and the link.
      */
-    public function dispatchDelete(MultimediaObject $multimediaObject, Link $link)
+    public function dispatchDelete(MultimediaObject $multimediaObject, Link $link): void
     {
         $event = new LinkEvent($multimediaObject, $link);
-        $this->dispatcher->dispatch(SchemaEvents::LINK_DELETE, $event);
+        $this->dispatcher->dispatch($event, SchemaEvents::LINK_DELETE);
     }
 }

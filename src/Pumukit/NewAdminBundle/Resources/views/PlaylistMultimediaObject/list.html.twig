@@ -46,22 +46,22 @@
                     </td>
                 {% endif %}
                 <td>
-                    {% include 'PumukitNewAdminBundle:PlaylistMultimediaObject:updatemenu.html.twig' with {'mm': mm, 'mm_pos':mm_pos} %}
+                    {% include '@PumukitNewAdmin/PlaylistMultimediaObject/updatemenu.html.twig' with {'mm': mm, 'mm_pos':mm_pos} %}
                 </td>
                 <td>
                     {% if mms.getCurrentPage() != 1 or not loop.first %}
-                        {% spaceless %}
+                        {% apply spaceless %}
                             <a href="{{ path('pumukitnewadmin_playlistmms_up', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move one position up{% endtrans %}">&#8593;</a>
                             <a href="{{ path('pumukitnewadmin_playlistmms_top', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move to the beginning of the list{% endtrans %}"><i class="mdi-editor-vertical-align-top"></i></a>
-                        {% endspaceless %}
+                        {% endapply %}
                     {% endif %}
                 </td>
                 <td>
                     {% if (mms.getCurrentPage() != mms.getNbPages()) or (loop.index + ((mms.getCurrentPage() - 1 ) * mms.getMaxPerPage()) != mms.getNbResults()) %}
-                        {% spaceless %}
+                        {% apply spaceless %}
                             <a href="{{ path('pumukitnewadmin_playlistmms_down', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move one position down{% endtrans %}">&#8595;</a>
                             <a href="{{ path('pumukitnewadmin_playlistmms_bottom', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move to the end of the list{% endtrans %}"><i class="mdi-editor-vertical-align-bottom"></i></a>
-                        {% endspaceless %}
+                        {% endapply %}
                     {% endif %}
                 </td>
                 <td>

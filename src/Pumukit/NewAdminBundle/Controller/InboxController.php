@@ -4,7 +4,7 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,8 +13,17 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Security("is_granted('ROLE_ACCESS_INBOX')")
  */
-class InboxController extends Controller implements NewAdminControllerInterface
+class InboxController extends AbstractController implements NewAdminControllerInterface
 {
+    private $pumukitInbox;
+    private $pumukitInboxDepth;
+
+    public function __construct($pumukitInbox, $pumukitInboxDepth)
+    {
+        $this->pumukitInbox = $pumukitInbox;
+        $this->pumukitInboxDepth = $pumukitInboxDepth;
+    }
+
     /**
      * @Route("/inbox", defaults={"_format"="json"})
      */
@@ -27,7 +36,7 @@ class InboxController extends Controller implements NewAdminControllerInterface
 
         $res = [];
 
-        if ('file' == $type) {
+        if ('file' === $type) {
             $finder->depth('< 1')->followLinks()->in($dir);
             $finder->sortByName();
             foreach ($finder as $f) {
@@ -43,7 +52,7 @@ class InboxController extends Controller implements NewAdminControllerInterface
             foreach ($finder as $f) {
                 if (0 !== (count(glob("{$f}/*")))) {
                     $contentFinder = new Finder();
-                    if (!$this->getParameter('pumukit.inbox_depth')) {
+                    if (!$this->pumukitInboxDepth) {
                         $contentFinder->depth('== 0');
                     }
                     $contentFinder->files()->in($f->getRealpath());
@@ -60,17 +69,15 @@ class InboxController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Inbox:form.html.twig")
-     *
-     * @param mixed $onlyDir
+     * @Template("@PumukitNewAdmin/Inbox/form.html.twig")
      */
-    public function formAction($onlyDir = false)
+    public function formAction(bool $onlyDir = false)
     {
-        if (!$this->container->hasParameter('pumukit.inbox')) {
+        if (!$this->pumukitInbox) {
             return $this->render('@PumukitNewAdmin/Inbox/form_noconf.html.twig');
         }
 
-        $dir = realpath($this->container->getParameter('pumukit.inbox'));
+        $dir = realpath($this->pumukitInbox);
 
         if (!file_exists($dir)) {
             return $this->render('@PumukitNewAdmin/Inbox/form_nofile.html.twig', ['dir' => $dir]);

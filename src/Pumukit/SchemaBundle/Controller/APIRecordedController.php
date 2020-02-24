@@ -2,7 +2,9 @@
 
 namespace Pumukit\SchemaBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Pumukit\CoreBundle\Services\SerializerService;
+use Pumukit\SchemaBundle\Services\StatsService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,17 +12,14 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/api/media")
  */
-class APIRecordedController extends Controller
+class APIRecordedController extends AbstractController
 {
     /**
      * @Route("/mmobj/num_recorded.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
      * @Route("/mmobj/recorded.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
      */
-    public function mmobjRecordedAction(Request $request)
+    public function mmobjRecordedAction(Request $request, StatsService $recordsService, SerializerService $serializer)
     {
-        $serializer = $this->get('jms_serializer');
-        $recordsService = $this->get('pumukitschema.stats');
-
         [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
 
         $groupBy = $request->get('group_by') ?: 'month';
@@ -38,7 +37,7 @@ class APIRecordedController extends Controller
             'views' => $views,
         ];
 
-        $data = $serializer->serialize($views, $request->getRequestFormat());
+        $data = $serializer->dataSerialize($views, $request->getRequestFormat());
 
         return new Response($data);
     }
@@ -48,11 +47,8 @@ class APIRecordedController extends Controller
      * @Route("/series/recorded.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
      * @Route("/series/published.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
      */
-    public function seriesRecordedAction(Request $request)
+    public function seriesRecordedAction(Request $request, StatsService $recordsService, SerializerService $serializer)
     {
-        $serializer = $this->get('jms_serializer');
-        $recordsService = $this->get('pumukitschema.stats');
-
         [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
 
         $groupBy = $request->get('group_by') ?: 'month';
@@ -70,7 +66,7 @@ class APIRecordedController extends Controller
             'views' => $views,
         ];
 
-        $data = $serializer->serialize($views, $request->getRequestFormat());
+        $data = $serializer->dataSerialize($views, $request->getRequestFormat());
 
         return new Response($data);
     }
@@ -79,11 +75,8 @@ class APIRecordedController extends Controller
      * @Route("/hours/num_recorded.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
      * @Route("/hours/recorded.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
      */
-    public function hoursRecordedAction(Request $request)
+    public function hoursRecordedAction(Request $request, StatsService $recordsService, SerializerService $serializer)
     {
-        $serializer = $this->get('jms_serializer');
-        $recordsService = $this->get('pumukitschema.stats');
-
         [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
 
         $groupBy = $request->get('group_by') ?: 'month';
@@ -101,7 +94,7 @@ class APIRecordedController extends Controller
             'views' => $views,
         ];
 
-        $data = $serializer->serialize($views, $request->getRequestFormat());
+        $data = $serializer->dataSerialize($views, $request->getRequestFormat());
 
         return new Response($data);
     }
@@ -111,11 +104,8 @@ class APIRecordedController extends Controller
      *
      * TODO: add criteria??? (see processRequestData)
      */
-    public function globalStatsAction(Request $request)
+    public function globalStatsAction(Request $request, StatsService $recordsService, SerializerService $serializer)
     {
-        $serializer = $this->get('jms_serializer');
-        $recordsService = $this->get('pumukitschema.stats');
-
         $groupBy = $request->get('group_by') ?: 'month';
 
         $stats = $recordsService->getGlobalStats($groupBy);
@@ -125,7 +115,7 @@ class APIRecordedController extends Controller
             'stats' => $stats,
         ];
 
-        $data = $serializer->serialize($stats, $request->getRequestFormat());
+        $data = $serializer->dataSerialize($stats, $request->getRequestFormat());
 
         return new Response($data);
     }

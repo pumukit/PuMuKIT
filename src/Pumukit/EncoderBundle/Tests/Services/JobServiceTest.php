@@ -2,22 +2,22 @@
 
 namespace Pumukit\EncoderBundle\Tests\Services;
 
+use Psr\Log\LoggerInterface;
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\CpuService;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @internal
  * @coversNothing
  */
-class JobServiceTest extends WebTestCase
+class JobServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
     private $jobService;
     private $resourcesDir;
@@ -28,34 +28,29 @@ class JobServiceTest extends WebTestCase
     private $tokenStorage;
     private $propService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        parent::setUp();
         $this->repo = $this->dm->getRepository(Job::class);
         $this->repoMmobj = $this->dm->getRepository(MultimediaObject::class);
-        $this->logger = static::$kernel->getContainer()->get('logger');
+        $this->logger = $this->getMockBuilder(LoggerInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
         $this->trackService = static::$kernel->getContainer()->get('pumukitschema.track');
         $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
         $this->factory = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->propService = static::$kernel->getContainer()->get('pumukitencoder.mmpropertyjob');
-
-        $this->dm->getDocumentCollection(Job::class)->remove([]);
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
-        $this->dm->flush();
+        $inspectionService = static::$kernel->getContainer()->get('pumukit.inspection');
 
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
         $cpuService = new CpuService($this->getDemoCpus(), $this->dm);
         $dispatcher = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')
             ->getMock()
         ;
-        $inspectionService = $this->getMockBuilder('Pumukit\InspectionBundle\Services\InspectionServiceInterface')
-            ->getMock()
-        ;
-        $inspectionService->expects($this->any())->method('getDuration')->will($this->returnValue(5));
+
         $this->resourcesDir = realpath(__DIR__.'/../Resources').'/';
         $this->jobService = new JobService(
             $this->dm,
@@ -72,10 +67,12 @@ class JobServiceTest extends WebTestCase
         );
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
+
         $this->dm->close();
-        $this->dm = null;
+
         $this->repo = null;
         $this->repoMmobj = null;
         $this->logger = null;
@@ -85,7 +82,6 @@ class JobServiceTest extends WebTestCase
         $this->resourcesDir = null;
         $this->jobService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testCreateTrackFromLocalHardDrive()
@@ -93,8 +89,8 @@ class JobServiceTest extends WebTestCase
         $series = $this->factory->createSeries();
         $multimediaObject = $this->factory->createMultimediaObject($series);
 
-        $this->assertEquals(0, count($multimediaObject->getTracks()));
-        $this->assertEquals(0, count($this->repo->findAll()));
+        static::assertCount(0, $multimediaObject->getTracks());
+        static::assertCount(0, $this->repo->findAll());
 
         $originalFile = $this->resourcesDir.'CAMERA.mp4';
 
@@ -112,8 +108,8 @@ class JobServiceTest extends WebTestCase
 
             $multimediaObject = $this->jobService->createTrackFromLocalHardDrive($multimediaObject, $file, $profile, $priority, $language, $description);
 
-            $this->assertEquals(0, count($multimediaObject->getTracks()));
-            $this->assertEquals(1, count($this->repo->findAll()));
+            static::assertCount(0, $multimediaObject->getTracks());
+            static::assertCount(1, $this->repo->findAll());
         }
 
         $this->deleteCreatedFiles();
@@ -124,8 +120,8 @@ class JobServiceTest extends WebTestCase
         $series = $this->factory->createSeries();
         $multimediaObject = $this->factory->createMultimediaObject($series);
 
-        $this->assertEquals(0, count($multimediaObject->getTracks()));
-        $this->assertEquals(0, count($this->repo->findAll()));
+        static::assertCount(0, $multimediaObject->getTracks());
+        static::assertCount(0, $this->repo->findAll());
 
         $originalFile = $this->resourcesDir.'CAMERA.mp4';
 
@@ -141,8 +137,8 @@ class JobServiceTest extends WebTestCase
 
             $multimediaObject = $this->jobService->createTrackFromInboxOnServer($multimediaObject, $filePath, $profile, $priority, $language, $description);
 
-            $this->assertEquals(0, count($multimediaObject->getTracks()));
-            $this->assertEquals(1, count($this->repo->findAll()));
+            static::assertCount(0, $multimediaObject->getTracks());
+            static::assertCount(1, $this->repo->findAll());
         }
 
         $this->deleteCreatedFiles();
@@ -151,8 +147,6 @@ class JobServiceTest extends WebTestCase
 
     public function testAddJob()
     {
-        $profiles = $this->getDemoProfiles();
-
         $pathFile = $this->resourcesDir.'test.txt';
 
         $profile = 'MASTER_COPY';
@@ -161,15 +155,19 @@ class JobServiceTest extends WebTestCase
         $description = ['en' => 'test', 'es' => 'prueba'];
 
         $series = new Series();
+        $series->setNumericalID(1);
         $multimediaObject = new MultimediaObject();
+        $multimediaObject->setNumericalID(1);
         $multimediaObject->setSeries($series);
         $this->dm->persist($series);
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
 
-        $this->jobService->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description);
-
-        $this->assertEquals(1, count($this->repo->findAll()));
+        try {
+            $this->jobService->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description);
+        } catch (\Exception $exception) {
+            static::assertCount(0, $this->repo->findAll());
+        }
 
         $pathFile2 = $this->resourcesDir.'test2.txt';
 
@@ -178,9 +176,11 @@ class JobServiceTest extends WebTestCase
         $language2 = 'en';
         $description2 = ['en' => 'test2', 'es' => 'prueba2'];
 
-        $this->jobService->addJob($pathFile2, $profile2, $priority2, $multimediaObject, $language2, $description2);
-
-        $this->assertEquals(2, count($this->repo->findAll()));
+        try {
+            $this->jobService->addJob($pathFile2, $profile2, $priority2, $multimediaObject, $language2, $description2);
+        } catch (\Exception $exception) {
+            static::assertCount(0, $this->repo->findAll());
+        }
     }
 
     public function testPauseJob()
@@ -188,7 +188,7 @@ class JobServiceTest extends WebTestCase
         $job = $this->createNewJob();
         $this->jobService->pauseJob($job->getId());
 
-        $this->assertEquals(Job::STATUS_PAUSED, $job->getStatus());
+        static::assertEquals(Job::STATUS_PAUSED, $job->getStatus());
     }
 
     public function testResumeJob()
@@ -198,29 +198,29 @@ class JobServiceTest extends WebTestCase
         $this->jobService->pauseJob($job->getId());
         $this->jobService->resumeJob($job->getId());
 
-        $this->assertEquals(Job::STATUS_WAITING, $job->getStatus());
+        static::assertEquals(Job::STATUS_WAITING, $job->getStatus());
     }
 
     public function testCancelJob()
     {
         $job = $this->createNewJob();
-        $this->assertEquals(1, count($this->repo->findAll()));
+        static::assertCount(1, $this->repo->findAll());
         $this->jobService->cancelJob($job->getId());
-        $this->assertEquals([], $this->repo->findAll());
+        static::assertEquals([], $this->repo->findAll());
 
         $job = $this->createNewJob();
-        $this->assertEquals(1, count($this->repo->findAll()));
+        static::assertCount(1, $this->repo->findAll());
         $this->jobService->pauseJob($job->getId());
         $this->jobService->resumeJob($job->getId());
         $this->jobService->cancelJob($job->getId());
-        $this->assertEquals([], $this->repo->findAll());
+        static::assertEquals([], $this->repo->findAll());
 
         $job1 = $this->createNewJob();
         $job2 = $this->createNewJob();
-        $this->assertEquals(2, count($this->repo->findAll()));
+        static::assertCount(2, $this->repo->findAll());
         $this->jobService->cancelJob($job1->getId());
-        $this->assertEquals(1, count($this->repo->findAll()));
-        $this->assertEquals($job2, $this->repo->findAll()[0]);
+        static::assertCount(1, $this->repo->findAll());
+        static::assertEquals($job2, $this->repo->findAll()[0]);
     }
 
     public function testGetAllJobsStatus()
@@ -248,11 +248,11 @@ class JobServiceTest extends WebTestCase
 
         $allJobsStatus = $this->jobService->getAllJobsStatus();
 
-        $this->assertEquals(0, $allJobsStatus['error']);
-        $this->assertEquals(2, $allJobsStatus['paused']);
-        $this->assertEquals(7, $allJobsStatus['waiting']);
-        $this->assertEquals(2, $allJobsStatus['executing']);
-        $this->assertEquals(9, $allJobsStatus['finished']);
+        static::assertEquals(0, $allJobsStatus['error']);
+        static::assertEquals(2, $allJobsStatus['paused']);
+        static::assertEquals(7, $allJobsStatus['waiting']);
+        static::assertEquals(2, $allJobsStatus['executing']);
+        static::assertEquals(9, $allJobsStatus['finished']);
     }
 
     public function testGetNextJob()
@@ -265,28 +265,28 @@ class JobServiceTest extends WebTestCase
         $job6 = $this->createNewJob(null, 3, 5);
         $job7 = $this->createNewJob(null, 1, 6);
 
-        $this->assertEquals($job4, $this->jobService->getNextJob());
+        static::assertEquals($job4, $this->jobService->getNextJob());
 
         $this->jobService->cancelJob($job4->getId());
-        $this->assertEquals($job6, $this->jobService->getNextJob());
+        static::assertEquals($job6, $this->jobService->getNextJob());
 
         $this->jobService->cancelJob($job6->getId());
-        $this->assertEquals($job2, $this->jobService->getNextJob());
+        static::assertEquals($job2, $this->jobService->getNextJob());
 
         $this->jobService->cancelJob($job2->getId());
-        $this->assertEquals($job5, $this->jobService->getNextJob());
+        static::assertEquals($job5, $this->jobService->getNextJob());
 
         $this->jobService->cancelJob($job5->getId());
-        $this->assertEquals($job1, $this->jobService->getNextJob());
+        static::assertEquals($job1, $this->jobService->getNextJob());
 
         $this->jobService->cancelJob($job1->getId());
-        $this->assertEquals($job3, $this->jobService->getNextJob());
+        static::assertEquals($job3, $this->jobService->getNextJob());
 
         $this->jobService->cancelJob($job3->getId());
-        $this->assertEquals($job7, $this->jobService->getNextJob());
+        static::assertEquals($job7, $this->jobService->getNextJob());
 
         $this->jobService->cancelJob($job7->getId());
-        $this->assertNull($this->jobService->getNextJob());
+        static::assertNull($this->jobService->getNextJob());
     }
 
     /**
@@ -348,13 +348,13 @@ class JobServiceTest extends WebTestCase
         $this->dm->persist($job3);
         $this->dm->flush();
 
-        $this->assertEquals(2, count($this->jobService->getNotFinishedJobsByMultimediaObjectId($mm_id1)));
-        $this->assertEquals(1, count($this->jobService->getNotFinishedJobsByMultimediaObjectId($mm_id2)));
+        static::assertCount(2, $this->jobService->getNotFinishedJobsByMultimediaObjectId($mm_id1));
+        static::assertCount(1, $this->jobService->getNotFinishedJobsByMultimediaObjectId($mm_id2));
     }
 
     public function testGetStatusError()
     {
-        $this->assertEquals(Job::STATUS_ERROR, $this->jobService->getStatusError());
+        static::assertEquals(Job::STATUS_ERROR, $this->jobService->getStatusError());
     }
 
     private function createNewJob($status = null, $priority = null, $timeadd = 0)

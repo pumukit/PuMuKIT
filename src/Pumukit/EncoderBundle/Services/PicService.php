@@ -22,9 +22,6 @@ class PicService
 
     /**
      * PicService constructor.
-     *
-     * @param DocumentManager            $documentManager
-     * @param MultimediaObjectPicService $mmsPicService
      */
     public function __construct(DocumentManager $documentManager, MultimediaObjectPicService $mmsPicService)
     {
@@ -111,7 +108,7 @@ class PicService
         array_push($pipeline, $group);
 
         $pics = $collection->aggregate($pipeline, ['cursor' => []]);
-        $data = $pics->toArray();
+        $data = iterator_to_array($pics);
         $pics = reset($data);
 
         if ($pics) {
@@ -224,7 +221,6 @@ class PicService
 
     /**
      * @param array $data
-     * @param array $params
      * @param bool  $no_replace
      *
      * @throws \Exception

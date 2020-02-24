@@ -3,37 +3,31 @@
 namespace Pumukit\CoreBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 
-class LogController extends Controller implements AdminControllerInterface
+class LogController extends AbstractController implements AdminControllerInterface
 {
     /**
-     * @param string $file
-     *
-     * @return JsonResponse|Response
-     *
      * @Security("is_granted('ROLE_SUPER_ADMIN')")
      * @Route("/admin/show/log/{file}")
      */
-    public function showLogAction($file = '')
+    public function showLogAction(?string $file, string $kernelEnvironment, string $kernelProjectDir)
     {
-        $env = $this->container->getParameter('kernel.environment');
-
         if (!$file) {
-            $sFile = $env.'.log';
+            $sFile = $kernelEnvironment.'.log';
         } else {
-            $sFile = $file.'_'.$env.'.log';
+            $sFile = $file.'_'.$kernelEnvironment.'.log';
         }
 
-        $pathFile = realpath($this->container->getParameter('kernel.root_dir').'/../app/logs/'.$sFile);
+        $pathFile = realpath($kernelProjectDir.'/var/log/'.$sFile);
 
         if (false === $pathFile) {
-            return new JsonResponse(['error' => 'Error reading log file'.$pathFile], 500);
+            return new JsonResponse(['error' => 'Error reading log file'.$pathFile], Response::HTTP_NOT_FOUND);
         }
 
         $response = new BinaryFileResponse($pathFile);

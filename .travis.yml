@@ -1,60 +1,28 @@
 sudo: false
-language: php
-dist: trusty
-
-php:
-  - "7.2"
-
-env:
-  - MONGO_VERSION=stable
 
 services:
-  - mongodb
+  - docker
 
-addons:
-  apt:
-    sources:
-      - mongodb-3.0-precise
-    packages:
-      - mongodb-org-server
-      - mediainfo
-      - libav-tools
-      - libavcodec-extra-54
+language: php
 
 before_script:
-  - pecl install -f mongodb-${MONGO_VERSION}
-  - composer self-update
-  - php -i
-  - npm install -g pa11y
-  - pa11y -V
-  - composer -V
-  - composer install
-
+  - composer validate
+  - docker-compose -f docker-compose.travis.yml build --build-arg APP_ENV=dev
+  - docker-compose -f docker-compose.travis.yml up -d h2-proxy
 
 script:
-  - find src -type f -name "*.php" -print0 | xargs -0 -n1 -P8 php -l
-  - php bin/console lint:yaml src
-  - php bin/console lint:yaml app
-  - php bin/console lint:twig src
-  - php bin/console lint:twig app
-  - ./bin/travis_checks/check_var_dumps
-  - php bin/php-cs-fixer fix src --dry-run -v
-  - php bin/phpstan analyse -l 4 src
-  - php bin/phpstan analyse -l 7 src/Pumukit/BaseLivePlayerBundle/
-  - php bin/phpstan analyse -l 5 src/Pumukit/BasePlayerBundle/
-  - php bin/phpstan analyse -l 7 src/Pumukit/CoreBundle/
-  - php bin/phpstan analyse -l 7 src/Pumukit/InspectionBundle/
-  - php bin/phpstan analyse -l 7 src/Pumukit/JWPlayerBundle/
-  - php bin/phpstan analyse -l 5 src/Pumukit/WizardBundle/
-  - php bin/phpunit -c app
-  - php bin/console doctrine:mongodb:schema:create
-  - php bin/console pumukit:init:repo all --force
-  - php bin/console server:start
-  - pa11y -c .pa11y.json http://localhost:8000/
-  - pa11y -c .pa11y.json http://localhost:8000/series/channel/1.html
-  - pa11y -c .pa11y.json http://localhost:8000/latestuploads
-  - pa11y -c .pa11y.json http://localhost:8000/searchmultimediaobjects
-  - pa11y -c .pa11y.json http://localhost:8000/searchseries
-  - pa11y -c .pa11y.json http://localhost:8000/mediateca
-  - pa11y -c .pa11y.json http://localhost:8000/categories
-  - php bin/console server:stop
+  - docker-compose -f docker-compose.travis.yml exec php composer lints
+  - docker-compose -f docker-compose.travis.yml exec php composer php-cs-fixer
+  - docker-compose -f docker-compose.travis.yml exec php composer phpstan
+  - docker-compose -f docker-compose.travis.yml exec php composer tests
+  - docker-compose -f docker-compose.travis.yml exec php bin/console pumukit:init:repo all --force
+  - docker-compose -f docker-compose.travis.yml run --rm pa11y https://h2-proxy
+  - docker-compose -f docker-compose.travis.yml run --rm pa11y https://h2-proxy/latestuploads
+  - docker-compose -f docker-compose.travis.yml run --rm pa11y https://h2-proxy/mediateca
+  - docker-compose -f docker-compose.travis.yml run --rm pa11y https://h2-proxy/searchmultimediaobjects
+  - docker-compose -f docker-compose.travis.yml run --rm pa11y https://h2-proxy/searchseries
+  - docker-compose -f docker-compose.travis.yml run --rm pa11y https://h2-proxy/events
+  - docker-compose -f docker-compose.travis.yml run --rm pa11y https://h2-proxy/categories
+  - docker-compose -f docker-compose.travis.yml run --rm pa11y https://h2-proxy/series/channel/1.html
+  - docker-compose -f docker-compose.travis.yml run --rm pa11y https://h2-proxy/multimediaobjects/tag/ROOT
+  - docker-compose -f docker-compose.travis.yml run --rm pa11y https://h2-proxy/series/tag/ROOT

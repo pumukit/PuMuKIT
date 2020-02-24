@@ -5,20 +5,12 @@ namespace Pumukit\BasePlayerBundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-/**
- * This is the class that validates and merges configuration from your app/config files.
- *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
- */
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('pumukit_base_player');
+        $treeBuilder = new TreeBuilder('pumukit_base_player');
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()
@@ -33,7 +25,7 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->enumNode('when_dispatch_view_event')
             ->values(['on_load', 'on_play'])
-            ->defaultValue('on_load')
+            ->defaultValue('on_play')
             ->info('When dispatch a view event, on load the track file or on play the video (via AJAX request).')
             ->end()
             ->end()

@@ -1,19 +1,19 @@
-{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+{% extends '@PumukitWebTV/layout.html.twig' %}
 
 {% block body %}
     <div class="row">
         <div class="col-xs-12">
-            {% include "PumukitWebTVBundle:Misc:page_title.html.twig" %}
+            {% include "@PumukitWebTV/Misc/page_title.html.twig" %}
         </div>
 
         <div class="col-xs-12">
-            {% for result in results if result.numMmobjs > 0 %}
+            {% for result in results | filter(result => result.numMmobjs > 0) %}
                 - {{ result.tag.title }}
-                [{% transchoice result.numMmobjs %}{0}0 Videos|{1}%count% Video|]1,Inf[%count% Videos{% endtranschoice %}]
+                [{{ "{0}0 Videos|{1}%count% Video|]1,Inf[%count% Videos"|trans({'%count%':  result.numMmobjs}) }}]
             {% endfor %}
         </div>
 
-        {% for result in results if result.numMmobjs > 0 %}
+        {% for result in results | filter(result => result.numMmobjs > 0) %}
             <div class="col-xs-12">
                 <h2>{{ result.tag.title }}
                     <a href="{{ path_to_tag(result.tag.cod) }}" {{ result.numMmobjs > 0?'':'style="pointer-events:none"' }}>
@@ -23,7 +23,7 @@
             </div>
             {% set objects = result.objects %}
             <div class="col-xs-12">
-                {% include 'PumukitWebTVBundle:Channel:template_list.html.twig' %}
+                {% include '@PumukitWebTV/Channel/template_list.html.twig' %}
             </div>
         {% else %}
             <div class="col-xs-12">

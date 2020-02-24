@@ -10,66 +10,38 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class TrackEventDispatcherService
 {
-    /**
-     * @var EventDispatcherInterface
-     */
+    /** @var EventDispatcherInterface */
     private $dispatcher;
 
-    /**
-     * Constructor.
-     *
-     * @param EventDispatcherInterface $dispatcher
-     */
     public function __construct(EventDispatcherInterface $dispatcher)
     {
         $this->dispatcher = $dispatcher;
     }
 
     /**
-     * Dispatch create.
-     *
-     * Dispatchs the event TRACK_CREATE
-     * 'track.create' passing
-     * the multimedia object and the track
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Track            $track
+     * Dispatch the event TRACK_CREATE 'track.create' passing the multimedia object and the track.
      */
-    public function dispatchCreate(MultimediaObject $multimediaObject, Track $track)
+    public function dispatchCreate(MultimediaObject $multimediaObject, Track $track): void
     {
         $event = new TrackEvent($multimediaObject, $track);
-        $this->dispatcher->dispatch(SchemaEvents::TRACK_CREATE, $event);
+        $this->dispatcher->dispatch($event, SchemaEvents::TRACK_CREATE);
     }
 
     /**
-     * Dispatch update.
-     *
-     * Dispatchs the event TRACK_UPDATE
-     * 'track.update' passing
-     * the multimedia object and the track
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Track            $track
+     * Dispatch the event TRACK_UPDATE 'track.update' passing the multimedia object and the track.
      */
-    public function dispatchUpdate(MultimediaObject $multimediaObject, Track $track)
+    public function dispatchUpdate(MultimediaObject $multimediaObject, Track $track): void
     {
         $event = new TrackEvent($multimediaObject, $track);
-        $this->dispatcher->dispatch(SchemaEvents::TRACK_UPDATE, $event);
+        $this->dispatcher->dispatch($event, SchemaEvents::TRACK_UPDATE);
     }
 
     /**
-     * Dispatch delete.
-     *
-     * Dispatchs the event TRACK_DELETE
-     * 'track.delete' passing
-     * the multimedia object and the track
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Track            $track
+     * Dispatch the event TRACK_DELETE 'track.delete' passing the multimedia object and the track.
      */
-    public function dispatchDelete(MultimediaObject $multimediaObject, Track $track)
+    public function dispatchDelete(MultimediaObject $multimediaObject, Track $track): void
     {
         $event = new TrackEvent($multimediaObject, $track);
-        $this->dispatcher->dispatch(SchemaEvents::TRACK_DELETE, $event);
+        $this->dispatcher->dispatch($event, SchemaEvents::TRACK_DELETE);
     }
 }

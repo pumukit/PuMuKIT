@@ -68,8 +68,6 @@ class Material extends Element
 
     /**
      * Set I18n name.
-     *
-     * @param array $name
      */
     public function setI18nName(array $name)
     {

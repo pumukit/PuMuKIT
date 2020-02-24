@@ -17,18 +17,16 @@ class LocaleListener implements EventSubscriberInterface
 {
     private $requestStack;
     private $defaultLocale;
-    private $pumukitLocales;
+    private $locales;
 
-    public function __construct(RequestStack $requestStack, $defaultLocale = 'en', $pumukitLocales = [])
+    public function __construct(RequestStack $requestStack, array $locales, $defaultLocale = 'en')
     {
         $this->requestStack = $requestStack;
         $this->defaultLocale = $defaultLocale;
-        $this->pumukitLocales = $pumukitLocales;
+        $this->locales = $locales;
     }
 
     /**
-     * @param GetResponseEvent $event
-     *
      * @throws \Exception
      */
     public function onKernelRequest(GetResponseEvent $event)
@@ -37,32 +35,25 @@ class LocaleListener implements EventSubscriberInterface
     }
 
     /**
-     * @param Request $request
-     *
      * @throws \Exception
      */
     public function fixRequestLocale(Request $request)
     {
         $requestLocale = $request->attributes->get('_locale');
-
-        if (null === $request->getSession()) {
-            return;
-        }
-
         $sessionLocale = $request->getSession()->get('_locale');
 
         // try to see if the locale has been set as a _locale routing parameter
-        if ($requestLocale && in_array($requestLocale, $this->pumukitLocales)) {
+        if ($requestLocale && in_array($requestLocale, $this->locales)) {
             $request->getSession()->set('_locale', $requestLocale);
         } else {
-            if (!$sessionLocale || !in_array($sessionLocale, $this->pumukitLocales)) {
-                $validLocales = array_intersect($request->getLanguages(), $this->pumukitLocales);
+            if (!$sessionLocale || !in_array($sessionLocale, $this->locales)) {
+                $validLocales = array_intersect($request->getLanguages(), $this->locales);
                 if ($validLocales) {
                     $request->getSession()->set('_locale', current($validLocales));
-                } elseif (in_array($this->defaultLocale, $this->pumukitLocales)) {
+                } elseif (in_array($this->defaultLocale, $this->locales)) {
                     $request->getSession()->set('_locale', $this->defaultLocale);
-                } elseif (!empty($this->pumukitLocales)) {
-                    $request->getSession()->set('_locale', $this->pumukitLocales[0]);
+                } elseif (!empty($this->locales)) {
+                    $request->getSession()->set('_locale', $this->locales[0]);
                 } else {
                     throw new \Exception('Pumukit.Locales is empty. You should define it in your parameters.');
                 }
@@ -80,9 +71,6 @@ class LocaleListener implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param LifecycleEventArgs $args
-     */
     public function postLoad(LifecycleEventArgs $args)
     {
         $document = $args->getDocument();

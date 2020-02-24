@@ -2,6 +2,7 @@
 
 namespace Pumukit\WebTVBundle\Twig;
 
+use MongoDB\BSON\UTCDateTime;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -14,11 +15,8 @@ class MongoDateExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @throws \Exception
-     */
-    public function convertMongoDateFilter(\MongoDate $mongoDate): \DateTime
+    public function convertMongoDateFilter(UTCDateTime $mongoDate): string
     {
-        return new \DateTime('@'.$mongoDate->sec);
+        return $mongoDate->toDateTime()->format('U');
     }
 }

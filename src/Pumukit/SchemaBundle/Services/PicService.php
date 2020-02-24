@@ -4,14 +4,11 @@ namespace Pumukit\SchemaBundle\Services;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Component\Routing\RequestContext;
 
 class PicService
 {
-    /**
-     * @var RequestContext
-     */
-    protected $context;
+    private $scheme;
+    private $host;
     private $defaultSeriesPic;
     private $defaultVideoPic;
     private $defaultAudioHDPic;
@@ -19,9 +16,10 @@ class PicService
     private $webDir;
     private $defaultPlaylistPic;
 
-    public function __construct(RequestContext $context, $webDir = '', $defaultSeriesPic = '', $defaultPlaylistPic = '', $defaultVideoPic = '', $defaultAudioHDPic = '', $defaultAudioSDPic = '')
+    public function __construct($scheme, $host, $webDir = '', $defaultSeriesPic = '', $defaultPlaylistPic = '', $defaultVideoPic = '', $defaultAudioHDPic = '', $defaultAudioSDPic = '')
     {
-        $this->context = $context;
+        $this->scheme = str_replace("'", '', $scheme);
+        $this->host = str_replace("'", '', $host);
         $this->webDir = $webDir;
         $this->defaultSeriesPic = $defaultSeriesPic;
         $this->defaultPlaylistPic = $defaultPlaylistPic;
@@ -72,18 +70,11 @@ class PicService
     }
 
     /**
-     * Get default url pic.
+     * Get the default url pic for a given resource checking if it is Series, MultimediaObject of type video or audio.
      *
-     * Get the default url pic
-     * for a given resource checking if
-     * it is Series, MultimediaObject of type
-     * video or audio
-     *
-     * @param MultimediaObject|Series $object   Object to get the url (using $object->getPics())
-     * @param bool                    $absolute Returns absolute path
-     * @param bool                    $hd       Returns pic in HD
-     *
-     * @return string
+     * @param mixed $object
+     * @param mixed $absolute
+     * @param mixed $hd
      */
     public function getDefaultUrlPicForObject($object, $absolute = false, $hd = true)
     {
@@ -206,19 +197,12 @@ class PicService
     }
 
     /**
-     * Get default path pic.
+     * Get the default path pic for a given resource checking if it is Series, MultimediaObject of type video or audio.
      *
-     * Get the default path pic
-     * for a given resource checking if
-     * it is Series, MultimediaObject of type
-     * video or audio
-     *
-     * @param MultimediaObject|Series $object Object to get the path (using $object->getPics())
-     * @param bool                    $hd     Returns pic in HD
-     *
-     * @return string
+     * @param mixed $object
+     * @param mixed $hd
      */
-    public function getDefaultPathPicForObject($object, $hd = true)
+    public function getDefaultPathPicForObject($object, $hd = true): string
     {
         if ($object instanceof Series) {
             return $this->getDefaultSeriesPathPic();
@@ -230,12 +214,7 @@ class PicService
         return $this->getDefaultMultimediaObjectPathPic(false, $hd);
     }
 
-    /**
-     * Get default series path pic.
-     *
-     * @returns string
-     */
-    public function getDefaultSeriesPathPic()
+    public function getDefaultSeriesPathPic(): string
     {
         return $this->getAbsolutePathPic($this->defaultSeriesPic);
     }
@@ -296,13 +275,7 @@ class PicService
         return $picUrl;
     }
 
-    /**
-     * @param object $object
-     * @param bool   $absolute
-     *
-     * @return string|null
-     */
-    public function getDynamicPic($object, $absolute = false)
+    public function getDynamicPic($object, bool $absolute = false): ?string
     {
         $pics = $object->getPics();
         $picUrl = null;
@@ -325,29 +298,13 @@ class PicService
         return $picUrl;
     }
 
-    /**
-     * Get absolute path of a given pic url.
-     *
-     * @param string $picUrl
-     *
-     * @return string
-     */
-    protected function getAbsoluteUrlPic($picUrl = '')
+    protected function getAbsoluteUrlPic(?string $picUrl): string
     {
-        if (!$picUrl || '/' != $picUrl[0]) {
-            return $picUrl;
+        if (!$picUrl || '/' !== $picUrl[0]) {
+            return '';
         }
 
-        $scheme = $this->context->getScheme();
-        $host = $this->context->getHost();
-        $port = '';
-        if ('http' === $scheme && 80 != $this->context->getHttpPort()) {
-            $port = ':'.$this->context->getHttpPort();
-        } elseif ('https' === $scheme && 443 != $this->context->getHttpsPort()) {
-            $port = ':'.$this->context->getHttpsPort();
-        }
-
-        return $scheme.'://'.$host.$port.$picUrl;
+        return $this->scheme.'://'.$this->host.$picUrl;
     }
 
     /**

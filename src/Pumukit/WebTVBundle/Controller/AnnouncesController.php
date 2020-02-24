@@ -3,32 +3,55 @@
 namespace Pumukit\WebTVBundle\Controller;
 
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
+use Pumukit\SchemaBundle\Services\AnnounceService;
+use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * Class AnnouncesController.
- */
-class AnnouncesController extends Controller implements WebTVControllerInterface
+class AnnouncesController extends AbstractController implements WebTVControllerInterface
 {
+    private $translator;
+    private $breadcrumbsService;
+    private $columnsObjsAnnounces;
+    private $menuAnnouncesTitle;
+    private $announcesService;
+    private $showLatestWithPudeNew;
+    private $useRecordDateAnnounce;
+
+    public function __construct(
+        TranslatorInterface $translator,
+        BreadcrumbsService $breadcrumbsService,
+        AnnounceService $announcesService,
+        int $columnsObjsAnnounces,
+        string $menuAnnouncesTitle,
+        $showLatestWithPudeNew,
+        $useRecordDateAnnounce
+    ) {
+        $this->translator = $translator;
+        $this->breadcrumbsService = $breadcrumbsService;
+        $this->columnsObjsAnnounces = $columnsObjsAnnounces;
+        $this->menuAnnouncesTitle = $menuAnnouncesTitle;
+        $this->announcesService = $announcesService;
+        $this->showLatestWithPudeNew = $showLatestWithPudeNew;
+        $this->useRecordDateAnnounce = $useRecordDateAnnounce;
+    }
+
     /**
      * @Route("/latestuploads", name="pumukit_webtv_announces_latestuploads")
-     * @Template("PumukitWebTVBundle:Announces:template.html.twig")
-     *
-     * @return array
+     * @Template("@PumukitWebTV/Announces/template.html.twig")
      */
     public function latestUploadsAction()
     {
-        $templateTitle = $this->container->getParameter('menu.announces_title');
-        $templateTitle = $this->get('translator')->trans($templateTitle);
-        $this->get('pumukit_web_tv.breadcrumbs')->addList($templateTitle, 'pumukit_webtv_announces_latestuploads');
+        $templateTitle = $this->translator->trans($this->menuAnnouncesTitle);
+        $this->breadcrumbsService->addList($templateTitle, 'pumukit_webtv_announces_latestuploads');
 
         return [
             'template_title' => $templateTitle,
-            'objectByCol' => $this->container->getParameter('columns_objs_announces'),
+            'objectByCol' => $this->columnsObjsAnnounces,
             'show_info' => false,
             'show_more' => false,
         ];
@@ -36,23 +59,15 @@ class AnnouncesController extends Controller implements WebTVControllerInterface
 
     /**
      * @Route("/latestuploads/pager", name="pumukit_webtv_announces_latestuploads_pager")
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     public function latestUploadsPagerAction(Request $request)
     {
-        [$numberCols, $showPudenew, $useRecordDate] = $this->getParameters();
-
-        $announcesService = $this->get('pumukitschema.announce');
-
         $dateRequest = $request->query->get('date', 0); //Use to queries for month and year to reduce formatting and unformatting.
         $date = \DateTime::createFromFormat('d/m/Y H:i:s', "01/{$dateRequest} 00:00:00");
         if (!$date) {
             throw $this->createNotFoundException();
         }
-        [$date, $last] = $announcesService->getNextLatestUploads($date, $showPudenew, $useRecordDate);
+        [$date, $last] = $this->announcesService->getNextLatestUploads($date, $this->showLatestWithPudeNew, $this->useRecordDateAnnounce);
 
         $response = new Response();
         $dateHeader = '---';
@@ -64,7 +79,7 @@ class AnnouncesController extends Controller implements WebTVControllerInterface
                     [
                         'last' => $last,
                         'date' => $date,
-                        'objectByCol' => $numberCols,
+                        'objectByCol' => $this->columnsObjsAnnounces,
                         'show_info' => false,
                         'show_more' => false,
                     ]
@@ -81,25 +96,8 @@ class AnnouncesController extends Controller implements WebTVControllerInterface
         return $response;
     }
 
-    /**
-     * @return string
-     */
-    protected function getLatestUploadsPagerTemplate()
+    protected function getLatestUploadsPagerTemplate(): string
     {
-        return 'PumukitWebTVBundle:Announces:template_pager.html.twig';
-    }
-
-    /**
-     * To extends this controller.
-     *
-     * @return array
-     */
-    protected function getParameters()
-    {
-        return [
-            $this->container->getParameter('columns_objs_announces'),
-            $this->container->getParameter('show_latest_with_pudenew'),
-            $this->container->getParameter('use_record_date_announces'),
-        ];
+        return '@PumukitWebTV/Announces/template_pager.html.twig';
     }
 }

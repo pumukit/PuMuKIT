@@ -9,19 +9,19 @@ fi
 /wait
 
 if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
-    mkdir -p app/cache
-    setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX app/cache app/logs web/storage web/uploads
-    setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX app/cache app/logs web/storage web/uploads
+    mkdir -p var/cache var/log var/sessions
+    setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var/cache var/log var/sessions public/storage public/uploads
+    setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var/cache var/log var/sessions public/storage public/uploads
 
     if [ "$APP_ENV" != 'prod' ]; then
-        composer install --prefer-dist --no-progress --no-suggest --no-interaction
-        bin/console doctrine:mongodb:schema:create
-	bin/console pumukit:init:repo all --force
+        composer install --prefer-dist --no-progress --no-suggest --classmap-authoritative --no-interaction
+        set +e
+        bin/console doctrine:mongodb:schema:create || true
+        bin/console pumukit:init:repo all
     	if [ "$AUTOCREATE_PUMUKIT_USER" == 'true' ]; then
-	    set +e
-	    php bin/console fos:user:create $PUMUKIT_USER $PUMUKIT_USER_MAIL $PUMUKIT_PASS --super-admin || true
-	    set -e
-	fi
+	        php bin/console fos:user:create $PUMUKIT_USER $PUMUKIT_USER_MAIL $PUMUKIT_PASS --super-admin || true
+	    fi
+        set -e
     fi
 fi
 

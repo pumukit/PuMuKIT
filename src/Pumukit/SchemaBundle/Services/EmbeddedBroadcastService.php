@@ -7,10 +7,10 @@ use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Twig\Environment as TemplatingEngine;
 
 class EmbeddedBroadcastService
 {
@@ -23,8 +23,14 @@ class EmbeddedBroadcastService
     private $router;
     private $templating;
 
-    public function __construct(DocumentManager $documentManager, MultimediaObjectService $mmsService, MultimediaObjectEventDispatcherService $dispatcher, AuthorizationCheckerInterface $authorizationChecker, EngineInterface $templating, RouterInterface $router)
-    {
+    public function __construct(
+        DocumentManager $documentManager,
+        MultimediaObjectService $mmsService,
+        MultimediaObjectEventDispatcherService $dispatcher,
+        AuthorizationCheckerInterface $authorizationChecker,
+        TemplatingEngine $templating,
+        RouterInterface $router
+    ) {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository(MultimediaObject::class);
         $this->mmsService = $mmsService;
@@ -37,9 +43,8 @@ class EmbeddedBroadcastService
     /**
      * Set public embedded broadcast.
      *
-     * @param MultimediaObject $multimediaObject
-     * @param string           $type
-     * @param bool             $executeFlush
+     * @param string $type
+     * @param bool   $executeFlush
      *
      * @return MultimediaObject
      */
@@ -104,8 +109,6 @@ class EmbeddedBroadcastService
     /**
      * Clone resource.
      *
-     * @param EmbeddedBroadcast $embeddedBroadcast
-     *
      * @return EmbeddedBroadcast
      */
     public function cloneResource(EmbeddedBroadcast $embeddedBroadcast)
@@ -152,9 +155,8 @@ class EmbeddedBroadcastService
     /**
      * Update type and name.
      *
-     * @param MultimediaObject $multimediaObject
-     * @param string           $type
-     * @param bool             $executeFlush
+     * @param string $type
+     * @param bool   $executeFlush
      */
     public function updateTypeAndName($type, MultimediaObject $multimediaObject, $executeFlush = true)
     {
@@ -178,9 +180,8 @@ class EmbeddedBroadcastService
     /**
      * Update password.
      *
-     * @param string           $password
-     * @param MultimediaObject $multimediaObject
-     * @param bool             $executeFlush
+     * @param string $password
+     * @param bool   $executeFlush
      */
     public function updatePassword($password, MultimediaObject $multimediaObject, $executeFlush = true)
     {
@@ -200,9 +201,7 @@ class EmbeddedBroadcastService
     /**
      * Add group to embeddedBroadcast.
      *
-     * @param Group            $group
-     * @param MultimediaObject $multimediaObject
-     * @param bool             $executeFlush
+     * @param bool $executeFlush
      */
     public function addGroup(Group $group, MultimediaObject $multimediaObject, $executeFlush = true)
     {
@@ -222,9 +221,7 @@ class EmbeddedBroadcastService
     /**
      * Delete group from embedded Broadcasr.
      *
-     * @param Group            $group
-     * @param MultimediaObject $multimediaObject
-     * @param bool             $executeFlush
+     * @param bool $executeFlush
      */
     public function deleteGroup(Group $group, MultimediaObject $multimediaObject, $executeFlush = true)
     {
@@ -244,9 +241,8 @@ class EmbeddedBroadcastService
     /**
      * Can User play multimediaObject.
      *
-     * @param MultimediaObject $multimediaObject
-     * @param User             $user
-     * @param string           $password
+     * @param User   $user
+     * @param string $password
      *
      * @return bool|Response
      */
@@ -275,8 +271,7 @@ class EmbeddedBroadcastService
     /**
      * Is user related to multimedia object.
      *
-     * @param MultimediaObject $multimediaObject
-     * @param User             $user
+     * @param User $user
      *
      * @return bool
      */
@@ -299,8 +294,6 @@ class EmbeddedBroadcastService
 
     /**
      * Delete all embedded broadcasts from group.
-     *
-     * @param Group $group
      */
     public function deleteAllFromGroup(Group $group)
     {
@@ -361,14 +354,14 @@ class EmbeddedBroadcastService
 
     private function renderErrorNotAuthenticated()
     {
-        $renderedView = $this->templating->render('PumukitWebTVBundle:Index:403forbidden.html.twig', ['show_forceauth' => true]);
+        $renderedView = $this->templating->render('@PumukitWebTV/Index/403forbidden.html.twig', ['show_forceauth' => true]);
 
         return new Response($renderedView, Response::HTTP_FORBIDDEN);
     }
 
     private function renderErrorPassword($invalidPassword = false)
     {
-        $renderedView = $this->templating->render('PumukitWebTVBundle:Index:401unauthorized.html.twig', ['show_forceauth' => true, 'invalid_password' => $invalidPassword]);
+        $renderedView = $this->templating->render('@PumukitWebTV/Index/401unauthorized.html.twig', ['show_forceauth' => true, 'invalid_password' => $invalidPassword]);
 
         return new Response($renderedView, Response::HTTP_UNAUTHORIZED);
     }

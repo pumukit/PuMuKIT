@@ -16,7 +16,7 @@ class PlaylistTest extends WebTestCase
     public function testCreate()
     {
         $playlist = new Playlist();
-        $this->assertEquals([], $playlist->getMultimediaObjectsIdList());
+        static::assertEquals([], $playlist->getMultimediaObjectsIdList());
     }
 
     public function testMoveMultimediaObject()
@@ -28,7 +28,7 @@ class PlaylistTest extends WebTestCase
         $mmobjA->setSeries($playlist);
         $mmobjB->setSeries($playlist);
         $mmobjC->setSeries($playlist);
-        $this->assertEquals(0, $playlist->getPlaylist()->getMultimediaObjects()->count());
+        static::assertCount(0, $playlist->getPlaylist()->getMultimediaObjects());
         $playlist->getPlaylist()->addMultimediaObject($mmobjA);
         $playlist->getPlaylist()->addMultimediaObject($mmobjB);
         $playlist->getPlaylist()->addMultimediaObject($mmobjC);
@@ -37,10 +37,10 @@ class PlaylistTest extends WebTestCase
         $playlist->getPlaylist()->addMultimediaObject($mmobjC);
         //Nothing changes
         $oldArray = $playlist->getPlaylist()->getMultimediaObjects()->toArray();
-        $this->assertFalse(false, $playlist->getPlaylist()->moveMultimediaObject(123, 123));
-        $this->assertEquals($oldArray, $playlist->getPlaylist()->getMultimediaObjects()->toArray());
+        static::assertFalse(false, $playlist->getPlaylist()->moveMultimediaObject(123, 123));
+        static::assertEquals($oldArray, $playlist->getPlaylist()->getMultimediaObjects()->toArray());
         //Start out of bounds (nothing changes either).
-        $this->assertFalse($playlist->getPlaylist()->moveMultimediaObject(-123, 0));
+        static::assertFalse($playlist->getPlaylist()->moveMultimediaObject(-123, 0));
         $mmobjs = [
             $mmobjA,
             $mmobjB,
@@ -49,7 +49,7 @@ class PlaylistTest extends WebTestCase
             $mmobjB,
             $mmobjC,
         ];
-        $this->assertEquals($mmobjs, $playlist->getPlaylist()->getMultimediaObjects()->toArray());
+        static::assertEquals($mmobjs, $playlist->getPlaylist()->getMultimediaObjects()->toArray());
         //Move one.
         $playlist->getPlaylist()->moveMultimediaObject(3, 1);
         $mmobjs = [
@@ -60,7 +60,7 @@ class PlaylistTest extends WebTestCase
             $mmobjB,
             $mmobjC,
         ];
-        $this->assertEquals($mmobjs, $playlist->getPlaylist()->getMultimediaObjects()->toArray());
+        static::assertEquals($mmobjs, $playlist->getPlaylist()->getMultimediaObjects()->toArray());
         //Downwards out of bounds (goes in a circle)
         $playlist->getPlaylist()->moveMultimediaObject(4, 9);
         $mmobjs = [
@@ -71,7 +71,7 @@ class PlaylistTest extends WebTestCase
             $mmobjC,
             $mmobjC,
         ];
-        $this->assertEquals($mmobjs, $playlist->getPlaylist()->getMultimediaObjects()->toArray());
+        static::assertEquals($mmobjs, $playlist->getPlaylist()->getMultimediaObjects()->toArray());
         //Move upward
         $playlist->getPlaylist()->moveMultimediaObject(5, 0);
         $mmobjs = [
@@ -82,7 +82,7 @@ class PlaylistTest extends WebTestCase
             $mmobjB,
             $mmobjC,
         ];
-        $this->assertEquals($mmobjs, $playlist->getPlaylist()->getMultimediaObjects()->toArray());
+        static::assertEquals($mmobjs, $playlist->getPlaylist()->getMultimediaObjects()->toArray());
         //Upwards out of bounds
         $playlist->getPlaylist()->moveMultimediaObject(0, -1);
         $mmobjs = [
@@ -93,7 +93,7 @@ class PlaylistTest extends WebTestCase
             $mmobjC,
             $mmobjC,
         ];
-        $this->assertEquals($mmobjs, $playlist->getPlaylist()->getMultimediaObjects()->toArray());
+        static::assertEquals($mmobjs, $playlist->getPlaylist()->getMultimediaObjects()->toArray());
         //Upwards REALLY out of bounds
         $playlist->getPlaylist()->moveMultimediaObject(2, 1 - 12);
         $mmobjs = [
@@ -104,7 +104,7 @@ class PlaylistTest extends WebTestCase
             $mmobjC,
             $mmobjC,
         ];
-        $this->assertEquals($mmobjs, $playlist->getPlaylist()->getMultimediaObjects()->toArray());
+        static::assertEquals($mmobjs, $playlist->getPlaylist()->getMultimediaObjects()->toArray());
         //Downwards REALLY out of bounds
         $playlist->getPlaylist()->moveMultimediaObject(3, 7 + 12);
         $mmobjs = [
@@ -115,8 +115,8 @@ class PlaylistTest extends WebTestCase
             $mmobjC,
             $mmobjC,
         ];
-        $this->assertEquals($mmobjs, $playlist->getPlaylist()->getMultimediaObjects()->toArray());
+        static::assertEquals($mmobjs, $playlist->getPlaylist()->getMultimediaObjects()->toArray());
 
-        $this->assertEquals(false, false);
+        static::assertEquals(false, false);
     }
 }

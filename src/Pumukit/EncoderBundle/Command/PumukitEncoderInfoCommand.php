@@ -2,7 +2,10 @@
 
 namespace Pumukit\EncoderBundle\Command;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\EncoderBundle\Services\CpuService;
+use Pumukit\EncoderBundle\Services\JobService;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -11,6 +14,18 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class PumukitEncoderInfoCommand extends BasePumukitEncoderCommand
 {
+    private $dm;
+    private $jobService;
+    private $cpuService;
+
+    public function __construct(DocumentManager $documentManager, JobService $jobService, CpuService $cpuService)
+    {
+        $this->dm = $documentManager;
+        $this->jobService = $jobService;
+        $this->cpuService = $cpuService;
+        parent::__construct();
+    }
+
     protected function configure()
     {
         $this
@@ -29,14 +44,15 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $jobService = $this->getContainer()->get('pumukitencoder.job');
-        $jobService->executeNextJob();
+        $this->jobService->executeNextJob();
 
         if ($input->getArgument('id')) {
             $this->showInfo($input->getArgument('id'), $output);
         } else {
             $this->showList($input->getOption('all'), $output);
         }
+
+        return 0;
     }
 
     protected function showList($all, OutputInterface $output)
@@ -47,9 +63,8 @@ EOT
 
     private function listCpus(OutputInterface $output)
     {
-        $cpuService = $this->getContainer()->get('pumukitencoder.cpu');
-        $deactivatedCpus = $cpuService->getCpuNamesInMaintenanceMode();
-        $cpus = $cpuService->getCpus();
+        $deactivatedCpus = $this->cpuService->getCpuNamesInMaintenanceMode();
+        $cpus = $this->cpuService->getCpus();
 
         $output->writeln('<info>CPUS:</info>');
         $table = new Table($output);
@@ -72,11 +87,9 @@ EOT
 
     private function listJobs(OutputInterface $output, $all = false)
     {
-        $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-        $jobRepo = $dm->getRepository(Job::class);
-        $jobService = $this->getContainer()->get('pumukitencoder.job');
+        $jobRepo = $this->dm->getRepository(Job::class);
 
-        $stats = $jobService->getAllJobsStatus();
+        $stats = $this->jobService->getAllJobsStatus();
 
         $output->writeln('<info>JOBS NUMBERS:</info>');
         $table = new Table($output);
@@ -115,14 +128,11 @@ EOT
 
     private function showInfo($id, OutputInterface $output)
     {
-        $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-        $jobService = $this->getContainer()->get('pumukitencoder.job');
-
-        if (null === ($job = $dm->find(Job::class, $id))) {
+        if (null === ($job = $this->dm->find(Job::class, $id))) {
             throw new \RuntimeException("Not job found with id {$id}.");
         }
 
-        if (null === ($job = $dm->find(Job::class, $id))) {
+        if (null === ($job = $this->dm->find(Job::class, $id))) {
             throw new \RuntimeException("Not job found with id {$id}.");
         }
 
@@ -138,7 +148,7 @@ EOT
         $output->writeln('<comment>Timestart</comment>         '.$job->getTimestart('Y-m-d H:i:s'));
         $output->writeln('<comment>Timeend</comment>           '.$job->getTimeend('Y-m-d H:i:s'));
         $output->writeln('<comment>Command</comment>');
-        $output->writeln($jobService->renderBat($job));
+        $output->writeln($this->jobService->renderBat($job));
         $output->writeln('<comment>Out</comment>');
         $output->writeln($job->getOutput());
     }

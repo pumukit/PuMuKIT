@@ -5,7 +5,7 @@
                 <a target="_black" href="{{ url('pumukit_webtv_series_index', {id: series.id}) }}"> {{ series.title }} </a>.
             </p>
         {% endif %}
-        {% include("PumukitNewAdminBundle:Collection:show.html.twig") with {'collection':series} %}
+        {% include("@PumukitNewAdmin/Collection/show.html.twig") with {'collection':series} %}
     {% else %}
         <p>
             {% trans %}Select any series.{% endtrans %}

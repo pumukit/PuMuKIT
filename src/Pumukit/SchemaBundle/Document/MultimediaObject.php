@@ -139,7 +139,7 @@ class MultimediaObject
 
     /**
      * @var Collection
-     * @MongoDB\ReferenceMany(targetDocument=Group::class, storeAs="id", sort={"key":1}, strategy="setArray")
+     * @MongoDB\ReferenceMany(targetDocument=Group::class, storeAs="id", sort={"key":1}, strategy="setArray", cascade={"persist","remove"})
      */
     private $groups;
 
@@ -280,104 +280,54 @@ class MultimediaObject
         return $this->getTitle();
     }
 
-    /**
-     * @return bool
-     */
-    public function isCollection()
+    public function isCollection(): bool
     {
         return false;
     }
 
-    /**
-     * Get id.
-     *
-     * @return \MongoId|string|null
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Get numerical id.
-     *
-     * @return int
-     */
-    public function getNumericalID()
+    public function getNumericalID(): int
     {
         return $this->numerical_id;
     }
 
-    /**
-     * Set numerical id.
-     *
-     * @param mixed $numericalID
-     *
-     * @return int
-     */
-    public function setNumericalID($numericalID)
+    public function setNumericalID(int $numericalID): void
     {
-        return $this->numerical_id = $numericalID;
+        $this->numerical_id = $numericalID;
     }
 
-    /**
-     * Get secret.
-     *
-     * @return string
-     */
-    public function getSecret()
+    public function getSecret(): string
     {
         return $this->secret;
     }
 
-    /**
-     * Resets secret.
-     *
-     * @return string
-     */
-    public function resetSecret()
+    public function resetSecret(): string
     {
         $this->secret = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
 
         return $this->secret;
     }
 
-    /**
-     * Set locale.
-     *
-     * @param string $locale
-     */
-    public function setLocale($locale)
+    public function setLocale(string $locale): void
     {
         $this->locale = $locale;
     }
 
-    /**
-     * Get locale.
-     *
-     * @return string
-     */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
 
-    /**
-     * Set rank.
-     *
-     * @param int $rank
-     */
-    public function setRank($rank)
+    public function setRank(int $rank): void
     {
         $this->rank = $rank;
     }
 
-    /**
-     * Get rank.
-     *
-     * @return int
-     */
-    public function getRank()
+    public function getRank(): int
     {
         return $this->rank;
     }
@@ -565,8 +515,6 @@ class MultimediaObject
 
     /**
      * Set I18n title.
-     *
-     * @param array $title
      */
     public function setI18nTitle(array $title)
     {
@@ -618,8 +566,6 @@ class MultimediaObject
 
     /**
      * Set I18n subtitle.
-     *
-     * @param array $subtitle
      */
     public function setI18nSubtitle(array $subtitle)
     {
@@ -671,8 +617,6 @@ class MultimediaObject
 
     /**
      * Set I18n description.
-     *
-     * @param array $description
      */
     public function setI18nDescription(array $description)
     {
@@ -744,8 +688,6 @@ class MultimediaObject
 
     /**
      * Set I18n line2.
-     *
-     * @param array $line2
      */
     public function setI18nLine2(array $line2)
     {
@@ -891,8 +833,6 @@ class MultimediaObject
 
     /**
      * Set series.
-     *
-     * @param Series $series
      */
     public function setSeries(Series $series)
     {
@@ -943,8 +883,6 @@ class MultimediaObject
 
     /**
      * Set embedded broadcast.
-     *
-     * @param EmbeddedBroadcast $embeddedBroadcast
      */
     public function setEmbeddedBroadcast(EmbeddedBroadcast $embeddedBroadcast)
     {
@@ -963,8 +901,6 @@ class MultimediaObject
 
     /**
      * Set embeddedEvent.
-     *
-     * @param EmbeddedEvent $embeddedEvent
      */
     public function setEmbeddedEvent(EmbeddedEvent $embeddedEvent)
     {
@@ -987,17 +923,12 @@ class MultimediaObject
         $this->embeddedSegments = $embeddedSegments;
     }
 
-    /**
-     * @param EmbeddedSegment $embeddedSegment
-     */
     public function addEmbeddedSegment(EmbeddedSegment $embeddedSegment)
     {
         $this->embeddedSegments[] = $embeddedSegment;
     }
 
     /**
-     * @param EmbeddedSegment $embeddedSegment
-     *
      * @return bool
      */
     public function removeEmbeddedSegment(EmbeddedSegment $embeddedSegment)
@@ -1050,8 +981,6 @@ class MultimediaObject
 
     /**
      * Set embedded social.
-     *
-     * @param EmbeddedSocial $embeddedSocial
      */
     public function setEmbeddedSocial(EmbeddedSocial $embeddedSocial)
     {
@@ -1173,8 +1102,6 @@ class MultimediaObject
      * The original string tag logic used array_intersect and count to check it.
      * This function uses doctrine2 arrayCollection contains function instead.
      *
-     * @param array $tags
-     *
      * @return bool TRUE if this multimedia_object contained all tags, FALSE otherwise
      */
     public function containsAllTags(array $tags)
@@ -1192,8 +1119,6 @@ class MultimediaObject
      * Contains all tags with codes
      * The original string tag logic used array_intersect and count to check it.
      * This function uses doctrine2 arrayCollection contains function instead.
-     *
-     * @param array $tagCodes
      *
      * @return bool TRUE if this multimedia_object contained all tags, FALSE otherwise
      */
@@ -1213,8 +1138,6 @@ class MultimediaObject
      * The original string tag logic used array_intersect and count to check it.
      * This function uses doctrine2 arrayCollection contains function instead.
      *
-     * @param array $tags
-     *
      * @return bool TRUE if this multimedia_object contained any tag of the list, FALSE otherwise
      */
     public function containsAnyTag(array $tags)
@@ -1233,8 +1156,6 @@ class MultimediaObject
      * The original string tag logic used array_intersect and count to check it.
      * This function uses doctrine2 arrayCollection contains function instead.
      *
-     * @param array $tagCodes
-     *
      * @return bool TRUE if this multimedia_object contained any tag of the list, FALSE otherwise
      */
     public function containsAnyTagWithCodes(array $tagCodes)
@@ -1252,8 +1173,6 @@ class MultimediaObject
 
     /**
      * Add track.
-     *
-     * @param Track $track
      */
     public function addTrack(Track $track)
     {
@@ -1266,8 +1185,6 @@ class MultimediaObject
 
     /**
      * Remove track.
-     *
-     * @param Track $track
      */
     public function removeTrack(Track $track)
     {
@@ -1312,8 +1229,6 @@ class MultimediaObject
 
     /**
      * Contains track.
-     *
-     * @param Track $track
      *
      * @return bool
      */
@@ -1391,8 +1306,6 @@ class MultimediaObject
     /**
      * Get tracks with all tags.
      *
-     * @param array $tags
-     *
      * @return array
      */
     public function getTracksWithAllTags(array $tags)
@@ -1411,8 +1324,6 @@ class MultimediaObject
     /**
      * Get tracks with all tags.
      *
-     * @param array $tags
-     *
      * @return Track|null
      */
     public function getTrackWithAllTags(array $tags)
@@ -1428,8 +1339,6 @@ class MultimediaObject
 
     /**
      * Get tracks with any tag.
-     *
-     * @param array $tags
      *
      * @return array
      */
@@ -1448,8 +1357,6 @@ class MultimediaObject
 
     /**
      * Get track with any tag.
-     *
-     * @param array $tags
      *
      * @return Track|null
      */
@@ -1523,11 +1430,7 @@ class MultimediaObject
     /**
      * Get filtered tracks with tags.
      *
-     * @param array $any_tags
-     * @param array $all_tags
-     * @param array $not_any_tags
-     * @param array $not_all_tags
-     * @param bool  $all
+     * @param bool $all
      *
      * @return array
      */
@@ -1561,11 +1464,7 @@ class MultimediaObject
     /**
      * Get filtered track with tags.
      *
-     * @param array $any_tags
-     * @param array $all_tags
-     * @param array $not_any_tags
-     * @param array $not_all_tags
-     * @param bool  $all
+     * @param bool $all
      *
      * @return Track|null
      */
@@ -1683,18 +1582,10 @@ class MultimediaObject
         return false;
     }
 
-    /**
-     * Contains person with role.
-     *
-     * @param EmbeddedPerson|Person $person
-     * @param EmbeddedRole|Role     $role
-     *
-     * @return bool
-     */
-    public function containsPersonWithRole($person, $role)
+    public function containsPersonWithRole(PersonInterface $person, RoleInterface $role): bool
     {
         foreach ($this->getPeopleByRole($role, true) as $embeddedPerson) {
-            if ($person->getId() == $embeddedPerson->getId()) {
+            if ($person->getId() === $embeddedPerson->getId()) {
                 return true;
             }
         }
@@ -1702,15 +1593,7 @@ class MultimediaObject
         return false;
     }
 
-    /**
-     * Contains person with all roles.
-     *
-     * @param EmbeddedPerson|Person $person
-     * @param array                 $roles
-     *
-     * @return bool
-     */
-    public function containsPersonWithAllRoles($person, array $roles)
+    public function containsPersonWithAllRoles(PersonInterface $person, array $roles): bool
     {
         foreach ($roles as $role) {
             if (!($this->containsPersonWithRole($person, $role))) {
@@ -1721,15 +1604,7 @@ class MultimediaObject
         return true;
     }
 
-    /**
-     * Contains person with any role.
-     *
-     * @param EmbeddedPerson|Person $person
-     * @param array                 $roles
-     *
-     * @return bool
-     */
-    public function containsPersonWithAnyRole($person, array $roles)
+    public function containsPersonWithAnyRole(PersonInterface $person, array $roles): bool
     {
         foreach ($roles as $role) {
             if ($this->containsPersonWithRole($person, $role)) {
@@ -1792,13 +1667,7 @@ class MultimediaObject
         return $aux;
     }
 
-    /**
-     * Add Person with Role.
-     *
-     * @param EmbeddedPerson|Person $person
-     * @param EmbeddedRole|Role     $role
-     */
-    public function addPersonWithRole($person, $role)
+    public function addPersonWithRole(PersonInterface $person, RoleInterface $role): void
     {
         if (!($this->containsPersonWithRole($person, $role))) {
             if ($embeddedRole = $this->getEmbeddedRole($role)) {
@@ -1902,14 +1771,7 @@ class MultimediaObject
         }
     }
 
-    /**
-     * Get embedded role.
-     *
-     * @param EmbeddedRole|Role $role
-     *
-     * @return bool|EmbeddedRole EmbeddedRole if found, FALSE otherwise
-     */
-    public function getEmbeddedRole($role)
+    public function getEmbeddedRole(RoleInterface $role)
     {
         foreach ($this->people as $embeddedRole) {
             if ($role->getCod() === $embeddedRole->getCod()) {
@@ -1920,23 +1782,13 @@ class MultimediaObject
         return false;
     }
 
-    /**
-     * Create embedded role.
-     *
-     * @param EmbeddedRole|Role $role
-     *
-     * @return EmbeddedRole
-     */
-    public function createEmbeddedRole($role)
+    public function createEmbeddedRole(RoleInterface $role): EmbeddedRole
     {
         if ($role instanceof EmbeddedRole) {
             return $role;
         }
-        if ($role instanceof Role) {
-            return new EmbeddedRole($role);
-        }
 
-        throw new \InvalidArgumentException('Only Role or EmbeddedRole are allowed.');
+        return new EmbeddedRole($role);
     }
 
     /**
@@ -1956,8 +1808,6 @@ class MultimediaObject
     /**
      * Contains group.
      *
-     * @param Group $group
-     *
      * @return bool
      */
     public function containsGroup(Group $group)
@@ -1968,8 +1818,6 @@ class MultimediaObject
     /**
      * add admin group.
      *
-     * @param Group $group
-     *
      * @return bool
      */
     public function addGroup(Group $group)
@@ -1979,8 +1827,6 @@ class MultimediaObject
 
     /**
      * Remove admin group.
-     *
-     * @param Group $group
      */
     public function removeGroup(Group $group)
     {

@@ -25,9 +25,7 @@ class MenuService
     /**
      * MenuService constructor.
      *
-     * @param DocumentManager             $documentManager
-     * @param EmbeddedEventSessionService $eventSessionService
-     * @param Event[]                     $advanceEvents
+     * @param Event[] $advanceEvents
      */
     public function __construct(DocumentManager $documentManager, EmbeddedEventSessionService $eventSessionService, $advanceEvents)
     {
@@ -64,13 +62,14 @@ class MenuService
         $nowOrFuture = false;
         foreach ($events as $event) {
             foreach ($event['data'] as $sessionData) {
-                $sec = $sessionData['session']['ends']->sec;
+                $sec = $sessionData['session']['ends']->toDateTime()->format('U');
                 $date = new \DateTime();
                 $ends = $date->setTimestamp($sec);
                 if (new \DateTime() < $ends) {
                     $nowOrFuture = true;
                 }
-                $sessionStart = $sessionData['session']['start']->sec;
+
+                $sessionStart = $sessionData['session']['start']->toDateTime()->format('U');
                 $todayEnds = strtotime(date('Y-m-d H:i:s', mktime(23, 59, 59, date('m'), date('d'), date('Y'))));
                 if ($sessionStart > $todayEnds) {
                     $nowOrFuture = false;

@@ -2,25 +2,19 @@
 
 namespace Pumukit\CoreBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class AuthController.
- */
-class AuthController extends Controller implements WebTVControllerInterface
+class AuthController extends AbstractController implements WebTVControllerInterface
 {
     /**
      * @Route("/auth", name="pumukit_auth")
      */
-    public function changeAction(Request $request): RedirectResponse
+    public function changeAction(Request $request, SessionInterface $session): RedirectResponse
     {
-        /** @var SessionInterface */
-        $session = $this->get('session');
-
         if (!$session->has('target_path')) {
             $referer = $request->headers->get('referer', '/');
             $session->set('target_path', $request->query->get('referer', $referer));

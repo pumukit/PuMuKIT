@@ -18,78 +18,62 @@ class MultimediaObjectPropertyJobService
         $this->dm = $documentManager;
     }
 
-    public function addJob(MultimediaObject $multimediaObject, Job $job)
+    public function addJob(MultimediaObject $multimediaObject, Job $job): void
     {
         $this->addPropertyInArray($multimediaObject, 'pending_jobs', $job->getId());
     }
 
-    public function executeJob(MultimediaObject $multimediaObject, Job $job)
+    public function setJobAsExecuting(MultimediaObject $multimediaObject, Job $job): void
     {
         if ($this->delPropertyInArray($multimediaObject, 'pending_jobs', $job->getId())) {
             $this->addPropertyInArray($multimediaObject, 'executing_jobs', $job->getId());
         }
     }
 
-    public function finishJob(MultimediaObject $multimediaObject, Job $job)
+    public function finishJob(MultimediaObject $multimediaObject, Job $job): void
     {
         if ($this->delPropertyInArray($multimediaObject, 'executing_jobs', $job->getId())) {
             $this->addPropertyInArray($multimediaObject, 'finished_jobs', $job->getId());
         }
     }
 
-    public function errorJob(MultimediaObject $multimediaObject, Job $job)
+    public function errorJob(MultimediaObject $multimediaObject, Job $job): void
     {
         if ($this->delPropertyInArray($multimediaObject, 'executing_jobs', $job->getId())) {
             $this->addPropertyInArray($multimediaObject, 'error_jobs', $job->getId());
         }
     }
 
-    public function retryJob(MultimediaObject $multimediaObject, Job $job)
+    public function retryJob(MultimediaObject $multimediaObject, Job $job): void
     {
         if ($this->delPropertyInArray($multimediaObject, 'error_jobs', $job->getId())) {
             $this->addPropertyInArray($multimediaObject, 'pending_jobs', $job->getId());
         }
     }
 
-    private function addPropertyInArray(MultimediaObject $multimediaObject, $key, $value)
+    private function addPropertyInArray(MultimediaObject $multimediaObject, string $key, string $value): void
     {
-        $this->dm->createQueryBuilder(MultimediaObject::class)
-            ->updateMany()
-            ->field('properties.'.$key)->push($value)
-            ->field('_id')->equals($multimediaObject->getId())
-            ->getQuery()
-            ->execute()
-        ;
+        $propertyData = $multimediaObject->getProperty($key);
+        $propertyData[] = $value;
+        $multimediaObject->setProperty($key, $propertyData);
+        $this->dm->flush();
     }
 
-    private function delPropertyInArray(MultimediaObject $multimediaObject, $key, $value)
+    private function delPropertyInArray(MultimediaObject $multimediaObject, string $key, string $value): bool
     {
-        //Try to delete all the property if is the last job in this state.
-        $out = $this->dm->createQueryBuilder(MultimediaObject::class)
-            ->updateMany()
-            ->field('properties.'.$key)->unsetField()
-            ->field('_id')->equals($multimediaObject->getId())
-            ->field('properties.'.$key)->equals([$value])
-            ->getQuery()
-            ->execute()
-        ;
+        if (($propertyValue = $multimediaObject->getProperty($key))) {
+            $positionValue = array_search($value, $propertyValue, true);
+            if (false !== $positionValue) {
+                unset($propertyValue[$positionValue]);
+                if (0 === count($propertyValue)) {
+                    $multimediaObject->removeProperty($key);
+                } else {
+                    $multimediaObject->setProperty($key, array_values($propertyValue));
+                }
+                $this->dm->flush();
 
-        if ((isset($out['nModified']) && 1 == $out['nModified']) || (isset($out['n']) && 1 == $out['n'])) {
-            return true;
-        }
-
-        // If not delete job from the property
-        $out = $this->dm->createQueryBuilder(MultimediaObject::class)
-            ->updateMany()
-            ->field('properties.'.$key)->pull($value)
-            ->field('_id')->equals($multimediaObject->getId())
-            ->field('properties.'.$key)->equals($value)
-            ->getQuery()
-            ->execute()
-        ;
-
-        if ((isset($out['nModified']) && 1 == $out['nModified']) || (isset($out['n']) && 1 == $out['n'])) {
-            return true;
+                return true;
+            }
         }
 
         return false;

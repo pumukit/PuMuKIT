@@ -9,75 +9,67 @@
 
 namespace Pumukit\SchemaBundle\Tests\Other;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class MultimediaObjectInSeriesTest extends WebTestCase
+class MultimediaObjectInSeriesTest extends PumukitTestCase
 {
-    private $dm;
     private $seriesRepo;
     private $mmobjRepo;
     private $factoryService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
+        parent::setUp();
         $container = static::$kernel->getContainer();
         $this->factoryService = $container->get('pumukitschema.factory');
-        $this->dm = $container->get('doctrine_mongodb')->getManager();
         $this->seriesRepo = $this->dm->getRepository(Series::class);
         $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
-
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
         $this->factoryService = null;
-        $this->dm = null;
+
         $this->seriesRepo = null;
         $this->mmobjRepo = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testCreateNewMultimediaObject()
     {
         $series = $this->factoryService->createSeries();
+        $this->dm->persist($series);
 
         $this->factoryService->createMultimediaObject($series);
 
         $coll_mms = $this->seriesRepo->getMultimediaObjects($series);
 
-        //echo "Assert\n";
-        $this->assertEquals(1, count($coll_mms));
+        static::assertCount(1, $coll_mms);
 
-        //echo "Foreach\n";
         $i = 0;
         foreach ($coll_mms as $mm) {
             ++$i;
-            //echo "\t - ", $mm->getId(), "\n";
         }
-        $this->assertEquals(1, $i);
+        static::assertEquals(1, $i);
     }
 
-    public function testRelationSimple()
+    public function testRelationSimple(): void
     {
         $series1 = $this->factoryService->createSeries();
-        $mm11 = $this->factoryService->createMultimediaObject($series1);
-        $mm12 = $this->factoryService->createMultimediaObject($series1);
-        $mm13 = $this->factoryService->createMultimediaObject($series1);
+        $this->factoryService->createMultimediaObject($series1);
+        $this->factoryService->createMultimediaObject($series1);
+        $this->factoryService->createMultimediaObject($series1);
 
-        $id = $series1->getId();
         $this->dm->clear();
 
         $i = 0;
@@ -86,6 +78,6 @@ class MultimediaObjectInSeriesTest extends WebTestCase
                 ++$i;
             }
         }
-        $this->assertEquals(3, $i);
+        static::assertEquals(3, $i);
     }
 }

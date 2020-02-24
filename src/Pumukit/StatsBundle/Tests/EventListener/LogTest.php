@@ -3,61 +3,40 @@
 namespace Pumukit\StatsBundle\Tests\EventListener;
 
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\StatsBundle\Document\ViewsLog;
 use Pumukit\StatsBundle\EventListener\Log;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @internal
  * @coversNothing
  */
-class LogTest extends WebTestCase
+class LogTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
     private $factoryService;
     private $tokenStorage;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
-        $this->repo = $this->dm
-            ->getRepository(ViewsLog::class)
-        ;
-        $this->factoryService = static::$kernel->getContainer()
-            ->get('pumukitschema.factory')
-        ;
-        $this->tokenStorage = static::$kernel->getContainer()
-            ->get('security.token_storage')
-        ;
-
-        $this->dm->getDocumentCollection(ViewsLog::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove([])
-        ;
-        $this->dm->getDocumentCollection(Series::class)
-            ->remove([])
-        ;
+        parent::setUp();
+        $this->repo = $this->dm->getRepository(ViewsLog::class);
+        $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
+        $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
-        $this->dm = null;
+        parent::tearDown();
+
         $this->repo = null;
         $this->factoryService = null;
         $this->tokenStorage = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testonMultimediaObjectViewed()
@@ -67,7 +46,7 @@ class LogTest extends WebTestCase
 
         $event = $this->createEvent();
         $service->onMultimediaObjectViewed($event);
-        $this->assertEquals(1, count($this->repo->findAll()));
+        static::assertCount(1, $this->repo->findAll());
     }
 
     public function testonMultimediaObjectWithoutTrackViewed()
@@ -77,14 +56,14 @@ class LogTest extends WebTestCase
 
         $event = $this->createEvent(false);
         $service->onMultimediaObjectViewed($event);
-        $this->assertEquals(1, count($this->repo->findAll()));
+        static::assertCount(1, $this->repo->findAll());
     }
 
     private function createMockRequestStack()
     {
         $request = Request::create('/');
         $requestStack = $this->getMockBuilder('Symfony\Component\HttpFoundation\RequestStack')->getMock();
-        $requestStack->expects($this->once())->method('getMasterRequest')->will($this->returnValue($request));
+        $requestStack->expects(static::once())->method('getMasterRequest')->willReturn($request);
 
         return $requestStack;
     }

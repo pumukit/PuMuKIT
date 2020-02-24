@@ -19,7 +19,7 @@ class LinkTest extends TestCase
         $link = new Link();
         $link->setName($name);
 
-        $this->assertEquals($name, $link->getName());
+        static::assertEquals($name, $link->getName());
 
         $nameEs = 'nombre';
         $localeEs = 'es';
@@ -28,11 +28,11 @@ class LinkTest extends TestCase
 
         $link->setI18nName($nameI18n);
 
-        $this->assertEquals($nameI18n, $link->getI18nName());
+        static::assertEquals($nameI18n, $link->getI18nName());
 
         $name = null;
 
         $link->setName($name);
-        $this->assertEquals($name, $link->getName());
+        static::assertEquals($name, $link->getName());
     }
 }

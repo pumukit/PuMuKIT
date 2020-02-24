@@ -18,10 +18,6 @@ class MaterialEvent extends Event
      */
     protected $material;
 
-    /**
-     * @param MultimediaObject $multimediaObject
-     * @param Material         $material
-     */
     public function __construct(MultimediaObject $multimediaObject, Material $material)
     {
         $this->multimediaObject = $multimediaObject;

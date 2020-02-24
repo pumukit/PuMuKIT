@@ -1,7 +1,7 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 <div id="pic_list_thumbnails">
   {% set event_poster = (is_event_poster is defined ? is_event_poster : false) %}
-  {% for index,pic in resource.getPics() if (event_poster and pic.containsTag('poster') or (not event_poster and not pic.containsTag('poster'))) %}
+  {% for index,pic in resource.getPics() | filter(pic => event_poster and pic.containsTag('poster') or (not event_poster and not pic.containsTag('poster'))) %}
   <div style="float: left; padding : 10px; ">
     <div style="padding: 10px; float:left; text-align : center">
       <div class="wrap0"><div class="wrap1"><div class="wrap2"><div class="wrap3">

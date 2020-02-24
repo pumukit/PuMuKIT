@@ -2,9 +2,11 @@
 
 namespace Pumukit\SchemaBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\CoreBundle\Services\SerializerService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,14 +14,16 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/api/keywords")
  */
-class APIKeywordsController extends Controller
+class APIKeywordsController extends AbstractController
 {
     /**
      * @Route("/series.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
      */
-    public function seriesAction(Request $request)
+    public function seriesAction(Request $request, DocumentManager $documentManager, SerializerService $serializer)
     {
         return $this->base(
+            $documentManager,
+            $serializer,
             Series::class,
             $request->getLocale(),
             $request->getRequestFormat(),
@@ -30,9 +34,11 @@ class APIKeywordsController extends Controller
     /**
      * @Route("/mmobj.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
      */
-    public function mmobjAction(Request $request)
+    public function mmobjAction(Request $request, DocumentManager $documentManager, SerializerService $serializer)
     {
         return $this->base(
+            $documentManager,
+            $serializer,
             MultimediaObject::class,
             $request->getLocale(),
             $request->getRequestFormat(),
@@ -40,13 +46,9 @@ class APIKeywordsController extends Controller
         );
     }
 
-    private function base($collName, $lang, $format = 'json', $limit = null)
+    private function base(DocumentManager $documentManager, SerializerService $serializer, $collName, $lang, $format = 'json', $limit = null)
     {
-        $coll = $this
-            ->get('doctrine_mongodb.odm.document_manager')
-            ->getDocumentCollection($collName)
-        ;
-        $serializer = $this->get('jms_serializer');
+        $coll = $documentManager->getDocumentCollection($collName);
 
         $pipeline = [
             ['$project' => ['k' => '$keywords.'.$lang, '_id' => false]],
@@ -60,8 +62,8 @@ class APIKeywordsController extends Controller
             $pipeline[] = ['$limit' => $limit];
         }
 
-        $kws = $coll->aggregate($pipeline, ['cursor' => []]);
-        $data = $serializer->serialize($kws->toArray(), $format);
+        $kws = iterator_to_array($coll->aggregate($pipeline, ['cursor' => []]));
+        $data = $serializer->dataSerialize($kws, $format);
 
         return new Response($data);
     }

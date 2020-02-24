@@ -1,0 +1,114 @@
+services:
+  _defaults:
+    autowire:      true
+    autoconfigure: true
+    public:        true
+    bind:
+      $columnsObjsAnnounces: '%columns_objs_announces%'
+      $menuAnnouncesTitle: '%menu.announces_title%'
+      $showLatestWithPudeNew: '%show_latest_with_pudenew%'
+      $useRecordDateAnnounce: '%use_record_date_announces%'
+      $categoriesListGeneralTag: '%categories.list_general_tags%'
+      $menuCategoriesTitle: '%menu.categories_title%'
+      $columnsObjsByTag: '%columns_objs_bytag%'
+      $pumukitLiveChatEnable: '%pumukit_live.chat.enable%'
+      $pumukitLiveChatUpdateInterval: '%pumukit_live.chat.update_interval%'
+      $captchaPublicKey: '%captcha_public_key%'
+      $captchaPrivateKey: '%captcha_private_key%'
+      $pumukitLiveEventContactAndShare: '%liveevent_contact_and_share%'
+      $pumukitIntro: '%pumukit.intro%'
+      $pumukitNotificationSenderEmail: '%pumukit_notification.sender_email%'
+      $pumukitInfo: '%pumukit.info%'
+      $pumukitNewAdminAdvanceLiveEventCreateDefaultPic: '%pumukit_new_admin.advance_live_event_create_default_pic%'
+      $columnsObjsEvent: '%columns_objs_event%'
+      $pumukitLiveTwitterEnable: '%pumukit_live.twitter.enable%'
+      $pumukitNewAdminAdvanceLiveEvent: '%pumukit_new_admin.advance_live_event%'
+      $menuShowStats: '%menu.show_stats%'
+      $scrollListByUser: '%scroll_list_byuser%'
+      $columnsObjsByUser: '%columns_objs_byuser%'
+      $limitObjsByUser: '%limit_objs_byuser%'
+      $pumukitSchemaPersonalScopeRoleCode: '%pumukitschema.personal_scope_role_code%'
+      $scrollListByTag: '%scroll_list_bytag%'
+      $limitObjsByTag: '%limit_objs_bytag%'
+      $menuMediatecaTitle: '%menu.mediateca_title%'
+      $pumukitWebTVMediaLibraryFilterTags: '%pumukit_web_tv.media_library.filter_tags%'
+      $catalogueThumbnails: '%catalogue_thumbnails%'
+      $columnsObjsCatalogue: '%columns_objs_catalogue%'
+      $byTagBlockObjectsByCol: '%bytagblock.objects_by_col%'
+      $limitObjsMostViewed: '%limit_objs_mostviewed%'
+      $showMostViewedLastMonth: '%show_mostviewed_lastmonth%'
+      $mostViewedObjectsByCol: '%mostviewed.objects_by_col%'
+      $limitObjsHightlight: '%limit_objs_hightlight%'
+      $hightlightObjectsByCol: '%hightlight.objects_by_col%'
+      $menuHomeTitle: '%menu.home_title%'
+      $menuSearchTitle: '%menu.search_title%'
+      $limitObjsLiveBlock: '%limit_objs_live_block%'
+      $liveBlockObjectsByCol: '%live_block.objects_by_col%'
+      $locales: '%pumukit.locales%'
+      $limitObjsRecentlyAdded: '%limit_objs_recentlyadded%'
+      $recentlyAddedObjectsByCol: '%recentlyadded.objects_by_col%'
+      $limitObjsPlayerSeries: '%limit_objs_player_series%'
+      $pumukitFullMagicUrl: '%pumukit_core.full_magic_url'
+      $cinemaMode: '%pumukit_web_tv.cinema_mode%'
+      $columnsObjsSearch: '%columns_objs_search%'
+      $pumukitNewAdminLicenses: '%pumukit_new_admin.licenses%'
+      $limitObjsSearch: '%limit_objs_search%'
+      $limitObjsSeries: '%limit_objs_series%'
+
+
+  Pumukit\WebTVBundle\Controller\:
+    resource: '../../src/Pumukit/WebTVBundle/Controller/'
+    tags: ['controller.service_arguments']
+
+  Pumukit\WebTVBundle\Services\BreadcrumbsService:
+    class: Pumukit\WebTVBundle\Services\BreadcrumbsService
+    arguments:
+      $allTitle:  '%pumukit_web_tv.breadcrumbs_all_title%'
+      $allRoute:  '%pumukit_web_tv.breadcrumbs_all_route%'
+      $homeTitle: '%breadcrumbs_home_title%'
+      $parentWeb: '%pumukit_web_tv.breadcrumbs_parentweb%'
+
+  Pumukit\WebTVBundle\Services\ChannelService:
+    class: Pumukit\WebTVBundle\Services\ChannelService
+
+  Pumukit\WebTVBundle\Services\CategoriesService:
+    class: Pumukit\WebTVBundle\Services\CategoriesService
+    arguments:
+      $parentCod:        '%categories_tag_cod%'
+      $listGeneralParam: '%categories.list_general_tags%'
+
+  Pumukit\WebTVBundle\Services\ChapterMarkService:
+    class: Pumukit\WebTVBundle\Services\ChapterMarkService
+
+  Pumukit\WebTVBundle\Services\LinkService:
+    class: Pumukit\WebTVBundle\Services\LinkService
+    arguments:
+      $linkTagToSearch: '%pumukit_web_tv.linktagtosearch%'
+
+  Pumukit\WebTVBundle\Services\ListService:
+    class: Pumukit\WebTVBundle\Services\ListService
+    arguments:
+      $advanceLiveEvents: '%pumukit_new_admin.advance_live_event%'
+      $wallTag:           '%wall_block.wall_tag%'
+
+  Pumukit\WebTVBundle\Services\MenuService:
+    class: Pumukit\WebTVBundle\Services\MenuService
+    arguments:
+      $advanceEvents: '%pumukit_new_admin.advance_live_event%'
+
+  Pumukit\WebTVBundle\Services\SearchService:
+    class: Pumukit\WebTVBundle\Services\SearchService
+    arguments:
+      $parentTagCod:         '%search.parent_tag.cod%'
+      $parentTagCodOptional: '%search.parent_tag_2.cod%'
+
+  Pumukit\WebTVBundle\Twig\MongoDateExtension:
+    class: Pumukit\WebTVBundle\Twig\MongoDateExtension
+
+  Pumukit\WebTVBundle\Twig\BootstrapExtension:
+    class: Pumukit\WebTVBundle\Twig\BootstrapExtension
+
+  Pumukit\WebTVBundle\Twig\PumukitExtension:
+    class: Pumukit\WebTVBundle\Twig\PumukitExtension
+    arguments:
+      $defaultPic: '%pumukit_web_tv.default_pic%'

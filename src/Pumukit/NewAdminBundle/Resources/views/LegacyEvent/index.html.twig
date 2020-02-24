@@ -1,4 +1,4 @@
-{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+{% extends '@PumukitNewAdmin/layout.html.twig' %}
 
 {% block body %}
 
@@ -13,7 +13,7 @@
             <div class="col-md-10">
                 <div class="well">
                     <div id="list_events">
-                        {% include 'PumukitNewAdminBundle:LegacyEvent:list.html.twig' %}
+                        {% include '@PumukitNewAdmin/LegacyEvent/list.html.twig' %}
                     </div>
                     <div class="row">
                         <div class="col-xs-4">
@@ -37,7 +37,7 @@
                         {% trans %}Select any live event.{% endtrans %}
                     {% endif %}
                 </div>
-                {% include 'PumukitNewAdminBundle:LegacyEvent:filters.html.twig' %}
+                {% include '@PumukitNewAdmin/LegacyEvent/filters.html.twig' %}
             </div>
         {% else %}
             <div class="col-md-12">

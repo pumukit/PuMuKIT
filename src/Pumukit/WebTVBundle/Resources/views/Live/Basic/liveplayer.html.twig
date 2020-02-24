@@ -1,7 +1,7 @@
 {% set id = random() %}
 
-{% include "PumukitBaseLivePlayerBundle::player.html.twig" with {'advance_live_events' : false } %}
+{% include "@PumukitBaseLivePlayer/player.html.twig" with {'advance_live_events' : false } %}
 
 <script type="text/javascript">
-    {% include "PumukitBaseLivePlayerBundle:Default:player.js.twig" %}
+    {% include "@PumukitBaseLivePlayer/Default/player.js.twig" %}
 </script>

@@ -20,8 +20,6 @@ class ChapterMarkService
     }
 
     /**
-     * @param MultimediaObject $multimediaObject
-     *
      * @throws \MongoException
      *
      * @return array

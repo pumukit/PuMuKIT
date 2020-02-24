@@ -31,10 +31,12 @@ class PersonRepository extends DocumentRepository
             ->getRepository(MultimediaObject::class)
         ;
         foreach ($people as $person) {
-            $mms = $mmobjRepo->findByPersonIdWithRoleCod($person->getId(), $roleCode);
-            if ($mms->count() > 0) {
-                return $person;
+            $numberMms = $mmobjRepo->countByPersonIdWithRoleCod($person->getId(), $roleCode);
+            if ($numberMms <= 0) {
+                continue;
             }
+
+            return $person;
         }
 
         return null;

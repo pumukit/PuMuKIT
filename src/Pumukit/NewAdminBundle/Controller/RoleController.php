@@ -2,48 +2,82 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\NewAdminBundle\Form\Type\RoleType;
 use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\SchemaBundle\Services\GroupService;
+use Pumukit\SchemaBundle\Services\PersonService;
+use Pumukit\SchemaBundle\Services\RoleService;
+use Pumukit\SchemaBundle\Services\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_ROLES')")
  */
-class RoleController extends SortableAdminController implements NewAdminControllerInterface
+class RoleController extends SortableAdminController
 {
     public static $resourceName = 'role';
     public static $repoName = Role::class;
+    /** @var PersonService */
+    protected $personService;
+    /** @var TranslatorInterface */
+    protected $translator;
+    /** @var RoleService */
+    protected $roleService;
+    /** @var ValidatorInterface */
+    private $validator;
+
+    public function __construct(
+        DocumentManager $documentManager,
+        PaginationService $paginationService,
+        FactoryService $factoryService,
+        GroupService $groupService,
+        UserService $userService,
+        SessionInterface $session,
+        PersonService $personService,
+        TranslatorInterface $translator,
+        RoleService $roleService,
+        ValidatorInterface $validator
+    ) {
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
+        $this->personService = $personService;
+        $this->translator = $translator;
+        $this->roleService = $roleService;
+        $this->session = $session;
+        $this->validator = $validator;
+    }
 
     /**
-     * Update role.
-     *
-     * @Template("PumukitNewAdminBundle:Role:update.html.twig")
+     * @Template("@PumukitNewAdmin/Role/update.html.twig")
      */
     public function updateAction(Request $request)
     {
-        $personService = $this->get('pumukitschema.person');
-        $role = $personService->findRoleById($request->get('id'));
+        $role = $this->personService->findRoleById($request->get('id'));
 
-        $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $form = $this->createForm(RoleType::class, $role, ['translator' => $translator, 'locale' => $locale]);
+        $form = $this->createForm(RoleType::class, $role, ['translator' => $this->translator, 'locale' => $locale]);
 
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 try {
-                    $personService->updateRole($role);
+                    $this->personService->updateRole($role);
                 } catch (\Exception $e) {
                     return new JsonResponse(['status' => $e->getMessage()], 409);
                 }
 
                 return $this->redirect($this->generateUrl('pumukitnewadmin_role_list'));
             }
-            $errors = $this->get('validator')->validate($role);
+            $errors = $this->validator->validate($role);
             $textStatus = '';
             foreach ($errors as $error) {
                 $textStatus .= $error->getPropertyPath().' value '.$error->getInvalidValue().': '.$error->getMessage().'. ';
@@ -58,16 +92,11 @@ class RoleController extends SortableAdminController implements NewAdminControll
         ];
     }
 
-    /**
-     * Gets the list of resources according to a criteria.
-     *
-     * @param mixed $criteria
-     */
     public function getResources(Request $request, $criteria)
     {
         $sorting = $this->getSorting($request);
         $sorting['rank'] = 'asc';
-        $session = $this->get('session');
+        $session = $this->session;
         $session_namespace = 'admin/'.$this->getResourceName();
 
         $resources = $this->createPager($criteria, $sorting);
@@ -89,9 +118,6 @@ class RoleController extends SortableAdminController implements NewAdminControll
         return $resources;
     }
 
-    /**
-     * Delete action.
-     */
     public function deleteAction(Request $request)
     {
         $resource = $this->findOr404($request);
@@ -102,9 +128,9 @@ class RoleController extends SortableAdminController implements NewAdminControll
             return new Response("Can not delete role '".$resource->getName()."', There are Multimedia objects with this role. ", 409);
         }
 
-        $this->get('pumukitschema.factory')->deleteResource($resource);
-        if ($resourceId === $this->get('session')->get('admin/'.$resourceName.'/id')) {
-            $this->get('session')->remove('admin/'.$resourceName.'/id');
+        $this->factoryService->deleteResource($resource);
+        if ($resourceId === $this->session->get('admin/'.$resourceName.'/id')) {
+            $this->session->remove('admin/'.$resourceName.'/id');
         }
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
@@ -120,7 +146,6 @@ class RoleController extends SortableAdminController implements NewAdminControll
 
         $resourceName = $this->getResourceName();
 
-        $factory = $this->get('pumukitschema.factory');
         foreach ($ids as $id) {
             $resource = $this->find($id);
             if (0 !== $resource->getNumberPeopleInMultimediaObject()) {
@@ -128,12 +153,12 @@ class RoleController extends SortableAdminController implements NewAdminControll
             }
 
             try {
-                $factory->deleteResource($resource);
+                $this->factoryService->deleteResource($resource);
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
-            if ($id === $this->get('session')->get('admin/'.$resourceName.'/id')) {
-                $this->get('session')->remove('admin/'.$resourceName.'/id');
+            if ($id === $this->session->get('admin/'.$resourceName.'/id')) {
+                $this->session->remove('admin/'.$resourceName.'/id');
             }
         }
 
@@ -147,10 +172,8 @@ class RoleController extends SortableAdminController implements NewAdminControll
 
     public function exportRolesAction(): Response
     {
-        $roleService = $this->get('pumukit_schema.role');
-
         return new Response(
-            $roleService->exportAllToCsv(),
+            $this->roleService->exportAllToCsv(),
             Response::HTTP_OK,
             [
                 'Content-Disposition' => 'attachment; filename="roles_i18n.csv"',

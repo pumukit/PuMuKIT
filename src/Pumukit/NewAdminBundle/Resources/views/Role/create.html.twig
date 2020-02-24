@@ -4,7 +4,7 @@
 </div>
 <div class="modal-body">
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ROLES')) %}
-  {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
+  {% form_theme form '@PumukitNewAdmin/Themes/fields.html.twig' %}
   <form onsubmit="
                   $(this).find(':submit').prop('disabled', true);
                   $('#myModal').modal('hide');

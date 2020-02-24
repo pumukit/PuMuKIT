@@ -10,7 +10,7 @@ use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\EncoderBundle\Executor\ExecutorException;
 use Pumukit\EncoderBundle\Executor\LocalExecutor;
 use Pumukit\EncoderBundle\Executor\RemoteHTTPExecutor;
-use Pumukit\InspectionBundle\Services\InspectionServiceInterface;
+use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\User;
@@ -19,8 +19,10 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Process\ProcessBuilder;
+use Symfony\Component\Process\Process;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
 
 class JobService
 {
@@ -33,7 +35,6 @@ class JobService
     private $cpuService;
     private $inspectionService;
     private $tmpPath;
-    private $dispatcher;
     private $trackService;
     private $logger;
     private $environment;
@@ -42,12 +43,14 @@ class JobService
     private $inboxPath;
     private $binPath;
     private $deleteInboxFiles;
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
 
     public function __construct(
         DocumentManager $documentManager,
         ProfileService $profileService,
         CpuService $cpuService,
-        InspectionServiceInterface $inspectionService,
+        InspectionFfprobeService $inspectionService,
         EventDispatcherInterface $dispatcher,
         LoggerInterface $logger,
         TrackService $trackService,
@@ -69,7 +72,7 @@ class JobService
         $this->logger = $logger;
         $this->trackService = $trackService;
         $this->tokenStorage = $tokenStorage;
-        $this->dispatcher = $dispatcher;
+        $this->eventDispatcher = $dispatcher;
         $this->environment = $environment;
         $this->propService = $propService;
         $this->binPath = $binPath;
@@ -79,15 +82,13 @@ class JobService
     /**
      * Create track from local hard drive with job service. AddJob method wrapper.
      *
-     * @param MultimediaObject $multimediaObject
-     * @param UploadedFile     $trackFile
-     * @param array            $profile
-     * @param int              $priority
-     * @param string           $language
-     * @param array            $description
-     * @param array            $initVars
-     * @param int              $duration
-     * @param int              $flags
+     * @param array  $profile
+     * @param int    $priority
+     * @param string $language
+     * @param array  $description
+     * @param array  $initVars
+     * @param int    $duration
+     * @param int    $flags
      *
      * @throws \Exception
      *
@@ -113,15 +114,14 @@ class JobService
     /**
      * Create track from inbox on server with job service. AddJob method wrapper.
      *
-     * @param MultimediaObject $multimediaObject
-     * @param string           $trackUrl
-     * @param string           $profile
-     * @param int              $priority
-     * @param string           $language
-     * @param array            $description
-     * @param array            $initVars
-     * @param int              $duration
-     * @param int              $flags
+     * @param string $trackUrl
+     * @param string $profile
+     * @param int    $priority
+     * @param string $language
+     * @param array  $description
+     * @param array  $initVars
+     * @param int    $duration
+     * @param int    $flags
      *
      * @throws \Exception
      *
@@ -141,13 +141,12 @@ class JobService
     /**
      * Add job checking if not exists.
      *
-     * @param string           $pathFile
-     * @param string           $profile
-     * @param int              $priority
-     * @param MultimediaObject $multimediaObject
-     * @param string|null      $language
-     * @param array            $description
-     * @param array            $initVars
+     * @param string      $pathFile
+     * @param string      $profile
+     * @param int         $priority
+     * @param string|null $language
+     * @param array       $description
+     * @param array       $initVars
      *
      * @throws \Exception
      * @deprecated: Use addJob with JobService::ADD_JOB_UNIQUE flag.
@@ -160,15 +159,14 @@ class JobService
     /**
      * Add a encoder job.
      *
-     * @param string           $pathFile         Absolute path of the multimedia object
-     * @param string           $profileName      Encoder profile name
-     * @param int              $priority         Priority of the new job
-     * @param MultimediaObject $multimediaObject
-     * @param string           $language
-     * @param array            $description
-     * @param array            $initVars         Init values of the Job
-     * @param int              $duration         Only necesary in JobService::ADD_JOB_NOT_CHECKS
-     * @param int              $flags            A bit field of constants to customize the job creation: JobService::ADD_JOB_UNIQUE, JobService::ADD_JOB_NOT_CHECKS
+     * @param string $pathFile    Absolute path of the multimedia object
+     * @param string $profileName Encoder profile name
+     * @param int    $priority    Priority of the new job
+     * @param string $language
+     * @param array  $description
+     * @param array  $initVars    Init values of the Job
+     * @param int    $duration    Only necessary in JobService::ADD_JOB_NOT_CHECKS
+     * @param int    $flags       A bit field of constants to customize the job creation: JobService::ADD_JOB_UNIQUE, JobService::ADD_JOB_NOT_CHECKS
      *
      * @throws \Exception
      *
@@ -373,11 +371,11 @@ class JobService
     public function getAllJobsStatus()
     {
         return [
-            'paused' => count($this->repo->findWithStatus([Job::STATUS_PAUSED])),
-            'waiting' => count($this->repo->findWithStatus([Job::STATUS_WAITING])),
-            'executing' => count($this->repo->findWithStatus([Job::STATUS_EXECUTING])),
-            'finished' => count($this->repo->findWithStatus([Job::STATUS_FINISHED])),
-            'error' => count($this->repo->findWithStatus([Job::STATUS_ERROR])),
+            'paused' => $this->repo->countWithStatus([Job::STATUS_PAUSED]),
+            'waiting' => $this->repo->countWithStatus([Job::STATUS_WAITING]),
+            'executing' => $this->repo->countWithStatus([Job::STATUS_EXECUTING]),
+            'finished' => $this->repo->countWithStatus([Job::STATUS_FINISHED]),
+            'error' => $this->repo->countWithStatus([Job::STATUS_ERROR]),
         ];
     }
 
@@ -452,50 +450,23 @@ class JobService
         return $nextJobToExecute;
     }
 
-    /**
-     * @param Job $job
-     */
-    public function executeInBackground(Job $job)
+    public function executeInBackground(Job $job): void
     {
-        $pb = new ProcessBuilder();
-        // PHP wraps the process in "sh -c" by default, but we need to control
-        // the process directly.
-        /*
-          if ( ! defined('PHP_WINDOWS_VERSION_MAJOR')) {
-          $pb->add('exec');
-          }
-        */
+        $multimediaObject = $this->getMultimediaObject($job);
+        $this->propService->setJobAsExecuting($multimediaObject, $job);
 
-        $console = $this->binPath.'console';
+        $command = [
+            'php', "{$this->binPath}/console", sprintf('--env=%s', $this->environment), 'pumukit:encoder:job', $job->getId(),
+        ];
 
-        $pb
-            ->add('php')
-            ->add($console)
-            ->add(sprintf('--env=%s', $this->environment))
-            ;
-
-        $pb
-            ->add('pumukit:encoder:job')
-            ->add($job->getId())
-            ;
-
-        $process = $pb->getProcess();
+        $process = new Process($command);
 
         $command = $process->getCommandLine();
         $this->logger->info('[executeInBackground] CommandLine '.$command);
         shell_exec("nohup {$command} 1> /dev/null 2> /dev/null & echo $!");
-
-        //$process->disableOutput();
-        //$process->start();
-        //$process->run();
-        //dump($process->getOutput());
-        //dump($process->getErrorOutput());
-        //dump($process->getCommandLine());
     }
 
     /**
-     * @param Job $job
-     *
      * @throws \Exception
      */
     public function execute(Job $job)
@@ -515,8 +486,7 @@ class JobService
 
             //Throws exception when the multimedia object is not found.
             $multimediaObject = $this->getMultimediaObject($job);
-            //This does not 'executes' the job. This adds the 'executing job' property to the mmobj.
-            $this->propService->executeJob($multimediaObject, $job);
+            $this->propService->setJobAsExecuting($multimediaObject, $job);
             //Executes the job. It can throw exceptions if the executor has issues.
             $out = $executor->execute($commandLine, $cpu);
             $job->setOutput($out);
@@ -601,8 +571,6 @@ class JobService
      * Generates execution line replacing %1 %2 %3 by
      * in, out and cfg files
      *
-     * @param Job $job
-     *
      * @throws \Exception
      *
      * @return string commandLine
@@ -637,8 +605,8 @@ class JobService
             $vars['tmpfile'.$identifier] = $this->tmpPath.'/'.rand();
         }
 
-        $loader = new \Twig_Loader_Array(['bat' => $profile['bat']]);
-        $twig = new \Twig_Environment($loader);
+        $loader = new ArrayLoader(['bat' => $profile['bat']]);
+        $twig = new Environment($loader);
 
         $commandLine = $twig->render('bat', $vars);
         $this->logger->info('[renderBat] CommandLine: '.$commandLine);
@@ -652,8 +620,6 @@ class JobService
 
     /**
      * Set path end auto.
-     *
-     * @param Job $job
      *
      * @throws \Exception
      */
@@ -692,8 +658,6 @@ class JobService
     }
 
     /**
-     * @param Job $job
-     *
      * @throws \Exception
      *
      * @return Track
@@ -706,11 +670,10 @@ class JobService
     }
 
     /**
-     * @param string           $pathFile
-     * @param string           $profileName
-     * @param MultimediaObject $multimediaObject
-     * @param string|null      $language
-     * @param array            $description
+     * @param string      $pathFile
+     * @param string      $profileName
+     * @param string|null $language
+     * @param array       $description
      *
      * @throws \Exception
      *
@@ -735,12 +698,11 @@ class JobService
     }
 
     /**
-     * @param MultimediaObject $multimediaObject
-     * @param string           $pathEnd
-     * @param string           $profileName
-     * @param string|null      $language
-     * @param array            $description
-     * @param mixed|null       $pathFile
+     * @param string      $pathEnd
+     * @param string      $profileName
+     * @param string|null $language
+     * @param array       $description
+     * @param mixed|null  $pathFile
      *
      * @return Track
      */
@@ -817,8 +779,6 @@ class JobService
     /**
      * Retry job.
      *
-     * @param Job $job
-     *
      * @throws \Exception
      *
      * @return bool
@@ -849,9 +809,6 @@ class JobService
         return true;
     }
 
-    /**
-     * @param Job $job
-     */
     private function deleteTempFiles(Job $job)
     {
         if (false !== strpos($job->getPathIni(), $this->tmpPath)) {
@@ -864,7 +821,6 @@ class JobService
     /**
      * Change status of a given job.
      *
-     * @param Job $job
      * @param int $actualStatus
      * @param int $newStatus
      */
@@ -878,7 +834,6 @@ class JobService
     }
 
     /**
-     * @param array  $profile
      * @param string $dir
      * @param string $file
      * @param string $extension
@@ -909,8 +864,6 @@ class JobService
     }
 
     /**
-     * @param Job $job
-     *
      * @throws \Exception
      *
      * @return mixed|null
@@ -930,8 +883,6 @@ class JobService
     }
 
     /**
-     * @param Job $job
-     *
      * @throws \Exception
      *
      * @return mixed
@@ -953,9 +904,7 @@ class JobService
     /**
      * Emit an event to notify finished job.
      *
-     * @param bool       $success
-     * @param Job        $job
-     * @param Track|null $track
+     * @param bool $success
      *
      * @throws \Exception
      */
@@ -964,7 +913,7 @@ class JobService
         $multimediaObject = $this->getMultimediaObject($job);
 
         $event = new JobEvent($job, $track, $multimediaObject);
-        $this->dispatcher->dispatch($success ? EncoderEvents::JOB_SUCCESS : EncoderEvents::JOB_ERROR, $event);
+        $this->eventDispatcher->dispatch($event, $success ? EncoderEvents::JOB_SUCCESS : EncoderEvents::JOB_ERROR);
     }
 
     /**
@@ -998,8 +947,6 @@ class JobService
      * Get user email.
      *
      * Gets the email of the user who executed the job, if no session get the user info from other jobs of the same mm.
-     *
-     * @param Job|null $job
      */
     private function getUserEmail(Job $job = null)
     {

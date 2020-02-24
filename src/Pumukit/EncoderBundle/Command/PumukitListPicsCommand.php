@@ -2,12 +2,13 @@
 
 namespace Pumukit\EncoderBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Pumukit\EncoderBundle\Services\PicService;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class PumukitListPicsCommand extends ContainerAwareCommand
+class PumukitListPicsCommand extends Command
 {
     private $output;
     private $input;
@@ -19,6 +20,12 @@ class PumukitListPicsCommand extends ContainerAwareCommand
     private $type;
     private $picService;
     private $id;
+
+    public function __construct(PicService $picService)
+    {
+        $this->picService = $picService;
+        parent::__construct();
+    }
 
     protected function configure()
     {
@@ -63,13 +70,8 @@ EOT
         ;
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     */
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
-        $this->picService = $this->getContainer()->get('pumukitencoder.pic');
         $this->output = $output;
         $this->input = $input;
         $this->id = $this->input->getOption('id');
@@ -81,14 +83,6 @@ EOT
         $this->type = $this->input->getOption('type');
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @throws \Exception
-     *
-     * @return bool|int|null
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $validInput = $this->checkInputOptions();
@@ -107,13 +101,10 @@ EOT
             $this->output->writeln('No pics found');
         }
 
-        return true;
+        return 0;
     }
 
-    /**
-     * @return array
-     */
-    private function checkInputOptions()
+    private function checkInputOptions(): array
     {
         $isValidInput = ['success' => true];
         if ($this->size && !is_string($this->size)) {
@@ -149,12 +140,7 @@ EOT
         return $isValidInput;
     }
 
-    /**
-     * @param array $data
-     *
-     * @return bool
-     */
-    private function showData($data)
+    private function showData(array $data): bool
     {
         if (empty($data['pics'])) {
             $this->output->writeln('No pics found');

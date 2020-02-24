@@ -2,27 +2,47 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\NewAdminBundle\Form\Type\TagType;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Services\TagService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_TAGS')")
  */
-class TagController extends Controller implements NewAdminControllerInterface
+class TagController extends AbstractController implements NewAdminControllerInterface
 {
+    /** @var DocumentManager */
+    private $documentManager;
+    /** @var TagService */
+    private $tagService;
+
+    /** @var TranslatorInterface */
+    private $translator;
+
+    public function __construct(
+        DocumentManager $documentManager,
+        TagService $tagService,
+        TranslatorInterface $translator
+    ) {
+        $this->documentManager = $documentManager;
+        $this->tagService = $tagService;
+        $this->translator = $translator;
+    }
+
     /**
-     * @Template("PumukitNewAdminBundle:Tag:index.html.twig")
+     * @Template("@PumukitNewAdmin/Tag/index.html.twig")
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $repo = $dm->getRepository(Tag::class);
+        $repo = $this->documentManager->getRepository(Tag::class);
 
         $root_name = 'ROOT';
         $root = $repo->findOneByCod($root_name);
@@ -39,21 +59,23 @@ class TagController extends Controller implements NewAdminControllerInterface
 
     /**
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag")
-     * @Template("PumukitNewAdminBundle::Tag:children.html.twig")
+     * @Template("@PumukitNewAdmin/Tag/children.html.twig")
      */
-    public function childrenAction(Tag $tag, Request $request)
+    public function childrenAction(Tag $tag)
     {
-        return ['tag' => $tag,
-            'children' => $tag->getChildren(), ];
+        return [
+            'tag' => $tag,
+            'children' => $tag->getChildren(),
+        ];
     }
 
     /**
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag")
      */
-    public function deleteAction(Tag $tag, Request $request)
+    public function deleteAction(Tag $tag)
     {
         try {
-            $this->get('pumukitschema.tag')->deleteTag($tag);
+            $this->tagService->deleteTag($tag);
         } catch (\Exception $e) {
             $msg = sprintf(
                 'Tag with children (%d) and multimedia objects (%d)',
@@ -69,18 +91,17 @@ class TagController extends Controller implements NewAdminControllerInterface
 
     /**
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag")
-     * @Template("PumukitNewAdminBundle:Tag:update.html.twig")
+     * @Template("@PumukitNewAdmin/Tag/update.html.twig")
      */
-    public function updateAction(Tag $tag, Request $request)
+    public function updateAction(Request $request, Tag $tag)
     {
-        $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $form = $this->createForm(TagType::class, $tag, ['translator' => $translator, 'locale' => $locale]);
+        $form = $this->createForm(TagType::class, $tag, ['translator' => $this->translator, 'locale' => $locale]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && ($request->isMethod('PUT') || $request->isMethod('POST'))) {
             try {
-                $this->get('pumukitschema.tag')->updateTag($tag);
+                $this->tagService->updateTag($tag);
             } catch (\Exception $e) {
                 return new JsonResponse(['status' => $e->getMessage()], JsonResponse::HTTP_CONFLICT);
             }
@@ -93,25 +114,22 @@ class TagController extends Controller implements NewAdminControllerInterface
 
     /**
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"id" = "parent"})
-     * @Template("PumukitNewAdminBundle:Tag:create.html.twig")
+     * @Template("@PumukitNewAdmin/Tag/create.html.twig")
      */
-    public function createAction(Tag $parent, Request $request)
+    public function createAction(Request $request, Tag $parent)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
         $tag = new Tag();
         $tag->setParent($parent);
 
-        $translator = $this->get('translator');
         $locale = $request->getLocale();
 
-        $form = $this->createForm(TagType::class, $tag, ['translator' => $translator, 'locale' => $locale]);
+        $form = $this->createForm(TagType::class, $tag, ['translator' => $this->translator, 'locale' => $locale]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && ($request->isMethod('PUT') || $request->isMethod('POST'))) {
             try {
-                $dm->persist($tag);
-                $dm->flush();
+                $this->documentManager->persist($tag);
+                $this->documentManager->flush();
             } catch (\Exception $e) {
                 return new JsonResponse(['status' => $e->getMessage()], JsonResponse::HTTP_CONFLICT);
             }
@@ -123,14 +141,11 @@ class TagController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * List action.
-     *
-     * @Template("PumukitNewAdminBundle:Tag:list.html.twig")
+     * @Template("@PumukitNewAdmin/Tag/list.html.twig")
      */
-    public function listAction(Request $request)
+    public function listAction()
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $repo = $dm->getRepository(Tag::class);
+        $repo = $this->documentManager->getRepository(Tag::class);
 
         $root_name = 'ROOT';
         $root = $repo->findOneByCod($root_name);
@@ -149,8 +164,7 @@ class TagController extends Controller implements NewAdminControllerInterface
 
     public function batchDeleteAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $repo = $dm->getRepository(Tag::class);
+        $repo = $this->documentManager->getRepository(Tag::class);
 
         $ids = $request->get('ids');
 
@@ -162,7 +176,7 @@ class TagController extends Controller implements NewAdminControllerInterface
         $tagsWithChildren = [];
         foreach ($ids as $id) {
             $tag = $repo->find($id);
-            if ($this->get('pumukitschema.tag')->canDeleteTag($tag)) {
+            if ($this->tagService->canDeleteTag($tag)) {
                 $tags[] = $tag;
             } else {
                 $tagsWithChildren[] = $tag;
@@ -178,9 +192,9 @@ class TagController extends Controller implements NewAdminControllerInterface
             return new JsonResponse(['status' => $message], JsonResponse::HTTP_CONFLICT);
         }
         foreach ($tags as $tag) {
-            $dm->remove($tag);
+            $this->documentManager->remove($tag);
         }
-        $dm->flush();
+        $this->documentManager->flush();
 
         $this->addFlash('success', 'delete');
 

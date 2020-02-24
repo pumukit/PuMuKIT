@@ -2,27 +2,42 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\SeriesStyle;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * Class SeriesStylesController.
- *
  * @Route ("/series/styles")
  * @Security("is_granted('ROLE_ACCESS_SERIES_STYLE')")
  */
-class SeriesStylesController extends Controller
+class SeriesStylesController extends AbstractController
 {
+    /** @var DocumentManager */
+    private $documentManager;
+    /** @var TranslatorInterface */
+    private $translator;
+    /** @var SessionInterface */
+    private $session;
+
+    public function __construct(DocumentManager $documentManager, TranslatorInterface $translator, SessionInterface $session)
+    {
+        $this->documentManager = $documentManager;
+        $this->translator = $translator;
+        $this->session = $session;
+    }
+
     /**
      * @Route("/", name="pumukit_newadmin_series_styles")
-     * @Template("PumukitNewAdminBundle:SeriesStyle:crud.html.twig")
+     * @Template("@PumukitNewAdmin/SeriesStyle/crud.html.twig")
      */
     public function menuAction()
     {
@@ -31,13 +46,11 @@ class SeriesStylesController extends Controller
 
     /**
      * @Route("/list", name="pumukit_newadmin_series_styles_list")
-     * @Template("PumukitNewAdminBundle:SeriesStyle:list.html.twig")
+     * @Template("@PumukitNewAdmin/SeriesStyle/list.html.twig")
      */
     public function listAction()
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
-
-        $styles = $dm->getRepository(SeriesStyle::class)->findAll();
+        $styles = $this->documentManager->getRepository(SeriesStyle::class)->findAll();
 
         usort($styles, function ($a, $b) {
             return strtolower($a->getName()) > strtolower($b->getName());
@@ -47,42 +60,30 @@ class SeriesStylesController extends Controller
     }
 
     /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     *
      * @Route("/create", name="pumukit_newadmin_series_styles_create")
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request): JsonResponse
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
-
         $style = new SeriesStyle();
         $style->setName($request->query->get('name'));
         $style->setText('');
-        $dm->persist($style);
-        $dm->flush();
+        $this->documentManager->persist($style);
+        $this->documentManager->flush();
 
-        $session = $this->get('session');
+        $session = $this->session;
         $session->set('seriesstyle/id', $style->getId());
 
         return new JsonResponse(['success', 'id' => $style->getId()]);
     }
 
     /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     *
      * @Route("/edit", name="pumukit_newadmin_series_styles_edit")
      */
-    public function editAction(Request $request)
+    public function editAction(Request $request): JsonResponse
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
-
         $id = $request->request->get('id');
         if (isset($id)) {
-            $style = $dm->getRepository(SeriesStyle::class)->findOneBy(
+            $style = $this->documentManager->getRepository(SeriesStyle::class)->findOneBy(
                 ['_id' => new ObjectId($request->request->get('id'))]
             );
         } else {
@@ -90,62 +91,51 @@ class SeriesStylesController extends Controller
         }
 
         $style->setText($request->request->get('style_text'));
-        $dm->flush();
+        $this->documentManager->flush();
 
-        $session = $this->get('session');
+        $session = $this->session;
         $session->set('seriesstyle/id', $style->getId());
 
         return new JsonResponse(['success']);
     }
 
     /**
-     * @param string $id
-     *
-     * @return JsonResponse
-     *
      * @Route("/delete/{id}", name="pumukit_newadmin_series_styles_delete")
      */
-    public function deleteAction($id)
+    public function deleteAction(string $id): JsonResponse
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
-        $translator = $this->get('translator');
-        $session = $this->get('session');
+        $session = $this->session;
 
-        $style = $dm->getRepository(SeriesStyle::class)->findOneBy(['_id' => new ObjectId($id)]);
+        $style = $this->documentManager->getRepository(SeriesStyle::class)->findOneBy(['_id' => new ObjectId($id)]);
 
         if ($style) {
-            $series = $dm->getRepository(Series::class)->findOneBy(
+            $series = $this->documentManager->getRepository(Series::class)->findOneBy(
                 ['series_style' => new ObjectId($style->getId())]
             );
 
             if (!$series) {
-                $dm->remove($style);
-                $dm->flush();
+                $this->documentManager->remove($style);
+                $this->documentManager->flush();
 
                 $session->set('seriesstyle/id', '');
 
-                return new JsonResponse(['success', 'msg' => $translator->trans('Successfully deleted series style')]);
+                return new JsonResponse(['success', 'msg' => $this->translator->trans('Successfully deleted series style')]);
             }
 
-            return new JsonResponse(['error', 'msg' => $translator->trans('There are series with this series style')]);
+            return new JsonResponse(['error', 'msg' => $this->translator->trans('There are series with this series style')]);
         }
 
-        return new JsonResponse(['error', 'msg' => $translator->trans("Series style {$style->getId}() doesn't exists")]);
+        return new JsonResponse(['error', 'msg' => $this->translator->trans("Series style {$id}() doesn't exists")]);
     }
 
     /**
-     * @param string $id
-     *
-     * @return array
-     *
      * @Route("/show/{id}", name="pumukit_newadmin_series_styles_show")
-     * @Template("PumukitNewAdminBundle:SeriesStyle:show.html.twig")
+     * @Template("@PumukitNewAdmin/SeriesStyle/show.html.twig")
      */
-    public function showAction($id = null)
+    public function showAction(?string $id = null): array
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
         if (isset($id)) {
-            $style = $dm->getRepository(SeriesStyle::class)->findOneBy(
+            $style = $this->documentManager->getRepository(SeriesStyle::class)->findOneBy(
                 ['_id' => new ObjectId($id)]
             );
         } else {

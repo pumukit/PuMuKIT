@@ -10,79 +10,47 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class MultimediaObjectEventDispatcherService
 {
-    /**
-     * @var EventDispatcherInterface
-     */
+    /** @var EventDispatcherInterface */
     private $dispatcher;
 
-    /**
-     * Constructor.
-     *
-     * @param EventDispatcherInterface $dispatcher
-     */
     public function __construct(EventDispatcherInterface $dispatcher)
     {
         $this->dispatcher = $dispatcher;
     }
 
     /**
-     * Dispatch create.
-     *
-     * Dispatchs the event MULTIMEDIAOBJECT_CREATE
-     * 'multimediaobject.create' passing
-     * the multimedia object
-     *
-     * @param MultimediaObject $multimediaObject
+     * Dispatch the event MULTIMEDIAOBJECT_CREATE 'multimediaobject.create' passing the multimedia object.
      */
-    public function dispatchCreate(MultimediaObject $multimediaObject)
+    public function dispatchCreate(MultimediaObject $multimediaObject): void
     {
         $event = new MultimediaObjectEvent($multimediaObject);
-        $this->dispatcher->dispatch(SchemaEvents::MULTIMEDIAOBJECT_CREATE, $event);
+        $this->dispatcher->dispatch($event, SchemaEvents::MULTIMEDIAOBJECT_CREATE);
     }
 
     /**
-     * Dispatch update.
-     *
-     * Dispatchs the event MULTIMEDIAOBJECT_UPDATE
-     * 'multimediaobject.update' passing
-     * the multimedia object
-     *
-     * @param MultimediaObject $multimediaObject
+     * Dispatch the event MULTIMEDIAOBJECT_UPDATE 'multimediaobject.update' passing the multimedia object.
      */
-    public function dispatchUpdate(MultimediaObject $multimediaObject)
+    public function dispatchUpdate(MultimediaObject $multimediaObject): void
     {
         $event = new MultimediaObjectEvent($multimediaObject);
-        $this->dispatcher->dispatch(SchemaEvents::MULTIMEDIAOBJECT_UPDATE, $event);
+        $this->dispatcher->dispatch($event, SchemaEvents::MULTIMEDIAOBJECT_UPDATE);
     }
 
     /**
-     * Dispatch delete.
-     *
-     * Dispatchs the event MULTIMEDIAOBJECT_DELETE
-     * 'multimediaobject.delete' passing
-     * the multimedia object
-     *
-     * @param MultimediaObject $multimediaObject
+     * Dispatch the event MULTIMEDIAOBJECT_DELETE 'multimediaobject.delete' passing the multimedia object.
      */
-    public function dispatchDelete(MultimediaObject $multimediaObject)
+    public function dispatchDelete(MultimediaObject $multimediaObject): void
     {
         $event = new MultimediaObjectEvent($multimediaObject);
-        $this->dispatcher->dispatch(SchemaEvents::MULTIMEDIAOBJECT_DELETE, $event);
+        $this->dispatcher->dispatch($event, SchemaEvents::MULTIMEDIAOBJECT_DELETE);
     }
 
     /**
-     * Dispatch clone.
-     *
-     * Dispatchs the event MULTIMEDIAOBJECT_CLONE
-     * 'multimediaobject.clone' passing
-     * the multimedia object
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param MultimediaObject $multimediaObjectCloned
+     * Dispatch the event MULTIMEDIAOBJECT_CLONE 'multimediaobject.clone' passing the multimedia object.
      */
-    public function dispatchClone(MultimediaObject $multimediaObject, MultimediaObject $multimediaObjectCloned)
+    public function dispatchClone(MultimediaObject $multimediaObject, MultimediaObject $multimediaObjectCloned): void
     {
         $event = new MultimediaObjectCloneEvent($multimediaObject, $multimediaObjectCloned);
-        $this->dispatcher->dispatch(SchemaEvents::MULTIMEDIAOBJECT_CLONE, $event);
+        $this->dispatcher->dispatch($event, SchemaEvents::MULTIMEDIAOBJECT_CLONE);
     }
 }

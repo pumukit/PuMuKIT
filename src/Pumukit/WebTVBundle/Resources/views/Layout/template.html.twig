@@ -39,14 +39,14 @@
 <body class="{% block body_class %}{% endblock %}">
     {% block body_base %}
 
-        {% include 'PumukitWebTVBundle:Layout:template_header.html.twig' %}
+        {% include '@PumukitWebTV/Layout/template_header.html.twig' %}
 
         <div class="template-menu-pmk">
-            {% include 'PumukitWebTVBundle:Menu:template.html.twig' %}
+            {% include '@PumukitWebTV/Menu/template.html.twig' %}
         </div>
 
         {% if app.request.get('_route') != 'pumukit_webtv_index_index' %}
-            {{ render(controller('PumukitWebTVBundle:Modules:breadcrumbs')) }}
+            {{ render(controller('Pumukit\\WebTVBundle\\Controller\\ModulesController::breadcrumbsAction')) }}
         {% endif %}
 
         {% block custom_block_before_body %}{% endblock %}
@@ -66,7 +66,7 @@
 
         {% block custom_block_after_body %}{% endblock %}
 
-        {% include "PumukitWebTVBundle:Layout:template_footer.html.twig" %}
+        {% include "@PumukitWebTV/Layout/template_footer.html.twig" %}
 
         <div class="container-fluid powered_by">
             <div class="row">

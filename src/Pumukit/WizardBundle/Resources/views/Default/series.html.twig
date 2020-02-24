@@ -1,10 +1,10 @@
-{% extends 'PumukitWizardBundle:Default:index.html.twig' %}
+{% extends '@PumukitWizard/Default/index.html.twig' %}
 {% block wizard_body %}
-{{ render(controller('PumukitWizardBundle:Default:steps', {'step': 0, 'option': 'single', 'show_series': true, 'same_series': same_series})) }}
+    {{ render(controller('Pumukit\\WizardBundle\\Controller\\DefaultController::stepsAction', {'step': 0, 'option': 'single', 'show_series': true, 'same_series': same_series})) }}
 <div class="well">
   <form id="pumukitwizard_series_form"
         action="{{ path('pumukitwizard_default_type', {'id': 'null'}) }}" method="POST">
-    {% include 'PumukitWizardBundle:Default:hidden.html.twig' with {'step': 'series'} %}
+    {% include '@PumukitWizard/Default/hidden.html.twig' with {'step': 'series'} %}
     <input type="hidden" name="pumukitwizard_form_data[mandatory_title]" id="pumukitwizard_mandatory_title" value="{{ mandatory_title }}">
     <fieldset class="well">
       <legend hidden>{% trans %}Series{% endtrans %}</legend>

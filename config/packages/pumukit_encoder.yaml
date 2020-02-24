@@ -1,0 +1,61 @@
+services:
+  _defaults:
+    autowire:      true
+    autoconfigure: true
+    public:        true
+
+  Pumukit\EncoderBundle\Controller\:
+    resource: '../../src/Pumukit/EncoderBundle/Controller/'
+    tags: ['controller.service_arguments']
+
+  Pumukit\EncoderBundle\Command\:
+    resource: '../../src/Pumukit/EncoderBundle/Command/'
+    tags: ['console.command']
+
+  Pumukit\EncoderBundle\Services\CpuService:
+    class: Pumukit\EncoderBundle\Services\CpuService
+    arguments:
+      $cpus: '%pumukitencode.cpulist%'
+
+  Pumukit\EncoderBundle\Services\ProfileService:
+    class: Pumukit\EncoderBundle\Services\ProfileService
+    arguments:
+      $profiles:         '%pumukitencode.profilelist%'
+      $default_profiles: '%pumukitencode.target_default_profiles%'
+
+  Pumukit\EncoderBundle\Services\JobService:
+    class: Pumukit\EncoderBundle\Services\JobService
+    arguments:
+      $binPath:          '%kernel.project_dir%/bin/'
+      $environment:      '%kernel.environment%'
+      $tmpPath:          '%pumukit.tmp%'
+      $inboxPath:        '%pumukit.inbox%'
+      $deleteInboxFiles: '%pumukitencode.delete_inbox_files%'
+    tags:
+      - { name: "monolog.logger", channel: "encoder" }
+
+  Pumukit\EncoderBundle\Services\MultimediaObjectPropertyJobService:
+    class: Pumukit\EncoderBundle\Services\MultimediaObjectPropertyJobService
+
+  Pumukit\EncoderBundle\Services\PicExtractorService:
+    class: Pumukit\EncoderBundle\Services\PicExtractorService
+    arguments:
+      $width:      '%pumukitencode.thumbnail.width%'
+      $height:     '%pumukitencode.thumbnail.height%'
+      $targetPath: '%pumukit.uploads_pic_dir%'
+      $targetUrl:  '%pumukit.uploads_pic_url%'
+      $command:    '%pumukit.picextractor.command%'
+
+  Pumukit\EncoderBundle\Services\PicService:
+    class: Pumukit\EncoderBundle\Services\PicService
+
+  Pumukit\EncoderBundle\EventListener\RemoveListener:
+    class: Pumukit\EncoderBundle\EventListener\RemoveListener
+    tags:
+      - { name: "kernel.event_listener", event: "track.delete", method: "postTrackRemove" }
+
+  Pumukit\EncoderBundle\Services\DynamicPicExtractorService:
+    class: Pumukit\EncoderBundle\Services\DynamicPicExtractorService
+    arguments:
+      $targetPath: '%pumukit.uploads_pic_dir%'
+      $command:    '%pumukit.dynamicpicextractor.command%'

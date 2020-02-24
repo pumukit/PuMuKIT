@@ -43,18 +43,18 @@ class SeriesTest extends TestCase
         $series->setLocale($locale);
         $series->setProperties($properties);
 
-        $this->assertEquals($series_type, $series->getSeriesType());
-        $this->assertEquals($announce, $series->getAnnounce());
-        $this->assertEquals($publicDate, $series->getPublicDate());
-        $this->assertEquals($title, $series->getTitle());
-        $this->assertEquals($subtitle, $series->getSubtitle());
-        $this->assertEquals($description, $series->getDescription());
-        $this->assertEquals($header, $series->getHeader());
-        $this->assertEquals($footer, $series->getFooter());
-        $this->assertEquals($keyword, $series->getKeyword());
-        $this->assertEquals($line2, $series->getLine2());
-        $this->assertEquals($locale, $series->getLocale());
-        $this->assertEquals($properties, $series->getProperties());
+        static::assertEquals($series_type, $series->getSeriesType());
+        static::assertEquals($announce, $series->getAnnounce());
+        static::assertEquals($publicDate, $series->getPublicDate());
+        static::assertEquals($title, $series->getTitle());
+        static::assertEquals($subtitle, $series->getSubtitle());
+        static::assertEquals($description, $series->getDescription());
+        static::assertEquals($header, $series->getHeader());
+        static::assertEquals($footer, $series->getFooter());
+        static::assertEquals($keyword, $series->getKeyword());
+        static::assertEquals($line2, $series->getLine2());
+        static::assertEquals($locale, $series->getLocale());
+        static::assertEquals($properties, $series->getProperties());
 
         $titleEs = 'título';
         $subtitleEs = 'subtítulo';
@@ -81,13 +81,13 @@ class SeriesTest extends TestCase
         $series->setI18nKeyword($keywordI18n);
         $series->setI18nLine2($line2I18n);
 
-        $this->assertEquals($titleI18n, $series->getI18nTitle());
-        $this->assertEquals($subtitleI18n, $series->getI18nSubtitle());
-        $this->assertEquals($descriptionI18n, $series->getI18nDescription());
-        $this->assertEquals($headerI18n, $series->getI18nHeader());
-        $this->assertEquals($footerI18n, $series->getI18nFooter());
-        $this->assertEquals($keywordI18n, $series->getI18nKeyword());
-        $this->assertEquals($line2I18n, $series->getI18nLine2());
+        static::assertEquals($titleI18n, $series->getI18nTitle());
+        static::assertEquals($subtitleI18n, $series->getI18nSubtitle());
+        static::assertEquals($descriptionI18n, $series->getI18nDescription());
+        static::assertEquals($headerI18n, $series->getI18nHeader());
+        static::assertEquals($footerI18n, $series->getI18nFooter());
+        static::assertEquals($keywordI18n, $series->getI18nKeyword());
+        static::assertEquals($line2I18n, $series->getI18nLine2());
 
         $title = null;
         $subtitle = null;
@@ -105,19 +105,19 @@ class SeriesTest extends TestCase
         $series->setKeyword($keyword);
         $series->setLine2($line2);
 
-        $this->assertEquals(null, $series->getTitle());
-        $this->assertEquals(null, $series->getSubtitle());
-        $this->assertEquals(null, $series->getDescription());
-        $this->assertEquals(null, $series->getHeader());
-        $this->assertEquals(null, $series->getFooter());
-        $this->assertEquals(null, $series->getKeyword());
-        $this->assertEquals(null, $series->getLine2());
+        static::assertEquals(null, $series->getTitle());
+        static::assertEquals(null, $series->getSubtitle());
+        static::assertEquals(null, $series->getDescription());
+        static::assertEquals(null, $series->getHeader());
+        static::assertEquals(null, $series->getFooter());
+        static::assertEquals(null, $series->getKeyword());
+        static::assertEquals(null, $series->getLine2());
     }
 
     public function testToString()
     {
         $series = new Series();
-        $this->assertEquals($series->getTitle(), $series->__toString());
+        static::assertEquals($series->getTitle(), $series->__toString());
     }
 
     public function testPicsInSeries()
@@ -128,30 +128,30 @@ class SeriesTest extends TestCase
 
         $series = new Series();
 
-        $this->assertEquals(0, count($series->getPics()));
+        static::assertCount(0, $series->getPics());
 
         $series->addPic($pic);
 
-        $this->assertEquals(1, count($series->getPics()));
-        $this->assertTrue($series->containsPic($pic));
+        static::assertCount(1, $series->getPics());
+        static::assertTrue($series->containsPic($pic));
 
         $series->removePic($pic);
 
-        $this->assertEquals(0, count($series->getPics()));
-        $this->assertFalse($series->containsPic($pic));
+        static::assertCount(0, $series->getPics());
+        static::assertFalse($series->containsPic($pic));
 
         $picWithoutUrl = new Pic();
 
         $series->addPic($picWithoutUrl);
         $series->addPic($pic);
 
-        $this->assertEquals(2, count($series->getPics()));
-        $this->assertEquals($url, $series->getFirstUrlPic());
+        static::assertCount(2, $series->getPics());
+        static::assertEquals($url, $series->getFirstUrlPic());
     }
 
     public function testIsCollection()
     {
         $series = new Series();
-        $this->assertEquals(true, $series->isCollection());
+        static::assertEquals(true, $series->isCollection());
     }
 }

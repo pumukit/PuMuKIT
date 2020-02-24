@@ -19,10 +19,6 @@ class GroupService
 
     /**
      * Constructor.
-     *
-     * @param DocumentManager             $documentManager
-     * @param GroupEventDispatcherService $dispatcher
-     * @param TranslatorInterface         $translator
      */
     public function __construct(DocumentManager $documentManager, GroupEventDispatcherService $dispatcher, TranslatorInterface $translator)
     {
@@ -34,19 +30,10 @@ class GroupService
         $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
     }
 
-    /**
-     * Create group.
-     *
-     * @param Group $group
-     *
-     * @throws \Exception
-     *
-     * @return Group
-     */
-    public function create(Group $group)
+    public function create(Group $group): Group
     {
-        $groupByKey = $this->repo->findOneByKey($group->getKey());
-        $groupByName = $this->repo->findOneByName($group->getName());
+        $groupByKey = $this->repo->findOneBy(['key' => $group->getKey()]);
+        $groupByName = $this->repo->findOneBy(['name' => $group->getName()]);
         if ($groupByKey && $groupByName) {
             throw new \Exception('There is already a group created with key '.$group->getKey().' and a group created with name '.$group->getName().'.');
         }
@@ -67,8 +54,7 @@ class GroupService
     /**
      * Update group.
      *
-     * @param Group $group
-     * @param bool  $executeFlush
+     * @param bool $executeFlush
      *
      * @throws \Exception
      *
@@ -76,14 +62,14 @@ class GroupService
      */
     public function update(Group $group, $executeFlush = true)
     {
-        $auxKeyGroup = $this->repo->findOneByKey($group->getKey());
+        $auxKeyGroup = $this->repo->findOneBy(['key' => $group->getKey()]);
         if ($auxKeyGroup) {
             if ($auxKeyGroup->getId() != $group->getId()) {
                 throw new \Exception('There is already a group created with key '.$group->getKey().'.');
             }
         }
 
-        $auxNameGroup = $this->repo->findOneByName($group->getName());
+        $auxNameGroup = $this->repo->findOneBy(['name' => $group->getName()]);
         if ($auxNameGroup) {
             if ($auxNameGroup->getId() != $group->getId()) {
                 throw new \Exception('There is already a group created with name '.$group->getName().'.');
@@ -104,9 +90,8 @@ class GroupService
     /**
      * Delete group.
      *
-     * @param Group $group
-     * @param bool  $executeFlush
-     * @param bool  $checkOrigin
+     * @param bool $executeFlush
+     * @param bool $checkOrigin
      *
      * @throws \Exception
      */
@@ -126,7 +111,6 @@ class GroupService
     /**
      * Can be deleted.
      *
-     * @param Group $group
      * @param mixed $checkOrigin
      *
      * @return bool
@@ -152,7 +136,6 @@ class GroupService
     /**
      * Get delete message.
      *
-     * @param Group  $group
      * @param string $locale
      *
      * @return string
@@ -240,8 +223,6 @@ class GroupService
     /**
      * Count resources in group.
      *
-     * @param Group $group
-     *
      * @return array
      */
     public function countResourcesInGroup(Group $group)
@@ -257,8 +238,6 @@ class GroupService
     /**
      * Count admin multimediaObjects in group.
      *
-     * @param Group $group
-     *
      * @return int
      */
     public function countAdminMultimediaObjectsInGroup(Group $group)
@@ -269,8 +248,6 @@ class GroupService
     /**
      * Count play multimediaObjects in group.
      *
-     * @param Group $group
-     *
      * @return int
      */
     public function countPlayMultimediaObjectsInGroup(Group $group)
@@ -280,8 +257,6 @@ class GroupService
 
     /**
      * Count users in group.
-     *
-     * @param Group $group
      *
      * @return int
      */
@@ -299,7 +274,6 @@ class GroupService
      * Find users in group.
      * ss.
      *
-     * @param Group $group
      * @param array $sort
      * @param int   $limit
      *

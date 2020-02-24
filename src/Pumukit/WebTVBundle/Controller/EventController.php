@@ -2,87 +2,120 @@
 
 namespace Pumukit\WebTVBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
+use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
+use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * Class EventController.
- */
-class EventController extends Controller implements WebTVControllerInterface
+class EventController extends AbstractController implements WebTVControllerInterface
 {
+    private $documentManager;
+    private $breadcrumbsService;
+    private $translator;
+    private $pumukitNewAdminAdvanceLiveEventCreateDefaultPic;
+    private $eventSessionService;
+    private $paginationService;
+    private $columnsObjsEvent;
+    private $pumukitLiveTwitterEnable;
+    private $pumukitNewAdminAdvanceLiveEvent;
+
+    public function __construct(
+        DocumentManager $documentManager,
+        BreadcrumbsService $breadcrumbsService,
+        TranslatorInterface $translator,
+        PaginationService $paginationService,
+        EmbeddedEventSessionService $eventSessionService,
+        string $pumukitNewAdminAdvanceLiveEventCreateDefaultPic,
+        int $columnsObjsEvent,
+        bool $pumukitLiveTwitterEnable,
+        bool $pumukitNewAdminAdvanceLiveEvent
+    ) {
+        $this->documentManager = $documentManager;
+        $this->breadcrumbsService = $breadcrumbsService;
+        $this->translator = $translator;
+        $this->pumukitNewAdminAdvanceLiveEventCreateDefaultPic = $pumukitNewAdminAdvanceLiveEventCreateDefaultPic;
+        $this->eventSessionService = $eventSessionService;
+        $this->columnsObjsEvent = $columnsObjsEvent;
+        $this->paginationService = $paginationService;
+        $this->pumukitLiveTwitterEnable = $pumukitLiveTwitterEnable;
+        $this->pumukitNewAdminAdvanceLiveEvent = $pumukitNewAdminAdvanceLiveEvent;
+    }
+
+    public function advanceLiveEventMenuAction(): Response
+    {
+        if ($this->pumukitNewAdminAdvanceLiveEvent) {
+            return  new Response($this->renderView('@PumukitWebTV/Menu/advance_event_link.html.twig'));
+        }
+
+        return new Response();
+    }
+
     /**
      * @Route ("/events/", defaults={"filter": false}, name="pumukit_webtv_events")
-     * @Template("PumukitWebTVBundle:Live:template.html.twig")
-     *
-     * @param Request $request
-     *
-     * @return array|\Symfony\Component\HttpFoundation\Response
+     * @Template("@PumukitWebTV/Live/template.html.twig")
      */
     public function indexAction(Request $request)
     {
         $advanceEvents = $this->checkAdvanceEvents();
         if (!$advanceEvents) {
-            return $this->render('PumukitWebTVBundle:Index:404notfound.html.twig');
+            return $this->render('@PumukitWebTV/Index/404notfound.html.twig');
         }
 
-        $translator = $this->get('translator');
-        $this->updateBreadcrumbs($translator->trans('Live events'), 'pumukit_webtv_events');
+        $this->updateBreadcrumbs($this->translator->trans('Live events'), 'pumukit_webtv_events');
 
-        $defaultPic = $this->container->getParameter('pumukit_new_admin.advance_live_event_create_default_pic');
-
-        $eventsNow = $this->get('pumukitschema.eventsession')->findEventsNow();
-        $eventsToday = $this->get('pumukitschema.eventsession')->findEventsToday();
+        $eventsNow = $this->eventSessionService->findEventsNow();
+        $eventsToday = $this->eventSessionService->findEventsToday();
         $eventsToday = $this->getEventsTodayNextSession($eventsNow, $eventsToday);
-        $eventsFuture = $this->get('pumukitschema.eventsession')->findNextEvents();
+        $eventsFuture = $this->eventSessionService->findNextEvents();
 
         $page = $request->query->get('page', 1);
 
-        $maxPerPage = $this->container->getParameter('columns_objs_event') * 3;
+        $maxPerPage = $this->columnsObjsEvent * 3;
 
-        $paginationService = $this->get('pumukit_core.pagination_service');
-        $pager = $paginationService->createArrayAdapter($eventsFuture, $page, $maxPerPage);
+        $pager = $this->paginationService->createArrayAdapter($eventsFuture, $page, $maxPerPage);
 
         return [
             'eventsToday' => $eventsToday,
             'eventsNow' => $eventsNow,
             'eventsFuture' => $pager,
-            'defaultPic' => $defaultPic,
-            'objectByCol' => $this->container->getParameter('columns_objs_event'),
+            'defaultPic' => $this->pumukitNewAdminAdvanceLiveEventCreateDefaultPic,
+            'objectByCol' => $this->columnsObjsEvent,
             'show_info' => true,
             'show_description' => false,
         ];
     }
 
     /**
-     * @Template("PumukitWebTVBundle:Live:Advance/livelist.html.twig")
+     * @Template("@PumukitWebTV/Live/Advance/livelist.html.twig")
      */
     public function liveListAction()
     {
-        $defaultPic = $this->container->getParameter('pumukit_new_admin.advance_live_event_create_default_pic');
-        $events = $this->get('pumukitschema.eventsession')->findEventsNow();
+        $events = $this->eventSessionService->findEventsNow();
 
         return [
             'events' => $events,
-            'defaultPic' => $defaultPic,
+            'defaultPic' => $this->pumukitNewAdminAdvanceLiveEventCreateDefaultPic,
         ];
     }
 
     /**
-     * @param string $id
-     *
-     * @return array
      * @Route("/event/next/session/{id}", name="pumukit_webtv_next_session_event")
-     * @Template("PumukitWebTVBundle:Live:Advance/nextsessionlist.html.twig")
+     * @Template("@PumukitWebTV/Live/Advance/nextsessionlist.html.twig")
+     *
+     * @param mixed $id
      */
     public function nextSessionListAction($id)
     {
-        $defaultPic = $this->container->getParameter('pumukit_new_admin.advance_live_event_create_default_pic');
-        $embeddedEventSessionService = $this->get('pumukitschema.eventsession');
+        $embeddedEventSessionService = $this->eventSessionService;
 
         $criteria = [
             '_id' => new ObjectId($id),
@@ -92,51 +125,33 @@ class EventController extends Controller implements WebTVControllerInterface
         return [
             'events' => $events,
             'sessionlist' => true,
-            'defaultPic' => $defaultPic,
+            'defaultPic' => $this->pumukitNewAdminAdvanceLiveEventCreateDefaultPic,
         ];
     }
 
     /**
-     * @param string $id
-     *
-     * @return array
      * @Route("/event/twitter/{id}", name="pumukit_webtv_event_twitter")
-     * @Template("PumukitWebTVBundle:Live:Advance/twitter.html.twig")
+     * @Template("@PumukitWebTV/Live/Advance/twitter.html.twig")
      */
-    public function twitterAction($id)
+    public function twitterAction(string $id)
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
-        $repo = $dm->getRepository(MultimediaObject::class);
-        $multimediaObject = $repo->find($id);
-        $enableTwitter = $this->container->getParameter('pumukit_live.twitter.enable');
+        $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->find($id);
 
         return [
             'multimediaObject' => $multimediaObject,
-            'enable_twitter' => $enableTwitter,
+            'enable_twitter' => $this->pumukitLiveTwitterEnable,
         ];
     }
 
-    /**
-     * @param string $title
-     * @param string $routeName
-     * @param array  $routeParameters
-     */
-    private function updateBreadcrumbs($title, $routeName, array $routeParameters = [])
+    private function updateBreadcrumbs(string $title, string $routeName, array $routeParameters = [])
     {
-        $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
-        $breadcrumbs->addList($title, $routeName, $routeParameters);
+        $this->breadcrumbsService->addList($title, $routeName, $routeParameters);
     }
 
-    /**
-     * @param array $eventsNow
-     * @param array $eventsToday
-     *
-     * @return array
-     */
-    private function getEventsTodayNextSession($eventsNow, $eventsToday)
+    private function getEventsTodayNextSession(array $eventsNow, array $eventsToday): array
     {
         $now = array_map(
-            function ($e) {
+            static function ($e) {
                 return $e['_id'];
             },
             $eventsNow
@@ -153,11 +168,8 @@ class EventController extends Controller implements WebTVControllerInterface
         return $result;
     }
 
-    /**
-     * @return mixed
-     */
     private function checkAdvanceEvents()
     {
-        return $this->container->getParameter('pumukit_new_admin.advance_live_event');
+        return $this->pumukitNewAdminAdvanceLiveEvent;
     }
 }

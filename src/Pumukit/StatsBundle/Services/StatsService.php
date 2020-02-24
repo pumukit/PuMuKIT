@@ -3,6 +3,7 @@
 namespace Pumukit\StatsBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\UTCDateTime;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
@@ -26,7 +27,7 @@ class StatsService
         $this->sumValue = $useAggregation ? '$numView' : 1;
     }
 
-    public function doGetMostViewed(array $criteria = [], $days = 30, $limit = 3)
+    public function doGetMostViewed(array $criteria = [], $days = 30, $limit = 3): array
     {
         $ids = [];
         $fromDate = new \DateTime(sprintf('-%s days', $days));
@@ -66,7 +67,7 @@ class StatsService
         return $mostViewed;
     }
 
-    public function getMostViewed(array $tags, $days = 30, $limit = 3)
+    public function getMostViewed(array $tags, $days = 30, $limit = 3): array
     {
         $criteria = [];
         if ($tags) {
@@ -76,7 +77,7 @@ class StatsService
         return $this->doGetMostViewed($criteria, $days, $limit);
     }
 
-    public function getMostViewedUsingFilters($days = 30, $limit = 3)
+    public function getMostViewedUsingFilters($days = 30, $limit = 3): array
     {
         $filters = $this->dm->getFilterCollection()->getFilterCriteria($this->repo->getClassMetadata());
 
@@ -86,7 +87,7 @@ class StatsService
     /**
      * Returns an array of mmobj viewed on the given range and its number of views on that range.
      */
-    public function getMmobjsMostViewedByRange(array $criteria = [], array $options = [])
+    public function getMmobjsMostViewedByRange(array $criteria = [], array $options = []): array
     {
         $ids = [];
 
@@ -98,16 +99,16 @@ class StatsService
 
         $options = $this->parseOptions($options);
 
-        $pipeline = [];
         $pipeline = $this->aggrPipeAddMatch($options['from_date'], $options['to_date'], $matchExtra);
         $pipeline[] = ['$group' => ['_id' => '$multimediaObject', 'numView' => ['$sum' => $this->sumValue]]];
         $pipeline[] = ['$sort' => ['numView' => $options['sort']]];
 
         $aggregation = $viewsLogColl->aggregate($pipeline, ['cursor' => []]);
 
+        $aggregation = $aggregation->toArray();
         $totalInAggegation = count($aggregation);
         $total = count($mmobjIds);
-        $aggregation = $this->getPagedAggregation($aggregation->toArray(), $options['page'], $options['limit']);
+        $aggregation = $this->getPagedAggregation($aggregation, $options['page'], $options['limit']);
 
         $mostViewed = [];
         foreach ($aggregation as $element) {
@@ -121,28 +122,29 @@ class StatsService
         }
 
         //Add mmobj with zero views
-        if (count($aggregation) < $options['limit']) {
-            if (0 == count($aggregation)) {
-                $max = min((1 + $options['page']) * $options['limit'], $total);
-                for ($i = ($options['page'] * $options['limit']); $i < $max; ++$i) {
-                    $multimediaObject = $this->repo->find($mmobjIds[$i - $totalInAggegation]);
+        if (count($aggregation) >= $options['limit']) {
+            return [$mostViewed, $total];
+        }
+        if (0 == count($aggregation)) {
+            $max = min((1 + $options['page']) * $options['limit'], $total);
+            for ($i = ($options['page'] * $options['limit']); $i < $max; ++$i) {
+                $multimediaObject = $this->repo->find($mmobjIds[$i - $totalInAggegation]);
+                if ($multimediaObject) {
+                    $mostViewed[] = ['mmobj' => $multimediaObject,
+                        'num_viewed' => 0,
+                    ];
+                }
+            }
+        } else {
+            foreach ($mmobjIds as $element) {
+                if (!in_array($element, $ids)) {
+                    $multimediaObject = $this->repo->find($element);
                     if ($multimediaObject) {
                         $mostViewed[] = ['mmobj' => $multimediaObject,
                             'num_viewed' => 0,
                         ];
-                    }
-                }
-            } else {
-                foreach ($mmobjIds as $element) {
-                    if (!in_array($element, $ids)) {
-                        $multimediaObject = $this->repo->find($element);
-                        if ($multimediaObject) {
-                            $mostViewed[] = ['mmobj' => $multimediaObject,
-                                'num_viewed' => 0,
-                            ];
-                            if (count($mostViewed) == $options['limit']) {
-                                break;
-                            }
+                        if (count($mostViewed) == $options['limit']) {
+                            break;
                         }
                     }
                 }
@@ -155,7 +157,7 @@ class StatsService
     /**
      * Returns an array of series viewed on the given range and its number of views on that range.
      */
-    public function getSeriesMostViewedByRange(array $criteria = [], array $options = [])
+    public function getSeriesMostViewedByRange(array $criteria = [], array $options = []): array
     {
         $ids = [];
         $viewsLogColl = $this->dm->getDocumentCollection($this->collectionName);
@@ -167,16 +169,15 @@ class StatsService
 
         $options = $this->parseOptions($options);
 
-        $pipeline = [];
         $pipeline = $this->aggrPipeAddMatch($options['from_date'], $options['to_date'], $matchExtra);
         $pipeline[] = ['$group' => ['_id' => '$series', 'numView' => ['$sum' => $this->sumValue]]];
         $pipeline[] = ['$sort' => ['numView' => $options['sort']]];
 
         $aggregation = $viewsLogColl->aggregate($pipeline, ['cursor' => []]);
-
+        $aggregation = $aggregation->toArray();
         $totalInAggegation = count($aggregation);
         $total = count($seriesIds);
-        $aggregation = $this->getPagedAggregation($aggregation->toArray(), $options['page'], $options['limit']);
+        $aggregation = $this->getPagedAggregation($aggregation, $options['page'], $options['limit']);
 
         $mostViewed = [];
         foreach ($aggregation as $element) {
@@ -227,7 +228,7 @@ class StatsService
      * If $options['criteria_mmobj'] exists, a query will be executed to filter using the resulting mmobj ids.
      * If $options['criteria_series'] exists, a query will be executed to filter using the resulting series ids.
      */
-    public function getTotalViewedGrouped(array $options = [])
+    public function getTotalViewedGrouped(array $options = []): array
     {
         return $this->getGroupedByAggrPipeline($options);
     }
@@ -235,7 +236,7 @@ class StatsService
     /**
      * Returns an array with the number of views for a mmobj on a certain date range, grouped by hour/day/month/year.
      */
-    public function getTotalViewedGroupedByMmobj(\MongoId $mmobjId, array $options = [])
+    public function getTotalViewedGroupedByMmobj(ObjectId $mmobjId, array $options = [])
     {
         return $this->getGroupedByAggrPipeline($options, ['multimediaObject' => $mmobjId]);
     }
@@ -243,7 +244,7 @@ class StatsService
     /**
      * Returns an array with the total number of views for a series on a certain date range, grouped by hour/day/month/year.
      */
-    public function getTotalViewedGroupedBySeries(\MongoId $seriesId, array $options = [])
+    public function getTotalViewedGroupedBySeries(ObjectId $seriesId, array $options = [])
     {
         return $this->getGroupedByAggrPipeline($options, ['series' => $seriesId]);
     }
@@ -431,7 +432,7 @@ class StatsService
             $qb->addAnd($criteria);
         }
 
-        return $qb->distinct('_id')->getQuery()->execute()->toArray();
+        return $qb->distinct('_id')->getQuery()->execute();
     }
 
     private function getSeriesIdsWithCriteria($criteria)
@@ -441,7 +442,7 @@ class StatsService
             $qb->addAnd($criteria);
         }
 
-        return $qb->distinct('_id')->getQuery()->execute()->toArray();
+        return $qb->distinct('_id')->getQuery()->execute();
     }
 
     /**

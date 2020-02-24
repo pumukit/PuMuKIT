@@ -2,96 +2,91 @@
 
 namespace Pumukit\EncoderBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\ProfileService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class ProfileServiceTest extends WebTestCase
+class ProfileServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
     private $profileService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
-
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        parent::setUp();
         $this->repo = $this->dm->getRepository(Job::class);
-
-        $this->dm->getDocumentCollection(Job::class)->remove([]);
-        $this->dm->flush();
-
         $this->profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
+
         $this->dm->close();
-        $this->dm = null;
+
         $this->repo = null;
         $this->profileService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testGetProfiles()
     {
         $profiles = $this->getDemoProfiles();
-        $this->assertEquals(count($profiles), count($this->profileService->getProfiles()));
+        static::assertCount(count($profiles), $this->profileService->getProfiles());
 
-        $this->assertEquals(0, count($this->profileService->getProfiles(true)));
-        $this->assertEquals(0, count($this->profileService->getProfiles(null, false)));
-        $this->assertEquals(2, count($this->profileService->getProfiles(null, null, true)));
-        $this->assertEquals(2, count($this->profileService->getProfiles(false, true)));
-        $this->assertEquals(0, count($this->profileService->getProfiles(null, true, false)));
-        $this->assertEquals(0, count($this->profileService->getProfiles(false, null, false)));
-        $this->assertEquals(2, count($this->profileService->getProfiles(false, true, true)));
+        static::assertCount(0, $this->profileService->getProfiles(true));
+        static::assertCount(0, $this->profileService->getProfiles(null, false));
+        static::assertCount(2, $this->profileService->getProfiles(null, null, true));
+        static::assertCount(2, $this->profileService->getProfiles(false, true));
+        static::assertCount(0, $this->profileService->getProfiles(null, true, false));
+        static::assertCount(0, $this->profileService->getProfiles(false, null, false));
+        static::assertCount(2, $this->profileService->getProfiles(false, true, true));
 
-        $this->assertEquals(2, count($this->profileService->getProfilesByTags([])));
-        $this->assertEquals(2, count($this->profileService->getProfilesByTags('uno')));
-        $this->assertEquals(1, count($this->profileService->getProfilesByTags(['tres'])));
-        $this->assertEquals(1, count($this->profileService->getProfilesByTags(['uno', 'tres'])));
+        static::assertCount(2, $this->profileService->getProfilesByTags([]));
+        static::assertCount(2, $this->profileService->getProfilesByTags('uno'));
+        static::assertCount(1, $this->profileService->getProfilesByTags(['tres']));
+        static::assertCount(1, $this->profileService->getProfilesByTags(['uno', 'tres']));
     }
 
     public function testGetMasterProfiles()
     {
         $profiles = $this->getDemoProfiles();
-        $this->assertEquals(count($profiles), count($this->profileService->getMasterProfiles(true)));
-        $this->assertEquals(0, count($this->profileService->getMasterProfiles(false)));
+        static::assertCount(count($profiles), $this->profileService->getMasterProfiles(true));
+        static::assertCount(0, $this->profileService->getMasterProfiles(false));
     }
 
     public function testGetDefaultMasterProfile()
     {
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
-        $this->assertEquals('MASTER_VIDEO_H264', $profileService->getDefaultMasterProfile());
+        static::assertEquals('MASTER_VIDEO_H264', $profileService->getDefaultMasterProfile());
 
         $profiles = ['MASTER_COPY' => $this->getDemoProfiles()['MASTER_COPY']];
         $profileService = new ProfileService($profiles, $this->dm);
-        $this->assertEquals('MASTER_COPY', $profileService->getDefaultMasterProfile());
+        static::assertEquals('MASTER_COPY', $profileService->getDefaultMasterProfile());
 
         $profile = $this->getDemoProfiles()['MASTER_VIDEO_H264'];
         $profile['master'] = false;
         $profiles = ['VIDEO_H264' => $profile];
         $profileService = new ProfileService($profiles, $this->dm);
-        $this->assertNull($profileService->getDefaultMasterProfile());
+        static::assertNull($profileService->getDefaultMasterProfile());
 
         $profileService = new ProfileService([], $this->dm);
-        $this->assertNull($profileService->getDefaultMasterProfile());
+        static::assertNull($profileService->getDefaultMasterProfile());
     }
 
     public function testGetProfile()
     {
         $profiles = $this->getDemoProfiles();
-        $this->assertEquals($profiles['MASTER_COPY'], $this->profileService->getProfile('MASTER_COPY'));
-        $this->assertEquals($profiles['MASTER_VIDEO_H264'], $this->profileService->getProfile('MASTER_VIDEO_H264'));
-        $this->assertNull($this->profileService->getProfile('master_COPY')); //Case sensitive
-        $this->assertNull($this->profileService->getProfile('master'));
+        static::assertEquals($profiles['MASTER_COPY'], $this->profileService->getProfile('MASTER_COPY'));
+        static::assertEquals($profiles['MASTER_VIDEO_H264'], $this->profileService->getProfile('MASTER_VIDEO_H264'));
+        static::assertNull($this->profileService->getProfile('master_COPY')); //Case sensitive
+        static::assertNull($this->profileService->getProfile('master'));
     }
 
     /**
@@ -100,8 +95,8 @@ class ProfileServiceTest extends WebTestCase
      */
     public function testInvalidTargetPath()
     {
-        $profileService = new ProfileService($this->getDemoProfilesWithNonExistingPath(), $this->dm);
-        $profileService->validateProfilesDirOut();
+//        $profileService = new ProfileService($this->getDemoProfilesWithNonExistingPath(), $this->dm);
+        ProfileService::validateProfilesDir($this->getDemoProfilesWithNonExistingPath());
     }
 
     private function getDemoProfiles()

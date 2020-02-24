@@ -4,7 +4,7 @@
 </div>
 <div class="modal-body">
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
-  {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
+  {% form_theme form '@PumukitNewAdmin/Themes/fields.html.twig' %}
   <form onsubmit="$('#myModal').modal('hide');
                   $.ajax({
                           url: '{{ path('pumukitnewadmin_track_update', {'id': track.id, 'mmId': mmId}) }}',
@@ -38,7 +38,7 @@
           {% endfor %}
         </select>
       </div>
-      {% for child in form if child.vars.id not in ['pumukitnewadmin_track_update_i18n_description'] %}
+      {% for child in form | filter(child => child.vars.id not in ['pumukitnewadmin_track_update_i18n_description']) %}
         {{ form_row(child) }}
       {% endfor %}
       {{ form_rest(form) }}

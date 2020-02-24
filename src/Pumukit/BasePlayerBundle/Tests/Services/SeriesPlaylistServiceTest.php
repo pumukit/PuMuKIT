@@ -2,18 +2,17 @@
 
 namespace Pumukit\BasePlayerBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Track;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class SeriesPlaylistServiceTest extends WebTestCase
+class SeriesPlaylistServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $mmobjRepo;
     private $seriesRepo;
     private $seriesPlaylistService;
@@ -21,22 +20,19 @@ class SeriesPlaylistServiceTest extends WebTestCase
     private $testPlaylistMmobjs;
     private $testSeries;
 
-    public function setUp()
+    public function setUp(): void
     {
-        $options = ['environment' => 'test'];
-        static::bootKernel($options);
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        parent::setUp();
+
         $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
         $this->seriesRepo = $this->dm->getRepository(Series::class);
-        $this->seriesPlaylistService = static::$kernel->getContainer()->get('pumukit_baseplayer.seriesplaylist');
-
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
-        $this->dm->flush();
+        $this->seriesPlaylistService = self::$kernel->getContainer()->get('pumukit_baseplayer.seriesplaylist');
 
         $track = new Track();
         $series = new Series();
+        $series->setNumericalID(1);
         $series2 = new Series();
+        $series2->setNumericalID(2);
         $mmobjs = [
             'published' => new MultimediaObject(),
             'hidden' => new MultimediaObject(),
@@ -44,14 +40,20 @@ class SeriesPlaylistServiceTest extends WebTestCase
             'prototype' => new MultimediaObject(),
         ];
         $mmobjs['published']->setStatus(MultimediaObject::STATUS_PUBLISHED);
+        $mmobjs['published']->setNumericalID(1);
         $mmobjs['blocked']->setStatus(MultimediaObject::STATUS_BLOCKED);
+        $mmobjs['blocked']->setNumericalID(2);
         $mmobjs['hidden']->setStatus(MultimediaObject::STATUS_HIDDEN);
+        $mmobjs['hidden']->setNumericalID(3);
         $mmobjs['prototype']->setStatus(MultimediaObject::STATUS_PROTOTYPE);
+        $mmobjs['prototype']->setNumericalID(4);
+
         $playlistMmobjs = [
             'published' => new MultimediaObject(),
         ];
         $track->setUrl('funnyurl.mp4');
         $playlistMmobjs['published']->setStatus(MultimediaObject::STATUS_PUBLISHED);
+        $playlistMmobjs['published']->setNumericalID(5);
 
         foreach ($mmobjs as $mmobj) {
             $mmobj->setSeries($series);
@@ -84,39 +86,38 @@ class SeriesPlaylistServiceTest extends WebTestCase
         $this->testSeries = $series;
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->mmobjRepo = null;
         $this->seriesPlaylistService = null;
         $this->testMmobjs = null;
         $this->testPlaylistMmobjs = null;
         $this->testSeries = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testGetPlaylistMmobjs()
     {
         $playlistMmobjs = $this->seriesPlaylistService->getPlaylistMmobjs($this->testSeries);
-        $this->assertEquals([
+        static::assertEquals([
             $this->testMmobjs['published'],
             $this->testMmobjs['hidden'],
             $this->testMmobjs['blocked'],
-            $this->testPlaylistMmobjs['published'],
         ], iterator_to_array($playlistMmobjs, false));
     }
 
     public function testGetPlaylistFirstMmobj()
     {
         $playlistMmobj = $this->seriesPlaylistService->getPlaylistFirstMmobj($this->testSeries);
-        $this->assertEquals($this->testMmobjs['published'], $playlistMmobj);
+        static::assertEquals($this->testMmobjs['published'], $playlistMmobj);
     }
 
     public function testGetMmobjFromIdAndPlaylist()
     {
         $playlistMmobj = $this->seriesPlaylistService->getMmobjFromIdAndPlaylist($this->testMmobjs['published']->getId(), $this->testSeries);
-        $this->assertEquals($this->testMmobjs['published'], $playlistMmobj);
+        static::assertEquals($this->testMmobjs['published'], $playlistMmobj);
     }
 }

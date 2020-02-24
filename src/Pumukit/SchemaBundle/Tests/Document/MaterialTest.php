@@ -21,7 +21,7 @@ class MaterialTest extends TestCase
         $hide = false;
         $language = 'en';
 
-        $material = new material();
+        $material = new Material();
 
         $material->setName($name);
         $material->setTags($tags);
@@ -31,66 +31,56 @@ class MaterialTest extends TestCase
         $material->setHide($hide);
         $material->setLanguage($language);
 
-        $this->assertEquals($name, $material->getName());
-        $this->assertEquals($tags, $material->getTags());
-        $this->assertEquals($url, $material->getUrl());
-        $this->assertEquals($path, $material->getPath());
-        $this->assertEquals($mime, $material->getMimeType());
-        $this->assertFalse($hide, $material->getHide());
-        $this->assertEquals($language, $material->getLanguage());
+        static::assertEquals($name, $material->getName());
+        static::assertEquals($tags, $material->getTags());
+        static::assertEquals($url, $material->getUrl());
+        static::assertEquals($path, $material->getPath());
+        static::assertEquals($mime, $material->getMimeType());
+        static::assertFalse($hide, $material->getHide());
+        static::assertEquals($language, $material->getLanguage());
 
         $name = null;
         $material->setName(null);
-        $this->assertEquals($name, $material->getName());
+        static::assertEquals($name, $material->getName());
     }
 
     public function testMaxSize()
     {
         $size = 5368709120; // 5GB, integer types in 32 bits machines only admit 2GB
 
-        $material = new material();
+        $material = new Material();
         $material->setSize($size);
-        $this->assertEquals($size, $material->getSize());
+        static::assertEquals($size, $material->getSize());
     }
 
     public function testTagCollection()
     {
-        $material = new material();
-        $this->assertFalse($material->containsTag('t'));
+        $material = new Material();
+        static::assertFalse($material->containsTag('t'));
         $material->addTag('t');
-        $this->assertTrue($material->containsTag('t'));
+        static::assertTrue($material->containsTag('t'));
         $material->removeTag('t');
-        $this->assertFalse($material->containsTag('t'));
+        static::assertFalse($material->containsTag('t'));
 
         //Repeat Tag
-        $this->assertFalse($material->containsTag('t'));
+        static::assertFalse($material->containsTag('t'));
         $material->addTag('t');
         $material->addTag('t');
-        $this->assertTrue($material->containsTag('t'));
+        static::assertTrue($material->containsTag('t'));
         $material->removeTag('t');
-        $this->assertFalse($material->containsTag('t'));
-        $this->assertFalse($material->removeTag('t'));
+        static::assertFalse($material->containsTag('t'));
+        static::assertFalse($material->removeTag('t'));
 
         //containsAllTag and containsAnyTag
         $material->addTag('t1');
         $material->addTag('t2');
         $material->addTag('t3');
-        $this->assertTrue($material->containsAnyTag(['t0', 't2']));
-        $this->assertTrue($material->containsAnyTag(['t2', 't3']));
-        $this->assertFalse($material->containsAnyTag(['t0', 't4']));
-        $this->assertTrue($material->containsAllTags(['t1', 't2']));
-        $this->assertTrue($material->containsAllTags(['t1']));
-        $this->assertFalse($material->containsAllTags(['t0', 't2']));
-        $this->assertFalse($material->containsAllTags(['t0', 't1', 't2', 't3']));
+        static::assertTrue($material->containsAnyTag(['t0', 't2']));
+        static::assertTrue($material->containsAnyTag(['t2', 't3']));
+        static::assertFalse($material->containsAnyTag(['t0', 't4']));
+        static::assertTrue($material->containsAllTags(['t1', 't2']));
+        static::assertTrue($material->containsAllTags(['t1']));
+        static::assertFalse($material->containsAllTags(['t0', 't2']));
+        static::assertFalse($material->containsAllTags(['t0', 't1', 't2', 't3']));
     }
-
-    /*public function testRef()
-    {
-        $t1 = new material();
-        $t2 = new material();
-
-        $t2->setRef($t1);
-        $this->assertEquals(null, $t1->getRef());
-        $this->assertEquals($t1, $t2->getRef());
-    }*/
 }

@@ -10,7 +10,7 @@
                 <a class="navbar-brand" href="{{ path('pumukit_webtv_index_index') }}" style="padding:0px"><img src="{{ asset('/bundles/pumukitnewadmin/images/logo.png') }}" alt="{% trans %}Logo{% endtrans %}"/></a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                {{ knp_menu_render('PumukitNewAdminBundle:Builder:mainMenu', {'currentClass': 'active', 'template': 'PumukitNewAdminBundle:Themes:menu.html.twig'}) }}
+                {{ knp_menu_render('PumukitNewAdminBundle:Builder:mainMenu', {'currentClass': 'active', 'template': '@PumukitNewAdmin/Themes/menu.html.twig'}) }}
                 {# NOTE: Temporarily commented
                 <form class="navbar-form navbar-left" action="{{ path('pumukitnewadmin_series_search') }}">
                     <input type="text" class="form-control col-lg-8" placeholder="Search series" name="q">
@@ -24,7 +24,7 @@
                       <ul class="dropdown-menu">
                         <li class="dropdown-header">{% trans %}Login since{% endtrans %}: {{ app.user.lastLogin|localizeddate('medium','medium',app.request.getLocale()) }}</li>
                         <li class="dropdown-header">{{ app.user.email }}</li>
-                        {{ render( controller( 'PumukitNewAdminBundle:Widget:languageselect') ) }}
+                          {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\WidgetController::languageselectAction') ) }}
                         <li class="divider"></li>
                         <li><a href="{{ path('fos_user_security_logout') }}" class="login-menu-button" style="background-color: #fff;">{% trans %}Logout{% endtrans %}</a></li>
                       </ul>

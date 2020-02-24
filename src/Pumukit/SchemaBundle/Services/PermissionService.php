@@ -5,19 +5,16 @@ namespace Pumukit\SchemaBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Repository\TagRepository;
 use Pumukit\SchemaBundle\Security\Permission;
 
 class PermissionService
 {
+    /** @var TagRepository */
     private $repo;
     private $externalPermissions;
     private $allPermissions;
 
-    /**
-     * Constructor.
-     *
-     * @param array $externalPermissions
-     */
     public function __construct(DocumentManager $documentManager, array $externalPermissions = [])
     {
         $this->repo = $documentManager->getRepository(Tag::class);
@@ -247,7 +244,6 @@ class PermissionService
      *
      * @param string $permission
      * @param string $scope
-     * @param array  $allPermissions
      */
     private function buildDependenciesByScope($permission, $scope, array $allPermissions)
     {

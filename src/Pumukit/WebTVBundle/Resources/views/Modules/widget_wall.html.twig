@@ -1,11 +1,11 @@
 {% if objects %}
     <div class="block-wall-pmk {{ class }}">
-        {% include "PumukitWebTVBundle:Resources:template_widget_title.html.twig" %}
+        {% include "@PumukitWebTV/Resources/template_widget_title.html.twig" %}
         <div class="row wall-container">
             <div class="col-xs-12 col-md-9 wall-image">
                 <div class="row">
                     {% set object = objects|first %}
-                    {% include 'PumukitWebTVBundle:Resources:template_video.html.twig' %}
+                    {% include '@PumukitWebTV/Resources/template_video.html.twig' %}
                 </div>
             </div>
 
@@ -20,7 +20,7 @@
                 </div>
 
                 <div class="wall-labels">
-                    {% for tag in object.getTags() if tag.display %}
+                    {% for tag in object.getTags() | filter(tag => tag.display) %}
                         <a href="{{ path('pumukit_webtv_search_multimediaobjects', {'tagCod' : tag.getCod() }) }}" title="{{ tag.getTitle() }}">
                             <span class="label label-default label-pmk">
                                 {{ tag.getTitle() }}

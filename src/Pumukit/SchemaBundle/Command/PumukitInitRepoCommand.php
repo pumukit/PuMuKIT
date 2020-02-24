@@ -6,14 +6,16 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Tag;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Pumukit\SchemaBundle\Services\PermissionService;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpKernel\KernelInterface;
 
-class PumukitInitRepoCommand extends ContainerAwareCommand
+class PumukitInitRepoCommand extends Command
 {
     private const ROOT_TAG_CODE = 'ROOT';
     private const ROOT_TAG_DATA = ['id' => null, 'cod' => 'ROOT', 'tree_parent_cod' => null, 'metatag' => 1, 'display' => 0, 'name_en' => 'ROOT'];
@@ -25,12 +27,24 @@ class PumukitInitRepoCommand extends ContainerAwareCommand
     private $repoName;
     private $force;
     private $file;
+    private $permissionService;
+    private $kernel;
 
     private $tagsPath = 'Resources/data/tags/';
     private $rolesPath = 'Resources/data/roles/';
     private $permissionProfilesPath = 'Resources/data/permissionprofiles/';
 
     private $allPermissions;
+
+    public function __construct(DocumentManager $documentManager, PermissionService $permissionService, KernelInterface $kernel, array $locales)
+    {
+        $this->dm = $documentManager;
+        $this->permissionService = $permissionService;
+        $this->kernel = $kernel;
+        $this->locales = $locales;
+
+        parent::__construct();
+    }
 
     protected function configure(): void
     {
@@ -42,23 +56,23 @@ class PumukitInitRepoCommand extends ContainerAwareCommand
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
             ->setHelp(
                 <<<'EOT'
- 
+
 Command to load a controlled set of data into a database. Useful for init Pumukit environment.
 
 Examples:
 
-php bin/console pumukit:init:repo all 
-php bin/console pumukit:init:repo tag  
+php bin/console pumukit:init:repo all
+php bin/console pumukit:init:repo tag
 php bin/console pumukit:init:repo role
 php bin/console pumukit:init:repo permissionprofile
 
-Example with file option: 
+Example with file option:
 
 php bin/console pumukit:init:repo tag src/Pumukit/SchemaBundle/Resources/data/tag/unesco_i18n.csv
 
 Example with force option:
 
-php bin/console pumukit:init:repo tag --force 
+php bin/console pumukit:init:repo tag --force
 
 ** The --force parameter has to be used to actually drop the database.
 
@@ -69,10 +83,8 @@ EOT
 
     protected function initialize(InputInterface $input, OutputInterface $output): void
     {
-        $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-
-        $this->allPermissions = $this->getContainer()->get('pumukitschema.permission')->getAllPermissions();
-        $this->locales = array_unique(array_merge($this->getContainer()->getParameter('pumukit.locales'), ['en']));
+        $this->allPermissions = $this->permissionService->getAllPermissions();
+        $this->locales = array_unique(array_merge($this->locales, ['en']));
         $this->repoName = $input->getArgument('repo');
         $this->force = $input->getOption('force');
         $this->file = $input->getArgument('file');
@@ -113,6 +125,8 @@ EOT
                 $output->writeln($key.' - '.$value);
             }
         }
+
+        return 0;
     }
 
     protected function executeTags(): array
@@ -195,17 +209,17 @@ EOT
 
     protected function removeTags(): void
     {
-        $this->dm->getDocumentCollection(Tag::class)->remove([]);
+        $this->dm->getDocumentCollection(Tag::class)->deleteMany([]);
     }
 
     protected function removeRoles(): void
     {
-        $this->dm->getDocumentCollection(Role::class)->remove([]);
+        $this->dm->getDocumentCollection(Role::class)->deleteMany([]);
     }
 
     protected function removePermissionProfiles(): void
     {
-        $this->dm->getDocumentCollection(PermissionProfile::class)->remove([]);
+        $this->dm->getDocumentCollection(PermissionProfile::class)->deleteMany([]);
     }
 
     protected function createRoot(): Tag
@@ -400,7 +414,7 @@ EOT
     private function locateResource(string $filePath): Finder
     {
         $finder = new Finder();
-        $finder->files()->in($this->getContainer()->get('kernel')->locateResource('@PumukitSchemaBundle/'.$filePath));
+        $finder->files()->in($this->kernel->locateResource('@PumukitSchemaBundle/'.$filePath));
 
         return $finder;
     }

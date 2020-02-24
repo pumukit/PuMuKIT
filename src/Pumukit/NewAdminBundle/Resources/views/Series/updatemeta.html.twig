@@ -13,7 +13,7 @@
                     }
                 });
               return false;" action="{{ path('pumukitnewadmin_series_update', {'id': series.id}) }}" method="POST">
-        {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
+        {% form_theme form '@PumukitNewAdmin/Themes/fields.html.twig' %}
         <input type="hidden" name="id" id="series_id_updatemeta" value="{{ series.id }}">
 
         <div class="row">
@@ -31,7 +31,7 @@
             <fieldset>
                 <legend hidden>{% trans %}Update Series Metadata{% endtrans %}</legend>
                 <div class="col-lg-7">
-                    {% for child in form if (child.vars.id not in show_later_fields and child.vars.id not in exclude_fields) %}
+                    {% for child in form | filter(child => child.vars.id not in show_later_fields and child.vars.id not in exclude_fields) %}
                         {{ is_naked() and child.vars.id == 'pumukitnewadmin_series_announce' ? '' : form_row(child) }}
                     {% endfor %}
 
@@ -40,7 +40,7 @@
                             <dt>{% trans %}Thumbnails{% endtrans %}</dt>
                             <dd>
                                 <div id="pic_series_{{ series.id }}">
-                                    {% include 'PumukitNewAdminBundle:Pic:list.html.twig' with {'resource': series, 'resource_name': 'series'} %}
+                                    {% include '@PumukitNewAdmin/Pic/list.html.twig' with {'resource': series, 'resource_name': 'series'} %}
                                 </div>
                             </dd>
                         </dl>
@@ -61,7 +61,7 @@
                             </a>
                         </div>
 
-                        {% for child in form if (child.vars.id in ['pumukitnewadmin_series_i18n_header']) %}
+                        {% for child in form | filter(child => child.vars.id in ['pumukitnewadmin_series_i18n_header']) %}
                             <div class="hidden-naked form-group" style="display:none" id="{{ child.vars.id }}">
                                 <div>
                                     <a href="{{ path('pumukitnewadmin_seriespic_banner', {'id': series.id}) }}" style="float: right;" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}Add banner{% endtrans %}</a>
@@ -73,7 +73,7 @@
                             </div>
                         {% endfor %}
 
-                        {% for child in form if (child.vars.id in ['pumukitnewadmin_series_i18n_footer']) %}
+                        {% for child in form | filter(child => child.vars.id in ['pumukitnewadmin_series_i18n_footer']) %}
                             <div class="hidden-naked form-group" style="display:none" id="{{ child.vars.id }}">
                                 <label for="header" class="control-label">{{ child.vars.label }}</label>
                                 <div>
@@ -82,7 +82,7 @@
                             </div>
                         {% endfor %}
 
-                        {% for child in form if (child.vars.id in ['pumukitnewadmin_series_series_style']) %}
+                        {% for child in form | filter(child => child.vars.id in ['pumukitnewadmin_series_series_style']) %}
                             <div class="hidden-naked form-group" style="display:none" id="{{ child.vars.id }}">
                                 <label for="header" class="control-label">{{ child.vars.label }}</label>
                                 <div>
@@ -94,7 +94,7 @@
                         {{ form_row(form['i18n_line2']) }}
 
                         {# This iterates over all children except for the excluded ones. form_widget doesn't print the same field twice, so it works ala form_rest(form) #}
-                        {% for child in form if (child.vars.id not in exclude_fields and not child.rendered) %}
+                        {% for child in form | filter(child => child.vars.id not in exclude_fields and not child.rendered) %}
                             {{ form_row(child) }}
                         {% endfor %}
                     </div>

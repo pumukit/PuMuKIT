@@ -10,66 +10,38 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class PicEventDispatcherService
 {
-    /**
-     * @var EventDispatcherInterface
-     */
+    /** @var EventDispatcherInterface */
     private $dispatcher;
 
-    /**
-     * Constructor.
-     *
-     * @param EventDispatcherInterface $dispatcher
-     */
     public function __construct(EventDispatcherInterface $dispatcher)
     {
         $this->dispatcher = $dispatcher;
     }
 
     /**
-     * Dispatch create.
-     *
-     * Dispatchs the event PIC_CREATE
-     * 'pic.create' passing
-     * the multimedia object and the pic
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Pic              $pic
+     * Dispatch the event PIC_CREATE 'pic.create' passing the multimedia object and the pic.
      */
-    public function dispatchCreate(MultimediaObject $multimediaObject, Pic $pic)
+    public function dispatchCreate(MultimediaObject $multimediaObject, Pic $pic): void
     {
         $event = new PicEvent($multimediaObject, $pic);
-        $this->dispatcher->dispatch(SchemaEvents::PIC_CREATE, $event);
+        $this->dispatcher->dispatch($event, SchemaEvents::PIC_CREATE);
     }
 
     /**
-     * Dispatch update.
-     *
-     * Dispatchs the event PIC_UPDATE
-     * 'pic.update' passing
-     * the multimedia object and the pic
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Pic              $pic
+     * Dispatch the event PIC_UPDATE 'pic.update' passing the multimedia object and the pic.
      */
-    public function dispatchUpdate(MultimediaObject $multimediaObject, Pic $pic)
+    public function dispatchUpdate(MultimediaObject $multimediaObject, Pic $pic): void
     {
         $event = new PicEvent($multimediaObject, $pic);
-        $this->dispatcher->dispatch(SchemaEvents::PIC_UPDATE, $event);
+        $this->dispatcher->dispatch($event, SchemaEvents::PIC_UPDATE);
     }
 
     /**
-     * Dispatch delete.
-     *
-     * Dispatchs the event PIC_DELETE
-     * 'pic.delete' passing
-     * the multimedia object and the pic
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Pic              $pic
+     * Dispatch the event PIC_DELETE 'pic.delete' passing the multimedia object and the pic.
      */
-    public function dispatchDelete(MultimediaObject $multimediaObject, Pic $pic)
+    public function dispatchDelete(MultimediaObject $multimediaObject, Pic $pic): void
     {
         $event = new PicEvent($multimediaObject, $pic);
-        $this->dispatcher->dispatch(SchemaEvents::PIC_DELETE, $event);
+        $this->dispatcher->dispatch($event, SchemaEvents::PIC_DELETE);
     }
 }

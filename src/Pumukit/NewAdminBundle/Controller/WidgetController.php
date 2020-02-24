@@ -3,21 +3,27 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
-class WidgetController extends Controller
+class WidgetController extends AbstractController
 {
-    /**
-     * @Template("PumukitNewAdminBundle:Widget:languageselect.html.twig")
-     */
-    public function languageselectAction()
+    private $locales;
+
+    public function __construct(array $locales)
     {
-        $array_locales = $this->container->getParameter('pumukit.locales');
-        if (count($array_locales) <= 1) {
+        $this->locales = $locales;
+    }
+
+    /**
+     * @Template("@PumukitNewAdmin/Widget/languageselect.html.twig")
+     */
+    public function languageSelectAction()
+    {
+        if (count($this->locales) <= 1) {
             return new Response('');
         }
 
-        return ['languages' => $array_locales];
+        return ['languages' => $this->locales];
     }
 }

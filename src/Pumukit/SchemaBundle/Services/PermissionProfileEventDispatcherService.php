@@ -9,63 +9,38 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class PermissionProfileEventDispatcherService
 {
-    /**
-     * @var EventDispatcherInterface
-     */
+    /** @var EventDispatcherInterface */
     private $dispatcher;
 
-    /**
-     * Constructor.
-     *
-     * @param EventDispatcherInterface $dispatcher
-     */
     public function __construct(EventDispatcherInterface $dispatcher)
     {
         $this->dispatcher = $dispatcher;
     }
 
     /**
-     * Dispatch create.
-     *
-     * Dispatchs the event PERMISSIONPROFILE_CREATE
-     * 'permissionprofile.create' passing
-     * the permissionProfile
-     *
-     * @param PermissionProfile $permissionProfile
+     * Dispatch the event PERMISSIONPROFILE_CREATE 'permissionprofile.create' passing the permissionProfile.
      */
     public function dispatchCreate(PermissionProfile $permissionProfile)
     {
         $event = new PermissionProfileEvent($permissionProfile);
-        $this->dispatcher->dispatch(SchemaEvents::PERMISSIONPROFILE_CREATE, $event);
+        $this->dispatcher->dispatch($event, SchemaEvents::PERMISSIONPROFILE_CREATE);
     }
 
     /**
-     * Dispatch update.
-     *
-     * Dispatchs the event PERMISSIONPROFILE_UPDATE
-     * 'permissionprofile.update' passing
-     * the permissionProfile
-     *
-     * @param PermissionProfile $permissionProfile
+     * Dispatch the event PERMISSIONPROFILE_UPDATE 'permissionprofile.update' passing the permissionProfile.
      */
     public function dispatchUpdate(PermissionProfile $permissionProfile)
     {
         $event = new PermissionProfileEvent($permissionProfile);
-        $this->dispatcher->dispatch(SchemaEvents::PERMISSIONPROFILE_UPDATE, $event);
+        $this->dispatcher->dispatch($event, SchemaEvents::PERMISSIONPROFILE_UPDATE);
     }
 
     /**
-     * Dispatch delete.
-     *
-     * Dispatchs the event PERMISSIONPROFILE_DELETE
-     * 'permissionprofile.delete' passing
-     * the permissionProfile
-     *
-     * @param PermissionProfile $permissionProfile
+     * Dispatch the event PERMISSIONPROFILE_DELETE 'permissionprofile.delete' passing the permissionProfile.
      */
     public function dispatchDelete(PermissionProfile $permissionProfile)
     {
         $event = new PermissionProfileEvent($permissionProfile);
-        $this->dispatcher->dispatch(SchemaEvents::PERMISSIONPROFILE_DELETE, $event);
+        $this->dispatcher->dispatch($event, SchemaEvents::PERMISSIONPROFILE_DELETE);
     }
 }

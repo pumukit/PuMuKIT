@@ -6,6 +6,8 @@ interface PersonInterface
 {
     public function __toString(): string;
 
+    public function getId();
+
     public function getName(): ?string;
 
     public function setName(?string $name): void;

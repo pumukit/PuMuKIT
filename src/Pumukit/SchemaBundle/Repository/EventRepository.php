@@ -87,14 +87,14 @@ class EventRepository extends DocumentRepository
             $pipeline[] = ['$limit' => $limit];
         }
         $aggregation = $dmColl->aggregate($pipeline, ['cursor' => []]);
-
-        if (0 === $aggregation->count()) {
+        $aggregation = iterator_to_array($aggregation);
+        if (0 === count($aggregation)) {
             return [];
         }
 
         $ids = array_map(function ($e) {
             return $e['_id'];
-        }, $aggregation->toArray());
+        }, $aggregation);
 
         return $this->createQueryBuilder()
             ->field('_id')->in($ids)

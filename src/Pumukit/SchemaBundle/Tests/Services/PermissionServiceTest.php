@@ -16,19 +16,16 @@ class PermissionServiceTest extends WebTestCase
     private $permissionService;
     private $dm;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-
-        $this->permissionService = static::$kernel->getContainer()
-            ->get('pumukitschema.permission')
-        ;
+        $this->permissionService = static::$kernel->getContainer()->get('pumukitschema.permission');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->permissionService = null;
         gc_collect_cycles();
@@ -40,7 +37,7 @@ class PermissionServiceTest extends WebTestCase
         $externalPermissions = $this->getExternalPermissions();
         $permissionService = new PermissionService($this->dm, $externalPermissions);
 
-        $this->assertEquals($externalPermissions, $permissionService->getExternalPermissions());
+        static::assertEquals($externalPermissions, $permissionService->getExternalPermissions());
     }
 
     /**
@@ -78,7 +75,7 @@ class PermissionServiceTest extends WebTestCase
         $externalPermissions = $this->getExternalPermissions();
         $permissionService = new PermissionService($this->dm, $externalPermissions);
 
-        $this->assertEquals(Permission::$permissionDescription, $permissionService->getLocalPermissions());
+        static::assertEquals(Permission::$permissionDescription, $permissionService->getLocalPermissions());
     }
 
     public function testGetAllPermissions()
@@ -94,7 +91,7 @@ class PermissionServiceTest extends WebTestCase
         $allPermissions['ROLE_THREE'] = 'Access Three';
         $allPermissions['ROLE_FOUR'] = 'Access Four';
 
-        $this->assertEquals($allPermissions, $permissionService->getAllPermissions());
+        static::assertEquals($allPermissions, $permissionService->getAllPermissions());
     }
 
     public function testGetAllDependencies()
@@ -122,7 +119,7 @@ class PermissionServiceTest extends WebTestCase
             PermissionProfile::SCOPE_PERSONAL => [],
         ];
 
-        $this->assertEquals($allDependencies, $permissionService->getAllDependencies());
+        static::assertEquals($allDependencies, $permissionService->getAllDependencies());
     }
 
     public function testGetDependenciesByScope()
@@ -130,14 +127,14 @@ class PermissionServiceTest extends WebTestCase
         $externalPermissions = $this->getExternalPermissions();
         $permissionService = new PermissionService($this->dm, $externalPermissions);
 
-        $this->assertEquals(['ROLE_TWO', 'ROLE_THREE'], $permissionService->getDependenciesByScope($externalPermissions[0]['role'], PermissionProfile::SCOPE_GLOBAL));
-        $this->assertEquals(['ROLE_TWO'], $permissionService->getDependenciesByScope($externalPermissions[0]['role'], PermissionProfile::SCOPE_PERSONAL));
-        $this->assertEquals(['ROLE_THREE', 'ROLE_ONE'], $permissionService->getDependenciesByScope($externalPermissions[1]['role'], PermissionProfile::SCOPE_GLOBAL));
-        $this->assertEquals([], $permissionService->getDependenciesByScope($externalPermissions[1]['role'], PermissionProfile::SCOPE_PERSONAL));
-        $this->assertEquals(['ROLE_ONE', 'ROLE_TWO'], $permissionService->getDependenciesByScope($externalPermissions[2]['role'], PermissionProfile::SCOPE_GLOBAL));
-        $this->assertEquals([], $permissionService->getDependenciesByScope($externalPermissions[2]['role'], PermissionProfile::SCOPE_PERSONAL));
-        $this->assertEquals([], $permissionService->getDependenciesByScope($externalPermissions[3]['role'], PermissionProfile::SCOPE_GLOBAL));
-        $this->assertEquals([], $permissionService->getDependenciesByScope($externalPermissions[3]['role'], PermissionProfile::SCOPE_PERSONAL));
+        static::assertEquals(['ROLE_TWO', 'ROLE_THREE'], $permissionService->getDependenciesByScope($externalPermissions[0]['role'], PermissionProfile::SCOPE_GLOBAL));
+        static::assertEquals(['ROLE_TWO'], $permissionService->getDependenciesByScope($externalPermissions[0]['role'], PermissionProfile::SCOPE_PERSONAL));
+        static::assertEquals(['ROLE_THREE', 'ROLE_ONE'], $permissionService->getDependenciesByScope($externalPermissions[1]['role'], PermissionProfile::SCOPE_GLOBAL));
+        static::assertEquals([], $permissionService->getDependenciesByScope($externalPermissions[1]['role'], PermissionProfile::SCOPE_PERSONAL));
+        static::assertEquals(['ROLE_ONE', 'ROLE_TWO'], $permissionService->getDependenciesByScope($externalPermissions[2]['role'], PermissionProfile::SCOPE_GLOBAL));
+        static::assertEquals([], $permissionService->getDependenciesByScope($externalPermissions[2]['role'], PermissionProfile::SCOPE_PERSONAL));
+        static::assertEquals([], $permissionService->getDependenciesByScope($externalPermissions[3]['role'], PermissionProfile::SCOPE_GLOBAL));
+        static::assertEquals([], $permissionService->getDependenciesByScope($externalPermissions[3]['role'], PermissionProfile::SCOPE_PERSONAL));
     }
 
     /**

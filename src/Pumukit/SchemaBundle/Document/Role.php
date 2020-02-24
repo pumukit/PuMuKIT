@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\RoleRepository")
  */
-class Role
+class Role implements RoleInterface
 {
     /**
      * @MongoDB\Id
@@ -16,16 +16,12 @@ class Role
     protected $id;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      * @MongoDB\UniqueIndex()
      */
     private $cod = '0';
 
     /**
-     * @var int|null
-     *
      * @MongoDB\Field(type="int")
      * @MongoDB\Index
      * @Gedmo\SortablePosition
@@ -33,181 +29,104 @@ class Role
     private $rank;
 
     /**
-     * @var int
      * @MongoDB\Field(type="int", strategy="increment" )
      */
     private $number_people_in_multimedia_object = 0;
 
     /**
-     * See European Broadcasting Union Role Codes.
-     * https://www.ebu.ch/metadata/cs/web/ebu_RoleCodeCS_p.xml.htm.
-     *
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $xml;
 
     /**
-     * @var bool
-     *
      * @MongoDB\Field(type="boolean")
      */
     private $display = true;
 
     /**
-     * @var bool
-     *
      * @MongoDB\Field(type="boolean")
      */
     private $readOnly = false;
 
     /**
-     * @var array<string, string>
-     *
      * @MongoDB\Field(type="raw")
      */
     private $name = ['en' => ''];
 
     /**
-     * @var array<string, string>
-     *
      * @MongoDB\Field(type="raw")
      */
     private $text = ['en' => ''];
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $locale = 'en';
 
-    /**
-     * Get id.
-     *
-     * @return \MongoId|string|null
-     */
+    public function __toString(): string
+    {
+        return $this->getCod();
+    }
+
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set cod.
-     *
-     * @param string $cod
-     */
-    public function setCod($cod)
+    public function setCod(string $cod): void
     {
         $this->cod = $cod;
     }
 
-    /**
-     * Get cod.
-     *
-     * @return string
-     */
-    public function getCod()
+    public function getCod(): string
     {
         return $this->cod;
     }
 
-    /**
-     * Set rank.
-     *
-     * @param int $rank
-     */
-    public function setRank($rank)
+    public function setRank(int $rank): void
     {
         $this->rank = $rank;
     }
 
-    /**
-     * Get rank.
-     *
-     * @return int
-     */
-    public function getRank()
+    public function getRank(): int
     {
         return $this->rank;
     }
 
-    /**
-     * Set xml.
-     *
-     * @param string $xml
-     */
-    public function setXml($xml)
+    public function setXml(string $xml): void
     {
         $this->xml = $xml;
     }
 
-    /**
-     * Get xml.
-     *
-     * @return string
-     */
-    public function getXml()
+    public function getXml(): ?string
     {
         return $this->xml;
     }
 
-    /**
-     * Set display.
-     *
-     * @param bool $display
-     */
-    public function setDisplay($display)
+    public function setDisplay(bool $display): void
     {
         $this->display = $display;
     }
 
-    /**
-     * Get display.
-     *
-     * @return bool
-     */
-    public function getDisplay()
+    public function getDisplay(): bool
     {
         return $this->display;
     }
 
-    /**
-     * Set readOnly.
-     *
-     * @param bool $readOnly
-     */
-    public function setReadOnly($readOnly)
+    public function setReadOnly(bool $readOnly): void
     {
         $this->readOnly = $readOnly;
     }
 
-    /**
-     * Get readOnly.
-     *
-     * @return bool
-     */
-    public function getReadOnly()
+    public function getReadOnly(): bool
     {
         return $this->readOnly;
     }
 
-    /**
-     * Is readOnly.
-     *
-     * @return bool
-     */
-    public function isReadOnly()
+    public function isReadOnly(): bool
     {
         return $this->readOnly;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string      $name
-     * @param string|null $locale
-     */
-    public function setName($name, $locale = null)
+    public function setName(string $name, ?string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -215,14 +134,7 @@ class Role
         $this->name[$locale] = $name;
     }
 
-    /**
-     * Get name.
-     *
-     * @param string|null $locale
-     *
-     * @return string
-     */
-    public function getName($locale = null)
+    public function getName(?string $locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -234,33 +146,17 @@ class Role
         return $this->name[$locale];
     }
 
-    /**
-     * Set I18n name.
-     *
-     * @param array $name
-     */
-    public function setI18nName(array $name)
+    public function setI18nName(array $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * Get i18n name.
-     *
-     * @return array
-     */
-    public function getI18nName()
+    public function getI18nName(): array
     {
         return $this->name;
     }
 
-    /**
-     * Set text.
-     *
-     * @param string      $text
-     * @param string|null $locale
-     */
-    public function setText($text, $locale = null)
+    public function setText(string $text, ?string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -268,14 +164,7 @@ class Role
         $this->text[$locale] = $text;
     }
 
-    /**
-     * Get text.
-     *
-     * @param string|null $locale
-     *
-     * @return string
-     */
-    public function getText($locale = null)
+    public function getText(?string $locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -287,86 +176,47 @@ class Role
         return $this->text[$locale];
     }
 
-    /**
-     * Set I18n text.
-     *
-     * @param array $text
-     */
-    public function setI18nText(array $text)
+    public function setI18nText(array $text): void
     {
         $this->text = $text;
     }
 
-    /**
-     * Get i18n text.
-     *
-     * @return array
-     */
-    public function getI18nText()
+    public function getI18nText(): array
     {
         return $this->text;
     }
 
-    /**
-     * Set locale.
-     *
-     * @param string $locale
-     */
-    public function setLocale($locale)
+    public function setLocale(string $locale): void
     {
         $this->locale = $locale;
     }
 
-    /**
-     * Get locale.
-     *
-     * @return string
-     */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
 
-    /**
-     * Increase number_people_in_multimedia_object.
-     */
-    public function increaseNumberPeopleInMultimediaObject()
+    public function increaseNumberPeopleInMultimediaObject(): void
     {
         ++$this->number_people_in_multimedia_object;
     }
 
-    /**
-     * Decrease number_people_in_multimedia_object.
-     */
-    public function decreaseNumberPeopleInMultimediaObject()
+    public function decreaseNumberPeopleInMultimediaObject(): void
     {
         --$this->number_people_in_multimedia_object;
     }
 
-    /**
-     * Get number_people_in_multimedia_object.
-     */
-    public function getNumberPeopleInMultimediaObject()
+    public function getNumberPeopleInMultimediaObject(): int
     {
         return $this->number_people_in_multimedia_object;
     }
 
-    /**
-     * Set number_people_in_multimedia_object.
-     *
-     * @param mixed $number_people_in_multimedia_object
-     */
-    public function setNumberPeopleInMultimediaObject($number_people_in_multimedia_object)
+    public function setNumberPeopleInMultimediaObject(int $number_people_in_multimedia_object): void
     {
         $this->number_people_in_multimedia_object = $number_people_in_multimedia_object;
     }
 
-    /**
-     * Clone Role.
-     *
-     * @return Role
-     */
-    public function cloneResource()
+    public function cloneResource(): Role
     {
         $aux = clone $this;
         $aux->id = null;

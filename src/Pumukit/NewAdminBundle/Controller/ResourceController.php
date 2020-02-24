@@ -2,39 +2,52 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Pagerfanta\Pagerfanta;
+use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class ResourceController extends Controller
+class ResourceController extends AbstractController
 {
     public static $resourceName = 'series';
     public static $repoName = Series::class;
 
-    public function getResourceName()
+    /** @var DocumentManager */
+    protected $documentManager;
+    /** @var PaginationService */
+    protected $paginationService;
+
+    public function __construct(DocumentManager $documentManager, PaginationService $paginationService)
+    {
+        $this->documentManager = $documentManager;
+        $this->paginationService = $paginationService;
+    }
+
+    public function getResourceName(): string
     {
         return static::$resourceName;
     }
 
-    public function getPluralResourceName()
+    public function getPluralResourceName(): string
     {
         return static::$resourceName.'s';
     }
 
-    public function redirectToIndex()
+    public function redirectToIndex(): RedirectResponse
     {
         return $this->redirect($this->generateUrl($this->getRedirectRoute()));
     }
 
     public function getRepository()
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
-
-        return $dm->getRepository(static::$repoName);
+        return $this->documentManager->getRepository(static::$repoName);
     }
 
-    public function getSorting(Request $request = null, $session_namespace = null)
+    public function getSorting(Request $request = null, $session_namespace = null): array
     {
         return [];
     }
@@ -67,11 +80,10 @@ class ResourceController extends Controller
         return $resource;
     }
 
-    public function update($resource)
+    public function update($resource): void
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $dm->persist($resource);
-        $dm->flush();
+        $this->documentManager->persist($resource);
+        $this->documentManager->flush();
     }
 
     public function createNew()
@@ -80,21 +92,24 @@ class ResourceController extends Controller
         throw new \LogicException('createNew method should be overide in the final Controller.');
     }
 
-    protected function createPager($criteria, $sorting)
+    protected function createPager($criteria, $sorting): Pagerfanta
     {
         $repo = $this->getRepository();
 
         $queryBuilder = $repo->createQueryBuilder();
 
         $queryBuilder->setQueryArray($criteria);
-        $queryBuilder->sort($sorting);
 
-        $paginationService = $this->get('pumukit_core.pagination_service');
+        if (array_key_exists('textScore', $sorting)) {
+            $queryBuilder = $queryBuilder->sortMeta('score', 'textScore');
+        } else {
+            $queryBuilder->sort($sorting);
+        }
 
-        return $paginationService->createDoctrineODMMongoDBAdapter($queryBuilder);
+        return $this->paginationService->createDoctrineODMMongoDBAdapter($queryBuilder);
     }
 
-    private function getRedirectRoute($routeName = 'index')
+    private function getRedirectRoute(string $routeName = 'index'): string
     {
         $resourceName = $this->getResourceName();
 

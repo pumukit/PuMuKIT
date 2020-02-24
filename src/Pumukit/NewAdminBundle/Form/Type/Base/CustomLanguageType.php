@@ -4,7 +4,7 @@ namespace Pumukit\NewAdminBundle\Form\Type\Base;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Intl\Intl;
+use Symfony\Component\Intl\Languages;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -40,7 +40,7 @@ class CustomLanguageType extends AbstractType
 
     public static function getLanguageNames($customLanguages, $translator)
     {
-        $languageNames = Intl::getLanguageBundle()->getLanguageNames();
+        $languageNames = Languages::getNames();
 
         if ($customLanguages) {
             $choices = [];

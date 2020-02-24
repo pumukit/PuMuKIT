@@ -4,7 +4,7 @@
 </div>
 <div class="modal-body">
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PERMISSION_PROFILES')) %}
-  {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
+  {% form_theme form '@PumukitNewAdmin/Themes/fields.html.twig' %}
   <form id="pumukitnewadmin_permissionprofile_form_create"
         action="{{ path('pumukitnewadmin_permissionprofile_create') }}" method="POST">
     <fieldset>

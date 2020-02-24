@@ -35,23 +35,23 @@ class PersonTest extends TestCase
         $person->setPost($post);
         $person->setBio($bio);
 
-        $this->assertEquals($email, $person->getEmail());
-        $this->assertEquals($name, $person->getName());
-        $this->assertEquals($web, $person->getWeb());
-        $this->assertEquals($phone, $person->getPhone());
-        $this->assertEquals($honorific, $person->getHonorific());
-        $this->assertEquals($firm, $person->getFirm());
-        $this->assertEquals($post, $person->getPost());
-        $this->assertEquals($bio, $person->getBio());
-        $this->assertEquals($locale, $person->getLocale());
+        static::assertEquals($email, $person->getEmail());
+        static::assertEquals($name, $person->getName());
+        static::assertEquals($web, $person->getWeb());
+        static::assertEquals($phone, $person->getPhone());
+        static::assertEquals($honorific, $person->getHonorific());
+        static::assertEquals($firm, $person->getFirm());
+        static::assertEquals($post, $person->getPost());
+        static::assertEquals($bio, $person->getBio());
+        static::assertEquals($locale, $person->getLocale());
 
-        $this->assertEquals($honorific.' '.$name, $person->getHName());
-        $this->assertEquals($post.' '.$firm.' '.$bio, $person->getOther());
-        $this->assertEquals($post.', '.$firm.', '.$bio, $person->getInfo());
+        static::assertEquals($honorific.' '.$name, $person->getHName());
+        static::assertEquals($post.' '.$firm.' '.$bio, $person->getOther());
+        static::assertEquals($post.', '.$firm.', '.$bio, $person->getInfo());
 
         $bio = '';
         $person->setBio($bio);
-        $this->assertEquals($post.', '.$firm, $person->getInfo());
+        static::assertEquals($post.', '.$firm, $person->getInfo());
 
         $honorificEs = 'Don';
         $firmEs = 'Firma de esta persona';
@@ -68,10 +68,10 @@ class PersonTest extends TestCase
         $person->setI18nPost($i18nPost);
         $person->setI18nBio($i18nBio);
 
-        $this->assertEquals($i18nHonorific, $person->getI18nHonorific());
-        $this->assertEquals($i18nFirm, $person->getI18nFirm());
-        $this->assertEquals($i18nPost, $person->getI18nPost());
-        $this->assertEquals($i18nBio, $person->getI18nBio());
+        static::assertEquals($i18nHonorific, $person->getI18nHonorific());
+        static::assertEquals($i18nFirm, $person->getI18nFirm());
+        static::assertEquals($i18nPost, $person->getI18nPost());
+        static::assertEquals($i18nBio, $person->getI18nBio());
 
         $honorific = '';
         $firm = '';
@@ -83,16 +83,16 @@ class PersonTest extends TestCase
         $person->setPost($post);
         $person->setBio($bio);
 
-        $this->assertEquals($honorific, $person->getHonorific());
-        $this->assertEquals($firm, $person->getFirm());
-        $this->assertEquals($post, $person->getPost());
-        $this->assertEquals($bio, $person->getBio());
+        static::assertEquals($honorific, $person->getHonorific());
+        static::assertEquals($firm, $person->getFirm());
+        static::assertEquals($post, $person->getPost());
+        static::assertEquals($bio, $person->getBio());
     }
 
     public function testCloneResource()
     {
         $person = new Person();
 
-        $this->assertEquals($person, $person->cloneResource());
+        static::assertEquals($person, $person->cloneResource());
     }
 }

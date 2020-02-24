@@ -1,4 +1,4 @@
-{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+{% extends '@PumukitNewAdmin/layout.html.twig' %}
 
 {% block body %}
     <h3 class="cab_body_div">
@@ -16,7 +16,7 @@
             <div id="tv_admin_content" class="col-md-10">
                 <div class="well">
                     <div id="list_mms">
-                        {% include 'PumukitNewAdminBundle:MultimediaObject:listAll.html.twig' %}
+                        {% include '@PumukitNewAdmin/MultimediaObject/listAll.html.twig' %}
                     </div>
                 </div>
                 <div id="edit_mm">
@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div class="col-md-2 hidden-xs hidden-sm">
-                {% include 'PumukitNewAdminBundle:MultimediaObject:acordeon.html.twig' with {'roles' : roles, 'statusPub' : statusPub} %}
+                {% include '@PumukitNewAdmin/MultimediaObject/acordeon.html.twig' with {'roles' : roles, 'statusPub' : statusPub} %}
             </div>
         {% else %}
             <div class="col-md-12">

@@ -14,10 +14,6 @@ class PermissionProfileService
 
     /**
      * Constructor.
-     *
-     * @param DocumentManager                         $documentManager
-     * @param PermissionProfileEventDispatcherService $dispatcher
-     * @param PermissionService                       $permissionService
      */
     public function __construct(DocumentManager $documentManager, PermissionProfileEventDispatcherService $dispatcher, PermissionService $permissionService)
     {
@@ -30,8 +26,7 @@ class PermissionProfileService
     /**
      * Update User Permission.
      *
-     * @param PermissionProfile $permissionProfile
-     * @param bool              $dispatchCreate
+     * @param bool $dispatchCreate
      */
     public function update(PermissionProfile $permissionProfile, $dispatchCreate = false)
     {
@@ -56,21 +51,19 @@ class PermissionProfileService
      * If there is no PermissionProfile as default,
      * calls setDefaultPermissionProfile.
      *
-     * @param PermissionProfile $permissionProfile
-     *
      * @return PermissionProfile
      */
     public function checkDefault(PermissionProfile $permissionProfile)
     {
         if ($permissionProfile->isDefault()) {
-            $default = $this->repo->findOneByDefault(true);
+            $default = $this->repo->findOneBy(['default' => true]);
             $this->repo->changeDefault($permissionProfile);
             if (null !== $default) {
                 $this->dispatcher->dispatchUpdate($default);
             }
         }
 
-        $default = $this->repo->findOneByDefault(true);
+        $default = $this->repo->findOneBy(['default' => true]);
         if ((null === $default) || (!$default->isDefault())) {
             $default = $this->setDefaultPermissionProfile();
             $this->dispatcher->dispatchUpdate($default);
@@ -106,9 +99,8 @@ class PermissionProfileService
     /**
      * Calls doAddPermission  and the dispatchUpdate event.
      *
-     * @param PermissionProfile $permissionProfile
-     * @param string            $permission
-     * @param bool              $executeFlush
+     * @param string $permission
+     * @param bool   $executeFlush
      *
      * @return PermissionProfile
      */
@@ -123,9 +115,8 @@ class PermissionProfileService
     /**
      * Adds a permission.
      *
-     * @param PermissionProfile $permissionProfile
-     * @param string            $permission
-     * @param bool              $executeFlush
+     * @param string $permission
+     * @param bool   $executeFlush
      *
      * @return PermissionProfile
      */
@@ -148,9 +139,8 @@ class PermissionProfileService
     /**
      * Remove permission.
      *
-     * @param PermissionProfile $permissionProfile
-     * @param string            $permission
-     * @param bool              $executeFlush
+     * @param string $permission
+     * @param bool   $executeFlush
      *
      * @return PermissionProfile
      */
@@ -178,9 +168,8 @@ class PermissionProfileService
     /**
      * Set scope.
      *
-     * @param PermissionProfile $permissionProfile
-     * @param string            $scope
-     * @param bool              $executeFlush
+     * @param string $scope
+     * @param bool   $executeFlush
      *
      * @return PermissionProfile
      */
@@ -201,9 +190,8 @@ class PermissionProfileService
     /**
      * Updates all permissions for a given permissionProfile.
      *
-     * @param PermissionProfile $permissionProfile
-     * @param mixed             $permissionsList
-     * @param mixed             $executeFlush
+     * @param mixed $permissionsList
+     * @param mixed $executeFlush
      */
     public function batchUpdate(PermissionProfile $permissionProfile, $permissionsList, $executeFlush = true)
     {
@@ -229,7 +217,7 @@ class PermissionProfileService
      */
     public function getDefault()
     {
-        return $this->repo->findOneByDefault(true);
+        return $this->repo->findOneBy(['default' => true]);
     }
 
     /**

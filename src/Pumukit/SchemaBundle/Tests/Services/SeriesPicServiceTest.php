@@ -2,20 +2,18 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
-use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Services\SeriesPicService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @internal
  * @coversNothing
  */
-class SeriesPicServiceTest extends WebTestCase
+class SeriesPicServiceTest extends PumukitTestCase
 {
-    private $dm;
     private $repo;
     private $factoryService;
     private $seriesPicService;
@@ -24,41 +22,27 @@ class SeriesPicServiceTest extends WebTestCase
     private $uploadsPath;
     private $seriesDispatcher;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
+        parent::setUp();
 
-        $this->dm = static::$kernel->getContainer()
-            ->get('doctrine_mongodb')->getManager();
-        $this->repo = $this->dm
-            ->getRepository(Series::class)
-        ;
-        $this->factoryService = static::$kernel->getContainer()
-            ->get('pumukitschema.factory')
-        ;
-        $this->seriesPicService = static::$kernel->getContainer()
-            ->get('pumukitschema.seriespic')
-        ;
-        $this->mmsPicService = static::$kernel->getContainer()
-            ->get('pumukitschema.mmspic')
-        ;
-        $this->seriesDispatcher = static::$kernel->getContainer()
-            ->get('pumukitschema.series_dispatcher')
-        ;
+        $this->repo = $this->dm->getRepository(Series::class);
+        $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
+        $this->seriesPicService = static::$kernel->getContainer()->get('pumukitschema.seriespic');
+        $this->mmsPicService = static::$kernel->getContainer()->get('pumukitschema.mmspic');
+        $this->seriesDispatcher = static::$kernel->getContainer()->get('pumukitschema.series_dispatcher');
 
         $this->originalPicPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'logo.png';
-        $this->uploadsPath = realpath(__DIR__.'/../../../../../web/uploads/pic');
-
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
-        $this->dm->getDocumentCollection(Series::class)->remove([]);
-        $this->dm->flush();
+        $this->uploadsPath = static::$kernel->getContainer()->getParameter('pumukit.uploads_pic_dir');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->repo = null;
         $this->factoryService = null;
         $this->seriesPicService = null;
@@ -67,7 +51,6 @@ class SeriesPicServiceTest extends WebTestCase
         $this->originalPicPath = null;
         $this->uploadsPath = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testGetRecommendedPics()
@@ -122,35 +105,35 @@ class SeriesPicServiceTest extends WebTestCase
         $this->dm->persist($mm21);
         $this->dm->flush();
 
-        $this->assertEquals(3, count($this->seriesPicService->getRecommendedPics($series1)));
-        $this->assertEquals(1, count($this->seriesPicService->getRecommendedPics($series2)));
+        static::assertCount(3, $this->seriesPicService->getRecommendedPics($series1));
+        static::assertCount(1, $this->seriesPicService->getRecommendedPics($series2));
     }
 
     public function testAddPicUrl()
     {
         $series = $this->factoryService->createSeries();
 
-        $this->assertEquals(0, count($series->getPics()));
+        static::assertCount(0, $series->getPics());
 
         $url = 'http://domain.com/pic.png';
         $bannerTargetUrl = 'http://domain.com/banner';
 
         $series = $this->seriesPicService->addPicUrl($series, $url);
 
-        $this->assertEquals(1, count($series->getPics()));
-        $this->assertEquals(1, count($this->repo->findAll()[0]->getPics()));
+        static::assertCount(1, $series->getPics());
+        static::assertCount(1, $this->repo->findAll()[0]->getPics());
 
         $series = $this->seriesPicService->addPicUrl($series, $url, true, $bannerTargetUrl);
 
-        $this->assertEquals(2, count($series->getPics()));
-        $this->assertEquals(2, count($this->repo->findAll()[0]->getPics()));
+        static::assertCount(2, $series->getPics());
+        static::assertCount(2, $this->repo->findAll()[0]->getPics());
     }
 
     public function testAddPicFile()
     {
         $series = $this->factoryService->createSeries();
 
-        $this->assertEquals(0, count($series->getPics()));
+        static::assertCount(0, $series->getPics());
 
         $picPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'picCopy.png';
         if (copy($this->originalPicPath, $picPath)) {
@@ -158,13 +141,13 @@ class SeriesPicServiceTest extends WebTestCase
             $series = $this->seriesPicService->addPicFile($series, $picFile);
             $series = $this->repo->find($series->getId());
 
-            $this->assertEquals(1, count($series->getPics()));
+            static::assertCount(1, $series->getPics());
 
             $pic = $series->getPics()[0];
-            $this->assertTrue($series->containsPic($pic));
+            static::assertTrue($series->containsPic($pic));
 
             $uploadedPic = '/uploads/pic/series/'.$series->getId().DIRECTORY_SEPARATOR.$picFile->getClientOriginalName();
-            $this->assertEquals($uploadedPic, $pic->getUrl());
+            static::assertEquals($uploadedPic, $pic->getUrl());
         }
 
         $picPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'picCopy2.png';
@@ -174,7 +157,7 @@ class SeriesPicServiceTest extends WebTestCase
             $bannerTargetUrl = 'http://domain.com/banner';
             $series = $this->seriesPicService->addPicFile($series, $picFile, true, $bannerTargetUrl);
 
-            $this->assertEquals(2, count($series->getPics()));
+            static::assertCount(2, $series->getPics());
         }
 
         $this->deleteCreatedFiles();
@@ -184,7 +167,7 @@ class SeriesPicServiceTest extends WebTestCase
     {
         $series = $this->factoryService->createSeries();
 
-        $this->assertEquals(0, count($series->getPics()));
+        static::assertCount(0, $series->getPics());
 
         $pic = new Pic();
         $url = 'http://domain.com/pic.png';
@@ -199,10 +182,10 @@ class SeriesPicServiceTest extends WebTestCase
         $this->dm->flush();
 
         $series->addPic($pic);
-        $this->assertEquals(1, count($series->getPics()));
+        static::assertCount(1, $series->getPics());
 
         $series = $this->seriesPicService->removePicFromSeries($series, $pic->getId());
-        $this->assertEquals(0, count($series->getPics()));
+        static::assertCount(0, $series->getPics());
 
         $picPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'picCopy2.png';
         if (copy($this->originalPicPath, $picPath)) {
@@ -212,13 +195,13 @@ class SeriesPicServiceTest extends WebTestCase
             $series = $this->seriesPicService->addPicFile($series, $picFile, true, $bannerTargetUrl);
             $series = $this->repo->find($series->getId());
 
-            $this->assertEquals(1, count($series->getPics()));
+            static::assertCount(1, $series->getPics());
 
             $pic = $series->getPics()[0];
-            $this->assertTrue($series->containsPic($pic));
+            static::assertTrue($series->containsPic($pic));
 
             $series = $this->seriesPicService->removePicFromSeries($series, $pic->getId());
-            $this->assertEquals(0, count($series->getPics()));
+            static::assertCount(0, $series->getPics());
         }
     }
 

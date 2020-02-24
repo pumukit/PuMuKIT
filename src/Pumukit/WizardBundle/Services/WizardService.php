@@ -3,8 +3,6 @@
 namespace Pumukit\WizardBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\EncoderBundle\Services\JobService;
-use Pumukit\InspectionBundle\Services\InspectionServiceInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
@@ -12,91 +10,33 @@ use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\TagService;
-use Symfony\Component\Process\ProcessBuilder;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Process\Process;
 
-/**
- * Class WizardService.
- */
 class WizardService
 {
-    /**
-     * @var DocumentManager
-     */
+    /** @var DocumentManager */
     private $dm;
-
-    /**
-     * @var FactoryService
-     */
+    /** @var FactoryService */
     private $factoryService;
-
-    /**
-     * @var InspectionServiceInterface
-     */
-    private $inspectionService;
-
-    /**
-     * @var FormEventDispatcherService
-     */
-    private $formEventDispatcher;
-
-    /**
-     * @var JobService
-     */
-    private $jobService;
-
-    /**
-     * @var AuthorizationCheckerInterface
-     */
-    private $authorizationChecker;
-
-    /**
-     * @var TagService
-     */
+    /** @var TagService */
     private $tagService;
-
-    /**
-     * @var User
-     */
+    /** @var User */
     private $user;
-
     private $inboxDepth;
     private $locales;
     private $basePath;
 
-    /**
-     * WizardService constructor.
-     *
-     * @param DocumentManager               $documentManager
-     * @param FactoryService                $factoryService
-     * @param InspectionServiceInterface    $inspectionService
-     * @param FormEventDispatcherService    $formEventDispatcher
-     * @param JobService                    $jobService
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param TagService                    $tagService
-     * @param string                        $basePath
-     * @param array                         $locales
-     * @param bool|null                     $inboxDepth
-     */
     public function __construct(
         DocumentManager $documentManager,
         FactoryService $factoryService,
-        InspectionServiceInterface $inspectionService,
-        FormEventDispatcherService $formEventDispatcher,
-        JobService $jobService,
-        AuthorizationCheckerInterface $authorizationChecker,
         TagService $tagService,
-        $basePath,
-        $locales,
-        $inboxDepth = null
+        string $basePath,
+        array $locales,
+        bool $inboxDepth = null
     ) {
         $this->dm = $documentManager;
         $this->factoryService = $factoryService;
-        $this->inspectionService = $inspectionService;
-        $this->formEventDispatcher = $formEventDispatcher;
         $this->inboxDepth = $inboxDepth;
-        $this->jobService = $jobService;
-        $this->authorizationChecker = $authorizationChecker;
         $this->tagService = $tagService;
         $this->locales = $locales;
         $this->basePath = $basePath;
@@ -139,8 +79,6 @@ class WizardService
     }
 
     /**
-     * @param array $seriesData
-     *
      * @throws \Exception
      *
      * @return mixed|object|Series|null
@@ -160,8 +98,6 @@ class WizardService
     }
 
     /**
-     * @param array $seriesData
-     *
      * @throws \Exception
      *
      * @return mixed|Series|null
@@ -186,8 +122,6 @@ class WizardService
 
     /**
      * @param string $key
-     * @param array  $formData
-     * @param array  $default
      *
      * @return mixed
      */
@@ -265,9 +199,7 @@ class WizardService
     }
 
     /**
-     * @param MultimediaObject $multimediaObject
-     * @param string           $tagCode
-     * @param User             $user
+     * @param string $tagCode
      *
      * @throws \Exception
      *
@@ -290,10 +222,6 @@ class WizardService
     }
 
     /**
-     * @param array  $mmData
-     * @param Series $series
-     * @param User   $user
-     *
      * @throws \Exception
      *
      * @return MultimediaObject
@@ -317,17 +245,17 @@ class WizardService
      */
     public function createProcess($aCommandArguments = [])
     {
-        $builder = new ProcessBuilder();
-        $console = $this->basePath.'app/console';
+        $command = [
+            'php',
+            $this->basePath.'bin/console',
+            'pumukit:wizard:import',
+        ];
 
-        $builder->add('php')->add($console);
-
-        $builder->add('pumukit:wizard:import');
         foreach ($aCommandArguments as $argument) {
-            $builder->add($argument);
+            $command[] = $argument;
         }
 
-        $process = $builder->getProcess();
+        $process = new Process($command);
 
         $command = $process->getCommandLine();
 
@@ -337,10 +265,8 @@ class WizardService
     /**
      * @param User   $user
      * @param string $selectedPath
-     * @param int    $inboxDepth
      * @param string $series
      * @param string $status
-     * @param array  $pubChannel
      * @param string $profile
      * @param string $priority
      * @param string $language

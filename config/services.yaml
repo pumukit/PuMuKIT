@@ -1,0 +1,98 @@
+parameters:
+  pumukit.inspection.command:          ffprobe -v quiet -print_format json -show_format -show_streams "{{file}}"
+  pumukit.picextractor.command:        ffmpeg -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"
+  pumukit.dynamicpicextractor.command: ffmpeg -i "{{input}}" -ss 00:00:05 -t 3 -quality 80 -r 10 -s {{width}}x{{height}} "{{output}}"
+  pumukit.warning_on_unpublished:      false
+  pumukit.show_dashboard_tab:          true
+  pumukit.show_mms_list_all_menu:      false
+  pumukit.inbox_depth:                 false
+  pumukit.customlanguages:
+    - es
+    - gl
+    - en
+    - pt
+    - fr
+    - it
+    - de
+    - ca
+    - eu
+    - lse
+    - lsi
+  locale:                              "%env(string:PUMUKIT_LOCALE)%"
+  secret:                              "%env(string:PUMUKIT_SECRET)%"
+  debug_toolbar:                       true
+  debug_redirects:                     false
+  use_assetic_controller:              true
+  router.request_context.scheme:       "%env(string:PUMUKIT_SCHEME)%"
+  router.request_context.host:         "%env(string:PUMUKIT_HOST)%"
+
+  pumukit.info:
+    title:               "%env(string:PUMUKIT_TITLE)%"
+    description:         "%env(string:PUMUKIT_DESCRIPTION)%"
+    keywords:            "%env(string:PUMUKIT_KEYWORDS)%"
+    email:               "%env(string:PUMUKIT_EMAIL)%"
+    logo:                "%env(string:PUMUKIT_LOGO)%"
+    primary_color:       "%env(string:PUMUKIT_PRIMARY_COLOR)%"
+    font_color:          "%env(string:PUMUKIT_FONT_COLOR)%"
+
+  pumukit.locales:                     "%env(csv:PUMUKIT_LOCALES)%"
+  pumukit.public_dir:                  "%env(string:PUMUKIT_PUBLIC_DIR)%"
+  pumukit.storage_dir:                 "%env(string:PUMUKIT_STORAGE_DIR)%"
+  pumukit.uploads_dir:                 "%env(string:PUMUKIT_UPLOADS_DIR)%"
+  pumukit.uploads_url:                 "%env(string:PUMUKIT_UPLOADS_URL)%"
+  pumukit.uploads_material_dir:        "%env(string:PUMUKIT_UPLOADS_MATERIAL_DIR)%"
+  pumukit.uploads_material_url:        "%env(string:PUMUKIT_UPLOADS_MATERIAL_URL)%"
+  pumukit.uploads_pic_dir:             "%env(string:PUMUKIT_UPLOADS_PIC_DIR)%"
+  pumukit.uploads_pic_url:             "%env(string:PUMUKIT_UPLOADS_PIC_URL)%"
+  pumukit.inbox:                       "%env(string:PUMUKIT_INBOX)%"
+  pumukit.tmp:                         "%env(string:PUMUKIT_TMP)%"
+  pumukit.masters:                     "%env(string:PUMUKIT_MASTERS)%"
+  pumukit.downloads:                   "%env(string:PUMUKIT_DOWNLOADS)%"
+  pumukit.delete_on_disk:              "%env(bool:PUMUKIT_DELETE_ON_DISK)%"
+
+services:
+  _defaults:
+    autowire:      true
+    autoconfigure: true
+    public:        true
+
+  doctrine:
+    alias: doctrine_mongodb
+
+  twig.extension.intl:
+    class: Twig_Extensions_Extension_Intl
+    tags:
+      - { name: "twig.extension" }
+
+  Gedmo\Tree\TreeListener:
+    tags:
+      - { name: doctrine.event_subscriber, connection: default }
+      - { name: doctrine_mongodb.odm.event_subscriber }
+    calls:
+      - method: setAnnotationReader
+        arguments:
+          - "@annotation_reader"
+
+  Gedmo\Sortable\SortableListener:
+    tags:
+      - { name: doctrine.event_subscriber, connection: default }
+      - { name: doctrine_mongodb.odm.event_subscriber }
+    calls:
+      - method: setAnnotationReader
+        arguments:
+          - '@annotation_reader'
+
+  Vipx\BotDetect\BotDetector:
+    class: Vipx\BotDetect\BotDetector
+    arguments:
+      $loader: '@vipx_bot_detect.metadata.loader'
+      $resource: '%vipx_bot_detect.metadata.metadata_file%'
+      $options:
+        cache_dir: '%kernel.cache_dir%'
+        debug: '%kernel.debug%'
+        metadata_cache_file: '%vipx_bot_detect.metadata.cache_file%'
+        metadata_dumper_class: '%vipx_bot_detect.metadata.dumper.class%'
+
+  SunCat\MobileDetectBundle\DeviceDetector\MobileDetector:
+    class: SunCat\MobileDetectBundle\DeviceDetector\MobileDetector
+

@@ -1,4 +1,4 @@
-{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+{% extends '@PumukitWebTV/layout.html.twig' %}
 
 {% block javascripts %}
     {{ parent() }}
@@ -7,7 +7,7 @@
 
 {% block body %}
     {% set title = template_title %}
-    {% include "PumukitWebTVBundle:Misc:page_title.html.twig" %}
+    {% include "@PumukitWebTV/Misc/page_title.html.twig" %}
 
     <div class="announces" id="announces"></div>
 

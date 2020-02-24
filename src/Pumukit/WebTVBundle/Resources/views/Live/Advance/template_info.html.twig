@@ -29,7 +29,7 @@
     </div>
 </div>
 
-{{ render(controller('PumukitWebTVBundle:Chat:show', {'id': multimediaObject.getId() })) }}
+{{ render(controller('Pumukit\\WebTVBundle\\Controller\\ChatController::showAction', {'id': multimediaObject.getId() })) }}
 <div class="row">
     <div class="col-sm-6">
         <div class="panel panel-default panel-pmk">
@@ -37,20 +37,20 @@
                 {% trans %} Attachments {% endtrans %}
             </div>
             <div class="panel-body">
-                {% include "PumukitWebTVBundle:Misc:materials.html.twig" with {'object': multimediaObject } %}
-                {% include "PumukitWebTVBundle:Misc:links.html.twig" with {'object': multimediaObject } %}
+                {% include "@PumukitWebTV/Misc/materials.html.twig" with {'object': multimediaObject } %}
+                {% include "@PumukitWebTV/Misc/links.html.twig" with {'object': multimediaObject } %}
             </div>
         </div>
     </div>
 
     <div class="col-sm-6">
-        {% include 'PumukitWebTVBundle:Live:Advance/share.html.twig' %}
+        {% include '@PumukitWebTV/Live/Advance/share.html.twig' %}
     </div>
 </div>
 
 {% if activeContact|default(false) %}
     {% if multimediaObject.getEmbeddedSocial() is defined and multimediaObject.getEmbeddedSocial() is not null and multimediaObject.getEmbeddedSocial().getEmail() is not null and multimediaObject.getEmbeddedSocial().getEmail() != '' %}
-        {% include 'PumukitWebTVBundle:Live:Advance/contact.html.twig' %}
+        {% include '@PumukitWebTV/Live/Advance/contact.html.twig' %}
     {% endif %}
 {% endif %}
 

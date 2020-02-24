@@ -1,0 +1,39 @@
+version: '3.4'
+
+services:
+  php:
+    image: teltek/pumukit
+    env_file:
+      - .env.travis
+    build:
+      context: ./
+      cache_from:
+        - teltek/pumukit
+        - teltek/nginx
+    depends_on:
+      - db
+
+  h2-proxy:
+    image: teltek/nginx
+    env_file:
+      - .env.travis
+    build:
+      context: ./doc/docker/nginx
+      cache_from:
+        - teltek/pumukit
+        - teltek/nginx
+    depends_on:
+      - php
+    ports:
+      - "80:80"
+      - "443:443"
+
+  db:
+    image: mongo:4.0
+
+  pa11y:
+    image: teltek/pa11y:latest
+    env_file:
+      - .env.travis
+    build:
+      context: ./doc/docker/pa11y

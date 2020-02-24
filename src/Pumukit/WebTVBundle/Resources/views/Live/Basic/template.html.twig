@@ -1,8 +1,8 @@
-{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+{% extends '@PumukitWebTV/layout.html.twig' %}
 {% set hide_slidebar = true %}
 {% block javascripts %}
     {{ parent() }}
-    {% include('PumukitBaseLivePlayerBundle:Default:js.html.twig') %}
+    {% include('@PumukitBaseLivePlayer/Default/js.html.twig') %}
 {% endblock%}
 
 {% block title %}{{ parent() }} - {{ live.name }}{% endblock %}
@@ -15,15 +15,15 @@
     {% endif %}
 
     <div class="col-xs-12">
-        {% include('PumukitWebTVBundle:Live:Basic/liveplayer.html.twig') with {stretching: 'exactfit', aspectratio: '16:9'} %}
+        {% include('@PumukitWebTV/Live/Basic/liveplayer.html.twig') with {stretching: 'exactfit', aspectratio: '16:9'} %}
         <div class="row">
             <div class="live_content">
                 <div class="col-xs-12 {% if not chat %}col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6{% else %}col-md-6 col-lg-6{% endif %}#}">
-                    {% include('PumukitWebTVBundle:Live:Basic/template_info.html.twig') %}
+                    {% include('@PumukitWebTV/Live/Basic/template_info.html.twig') %}
                 </div>
                 {% if chat %}
                     <div class="col-xs-12 col-md-6">
-                        {{ render(controller('PumukitWebTVBundle:Chat:showBasic', {'id': live.id })) }}
+                        {{ render(controller('Pumukit\\WebTVBundle\\Controller\\ChatController::showBasicAction', {'id': live.id })) }}
                     </div>
                 {% endif %}
             </div>

@@ -2,21 +2,47 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\CoreBundle\Services\PaginationService;
+use Pumukit\SchemaBundle\Document\Playlist;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Services\SeriesPicService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_EDIT_PLAYLIST')")
  */
-class PlaylistPicController extends Controller implements NewAdminControllerInterface
+class PlaylistPicController extends AbstractController implements NewAdminControllerInterface
 {
+    /** @var SeriesPicService */
+    private $seriesPicService;
+    /** @var DocumentManager */
+    private $documentManager;
+    /** @var PaginationService */
+    private $paginationService;
+    /** @var SessionInterface */
+    private $session;
+
+    public function __construct(
+        SeriesPicService $seriesPicService,
+        DocumentManager $documentManager,
+        PaginationService $paginationService,
+        SessionInterface $session
+    ) {
+        $this->seriesPicService = $seriesPicService;
+        $this->documentManager = $documentManager;
+        $this->paginationService = $paginationService;
+        $this->session = $session;
+    }
+
     /**
-     * @Template("PumukitNewAdminBundle:Pic:create.html.twig")
+     * @Template("@PumukitNewAdmin/Pic/create.html.twig")
      */
-    public function createAction(Series $playlist, Request $request)
+    public function createAction(Series $playlist)
     {
         return [
             'resource' => $playlist,
@@ -25,7 +51,7 @@ class PlaylistPicController extends Controller implements NewAdminControllerInte
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Pic:list.html.twig")
+     * @Template("@PumukitNewAdmin/Pic/list.html.twig")
      */
     public function listAction(Series $playlist)
     {
@@ -36,18 +62,15 @@ class PlaylistPicController extends Controller implements NewAdminControllerInte
     }
 
     /**
-     * Assign a picture from an url or from an existing one to the playlist.
-     *
-     * @Template("PumukitNewAdminBundle:Pic:list.html.twig")
+     * @Template("@PumukitNewAdmin/Pic/list.html.twig")
      */
-    public function updateAction(Series $playlist, Request $request)
+    public function updateAction(Request $request, Series $playlist)
     {
         $isBanner = false;
         if (($url = $request->get('url')) || ($url = $request->get('picUrl'))) {
-            $picService = $this->get('pumukitschema.seriespic');
             $isBanner = $request->query->get('banner', false);
             $bannerTargetUrl = $request->get('url_bannerTargetUrl', null);
-            $playlist = $picService->addPicUrl($playlist, $url, $isBanner, $bannerTargetUrl);
+            $playlist = $this->seriesPicService->addPicUrl($playlist, $url, $isBanner, $bannerTargetUrl);
         }
 
         if ($isBanner) {
@@ -61,9 +84,9 @@ class PlaylistPicController extends Controller implements NewAdminControllerInte
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Pic:upload.html.twig")
+     * @Template("@PumukitNewAdmin/Pic/upload.html.twig")
      */
-    public function uploadAction(Series $playlist, Request $request)
+    public function uploadAction(Request $request, Series $playlist)
     {
         $isBanner = false;
 
@@ -72,10 +95,9 @@ class PlaylistPicController extends Controller implements NewAdminControllerInte
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
             }
             if ($request->files->has('file')) {
-                $picService = $this->get('pumukitschema.seriespic');
                 $isBanner = $request->query->get('banner', false);
                 $bannerTargetUrl = $request->get('file_bannerTargetUrl', null);
-                $picService->addPicFile($playlist, $request->files->get('file'), $isBanner, $bannerTargetUrl);
+                $this->seriesPicService->addPicFile($playlist, $request->files->get('file'), $isBanner, $bannerTargetUrl);
             }
         } catch (\Exception $e) {
             return [
@@ -96,88 +118,70 @@ class PlaylistPicController extends Controller implements NewAdminControllerInte
         ];
     }
 
-    /**
-     * Delete pic.
-     */
     public function deleteAction(Request $request)
     {
         $picId = $request->get('id');
 
-        $repo = $this->get('doctrine_mongodb')
-            ->getRepository(Series::class)
-        ;
+        $repo = $this->documentManager->getRepository(Series::class);
 
         if (!$playlist = $repo->findByPicId($picId)) {
             throw $this->createNotFoundException('Requested playlist does not exist');
         }
 
-        $playlist = $this->get('pumukitschema.seriespic')->removePicFromSeries($playlist, $picId);
+        $playlist = $this->seriesPicService->removePicFromSeries($playlist, $picId);
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_playlist_update', ['id' => $playlist->getId()]));
     }
 
-    /**
-     * Up pic.
-     */
     public function upAction(Request $request)
     {
         $picId = $request->get('id');
 
-        $repo = $this->get('doctrine_mongodb')
-            ->getRepository(Series::class)
-        ;
-
-        if (!$playlist = $repo->findByPicId($picId)) {
+        $repo = $this->documentManager->getRepository(Series::class);
+        $playlist = $repo->findByPicId($picId);
+        if (!$playlist instanceof Series) {
             throw $this->createNotFoundException('Requested playlist does not exist');
         }
 
         $playlist->upPicById($picId);
 
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $dm->persist($playlist);
-        $dm->flush();
+        $this->documentManager->persist($playlist);
+        $this->documentManager->flush();
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_playlistpic_list', ['id' => $playlist->getId()]));
     }
 
-    /**
-     * Down pic.
-     */
     public function downAction(Request $request)
     {
         $picId = $request->get('id');
 
-        $repo = $this->get('doctrine_mongodb')
-            ->getRepository(Series::class)
-        ;
+        $repo = $this->documentManager->getRepository(Series::class);
 
-        if (!$playlist = $repo->findByPicId($picId)) {
+        $playlist = $repo->findByPicId($picId);
+        if (!$playlist instanceof Series) {
             throw $this->createNotFoundException('Requested playlist does not exist');
         }
 
         $playlist->downPicById($picId);
 
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $dm->persist($playlist);
-        $dm->flush();
+        $this->documentManager->persist($playlist);
+        $this->documentManager->flush();
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_playlistpic_list', ['id' => $playlist->getId()]));
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Pic:picstoaddlist.html.twig")
+     * @Template("@PumukitNewAdmin/Pic/picstoaddlist.html.twig")
      */
-    public function picstoaddlistAction(Series $playlist, Request $request)
+    public function picstoaddlistAction(Request $request, Series $playlist)
     {
-        $picService = $this->get('pumukitschema.seriespic');
-
         if ($request->get('page', null)) {
-            $this->get('session')->set('admin/playlistpic/page', $request->get('page', 1));
+            $this->session->set('admin/playlistpic/page', $request->get('page', 1));
         }
-        $page = (int) ($this->get('session')->get('admin/playlistpic/page', 1));
+        $page = (int) ($this->session->get('admin/playlistpic/page', 1));
         $limit = 12;
 
-        $urlPics = $picService->getRecommendedPics($playlist);
+        $urlPics = $this->seriesPicService->getRecommendedPics($playlist);
 
         $total = (int) (ceil(count($urlPics) / $limit));
 
@@ -193,9 +197,9 @@ class PlaylistPicController extends Controller implements NewAdminControllerInte
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:Pic:banner.html.twig")
+     * @Template("@PumukitNewAdmin/Pic/banner.html.twig")
      */
-    public function bannerAction(Series $playlist, Request $request)
+    public function bannerAction(Request $request, Series $playlist)
     {
         return [
             'resource' => $playlist,
@@ -205,8 +209,6 @@ class PlaylistPicController extends Controller implements NewAdminControllerInte
 
     private function getPaginatedPics($urlPics, $limit, $page)
     {
-        $paginationService = $this->get('pumukit_core.pagination_service');
-
-        return $paginationService->createArrayAdapter($urlPics->toArray(), $page, $limit);
+        return $this->paginationService->createArrayAdapter($urlPics, $page, $limit);
     }
 }

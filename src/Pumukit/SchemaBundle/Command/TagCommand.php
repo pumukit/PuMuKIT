@@ -2,21 +2,27 @@
 
 namespace Pumukit\SchemaBundle\Command;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\Tag;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class TagCommand extends ContainerAwareCommand
+class TagCommand extends Command
 {
     private $dm;
     private $tagRepo;
 
-    /**
-     * @see Command
-     */
+    public function __construct(DocumentManager $documentManager)
+    {
+        $this->dm = $documentManager;
+        $this->tagRepo = $this->dm->getRepository(Tag::class);
+
+        parent::__construct();
+    }
+
     protected function configure()
     {
         $this
@@ -37,40 +43,25 @@ EOT
         ;
     }
 
-    /**
-     * @see Command
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->initParameters();
-
         $tagCode = $input->getArgument('tag');
-        $tag = $this->getTag($tagCode);
-
-        $display = (true === $input->getOption('display'));
-
-        $tag = $this->updateTag($tag, $display);
-
-        $output->writeln(sprintf('<info>Tag with code "%s" has been set with display to %b.</info>', $tagCode, $display));
-    }
-
-    private function initParameters()
-    {
-        $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->tagRepo = $this->dm->getRepository(Tag::class);
-    }
-
-    private function getTag($tagCode)
-    {
         $tag = $this->tagRepo->findOneByCod($tagCode);
+
         if (!$tag) {
             throw new \InvalidArgumentException(sprintf('No tag with code %s', $tagCode));
         }
 
-        return $tag;
+        $display = (true === $input->getOption('display'));
+
+        $this->updateTag($tag, $display);
+
+        $output->writeln(sprintf('<info>Tag with code "%s" has been set with display to %b.</info>', $tagCode, $display));
+
+        return 0;
     }
 
-    private function updateTag($tag, $display)
+    private function updateTag(Tag $tag, bool $display): Tag
     {
         $tag->setDisplay($display);
         $this->dm->persist($tag);

@@ -23,14 +23,26 @@ class UserStatsService
         $collection = $this->documentManager->getDocumentCollection(MultimediaObject::class);
         $code = 'owner';
         $pipeline = $this->generateUserFilterPipeline($user, $code);
-        $pipeline[] = [
-            '$group' => [
-                '_id' => '$status',
-                'multimediaObjects' => ['$addToSet' => '$_id'],
-            ],
-        ];
 
-        return $collection->aggregate($pipeline, ['cursor' => []])->toArray();
+        $pipelinePublished = $pipeline;
+        $pipelinePublished[] = ['$match' => ['status' => MultimediaObject::STATUS_PUBLISHED]];
+
+        $published = $collection->aggregate($pipelinePublished, ['cursor' => []]);
+
+        $pipelineBlocked = $pipeline;
+        $pipelineBlocked[] = ['$match' => ['status' => MultimediaObject::STATUS_BLOCKED]];
+
+        $blocked = $collection->aggregate($pipelineBlocked, ['cursor' => []]);
+
+        $pipelineHidden = $pipeline;
+        $pipelineHidden[] = ['$match' => ['status' => MultimediaObject::STATUS_HIDDEN]];
+        $hidden = $collection->aggregate($pipelineHidden, ['cursor' => []]);
+
+        return [
+            iterator_count($published),
+            iterator_count($blocked),
+            iterator_count($hidden),
+        ];
     }
 
     public function getUserMultimediaObjectsGroupByRole(UserInterface $user): array
@@ -46,7 +58,7 @@ class UserStatsService
                     'multimediaObjects' => ['$addToSet' => '$_id'],
                 ],
             ];
-            $result[$role->getCod()] = $multimediaObjectCollection->aggregate($pipeline, ['cursor' => []])->toArray();
+            $result[$role->getCod()] = iterator_to_array($multimediaObjectCollection->aggregate($pipeline, ['cursor' => []]));
         }
 
         return $result;
@@ -69,7 +81,7 @@ class UserStatsService
                 'size' => ['$sum' => '$size'],
             ],
         ];
-        $result = $collection->aggregate($pipeline, ['cursor' => []])->toArray();
+        $result = iterator_to_array($collection->aggregate($pipeline, ['cursor' => []]));
 
         return reset($result)['size'] / 1048576;
     }
@@ -91,7 +103,7 @@ class UserStatsService
                 'duration' => ['$sum' => '$duration'],
             ],
         ];
-        $result = $collection->aggregate($pipeline, ['cursor' => []])->toArray();
+        $result = iterator_to_array($collection->aggregate($pipeline, ['cursor' => []]));
         $seconds = reset($result)['duration'];
 
         return gmdate('H:i:s', $seconds);

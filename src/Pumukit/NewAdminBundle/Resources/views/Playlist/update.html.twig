@@ -23,7 +23,7 @@
     </div>
 
     {% if is_naked() %}
-      {% include 'PumukitNewAdminBundle:Playlist:updatemeta.html.twig' %}
+      {% include '@PumukitNewAdmin/Playlist/updatemeta.html.twig' %}
     {% else %}
       <div role="tabpanel">
         <ul id="seriesTab" class="nav nav-tabs" role="tablist">
@@ -34,7 +34,7 @@
 
         <div class="tab-content">
           <div id="editSeries" role="tabpanel" class="tab-pane active">
-            {% include 'PumukitNewAdminBundle:Playlist:updatemeta.html.twig' %}
+            {% include '@PumukitNewAdmin/Playlist/updatemeta.html.twig' %}
           </div>
         </div>
       </div>

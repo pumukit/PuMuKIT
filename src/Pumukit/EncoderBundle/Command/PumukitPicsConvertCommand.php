@@ -2,12 +2,13 @@
 
 namespace Pumukit\EncoderBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Pumukit\EncoderBundle\Services\PicService;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class PumukitPicsConvertCommand extends ContainerAwareCommand
+class PumukitPicsConvertCommand extends Command
 {
     private $output;
     private $input;
@@ -26,6 +27,12 @@ class PumukitPicsConvertCommand extends ContainerAwareCommand
     private $no_replace;
     private $convert_max_width;
     private $convert_max_height;
+
+    public function __construct(PicService $picService)
+    {
+        $this->picService = $picService;
+        parent::__construct();
+    }
 
     protected function configure()
     {
@@ -80,8 +87,8 @@ Create image options:
 
 Examples:
 
-php app/console pumukit:pics:convert --path="{pathToPuMuKIT}/web/uploads/pic/5b4f4af72bb478f9048b457d/" --type="mm" --convert
-php app/console pumukit:pics:convert --path="{pathToPuMuKIT}/web/uploads/pic/5b4f4af72bb478f9048b457d/" --type="mm" --convert --no_replace
+php app/console pumukit:pics:convert --path="{pathToPuMuKITUploadsPicDir}/5b4f4af72bb478f9048b457d/" --type="mm" --convert
+php app/console pumukit:pics:convert --path="{pathToPuMuKITUploadsMaterialDir}/5b4f4af72bb478f9048b457d/" --type="mm" --convert --no_replace
 
 
 
@@ -90,13 +97,8 @@ EOT
         ;
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        $this->picService = $this->getContainer()->get('pumukitencoder.pic');
         $this->output = $output;
         $this->input = $input;
         $this->id = $this->input->getOption('id');
@@ -116,14 +118,6 @@ EOT
         $this->no_replace = $this->input->getOption('no_replace');
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @throws \Exception
-     *
-     * @return bool|int|null
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if (!extension_loaded('gd')) {
@@ -158,13 +152,10 @@ EOT
             $this->output->writeln('<info>Please set option --convert to start convert</info>');
         }
 
-        return true;
+        return 0;
     }
 
-    /**
-     * @return array
-     */
-    private function checkInputOptions()
+    private function checkInputOptions(): array
     {
         $isValidInput = ['success' => true];
         if ($this->size && !is_string($this->size)) {
@@ -200,12 +191,7 @@ EOT
         return $isValidInput;
     }
 
-    /**
-     * @param array $data
-     *
-     * @return bool
-     */
-    private function showData($data)
+    private function showData(array $data): bool
     {
         if (empty($data['pics'])) {
             $this->output->writeln('No pics found');
@@ -222,12 +208,11 @@ EOT
 
             $this->output->writeln($message);
         }
+
+        return true;
     }
 
-    /**
-     * @param array $data
-     */
-    private function showOutput($data)
+    private function showOutput(array $data): void
     {
         foreach ($data as $message) {
             $this->output->writeln($message);

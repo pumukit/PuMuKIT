@@ -1,5 +1,5 @@
 {% block wizard_body %}
-{{ render(controller('PumukitWizardBundle:Default:steps', {'step': 5, 'option': option, 'show_series': show_series, 'same_series': same_series})) }}
+    {{ render(controller('Pumukit\\WizardBundle\\Controller\\DefaultController::stepsAction', {'step': 5, 'option': option, 'show_series': show_series, 'same_series': same_series})) }}
 <div class="well">
 
 <h1 class="cS_h1_error">{{ message|raw }}</h1>

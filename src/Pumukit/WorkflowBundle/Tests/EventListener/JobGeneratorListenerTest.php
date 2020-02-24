@@ -2,6 +2,9 @@
 
 namespace Pumukit\WorkflowBundle\Tests\EventListener;
 
+use Doctrine\Common\Annotations\Annotation\IgnoreAnnotation;
+use Psr\Log\LoggerInterface;
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
@@ -9,7 +12,6 @@ use Pumukit\SchemaBundle\EventListener\MultimediaObjectListener;
 use Pumukit\SchemaBundle\Services\TextIndexService;
 use Pumukit\SchemaBundle\Services\TrackService;
 use Pumukit\WorkflowBundle\EventListener\JobGeneratorListener;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
@@ -18,22 +20,25 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
  * @internal
  * @coversNothing
  */
-class JobGeneratorListenerTest extends WebTestCase
+class JobGeneratorListenerTest extends PumukitTestCase
 {
-    private $dm;
     private $logger;
     private $listener;
     private $trackDispatcher;
     private $trackService;
     private $jobGeneratorListener;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
 
-        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->logger = static::$kernel->getContainer()->get('logger');
+        parent::setUp();
+
+        $this->logger = $this->getMockBuilder(LoggerInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
 
         $streamserver = ['dir_out' => sys_get_temp_dir()];
         $testProfiles = ['video' => ['target' => 'TAGA TAGC', 'resolution_hor' => 0, 'resolution_ver' => 0, 'audio' => false, 'streamserver' => $streamserver],
@@ -48,14 +53,9 @@ class JobGeneratorListenerTest extends WebTestCase
             ->disableOriginalConstructor()
             ->getMock()
         ;
-        $jobService->expects($this->any())
+        $jobService->expects(static::any())
             ->method('addUniqueJob')
-            ->will($this->returnArgument(1))
-        ;
-
-        $logger = $this->getMockBuilder('Psr\Log\LoggerInterface')
-            ->disableOriginalConstructor()
-            ->getMock()
+            ->will(static::returnArgument(1))
         ;
 
         $this->jobGeneratorListener = new JobGeneratorListener($this->dm, $jobService, $profileService, $this->logger);
@@ -63,24 +63,22 @@ class JobGeneratorListenerTest extends WebTestCase
         $dispatcher = new EventDispatcher();
         $this->listener = new MultimediaObjectListener($this->dm, new TextIndexService());
         $dispatcher->addListener('multimediaobject.update', [$this->listener, 'postUpdate']);
-        $this->trackDispatcher = static::$kernel->getContainer()
-            ->get('pumukitschema.track_dispatcher')
-        ;
+        $this->trackDispatcher = static::$kernel->getContainer()->get('pumukitschema.track_dispatcher');
         $profileService = new ProfileService($testProfiles, $this->dm);
-        $this->trackService = new TrackService($this->dm, $this->trackDispatcher, $profileService, null, true);
+        $this->trackService = new TrackService($this->dm, $this->trackDispatcher, null, true);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
         $this->dm->close();
-        $this->dm = null;
+
         $this->logger = null;
         $this->jobGeneratorListener = null;
         $this->listener = null;
         $this->trackDispatcher = null;
         $this->trackService = null;
         gc_collect_cycles();
-        parent::tearDown();
     }
 
     public function testGetTargets()
@@ -98,7 +96,7 @@ class JobGeneratorListenerTest extends WebTestCase
         ];
         foreach ($data as $d) {
             $targets = $this->invokeMethod($this->jobGeneratorListener, 'getTargets', [$d[0]]);
-            $this->assertEquals($d[1], $targets);
+            static::assertEquals($d[1], $targets);
         }
     }
 
@@ -114,19 +112,19 @@ class JobGeneratorListenerTest extends WebTestCase
         $mmobj->addTrack($track);
 
         $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', [$mmobj, 'TAGA']);
-        $this->assertEquals(['video'], $jobs);
+        static::assertEquals(['video'], $jobs);
 
         $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', [$mmobj, 'TAGC']);
-        $this->assertEquals(['video', 'video2'], $jobs);
+        static::assertEquals(['video', 'video2'], $jobs);
 
         $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', [$mmobj, 'TAGB']);
-        $this->assertEquals(['video2', 'audio2'], $jobs);
+        static::assertEquals(['video2', 'audio2'], $jobs);
 
         $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', [$mmobj, 'TAGP']);
-        $this->assertEquals(['videoSD'], $jobs);
+        static::assertEquals(['videoSD'], $jobs);
 
         $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', [$mmobj, 'TAGFP']);
-        $this->assertEquals(['videoSD', 'videoHD'], $jobs);
+        static::assertEquals(['videoSD', 'videoHD'], $jobs);
     }
 
     public function testGenerateJobsForHDVideo()
@@ -141,19 +139,19 @@ class JobGeneratorListenerTest extends WebTestCase
         $mmobj->addTrack($track);
 
         $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', [$mmobj, 'TAGA']);
-        $this->assertEquals(['video'], $jobs);
+        static::assertEquals(['video'], $jobs);
 
         $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', [$mmobj, 'TAGC']);
-        $this->assertEquals(['video', 'video2'], $jobs);
+        static::assertEquals(['video', 'video2'], $jobs);
 
         $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', [$mmobj, 'TAGB']);
-        $this->assertEquals(['video2', 'audio2'], $jobs);
+        static::assertEquals(['video2', 'audio2'], $jobs);
 
         $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', [$mmobj, 'TAGP']);
-        $this->assertEquals(['videoHD'], $jobs);
+        static::assertEquals(['videoHD'], $jobs);
 
         $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', [$mmobj, 'TAGFP']);
-        $this->assertEquals(['videoSD', 'videoHD'], $jobs);
+        static::assertEquals(['videoSD', 'videoHD'], $jobs);
     }
 
     public function testGenerateJobsForAudio()
@@ -166,17 +164,17 @@ class JobGeneratorListenerTest extends WebTestCase
         $this->trackService->addTrackToMultimediaObject($mmobj, $track, true);
 
         $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', [$mmobj, 'TAGA']);
-        $this->assertEquals(['audio'], $jobs);
+        static::assertEquals(['audio'], $jobs);
 
         $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', [$mmobj, 'TAGC']);
-        $this->assertEquals(['audio', 'audio2'], $jobs);
+        static::assertEquals(['audio', 'audio2'], $jobs);
 
         // #15818: See commented text in JobGeneratorListener, function generateJobs
         // $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGB'));
         // $this->assertEquals(array('audio2'), $jobs); //generate a video2 from an audio has no sense.
 
         $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', [$mmobj, 'TAGP']);
-        $this->assertEquals([], $jobs); //generate a video from an audio has no sense.
+        static::assertEquals([], $jobs); //generate a video from an audio has no sense.
 
         // #15818: See commented text in JobGeneratorListener, function generateJobs
         // $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGFP'));
@@ -195,7 +193,7 @@ class JobGeneratorListenerTest extends WebTestCase
         $mmobj->addTrack($track);
 
         $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', [$mmobj, 'TAGC']);
-        $this->assertEquals([], $jobs);
+        static::assertEquals([], $jobs);
 
         //$this->assertEquals(1, 2);
     }

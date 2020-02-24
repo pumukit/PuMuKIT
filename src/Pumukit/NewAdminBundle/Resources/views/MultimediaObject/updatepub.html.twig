@@ -1,4 +1,4 @@
-{% form_theme form_pub 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
+{% form_theme form_pub '@PumukitNewAdmin/Themes/fields.html.twig' %}
 
 <div id="tv_admin_container_pub" class="well">
     <form id="pumukitnewadmin_mms_updatepub_form"
@@ -47,20 +47,20 @@
                 <div class="form-group" id="pumukitnewadmin_mms_pub_channel" {{ (mm.getStatus() == 1)?'style="background-color: #f2f2f2"':'' }}>
                     <label for="pub" class="control-label">{% trans %}Publication Channels{% endtrans %}</label>
                     <div id="list_pub_{{ mm.id }}">
-                        {% include 'PumukitNewAdminBundle:MultimediaObject:listpub.html.twig' with {'mm': mm, 'pubs': pub_channels, 'pub_type': 'channels'} %}
+                        {% include '@PumukitNewAdmin/MultimediaObject/listpub.html.twig' with {'mm': mm, 'pubs': pub_channels, 'pub_type': 'channels'} %}
                     </div>
                 </div>
                 <div class="form-group" id="pumukitnewadmin_mms_pub_decision">
                     <label for="announce_label" class="control-label">{% trans %}Publishing
                         Decisions{% endtrans %}</label>
                     <div id="list_pubdecisions_{{ mm.id }}">
-                        {% include 'PumukitNewAdminBundle:MultimediaObject:listpub.html.twig' with {'mm': mm, 'pubs': pub_decisions, 'pub_type': 'decisions'} %}
+                        {% include '@PumukitNewAdmin/MultimediaObject/listpub.html.twig' with {'mm': mm, 'pubs': pub_decisions, 'pub_type': 'decisions'} %}
                     </div>
                 </div>
                 <div class="form-group" id="pumukitnewadmin_mms_pub_broadcast">
                     <label for="announce_label" class="control-label">{% trans %}Broadcast profile{% endtrans %}</label>
                     <div id="list_pubbroadcast_{{ mm.id }}">
-                        {% include 'PumukitNewAdminBundle:MultimediaObject:listbroadcast.html.twig' with {'mm': mm} %}
+                        {% include '@PumukitNewAdmin/MultimediaObject/listbroadcast.html.twig' with {'mm': mm} %}
                     </div>
                 </div>
                 {% for pub in pub_channels %}

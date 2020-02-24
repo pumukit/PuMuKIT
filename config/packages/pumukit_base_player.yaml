@@ -1,0 +1,37 @@
+services:
+  _defaults:
+    autowire:      true
+    autoconfigure: true
+    public:        true
+    bind:
+      $secret:         '%pumukitplayer.secure_secret%'
+      $secureDuration: '%pumukitplayer.secure_duration%'
+      $pumukitPlayerWhenDispatchViewEvent: '%pumukitplayer.when_dispatch_view_event%'
+
+  Pumukit\BasePlayerBundle\Controller\:
+    resource: '../../src/Pumukit/BasePlayerBundle/Controller/'
+    tags: ['controller.service_arguments']
+
+  Pumukit\BasePlayerBundle\Services\TrackUrlService:
+    arguments:
+      $secret:         '%pumukitplayer.secure_secret%'
+      $secureDuration: '%pumukitplayer.secure_duration%'
+
+  Pumukit\BasePlayerBundle\Services\SeriesPlaylistService:
+    class: Pumukit\BasePlayerBundle\Services\SeriesPlaylistService
+
+  Pumukit\BasePlayerBundle\Twig\BasePlayerExtension:
+    class: Pumukit\BasePlayerBundle\Twig\BasePlayerExtension
+    tags:
+      - { name: "twig.extension" }
+
+  Pumukit\BasePlayerBundle\Services\IntroService:
+    class: Pumukit\BasePlayerBundle\Services\IntroService
+    arguments:
+      $globalUrlIntroduction: '%pumukit.intro%'
+
+  Pumukit\BasePlayerBundle\Services\PlayerService:
+    class: Pumukit\BasePlayerBundle\Services\PlayerService
+
+  Pumukit\BasePlayerBundle\Services\UserAgentParserService:
+    class: Pumukit\BasePlayerBundle\Services\UserAgentParserService

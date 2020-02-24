@@ -1,11 +1,11 @@
-{% extends 'PumukitWizardBundle:Default:index.html.twig' %}
+{% extends '@PumukitWizard/Default/index.html.twig' %}
 {% block wizard_body %}
 {% set access_inbox = (app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX'))) %}
-{{ render(controller('PumukitWizardBundle:Default:steps', {'step': 2, 'option': form_data.type.option, 'show_series': show_series, 'same_series': same_series})) }}
+    {{ render(controller('Pumukit\\WizardBundle\\Controller\\DefaultController::stepsAction', {'step': 2, 'option': form_data.type.option, 'show_series': show_series, 'same_series': same_series})) }}
 <div class="well">
   <form id="pumukitwizard_multimediaobject_form"
         action="{{ path('pumukitwizard_default_track') }}" method="POST">
-    {% include 'PumukitWizardBundle:Default:hidden.html.twig' with {'step': 'multimediaobject'} %}
+    {% include '@PumukitWizard/Default/hidden.html.twig' with {'step': 'multimediaobject'} %}
     <input type="hidden" name="pumukitwizard_form_data[mandatory_title]" id="pumukitwizard_mandatory_title" value="{{ mandatory_title }}">
     <fieldset class="well">
       <legend hidden>{% trans %}Metadata{% endtrans %}</legend>
@@ -125,13 +125,13 @@
     </fieldset>
     <div class="row">
       <div class="col-md-4">
-        {% spaceless %}
+        {% apply spaceless %}
           {% if same_series and form_data.series.id is defined and form_data.series.id is not null %}
           <a href="{{ path('pumukitnewadmin_mms_index', {'id': form_data.series.id}) }}" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</a>
           {% else %}
           <a href="{{ path('pumukitnewadmin_series_index') }}" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</a>
           {% endif %}
-        {% endspaceless %}
+        {% endapply %}
       </div>
       <div class="col-md-8">
         <div class="text-right">
