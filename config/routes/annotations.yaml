@@ -2,9 +2,9 @@ controllers:
     resource: ../../src/Pumukit/*/Controller/*
     type: annotation
 
-#pumukit_stats_ui:
-#  resource: "@PumukitStatsUIBundle/Resources/config/routing.yml"
-#  prefix:   /
+pumukit_stats_ui:
+  resource: "@PumukitStatsUIBundle/Resources/config/routing.yml"
+  prefix:   /
 
 pumukit_jw_player:
   resource: "@PumukitJWPlayerBundle/Resources/config/routing.yml"

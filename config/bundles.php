@@ -24,7 +24,6 @@ return [
     Pumukit\NotificationBundle\PumukitNotificationBundle::class => ['all' => true],
     Pumukit\SchemaBundle\PumukitSchemaBundle::class => ['all' => true],
     Pumukit\StatsBundle\PumukitStatsBundle::class => ['all' => true],
-    Pumukit\StatsUIBundle\PumukitStatsUIBundle::class => ['all' => true],
     Pumukit\WebTVBundle\PumukitWebTVBundle::class => ['all' => true],
     Pumukit\WizardBundle\PumukitWizardBundle::class => ['all' => true],
     Pumukit\WorkflowBundle\PumukitWorkflowBundle::class => ['all' => true],
@@ -32,4 +31,5 @@ return [
     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true, 'test' => true],
     Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
     ApiPlatform\Core\Bridge\Symfony\Bundle\ApiPlatformBundle::class => ['all' => true],
+    Pumukit\StatsUIBundle\PumukitStatsUIBundle::class => ['all' => true],
 ];
