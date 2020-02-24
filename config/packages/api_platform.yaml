@@ -6,7 +6,8 @@ api_platform:
     enable_fos_user: true
     doctrine:
       enabled: false
-    doctrine_mongodb_odm: true
+    doctrine_mongodb_odm:
+      enabled: true
     mapping:
         paths: [
           '%kernel.project_dir%/src/Pumukit/EncoderBundle/Document',
