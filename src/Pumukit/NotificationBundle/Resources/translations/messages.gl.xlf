@@ -7,7 +7,7 @@
     <body>
       <trans-unit id="EhVukhv" resname="Id">
         <source>Id</source>
-        <target state="needs-translation">Id</target>
+        <target state="translated">Id</target>
       </trans-unit>
       <trans-unit id="kg5BPH1" resname="Status">
         <source>Status</source>
@@ -23,7 +23,7 @@
       </trans-unit>
       <trans-unit id="gCuh9lB" resname="Cpu">
         <source>Cpu</source>
-        <target state="needs-translation">Cpu</target>
+        <target state="translated">Cpu</target>
       </trans-unit>
       <trans-unit id="1g27oHk" resname="Priority">
         <source>Priority</source>
@@ -71,7 +71,7 @@
       </trans-unit>
       <trans-unit id="nt31c8t" resname="Metadata">
         <source>Metadata</source>
-        <target state="needs-translation">Metadata</target>
+        <target state="translated">Metadatos</target>
       </trans-unit>
       <trans-unit id="JAv3aP1" resname="Multimedia Object Title">
         <source>Multimedia Object Title</source>

@@ -161,6 +161,9 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
         $this->updateBreadcrumbs($multimediaObject);
         $editorChapters = $this->chapterMarksService->getChapterMarks($multimediaObject);
 
+        /** @var IntroService */
+        $basePlayerIntroService = $this->get('pumukit_baseplayer.intro');
+
         return [
             'autostart' => $request->query->get('autostart', 'true'),
             'intro' => $this->introService->getVideoIntroduction($multimediaObject, $request->query->getBoolean('intro')),

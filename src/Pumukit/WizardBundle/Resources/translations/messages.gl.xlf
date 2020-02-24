@@ -15,7 +15,7 @@
       </trans-unit>
       <trans-unit id="KGDhGAr" resname="SERIES">
         <source>SERIES</source>
-        <target state="needs-translation">SERIES</target>
+        <target state="translated">SERIES</target>
       </trans-unit>
       <trans-unit id="ZbL57DM" resname="VIDEO">
         <source>VIDEO</source>

@@ -669,6 +669,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         switch ($tagCondition) {
             case '1':
                 // NOTE: Videos without configured tag
+
                 $selectedTag = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => $configuredTag->getCod()]);
                 $query = $this->documentManager->getRepository(MultimediaObject::class)->createStandardQueryBuilder()
                     ->field('tags.cod')
