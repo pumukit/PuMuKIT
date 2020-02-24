@@ -44,7 +44,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
         if ($track instanceof RedirectResponse) {
             return $track;
         }
-      
+
         $playerParameters = $this->getPlayerParameters($request, $basePlayerIntroService, $multimediaObject);
 
         return [

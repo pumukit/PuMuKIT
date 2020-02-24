@@ -3,14 +3,14 @@
 namespace Pumukit\CoreBundle\Command;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
-class MoveFilesCommand extends ContainerAwareCommand
+class MoveFilesCommand extends Command
 {
     private $dm;
     private $origin;
@@ -72,6 +72,8 @@ EOT
         }
 
         $this->output->writeln('Move files done');
+
+        return 0;
     }
 
     private function checkInputs(): void
