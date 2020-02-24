@@ -12,22 +12,12 @@ class SeriesSearchService
 {
     private $dm;
 
-    /**
-     * SeriesSearchService constructor.
-     */
     public function __construct(DocumentManager $documentManager)
     {
         $this->dm = $documentManager;
     }
 
-    /**
-     * @param array  $reqCriteria
-     * @param bool   $searchInObjects
-     * @param string $locale
-     *
-     * @return array
-     */
-    public function processCriteria($reqCriteria, $searchInObjects = false, $locale = 'en')
+    public function processCriteria(array $reqCriteria, bool $searchInObjects = false, string $locale = 'en'): array
     {
         $new_criteria = [];
 
@@ -35,7 +25,7 @@ class SeriesSearchService
             if (('search' === $property) && ('' !== $value)) {
                 if ($searchInObjects) {
                     $mmRepo = $this->dm->getRepository(MultimediaObject::class);
-                    $ids = $mmRepo->getIdsWithSeriesTextOrId($value, 100, 0, $locale)->toArray();
+                    $ids = $mmRepo->getIdsWithSeriesTextOrId($value, 100, 0, $locale);
                     $ids[] = $value;
 
                     if (preg_match('/^[0-9a-z]{24}$/', $value)) {
@@ -80,7 +70,7 @@ class SeriesSearchService
         return $new_criteria;
     }
 
-    private function processDates(array $value)
+    private function processDates(array $value): array
     {
         $criteria = [];
         $date_from = null;
@@ -104,13 +94,13 @@ class SeriesSearchService
         return $criteria;
     }
 
-    private function getSearchCriteria(string $text, array $base = [], string $locale = 'en')
+    private function getSearchCriteria(string $text, array $base = [], string $locale = 'en'): array
     {
         $text = trim($text);
         if ((false !== strpos($text, '*')) && (false === strpos($text, ' '))) {
             $text = str_replace('*', '.*', $text);
             $text = SearchUtils::scapeTildes($text);
-            $mRegex = new Regex("{$text}", 'i');
+            $mRegex = new Regex($text, 'i');
             $base[] = [('title.'.$locale) => $mRegex];
             $base[] = ['people.people.name' => $mRegex];
         } else {
