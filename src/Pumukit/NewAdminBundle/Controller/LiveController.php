@@ -26,6 +26,7 @@ class LiveController extends AdminController
     public static $repoName = Live::class;
 
     private $pumukitLiveChatEnable;
+    private $advanceLiveEvent;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -35,10 +36,12 @@ class LiveController extends AdminController
         UserService $userService,
         TranslatorInterface $translator,
         SessionInterface $session,
-        $pumukitLiveChatEnable
+        $pumukitLiveChatEnable,
+        $advanceLiveEvent
     ) {
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
         $this->pumukitLiveChatEnable = $pumukitLiveChatEnable;
+        $this->advanceLiveEvent = $advanceLiveEvent;
     }
 
     public function createAction(Request $request)
@@ -62,6 +65,7 @@ class LiveController extends AdminController
             '@PumukitNewAdmin/Live/create.html.twig',
             [
                 'enableChat' => $this->pumukitLiveChatEnable,
+                'advanceLiveEvent' => $this->advanceLiveEvent,
                 'live' => $resource,
                 'form' => $form->createView(),
             ]
@@ -91,6 +95,7 @@ class LiveController extends AdminController
             '@PumukitNewAdmin/'.ucfirst($resourceName).'/update.html.twig',
             [
                 'enableChat' => $this->pumukitLiveChatEnable,
+                'advanceLiveEvent' => $this->advanceLiveEvent,
                 'live' => $resource,
                 'form' => $form->createView(),
             ]
