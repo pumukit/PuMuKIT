@@ -2,6 +2,8 @@
 
 namespace Pumukit\CoreBundle\Command;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Psr\Log\LoggerInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -20,6 +22,12 @@ class MoveFilesCommand extends Command
     private $output;
     private $fileSystem;
     private $logger;
+
+    public function __construct(DocumentManager $documentManager, LoggerInterface $logger)
+    {
+        $this->dm = $documentManager;
+        $this->logger = $logger;
+    }
 
     protected function configure(): void
     {
@@ -44,12 +52,9 @@ EOT
 
     protected function initialize(InputInterface $input, OutputInterface $output): void
     {
-        $this->dm = $this->getContainer()->get('doctrine_mongodb.odm.document_manager');
         $this->origin = $input->getOption('origin');
         $this->destiny = $input->getOption('destiny');
         $this->limit = $input->getOption('limit');
-
-        $this->logger = $this->getContainer()->get('logger');
 
         $this->fileSystem = new Filesystem();
 
