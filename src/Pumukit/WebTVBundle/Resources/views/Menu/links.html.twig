@@ -19,9 +19,5 @@
             {% trans %}Search{% endtrans %}
         </a>
     </li>
-    <li>
-        <a href="{{ path('pumukit_webtv_events') }}" title="{% trans %}Events{% endtrans %}">
-            {% trans %}Events{% endtrans %}
-        </a>
-    </li>
+    {{ render(controller('Pumukit\\WebTVBundle\\Controller\\EventController::advanceLiveEventMenuAction')) }}
 </ul>
