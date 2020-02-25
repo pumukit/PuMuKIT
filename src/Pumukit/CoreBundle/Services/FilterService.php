@@ -2,7 +2,6 @@
 
 namespace Pumukit\CoreBundle\Services;
 
-use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Query\Filter\BsonFilter;
 use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -10,63 +9,40 @@ use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\PersonService;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-/**
- * Class FilterService.
- */
 class FilterService
 {
-    const MAGIC_STATUS = [
+    public const MAGIC_STATUS = [
         MultimediaObject::STATUS_PUBLISHED,
         MultimediaObject::STATUS_HIDDEN,
     ];
 
-    const PUBLIC_STATUS = [
+    public const PUBLIC_STATUS = [
         MultimediaObject::STATUS_PUBLISHED,
     ];
 
-    const ALL_STATUS = [
+    public const ALL_STATUS = [
         MultimediaObject::STATUS_PUBLISHED,
         MultimediaObject::STATUS_HIDDEN,
         MultimediaObject::STATUS_BLOCKED,
     ];
 
-    /**
-     * @var DocumentManager
-     */
-    private $dm;
-
-    /**
-     * @var PersonService;
-     */
+    /** @var PersonService; */
     private $personService;
-
-    /**
-     * @var TokenStorageInterface
-     */
+    /** @var TokenStorageInterface */
     private $securityContext;
-
     private $addUserAsPerson;
 
-    /**
-     * FilterService constructor.
-     *
-     * @param bool $addUserAsPerson
-     */
-    public function __construct(DocumentManager $dm, PersonService $personService, TokenStorageInterface $securityContext, $addUserAsPerson = true)
+    public function __construct(PersonService $personService, TokenStorageInterface $securityContext, $addUserAsPerson = true)
     {
-        $this->dm = $dm;
         $this->personService = $personService;
         $this->securityContext = $securityContext;
         $this->addUserAsPerson = $addUserAsPerson;
     }
 
-    /**
-     * @return bool
-     */
-    public function checkFilterActivation(FilterControllerEvent $event)
+    public function checkFilterActivation(ControllerEvent $event): bool
     {
         [$controller, $routeParams] = $this->getEventData($event);
 
@@ -76,17 +52,10 @@ class FilterService
 
         $isFilterActivated = (!isset($routeParams['filter']) || $routeParams['filter']);
 
-        if (!$event->isMasterRequest() || !$isFilterActivated) {
-            return false;
-        }
-
-        return true;
+        return !(!$isFilterActivated || !$event->isMasterRequest());
     }
 
-    /**
-     * @return array
-     */
-    public function getEventData(FilterControllerEvent $event)
+    public function getEventData(ControllerEvent $event): array
     {
         $request = $event->getRequest();
         $controller = $event->getController();
@@ -98,7 +67,7 @@ class FilterService
         ];
     }
 
-    public function setGenericFilterParameters(BsonFilter $filter, array $routeParams)
+    public function setGenericFilterParameters(BsonFilter $filter, array $routeParams): void
     {
         if (isset($routeParams['show_hide']) && $routeParams['show_hide']) {
             $filter->setParameter('status', [
@@ -119,7 +88,7 @@ class FilterService
         }
     }
 
-    public function setFrontendFilterParameters(BsonFilter $filter, array $routeParams)
+    public function setFrontendFilterParameters(BsonFilter $filter, array $routeParams): void
     {
         if (!isset($routeParams['no_channels']) || !$routeParams['no_channels']) {
             $filter->setParameter('pub_channel_tag', 'PUCHWEBTV');
@@ -128,12 +97,9 @@ class FilterService
         $filter->setParameter('type', ['$ne' => MultimediaObject::TYPE_LIVE]);
     }
 
-    /**
-     * @throws \MongoException
-     */
-    public function setAdminParameters(BsonFilter $filter, User $user = null)
+    public function setAdminParameters(BsonFilter $filter, User $user = null): void
     {
-        // NOTE: Returns empty results, since the user is anonimous or does not have SCOPE_PERSONAL
+        // NOTE: Returns empty results, since the user is anonymous or does not have SCOPE_PERSONAL
         if (!$user || !$user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
             $filter->setParameter('people', []);
             $filter->setParameter('groups', []);
@@ -161,15 +127,10 @@ class FilterService
         $filter->setParameter('series_groups', $user->getGroupsIds());
     }
 
-    /**
-     * @throws \MongoException
-     */
-    public function setPersonalFilterParameters(BsonFilter $filter, User $user)
+    public function setPersonalFilterParameters(BsonFilter $filter, User $user): void
     {
         $groups = [
-            '$in' => [
-                $user->getGroupsIds(),
-            ],
+            '$in' => $user->getGroupsIds(),
         ];
         $filter->setParameter('groups', $groups);
 
@@ -185,10 +146,7 @@ class FilterService
         }
     }
 
-    /**
-     * @return User|null
-     */
-    public function checkUserActivateFilter()
+    public function checkUserActivateFilter(): ?User
     {
         if (!$this->addUserAsPerson) {
             return null;
@@ -202,20 +160,7 @@ class FilterService
         return $loggedInUser;
     }
 
-    /**
-     * Get people mongo query.
-     *
-     * Match the MultimediaObjects
-     * with given Person and Role code
-     *
-     * Query in MongoDB:
-     * {"people":{"$elemMatch":{"people._id":{"$id":"___MongoID_of_Person___"},"cod":"___Role_cod___"}}}
-     *
-     * @throws \MongoException
-     *
-     * @return array
-     */
-    public function getPeopleMongoQuery(Person $person = null)
+    public function getPeopleMongoQuery(Person $person = null): array
     {
         $people = [];
         if ((null !== $person) && (null !== ($roleCode = $this->personService->getPersonalScopeRoleCode()))) {
@@ -227,19 +172,7 @@ class FilterService
         return $people;
     }
 
-    /**
-     * Get groups mongo query.
-     *
-     * Match the MultimediaObjects
-     * with some of the admin groups
-     * of the given user
-     *
-     * Query in MongoDB:
-     * {"groups":{"$in":["___MongoID_of_Group_1___", "___MongoID_of_Group_2___"...]}}
-     *
-     * @return array $groups
-     */
-    public function getGroupsMongoQuery(User $user)
+    public function getGroupsMongoQuery(User $user): array
     {
         $groups = [];
         $groups['$in'] = $user->getGroupsIds();
@@ -247,12 +180,7 @@ class FilterService
         return $groups;
     }
 
-    /**
-     * Get logged in user.
-     *
-     * @return User|null
-     */
-    private function getLoggedInUser()
+    private function getLoggedInUser(): ?User
     {
         if (null !== $token = $this->securityContext->getToken()) {
             $user = $token->getUser();
