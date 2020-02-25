@@ -20,9 +20,19 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
 {
     private $pumukitPlayerWhenDispatchViewEvent;
 
-    public function __construct(EventDispatcherInterface $eventDispatcher, string $pumukitPlayerWhenDispatchViewEvent)
-    {
-        parent::__construct($eventDispatcher);
+    public function __construct(
+        EventDispatcherInterface $eventDispatcher,
+        EmbeddedBroadcastService $embeddedBroadcastService,
+        MultimediaObjectService $multimediaObjectService,
+        IntroService $basePlayerIntroService,
+        string $pumukitPlayerWhenDispatchViewEvent
+    ) {
+        parent::__construct(
+            $eventDispatcher,
+            $embeddedBroadcastService,
+            $multimediaObjectService,
+            $basePlayerIntroService
+        );
         $this->pumukitPlayerWhenDispatchViewEvent = $pumukitPlayerWhenDispatchViewEvent;
     }
 
@@ -30,12 +40,12 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
      * @Route("/videoplayer/{id}", name="pumukit_videoplayer_index", defaults={"no_channels": true} )
      * @Template("@PumukitJWPlayer/JWPlayer/player.html.twig")
      */
-    public function indexAction(Request $request, EmbeddedBroadcastService $embeddedBroadcastService, MultimediaObjectService $multimediaObjectService, IntroService $basePlayerIntroService, MultimediaObject $multimediaObject)
+    public function indexAction(Request $request, MultimediaObject $multimediaObject)
     {
         $password = $request->get('broadcast_password');
         /** @var User|null $user */
         $user = $this->getUser();
-        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $user, $password);
+        $response = $this->embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $user, $password);
         if ($response instanceof Response) {
             return $response;
         }
@@ -45,7 +55,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
             return $track;
         }
 
-        $playerParameters = $this->getPlayerParameters($request, $basePlayerIntroService, $multimediaObject);
+        $playerParameters = $this->getPlayerParameters($request, $multimediaObject);
 
         return [
             'autostart' => $playerParameters['autoStart'],
@@ -61,17 +71,17 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
      * @Route("/videoplayer/magic/{secret}", name="pumukit_videoplayer_magicindex", defaults={"show_hide": true, "no_channels": true} )
      * @Template("@PumukitJWPlayer/JWPlayer/player.html.twig")
      */
-    public function magicAction(Request $request, EmbeddedBroadcastService $embeddedBroadcastService, MultimediaObjectService $multimediaObjectService, IntroService $basePlayerIntroService, MultimediaObject $multimediaObject)
+    public function magicAction(Request $request, MultimediaObject $multimediaObject)
     {
-        if ($multimediaObjectService->isPublished($multimediaObject, 'PUCHWEBTV')) {
-            if ($multimediaObjectService->hasPlayableResource($multimediaObject) && $multimediaObject->isPublicEmbeddedBroadcast()) {
+        if ($this->multimediaObjectService->isPublished($multimediaObject, 'PUCHWEBTV')) {
+            if ($this->multimediaObjectService->hasPlayableResource($multimediaObject) && $multimediaObject->isPublicEmbeddedBroadcast()) {
                 return $this->redirect($this->generateUrl('pumukit_videoplayer_index', ['id' => $multimediaObject->getId()]));
             }
         } elseif (!$multimediaObject->containsTagWithCod('PUCHWEBTV') || (!in_array($multimediaObject->getStatus(), [MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDDEN], true))) {
             return $this->render('@PumukitWebTV/Index/404notfound.html.twig');
         }
 
-        if ($response = $this->validateAccess($request, $embeddedBroadcastService, $multimediaObject)) {
+        if ($response = $this->validateAccess($request, $multimediaObject)) {
             return $response;
         }
 
@@ -80,7 +90,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
             return $track;
         }
 
-        $playerParameters = $this->getPlayerParameters($request, $basePlayerIntroService, $multimediaObject);
+        $playerParameters = $this->getPlayerParameters($request, $multimediaObject);
 
         return [
             'autostart' => $playerParameters['autoStart'],
@@ -92,37 +102,11 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
         ];
     }
 
-    private function validateAccess(Request $request, EmbeddedBroadcastService $embeddedBroadcastService, MultimediaObject $multimediaObject)
-    {
-        $password = $request->get('broadcast_password');
-        /** @var User|null $user */
-        $user = $this->getUser();
-        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $user, $password);
-        if ($response instanceof Response) {
-            return $response;
-        }
-
-        return false;
-    }
-
-    private function checkMultimediaObjectTracks(Request $request, MultimediaObject $multimediaObject)
-    {
-        $track = $request->query->has('track_id') ? $multimediaObject->getTrackById($request->query->get('track_id')) : $multimediaObject->getDisplayTrack();
-        if ($track && $track->containsTag('download')) {
-            return $this->redirect($track->getUrl());
-        }
-        if (!$track && null !== $url = $multimediaObject->getProperty('externalplayer')) {
-            return $this->redirect($url);
-        }
-
-        return $track;
-    }
-
-    private function getPlayerParameters(Request $request, IntroService $basePlayerIntroService, MultimediaObject $multimediaObject): array
+    private function getPlayerParameters(Request $request, MultimediaObject $multimediaObject): array
     {
         return [
             'autoStart' => $request->query->get('autostart', 'false'),
-            'intro' => $basePlayerIntroService->getVideoIntroduction($multimediaObject, $request->query->getBoolean('intro')),
+            'intro' => $this->basePlayerIntroService->getVideoIntroduction($multimediaObject, $request->query->getBoolean('intro')),
             'whenDispatchViewEvent' => $this->pumukitPlayerWhenDispatchViewEvent,
         ];
     }
