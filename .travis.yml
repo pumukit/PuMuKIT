@@ -14,7 +14,6 @@ services:
 addons:
   apt:
     packages:
-      - mongodb-server
       - ffmpeg
 
 before_script:
@@ -25,7 +24,6 @@ before_script:
   - pa11y -V
   - composer -V
   - composer install
-
 
 script:
     - find src -type f -name "*.php" -print0 | xargs -0 -n1 -P8 php -l
