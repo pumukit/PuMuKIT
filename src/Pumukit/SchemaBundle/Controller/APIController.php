@@ -71,6 +71,9 @@ class APIController extends AbstractController implements NewAdminControllerInte
         }
 
         $sort = $request->get('sort') ?: [];
+        if (!is_array($sort)) {
+            $sort = ['publicDate' => $sort];
+        }
         $prototypes = $request->get('prototypes') ?: false;
 
         if (!$limit || $limit > 100) {
