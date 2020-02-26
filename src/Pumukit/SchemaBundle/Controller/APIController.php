@@ -72,7 +72,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
 
         $sort = $request->get('sort') ?: [];
         if (!is_array($sort)) {
-            $sort = ['publicDate' => $sort];
+            $sort = ['public_date' => $sort];
         }
         $prototypes = $request->get('prototypes') ?: false;
 
