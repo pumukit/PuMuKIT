@@ -7592,12 +7592,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/teltek/PumukitStatsUIBundle.git",
-                "reference": "430ea87b67d2e06dcbe28da2b91665427cdfb420"
+                "reference": "4e3d13fc15d71ca1f46b6a7560fb340cb3c35100"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teltek/PumukitStatsUIBundle/zipball/430ea87b67d2e06dcbe28da2b91665427cdfb420",
-                "reference": "430ea87b67d2e06dcbe28da2b91665427cdfb420",
+                "url": "https://api.github.com/repos/teltek/PumukitStatsUIBundle/zipball/4e3d13fc15d71ca1f46b6a7560fb340cb3c35100",
+                "reference": "4e3d13fc15d71ca1f46b6a7560fb340cb3c35100",
                 "shasum": ""
             },
             "require": {
@@ -7623,14 +7623,14 @@
             "description": "Stats UI for PuMuKIT",
             "homepage": "https://github.com/teltek/PumukitStatsUIBundle",
             "keywords": [
-                "Symfony2",
                 "bundle",
                 "pumukit",
                 "stats",
+                "symfony",
                 "teltek",
                 "ui"
             ],
-            "time": "2020-02-21T10:29:01+00:00"
+            "time": "2020-02-24T09:32:10+00:00"
         },
         {
             "name": "twig/extensions",
