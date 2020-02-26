@@ -7592,12 +7592,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/teltek/PumukitStatsUIBundle.git",
-                "reference": "4e3d13fc15d71ca1f46b6a7560fb340cb3c35100"
+                "reference": "84d7a3b84fb82bef736a632fb2ed91d6960413ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teltek/PumukitStatsUIBundle/zipball/4e3d13fc15d71ca1f46b6a7560fb340cb3c35100",
-                "reference": "4e3d13fc15d71ca1f46b6a7560fb340cb3c35100",
+                "url": "https://api.github.com/repos/teltek/PumukitStatsUIBundle/zipball/84d7a3b84fb82bef736a632fb2ed91d6960413ac",
+                "reference": "84d7a3b84fb82bef736a632fb2ed91d6960413ac",
                 "shasum": ""
             },
             "require": {
@@ -7630,7 +7630,7 @@
                 "teltek",
                 "ui"
             ],
-            "time": "2020-02-24T09:32:10+00:00"
+            "time": "2020-02-26T16:44:29+00:00"
         },
         {
             "name": "twig/extensions",
