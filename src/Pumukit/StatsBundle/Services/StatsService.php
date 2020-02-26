@@ -275,10 +275,10 @@ class StatsService
         $pipeline = $this->aggrPipeAddProjectGroupDate($pipeline, $options['group_by']);
         $pipeline[] = ['$sort' => ['_id' => $options['sort']]];
 
-        $aggregation = $viewsLogColl->aggregate($pipeline, ['cursor' => []]);
+        $aggregation = $viewsLogColl->aggregate($pipeline, ['cursor' => []])->toArray();
 
         $total = count($aggregation);
-        $aggregation = $this->getPagedAggregation($aggregation->toArray(), $options['page'], $options['limit']);
+        $aggregation = $this->getPagedAggregation($aggregation, $options['page'], $options['limit']);
 
         return [$aggregation, $total];
     }
