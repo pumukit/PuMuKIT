@@ -1,5 +1,5 @@
 ARG PHP_VERSION=7.2
-ARG ALPINE_VERSION=3.8
+ARG ALPINE_VERSION=3.10
 
 FROM php:${PHP_VERSION}-fpm-alpine${ALPINE_VERSION} as base
 MAINTAINER Pablo Nieto, pnieto@teltek.es
@@ -13,8 +13,8 @@ RUN apk  add --no-cache \
 	     		libgcc \
 			libstdc++ \
 			ca-certificates \
-			libcrypto1.0 \
-			libssl1.0 \
+			libcrypto1.1 \
+			libssl1.1 \
 			libgomp \
 			expat \
 			python \
@@ -26,7 +26,7 @@ RUN apk  add --no-cache \
 
 RUN pip install google-api-python-client==1.2
 
-COPY --from=jrottenberg/ffmpeg:4.0-alpine /usr/local /usr/local
+COPY --from=teltek/ffmpeg /usr/local /usr/local
 
 
 RUN apk add --no-cache \
