@@ -106,6 +106,7 @@ class SeriesPlaylistServiceTest extends PumukitTestCase
             $this->testMmobjs['published'],
             $this->testMmobjs['hidden'],
             $this->testMmobjs['blocked'],
+            $this->testPlaylistMmobjs['published'],
         ], iterator_to_array($playlistMmobjs, false));
     }
 
