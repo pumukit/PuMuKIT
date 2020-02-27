@@ -142,7 +142,8 @@ class SeriesPlaylistService
         //Ideally, mongo should return them ordered already, but I couldn't find how to achieve that.
         foreach ($playlistMmobjs as $playMmobj) {
             foreach ($playlistMmobjsFiltered as $mmobj) {
-                if ($playMmobj === $mmobj->getId()) {
+                // NOTE: dont use strict mode comparation because getId returns string
+                if ($playMmobj == $mmobj->getId()) {
                     $playlist[] = $mmobj;
                 }
             }
