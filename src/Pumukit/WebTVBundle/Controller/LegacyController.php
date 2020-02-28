@@ -110,7 +110,6 @@ class LegacyController extends Controller implements WebTVControllerInterface
      * @Route("/{_locale}/mmobj/iframe/id/{pumukit1id}", defaults={"filter": false}, requirements={"_locale"=".."})
      * @Route("/{_locale}/video/iframe/{pumukit1id}.html", defaults={"filter": false}, requirements={"_locale"=".."})
      * @Route("/index.php/{_locale}/video/iframe/{pumukit1id}.html", defaults={"filter": false}, requirements={"_locale"=".."})
-     * @Route("/{_locale}/pumoodle/embed/m/{pumukit1id}", defaults={"filter": false}, requirements={"_locale"=".."})
      * 
      * Parameters:
      * - {_locale} matches the current locale
