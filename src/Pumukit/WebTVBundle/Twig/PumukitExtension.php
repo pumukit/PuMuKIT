@@ -5,7 +5,6 @@ namespace Pumukit\WebTVBundle\Twig;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
-use Pumukit\SchemaBundle\Document\EmbeddedTag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
@@ -18,55 +17,35 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
-/**
- * Class PumukitExtension.
- */
 class PumukitExtension extends AbstractExtension
 {
     protected $defaultPic;
-
-    /**
-     * @var RequestContext
-     */
     protected $context;
-
-    /**
-     * @var DocumentManager
-     */
     private $dm;
-
-    /**
-     * @var CaptionService
-     */
     private $captionService;
-
-    /**
-     * @var PicService
-     */
     private $picService;
-
-    /**
-     * @var LinkService
-     */
     private $linkService;
-
     private $mmobjDurationService;
 
-    public function __construct(DocumentManager $documentManager, RequestContext $context, $defaultPic, CaptionService $captionService, PicService $picService, LinkService $linkService, MultimediaObjectDurationService $mmobjDurationService)
-    {
+    public function __construct(
+        DocumentManager $documentManager,
+        RequestContext $context,
+        CaptionService $captionService,
+        PicService $picService,
+        LinkService $linkService,
+        MultimediaObjectDurationService $mmobjDurationService,
+        $defaultPic
+    ) {
         $this->dm = $documentManager;
         $this->context = $context;
-        $this->defaultPic = $defaultPic;
         $this->captionService = $captionService;
         $this->picService = $picService;
         $this->linkService = $linkService;
         $this->mmobjDurationService = $mmobjDurationService;
+        $this->defaultPic = $defaultPic;
     }
 
-    /**
-     * @return array
-     */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('first_url_pic', [$this, 'getFirstUrlPicFilter']),
@@ -77,10 +56,7 @@ class PumukitExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('public_broadcast', [$this, 'getPublicBroadcast']),
@@ -97,13 +73,6 @@ class PumukitExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @param MultimediaObject|Series $object   Object to get the url (using $object->getPics())
-     * @param bool                    $absolute return absolute path
-     * @param bool                    $hd       return HD image
-     *
-     * @return string
-     */
     public function getFirstUrlPicFilter($object, $absolute = false, $hd = false)
     {
         return $this->picService->getFirstUrlPic($object, $absolute, $hd);
@@ -114,23 +83,11 @@ class PumukitExtension extends AbstractExtension
         return $this->picService->getDynamicPic($object, $absolute);
     }
 
-    /**
-     * Get public broadcast.
-     *
-     * @return string
-     */
     public function getPublicBroadcast()
     {
         return EmbeddedBroadcast::TYPE_PUBLIC;
     }
 
-    /**
-     * Get precinct.
-     *
-     * @param array $embeddedTags
-     *
-     * @return EmbeddedTag|null
-     */
     public function getPrecinct($embeddedTags)
     {
         $precinctTag = null;
@@ -144,13 +101,6 @@ class PumukitExtension extends AbstractExtension
         return $precinctTag;
     }
 
-    /**
-     * Get precinct of Series.
-     *
-     * @param array $multimediaObjects
-     *
-     * @return bool|EmbeddedTag
-     */
     public function getPrecinctOfSeries($multimediaObjects)
     {
         $precinctTag = false;
@@ -178,23 +128,11 @@ class PumukitExtension extends AbstractExtension
         return $precinctTag;
     }
 
-    /**
-     * Get precinct of Series.
-     *
-     * @param MultimediaObject $multimediaObject
-     *
-     * @return EmbeddedTag|null
-     */
     public function getPrecinctOfMultimediaObject($multimediaObject)
     {
         return $this->getPrecinct($multimediaObject->getTags());
     }
 
-    /**
-     * Get precinct full title.
-     *
-     * @param EmbeddedTag $precinctEmbeddedTag
-     */
     public function getPrecinctFullTitle($precinctEmbeddedTag): string
     {
         $fullTitle = '';
@@ -221,13 +159,6 @@ class PumukitExtension extends AbstractExtension
         return $fullTitle;
     }
 
-    /**
-     * Get duration in minutes and seconds.
-     *
-     * @param int $duration
-     *
-     * @return string
-     */
     public function getDurationInMinutesSeconds($duration)
     {
         $minutes = floor($duration / 60);
@@ -240,9 +171,6 @@ class PumukitExtension extends AbstractExtension
         return $minutes."' ".$seconds."''";
     }
 
-    /**
-     * Get duration as not internationalized string. The format is type 78'12''.
-     */
     public function getDurationString(int $duration): string
     {
         if (!$duration) {
@@ -269,35 +197,16 @@ class PumukitExtension extends AbstractExtension
         return "0''";
     }
 
-    /**
-     * Wrapper for the duration of the object. Gets the duration using the MultimediaObjectDurationService.
-     *
-     * @return int
-     */
     public function getMmobjDuration(MultimediaObject $mmobj)
     {
         return $this->mmobjDurationService->getMmobjDuration($mmobj);
     }
 
-    /**
-     * Get captions.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
     public function getCaptions(MultimediaObject $multimediaObject)
     {
         return $this->captionService->getCaptions($multimediaObject);
     }
 
-    /**
-     * Get Iframe Url of a Multimedia Object.
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param bool             $isHTML5          default=false
-     * @param bool             $isDownloadable   default=false
-     *
-     * @return string
-     */
     public function getIframeUrl($multimediaObject, $isHTML5 = false, $isDownloadable = false)
     {
         $url = str_replace('%id%', $multimediaObject->isMultistream(), $multimediaObject->getProperty('opencasturl'));
@@ -328,26 +237,11 @@ class PumukitExtension extends AbstractExtension
         return $url;
     }
 
-    /**
-     * @param null $tagCod
-     * @param null $useBlockedTagAsGeneral
-     *
-     * @return string
-     */
     public function getPathToTag($tagCod = null, $useBlockedTagAsGeneral = null)
     {
         return $this->linkService->generatePathToTag($tagCod, $useBlockedTagAsGeneral);
     }
 
-    /**
-     * Get next event session without sessions that reproducing now.
-     *
-     * @param array $event
-     *
-     * @throws \Exception
-     *
-     * @return \DateTime|string
-     */
     public function getNextEventSession($event)
     {
         $embeddedEventSession = $event['embeddedEventSession'];
@@ -369,13 +263,6 @@ class PumukitExtension extends AbstractExtension
         return $firstSession;
     }
 
-    /**
-     * Get next live event session.
-     *
-     * @throws \Exception
-     *
-     * @return object
-     */
     public function getLiveEventSession(MultimediaObject $multimediaObject)
     {
         $now = new \DateTime();
@@ -400,11 +287,6 @@ class PumukitExtension extends AbstractExtension
         return $sessionData;
     }
 
-    /**
-     * @throws \MongoException
-     *
-     * @return int
-     */
     public function getMMobjsFromSerie(Series $series)
     {
         $criteria = [
