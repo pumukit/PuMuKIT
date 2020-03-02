@@ -11,7 +11,7 @@ use Pumukit\SchemaBundle\Event\AnnotationsEvents;
 use Pumukit\SchemaBundle\Event\AnnotationsUpdateEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -22,10 +22,21 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AnnotationsAPIController extends AbstractController
 {
+    private $documentManager;
+    private $serializer;
+    private $eventDispatcher;
+
+    public function __construct(DocumentManager $documentManager, SerializerService $serializer, EventDispatcherInterface $eventDispatcher)
+    {
+        $this->documentManager = $documentManager;
+        $this->serializer = $serializer;
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
     /**
      * @Route("/annotations.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"}, methods={"GET"})
      */
-    public function getAction(Request $request, DocumentManager $documentManager, SerializerService $serializer)
+    public function getAction(Request $request)
     {
         $episode = $request->get('episode');
         $type = $request->get('type');
@@ -34,7 +45,7 @@ class AnnotationsAPIController extends AbstractController
         $limit = $request->get('limit') ?: 10;
         $offset = $request->get('offset') ?: 0;
 
-        $annonRepo = $documentManager->getRepository(Annotation::class);
+        $annonRepo = $this->documentManager->getRepository(Annotation::class);
         $annonQB = $annonRepo->createQueryBuilder();
 
         if ($episode) {
@@ -72,7 +83,7 @@ class AnnotationsAPIController extends AbstractController
             ],
         ];
 
-        $response = $serializer->dataSerialize($data, $request->getRequestFormat());
+        $response = $this->serializer->dataSerialize($data, $request->getRequestFormat());
 
         return new Response($response);
     }
@@ -80,7 +91,7 @@ class AnnotationsAPIController extends AbstractController
     /**
      * @Route("/{id}.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"}, methods={"GET"})
      */
-    public function getByIdAction(Annotation $annotation, Request $request, SerializerService $serializer)
+    public function getByIdAction(Request $request, Annotation $annotation)
     {
         $data = [
             'annotation' => [
@@ -97,7 +108,7 @@ class AnnotationsAPIController extends AbstractController
                 'created' => $annotation->getCreated(),
             ],
         ];
-        $response = $serializer->dataSerialize($data, $request->getRequestFormat());
+        $response = $this->serializer->dataSerialize($data, $request->getRequestFormat());
 
         return new Response($response);
     }
@@ -106,7 +117,7 @@ class AnnotationsAPIController extends AbstractController
      * @Route("/", methods={"PUT"})
      * @Security("has_role('ROLE_ACCESS_MULTIMEDIA_SERIES')")
      */
-    public function createNewAction(Request $request, SerializerService $serializer, DocumentManager $documentManager, EventDispatcher $eventDispatcher)
+    public function createNewAction(Request $request)
     {
         $episode = $request->get('episode');
         $type = $request->get('type');
@@ -130,8 +141,8 @@ class AnnotationsAPIController extends AbstractController
         $session = $session->getId();
         $annotation->setSession($session);
 
-        $documentManager->persist($annotation);
-        $documentManager->flush();
+        $this->documentManager->persist($annotation);
+        $this->documentManager->flush();
 
         $data = [
             'annotation' => [
@@ -148,9 +159,9 @@ class AnnotationsAPIController extends AbstractController
                 'created' => $annotation->getCreated(),
             ],
         ];
-        $response = $serializer->dataSerialize($data, 'json');
+        $response = $this->serializer->dataSerialize($data, 'json');
         $event = new AnnotationsUpdateEvent($episode);
-        $eventDispatcher->dispatch($event, AnnotationsEvents::UPDATE);
+        $this->eventDispatcher->dispatch($event, AnnotationsEvents::UPDATE);
 
         return new Response($response);
     }
@@ -159,12 +170,12 @@ class AnnotationsAPIController extends AbstractController
      * @Route("/{id}", methods={"PUT"})
      * @Security("has_role('ROLE_ACCESS_MULTIMEDIA_SERIES')")
      */
-    public function editAction(Annotation $annotation, Request $request, SerializerService $serializer, DocumentManager $documentManager, EventDispatcher $eventDispatcher)
+    public function editAction(Request $request, Annotation $annotation)
     {
         $value = $request->get('value');
         $annotation->setValue($value);
-        $documentManager->persist($annotation);
-        $documentManager->flush();
+        $this->documentManager->persist($annotation);
+        $this->documentManager->flush();
         $data = [
             'annotation' => [
                 'annotationId' => $annotation->getId(),
@@ -180,9 +191,9 @@ class AnnotationsAPIController extends AbstractController
                 'created' => $annotation->getCreated(),
             ],
         ];
-        $response = $serializer->dataSerialize($data, 'xml');
+        $response = $this->serializer->dataSerialize($data, 'xml');
         $event = new AnnotationsUpdateEvent($annotation->getMultimediaObject());
-        $eventDispatcher->dispatch($event, AnnotationsEvents::UPDATE);
+        $this->eventDispatcher->dispatch($event, AnnotationsEvents::UPDATE);
 
         return new Response($response);
     }
@@ -191,12 +202,12 @@ class AnnotationsAPIController extends AbstractController
      * @Route("/{id}", methods={"DELETE"})
      * @Security("has_role('ROLE_ACCESS_MULTIMEDIA_SERIES')")
      */
-    public function deleteAction(Annotation $annotation, DocumentManager $documentManager, SerializerService $serializer)
+    public function deleteAction(Annotation $annotation)
     {
-        $documentManager->remove($annotation);
-        $documentManager->flush();
+        $this->documentManager->remove($annotation);
+        $this->documentManager->flush();
 
-        $response = $serializer->dataSerialize($annotation, 'xml');
+        $response = $this->serializer->dataSerialize($annotation, 'xml');
 
         return new Response($response);
     }
@@ -205,14 +216,14 @@ class AnnotationsAPIController extends AbstractController
      * @Route("/reset/{id}", methods={"DELETE"})
      * @Security("has_role('ROLE_ACCESS_MULTIMEDIA_SERIES')")
      */
-    public function deleteAllAction(MultimediaObject $multimediaobject, DocumentManager $documentManager, SerializerService $serializer)
+    public function deleteAllAction(MultimediaObject $multimediaobject)
     {
-        $annonRepo = $documentManager->getRepository(Annotation::class);
+        $annonRepo = $this->documentManager->getRepository(Annotation::class);
         $annonQB = $annonRepo->createQueryBuilder();
         $annonQB->field('multimediaObject')->equals(new ObjectId($multimediaobject->getId()));
         $annonQB->remove()->getQuery()->execute();
 
-        $response = $serializer->dataSerialize(['status' => 'ok'], 'xml');
+        $response = $this->serializer->dataSerialize(['status' => 'ok'], 'xml');
 
         return new Response($response);
     }
