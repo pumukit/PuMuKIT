@@ -7,6 +7,7 @@ use Pagerfanta\Adapter\AdapterInterface;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Adapter\DoctrineCollectionAdapter;
 use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
+use Pagerfanta\Adapter\FixedAdapter;
 use Pagerfanta\Pagerfanta;
 
 class PaginationService
@@ -31,6 +32,13 @@ class PaginationService
     public function createDoctrineCollectionAdapter($objects, int $page = self::DEFAULT_PAGE, int $limit = self::DEFAULT_MAX_ELEMENTS_PER_PAGE): Pagerfanta
     {
         $adapter = new DoctrineCollectionAdapter($objects);
+
+        return $this->generatePager($adapter, $page, $limit);
+    }
+
+    public function createFixedAdapter($total, array $objects, int $page = self::DEFAULT_PAGE, int $limit = self::DEFAULT_MAX_ELEMENTS_PER_PAGE): Pagerfanta
+    {
+        $adapter = new FixedAdapter($total, $objects);
 
         return $this->generatePager($adapter, $page, $limit);
     }
