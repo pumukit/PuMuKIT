@@ -63,7 +63,7 @@
             "bin/console lint:yaml config",
             "bin/console lint:twig src",
             "bin/console lint:twig templates",
-            "bin/console lint:xlif translations/",
+            "bin/console lint:xliff translations/",
             "vendor/bin/var-dump-check --symfony src",
             "bin/travis_checks/check_var_dumps"
         ],
