@@ -136,6 +136,38 @@ class MaterialService
         return $multimediaObject;
     }
 
+    public function updateMaterialFile(MultimediaObject $multimediaObject, UploadedFile $materialFile, Material $material, $formData)
+    {
+        if (UPLOAD_ERR_OK != $materialFile->getError()) {
+            throw new \Exception($materialFile->getErrorMessage());
+        }
+
+        if (!is_file($materialFile->getPathname())) {
+            throw new FileNotFoundException($materialFile->getPathname());
+        }
+
+        $materialOldPath = $material->getPath();
+
+        $material = $this->saveFormData($material, $formData);
+
+        $path = $materialFile->move($this->targetPath.'/'.$multimediaObject->getId(), $materialFile->getClientOriginalName());
+
+        $material->setSize($materialFile->getClientSize());
+        $material->setName($materialFile->getClientOriginalName());
+
+        $material->setPath($path);
+        $material->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
+
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        $this->deleteFileOnDisk($materialOldPath);
+
+        $this->dispatcher->dispatchUpdate($multimediaObject, $material);
+
+        return $multimediaObject;
+    }
+
     /**
      * Remove Material from Multimedia Object.
      *
