@@ -47,7 +47,7 @@ EOT
         $this->dm = $this->getContainer()->get('doctrine_mongodb.odm.document_manager');
         $this->origin = $input->getOption('origin');
         $this->destiny = $input->getOption('destiny');
-        $this->limit = abs((int) $input->getOption('limit'));
+        $this->limit = $input->getOption('limit');
 
         $this->logger = $this->getContainer()->get('logger');
 
