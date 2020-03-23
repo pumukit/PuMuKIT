@@ -38,11 +38,12 @@ class CategoriesService
         $this->linkService = $linkService;
     }
 
-    public function getCategoriesElements($provider)
+    public function getCategoriesElements($provider, $parentCod = null)
     {
+        $parentCod = $parentCod ?? $this->parentCod;
         $groundsRoot = $this->documentManager
             ->getRepository(Tag::class)
-            ->findOneByCod($this->parentCod)
+            ->findOneByCod($parentCod)
         ;
 
         if (!isset($groundsRoot)) {
