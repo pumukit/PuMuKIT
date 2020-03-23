@@ -31,6 +31,7 @@ class CategoriesController extends Controller implements WebTVControllerInterfac
 
         $parentCod = $request->get('parent');
         [$elements, $groundsRootTitle] = $this->get('pumukit_web_tv.categories_service')->getCategoriesElements($request->get('provider'), $parentCod);
+
         return [
             'allGrounds' => $elements,
             'title' => $groundsRootTitle,

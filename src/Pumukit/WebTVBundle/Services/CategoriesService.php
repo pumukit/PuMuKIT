@@ -28,6 +28,7 @@ class CategoriesService
     private $translator;
     private $parentCod;
     private $listGeneralParam;
+    private $excludeEmptyTags;
 
     public function __construct(DocumentManager $documentManager, LinkService $linkService, TranslatorInterface $translator, $parentCod, $listGeneralParam, $excludeEmptyTags)
     {
@@ -90,7 +91,7 @@ class CategoriesService
             if (isset($counterMmobjs[$cod])) {
                 $numMmobjs += $counterMmobjs[$cod];
             }
-            if($this->excludeEmptyTags and $numMmobjs <= 0){
+            if ($this->excludeEmptyTags and $numMmobjs <= 0) {
                 continue;
             }
             $allGrounds[$id] = [];
@@ -124,7 +125,7 @@ class CategoriesService
                 if (isset($counterMmobjs[$cod])) {
                     $numMmobjs += $counterMmobjs[$cod];
                 }
-                if($this->excludeEmptyTags and $numMmobjs <= 0){
+                if ($this->excludeEmptyTags and $numMmobjs <= 0) {
                     continue;
                 }
                 $allGrounds[$id]['children'][$id2] = [];
@@ -167,6 +168,7 @@ class CategoriesService
 
     /**
      * @param string|null $provider
+     * @param mixed|null  $parentCod
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
