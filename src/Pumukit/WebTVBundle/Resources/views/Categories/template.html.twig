@@ -17,40 +17,40 @@
             </a>
             <ul>
                 {% for child in parent.children %}
-                {% if child.children is empty %}
-                {% set markdown = 'p' %}
-                {% else %}
-                {% set markdown = 'h4' %}
-                {% endif %}
-                <li>
-                    {% if child.num_mmobjs > 0 %}
-                    <{{markdown}}>
-                        <a href="{{ child.url }}">
-                            {{ child.title }} ({%trans%} All {% endtrans %} {{ child.num_mmobjs }})
-                        </a>
-                    </{{markdown}}>
+                    {% if child.children is empty %}
+                        {% set markdown = 'p' %}
                     {% else %}
-                    <{{markdown}} class="disabled">{{ child.title }} ({%trans%} All {% endtrans %} {{ child.num_mmobjs }})</{{markdown}}>
+                        {% set markdown = 'h4' %}
                     {% endif %}
-                    {% if child.children |length > 0 %}
-                    <ul>
-                        {% for grandchild in child.children %}
-                        <li>
-                            {% if grandchild.num_mmobjs > 0 %}
-                            <p>
-                                <a href="{{ grandchild.url }}">
-                                    {{ grandchild.title }} ({{grandchild.num_mmobjs }})
-                                </a>
-                            </p>
-                            {% else %}
-                            <p class="disabled">{{ grandchild.title }} ({{grandchild.num_mmobjs }})</p>
-                            {% endif %}
-                        </li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
-                    {% endfor %}
-                </li>
+                    <li>
+                        {% if child.num_mmobjs > 0 %}
+                            <{{markdown}}>
+                            <a href="{{ child.url }}">
+                                {{ child.title }} ({%trans%} All {% endtrans %} {{ child.num_mmobjs }})
+                            </a>
+                            </{{markdown}}>
+                        {% else %}
+                            <{{markdown}} class="disabled">{{ child.title }} ({%trans%} All {% endtrans %} {{ child.num_mmobjs }})</{{markdown}}>
+                        {% endif %}
+                        {% if child.children |length > 0 %}
+                            <ul>
+                                {% for grandchild in child.children %}
+                                    <li>
+                                        {% if grandchild.num_mmobjs > 0 %}
+                                            <p>
+                                                <a href="{{ grandchild.url }}">
+                                                    {{ grandchild.title }} ({{grandchild.num_mmobjs }})
+                                                </a>
+                                            </p>
+                                        {% else %}
+                                            <p class="disabled">{{ grandchild.title }} ({{grandchild.num_mmobjs }})</p>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </li>
+                {% endfor %}
             </ul>
         </div>
         {% if loop.index is even %}

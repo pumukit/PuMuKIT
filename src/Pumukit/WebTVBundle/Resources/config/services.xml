@@ -72,6 +72,7 @@
             <argument type="service" id="translator" />
             <argument>%categories_tag_cod%</argument>
             <argument>%categories.list_general_tags%</argument>
+            <argument>%categories.exclude_empty_tags%</argument>
         </service>
 
         <service id="pumukit_web_tv.pagination_service" class="Pumukit\WebTVBundle\Services\PaginationService">
