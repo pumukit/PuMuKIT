@@ -49,7 +49,7 @@ class CategoriesService
         ;
 
         if (!isset($groundsRoot)) {
-            throw new \Exception('The parent with cod: '.$this->parentCod.' was not found. Please add it to the Tags database or configure another categories_tag_cod in parameters.yml');
+            throw new \Exception('The parent with cod: '.$parentCod.' was not found. Please add it to the Tags database or configure another categories_tag_cod in parameters.yml');
         }
 
         $allGrounds = [];
