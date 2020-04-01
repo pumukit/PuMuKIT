@@ -10,6 +10,8 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Repository\MultimediaObjectRepository;
+use Pumukit\SchemaBundle\Repository\SeriesRepository;
 use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Pumukit\WebTVBundle\Services\ListService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -274,7 +276,9 @@ class ListController extends AbstractController implements WebTVControllerInterf
             $class = Series::class;
         }
 
-        $qb = $this->documentManager->getRepository($class)->createBuilderWithTag($tag, ['public_date' => -1]);
+        /** @var MultimediaObjectRepository|SeriesRepository $qb */
+        $qb = $this->documentManager->getRepository($class);
+        $qb->createBuilderWithTag($tag, ['public_date' => -1]);
 
         return $this->generateResponse($qb, $date, $numberCols);
     }
