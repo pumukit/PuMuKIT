@@ -633,6 +633,8 @@ class MultimediaObjectController extends SortableAdminController
         $repo = $this->documentManager->getRepository(Tag::class);
 
         $search_text = $request->get('search_text');
+        $search_text = $request->query->get('search_text');
+
         $lang = $request->getLocale();
         $mmId = $request->get('mmId');
 
@@ -666,7 +668,7 @@ class MultimediaObjectController extends SortableAdminController
 
         usort(
             $result,
-            static function ($x, $y) {
+            static function (Tag $x, Tag $y) {
                 return strcasecmp($x->getCod(), $y->getCod());
             }
         );
@@ -1451,7 +1453,9 @@ class MultimediaObjectController extends SortableAdminController
             }
         }
 
-        $tags[] = $parent;
+        if (2 !== (int) $parent->getLevel()) {
+            $tags[] = $parent;
+        }
 
         return $this->getAllParents($parent, $tags, $top_parent);
     }
