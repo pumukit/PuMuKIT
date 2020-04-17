@@ -5,6 +5,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 To get the diff for a specific change, go to https://github.com/pumukit/PuMuKIT/commit/XXX where XXX is the change hash.
 To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/compare/3.0.0...3.1.x
 
+## [3.2.0](https://github.com/pumukit/PuMuKIT/compare/3.2.0...3.1.0) - (Unreleased)
+#### Added
+- New logic to read mp properties from Galicaster mediapackages in Opencast
+- Optional notification sending to OpencastBundle when a mediapackage has been imported
+- Hide/show eye tooltip to multimedia object list of tracks in the back-office
+- Script that syncs existing PuMuKIT series with Opencast (opencast:sync:series)
+- Minor design improvements to the back-office lists and naked view
+
+#### Fixed
+- Edge-case where removing a cloned object after changing the user would remove the original attached image.
+- Live events issue related to using mongo driver version 1.4.5 or lower
+
 ## [3.1.0](https://github.com/pumukit/PuMuKIT/compare/3.1.0...3.0.0) - (2019-09-10)
 
 #### Added
