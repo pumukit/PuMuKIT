@@ -1,7 +1,9 @@
-{% if object.isPublished %}
-    {% set videoPath = path('pumukit_webtv_multimediaobject_index', {'id': object.id}) %}
-{% else %}
-    {% set videoPath = path('pumukit_webtv_multimediaobject_magicindex', {'secret': object.secret}) %}
+{% if videoPath is not defined %} 
+    {% if object.isPublished %}
+        {% set videoPath = path('pumukit_webtv_multimediaobject_index', {'id': object.id}) %}
+    {% else %}
+        {% set videoPath = path('pumukit_webtv_multimediaobject_magicindex', {'secret': object.secret}) %}
+    {% endif %}
 {% endif %}
 {% set videoTitle = object.title | default('No title'|trans) %}
 {% set seriesTitle = object.getSeriesTitle()|default('') %}
