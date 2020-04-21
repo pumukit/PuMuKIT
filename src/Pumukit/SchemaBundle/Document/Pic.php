@@ -32,7 +32,7 @@ class Pic extends Element
      */
     public function __toString()
     {
-        return $this->getUrl();
+        return $this->getUrl() ?? '';
     }
 
     /**

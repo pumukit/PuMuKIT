@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   php:
-    image: teltek/pumukit
+    image: teltek/pumukit:3.3.x
     build:
       context: ./
       cache_from:
@@ -20,7 +20,7 @@ services:
       - ./:/srv/pumukit
 
   h2-proxy:
-    image: teltek/nginx
+    image: teltek/nginx:3.3.x
     build:
       context: ./doc/docker/nginx
       cache_from:
@@ -29,10 +29,10 @@ services:
     depends_on:
       - php
     volumes:
-      # Comment out the next lines in production    
+      # Comment out the next lines in production
       # - ./web/storage:/srv/pumukit/web/storage:ro
       # - ./web/uploads:/srv/pumukit/web/uploads:ro
-      - ./:/srv/pumukit      
+      - ./:/srv/pumukit
     ports:
       - "80:80"
       - "443:443"
