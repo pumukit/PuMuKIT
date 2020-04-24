@@ -276,7 +276,7 @@ class ModulesController extends Controller implements WebTVControllerInterface
      *
      * @return array
      */
-    public function legacyRecentlyAdded($design = 'vertical')
+    public function legacyRecentlyAddedAction($design = 'vertical')
     {
         $translator = $this->get('translator');
         $title = $translator->trans('Recently added');

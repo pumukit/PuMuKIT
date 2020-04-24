@@ -110,8 +110,9 @@ RUN set -eux; \
 
 # Download and install pumukit to get the composer cache and improve build times
 RUN git clone https://github.com/pumukit/pumukit /srv/pumukit; \
-cd /srv/pumukit; \
-composer install -a -n --no-scripts
+	cd /srv/pumukit; \
+	git checkout 3.2.x; \
+	composer install -a -n --no-scripts
 RUN rm -rf /srv/pumukit
 
 ENV PATH="${PATH}:/root/.composer/vendor/bin"

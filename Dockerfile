@@ -1,5 +1,4 @@
-
-FROM teltek/pumukit-base
+FROM teltek/pumukit-base:3.3.x
 
 # default build for production
 ARG APP_ENV=prod
@@ -16,7 +15,7 @@ RUN set -eux; \
     composer install -a -n; \
     php vendor/sensio/distribution-bundle/Resources/bin/build_bootstrap.php; \
     php app/console a:i
-    
+
 COPY doc/docker/pumukit/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 RUN chmod +x /usr/local/bin/docker-entrypoint
 
