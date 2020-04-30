@@ -113,4 +113,11 @@ class SeriesService
 
         return $this->repo->findByPersonIdAndRoleCodOrGroupsSorted($user->getPerson()->getId(), $roleOwnerCode, $groups, $sort, $limit);
     }
+
+    public function canUserAccessSeries(User $user, Series $series): bool
+    {
+        $singleMmobj = $this->mmRepo->findOneBy(['series' => $series, 'properties.owners' => $user->getId()]);
+
+        return null !== $singleMmobj;
+    }
 }
