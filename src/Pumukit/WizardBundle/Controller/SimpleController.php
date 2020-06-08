@@ -121,7 +121,7 @@ class SimpleController extends Controller
             $series = $this->getSeriesByExternalData($externalData);
         }
 
-        $canAccessSeries = $this->get('pumukitschema.series')->canUserAccessSeries($this->getUser(), $series);
+        $canAccessSeries = null !== $series && $this->get('pumukitschema.series')->canUserAccessSeries($this->getUser(), $series);
 
         $licenseService = $this->get('pumukit_wizard.license');
         $licenseContent = $licenseService->getLicenseContent($request->getLocale());
