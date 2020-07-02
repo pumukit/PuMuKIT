@@ -73,11 +73,11 @@
                         {% endif %}
                         {% if is_published and is_playable and mm.getDisplayTrack() %}
                             {% set video_url = url('pumukit_trackfile_index', {id: mm.getDisplayTrack().getId(), ext: 'mp4'  }) %}
-                            <label for="inputROUrl" class="col-xs-2 control-label hidden-naked">File url:</label>
+                            <label for="inputTrackFileUrl" class="col-xs-2 control-label hidden-naked">{{ "File url"|trans }}:</label>
                             <div class="col-xs-10 input-group hidden-naked">
-                                <input type="text" class="form-control" id="inputROUrl" readonly onclick="select()" value="{{ video_url }}">
+                                <input type="text" class="form-control" id="inputTrackFileUrl" readonly onclick="select()" value="{{ video_url }}">
                                 <span class="input-group-addon">
-                                    <a href="{{ video_url }}" target="_blank" title="{% trans %}Video URL{% endtrans %}">
+                                    <a href="{{ video_url }}" target="_blank" title="{{ "File url"|trans }}">
                                         <i class="mdi-action-exit-to-app"></i>
                                     </a>
                                 </span>
