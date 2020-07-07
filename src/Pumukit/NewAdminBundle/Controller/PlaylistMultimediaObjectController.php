@@ -342,19 +342,24 @@ class PlaylistMultimediaObjectController extends Controller
      */
     public function addModalAction(Request $request)
     {
-        $repoSeries = $this->getDoctrine()
-            ->getRepository(Series::class)
-        ;
-        $repoMms = $this->getDoctrine()
-            ->getRepository(MultimediaObject::class)
-        ;
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $repoSeries = $this->getDoctrine()->getRepository(Series::class);
+        $repoMms = $this->getDoctrine()->getRepository(MultimediaObject::class);
 
-        $series = $repoSeries->createQueryBuilder()
-            ->field('type')->equals(Series::TYPE_PLAYLIST)
-            ->sort('public_date', -1)
-            ->getQuery()
-            ->execute()
-        ;
+        if ($this->isGranted(PermissionProfile::SCOPE_GLOBAL)) {
+            $series = $repoSeries->createQueryBuilder()
+                ->field('type')->equals(Series::TYPE_PLAYLIST)
+                ->sort('public_date', -1)
+                ->getQuery()
+                ->execute()
+            ;
+        } else {
+            $user = $this->get('security.token_storage')->getToken()->getUser();
+            $series = $dm->getRepository(Series::class)->findBy([
+                'type' => Series::TYPE_PLAYLIST,
+                'properties.owners' => $user->getId(),
+            ]);
+        }
 
         $multimediaObject = $request->get('id') ? $repoMms->find($request->get('id')) : null;
 
@@ -462,7 +467,9 @@ class PlaylistMultimediaObjectController extends Controller
         if ($this->isGranted(PermissionProfile::SCOPE_GLOBAL)) {
             return;
         }
-        $dm->getFilterCollection()->disable('backoffice');
+        if ($dm->getFilterCollection()->isEnabled('backoffice')) {
+            $dm->getFilterCollection()->disable('backoffice');
+        }
         $filter = $dm->getFilterCollection()->enable('personal');
         $person = $this->get('pumukitschema.person')->getPersonFromLoggedInUser($user);
         $people = [];
