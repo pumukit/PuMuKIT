@@ -39,7 +39,7 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Install Composer dependencies
-        run: make install
+        run: composer install
 
       # —— Symfony 🎵 ——————————————————————————————————————————————————————————
       - name: Check Symfony requirements
