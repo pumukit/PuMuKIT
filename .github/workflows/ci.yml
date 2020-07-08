@@ -41,14 +41,6 @@ jobs:
       - name: Install Composer dependencies
         run: composer install
 
-      # —— Symfony 🎵 ——————————————————————————————————————————————————————————
-      - name: Check Symfony requirements
-        run: vendor/bin/requirements-checker
-
-      - name: Check the Symfony console
-        run: |
-              php bin/console -V
-
       # —— Code Validations 🧙‍️ —————————————————————————————————————————————————————————
       - name: PHPCode
         run:  find src -type f -name '.php' -print0 | xargs -0 -n1 -P8 php -l
