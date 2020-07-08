@@ -48,20 +48,32 @@ jobs:
       - name: YAML
         run:  |
                php bin/console lint:yaml src
-               php bin/console lint:yaml config
-               php bin/console lint:twig src
-               php bin/console lint:twig templates
+               php bin/console lint:yaml app
 
       - name: Twig
         run:  |
                php bin/console lint:twig src
-               php bin/console lint:twig templates
+               php bin/console lint:twig app
 
       - name: Translations
         run:  php bin/console lint:xliff translations/
 
+      - name: var_dump
+        run: ./bin/travis_checks/check_var_dumps
+
       - name: PHPCSFixer
-        run:  php bin/php-cs-fixer fix src
+        run:  php bin/php-cs-fixer fix src --dry-run -v
 
       - name: PHPStan
-        run:  php bin/phpstan analyse -l 4 src
+        run:  |
+               php bin/phpstan analyse -l 4 src
+               php bin/phpstan analyse -l 4 src
+               php bin/phpstan analyse -l 7 src/Pumukit/BaseLivePlayerBundle/
+               php bin/phpstan analyse -l 5 src/Pumukit/BasePlayerBundle/
+               php bin/phpstan analyse -l 7 src/Pumukit/CoreBundle/
+               php bin/phpstan analyse -l 7 src/Pumukit/InspectionBundle/
+               php bin/phpstan analyse -l 7 src/Pumukit/JWPlayerBundle/
+               php bin/phpstan analyse -l 5 src/Pumukit/WizardBundle/
+
+      - name: PHPUnit
+        run: php bin/phpunit -c app
