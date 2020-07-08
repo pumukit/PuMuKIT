@@ -6987,5 +6987,6 @@
     "platform-dev": [],
     "platform-overrides": {
         "ext-mongo": "1.6.16"
-    }
+    },
+    "plugin-api-version": "1.1.0"
 }
