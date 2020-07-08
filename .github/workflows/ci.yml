@@ -1,0 +1,28 @@
+name: Code validation
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Validate composer.json and composer.lock
+        run:  composer validate
+
+      - name: PHPCode
+        run:  find src -type f -name '.php' -print0 | xargs -0 -n1 -P8 php -l
+
+      - name: YAML
+        run:  php bin/console lint:yaml src && bin/console lint:yaml config && bin/console lint:twig src && bin/console lint:twig templates
+
+      - name: Translations
+        run:  php bin/console lint:xliff translations/
+
+      - name: PHPCSFixer
+        run:  php bin/php-cs-fixer fix src
+
+      - name: PHPStan
+        run:  php bin/phpstan analyse -l 4 src
