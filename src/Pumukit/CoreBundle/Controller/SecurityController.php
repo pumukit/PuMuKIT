@@ -37,7 +37,7 @@ class SecurityController extends Controller
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $multimediaObject = $dm->find(MultimediaObject::class, $id);
 
-        if (!$multimediaObject) {
+        if (!$multimediaObject instanceof MultimediaObject) {
             throw $this->createNotFoundException();
         }
 

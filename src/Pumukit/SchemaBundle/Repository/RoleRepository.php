@@ -13,7 +13,7 @@ use Pumukit\SchemaBundle\Document\Role;
  */
 class RoleRepository extends DocumentRepository
 {
-    public function findOneByCod(string $cod): ?Role
+    public function findOneByCod(string $cod)
     {
         return $this->findOneBy(['cod' => $cod]);
     }

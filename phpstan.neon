@@ -9,5 +9,6 @@ parameters:
         objectManagerLoader: doc/object-manager.php
     ignoreErrors:
     - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\).#'
+    - '#Call to an undefined method Doctrine\\Persistence\\ObjectRepository#'
     excludes_analyse:
         - src/Pumukit/TemplateBundle/EventListener/RouteFoundHttpListener.php

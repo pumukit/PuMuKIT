@@ -10,6 +10,7 @@ use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
+use Pumukit\SchemaBundle\Repository\TagRepository;
 
 class JobGeneratorListener
 {
@@ -51,6 +52,7 @@ class JobGeneratorListener
             return;
         }
 
+        /** @var TagRepository $repository */
         $repository = $this->dm->getRepository(Tag::class);
         $tag = $repository->findOneByCod('PUBCHANNELS');
         if (!$tag) {

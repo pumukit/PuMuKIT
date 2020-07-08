@@ -22,8 +22,6 @@ class LinkService
      *
      * @param MultimediaObject $multimediaObject
      * @param Link             $link
-     *
-     * @return MultimediaObject
      */
     public function addLinkToMultimediaObject(MultimediaObject $multimediaObject, Link $link)
     {
@@ -45,8 +43,6 @@ class LinkService
      *
      * @param MultimediaObject $multimediaObject
      * @param Link             $link
-     *
-     * @return MultimediaObject
      */
     public function updateLinkInMultimediaObject(MultimediaObject $multimediaObject, Link $link)
     {
@@ -66,8 +62,6 @@ class LinkService
      *
      * @param MultimediaObject $multimediaObject
      * @param string           $linkId
-     *
-     * @return MultimediaObject
      */
     public function removeLinkFromMultimediaObject(MultimediaObject $multimediaObject, $linkId)
     {
@@ -90,8 +84,6 @@ class LinkService
      *
      * @param MultimediaObject $multimediaObject
      * @param string           $linkId
-     *
-     * @return MultimediaObject
      */
     public function upLinkInMultimediaObject(MultimediaObject $multimediaObject, $linkId)
     {
@@ -110,8 +102,6 @@ class LinkService
      *
      * @param MultimediaObject $multimediaObject
      * @param string           $linkId
-     *
-     * @return MultimediaObject
      */
     public function downLinkInMultimediaObject(MultimediaObject $multimediaObject, $linkId)
     {

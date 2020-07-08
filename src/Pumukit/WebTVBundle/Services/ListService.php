@@ -7,6 +7,8 @@ use Doctrine\ODM\MongoDB\Query\Builder;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Repository\MultimediaObjectRepository;
+use Pumukit\SchemaBundle\Repository\SeriesRepository;
 use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 
 class ListService
@@ -64,8 +66,10 @@ class ListService
         $criteria = [
             'tags.cod' => $this->wallTag,
         ];
+        /** @var MultimediaObjectRepository $mmoRepository */
+        $mmoRepository =  $this->documentManager->getRepository(MultimediaObject::class);
 
-        return $this->documentManager->getRepository(MultimediaObject::class)->findStandardBy($criteria);
+        return $mmoRepository->findStandardBy($criteria);
     }
 
     /**
@@ -81,8 +85,11 @@ class ListService
     public function getMediaLibrary(array $criteria = [], $sort = 'date', $locale = 'en', $parentTag = null)
     {
         $result = [];
+        /** @var SeriesRepository $seriesRepository */
         $seriesRepository = $this->documentManager->getRepository(Series::class);
-        $aggregatedNumMmobjs = $this->documentManager->getRepository(MultimediaObject::class)->countMmobjsBySeries();
+        /** @var MultimediaObjectRepository $mmoRepository */
+        $mmoRepository=  $this->documentManager->getRepository(MultimediaObject::class);
+        $aggregatedNumMmobjs = $mmoRepository->countMmobjsBySeries();
 
         switch ($sort) {
             case 'alphabetically':

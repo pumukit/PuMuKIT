@@ -14,7 +14,7 @@ use Pumukit\SchemaBundle\Document\Person;
  */
 class PersonRepository extends DocumentRepository
 {
-    public function findOneByEmail(string $email): ?Person
+    public function findOneByEmail(string $email)
     {
         return $this->findOneBy(['email' => $email]);
     }

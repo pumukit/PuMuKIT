@@ -7,6 +7,7 @@ use Doctrine\ODM\MongoDB\Query\Builder;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Repository\MultimediaObjectRepository;
 use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
 
 class SearchService
@@ -114,7 +115,9 @@ class SearchService
      */
     public function getLanguages()
     {
-        return $this->documentManager->getRepository(MultimediaObject::class)
+        /** @var MultimediaObjectRepository $mmoRepository */
+        $mmoRepository = $this->documentManager->getRepository(MultimediaObject::class);
+        return $mmoRepository
             ->createStandardQueryBuilder()
             ->distinct('tracks.language')
             ->getQuery()
@@ -293,7 +296,9 @@ class SearchService
      */
     public function addValidSeriesQueryBuilder(Builder $queryBuilder)
     {
-        $validSeries = $this->documentManager->getRepository(MultimediaObject::class)
+        /** @var MultimediaObjectRepository $mmoRepository */
+        $mmoRepository = $this->documentManager->getRepository(MultimediaObject::class);
+        $validSeries = $mmoRepository
             ->createStandardQueryBuilder()
             ->distinct('series')
             ->getQuery()

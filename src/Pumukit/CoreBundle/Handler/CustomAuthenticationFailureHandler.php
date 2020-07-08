@@ -34,7 +34,7 @@ class CustomAuthenticationFailureHandler extends DefaultAuthenticationFailureHan
         }
 
         $user = $this->documentManager->getRepository(User::class)->findOneBy(['username' => $username]);
-        if (!$user) {
+        if (!$user instanceof User) {
             throw new UsernameNotFoundException(self::EXCEPTION_MESSAGE);
         }
 

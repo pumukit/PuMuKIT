@@ -154,7 +154,7 @@ class ImportMappingDataService
                 'cod' => $tagCod,
             ]);
 
-            if ($tag) {
+            if ($tag instanceof Tag) {
                 $this->tagService->addTagByCodToMultimediaObject($multimediaObject, $tag->getCod(), false);
             }
         }
@@ -180,7 +180,7 @@ class ImportMappingDataService
                     }
                 }
 
-                if ($role && $person) {
+                if ($role  instanceof Role && $person instanceof Person) {
                     $this->personService->createRelationPerson($person, $role, $multimediaObject);
                 }
             }

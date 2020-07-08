@@ -13,7 +13,7 @@ use Pumukit\SchemaBundle\Document\Tag;
  */
 class TagRepository extends MaterializedPathRepository
 {
-    public function findOneByCod(string $cod): ?Tag
+    public function findOneByCod(string $cod)
     {
         return $this->findOneBy(['cod' => $cod]);
     }

@@ -5,6 +5,8 @@ namespace Pumukit\WebTVBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\Event;
 use Pumukit\SchemaBundle\Document\Live;
+use Pumukit\SchemaBundle\Repository\EventRepository;
+use Pumukit\SchemaBundle\Repository\LiveRepository;
 use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 
 /**
@@ -107,8 +109,12 @@ class MenuService
      */
     private function getEvents()
     {
-        $channels = $this->dm->getRepository(Live::class)->findAll();
-        $events = $this->dm->getRepository(Event::class)->findNextEvents();
+        /** @var LiveRepository $channels */
+        $channels = $this->dm->getRepository(Live::class);
+        $channels = $channels->findAll();
+        /** @var EventRepository $events */
+        $events = $this->dm->getRepository(Event::class);
+        $events = $events->findNextEvents();
         $liveEventTypeSession = false;
 
         return [

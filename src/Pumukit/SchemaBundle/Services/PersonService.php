@@ -77,8 +77,6 @@ class PersonService
      * Find person by id.
      *
      * @param string $id
-     *
-     * @return Person
      */
     public function findPersonById($id)
     {
@@ -89,8 +87,6 @@ class PersonService
      * Find role by id.
      *
      * @param string $id
-     *
-     * @return Role
      */
     public function findRoleById($id)
     {

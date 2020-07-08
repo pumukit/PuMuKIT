@@ -5,6 +5,8 @@ namespace Pumukit\BaseLivePlayerBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\Event;
 use Pumukit\SchemaBundle\Document\Live;
+use Pumukit\SchemaBundle\Repository\EventRepository;
+use Pumukit\SchemaBundle\Repository\LiveRepository;
 
 class APIService
 {
@@ -20,7 +22,10 @@ class APIService
      */
     public function getEventsByCriteria(array $criteria, string $sort, int $limit): array
     {
-        $qb = $this->documentManager->getRepository(Event::class)->createQueryBuilder();
+        /** @var EventRepository $qb */
+        $qb = $this->documentManager->getRepository(Event::class);
+
+        $qb = $qb->createQueryBuilder();
 
         if ($criteria) {
             $qb = $qb->addAnd($criteria);
@@ -42,7 +47,10 @@ class APIService
      */
     public function getLivesByCriteria(array $criteria, string $sort, int $limit): array
     {
-        $qb = $this->documentManager->getRepository(Live::class)->createQueryBuilder();
+        /** @var LiveRepository $qb */
+        $qb = $this->documentManager->getRepository(Live::class);
+
+        $qb = $qb->createQueryBuilder();
 
         if ($criteria) {
             $qb = $qb->addAnd($criteria);
