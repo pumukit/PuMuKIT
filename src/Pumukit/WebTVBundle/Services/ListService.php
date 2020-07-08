@@ -67,7 +67,7 @@ class ListService
             'tags.cod' => $this->wallTag,
         ];
         /** @var MultimediaObjectRepository $mmoRepository */
-        $mmoRepository =  $this->documentManager->getRepository(MultimediaObject::class);
+        $mmoRepository = $this->documentManager->getRepository(MultimediaObject::class);
 
         return $mmoRepository->findStandardBy($criteria);
     }
@@ -88,7 +88,7 @@ class ListService
         /** @var SeriesRepository $seriesRepository */
         $seriesRepository = $this->documentManager->getRepository(Series::class);
         /** @var MultimediaObjectRepository $mmoRepository */
-        $mmoRepository=  $this->documentManager->getRepository(MultimediaObject::class);
+        $mmoRepository = $this->documentManager->getRepository(MultimediaObject::class);
         $aggregatedNumMmobjs = $mmoRepository->countMmobjsBySeries();
 
         switch ($sort) {

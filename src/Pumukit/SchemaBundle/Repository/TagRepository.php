@@ -3,7 +3,6 @@
 namespace Pumukit\SchemaBundle\Repository;
 
 use Gedmo\Tree\Document\MongoDB\Repository\MaterializedPathRepository;
-use Pumukit\SchemaBundle\Document\Tag;
 
 /**
  * TagRepository.

@@ -117,6 +117,7 @@ class SearchService
     {
         /** @var MultimediaObjectRepository $mmoRepository */
         $mmoRepository = $this->documentManager->getRepository(MultimediaObject::class);
+
         return $mmoRepository
             ->createStandardQueryBuilder()
             ->distinct('tracks.language')
