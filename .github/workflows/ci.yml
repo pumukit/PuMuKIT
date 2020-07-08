@@ -55,9 +55,6 @@ jobs:
                php bin/console lint:twig src
                php bin/console lint:twig app
 
-      - name: Translations
-        run:  php bin/console lint:xliff translations/
-
       - name: var_dump
         run: ./bin/travis_checks/check_var_dumps
 
