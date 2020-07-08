@@ -64,7 +64,6 @@ jobs:
       - name: PHPStan
         run:  |
                php bin/phpstan analyse -l 4 src
-               php bin/phpstan analyse -l 4 src
                php bin/phpstan analyse -l 7 src/Pumukit/BaseLivePlayerBundle/
                php bin/phpstan analyse -l 5 src/Pumukit/BasePlayerBundle/
                php bin/phpstan analyse -l 7 src/Pumukit/CoreBundle/
