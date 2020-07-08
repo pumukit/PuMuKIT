@@ -343,8 +343,8 @@ class PlaylistMultimediaObjectController extends Controller
     public function addModalAction(Request $request)
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $repoSeries = $this->getDoctrine()->getRepository(Series::class);
-        $repoMms = $this->getDoctrine()->getRepository(MultimediaObject::class);
+        $repoSeries = $dm->getRepository(Series::class);
+        $repoMms = $dm->getRepository(MultimediaObject::class);
 
         if ($this->isGranted(PermissionProfile::SCOPE_GLOBAL)) {
             $series = $repoSeries->createQueryBuilder()
@@ -355,7 +355,7 @@ class PlaylistMultimediaObjectController extends Controller
             ;
         } else {
             $user = $this->get('security.token_storage')->getToken()->getUser();
-            $series = $dm->getRepository(Series::class)->findBy([
+            $series = $repoSeries->findBy([
                 'type' => Series::TYPE_PLAYLIST,
                 'properties.owners' => $user->getId(),
             ]);
