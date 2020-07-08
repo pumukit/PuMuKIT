@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php-versions: ['7.2', '7.3']
+        php-versions: ['7.2']
 
     steps:
       - name: Checkout
@@ -71,25 +71,8 @@ jobs:
                php bin/phpstan analyse -l 7 src/Pumukit/JWPlayerBundle/
                php bin/phpstan analyse -l 5 src/Pumukit/WizardBundle/
 
-      # —— Pa11y🧙‍️ —————————————————————————————————————————————————————————
-      - name: Pa11y
-        run: |
-              sudo npm install -g pa11y
-              pa11y -V
-
-      - name: Pumukit initialize
+      # —— PuMuKIT load fixtures🧙‍️ —————————————————————————————————————————————————————————
+      - name: PuMuKIT load fixtures🧙‍
         run: |
               php bin/console doctrine:mongodb:schema:create
               php bin/console pumukit:init:repo all --force
-              php bin/console server:start
-              pa11y -c .pa11y.json http://localhost:8000/
-              pa11y -c .pa11y.json http://localhost:8000/series/channel/1.html
-              pa11y -c .pa11y.json http://localhost:8000/latestuploads
-              pa11y -c .pa11y.json http://localhost:8000/searchmultimediaobjects
-              pa11y -c .pa11y.json http://localhost:8000/searchseries
-              pa11y -c .pa11y.json http://localhost:8000/mediateca
-              pa11y -c .pa11y.json http://localhost:8000/mediateca
-              pa11y -c .pa11y.json http://localhost:8000/categories
-              php bin/console server:stop
-#      - name: PHPUnit
-#        run: php bin/phpunit -c app
