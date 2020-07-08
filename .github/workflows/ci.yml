@@ -14,6 +14,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Setup PHP, extensions and composer with shivammathur/setup-php
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions:  mbstring, xml, ctype, iconv, intl, dom, filter, gd, iconv, json, mbstring, pdo
+        env:
+          update: true
+
       - name: Validate composer.json and composer.lock
         run: composer validate
 
