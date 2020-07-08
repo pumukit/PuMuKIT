@@ -14,16 +14,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      # —— PHPSetup 🧙‍️ —————————————————————————————————————————————————————————
-      - name: Setup PHP, extensions and composer with shivammathur/setup-php
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php-versions }}
-          extensions:  mbstring, xml, ctype, iconv, intl, dom, filter, gd, iconv, json, mbstring, pdo
-        env:
-          update: true
-
-      # —— Composer 🧙‍️ —————————————————————————————————————————————————————————
       - name: Validate composer.json and composer.lock
         run: composer validate
 
@@ -41,7 +31,6 @@ jobs:
       - name: Install Composer dependencies
         run: composer install
 
-      # —— Code Validations 🧙‍️ —————————————————————————————————————————————————————————
       - name: PHPCode
         run:  find src -type f -name '.php' -print0 | xargs -0 -n1 -P8 php -l
 
@@ -72,3 +61,6 @@ jobs:
                php bin/phpstan analyse -l 7 src/Pumukit/InspectionBundle/
                php bin/phpstan analyse -l 7 src/Pumukit/JWPlayerBundle/
                php bin/phpstan analyse -l 5 src/Pumukit/WizardBundle/
+
+      - name: PHPUnit
+        run: php bin/phpunit -c app
