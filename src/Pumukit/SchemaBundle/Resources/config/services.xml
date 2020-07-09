@@ -200,6 +200,7 @@
             <argument>%pumukit.uploads_dir%/material</argument>
             <argument>%pumukit.uploads_url%/material</argument>
             <argument>%pumukit.delete_on_disk%</argument>
+            <argument>%pumukit.locales%</argument>
         </service>
 
         <service id="pumukitschema.caption" class="Pumukit\SchemaBundle\Services\CaptionService">
