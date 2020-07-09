@@ -120,6 +120,15 @@ class MaterialService
         }
 
         $material = new Material();
+
+        if (!isset($formData['i18n_name'])) {
+            $i18nName['en'] = $materialFile->getClientOriginalName();
+            foreach ($this->locales as $locale) {
+                $i18nName[$locale] = $materialFile->getClientOriginalName();
+            }
+            $formData['i18n_name'] = $i18nName;
+        }
+        
         $material = $this->saveFormData($material, $formData);
 
         $path = $materialFile->move($this->targetPath.'/'.$multimediaObject->getId(), $materialFile->getClientOriginalName());
