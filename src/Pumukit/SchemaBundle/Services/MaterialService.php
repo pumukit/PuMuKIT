@@ -122,6 +122,7 @@ class MaterialService
 
         $path = $materialFile->move($this->targetPath.'/'.$multimediaObject->getId(), $materialFile->getClientOriginalName());
 
+        $material->setName($materialFile->getClientOriginalName());
         $material->setSize($materialFile->getClientSize());
 
         $material->setPath($path);
