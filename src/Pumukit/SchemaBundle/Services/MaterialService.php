@@ -16,8 +16,9 @@ class MaterialService
     private $targetPath;
     private $targetUrl;
     private $forceDeleteOnDisk;
+    private $locales;
 
-    public function __construct(DocumentManager $documentManager, MaterialEventDispatcherService $dispatcher, $targetPath, $targetUrl, $forceDeleteOnDisk = true)
+    public function __construct(DocumentManager $documentManager, MaterialEventDispatcherService $dispatcher, $targetPath, $targetUrl, $forceDeleteOnDisk = true, $locales = ['en'])
     {
         $this->dm = $documentManager;
         $this->dispatcher = $dispatcher;
@@ -27,6 +28,7 @@ class MaterialService
         }
         $this->targetUrl = $targetUrl;
         $this->forceDeleteOnDisk = $forceDeleteOnDisk;
+        $this->locales = $locales;
     }
 
     /**
@@ -122,6 +124,9 @@ class MaterialService
 
         $path = $materialFile->move($this->targetPath.'/'.$multimediaObject->getId(), $materialFile->getClientOriginalName());
 
+        foreach ($this->locales as $locale) {
+            $material->setName($materialFile->getClientOriginalName(), $locale);
+        }
         $material->setSize($materialFile->getClientSize());
 
         $material->setPath($path);
