@@ -31,15 +31,15 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="text-right">
-                                {% if can_access_series is defined and can_access_series and not is_naked() %}
-                                    <a href="{{ path('pumukitnewadmin_mms_index', {'id': series.id}) }}" class="btn btn-default btn-raised">
-                                        {% trans %}Cancel{% endtrans %}
-                                    </a>
-                                {% else %}
-                                    <a href="{{ path('pumukitnewadmin_series_index') }}" class="btn btn-default btn-raised">
-                                        {% trans %}Cancel{% endtrans %}
-                                    </a>
-                                {% endif %}
+{#                                {% if can_access_series is defined and can_access_series %}#}
+{#                                    <a href="{{ path('pumukitnewadmin_mms_index', {'id': series.id}) }}" class="btn btn-default btn-raised">#}
+{#                                        {% trans %}Cancel{% endtrans %}#}
+{#                                    </a>#}
+{#                                {% else %}#}
+{#                                    <a href="{{ path('pumukitnewadmin_series_index') }}" class="btn btn-default btn-raised">#}
+{#                                        {% trans %}Cancel{% endtrans %}#}
+{#                                    </a>#}
+{#                                {% endif %}#}
                                 <button type="submit" class="btn btn-pumukit btn-raised">
                                     {% trans %}Upload{% endtrans %}
                                 </button>
