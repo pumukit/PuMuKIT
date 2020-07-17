@@ -36,48 +36,49 @@ class SeriesType extends AbstractType
         $this->locale = $options['locale'];
         $this->disablePudenew = $options['disable_PUDENEW'];
 
-        if($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_LAST_ANNOUNCES)) {
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_LAST_ANNOUNCES)) {
             $builder
                 ->add(
                     'announce',
                     CheckboxType::class,
                     [
                         'label_attr' => $this->disablePudenew ? ['class' => 'pmk_disabled_checkbox'] : [],
-                        'disabled'   => $this->disablePudenew,
-                        'required'   => false,
-                        'attr'       => [
+                        'disabled' => $this->disablePudenew,
+                        'required' => false,
+                        'attr' => [
                             'aria-label' => $this->translator->trans(
                                 'Last Added (Announced)',
                                 [],
                                 null,
                                 $this->locale
-                            )
+                            ),
                         ],
-                        'label'      => $this->translator->trans('Last Added (Announced)', [], null, $this->locale),
+                        'label' => $this->translator->trans('Last Added (Announced)', [], null, $this->locale),
                     ]
-                );
+                )
+            ;
         }
 
-        if($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_DISPLAY)) {
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_DISPLAY)) {
             $builder->add(
                 'hide',
                 CheckboxType::class,
                 [
                     'required' => false,
-                    'attr'     => ['aria-label' => $this->translator->trans('Hide', [], null, $this->locale)],
-                    'label'    => $this->translator->trans('Hide', [], null, $this->locale),
+                    'attr' => ['aria-label' => $this->translator->trans('Hide', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Hide', [], null, $this->locale),
                 ]
             );
         }
 
-            $builder->add(
-                'i18n_title',
-                TextI18nType::class,
-                [
-                    'attr' => ['aria-label' => $this->translator->trans('Title', [], null, $this->locale)],
-                    'label' => $this->translator->trans('Title', [], null, $this->locale),
-                ]
-            )
+        $builder->add(
+            'i18n_title',
+            TextI18nType::class,
+            [
+                'attr' => ['aria-label' => $this->translator->trans('Title', [], null, $this->locale)],
+                'label' => $this->translator->trans('Title', [], null, $this->locale),
+            ]
+        )
             ->add(
                 'i18n_subtitle',
                 TextI18nType::class,
@@ -107,69 +108,70 @@ class SeriesType extends AbstractType
                     'attr' => ['style' => 'resize:vertical;'],
                     'label' => $this->translator->trans('Comments', [], null, $this->locale),
                 ]
-            );
+            )
+            ;
 
-        if($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_KEYWORDS)) {
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_KEYWORDS)) {
             $builder->add(
                 'i18n_keyword',
                 TextI18nAdvanceType::class,
                 [
                     'required' => false,
-                    'attr'     => [
-                        'class'      => 'series materialtags',
+                    'attr' => [
+                        'class' => 'series materialtags',
                         'aria-label' => $this->translator->trans('Keywords', [], null, $this->locale),
                     ],
-                    'label'    => $this->translator->trans('Keywords', [], null, $this->locale),
+                    'label' => $this->translator->trans('Keywords', [], null, $this->locale),
                 ]
             );
         }
 
-        if($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_CHANNELS)) {
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_CHANNELS)) {
             $builder->add(
                 'series_type',
                 null,
                 [
                     'required' => false,
-                    'attr'     => ['aria-label' => $this->translator->trans('Channel', [], null, $this->locale)],
-                    'label'    => $this->translator->trans('Channel', [], null, $this->locale),
+                    'attr' => ['aria-label' => $this->translator->trans('Channel', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Channel', [], null, $this->locale),
                 ]
             );
         }
 
-        if($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_STYLE)) {
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_STYLE)) {
             $builder->add(
                 'series_style',
                 null,
                 [
                     'required' => false,
-                    'attr'     => ['aria-label' => $this->translator->trans('Series Style', [], null, $this->locale)],
-                    'label'    => $this->translator->trans('Series Style', [], null, $this->locale),
+                    'attr' => ['aria-label' => $this->translator->trans('Series Style', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Series Style', [], null, $this->locale),
                 ]
             );
         }
 
         $builder->add(
-                'public_date',
-                Html5dateType::class,
-                [
-                    'data_class' => 'DateTime',
-                    'attr' => ['aria-label' => $this->translator->trans('Publication Date', [], null, $this->locale)],
-                    'label' => $this->translator->trans('Publication Date', [], null, $this->locale),
-                ]
-            );
+            'public_date',
+            Html5dateType::class,
+            [
+                'data_class' => 'DateTime',
+                'attr' => ['aria-label' => $this->translator->trans('Publication Date', [], null, $this->locale)],
+                'label' => $this->translator->trans('Publication Date', [], null, $this->locale),
+            ]
+        );
 
-        if($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_HTML_CONFIGURATION)) {
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_HTML_CONFIGURATION)) {
             $builder->add(
                 'i18n_header',
                 TextareaI18nType::class,
                 [
                     'required' => false,
-                    'attr'     => [
+                    'attr' => [
                         'groupclass' => 'hidden-naked',
-                        'style'      => 'resize:vertical;',
+                        'style' => 'resize:vertical;',
                         'aria-label' => $this->translator->trans('Header Text', [], null, $this->locale),
                     ],
-                    'label'    => $this->translator->trans('Header Text', [], null, $this->locale),
+                    'label' => $this->translator->trans('Header Text', [], null, $this->locale),
                 ]
             )
                 ->add(
@@ -177,76 +179,77 @@ class SeriesType extends AbstractType
                     TextareaI18nType::class,
                     [
                         'required' => false,
-                        'attr'     => [
+                        'attr' => [
                             'groupclass' => 'hidden-naked',
-                            'style'      => 'resize:vertical;',
+                            'style' => 'resize:vertical;',
                             'aria-label' => $this->translator->trans('Footer Text', [], null, $this->locale),
                         ],
-                        'label'    => $this->translator->trans('Footer Text', [], null, $this->locale),
+                        'label' => $this->translator->trans('Footer Text', [], null, $this->locale),
                     ]
-                );
+                )
+            ;
         }
 
-        if($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_HEADLINE)) {
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_HEADLINE)) {
             $builder->add(
                 'i18n_line2',
                 TextareaI18nType::class,
                 [
                     'required' => false,
-                    'attr'     => [
+                    'attr' => [
                         'groupclass' => 'hidden-naked',
-                        'style'      => 'resize:vertical;',
+                        'style' => 'resize:vertical;',
                         'aria-label' => $this->translator->trans('Headline', [], null, $this->locale),
                     ],
-                    'label'    => $this->translator->trans('Headline', [], null, $this->locale),
+                    'label' => $this->translator->trans('Headline', [], null, $this->locale),
                 ]
             );
         }
 
-        if($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_TEMPLATE)) {
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_TEMPLATE)) {
             $builder->add(
                 'template',
                 ChoiceType::class,
                 [
-                    'choices'    => array_flip(
+                    'choices' => array_flip(
                         [
-                            'date'            => $this->translator->trans('date'),
-                            'date_all'        => $this->translator->trans('date_all'),
-                            'date_subserial'  => $this->translator->trans('date_subserial'),
+                            'date' => $this->translator->trans('date'),
+                            'date_all' => $this->translator->trans('date_all'),
+                            'date_subserial' => $this->translator->trans('date_subserial'),
                             'place_subserial' => $this->translator->trans('place_subserial'),
-                            'subserial'       => $this->translator->trans('subserial'),
-                            'multisubserial'  => $this->translator->trans('multisubserial'),
+                            'subserial' => $this->translator->trans('subserial'),
+                            'multisubserial' => $this->translator->trans('multisubserial'),
                         ]
                     ),
                     'empty_data' => null,
-                    'mapped'     => false,
-                    'attr'       => [
+                    'mapped' => false,
+                    'attr' => [
                         'groupclass' => 'hidden-naked',
                         'aria-label' => $this->translator->trans('Template', [], null, $this->locale),
                     ],
-                    'required'   => true,
-                    'label'      => $this->translator->trans('Template', [], null, $this->locale),
+                    'required' => true,
+                    'label' => $this->translator->trans('Template', [], null, $this->locale),
                 ]
             );
         }
 
         $builder->add(
-                'sorting',
-                ChoiceType::class,
-                [
-                    'choices' => array_flip(Series::$sortText),
-                    'empty_data' => null,
-                    'attr' => [
-                        'groupclass' => 'hidden-naked',
-                        'aria-label' => $this->translator->trans('Sorting', [], null, $this->locale),
-                    ],
-                    'required' => true,
-                    'label' => $this->translator->trans('Sorting', [], null, $this->locale),
-                ]
-            )
+            'sorting',
+            ChoiceType::class,
+            [
+                'choices' => array_flip(Series::$sortText),
+                'empty_data' => null,
+                'attr' => [
+                    'groupclass' => 'hidden-naked',
+                    'aria-label' => $this->translator->trans('Sorting', [], null, $this->locale),
+                ],
+                'required' => true,
+                'label' => $this->translator->trans('Sorting', [], null, $this->locale),
+            ]
+        )
         ;
 
-        if($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_TEMPLATE)) {
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_TEMPLATE)) {
             $builder->addEventListener(
                 FormEvents::POST_SET_DATA,
                 static function (FormEvent $event) {
@@ -270,7 +273,7 @@ class SeriesType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => Series::class
+                'data_class' => Series::class,
             ]
         );
 

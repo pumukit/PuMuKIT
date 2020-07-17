@@ -41,8 +41,8 @@ class MultimediaObjectMetaType extends AbstractType
                 TextI18nType::class,
                 [
                     'required' => false,
-                    'attr'     => ['aria-label' => $this->translator->trans('Title', [], null, $this->locale)],
-                    'label'    => $this->translator->trans('Title', [], null, $this->locale),
+                    'attr' => ['aria-label' => $this->translator->trans('Title', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Title', [], null, $this->locale),
                 ]
             )
             ->add(
@@ -50,8 +50,8 @@ class MultimediaObjectMetaType extends AbstractType
                 TextI18nType::class,
                 [
                     'required' => false,
-                    'attr'     => ['aria-label' => $this->translator->trans('Subtitle', [], null, $this->locale)],
-                    'label'    => $this->translator->trans('Subtitle', [], null, $this->locale),
+                    'attr' => ['aria-label' => $this->translator->trans('Subtitle', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Subtitle', [], null, $this->locale),
                 ]
             )
             ->add(
@@ -59,10 +59,10 @@ class MultimediaObjectMetaType extends AbstractType
                 TextareaI18nType::class,
                 [
                     'required' => false,
-                    'attr'     => ['style'      => 'resize:vertical;',
-                                   'aria-label' => $this->translator->trans('Description', [], null, $this->locale)
+                    'attr' => ['style' => 'resize:vertical;',
+                        'aria-label' => $this->translator->trans('Description', [], null, $this->locale),
                     ],
-                    'label'    => $this->translator->trans('Description', [], null, $this->locale),
+                    'label' => $this->translator->trans('Description', [], null, $this->locale),
                 ]
             )
             ->add(
@@ -70,57 +70,58 @@ class MultimediaObjectMetaType extends AbstractType
                 TextareaType::class,
                 [
                     'required' => false,
-                    'attr'     => ['style' => 'resize:vertical;'],
-                    'label'    => $this->translator->trans('Comments', [], null, $this->locale),
+                    'attr' => ['style' => 'resize:vertical;'],
+                    'label' => $this->translator->trans('Comments', [], null, $this->locale),
                 ]
-            );
+            )
+        ;
 
-        if($this->authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_META_KEYWORDS)) {
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_META_KEYWORDS)) {
             $builder->add(
                 'i18n_keyword',
                 TextI18nAdvanceType::class,
                 [
                     'required' => false,
-                    'attr'     => [
-                        'class'      => 'mmobj materialtags',
-                        'aria-label' => $this->translator->trans('Keywords', [], null, $this->locale)
+                    'attr' => [
+                        'class' => 'mmobj materialtags',
+                        'aria-label' => $this->translator->trans('Keywords', [], null, $this->locale),
                     ],
-                    'label'    => $this->translator->trans('Keywords', [], null, $this->locale),
+                    'label' => $this->translator->trans('Keywords', [], null, $this->locale),
                 ]
             );
         }
 
-        if($this->authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_META_COPYRIGHT)) {
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_META_COPYRIGHT)) {
             $builder->add(
                 'copyright',
                 TextType::class,
                 [
                     'required' => false,
-                    'attr'     => ['aria-label' => $this->translator->trans('Copyright', [], null, $this->locale)],
-                    'label'    => $this->translator->trans('Copyright', [], null, $this->locale),
+                    'attr' => ['aria-label' => $this->translator->trans('Copyright', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Copyright', [], null, $this->locale),
                 ]
             );
         }
-        if($this->authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_META_LICENSE)) {
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_META_LICENSE)) {
             $builder->add(
                 'license',
                 LicenseType::class,
                 [
                     'required' => false,
-                    'attr'     => ['aria-label' => $this->translator->trans('License', [], null, $this->locale)],
-                    'label'    => $this->translator->trans('License', [], null, $this->locale),
+                    'attr' => ['aria-label' => $this->translator->trans('License', [], null, $this->locale)],
+                    'label' => $this->translator->trans('License', [], null, $this->locale),
                 ]
             );
         }
         $builder->add(
-                'public_date',
-                Html5dateType::class,
-                [
-                    'data_class' => 'DateTime',
-                    'attr' => ['aria-label' => $this->translator->trans('Publication Date', [], null, $this->locale)],
-                    'label' => $this->translator->trans('Publication Date', [], null, $this->locale),
-                ]
-            )
+            'public_date',
+            Html5dateType::class,
+            [
+                'data_class' => 'DateTime',
+                'attr' => ['aria-label' => $this->translator->trans('Publication Date', [], null, $this->locale)],
+                'label' => $this->translator->trans('Publication Date', [], null, $this->locale),
+            ]
+        )
             ->add(
                 'record_date',
                 Html5dateType::class,
@@ -129,54 +130,56 @@ class MultimediaObjectMetaType extends AbstractType
                     'attr' => ['aria-label' => $this->translator->trans('Recording Date', [], null, $this->locale)],
                     'label' => $this->translator->trans('Recording Date', [], null, $this->locale),
                 ]
-            );
+            )
+        ;
 
-        if($this->authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_META_HEADLINE)) {
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_META_HEADLINE)) {
             $builder->add(
                 'i18n_line2',
                 TextareaI18nType::class,
                 [
                     'required' => false,
-                    'attr'     => [
+                    'attr' => [
                         'groupclass' => 'hidden-naked',
-                        'style'      => 'resize:vertical;',
-                        'aria-label' => $this->translator->trans('Headline', [], null, $this->locale)
+                        'style' => 'resize:vertical;',
+                        'aria-label' => $this->translator->trans('Headline', [], null, $this->locale),
                     ],
-                    'label'    => $this->translator->trans('Headline', [], null, $this->locale),
+                    'label' => $this->translator->trans('Headline', [], null, $this->locale),
                 ]
             );
         }
 
-        if($this->authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_META_SUBSERIE)) {
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_META_SUBSERIE)) {
             $builder->add(
                 'subseries',
                 CheckboxType::class,
                 [
-                    'mapped'   => false,
+                    'mapped' => false,
                     'required' => false,
-                    'attr'     => [
+                    'attr' => [
                         'groupclass' => 'hidden-naked',
                         'aria-label' => $this->translator->trans('Subseries', [], null, $this->locale),
                     ],
-                    'label'    => $this->translator->trans('Subseries', [], null, $this->locale),
+                    'label' => $this->translator->trans('Subseries', [], null, $this->locale),
                 ]
             )
                 ->add(
                     'subseriestitle',
                     TextI18nType::class,
                     [
-                        'mapped'   => false,
+                        'mapped' => false,
                         'required' => false,
-                        'attr'     => [
+                        'attr' => [
                             'groupclass' => 'hidden-naked',
-                            'aria-label' => $this->translator->trans('Subseries', [], null, $this->locale)
+                            'aria-label' => $this->translator->trans('Subseries', [], null, $this->locale),
                         ],
-                        'label'    => $this->translator->trans('Subseries', [], null, $this->locale),
+                        'label' => $this->translator->trans('Subseries', [], null, $this->locale),
                     ]
-                );
+                )
+            ;
         }
 
-        if($this->authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_META_SUBSERIE)) {
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_META_SUBSERIE)) {
             $builder->addEventListener(
                 FormEvents::POST_SET_DATA,
                 static function (FormEvent $event) {
@@ -203,7 +206,7 @@ class MultimediaObjectMetaType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => MultimediaObject::class
+                'data_class' => MultimediaObject::class,
             ]
         );
 
