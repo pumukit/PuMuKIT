@@ -7,6 +7,8 @@ use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nAdvanceType;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
 use Pumukit\NewAdminBundle\Form\Type\Other\Html5dateType;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Security\Permission;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -15,11 +17,18 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class MultimediaObjectMetaType extends AbstractType
 {
     private $translator;
     private $locale;
+    private $authorizationChecker;
+
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
+    {
+        $this->authorizationChecker = $authorizationChecker;
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -50,7 +59,9 @@ class MultimediaObjectMetaType extends AbstractType
                 TextareaI18nType::class,
                 [
                     'required' => false,
-                    'attr' => ['style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Description', [], null, $this->locale)],
+                    'attr' => ['style' => 'resize:vertical;',
+                        'aria-label' => $this->translator->trans('Description', [], null, $this->locale),
+                    ],
                     'label' => $this->translator->trans('Description', [], null, $this->locale),
                 ]
             )
@@ -63,16 +74,25 @@ class MultimediaObjectMetaType extends AbstractType
                     'label' => $this->translator->trans('Comments', [], null, $this->locale),
                 ]
             )
-            ->add(
+        ;
+
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_META_KEYWORDS)) {
+            $builder->add(
                 'i18n_keyword',
                 TextI18nAdvanceType::class,
                 [
                     'required' => false,
-                    'attr' => ['class' => 'mmobj materialtags', 'aria-label' => $this->translator->trans('Keywords', [], null, $this->locale)],
+                    'attr' => [
+                        'class' => 'mmobj materialtags',
+                        'aria-label' => $this->translator->trans('Keywords', [], null, $this->locale),
+                    ],
                     'label' => $this->translator->trans('Keywords', [], null, $this->locale),
                 ]
-            )
-            ->add(
+            );
+        }
+
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_META_COPYRIGHT)) {
+            $builder->add(
                 'copyright',
                 TextType::class,
                 [
@@ -80,8 +100,10 @@ class MultimediaObjectMetaType extends AbstractType
                     'attr' => ['aria-label' => $this->translator->trans('Copyright', [], null, $this->locale)],
                     'label' => $this->translator->trans('Copyright', [], null, $this->locale),
                 ]
-            )
-            ->add(
+            );
+        }
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_META_LICENSE)) {
+            $builder->add(
                 'license',
                 LicenseType::class,
                 [
@@ -89,16 +111,17 @@ class MultimediaObjectMetaType extends AbstractType
                     'attr' => ['aria-label' => $this->translator->trans('License', [], null, $this->locale)],
                     'label' => $this->translator->trans('License', [], null, $this->locale),
                 ]
-            )
-            ->add(
-                'public_date',
-                Html5dateType::class,
-                [
-                    'data_class' => 'DateTime',
-                    'attr' => ['aria-label' => $this->translator->trans('Publication Date', [], null, $this->locale)],
-                    'label' => $this->translator->trans('Publication Date', [], null, $this->locale),
-                ]
-            )
+            );
+        }
+        $builder->add(
+            'public_date',
+            Html5dateType::class,
+            [
+                'data_class' => 'DateTime',
+                'attr' => ['aria-label' => $this->translator->trans('Publication Date', [], null, $this->locale)],
+                'label' => $this->translator->trans('Publication Date', [], null, $this->locale),
+            ]
+        )
             ->add(
                 'record_date',
                 Html5dateType::class,
@@ -108,16 +131,26 @@ class MultimediaObjectMetaType extends AbstractType
                     'label' => $this->translator->trans('Recording Date', [], null, $this->locale),
                 ]
             )
-            ->add(
+        ;
+
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_META_HEADLINE)) {
+            $builder->add(
                 'i18n_line2',
                 TextareaI18nType::class,
                 [
                     'required' => false,
-                    'attr' => ['groupclass' => 'hidden-naked', 'style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Headline', [], null, $this->locale)],
+                    'attr' => [
+                        'groupclass' => 'hidden-naked',
+                        'style' => 'resize:vertical;',
+                        'aria-label' => $this->translator->trans('Headline', [], null, $this->locale),
+                    ],
                     'label' => $this->translator->trans('Headline', [], null, $this->locale),
                 ]
-            )
-            ->add(
+            );
+        }
+
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_META_SUBSERIE)) {
+            $builder->add(
                 'subseries',
                 CheckboxType::class,
                 [
@@ -130,44 +163,50 @@ class MultimediaObjectMetaType extends AbstractType
                     'label' => $this->translator->trans('Subseries', [], null, $this->locale),
                 ]
             )
-            ->add(
-                'subseriestitle',
-                TextI18nType::class,
-                [
-                    'mapped' => false,
-                    'required' => false,
-                    'attr' => ['groupclass' => 'hidden-naked', 'aria-label' => $this->translator->trans('Subseries', [], null, $this->locale)],
-                    'label' => $this->translator->trans('Subseries', [], null, $this->locale),
-                ]
-            )
-        ;
+                ->add(
+                    'subseriestitle',
+                    TextI18nType::class,
+                    [
+                        'mapped' => false,
+                        'required' => false,
+                        'attr' => [
+                            'groupclass' => 'hidden-naked',
+                            'aria-label' => $this->translator->trans('Subseries', [], null, $this->locale),
+                        ],
+                        'label' => $this->translator->trans('Subseries', [], null, $this->locale),
+                    ]
+                )
+            ;
+        }
 
-        $builder->addEventListener(
-            FormEvents::POST_SET_DATA,
-            function (FormEvent $event) {
-                $multimediaObject = $event->getData();
-                $event->getForm()->get('subseries')->setData($multimediaObject->getProperty('subseries'));
-                $event->getForm()->get('subseriestitle')->setData($multimediaObject->getProperty('subseriestitle'));
-            }
-        );
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_META_SUBSERIE)) {
+            $builder->addEventListener(
+                FormEvents::POST_SET_DATA,
+                static function (FormEvent $event) {
+                    $multimediaObject = $event->getData();
+                    $event->getForm()->get('subseries')->setData($multimediaObject->getProperty('subseries'));
+                    $event->getForm()->get('subseriestitle')->setData($multimediaObject->getProperty('subseriestitle'));
+                }
+            );
 
-        $builder->addEventListener(
-            FormEvents::SUBMIT,
-            function (FormEvent $event) {
-                $subseries = $event->getForm()->get('subseries')->getData();
-                $subseriestitle = $event->getForm()->get('subseriestitle')->getData();
-                $multimediaObject = $event->getData();
-                $multimediaObject->setProperty('subseries', $subseries);
-                $multimediaObject->setProperty('subseriestitle', $subseriestitle);
-            }
-        );
+            $builder->addEventListener(
+                FormEvents::SUBMIT,
+                static function (FormEvent $event) {
+                    $subseries = $event->getForm()->get('subseries')->getData();
+                    $subseriestitle = $event->getForm()->get('subseriestitle')->getData();
+                    $multimediaObject = $event->getData();
+                    $multimediaObject->setProperty('subseries', $subseries);
+                    $multimediaObject->setProperty('subseriestitle', $subseriestitle);
+                }
+            );
+        }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Pumukit\SchemaBundle\Document\MultimediaObject',
+                'data_class' => MultimediaObject::class,
             ]
         );
 
@@ -175,7 +214,7 @@ class MultimediaObjectMetaType extends AbstractType
         $resolver->setRequired('locale');
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'pumukitnewadmin_mms_meta';
     }

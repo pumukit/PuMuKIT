@@ -1,4 +1,4 @@
-{% if videoPath is not defined %} 
+{% if videoPath is not defined %}
     {% if object.isPublished %}
         {% set videoPath = path('pumukit_webtv_multimediaobject_index', {'id': object.id}) %}
     {% else %}
@@ -17,6 +17,11 @@
                          data-dynamic-pic="{{ object|first_dynamic_pic(true) }}"
                          data-static-pic="{{ object|first_url_pic() }}"
                     />
+                    {% if show_video_options is defined and show_video_options is same as (true)%}
+                        <div class="multimedia_object_edit_button" data-multimedia-object="{{ object.id }}" data-multimedia-object-status="{{ object.getStatus() }}" data-multimedia-object-title="{{ object.getTitle() }}">
+                            <i class="fa fa-cog fa-2x"></i>
+                        </div>
+                    {% endif %}
 
                     {% if show_inside_video_duration|default(true) and mmobj_duration(object) %}
                         <span class="inside-video-duration">{{ mmobj_duration(object) | duration_string }}</span>

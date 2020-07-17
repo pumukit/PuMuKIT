@@ -22,6 +22,16 @@
             <tag name="form.type" alias="texti18n" />
         </service>
 
+        <service id="form.type.multimedia_object_meta_type" class="Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType">
+            <argument type="service" id="security.authorization_checker" />
+            <tag name="form.type" />
+        </service>
+
+        <service id="form.type.series_type" class="Pumukit\NewAdminBundle\Form\Type\SeriesType">
+            <argument type="service" id="security.authorization_checker" />
+            <tag name="form.type" />
+        </service>
+
         <service id="form.type.texti18nadvance" class="Pumukit\NewAdminBundle\Form\Type\Base\TextI18nAdvanceType">
             <argument>%pumukit.locales%</argument>
             <argument>%pumukit_new_admin.metadata_translators%</argument>

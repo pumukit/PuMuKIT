@@ -1,0 +1,44 @@
+<div class="form-group">
+    <a style="color:#666; text-decoration:underline" href="#" onclick="$('#pumukitnewadmin_series_header_banner').toggle();
+                                                              $('#pumukitnewadmin_series_i18n_header').toggle();
+                                                              $('#pumukitnewadmin_series_i18n_footer').toggle();
+                                                              $('#pumukitnewadmin_series_series_style').toggle();
+                                                              $('#html_text_arr_1').toggle();
+                                                              $('#html_text_arr_2').toggle();
+                                                              return false;">
+        <span id="html_text_arr_1">&#9654;</span> <span style="display:none" id="html_text_arr_2">&#9660;</span>
+        {% trans %}Show configuration{% endtrans %} <strong>HTML</strong> {% trans %}Texts.{% endtrans %}
+        <i class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Click to show or add header/banner and footer{% endtrans %}"></i>
+    </a>
+</div>
+
+
+{% for child in form if (child.vars.id in ['pumukitnewadmin_series_i18n_header']) %}
+    <div class="hidden-naked form-group" style="display:none" id="{{ child.vars.id }}">
+        <div>
+            <a href="{{ path('pumukitnewadmin_seriespic_banner', {'id': series.id}) }}" style="float: right;" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}Add banner{% endtrans %}</a>
+        </div>
+        <label for="header" class="control-label">{{ child.vars.label }}</label>
+        <div>
+            {{ form_widget(child) }}
+        </div>
+    </div>
+{% endfor %}
+
+{% for child in form if (child.vars.id in ['pumukitnewadmin_series_i18n_footer']) %}
+    <div class="hidden-naked form-group" style="display:none" id="{{ child.vars.id }}">
+        <label for="header" class="control-label">{{ child.vars.label }}</label>
+        <div>
+            {{ form_widget(child) }}
+        </div>
+    </div>
+{% endfor %}
+
+{% for child in form if (child.vars.id in ['pumukitnewadmin_series_series_style']) %}
+    <div class="hidden-naked form-group" style="display:none" id="{{ child.vars.id }}">
+        <label for="header" class="control-label">{{ child.vars.label }}</label>
+        <div>
+            {{ form_widget(child) }}
+        </div>
+    </div>
+{% endfor %}
