@@ -27,6 +27,7 @@
                             <span class="input-group-addon"><a href="{{ url('pumukit_webtv_series_index', {id: series.id}) }}" target="_blank" title="Url"><i class="mdi-action-exit-to-app"></i></a></span>
                         {% endif %}
                     </div>
+                    {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_SERIES_MAGIC_URL')) %}
                     <label for="inputROMagicUrl" class="col-xs-2 control-label hidden-naked" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">
                         {% trans %}Magic Url{% endtrans %}:
                     </label>
@@ -43,6 +44,7 @@
                             </a>
                         </span>
                     </div>
+                    {% endif %}
                 </div>
             </fieldset>
         </form>

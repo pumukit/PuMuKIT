@@ -2,40 +2,37 @@
 
 <div id="tv_admin_container_meta" class="well">
 
-  <form id="pumukitnewadmin_mms_updatemeta_form"
-        action="{{ path('pumukitnewadmin_mms_update_meta', {'id': mm.id}) }}" method="POST">
+    <form id="pumukitnewadmin_mms_updatemeta_form" action="{{ path('pumukitnewadmin_mms_update_meta', {'id': mm.id}) }}" method="POST">
+        <input type="hidden" name="id" id="mm_id_meta" value="{{ mm.id }}">
+        <input type="hidden" name="series_id" id="series_id_updatemeta" value="{{ mm.series.id }}">
 
-    <input type="hidden" name="id" id="mm_id_meta" value="{{ mm.id }}">
-    <input type="hidden" name="series_id" id="series_id_updatemeta" value="{{ mm.series.id }}">
+        <div class="row">
+            <div class="col-xs-6">
+                <span id="remember_save_mm" class="alert alert-dismissable alert-danger"
+                      style="display:none;vertical-align:middle;">{% trans %}Press OK for changes to take effect{% endtrans %}</span>
+                &nbsp;
+            </div>
 
-    <div class="row">
-      <div class="col-xs-6">
-        <span id="remember_save_mm" class="alert alert-dismissable alert-danger" style="display:none;vertical-align:middle;">{% trans %}Press OK for changes to take effect{% endtrans %}</span> &nbsp;
-      </div>
+            <div class="col-xs-6 text-right">
+                <button id="pumukitnewadmin_mms_updatemeta_cancel" type="button"
+                        class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button>
+                <button type="submit" class="btn btn-pumukit btn-raised">{% trans %}OK{% endtrans %}</button>
+            </div>
+        </div>
 
-      <div class="col-xs-6 text-right">
-        <button id="pumukitnewadmin_mms_updatemeta_cancel" type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button>
-        <button type="submit" class="btn btn-pumukit btn-raised">{% trans %}OK{% endtrans %}</button>
-      </div>
-    </div>
-
-    <fieldset>
-      <legend hidden>{% trans %}Update metadata{% endtrans %}</legend>
-      <div class="col-lg-7">
-
-        {% for child in form_meta %}
-        {{ form_row(child) }}
-        {% endfor %}
-
-      </div>
-    </fieldset>
-  </form>
+        <fieldset>
+            <legend hidden>{% trans %}Update metadata{% endtrans %}</legend>
+            <div class="col-lg-7">
+                {% for child in form_meta %}
+                    {{ form_row(child) }}
+                {% endfor %}
+            </div>
+        </fieldset>
+    </form>
 </div>
 
 <script type="text/javascript">
-
-$(function(){
-    window.init_mmobj_materialtags();
-});
-
+    $(function () {
+        window.init_mmobj_materialtags();
+    });
 </script>
