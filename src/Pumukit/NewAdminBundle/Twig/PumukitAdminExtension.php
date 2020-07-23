@@ -132,7 +132,7 @@ class PumukitAdminExtension extends AbstractExtension
         return gmdate('H:i:s', $duration);
     }
 
-    public function getLanguageName(string $code, bool $translate = true): string
+    public function getLanguageName(?string $code, bool $translate = true)
     {
         $addonLanguages = CustomLanguageType::$addonLanguages;
 
@@ -140,7 +140,6 @@ class PumukitAdminExtension extends AbstractExtension
             $name = $translate ?
                   $this->languages[$code] :
                   Intl::getLanguageBundle()->getLanguageName($code, null, $code);
-
             return ucfirst($name);
         }
         if (isset($addonLanguages[$code])) {
@@ -149,10 +148,8 @@ class PumukitAdminExtension extends AbstractExtension
             if ($translate) {
                 $name = $this->translator->trans($name);
             }
-
             return ucfirst($name);
         }
-
         return $code;
     }
 
@@ -397,7 +394,7 @@ class PumukitAdminExtension extends AbstractExtension
     public function isNaked(Environment $env)
     {
         if (isset($env->getGlobals()['app'])) {
-            return $env->getGlobals()['app']->getRequest()->attributes->get('nakedbackoffice', false);
+            return $env->getGlobals()['app']->getRequest()->attributes->get('nakedbackoffice', false);  
         }
 
         return false;
