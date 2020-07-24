@@ -132,7 +132,7 @@ class PumukitAdminExtension extends AbstractExtension
         return gmdate('H:i:s', $duration);
     }
 
-    public function getLanguageName(?string $code, bool $translate = true)
+    public function getLanguageName(string $code, bool $translate = true): string
     {
         $addonLanguages = CustomLanguageType::$addonLanguages;
 
