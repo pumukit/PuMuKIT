@@ -2,12 +2,14 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\Query\Builder;
 use Pagerfanta\Adapter\DoctrineCollectionAdapter;
 use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -157,8 +159,12 @@ class PlaylistMultimediaObjectController extends Controller
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $page = $request->get('modal_page', 1);
         $limit = $request->get('modal_limit', 20);
-        //Get all multimedia objects. The filter will do the rest.
-        $mmobjs = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
+        // Filter doesnt work here because add conditions like $or and createStandardQueryBuilder is a generic condition
+        if (!$this->isGranted(PermissionProfile::SCOPE_GLOBAL)) {
+            $mmobjs = $this->getPersonalVideos();
+        } else {
+            $mmobjs = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
+        }
         $adapter = new DoctrineODMMongoDBAdapter($mmobjs);
         $mmobjs = new Pagerfanta($adapter);
         $mmobjs
@@ -182,12 +188,8 @@ class PlaylistMultimediaObjectController extends Controller
         $limit = 50;
         $value = $request->query->get('search', '');
 
-        $criteria = ['search' => $value];
-        $criteria = $this->get('pumukitnewadmin.multimedia_object_search')->processMMOCriteria($criteria, $request->getLocale());
-
-        $queryBuilder = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
-        $criteria = array_merge($queryBuilder->getQueryArray(), $criteria);
-        $queryBuilder->setQueryArray($criteria);
+        $queryBuilder = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(MultimediaObject::class)->createQueryBuilder();
+        $queryBuilder = $this->searchVideos($queryBuilder, $value, $request->getLocale());
         $queryBuilder->limit($limit);
         $queryBuilder->sortMeta('score', 'textScore');
 
@@ -504,5 +506,55 @@ class PlaylistMultimediaObjectController extends Controller
         }
 
         throw $this->createNotFoundException();
+    }
+
+    private function getPersonalVideos()
+    {
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $builder = $dm->getRepository(MultimediaObject::class)->createQueryBuilder();
+
+        $builder
+            ->field('people')->elemMatch(
+                $builder->expr()
+                    ->field('people._id')->equals(new \MongoId($this->getUser()->getPerson()->getId()))
+                    ->field('cod')->equals('owner')
+            )
+            ->field('status')->in([MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_BLOCKED, MultimediaObject::STATUS_HIDDEN]);
+
+        $builder->getQuery()->execute();
+
+        return $builder;
+    }
+
+    private function searchVideos(Builder $builder, string $text = '', string $locale = 'en'): Builder
+    {
+        $builder
+            ->addOr(
+                $builder->expr()
+                    ->field('people')->elemMatch(
+                        $builder->expr()
+                            ->field('people._id')->equals(new \MongoId($this->getUser()->getPerson()->getId()))
+                            ->field('cod')->equals('owner')
+                    )
+                    ->field('status')->in([MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_BLOCKED, MultimediaObject::STATUS_HIDDEN])
+            )
+            ->addOr(
+                $builder->expr()
+                    ->field('status')->equals(MultimediaObject::STATUS_PUBLISHED)
+                    ->field('tags.cod')->equals('PUCHWEBTV')
+                    ->field('tracks')->elemMatch($builder->expr()->field('tags')->equals('display')->field('hide')->equals(false))
+            )
+        ;
+
+        if (!empty($text)) {
+            $builder->field('$text')->equals([
+                '$search' => TextIndexUtils::cleanTextIndex($text),
+                '$language' => TextIndexUtils::getCloseLanguage($locale),
+            ]);
+        }
+
+        $builder->getQuery()->execute();
+
+        return $builder;
     }
 }
