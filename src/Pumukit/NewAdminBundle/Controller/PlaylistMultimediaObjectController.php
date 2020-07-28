@@ -135,9 +135,13 @@ class PlaylistMultimediaObjectController extends Controller
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $limit = $request->get('modal_limit', 20);
-        //Get all multimedia objects. The filter will do the rest.
-        $mmobjs = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
-        $total = $mmobjs->count()->getQuery()->execute();
+
+        if (!$this->isGranted(PermissionProfile::SCOPE_GLOBAL)) {
+            $total = $this->getPersonalVideos();
+        } else {
+            $mmobjs = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
+            $total = $mmobjs->count()->getQuery()->execute();
+        }
 
         return [
             'my_mmobjs' => [],
