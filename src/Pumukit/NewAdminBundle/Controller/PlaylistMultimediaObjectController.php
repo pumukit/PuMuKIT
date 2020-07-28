@@ -520,7 +520,6 @@ class PlaylistMultimediaObjectController extends Controller
                     ->field('people._id')->equals(new \MongoId($this->getUser()->getPerson()->getId()))
                     ->field('cod')->equals('owner')
             );
-
         $builder->getQuery()->execute();
 
         return $builder;
@@ -539,6 +538,7 @@ class PlaylistMultimediaObjectController extends Controller
             )
             ->addOr(
                 $builder->expr()
+                    ->field('status')->equals(MultimediaObject::STATUS_PUBLISHED)
                     ->field('tags.cod')->equals('PUCHWEBTV')
                     ->field('tracks')->elemMatch($builder->expr()->field('tags')->equals('display')->field('hide')->equals(false))
             )
