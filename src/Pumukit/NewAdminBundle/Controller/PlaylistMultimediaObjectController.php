@@ -159,7 +159,7 @@ class PlaylistMultimediaObjectController extends Controller
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $page = $request->get('modal_page', 1);
         $limit = $request->get('modal_limit', 20);
-        // Filter doesnt work here because add conditions like $or and createStandardQueryBuilder is a generic condition
+        // Filter doesnt work here because add conditions like $or and createStandardQueryBuilder is a generic condition. This is a WA.
         if (!$this->isGranted(PermissionProfile::SCOPE_GLOBAL)) {
             $mmobjs = $this->getPersonalVideos();
         } else {
@@ -188,6 +188,7 @@ class PlaylistMultimediaObjectController extends Controller
         $limit = 50;
         $value = $request->query->get('search', '');
 
+        // Filter doesnt work here because add conditions like $or and createStandardQueryBuilder is a generic condition. This is a WA.
         $queryBuilder = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(MultimediaObject::class)->createQueryBuilder();
         $queryBuilder = $this->searchVideos($queryBuilder, $value, $request->getLocale());
         $queryBuilder->limit($limit);
@@ -519,7 +520,8 @@ class PlaylistMultimediaObjectController extends Controller
                     ->field('people._id')->equals(new \MongoId($this->getUser()->getPerson()->getId()))
                     ->field('cod')->equals('owner')
             )
-            ->field('status')->in([MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_BLOCKED, MultimediaObject::STATUS_HIDDEN]);
+            ->field('status')->in([MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_BLOCKED, MultimediaObject::STATUS_HIDDEN])
+            ->field('type')->notEqual(MultimediaObject::TYPE_LIVE);
 
         $builder->getQuery()->execute();
 
@@ -537,12 +539,14 @@ class PlaylistMultimediaObjectController extends Controller
                             ->field('cod')->equals('owner')
                     )
                     ->field('status')->in([MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_BLOCKED, MultimediaObject::STATUS_HIDDEN])
+                    ->field('type')->notEqual(MultimediaObject::TYPE_LIVE)
             )
             ->addOr(
                 $builder->expr()
                     ->field('status')->equals(MultimediaObject::STATUS_PUBLISHED)
                     ->field('tags.cod')->equals('PUCHWEBTV')
                     ->field('tracks')->elemMatch($builder->expr()->field('tags')->equals('display')->field('hide')->equals(false))
+                    ->field('type')->notEqual(MultimediaObject::TYPE_LIVE)
             )
         ;
 
