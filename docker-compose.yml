@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   php:
-    image: teltek/pumukit:3.3.x
+    image: teltek/pumukit:3.4.x
     build:
       context: ./
       cache_from:
@@ -20,7 +20,7 @@ services:
       - ./:/srv/pumukit
 
   h2-proxy:
-    image: teltek/nginx:3.3.x
+    image: teltek/nginx:3.4.x
     build:
       context: ./doc/docker/nginx
       cache_from:

@@ -54,7 +54,7 @@ composer-validate:
 	docker-compose run --service-ports php composer validate
 
 fixtures:
-	docker-compose run --service-ports php bin/console pumukit:init:repo all --forcegit
+	docker-compose run --service-ports php bin/console pumukit:init:repo all --force
 
 test-all: test test-lint-yaml test-lint-twig test-lint-generic test-php-cs-fixer test-php-stan
 
