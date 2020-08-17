@@ -21,8 +21,8 @@ jobs:
       - name: Validate composer.json and composer.lock
         run:  make composer-validate
 
-      - name: Composer install
-        run: make composer-install
+      - name: Check dockers
+        run: docker-compose ps
 
       - name: Lints
         run:  |

@@ -43,42 +43,42 @@ build:
 	docker-compose build
 
 cc-envs:
-	docker-compose run --service-ports php bin/console c:c
-	docker-compose run --service-ports php bin/console c:c --env=prod
+	docker-compose exec php bin/console c:c
+	docker-compose exec php bin/console c:c --env=prod
 
 ai:
-	docker-compose run --service-ports php bin/console a:i --symlink --relative
+	docker-compose exec php bin/console a:i --symlink --relative
 
 cc: cc-envs ai
 
 composer-validate:
-	docker-compose run --service-ports php composer validate
+	docker-compose exec php composer validate
 
 composer-install:
-	docker-compose run --service-ports php composer install
+	docker-compose exec php composer install
 
 fixtures:
-	docker-compose run --service-ports php bin/console pumukit:init:repo all --force
+	docker-compose exec php bin/console pumukit:init:repo all --force
 
 test-all: test test-lint-yaml test-lint-twig test-lint-generic test-php-cs-fixer test-php-stan
 
 test:
-	docker-compose run --service-ports php composer tests
+	docker-compose exec php composer tests
 
 test-lint-yaml:
-	docker-compose run --service-ports php composer lint-yaml
+	docker-compose exec php composer lint-yaml
 
 test-lint-twig:
-	docker-compose run --service-ports php composer lint-twig
+	docker-compose exec php composer lint-twig
 
 test-lint-generic:
-	docker-compose run --service-ports php composer lint-generic
+	docker-compose exec php composer lint-generic
 
 test-php-cs-fixer:
-	docker-compose run --service-ports php composer php-cs-fixer
+	docker-compose exec php composer php-cs-fixer
 
 test-php-stan:
-	docker-compose run --service-ports php composer php-stan
+	docker-compose exec php composer php-stan
 
 shell:
 	docker-compose exec php sh
