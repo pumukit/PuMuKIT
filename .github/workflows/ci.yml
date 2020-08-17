@@ -16,23 +16,25 @@ jobs:
 
       - name: Docker build
         run:  |
-              docker-compose -f docker-compose.yml build --build-arg APP_ENV=dev
-              docker-compose -f docker-compose.yml up -d h2-proxy
+              make build
 
       - name: Validate composer.json and composer.lock
-        run:  composer validate
+        run:  make composer-validate
 
       - name: Lints
-        run:  docker-compose -f docker-compose.yml exec -T php composer lints
+        run:  |
+              make test-lint-yaml
+              make test-lint-twig
+              make test-lint-generic
 
       - name: PHPCSFixer
-        run:  docker-compose -f docker-compose.yml exec -T php composer php-cs-fixer
+        run:  make test-php-cs-fixer
 
       - name: PHPStan
-        run:  docker-compose -f docker-compose.yml exec -T php composer phpstan
+        run:  make test-php-stan
 
       - name: Test
-        run:  docker-compose -f docker-compose.yml exec -T php composer tests
+        run:  make test
 
       - name: Fixtures
-        run:  docker-compose -f docker-compose.yml exec -T php bin/console pumukit:init:repo all --force
+        run:  make fixtures
