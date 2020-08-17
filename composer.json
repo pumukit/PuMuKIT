@@ -77,7 +77,7 @@
             "find src -type f -name '.php' -print0 | xargs -0 -n1 -P8 php -l",
             "bin/travis_checks/check_var_dumps"
         ],
-        "php-cs-fixer": "vendor/bin/php-cs-fixer fix src --dry-run -v",
+        "php-cs-fixer": "bin/php-cs-fixer fix src --dry-run -v",
         "php-stan": [
             "vendor/bin/phpstan analyse -l 4 src"
         ],
