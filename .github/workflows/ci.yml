@@ -20,6 +20,9 @@ jobs:
       - name: Validate composer.json and composer.lock
         run:  make composer-validate
 
+      - name: Install dependencies
+        uses: php-actions/composer@v2
+
       - name: Lints
         run:  |
               make test-lint-yaml
