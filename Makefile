@@ -55,7 +55,7 @@ composer-validate:
 	docker-compose exec -T php composer validate
 
 composer-install:
-	docker-compose exec -T php composer install
+	docker-compose exec -T php php -d memory_limit=-1 /usr/bin/composer install
 
 fixtures:
 	docker-compose exec -T php bin/console pumukit:init:repo all --force
