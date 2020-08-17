@@ -81,7 +81,7 @@
         "php-stan": [
             "bin/phpstan analyse -l 4 src"
         ],
-        "tests": "bin/phpunit -c app",
+        "tests": "APP_ENV=test bin/phpunit -c app",
         "ci": [
             "@lint-yaml",
             "@lint-twig",
