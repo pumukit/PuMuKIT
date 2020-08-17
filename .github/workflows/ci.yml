@@ -21,9 +21,6 @@ jobs:
       - name: Validate composer.json and composer.lock
         run:  make composer-validate
 
-      - name: Composer install
-        run: make composer-install
-
       - name: Lints
         run:  |
               make test-lint-yaml
