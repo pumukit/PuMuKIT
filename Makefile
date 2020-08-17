@@ -19,6 +19,7 @@ help:
 	@echo '    make cc                    Clear cache and install assets'
 	@echo '    make composer-validate     Validate composer'
 	@echo '    make fixtures              Import basic fixtures'
+	@echo '    make composer-install      Install composer dependencies'
 
 up:
 	docker-compose up -d
@@ -52,6 +53,9 @@ cc: cc-envs ai
 
 composer-validate:
 	docker-compose run --service-ports php composer validate
+
+composer-install:
+	docker-compose run --service-ports php composer install
 
 fixtures:
 	docker-compose run --service-ports php bin/console pumukit:init:repo all --force

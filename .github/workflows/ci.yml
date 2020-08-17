@@ -14,16 +14,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Docker build
-        run:  |
-              make build
-
       - name: Docker up
         run:  |
               make up
 
       - name: Validate composer.json and composer.lock
         run:  make composer-validate
+
+      - name: Composer install
+        run: make composer-install
 
       - name: Lints
         run:  |
