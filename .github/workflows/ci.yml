@@ -23,16 +23,16 @@ jobs:
         run:  composer validate
 
       - name: Lints
-        run:  docker-compose -f docker-compose.yml exec php composer lints
+        run:  docker-compose -f docker-compose.yml exec -T php composer lints
 
       - name: PHPCSFixer
-        run:  docker-compose -f docker-compose.yml exec php composer php-cs-fixer
+        run:  docker-compose -f docker-compose.yml exec -T php composer php-cs-fixer
 
       - name: PHPStan
-        run:  docker-compose -f docker-compose.yml exec php composer phpstan
+        run:  docker-compose -f docker-compose.yml exec -T php composer phpstan
 
       - name: Test
-        run:  docker-compose -f docker-compose.yml exec php composer tests
+        run:  docker-compose -f docker-compose.yml exec -T php composer tests
 
       - name: Fixtures
-        run:  docker-compose -f docker-compose.yml exec php bin/console pumukit:init:repo all --force
+        run:  docker-compose -f docker-compose.yml exec -T php bin/console pumukit:init:repo all --force
