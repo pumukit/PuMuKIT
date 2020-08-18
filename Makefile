@@ -1,4 +1,4 @@
-.PHONY: help  up start stop clean debug pull build test shell ps logs
+.PHONY: help debug stop start clean pull build test-all shell ps logs cc composer-validate fixtures composer-install
 
 help:
 	@echo ''
@@ -20,6 +20,8 @@ help:
 	@echo '    make composer-validate     Validate composer'
 	@echo '    make fixtures              Import basic fixtures'
 	@echo '    make composer-install      Install composer dependencies'
+
+current-dir := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
 up:
 	docker-compose up -d
@@ -51,11 +53,18 @@ ai:
 
 cc: cc-envs ai
 
+# Composer
+composer-install: CMD=install
+composer-update: CMD=update
+composer composer-install composer-update:
+	@docker run --rm --interactive --volume $(current-dir):/app --user $(id -u):$(id -g) \
+		clevyr/prestissimo $(CMD) \
+			--ignore-platform-reqs \
+			--no-ansi \
+			--no-interaction
+
 composer-validate:
 	docker-compose exec -T php composer validate
-
-composer-install:
-	docker-compose exec -T php php -d memory_limit=-1 /usr/bin/composer install
 
 fixtures:
 	docker-compose exec -T php bin/console pumukit:init:repo all --force
