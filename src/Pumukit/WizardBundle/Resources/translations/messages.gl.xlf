@@ -341,6 +341,10 @@
         <source>Status</source>
         <target state="translated">Estado</target>
       </trans-unit>
+      <trans-unit id="SGGKkey" resname="Uploading file">
+        <source>Uploading file</source>
+        <target>Uploading file</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
