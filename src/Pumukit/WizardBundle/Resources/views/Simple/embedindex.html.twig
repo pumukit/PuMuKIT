@@ -18,7 +18,15 @@
 
 {% block body %}
     <h3> {% trans %}Upload local file{% endtrans %}</h3>
-    <div class="row" style="padding-top: 50px">
+    <div class="row uploading-file-message" style="padding-top: 50px; display:none;">
+        <div class="col-md-12">
+            <div class="well">
+                <h2 class="text-center">{% trans %}Uploading file{% endtrans %}</h2>
+                <div class="loader">Loading...</div>
+            </div>
+        </div>
+    </div>
+    <div class="row uploading-form" style="padding-top: 50px;">
         <div class="col-md-12">
             <div class="well">
                 <form id="pumukitwizard_simple_embed_track_form" enctype="multipart/form-data"
