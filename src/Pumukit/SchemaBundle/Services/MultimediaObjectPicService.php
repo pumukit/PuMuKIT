@@ -35,8 +35,6 @@ class MultimediaObjectPicService
     /**
      * Returns the target path for an object.
      *
-     * @param MultimediaObject $multimediaObject
-     *
      * @return string
      */
     public function getTargetPath(MultimediaObject $multimediaObject)
@@ -46,8 +44,6 @@ class MultimediaObjectPicService
 
     /**
      * Returns the target url for an object.
-     *
-     * @param MultimediaObject $multimediaObject
      *
      * @return string
      */
@@ -73,10 +69,9 @@ class MultimediaObjectPicService
     /**
      * Set a pic from an url into the multimediaObject.
      *
-     * @param MultimediaObject $multimediaObject
-     * @param string           $picUrl
-     * @param bool             $flush
-     * @param bool             $isEventPoster
+     * @param string $picUrl
+     * @param bool   $flush
+     * @param bool   $isEventPoster
      *
      * @return MultimediaObject
      */
@@ -102,9 +97,7 @@ class MultimediaObjectPicService
     /**
      * Set a pic from an url into the multimediaObject.
      *
-     * @param MultimediaObject $multimediaObject
-     * @param UploadedFile     $picFile
-     * @param bool             $isEventPoster
+     * @param bool $isEventPoster
      *
      * @throws \Exception
      *
@@ -142,9 +135,8 @@ class MultimediaObjectPicService
     /**
      * Set a pic from a memory string.
      *
-     * @param MultimediaObject $multimediaObject
-     * @param string           $pic
-     * @param string           $format
+     * @param string $pic
+     * @param string $format
      *
      * @return MultimediaObject
      */
@@ -183,8 +175,7 @@ class MultimediaObjectPicService
     /**
      * Remove Pic from Multimedia Object.
      *
-     * @param MultimediaObject $multimediaObject
-     * @param \MongoId|string  $picId
+     * @param \MongoId|string $picId
      *
      * @throws \Exception
      *
@@ -242,9 +233,6 @@ class MultimediaObjectPicService
     }
 
     /**
-     * @param MultimediaObject $multimediaObject
-     * @param Pic              $pic
-     *
      * @return Pic
      */
     private function updatePosterTag(MultimediaObject $multimediaObject, Pic $pic)

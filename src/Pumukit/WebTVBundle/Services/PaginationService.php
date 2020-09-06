@@ -25,9 +25,8 @@ class PaginationService
     }
 
     /**
-     * @param Builder $objects
-     * @param string  $page
-     * @param int     $limit
+     * @param string $page
+     * @param int    $limit
      *
      * @throws \Exception
      *
@@ -48,7 +47,6 @@ class PaginationService
     }
 
     /**
-     * @param array  $objects
      * @param string $page
      * @param int    $limit
      *
@@ -62,9 +60,8 @@ class PaginationService
     }
 
     /**
-     * @param AdapterInterface $adapter
-     * @param string           $page
-     * @param int              $limit
+     * @param string $page
+     * @param int    $limit
      *
      * @return Pagerfanta
      */

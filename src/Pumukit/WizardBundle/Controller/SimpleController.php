@@ -18,9 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 class SimpleController extends Controller
 {
     /**
-     * @param Series  $series
-     * @param Request $request
-     *
      * @return array
      *
      * @Template("PumukitWizardBundle:Simple:index.html.twig")
@@ -41,9 +38,6 @@ class SimpleController extends Controller
     }
 
     /**
-     * @param Series  $series
-     * @param Request $request
-     *
      * @throws \Exception
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -106,8 +100,6 @@ class SimpleController extends Controller
     }
 
     /**
-     * @param Request $request
-     *
      * @return array
      *
      * @Template("PumukitWizardBundle:Simple:embedindex.html.twig")
@@ -152,8 +144,6 @@ class SimpleController extends Controller
     }
 
     /**
-     * @param Request $request
-     *
      * @throws \Exception
      *
      * @return JsonResponse
@@ -250,7 +240,6 @@ class SimpleController extends Controller
      * Create Multimedia Object.
      *
      * @param string $title
-     * @param Series $series
      *
      * @return MultimediaObject
      */
@@ -269,8 +258,7 @@ class SimpleController extends Controller
     /**
      * Create Multimedia Object.
      *
-     * @param array  $i18nTitle
-     * @param Series $series
+     * @param array $i18nTitle
      *
      * @return MultimediaObject
      */
@@ -353,8 +341,7 @@ class SimpleController extends Controller
     }
 
     /**
-     * @param MultimediaObject $multimediaObject
-     * @param array            $externalData
+     * @param array $externalData
      *
      * @return MultimediaObject
      */

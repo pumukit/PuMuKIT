@@ -209,7 +209,6 @@ class ModulesController extends Controller implements WebTVControllerInterface
     /**
      * @Template("PumukitWebTVBundle:Modules:widget_categories.html.twig")
      *
-     * @param Request      $request
      * @param string       $title
      * @param string       $class
      * @param array|string $categories

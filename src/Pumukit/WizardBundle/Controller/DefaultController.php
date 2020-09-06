@@ -596,7 +596,6 @@ class DefaultController extends Controller
      * Get key data.
      *
      * @param mixed $key
-     * @param array $formData
      * @param mixed $default
      *
      * @return mixed
@@ -652,9 +651,6 @@ class DefaultController extends Controller
     /**
      * Create Multimedia Object.
      *
-     * @param array  $mmData
-     * @param Series $series
-     *
      * @return mixed|MultimediaObject|void
      */
     private function createMultimediaObject(array $mmData, Series $series)
@@ -673,8 +669,7 @@ class DefaultController extends Controller
     /**
      * Add Tag to Multimedia Object by Code.
      *
-     * @param MultimediaObject $multimediaObject
-     * @param string           $tagCode
+     * @param string $tagCode
      *
      * @return array
      */
@@ -729,9 +724,6 @@ class DefaultController extends Controller
 
     /**
      * Remove Invalid Multimedia Object.
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Series           $series
      */
     private function removeInvalidMultimediaObject(MultimediaObject $multimediaObject, Series $series)
     {
@@ -805,8 +797,7 @@ class DefaultController extends Controller
     /**
      * Complete Form with Series metadata.
      *
-     * @param array  $formData
-     * @param Series $series
+     * @param array $formData
      *
      * @return array
      */

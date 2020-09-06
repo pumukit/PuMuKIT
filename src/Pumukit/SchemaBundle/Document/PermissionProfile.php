@@ -111,8 +111,6 @@ class PermissionProfile
 
     /**
      * Set permissions.
-     *
-     * @param array $permissions
      */
     public function setPermissions(array $permissions)
     {
@@ -176,8 +174,6 @@ class PermissionProfile
     /**
      * Contains all permissions.
      *
-     * @param array $permissions
-     *
      * @return bool TRUE if this PermissionProfile contains all permissions, FALSE otherwise
      */
     public function containsAllPermissions(array $permissions)
@@ -187,8 +183,6 @@ class PermissionProfile
 
     /**
      * Contains any permissions.
-     *
-     * @param array $permissions
      *
      * @return bool TRUE if this PermissionProfile contains any permission of the list, FALSE otherwise
      */

@@ -15,8 +15,6 @@ class PermissionService
 
     /**
      * Constructor.
-     *
-     * @param array $externalPermissions
      */
     public function __construct(DocumentManager $documentManager, array $externalPermissions = [])
     {
@@ -247,7 +245,6 @@ class PermissionService
      *
      * @param string $permission
      * @param string $scope
-     * @param array  $allPermissions
      */
     private function buildDependenciesByScope($permission, $scope, array $allPermissions)
     {

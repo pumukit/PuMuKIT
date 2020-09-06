@@ -135,11 +135,10 @@ class CpuService
     public function getCpuNamesInMaintenanceMode()
     {
         $cpus = $this->cpuRepo->findBy(['status' => CpuStatus::STATUS_MAINTENANCE]);
-        $cpuNames = array_map(function ($a) {
+
+        return array_map(function ($a) {
             return $a->getName();
         }, $cpus);
-
-        return $cpuNames;
     }
 
     private function getOptimalCpuName($freeCpus = [])

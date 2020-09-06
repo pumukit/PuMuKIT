@@ -90,10 +90,6 @@ EOT
         ;
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         $this->picService = $this->getContainer()->get('pumukitencoder.pic');
@@ -117,9 +113,6 @@ EOT
     }
 
     /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
      * @throws \Exception
      *
      * @return bool|int|null

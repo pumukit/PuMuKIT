@@ -42,8 +42,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
      *
      * @Template
      *
-     * @param Request $request
-     *
      * @throws \Doctrine\ODM\MongoDB\LockException
      * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      *
@@ -1095,8 +1093,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     /**
      * User last relation.
      *
-     * @param Request $request
-     *
      * @return JsonResponse
      */
     public function userLastRelationAction(Request $request)
@@ -1294,8 +1290,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     /**
      * Gets the list of resources according to a criteria.
      *
-     * @param Request $request
-     * @param mixed   $criteria
+     * @param mixed $criteria
      *
      * @return Pagerfanta
      */
@@ -1372,9 +1367,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     /**
      * Sync selected metadata on all mmobjs of the series.
      *
-     * @param Request          $request
-     * @param MultimediaObject $multimediaObject
-     *
      * @throws \Exception
      *
      * @return array
@@ -1414,9 +1406,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * @param Request          $request
-     * @param MultimediaObject $multimediaObject
-     *
      * @return JsonResponse
      */
     public function updateMultimediaObjectSyncAction(Request $request, MultimediaObject $multimediaObject)

@@ -328,8 +328,6 @@ class SeriesRepository extends DocumentRepository
     /**
      * Find series with given series type.
      *
-     * @param SeriesType $series_type
-     *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
      * @return mixed
@@ -646,8 +644,6 @@ class SeriesRepository extends DocumentRepository
     }
 
     /**
-     * @param Series $series
-     *
      * @return mixed
      */
     public function getMultimediaObjects(Series $series)
@@ -659,8 +655,6 @@ class SeriesRepository extends DocumentRepository
     }
 
     /**
-     * @param Series $series
-     *
      * @return mixed
      */
     public function countMultimediaObjects(Series $series)

@@ -266,8 +266,6 @@ class Group implements GroupInterface
     /**
      * Defined to implement GroupInterface.
      *
-     * @param array $roles
-     *
      * @return self
      */
     public function setRoles(array $roles)

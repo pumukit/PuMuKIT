@@ -25,8 +25,6 @@ class SearchController extends Controller implements WebTVControllerInterface
      * @Route("/searchseries", name="pumukit_webtv_search_series")
      * @Template("PumukitWebTVBundle:Search:template.html.twig")
      *
-     * @param Request $request
-     *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      * @throws \MongoException
      *
@@ -83,9 +81,7 @@ class SearchController extends Controller implements WebTVControllerInterface
      * @ParamConverter("blockedTag", class="PumukitSchemaBundle:Tag", options={"mapping": {"tagCod": "cod"}})
      * @Template("PumukitWebTVBundle:Search:template.html.twig")
      *
-     * @param Request  $request
-     * @param Tag|null $blockedTag
-     * @param bool     $useTagAsGeneral
+     * @param bool $useTagAsGeneral
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      * @throws \MongoException

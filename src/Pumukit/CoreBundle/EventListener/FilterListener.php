@@ -30,8 +30,6 @@ class FilterListener
     }
 
     /**
-     * @param FilterControllerEvent $event
-     *
      * @throws \MongoException
      */
     public function onKernelController(FilterControllerEvent $event)
@@ -72,8 +70,6 @@ class FilterListener
 
     /**
      * Enable the "WebTV" filter.
-     *
-     * @param array $routeParams
      */
     private function enableWebTVFilter(array $routeParams)
     {
@@ -85,8 +81,6 @@ class FilterListener
     }
 
     /**
-     * @param array $routeParams
-     *
      * @throws \MongoException
      */
     private function enablePersonalFilter(array $routeParams)

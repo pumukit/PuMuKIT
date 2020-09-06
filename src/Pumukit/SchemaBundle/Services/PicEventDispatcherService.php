@@ -17,8 +17,6 @@ class PicEventDispatcherService
 
     /**
      * Constructor.
-     *
-     * @param EventDispatcherInterface $dispatcher
      */
     public function __construct(EventDispatcherInterface $dispatcher)
     {
@@ -31,9 +29,6 @@ class PicEventDispatcherService
      * Dispatchs the event PIC_CREATE
      * 'pic.create' passing
      * the multimedia object and the pic
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Pic              $pic
      */
     public function dispatchCreate(MultimediaObject $multimediaObject, Pic $pic)
     {
@@ -47,9 +42,6 @@ class PicEventDispatcherService
      * Dispatchs the event PIC_UPDATE
      * 'pic.update' passing
      * the multimedia object and the pic
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Pic              $pic
      */
     public function dispatchUpdate(MultimediaObject $multimediaObject, Pic $pic)
     {
@@ -63,9 +55,6 @@ class PicEventDispatcherService
      * Dispatchs the event PIC_DELETE
      * 'pic.delete' passing
      * the multimedia object and the pic
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Pic              $pic
      */
     public function dispatchDelete(MultimediaObject $multimediaObject, Pic $pic)
     {

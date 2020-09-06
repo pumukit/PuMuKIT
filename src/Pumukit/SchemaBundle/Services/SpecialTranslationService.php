@@ -20,8 +20,7 @@ class SpecialTranslationService
     /**
      * Get I18n EmbeddedBroadcast.
      *
-     * @param EmbeddedBroadcast $embeddedBroadcast
-     * @param string            $locale
+     * @param string $locale
      */
     public function getI18nEmbeddedBroadcast(EmbeddedBroadcast $embeddedBroadcast, $locale = null)
     {

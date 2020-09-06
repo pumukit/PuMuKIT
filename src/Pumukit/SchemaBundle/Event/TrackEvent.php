@@ -18,10 +18,6 @@ class TrackEvent extends Event
      */
     protected $track;
 
-    /**
-     * @param MultimediaObject $multimediaObject
-     * @param Track            $track
-     */
     public function __construct(MultimediaObject $multimediaObject, Track $track)
     {
         $this->multimediaObject = $multimediaObject;

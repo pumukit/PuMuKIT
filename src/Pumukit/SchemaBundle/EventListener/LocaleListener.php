@@ -27,8 +27,6 @@ class LocaleListener implements EventSubscriberInterface
     }
 
     /**
-     * @param GetResponseEvent $event
-     *
      * @throws \Exception
      */
     public function onKernelRequest(GetResponseEvent $event)
@@ -37,8 +35,6 @@ class LocaleListener implements EventSubscriberInterface
     }
 
     /**
-     * @param Request $request
-     *
      * @throws \Exception
      */
     public function fixRequestLocale(Request $request)
@@ -80,9 +76,6 @@ class LocaleListener implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param LifecycleEventArgs $args
-     */
     public function postLoad(LifecycleEventArgs $args)
     {
         $document = $args->getDocument();

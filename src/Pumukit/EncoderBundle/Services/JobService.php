@@ -79,15 +79,13 @@ class JobService
     /**
      * Create track from local hard drive with job service. AddJob method wrapper.
      *
-     * @param MultimediaObject $multimediaObject
-     * @param UploadedFile     $trackFile
-     * @param array            $profile
-     * @param int              $priority
-     * @param string           $language
-     * @param array            $description
-     * @param array            $initVars
-     * @param int              $duration
-     * @param int              $flags
+     * @param array  $profile
+     * @param int    $priority
+     * @param string $language
+     * @param array  $description
+     * @param array  $initVars
+     * @param int    $duration
+     * @param int    $flags
      *
      * @throws \Exception
      *
@@ -113,15 +111,14 @@ class JobService
     /**
      * Create track from inbox on server with job service. AddJob method wrapper.
      *
-     * @param MultimediaObject $multimediaObject
-     * @param string           $trackUrl
-     * @param string           $profile
-     * @param int              $priority
-     * @param string           $language
-     * @param array            $description
-     * @param array            $initVars
-     * @param int              $duration
-     * @param int              $flags
+     * @param string $trackUrl
+     * @param string $profile
+     * @param int    $priority
+     * @param string $language
+     * @param array  $description
+     * @param array  $initVars
+     * @param int    $duration
+     * @param int    $flags
      *
      * @throws \Exception
      *
@@ -141,13 +138,12 @@ class JobService
     /**
      * Add job checking if not exists.
      *
-     * @param string           $pathFile
-     * @param string           $profile
-     * @param int              $priority
-     * @param MultimediaObject $multimediaObject
-     * @param string|null      $language
-     * @param array            $description
-     * @param array            $initVars
+     * @param string      $pathFile
+     * @param string      $profile
+     * @param int         $priority
+     * @param string|null $language
+     * @param array       $description
+     * @param array       $initVars
      *
      * @throws \Exception
      * @deprecated: Use addJob with JobService::ADD_JOB_UNIQUE flag.
@@ -160,15 +156,14 @@ class JobService
     /**
      * Add a encoder job.
      *
-     * @param string           $pathFile         Absolute path of the multimedia object
-     * @param string           $profileName      Encoder profile name
-     * @param int              $priority         Priority of the new job
-     * @param MultimediaObject $multimediaObject
-     * @param string           $language
-     * @param array            $description
-     * @param array            $initVars         Init values of the Job
-     * @param int              $duration         Only necesary in JobService::ADD_JOB_NOT_CHECKS
-     * @param int              $flags            A bit field of constants to customize the job creation: JobService::ADD_JOB_UNIQUE, JobService::ADD_JOB_NOT_CHECKS
+     * @param string $pathFile    Absolute path of the multimedia object
+     * @param string $profileName Encoder profile name
+     * @param int    $priority    Priority of the new job
+     * @param string $language
+     * @param array  $description
+     * @param array  $initVars    Init values of the Job
+     * @param int    $duration    Only necesary in JobService::ADD_JOB_NOT_CHECKS
+     * @param int    $flags       A bit field of constants to customize the job creation: JobService::ADD_JOB_UNIQUE, JobService::ADD_JOB_NOT_CHECKS
      *
      * @throws \Exception
      *
@@ -452,9 +447,6 @@ class JobService
         return $nextJobToExecute;
     }
 
-    /**
-     * @param Job $job
-     */
     public function executeInBackground(Job $job)
     {
         $pb = new ProcessBuilder();
@@ -494,8 +486,6 @@ class JobService
     }
 
     /**
-     * @param Job $job
-     *
      * @throws \Exception
      */
     public function execute(Job $job)
@@ -601,8 +591,6 @@ class JobService
      * Generates execution line replacing %1 %2 %3 by
      * in, out and cfg files
      *
-     * @param Job $job
-     *
      * @throws \Exception
      *
      * @return string commandLine
@@ -653,8 +641,6 @@ class JobService
     /**
      * Set path end auto.
      *
-     * @param Job $job
-     *
      * @throws \Exception
      */
     public function setPathEndAndExtensions(Job $job)
@@ -692,8 +678,6 @@ class JobService
     }
 
     /**
-     * @param Job $job
-     *
      * @throws \Exception
      *
      * @return Track
@@ -706,11 +690,10 @@ class JobService
     }
 
     /**
-     * @param string           $pathFile
-     * @param string           $profileName
-     * @param MultimediaObject $multimediaObject
-     * @param string|null      $language
-     * @param array            $description
+     * @param string      $pathFile
+     * @param string      $profileName
+     * @param string|null $language
+     * @param array       $description
      *
      * @throws \Exception
      *
@@ -735,12 +718,11 @@ class JobService
     }
 
     /**
-     * @param MultimediaObject $multimediaObject
-     * @param string           $pathEnd
-     * @param string           $profileName
-     * @param string|null      $language
-     * @param array            $description
-     * @param mixed|null       $pathFile
+     * @param string      $pathEnd
+     * @param string      $profileName
+     * @param string|null $language
+     * @param array       $description
+     * @param mixed|null  $pathFile
      *
      * @return Track
      */
@@ -817,8 +799,6 @@ class JobService
     /**
      * Retry job.
      *
-     * @param Job $job
-     *
      * @throws \Exception
      *
      * @return bool
@@ -849,9 +829,6 @@ class JobService
         return true;
     }
 
-    /**
-     * @param Job $job
-     */
     private function deleteTempFiles(Job $job)
     {
         if (false !== strpos($job->getPathIni(), $this->tmpPath)) {
@@ -864,7 +841,6 @@ class JobService
     /**
      * Change status of a given job.
      *
-     * @param Job $job
      * @param int $actualStatus
      * @param int $newStatus
      */
@@ -878,7 +854,6 @@ class JobService
     }
 
     /**
-     * @param array  $profile
      * @param string $dir
      * @param string $file
      * @param string $extension
@@ -909,8 +884,6 @@ class JobService
     }
 
     /**
-     * @param Job $job
-     *
      * @throws \Exception
      *
      * @return mixed|null
@@ -930,8 +903,6 @@ class JobService
     }
 
     /**
-     * @param Job $job
-     *
      * @throws \Exception
      *
      * @return mixed
@@ -953,9 +924,7 @@ class JobService
     /**
      * Emit an event to notify finished job.
      *
-     * @param bool       $success
-     * @param Job        $job
-     * @param Track|null $track
+     * @param bool $success
      *
      * @throws \Exception
      */
@@ -998,8 +967,6 @@ class JobService
      * Get user email.
      *
      * Gets the email of the user who executed the job, if no session get the user info from other jobs of the same mm.
-     *
-     * @param Job|null $job
      */
     private function getUserEmail(Job $job = null)
     {

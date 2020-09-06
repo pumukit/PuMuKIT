@@ -21,10 +21,6 @@ class LiveType extends AbstractType
     private $translator;
     private $locale;
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->translator = $options['translator'];

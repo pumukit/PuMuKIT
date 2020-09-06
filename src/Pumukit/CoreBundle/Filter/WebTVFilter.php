@@ -13,8 +13,6 @@ use Pumukit\SchemaBundle\Document\Series;
 class WebTVFilter extends BsonFilter
 {
     /**
-     * @param ClassMetadata $targetDocument
-     *
      * @return array|void
      */
     public function addFilterCriteria(ClassMetadata $targetDocument)

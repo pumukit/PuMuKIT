@@ -23,9 +23,6 @@ class FormEvent extends Event
      */
     protected $user;
 
-    /**
-     * @param array $form
-     */
     public function __construct(User $user, MultimediaObject $multimediaObject, array $form)
     {
         $this->user = $user;

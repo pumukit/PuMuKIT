@@ -18,10 +18,6 @@ class PicEvent extends Event
      */
     protected $pic;
 
-    /**
-     * @param MultimediaObject $multimediaObject
-     * @param Pic              $pic
-     */
     public function __construct(MultimediaObject $multimediaObject, Pic $pic)
     {
         $this->multimediaObject = $multimediaObject;

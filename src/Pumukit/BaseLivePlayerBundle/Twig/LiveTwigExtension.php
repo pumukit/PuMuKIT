@@ -83,9 +83,6 @@ class LiveTwigExtension extends AbstractExtension
         return $this->eventsService->getPosterTextColor($event);
     }
 
-    /**
-     * @param MultimediaObject $multimediaObject
-     */
     public function getPosterPicTextColor(MultimediaObject $multimediaObject): string
     {
         return $this->eventsService->getPicPosterTextColor($multimediaObject);
