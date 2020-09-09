@@ -165,7 +165,7 @@ class Tag implements TagInterface
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->label[$locale])) {
+        if (!isset($this->label[$locale]) || '' === $this->label[$locale]) {
             return $this->getTitle($locale);
         }
 
