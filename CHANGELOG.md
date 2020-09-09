@@ -3,9 +3,30 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 To get the diff for a specific change, go to https://github.com/pumukit/PuMuKIT/commit/XXX where XXX is the change hash.
-To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/compare/3.0.0...3.1.x
+To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/compare/3.0.0...3.1.x.
 
-## [3.2.0](https://github.com/pumukit/PuMuKIT/compare/3.2.0...3.1.0) - (Unreleased)
+## [3.4.0](https://github.com/pumukit/PuMuKIT/compare/3.4.0...3.3.0) - (2020-06-18)
+
+#### Added
+- Added CA translations
+
+#### Fixed
+- Fixed design on basic live chat
+- Fixed method to override a material file
+
+## [3.3.0](https://github.com/pumukit/PuMuKIT/compare/3.3.0...3.2.0) - (2020-03-30)
+
+#### Added
+- Added method to override a material file added to use external API
+- Update PHP Alpine version on docker
+- Use cache to install composer dependencies
+
+#### Fixed
+- Fixed embeddedSegments toString method
+- Fixed Pic toString method
+
+## [3.2.0](https://github.com/pumukit/PuMuKIT/compare/3.2.0...3.1.0) - (2020-03-09)
+
 #### Added
 - New logic to read mp properties from Galicaster mediapackages in Opencast
 - Optional notification sending to OpencastBundle when a mediapackage has been imported
