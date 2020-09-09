@@ -5,6 +5,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 To get the diff for a specific change, go to https://github.com/pumukit/PuMuKIT/commit/XXX where XXX is the change hash.
 To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/compare/3.0.0...3.1.x.
 
+## [3.5.0](https://github.com/pumukit/PuMuKIT/compare/3.5.0...3.4.0) - (2020-07-21)
+
+#### Added
+- Added new permissions to edit multimedia object
+- Add a loading spinner and disabled "upload" button on wizard to know when wizard are uploading file
+- Add logger on generate new tracks
+- Add new param to show and basic editable video interface on WebTV portal.
+
+#### Fixed
+- Remove cancel button on wizard
+
 ## [3.4.0](https://github.com/pumukit/PuMuKIT/compare/3.4.0...3.3.0) - (2020-06-18)
 
 #### Added
