@@ -66,6 +66,7 @@ class Permission
     public const ACCESS_MULTIMEDIA_SYNC_TAB = 'ROLE_ACCESS_MULTIMEDIA_SYNC_TAB';
     public const ACCESS_MULTIMEDIA_MAGIC_URL = 'ROLE_ACCESS_MULTIMEDIA_MAGIC_URL';
     public const ACCESS_MULTIMEDIA_SHOW_WIZARD_BUTTON = 'ROLE_ACCESS_MULTIMEDIA_SHOW_WIZARD_BUTTON';
+    public const ACCESS_MULTIMEDIA_SHOW_MULTIMEDIA_OBJECT_INFO_URL = 'ROLE_ACCESS_MULTIMEDIA_SHOW_MULTIMEDIA_OBJECT_INFO_URL';
 
     public const PREFIX_ROLE_TAG_DEFAULT = 'ROLE_TAG_DEFAULT_';
     public const PREFIX_ROLE_TAG_DISABLE = 'ROLE_TAG_DISABLE_';
@@ -458,6 +459,13 @@ class Permission
         ],
         self::ACCESS_MULTIMEDIA_SHOW_WIZARD_BUTTON => [
             'description' => 'Show wizard button on multimedia object',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::ACCESS_MULTIMEDIA_SHOW_MULTIMEDIA_OBJECT_INFO_URL => [
+            'description' => 'Show info urls on multimedia object',
             'dependencies' => [
                 PermissionProfile::SCOPE_GLOBAL => [],
                 PermissionProfile::SCOPE_PERSONAL => [],
