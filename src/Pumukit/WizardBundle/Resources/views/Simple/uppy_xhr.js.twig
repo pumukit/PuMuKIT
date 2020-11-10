@@ -25,8 +25,9 @@ uppy.use(Uppy.FileInput, {
     replaceTargetContent: true
 })
 
-uppy.use(Uppy.ProgressBar, {
-    target: '.UppyProgressBar',
+uppy.use(Uppy.StatusBar, {
+    target: '.UppyInput-Progress',
+    hideUploadButton: true,
     hideAfterFinish: false
 })
 

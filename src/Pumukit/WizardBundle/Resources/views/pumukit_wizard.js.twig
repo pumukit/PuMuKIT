@@ -119,8 +119,20 @@ $(function(){
         if (submitForm) {
             uppy.upload()
 
+            uppy.on('upload-error', (file, error, response) => {
+                if (error.isNetworkError) {
+                    alert(error)
+                    uppy.reset();
+                }
+            })
+
+            uppy.on('restriction-failed', (file, error) => {
+                console.log(error);
+                uppy.reset();
+            })
+
             uppy.on('upload-success', (file, response) => {
-                if(response.status === 200 && !response.body.errorMessage ) {
+                if(response.status && response.status === 200 && !response.body.errorMessage ) {
                     if ('url' in response.body) {
                         window.location.href =  response.body.url;
                     }
