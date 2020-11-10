@@ -2,6 +2,7 @@
 
 namespace Pumukit\WizardBundle\Controller;
 
+use Nette\Utils\Json;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -9,8 +10,10 @@ use Pumukit\SchemaBundle\Document\Series;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_WIZARD_UPLOAD')")
@@ -176,26 +179,50 @@ class SimpleController extends Controller
         $language = $request->request->get('language', $request->getLocale());
         $file = $request->files->get('resource');
 
+        if(is_array($file)) {
+            $file = $file[0];
+        }
+
         try {
             if (!$file) {
-                throw new \Exception('No file found');
+                $response = [
+                    'status' => Response::HTTP_BAD_REQUEST,
+                    'errorMessage' => $this->get('translator')->trans('No file found'),
+                ];
+
+                return new JsonResponse($response);
             }
 
             if (!$file->isValid()) {
-                throw new \Exception($file->getErrorMessage());
+                $response = [
+                    'status' => Response::HTTP_BAD_REQUEST,
+                    'errorMessage' => $this->get('translator')->trans($file->getErrorMessage()),
+                ];
+
+                return new JsonResponse($response);
             }
 
             $filePath = $file->getPathname();
 
             try {
-                //exception if is not a mediafile (video or audio)
                 $duration = $inspectionService->getDuration($filePath);
             } catch (\Exception $e) {
-                throw new \Exception('The file is not a valid video or audio file');
+                $response = [
+                    'status' => Response::HTTP_UNSUPPORTED_MEDIA_TYPE,
+                    'errorMessage' => $this->get('translator')->trans('The file is not a valid video or audio file'),
+                ];
+
+                return new JsonResponse($response);
+
             }
 
-            if (0 == $duration) {
-                throw new \Exception('The file is not a valid video or audio file (duration is zero)');
+            if (0 === (int) $duration) {
+                $response = [
+                    'status' => Response::HTTP_UNSUPPORTED_MEDIA_TYPE,
+                    'errorMessage' => $this->get('translator')->trans('The file is not a valid video or audio file (duration is zero)'),
+                ];
+
+                return new JsonResponse($response);
             }
 
             if (!$series) {

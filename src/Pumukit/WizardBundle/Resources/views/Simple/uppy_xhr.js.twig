@@ -1,0 +1,39 @@
+const uppy = new Uppy.Core({
+    autoProceed: false,
+    allowMultipleUploads: false,
+    debug: true,
+    restrictions: {
+        {#maxFileSize: 1,#}
+        {#minFileSize: null,#}
+        {#maxTotalFileSize: null,#}
+        maxNumberOfFiles: 1,
+        {#allowedFileTypes: null#}
+    }
+})
+
+uppy.use(Uppy.Form, {
+    target: formElement,
+    getMetaFromForm: true,
+    addResultToForm: true,
+    multipleResults: false,
+    submitOnSuccess: false,
+    triggerUploadOnSubmit: false
+})
+
+uppy.use(Uppy.FileInput, {
+    target: '.UppyForm',
+    replaceTargetContent: true
+})
+
+uppy.use(Uppy.ProgressBar, {
+    target: '.UppyProgressBar',
+    hideAfterFinish: false
+})
+
+uppy.use(Uppy.XHRUpload, {
+    endpoint: "{{ pathToUpload }}",
+    formData: true,
+    method: 'post',
+    fieldName: 'resource[]',
+    limit: 10
+});
