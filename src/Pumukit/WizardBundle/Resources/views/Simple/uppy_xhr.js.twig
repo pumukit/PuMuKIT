@@ -33,7 +33,7 @@ uppy.use(Uppy.XHRUpload, {
     method: 'post',
     fieldName: 'resource[]',
     limit: 10,
-    timeout: 1800
+    timeout: 1800000
 });
 
 uppy.on('file-added', (file) => {
