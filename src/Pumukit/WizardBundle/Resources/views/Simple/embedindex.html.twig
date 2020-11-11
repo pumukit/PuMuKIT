@@ -4,6 +4,17 @@
     {{ parent() }}
     <link href="{{ asset('/bundles/pumukitwizard/css/nav-wizard.bootstrap.css') }}" rel="stylesheet">
     <link href="https://releases.transloadit.com/uppy/v1.22.0/uppy.min.css" rel="stylesheet">
+    <style>
+        .uppy-FileInput-btn {
+            border: 1px solid #ccc;
+            color: #000;
+        }
+        .uppy-FileInput-btn:hover {
+            border: 1px solid #000;
+            background-color: transparent;
+            color: #000;
+        }
+    </style>
 {% endblock stylesheets %}
 
 {% block javascripts %}
