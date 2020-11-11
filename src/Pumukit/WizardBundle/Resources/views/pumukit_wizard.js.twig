@@ -119,18 +119,6 @@ $(function(){
         if (submitForm) {
             uppy.upload()
 
-            uppy.on('upload-error', (file, error, response) => {
-                if (error.isNetworkError) {
-                    alert(error)
-                    uppy.reset();
-                }
-            })
-
-            uppy.on('restriction-failed', (file, error) => {
-                console.log(error);
-                uppy.reset();
-            })
-
             uppy.on('upload-success', (file, response) => {
                 if(response.status && response.status === 200 && !response.body.errorMessage ) {
                     if ('url' in response.body) {
@@ -142,11 +130,13 @@ $(function(){
                 } else {
                     uppy.reset();
                     window.alert('{% trans %}ERROR!!{% endtrans %}\n\n' + response.body.errorMessage);
+                    return false;
                 }
             })
         } else {
             uppy.reset();
             window.alert('{% trans %}ERROR!!{% endtrans %}\n\n{% trans %}There was an error{% endtrans %}');
+            return false;
         }
 
         return false;
