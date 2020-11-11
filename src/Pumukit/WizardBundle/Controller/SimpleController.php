@@ -2,7 +2,6 @@
 
 namespace Pumukit\WizardBundle\Controller;
 
-use Nette\Utils\Json;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -10,7 +9,6 @@ use Pumukit\SchemaBundle\Document\Series;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -179,7 +177,7 @@ class SimpleController extends Controller
         $language = $request->request->get('language', $request->getLocale());
         $file = $request->files->get('resource');
 
-        if(is_array($file)) {
+        if (is_array($file)) {
             $file = $file[0];
         }
 
@@ -213,7 +211,6 @@ class SimpleController extends Controller
                 ];
 
                 return new JsonResponse($response);
-
             }
 
             if (0 === (int) $duration) {
