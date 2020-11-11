@@ -3,11 +3,7 @@ const uppy = new Uppy.Core({
     allowMultipleUploads: false,
     debug: true,
     restrictions: {
-        {#maxFileSize: 1,#}
-        {#minFileSize: null,#}
-        {#maxTotalFileSize: null,#}
-        maxNumberOfFiles: 1,
-        {#allowedFileTypes: null#}
+        allowedFileTypes: ['audio/*','video/*']
     }
 })
 
@@ -36,5 +32,27 @@ uppy.use(Uppy.XHRUpload, {
     formData: true,
     method: 'post',
     fieldName: 'resource[]',
-    limit: 10
+    limit: 10,
+    timeout: 1800
 });
+
+uppy.on('file-added', (file) => {
+    $('.file-data').show();
+    $('.file-title').html(file.name);
+
+    var fileSize = (file.size / 1024 / 1024).toFixed(2);
+    var fileSizeMessage = fileSize + ' MB';
+    $('.file-size').html(fileSizeMessage);
+})
+
+uppy.on('upload-error', (file, error, response) => {
+    if (error.isNetworkError) {
+        alert(error)
+        uppy.reset();
+    }
+})
+
+uppy.on('restriction-failed', (file, error) => {
+    alert(error);
+    uppy.reset();
+})
