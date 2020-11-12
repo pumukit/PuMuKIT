@@ -3,6 +3,7 @@ const uppy = new Uppy.Core({
     allowMultipleUploads: false,
     debug: true,
     restrictions: {
+        maxNumberOfFiles: 1,
         allowedFileTypes: ['audio/*','video/*']
     }
 })
@@ -33,26 +34,68 @@ uppy.use(Uppy.XHRUpload, {
     method: 'post',
     fieldName: 'resource[]',
     limit: 10,
-    timeout: 1800
+    timeout: 1800000
 });
 
 uppy.on('file-added', (file) => {
+    show_file_added(file);
+    if(uppy.getFiles().length > 1) {
+        uppy.removeAll();
+    }
+})
+
+uppy.on('upload-error', (file, error, response) => {
+    if (error.isNetworkError) {
+        file_data_clear();
+        alert(error)
+    }
+})
+
+uppy.on('restriction-failed', (file, error) => {
+    alert(error);
+})
+
+uppy.on('upload-success', (file, response) => {
+    if(response.status && response.status === 200 && !response.body.errorMessage ) {
+        if ('url' in response.body) {
+            window.location.href =  response.body.url;
+        }
+        if ('window' in parent && 'mmId' in  response.body) {
+            parent.window.postMessage({'mmId':  response.body.mmId}, '*');
+        }
+    } else {
+        file_data_clear()
+        window.alert(' {{ "ERROR!!"|trans }}\n\n' + response.body.errorMessage);
+        return false;
+    }
+})
+
+$('#uppy-remove-file').on('click', function(event) {
+    event.preventDefault();
+
+    uppy.removeFile($(this).data('file-id'));
+    uppy.cancelAll();
+
+    $('.file-data').hide();
+    $('.file-title').html('');
+    $('.file-size').html('');
+})
+
+function show_file_added(file)
+{
     $('.file-data').show();
     $('.file-title').html(file.name);
 
     var fileSize = (file.size / 1024 / 1024).toFixed(2);
     var fileSizeMessage = fileSize + ' MB';
     $('.file-size').html(fileSizeMessage);
-})
 
-uppy.on('upload-error', (file, error, response) => {
-    if (error.isNetworkError) {
-        alert(error)
-        uppy.reset();
-    }
-})
+    $('#uppy-remove-file').data('file-id', file.id);
+}
 
-uppy.on('restriction-failed', (file, error) => {
-    alert(error);
-    uppy.reset();
-})
+function file_data_clear() {
+    uppy.cancelAll();
+    $('.file-data').hide();
+    $('.file-title').html('');
+    $('.file-size').html('');
+}
