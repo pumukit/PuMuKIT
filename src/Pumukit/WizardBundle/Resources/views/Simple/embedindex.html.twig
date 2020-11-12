@@ -88,7 +88,7 @@
                                 </label>
                                 <div class="UppyForm">
                                     <h5>Uppy was not loaded — slow connection, unsupported browser, weird JS error on a page — but the upload still works, because HTML is cool like that</h5>
-                                    <input id="wizard-input-file" type="file" name="resource[]" multiple="">
+                                    <input id="wizard-input-file" type="file" name="resource[]">
                                 </div>
                                 <div class="grid">
                                     <div class="column-full">
@@ -100,6 +100,9 @@
                                     <p><b>{{ "File to upload"|trans }}:</b></p>
                                     <span class="label label-default file-title"></span>
                                     <span class="label label-primary file-size"></span>
+                                    <a href="#" id="uppy-remove-file" class="file-id uppy-remove-file" style="margin-left:10px;">
+                                        <i class="glyphicon glyphicon-remove"></i>
+                                    </a>
                                 </div>
                             </div>
                             {% if show_license %}
