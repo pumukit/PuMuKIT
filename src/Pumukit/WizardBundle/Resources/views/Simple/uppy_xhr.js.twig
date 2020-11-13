@@ -3,6 +3,7 @@ const uppy = new Uppy.Core({
     allowMultipleUploads: false,
     debug: true,
     restrictions: {
+        maxFileSize: convertSizeToBytes("{{ php_upload_max_filesize() }}"),
         maxNumberOfFiles: 1,
         allowedFileTypes: ['audio/*','video/*']
     }
@@ -98,4 +99,17 @@ function file_data_clear() {
     $('.file-data').hide();
     $('.file-title').html('');
     $('.file-size').html('');
+}
+
+function convertSizeToBytes(size)
+{
+    if(size.indexOf('GB') !== -1) {
+        return parseInt(size.replace("GB","")) * 1024 * 1024 * 1024;
+    }
+
+    if(size.indexOf('MB') !== -1) {
+        return parseInt(size.replace("MB","")) * 1024 * 1024;
+    }
+
+    return 1024*1024*1024;
 }
