@@ -105,12 +105,10 @@ $(function(){
 
     $('#pumukitwizard_simple_embed_track_form').on('submit', function(e){
         e.preventDefault();
-        $('#btn-wizard-simple-upload').prop('disabled', true);
-        $('.uploading-file-message').show();
-        $('.uploading-form').hide();
+
         var show_license = $('#pumukitwizard_simple_license_show').val();
         var submitForm = false;
-        if (show_license == "true") {
+        if (show_license === "true") {
             var license_accept = $('#pumukitwizard_simple_license_accept').is(':checked');
             if(license_accept){
                 submitForm = true;
@@ -119,38 +117,13 @@ $(function(){
             submitForm = true;
         }
         if (submitForm) {
-            var formData = new FormData($(this)[0]);
-            $.ajax({
-                    url: $(this).attr('action'),
-                    type: 'POST',
-                    data: formData,
-                    async: true,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: function(data, textStatus, jqXHR){
-                        if ('url' in data) {
-                            window.location.href = data.url;
-                        }
-                        if ('window' in parent && 'mmId' in data) {
-                            parent.window.postMessage({'mmId':data.mmId}, '*');
-                        }
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        $('#btn-wizard-simple-upload').prop('disabled', false);
-
-                        $('.uploading-file-message').hide();
-                        $('.uploading-form').show();
-                        window.alert('{% trans %}ERROR!!{% endtrans %}\n\n{% trans %}There was an error:{% endtrans %} '+ errorThrown + ' / ' + textStatus);
-                    }
-                });
-
+            uppy.upload()
         } else {
-            $('#btn-wizard-simple-upload').prop('disabled', false);
-            $('.uploading-file-message').hide();
-            $('.uploading-form').show();
-            $('#pumukitwizard_simple_error_display').show();
+            file_data_clear();
+            window.alert('{% trans %}ERROR!!{% endtrans %}\n\n{% trans %}There was an error{% endtrans %}');
+            return false;
         }
+
         return false;
     });
 
