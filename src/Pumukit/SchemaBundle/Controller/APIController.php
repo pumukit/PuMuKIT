@@ -55,9 +55,9 @@ class APIController extends Controller implements NewAdminControllerInterface
         $mmRepo = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
         $serializer = $this->get('jms_serializer');
 
-        $limit = $request->get('limit');
-        $page = $request->get('page');
-        $skip = $request->get('skip');
+        $limit = (int) $request->get('limit');
+        $page = (int) $request->get('page');
+        $skip = (int) $request->get('skip');
 
         try {
             $criteria = $this->getMultimediaObjectCriteria($request->get('criteria'), $request->get('criteriajson'));
@@ -121,9 +121,9 @@ class APIController extends Controller implements NewAdminControllerInterface
     {
         $seriesRepo = $this->get('doctrine_mongodb')->getRepository(Series::class);
         $serializer = $this->get('jms_serializer');
-        $limit = $request->get('limit');
-        $page = $request->get('page');
-        $skip = $request->get('skip');
+        $limit = (int) $request->get('limit');
+        $page = (int) $request->get('page');
+        $skip = (int) $request->get('skip');
 
         try {
             $criteria = $this->getCriteria($request->get('criteria'), $request->get('criteriajson'));
