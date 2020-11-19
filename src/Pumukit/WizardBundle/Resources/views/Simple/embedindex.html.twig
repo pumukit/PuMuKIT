@@ -3,6 +3,18 @@
 {% block stylesheets %}
     {{ parent() }}
     <link href="{{ asset('/bundles/pumukitwizard/css/nav-wizard.bootstrap.css') }}" rel="stylesheet">
+    <link href="https://releases.transloadit.com/uppy/v1.22.0/uppy.min.css" rel="stylesheet">
+    <style>
+        .uppy-FileInput-btn {
+            border: 1px solid #ccc;
+            color: #000;
+        }
+        .uppy-FileInput-btn:hover {
+            border: 1px solid #000;
+            background-color: transparent;
+            color: #000;
+        }
+    </style>
 {% endblock stylesheets %}
 
 {% block javascripts %}
@@ -17,38 +29,30 @@
 {% endblock %}
 
 {% block body %}
-    <h3> {% trans %}Upload local file{% endtrans %}</h3>
-    <div class="row uploading-file-message" style="padding-top: 50px; display:none;">
-        <div class="col-md-12">
-            <div class="well">
-                <h2 class="text-center">{% trans %}Uploading file{% endtrans %}</h2>
-                <div class="loader">Loading...</div>
-            </div>
-        </div>
-    </div>
+    {% if series.id is defined %}
+        {% set pathToUpload = path('pumukitwizard_simple_embedupload', {'id': series.id, 'externalData': externalData}) %}
+    {% else %}
+        {% set pathToUpload = path('pumukitwizard_simple_embedupload', {'id': 'notId', 'externalData': externalData}) %}
+    {% endif %}
+
+    <h3>{{ "Upload local file"|trans }}</h3>
     <div class="row uploading-form" style="padding-top: 50px;">
         <div class="col-md-12">
             <div class="well">
-                <form id="pumukitwizard_simple_embed_track_form" enctype="multipart/form-data"
-                    {% if series.id is defined %}
-                        action="{{ path('pumukitwizard_simple_embedupload', {'id': series.id, 'externalData': externalData}) }}" method="POST">
-                    {% else %}
-                        action="{{ path('pumukitwizard_simple_embedupload', {'id': 'notId', 'externalData': externalData}) }}" method="POST">
-                    {% endif %}
+                <form id="pumukitwizard_simple_embed_track_form" enctype="multipart/form-data" method="POST">
                     <input type="hidden" id="pumukitwizard_simple_license_show" value="{{ show_license ? 'true':'false' }}"/>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="text-right">
                                 <button id="btn-wizard-simple-upload" type="submit" class="btn btn-pumukit btn-raised">
-                                    {% trans %}Upload{% endtrans %}
+                                    {{ "Upload"|trans }}
                                 </button>
                             </div>
                         </div>
                     </div>
 
-
                     <fieldset>
-                        <legend hidden>{% trans %}Upload local file{% endtrans %}</legend>
+                        <legend hidden>{{ "Upload local file"|trans }}</legend>
                         <div class="col-md-6">
                             {% if show_simple_mm_title %}
                                 {% include 'PumukitWizardBundle:Simple:multimediaobjecttitle.html.twig' %}
@@ -56,8 +60,8 @@
                             {% if show_simple_series_title %}
                                 {% include 'PumukitWizardBundle:Simple:seriestitle.html.twig' %}
                             {% endif %}
-                            <div class="form-group" id="pumukitwizard_track_language">
-                                <label for="pumukitwizard_track_language" class="control-label">{% trans %}Video/Audio language{% endtrans %}</label>
+                            <div class="form-group">
+                                <label for="pumukitwizard_track_language" class="control-label">{{ "Video/Audio language"|trans }}</label>
                                 <select id="pumukitwizard_track_language" name="language" class="form-control">
                                     {% for locale, language in languages %}
                                         <option value="{{ locale }}" {{ (locale == app.request.getLocale())?'selected="selected"':'' }}>
@@ -67,18 +71,29 @@
                                 </select>
                             </div>
 
-                            <div class="form-group" id="pumukitwizard_track_file">
-                                <label for="url" class="control-label">
-                                    {% trans %}Audio/video file{% endtrans %}:
+                            <div class="form-group">
+                                <label for="url" class="control-label">{{ "Audio/video file"|trans }}:
+                                    <span style="color: red">
+                                        ({{ "Max."|trans }} {{ php_upload_max_filesize() }})
+                                    </span>
                                 </label>
-                                <div class="input-group">
-                                    <input type="file" name="resource" id="resource" value="" size="70" accept="audio/*,video/mp4,video/x-m4v,video/*" required="required">
-                                    <span style="color: blue">
-                                        ({% trans %}Under{% endtrans %} {{ php_upload_max_filesize() }})
-                                    </span>
-                                    <span id="file_upload_progress" style="color:blue; display:none;">
-                                        {% trans %}Progress{% endtrans %}...
-                                    </span>
+                                <div class="UppyForm">
+                                    <h5>Uppy was not loaded — slow connection, unsupported browser, weird JS error on a page — but the upload still works, because HTML is cool like that</h5>
+                                    <input id="wizard-input-file" type="file" name="resource[]">
+                                </div>
+                                <div class="grid">
+                                    <div class="column-full">
+                                        <div class="UppyInput"></div>
+                                        <div class="UppyInput-Progress"></div>
+                                    </div>
+                                </div>
+                                <div class="file-data" style="display:none;">
+                                    <p><b>{{ "File to upload"|trans }}:</b></p>
+                                    <span class="label label-default file-title"></span>
+                                    <span class="label label-primary file-size"></span>
+                                    <a href="#" id="uppy-remove-file" class="file-id uppy-remove-file" style="margin-left:10px;">
+                                        <i class="glyphicon glyphicon-remove"></i>
+                                    </a>
                                 </div>
                             </div>
                             {% if show_license %}
@@ -90,4 +105,10 @@
             </div>
         </div>
     </div>
+
+    <script src="https://releases.transloadit.com/uppy/v1.22.0/uppy.min.js"></script>
+    <script>
+        formElement = document.getElementById('pumukitwizard_simple_embed_track_form');
+        {% include "PumukitWizardBundle:Simple:uppy_xhr.js.twig" %}
+    </script>
 {% endblock %}
