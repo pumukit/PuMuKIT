@@ -3,6 +3,8 @@
 namespace Pumukit\EncoderBundle\EventListener;
 
 use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Event\TrackEvent;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -28,6 +30,31 @@ class RemoveListener
         $relatedJob = $jobRepo->findOneBy(['path_end' => $trackPath, 'mm_id' => $multimediaObject->getId()]);
         if ($relatedJob) {
             $jobService->deleteJob($relatedJob->getId());
+        }
+
+        if ($this->checkIfMultimediaObjectHaveJustMasterTrack($multimediaObject)) {
+            $this->removeEncodedTagOnMasterTrack($multimediaObject);
+        }
+    }
+
+    public function checkIfMultimediaObjectHaveJustMasterTrack(MultimediaObject $multimediaObject): bool
+    {
+        $tracks = $multimediaObject->getTracks();
+        if (1 === count($tracks)) {
+            $masterTrack = $multimediaObject->getMaster();
+            if ($masterTrack) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function removeEncodedTagOnMasterTrack(MultimediaObject $multimediaObject): void
+    {
+        $masterTrack = $multimediaObject->getMaster();
+        if ($masterTrack instanceof Track) {
+            $masterTrack->removeTag('ENCODED_PUCHWEBTV');
         }
     }
 }
