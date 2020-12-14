@@ -62,6 +62,13 @@
             <tag name="kernel.event_listener" event="personwithrole.delete" method="postUpdate" />
         </service>
 
+        <service id="pumukit_schema.schema.multimedia_object_add_owner" class="Pumukit\SchemaBundle\EventListener\MultimediaObjectAddOwnerListener">
+            <argument type="service" id="pumukit_notification.sender" />
+            <argument>%pumukit_schema.multimedia_object_add_owner_subject%</argument>
+            <argument>%pumukit_schema.multimedia_object_add_owner_template%</argument>
+            <tag name="kernel.event_listener" event="multimedia_object.add_owner" method="add" />
+        </service>
+
         <service id="pumukitschema.factory" class="Pumukit\SchemaBundle\Services\FactoryService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager" />
             <argument type="service" id="pumukitschema.tag" />
@@ -227,7 +234,9 @@
             <argument type="service" id="pumukitschema.user_dispatcher" />
             <argument type="service" id="pumukitschema.permission"/>
             <argument type="service" id="pumukitschema.permissionprofile"/>
+            <argument type="service" id="pumukitschema.multimediaobject_dispatcher" />
             <argument>%pumukitschema.personal_scope_delete_owners%</argument>
+            <argument>%pumukit_schema.send_email_on_user_added_as_owner%</argument>
         </service>
 
         <service id="pumukitschema.group" class="Pumukit\SchemaBundle\Services\GroupService">

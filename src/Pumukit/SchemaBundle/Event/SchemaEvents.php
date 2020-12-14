@@ -83,6 +83,11 @@ final class SchemaEvents
     const MULTIMEDIAOBJECT_DELETE = 'multimediaobject.delete';
 
     /**
+     * This event is thrown each time a owner is added on multimedia object.
+     */
+    const MULTIMEDIA_OBJECT_ADD_OWNER = 'multimedia_object.add_owner';
+
+    /**
      * The material.create event is thrown each time a
      * material is created.
      *

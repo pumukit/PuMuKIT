@@ -21,18 +21,18 @@ class UserService
     private $personalScopeDeleteOwners;
     private $dispatcher;
     private $permissionProfileService;
+    private $multimediaObjectEventDispatcherService;
+    private $sendEmailWhenAddUserOwner;
 
-    /**
-     * UserService constructor.
-     *
-     * @param DocumentManager            $documentManager
-     * @param UserEventDispatcherService $dispatcher
-     * @param PermissionService          $permissionService
-     * @param PermissionProfileService   $permissionProfileService
-     * @param bool                       $personalScopeDeleteOwners
-     */
-    public function __construct(DocumentManager $documentManager, UserEventDispatcherService $dispatcher, PermissionService $permissionService, PermissionProfileService $permissionProfileService, $personalScopeDeleteOwners = false)
-    {
+    public function __construct(
+        DocumentManager $documentManager,
+        UserEventDispatcherService $dispatcher,
+        PermissionService $permissionService,
+        PermissionProfileService $permissionProfileService,
+        MultimediaObjectEventDispatcherService $multimediaObjectEventDispatcherService,
+        $personalScopeDeleteOwners = false,
+        $sendEmailWhenAddUserOwner = false
+    ) {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository(User::class);
         $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
@@ -40,8 +40,10 @@ class UserService
         $this->groupRepo = $this->dm->getRepository(Group::class);
         $this->permissionService = $permissionService;
         $this->dispatcher = $dispatcher;
+        $this->multimediaObjectEventDispatcherService = $multimediaObjectEventDispatcherService;
         $this->personalScopeDeleteOwners = $personalScopeDeleteOwners;
         $this->permissionProfileService = $permissionProfileService;
+        $this->sendEmailWhenAddUserOwner = $sendEmailWhenAddUserOwner;
     }
 
     /**
@@ -678,6 +680,9 @@ class UserService
                 $owners[] = $user->getId();
                 $object->setProperty('owners', $owners);
                 $this->dm->persist($object);
+                if ($this->sendEmailWhenAddUserOwner && $object instanceof MultimediaObject) {
+                    $this->multimediaObjectEventDispatcherService->dispatchMultimediaObjectAddOwner($object, $user);
+                }
             }
             if ($executeFlush) {
                 $this->dm->flush();
