@@ -35,9 +35,9 @@ class MultimediaObjectAddOwnerListener
 
     private function sendNotificationEmail(MultimediaObject $multimediaObject, UserInterface $user): void
     {
-        $subject = implode(" ", [
+        $subject = implode(' ', [
             $this->getPredefinedSubject(),
-            $multimediaObject->getTitle()
+            $multimediaObject->getTitle(),
         ]);
 
         $this->senderService->sendNotification(

@@ -680,7 +680,7 @@ class UserService
                 $owners[] = $user->getId();
                 $object->setProperty('owners', $owners);
                 $this->dm->persist($object);
-                if($this->sendEmailWhenAddUserOwner && $object instanceof MultimediaObject) {
+                if ($this->sendEmailWhenAddUserOwner && $object instanceof MultimediaObject) {
                     $this->multimediaObjectEventDispatcherService->dispatchMultimediaObjectAddOwner($object, $user);
                 }
             }

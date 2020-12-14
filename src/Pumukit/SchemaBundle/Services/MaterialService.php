@@ -130,7 +130,6 @@ class MaterialService
             $formData['i18n_name'] = $i18nName;
         }
 
-
         $material = $this->saveFormData($material, $formData);
 
         $path = $materialFile->move($this->targetPath.'/'.$multimediaObject->getId(), $materialFile->getClientOriginalName());
