@@ -22,6 +22,18 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+            ->booleanNode('send_email_on_user_added_as_owner')
+            ->defaultFalse()
+            ->info('Activate send email on user added as owner')
+            ->end()
+            ->scalarNode('multimedia_object_add_owner_subject')
+            ->defaultValue('PuMuKIT - Added as owner on multimedia object')
+            ->info('Email subject on event add owner to multimedia object')
+            ->end()
+            ->scalarNode('multimedia_object_add_owner_template')
+            ->defaultValue('PumukitNewAdminBundle:MultimediaObject:AddOwner/email.html.twig')
+            ->info('Email template on add owner to multimedia object')
+            ->end()
             ->scalarNode('default_copyright')
             ->defaultValue('')
             ->info('Default copyright MultimediaObject')

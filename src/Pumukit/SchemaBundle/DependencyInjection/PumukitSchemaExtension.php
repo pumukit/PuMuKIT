@@ -35,6 +35,9 @@ class PumukitSchemaExtension extends Extension
         $container->setParameter('pumukitschema.personal_scope_delete_owners', $config['personal_scope_delete_owners']);
         $container->setParameter('pumukitschema.external_permissions', $config['external_permissions']);
         $container->setParameter('pumukitschema.gen_user_salt', $config['gen_user_salt']);
+        $container->setParameter('pumukit_schema.multimedia_object_add_owner_subject', $config['multimedia_object_add_owner_subject']);
+        $container->setParameter('pumukit_schema.multimedia_object_add_owner_template', $config['multimedia_object_add_owner_template']);
+        $container->setParameter('pumukit_schema.send_email_on_user_added_as_owner', $config['send_email_on_user_added_as_owner']);
 
         // To use with CAS (rewrite session_id with the CAS ticket)
         $container->setParameter('security.authentication.session_strategy.strategy', SessionAuthenticationStrategy::NONE);
