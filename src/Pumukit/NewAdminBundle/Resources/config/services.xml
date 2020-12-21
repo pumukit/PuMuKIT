@@ -122,6 +122,13 @@
 
         <service id="pumukitnewadmin.translatecontroller" class="Pumukit\NewAdminBundle\Controller\TranslateController"/>
 
+        <service id="pumukitnewadmin.owner" class="Pumukit\NewAdminBundle\Services\OwnerService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument type="service" id="pumukitschema.multimedia_object"/>
+            <argument type="service" id="pumukitschema.personwithrole_dispatcher"/>
+            <argument>%pumukitschema.personal_scope_role_code%</argument>
+        </service>
+
     </services>
 
 </container>

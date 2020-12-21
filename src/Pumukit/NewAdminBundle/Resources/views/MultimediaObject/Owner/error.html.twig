@@ -1,0 +1,11 @@
+{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+
+{% block body %}
+    <br />
+    <div class="well text-center">
+        <h2>{% trans %}Error on reject of a publication{% endtrans %}</h2>
+        <p>{% trans %}Check the URL is valid.{% endtrans %}</p>
+        <p>{{ message|trans }}</p>
+        <p><a class="btn btn-pumukit" href="{{ path('pumukitnewadmin_series_index') }}">{% trans %}Back to index{% endtrans %}</a></p>
+    </div>
+{% endblock %}

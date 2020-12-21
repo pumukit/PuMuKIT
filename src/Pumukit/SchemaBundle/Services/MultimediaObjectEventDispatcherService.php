@@ -88,9 +88,9 @@ class MultimediaObjectEventDispatcherService
         $this->dispatcher->dispatch(SchemaEvents::MULTIMEDIAOBJECT_CLONE, $event);
     }
 
-    public function dispatchMultimediaObjectAddOwner(MultimediaObject $multimediaObject, UserInterface $user): void
+    public function dispatchMultimediaObjectAddOwner(MultimediaObject $multimediaObject, UserInterface $user, UserInterface $coOwner): void
     {
-        $event = new MultimediaObjectAddOwnerEvent($multimediaObject, $user);
+        $event = new MultimediaObjectAddOwnerEvent($multimediaObject, $user, $coOwner);
         $this->dispatcher->dispatch(SchemaEvents::MULTIMEDIA_OBJECT_ADD_OWNER, $event);
     }
 }
