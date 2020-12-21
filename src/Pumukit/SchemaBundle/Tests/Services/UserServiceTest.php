@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\EventListener\PermissionProfileListener;
 use Pumukit\SchemaBundle\Security\Permission;
+use Pumukit\SchemaBundle\Services\MultimediaObjectEventDispatcherService;
 use Pumukit\SchemaBundle\Services\PermissionProfileEventDispatcherService;
 use Pumukit\SchemaBundle\Services\PermissionProfileService;
 use Pumukit\SchemaBundle\Services\PermissionService;
@@ -16,6 +17,7 @@ use Pumukit\SchemaBundle\Services\UserEventDispatcherService;
 use Pumukit\SchemaBundle\Services\UserService;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 /**
  * @internal
@@ -41,6 +43,7 @@ class UserServiceTest extends WebTestCase
         $dispatcher = new EventDispatcher();
         $userDispatcher = new UserEventDispatcherService($dispatcher);
         $permissionProfileDispatcher = new PermissionProfileEventDispatcherService($dispatcher);
+        $multimediaObjectEventDispatcher = new MultimediaObjectEventDispatcherService($dispatcher);
         $permissionService = new PermissionService($this->dm);
         $permissionProfileService = new PermissionProfileService(
             $this->dm,
@@ -51,14 +54,19 @@ class UserServiceTest extends WebTestCase
             ->get('logger')
         ;
 
+        $tokenStorage = new TokenStorage();
         $personalScopeDeleteOwners = false;
+        $sendEmailWhenAddUserOwner = false;
 
         $this->userService = new UserService(
             $this->dm,
             $userDispatcher,
             $permissionService,
             $permissionProfileService,
-            $personalScopeDeleteOwners
+            $multimediaObjectEventDispatcher,
+            $tokenStorage,
+            $personalScopeDeleteOwners,
+            $sendEmailWhenAddUserOwner
         );
 
         $listener = new PermissionProfileListener($this->dm, $this->userService, $this->logger);
