@@ -12,11 +12,13 @@ class MultimediaObjectAddOwnerEvent extends Event
 {
     protected $multimediaObject;
     protected $user;
+    protected $coOwner;
 
-    public function __construct(MultimediaObject $multimediaObject, UserInterface $user)
+    public function __construct(MultimediaObject $multimediaObject, UserInterface $user, UserInterface $coOwner)
     {
         $this->multimediaObject = $multimediaObject;
         $this->user = $user;
+        $this->coOwner = $coOwner;
     }
 
     public function getMultimediaObject(): MultimediaObject
@@ -27,5 +29,10 @@ class MultimediaObjectAddOwnerEvent extends Event
     public function getUser(): UserInterface
     {
         return $this->user;
+    }
+
+    public function getCoOwner(): UserInterface
+    {
+        return $this->coOwner;
     }
 }

@@ -1,0 +1,20 @@
+{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+{% block body %}
+    <div class="well text-center">
+        <h2>{% trans %}Reject/report of publication in my name{% endtrans %}</h2>
+        <p>{% trans %}You've been deleted as owner of the following multimedia object{% endtrans %}:</p>
+        <ul style="list-style-type: none;">
+            <li>
+                <strong>{% trans %}Multimedia Object Id{% endtrans %}:</strong> {{ multimedia_object_id }}
+            </li>
+            <li>
+                <strong>{% trans %}Multimedia Object Title{% endtrans %}:</strong> {{ multimedia_object_title }}
+            </li>
+            <li>
+                <strong>{% trans %}Belongs to Series{% endtrans %}:</strong> {{ series_title }}
+            </li>
+        </ul>
+        <p>{% trans %}NOTE: This is an URL of one single use, if you attempt to access it again, an error message will be shown.{% endtrans %}</p>
+        <p><a class="btn btn-pumukit" href="{{ path('pumukitnewadmin_series_index') }}">{% trans %}Back to index{% endtrans %}</a></p>
+    </div>
+{% endblock %}

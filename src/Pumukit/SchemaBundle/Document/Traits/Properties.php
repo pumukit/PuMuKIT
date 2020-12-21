@@ -36,9 +36,7 @@ trait Properties
     /**
      * Get property, null if none.
      *
-     * @param string $key
-     *
-     * @return string|null
+     * @param mixed $key
      */
     public function getProperty($key)
     {

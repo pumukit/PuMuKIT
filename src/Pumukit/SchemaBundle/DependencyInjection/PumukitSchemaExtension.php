@@ -38,6 +38,7 @@ class PumukitSchemaExtension extends Extension
         $container->setParameter('pumukit_schema.multimedia_object_add_owner_subject', $config['multimedia_object_add_owner_subject']);
         $container->setParameter('pumukit_schema.multimedia_object_add_owner_template', $config['multimedia_object_add_owner_template']);
         $container->setParameter('pumukit_schema.send_email_on_user_added_as_owner', $config['send_email_on_user_added_as_owner']);
+        $container->setParameter('pumukit_schema.user_can_reject_owner_of_multimedia_object', $config['user_can_reject_owner_of_multimedia_object']);
 
         // To use with CAS (rewrite session_id with the CAS ticket)
         $container->setParameter('security.authentication.session_strategy.strategy', SessionAuthenticationStrategy::NONE);

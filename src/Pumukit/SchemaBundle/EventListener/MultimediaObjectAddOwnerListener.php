@@ -29,11 +29,12 @@ class MultimediaObjectAddOwnerListener
     {
         $multimediaObject = $event->getMultimediaObject();
         $user = $event->getUser();
+        $coOwner = $event->getCoOwner();
 
-        $this->sendNotificationEmail($multimediaObject, $user);
+        $this->sendNotificationEmail($multimediaObject, $user, $coOwner);
     }
 
-    private function sendNotificationEmail(MultimediaObject $multimediaObject, UserInterface $user): void
+    private function sendNotificationEmail(MultimediaObject $multimediaObject, UserInterface $user, UserInterface $coOwner): void
     {
         $subject = implode(' ', [
             $this->getPredefinedSubject(),
@@ -44,7 +45,7 @@ class MultimediaObjectAddOwnerListener
             $user->getEmail(),
             $subject,
             $this->getPredefinedEmailTemplate(),
-            $this->generateParametersForEmail($multimediaObject, $user, $subject),
+            $this->generateParametersForEmail($multimediaObject, $user, $coOwner, $subject),
             false
         );
     }
@@ -59,12 +60,13 @@ class MultimediaObjectAddOwnerListener
         return $this->addedOwnerEmailTemplate;
     }
 
-    private function generateParametersForEmail(MultimediaObject $multimediaObject, UserInterface $user, string $subject): array
+    private function generateParametersForEmail(MultimediaObject $multimediaObject, UserInterface $user, UserInterface $coOwner, string $subject): array
     {
         return [
             'platform_name' => $this->senderService->getPlatformName(),
             'subject' => $subject,
             'user' => $user,
+            'coOwner' => $coOwner,
             'multimediaObject' => $multimediaObject,
             'sender_name' => $this->senderService->getSenderName(),
         ];

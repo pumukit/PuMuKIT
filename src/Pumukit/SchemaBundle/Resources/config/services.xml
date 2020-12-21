@@ -235,6 +235,7 @@
             <argument type="service" id="pumukitschema.permission"/>
             <argument type="service" id="pumukitschema.permissionprofile"/>
             <argument type="service" id="pumukitschema.multimediaobject_dispatcher" />
+            <argument type="service" id="security.token_storage" />
             <argument>%pumukitschema.personal_scope_delete_owners%</argument>
             <argument>%pumukit_schema.send_email_on_user_added_as_owner%</argument>
         </service>
