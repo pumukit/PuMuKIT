@@ -13,7 +13,6 @@
         "ext-mongodb": "*",
         "ext-sysvsem": "*",
         "api-platform/api-pack": "^1.2",
-        "doctrine/mongodb-odm": "~2",
         "doctrine/mongodb-odm-bundle": "~4",
         "friendsofsymfony/user-bundle": "dev-master",
         "gedmo/doctrine-extensions": "dev-master",
