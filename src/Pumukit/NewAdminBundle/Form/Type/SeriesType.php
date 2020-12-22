@@ -7,6 +7,7 @@ use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nAdvanceType;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
 use Pumukit\NewAdminBundle\Form\Type\Other\Html5dateType;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Security\Permission;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -15,12 +16,19 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class SeriesType extends AbstractType
 {
     private $translator;
     private $locale;
     private $disablePudenew;
+    private $authorizationChecker;
+
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
+    {
+        $this->authorizationChecker = $authorizationChecker;
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -28,19 +36,31 @@ class SeriesType extends AbstractType
         $this->locale = $options['locale'];
         $this->disablePudenew = $options['disable_PUDENEW'];
 
-        $builder
-            ->add(
-                'announce',
-                CheckboxType::class,
-                [
-                    'label_attr' => $this->disablePudenew ? ['class' => 'pmk_disabled_checkbox'] : [],
-                    'disabled' => $this->disablePudenew,
-                    'required' => false,
-                    'attr' => ['aria-label' => $this->translator->trans('Last Added (Announced)', [], null, $this->locale)],
-                    'label' => $this->translator->trans('Last Added (Announced)', [], null, $this->locale),
-                ]
-            )
-            ->add(
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_LAST_ANNOUNCES)) {
+            $builder
+                ->add(
+                    'announce',
+                    CheckboxType::class,
+                    [
+                        'label_attr' => $this->disablePudenew ? ['class' => 'pmk_disabled_checkbox'] : [],
+                        'disabled' => $this->disablePudenew,
+                        'required' => false,
+                        'attr' => [
+                            'aria-label' => $this->translator->trans(
+                                'Last Added (Announced)',
+                                [],
+                                null,
+                                $this->locale
+                            ),
+                        ],
+                        'label' => $this->translator->trans('Last Added (Announced)', [], null, $this->locale),
+                    ]
+                )
+            ;
+        }
+
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_DISPLAY)) {
+            $builder->add(
                 'hide',
                 CheckboxType::class,
                 [
@@ -48,15 +68,17 @@ class SeriesType extends AbstractType
                     'attr' => ['aria-label' => $this->translator->trans('Hide', [], null, $this->locale)],
                     'label' => $this->translator->trans('Hide', [], null, $this->locale),
                 ]
-            )
-            ->add(
-                'i18n_title',
-                TextI18nType::class,
-                [
-                    'attr' => ['aria-label' => $this->translator->trans('Title', [], null, $this->locale)],
-                    'label' => $this->translator->trans('Title', [], null, $this->locale),
-                ]
-            )
+            );
+        }
+
+        $builder->add(
+            'i18n_title',
+            TextI18nType::class,
+            [
+                'attr' => ['aria-label' => $this->translator->trans('Title', [], null, $this->locale)],
+                'label' => $this->translator->trans('Title', [], null, $this->locale),
+            ]
+        )
             ->add(
                 'i18n_subtitle',
                 TextI18nType::class,
@@ -87,7 +109,10 @@ class SeriesType extends AbstractType
                     'label' => $this->translator->trans('Comments', [], null, $this->locale),
                 ]
             )
-            ->add(
+            ;
+
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_KEYWORDS)) {
+            $builder->add(
                 'i18n_keyword',
                 TextI18nAdvanceType::class,
                 [
@@ -98,8 +123,11 @@ class SeriesType extends AbstractType
                     ],
                     'label' => $this->translator->trans('Keywords', [], null, $this->locale),
                 ]
-            )
-            ->add(
+            );
+        }
+
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_CHANNELS)) {
+            $builder->add(
                 'series_type',
                 null,
                 [
@@ -107,8 +135,11 @@ class SeriesType extends AbstractType
                     'attr' => ['aria-label' => $this->translator->trans('Channel', [], null, $this->locale)],
                     'label' => $this->translator->trans('Channel', [], null, $this->locale),
                 ]
-            )
-            ->add(
+            );
+        }
+
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_STYLE)) {
+            $builder->add(
                 'series_style',
                 null,
                 [
@@ -116,17 +147,21 @@ class SeriesType extends AbstractType
                     'attr' => ['aria-label' => $this->translator->trans('Series Style', [], null, $this->locale)],
                     'label' => $this->translator->trans('Series Style', [], null, $this->locale),
                 ]
-            )
-            ->add(
-                'public_date',
-                Html5dateType::class,
-                [
-                    'data_class' => 'DateTime',
-                    'attr' => ['aria-label' => $this->translator->trans('Publication Date', [], null, $this->locale)],
-                    'label' => $this->translator->trans('Publication Date', [], null, $this->locale),
-                ]
-            )
-            ->add(
+            );
+        }
+
+        $builder->add(
+            'public_date',
+            Html5dateType::class,
+            [
+                'data_class' => 'DateTime',
+                'attr' => ['aria-label' => $this->translator->trans('Publication Date', [], null, $this->locale)],
+                'label' => $this->translator->trans('Publication Date', [], null, $this->locale),
+            ]
+        );
+
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_HTML_CONFIGURATION)) {
+            $builder->add(
                 'i18n_header',
                 TextareaI18nType::class,
                 [
@@ -139,20 +174,24 @@ class SeriesType extends AbstractType
                     'label' => $this->translator->trans('Header Text', [], null, $this->locale),
                 ]
             )
-            ->add(
-                'i18n_footer',
-                TextareaI18nType::class,
-                [
-                    'required' => false,
-                    'attr' => [
-                        'groupclass' => 'hidden-naked',
-                        'style' => 'resize:vertical;',
-                        'aria-label' => $this->translator->trans('Footer Text', [], null, $this->locale),
-                    ],
-                    'label' => $this->translator->trans('Footer Text', [], null, $this->locale),
-                ]
-            )
-            ->add(
+                ->add(
+                    'i18n_footer',
+                    TextareaI18nType::class,
+                    [
+                        'required' => false,
+                        'attr' => [
+                            'groupclass' => 'hidden-naked',
+                            'style' => 'resize:vertical;',
+                            'aria-label' => $this->translator->trans('Footer Text', [], null, $this->locale),
+                        ],
+                        'label' => $this->translator->trans('Footer Text', [], null, $this->locale),
+                    ]
+                )
+            ;
+        }
+
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_HEADLINE)) {
+            $builder->add(
                 'i18n_line2',
                 TextareaI18nType::class,
                 [
@@ -164,8 +203,11 @@ class SeriesType extends AbstractType
                     ],
                     'label' => $this->translator->trans('Headline', [], null, $this->locale),
                 ]
-            )
-            ->add(
+            );
+        }
+
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_TEMPLATE)) {
+            $builder->add(
                 'template',
                 ChoiceType::class,
                 [
@@ -188,46 +230,50 @@ class SeriesType extends AbstractType
                     'required' => true,
                     'label' => $this->translator->trans('Template', [], null, $this->locale),
                 ]
-            )
-            ->add(
-                'sorting',
-                ChoiceType::class,
-                [
-                    'choices' => array_flip(Series::$sortText),
-                    'empty_data' => null,
-                    'attr' => [
-                        'groupclass' => 'hidden-naked',
-                        'aria-label' => $this->translator->trans('Sorting', [], null, $this->locale),
-                    ],
-                    'required' => true,
-                    'label' => $this->translator->trans('Sorting', [], null, $this->locale),
-                ]
-            )
+            );
+        }
+
+        $builder->add(
+            'sorting',
+            ChoiceType::class,
+            [
+                'choices' => array_flip(Series::$sortText),
+                'empty_data' => null,
+                'attr' => [
+                    'groupclass' => 'hidden-naked',
+                    'aria-label' => $this->translator->trans('Sorting', [], null, $this->locale),
+                ],
+                'required' => true,
+                'label' => $this->translator->trans('Sorting', [], null, $this->locale),
+            ]
+        )
         ;
 
-        $builder->addEventListener(
-            FormEvents::POST_SET_DATA,
-            function (FormEvent $event) {
-                $series = $event->getData();
-                $event->getForm()->get('template')->setData($series->getProperty('template'));
-            }
-        );
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_TEMPLATE)) {
+            $builder->addEventListener(
+                FormEvents::POST_SET_DATA,
+                static function (FormEvent $event) {
+                    $series = $event->getData();
+                    $event->getForm()->get('template')->setData($series->getProperty('template'));
+                }
+            );
 
-        $builder->addEventListener(
-            FormEvents::SUBMIT,
-            function (FormEvent $event) {
-                $template = $event->getForm()->get('template')->getData();
-                $series = $event->getData();
-                $series->setProperty('template', $template);
-            }
-        );
+            $builder->addEventListener(
+                FormEvents::SUBMIT,
+                static function (FormEvent $event) {
+                    $template = $event->getForm()->get('template')->getData();
+                    $series = $event->getData();
+                    $series->setProperty('template', $template);
+                }
+            );
+        }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Pumukit\SchemaBundle\Document\Series',
+                'data_class' => Series::class,
             ]
         );
 
@@ -236,7 +282,7 @@ class SeriesType extends AbstractType
         $resolver->setRequired('disable_PUDENEW');
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'pumukitnewadmin_series';
     }

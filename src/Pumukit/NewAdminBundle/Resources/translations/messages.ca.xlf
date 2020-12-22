@@ -3525,15 +3525,15 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="CFp4TPJ" resname="i18n.multiple.Published">
         <source>i18n.multiple.Published</source>
-        <target state="translated">i18n.multiple.Publicat</target>
+        <target state="translated">Publicat</target>
       </trans-unit>
       <trans-unit id="1FBVDqa" resname="i18n.multiple.Hidden">
         <source>i18n.multiple.Hidden</source>
-        <target state="translated">i18n.multiple.Ocult</target>
+        <target state="translated">Ocult</target>
       </trans-unit>
       <trans-unit id="b1Ytm3C" resname="i18n.multiple.Blocked">
         <source>i18n.multiple.Blocked</source>
-        <target state="translated">i18n.multiple.Bloquejat</target>
+        <target state="translated">Bloquejat</target>
       </trans-unit>
       <trans-unit id="jWuw_Y7" resname="Show advanced">
         <source>Show advanced</source>
@@ -3789,7 +3789,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="gOjdGlo" resname="Recording">
         <source>Recording</source>
-        <target state="needs-translation">Recording</target>
+        <target state="translated">Enregistrament</target>
       </trans-unit>
       <trans-unit id="GyjReFW" resname="Viewed">
         <source>Viewed</source>
@@ -3801,11 +3801,11 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="5KIt_PS" resname="Error: Multimedia Object with id %id% not found">
         <source>Error: Multimedia Object with id %id% not found</source>
-        <target state="needs-translation">Error: Multimedia Object with id %id% not found</target>
+        <target state="translated">Error: no es troba l'objecte multimèdia amb l'id %id% </target>
       </trans-unit>
       <trans-unit id="eQLp7Fl" resname="Go back to">
         <source>Go back to</source>
-        <target state="needs-translation">Go back to</target>
+        <target state="translated">Tornar a </target>
       </trans-unit>
       <trans-unit id="YMfjw07" resname="my series">
         <source>my series</source>
@@ -3813,59 +3813,103 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="CZ_p4k1" resname="Show/Hide track">
         <source>Show/Hide track</source>
-        <target state="needs-translation">Show/Hide track</target>
+        <target state="translated">Mostra/Amaga la pista</target>
       </trans-unit>
       <trans-unit id="z6IKnQ2" resname="Personal profile">
         <source>Personal profile</source>
-        <target state="needs-translation">Personal profile</target>
+        <target state="translated">Perfil personal</target>
       </trans-unit>
       <trans-unit id="j_dsskm" resname="My personal profile">
         <source>My personal profile</source>
-        <target state="needs-translation">My personal profile</target>
+        <target state="translated">El meu perfil personal</target>
       </trans-unit>
       <trans-unit id="EPGZEYI" resname="My profile info">
         <source>My profile info</source>
-        <target state="needs-translation">My profile info</target>
+        <target state="translated">Informació del meu perfil</target>
       </trans-unit>
       <trans-unit id="5QtQix1" resname="Time uploaded">
         <source>Time uploaded</source>
-        <target state="needs-translation">Time uploaded</target>
+        <target state="translated">Temps de càrrega</target>
       </trans-unit>
       <trans-unit id="LZRp8Ix" resname="Your video stats">
         <source>Your video stats</source>
-        <target state="needs-translation">Your video stats</target>
+        <target state="translated">Estadístiques dels teus vídeos</target>
       </trans-unit>
       <trans-unit id="BpOx4v1" resname="Assigned videos by role">
         <source>Assigned videos by role</source>
-        <target state="needs-translation">Assigned videos by role</target>
+        <target state="translated">Vídeos assignats per el rol</target>
       </trans-unit>
       <trans-unit id="DTlgLcO" resname="Last login">
         <source>Last login</source>
-        <target state="needs-translation">Last login</target>
+        <target state="translated">Darrer inici de sessió</target>
       </trans-unit>
       <trans-unit id="RyWQrpd" resname="Provider">
         <source>Provider</source>
-        <target state="needs-translation">Provider</target>
+        <target state="translated">Proveïdor </target>
       </trans-unit>
       <trans-unit id="Rj1ftLT" resname="No groups found">
         <source>No groups found</source>
-        <target state="needs-translation">No groups found</target>
+        <target state="translated">No s'ha trobat grups</target>
       </trans-unit>
       <trans-unit id="ITD9xUa" resname="Email already in use">
         <source>Email already in use</source>
-        <target state="needs-translation">Email already in use</target>
+        <target state="translated">El correu electrònic ja s'està utilitzant</target>
       </trans-unit>
       <trans-unit id="8AEUIqw" resname="User info updated">
         <source>User info updated</source>
-        <target state="needs-translation">User info updated</target>
+        <target state="translated">Informació d'usuari actualitzada</target>
       </trans-unit>
       <trans-unit id="Jxxi_i3" resname="My profile">
         <source>My profile</source>
-        <target state="needs-translation">My profile</target>
+        <target state="translated">El meu perfil</target>
       </trans-unit>
       <trans-unit id="dclYZH3" resname="My stats">
         <source>My stats</source>
-        <target state="needs-translation">My stats</target>
+        <target state="translated">Les meves estadístiques</target>
+      </trans-unit>
+      <trans-unit id="f4d09e54e9e3e5c30365ebf536f2e4f5" resname="You're not allowed to access this link. You're not the holder user.">
+        <source>You're not allowed to access this link. You're not the holder user.</source>
+        <target>You're not allowed to access this link. You're not the holder user.</target>
+      </trans-unit>
+      <trans-unit id="839425ae7f420452b93e56bd6f0633aa" resname="This link was already used by co-owner.">
+        <source>This link was already used by co-owner.</source>
+        <target>This link was already used by co-owner.</target>
+      </trans-unit>
+      <trans-unit id="ca798e42d818eaf0bb742e3545af4f50" resname="You're not allowed to access this link. You're not the owner user of this multimedia object.">
+        <source>You're not allowed to access this link. You're not the owner user of this multimedia object.</source>
+        <target>You're not allowed to access this link. You're not the owner user of this multimedia object.</target>
+      </trans-unit>
+      <trans-unit id="bd631e7d782c3f134eba94fa25116fcd" resname="The user '%user%' has added you as co-owner of the video:">
+        <source>The user '%user%' has added you as co-owner of the video:</source>
+        <target>The user '%user%' has added you as co-owner of the video:</target>
+      </trans-unit>
+      <trans-unit id="3e1d8d5e659e87b8b3907904a9975bfa" resname="You can reject being co-owner in the following URL link:">
+        <source>You can reject being co-owner in the following URL link:</source>
+        <target>You can reject being co-owner in the following URL link:</target>
+      </trans-unit>
+      <trans-unit id="b25dbdd9f0cf292aa2e79348c6fd533d" resname="Error on reject of a publication">
+        <source>Error on reject of a publication</source>
+        <target>Error on reject of a publication</target>
+      </trans-unit>
+      <trans-unit id="29abe05fed22c6f7dc46cd7f3459ebd5" resname="Check the URL is valid.">
+        <source>Check the URL is valid.</source>
+        <target>Check the URL is valid.</target>
+      </trans-unit>
+      <trans-unit id="2528d799b77457ae4e52dcd038da26ca" resname="Back to index">
+        <source>Back to index</source>
+        <target>Back to index</target>
+      </trans-unit>
+      <trans-unit id="2f2437fb0d28c1d662c6dad6c120fb7d" resname="Reject/report of publication in my name">
+        <source>Reject/report of publication in my name</source>
+        <target>Reject/report of publication in my name</target>
+      </trans-unit>
+      <trans-unit id="507493d262a6bd30c0bb030413dda1e3" resname="You've been deleted as owner of the following multimedia object">
+        <source>You've been deleted as owner of the following multimedia object</source>
+        <target>You've been deleted as owner of the following multimedia object</target>
+      </trans-unit>
+      <trans-unit id="7587ebf6ad75aa7005b9d4d0e035def8" resname="NOTE: This is an URL of one single use, if you attempt to access it again, an error message will be shown.">
+        <source>NOTE: This is an URL of one single use, if you attempt to access it again, an error message will be shown.</source>
+        <target>NOTE: This is an URL of one single use, if you attempt to access it again, an error message will be shown.</target>
       </trans-unit>
     </body>
   </file>

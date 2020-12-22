@@ -1,7 +1,7 @@
 <div class="qa-player-tags col-xs-12 tags-info-pmk">
     {% for tag in multimediaObject.tags | filter(tag => tag.display and not tag.metatag and not tag.isDescendantOfByCod('PUBCHANNELS')) %}
         <span class="label label-default label-pmk">
-            <a href="{{ path_to_tag(tag.cod) }}">
+            <a href="{{ path_to_tag(tag.cod) }}" title="{{ tag.getTitle() }}">
                 {{ tag.title }}
             </a>
         </span>

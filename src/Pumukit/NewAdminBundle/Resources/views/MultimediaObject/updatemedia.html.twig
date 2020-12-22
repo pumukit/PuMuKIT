@@ -1,43 +1,42 @@
 <div class="well">
-  <fieldset>
-    <legend hidden>{% trans %}Update media{% endtrans %}</legend>
-    <dl>
-      <div class="form-row">
-        <dt>{% trans %}Thumbnails{% endtrans %}:</dt>
-        <dd>
-          <div id="pic_mms_{{ mm.id }}">
-	        {% include '@PumukitNewAdmin/Pic/list.html.twig' with {'resource': mm, 'resource_name': 'mms'} %}
-          </div>
-        </dd>
-      </div>
+    <fieldset>
+        <legend hidden>{% trans %}Update media{% endtrans %}</legend>
+        <dl>
+            <div class="form-row">
+                <dt>{% trans %}Thumbnails{% endtrans %}:</dt>
+                <dd>
+                    <div id="pic_mms_{{ mm.id }}">
+                        {% include 'PumukitNewAdminBundle:Pic:list.html.twig' with {'resource': mm, 'resource_name': 'mms'} %}
+                    </div>
+                </dd>
+            </div>
 
-      <div class="form-row">
-        <dt>{% trans %}Video Files{% endtrans %}:</dt>
-        <dd>
-          <div id="tracks_mms_{{ mm.id }}" style="overflow:visible;">
-	        {% include '@PumukitNewAdmin/Track/list.html.twig' with {'mm': mm, 'tracks': mm.getTracks(), 'oc': ''} %}
-          </div>
-        </dd>
-      </div>
+            <div class="form-row">
+                <dt>{% trans %}Video Files{% endtrans %}:</dt>
+                <dd>
+                    <div id="tracks_mms_{{ mm.id }}" style="overflow:visible;">
+                        {% include 'PumukitNewAdminBundle:Track:list.html.twig' with {'mm': mm, 'tracks': mm.getTracks(), 'oc': ''} %}
+                    </div>
+                </dd>
+            </div>
 
-      <div class="form-row">
-        <dt>{% trans %}Attachments{% endtrans %}:</dt>
-        <dd>
-          <div id="materials_mms_{{ mm.id }}">
-	        {% include '@PumukitNewAdmin/Material/list.html.twig' with {'mmId': mm.id, 'materials': mm.getMaterials()} %}
-          </div>
-        </dd>
-      </div>
+            <div class="form-row">
+                <dt>{% trans %}Attachments{% endtrans %}:</dt>
+                <dd>
+                    <div id="materials_mms_{{ mm.id }}">
+                        {% include 'PumukitNewAdminBundle:Material:list.html.twig' with {'mmId': mm.id, 'materials': mm.getMaterials()} %}
+                    </div>
+                </dd>
+            </div>
 
-      <div class="form-row">
-        <dt>{% trans %}Links{% endtrans %}:</dt>
-        <dd>
-          <div id="links_mms_{{ mm.id }}">
-	        {% include '@PumukitNewAdmin/Link/list.html.twig' with {'mmId': mm.id, 'links': mm.getLinks()} %}
-          </div>
-        </dd>
-    </div>
-    </dl>
-  </fieldset>
-
+            <div class="form-row">
+                <dt>{% trans %}Links{% endtrans %}:</dt>
+                <dd>
+                    <div id="links_mms_{{ mm.id }}">
+                        {% include 'PumukitNewAdminBundle:Link:list.html.twig' with {'mmId': mm.id, 'links': mm.getLinks()} %}
+                    </div>
+                </dd>
+            </div>
+        </dl>
+    </fieldset>
 </div>

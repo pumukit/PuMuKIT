@@ -28,25 +28,28 @@ class CategoriesService
     private $translator;
     private $parentCod;
     private $listGeneralParam;
+    private $excludeEmptyTags;
 
-    public function __construct(DocumentManager $documentManager, LinkService $linkService, TranslatorInterface $translator, $parentCod, $listGeneralParam)
+    public function __construct(DocumentManager $documentManager, LinkService $linkService, TranslatorInterface $translator, $parentCod, $listGeneralParam, $excludeEmptyTags)
     {
         $this->documentManager = $documentManager;
         $this->parentCod = $parentCod;
         $this->translator = $translator;
         $this->listGeneralParam = $listGeneralParam;
         $this->linkService = $linkService;
+        $this->excludeEmptyTags = $excludeEmptyTags;
     }
 
-    public function getCategoriesElements($provider)
+    public function getCategoriesElements($provider, $parentCod = null)
     {
+        $parentCod = $parentCod ?? $this->parentCod;
         $groundsRoot = $this->documentManager
             ->getRepository(Tag::class)
-            ->findOneByCod($this->parentCod)
+            ->findOneByCod($parentCod)
         ;
 
         if (!isset($groundsRoot)) {
-            throw new \Exception('The parent with cod: '.$this->parentCod.' was not found. Please add it to the Tags database or configure another categories_tag_cod in parameters.yml');
+            throw new \Exception('The parent with cod: '.$parentCod.' was not found. Please add it to the Tags database or configure another categories_tag_cod in parameters.yml');
         }
 
         $allGrounds = [];
@@ -78,24 +81,28 @@ class CategoriesService
         }
         $tagsArray = $ref;
 
-        $counterMmobjs = $this->countMmobjInTags($provider);
+        $counterMmobjs = $this->countMmobjInTags($provider, $parentCod);
         foreach ($tagsArray as $id => $parent) {
             if ('__object' == $id) {
+                continue;
+            }
+            $cod = $parent['__object']->getCod();
+            $numMmobjs = 0;
+            if (isset($counterMmobjs[$cod])) {
+                $numMmobjs += $counterMmobjs[$cod];
+            }
+            if ($this->excludeEmptyTags and $numMmobjs <= 0) {
                 continue;
             }
             $allGrounds[$id] = [];
             $allGrounds[$id]['title'] = $parent['__object']->getTitle();
             $allGrounds[$id]['url'] = $this->linkService->generatePathToTag($parent['__object']->getCod(), null, ['tags[]' => $provider]);
-            $numMmobjs = 0;
-            $cod = $parent['__object']->getCod();
-            if (isset($counterMmobjs[$cod])) {
-                $numMmobjs = $counterMmobjs[$cod];
-            }
             $allGrounds[$id]['num_mmobjs'] = $numMmobjs;
             $allGrounds[$id]['children'] = [];
 
+            $numMmobjsGeneral = $this->countGeneralMmobjsInTag($parent['__object'], $provider);
             //Add 'General' Tag
-            if ($this->listGeneralParam) {
+            if ($this->listGeneralParam && (!$this->excludeEmptyTags || $numMmobjsGeneral > 0)) {
                 $allGrounds[$id]['children']['general'] = [];
                 $allGrounds[$id]['children']['general']['title'] = $this->translator->trans(
                     'General %title%',
@@ -106,15 +113,19 @@ class CategoriesService
                     true,
                     ['tags[]' => $provider]
                 );
-                $numMmobjs = 0;
-                if (isset($counterGeneralMmobjs[$cod])) {
-                    $numMmobjs = $counterMmobjs[$cod];
-                }
-                $allGrounds[$id]['children']['general']['num_mmobjs'] = $this->countGeneralMmobjsInTag($parent['__object'], $provider);
+                $allGrounds[$id]['children']['general']['num_mmobjs'] = $numMmobjsGeneral;
                 $allGrounds[$id]['children']['general']['children'] = [];
             }
             foreach ($parent as $id2 => $child) {
                 if ('__object' == $id2) {
+                    continue;
+                }
+                $numMmobjs = 0;
+                $cod = $child['__object']->getCod();
+                if (isset($counterMmobjs[$cod])) {
+                    $numMmobjs += $counterMmobjs[$cod];
+                }
+                if ($this->excludeEmptyTags and $numMmobjs <= 0) {
                     continue;
                 }
                 $allGrounds[$id]['children'][$id2] = [];
@@ -125,11 +136,6 @@ class CategoriesService
                     ['tags[]' => $provider]
                 );
 
-                $numMmobjs = 0;
-                $cod = $child['__object']->getCod();
-                if (isset($counterMmobjs[$cod])) {
-                    $numMmobjs = $counterMmobjs[$cod];
-                }
                 $allGrounds[$id]['children'][$id2]['num_mmobjs'] = $numMmobjs;
                 $allGrounds[$id]['children'][$id2]['children'] = [];
 
@@ -147,7 +153,7 @@ class CategoriesService
                     $numMmobjs = 0;
                     $cod = $grandchild['__object']->getCod();
                     if (isset($counterMmobjs[$cod])) {
-                        $numMmobjs = $counterMmobjs[$cod];
+                        $numMmobjs += $counterMmobjs[$cod];
                     }
                     $allGrounds[$id]['children'][$id2]['children'][$id3]['num_mmobjs'] = $numMmobjs;
                 }
@@ -162,15 +168,17 @@ class CategoriesService
 
     /**
      * @param string|null $provider
+     * @param mixed|null  $parentCod
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
      * @return array
      */
-    private function countMmobjInTags($provider = null)
+    private function countMmobjInTags($provider = null, $parentCod = null)
     {
+        $parentCod = $parentCod ?? $this->parentCod;
         $multimediaObjectsColl = $this->documentManager->getDocumentCollection(MultimediaObject::class);
-        $criteria = ['status' => MultimediaObject::STATUS_PUBLISHED, 'tags.cod' => ['$all' => ['PUCHWEBTV', $this->parentCod]]];
+        $criteria = ['status' => MultimediaObject::STATUS_PUBLISHED, 'tags.cod' => ['$all' => ['PUCHWEBTV', $parentCod]]];
         $criteria['$or'] = [
             ['tracks' => ['$elemMatch' => ['tags' => 'display', 'hide' => false]], 'properties.opencast' => ['$exists' => false]],
             ['properties.opencast' => ['$exists' => true]],

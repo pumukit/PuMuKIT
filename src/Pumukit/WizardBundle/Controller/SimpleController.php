@@ -19,6 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_WIZARD_UPLOAD')")
@@ -111,6 +112,7 @@ class SimpleController extends AbstractController
             $series = $this->getSeriesByExternalData($documentManager, $externalData);
         }
 
+        $canAccessSeries = null !== $series && $this->get('pumukitschema.series')->canUserAccessSeries($this->getUser(), $series);
         $licenseContent = $licenseService->getLicenseContent($request->getLocale());
         $languages = CustomLanguageType::getLanguageNames($pumukitCustomLocales, $translator);
 
@@ -122,6 +124,7 @@ class SimpleController extends AbstractController
         }
 
         return [
+            'can_access_series' => $canAccessSeries,
             'series' => $series,
             'languages' => $languages,
             'show_license' => $licenseService->isEnabled(),
@@ -148,13 +151,27 @@ class SimpleController extends AbstractController
         $language = $request->request->get('language', $request->getLocale());
         $file = $request->files->get('resource');
 
+        if (is_array($file)) {
+            $file = $file[0];
+        }
+
         try {
             if (!$file) {
-                throw new \Exception('No file found');
+                $response = [
+                    'status' => Response::HTTP_BAD_REQUEST,
+                    'errorMessage' => $this->get('translator')->trans('No file found'),
+                ];
+
+                return new JsonResponse($response);
             }
 
             if (!$file->isValid()) {
-                throw new \Exception($file->getErrorMessage());
+                $response = [
+                    'status' => Response::HTTP_BAD_REQUEST,
+                    'errorMessage' => $this->get('translator')->trans($file->getErrorMessage()),
+                ];
+
+                return new JsonResponse($response);
             }
 
             $filePath = $file->getPathname();
@@ -163,11 +180,21 @@ class SimpleController extends AbstractController
                 //exception if is not a mediafile (video or audio)
                 $duration = $inspectionFfprobeService->getDuration($filePath);
             } catch (\Exception $e) {
-                throw new \Exception('The file is not a valid video or audio file');
+                $response = [
+                    'status' => Response::HTTP_UNSUPPORTED_MEDIA_TYPE,
+                    'errorMessage' => $this->get('translator')->trans('The file is not a valid video or audio file'),
+                ];
+
+                return new JsonResponse($response);
             }
 
             if (0 === $duration) {
-                throw new \Exception('The file is not a valid video or audio file (duration is zero)');
+                $response = [
+                    'status' => Response::HTTP_UNSUPPORTED_MEDIA_TYPE,
+                    'errorMessage' => $this->get('translator')->trans('The file is not a valid video or audio file (duration is zero)'),
+                ];
+
+                return new JsonResponse($response);
             }
 
             if (!$series) {

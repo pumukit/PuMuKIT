@@ -9,7 +9,7 @@
 </form>
 <script type="text/javascript">
  var calledAjax = false;
- var maxPage = {{ (mmobjs_total/mmobjs_limit) |round(0, 'ceil')}};
+ var maxPage = {{ ((mmobjs_total|length)/mmobjs_limit) |round(0, 'ceil')}};
  var ajaxurl = "{{url("pumukitnewadmin_playlistmms_modal_mymmobjs", {'id':playlist.id, 'modal_page':'__page__', 'modal_limit': mmobjs_limit})}}";
  var currentPage = 0;
  $("#form_my_mmobjs_list").on("scroll", function(){

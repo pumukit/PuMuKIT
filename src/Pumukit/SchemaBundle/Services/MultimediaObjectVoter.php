@@ -109,6 +109,11 @@ class MultimediaObjectVoter extends Voter
             return true;
         }
 
+        // TTK-24312 WA to show public videos with Poddium channel
+        if ($this->mmobjService->isPublished($multimediaObject, 'PUCHPODDIUM')) {
+            return true;
+        }
+
         return false;
     }
 

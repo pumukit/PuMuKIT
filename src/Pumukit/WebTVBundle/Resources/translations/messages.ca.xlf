@@ -439,7 +439,7 @@
       </trans-unit>
       <trans-unit id="CscPjL9" resname="i18n.one.Series">
         <source>i18n.one.Series</source>
-        <target state="translated">i18n.one.Sèrie</target>
+        <target state="translated">Sèrie</target>
       </trans-unit>
       <trans-unit id="FV_BbAQ" resname="Submit">
         <source>Submit</source>
@@ -707,7 +707,7 @@
       </trans-unit>
       <trans-unit id="926pIe3" resname="Wall">
         <source>Wall</source>
-        <target state="needs-translation">Wall</target>
+        <target state="translated">Destacat</target>
       </trans-unit>
       <trans-unit id="xj62cgx" resname="Private">
         <source>Private</source>

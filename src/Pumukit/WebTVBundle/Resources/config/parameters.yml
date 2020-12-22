@@ -10,6 +10,7 @@ parameters:
   limit_objs_player_series:  12                           # Limit for mmobjs to appear on the mmobj player (Default 10)
   categories_tag_cod:        UNESCO
   categories.list_general_tags:  true
+  categories.exclude_empty_tags: false
   search.parent_tag.cod:     UNESCO                      # Search controller option for the main tag search.
   search.parent_tag_2.cod:   null                         # Search controller option for the optional tag search.
   menu.announces_title:      'Latest Uploads'             # 'Announces' option title for the menu widget.

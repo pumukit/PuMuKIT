@@ -6,11 +6,7 @@
         <ul class="breadcrumb" style="margin-bottom: 5px;">
             <li class="active">
                 {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}
-                    {% if is_naked() %}
-                        {% trans %}My Series{% endtrans %}
-                    {% else %}
-                        {% trans %}My Multimedia Series{% endtrans %}
-                    {% endif %}
+                    {% trans %}My Series{% endtrans %}
                 {% else %}
                     {% trans %}Series{% endtrans %}
                 {% endif %}
@@ -27,6 +23,7 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-4">
+                            {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_SERIES_META_GROUP_LIST_OPTIONS')) %}
                             <select id="options_series" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('series', $(this), 'series');">
                                 <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
                                 <option disabled="">---</option>
@@ -37,16 +34,9 @@
                                 {% endif %}
 
                             </select>
+                            {% endif %}
                         </div>
                         <div class="col-xs-8 text-right">
-                            {#
-                            {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_WIZARD_UPLOAD')) %}
-                            <a class="btn btn-primary btn-raised" href="{{ url('pumukitwizard_default_series') }}">{% trans %}Wizard{% endtrans %}</a>
-                            {% endif %}
-                            {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADVANCED_UPLOAD')) %}
-                            <a title="{% trans %}Create new series{% endtrans %}" id="pumukitnewadmin_series_new_button" class="btn btn-pumukit btn-raised" href="#">{% trans %}New{% endtrans %}</a>
-                            {% endif %}
-                            #}
                             {% if is_granted('ROLE_ACCESS_ADVANCED_UPLOAD') or is_granted('ROLE_ACCESS_WIZARD_UPLOAD') %}
                                 <a title="{% trans %}Create new series{% endtrans %}" id="pumukitnewadmin_series_new_button" class="btn btn-pumukit btn-raised" href="#">
                                     <i class="mdi-content-add"></i>

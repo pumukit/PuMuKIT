@@ -128,28 +128,19 @@ class EmbeddedBroadcastService
         return $new;
     }
 
-    /**
-     * Get all broadcast types.
-     *
-     * @param bool $live
-     *
-     * @return array
-     */
-    public function getAllTypes($live = false)
+    public function getAllTypes(bool $live = false): array
     {
-        if ($live) {
-            return [
-                EmbeddedBroadcast::TYPE_PUBLIC => EmbeddedBroadcast::NAME_PUBLIC,
-                EmbeddedBroadcast::TYPE_PASSWORD => EmbeddedBroadcast::NAME_PASSWORD,
-            ];
-        }
-
-        return [
+        $broadcastBasicTypes = [
             EmbeddedBroadcast::TYPE_PUBLIC => EmbeddedBroadcast::NAME_PUBLIC,
             EmbeddedBroadcast::TYPE_PASSWORD => EmbeddedBroadcast::NAME_PASSWORD,
             EmbeddedBroadcast::TYPE_LOGIN => EmbeddedBroadcast::NAME_LOGIN,
-            EmbeddedBroadcast::TYPE_GROUPS => EmbeddedBroadcast::NAME_GROUPS,
         ];
+
+        if (!$live) {
+            $broadcastBasicTypes[EmbeddedBroadcast::TYPE_GROUPS] = EmbeddedBroadcast::NAME_GROUPS;
+        }
+
+        return $broadcastBasicTypes;
     }
 
     /**

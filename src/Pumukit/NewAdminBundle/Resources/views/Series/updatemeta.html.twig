@@ -47,19 +47,9 @@
                     </div>
 
                     <div class="hidden-naked">
-                        <div class="form-group">
-                            <a style="color:#666; text-decoration:underline" href="#" onclick="$('#pumukitnewadmin_series_header_banner').toggle();
-                                                              $('#pumukitnewadmin_series_i18n_header').toggle();
-                                                              $('#pumukitnewadmin_series_i18n_footer').toggle();
-                                                              $('#pumukitnewadmin_series_series_style').toggle();
-                                                              $('#html_text_arr_1').toggle();
-                                                              $('#html_text_arr_2').toggle();
-                                                              return false;">
-                                <span id="html_text_arr_1">&#9654;</span> <span style="display:none" id="html_text_arr_2">&#9660;</span>
-                                {% trans %}Show configuration{% endtrans %} <strong>HTML</strong> {% trans %}Texts.{% endtrans %}
-                                <i class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Click to show or add header/banner and footer{% endtrans %}"></i>
-                            </a>
-                        </div>
+                        {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_SERIES_META_HTML_CONFIGURATION')) %}
+                            {% include 'PumukitNewAdminBundle:Series:html_configuration.html.twig' %}
+                        {% endif %}
 
                         {% for child in form | filter(child => child.vars.id in ['pumukitnewadmin_series_i18n_header']) %}
                             <div class="hidden-naked form-group" style="display:none" id="{{ child.vars.id }}">
@@ -91,7 +81,9 @@
                             </div>
                         {% endfor %}
 
-                        {{ form_row(form['i18n_line2']) }}
+                        {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_SERIES_META_HEADLINE')) %}
+                            {{ form_row(form['i18n_line2']) }}
+                        {% endif %}
 
                         {# This iterates over all children except for the excluded ones. form_widget doesn't print the same field twice, so it works ala form_rest(form) #}
                         {% for child in form | filter(child => child.vars.id not in exclude_fields and not child.rendered) %}
@@ -103,7 +95,6 @@
         </div>
     </form>
 </div>
-
 
 <script type="text/javascript">
 

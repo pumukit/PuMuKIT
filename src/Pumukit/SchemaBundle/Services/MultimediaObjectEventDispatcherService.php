@@ -2,7 +2,9 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
+use FOS\UserBundle\Model\UserInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Event\MultimediaObjectAddOwnerEvent;
 use Pumukit\SchemaBundle\Event\MultimediaObjectCloneEvent;
 use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
@@ -52,5 +54,11 @@ class MultimediaObjectEventDispatcherService
     {
         $event = new MultimediaObjectCloneEvent($multimediaObject, $multimediaObjectCloned);
         $this->dispatcher->dispatch($event, SchemaEvents::MULTIMEDIAOBJECT_CLONE);
+    }
+
+    public function dispatchMultimediaObjectAddOwner(MultimediaObject $multimediaObject, UserInterface $user, UserInterface $coOwner): void
+    {
+        $event = new MultimediaObjectAddOwnerEvent($multimediaObject, $user, $coOwner);
+        $this->dispatcher->dispatch(SchemaEvents::MULTIMEDIA_OBJECT_ADD_OWNER, $event);
     }
 }

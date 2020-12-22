@@ -664,6 +664,8 @@ class JobService
      */
     public function createTrackWithJob(Job $job)
     {
+        $this->logger->info('Create new track with job '.$job->getId().' and profileName '.$job->getProfile());
+
         $multimediaObject = $this->getMultimediaObject($job);
 
         return $this->createTrack($multimediaObject, $job->getPathEnd(), $job->getProfile(), $job->getLanguageId(), $job->getI18nDescription(), $job->getPathIni());
@@ -681,6 +683,8 @@ class JobService
      */
     public function createTrackWithFile($pathFile, $profileName, MultimediaObject $multimediaObject, $language = null, $description = [])
     {
+        $this->logger->info('Create new track with file '.$pathFile.' and profileName '.$profileName);
+
         $profile = $this->profileService->getProfile($profileName);
 
         $pathEnd = $this->getPathEnd(

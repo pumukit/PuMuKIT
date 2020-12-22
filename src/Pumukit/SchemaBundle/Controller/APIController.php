@@ -57,9 +57,9 @@ class APIController extends AbstractController implements NewAdminControllerInte
     {
         $mmRepo = $documentManager->getRepository(MultimediaObject::class);
 
-        $limit = $request->get('limit');
-        $page = $request->get('page');
-        $skip = $request->get('skip') ?? self::API_SKIP;
+        $limit = (int) $request->get('limit');
+        $page = (int) $request->get('page');
+        $skip =  (int) ($request->get('skip') ?? self::API_SKIP);
 
         try {
             $criteria = $this->getMultimediaObjectCriteria($request->get('criteria'), $request->get('criteriajson'));
@@ -125,9 +125,9 @@ class APIController extends AbstractController implements NewAdminControllerInte
     public function seriesAction(Request $request, DocumentManager $documentManager, SerializerService $serializer)
     {
         $seriesRepo = $documentManager->getRepository(Series::class);
-        $limit = $request->get('limit');
-        $page = $request->get('page');
-        $skip = $request->get('skip') ?? self::API_SKIP;
+        $limit = (int) $request->get('limit');
+        $page = (int) $request->get('page');
+        $skip = (int) ($request->get('skip') ?? self::API_SKIP);
 
         try {
             $criteria = $this->getCriteria($request->get('criteria'), $request->get('criteriajson'));

@@ -3,7 +3,7 @@
     {% set magic_url = url('pumukit_webtv_multimediaobject_magicindex', {secret: mm.secret}) %}
 {% endif %}
 <div class="row">
-    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SHOW_MULTIMEDIA_OBJECT_INFO_URL')) %}
         <div class="background_id col-lg-12">
             <form class="form-horizontal">
                 <fieldset>
@@ -28,6 +28,7 @@
                                 <span class="input-group-addon"><i class="mdi-action-report-problem" title="{% trans %}Warning: This link will give a 404 error until this multimedia object is correctly published.{% endtrans %}"></i></span>
                             {% endif %}
                         </div>
+                        {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_MAGIC_URL')) %}
                         <label for="inputROMagicUrl" class="col-xs-2 control-label hidden-naked"
                                style=" word-break: break-all; overflow: hidden; white-space: nowrap;"
                                data-toggle="tooltip" data-placement="bottom"
@@ -53,6 +54,7 @@
                                 </a>
                             </span>
                         </div>
+                        {% endif %}
                         {% if is_published and is_playable and mm.getProperty('externalplayer')%}
                             {% if mm.getDisplayTrack() %}
                                 {% set video_url = url('pumukit_webtv_multimediaobject_index', {id: mm.id, 'track_id': mm.getDisplayTrack().getId() }) %}

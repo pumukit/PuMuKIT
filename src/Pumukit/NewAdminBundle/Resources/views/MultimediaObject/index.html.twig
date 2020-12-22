@@ -6,7 +6,15 @@
             « {% trans %}Back to series list{% endtrans %}
         </a>
         <ul class="breadcrumb" style="margin-bottom: 5px;">
-            <li><a href="{{ path('pumukitnewadmin_series_index') }}">{% trans %}Series{% endtrans %}</a></li>
+            <li>
+                <a href="{{ path('pumukitnewadmin_series_index') }}">
+                    {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}
+                        {% trans %}My Series{% endtrans %}
+                    {% else %}
+                        {% trans %}Series{% endtrans %}
+                    {% endif %}
+                </a>
+            </li>
             <li class="active">{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %} {{ series.getTitle() }}{% endif %}</li>
         </ul>
         {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
@@ -81,7 +89,7 @@
                                     </a>
                                 {% endif %}
                             {% endfor %}
-                            {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_WIZARD_UPLOAD')) %}
+                            {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_WIZARD_UPLOAD')) and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SHOW_WIZARD_BUTTON')) %}
                                 <a class="extra_button btn btn-primary btn-raised wizard_button" href="{{ url(is_naked() ? 'pumukitwizard_simple_index' : 'pumukitwizard_default_type', {'id': series.id, 'from':'mms', 'same_series': true}) }}">
                                     <i class="fas fa-rocket"></i>
                                     {% trans %}Wizard{% endtrans %}

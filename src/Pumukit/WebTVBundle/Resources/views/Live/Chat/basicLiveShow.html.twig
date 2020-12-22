@@ -11,7 +11,7 @@
                 </div>
             </div>
         </div>
-        <div id="chat-panel-body" class="panel-body" style="height:200px;">
+        <div id="chat-panel-body" class="panel-body" style="height:200px;overflow: auto;">
             <div id="chatList" style="overflow: hidden;">
                 {{ render(controller('Pumukit\\WebTVBundle\\Controller\\ChatController::listBasicAction', {'id': live.id})) }}
             </div>

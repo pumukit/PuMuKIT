@@ -6,43 +6,70 @@ use Pumukit\SchemaBundle\Document\PermissionProfile;
 
 class Permission
 {
-    const ACCESS_DASHBOARD = 'ROLE_ACCESS_DASHBOARD';
-    const ACCESS_MULTIMEDIA_SERIES = 'ROLE_ACCESS_MULTIMEDIA_SERIES';
-    const ACCESS_LIVE_CHANNELS = 'ROLE_ACCESS_LIVE_CHANNELS';
-    const ACCESS_LIVE_EVENTS = 'ROLE_ACCESS_LIVE_EVENTS';
-    const ACCESS_JOBS = 'ROLE_ACCESS_JOBS';
-    const ACCESS_PEOPLE = 'ROLE_ACCESS_PEOPLE';
-    const SHOW_PEOPLE_MENU = 'ROLE_SHOW_PEOPLE_MENU';
-    const ACCESS_TAGS = 'ROLE_ACCESS_TAGS';
-    const ACCESS_SERIES_TYPES = 'ROLE_ACCESS_SERIES_TYPES';
-    const ACCESS_ADMIN_USERS = 'ROLE_ACCESS_ADMIN_USERS';
-    const ACCESS_PERMISSION_PROFILES = 'ROLE_ACCESS_PERMISSION_PROFILES';
-    const ACCESS_ROLES = 'ROLE_ACCESS_ROLES';
-    const ACCESS_GROUPS = 'ROLE_ACCESS_GROUPS';
-    const CHANGE_MMOBJECT_STATUS = 'ROLE_CHANGE_MMOBJECT_STATUS';
-    const CHANGE_MMOBJECT_PUBCHANNEL = 'ROLE_CHANGE_MMOBJECT_PUBCHANNEL';
-    const ACCESS_PUBLICATION_TAB = 'ROLE_ACCESS_PUBLICATION_TAB';
-    const ACCESS_ADVANCED_UPLOAD = 'ROLE_ACCESS_ADVANCED_UPLOAD';
-    const ACCESS_EDIT_PLAYLIST = 'ROLE_ACCESS_EDIT_PLAYLIST';
-    const ACCESS_WIZARD_UPLOAD = 'ROLE_ACCESS_WIZARD_UPLOAD';
-    const SHOW_WIZARD_MENU = 'ROLE_SHOW_WIZARD_MENU';
-    const ACCESS_API = 'ROLE_ACCESS_API';
-    const ACCESS_INBOX = 'ROLE_ACCESS_INBOX';
-    const MODIFY_OWNER = 'ROLE_MODIFY_OWNER';
-    const ADD_OWNER = 'ROLE_ADD_OWNER';
-    const INIT_STATUS_PUBLISHED = 'ROLE_INIT_STATUS_PUBLISHED';
-    const INIT_STATUS_HIDDEN = 'ROLE_INIT_STATUS_HIDDEN';
-    const SHOW_CODES = 'ROLE_SHOW_CODES';
-    const ROLE_SEND_NOTIFICATION_COMPLETE = 'ROLE_SEND_NOTIFICATION_COMPLETE';
-    const ROLE_SEND_NOTIFICATION_ERRORS = 'ROLE_SEND_NOTIFICATION_ERRORS';
-    const ACCESS_SERIES_STYLE = 'ROLE_ACCESS_SERIES_STYLE';
-    const DISABLED_TRACK_PROFILES = 'ROLE_DISABLED_WIZARD_TRACK_PROFILES';
-    const DISABLED_TRACK_PRIORITY = 'ROLE_DISABLED_WIZARD_TRACK_PRIORITY';
-    const ADD_EXTERNAL_PLAYER = 'ROLE_ADD_EXTERNAL_PLAYER';
+    public const ACCESS_DASHBOARD = 'ROLE_ACCESS_DASHBOARD';
+    public const ACCESS_MULTIMEDIA_SERIES = 'ROLE_ACCESS_MULTIMEDIA_SERIES';
+    public const ACCESS_LIVE_CHANNELS = 'ROLE_ACCESS_LIVE_CHANNELS';
+    public const ACCESS_LIVE_EVENTS = 'ROLE_ACCESS_LIVE_EVENTS';
+    public const ACCESS_JOBS = 'ROLE_ACCESS_JOBS';
+    public const ACCESS_PEOPLE = 'ROLE_ACCESS_PEOPLE';
+    public const SHOW_PEOPLE_MENU = 'ROLE_SHOW_PEOPLE_MENU';
+    public const ACCESS_TAGS = 'ROLE_ACCESS_TAGS';
+    public const ACCESS_SERIES_TYPES = 'ROLE_ACCESS_SERIES_TYPES';
+    public const ACCESS_ADMIN_USERS = 'ROLE_ACCESS_ADMIN_USERS';
+    public const ACCESS_PERMISSION_PROFILES = 'ROLE_ACCESS_PERMISSION_PROFILES';
+    public const ACCESS_ROLES = 'ROLE_ACCESS_ROLES';
+    public const ACCESS_GROUPS = 'ROLE_ACCESS_GROUPS';
+    public const CHANGE_MMOBJECT_STATUS = 'ROLE_CHANGE_MMOBJECT_STATUS';
+    public const CHANGE_MMOBJECT_PUBCHANNEL = 'ROLE_CHANGE_MMOBJECT_PUBCHANNEL';
+    public const ACCESS_PUBLICATION_TAB = 'ROLE_ACCESS_PUBLICATION_TAB';
+    public const ACCESS_ADVANCED_UPLOAD = 'ROLE_ACCESS_ADVANCED_UPLOAD';
+    public const ACCESS_EDIT_PLAYLIST = 'ROLE_ACCESS_EDIT_PLAYLIST';
+    public const ACCESS_WIZARD_UPLOAD = 'ROLE_ACCESS_WIZARD_UPLOAD';
+    public const SHOW_WIZARD_MENU = 'ROLE_SHOW_WIZARD_MENU';
+    public const ACCESS_API = 'ROLE_ACCESS_API';
+    public const ACCESS_INBOX = 'ROLE_ACCESS_INBOX';
+    public const MODIFY_OWNER = 'ROLE_MODIFY_OWNER';
+    public const ADD_OWNER = 'ROLE_ADD_OWNER';
+    public const INIT_STATUS_PUBLISHED = 'ROLE_INIT_STATUS_PUBLISHED';
+    public const INIT_STATUS_HIDDEN = 'ROLE_INIT_STATUS_HIDDEN';
+    public const SHOW_CODES = 'ROLE_SHOW_CODES';
+    public const ROLE_SEND_NOTIFICATION_COMPLETE = 'ROLE_SEND_NOTIFICATION_COMPLETE';
+    public const ROLE_SEND_NOTIFICATION_ERRORS = 'ROLE_SEND_NOTIFICATION_ERRORS';
+    public const ACCESS_SERIES_STYLE = 'ROLE_ACCESS_SERIES_STYLE';
+    public const DISABLED_TRACK_PROFILES = 'ROLE_DISABLED_WIZARD_TRACK_PROFILES';
+    public const DISABLED_TRACK_PRIORITY = 'ROLE_DISABLED_WIZARD_TRACK_PRIORITY';
+    public const ADD_EXTERNAL_PLAYER = 'ROLE_ADD_EXTERNAL_PLAYER';
 
-    const PREFIX_ROLE_TAG_DEFAULT = 'ROLE_TAG_DEFAULT_';
+    // Permissions for series metadata inputs
+    public const ACCESS_SERIES_META_LAST_ANNOUNCES = 'ROLE_ACCESS_SERIES_META_LAST_ANNOUNCES';
+    public const ACCESS_SERIES_META_STYLE = 'ROLE_ACCESS_SERIES_META_STYLE';
+    public const ACCESS_SERIES_META_DISPLAY = 'ROLE_ACCESS_SERIES_META_DISPLAY';
+    public const ACCESS_SERIES_META_GROUP_LIST_OPTIONS = 'ROLE_ACCESS_SERIES_META_GROUP_LIST_OPTIONS';
+    public const ACCESS_SERIES_META_KEYWORDS = 'ROLE_ACCESS_SERIES_META_KEYWORDS';
+    public const ACCESS_SERIES_META_CHANNELS = 'ROLE_ACCESS_SERIES_META_CHANNELS';
+    public const ACCESS_SERIES_META_HTML_CONFIGURATION = 'ROLE_ACCESS_SERIES_META_HTML_CONFIGURATION';
+    public const ACCESS_SERIES_META_HEADLINE = 'ROLE_ACCESS_SERIES_META_HEADLINE';
+    public const ACCESS_SERIES_META_TEMPLATE = 'ROLE_ACCESS_SERIES_META_TEMPLATE';
+    public const ACCESS_SERIES_MAGIC_URL = 'ROLE_ACCESS_SERIES_MAGIC_URL';
+    public const ACCESS_SERIES_EDIT_TEMPLATE = 'ROLE_ACCESS_SERIES_EDIT_TEMPLATE';
 
-    const PREFIX_ROLE_TAG_DISABLE = 'ROLE_TAG_DISABLE_';
+    // Permission for multimedia object
+    public const ACCESS_MULTIMEDIA_META_COPYRIGHT = 'ROLE_ACCESS_MULTIMEDIA_META_COPYRIGHT';
+    public const ACCESS_MULTIMEDIA_META_HEADLINE = 'ROLE_ACCESS_MULTIMEDIA_META_HEADLINE';
+    public const ACCESS_MULTIMEDIA_META_KEYWORDS = 'ROLE_ACCESS_MULTIMEDIA_META_KEYWORDS';
+    public const ACCESS_MULTIMEDIA_META_SUBSERIE = 'ROLE_ACCESS_MULTIMEDIA_META_SUBSERIE';
+    public const ACCESS_MULTIMEDIA_META_LICENSE = 'ROLE_ACCESS_MULTIMEDIA_META_LICENSE';
+    public const ACCESS_MULTIMEDIA_TRACKS_OPTIONS = 'ROLE_ACCESS_MULTIMEDIA_TRACKS_OPTIONS';
+    public const ACCESS_MULTIMEDIA_CATEGORY_TAB = 'ROLE_ACCESS_MULTIMEDIA_CATEGORY_TAB';
+    public const ACCESS_MULTIMEDIA_PEOPLE_TAB = 'ROLE_ACCESS_MULTIMEDIA_PEOPLE_TAB';
+    public const ACCESS_MULTIMEDIA_OWNER_TAB = 'ROLE_ACCESS_MULTIMEDIA_OWNER_TAB';
+    public const ACCESS_MULTIMEDIA_SYNC_TAB = 'ROLE_ACCESS_MULTIMEDIA_SYNC_TAB';
+    public const ACCESS_MULTIMEDIA_MAGIC_URL = 'ROLE_ACCESS_MULTIMEDIA_MAGIC_URL';
+    public const ACCESS_MULTIMEDIA_SHOW_WIZARD_BUTTON = 'ROLE_ACCESS_MULTIMEDIA_SHOW_WIZARD_BUTTON';
+    public const ACCESS_MULTIMEDIA_SHOW_MULTIMEDIA_OBJECT_INFO_URL = 'ROLE_ACCESS_MULTIMEDIA_SHOW_MULTIMEDIA_OBJECT_INFO_URL';
+
+    public const PREFIX_ROLE_TAG_DEFAULT = 'ROLE_TAG_DEFAULT_';
+    public const PREFIX_ROLE_TAG_DISABLE = 'ROLE_TAG_DISABLE_';
 
     public static $permissionDescription = [
         self::ACCESS_DASHBOARD => [
@@ -276,14 +303,182 @@ class Permission
                 PermissionProfile::SCOPE_PERSONAL => [],
             ],
         ],
+        self::ACCESS_SERIES_META_LAST_ANNOUNCES => [
+            'description' => 'Show last announces on series metadata',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::ACCESS_SERIES_META_STYLE => [
+            'description' => 'Show series style on series metadata',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::ACCESS_SERIES_META_DISPLAY => [
+            'description' => 'Show display on series metadata',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::ACCESS_SERIES_META_GROUP_LIST_OPTIONS => [
+            'description' => 'Group list options on series list',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::ACCESS_SERIES_META_KEYWORDS => [
+            'description' => 'Show keywords options on series metadata',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::ACCESS_SERIES_META_CHANNELS => [
+            'description' => 'Show channel option on series metadata',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::ACCESS_SERIES_META_HTML_CONFIGURATION => [
+            'description' => 'Show html configuration option on series metadata',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::ACCESS_SERIES_META_HEADLINE => [
+            'description' => 'Show headline option on series metadata',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::ACCESS_SERIES_META_TEMPLATE => [
+            'description' => 'Show template option on series metadata',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::ACCESS_SERIES_MAGIC_URL => [
+            'description' => 'Show magic url option on series',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::ACCESS_SERIES_EDIT_TEMPLATE => [
+            'description' => 'Show tab edit template on series',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::ACCESS_MULTIMEDIA_META_COPYRIGHT => [
+            'description' => 'Edit copyright on multimedia object',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::ACCESS_MULTIMEDIA_META_HEADLINE => [
+            'description' => 'Edit headline on multimedia object',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::ACCESS_MULTIMEDIA_META_KEYWORDS => [
+            'description' => 'Edit keywords on multimedia object',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::ACCESS_MULTIMEDIA_META_SUBSERIE => [
+            'description' => 'Edit subserie on multimedia object',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::ACCESS_MULTIMEDIA_META_LICENSE => [
+            'description' => 'Edit license on multimedia object',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::ACCESS_MULTIMEDIA_TRACKS_OPTIONS => [
+            'description' => 'Show tracks options on multimedia object',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::ACCESS_MULTIMEDIA_CATEGORY_TAB => [
+            'description' => 'Show category tab on multimedia object',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::ACCESS_MULTIMEDIA_PEOPLE_TAB => [
+            'description' => 'Show people tab on multimedia object',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::ACCESS_MULTIMEDIA_OWNER_TAB => [
+            'description' => 'Show owner tab on multimedia object',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::ACCESS_MULTIMEDIA_SYNC_TAB => [
+            'description' => 'Show sync tab on multimedia object',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::ACCESS_MULTIMEDIA_MAGIC_URL => [
+            'description' => 'Show magic url on multimedia object',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::ACCESS_MULTIMEDIA_SHOW_WIZARD_BUTTON => [
+            'description' => 'Show wizard button on multimedia object',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::ACCESS_MULTIMEDIA_SHOW_MULTIMEDIA_OBJECT_INFO_URL => [
+            'description' => 'Show info urls on multimedia object',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
     ];
 
-    public static function isRoleTagDefault($role)
+    public static function isRoleTagDefault(string $role): bool
     {
         return 0 === strpos($role, self::PREFIX_ROLE_TAG_DEFAULT);
     }
 
-    public static function getPubChannelForRoleTagDefault($role)
+    public static function getPubChannelForRoleTagDefault(string $role)
     {
         if (self::isRoleTagDefault($role)) {
             return substr($role, strlen(self::PREFIX_ROLE_TAG_DEFAULT));
@@ -292,17 +487,17 @@ class Permission
         return false;
     }
 
-    public static function getRoleTagDefaultForPubChannel($cod)
+    public static function getRoleTagDefaultForPubChannel(string $cod): string
     {
         return self::PREFIX_ROLE_TAG_DEFAULT.strtoupper($cod);
     }
 
-    public static function isRoleTagDisable($role)
+    public static function isRoleTagDisable(string $role): bool
     {
         return 0 === strpos($role, self::PREFIX_ROLE_TAG_DISABLE);
     }
 
-    public static function getPubChannelForRoleTagDisable($role)
+    public static function getPubChannelForRoleTagDisable(string $role)
     {
         if (self::isRoleTagDisable($role)) {
             return substr($role, strlen(self::PREFIX_ROLE_TAG_DISABLE));
@@ -311,7 +506,7 @@ class Permission
         return false;
     }
 
-    public static function getRoleTagDisableForPubChannel($cod)
+    public static function getRoleTagDisableForPubChannel(string $cod): string
     {
         return self::PREFIX_ROLE_TAG_DISABLE.strtoupper($cod);
     }

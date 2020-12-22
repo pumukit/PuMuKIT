@@ -64,7 +64,9 @@ class EmbeddedSegment
      */
     public function __toString()
     {
-        return $this->getText();
+        $text = $this->getText() ?? '';
+
+        return (string) $text;
     }
 
     /**

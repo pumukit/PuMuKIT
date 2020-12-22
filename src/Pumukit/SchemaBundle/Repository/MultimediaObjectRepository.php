@@ -888,7 +888,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function createStandardQueryBuilder(): Builder
     {
         return $this->createQueryBuilder()
-            ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
+            ->field('status')->notIn([MultimediaObject::STATUS_PROTOTYPE, MultimediaObject::STATUS_NEW])
             ->field('type')->notEqual(MultimediaObject::TYPE_LIVE);
     }
 

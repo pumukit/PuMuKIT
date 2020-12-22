@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class UserService
 {
@@ -22,14 +23,21 @@ class UserService
     private $personalScopeDeleteOwners;
     private $dispatcher;
     private $permissionProfileService;
+    private $multimediaObjectEventDispatcherService;
+    private $tokenStorage;
+    private $sendEmailWhenAddUserOwner;
 
-    /**
-     * UserService constructor.
-     *
-     * @param bool $personalScopeDeleteOwners
-     */
-    public function __construct(DocumentManager $documentManager, UserEventDispatcherService $dispatcher, PermissionService $permissionService, PermissionProfileService $permissionProfileService, $personalScopeDeleteOwners = false)
-    {
+    public function __construct(
+        DocumentManager $documentManager,
+        UserEventDispatcherService $dispatcher,
+        PermissionService $permissionService,
+        PermissionProfileService $permissionProfileService,
+        MultimediaObjectEventDispatcherService $multimediaObjectEventDispatcherService,
+        TokenStorage $tokenStorage,
+        $personalScopeDeleteOwners = false,
+        $sendEmailWhenAddUserOwner = false
+    ) {
+
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository(User::class);
         $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
@@ -37,19 +45,16 @@ class UserService
         $this->groupRepo = $this->dm->getRepository(Group::class);
         $this->permissionService = $permissionService;
         $this->dispatcher = $dispatcher;
+        $this->multimediaObjectEventDispatcherService = $multimediaObjectEventDispatcherService;
+        $this->tokenStorage = $tokenStorage;
         $this->personalScopeDeleteOwners = $personalScopeDeleteOwners;
         $this->permissionProfileService = $permissionProfileService;
+        $this->sendEmailWhenAddUserOwner = $sendEmailWhenAddUserOwner;
     }
 
     /**
      * Add owner user to MultimediaObject.
-     *
-     * Add user id of the creator of the
-     * Multimedia Object as property
-     *
-     * @param bool $executeFlush
-     *
-     * @return MultimediaObject
+     * Add user id of the creator of the Multimedia Object as property.
      */
     public function addOwnerUserToMultimediaObject(MultimediaObject $multimediaObject, User $user, $executeFlush = true)
     {
@@ -617,14 +622,7 @@ class UserService
 
     /**
      * Add owner user to object.
-     *
-     * Add user id of the creator of the
-     * Multimedia Object or Series as property
-     *
-     * @param MultimediaObject|Series $object
-     * @param bool                    $executeFlush
-     *
-     * @return MultimediaObject
+     * Add user id of the creator of the Multimedia Object or Series as property.
      */
     private function addOwnerUserToObject($object, User $user, $executeFlush = true)
     {
@@ -637,6 +635,10 @@ class UserService
                 $owners[] = $user->getId();
                 $object->setProperty('owners', $owners);
                 $this->dm->persist($object);
+                if ($this->sendEmailWhenAddUserOwner && $object instanceof MultimediaObject) {
+                    $userLogged = $this->tokenStorage->getToken()->getUser();
+                    $this->multimediaObjectEventDispatcherService->dispatchMultimediaObjectAddOwner($object, $userLogged, $user);
+                }
             }
             if ($executeFlush) {
                 $this->dm->flush();

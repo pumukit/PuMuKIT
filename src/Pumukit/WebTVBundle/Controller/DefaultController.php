@@ -136,6 +136,10 @@ class DefaultController extends AbstractController
             ]);
         }
 
+        if (!$this->isGranted('IS_AUTHENTICATED_FULLY') && EmbeddedBroadcast::TYPE_LOGIN === $multimediaObject->getEmbeddedBroadcast()->getType()) {
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        }
+
         $userAgent = $request->headers->get('user-agent');
 
         $mobileDevice = ($this->mobileDetectorService->isMobile($userAgent) || $this->mobileDetectorService->isTablet($userAgent));

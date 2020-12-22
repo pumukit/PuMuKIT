@@ -13,7 +13,7 @@
                     <li class="active">
                         <a href="#editSeries" aria-controls="editSeries" role="tab" data-toggle="tab" class="main-pmk-tab task-series-updatemeta">{% trans %}Series Metadata{% endtrans %}</a>
                     </li>
-                    {% if mmtemplate %}
+                    {% if mmtemplate and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_SERIES_EDIT_TEMPLATE')) %}
                         <li>
                             <a href="#editTemplate" aria-controls="editTemplate" role="tab" data-toggle="tab" class="main-pmk-tab task-multimedia-object-template">{% trans %}Videos Metadata Template{% endtrans %}</a>
                         </li>
