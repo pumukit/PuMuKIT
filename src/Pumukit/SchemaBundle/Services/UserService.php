@@ -8,9 +8,8 @@ use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Person;
-use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class UserService
 {
@@ -33,7 +32,7 @@ class UserService
         PermissionService $permissionService,
         PermissionProfileService $permissionProfileService,
         MultimediaObjectEventDispatcherService $multimediaObjectEventDispatcherService,
-        TokenStorage $tokenStorage,
+        TokenStorageInterface $tokenStorage,
         $personalScopeDeleteOwners = false,
         $sendEmailWhenAddUserOwner = false
     ) {

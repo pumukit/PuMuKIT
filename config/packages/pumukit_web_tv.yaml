@@ -76,6 +76,7 @@ services:
     arguments:
       $parentCod:        '%categories_tag_cod%'
       $listGeneralParam: '%categories.list_general_tags%'
+      $excludeEmptyTags: '%categories.exclude_empty_tags%'
 
   Pumukit\WebTVBundle\Services\ChapterMarkService:
     class: Pumukit\WebTVBundle\Services\ChapterMarkService

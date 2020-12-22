@@ -28,6 +28,7 @@ services:
       $pumukitNewAdminMultimediaObjectLabel: '%pumukit_new_admin.multimedia_object_label%'
       $pumukitLdapEnable: '%pumukit_ldap.ldap%'
       $pumukitNewAdminBaseCatalogueTag: '%pumukit_new_admin.base_catalogue_tag%'
+      $personalScopeRoleCode: '%pumukitschema.personal_scope_role_code%'
 
   Pumukit\NewAdminBundle\Controller\:
     resource: '../../src/Pumukit/NewAdminBundle/Controller/'
