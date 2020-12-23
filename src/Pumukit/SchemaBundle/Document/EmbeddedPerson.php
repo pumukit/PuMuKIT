@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
@@ -25,13 +27,11 @@ class EmbeddedPerson implements PersonInterface
     /**
      * @MongoDB\Field(type="string")
      * @Assert\Email
-     * //@Assert\NotEmpty
      */
     protected $email;
 
     /**
      * @MongoDB\Field(type="string")
-     * //@Assert\Url('http', 'https', 'ftp')
      */
     protected $web;
 
@@ -65,7 +65,7 @@ class EmbeddedPerson implements PersonInterface
      */
     protected $locale = 'en';
 
-    public function __construct(Person $person)
+    public function __construct(PersonInterface $person)
     {
         if (null !== $person) {
             $this->id = $person->getId();
@@ -82,11 +82,7 @@ class EmbeddedPerson implements PersonInterface
 
     public function __toString(): string
     {
-        if ($this->getName()) {
-            return $this->getName() ?? '';
-        }
-
-        return '';
+        return $this->getName() ?? '';
     }
 
     public function getId()
@@ -147,11 +143,8 @@ class EmbeddedPerson implements PersonInterface
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->honorific[$locale])) {
-            return '';
-        }
 
-        return $this->honorific[$locale];
+        return $this->honorific[$locale] ?? '';
     }
 
     public function setI18nHonorific(array $honorific): void
@@ -177,11 +170,8 @@ class EmbeddedPerson implements PersonInterface
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->firm[$locale])) {
-            return '';
-        }
 
-        return $this->firm[$locale];
+        return $this->firm[$locale] ?? '';
     }
 
     public function setI18nFirm(array $firm): void
@@ -207,11 +197,8 @@ class EmbeddedPerson implements PersonInterface
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->post[$locale])) {
-            return '';
-        }
 
-        return $this->post[$locale];
+        return $this->post[$locale] ?? '';
     }
 
     public function setI18nPost(array $post): void
@@ -237,11 +224,8 @@ class EmbeddedPerson implements PersonInterface
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->bio[$locale])) {
-            return '';
-        }
 
-        return $this->bio[$locale];
+        return $this->bio[$locale] ?? '';
     }
 
     public function setI18nBio(array $bio): void

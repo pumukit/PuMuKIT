@@ -1,12 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * Pumukit\SchemaBundle\Document\Element.
- *
  * @MongoDB\MappedSuperclass
  */
 class Element
@@ -14,72 +14,47 @@ class Element
     use Traits\Properties;
 
     /**
-     * @var \MongoId|string|null
-     *
      * @MongoDB\Id
      */
     private $id;
 
     /**
-     * @MongoDB\OneToOne(targetDocument=Element::class)
-     * @MongoDB\JoinColumn(name="ref_id", referencedColumnName="id")
-     */
-    //private $ref = null;
-
-    /**
-     * @var array
-     *
      * @MongoDB\Field(type="collection")
      */
     private $tags;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $url;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $path;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $mime_type;
 
     /**
-     * @var int
-     *
      * @MongoDB\Field(type="int")
      */
     private $size;
 
     /**
-     * @var bool
-     *
      * @MongoDB\Field(type="boolean")
      */
     private $hide = false;
 
     /**
-     * @var array<string, string>
-     *
      * @MongoDB\Field(type="raw")
      */
     private $description = ['en' => ''];
 
     /**
-     * Used locale to override Translation listener`s locale
-     * this is not a mapped field of entity metadata, just a simple property.
-     *
-     * @var string
+     * Used locale to override Translation listener`s locale this is not a mapped field of entity metadata, just a simple property.
      */
     private $locale = 'en';
 
@@ -93,84 +68,34 @@ class Element
         $this->id = null;
     }
 
-    /**
-     * To string.
-     *
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getUrl();
     }
 
-    /**
-     * Get id.
-     *
-     * @return \MongoId|string|null
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set ref.
-     *
-     * @param Pic $ref
-     */
-    /*public function setRef(Element $ref)
-      {
-      $this->ref = $ref;
-      }*/
-
-    /**
-     * Get ref.
-     *
-     * @return Pic
-     */
-    /*public function getRef()
-      {
-      return $this->ref;
-      }*/
-
-    /**
-     * Set tags.
-     */
-    public function setTags(array $tags)
+    public function setTags(array $tags): void
     {
         $this->tags = $tags;
     }
 
-    /**
-     * Get tags.
-     *
-     * @return array
-     */
-    public function getTags()
+    public function getTags(): array
     {
         return $this->tags;
     }
 
-    /**
-     * Add tag.
-     *
-     * @param string $tag
-     */
-    public function addTag($tag)
+    public function addTag(string $tag): array
     {
         $this->tags[] = $tag;
 
         return $this->tags = array_unique($this->tags);
     }
 
-    /**
-     * Remove tag.
-     *
-     * @param string $tag
-     *
-     * @return bool TRUE if this pic contained the specified tag, FALSE otherwise
-     */
-    public function removeTag($tag)
+    public function removeTag($tag): bool
     {
         $tag = array_search($tag, $this->tags, true);
 
@@ -183,155 +108,77 @@ class Element
         return false;
     }
 
-    /**
-     * Contains tag.
-     *
-     * @param string $tag
-     *
-     * @return bool TRUE if this pic contained the specified tag, FALSE otherwise
-     */
-    public function containsTag($tag)
+    public function containsTag($tag): bool
     {
         return in_array($tag, $this->tags, true);
     }
 
-    /**
-     * Contains all tags.
-     *
-     * @return bool TRUE if this pic contained all tags, FALSE otherwise
-     */
-    public function containsAllTags(array $tags)
+    public function containsAllTags(array $tags): bool
     {
         return count(array_intersect($tags, $this->tags)) === count($tags);
     }
 
-    /**
-     * Contains any tags.
-     *
-     * @return bool TRUE if this pic contained any tag of the list, FALSE otherwise
-     */
-    public function containsAnyTag(array $tags)
+    public function containsAnyTag(array $tags): bool
     {
-        return 0 != count(array_intersect($tags, $this->tags));
+        return 0 !== count(array_intersect($tags, $this->tags));
     }
 
-    /**
-     * Set url.
-     *
-     * @param string $url
-     */
-    public function setUrl($url)
+    public function setUrl(string $url): void
     {
         $this->url = $url;
     }
 
-    /**
-     * Get url.
-     *
-     * @return string
-     */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
 
-    /**
-     * Set path.
-     *
-     * @param string $path
-     */
-    public function setPath($path)
+    public function setPath(string $path): void
     {
         $this->path = $path;
     }
 
-    /**
-     * Get path.
-     *
-     * @return string
-     */
-    public function getPath()
+    public function getPath(): string
     {
         return $this->path;
     }
 
-    /**
-     * Set mime_type.
-     *
-     * @param string $mime_type
-     */
-    public function setMimeType($mime_type)
+    public function setMimeType(string $mime_type): void
     {
         $this->mime_type = $mime_type;
     }
 
-    /**
-     * Get mime_type.
-     *
-     * @return string
-     */
-    public function getMimeType()
+    public function getMimeType(): string
     {
         return $this->mime_type;
     }
 
-    /**
-     * Set size.
-     *
-     * @param int $size
-     */
-    public function setSize($size)
+    public function setSize(int $size): void
     {
         $this->size = $size;
     }
 
-    /**
-     * Get size.
-     *
-     * @return int
-     */
-    public function getSize()
+    public function getSize(): int
     {
         return $this->size;
     }
 
-    /**
-     * Set hide.
-     *
-     * @param bool $hide
-     */
-    public function setHide($hide)
+    public function setHide(bool $hide): void
     {
         $this->hide = $hide;
     }
 
-    /**
-     * Get hide.
-     *
-     * @return bool
-     */
-    public function getHide()
+    public function getHide(): bool
     {
         return $this->hide;
     }
 
-    /**
-     * Get hide.
-     *
-     * @return bool
-     */
-    public function isHide()
+    public function isHide(): bool
     {
         return $this->hide;
     }
 
-    /**
-     * Set description.
-     *
-     * @param string      $description
-     * @param string|null $locale
-     */
-    public function setDescription($description, $locale = null)
+    public function setDescription(string $description, string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -339,59 +186,31 @@ class Element
         $this->description[$locale] = $description;
     }
 
-    /**
-     * Get description.
-     *
-     * @param string|null $locale
-     *
-     * @return string
-     */
-    public function getDescription($locale = null)
+    public function getDescription($locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->description[$locale])) {
-            return '';
-        }
 
-        return $this->description[$locale];
+        return $this->description[$locale] ?? '';
     }
 
-    /**
-     * Set I18n description.
-     */
-    public function setI18nDescription(array $description)
+    public function setI18nDescription(array $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * Get I18n description.
-     *
-     * @return array
-     */
-    public function getI18nDescription()
+    public function getI18nDescription(): array
     {
         return $this->description;
     }
 
-    /**
-     * Set locale.
-     *
-     * @param string $locale
-     */
-    public function setLocale($locale)
+    public function setLocale(string $locale): void
     {
         $this->locale = $locale;
     }
 
-    /**
-     * Get locale.
-     *
-     * @return string
-     */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }

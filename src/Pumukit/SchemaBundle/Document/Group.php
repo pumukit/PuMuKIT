@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
@@ -7,13 +9,11 @@ use FOS\UserBundle\Model\GroupInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Pumukit\SchemaBundle\Document\Group.
- *
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\GroupRepository")
  */
 class Group implements GroupInterface
 {
-    const ORIGIN_LOCAL = 'local';
+    public const ORIGIN_LOCAL = 'local';
 
     /**
      * @MongoDB\Id(strategy="auto")
@@ -21,8 +21,6 @@ class Group implements GroupInterface
     protected $id;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      * @MongoDB\UniqueIndex(order="asc")
      * @Assert\Regex("/^\w*$/")
@@ -30,46 +28,31 @@ class Group implements GroupInterface
     protected $key;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      * @MongoDB\UniqueIndex(order="asc")
      */
     protected $name;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     protected $comments;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     protected $origin = self::ORIGIN_LOCAL;
 
     /**
-     * @var \DateTime
-     *
      * @MongoDB\Field(type="date")
      */
     private $createdAt;
 
     /**
-     * @var \DateTime
-     *
      * @MongoDB\Field(type="date")
      */
     private $updatedAt;
 
-    /**
-     * Constructor.
-     *
-     * @param string $key
-     */
     public function __construct($key = null)
     {
         $this->key = $key;
@@ -77,198 +60,99 @@ class Group implements GroupInterface
         $this->updatedAt = new \DateTime();
     }
 
-    /**
-     * To string.
-     *
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
-        return null === $this->key ? '' : $this->key;
+        return $this->key ?? '';
     }
 
-    /**
-     * Get id.
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     */
-    public function setName($name)
+    public function setName($name): Group
     {
         $this->name = $name;
+
+        return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * Set key.
-     *
-     * @param string $key
-     */
-    public function setKey($key)
+    public function setKey($key): void
     {
         $this->key = $key;
     }
 
-    /**
-     * Get key.
-     *
-     * @return string
-     */
     public function getKey()
     {
         return $this->key;
     }
 
-    /**
-     * Set comments.
-     *
-     * @param string $comments
-     */
-    public function setComments($comments)
+    public function setComments($comments): void
     {
         $this->comments = $comments;
     }
 
-    /**
-     * Get comments.
-     *
-     * @return string
-     */
     public function getComments()
     {
         return $this->comments;
     }
 
-    /**
-     * Set origin.
-     *
-     * @param string $origin
-     */
-    public function setOrigin($origin)
+    public function setOrigin($origin): void
     {
         $this->origin = $origin;
     }
 
-    /**
-     * Get origin.
-     *
-     * @return string
-     */
-    public function getOrigin()
+    public function getOrigin(): string
     {
         return $this->origin;
     }
 
-    /**
-     * Is the origin local.
-     *
-     * @return bool
-     */
-    public function isLocal()
+    public function isLocal(): bool
     {
-        return self::ORIGIN_LOCAL == $this->origin;
+        return self::ORIGIN_LOCAL === $this->origin;
     }
 
-    /**
-     * Get createdAt.
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * Set updatedAt.
-     *
-     * @param \DateTime $updatedAt
-     */
-    public function setUpdatedAt($updatedAt)
+    public function setUpdatedAt($updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
 
-    /**
-     * Get updatedAt.
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): \DateTime
     {
         return $this->updatedAt;
     }
 
-    /**
-     * Defined to implement GroupInterface.
-     *
-     * @param string $role
-     *
-     * @return self
-     */
-    public function addRole($role)
+    public function addRole($role): Group
     {
         return $this;
     }
 
-    /**
-     * Defined to implement GroupInterface.
-     *
-     * @param string $role
-     *
-     * @return bool
-     */
-    public function hasRole($role)
+    public function hasRole($role): bool
     {
         return false;
     }
 
-    /**
-     * Defined to implement GroupInterface.
-     *
-     * Note: If implementation changes User::getRoles must be updated
-     *
-     * @return array
-     */
-    public function getRoles()
+    public function getRoles(): array
     {
         return [];
     }
 
-    /**
-     * Defined to implement GroupInterface.
-     *
-     * @param string $role
-     *
-     * @return self
-     */
-    public function removeRole($role)
+    public function removeRole($role): Group
     {
         return $this;
     }
 
-    /**
-     * Defined to implement GroupInterface.
-     *
-     * @return self
-     */
-    public function setRoles(array $roles)
+    public function setRoles(array $roles): Group
     {
         return $this;
     }

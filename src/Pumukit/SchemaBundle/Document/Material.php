@@ -1,45 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * Pumukit\SchemaBundle\Document\Material.
- *
  * @MongoDB\EmbeddedDocument
  */
 class Material extends Element
 {
     /**
-     * @var array
      * @MongoDB\Field(type="raw")
      */
     private $name = ['en' => ''];
 
     /**
-     * @var string
      * @MongoDB\Field(type="string")
      */
     private $language;
 
-    /**
-     * To string.
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getUrl();
-    }
-
-    /**
-     * Set name.
-     *
-     * @param string      $name
-     * @param string|null $locale
-     */
-    public function setName($name, $locale = null)
+    public function setName($name, $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->getLocale();
@@ -47,59 +29,31 @@ class Material extends Element
         $this->name[$locale] = $name;
     }
 
-    /**
-     * Get name.
-     *
-     * @param string|null $locale
-     *
-     * @return string
-     */
-    public function getName($locale = null)
+    public function getName($locale = null): string
     {
         if (null === $locale) {
             $locale = $this->getLocale();
         }
-        if (!isset($this->name[$locale])) {
-            return '';
-        }
 
-        return $this->name[$locale];
+        return $this->name[$locale] ?? '';
     }
 
-    /**
-     * Set I18n name.
-     */
-    public function setI18nName(array $name)
+    public function setI18nName(array $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * Get I18n name.
-     *
-     * @return array
-     */
-    public function getI18nName()
+    public function getI18nName(): array
     {
         return $this->name;
     }
 
-    /**
-     * Set language.
-     *
-     * @param string $language
-     */
-    public function setLanguage($language)
+    public function setLanguage($language): void
     {
         $this->language = $language;
     }
 
-    /**
-     * Get language.
-     *
-     * @return string
-     */
-    public function getLanguage()
+    public function getLanguage(): string
     {
         return $this->language ?? '';
     }

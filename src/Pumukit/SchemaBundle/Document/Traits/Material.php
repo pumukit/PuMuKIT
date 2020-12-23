@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\SchemaBundle\Document\Traits;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Pumukit\SchemaBundle\Document\Material as DocumentMaterial;
 
@@ -26,7 +27,6 @@ trait Material
     */
 
     /**
-     * @var Collection
      * @MongoDB\EmbedMany(targetDocument=Material::class)
      */
     private $materials;
@@ -36,85 +36,47 @@ trait Material
         $this->materials = new ArrayCollection();
     }
 
-    /**
-     * Add material.
-     */
-    public function addMaterial(DocumentMaterial $material)
+    public function addMaterial(DocumentMaterial $material): void
     {
         $this->materials->add($material);
     }
 
-    /**
-     * Remove material.
-     */
-    public function removeMaterial(DocumentMaterial $material)
+    public function removeMaterial(DocumentMaterial $material): void
     {
         $this->materials->removeElement($material);
     }
 
-    /**
-     * Remove material by id.
-     *
-     * @param string $materialId
-     */
-    public function removeMaterialById($materialId)
+    public function removeMaterialById($materialId): void
     {
         $this->materials = $this->materials->filter(function ($material) use ($materialId) {
             return $material->getId() !== $materialId;
         });
     }
 
-    /**
-     * Up material by id.
-     *
-     * @param string $materialId
-     */
-    public function upMaterialById($materialId)
+    public function upMaterialById($materialId): void
     {
-        $this->reorderMaterialById($materialId, true);
+        $this->reorderMaterialById($materialId);
     }
 
-    /**
-     * Down material by id.
-     *
-     * @param string $materialId
-     */
-    public function downMaterialById($materialId)
+    public function downMaterialById($materialId): void
     {
         $this->reorderMaterialById($materialId, false);
     }
 
-    /**
-     * Contains material.
-     *
-     * @return bool
-     */
-    public function containsMaterial(DocumentMaterial $material)
+    public function containsMaterial(DocumentMaterial $material): bool
     {
         return $this->materials->contains($material);
     }
 
-    /**
-     * Get materials.
-     *
-     * @return Collection
-     */
-    public function getMaterials()
+    public function getMaterials(): ArrayCollection
     {
         return $this->materials;
     }
 
-    /**
-     * Get material by id.
-     *
-     * @param \MongoId|string $materialId
-     *
-     * @return DocumentMaterial|null
-     */
     public function getMaterialById($materialId)
     {
         foreach ($this->materials as $material) {
-            if ($material->getId() == $materialId) {
+            if ($material->getId() === $materialId) {
                 return $material;
             }
         }
@@ -122,14 +84,7 @@ trait Material
         return null;
     }
 
-    /**
-     * Get materials with tag.
-     *
-     * @param string $tag
-     *
-     * @return array
-     */
-    public function getMaterialsWithTag($tag)
+    public function getMaterialsWithTag($tag): array
     {
         $r = [];
 
@@ -142,13 +97,6 @@ trait Material
         return $r;
     }
 
-    /**
-     * Get material with tag.
-     *
-     * @param string $tag
-     *
-     * @return DocumentMaterial|null
-     */
     public function getMaterialWithTag($tag)
     {
         foreach ($this->materials as $material) {
@@ -160,12 +108,7 @@ trait Material
         return null;
     }
 
-    /**
-     * Get materials with all tags.
-     *
-     * @return array
-     */
-    public function getMaterialsWithAllTags(array $tags)
+    public function getMaterialsWithAllTags(array $tags): array
     {
         $r = [];
 
@@ -178,11 +121,6 @@ trait Material
         return $r;
     }
 
-    /**
-     * Get material with all tags.
-     *
-     * @return DocumentMaterial|null
-     */
     public function getMaterialWithAllTags(array $tags)
     {
         foreach ($this->materials as $material) {
@@ -194,12 +132,7 @@ trait Material
         return null;
     }
 
-    /**
-     * Get materials with any tag.
-     *
-     * @return array
-     */
-    public function getMaterialsWithAnyTag(array $tags)
+    public function getMaterialsWithAnyTag(array $tags): array
     {
         $r = [];
 
@@ -212,11 +145,6 @@ trait Material
         return $r;
     }
 
-    /**
-     * Get material with any tag.
-     *
-     * @return DocumentMaterial|null
-     */
     public function getMaterialWithAnyTag(array $tags)
     {
         foreach ($this->materials as $material) {
@@ -228,12 +156,7 @@ trait Material
         return null;
     }
 
-    /**
-     * Get filtered materials with tags.
-     *
-     * @return array
-     */
-    public function getFilteredMaterialsWithTags(array $any_tags = [], array $all_tags = [], array $not_any_tags = [], array $not_all_tags = [])
+    public function getFilteredMaterialsWithTags(array $any_tags = [], array $all_tags = [], array $not_any_tags = [], array $not_all_tags = []): array
     {
         $r = [];
 
@@ -257,13 +180,7 @@ trait Material
         return $r;
     }
 
-    /**
-     * Reorder material by id.
-     *
-     * @param string $materialId
-     * @param bool   $up
-     */
-    private function reorderMaterialById($materialId, $up = true)
+    private function reorderMaterialById($materialId, $up = true): void
     {
         $snapshot = array_values($this->materials->toArray());
         $this->materials->clear();

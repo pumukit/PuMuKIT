@@ -1,35 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Pumukit\SchemaBundle\Document\Live.
- *
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\LiveRepository")
  */
 class Live
 {
-    const LIVE_TYPE_WOWZA = 'WOWZA';
-    const LIVE_TYPE_AMS = 'AMS';
-    const LIVE_TYPE_FMS = 'FMS'; //Kept for backwards compatibility
-    const LIVE_TYPE_WMS = 'WMS'; //Kept for backwards compatibility
+    public const LIVE_TYPE_WOWZA = 'WOWZA';
+    public const LIVE_TYPE_AMS = 'AMS';
+    public const LIVE_TYPE_FMS = 'FMS'; //Kept for backwards compatibility
+    public const LIVE_TYPE_WMS = 'WMS'; //Kept for backwards compatibility
 
-    /**
-     * Constructor.
-     */
     protected static $instances = [];
 
     /**
-     * @var \MongoId|string|null
      * @MongoDB\Id
      */
     private $id;
 
     /**
-     * @var string
      * @MongoDB\Field(type="string")
      * @Assert\NotBlank()
      * @Assert\Url(protocols= {"rtmpt", "rtmp", "http", "mms", "rtp", "https"})
@@ -37,161 +32,110 @@ class Live
     private $url;
 
     /**
-     * @var string
      * @MongoDB\Field(type="string")
      */
     private $passwd;
 
     /**
-     * @var string
      * @MongoDB\Field(type="string")
      */
     private $live_type = self::LIVE_TYPE_WOWZA;
 
     /**
-     * @var int
      * @MongoDB\Field(type="int")
      */
     private $width = 720;
 
     /**
-     * @var int
      * @MongoDB\Field(type="int")
      */
     private $height = 576;
 
     /**
-     * @var array
      * @MongoDB\Field(type="raw")
      */
     private $qualities;
 
     /**
-     * @var string
      * @MongoDB\Field(type="string")
      */
     private $ip_source;
 
     /**
-     * @var string
      * @MongoDB\Field(type="string")
      * @Assert\NotBlank()
      */
     private $source_name;
 
     /**
-     * @var bool
      * @MongoDB\Field(type="boolean")
      */
     private $index_play = false;
 
     /**
-     * @var bool
      * @MongoDB\Field(type="boolean")
      */
     private $chat = false;
 
     /**
-     * @var bool
      * @MongoDB\Field(type="boolean")
      */
     private $broadcasting = false;
 
     /**
-     * @var bool
      * @MongoDB\Field(type="boolean")
      */
     private $debug = false;
 
     /**
-     * @var array<string, string>
      * @MongoDB\Field(type="raw")
      * @Assert\NotBlank()
      */
     private $name = ['en' => ''];
 
     /**
-     * @var array<string, string>
      * @MongoDB\Field(type="raw")
      */
     private $description = ['en' => ''];
 
-    /**
-     * @var string
-     */
     private $locale = 'en';
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getName();
     }
 
-    /**
-     * Get id.
-     *
-     * @return \MongoId|string|null
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set url.
-     *
-     * @param string $url
-     */
-    public function setUrl($url)
+    public function setUrl($url): void
     {
         $this->url = $url;
     }
 
-    /**
-     * Get url.
-     *
-     * @return string
-     */
     public function getUrl()
     {
         return $this->url;
     }
 
-    /**
-     * Set passwd.
-     *
-     * @param string $passwd
-     */
-    public function setPasswd($passwd)
+    public function setPasswd($passwd): void
     {
         $this->passwd = $passwd;
     }
 
-    /**
-     * Get passwd.
-     *
-     * @return string
-     */
     public function getPasswd()
     {
         return $this->passwd;
     }
 
-    /**
-     * Set live_type.
-     *
-     * @param string $live_type
-     */
-    public function setLiveType($live_type)
+    public function setLiveType($live_type): void
     {
         $this->live_type = $live_type;
     }
 
-    /**
-     * Get live_type.
-     *
-     * @return string
-     */
-    public function getLiveType()
+    public function getLiveType(): string
     {
         return $this->live_type;
     }
@@ -199,7 +143,7 @@ class Live
     /**
      * @Assert\IsTrue(message = "Live type not valid")
      */
-    public function isValidLiveType()
+    public function isValidLiveType(): bool
     {
         return in_array($this->live_type, [
             self::LIVE_TYPE_WOWZA,
@@ -209,189 +153,97 @@ class Live
         ]);
     }
 
-    /**
-     * Set width.
-     *
-     * @param int $width
-     */
-    public function setWidth($width)
+    public function setWidth($width): void
     {
         $this->width = $width;
     }
 
-    /**
-     * Get width.
-     *
-     * @return int
-     */
-    public function getWidth()
+    public function getWidth(): int
     {
         return $this->width;
     }
 
-    /**
-     * Set height.
-     *
-     * @param int $height
-     */
-    public function setHeight($height)
+    public function setHeight($height): void
     {
         $this->height = $height;
     }
 
-    /**
-     * Get height.
-     *
-     * @return int
-     */
-    public function getHeight()
+    public function getHeight(): int
     {
         return $this->height;
     }
 
-    /**
-     * Set qualities.
-     *
-     * @param array $qualities
-     */
-    public function setQualities($qualities)
+    public function setQualities($qualities): void
     {
         $this->qualities = $qualities;
     }
 
-    /**
-     * Get qualities.
-     *
-     * @return array
-     */
     public function getQualities()
     {
         return $this->qualities;
     }
 
-    /**
-     * Set ip_source.
-     *
-     * @param string $ip_source
-     */
-    public function setIpSource($ip_source)
+    public function setIpSource($ip_source): void
     {
         $this->ip_source = $ip_source;
     }
 
-    /**
-     * Get ip_source.
-     *
-     * @return string
-     */
     public function getIpSource()
     {
         return $this->ip_source;
     }
 
-    /**
-     * Set source_name.
-     *
-     * @param string $source_name
-     */
-    public function setSourceName($source_name)
+    public function setSourceName($source_name): void
     {
         $this->source_name = $source_name;
     }
 
-    /**
-     * Get source_name.
-     *
-     * @return string
-     */
     public function getSourceName()
     {
         return $this->source_name;
     }
 
-    /**
-     * Set index_play.
-     *
-     * @param bool $index_play
-     */
-    public function setIndexPlay($index_play)
+    public function setIndexPlay($index_play): void
     {
         $this->index_play = $index_play;
     }
 
-    /**
-     * Get index_play.
-     *
-     * @return bool
-     */
-    public function getIndexPlay()
+    public function getIndexPlay(): bool
     {
         return $this->index_play;
     }
 
-    /**
-     * @return bool
-     */
-    public function isChat()
+    public function isChat(): bool
     {
         return $this->chat;
     }
 
-    /**
-     * @param bool $chat
-     */
-    public function setChat($chat)
+    public function setChat($chat): void
     {
         $this->chat = $chat;
     }
 
-    /**
-     * Set broadcasting.
-     *
-     * @param bool $broadcasting
-     */
-    public function setBroadcasting($broadcasting)
+    public function setBroadcasting($broadcasting): void
     {
         $this->broadcasting = $broadcasting;
     }
 
-    /**
-     * Get broadcasting.
-     *
-     * @return bool
-     */
-    public function getBroadcasting()
+    public function getBroadcasting(): bool
     {
         return $this->broadcasting;
     }
 
-    /**
-     * Set debug.
-     *
-     * @param bool $debug
-     */
-    public function setDebug($debug)
+    public function setDebug($debug): void
     {
         $this->debug = $debug;
     }
 
-    /**
-     * Get debug.
-     *
-     * @return bool
-     */
-    public function getDebug()
+    public function getDebug(): bool
     {
         return $this->debug;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string      $name
-     * @param string|null $locale
-     */
-    public function setName($name, $locale = null)
+    public function setName($name, $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -399,50 +251,26 @@ class Live
         $this->name[$locale] = $name;
     }
 
-    /**
-     * Get name.
-     *
-     * @param string|null $locale
-     *
-     * @return string
-     */
-    public function getName($locale = null)
+    public function getName($locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->name[$locale])) {
-            return '';
-        }
 
-        return $this->name[$locale];
+        return $this->name[$locale] ?? '';
     }
 
-    /**
-     * Set I18n name.
-     */
-    public function setI18nName(array $name)
+    public function setI18nName(array $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * Get i18n name.
-     *
-     * @return array
-     */
-    public function getI18nName()
+    public function getI18nName(): array
     {
         return $this->name;
     }
 
-    /**
-     * Set description.
-     *
-     * @param string      $description
-     * @param string|null $locale
-     */
-    public function setDescription($description, $locale = null)
+    public function setDescription($description, $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -450,69 +278,36 @@ class Live
         $this->description[$locale] = $description;
     }
 
-    /**
-     * Get description.
-     *
-     * @param string|null $locale
-     *
-     * @return string
-     */
-    public function getDescription($locale = null)
+    public function getDescription($locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->description[$locale])) {
-            return '';
-        }
 
-        return $this->description[$locale];
+        return $this->description[$locale] ?? '';
     }
 
-    /**
-     * Set I18n description.
-     */
-    public function setI18nDescription(array $description)
+    public function setI18nDescription(array $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * Get I18n description.
-     *
-     * @return array
-     */
-    public function getI18nDescription()
+    public function getI18nDescription(): array
     {
         return $this->description;
     }
 
-    /**
-     * Set locale.
-     *
-     * @param string $locale
-     */
-    public function setLocale($locale)
+    public function setLocale($locale): void
     {
         $this->locale = $locale;
     }
 
-    /**
-     * Get locale.
-     *
-     * @return string
-     */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
 
-    /**
-     * Clone Live.
-     *
-     * @return Live
-     */
-    public function cloneResource()
+    public function cloneResource(): Live
     {
         $aux = clone $this;
         $aux->id = null;
@@ -520,12 +315,7 @@ class Live
         return $aux;
     }
 
-    /**
-     * Get Resolution.
-     *
-     * @return array
-     */
-    public function getResolution()
+    public function getResolution(): array
     {
         return [
             'width' => $this->width,
@@ -533,12 +323,7 @@ class Live
         ];
     }
 
-    /**
-     * Set Resolution.
-     *
-     * @param array $resolution
-     */
-    public function setResolution($resolution)
+    public function setResolution($resolution): void
     {
         if ((!empty($resolution['width'])) && (!empty($resolution['height']))) {
             $this->width = $resolution['width'];
@@ -546,12 +331,7 @@ class Live
         }
     }
 
-    /**
-     * Return short info about the live channel to use as choice label.
-     *
-     * @return string
-     */
-    public function getInfo()
+    public function getInfo(): string
     {
         return sprintf('%s (%s/%s)', $this->getName(), $this->getUrl(), $this->getSourceName());
     }

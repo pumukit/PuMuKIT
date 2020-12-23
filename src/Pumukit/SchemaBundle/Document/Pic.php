@@ -1,91 +1,57 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * Pumukit\SchemaBundle\Document\Pic.
- *
  * @MongoDB\EmbeddedDocument
  */
 class Pic extends Element
 {
     /**
-     * @var int
-     *
      * @MongoDB\Field(type="int")
      */
     private $width;
 
     /**
-     * @var int
-     *
      * @MongoDB\Field(type="int")
      */
     private $height;
 
-    /**
-     * To string.
-     *
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getUrl() ?? '';
     }
 
-    /**
-     * Set width.
-     *
-     * @param int $width
-     */
-    public function setWidth($width)
+    public function setWidth($width): void
     {
         $this->width = $width;
     }
 
-    /**
-     * Get width.
-     *
-     * @return int
-     */
     public function getWidth()
     {
         return $this->width;
     }
 
-    /**
-     * Set height.
-     *
-     * @param int $height
-     */
-    public function setHeight($height)
+    public function setHeight($height): void
     {
         $this->height = $height;
     }
 
-    /**
-     * Get height.
-     *
-     * @return int
-     */
     public function getHeight()
     {
         return $this->height;
     }
 
-    /**
-     * Get time from a tag with time_XXX format.
-     *
-     * @return integer|float, default 0
-     */
     public function getTime()
     {
         $time = 0;
 
         foreach ($this->getTags() as $tag) {
-            if ('time_' == substr($tag, 0, 5)) {
+            if (0 === strpos($tag, 'time_')) {
                 return (float) (substr($tag, 5));
             }
         }

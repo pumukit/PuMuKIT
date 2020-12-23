@@ -1,102 +1,77 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * Pumukit\SchemaBundle\Document\Track.
- *
  * @MongoDB\EmbeddedDocument
  */
 class Track extends Element
 {
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $language;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $originalName;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $acodec;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $vcodec;
 
     /**
-     * @var int
-     *
      * @MongoDB\Field(type="int")
      */
     private $bitrate;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $framerate;
 
     /**
-     * @var bool
-     *
      * @MongoDB\Field(type="boolean")
      */
     private $only_audio;
 
     /**
-     * @var int
-     *
      * @MongoDB\Field(type="int")
      */
     private $channels;
 
     /**
-     * @var int
-     *
      * @MongoDB\Field(type="int")
      */
     private $duration = 0;
 
     /**
-     * @var int
-     *
      * @MongoDB\Field(type="int")
      */
     private $width;
 
     /**
-     * @var int
-     *
      * @MongoDB\Field(type="int")
      */
     private $height;
 
     /**
-     * @var bool
-     *
      * @MongoDB\Field(type="boolean")
      */
     private $allowDownload = false;
 
     /**
-     * @var int
      * @MongoDB\Field(type="int", strategy="increment" )
      */
     private $numview;
@@ -107,154 +82,77 @@ class Track extends Element
         parent::__construct();
     }
 
-    /**
-     * To string.
-     *
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->getUrl() ? $this->getUrl() : $this->getPath();
+        return $this->getUrl() ?: $this->getPath();
     }
 
-    /**
-     * Set language.
-     *
-     * @param string $language
-     */
-    public function setLanguage($language)
+    public function setLanguage($language): void
     {
         $this->language = $language;
     }
 
-    /**
-     * Get language.
-     *
-     * @return string
-     */
-    public function getLanguage()
+    public function getLanguage(): string
     {
         return $this->language;
     }
 
-    /**
-     * Set acodec.
-     *
-     * @param string $acodec
-     */
-    public function setAcodec($acodec)
+    public function setAcodec($acodec): void
     {
         $this->acodec = $acodec;
     }
 
-    /**
-     * Get acodec.
-     *
-     * @return string
-     */
     public function getAcodec()
     {
         return $this->acodec;
     }
 
-    /**
-     * Set originalName.
-     *
-     * @param string $originalName
-     */
-    public function setOriginalName($originalName)
+    public function setOriginalName($originalName): void
     {
         $this->originalName = $originalName;
     }
 
-    /**
-     * Get originalName.
-     *
-     * @return string
-     */
     public function getOriginalName()
     {
         return $this->originalName;
     }
 
-    /**
-     * Set vcodec.
-     *
-     * @param string $vcodec
-     */
-    public function setVcodec($vcodec)
+    public function setVcodec($vcodec): void
     {
         $this->vcodec = $vcodec;
     }
 
-    /**
-     * Get vcodec.
-     *
-     * @return string
-     */
     public function getVcodec()
     {
         return $this->vcodec;
     }
 
-    /**
-     * Set bitrate.
-     *
-     * @param int $bitrate
-     */
-    public function setBitrate($bitrate)
+    public function setBitrate($bitrate): void
     {
         $this->bitrate = $bitrate;
     }
 
-    /**
-     * Get bitrate.
-     *
-     * @return int
-     */
     public function getBitrate()
     {
         return $this->bitrate;
     }
 
-    /**
-     * Set framerate.
-     *
-     * @param string $framerate
-     */
-    public function setFramerate($framerate)
+    public function setFramerate($framerate): void
     {
         $this->framerate = $framerate;
     }
 
-    /**
-     * Get framerate.
-     *
-     * @return string
-     */
     public function getFramerate()
     {
         return $this->framerate;
     }
 
-    /**
-     * Get total number of frames.
-     *
-     * @return int
-     */
-    public function getNumFrames()
+    public function getNumFrames(): int
     {
         return $this->getFrameNumber($this->getDuration());
     }
 
-    /**
-     * Get frame number of a instant in seg.
-     *
-     * @param mixed $seg
-     *
-     * @return int
-     */
-    public function getFrameNumber($seg)
+    public function getFrameNumber($seg): int
     {
         if (false !== strpos($this->getFramerate(), '/')) {
             $aux = explode('/', $this->getFramerate());
@@ -265,13 +163,6 @@ class Track extends Element
         return (int) ($seg * $this->getFramerate());
     }
 
-    /**
-     * Get instant in seg of a frame number.
-     *
-     * @param mixed $frame
-     *
-     * @return float
-     */
     public function getTimeOfAFrame($frame)
     {
         if (!$this->getFramerate()) {
@@ -287,170 +178,87 @@ class Track extends Element
         return (float) ($frame / $this->getFramerate());
     }
 
-    /**
-     * Set only_audio.
-     *
-     * @param bool $onlyAudio
-     */
-    public function setOnlyAudio($onlyAudio)
+    public function setOnlyAudio($onlyAudio): void
     {
         $this->only_audio = $onlyAudio;
     }
 
-    /**
-     * Get only_audio.
-     *
-     * @return bool
-     */
     public function getOnlyAudio()
     {
         return $this->only_audio;
     }
 
-    /**
-     * Get only_audio.
-     *
-     * getOnlyAudio proxy. Same API as MultimediaObject
-     *
-     * @return bool
-     */
     public function isOnlyAudio()
     {
         return $this->only_audio;
     }
 
-    /**
-     * Set channels.
-     *
-     * @param int $channels
-     */
-    public function setChannels($channels)
+    public function setChannels($channels): void
     {
         $this->channels = $channels;
     }
 
-    /**
-     * Get channels.
-     *
-     * @return int
-     */
     public function getChannels()
     {
         return $this->channels;
     }
 
-    /**
-     * Set duration.
-     *
-     * @param int $duration
-     */
-    public function setDuration($duration)
+    public function setDuration($duration): void
     {
         $this->duration = $duration;
     }
 
-    /**
-     * Get duration.
-     *
-     * @return int
-     */
-    public function getDuration()
+    public function getDuration(): int
     {
         return $this->duration;
     }
 
-    /**
-     * Set width.
-     *
-     * @param int $width
-     */
-    public function setWidth($width)
+    public function setWidth($width): void
     {
         $this->width = $width;
     }
 
-    /**
-     * Get width.
-     *
-     * @return int
-     */
     public function getWidth()
     {
         return $this->width;
     }
 
-    /**
-     * Set height.
-     *
-     * @param int $height
-     */
-    public function setHeight($height)
+    public function setHeight($height): void
     {
         $this->height = $height;
     }
 
-    /**
-     * Get height.
-     *
-     * @return int
-     */
     public function getHeight()
     {
         return $this->height;
     }
 
-    /**
-     * Set numview.
-     *
-     * @param int $numview
-     */
-    public function setNumview($numview)
+    public function setNumview($numview): void
     {
         $this->numview = $numview;
     }
 
-    /**
-     * Increment numview.
-     */
-    public function incNumview()
+    public function incNumview(): void
     {
         ++$this->numview;
     }
 
-    /**
-     * Get numview.
-     *
-     * @return int
-     */
     public function getNumview()
     {
         return $this->numview;
     }
 
-    /**
-     * Set allowDownload.
-     *
-     * @param bool $allowDownload
-     */
-    public function setAllowDownload($allowDownload)
+    public function setAllowDownload($allowDownload): void
     {
         $this->allowDownload = $allowDownload;
     }
 
-    /**
-     * Get allowDownload.
-     */
-    public function getAllowDownload()
+    public function getAllowDownload(): bool
     {
         return $this->allowDownload;
     }
 
-    /**
-     * Get Resolution.
-     *
-     * @return array
-     */
-    public function getResolution()
+    public function getResolution(): array
     {
         return [
             'width' => $this->width,
@@ -458,12 +266,7 @@ class Track extends Element
         ];
     }
 
-    /**
-     * Set Resolution.
-     *
-     * @param array $resolution
-     */
-    public function setResolution($resolution)
+    public function setResolution($resolution): void
     {
         if ((!empty($resolution['width'])) && (!empty($resolution['height']))) {
             $this->width = $resolution['width'];
@@ -471,22 +274,12 @@ class Track extends Element
         }
     }
 
-    /**
-     * Get video aspect ratio.
-     *
-     * @return float
-     */
     public function getAspectRatio()
     {
-        return (0 == $this->height) ? 0 : $this->width / $this->height;
+        return (0 === $this->height) ? 0 : $this->width / $this->height;
     }
 
-    /**
-     * Get duration in minutes and seconds.
-     *
-     * @return array
-     */
-    public function getDurationInMinutesAndSeconds()
+    public function getDurationInMinutesAndSeconds(): array
     {
         $minutes = floor($this->getDuration() / 60);
 
@@ -495,33 +288,18 @@ class Track extends Element
         return ['minutes' => $minutes, 'seconds' => $seconds];
     }
 
-    /**
-     * Set duration in minutes and seconds.
-     *
-     * @param array $durationInMinutesAndSeconds
-     */
-    public function setDurationInMinutesAndSeconds($durationInMinutesAndSeconds)
+    public function setDurationInMinutesAndSeconds($durationInMinutesAndSeconds): void
     {
         if ((!empty($durationInMinutesAndSeconds['minutes'])) && (!empty($durationInMinutesAndSeconds['seconds']))) {
             $this->duration = ($durationInMinutesAndSeconds['minutes'] * 60) + $durationInMinutesAndSeconds['seconds'];
         }
     }
 
-    /**
-     * Return true if track is a master.
-     *
-     * @return bool
-     */
-    public function isMaster()
+    public function isMaster(): bool
     {
         return $this->containsTag('master');
     }
 
-    /**
-     * Return the profiles used to generate the track.
-     *
-     * @return string|null
-     */
     public function getProfileName()
     {
         foreach ($this->getTags() as $tag) {

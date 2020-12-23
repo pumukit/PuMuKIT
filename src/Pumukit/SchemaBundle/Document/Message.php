@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
@@ -10,148 +12,102 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 class Message
 {
     /**
-     * @var \MongoId|string|null id
-     *
      * @MongoDB\Id
      */
     private $id;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $author;
 
     /**
-     * @var string multimediaObject
      * @MongoDB\ReferenceOne(targetDocument=MultimediaObject::class, inversedBy="multimedia_object", storeAs="id", cascade={"persist"})
      * @MongoDB\Index
      */
     private $multimediaObject;
 
     /**
-     * @var string channel
-     *
      * @MongoDB\Field(type="string")
      */
     private $channel;
 
     /**
-     * @var string message
-     *
      * @MongoDB\Field(type="string")
      */
     private $message;
 
     /**
-     * @var \DateTime
-     *
      * @MongoDB\Field(type="date")
      */
     private $insertDate;
 
     /**
-     * @var string cookie
-     *
      * @MongoDB\Field(type="string")
      */
     private $cookie;
 
-    /**
-     * Get id.
-     *
-     * @return string
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getMessage()
     {
         return $this->message;
     }
 
-    /**
-     * @param string $author
-     */
-    public function setAuthor($author)
+    public function setAuthor($author): void
     {
         $this->author = $author;
     }
 
-    /**
-     * @return string
-     */
     public function getAuthor()
     {
         return $this->author;
     }
 
-    /**
-     * @param string $content
-     */
-    public function setMessage($content)
+    public function setMessage($content): void
     {
         $this->message = $content;
     }
 
-    /**
-     * @param \DateTime $insertDate
-     */
-    public function setInsertDate($insertDate)
+    public function setInsertDate($insertDate): void
     {
         $this->insertDate = $insertDate;
     }
 
-    /**
-     * @return \DateTime
-     */
     public function getInsertDate()
     {
         return $this->insertDate;
     }
 
-    /**
-     * @param string $multimediaObject
-     */
-    public function setMultimediaObject($multimediaObject)
+    public function setMultimediaObject($multimediaObject): void
     {
         $this->multimediaObject = $multimediaObject;
     }
 
-    /**
-     * @return string
-     */
+    public function getMultimediaObject()
+    {
+        return $this->multimediaObject;
+    }
+
     public function getChannel()
     {
         return $this->channel;
     }
 
-    /**
-     * @param string $channel
-     */
-    public function setChannel($channel)
+    public function setChannel($channel): void
     {
         $this->channel = $channel;
     }
 
-    /**
-     * @return string
-     */
     public function getCookie()
     {
         return $this->cookie;
     }
 
-    /**
-     * @param string $cookie
-     */
-    public function setCookie($cookie)
+    public function setCookie($cookie): void
     {
         $this->cookie = $cookie;
     }

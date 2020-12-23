@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -183,9 +185,6 @@ class User extends BaseUser
         return $this;
     }
 
-    /**
-     * @return ArrayCollection
-     */
     public function getGroups()
     {
         return $this->groups;

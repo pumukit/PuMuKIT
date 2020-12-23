@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
@@ -72,7 +74,7 @@ class EmbeddedTag implements TagInterface
      */
     private $level;
 
-    public function __construct(Tag $tag)
+    public function __construct(TagInterface $tag)
     {
         if (null !== $tag) {
             $this->id = $tag->getId();
@@ -113,11 +115,8 @@ class EmbeddedTag implements TagInterface
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->title[$locale])) {
-            return '';
-        }
 
-        return $this->title[$locale];
+        return $this->title[$locale] ?? '';
     }
 
     public function getI18nTitle(): array
@@ -143,11 +142,8 @@ class EmbeddedTag implements TagInterface
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->description[$locale])) {
-            return '';
-        }
 
-        return $this->description[$locale];
+        return $this->description[$locale] ?? '';
     }
 
     public function setI18nDescription(array $description): void

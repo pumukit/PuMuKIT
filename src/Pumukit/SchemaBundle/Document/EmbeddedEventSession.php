@@ -1,135 +1,92 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * Pumukit\SchemaBundle\Document\EmbeddedEventSession.
- *
  * @MongoDB\EmbeddedDocument
  */
 class EmbeddedEventSession
 {
     /**
-     * @var \MongoId|string|null
-     *
      * @MongoDB\Id
      */
     private $id;
 
     /**
-     * @var \DateTime
-     *
      * @MongoDB\Field(type="date")
      */
     private $start;
 
     /**
-     * @var \DateTime
-     *
      * @MongoDB\Field(type="date")
      */
     private $ends;
 
     /**
-     * @var int
-     *
      * @MongoDB\Field(type="int")
      */
     private $duration = 0;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $notes;
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getId();
     }
 
-    /**
-     * @return \MongoId|string|null
-     */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @param \MongoId|string $id
-     */
-    public function setId($id)
+    public function setId($id): void
     {
         $this->id = $id;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getStart()
+    public function getStart(): \DateTimeInterface
     {
         return $this->start;
     }
 
-    /**
-     * @param \DateTime $start
-     */
-    public function setStart($start)
+    public function setStart(\DateTimeInterface $start): void
     {
         $this->start = $start;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getEnds()
+    public function getEnds(): \DateTimeInterface
     {
         return $this->ends;
     }
 
-    /**
-     * @param \DateTime $ends
-     */
-    public function setEnds($ends)
+    public function setEnds(\DateTimeInterface $ends): void
     {
         $this->ends = $ends;
     }
 
-    /**
-     * @return int
-     */
-    public function getDuration()
+    public function getDuration(): int
     {
         return $this->duration;
     }
 
-    /**
-     * @param int $duration
-     */
-    public function setDuration($duration)
+    public function setDuration(int $duration): void
     {
         $this->duration = $duration;
     }
 
-    /**
-     * @return string
-     */
-    public function getNotes()
+    public function getNotes(): ?string
     {
         return $this->notes;
     }
 
-    /**
-     * @param string $notes
-     */
-    public function setNotes($notes)
+    public function setNotes(string $notes): void
     {
         $this->notes = $notes;
     }
