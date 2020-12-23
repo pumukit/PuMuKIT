@@ -1,12 +1,12 @@
-ARG PHP_VERSION=7.2
-ARG ALPINE_VERSION=3.10
+ARG PHP_VERSION=7.4
+ARG ALPINE_VERSION=3.11
 
 FROM php:${PHP_VERSION}-fpm-alpine${ALPINE_VERSION} as base
 MAINTAINER Pablo Nieto, pnieto@teltek.es
 
-ARG APCU_VERSION=5.1.17
-ARG PHP_MONGODB_VERSION=1.6.0
-ARG XDEBUG_VERSION=2.7.2
+ARG APCU_VERSION=5.1.19
+ARG PHP_MONGODB_VERSION=1.9.0
+ARG XDEBUG_VERSION=3.0.1
 
 RUN apk  add --no-cache \
     	    --update \
@@ -21,11 +21,10 @@ RUN apk  add --no-cache \
 			py-setuptools \
 			py-argparse \
 			py2-pip \
-			py-gflags \
 			grep \
 ;
 
-RUN pip install google-api-python-client==1.2
+RUN pip install google-api-python-client
 
 COPY --from=teltek/ffmpeg /usr/local /usr/local
 
@@ -53,14 +52,13 @@ RUN set -eux; \
 		freetype-dev \
  	; \
  	\
- 	docker-php-ext-configure zip --with-libzip; \
+ 	docker-php-ext-configure zip; \
 	freetype-config --cflags; \
      	mkdir -p /opt/ffmpeg/include; \
 	ln -s /usr/include/freetype2 /opt/ffmpeg/include/freetype2; \
 	docker-php-ext-configure gd \
-	 	--with-freetype-dir=/usr/include/ \
-		--with-jpeg-dir=/usr/include/ \
-		-with-png-dir=/usr/include; \
+	 	--with-freetype \
+		--with-jpeg ; \
  	docker-php-ext-install -j$(nproc) \
  		intl \
 		exif \
@@ -74,7 +72,6 @@ RUN set -eux; \
 		sysvsem \
 		sysvshm \
  		zip \
-		wddx \
 		xsl \
  	; \
  	pecl install \
@@ -107,13 +104,10 @@ COPY php-cli.ini /usr/local/etc/php/php-cli.ini
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
-RUN set -eux; \
-    composer global require "rubenrua/symfony-clean-tags-composer-plugin" "dev-master" -a
-
 # Download and install pumukit to get the composer cache and improve build times
 RUN git clone https://github.com/pumukit/pumukit /srv/pumukit; \
 	cd /srv/pumukit; \
-	git checkout 3.3.x; \
+	git checkout master; \
 	composer install -a -n --no-scripts
 RUN rm -rf /srv/pumukit
 
