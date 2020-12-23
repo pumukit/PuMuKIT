@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -45,7 +47,6 @@ class EmbeddedRole implements RoleInterface
      */
     private $people;
 
-    /** @var string */
     private $locale = 'en';
 
     public function __construct(RoleInterface $role)
@@ -71,9 +72,9 @@ class EmbeddedRole implements RoleInterface
         return $this->id;
     }
 
-    public function setCod(string $cod): void
+    public function setCod(string $code): void
     {
-        $this->cod = $cod;
+        $this->cod = $code;
     }
 
     public function getCod(): string
@@ -114,11 +115,8 @@ class EmbeddedRole implements RoleInterface
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->name[$locale])) {
-            return '';
-        }
 
-        return $this->name[$locale];
+        return $this->name[$locale] ?? '';
     }
 
     public function setI18nName(array $name): void
@@ -144,11 +142,8 @@ class EmbeddedRole implements RoleInterface
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->text[$locale])) {
-            return '';
-        }
 
-        return $this->text[$locale];
+        return $this->text[$locale] ?? '';
     }
 
     public function setI18nText(array $text): void
@@ -171,21 +166,24 @@ class EmbeddedRole implements RoleInterface
         return $this->locale;
     }
 
-    public function getPeople()
+    public function getPeople(): ArrayCollection
     {
         return $this->people;
     }
 
-    public function addPerson($person): void
+    public function addPerson(PersonInterface $person): void
     {
         if (!($this->containsPerson($person))) {
             $this->people[] = $this->createEmbeddedPerson($person);
         }
     }
 
-    public function removePerson($person): bool
+    public function removePerson(PersonInterface $person): bool
     {
         $embeddedPerson = $this->getEmbeddedPerson($person);
+        if (!$embeddedPerson) {
+            return true;
+        }
 
         $aux = $this->people->filter(static function ($i) use ($embeddedPerson) {
             return $i->getId() !== $embeddedPerson->getId();
@@ -240,7 +238,7 @@ class EmbeddedRole implements RoleInterface
         return new EmbeddedPerson($person);
     }
 
-    public function getEmbeddedPerson(PersonInterface $person)
+    public function getEmbeddedPerson(PersonInterface $person): ?PersonInterface
     {
         foreach ($this->people as $embeddedPerson) {
             if ($person->getId() === $embeddedPerson->getId()) {
@@ -248,6 +246,6 @@ class EmbeddedRole implements RoleInterface
             }
         }
 
-        return false;
+        return null;
     }
 }

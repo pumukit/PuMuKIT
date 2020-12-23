@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\SchemaBundle\Document\Traits;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Pumukit\SchemaBundle\Document\Link as DocumentLink;
 
@@ -26,7 +27,6 @@ trait Link
     */
 
     /**
-     * @var Collection
      * @MongoDB\EmbedMany(targetDocument=Link::class)
      */
     private $links;
@@ -36,85 +36,47 @@ trait Link
         $this->links = new ArrayCollection();
     }
 
-    /**
-     * Get links.
-     *
-     * @return Collection
-     */
-    public function getLinks()
+    public function getLinks(): ArrayCollection
     {
         return $this->links;
     }
 
-    /**
-     * Add link.
-     */
-    public function addLink(DocumentLink $link)
+    public function addLink(DocumentLink $link): void
     {
         $this->links->add($link);
     }
 
-    /**
-     * Remove link.
-     */
-    public function removeLink(DocumentLink $link)
+    public function removeLink(DocumentLink $link): void
     {
         $this->links->removeElement($link);
     }
 
-    /**
-     * Remove link by id.
-     *
-     * @param string $linkId
-     */
-    public function removeLinkById($linkId)
+    public function removeLinkById($linkId): void
     {
         $this->links = $this->links->filter(function ($link) use ($linkId) {
             return $link->getId() !== $linkId;
         });
     }
 
-    /**
-     * Up link by id.
-     *
-     * @param string $linkId
-     */
-    public function upLinkById($linkId)
+    public function upLinkById($linkId): void
     {
-        $this->reorderLinkById($linkId, true);
+        $this->reorderLinkById($linkId);
     }
 
-    /**
-     * Down link by id.
-     *
-     * @param string $linkId
-     */
-    public function downLinkById($linkId)
+    public function downLinkById($linkId): void
     {
         $this->reorderLinkById($linkId, false);
     }
 
-    /**
-     * Contains link.
-     *
-     * @return bool
-     */
-    public function containsLink(DocumentLink $link)
+    public function containsLink(DocumentLink $link): bool
     {
         return $this->links->contains($link);
     }
 
-    /**
-     * Get link by id.
-     *
-     * @param \MongoId|string $linkId
-     *
-     * @return DocumentLink|null
-     */
     public function getLinkById($linkId)
     {
         foreach ($this->links as $link) {
-            if ($link->getId() == $linkId) {
+            if ($link->getId() === $linkId) {
                 return $link;
             }
         }
@@ -122,14 +84,7 @@ trait Link
         return null;
     }
 
-    /**
-     * Get links with tag.
-     *
-     * @param string $tag
-     *
-     * @return array
-     */
-    public function getLinksWithTag($tag)
+    public function getLinksWithTag($tag): array
     {
         $r = [];
 
@@ -142,13 +97,6 @@ trait Link
         return $r;
     }
 
-    /**
-     * Get link with tag.
-     *
-     * @param string $tag
-     *
-     * @return DocumentLink|null
-     */
     public function getLinkWithTag($tag)
     {
         foreach ($this->links as $link) {
@@ -160,12 +108,7 @@ trait Link
         return null;
     }
 
-    /**
-     * Get links with all tags.
-     *
-     * @return array
-     */
-    public function getLinksWithAllTags(array $tags)
+    public function getLinksWithAllTags(array $tags): array
     {
         $r = [];
 
@@ -178,11 +121,6 @@ trait Link
         return $r;
     }
 
-    /**
-     * Get links with all tags.
-     *
-     * @return DocumentLink|null
-     */
     public function getLinkWithAllTags(array $tags)
     {
         foreach ($this->links as $link) {
@@ -194,12 +132,7 @@ trait Link
         return null;
     }
 
-    /**
-     * Get links with any tag.
-     *
-     * @return array
-     */
-    public function getLinksWithAnyTag(array $tags)
+    public function getLinksWithAnyTag(array $tags): array
     {
         $r = [];
 
@@ -212,11 +145,6 @@ trait Link
         return $r;
     }
 
-    /**
-     * Get link with any tag.
-     *
-     * @return DocumentLink|null
-     */
     public function getLinkWithAnyTag(array $tags)
     {
         foreach ($this->links as $link) {
@@ -228,12 +156,7 @@ trait Link
         return null;
     }
 
-    /**
-     * Get filtered links with tags.
-     *
-     * @return array
-     */
-    public function getFilteredLinksWithTags(array $any_tags = [], array $all_tags = [], array $not_any_tags = [], array $not_all_tags = [])
+    public function getFilteredLinksWithTags(array $any_tags = [], array $all_tags = [], array $not_any_tags = [], array $not_all_tags = []): array
     {
         $r = [];
 
@@ -257,13 +180,7 @@ trait Link
         return $r;
     }
 
-    /**
-     * Reorder link by id.
-     *
-     * @param string $linkId
-     * @param bool   $up
-     */
-    private function reorderLinkById($linkId, $up = true)
+    private function reorderLinkById($linkId, $up = true): void
     {
         $snapshot = array_values($this->links->toArray());
         $this->links->clear();

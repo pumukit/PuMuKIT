@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
@@ -146,11 +148,8 @@ class Person implements PersonInterface
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->honorific[$locale])) {
-            return '';
-        }
 
-        return $this->honorific[$locale];
+        return $this->honorific[$locale] ?? '';
     }
 
     public function setI18nHonorific(array $honorific): void
@@ -176,11 +175,8 @@ class Person implements PersonInterface
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->firm[$locale])) {
-            return '';
-        }
 
-        return $this->firm[$locale];
+        return $this->firm[$locale] ?? '';
     }
 
     public function setI18nFirm(array $firm): void
@@ -206,11 +202,8 @@ class Person implements PersonInterface
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->post[$locale])) {
-            return '';
-        }
 
-        return $this->post[$locale];
+        return $this->post[$locale] ?? '';
     }
 
     public function setI18nPost(array $post): void
@@ -236,11 +229,8 @@ class Person implements PersonInterface
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->bio[$locale])) {
-            return '';
-        }
 
-        return $this->bio[$locale];
+        return $this->bio[$locale] ?? '';
     }
 
     public function setI18nBio(array $bio): void

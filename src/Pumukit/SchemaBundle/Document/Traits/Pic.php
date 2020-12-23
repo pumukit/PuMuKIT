@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\SchemaBundle\Document\Traits;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Pumukit\SchemaBundle\Document\Pic as DocumentPic;
 
@@ -26,7 +27,6 @@ trait Pic
     */
 
     /**
-     * @var Collection
      * @MongoDB\EmbedMany(targetDocument=Pic::class)
      */
     private $pics;
@@ -36,95 +36,52 @@ trait Pic
         $this->pics = new ArrayCollection();
     }
 
-    /**
-     * Add pic.
-     */
-    public function addPic(DocumentPic $pic)
+    public function addPic(DocumentPic $pic): void
     {
         $this->pics->add($pic);
     }
 
-    /**
-     * Remove pic.
-     */
-    public function removePic(DocumentPic $pic)
+    public function removePic(DocumentPic $pic): void
     {
         $this->pics->removeElement($pic);
     }
 
-    /**
-     * Remove pic by id.
-     *
-     * @param string $picId
-     */
-    public function removePicById($picId)
+    public function removePicById($picId): void
     {
         $this->pics = $this->pics->filter(function ($pic) use ($picId) {
             return $pic->getId() !== $picId;
         });
     }
 
-    /**
-     * Up pic by id.
-     *
-     * @param string $picId
-     */
-    public function upPicById($picId)
+    public function upPicById($picId): void
     {
-        $this->reorderPicById($picId, true);
+        $this->reorderPicById($picId);
     }
 
-    /**
-     * Down pic by id.
-     *
-     * @param string $picId
-     */
-    public function downPicById($picId)
+    public function downPicById($picId): void
     {
         $this->reorderPicById($picId, false);
     }
 
-    /**
-     * Contains pic.
-     *
-     * @return bool
-     */
-    public function containsPic(DocumentPic $pic)
+    public function containsPic(DocumentPic $pic): bool
     {
         return $this->pics->contains($pic);
     }
 
-    /**
-     * Get pics.
-     *
-     * @return Collection
-     */
-    public function getPics()
+    public function getPics(): ArrayCollection
     {
         return $this->pics;
     }
 
-    /**
-     * Get first pic, null if none.
-     *
-     * @return DocumentPic
-     */
     public function getPic()
     {
         return $this->pics->get(0);
     }
 
-    /**
-     * Get pic by id.
-     *
-     * @param \MongoId|string $picId
-     *
-     * @return DocumentPic|null
-     */
     public function getPicById($picId)
     {
         foreach ($this->pics as $pic) {
-            if ($pic->getId() == $picId) {
+            if ($pic->getId() === $picId) {
                 return $pic;
             }
         }
@@ -133,14 +90,9 @@ trait Pic
     }
 
     /**
-     * @deprecated: Use PicService, function getFirstUrlPic($object, $absolute, $hd)
-     * Get first pic url
-     *
-     * @param string $default: url returned if series without pics
-     *
-     * @return string
+     * @deprecated: Use PicService, function getFirstUrlPic($object, $absolute, $hd) Get first pic url
      */
-    public function getFirstUrlPic($default = '')
+    public function getFirstUrlPic(string $default = ''): string
     {
         $url = $default;
         foreach ($this->pics as $pic) {
@@ -154,14 +106,7 @@ trait Pic
         return $url;
     }
 
-    /**
-     * Get pics with tag.
-     *
-     * @param string $tag
-     *
-     * @return array
-     */
-    public function getPicsWithTag($tag)
+    public function getPicsWithTag($tag): array
     {
         $r = [];
 
@@ -174,13 +119,6 @@ trait Pic
         return $r;
     }
 
-    /**
-     * Get pic with tag.
-     *
-     * @param string $tag
-     *
-     * @return DocumentPic|null
-     */
     public function getPicWithTag($tag)
     {
         foreach ($this->pics as $pic) {
@@ -192,12 +130,7 @@ trait Pic
         return null;
     }
 
-    /**
-     * Get pics with all tags.
-     *
-     * @return array
-     */
-    public function getPicsWithAllTags(array $tags)
+    public function getPicsWithAllTags(array $tags): array
     {
         $r = [];
 
@@ -210,11 +143,6 @@ trait Pic
         return $r;
     }
 
-    /**
-     * Get pics with all tags.
-     *
-     * @return DocumentPic|null
-     */
     public function getPicWithAllTags(array $tags)
     {
         foreach ($this->pics as $pic) {
@@ -226,12 +154,7 @@ trait Pic
         return null;
     }
 
-    /**
-     * Get pics with any tag.
-     *
-     * @return array
-     */
-    public function getPicsWithAnyTag(array $tags)
+    public function getPicsWithAnyTag(array $tags): array
     {
         $r = [];
 
@@ -244,11 +167,6 @@ trait Pic
         return $r;
     }
 
-    /**
-     * Get pic with any tag.
-     *
-     * @return DocumentPic|null
-     */
     public function getPicWithAnyTag(array $tags)
     {
         foreach ($this->pics as $pic) {
@@ -260,12 +178,7 @@ trait Pic
         return null;
     }
 
-    /**
-     * Get filter pics with tag.
-     *
-     * @return array
-     */
-    public function getFilteredPicsWithTags(array $any_tags = [], array $all_tags = [], array $not_any_tags = [], array $not_all_tags = [])
+    public function getFilteredPicsWithTags(array $any_tags = [], array $all_tags = [], array $not_any_tags = [], array $not_all_tags = []): array
     {
         $r = [];
 
@@ -289,13 +202,7 @@ trait Pic
         return $r;
     }
 
-    /**
-     * Reorder pic by id.
-     *
-     * @param string $picId
-     * @param bool   $up
-     */
-    private function reorderPicById($picId, $up = true)
+    private function reorderPicById($picId, $up = true): void
     {
         $snapshot = array_values($this->pics->toArray());
         $this->pics->clear();

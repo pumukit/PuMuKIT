@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\SchemaBundle\Document\Traits;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
@@ -7,32 +9,24 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 trait Keywords
 {
     /**
-     * @var array
-     *
-     * @deprecated in version 2.3
-     * use keywords instead
+     * @deprecated in version 2.3 use keywords instead
      *
      * @MongoDB\Field(type="raw")
      */
     private $keyword = ['en' => ''];
 
     /**
-     * @var array
-     *
      * @MongoDB\Field(type="raw")
      */
     private $keywords = ['en' => []];
 
     /**
-     * Set keyword.
+     * @deprecated in version 2.3 use setKeywords instead
      *
-     * @deprecated in version 2.3
-     * use setKeywords instead
-     *
-     * @param string      $keyword
-     * @param string|null $locale
+     * @param mixed      $keyword
+     * @param mixed|null $locale
      */
-    public function setKeyword($keyword, $locale = null)
+    public function setKeyword($keyword, $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -42,16 +36,9 @@ trait Keywords
     }
 
     /**
-     * Get keyword.
-     *
-     * @deprecated in version 2.3
-     * use getKeywords instead
-     *
-     * @param string|null $locale
-     *
-     * @return string
+     * @deprecated in version 2.3 use getKeywords instead
      */
-    public function getKeyword($locale = null)
+    public function getKeyword(?string $locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -63,10 +50,7 @@ trait Keywords
         return implode(',', $this->keywords[$locale]);
     }
 
-    /**
-     * Set I18n keyword.
-     */
-    public function setI18nKeyword(array $keyword)
+    public function setI18nKeyword(array $keyword): void
     {
         $keywords = [];
         foreach ($keyword as $lang => $value) {
@@ -77,12 +61,7 @@ trait Keywords
         $this->keyword = $keyword;
     }
 
-    /**
-     * Get i18n keyword.
-     *
-     * @return array
-     */
-    public function getI18nKeyword()
+    public function getI18nKeyword(): array
     {
         $keywords = [];
         foreach ($this->keywords as $lang => $value) {
@@ -92,15 +71,7 @@ trait Keywords
         return $keywords;
     }
 
-    /**
-     * Contains keyword.
-     *
-     * @param string|null $locale
-     * @param mixed       $keyword
-     *
-     * @return bool TRUE if this multimedia_object contained the keyword, FALSE otherwise
-     */
-    public function containsKeyword($keyword, $locale = null)
+    public function containsKeyword($keyword, $locale = null): bool
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -109,15 +80,7 @@ trait Keywords
         return in_array($keyword, $this->getKeywords($locale), true);
     }
 
-    /**
-     * Add keyword.
-     *
-     * @param string      $keyword
-     * @param string|null $locale
-     *
-     * @return bool Always TRUE
-     */
-    public function addKeyword($keyword, $locale = null)
+    public function addKeyword($keyword, $locale = null): bool
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -133,15 +96,7 @@ trait Keywords
         return true;
     }
 
-    /**
-     * Remove keyword.
-     *
-     * @param string      $keyword
-     * @param string|null $locale
-     *
-     * @return bool TRUE if object contains the keyword
-     */
-    public function removeKeyword($keyword, $locale = null)
+    public function removeKeyword($keyword, $locale = null): bool
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -162,12 +117,7 @@ trait Keywords
         return false;
     }
 
-    /**
-     * Set keywords.
-     *
-     * @param string|null $locale
-     */
-    public function setKeywords(array $keywords, $locale = null)
+    public function setKeywords(array $keywords, $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -175,39 +125,21 @@ trait Keywords
         $this->keywords[$locale] = $keywords;
     }
 
-    /**
-     * Get keyword.
-     *
-     * @param string|null $locale
-     *
-     * @return array
-     */
-    public function getKeywords($locale = null)
+    public function getKeywords($locale = null): array
     {
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->keyword[$locale])) {
-            return [];
-        }
 
-        return $this->keyword[$locale];
+        return $this->keyword[$locale] ?? [];
     }
 
-    /**
-     * Set I18n keywords.
-     */
-    public function setI18nKeywords(array $keywords)
+    public function setI18nKeywords(array $keywords): void
     {
         $this->keywords = $keywords;
     }
 
-    /**
-     * Get i18n keywords.
-     *
-     * @return array
-     */
-    public function getI18nKeywords()
+    public function getI18nKeywords(): array
     {
         return $this->keywords;
     }

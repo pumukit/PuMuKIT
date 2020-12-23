@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
@@ -19,15 +21,15 @@ class Series
         Traits\Pic::__construct as private __PicConstruct;
     }
 
-    const TYPE_SERIES = 0;
-    const TYPE_PLAYLIST = 1;
+    public const TYPE_SERIES = 0;
+    public const TYPE_PLAYLIST = 1;
 
-    const SORT_MANUAL = 0;
-    const SORT_PUB_ASC = 1;
-    const SORT_PUB_DES = 2;
-    const SORT_REC_DES = 3;
-    const SORT_REC_ASC = 4;
-    const SORT_ALPHAB = 5;
+    public const SORT_MANUAL = 0;
+    public const SORT_PUB_ASC = 1;
+    public const SORT_PUB_DES = 2;
+    public const SORT_REC_DES = 3;
+    public const SORT_REC_ASC = 4;
+    public const SORT_ALPHAB = 5;
 
     public static $sortCriteria = [
         self::SORT_MANUAL => ['rank' => 'asc'],
@@ -53,32 +55,24 @@ class Series
     protected $id;
 
     /**
-     * Numerical identifier.
-     *
-     * @var int
      * @MongoDB\Field(type="int")
      * @MongoDB\UniqueIndex()
      */
     private $numerical_id;
 
     /**
-     * @var string
      * @MongoDB\Field(type="string")
      * @MongoDB\Index
      */
     private $secret;
 
     /**
-     * Flag with TYPE_SERIES or TYPE_PLAYLIST to determine the collection type.
-     *
-     * @var int
      * @MongoDB\Field(type="int")
      * @MongoDB\Index
      */
     private $type;
 
     /**
-     * @var int
      * @MongoDB\Field(type="int")
      */
     private $sorting = self::SORT_MANUAL;
@@ -94,95 +88,79 @@ class Series
     private $series_style;
 
     /**
-     * @var Playlist
      * @MongoDB\EmbedOne(targetDocument=Playlist::class)
      * @Serializer\Exclude
      */
     private $playlist;
 
     /**
-     * @var bool
      * @MongoDB\Field(type="boolean")
      */
     private $announce = false;
 
     /**
-     * When series is hide and we access to the serie with the mmobj->getSeries(),
-     * it creates a pseudo serie with default values (the webtv filter dont permit to access hide series),
-     * and we want to force that the serie will be hide.
+     * When series is hide and we access to the series with the mmobj->getSeries(),
+     * it creates a pseudo series with default values (the WebTV filter dont permit to access hide series),
+     * and we want to force that the series will be hide.
      *
-     * @var bool
      * @MongoDB\Field(type="boolean")
      * @MongoDB\Index
      */
-    private $hide = true;
+    private $hide;
 
     /**
-     * @var \DateTime
      * @MongoDB\Field(type="date")
      * @MongoDB\Index
      */
     private $public_date;
 
     /**
-     * @var array<string, string>
      * @MongoDB\Field(type="raw")
      */
     private $title = ['en' => ''];
 
     /**
-     * @var array<string, string>
      * @MongoDB\Field(type="raw")
      */
     private $subtitle = ['en' => ''];
 
     /**
-     * @var array<string, string>
      * @MongoDB\Field(type="raw")
      */
     private $description = ['en' => ''];
 
     /**
-     * @var string
      * @MongoDB\Field(type="string")
      */
     private $comments;
 
     /**
-     * @var array<string, string>
      * @MongoDB\Field(type="raw")
      */
     private $header = ['en' => ''];
 
     /**
-     * @var array<string, string>
      * @MongoDB\Field(type="raw")
      */
     private $footer = ['en' => ''];
 
     /**
-     * @var array<string, string>
      * @MongoDB\Field(type="raw")
      */
     private $line2 = ['en' => ''];
 
     /**
-     * @var array
      * @MongoDB\Field(type="raw")
      */
     private $textindex = [];
 
     /**
-     * @var array
      * @MongoDB\Field(type="raw")
      */
     private $secondarytextindex = [];
 
     /**
-     * Used locale to override Translation listener`s locale
-     * this is not a mapped field of entity metadata, just a simple property.
-     *
-     * @var string
+     * Used locale to override Translation listener`s locale this is not a mapped field of entity metadata, just a simple property.
      */
     private $locale = 'en';
 
@@ -194,278 +172,144 @@ class Series
         $this->__PicConstruct();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getTitle();
     }
 
-    /**
-     * @return bool
-     */
-    public function isCollection()
+    public function isCollection(): bool
     {
         return true;
     }
 
-    /**
-     * Get id.
-     *
-     * @return string
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Get numerical id.
-     *
-     * @return int
-     */
     public function getNumericalID()
     {
         return $this->numerical_id;
     }
 
-    /**
-     * Set numerical id.
-     *
-     * @param mixed $numericalID
-     *
-     * @return int
-     */
     public function setNumericalID($numericalID)
     {
         return $this->numerical_id = $numericalID;
     }
 
-    /**
-     * Get secret.
-     *
-     * @return string
-     */
-    public function getSecret()
+    public function getSecret(): string
     {
         return $this->secret;
     }
 
-    /**
-     * Resets secret.
-     *
-     * @return string
-     */
-    public function resetSecret()
+    public function resetSecret(): string
     {
         $this->secret = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
 
         return $this->secret;
     }
 
-    /**
-     * Get type.
-     *
-     * @return int
-     */
     public function getType()
     {
         return $this->type;
     }
 
-    /**
-     * Set type.
-     *
-     * @param int $type
-     */
     public function setType($type)
     {
         return $this->type = $type;
     }
 
-    /**
-     * True is playlist.
-     *
-     * @return bool
-     */
-    public function isPlaylist()
+    public function isPlaylist(): bool
     {
         return self::TYPE_PLAYLIST === $this->type;
     }
 
-    /**
-     * Get sorting type.
-     *
-     * @return int
-     */
-    public function getSorting()
+    public function getSorting(): int
     {
         return $this->sorting;
     }
 
-    /**
-     * Get sorting criteria.
-     *
-     * @return array
-     */
-    public function getSortingCriteria()
+    public function getSortingCriteria(): array
     {
-        return isset(self::$sortCriteria[$this->sorting]) ?
-            self::$sortCriteria[$this->sorting] :
-            self::$sortCriteria[0];
+        return self::$sortCriteria[$this->sorting] ?? self::$sortCriteria[0];
     }
 
-    /**
-     * Set sorting type.
-     *
-     * @param int $sorting
-     */
     public function setSorting($sorting)
     {
         return $this->sorting = $sorting;
     }
 
-    /**
-     * Set series_type.
-     */
-    public function setSeriesType(SeriesType $series_type)
+    public function setSeriesType(SeriesType $series_type): void
     {
         $this->series_type = $series_type;
     }
 
-    /**
-     * Get series_type.
-     *
-     * @return SeriesType
-     */
     public function getSeriesType()
     {
         return $this->series_type;
     }
 
-    /**
-     * Set series_style.
-     *
-     * @param SeriesStyle $series_style
-     */
-    public function setSeriesStyle(SeriesStyle $series_style = null)
+    public function setSeriesStyle(SeriesStyle $series_style = null): void
     {
         $this->series_style = $series_style;
     }
 
-    /**
-     * Get series_style.
-     *
-     * @return SeriesStyle
-     */
     public function getSeriesStyle()
     {
         return $this->series_style;
     }
 
-    /**
-     * Set playlist.
-     */
-    public function setPlaylist(Playlist $playlist)
+    public function setPlaylist(Playlist $playlist): void
     {
         $this->playlist = $playlist;
     }
 
-    /**
-     * Get playlist.
-     *
-     * @return Playlist
-     */
-    public function getPlaylist()
+    public function getPlaylist(): Playlist
     {
         return $this->playlist;
     }
 
-    /**
-     * Set announce.
-     *
-     * @param bool $announce
-     */
-    public function setAnnounce($announce)
+    public function setAnnounce($announce): void
     {
         $this->announce = $announce;
     }
 
-    /**
-     * Get announce.
-     *
-     * @return bool
-     */
-    public function getAnnounce()
+    public function getAnnounce(): bool
     {
         return $this->announce;
     }
 
-    /**
-     * Get announce.
-     *
-     * @return bool
-     */
-    public function isAnnounce()
+    public function isAnnounce(): bool
     {
         return $this->announce;
     }
 
-    /**
-     * Set hide.
-     *
-     * @param bool $hide
-     */
-    public function setHide($hide)
+    public function setHide($hide): void
     {
         $this->hide = $hide;
     }
 
-    /**
-     * Get hide.
-     *
-     * @return bool
-     */
-    public function getHide()
+    public function getHide(): bool
     {
         return $this->hide;
     }
 
-    /**
-     * Get hide.
-     *
-     * @return bool
-     */
-    public function isHide()
+    public function isHide(): bool
     {
         return $this->hide;
     }
 
-    /**
-     * Set public_date.
-     *
-     * @param \DateTime $public_date
-     */
-    public function setPublicDate($public_date)
+    public function setPublicDate($public_date): void
     {
         $this->public_date = $public_date;
     }
 
-    /**
-     * Get public_date.
-     *
-     * @return \DateTime
-     */
     public function getPublicDate()
     {
         return $this->public_date;
     }
 
-    /**
-     * Set title.
-     *
-     * @param string      $title
-     * @param string|null $locale
-     */
-    public function setTitle($title, $locale = null)
+    public function setTitle($title, $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -473,50 +317,26 @@ class Series
         $this->title[$locale] = $title;
     }
 
-    /**
-     * Get title.
-     *
-     * @param string|null $locale
-     *
-     * @return string
-     */
-    public function getTitle($locale = null)
+    public function getTitle($locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->title[$locale])) {
-            return '';
-        }
 
-        return $this->title[$locale];
+        return $this->title[$locale] ?? '';
     }
 
-    /**
-     * Set I18n title.
-     */
-    public function setI18nTitle(array $title)
+    public function setI18nTitle(array $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * Get i18n title.
-     *
-     * @return array
-     */
-    public function getI18nTitle()
+    public function getI18nTitle(): array
     {
         return $this->title;
     }
 
-    /**
-     * Set subtitle.
-     *
-     * @param string      $subtitle
-     * @param string|null $locale
-     */
-    public function setSubtitle($subtitle, $locale = null)
+    public function setSubtitle($subtitle, $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -524,50 +344,26 @@ class Series
         $this->subtitle[$locale] = $subtitle;
     }
 
-    /**
-     * Get subtitle.
-     *
-     * @param string|null $locale
-     *
-     * @return string
-     */
-    public function getSubtitle($locale = null)
+    public function getSubtitle($locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->subtitle[$locale])) {
-            return '';
-        }
 
-        return $this->subtitle[$locale];
+        return $this->subtitle[$locale] ?? '';
     }
 
-    /**
-     * Set I18n subtitle.
-     */
-    public function setI18nSubtitle(array $subtitle)
+    public function setI18nSubtitle(array $subtitle): void
     {
         $this->subtitle = $subtitle;
     }
 
-    /**
-     * Get i18n subtitle.
-     *
-     * @return array
-     */
-    public function getI18nSubtitle()
+    public function getI18nSubtitle(): array
     {
         return $this->subtitle;
     }
 
-    /**
-     * Set description.
-     *
-     * @param string      $description
-     * @param string|null $locale
-     */
-    public function setDescription($description, $locale = null)
+    public function setDescription($description, $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -575,70 +371,36 @@ class Series
         $this->description[$locale] = $description;
     }
 
-    /**
-     * Get description.
-     *
-     * @param string|null $locale
-     *
-     * @return string
-     */
-    public function getDescription($locale = null)
+    public function getDescription($locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->description[$locale])) {
-            return '';
-        }
 
-        return $this->description[$locale];
+        return $this->description[$locale] ?? '';
     }
 
-    /**
-     * Set comments.
-     *
-     * @param string $comments
-     */
-    public function setComments($comments)
+    public function setComments($comments): void
     {
         $this->comments = $comments;
     }
 
-    /**
-     * Get comments.
-     *
-     * @return string
-     */
     public function getComments()
     {
         return $this->comments;
     }
 
-    /**
-     * Set I18n description.
-     */
-    public function setI18nDescription(array $description)
+    public function setI18nDescription(array $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * Get i18n description.
-     *
-     * @return array
-     */
-    public function getI18nDescription()
+    public function getI18nDescription(): array
     {
         return $this->description;
     }
 
-    /**
-     * Set header.
-     *
-     * @param string      $header
-     * @param string|null $locale
-     */
-    public function setHeader($header, $locale = null)
+    public function setHeader($header, $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -646,50 +408,26 @@ class Series
         $this->header[$locale] = $header;
     }
 
-    /**
-     * Get header.
-     *
-     * @param string|null $locale
-     *
-     * @return string
-     */
-    public function getHeader($locale = null)
+    public function getHeader($locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->header[$locale])) {
-            return '';
-        }
 
-        return $this->header[$locale];
+        return $this->header[$locale] ?? '';
     }
 
-    /**
-     * Set I18n header.
-     */
-    public function setI18nHeader(array $header)
+    public function setI18nHeader(array $header): void
     {
         $this->header = $header;
     }
 
-    /**
-     * Get i18n header.
-     *
-     * @return array
-     */
-    public function getI18nHeader()
+    public function getI18nHeader(): array
     {
         return $this->header;
     }
 
-    /**
-     * Set footer.
-     *
-     * @param string      $footer
-     * @param string|null $locale
-     */
-    public function setFooter($footer, $locale = null)
+    public function setFooter($footer, $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -697,61 +435,32 @@ class Series
         $this->footer[$locale] = $footer;
     }
 
-    /**
-     * Get footer.
-     *
-     * @param string|null $locale
-     *
-     * @return string
-     */
-    public function getFooter($locale = null)
+    public function getFooter($locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->footer[$locale])) {
-            return '';
-        }
 
-        return $this->footer[$locale];
+        return $this->footer[$locale] ?? '';
     }
 
-    /**
-     * Set I18n footer.
-     */
-    public function setI18nFooter(array $footer)
+    public function setI18nFooter(array $footer): void
     {
         $this->footer = $footer;
     }
 
-    /**
-     * Get i18n footer.
-     *
-     * @return array
-     */
-    public function getI18nFooter()
+    public function getI18nFooter(): array
     {
         return $this->footer;
     }
 
-    /**
-     * Set copyright.
-     *
-     * @deprecated Dont use this method, use setProperty('copyright', $copyright)
-     *
-     * @param string $copyright
-     */
-    public function setCopyright($copyright)
+    public function setCopyright($copyright): void
     {
         $this->setProperty('copyright', $copyright);
     }
 
     /**
-     * Get copyright.
-     *
      * @deprecated Dont use this method, use getProperty('copyright')
-     *
-     * @return string
      */
     public function getCopyright()
     {
@@ -759,36 +468,24 @@ class Series
     }
 
     /**
-     * Set license.
-     *
      * @deprecated  Dont use this method, use setProperty('license', $license)
      *
-     * @param string $license
+     * @param mixed $license
      */
-    public function setLicense($license)
+    public function setLicense($license): void
     {
         $this->setProperty('license', $license);
     }
 
     /**
-     * Get license.
-     *
      * @deprecated Dont use this method, use getProperty('license')
-     *
-     * @return string $license
      */
     public function getLicense()
     {
         return $this->getProperty('license');
     }
 
-    /**
-     * Set line2.
-     *
-     * @param string      $line2
-     * @param string|null $locale
-     */
-    public function setLine2($line2, $locale = null)
+    public function setLine2($line2, $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -796,99 +493,51 @@ class Series
         $this->line2[$locale] = $line2;
     }
 
-    /**
-     * Get line2.
-     *
-     * @param string|null $locale
-     *
-     * @return string
-     */
-    public function getLine2($locale = null)
+    public function getLine2($locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->line2[$locale])) {
-            return '';
-        }
 
-        return $this->line2[$locale];
+        return $this->line2[$locale] ?? '';
     }
 
-    /**
-     * Set I18n line2.
-     */
-    public function setI18nLine2(array $line2)
+    public function setI18nLine2(array $line2): void
     {
         $this->line2 = $line2;
     }
 
-    /**
-     * Get i18n line2.
-     *
-     * @return array
-     */
-    public function getI18nLine2()
+    public function getI18nLine2(): array
     {
         return $this->line2;
     }
 
-    /**
-     * Set locale.
-     *
-     * @param string $locale
-     */
-    public function setLocale($locale)
+    public function setLocale($locale): void
     {
         $this->locale = $locale;
     }
 
-    /**
-     * Get locale.
-     *
-     * @return string
-     */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
 
-    /**
-     * Set textindex.
-     *
-     * @param array $textindex
-     */
-    public function setTextIndex($textindex)
+    public function setTextIndex($textindex): void
     {
         $this->textindex = $textindex;
     }
 
-    /**
-     * Get textindex.
-     *
-     * @return array
-     */
-    public function getTextIndex()
+    public function getTextIndex(): array
     {
         return $this->textindex;
     }
 
-    /**
-     * Set secondarytextindex.
-     *
-     * @param array $secondarytextindex
-     */
-    public function setSecondaryTextIndex($secondarytextindex)
+    public function setSecondaryTextIndex($secondarytextindex): void
     {
         $this->secondarytextindex = $secondarytextindex;
     }
 
-    /**
-     * Get secondarytextindex.
-     *
-     * @return array
-     */
-    public function getSecondaryTextIndex()
+    public function getSecondaryTextIndex(): array
     {
         return $this->secondarytextindex;
     }

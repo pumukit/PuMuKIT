@@ -1,156 +1,99 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * Pumukit\SchemaBundle\Document\Event.
- *
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\EventRepository")
  */
 class Event
 {
     /**
-     * @var \MongoId|string|null
-     *
      * @MongoDB\Id
      */
     private $id;
 
     /**
-     * @var Live
-     *
      * @MongoDB\ReferenceOne(targetDocument=Live::class, cascade={"persist"})
      */
     private $live;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $name;
 
     /**
-     * @var array<string, string>
-     *
      * @MongoDB\Field(type="raw")
      */
     private $description = ['en' => ''];
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $place;
 
     /**
-     * @var \DateTime
-     *
      * @MongoDB\Field(type="date")
      */
     private $date;
 
     /**
-     * @var int
-     *
      * @MongoDB\Field(type="int")
      */
     private $duration = 60;
 
     /**
-     * @var bool
-     *
      * @MongoDB\Field(type="boolean")
      */
     private $display = true;
 
     /**
-     * @var bool
-     *
      * @MongoDB\Field(type="boolean")
      */
     private $create_serial = true;
 
     /**
-     * @var Pic|null
-     *
      * @MongoDB\EmbedOne(targetDocument=Pic::class)
      */
     private $pic;
 
-    /**
-     * @var string
-     */
     private $locale = 'en';
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->date = new \DateTime();
     }
 
-    /**
-     * Get id.
-     *
-     * @return \MongoId|string|null
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set live.
-     *
-     * @param Live $live
-     */
-    public function setLive($live)
+    public function setLive($live): void
     {
         $this->live = $live;
     }
 
-    /**
-     * Get live.
-     *
-     * @return string
-     */
     public function getLive()
     {
         return $this->live;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * Set description.
-     *
-     * @param string     $description
-     * @param mixed|null $locale
-     */
-    public function setDescription($description, $locale = null)
+    public function setDescription($description, $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -158,180 +101,94 @@ class Event
         $this->description[$locale] = $description;
     }
 
-    /**
-     * Get description.
-     *
-     * @param mixed|null $locale
-     *
-     * @return string
-     */
-    public function getDescription($locale = null)
+    public function getDescription($locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->description[$locale])) {
-            return '';
-        }
 
-        return $this->description[$locale];
+        return $this->description[$locale] ?? '';
     }
 
-    /**
-     * Set I18n description.
-     */
-    public function setI18nDescription(array $description)
+    public function setI18nDescription(array $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * Get I18n description.
-     *
-     * @return array
-     */
-    public function getI18nDescription()
+    public function getI18nDescription(): array
     {
         return $this->description;
     }
 
-    /**
-     * Set place.
-     *
-     * @param string $place
-     */
-    public function setPlace($place)
+    public function setPlace($place): void
     {
         $this->place = $place;
     }
 
-    /**
-     * Get place.
-     *
-     * @return string
-     */
     public function getPlace()
     {
         return $this->place;
     }
 
-    /**
-     * Set date.
-     *
-     * @param \DateTime $date
-     */
-    public function setDate($date)
+    public function setDate($date): void
     {
         $this->date = $date;
     }
 
-    /**
-     * Get date.
-     *
-     * @return \DateTime
-     */
-    public function getDate()
+    public function getDate(): \DateTime
     {
         return $this->date;
     }
 
-    /**
-     * Set duration.
-     *
-     * @param int $duration
-     */
-    public function setDuration($duration)
+    public function setDuration($duration): void
     {
         $this->duration = $duration;
     }
 
-    /**
-     * Get duration.
-     *
-     * @return int
-     */
-    public function getDuration()
+    public function getDuration(): int
     {
         return $this->duration;
     }
 
-    /**
-     * Set display.
-     *
-     * @param bool $display
-     */
-    public function setDisplay($display)
+    public function setDisplay($display): void
     {
         $this->display = $display;
     }
 
-    /**
-     * Get display.
-     *
-     * @return bool
-     */
-    public function getDisplay()
+    public function getDisplay(): bool
     {
         return $this->display;
     }
 
-    /**
-     * Set create_serial.
-     *
-     * @param bool $create_serial
-     */
-    public function setCreateSerial($create_serial)
+    public function setCreateSerial($create_serial): void
     {
         $this->create_serial = $create_serial;
     }
 
-    /**
-     * Get create_serial.
-     *
-     * @return bool
-     */
-    public function getCreateSerial()
+    public function getCreateSerial(): bool
     {
         return $this->create_serial;
     }
 
-    /**
-     * Set locale.
-     *
-     * @param string $locale
-     */
-    public function setLocale($locale)
+    public function setLocale($locale): void
     {
         $this->locale = $locale;
     }
 
-    /**
-     * Get locale.
-     *
-     * @return string
-     */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
 
-    /**
-     * Set Schedule.
-     *
-     * @return array
-     */
-    public function getSchedule()
+    public function getSchedule(): array
     {
-        return ['date' => $this->date,
-            'duration' => $this->duration, ];
+        return [
+            'date' => $this->date,
+            'duration' => $this->duration,
+        ];
     }
 
-    /**
-     * Get Schedule.
-     *
-     * @param array $schedule
-     */
-    public function setSchedule($schedule)
+    public function setSchedule($schedule): void
     {
         if ((!empty($schedule['date'])) && (!empty($schedule['duration']))) {
             $this->date = $schedule['date'];
@@ -339,27 +196,16 @@ class Event
         }
     }
 
-    /**
-     * Set pic.
-     */
-    public function setPic(Pic $pic)
+    public function setPic(Pic $pic): void
     {
         $this->pic = $pic;
     }
 
-    /**
-     * Remove pic.
-     */
-    public function removePic()
+    public function removePic(): void
     {
         $this->pic = null;
     }
 
-    /**
-     * Get pic.
-     *
-     * @return Pic
-     */
     public function getPic()
     {
         return $this->pic;

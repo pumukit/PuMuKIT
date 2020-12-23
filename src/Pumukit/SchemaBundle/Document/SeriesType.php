@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -7,53 +9,38 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
- * Pumukit\SchemaBundle\Document\SeriesType.
- *
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\SeriesTypeRepository")
  */
 class SeriesType
 {
     /**
-     * @var int
-     *
      * @MongoDB\Id
      */
     private $id;
 
     /**
-     * @var array<string, string>
-     *
      * @MongoDB\Field(type="raw")
      */
     private $name = ['en' => ''];
 
     /**
-     * @var array<string, string>
-     *
      * @MongoDB\Field(type="raw")
      */
     private $description = ['en' => ''];
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $cod = '0';
 
     /**
-     * @var ArrayCollection
-     *
      * @MongoDB\ReferenceMany(targetDocument=Series::class, mappedBy="series_type", storeAs="id", orphanRemoval=false)
      * @Serializer\Exclude
      */
     private $series;
 
     /**
-     * Used locale to override Translation listener`s locale
-     * this is not a mapped field of entity metadata, just a simple property.
-     *
-     * @var string
+     * Used locale to override Translation listener`s locale this is not a mapped field of entity metadata, just a simple property.
      */
     private $locale = 'en';
 
@@ -62,33 +49,17 @@ class SeriesType
         $this->series = new ArrayCollection();
     }
 
-    /**
-     * To string.
-     *
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getName();
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string      $name
-     * @param string|null $locale
-     */
-    public function setName($name, $locale = null)
+    public function setName($name, $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -96,50 +67,26 @@ class SeriesType
         $this->name[$locale] = $name;
     }
 
-    /**
-     * Get name.
-     *
-     * @param string|null $locale
-     *
-     * @return string
-     */
-    public function getName($locale = null)
+    public function getName($locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->name[$locale])) {
-            return '';
-        }
 
-        return $this->name[$locale];
+        return $this->name[$locale] ?? '';
     }
 
-    /**
-     * Set I18n name.
-     */
-    public function setI18nName(array $name)
+    public function setI18nName(array $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * Get i18n name.
-     *
-     * @return array
-     */
-    public function getI18nName()
+    public function getI18nName(): array
     {
         return $this->name;
     }
 
-    /**
-     * Set description.
-     *
-     * @param string      $description
-     * @param string|null $locale
-     */
-    public function setDescription($description, $locale = null)
+    public function setDescription($description, $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -147,99 +94,51 @@ class SeriesType
         $this->description[$locale] = $description;
     }
 
-    /**
-     * Get description.
-     *
-     * @param string|null $locale
-     *
-     * @return string
-     */
-    public function getDescription($locale = null)
+    public function getDescription($locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->description[$locale])) {
-            return '';
-        }
 
-        return $this->description[$locale];
+        return $this->description[$locale] ?? '';
     }
 
-    /**
-     * Set I18n description.
-     */
-    public function setI18nDescription(array $description)
+    public function setI18nDescription(array $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * Get i18n description.
-     *
-     * @return array
-     */
-    public function getI18nDescription()
+    public function getI18nDescription(): array
     {
         return $this->description;
     }
 
-    /**
-     * Set cod.
-     *
-     * @param string $cod
-     */
-    public function setCod($cod)
+    public function setCod($cod): void
     {
         $this->cod = $cod;
     }
 
-    /**
-     * Get cod.
-     *
-     * @return string
-     */
-    public function getCod()
+    public function getCod(): string
     {
         return $this->cod;
     }
 
-    /**
-     * Set locale.
-     *
-     * @param string $locale
-     */
-    public function setLocale($locale)
+    public function setLocale($locale): void
     {
         $this->locale = $locale;
     }
 
-    /**
-     * Get locale.
-     *
-     * @return string
-     */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
 
-    /**
-     * Contains series.
-     *
-     * @return bool
-     */
-    public function containsSeries(Series $series)
+    public function containsSeries(Series $series): bool
     {
         return $this->series->contains($series);
     }
 
-    /**
-     * Get series.
-     *
-     * @return ArrayCollection
-     */
-    public function getSeries()
+    public function getSeries(): ArrayCollection
     {
         return $this->series;
     }

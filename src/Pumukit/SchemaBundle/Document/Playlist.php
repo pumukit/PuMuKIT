@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -8,15 +10,11 @@ use JMS\Serializer\Annotation as Serializer;
 use MongoDB\BSON\ObjectId;
 
 /**
- * Pumukit\SchemaBundle\Document\Playlist.
- *
  * @MongoDB\EmbeddedDocument
  */
 class Playlist
 {
     /**
-     * @var ArrayCollection
-     *
      * @MongoDB\ReferenceMany(targetDocument=MultimediaObject::class, storeAs="id", strategy="setArray")
      * @Serializer\Exclude
      */
@@ -27,94 +25,51 @@ class Playlist
         $this->multimedia_objects = new ArrayCollection();
     }
 
-    /**
-     * Contains multimedia_object.
-     *
-     * @return bool
-     */
-    public function containsMultimediaObject(MultimediaObject $multimedia_object)
+    public function containsMultimediaObject(MultimediaObject $multimedia_object): bool
     {
         return $this->multimedia_objects->contains($multimedia_object);
     }
 
-    /**
-     * Add multimedia object.
-     */
-    public function addMultimediaObject(MultimediaObject $multimedia_object)
+    public function addMultimediaObject(MultimediaObject $multimedia_object): bool
     {
         return $this->multimedia_objects->add($multimedia_object);
     }
 
-    /**
-     * Remove multimedia object.
-     */
-    public function removeMultimediaObject(MultimediaObject $multimedia_object)
+    public function removeMultimediaObject(MultimediaObject $multimedia_object): void
     {
         $this->multimedia_objects->removeElement($multimedia_object);
     }
 
-    /**
-     * Removes all references to the multimedia objects with the given id.
-     *
-     * @param mixed $mmobjId
-     */
-    public function removeAllMultimediaObjectsById($mmobjId)
+    public function removeAllMultimediaObjectsById($mmobjId): void
     {
         foreach ($this->multimedia_objects as $key => $mmobj) {
-            if ($mmobj->getId() == $mmobjId) {
+            if ($mmobj->getId() === $mmobjId) {
                 $this->multimedia_objects->remove($key);
             }
         }
     }
 
-    /**
-     * Remove multimedia object by its position in the playlist.
-     *
-     * @param int $pos Position (starting from 0) of the mmobj in the playlist
-     */
-    public function removeMultimediaObjectByPos($pos)
+    public function removeMultimediaObjectByPos($pos): void
     {
         $this->multimedia_objects->remove($pos);
     }
 
-    /**
-     * Get multimedia_objects.
-     *
-     * @return ArrayCollection
-     */
-    public function getMultimediaObjects()
+    public function getMultimediaObjects(): ArrayCollection
     {
         return $this->multimedia_objects;
     }
 
-    /**
-     * Get published multimediaObjects.
-     *
-     * @return array
-     */
-    public function getPublishedMultimediaObjects()
+    public function getPublishedMultimediaObjects(): array
     {
         return $this->getMultimediaObjectsByStatus([MultimediaObject::STATUS_PUBLISHED]);
     }
 
-    /**
-     * Get published and hiddden multimediaObjects.
-     *
-     * @return array
-     */
-    public function getPublishedAndHiddenMultimediaObjects()
+    public function getPublishedAndHiddenMultimediaObjects(): array
     {
         return $this->getMultimediaObjectsByStatus([MultimediaObject::STATUS_HIDDEN, MultimediaObject::STATUS_PUBLISHED]);
     }
 
-    /**
-     * Get Published mmobjs
-     * try catch is used to avoid filter issues.
-     * By default, returns all mmobjs (all status).
-     *
-     * @return array
-     */
-    public function getMultimediaObjectsByStatus(array $status = [])
+    public function getMultimediaObjectsByStatus(array $status = []): array
     {
         if (empty($status)) {
             $status = [MultimediaObject::STATUS_HIDDEN, MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_BLOCKED];
@@ -123,11 +78,11 @@ class Playlist
         $multimediaObjects = [];
         foreach ($this->multimedia_objects as $multimediaObject) {
             try {
-                if (in_array(MultimediaObject::STATUS_PUBLISHED, $status) && $multimediaObject->isPublished()) {
+                if (in_array(MultimediaObject::STATUS_PUBLISHED, $status, true) && $multimediaObject->isPublished()) {
                     $multimediaObjects[] = $multimediaObject;
-                } elseif (in_array(MultimediaObject::STATUS_HIDDEN, $status) && $multimediaObject->isHidden()) {
+                } elseif (in_array(MultimediaObject::STATUS_HIDDEN, $status, true) && $multimediaObject->isHidden()) {
                     $multimediaObjects[] = $multimediaObject;
-                } elseif (in_array(MultimediaObject::STATUS_BLOCKED, $status) && $multimediaObject->isBlocked()) {
+                } elseif (in_array(MultimediaObject::STATUS_BLOCKED, $status, true) && $multimediaObject->isBlocked()) {
                     $multimediaObjects[] = $multimediaObject;
                 }
             } catch (\Exception $exception) {
@@ -138,42 +93,27 @@ class Playlist
         return $multimediaObjects;
     }
 
-    /**
-     * Get the mongo id list of multimedia objects.
-     *
-     * @return array
-     */
-    public function getMultimediaObjectsIdList()
+    public function getMultimediaObjectsIdList(): array
     {
-        $mmobjIds = array_map(
-            function ($m) {
+        return array_map(
+            static function ($m) {
                 return new ObjectId($m->getId());
             },
             $this->multimedia_objects->toArray()
         );
-
-        return $mmobjIds;
     }
 
-    /**
-     * Move multimedia_objects.
-     *
-     * @param int $posStart
-     * @param int $posEnd
-     *
-     * @return bool
-     */
-    public function moveMultimediaObject($posStart, $posEnd)
+    public function moveMultimediaObject($posStart, $posEnd): bool
     {
         $maxPos = $this->multimedia_objects->count();
         if ($maxPos < 1) {
             return false;
         }
-        if (0 == $posStart - $posEnd
+        if (0 === $posStart - $posEnd
            || $posStart < 0 || $posStart > $maxPos) {
             return false; //If start is out of range or start/end is the same, do nothing.
         }
-        $posEnd = $posEnd % $maxPos; //Out of bounds.
+        $posEnd %= $maxPos; //Out of bounds.
         if ($posEnd < 0) {
             $posEnd = $maxPos + $posEnd;
         }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
@@ -21,8 +23,6 @@ class Tag implements TagInterface
     private $id;
 
     /**
-     * Number of Multimedia Object with this tag. Only for cache purposes.
-     *
      * @MongoDB\Field(type="int", strategy="increment" )
      */
     private $number_multimedia_objects = 0;
@@ -90,11 +90,9 @@ class Tag implements TagInterface
     /**
      * @MongoDB\ReferenceMany(targetDocument=Tag::class, mappedBy="parent", sort={"cod": 1})
      */
-    private $children = [];
+    private $children;
 
     /**
-     * Number of children. Only for cache purposes.
-     *
      * @MongoDB\Field(type="int", strategy="increment" )
      */
     private $number_children = 0;
@@ -145,11 +143,8 @@ class Tag implements TagInterface
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->title[$locale])) {
-            return '';
-        }
 
-        return $this->title[$locale];
+        return $this->title[$locale] ?? '';
     }
 
     public function setLabel(string $label, string $locale = null): void
@@ -195,11 +190,8 @@ class Tag implements TagInterface
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->description[$locale])) {
-            return '';
-        }
 
-        return $this->description[$locale];
+        return $this->description[$locale] ?? '';
     }
 
     public function setI18nDescription(array $description): void
@@ -222,9 +214,9 @@ class Tag implements TagInterface
         return $this->slug;
     }
 
-    public function setCod(string $cod): void
+    public function setCod(string $code): void
     {
-        $this->cod = $cod;
+        $this->cod = $code;
     }
 
     public function getCod(): string
@@ -277,9 +269,6 @@ class Tag implements TagInterface
         return $this->updated;
     }
 
-    /**
-     * Set translatable locale.
-     */
     public function setLocale(string $locale): void
     {
         $this->locale = $locale;
@@ -290,23 +279,17 @@ class Tag implements TagInterface
         return $this->locale;
     }
 
-    /**
-     * Increase number_multimedia_objects.
-     */
     public function increaseNumberMultimediaObjects(): void
     {
         ++$this->number_multimedia_objects;
     }
 
-    /**
-     * Decrease number_multimedia_objects.
-     */
     public function decreaseNumberMultimediaObjects(): void
     {
         --$this->number_multimedia_objects;
     }
 
-    public function getNumberMultimediaObjects(): ?string
+    public function getNumberMultimediaObjects(): int
     {
         return $this->number_multimedia_objects;
     }
@@ -328,7 +311,7 @@ class Tag implements TagInterface
         return $this->parent;
     }
 
-    public function getChildren()
+    public function getChildren(): array
     {
         return $this->children;
     }

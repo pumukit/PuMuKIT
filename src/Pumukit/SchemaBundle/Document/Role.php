@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
@@ -71,9 +73,9 @@ class Role implements RoleInterface
         return $this->id;
     }
 
-    public function setCod(string $cod): void
+    public function setCod(string $code): void
     {
-        $this->cod = $cod;
+        $this->cod = $code;
     }
 
     public function getCod(): string
@@ -139,11 +141,8 @@ class Role implements RoleInterface
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->name[$locale])) {
-            return '';
-        }
 
-        return $this->name[$locale];
+        return $this->name[$locale] ?? '';
     }
 
     public function setI18nName(array $name): void
@@ -169,11 +168,8 @@ class Role implements RoleInterface
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->text[$locale])) {
-            return '';
-        }
 
-        return $this->text[$locale];
+        return $this->text[$locale] ?? '';
     }
 
     public function setI18nText(array $text): void

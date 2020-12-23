@@ -1,93 +1,79 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use Pumukit\SchemaBundle\Document\Live as DocumentLive;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Pumukit\SchemaBundle\Document\EmbeddedEvent.
- *
  * @MongoDB\EmbeddedDocument
  */
 class EmbeddedEvent
 {
     /**
-     * @var int
      * @MongoDB\Id
      */
     private $id;
 
     /**
-     * @var array<string, string>
      * @MongoDB\Field(type="raw")
      */
     private $name;
 
     /**
-     * @var array<string, string>
      * @MongoDB\Field(type="raw")
      */
     private $description;
 
     /**
-     * @var string
      * @MongoDB\Field(type="string")
      */
     private $author;
 
     /**
-     * @var string
      * @MongoDB\Field(type="string")
      */
     private $producer;
 
     /**
-     * @var string
      * @MongoDB\Field(type="string")
      */
     private $place;
 
     /**
-     * @var \DateTime
      * @MongoDB\Field(type="date")
      */
     private $date;
 
     /**
-     * @var int
      * @MongoDB\Field(type="int")
      */
     private $duration;
 
     /**
-     * @var bool
      * @MongoDB\Field(type="boolean")
      */
     private $display = true;
 
     /**
-     * @var bool
      * @MongoDB\Field(type="boolean")
      */
     private $create_serial = true;
 
     /**
-     * @var ArrayCollection
      * @MongoDB\EmbedMany(targetDocument=EmbeddedEventSession::class)
      */
     private $embeddedEventSession;
 
     /**
-     * @var DocumentLive
      * @MongoDB\ReferenceOne(targetDocument=Live::class, cascade={"persist"})
      */
     private $live;
 
     /**
-     * @var string
      * @MongoDB\Field(type="string")
      * @Assert\NotBlank()
      * @Assert\Url(protocols= {"rtmpt", "rtmp", "http", "mms", "rtp", "https"})
@@ -95,28 +81,22 @@ class EmbeddedEvent
     private $url;
 
     /**
-     * @var array<string, string>
      * @MongoDB\Field(type="raw")
      */
     private $alreadyHeldMessage = ['en' => ''];
 
     /**
-     * @var array<string, string>
      * @MongoDB\Field(type="raw")
      */
     private $notYetHeldMessage = ['en' => ''];
 
     /**
-     * @var bool
      * @MongoDB\Field(type="boolean")
      */
     private $enableChat = false;
 
     /**
-     * Used locale to override Translation listener`s locale
-     * this is not a mapped field of entity metadata, just a simple property.
-     *
-     * @var string
+     * Used locale to override Translation listener`s locale this is not a mapped field of entity metadata, just a simple property.
      */
     private $locale = 'en';
 
@@ -128,29 +108,17 @@ class EmbeddedEvent
         $this->description = ['en' => ''];
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getName();
     }
 
-    /**
-     * @return int
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string      $name
-     * @param string|null $locale
-     */
-    public function setName($name, $locale = null)
+    public function setName(string $name, string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -158,65 +126,35 @@ class EmbeddedEvent
         $this->name[$locale] = $name;
     }
 
-    /**
-     * Get name.
-     *
-     * @param string|null $locale
-     *
-     * @return string
-     */
-    public function getName($locale = null)
+    public function getName(string $locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->name[$locale])) {
-            return '';
-        }
 
-        return $this->name[$locale];
+        return $this->name[$locale] ?? '';
     }
 
-    /**
-     * Set I18n name.
-     */
-    public function setI18nName(array $name)
+    public function setI18nName(array $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * Get I18n name.
-     *
-     * @return array
-     */
-    public function getI18nName()
+    public function getI18nName(): array
     {
         return $this->name;
     }
 
-    /**
-     * @param string|null $locale
-     *
-     * @return string
-     */
-    public function getDescription($locale = null)
+    public function getDescription(string $locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->description[$locale])) {
-            return '';
-        }
 
-        return $this->description[$locale];
+        return $this->description[$locale] ?? '';
     }
 
-    /**
-     * @param string $description
-     * @param string $locale
-     */
-    public function setDescription($description, $locale = null)
+    public function setDescription(string $description, string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -225,176 +163,110 @@ class EmbeddedEvent
         $this->description[$locale] = $description;
     }
 
-    /**
-     * Set I18n name.
-     */
-    public function setI18nDescription(array $description)
+    public function setI18nDescription(array $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * Get I18n description.
-     *
-     * @return array
-     */
-    public function getI18nDescription()
+    public function getI18nDescription(): array
     {
         return $this->description;
     }
 
-    /**
-     * @return string
-     */
     public function getPlace()
     {
         return $this->place;
     }
 
-    /**
-     * @param string $place
-     */
-    public function setPlace($place)
+    public function setPlace($place): void
     {
         $this->place = $place;
     }
 
-    /**
-     * @return string
-     */
     public function getAuthor()
     {
         return $this->author;
     }
 
-    /**
-     * @param string $author
-     */
-    public function setAuthor($author)
+    public function setAuthor($author): void
     {
         $this->author = $author;
     }
 
-    /**
-     * @return string
-     */
     public function getProducer()
     {
         return $this->producer;
     }
 
-    /**
-     * @param string $producer
-     */
-    public function setProducer($producer)
+    public function setProducer(string $producer): void
     {
         $this->producer = $producer;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getDate()
+    public function getDate(): \DateTimeInterface
     {
         return $this->date;
     }
 
-    /**
-     * @param \DateTime $date
-     */
-    public function setDate($date)
+    public function setDate(\DateTimeInterface $date): void
     {
         $this->date = $date;
     }
 
-    /**
-     * @return int
-     */
-    public function getDuration()
+    public function getDuration(): int
     {
         return $this->duration;
     }
 
-    /**
-     * @param int $duration
-     */
-    public function setDuration($duration)
+    public function setDuration(int $duration): void
     {
         $this->duration = $duration;
     }
 
-    /**
-     * @return bool
-     */
-    public function isDisplay()
+    public function isDisplay(): bool
     {
         return $this->display;
     }
 
-    /**
-     * @param bool $display
-     */
-    public function setDisplay($display)
+    public function setDisplay(bool $display): void
     {
         $this->display = $display;
     }
 
-    /**
-     * @return bool
-     */
-    public function isCreateSerial()
+    public function isCreateSerial(): bool
     {
         return $this->create_serial;
     }
 
-    /**
-     * @param bool $create_serial
-     */
-    public function setCreateSerial($create_serial)
+    public function setCreateSerial(bool $create_serial): void
     {
         $this->create_serial = $create_serial;
     }
 
-    /**
-     * @return array
-     */
-    public function getEmbeddedEventSession()
+    public function getEmbeddedEventSession(): array
     {
         $embeddedEventSession = $this->embeddedEventSession->toArray();
-        usort($embeddedEventSession, function ($a, $b) {
+        usort($embeddedEventSession, static function ($a, $b) {
             return $a->getStart() > $b->getStart();
         });
 
         return $embeddedEventSession;
     }
 
-    /**
-     * @param ArrayCollection $embeddedEventSession
-     */
-    public function setEmbeddedEventSession($embeddedEventSession)
+    public function setEmbeddedEventSession($embeddedEventSession): void
     {
         $this->embeddedEventSession = $embeddedEventSession;
     }
 
-    /**
-     * @param EmbeddedEventSession $embeddedEventSession
-     *
-     * @return mixed
-     */
-    public function addEmbeddedEventSession($embeddedEventSession)
+    public function addEmbeddedEventSession($embeddedEventSession): bool
     {
         return $this->embeddedEventSession->add($embeddedEventSession);
     }
 
-    /**
-     * @param EmbeddedEventSession $embeddedEventSession
-     *
-     * @return bool
-     */
-    public function removeEmbeddedEventSession($embeddedEventSession)
+    public function removeEmbeddedEventSession($embeddedEventSession): bool
     {
         foreach ($this->embeddedEventSession as $session) {
-            if ($session->getId() == $embeddedEventSession->getId()) {
+            if ($session->getId() === $embeddedEventSession->getId()) {
                 $removed = $this->embeddedEventSession->removeElement($embeddedEventSession);
                 $this->embeddedEventSession = new ArrayCollection(array_values($this->embeddedEventSession->toArray()));
 
@@ -405,45 +277,27 @@ class EmbeddedEvent
         return false;
     }
 
-    /**
-     * @return DocumentLive
-     */
-    public function getLive()
+    public function getLive(): Live
     {
         return $this->live;
     }
 
-    /**
-     * @param DocumentLive $live
-     */
-    public function setLive($live)
+    public function setLive(Live $live): void
     {
         $this->live = $live;
     }
 
-    /**
-     * @return string
-     */
-    public function getUrl()
+    public function getUrl(): ?string
     {
         return $this->url;
     }
 
-    /**
-     * @param string $url
-     */
-    public function setUrl($url)
+    public function setUrl(string $url): void
     {
         $this->url = $url;
     }
 
-    /**
-     * Set already held message.
-     *
-     * @param string     $message
-     * @param mixed|null $locale
-     */
-    public function setAlreadyHeldMessage($message, $locale = null)
+    public function setAlreadyHeldMessage(string $message, string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -451,50 +305,26 @@ class EmbeddedEvent
         $this->alreadyHeldMessage[$locale] = $message;
     }
 
-    /**
-     * Get Already Held Message.
-     *
-     * @param mixed|null $locale
-     *
-     * @return string
-     */
-    public function getAlreadyHeldMessage($locale = null)
+    public function getAlreadyHeldMessage(string $locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->alreadyHeldMessage[$locale])) {
-            return '';
-        }
 
-        return $this->alreadyHeldMessage[$locale];
+        return $this->alreadyHeldMessage[$locale] ?? '';
     }
 
-    /**
-     * Set I18n Already Held Message.
-     */
-    public function setI18nAlreadyHeldMessage(array $message)
+    public function setI18nAlreadyHeldMessage(array $message): void
     {
         $this->alreadyHeldMessage = $message;
     }
 
-    /**
-     * Get I18n Already Held Message.
-     *
-     * @return array
-     */
-    public function getI18nAlreadyHeldMessage()
+    public function getI18nAlreadyHeldMessage(): array
     {
         return $this->alreadyHeldMessage;
     }
 
-    /**
-     * Set Not Yet held message.
-     *
-     * @param string     $message
-     * @param mixed|null $locale
-     */
-    public function setNotYetHeldMessage($message, $locale = null)
+    public function setNotYetHeldMessage(string $message, string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -502,89 +332,46 @@ class EmbeddedEvent
         $this->notYetHeldMessage[$locale] = $message;
     }
 
-    /**
-     * Get Not Yet Held Message.
-     *
-     * @param mixed|null $locale
-     *
-     * @return string
-     */
-    public function getNotYetHeldMessage($locale = null)
+    public function getNotYetHeldMessage(string $locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
         }
-        if (!isset($this->notYetHeldMessage[$locale])) {
-            return '';
-        }
 
-        return $this->notYetHeldMessage[$locale];
+        return $this->notYetHeldMessage[$locale] ?? '';
     }
 
-    /**
-     * Set I18n Not Yet Held Message.
-     */
-    public function setI18nNotYetHeldMessage(array $message)
+    public function setI18nNotYetHeldMessage(array $message): void
     {
         $this->notYetHeldMessage = $message;
     }
 
-    /**
-     * Get I18n Not Yet Held Message.
-     *
-     * @return array
-     */
-    public function getI18nNotYetHeldMessage()
+    public function getI18nNotYetHeldMessage(): array
     {
         return $this->notYetHeldMessage;
     }
 
-    /**
-     * Set enableChat.
-     *
-     * @param bool $enableChat
-     */
-    public function setEnableChat($enableChat)
+    public function setEnableChat(bool $enableChat): void
     {
         $this->enableChat = $enableChat;
     }
 
-    /**
-     * Get enableChat.
-     *
-     * @return bool
-     */
-    public function getEnableChat()
+    public function getEnableChat(): bool
     {
         return $this->enableChat;
     }
 
-    /**
-     * Is chat enabled.
-     *
-     * @return bool
-     */
-    public function isChatEnabled()
+    public function isChatEnabled(): bool
     {
         return $this->enableChat;
     }
 
-    /**
-     * Set locale.
-     *
-     * @param string $locale
-     */
-    public function setLocale($locale)
+    public function setLocale(string $locale): void
     {
         $this->locale = $locale;
     }
 
-    /**
-     * Get locale.
-     *
-     * @return string
-     */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
