@@ -86,7 +86,7 @@ class EmbeddedEventSession
         return $this->notes;
     }
 
-    public function setNotes(string $notes): void
+    public function setNotes(?string $notes): void
     {
         $this->notes = $notes;
     }

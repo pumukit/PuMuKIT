@@ -2000,7 +2000,6 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         static::assertFalse($embeddedRole->containsAnyPerson($people1));
         static::assertTrue($embeddedRole->containsAnyPerson($people3));
         static::assertFalse($embeddedRole->getEmbeddedPerson($person_cris));
-
     }
 
     public function testEmbeddedTag(): void

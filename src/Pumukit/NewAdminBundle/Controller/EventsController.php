@@ -3,7 +3,6 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use http\Env\Response;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Regex;
 use MongoDB\BSON\UTCDateTime;
@@ -621,8 +620,8 @@ class EventsController extends AbstractController implements NewAdminControllerI
         if ('POST' === $request->getMethod()) {
             try {
                 $data = $form->getData();
-                $start = new \DateTime($data->getStart());
-                $end = new \DateTime($data->getEnds());
+                $start = $data->getStart();
+                $end = $data->getEnds();
                 $duration = $end->getTimestamp() - $start->getTimestamp();
                 $notes = $data->getNotes();
 

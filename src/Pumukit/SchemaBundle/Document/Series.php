@@ -296,7 +296,7 @@ class Series
 
     public function isHide(): bool
     {
-        return $this->hide === true;
+        return true === $this->hide;
     }
 
     public function setPublicDate($public_date): void

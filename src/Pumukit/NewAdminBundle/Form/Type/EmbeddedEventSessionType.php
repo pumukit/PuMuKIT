@@ -3,13 +3,13 @@
 namespace Pumukit\NewAdminBundle\Form\Type;
 
 use Pumukit\NewAdminBundle\Form\Type\Other\Html5dateType;
+use Pumukit\SchemaBundle\Document\EmbeddedEventSession;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Pumukit\SchemaBundle\Document\EmbeddedEventSession;
 
 class EmbeddedEventSessionType extends AbstractType
 {
@@ -48,6 +48,16 @@ class EmbeddedEventSessionType extends AbstractType
                 ]
             )
         ;
+
+        $builder->addEventListener(
+            FormEvents::PRE_SUBMIT,
+            static function (FormEvent $event) {
+                $data = $event->getData();
+                $data['start'] = new \DateTime($event->getData()['start']);
+                $data['ends'] = new \DateTime($event->getData()['ends']);
+                $event->setData($data);
+            }
+        );
     }
 
     public function configureOptions(OptionsResolver $resolver): void

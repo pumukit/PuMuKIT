@@ -93,7 +93,7 @@ trait Keywords
 
     public function getKeywordsAsString($locale = null): string
     {
-        return implode(",", $this->getKeywords($locale));
+        return implode(',', $this->getKeywords($locale));
     }
 
     public function setI18nKeywords(array $keywords): void
