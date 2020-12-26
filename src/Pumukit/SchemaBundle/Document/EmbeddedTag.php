@@ -241,7 +241,7 @@ class EmbeddedTag implements TagInterface
         return $this->path;
     }
 
-    public static function getEmbeddedTag($embedTags, $tag): EmbeddedTag
+    public static function getEmbeddedTag($embedTags, TagInterface $tag): TagInterface
     {
         if ($tag instanceof self) {
             return $tag;

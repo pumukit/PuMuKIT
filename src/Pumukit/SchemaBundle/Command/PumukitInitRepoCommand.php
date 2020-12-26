@@ -223,7 +223,7 @@ EOT
         $this->dm->getDocumentCollection(PermissionProfile::class)->deleteMany([]);
     }
 
-    protected function createRoot(): Tag
+    protected function createRoot(): TagInterface
     {
         $root = $this->dm->getRepository(Tag::class)->findOneBy(['cod' => self::ROOT_TAG_CODE]);
         if (!isset($root)) {
@@ -311,7 +311,7 @@ EOT
         ];
     }
 
-    private function createTagFromCsvArray(array $csvTagsArray, $tag_parent = null): Tag
+    private function createTagFromCsvArray(array $csvTagsArray, $tag_parent = null): TagInterface
     {
         $tag = new Tag();
         $tag->setCod($csvTagsArray['cod']);

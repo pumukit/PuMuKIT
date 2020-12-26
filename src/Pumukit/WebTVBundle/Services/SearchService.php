@@ -36,7 +36,7 @@ class SearchService
         ];
     }
 
-    public function getParentTag(): Tag
+    public function getParentTag(): TagInterface
     {
         $parentTag = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => $this->parentTagCod]);
         if (!isset($parentTag)) {
@@ -51,7 +51,7 @@ class SearchService
         return $parentTag;
     }
 
-    public function getOptionalParentTag(): ?Tag
+    public function getOptionalParentTag(): ?TagInterface
     {
         $parentTagOptional = null;
         if ($this->parentTagCodOptional) {
