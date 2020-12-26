@@ -36,7 +36,6 @@ class UserService
         $personalScopeDeleteOwners = false,
         $sendEmailWhenAddUserOwner = false
     ) {
-
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository(User::class);
         $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
@@ -54,6 +53,8 @@ class UserService
     /**
      * Add owner user to MultimediaObject.
      * Add user id of the creator of the Multimedia Object as property.
+     *
+     * @param mixed $executeFlush
      */
     public function addOwnerUserToMultimediaObject(MultimediaObject $multimediaObject, User $user, $executeFlush = true)
     {
@@ -622,6 +623,9 @@ class UserService
     /**
      * Add owner user to object.
      * Add user id of the creator of the Multimedia Object or Series as property.
+     *
+     * @param mixed $object
+     * @param mixed $executeFlush
      */
     private function addOwnerUserToObject($object, User $user, $executeFlush = true)
     {
