@@ -41,12 +41,12 @@ class Role implements RoleInterface
     private $xml;
 
     /**
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      */
     private $display = true;
 
     /**
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      */
     private $readOnly = false;
 

@@ -62,7 +62,7 @@ class Annotation
     private $value;
 
     /**
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      */
     private $is_private;
 

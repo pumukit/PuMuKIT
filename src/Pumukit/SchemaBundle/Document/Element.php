@@ -44,7 +44,7 @@ class Element
     private $size;
 
     /**
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      */
     private $hide = false;
 

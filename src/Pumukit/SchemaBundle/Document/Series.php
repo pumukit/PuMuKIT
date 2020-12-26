@@ -94,7 +94,7 @@ class Series
     private $playlist;
 
     /**
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      */
     private $announce = false;
 
@@ -103,7 +103,7 @@ class Series
      * it creates a pseudo series with default values (the WebTV filter dont permit to access hide series),
      * and we want to force that the series will be hide.
      *
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      * @MongoDB\Index
      */
     private $hide;

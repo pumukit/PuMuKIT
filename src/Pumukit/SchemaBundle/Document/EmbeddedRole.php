@@ -28,7 +28,7 @@ class EmbeddedRole implements RoleInterface
     private $xml;
 
     /**
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      */
     private $display = true;
 

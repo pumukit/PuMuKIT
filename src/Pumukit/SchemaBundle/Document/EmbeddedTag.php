@@ -40,12 +40,12 @@ class EmbeddedTag implements TagInterface
     private $cod = '';
 
     /**
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      */
     private $metatag = false;
 
     /**
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      */
     private $display = false;
 

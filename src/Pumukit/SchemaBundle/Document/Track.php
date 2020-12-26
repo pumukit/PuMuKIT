@@ -42,7 +42,7 @@ class Track extends Element
     private $framerate;
 
     /**
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      */
     private $only_audio;
 
@@ -67,7 +67,7 @@ class Track extends Element
     private $height;
 
     /**
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      */
     private $allowDownload = false;
 
