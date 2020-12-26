@@ -5,9 +5,9 @@ namespace Pumukit\CoreBundle\Services;
 use Doctrine\ODM\MongoDB\Query\Builder;
 use Pagerfanta\Adapter\AdapterInterface;
 use Pagerfanta\Adapter\ArrayAdapter;
-use Pagerfanta\Adapter\DoctrineCollectionAdapter;
-use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Adapter\FixedAdapter;
+use Pagerfanta\Doctrine\Collections\CollectionAdapter;
+use Pagerfanta\Doctrine\MongoDBODM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 
 class PaginationService
@@ -17,7 +17,7 @@ class PaginationService
 
     public function createDoctrineODMMongoDBAdapter(Builder $objects, int $page = self::DEFAULT_PAGE, int $limit = self::DEFAULT_MAX_ELEMENTS_PER_PAGE): Pagerfanta
     {
-        $adapter = new DoctrineODMMongoDBAdapter($objects);
+        $adapter = new QueryAdapter($objects);
 
         return $this->generatePager($adapter, $page, $limit);
     }
@@ -31,7 +31,7 @@ class PaginationService
 
     public function createDoctrineCollectionAdapter($objects, int $page = self::DEFAULT_PAGE, int $limit = self::DEFAULT_MAX_ELEMENTS_PER_PAGE): Pagerfanta
     {
-        $adapter = new DoctrineCollectionAdapter($objects);
+        $adapter = new CollectionAdapter($objects);
 
         return $this->generatePager($adapter, $page, $limit);
     }
