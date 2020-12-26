@@ -13,6 +13,7 @@ use Pumukit\SchemaBundle\Document\Link;
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Person;
+use Pumukit\SchemaBundle\Document\PersonInterface;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Series;
@@ -3079,7 +3080,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         static::assertEquals(0, $this->repo->countInSeriesWithEmbeddedBroadcastGroups($series2, $typeGroups, $groups5));
     }
 
-    private function createPerson($name): Person
+    private function createPerson($name): PersonInterface
     {
         $email = $name.'@mail.es';
         $web = 'http://www.url.com';

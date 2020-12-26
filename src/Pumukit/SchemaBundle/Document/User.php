@@ -77,7 +77,7 @@ class User extends BaseUser
         return $this->permissionProfile;
     }
 
-    public function setPerson(Person $person = null): void
+    public function setPerson(PersonInterface $person = null): void
     {
         $this->person = $person;
     }

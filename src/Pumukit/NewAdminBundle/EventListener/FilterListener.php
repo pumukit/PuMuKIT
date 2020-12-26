@@ -7,6 +7,7 @@ use MongoDB\BSON\ObjectId;
 use Pumukit\NewAdminBundle\Controller\NewAdminControllerInterface;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Person;
+use Pumukit\SchemaBundle\Document\PersonInterface;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\PersonService;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
@@ -89,7 +90,7 @@ class FilterListener
      *
      * @return array $people
      */
-    private function getPeopleMongoQuery(Person $person = null)
+    private function getPeopleMongoQuery(PersonInterface $person = null)
     {
         $people = [];
         if ((null !== $person) && (null !== ($roleCode = $this->personService->getPersonalScopeRoleCode()))) {

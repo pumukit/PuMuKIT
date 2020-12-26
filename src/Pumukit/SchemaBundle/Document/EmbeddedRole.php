@@ -229,7 +229,7 @@ class EmbeddedRole implements RoleInterface
         return false;
     }
 
-    public function createEmbeddedPerson($person): EmbeddedPerson
+    public function createEmbeddedPerson($person): PersonInterface
     {
         if ($person instanceof EmbeddedPerson) {
             return $person;

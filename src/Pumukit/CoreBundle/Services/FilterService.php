@@ -6,7 +6,7 @@ use Doctrine\ODM\MongoDB\Query\Filter\BsonFilter;
 use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
-use Pumukit\SchemaBundle\Document\Person;
+use Pumukit\SchemaBundle\Document\PersonInterface;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\PersonService;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
@@ -160,7 +160,7 @@ class FilterService
         return $loggedInUser;
     }
 
-    public function getPeopleMongoQuery(Person $person = null): array
+    public function getPeopleMongoQuery(PersonInterface $person = null): array
     {
         $people = [];
         if ((null !== $person) && (null !== ($roleCode = $this->personService->getPersonalScopeRoleCode()))) {
