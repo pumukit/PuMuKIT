@@ -47,8 +47,10 @@ class MultimediaObjectVoter extends Voter
         switch ($attribute) {
         case self::EDIT:
             return $this->canEdit($multimediaObject, $user);
+
         case self::PLAY:
             return $this->canPlay($multimediaObject, $user);
+
         case self::VIEW_METADATA:
             return $this->canViewMetadata($multimediaObject, $user);
         }
@@ -139,8 +141,8 @@ class MultimediaObjectVoter extends Voter
 
     protected function isViewerOrWithScope(User $user)
     {
-        return $user->hasRole(PermissionProfile::SCOPE_GLOBAL) || $user->hasRole(PermissionProfile::SCOPE_PERSONAL) ||
-                $user->hasRole(PermissionProfile::SCOPE_NONE) || $user->hasRole('ROLE_SUPER_ADMIN');
+        return $user->hasRole(PermissionProfile::SCOPE_GLOBAL) || $user->hasRole(PermissionProfile::SCOPE_PERSONAL)
+                || $user->hasRole(PermissionProfile::SCOPE_NONE) || $user->hasRole('ROLE_SUPER_ADMIN');
     }
 
     // Related to EmbeddedBroadcastService::isUserRelatedToMultimediaObject

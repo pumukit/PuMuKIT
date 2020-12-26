@@ -103,10 +103,12 @@ EOT
             $statuses = [Job::STATUS_PAUSED, Job::STATUS_WAITING];
 
             break;
+
         case 'executing':
             $statuses = [Job::STATUS_EXECUTING];
 
             break;
+
         default:
             throw new \InvalidArgumentException('type argument should be "pending" or "executing". Not'.$type);
         }

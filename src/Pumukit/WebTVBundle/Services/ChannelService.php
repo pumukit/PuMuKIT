@@ -47,14 +47,14 @@ class ChannelService
 
     public function getChannelTitle($channelNumber)
     {
-        $title = isset($this->titles[$channelNumber]) ? $this->titles[$channelNumber] : 'No title';
+        $title = $this->titles[$channelNumber] ?? 'No title';
 
         return $this->translatorService->trans($title);
     }
 
     public function getTagsForChannel($channelNumber)
     {
-        $tagCods = isset($this->tags[$channelNumber]) ? $this->tags[$channelNumber] : [];
+        $tagCods = $this->tags[$channelNumber] ?? [];
         $tags = [];
         foreach ($tagCods as $tagCod) {
             $tags[] = $this->repoTags->findOneByCod($tagCod);

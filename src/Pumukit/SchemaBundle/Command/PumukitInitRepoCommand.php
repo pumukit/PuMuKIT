@@ -95,19 +95,23 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $result = [];
+
         switch ($this->repoName) {
             case 'tag':
                 $result = $this->executeTags();
 
                 break;
+
             case 'role':
                 $result = $this->executeRoles();
 
                 break;
+
             case 'permissionprofile':
                $result = $this->executePermissionProfiles();
 
                 break;
+
             case 'all':
                 $this->repoName = 'tag';
                 $resultTag = $this->executeTags();
@@ -119,6 +123,7 @@ EOT
                 $result = array_merge($resultTag, $resultRoles, $resultPermissionProfiles);
 
                 break;
+
             default:
         }
 
@@ -277,6 +282,7 @@ EOT
                     }
 
                     break;
+
                 case 'role':
                     $csvRolesArray = [];
 
@@ -293,6 +299,7 @@ EOT
                     }
 
                     break;
+
                 case 'permissionprofile':
                     if (!$this->dm->getRepository(PermissionProfile::class)->findOneBy(['name' => $currentRow[1]])) {
                         $this->createPermissionProfileFromCsvArray($currentRow);
@@ -381,9 +388,9 @@ EOT
         $permissionProfile->setName($permissionProfileArray[1]);
         $permissionProfile->setSystem($permissionProfileArray[2]);
         $permissionProfile->setDefault($permissionProfileArray[3]);
-        if ((PermissionProfile::SCOPE_GLOBAL === $permissionProfileArray[4]) ||
-            (PermissionProfile::SCOPE_PERSONAL === $permissionProfileArray[4]) ||
-            (PermissionProfile::SCOPE_NONE === $permissionProfileArray[4])) {
+        if ((PermissionProfile::SCOPE_GLOBAL === $permissionProfileArray[4])
+            || (PermissionProfile::SCOPE_PERSONAL === $permissionProfileArray[4])
+            || (PermissionProfile::SCOPE_NONE === $permissionProfileArray[4])) {
             $permissionProfile->setScope($permissionProfileArray[4]);
         }
         foreach (array_filter(preg_split('/[,\s]+/', $permissionProfileArray[5])) as $permission) {

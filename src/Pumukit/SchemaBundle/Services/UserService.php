@@ -306,8 +306,8 @@ class UserService
      */
     public function addUserScope(User $user, $scope = '')
     {
-        if ((!$user->hasRole($scope)) &&
-            (in_array($scope, array_keys(PermissionProfile::$scopeDescription)))) {
+        if ((!$user->hasRole($scope))
+            && (in_array($scope, array_keys(PermissionProfile::$scopeDescription)))) {
             $user->addRole($scope);
             $this->dm->persist($user);
             $this->dm->flush();
@@ -505,9 +505,9 @@ class UserService
         $userInAddGroups = $this->isUserInGroups($loggedInUser, $mmId, $personId, $addGroups);
 
         // Show warning??
-        if (($personToRemoveIsLogged && !$userInAddGroups) ||
-            (!$personToRemoveIsLogged && !$userInOwners && !$userInAddGroups) ||
-            (!$userInOwners && !$userInAddGroups)) {
+        if (($personToRemoveIsLogged && !$userInAddGroups)
+            || (!$personToRemoveIsLogged && !$userInOwners && !$userInAddGroups)
+            || (!$userInOwners && !$userInAddGroups)) {
             return true;
         }
 

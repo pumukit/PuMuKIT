@@ -101,19 +101,23 @@ class SearchService
     public function addTypeQueryBuilder(Builder $queryBuilder, ?string $typeFound): Builder
     {
         $type = '';
+
         switch ($typeFound) {
             case 'audio':
                 $type = MultimediaObject::TYPE_AUDIO;
 
                 break;
+
             case 'video':
                 $type = MultimediaObject::TYPE_VIDEO;
 
                 break;
+
             case 'external':
                 $type = MultimediaObject::TYPE_EXTERNAL;
 
                 break;
+
             default:
         }
         if ('' !== $type) {

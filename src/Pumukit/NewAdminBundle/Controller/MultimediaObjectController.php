@@ -1292,7 +1292,7 @@ class MultimediaObjectController extends SortableAdminController
             $key .= '.'.$request->getLocale();
         }
 
-        return  [$key => $value];
+        return [$key => $value];
     }
 
     public function getResourceName(): string
@@ -1371,9 +1371,9 @@ class MultimediaObjectController extends SortableAdminController
     {
         if (null !== $checkedTags) {
             foreach ($resource->getTags() as $tag) {
-                if ((0 == strpos($tag->getCod(), $codStart)) && (false !== strpos($tag->getCod(), $codStart)) &&
-                    (!in_array($tag->getCod(), $checkedTags)) &&
-                    (!$this->isGranted(Permission::getRoleTagDisableForPubChannel($tag->getCod())))) {
+                if ((0 == strpos($tag->getCod(), $codStart)) && (false !== strpos($tag->getCod(), $codStart))
+                    && (!in_array($tag->getCod(), $checkedTags))
+                    && (!$this->isGranted(Permission::getRoleTagDisableForPubChannel($tag->getCod())))) {
                     $resource->removeTag($tag);
                 }
             }
@@ -1385,9 +1385,9 @@ class MultimediaObjectController extends SortableAdminController
             }
         } else {
             foreach ($resource->getTags() as $tag) {
-                if ((0 == strpos($tag->getCod(), $codStart)) &&
-                    (false !== strpos($tag->getCod(), $codStart)) &&
-                    (!$this->isGranted(Permission::getRoleTagDisableForPubChannel($tag->getCod())))) {
+                if ((0 == strpos($tag->getCod(), $codStart))
+                    && (false !== strpos($tag->getCod(), $codStart))
+                    && (!$this->isGranted(Permission::getRoleTagDisableForPubChannel($tag->getCod())))) {
                     $resource->removeTag($tag);
                 }
             }
@@ -1431,9 +1431,9 @@ class MultimediaObjectController extends SortableAdminController
 
             $person = $this->personService->getPersonFromLoggedInUser($loggedInUser);
             $role = $this->personService->getPersonalScopeRole();
-            if (!$person ||
-                !$resource->containsPersonWithRole($person, $role) ||
-                count($resource->getPeopleByRole($role, true)) > 1) {
+            if (!$person
+                || !$resource->containsPersonWithRole($person, $role)
+                || count($resource->getPeopleByRole($role, true)) > 1) {
                 return false;
             }
         }

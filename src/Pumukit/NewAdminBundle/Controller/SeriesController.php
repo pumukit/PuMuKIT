@@ -635,8 +635,8 @@ class SeriesController extends AdminController
             $mmobjRepo = $this->documentManager->getRepository(MultimediaObject::class);
             $allMmobjs = $mmobjRepo->createStandardQueryBuilder()->field('series')->equals($series->getId())->getQuery()->execute();
             foreach ($allMmobjs as $resource) {
-                if (!$resource->containsPersonWithRole($person, $role) ||
-                    count($resource->getPeopleByRole($role, true)) > 1) {
+                if (!$resource->containsPersonWithRole($person, $role)
+                    || count($resource->getPeopleByRole($role, true)) > 1) {
                     if ($enableFilter) {
                         $this->documentManager->getFilterCollection()->enable('backoffice');
                     }

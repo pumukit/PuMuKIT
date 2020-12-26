@@ -42,9 +42,9 @@ class ProfileService
         }
 
         return array_filter($this->profiles, function ($profile) use ($display, $wizard, $master) {
-            return (null === $display || $profile['display'] === $display) &&
-                    (null === $wizard || $profile['wizard'] === $wizard) &&
-                    (null === $master || $profile['master'] === $master);
+            return (null === $display || $profile['display'] === $display)
+                    && (null === $wizard || $profile['wizard'] === $wizard)
+                    && (null === $master || $profile['master'] === $master);
         });
     }
 
