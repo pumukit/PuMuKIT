@@ -231,7 +231,7 @@ class EmbeddedTag implements TagInterface
         return $this->locale;
     }
 
-    public function getLevel(): ?string
+    public function getLevel(): ?int
     {
         return $this->level;
     }

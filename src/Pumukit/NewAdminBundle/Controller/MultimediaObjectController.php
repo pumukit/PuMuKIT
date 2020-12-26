@@ -23,6 +23,7 @@ use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\TagInterface;
 use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Security\Permission;
@@ -568,7 +569,7 @@ class MultimediaObjectController extends SortableAdminController
     /**
      * @Template("@PumukitNewAdmin/MultimediaObject/listtagsajax.html.twig")
      */
-    public function getChildrenTagAction(Tag $tag, Request $request)
+    public function getChildrenTagAction(TagInterface $tag, Request $request)
     {
         return [
             'nodes' => $tag->getChildren(),
@@ -668,7 +669,7 @@ class MultimediaObjectController extends SortableAdminController
 
         usort(
             $result,
-            static function (Tag $x, Tag $y) {
+            static function (TagInterface $x, TagInterface $y) {
                 return strcasecmp($x->getCod(), $y->getCod());
             }
         );
@@ -1440,7 +1441,7 @@ class MultimediaObjectController extends SortableAdminController
         return true;
     }
 
-    private function getAllParents(Tag $element, array $tags, string $top_parent): array
+    private function getAllParents(TagInterface $element, array $tags, string $top_parent): array
     {
         if ($element->getId() === $top_parent) {
             return $tags;

@@ -4,6 +4,7 @@ namespace Pumukit\SchemaBundle\Command;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\TagInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -61,7 +62,7 @@ EOT
         return 0;
     }
 
-    private function updateTag(Tag $tag, bool $display): Tag
+    private function updateTag(TagInterface $tag, bool $display): TagInterface
     {
         $tag->setDisplay($display);
         $this->dm->persist($tag);

@@ -6,6 +6,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\TagInterface;
 use Pumukit\SchemaBundle\Services\PermissionService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -234,7 +235,7 @@ EOT
         return $root;
     }
 
-    protected function createFromFile(string $fileRoute, Tag $root): array
+    protected function createFromFile(string $fileRoute, TagInterface $root): array
     {
         $fileWasValidated = $this->validateFile($fileRoute);
         if (!$fileWasValidated['status']) {

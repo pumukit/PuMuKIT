@@ -8,6 +8,7 @@ use MongoDB\BSON\Regex;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\TagInterface;
 use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
 
 class SearchService
@@ -198,7 +199,7 @@ class SearchService
         return $queryBuilder;
     }
 
-    public function addTagsQueryBuilder(Builder $queryBuilder, array $tagsFound = null, Tag $blockedTag = null, bool $useTagAsGeneral = false): Builder
+    public function addTagsQueryBuilder(Builder $queryBuilder, array $tagsFound = null, TagInterface $blockedTag = null, bool $useTagAsGeneral = false): Builder
     {
         if (null !== $blockedTag) {
             $tagsFound[] = $blockedTag->getCod();

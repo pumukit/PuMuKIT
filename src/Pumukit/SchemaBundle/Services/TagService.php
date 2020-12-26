@@ -6,6 +6,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\TagInterface;
 
 class TagService
 {
@@ -67,7 +68,7 @@ class TagService
      *
      * @return array[Tag] addded tags
      */
-    public function addTag(MultimediaObject $mmobj, Tag $tag, $executeFlush = true)
+    public function addTag(MultimediaObject $mmobj, TagInterface $tag, $executeFlush = true)
     {
         $tagAdded = [];
 
@@ -123,7 +124,7 @@ class TagService
      *
      * @return array[Tag] removed tags
      */
-    public function removeTag(MultimediaObject $mmobj, Tag $tag, $executeFlush = true)
+    public function removeTag(MultimediaObject $mmobj, TagInterface $tag, $executeFlush = true)
     {
         $removeTags = [];
 
@@ -178,7 +179,7 @@ class TagService
      *
      * @return array[Tag] removed tags
      */
-    public function removeOneTag(MultimediaObject $mmobj, Tag $tag, $executeFlush = true)
+    public function removeOneTag(MultimediaObject $mmobj, TagInterface $tag, $executeFlush = true)
     {
         $removed = $mmobj->removeTag($tag);
         if ($removed && !$mmobj->isPrototype()) {
@@ -202,10 +203,8 @@ class TagService
 
     /**
      * Update Tag.
-     *
-     * @return Tag
      */
-    public function updateTag(Tag $tag)
+    public function updateTag(TagInterface $tag)
     {
         $tag = $this->saveTag($tag);
 
@@ -234,10 +233,8 @@ class TagService
 
     /**
      * Save Tag.
-     *
-     * @return Tag
      */
-    public function saveTag(Tag $tag)
+    public function saveTag(TagInterface $tag)
     {
         $tag->setUpdated(new \DateTime());
 
@@ -254,7 +251,7 @@ class TagService
      *
      * @return bool
      */
-    public function deleteTag(Tag $tag)
+    public function deleteTag(TagInterface $tag)
     {
         if ($this->canDeleteTag($tag)) {
             $this->dm->clear('Pumukit\SchemaBundle\Document\MultimediaObject');
@@ -281,7 +278,7 @@ class TagService
      *
      * @return bool
      */
-    public function canDeleteTag(Tag $tag)
+    public function canDeleteTag(TagInterface $tag)
     {
         return (bool) ((0 == count($tag->getChildren())) && (0 == $tag->getNumberMultimediaObjects()));
     }
@@ -343,10 +340,9 @@ class TagService
     /**
      * Reset the descendent tags of an array of MultimediaObjects and set the target.
      *
-     * @param Tag[] $newTags
-     * @param bool  $executeFlush
+     * @param mixed $executeFlush
      */
-    public function syncTags(MultimediaObject $mmobj, array $newTags, Tag $parentTag, $executeFlush = true)
+    public function syncTags(MultimediaObject $mmobj, array $newTags, TagInterface $parentTag, $executeFlush = true)
     {
         foreach ($mmobj->getTags() as $originalEmbeddedTag) {
             if (!$originalEmbeddedTag->equalsOrDescendantOf($parentTag)) {

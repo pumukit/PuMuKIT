@@ -9,6 +9,7 @@ use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\TagInterface;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Repository\MultimediaObjectRepository;
 use Pumukit\SchemaBundle\Repository\SeriesRepository;
@@ -81,7 +82,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"tagCod": "cod"}})
      * @Template("@PumukitWebTV/List/template.html.twig")
      */
-    public function multimediaObjectsByTagAction(Request $request, Tag $tag)
+    public function multimediaObjectsByTagAction(Request $request, TagInterface $tag)
     {
         [$scrollList, $numberCols, $limit] = $this->getParametersByTag();
 
@@ -124,7 +125,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"tagCod": "cod"}})
      * @Template("@PumukitWebTV/List/template.html.twig")
      */
-    public function seriesByTagAction(Request $request, Tag $tag)
+    public function seriesByTagAction(Request $request, TagInterface $tag)
     {
         [$scrollList, $numberCols, $limit] = $this->getParametersByTag();
 
@@ -258,7 +259,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
      * @Route("/bytag/{tagCod}/pager/{type}", name="pumukit_webtv_bytag_objects_pager", defaults={"tagCod": null, "type": "multimediaobject"})
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"tagCod": "cod"}})
      */
-    public function byTagObjectsPagerAction(Request $request, Tag $tag)
+    public function byTagObjectsPagerAction(Request $request, TagInterface $tag)
     {
         [$scroll_list, $numberCols, $limit] = $this->getParametersByTag();
 
