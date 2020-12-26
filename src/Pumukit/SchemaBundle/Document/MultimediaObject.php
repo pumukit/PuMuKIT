@@ -1197,7 +1197,7 @@ class MultimediaObject
         return false;
     }
 
-    public function createEmbeddedRole(RoleInterface $role): EmbeddedRole
+    public function createEmbeddedRole(RoleInterface $role): RoleInterface
     {
         if ($role instanceof EmbeddedRole) {
             return $role;

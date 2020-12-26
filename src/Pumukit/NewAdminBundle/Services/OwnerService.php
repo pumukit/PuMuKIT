@@ -7,6 +7,7 @@ namespace Pumukit\NewAdminBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\RoleInterface;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Pumukit\SchemaBundle\Services\PersonWithRoleEventDispatcherService;
@@ -63,7 +64,7 @@ class OwnerService
         return $multimediaObject;
     }
 
-    private function dispatchPersonWithRoleEvent(MultimediaObject $multimediaObject, User $coOwner, Role $role): void
+    private function dispatchPersonWithRoleEvent(MultimediaObject $multimediaObject, User $coOwner, RoleInterface $role): void
     {
         $this->personWithRoleEventDispatcherService->dispatchDelete($multimediaObject, $coOwner->getPerson(), $role);
     }

@@ -16,6 +16,7 @@ use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\PersonInterface;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\RoleInterface;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\Tag;
@@ -3106,7 +3107,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         return $person;
     }
 
-    private function createRole($name): Role
+    private function createRole($name): RoleInterface
     {
         $cod = $name; // string (20)
         $rank = strlen($name); // Quick and dirty way to keep it unique

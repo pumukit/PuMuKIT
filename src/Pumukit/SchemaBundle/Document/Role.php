@@ -212,7 +212,7 @@ class Role implements RoleInterface
         $this->number_people_in_multimedia_object = $number_people_in_multimedia_object;
     }
 
-    public function cloneResource(): Role
+    public function cloneResource(): RoleInterface
     {
         $aux = clone $this;
         $aux->id = null;

@@ -10,6 +10,7 @@ use Pumukit\NewAdminBundle\Form\Type\PersonType;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\RoleInterface;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\GroupService;
 use Pumukit\SchemaBundle\Services\PersonService;
@@ -191,7 +192,7 @@ class PersonController extends AdminController
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
      * @Template("@PumukitNewAdmin/Person/listautocomplete.html.twig")
      */
-    public function listAutocompleteAction(Request $request, MultimediaObject $multimediaObject, Role $role)
+    public function listAutocompleteAction(Request $request, MultimediaObject $multimediaObject, RoleInterface $role)
     {
         if ($role->getCod() === $this->pumukitSchemaPersonalScopeRoleCode) {
             $this->denyAccessUnlessGranted('ROLE_ADD_OWNER');
@@ -228,7 +229,7 @@ class PersonController extends AdminController
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
      * @Template("@PumukitNewAdmin/Person/createrelation.html.twig")
      */
-    public function createRelationAction(Request $request, MultimediaObject $multimediaObject, Role $role)
+    public function createRelationAction(Request $request, MultimediaObject $multimediaObject, RoleInterface $role)
     {
         if ($role->getCod() === $this->pumukitSchemaPersonalScopeRoleCode) {
             $this->denyAccessUnlessGranted('ROLE_MODIFY_OWNER');
@@ -297,7 +298,7 @@ class PersonController extends AdminController
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
      */
-    public function updateRelationAction(Request $request, MultimediaObject $multimediaObject, Role $role)
+    public function updateRelationAction(Request $request, MultimediaObject $multimediaObject, RoleInterface $role)
     {
         if ($role->getCod() === $this->pumukitSchemaPersonalScopeRoleCode) {
             $this->denyAccessUnlessGranted('ROLE_MODIFY_OWNER');
@@ -364,7 +365,7 @@ class PersonController extends AdminController
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
      */
-    public function linkAction(Request $request, MultimediaObject $multimediaObject, Role $role): Response
+    public function linkAction(Request $request, MultimediaObject $multimediaObject, RoleInterface $role): Response
     {
         if ($role->getCod() === $this->pumukitSchemaPersonalScopeRoleCode) {
             $this->denyAccessUnlessGranted('ROLE_ADD_OWNER');
@@ -405,7 +406,7 @@ class PersonController extends AdminController
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
      */
-    public function autoCompleteAction(Request $request, MultimediaObject $multimediaObject, Role $role): JsonResponse
+    public function autoCompleteAction(Request $request, MultimediaObject $multimediaObject, RoleInterface $role): JsonResponse
     {
         $name = $request->get('term');
 
@@ -433,7 +434,7 @@ class PersonController extends AdminController
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
      */
-    public function upAction(Request $request, MultimediaObject $multimediaObject, Role $role)
+    public function upAction(Request $request, MultimediaObject $multimediaObject, RoleInterface $role)
     {
         if ($role->getCod() === $this->pumukitSchemaPersonalScopeRoleCode) {
             $this->denyAccessUnlessGranted('ROLE_ADD_OWNER');
@@ -470,7 +471,7 @@ class PersonController extends AdminController
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
      */
-    public function downAction(Request $request, MultimediaObject $multimediaObject, Role $role)
+    public function downAction(Request $request, MultimediaObject $multimediaObject, RoleInterface $role)
     {
         if ($role->getCod() === $this->pumukitSchemaPersonalScopeRoleCode) {
             $this->denyAccessUnlessGranted('ROLE_ADD_OWNER');
@@ -507,7 +508,7 @@ class PersonController extends AdminController
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
      */
-    public function deleteRelationAction(Request $request, MultimediaObject $multimediaObject, Role $role)
+    public function deleteRelationAction(Request $request, MultimediaObject $multimediaObject, RoleInterface $role)
     {
         $person = $this->personService->findPersonById($request->get('id'));
 

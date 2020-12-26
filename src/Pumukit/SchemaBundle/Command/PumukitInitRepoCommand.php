@@ -5,6 +5,7 @@ namespace Pumukit\SchemaBundle\Command;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\RoleInterface;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\TagInterface;
 use Pumukit\SchemaBundle\Services\PermissionService;
@@ -342,7 +343,7 @@ EOT
         return $tag;
     }
 
-    private function createRoleFromCsvArray(array $csvTagsArray): Role
+    private function createRoleFromCsvArray(array $csvTagsArray): RoleInterface
     {
         $role = new Role();
 

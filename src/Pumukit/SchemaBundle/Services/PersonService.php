@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\PersonInterface;
 use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\RoleInterface;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Repository\MultimediaObjectRepository;
 use Pumukit\SchemaBundle\Repository\PersonRepository;
@@ -53,7 +54,7 @@ class PersonService
         return $person;
     }
 
-    public function saveRole(Role $role): Role
+    public function saveRole(RoleInterface $role): RoleInterface
     {
         $this->dm->persist($role);
         $this->dm->flush();
@@ -95,7 +96,7 @@ class PersonService
         return $person;
     }
 
-    public function updateRole(Role $role): Role
+    public function updateRole(RoleInterface $role): RoleInterface
     {
         $role = $this->saveRole($role);
 
@@ -140,7 +141,7 @@ class PersonService
         return $seriesCollection;
     }
 
-    public function createRelationPerson(PersonInterface $person, Role $role, MultimediaObject $multimediaObject, bool $flush = true, bool $dispatch = true): MultimediaObject
+    public function createRelationPerson(PersonInterface $person, RoleInterface $role, MultimediaObject $multimediaObject, bool $flush = true, bool $dispatch = true): MultimediaObject
     {
         $this->dm->persist($person);
         $multimediaObject->addPersonWithRole($person, $role);
@@ -181,7 +182,7 @@ class PersonService
         ;
     }
 
-    public function upPersonWithRole(PersonInterface $person, Role $role, MultimediaObject $multimediaObject): MultimediaObject
+    public function upPersonWithRole(PersonInterface $person, RoleInterface $role, MultimediaObject $multimediaObject): MultimediaObject
     {
         $multimediaObject->upPersonWithRole($person, $role);
         $this->dm->persist($multimediaObject);
@@ -190,7 +191,7 @@ class PersonService
         return $multimediaObject;
     }
 
-    public function downPersonWithRole(PersonInterface $person, Role $role, MultimediaObject $multimediaObject): MultimediaObject
+    public function downPersonWithRole(PersonInterface $person, RoleInterface $role, MultimediaObject $multimediaObject): MultimediaObject
     {
         $multimediaObject->downPersonWithRole($person, $role);
         $this->dm->persist($multimediaObject);
@@ -199,7 +200,7 @@ class PersonService
         return $multimediaObject;
     }
 
-    public function deleteRelation(PersonInterface $person, Role $role, MultimediaObject $multimediaObject): MultimediaObject
+    public function deleteRelation(PersonInterface $person, RoleInterface $role, MultimediaObject $multimediaObject): MultimediaObject
     {
         $hasBeenRemoved = $multimediaObject->removePersonWithRole($person, $role);
         if ($hasBeenRemoved) {
