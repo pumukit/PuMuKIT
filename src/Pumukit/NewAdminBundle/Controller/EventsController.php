@@ -3,6 +3,7 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use http\Env\Response;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Regex;
 use MongoDB\BSON\UTCDateTime;
@@ -621,7 +622,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
             try {
                 $data = $form->getData();
                 $start = new \DateTime($data->getStart());
-                $end = new \DateTime($data->getDuration());
+                $end = new \DateTime($data->getEnds());
                 $duration = $end->getTimestamp() - $start->getTimestamp();
                 $notes = $data->getNotes();
 

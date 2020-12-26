@@ -551,7 +551,7 @@ class TagCatalogueService
                 break;
 
             case 'keywords':
-                $text = $object->getKeyword();
+                $text = $object->getKeywordsAsString();
 
                 break;
 

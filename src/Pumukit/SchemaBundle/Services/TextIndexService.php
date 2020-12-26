@@ -19,7 +19,7 @@ class TextIndexService
             $mongoLang = TextIndexUtils::getCloseLanguage($lang);
 
             $text .= $series->getTitle($lang);
-            $text .= ' | '.$series->getKeyword($lang);
+            $text .= ' | '.$series->getKeywordsAsString($lang);
             $secondaryText .= $series->getDescription($lang);
 
             $textIndex[] = ['indexlanguage' => $mongoLang, 'text' => TextIndexUtils::cleanTextIndex($text)];
@@ -40,7 +40,7 @@ class TextIndexService
             $mongoLang = TextIndexUtils::getCloseLanguage($lang);
 
             $text .= $multimediaObject->getTitle($lang);
-            $text .= ' | '.$multimediaObject->getKeyword($lang);
+            $text .= ' | '.$multimediaObject->getKeywordsAsString($lang);
             $text .= ' | '.$multimediaObject->getSeriesTitle($lang);
             $secondaryText .= $multimediaObject->getDescription($lang);
 

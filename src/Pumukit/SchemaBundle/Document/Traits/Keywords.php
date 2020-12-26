@@ -9,46 +9,9 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 trait Keywords
 {
     /**
-     * @deprecated in version 2.3 use keywords instead
-     *
-     * @MongoDB\Field(type="raw")
-     */
-    private $keyword = ['en' => ''];
-
-    /**
      * @MongoDB\Field(type="raw")
      */
     private $keywords = ['en' => []];
-
-    /**
-     * @deprecated in version 2.3 use setKeywords instead
-     *
-     * @param mixed      $keyword
-     * @param mixed|null $locale
-     */
-    public function setKeyword($keyword, $locale = null): void
-    {
-        if (null === $locale) {
-            $locale = $this->locale;
-        }
-        $this->keyword[$locale] = $keyword;
-        $this->keywords[$locale] = array_values(array_filter(array_map('trim', explode(',', $keyword))));
-    }
-
-    /**
-     * @deprecated in version 2.3 use getKeywords instead
-     */
-    public function getKeyword(?string $locale = null): string
-    {
-        if (null === $locale) {
-            $locale = $this->locale;
-        }
-        if (!isset($this->keywords[$locale])) {
-            return '';
-        }
-
-        return implode(',', $this->keywords[$locale]);
-    }
 
     public function setI18nKeyword(array $keyword): void
     {
@@ -58,7 +21,6 @@ trait Keywords
         }
 
         $this->keywords = $keywords;
-        $this->keyword = $keyword;
     }
 
     public function getI18nKeyword(): array
@@ -80,7 +42,7 @@ trait Keywords
         return in_array($keyword, $this->getKeywords($locale), true);
     }
 
-    public function addKeyword($keyword, $locale = null): bool
+    public function addKeyword(string $keyword, $locale = null): bool
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -91,7 +53,6 @@ trait Keywords
         }
 
         $this->keywords[$locale][] = $keyword;
-        $this->keyword[$locale] = implode(',', $this->keywords[$locale]);
 
         return true;
     }
@@ -100,10 +61,6 @@ trait Keywords
     {
         if (null === $locale) {
             $locale = $this->locale;
-        }
-
-        if (!isset($this->keyword[$locale])) {
-            return false;
         }
 
         $key = array_search($keyword, $this->keywords[$locale], true);
@@ -131,7 +88,12 @@ trait Keywords
             $locale = $this->locale;
         }
 
-        return $this->keyword[$locale] ?? [];
+        return $this->keywords[$locale] ?? [];
+    }
+
+    public function getKeywordsAsString($locale = null): string
+    {
+        return implode(",", $this->getKeywords($locale));
     }
 
     public function setI18nKeywords(array $keywords): void

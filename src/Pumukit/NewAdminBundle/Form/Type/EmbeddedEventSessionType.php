@@ -6,17 +6,17 @@ use Pumukit\NewAdminBundle\Form\Type\Other\Html5dateType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Pumukit\SchemaBundle\Document\EmbeddedEventSession;
 
 class EmbeddedEventSessionType extends AbstractType
 {
-    private $translator;
-    private $locale;
-
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->translator = $options['translator'];
-        $this->locale = $options['locale'];
+        $translator = $options['translator'];
+        $locale = $options['locale'];
 
         $builder
             ->add(
@@ -24,16 +24,16 @@ class EmbeddedEventSessionType extends AbstractType
                 Html5dateType::class,
                 [
                     'data_class' => 'DateTime',
-                    'label' => $this->translator->trans('Start', [], null, $this->locale),
+                    'label' => $translator->trans('Start', [], null, $locale),
                     'attr' => ['class' => 'form-control'],
                 ]
             )
             ->add(
-                'duration',
+                'ends',
                 Html5dateType::class,
                 [
                     'data_class' => 'DateTime',
-                    'label' => $this->translator->trans('End', [], null, $this->locale),
+                    'label' => $translator->trans('End', [], null, $locale),
                     'required' => false,
                     'attr' => ['class' => 'form-control'],
                 ]
@@ -42,7 +42,7 @@ class EmbeddedEventSessionType extends AbstractType
                 'notes',
                 TextareaType::class,
                 [
-                    'label' => $this->translator->trans('Notes', [], null, $this->locale),
+                    'label' => $translator->trans('Notes', [], null, $locale),
                     'required' => false,
                     'attr' => ['class' => 'form-control'],
                 ]
@@ -50,19 +50,17 @@ class EmbeddedEventSessionType extends AbstractType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(
-            [
-                'data_class' => 'Pumukit\SchemaBundle\Document\EmbeddedEventSession',
-            ]
-        );
+        $resolver->setDefaults([
+            'data_class' => EmbeddedEventSession::class,
+        ]);
 
         $resolver->setRequired('translator');
         $resolver->setRequired('locale');
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'pumukitnewadmin_event_session';
     }

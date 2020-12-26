@@ -68,7 +68,7 @@ trait Material
         return $this->materials->contains($material);
     }
 
-    public function getMaterials(): ArrayCollection
+    public function getMaterials()
     {
         return $this->materials;
     }

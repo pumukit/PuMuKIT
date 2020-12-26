@@ -78,7 +78,7 @@ class Event
         $this->live = $live;
     }
 
-    public function getLive()
+    public function getLive(): ?Live
     {
         return $this->live;
     }

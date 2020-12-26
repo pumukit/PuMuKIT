@@ -277,7 +277,7 @@ class EmbeddedEvent
         return false;
     }
 
-    public function getLive(): Live
+    public function getLive(): ?Live
     {
         return $this->live;
     }

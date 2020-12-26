@@ -110,14 +110,13 @@ class FactoryService
                 $series->setTitle($title, $locale);
             }
         }
+        $this->generateNumericalIDSeries($series);
 
         $mm = $this->createMultimediaObjectPrototype($series, $loggedInUser);
 
         $this->dm->persist($mm);
         $this->dm->persist($series);
         $this->dm->flush();
-
-        $this->generateNumericalIDSeries($series);
 
         return $series;
     }

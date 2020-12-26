@@ -106,7 +106,7 @@ class Series
      * @MongoDB\Field(type="bool")
      * @MongoDB\Index
      */
-    private $hide;
+    private $hide = false;
 
     /**
      * @MongoDB\Field(type="date")
@@ -166,7 +166,7 @@ class Series
 
     public function __construct()
     {
-        $this->secret = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
+        $this->secret = base_convert(sha1(uniqid((string) mt_rand(), true)), 16, 36);
         $this->hide = false;
         $this->playlist = new Playlist();
         $this->__PicConstruct();
@@ -204,7 +204,7 @@ class Series
 
     public function resetSecret(): string
     {
-        $this->secret = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
+        $this->secret = base_convert(sha1(uniqid((string) mt_rand(), true)), 16, 36);
 
         return $this->secret;
     }
@@ -296,7 +296,7 @@ class Series
 
     public function isHide(): bool
     {
-        return $this->hide;
+        return $this->hide === true;
     }
 
     public function setPublicDate($public_date): void

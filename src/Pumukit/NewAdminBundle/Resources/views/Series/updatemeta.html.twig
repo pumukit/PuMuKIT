@@ -48,7 +48,7 @@
 
                     <div class="hidden-naked">
                         {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_SERIES_META_HTML_CONFIGURATION')) %}
-                            {% include 'PumukitNewAdminBundle:Series:html_configuration.html.twig' %}
+                            {% include '@PumukitNewAdmin/Series/html_configuration.html.twig' %}
                         {% endif %}
 
                         {% for child in form | filter(child => child.vars.id in ['pumukitnewadmin_series_i18n_header']) %}

@@ -166,7 +166,7 @@ class EmbeddedRole implements RoleInterface
         return $this->locale;
     }
 
-    public function getPeople(): ArrayCollection
+    public function getPeople()
     {
         return $this->people;
     }

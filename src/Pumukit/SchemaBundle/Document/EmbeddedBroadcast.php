@@ -100,7 +100,7 @@ class EmbeddedBroadcast
         $this->password = $password;
     }
 
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -120,7 +120,7 @@ class EmbeddedBroadcast
         $this->groups->removeElement($group);
     }
 
-    public function getGroups(): ArrayCollection
+    public function getGroups()
     {
         return $this->groups;
     }
