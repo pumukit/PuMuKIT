@@ -77,17 +77,17 @@ class Group implements GroupInterface
         return $this;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setKey($key): void
+    public function setKey(string $key): void
     {
         $this->key = $key;
     }
 
-    public function getKey()
+    public function getKey(): ?string
     {
         return $this->key;
     }
@@ -97,7 +97,7 @@ class Group implements GroupInterface
         $this->comments = $comments;
     }
 
-    public function getComments()
+    public function getComments(): ?string
     {
         return $this->comments;
     }
