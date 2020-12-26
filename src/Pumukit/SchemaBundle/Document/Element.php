@@ -128,7 +128,7 @@ class Element
         $this->url = $url;
     }
 
-    public function getUrl(): string
+    public function getUrl(): ?string
     {
         return $this->url;
     }
@@ -138,7 +138,7 @@ class Element
         $this->path = $path;
     }
 
-    public function getPath(): string
+    public function getPath(): ?string
     {
         return $this->path;
     }
@@ -178,7 +178,7 @@ class Element
         return $this->hide;
     }
 
-    public function setDescription(string $description, string $locale = null): void
+    public function setDescription(?string $description, string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;

@@ -61,7 +61,7 @@ class MultimediaObjectTest extends TestCase
         $mm->setNumview($numview);
         $mm->setLocale($locale);
         $mm->setLine2($line2);
-        $mm->addKeyword($keyword);
+        $mm->addKeyword($keyword, $locale);
         $mm->setProperties($properties);
 
         static::assertEquals($series, $mm->getSeries());
@@ -77,14 +77,14 @@ class MultimediaObjectTest extends TestCase
         static::assertEquals($numview, $mm->getNumview());
         static::assertEquals($locale, $mm->getLocale());
         static::assertEquals($line2, $mm->getLine2());
-        static::assertEquals($keyword, $mm->getKeywordsAsString());
+        static::assertEquals([$keyword], $mm->getKeywords($locale));
         static::assertEquals($properties, $mm->getProperties());
 
         $title = null;
         $subtitle = null;
         $description = null;
         $line2 = null;
-        $keyword = null;
+        $keyword = 'keyword';
 
         $mm->setTitle($title);
         $mm->setSubtitle($subtitle);
@@ -96,7 +96,7 @@ class MultimediaObjectTest extends TestCase
         static::assertEquals(null, $mm->getSubtitle());
         static::assertEquals(null, $mm->getDescription());
         static::assertEquals(null, $mm->getLine2());
-        static::assertEquals(null, $mm->getKeywordsAsString());
+        static::assertEquals([$keyword, $keyword], $mm->getKeywords());
 
         $properties = ['prop2' => 'property2'];
         $mm->setProperties($properties);
@@ -638,7 +638,7 @@ class MultimediaObjectTest extends TestCase
         $mm->setDuration($duration1);
         static::assertEquals("2' 00''", $mm->getDurationString());
         $mm->setDuration($duration3);
-        static::assertEquals("30''", $mm->getDurationString());
+        static::assertEquals("0' 30''", $mm->getDurationString());
     }
 
     public function testIncNumview()

@@ -138,7 +138,7 @@ class SeriesType
         return $this->series->contains($series);
     }
 
-    public function getSeries(): ArrayCollection
+    public function getSeries()
     {
         return $this->series;
     }

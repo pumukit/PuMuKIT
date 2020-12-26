@@ -21,9 +21,9 @@ class LiveTest extends TestCase
         $qualities = 'high';
         $ip_source = '127.0.0.1';
         $source_name = 'localhost';
-        $index_play = 1;
-        $broadcasting = 1;
-        $debug = 1;
+        $index_play = true;
+        $broadcasting = true;
+        $debug = true;
         $locale = 'en';
         $name = 'liveo 1';
         $description = 'liveo channel';

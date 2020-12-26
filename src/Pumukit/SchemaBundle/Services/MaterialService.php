@@ -128,7 +128,7 @@ class MaterialService
         foreach ($this->locales as $locale) {
             $material->setName($materialFile->getClientOriginalName(), $locale);
         }
-        $material->setSize($materialFile->getClientSize());
+        $material->setSize($materialFile->getSize());
 
         $material->setPath($path);
         $material->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
@@ -158,7 +158,7 @@ class MaterialService
 
         $path = $materialFile->move($this->targetPath.'/'.$multimediaObject->getId(), $materialFile->getClientOriginalName());
 
-        $material->setSize($materialFile->getClientSize());
+        $material->setSize($materialFile->getSize());
         $material->setName($materialFile->getClientOriginalName());
 
         $material->setPath($path);

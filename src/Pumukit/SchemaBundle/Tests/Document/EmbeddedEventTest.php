@@ -27,8 +27,8 @@ class EmbeddedEventTest extends TestCase
         $embeddedEventSession = new ArrayCollection();
         $live = new Live();
         $url = 'https://test.com';
-        $alreadyHeldMessage = ['en' => 'The event has been already held.'];
-        $notYetHeldMessage = ['en' => 'The event has not yet been alread held.'];
+        $alreadyHeldMessage = 'The event has been already held.';
+        $notYetHeldMessage = 'The event has not yet been already held.';
         $locale = 'en';
 
         $embeddedEvent = new EmbeddedEvent();
@@ -44,8 +44,8 @@ class EmbeddedEventTest extends TestCase
         $embeddedEvent->setEmbeddedEventSession($embeddedEventSession);
         $embeddedEvent->setLive($live);
         $embeddedEvent->setUrl($url);
-        $embeddedEvent->setAlreadyHeldMessage($alreadyHeldMessage);
-        $embeddedEvent->setNotYetHeldMessage($notYetHeldMessage);
+        $embeddedEvent->setAlreadyHeldMessage($alreadyHeldMessage, 'en');
+        $embeddedEvent->setNotYetHeldMessage($notYetHeldMessage, 'en');
         $embeddedEvent->setLocale($locale);
 
         static::assertEquals($name, $embeddedEvent->getName());

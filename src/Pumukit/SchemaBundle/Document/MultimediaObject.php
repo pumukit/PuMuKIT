@@ -1147,13 +1147,13 @@ class MultimediaObject
         return $hasRemoved;
     }
 
-    public function getPersonWithRole($person, $role): bool
+    public function getPersonWithRole($person, $role): ?PersonInterface
     {
         if ($this->containsPersonWithRole($person, $role)) {
             return $this->getEmbeddedRole($role)->getEmbeddedPerson($person);
         }
 
-        return false;
+        return null;
     }
 
     public function upPersonWithRole($person, $role): void

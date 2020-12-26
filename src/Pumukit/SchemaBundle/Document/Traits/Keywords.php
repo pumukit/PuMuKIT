@@ -42,7 +42,7 @@ trait Keywords
         return in_array($keyword, $this->getKeywords($locale), true);
     }
 
-    public function addKeyword(string $keyword, $locale = null): bool
+    public function addKeyword(?string $keyword, $locale = null): bool
     {
         if (null === $locale) {
             $locale = $this->locale;

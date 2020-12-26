@@ -94,7 +94,8 @@ class SeriesTest extends TestCase
         $description = null;
         $header = null;
         $footer = null;
-        $keyword = null;
+        $keyword = 'test';
+        $langKeyword = 'en';
         $line2 = null;
 
         $series->setTitle($title);
@@ -102,7 +103,7 @@ class SeriesTest extends TestCase
         $series->setDescription($description);
         $series->setHeader($header);
         $series->setFooter($footer);
-        $series->addKeyword($keyword);
+        $series->addKeyword($keyword, $langKeyword);
         $series->setLine2($line2);
 
         static::assertEquals(null, $series->getTitle());
@@ -110,7 +111,7 @@ class SeriesTest extends TestCase
         static::assertEquals(null, $series->getDescription());
         static::assertEquals(null, $series->getHeader());
         static::assertEquals(null, $series->getFooter());
-        static::assertEquals(null, $series->getKeywordsAsString());
+        static::assertNotNull($series->getKeywordsAsString($langKeyword));
         static::assertEquals(null, $series->getLine2());
     }
 

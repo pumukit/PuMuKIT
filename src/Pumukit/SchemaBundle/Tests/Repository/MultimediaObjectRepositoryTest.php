@@ -482,7 +482,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         static::assertFalse($mm2->containsPersonWithRole($personKate, $roleActor));
         static::assertCount(0, $mm2->getPeople());
 
-        static::assertFalse($mm2->getPersonWithRole($personKate, $roleActor));
+        static::assertNull($mm2->getPersonWithRole($personKate, $roleActor));
 
         $mm2->addPersonWithRole($personKate, $roleActor);
         $this->dm->persist($mm2);
@@ -1999,7 +1999,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         static::assertFalse($embeddedRole->containsAllPeople($people2));
         static::assertFalse($embeddedRole->containsAnyPerson($people1));
         static::assertTrue($embeddedRole->containsAnyPerson($people3));
-        static::assertFalse($embeddedRole->getEmbeddedPerson($person_cris));
+        static::assertNull($embeddedRole->getEmbeddedPerson($person_cris));
     }
 
     public function testEmbeddedTag(): void

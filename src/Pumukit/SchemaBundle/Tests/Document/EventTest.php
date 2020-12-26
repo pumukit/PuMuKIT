@@ -19,9 +19,9 @@ class EventTest extends TestCase
         $name = 'event name';
         $place = 'event place';
         $date = new \DateTime();
-        $duration = '60';
-        $display = 0;
-        $create_serial = 0;
+        $duration = 60;
+        $display = false;
+        $create_serial = false;
         $locale = 'en';
         $schedule = ['date' => $date, 'duration' => $duration];
 
