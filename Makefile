@@ -58,8 +58,7 @@ composer-install: CMD=install
 composer-update: CMD=update
 composer composer-install composer-update:
 	@docker run --rm --interactive --volume $(current-dir):/app --user $(id -u):$(id -g) \
-		clevyr/prestissimo $(CMD) \
-			--no-interaction
+		clevyr/prestissimo $(CMD)
 
 composer-validate:
 	docker-compose exec -T php composer validate
