@@ -62,7 +62,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag")
      * @Template("@PumukitNewAdmin/Tag/children.html.twig")
      */
-    public function childrenAction(TagInterface $tag)
+    public function childrenAction(Tag $tag)
     {
         return [
             'tag' => $tag,
@@ -73,7 +73,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
     /**
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag")
      */
-    public function deleteAction(TagInterface $tag)
+    public function deleteAction(Tag $tag)
     {
         try {
             $this->tagService->deleteTag($tag);

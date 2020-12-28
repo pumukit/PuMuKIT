@@ -70,7 +70,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"id": "id"}})
      * @Template("@PumukitNewAdmin/Place/children_list.html.twig")
      */
-    public function childrenAction(TagInterface $tag)
+    public function childrenAction(Tag $tag)
     {
         $children = $tag->getChildren();
 
@@ -173,7 +173,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
         return ['tag' => $tag, 'form' => $form->createView()];
     }
 
-    private function autogenerateCode(TagInterface $parent, bool $isPrecinct)
+    private function autogenerateCode(Tag $parent, bool $isPrecinct)
     {
         $code = [];
         $delimiter = ($isPrecinct) ? 'PRECINCT' : 'PLACE';
