@@ -111,7 +111,7 @@ class MaterialServiceTest extends PumukitTestCase
         $filePath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'fileCopy.pdf';
 
         if (copy($this->originalFilePath, $filePath)) {
-            $file = new UploadedFile($filePath, 'file.pdf', null, null, null, true);
+            $file = new UploadedFile($filePath, 'file.pdf', 'application/pdf', null, null, true);
 
             $formData['i18n_name'] = ['en' => 'Material'];
             $formData['hide'] = false;

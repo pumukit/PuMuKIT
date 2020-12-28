@@ -101,7 +101,7 @@ class MaterialService
      */
     public function addMaterialFile(MultimediaObject $multimediaObject, UploadedFile $materialFile, $formData)
     {
-        if (UPLOAD_ERR_OK != $materialFile->getError()) {
+        if (UPLOAD_ERR_OK !== $materialFile->getError()) {
             throw new \Exception($materialFile->getErrorMessage());
         }
 
@@ -122,13 +122,12 @@ class MaterialService
 
         $material = $this->saveFormData($material, $formData);
 
-        $material->setSize($materialFile->getSize());
-
         $path = $materialFile->move($this->targetPath.'/'.$multimediaObject->getId(), $materialFile->getClientOriginalName());
+
         foreach ($this->locales as $locale) {
             $material->setName($materialFile->getClientOriginalName(), $locale);
         }
-        $material->setSize($materialFile->getSize());
+        $material->setSize($path->getSize());
 
         $material->setPath($path);
         $material->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
