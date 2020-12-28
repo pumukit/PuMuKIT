@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace Pumukit\SchemaBundle\Document\Traits;
 
 use Pumukit\SchemaBundle\Document\TagInterface;
