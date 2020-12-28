@@ -5,7 +5,9 @@ namespace Pumukit\SchemaBundle\Command;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\RoleInterface;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\TagInterface;
 use Pumukit\SchemaBundle\Services\PermissionService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -93,19 +95,23 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $result = [];
+
         switch ($this->repoName) {
             case 'tag':
                 $result = $this->executeTags();
 
                 break;
+
             case 'role':
                 $result = $this->executeRoles();
 
                 break;
+
             case 'permissionprofile':
                $result = $this->executePermissionProfiles();
 
                 break;
+
             case 'all':
                 $this->repoName = 'tag';
                 $resultTag = $this->executeTags();
@@ -117,6 +123,7 @@ EOT
                 $result = array_merge($resultTag, $resultRoles, $resultPermissionProfiles);
 
                 break;
+
             default:
         }
 
@@ -222,7 +229,7 @@ EOT
         $this->dm->getDocumentCollection(PermissionProfile::class)->deleteMany([]);
     }
 
-    protected function createRoot(): Tag
+    protected function createRoot(): TagInterface
     {
         $root = $this->dm->getRepository(Tag::class)->findOneBy(['cod' => self::ROOT_TAG_CODE]);
         if (!isset($root)) {
@@ -234,7 +241,7 @@ EOT
         return $root;
     }
 
-    protected function createFromFile(string $fileRoute, Tag $root): array
+    protected function createFromFile(string $fileRoute, TagInterface $root): array
     {
         $fileWasValidated = $this->validateFile($fileRoute);
         if (!$fileWasValidated['status']) {
@@ -275,6 +282,7 @@ EOT
                     }
 
                     break;
+
                 case 'role':
                     $csvRolesArray = [];
 
@@ -291,6 +299,7 @@ EOT
                     }
 
                     break;
+
                 case 'permissionprofile':
                     if (!$this->dm->getRepository(PermissionProfile::class)->findOneBy(['name' => $currentRow[1]])) {
                         $this->createPermissionProfileFromCsvArray($currentRow);
@@ -310,7 +319,7 @@ EOT
         ];
     }
 
-    private function createTagFromCsvArray(array $csvTagsArray, $tag_parent = null): Tag
+    private function createTagFromCsvArray(array $csvTagsArray, $tag_parent = null): TagInterface
     {
         $tag = new Tag();
         $tag->setCod($csvTagsArray['cod']);
@@ -341,7 +350,7 @@ EOT
         return $tag;
     }
 
-    private function createRoleFromCsvArray(array $csvTagsArray): Role
+    private function createRoleFromCsvArray(array $csvTagsArray): RoleInterface
     {
         $role = new Role();
 
@@ -379,9 +388,9 @@ EOT
         $permissionProfile->setName($permissionProfileArray[1]);
         $permissionProfile->setSystem($permissionProfileArray[2]);
         $permissionProfile->setDefault($permissionProfileArray[3]);
-        if ((PermissionProfile::SCOPE_GLOBAL === $permissionProfileArray[4]) ||
-            (PermissionProfile::SCOPE_PERSONAL === $permissionProfileArray[4]) ||
-            (PermissionProfile::SCOPE_NONE === $permissionProfileArray[4])) {
+        if ((PermissionProfile::SCOPE_GLOBAL === $permissionProfileArray[4])
+            || (PermissionProfile::SCOPE_PERSONAL === $permissionProfileArray[4])
+            || (PermissionProfile::SCOPE_NONE === $permissionProfileArray[4])) {
             $permissionProfile->setScope($permissionProfileArray[4]);
         }
         foreach (array_filter(preg_split('/[,\s]+/', $permissionProfileArray[5])) as $permission) {

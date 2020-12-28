@@ -39,12 +39,12 @@ class PermissionProfile
     private $permissions = [];
 
     /**
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      */
     private $system = false;
 
     /**
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      */
     private $default = false;
 

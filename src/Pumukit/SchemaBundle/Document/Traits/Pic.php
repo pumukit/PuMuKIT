@@ -68,7 +68,7 @@ trait Pic
         return $this->pics->contains($pic);
     }
 
-    public function getPics(): ArrayCollection
+    public function getPics()
     {
         return $this->pics;
     }

@@ -3,7 +3,9 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\Query\Builder;
 use MongoDB\BSON\ObjectId;
+use Pagerfanta\Pagerfanta;
 use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\NewAdminBundle\Services\MultimediaObjectSearchService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -14,6 +16,8 @@ use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Pumukit\SchemaBundle\Services\PersonService;
+use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
+use Pumukit\SchemaBundle\Utils\Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -190,7 +194,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         if (!$this->isGranted(PermissionProfile::SCOPE_GLOBAL)) {
             $total = $this->getPersonalVideos();
         } else {
-            $mmobjs = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
+            $mmobjs = $this->documentManager->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
             $total = $mmobjs->count()->getQuery()->execute();
         }
 
@@ -218,7 +222,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         if (!$this->isGranted(PermissionProfile::SCOPE_GLOBAL)) {
             $mmobjs = $this->getPersonalVideos();
         } else {
-            $mmobjs = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
+            $mmobjs = $this->documentManager->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
         }
         $adapter = new DoctrineODMMongoDBAdapter($mmobjs);
         $mmobjs = new Pagerfanta($adapter);

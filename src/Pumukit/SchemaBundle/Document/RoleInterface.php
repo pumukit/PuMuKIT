@@ -31,7 +31,7 @@ interface RoleInterface
 
     public function getI18nName(): array;
 
-    public function getText(?String $locale = null): string;
+    public function getText(?string $locale = null): string;
 
     public function setI18nText(array $text): void;
 

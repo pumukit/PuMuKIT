@@ -61,8 +61,8 @@ class CollectionController extends AbstractController implements NewAdminControl
             ;
             $allMmobjs = $mmobjRepo->createStandardQueryBuilder()->field('series')->equals($series->getId())->getQuery()->execute();
             foreach ($allMmobjs as $resource) {
-                if (!$resource->containsPersonWithRole($person, $role) ||
-                    count($resource->getPeopleByRole($role, true)) > 1) {
+                if (!$resource->containsPersonWithRole($person, $role)
+                    || count($resource->getPeopleByRole($role, true)) > 1) {
                     return false;
                 }
             }

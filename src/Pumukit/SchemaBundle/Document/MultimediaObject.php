@@ -223,7 +223,7 @@ class MultimediaObject
 
     public function __construct()
     {
-        $this->secret = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
+        $this->secret = base_convert(sha1(uniqid((string) mt_rand(), true)), 16, 36);
         $this->tracks = new ArrayCollection();
         $this->tags = new ArrayCollection();
         $this->people = new ArrayCollection();
@@ -272,7 +272,7 @@ class MultimediaObject
 
     public function resetSecret(): string
     {
-        $this->secret = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
+        $this->secret = base_convert(sha1(uniqid((string) mt_rand(), true)), 16, 36);
 
         return $this->secret;
     }
@@ -672,7 +672,7 @@ class MultimediaObject
         return $this->embeddedSocial;
     }
 
-    public function getTags(): ArrayCollection
+    public function getTags()
     {
         return $this->tags;
     }
@@ -811,7 +811,7 @@ class MultimediaObject
         return $this->tracks->contains($track);
     }
 
-    public function getTracks(): ArrayCollection
+    public function getTracks()
     {
         return $this->tracks;
     }
@@ -1147,13 +1147,13 @@ class MultimediaObject
         return $hasRemoved;
     }
 
-    public function getPersonWithRole($person, $role): bool
+    public function getPersonWithRole($person, $role): ?PersonInterface
     {
         if ($this->containsPersonWithRole($person, $role)) {
             return $this->getEmbeddedRole($role)->getEmbeddedPerson($person);
         }
 
-        return false;
+        return null;
     }
 
     public function upPersonWithRole($person, $role): void
@@ -1186,7 +1186,7 @@ class MultimediaObject
         }
     }
 
-    public function getEmbeddedRole(RoleInterface $role): bool
+    public function getEmbeddedRole(RoleInterface $role): ?RoleInterface
     {
         foreach ($this->people as $embeddedRole) {
             if ($role->getCod() === $embeddedRole->getCod()) {
@@ -1194,10 +1194,10 @@ class MultimediaObject
             }
         }
 
-        return false;
+        return null;
     }
 
-    public function createEmbeddedRole(RoleInterface $role): EmbeddedRole
+    public function createEmbeddedRole(RoleInterface $role): RoleInterface
     {
         if ($role instanceof EmbeddedRole) {
             return $role;
@@ -1206,7 +1206,7 @@ class MultimediaObject
         return new EmbeddedRole($role);
     }
 
-    public function getRoles(): ArrayCollection
+    public function getRoles()
     {
         return $this->people;
     }
@@ -1226,7 +1226,7 @@ class MultimediaObject
         $this->groups->removeElement($group);
     }
 
-    public function getGroups(): ArrayCollection
+    public function getGroups()
     {
         return $this->groups;
     }

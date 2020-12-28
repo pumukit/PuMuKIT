@@ -54,11 +54,13 @@ class CPUsController extends AbstractController
         if (!$cpu) {
             throw $this->createNotFoundException("The CPU with the name {$cpuName} does not exist");
         }
+
         switch ($activateMaintenance) {
         case 'activate':
             $cpuService->activateMaintenance($cpuName);
 
             break;
+
         case 'deactivate':
             $cpuService->deactivateMaintenance($cpuName);
             for ($i = 0; $i < $cpu['max']; ++$i) {

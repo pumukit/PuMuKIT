@@ -367,16 +367,19 @@ class EventsController extends AbstractController implements NewAdminControllerI
                 $message = $this->cloneEvent($multimediaObject);
 
                 break;
+
             case 'delete':
                 $message = $this->deleteEvent($multimediaObject);
                 $this->session->set('admin/live/event/id', null);
 
                 break;
+
             case 'deleteAll':
                 $message = $this->deleteEventAndSeries($multimediaObject);
                 $this->session->set('admin/live/event/id', null);
 
                 break;
+
             default:
                 $message = 'Option not allowed';
 
@@ -617,8 +620,8 @@ class EventsController extends AbstractController implements NewAdminControllerI
         if ('POST' === $request->getMethod()) {
             try {
                 $data = $form->getData();
-                $start = new \DateTime($data->getStart());
-                $end = new \DateTime($data->getDuration());
+                $start = $data->getStart();
+                $end = $data->getEnds();
                 $duration = $end->getTimestamp() - $start->getTimestamp();
                 $notes = $data->getNotes();
 

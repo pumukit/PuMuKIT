@@ -53,7 +53,7 @@ class EventController extends AbstractController implements WebTVControllerInter
     public function advanceLiveEventMenuAction(): Response
     {
         if ($this->pumukitNewAdminAdvanceLiveEvent) {
-            return  new Response($this->renderView('@PumukitWebTV/Menu/advance_event_link.html.twig'));
+            return new Response($this->renderView('@PumukitWebTV/Menu/advance_event_link.html.twig'));
         }
 
         return new Response();

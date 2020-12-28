@@ -91,7 +91,7 @@ class FactoryServiceTest extends PumukitTestCase
         $multimediaObjectTemplate = $this->multimediaObjectRepo->findPrototype($series);
         foreach ($this->locales as $locale) {
             $keyword = $this->translator->trans('keytest', [], null, $locale);
-            $multimediaObjectTemplate->setKeyword($keyword, $locale);
+            $multimediaObjectTemplate->addKeyword($keyword, $locale);
         }
         $this->dm->persist($multimediaObjectTemplate);
 
@@ -100,8 +100,8 @@ class FactoryServiceTest extends PumukitTestCase
         $this->dm->flush();
 
         foreach ($this->locales as $locale) {
-            static::assertNotEquals($multimediaObject->getKeyword($locale), $this->multimediaObjectRepo->findPrototype($series)->getKeyword($locale));
-            static::assertEquals($multimediaObject2->getKeyword($locale), $this->multimediaObjectRepo->findPrototype($series)->getKeyword($locale));
+            static::assertNotEquals($multimediaObject->getKeywordsAsString($locale), $this->multimediaObjectRepo->findPrototype($series)->getKeywordsAsString($locale));
+            static::assertEquals($multimediaObject2->getKeywordsAsString($locale), $this->multimediaObjectRepo->findPrototype($series)->getKeywordsAsString($locale));
         }
     }
 

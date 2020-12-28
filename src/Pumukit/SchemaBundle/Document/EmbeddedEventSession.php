@@ -51,7 +51,7 @@ class EmbeddedEventSession
         $this->id = $id;
     }
 
-    public function getStart(): \DateTimeInterface
+    public function getStart(): ?\DateTimeInterface
     {
         return $this->start;
     }
@@ -61,7 +61,7 @@ class EmbeddedEventSession
         $this->start = $start;
     }
 
-    public function getEnds(): \DateTimeInterface
+    public function getEnds(): ?\DateTimeInterface
     {
         return $this->ends;
     }
@@ -86,7 +86,7 @@ class EmbeddedEventSession
         return $this->notes;
     }
 
-    public function setNotes(string $notes): void
+    public function setNotes(?string $notes): void
     {
         $this->notes = $notes;
     }

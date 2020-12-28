@@ -89,6 +89,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
                         $only_audio = false;
 
                         break;
+
                     case 'audio':
                         if (isset($stream->codec_name)) {
                             $track->setAcodec((string) $stream->codec_name);

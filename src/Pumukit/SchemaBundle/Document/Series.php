@@ -94,7 +94,7 @@ class Series
     private $playlist;
 
     /**
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      */
     private $announce = false;
 
@@ -103,10 +103,10 @@ class Series
      * it creates a pseudo series with default values (the WebTV filter dont permit to access hide series),
      * and we want to force that the series will be hide.
      *
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      * @MongoDB\Index
      */
-    private $hide;
+    private $hide = false;
 
     /**
      * @MongoDB\Field(type="date")
@@ -166,7 +166,7 @@ class Series
 
     public function __construct()
     {
-        $this->secret = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
+        $this->secret = base_convert(sha1(uniqid((string) mt_rand(), true)), 16, 36);
         $this->hide = false;
         $this->playlist = new Playlist();
         $this->__PicConstruct();
@@ -204,7 +204,7 @@ class Series
 
     public function resetSecret(): string
     {
-        $this->secret = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
+        $this->secret = base_convert(sha1(uniqid((string) mt_rand(), true)), 16, 36);
 
         return $this->secret;
     }
@@ -296,7 +296,7 @@ class Series
 
     public function isHide(): bool
     {
-        return $this->hide;
+        return true === $this->hide;
     }
 
     public function setPublicDate($public_date): void

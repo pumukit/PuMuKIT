@@ -18,7 +18,7 @@
             {{ form_row(form.start) }}
         </div>
         <div class="col-xs-12" style="margin-top:20px">
-            {{ form_row(form.duration) }}
+            {{ form_row(form.ends) }}
         </div>
         <div class="col-xs-12" style="margin-top:20px">
             {{ form_row(form.notes, {'attr' : {'style': 'resize: vertical;'}}) }}
@@ -41,7 +41,7 @@
         event.preventDefault();
 
         var start = $('#pumukitnewadmin_event_session_start').val();
-        var end = $('#pumukitnewadmin_event_session_duration').val();
+        var end = $('#pumukitnewadmin_event_session_ends').val();
 
         if(start <= end) {
             $('#updatesessionmodal').modal('hide');

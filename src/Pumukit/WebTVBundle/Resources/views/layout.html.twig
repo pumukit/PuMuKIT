@@ -1,5 +1,9 @@
-{% extends [
-    app.request.attributes.get('microsite_custom_base'),
-    '@PumukitWebTV/Layout/template.html.twig'
-    ]
-%}
+{% extends app.request.attributes.has('microsite_custom_base')
+    ? app.request.attributes.get('microsite_custom_base')
+    : '@PumukitWebTV/Layout/template.html.twig' %}
+
+{#{% extends [#}
+{#    app.request.attributes.get('microsite_custom_base'),#}
+{#    '@PumukitWebTV/Layout/template.html.twig'#}
+{#    ]#}
+{#%}#}

@@ -226,7 +226,7 @@ class PersonServiceTest extends PumukitTestCase
         static::assertEquals($newPresenterCode, $this->roleRepo->find($rolePresenter->getId())->getCod());
         static::assertEquals($newPresenterCode, $mm1->getEmbeddedRole($rolePresenter)->getCod());
         static::assertEquals($newPresenterCode, $mm2->getEmbeddedRole($rolePresenter)->getCod());
-        static::assertFalse($mm3->getEmbeddedRole($rolePresenter));
+        static::assertNull($mm3->getEmbeddedRole($rolePresenter));
     }
 
     public function testFindSeriesWithPerson()

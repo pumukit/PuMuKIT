@@ -40,5 +40,5 @@ interface TagInterface
 
     public function getPath(): ?string;
 
-    public function getLevel(): ?string;
+    public function getLevel(): ?int;
 }

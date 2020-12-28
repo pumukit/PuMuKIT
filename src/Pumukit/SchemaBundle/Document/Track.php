@@ -42,7 +42,7 @@ class Track extends Element
     private $framerate;
 
     /**
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      */
     private $only_audio;
 
@@ -67,7 +67,7 @@ class Track extends Element
     private $height;
 
     /**
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      */
     private $allowDownload = false;
 
@@ -137,12 +137,12 @@ class Track extends Element
         return $this->bitrate;
     }
 
-    public function setFramerate($framerate): void
+    public function setFramerate(?string $framerate): void
     {
         $this->framerate = $framerate;
     }
 
-    public function getFramerate()
+    public function getFramerate(): ?string
     {
         return $this->framerate;
     }

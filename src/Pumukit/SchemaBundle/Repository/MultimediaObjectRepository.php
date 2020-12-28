@@ -12,6 +12,7 @@ use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\TagInterface;
 use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
 
 /**
@@ -489,7 +490,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function findWithTag(Tag $tag, $sort = [], $limit = 0, $page = 0)
+    public function findWithTag(TagInterface $tag, $sort = [], $limit = 0, $page = 0)
     {
         $qb = $this->createBuilderWithTag($tag, $sort);
 
@@ -507,7 +508,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function findWithGeneralTag(Tag $tag, $sort = [], $limit = 0, $page = 0)
+    public function findWithGeneralTag(TagInterface $tag, $sort = [], $limit = 0, $page = 0)
     {
         $qb = $this->createBuilderWithGeneralTag($tag, $sort);
 
@@ -523,7 +524,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
-    public function createBuilderWithTag(Tag $tag, $sort = [])
+    public function createBuilderWithTag(TagInterface $tag, $sort = [])
     {
         $qb = $this->createStandardQueryBuilder()->field('tags.cod')->equals($tag->getCod());
 
@@ -566,7 +567,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
-    public function createBuilderWithGeneralTag(Tag $tag, $sort = [])
+    public function createBuilderWithGeneralTag(TagInterface $tag, $sort = [])
     {
         $qb = $this->createStandardQueryBuilder()->field('tags.cod')->equals($tag->getCod())->field('tags.path')->notIn([new Regex(preg_quote($tag->getPath()).'.*\|/')]);
 
@@ -578,7 +579,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return array|object|null
      */
-    public function findOneWithTag(Tag $tag)
+    public function findOneWithTag(TagInterface $tag)
     {
         return $this->createStandardQueryBuilder()->field('tags._id')->equals(new ObjectId($tag->getId()))->getQuery()->getSingleResult();
     }
@@ -638,29 +639,27 @@ class MultimediaObjectRepository extends DocumentRepository
         return $qb->getQuery()->getSingleResult();
     }
 
-    public function qbWithoutTag(Tag $tag, array $sort = [], int $limit = 0, int $page = 0)
+    public function qbWithoutTag(TagInterface $tag, array $sort = [], int $limit = 0, int $page = 0)
     {
         $qb = $this->createStandardQueryBuilder()->field('tags._id')->notEqual(new ObjectId($tag->getId()));
 
         return $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
     }
 
-    public function findWithoutTag(Tag $tag, array $sort = [], int $limit = 0, int $page = 0)
+    public function findWithoutTag(TagInterface $tag, array $sort = [], int $limit = 0, int $page = 0)
     {
         return $this->qbWithoutTag($tag, $sort, $limit, $page)->getQuery()->execute();
     }
 
-    public function countWithoutTag(Tag $tag, array $sort = [], int $limit = 0, int $page = 0)
+    public function countWithoutTag(TagInterface $tag, array $sort = [], int $limit = 0, int $page = 0)
     {
         return $this->qbWithoutTag($tag, $sort, $limit, $page)->count()->getQuery()->execute();
     }
 
     /**
      * Find one multimedia object without tag id.
-     *
-     * @return array|object|null
      */
-    public function findOneWithoutTag(Tag $tag)
+    public function findOneWithoutTag(TagInterface $tag)
     {
         return $this->createStandardQueryBuilder()->field('tags._id')->notEqual(new ObjectId($tag->getId()))->getQuery()->getSingleResult();
     }
@@ -690,7 +689,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function findSeriesFieldWithTag(Tag $tag)
+    public function findSeriesFieldWithTag(TagInterface $tag)
     {
         return $this->createStandardQueryBuilder()
             ->field('tags._id')->equals(new ObjectId($tag->getId()))
@@ -700,7 +699,7 @@ class MultimediaObjectRepository extends DocumentRepository
         ;
     }
 
-    public function findOneSeriesFieldWithTag(Tag $tag): ?ObjectId
+    public function findOneSeriesFieldWithTag(TagInterface $tag): ?ObjectId
     {
         $series = $this->createStandardQueryBuilder()
             ->field('tags._id')
@@ -984,7 +983,7 @@ class MultimediaObjectRepository extends DocumentRepository
         return $this->createStandardQueryBuilder()->field('series')->references($series)->count()->getQuery()->execute();
     }
 
-    public function findByTagCodQueryBuilder(Tag $tag): Builder
+    public function findByTagCodQueryBuilder(TagInterface $tag): Builder
     {
         return $this->createStandardQueryBuilder()->field('tags.cod')->equals($tag->getCod());
     }
@@ -1008,17 +1007,14 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find by tag code.
      *
-     * @param Tag   $tag
-     * @param array $sort
-     *
-     * @return mixed
+     * @param mixed $sort
      */
-    public function findByTagCod($tag, $sort = [])
+    public function findByTagCod(TagInterface $tag, $sort = [])
     {
         return $this->findByTagCodQuery($tag, $sort)->execute();
     }
 
-    public function findAllByTagQueryBuilder(Tag $tag): Builder
+    public function findAllByTagQueryBuilder(TagInterface $tag): Builder
     {
         return $this->createQueryBuilder()->field('tags._id')->equals(new ObjectId($tag->getId()));
     }

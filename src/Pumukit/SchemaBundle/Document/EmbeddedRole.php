@@ -28,7 +28,7 @@ class EmbeddedRole implements RoleInterface
     private $xml;
 
     /**
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      */
     private $display = true;
 
@@ -166,7 +166,7 @@ class EmbeddedRole implements RoleInterface
         return $this->locale;
     }
 
-    public function getPeople(): ArrayCollection
+    public function getPeople()
     {
         return $this->people;
     }
@@ -229,7 +229,7 @@ class EmbeddedRole implements RoleInterface
         return false;
     }
 
-    public function createEmbeddedPerson($person): EmbeddedPerson
+    public function createEmbeddedPerson($person): PersonInterface
     {
         if ($person instanceof EmbeddedPerson) {
             return $person;

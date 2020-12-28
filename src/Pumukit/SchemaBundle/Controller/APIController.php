@@ -59,7 +59,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
 
         $limit = (int) $request->get('limit');
         $page = (int) $request->get('page');
-        $skip =  (int) ($request->get('skip') ?? self::API_SKIP);
+        $skip = (int) ($request->get('skip') ?? self::API_SKIP);
 
         try {
             $criteria = $this->getMultimediaObjectCriteria($request->get('criteria'), $request->get('criteriajson'));

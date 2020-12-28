@@ -8,6 +8,7 @@ use MongoDB\BSON\Regex;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\TagInterface;
 use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
 
 class SearchService
@@ -35,7 +36,7 @@ class SearchService
         ];
     }
 
-    public function getParentTag(): Tag
+    public function getParentTag(): TagInterface
     {
         $parentTag = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => $this->parentTagCod]);
         if (!isset($parentTag)) {
@@ -50,7 +51,7 @@ class SearchService
         return $parentTag;
     }
 
-    public function getOptionalParentTag(): ?Tag
+    public function getOptionalParentTag(): ?TagInterface
     {
         $parentTagOptional = null;
         if ($this->parentTagCodOptional) {
@@ -100,19 +101,23 @@ class SearchService
     public function addTypeQueryBuilder(Builder $queryBuilder, ?string $typeFound): Builder
     {
         $type = '';
+
         switch ($typeFound) {
             case 'audio':
                 $type = MultimediaObject::TYPE_AUDIO;
 
                 break;
+
             case 'video':
                 $type = MultimediaObject::TYPE_VIDEO;
 
                 break;
+
             case 'external':
                 $type = MultimediaObject::TYPE_EXTERNAL;
 
                 break;
+
             default:
         }
         if ('' !== $type) {
@@ -198,7 +203,7 @@ class SearchService
         return $queryBuilder;
     }
 
-    public function addTagsQueryBuilder(Builder $queryBuilder, array $tagsFound = null, Tag $blockedTag = null, bool $useTagAsGeneral = false): Builder
+    public function addTagsQueryBuilder(Builder $queryBuilder, array $tagsFound = null, TagInterface $blockedTag = null, bool $useTagAsGeneral = false): Builder
     {
         if (null !== $blockedTag) {
             $tagsFound[] = $blockedTag->getCod();

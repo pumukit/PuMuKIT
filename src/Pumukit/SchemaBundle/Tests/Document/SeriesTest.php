@@ -38,7 +38,7 @@ class SeriesTest extends TestCase
         $series->setDescription($description);
         $series->setHeader($header);
         $series->setFooter($footer);
-        $series->setKeyword($keyword);
+        $series->addKeyword($keyword);
         $series->setLine2($line2);
         $series->setLocale($locale);
         $series->setProperties($properties);
@@ -51,7 +51,7 @@ class SeriesTest extends TestCase
         static::assertEquals($description, $series->getDescription());
         static::assertEquals($header, $series->getHeader());
         static::assertEquals($footer, $series->getFooter());
-        static::assertEquals($keyword, $series->getKeyword());
+        static::assertEquals($keyword, $series->getKeywordsAsString());
         static::assertEquals($line2, $series->getLine2());
         static::assertEquals($locale, $series->getLocale());
         static::assertEquals($properties, $series->getProperties());
@@ -94,7 +94,8 @@ class SeriesTest extends TestCase
         $description = null;
         $header = null;
         $footer = null;
-        $keyword = null;
+        $keyword = 'test';
+        $langKeyword = 'en';
         $line2 = null;
 
         $series->setTitle($title);
@@ -102,7 +103,7 @@ class SeriesTest extends TestCase
         $series->setDescription($description);
         $series->setHeader($header);
         $series->setFooter($footer);
-        $series->setKeyword($keyword);
+        $series->addKeyword($keyword, $langKeyword);
         $series->setLine2($line2);
 
         static::assertEquals(null, $series->getTitle());
@@ -110,7 +111,7 @@ class SeriesTest extends TestCase
         static::assertEquals(null, $series->getDescription());
         static::assertEquals(null, $series->getHeader());
         static::assertEquals(null, $series->getFooter());
-        static::assertEquals(null, $series->getKeyword());
+        static::assertNotNull($series->getKeywordsAsString($langKeyword));
         static::assertEquals(null, $series->getLine2());
     }
 

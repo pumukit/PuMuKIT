@@ -21,7 +21,7 @@
 {% endblock %}
 
 {% block title %}{{ parent() }} - {{ object.title }}{% endblock %}
-{% block keywords %}{{ parent() }} - {{ object.keyword }}{% endblock %}
+{% block keywords %}{{ parent() }} - {{ object.keywords|join(',') }}{% endblock %}
 
 {% block body_base %}
 {% endblock %}

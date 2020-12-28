@@ -37,6 +37,16 @@ services:
   Pumukit\NewAdminBundle\Services\:
     resource: '../../src/Pumukit/NewAdminBundle/Services/'
 
+  Pumukit\NewAdminBundle\Form\Type\SeriesType:
+    class: Pumukit\NewAdminBundle\Form\Type\SeriesType
+    tags:
+      - { name: "form.type", alias: "pumukitnewadmin_series" }
+
+  Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType:
+    class: Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType
+    tags:
+      - { name: "form.type", alias: "pumukitnewadmin_mms_meta" }
+
   Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType:
     class: Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType
     arguments:

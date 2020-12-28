@@ -661,13 +661,13 @@ class EmbeddedEventSessionService
      */
     public function validateHtmlColor($color)
     {
-        if (in_array(strtolower($color), $this->validColors) ||
-        preg_match('/^#[a-f0-9]{3}$/i', $color) ||
-        preg_match('/^#[a-f0-9]{6}$/i', $color)) {
+        if (in_array(strtolower($color), $this->validColors)
+        || preg_match('/^#[a-f0-9]{3}$/i', $color)
+        || preg_match('/^#[a-f0-9]{6}$/i', $color)) {
             return $color;
         }
-        if (preg_match('/^[a-f0-9]{6}$/i', $color) ||
-        preg_match('/^[a-f0-9]{3}$/i', $color)) {
+        if (preg_match('/^[a-f0-9]{6}$/i', $color)
+        || preg_match('/^[a-f0-9]{3}$/i', $color)) {
             return '#'.$color;
         }
 

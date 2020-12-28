@@ -82,12 +82,12 @@
 
                     {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_CATEGORY_TAB')) %}
                         <div id="tagMm" role="tabpanel" class="tab-pane">
-                            {% include 'PumukitNewAdminBundle:MultimediaObject:updatetag.html.twig' with {'mm': mm, 'parent_tags': parent_tags, 'template': false} %}
+                            {% include '@PumukitNewAdmin/MultimediaObject/updatetag.html.twig' with {'mm': mm, 'parent_tags': parent_tags, 'template': false} %}
                         </div>
                     {% endif %}
                     {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_OWNER_TAB')) %}
                         <div id="groupMm" role="tabpanel" class="tab-pane">
-                            {% include 'PumukitNewAdminBundle:MultimediaObject:updategroup.html.twig' with {'mm': mm, 'personal_scope_role': personal_scope_role} %}
+                            {% include '@PumukitNewAdmin/MultimediaObject/updategroup.html.twig' with {'mm': mm, 'personal_scope_role': personal_scope_role} %}
                         </div>
                     {% endif %}
                 {% endif %}
@@ -95,7 +95,7 @@
 
                 {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_PEOPLE_TAB')) %}
                     <div id="personMm" role="tabpanel" class="tab-pane">
-                        {% include 'PumukitNewAdminBundle:MultimediaObject:updateperson.html.twig' with {'mm': mm, 'roles': roles} %}
+                        {% include '@PumukitNewAdmin/MultimediaObject/updateperson.html.twig' with {'mm': mm, 'roles': roles} %}
                     </div>
                 {% endif %}
 

@@ -44,7 +44,7 @@ class Element
     private $size;
 
     /**
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      */
     private $hide = false;
 
@@ -128,7 +128,7 @@ class Element
         $this->url = $url;
     }
 
-    public function getUrl(): string
+    public function getUrl(): ?string
     {
         return $this->url;
     }
@@ -138,7 +138,7 @@ class Element
         $this->path = $path;
     }
 
-    public function getPath(): string
+    public function getPath(): ?string
     {
         return $this->path;
     }
@@ -148,7 +148,7 @@ class Element
         $this->mime_type = $mime_type;
     }
 
-    public function getMimeType(): string
+    public function getMimeType(): ?string
     {
         return $this->mime_type;
     }
@@ -158,7 +158,7 @@ class Element
         $this->size = $size;
     }
 
-    public function getSize(): int
+    public function getSize(): ?int
     {
         return $this->size;
     }
@@ -178,7 +178,7 @@ class Element
         return $this->hide;
     }
 
-    public function setDescription(string $description, string $locale = null): void
+    public function setDescription(?string $description, string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -186,7 +186,7 @@ class Element
         $this->description[$locale] = $description;
     }
 
-    public function getDescription($locale = null): string
+    public function getDescription($locale = null): ?string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -200,7 +200,7 @@ class Element
         $this->description = $description;
     }
 
-    public function getI18nDescription(): array
+    public function getI18nDescription(): ?array
     {
         return $this->description;
     }

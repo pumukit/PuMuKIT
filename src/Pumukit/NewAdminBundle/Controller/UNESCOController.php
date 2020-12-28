@@ -551,13 +551,13 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
         switch ($option) {
         case 'delete_selected':
-
             foreach ($data as $multimediaObjectId) {
                 $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
                 $this->factoryService->deleteMultimediaObject($multimediaObject);
             }
 
             break;
+
         case 'invert_announce_selected':
             $pudeNew = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PUDENEW']);
             foreach ($data as $multimediaObjectId) {
@@ -570,6 +570,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
             }
 
             break;
+
         default:
             break;
         }
@@ -677,6 +678,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
                 ;
 
                 break;
+
             case 'tag':
                 $selectedTag = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => $tag]);
                 $query = $this->documentManager->getRepository(MultimediaObject::class)->createStandardQueryBuilder()
@@ -685,6 +687,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
                 ;
 
                 break;
+
             case '2':
             default:
                 // NOTE: All videos

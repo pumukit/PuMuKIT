@@ -6,10 +6,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Regex;
-use Pumukit\SchemaBundle\Document\EmbeddedPerson;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Person;
+use Pumukit\SchemaBundle\Document\PersonInterface;
 use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\RoleInterface;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Repository\MultimediaObjectRepository;
 use Pumukit\SchemaBundle\Repository\PersonRepository;
@@ -45,7 +46,7 @@ class PersonService
         $this->personalScopeRoleCode = $personalScopeRoleCode;
     }
 
-    public function savePerson(Person $person): Person
+    public function savePerson(PersonInterface $person): PersonInterface
     {
         $this->dm->persist($person);
         $this->dm->flush();
@@ -53,7 +54,7 @@ class PersonService
         return $person;
     }
 
-    public function saveRole(Role $role): Role
+    public function saveRole(RoleInterface $role): RoleInterface
     {
         $this->dm->persist($role);
         $this->dm->flush();
@@ -76,7 +77,7 @@ class PersonService
         return $this->repoPerson->findOneBy(['email' => $email]);
     }
 
-    public function updatePerson(Person $person): Person
+    public function updatePerson(PersonInterface $person): PersonInterface
     {
         $person = $this->savePerson($person);
 
@@ -95,7 +96,7 @@ class PersonService
         return $person;
     }
 
-    public function updateRole(Role $role): Role
+    public function updateRole(RoleInterface $role): RoleInterface
     {
         $role = $this->saveRole($role);
 
@@ -118,7 +119,7 @@ class PersonService
         return $role;
     }
 
-    public function findSeriesWithPerson(Person $person, int $limit = 0): ArrayCollection
+    public function findSeriesWithPerson(PersonInterface $person, int $limit = 0): ArrayCollection
     {
         $mmobjs = $this->repoMmobj->findByPersonId($person->getId());
 
@@ -140,7 +141,7 @@ class PersonService
         return $seriesCollection;
     }
 
-    public function createRelationPerson(Person $person, Role $role, MultimediaObject $multimediaObject, bool $flush = true, bool $dispatch = true): MultimediaObject
+    public function createRelationPerson(PersonInterface $person, RoleInterface $role, MultimediaObject $multimediaObject, bool $flush = true, bool $dispatch = true): MultimediaObject
     {
         $this->dm->persist($person);
         $multimediaObject->addPersonWithRole($person, $role);
@@ -181,7 +182,7 @@ class PersonService
         ;
     }
 
-    public function upPersonWithRole(Person $person, Role $role, MultimediaObject $multimediaObject): MultimediaObject
+    public function upPersonWithRole(PersonInterface $person, RoleInterface $role, MultimediaObject $multimediaObject): MultimediaObject
     {
         $multimediaObject->upPersonWithRole($person, $role);
         $this->dm->persist($multimediaObject);
@@ -190,7 +191,7 @@ class PersonService
         return $multimediaObject;
     }
 
-    public function downPersonWithRole(Person $person, Role $role, MultimediaObject $multimediaObject): MultimediaObject
+    public function downPersonWithRole(PersonInterface $person, RoleInterface $role, MultimediaObject $multimediaObject): MultimediaObject
     {
         $multimediaObject->downPersonWithRole($person, $role);
         $this->dm->persist($multimediaObject);
@@ -199,7 +200,7 @@ class PersonService
         return $multimediaObject;
     }
 
-    public function deleteRelation(Person $person, Role $role, MultimediaObject $multimediaObject): MultimediaObject
+    public function deleteRelation(PersonInterface $person, RoleInterface $role, MultimediaObject $multimediaObject): MultimediaObject
     {
         $hasBeenRemoved = $multimediaObject->removePersonWithRole($person, $role);
         if ($hasBeenRemoved) {
@@ -217,7 +218,7 @@ class PersonService
         return $multimediaObject;
     }
 
-    public function deletePerson(Person $person, bool $deleteFromUser = false): void
+    public function deletePerson(PersonInterface $person, bool $deleteFromUser = false): void
     {
         if (0 !== $this->repoMmobj->countByPersonId($person->getId())) {
             throw new \Exception("Couldn't remove Person with id ".$person->getId().'. There are multimedia objects with this person');
@@ -231,7 +232,7 @@ class PersonService
         $this->dm->flush();
     }
 
-    public function batchDeletePerson(Person $person): void
+    public function batchDeletePerson(PersonInterface $person): void
     {
         foreach ($this->repoMmobj->findByPersonId($person->getId()) as $mmobj) {
             foreach ($mmobj->getRoles() as $embeddedRole) {
@@ -249,7 +250,7 @@ class PersonService
         $this->dm->flush();
     }
 
-    public function countMultimediaObjectsWithPerson(Person $person)
+    public function countMultimediaObjectsWithPerson(PersonInterface $person)
     {
         return $this->repoMmobj->countByPersonId($person->getId());
     }
@@ -311,7 +312,7 @@ class PersonService
         return $this->repoRole->findBy($criteria, $sort);
     }
 
-    public function removeUserFromPerson(User $user, Person $person, bool $executeFlush = true): void
+    public function removeUserFromPerson(User $user, PersonInterface $person, bool $executeFlush = true): void
     {
         $person->setUser(null);
         $this->dm->persist($person);
@@ -341,7 +342,7 @@ class PersonService
         return $person;
     }
 
-    private function updateEmbeddedPerson(Person $person, EmbeddedPerson $embeddedPerson): EmbeddedPerson
+    private function updateEmbeddedPerson(PersonInterface $person, PersonInterface $embeddedPerson): PersonInterface
     {
         if (null !== $person) {
             $embeddedPerson->setName($person->getName());

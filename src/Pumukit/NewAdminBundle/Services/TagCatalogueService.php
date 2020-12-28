@@ -238,13 +238,17 @@ class TagCatalogueService
         }
 
         $key = $allDefaultFields[$field]['render'];
+
         switch ($key) {
             case 'text':
                 return $this->textRenderField($object, $field);
+
             case 'criteria':
                 return $this->criteriaRenderField($object, $session);
+
             case 'role':
                 return $this->roleRenderField($object, $field);
+
             default:
                 $data = '';
         }
@@ -511,96 +515,118 @@ class TagCatalogueService
                 $text = $object->getId();
 
                 break;
+
             case 'series.id':
                 $text = $object->getSeries()->getId();
                 $route = $this->router->generate('pumukitnewadmin_mms_index', ['id' => $text]);
                 $text = "<a href='".$route."'>".(string) $text.'</a>';
 
                 break;
+
             case 'title':
                 $text = $object->getTitle();
 
                 break;
+
             case 'seriesTitle':
                 $text = $object->getSeries()->getTitle();
                 $route = $this->router->generate('pumukitnewadmin_mms_index', ['id' => $object->getSeries()->getId()]);
                 $text = "<a href='".$route."'>".$text.'</a>';
 
                 break;
+
             case 'subtitle':
                 $text = $object->getSubtitle();
 
                 break;
+
             case 'description':
                 $text = $object->getDescription();
 
                 break;
+
             case 'comments':
                 $text = $object->getComments();
 
                 break;
+
             case 'keywords':
-                $text = $object->getKeyword();
+                $text = $object->getKeywordsAsString();
 
                 break;
+
             case 'copyright':
                 $text = $object->getCopyright();
 
                 break;
+
             case 'license':
                 $text = $object->getLicense();
 
                 break;
+
             case 'record_date':
                 $text = $object->getRecordDate()->format('Y-m-d');
 
                 break;
+
             case 'public_date':
                 $text = $object->getPublicDate()->format('Y-m-d');
 
                 break;
+
             case 'tracks.name':
                 $text = $this->getTracksName($object);
 
                 break;
+
             case 'numerical_id':
                 $text = $object->getNumericalID();
 
                 break;
+
             case 'series.numerical_id':
                 $text = $object->getSeries()->getNumericalID();
 
                 break;
+
             case 'type':
                 $type = $object->getType();
                 $text = $this->translator->trans($object->getStringType($type));
 
                 break;
+
             case 'duration':
                 $text = $object->getDurationString();
 
                 break;
+
             case 'numview':
                 $text = $object->getNumview();
 
                 break;
+
             case 'year':
                 $text = $object->getRecordDate();
                 $text = $text->format('Y');
 
                 break;
+
             case 'embeddedBroadcast':
                 $text = $this->translator->trans($object->getEmbeddedBroadcast()->getName());
 
                 break;
+
             case 'status':
                 $text = $this->translator->trans($object->getStringStatus($object->getStatus()));
 
                 break;
+
             case 'groups':
                 $text = implode(',', $object->getGroups()->toArray());
 
                 break;
+
             default:
                 $text = 'No data';
         }

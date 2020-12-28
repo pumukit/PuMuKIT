@@ -42,9 +42,9 @@ class ProfileService
         }
 
         return array_filter($this->profiles, function ($profile) use ($display, $wizard, $master) {
-            return (null === $display || $profile['display'] === $display) &&
-                    (null === $wizard || $profile['wizard'] === $wizard) &&
-                    (null === $master || $profile['master'] === $master);
+            return (null === $display || $profile['display'] === $display)
+                    && (null === $wizard || $profile['wizard'] === $wizard)
+                    && (null === $master || $profile['master'] === $master);
         });
     }
 
@@ -127,13 +127,12 @@ class ProfileService
             return $e['streamserver']['dir_out'];
         };
         $shares = array_unique(array_values(array_map($f, $this->profiles)));
-        $info = array_map(function ($e) {
+
+        return array_map(function ($e) {
             return ['dir' => $e,
                 'free' => disk_free_space($e),
                 'total' => disk_total_space($e), ];
         }, $shares);
-
-        return $info;
     }
 
     /**

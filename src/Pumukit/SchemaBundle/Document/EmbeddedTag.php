@@ -40,12 +40,12 @@ class EmbeddedTag implements TagInterface
     private $cod = '';
 
     /**
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      */
     private $metatag = false;
 
     /**
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      */
     private $display = false;
 
@@ -231,7 +231,7 @@ class EmbeddedTag implements TagInterface
         return $this->locale;
     }
 
-    public function getLevel(): ?string
+    public function getLevel(): ?int
     {
         return $this->level;
     }
@@ -241,7 +241,7 @@ class EmbeddedTag implements TagInterface
         return $this->path;
     }
 
-    public static function getEmbeddedTag($embedTags, $tag): EmbeddedTag
+    public static function getEmbeddedTag($embedTags, TagInterface $tag): TagInterface
     {
         if ($tag instanceof self) {
             return $tag;

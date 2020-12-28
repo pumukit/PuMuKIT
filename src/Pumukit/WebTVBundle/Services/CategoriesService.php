@@ -5,6 +5,7 @@ namespace Pumukit\WebTVBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\TagInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -207,7 +208,7 @@ class CategoriesService
     /**
      * @return mixed
      */
-    private function countGeneralMmobjsInTag(Tag $tag, string $provider = null)
+    private function countGeneralMmobjsInTag(TagInterface $tag, string $provider = null)
     {
         $repo = $this->documentManager->getRepository(MultimediaObject::class);
         $qb = $repo->createBuilderWithGeneralTag($tag);

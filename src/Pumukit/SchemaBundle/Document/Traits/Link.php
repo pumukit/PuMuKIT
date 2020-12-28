@@ -36,7 +36,7 @@ trait Link
         $this->links = new ArrayCollection();
     }
 
-    public function getLinks(): ArrayCollection
+    public function getLinks()
     {
         return $this->links;
     }

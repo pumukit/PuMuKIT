@@ -54,12 +54,12 @@ class EmbeddedEvent
     private $duration;
 
     /**
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      */
     private $display = true;
 
     /**
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      */
     private $create_serial = true;
 
@@ -91,7 +91,7 @@ class EmbeddedEvent
     private $notYetHeldMessage = ['en' => ''];
 
     /**
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      */
     private $enableChat = false;
 
@@ -277,7 +277,7 @@ class EmbeddedEvent
         return false;
     }
 
-    public function getLive(): Live
+    public function getLive(): ?Live
     {
         return $this->live;
     }

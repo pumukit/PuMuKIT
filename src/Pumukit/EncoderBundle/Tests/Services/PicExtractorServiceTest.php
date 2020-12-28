@@ -73,6 +73,8 @@ class PicExtractorServiceTest extends PumukitTestCase
 
         $track = new Track();
         $track->setPath($trackPath);
+        $track->setDuration(2);
+        $track->setFramerate('25/1');
 
         $multimediaObject->addTrack($track);
 

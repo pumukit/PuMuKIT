@@ -56,12 +56,12 @@ class Tag implements TagInterface
     private $cod = '';
 
     /**
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      */
     private $metatag = false;
 
     /**
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      */
     private $display = false;
 
@@ -299,7 +299,7 @@ class Tag implements TagInterface
         $this->number_multimedia_objects = $count;
     }
 
-    public function setParent(Tag $parent = null): void
+    public function setParent(TagInterface $parent = null): void
     {
         $this->parent = $parent;
 
@@ -311,7 +311,7 @@ class Tag implements TagInterface
         return $this->parent;
     }
 
-    public function getChildren(): array
+    public function getChildren()
     {
         return $this->children;
     }
@@ -326,7 +326,7 @@ class Tag implements TagInterface
         $this->number_children = $count;
     }
 
-    public function getLevel(): ?string
+    public function getLevel(): ?int
     {
         return $this->level;
     }
@@ -334,6 +334,11 @@ class Tag implements TagInterface
     public function getPath(): ?string
     {
         return $this->path;
+    }
+
+    public function setPath(?string $path): void
+    {
+        $this->path = $path;
     }
 
     public function getLockTime()

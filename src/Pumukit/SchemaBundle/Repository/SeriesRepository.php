@@ -6,11 +6,11 @@ use Doctrine\ODM\MongoDB\Query\Builder;
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Regex;
-use Pumukit\SchemaBundle\Document\EmbeddedTag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\TagInterface;
 use Pumukit\SchemaBundle\Document\User;
 
 /**
@@ -24,12 +24,10 @@ class SeriesRepository extends DocumentRepository
     /**
      * Find series by tag id.
      *
-     * @param EmbeddedTag|Tag $tag
-     * @param array           $sort
-     * @param int             $limit
-     * @param int             $page
-     *
-     * @return mixed
+     * @param mixed $tag
+     * @param mixed $sort
+     * @param mixed $limit
+     * @param mixed $page
      */
     public function findWithTag($tag, $sort = [], $limit = 0, $page = 0)
     {
@@ -57,12 +55,8 @@ class SeriesRepository extends DocumentRepository
 
     /**
      * Find one series with tag.
-     *
-     * @param EmbeddedTag|Tag $tag
-     *
-     * @return array|object|null
      */
-    public function findOneWithTag($tag)
+    public function findOneWithTag(TagInterface $tag)
     {
         $referencedOneSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findOneSeriesFieldWithTag($tag);
 
@@ -101,10 +95,7 @@ class SeriesRepository extends DocumentRepository
         return $this->createQueryBuilder()->field('_id')->equals($referencedOneSeries)->getQuery()->getSingleResult();
     }
 
-    /**
-     * @param EmbeddedTag|Tag $tag
-     */
-    public function findWithoutTag($tag, array $sort = [], int $limit = 0, int $page = 0)
+    public function findWithoutTag(TagInterface $tag, array $sort = [], int $limit = 0, int $page = 0)
     {
         $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithTag($tag);
 
@@ -117,12 +108,8 @@ class SeriesRepository extends DocumentRepository
 
     /**
      * Find one series without tag.
-     *
-     * @param EmbeddedTag|Tag $tag
-     *
-     * @return array|object|null
      */
-    public function findOneWithoutTag($tag)
+    public function findOneWithoutTag(TagInterface $tag)
     {
         $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithTag($tag);
 
@@ -264,7 +251,7 @@ class SeriesRepository extends DocumentRepository
         ;
     }
 
-    public function findWithTagAndSeriesType(Tag $tag, SeriesType $seriesType, array $sort = [], int $limit = 0, int $page = 0)
+    public function findWithTagAndSeriesType(TagInterface $tag, SeriesType $seriesType, array $sort = [], int $limit = 0, int $page = 0)
     {
         $qb = $this->createBuilderWithTagAndSeriesType($tag, $seriesType, $sort);
 

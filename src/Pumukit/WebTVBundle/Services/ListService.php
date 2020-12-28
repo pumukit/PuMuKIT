@@ -99,6 +99,7 @@ class ListService
                 }
 
                 break;
+
             case 'date':
                 $sortField = 'public_date';
                 $series = $seriesRepository->findBy($criteria, [$sortField => -1]);
@@ -131,6 +132,7 @@ class ListService
                 );
 
                 break;
+
             case 'tags':
                 $p_cod = $parentTag;
                 $parentTag = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => $p_cod]);

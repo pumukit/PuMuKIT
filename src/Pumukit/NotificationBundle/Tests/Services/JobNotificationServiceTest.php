@@ -25,8 +25,8 @@ class JobNotificationServiceTest extends PumukitTestCase
         parent::setUp();
         $this->containerHelper = self::$kernel->getContainer();
 
-        if (!array_key_exists('PumukitNotificationBundle', $this->containerHelper->getParameter('kernel.bundles')) ||
-            false === $this->containerHelper->getParameter('pumukit_notification.enable')) {
+        if (!array_key_exists('PumukitNotificationBundle', $this->containerHelper->getParameter('kernel.bundles'))
+            || false === $this->containerHelper->getParameter('pumukit_notification.enable')) {
             static::markTestSkipped('NotificationBundle is not installed');
         }
 

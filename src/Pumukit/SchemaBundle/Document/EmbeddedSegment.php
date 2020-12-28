@@ -37,7 +37,7 @@ class EmbeddedSegment
     private $relevance;
 
     /**
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      */
     private $hit;
 
