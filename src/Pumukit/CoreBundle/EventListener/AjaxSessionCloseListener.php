@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\CoreBundle\EventListener;
 
 use Symfony\Component\HttpFoundation\Session\SessionInterface;

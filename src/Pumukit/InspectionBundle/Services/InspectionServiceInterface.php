@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\InspectionBundle\Services;
 
 use Pumukit\SchemaBundle\Document\Track;

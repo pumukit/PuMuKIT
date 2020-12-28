@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\SchemaBundle\Utils\Pagerfanta\Adapter;
 
 use Doctrine\ODM\MongoDB\Query\Builder;

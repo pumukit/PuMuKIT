@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\NewAdminBundle\Form\Type\Base;
 
 use Symfony\Component\Form\AbstractType;

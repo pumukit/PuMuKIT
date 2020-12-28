@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\StatsBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\DocumentManager;

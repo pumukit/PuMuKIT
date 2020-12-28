@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\NewAdminBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;

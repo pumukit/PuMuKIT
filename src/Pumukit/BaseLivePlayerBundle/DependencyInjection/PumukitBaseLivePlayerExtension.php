@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\BaseLivePlayerBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\StatsBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;

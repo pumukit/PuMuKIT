@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\WebTVBundle\Controller;
 
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
