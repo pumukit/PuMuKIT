@@ -172,9 +172,13 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $role_hand = $this->createRole('Hand');
 
         $mm1 = $this->createMultimediaObjectAssignedToSeries('MmObject 1', $series_main);
+        $mm1->setStatus(MultimediaObject::STATUS_PUBLISHED);
         $mm2 = $this->createMultimediaObjectAssignedToSeries('MmObject 2', $series_wall);
+        $mm2->setStatus(MultimediaObject::STATUS_PUBLISHED);
         $mm3 = $this->createMultimediaObjectAssignedToSeries('MmObject 3', $series_main);
+        $mm3->setStatus(MultimediaObject::STATUS_PUBLISHED);
         $mm4 = $this->createMultimediaObjectAssignedToSeries('MmObject 4', $series_lhazar);
+        $mm4->setStatus(MultimediaObject::STATUS_PUBLISHED);
 
         $mm1->addPersonWithRole($person_ned, $role_lord);
         $mm2->addPersonWithRole($person_benjen, $role_ranger);
@@ -452,6 +456,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
 
         $mm = new MultimediaObject();
         $mm->setNumericalID(2);
+        $mm->setStatus(MultimediaObject::STATUS_PUBLISHED);
         $this->dm->persist($mm);
         $this->dm->flush();
 
@@ -475,6 +480,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
 
         $mm2 = new MultimediaObject();
         $mm2->setNumericalID(3);
+        $mm2->setStatus(MultimediaObject::STATUS_PUBLISHED);
         $this->dm->persist($mm2);
         $this->dm->flush();
 
@@ -502,7 +508,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         static::assertTrue($mm->containsPersonWithRole($personKate, $roleActor));
         static::assertTrue($mm->containsPersonWithRole($personKate, $rolePresenter));
         static::assertFalse($mm->containsPersonWithRole($personKate, $roleDirector));
-        static::assertCount(1, $mm->getPeople());
+        static::assertCount(2, $mm->getPeople());
 
         $mm->addPersonWithRole($personKate, $roleDirector);
         $this->dm->persist($mm);
@@ -513,7 +519,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         static::assertTrue($mm->containsPersonWithRole($personKate, $roleDirector));
         static::assertTrue($mm->containsPersonWithAllRoles($personKate, [$roleActor, $rolePresenter, $roleDirector]));
         static::assertTrue($mm->containsPersonWithAnyRole($personKate, [$roleActor, $rolePresenter, $roleDirector]));
-        static::assertCount(1, $mm->getPeople());
+        static::assertCount(3, $mm->getPeople());
 
         $mm->addPersonWithRole($personLucy, $roleDirector);
         $this->dm->persist($mm);
@@ -526,14 +532,14 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         static::assertFalse($mm->containsPersonWithRole($personLucy, $roleActor));
         static::assertFalse($mm->containsPersonWithRole($personLucy, $rolePresenter));
         static::assertTrue($mm->containsPersonWithRole($personLucy, $roleDirector));
-        static::assertCount(2, $mm->getPeople());
+        static::assertCount(4, $mm->getPeople());
 
-        static::assertCount(2, $mm->getPeopleByRole(null, false));
+        static::assertCount(4, $mm->getPeopleByRole(null, false));
         $mm->getEmbeddedRole($roleDirector)->setDisplay(false);
         $this->dm->persist($mm);
         $this->dm->flush();
-        static::assertCount(2, $mm->getPeopleByRole(null, true));
-        static::assertCount(1, $mm->getPeopleByRole(null, false));
+        static::assertCount(4, $mm->getPeopleByRole(null, true));
+        static::assertCount(2, $mm->getPeopleByRole(null, false));
         $mm->getEmbeddedRole($roleDirector)->setDisplay(true);
         $this->dm->persist($mm);
         $this->dm->flush();
@@ -592,7 +598,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         static::assertFalse($mm->containsPersonWithRole($personLucy, $roleActor));
         static::assertFalse($mm->containsPersonWithRole($personLucy, $rolePresenter));
         static::assertTrue($mm->containsPersonWithRole($personLucy, $roleDirector));
-        static::assertCount(2, $mm->getPeople());
+        static::assertCount(3, $mm->getPeople());
 
         static::assertTrue($mm->removePersonWithRole($personLucy, $roleDirector));
         $this->dm->persist($mm);
@@ -605,7 +611,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         static::assertFalse($mm->containsPersonWithRole($personLucy, $roleActor));
         static::assertFalse($mm->containsPersonWithRole($personLucy, $rolePresenter));
         static::assertFalse($mm->containsPersonWithRole($personLucy, $roleDirector));
-        static::assertCount(1, $mm->getPeople());
+        static::assertCount(2, $mm->getPeople());
 
         static::assertTrue($mm->removePersonWithRole($personKate, $roleDirector));
         $this->dm->persist($mm);
@@ -1830,9 +1836,14 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->dm->flush();
 
         $mm1 = $this->createMultimediaObjectAssignedToSeries('mm1', $series1);
+        $mm1->setStatus(MultimediaObject::STATUS_PUBLISHED);
         $mm2 = $this->createMultimediaObjectAssignedToSeries('mm2', $series1);
+        $mm2->setStatus(MultimediaObject::STATUS_PUBLISHED);
         $mm3 = $this->createMultimediaObjectAssignedToSeries('mm3', $series2);
+        $mm3->setStatus(MultimediaObject::STATUS_PUBLISHED);
         $mm4 = $this->createMultimediaObjectAssignedToSeries('mm4', $series3);
+        $mm4->setStatus(MultimediaObject::STATUS_PUBLISHED);
+        $this->dm->flush();
 
         static::assertEquals(4, $this->repo->count());
         static::assertEquals(492, $this->repo->countDuration());

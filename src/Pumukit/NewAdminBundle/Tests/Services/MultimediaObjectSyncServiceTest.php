@@ -103,6 +103,7 @@ class MultimediaObjectSyncServiceTest extends PumukitTestCase
         // Add publishing decision
         $tag = new Tag();
         $tag->setCod('PUBDECISIONS');
+        $tag->setPath('ROOT|PUBDECISIONS');
         $tag->setMetatag(true);
         $tag->setDisplay(true);
         $tag->setTitle('title', 'es');
@@ -110,6 +111,7 @@ class MultimediaObjectSyncServiceTest extends PumukitTestCase
 
         $tag2 = new Tag();
         $tag2->setCod('other_pub_decision');
+        $tag2->setPath('ROOT|other_pub_decision');
         $tag2->setMetatag(false);
         $tag2->setDisplay(true);
         $tag2->setTitle('title', 'es');
@@ -119,6 +121,7 @@ class MultimediaObjectSyncServiceTest extends PumukitTestCase
         // Add unesco tag
         $tagUNESCO = new Tag();
         $tagUNESCO->setCod('UNESCO');
+        $tagUNESCO->setPath('ROOT|UNESCO');
         $tagUNESCO->setMetatag(true);
         $tagUNESCO->setDisplay(true);
         $tagUNESCO->setTitle('UNESCO', 'es');
@@ -126,6 +129,7 @@ class MultimediaObjectSyncServiceTest extends PumukitTestCase
 
         $tag3 = new Tag();
         $tag3->setCod('science');
+        $tag3->setPath('ROOT|science');
         $tag3->setMetatag(false);
         $tag3->setDisplay(true);
         $tag3->setTitle('Science', 'es');

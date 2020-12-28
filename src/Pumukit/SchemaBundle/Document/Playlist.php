@@ -54,7 +54,7 @@ class Playlist
         $this->multimedia_objects->remove($pos);
     }
 
-    public function getMultimediaObjects(): ArrayCollection
+    public function getMultimediaObjects()
     {
         return $this->multimedia_objects;
     }

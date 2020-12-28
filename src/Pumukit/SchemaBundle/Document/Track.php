@@ -137,12 +137,12 @@ class Track extends Element
         return $this->bitrate;
     }
 
-    public function setFramerate($framerate): void
+    public function setFramerate(?string $framerate): void
     {
         $this->framerate = $framerate;
     }
 
-    public function getFramerate()
+    public function getFramerate(): ?string
     {
         return $this->framerate;
     }

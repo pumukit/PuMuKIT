@@ -336,6 +336,11 @@ class Tag implements TagInterface
         return $this->path;
     }
 
+    public function setPath(?string $path): void
+    {
+        $this->path = $path;
+    }
+
     public function getLockTime()
     {
         return $this->lockTime;
