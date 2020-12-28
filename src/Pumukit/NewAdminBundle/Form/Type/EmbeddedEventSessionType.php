@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\NewAdminBundle\Form\Type;
 
 use Pumukit\NewAdminBundle\Form\Type\Other\Html5dateType;

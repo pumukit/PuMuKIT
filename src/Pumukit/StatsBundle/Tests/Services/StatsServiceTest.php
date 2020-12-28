@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\StatsBundle\Tests\Services;
 
 use Pumukit\CoreBundle\Tests\PumukitTestCase;

@@ -1,7 +1,5 @@
 <?php
-
 declare(strict_types=1);
-
 namespace Pumukit\SchemaBundle\Event;
 
 use FOS\UserBundle\Model\UserInterface;

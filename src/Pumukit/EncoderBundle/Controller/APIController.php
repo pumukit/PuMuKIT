@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\EncoderBundle\Controller;
 
 use Pumukit\EncoderBundle\Services\CpuService;

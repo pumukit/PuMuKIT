@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\EncoderBundle\Tests\Executor;
 
 use Pumukit\EncoderBundle\Executor\LocalExecutor;

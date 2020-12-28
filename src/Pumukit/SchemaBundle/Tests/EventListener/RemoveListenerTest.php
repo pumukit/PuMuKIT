@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\SchemaBundle\Tests\EventListener;
 
 use Psr\Log\LoggerInterface;

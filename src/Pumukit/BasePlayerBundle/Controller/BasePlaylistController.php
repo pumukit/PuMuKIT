@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\BasePlayerBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;

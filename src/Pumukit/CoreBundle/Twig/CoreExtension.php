@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\CoreBundle\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;

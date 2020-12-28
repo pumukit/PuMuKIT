@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\StatsBundle\Repository;
 
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\WizardBundle\Event;
 
 final class WizardEvents

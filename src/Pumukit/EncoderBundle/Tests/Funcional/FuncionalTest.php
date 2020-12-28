@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\EncoderBundle\Tests\Funcional;
 
 use Monolog\Handler\StreamHandler;

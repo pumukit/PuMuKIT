@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\WebTVBundle\Twig;
 
 use MongoDB\BSON\UTCDateTime;

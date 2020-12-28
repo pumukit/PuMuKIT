@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\SchemaBundle\Repository;
 
 use Gedmo\Tree\Document\MongoDB\Repository\MaterializedPathRepository;

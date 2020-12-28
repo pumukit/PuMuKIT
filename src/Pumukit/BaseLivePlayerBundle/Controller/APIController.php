@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\BaseLivePlayerBundle\Controller;
 
 use Pumukit\BaseLivePlayerBundle\Services\APIService;

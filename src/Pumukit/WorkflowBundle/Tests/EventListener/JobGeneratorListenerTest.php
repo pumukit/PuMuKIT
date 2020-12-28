@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\WorkflowBundle\Tests\EventListener;
 
 use Doctrine\Common\Annotations\Annotation\IgnoreAnnotation;

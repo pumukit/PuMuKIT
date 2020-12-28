@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\CoreBundle\Services;
 
 use Symfony\Bundle\TwigBundle\Loader\FilesystemLoader as BaseFilesystemLoader;

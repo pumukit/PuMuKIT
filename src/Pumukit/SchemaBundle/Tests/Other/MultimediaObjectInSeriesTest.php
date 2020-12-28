@@ -1,5 +1,6 @@
 <?php
-/**
+
+declare(strict_types=1); /**
  * This test signs a bug in 'doctrine/mongodb-odm'. The bug is similar to #981.
  * Pumukit has the next workaround while the bug is not fixed:.
  *
