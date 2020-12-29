@@ -15,16 +15,13 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Docker up
-        run:  make up
+        run:  make up2
 
       - name: Wait for the environment
         run:  sleep 15
 
       - name: Docker ps
         run:  make ps
-
-      - name: Docker logs
-        run:  make logs
 
       - name: Validate composer.json and composer.lock
         run:  make composer-validate

@@ -28,6 +28,9 @@ dynamic_docker_php_name := $(shell echo $(notdir $(shell pwd) | tr A-Z a-z))_php
 up:
 	docker-compose up --build -d
 
+up2:
+	docker-compose up --build
+
 start:
 	docker-compose start
 
