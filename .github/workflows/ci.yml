@@ -14,6 +14,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Docker build
+        run: make build
+
       - name: Docker up
         run:  make up
 
