@@ -26,7 +26,7 @@ current-dir := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 dynamic_docker_php_name := $(shell echo $(notdir $(shell pwd) | tr A-Z a-z))_php_1
 
 up:
-	docker-compose up -d
+	docker-compose up --build -d
 
 start:
 	docker-compose start
