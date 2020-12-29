@@ -20,6 +20,9 @@ jobs:
       - name: Wait for the environment
         run:  sleep 15
 
+      - name: Docker ps
+        run:  make ps
+
       - name: Validate composer.json and composer.lock
         run:  make composer-validate
 
