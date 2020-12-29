@@ -94,7 +94,7 @@ EOT
         $this->file = $input->getArgument('file');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $result = [];
 
@@ -243,8 +243,12 @@ EOT
         return $root;
     }
 
-    protected function createFromFile(string $fileRoute, TagInterface $root): array
+    protected function createFromFile($fileRoute, TagInterface $root): array
     {
+        if (!is_string($fileRoute)) {
+            $fileRoute = $fileRoute->getPathname();
+        }
+
         $fileWasValidated = $this->validateFile($fileRoute);
         if (!$fileWasValidated['status']) {
             return [$fileRoute => $fileWasValidated['message']];
@@ -325,8 +329,8 @@ EOT
     {
         $tag = new Tag();
         $tag->setCod($csvTagsArray['cod']);
-        $tag->setMetatag($csvTagsArray['metatag']);
-        $tag->setDisplay($csvTagsArray['display']);
+        $tag->setMetatag((bool) $csvTagsArray['metatag']);
+        $tag->setDisplay((bool) $csvTagsArray['display']);
         if ($tag_parent) {
             $tag->setParent($tag_parent);
         }
@@ -358,7 +362,7 @@ EOT
 
         $role->setCod($csvTagsArray['cod']);
         $role->setXml($csvTagsArray['xml']);
-        $role->setDisplay($csvTagsArray['display']);
+        $role->setDisplay((bool) $csvTagsArray['display']);
 
         foreach ($this->locales as $locale) {
             $key_name = 'name_'.$locale;
@@ -388,8 +392,8 @@ EOT
         $permissionProfile = new PermissionProfile();
 
         $permissionProfile->setName($permissionProfileArray[1]);
-        $permissionProfile->setSystem($permissionProfileArray[2]);
-        $permissionProfile->setDefault($permissionProfileArray[3]);
+        $permissionProfile->setSystem((bool) $permissionProfileArray[2]);
+        $permissionProfile->setDefault((bool) $permissionProfileArray[3]);
         if ((PermissionProfile::SCOPE_GLOBAL === $permissionProfileArray[4])
             || (PermissionProfile::SCOPE_PERSONAL === $permissionProfileArray[4])
             || (PermissionProfile::SCOPE_NONE === $permissionProfileArray[4])) {
@@ -432,7 +436,15 @@ EOT
 
     private function isEmptyFile(Finder $finder): bool
     {
-        return 0 === strcmp($this->file, '') && 0 === $finder->count();
+        if ($finder->count() > 0) {
+            return false;
+        }
+
+        if (!isset($this->file) || 0 !== strcmp($this->file, '')) {
+            return false;
+        }
+
+        return true;
     }
 
     private function validateFile(string $fileRoute): array
