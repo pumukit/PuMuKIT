@@ -23,6 +23,8 @@ help:
 
 current-dir := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
+dynamic_docker_php_name := $(shell echo $(notdir $(shell pwd) | tr A-Z a-z))_php_1
+
 up:
 	docker-compose up -d
 
@@ -57,34 +59,33 @@ cc: cc-envs ai
 composer-install: CMD=install
 composer-update: CMD=update
 composer-install composer-update:
-	@docker run --rm --interactive --volume $(current-dir):/app --user $(id -u):$(id -g) \
-		clevyr/prestissimo composer $(CMD)
+	docker-compose -f docker-compose.yml exec php composer $(CMD)
 
 composer-validate:
-	docker-compose exec -T php composer validate
+	docker-compose -f docker-compose.yml exec php composer validate
 
 fixtures:
-	docker-compose exec -T php bin/console pumukit:init:repo all --force
+	docker-compose -f docker-compose.yml exec php bin/console pumukit:init:repo all --force
 
 test-all: test test-lint-yaml test-lint-twig test-lint-generic test-php-cs-fixer test-php-stan
 
 test:
-	docker-compose exec -T php composer tests
+	docker-compose -f docker-compose.yml exec php composer tests
 
 test-lint-yaml:
-	docker-compose exec -T php composer lint-yaml
+	docker-compose -f docker-compose.yml exec php composer lint-yaml
 
 test-lint-twig:
-	docker-compose exec -T php composer lint-twig
+	docker-compose -f docker-compose.yml exec php composer lint-twig
 
 test-lint-generic:
-	docker-compose exec -T php composer lint-generic
+	docker-compose -f docker-compose.yml exec php composer lint-generic
 
 test-php-cs-fixer:
-	docker-compose exec -T php composer php-cs-fixer
+	docker-compose -f docker-compose.yml exec php composer php-cs-fixer
 
 test-php-stan:
-	docker-compose exec -T php composer php-stan
+	docker-compose -f docker-compose.yml exec php composer php-stan
 
 shell:
 	docker-compose exec php sh
