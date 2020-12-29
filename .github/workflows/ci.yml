@@ -23,6 +23,9 @@ jobs:
       - name: Docker ps
         run:  make ps
 
+      - name: Docker logs
+        run:  make logs
+
       - name: Validate composer.json and composer.lock
         run:  make composer-validate
 
