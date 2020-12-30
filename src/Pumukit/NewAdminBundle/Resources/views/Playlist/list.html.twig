@@ -76,8 +76,9 @@
                         <div class="col-md-6 text-right">
                             <div class="pagerfanta">
                                 {% set sorting = {('sorting[' ~ (app.session.get('admin/playlist/sort')) ~ ']') : (app.session.get('admin/playlist/type')) } %}
-                                {{ pagerfanta(series, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_playlist_index", "routeParams": sorting}) }}
-
+                                {% set pagerClass = 'twitter_bootstrap3' %}
+                                {% set pagerStyles = {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_playlist_index", "routeParams": sorting} %}
+                                {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects' : series, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles} %}
                                 {% if not is_naked() %}
                                     <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_playlist_index') }}' + '?page=1&paginate=' + this.value" aria-label="{% trans %}Select the number of playlists to display per page.{% endtrans %}">
                                         <option {% if series.maxPerPage == 10 %}selected{% endif %} value="10">

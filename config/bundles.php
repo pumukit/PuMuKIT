@@ -31,4 +31,5 @@ return [
     Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
     ApiPlatform\Core\Bridge\Symfony\Bundle\ApiPlatformBundle::class => ['all' => true],
     Pumukit\StatsUIBundle\PumukitStatsUIBundle::class => ['all' => true],
+    BabDev\PagerfantaBundle\BabDevPagerfantaBundle::class => ['all' => true]
 ];

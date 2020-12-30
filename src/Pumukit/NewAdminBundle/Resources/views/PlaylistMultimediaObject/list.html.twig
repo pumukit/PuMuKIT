@@ -134,8 +134,9 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="pagerfanta">
-                            {{ pagerfanta(mms, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;",
-                                "routeParams": {"id": playlist.id}, "routeName": "pumukitnewadmin_playlistmms_index"}) }}
+                            {% set pagerClass = 'twitter_bootstrap3' %}
+                            {% set pagerStyles = {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeParams": {"id": playlist.id}, "routeName": "pumukitnewadmin_playlistmms_index"} %}
+                            {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects' : mms, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles} %}
 
                             {% if not is_naked() %}
                                 <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_playlistmms_index') }}' + '?page=1&paginate=' + this.value" aria-label="{% trans %}Select the number of playlists to display per page.{% endtrans %}">

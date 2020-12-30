@@ -112,8 +112,9 @@
                        </div>
                        <div class="col-md-4 text-right">
                             <div class="pagerfanta">
-                                {{ pagerfanta(multimediaObjects, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukit_new_admin_live_event_index"}) }}
-
+                                {% set pagerClass = 'twitter_bootstrap3' %}
+                                {% set pagerStyles = {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukit_new_admin_live_event_index"} %}
+                                {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects' : multimediaObjects, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles} %}
                                 <input title="{% trans %}Go to page{% endtrans %}" type="number"
                                        style="width: 25px;text-align:center;cursor:pointer;"
                                        value="{{ multimediaObjects.getCurrentPage() }}"

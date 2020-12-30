@@ -63,9 +63,11 @@
           </div>
           <div class="col-md-4 text-right">
             <div class="pagerfanta">
-              {{ pagerfanta(jobs.jobs, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm",
-              "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukit_encoder_info",
-              "pageParameter": pageParameter, "routeParams": app.request.query.all}) }}
+                {% set pagerClass = 'twitter_bootstrap3' %}
+                {% set pagerStyles = {"css_container_class": "pagination pagination-sm",
+                    "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukit_encoder_info",
+                    "pageParameter": pageParameter, "routeParams": app.request.query.all} %}
+                {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects': jobs.jobs, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles } %}
             </div>
           </div>
         </div>

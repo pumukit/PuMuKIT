@@ -44,8 +44,9 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="pagerfanta">
-                            {{ pagerfanta(mms, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;",
-                                "routeName": "pumukitnewadmin_unesco_index"}) }}
+                            {% set pagerClass = 'twitter_bootstrap3'  %}
+                            {% set pagerStyles = {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_unesco_index"} %}
+                            {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects' : mms, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles} %}
                             {% if not is_naked() %}
                             <input title="{% trans %}Go to page{% endtrans %}" type="number"
                                    style="width: 25px;text-align:center;cursor:pointer;"

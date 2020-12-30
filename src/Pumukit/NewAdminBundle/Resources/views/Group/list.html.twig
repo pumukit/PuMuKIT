@@ -82,7 +82,10 @@
             <div class="col-md-4 text-right">
               <div class="pagerfanta">
                 {% set sorting = {('sorting[' ~ (app.session.get('admin/group/sort')) ~ ']') : (app.session.get('admin/group/type')) } %}
-                {{ pagerfanta(groups, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_group_index", "routeParams": sorting}) }}
+
+                  {% set pagerClass = 'twitter_bootstrap3' %}
+                  {% set pagerStyles = {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_group_index", "routeParams": sorting} %}
+                  {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects' : groups, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles} %}
               </div>
             </div>
         </td>

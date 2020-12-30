@@ -101,7 +101,10 @@
             </div>
             <div class="col-md-4 text-right">
               <div class="pagerfanta">
-                {{ pagerfanta(users, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_user_index"}) }}
+                  {% set pagerClass = 'twitter_bootstrap3' %}
+                  {% set pagerStyles = {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_user_index"} %}
+                  {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects' : users, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles} %}
+
               </div>
             </div>
           </td>
