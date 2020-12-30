@@ -88,7 +88,7 @@ test-php-stan:
 	docker-compose -f docker-compose.yml run --service-ports php composer php-stan
 
 shell:
-	docker-compose run --service-ports php sh
+	docker-compose -f docker-compose.yml run --service-ports php sh
 
 ps:
 	docker-compose ps

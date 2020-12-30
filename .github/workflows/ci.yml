@@ -34,6 +34,7 @@ jobs:
               make test-lint-yaml
               make test-lint-twig
               make test-lint-generic
+
       - name: PHPCSFixer
         run:  make test-php-cs-fixer
 
