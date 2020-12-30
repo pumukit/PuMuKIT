@@ -62,7 +62,7 @@ composer-install composer-update:
 	docker-compose -f docker-compose.yml exec php composer $(CMD)
 
 composer-validate:
-	docker-compose -f docker-compose.yml exec php composer validate
+	docker-compose -f docker-compose.yml run --service-ports php composer validate
 
 fixtures:
 	docker-compose -f docker-compose.yml exec php bin/console pumukit:init:repo all --force
