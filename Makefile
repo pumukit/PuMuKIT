@@ -47,11 +47,11 @@ build:
 	docker-compose build
 
 cc-envs:
-	docker-compose exec php bin/console c:c
-	docker-compose exec php bin/console c:c --env=prod
+	docker-compose -f docker-compose.yml run --service-ports php bin/console c:c
+	docker-compose -f docker-compose.yml run --service-ports php bin/console c:c --env=prod
 
 ai:
-	docker-compose exec php bin/console a:i --symlink --relative
+	docker-compose -f docker-compose.yml run --service-ports php bin/console a:i --symlink --relative
 
 cc: cc-envs ai
 
@@ -59,36 +59,36 @@ cc: cc-envs ai
 composer-install: CMD=install
 composer-update: CMD=update
 composer-install composer-update:
-	docker-compose -f docker-compose.yml exec php composer $(CMD)
+	docker-compose -f docker-compose.yml run --service-ports php composer $(CMD)
 
 composer-validate:
 	docker-compose -f docker-compose.yml run --service-ports php composer validate
 
 fixtures:
-	docker-compose -f docker-compose.yml exec php bin/console pumukit:init:repo all --force
+	docker-compose -f docker-compose.yml run --service-ports php bin/console pumukit:init:repo all --force
 
 test-all: test test-lint-yaml test-lint-twig test-lint-generic test-php-cs-fixer test-php-stan
 
 test:
-	docker-compose -f docker-compose.yml exec php composer tests
+	docker-compose -f docker-compose.yml run --service-ports php composer tests
 
 test-lint-yaml:
-	docker-compose -f docker-compose.yml exec php composer lint-yaml
+	docker-compose -f docker-compose.yml run --service-ports php composer lint-yaml
 
 test-lint-twig:
-	docker-compose -f docker-compose.yml exec php composer lint-twig
+	docker-compose -f docker-compose.yml run --service-ports php composer lint-twig
 
 test-lint-generic:
-	docker-compose -f docker-compose.yml exec php composer lint-generic
+	docker-compose -f docker-compose.yml run --service-ports php composer lint-generic
 
 test-php-cs-fixer:
-	docker-compose -f docker-compose.yml exec php composer php-cs-fixer
+	docker-compose -f docker-compose.yml run --service-ports php composer php-cs-fixer
 
 test-php-stan:
-	docker-compose -f docker-compose.yml exec php composer php-stan
+	docker-compose -f docker-compose.yml run --service-ports php composer php-stan
 
 shell:
-	docker-compose exec php sh
+	docker-compose run --service-ports php sh
 
 ps:
 	docker-compose ps
