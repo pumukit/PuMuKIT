@@ -38,7 +38,7 @@ class MaterialTest extends TestCase
         static::assertEquals($url, $material->getUrl());
         static::assertEquals($path, $material->getPath());
         static::assertEquals($mime, $material->getMimeType());
-        static::assertFalse($hide, $material->getHide());
+        static::assertFalse($material->getHide());
         static::assertEquals($language, $material->getLanguage());
 
         $name = null;

@@ -64,12 +64,12 @@ class TrackTest extends TestCase
         static::assertEquals($vcodec, $track->getVcodec());
         static::assertEquals($bitrate, $track->getBitrate());
         static::assertEquals($framerate, $track->getFramerate());
-        static::assertFalse($only_audio, $track->getOnlyAudio());
+        static::assertFalse($track->getOnlyAudio());
         static::assertEquals($channels, $track->getChannels());
         static::assertEquals($duration, $track->getDuration());
         static::assertEquals($width, $track->getWidth());
         static::assertEquals($height, $track->getHeight());
-        static::assertFalse($hide, $track->getHide());
+        static::assertFalse($track->getHide());
         static::assertEquals($numview, $track->getNumview());
         static::assertEquals($resolution, $track->getResolution());
     }

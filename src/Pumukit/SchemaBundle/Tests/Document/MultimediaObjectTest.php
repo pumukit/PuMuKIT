@@ -456,7 +456,7 @@ class MultimediaObjectTest extends TestCase
         $title = 'title';
         $description = 'description';
         $slug = 'slug';
-        $cod = 23;
+        $cod = '23';
         $metatag = true;
         $created = new \DateTime('now');
         $updated = new \DateTime('now');

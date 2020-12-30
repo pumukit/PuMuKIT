@@ -285,7 +285,7 @@ class StatsServiceTest extends PumukitTestCase
         $tags = [];
         foreach ($list as $i => $mm) {
             $tag = new Tag();
-            $tag->setCod($i);
+            $tag->setCod((string) $i);
             $this->dm->persist($tag);
             $tags[$i] = $tag;
         }

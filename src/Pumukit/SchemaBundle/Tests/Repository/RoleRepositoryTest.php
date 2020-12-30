@@ -34,7 +34,7 @@ class RoleRepositoryTest extends PumukitTestCase
 
     public function testRepository()
     {
-        $cod = 123;
+        $cod = '123';
         $xml = '<xml contenido del xml/>';
         $display = true;
         $name = 'rolename1';
@@ -116,7 +116,7 @@ class RoleRepositoryTest extends PumukitTestCase
     {
         $rand = rand();
 
-        $cod = $rand;
+        $cod = (string) $rand;
         $xml = "<xml contenido del xml {$rand} />";
         $name = "rolename{$rand}";
         $text = "text is {$rand}";
