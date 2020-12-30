@@ -1539,12 +1539,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/teltek/FOSUserBundle.git",
-                "reference": "f5e72d898855649688de778bbed1fb0912f0db7d"
+                "reference": "a0aa8f250b0ec1f04a4bb8b2d628c675107cf5f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teltek/FOSUserBundle/zipball/f5e72d898855649688de778bbed1fb0912f0db7d",
-                "reference": "f5e72d898855649688de778bbed1fb0912f0db7d",
+                "url": "https://api.github.com/repos/teltek/FOSUserBundle/zipball/a0aa8f250b0ec1f04a4bb8b2d628c675107cf5f6",
+                "reference": "a0aa8f250b0ec1f04a4bb8b2d628c675107cf5f6",
                 "shasum": ""
             },
             "require": {
@@ -1617,7 +1617,7 @@
                 "docs": "https://symfony.com/doc/master/bundles/FOSUserBundle/index.html",
                 "source": "https://github.com/teltek/FOSUserBundle/tree/master"
             },
-            "time": "2020-12-29T17:06:16+00:00"
+            "time": "2020-12-30T11:07:45+00:00"
         },
         {
             "name": "gedmo/doctrine-extensions",
