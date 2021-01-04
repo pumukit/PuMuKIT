@@ -1,0 +1,48 @@
+name: Code validation
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        php-versions: ['7.4']
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Docker build
+        run: make build
+
+      - name: Docker up
+        run:  make up
+
+      - name: Wait for the environment
+        run:  sleep 15
+
+      - name: Docker ps
+        run:  make ps
+
+      - name: Validate composer.json and composer.lock
+        run:  make composer-validate
+
+      - name: Lints
+        run:  |
+              make test-lint-yaml
+              make test-lint-twig
+              make test-lint-generic
+
+      - name: PHPCSFixer
+        run:  make test-php-cs-fixer
+
+      - name: PHPStan
+        run:  make test-php-stan
+
+      - name: Test
+        run:  make test
+
+      - name: Fixtures
+        run:  make fixtures

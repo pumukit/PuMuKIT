@@ -27,6 +27,9 @@ class PasswordUpdater implements PasswordUpdaterInterface
     public function hashPassword(UserInterface $user)
     {
         $plainPassword = $user->getPlainPassword();
+        if (!$plainPassword) {
+            return;
+        }
 
         if (0 === strlen($plainPassword)) {
             return;

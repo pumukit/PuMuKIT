@@ -70,7 +70,7 @@ class PicExtractorService
             $num = (int) $numframe;
         }
 
-        $this->createPic($multimediaObject, $track, $num);
+        $this->createPic($multimediaObject, $track, (int) $num);
 
         return 'Captured the FRAME '.$num.' as image.';
     }

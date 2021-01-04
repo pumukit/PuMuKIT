@@ -81,6 +81,9 @@ class MultimediaObjectPicService
     public function addPicUrl(MultimediaObject $multimediaObject, $picUrl, $flush = true, $isEventPoster = false)
     {
         $pic = new Pic();
+        if (!is_string($picUrl)) {
+            $picUrl = $picUrl->getUrl();
+        }
         $pic->setUrl($picUrl);
         if ($isEventPoster) {
             $pic = $this->updatePosterTag($multimediaObject, $pic);
@@ -120,6 +123,10 @@ class MultimediaObjectPicService
 
         $pic = new Pic();
         $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
+
+        if (!is_string($path)) {
+            $path = $path->getPathname();
+        }
         $pic->setPath($path);
 
         if ($isEventPoster) {

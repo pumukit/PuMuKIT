@@ -38,7 +38,7 @@ class ElementTest extends TestCase
         static::assertEquals($url, $element->getUrl());
         static::assertEquals($path, $element->getPath());
         static::assertEquals($mime, $element->getMimeType());
-        static::assertFalse($hide, $element->getHide());
+        static::assertFalse($element->getHide());
         static::assertEquals($description, $element->getDescription());
 
         $description = null;

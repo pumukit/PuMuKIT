@@ -39,7 +39,7 @@ class PlaylistTest extends WebTestCase
         $playlist->getPlaylist()->addMultimediaObject($mmobjC);
         //Nothing changes
         $oldArray = $playlist->getPlaylist()->getMultimediaObjects()->toArray();
-        static::assertFalse(false, $playlist->getPlaylist()->moveMultimediaObject(123, 123));
+        static::assertFalse($playlist->getPlaylist()->moveMultimediaObject(123, 123));
         static::assertEquals($oldArray, $playlist->getPlaylist()->getMultimediaObjects()->toArray());
         //Start out of bounds (nothing changes either).
         static::assertFalse($playlist->getPlaylist()->moveMultimediaObject(-123, 0));

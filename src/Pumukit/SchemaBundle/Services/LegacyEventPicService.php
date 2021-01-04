@@ -63,7 +63,7 @@ class LegacyEventPicService
 
         $pic = new Pic();
         $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
-        $pic->setPath($path);
+        $pic->setPath($path->getPathname());
 
         $event->setPic($pic);
         $this->dm->persist($event);

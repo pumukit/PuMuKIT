@@ -225,8 +225,8 @@ class EmbeddedEventSessionService
      */
     public function findEventsToday()
     {
-        $todayStarts = mktime(00, 00, 00, date('m'), date('d'), date('Y')) * 1000;
-        $todayEnds = mktime(23, 59, 59, date('m'), date('d'), date('Y')) * 1000;
+        $todayStarts = mktime(00, 00, 00, (int) date('m'), (int) date('d'), (int) date('Y')) * 1000;
+        $todayEnds = mktime(23, 59, 59, (int) date('m'), (int) date('d'), (int) date('Y')) * 1000;
         $pipeline = $this->initPipeline();
         $pipeline[] = [
             '$match' => ['$and' => [
@@ -245,7 +245,7 @@ class EmbeddedEventSessionService
      */
     public function findNextEvents()
     {
-        $todayEnds = mktime(23, 59, 59, date('m'), date('d'), date('Y')) * 1000;
+        $todayEnds = mktime(23, 59, 59, (int) date('m'), (int) date('d'), (int) date('Y')) * 1000;
         $pipeline = $this->initPipeline();
         $pipeline[] = [
             '$match' => [

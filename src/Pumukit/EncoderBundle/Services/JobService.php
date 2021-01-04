@@ -108,6 +108,9 @@ class JobService
 
         $pathFile = $trackFile->move($this->tmpPath.'/'.$multimediaObject->getId(), $trackFile->getClientOriginalName());
 
+        if (!is_string($pathFile)) {
+            $pathFile = $pathFile->getPathname();
+        }
         $this->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description, $initVars, $duration, $flags);
 
         return $multimediaObject;
