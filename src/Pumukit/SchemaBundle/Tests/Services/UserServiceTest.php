@@ -370,10 +370,10 @@ class UserServiceTest extends PumukitTestCase
         $this->dm->persist($permissionProfile2);
         $this->dm->flush();
 
-        $user1 = $this->userService->instantiate();
+        $user1 = $this->userService->instantiate('usernameTest', 'emailTest@teltek.es');
 
-        static::assertNull($user1->getUsername());
-        static::assertNull($user1->getEmail());
+        static::assertEquals('usernameTest', $user1->getUsername());
+        static::assertEquals('emailTest@teltek.es', $user1->getEmail());
         static::assertTrue($user1->isEnabled());
         static::assertNotEquals($permissionProfile1, $user1->getPermissionProfile());
         static::assertEquals($permissionProfile2, $user1->getPermissionProfile());

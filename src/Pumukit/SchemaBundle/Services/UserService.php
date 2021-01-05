@@ -96,7 +96,8 @@ class UserService
     public function create(User $user)
     {
         if (null !== ($permissionProfile = $user->getPermissionProfile())) {
-            $user = $this->setUserScope($user, null, $permissionProfile->getScope());
+            $user = $this->setUserScope($user, '', $permissionProfile->getScope());
+
             $user = $this->addRoles($user, $permissionProfile->getPermissions(), false);
         }
         $this->dm->persist($user);
@@ -308,8 +309,7 @@ class UserService
      */
     public function addUserScope(User $user, $scope = '')
     {
-        if ((!$user->hasRole($scope))
-            && (in_array($scope, array_keys(PermissionProfile::$scopeDescription)))) {
+        if (array_key_exists($scope, PermissionProfile::$scopeDescription) && !$user->hasRole($scope)) {
             $user->addRole($scope);
             $this->dm->persist($user);
             $this->dm->flush();

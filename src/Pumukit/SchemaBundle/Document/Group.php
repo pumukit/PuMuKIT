@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use FOS\UserBundle\Model\GroupInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -77,7 +76,7 @@ class Group implements GroupInterface
         return $this;
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }

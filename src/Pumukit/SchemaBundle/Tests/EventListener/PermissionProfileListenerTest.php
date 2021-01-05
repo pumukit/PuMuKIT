@@ -87,13 +87,19 @@ class PermissionProfileListenerTest extends PumukitTestCase
 
     public function testPostUpdate()
     {
+        $permissions = [Permission::ACCESS_LIVE_CHANNELS];
+
         $permissionProfile1 = new PermissionProfile();
         $permissionProfile1->setName('permissionprofile1');
+        $permissionProfile1->setPermissions($permissions);
+        $permissionProfile1->setScope(PermissionProfile::SCOPE_PERSONAL);
         $this->dm->persist($permissionProfile1);
         $this->dm->flush();
 
         $permissionProfile2 = new PermissionProfile();
         $permissionProfile2->setName('permissionprofile2');
+        $permissionProfile2->setPermissions($permissions);
+        $permissionProfile2->setScope(PermissionProfile::SCOPE_PERSONAL);
         $this->dm->persist($permissionProfile2);
         $this->dm->flush();
 

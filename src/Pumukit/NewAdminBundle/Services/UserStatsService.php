@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Pumukit\NewAdminBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use FOS\UserBundle\Model\UserInterface;
 use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\User;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserStatsService
 {

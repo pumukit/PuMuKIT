@@ -694,7 +694,7 @@ class PersonServiceTest extends PumukitTestCase
 
         $user = new User();
         $user->setUsername($username);
-        $user->setFullname($fullname);
+        $user->setFullName($fullname);
         $user->setEmail($email);
 
         $this->dm->persist($user);
@@ -726,7 +726,7 @@ class PersonServiceTest extends PumukitTestCase
 
         $user2 = new User();
         $user2->setUsername($username2);
-        $user2->setFullname($fullname2);
+        $user2->setFullName($fullname2);
         $user2->setEmail($email2);
 
         $this->dm->persist($user2);

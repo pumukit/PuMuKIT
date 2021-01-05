@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Services;
 
-use FOS\UserBundle\Model\UserInterface;
-use FOS\UserBundle\Util\PasswordUpdaterInterface;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Overide FOS\UserBundle\Util\PasswordUpdater to allow disabling the generation of a random user salt,
  * it is required to use PuMuKIT as a CAS user provider.
  */
-class PasswordUpdater implements PasswordUpdaterInterface
+class PasswordUpdater
 {
     private $encoderFactory;
     private $genUserSalt;

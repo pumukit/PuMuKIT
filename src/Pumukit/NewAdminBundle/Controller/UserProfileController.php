@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use FOS\UserBundle\Model\UserManagerInterface;
 use Pumukit\NewAdminBundle\Form\Type\UserUpdateProfileType;
 use Pumukit\NewAdminBundle\Services\UserStatsService;
 use Pumukit\SchemaBundle\Document\User;
@@ -31,9 +30,6 @@ class UserProfileController extends AbstractController
     /** @var TranslatorInterface */
     protected $translator;
 
-    /** @var UserManagerInterface */
-    protected $fosUserManager;
-
     /** @var UserService */
     protected $userService;
 
@@ -44,12 +40,10 @@ class UserProfileController extends AbstractController
         DocumentManager $documentManager,
         UserService $userService,
         TranslatorInterface $translator,
-        UserManagerInterface $fosUserManager,
         UserStatsService $userStatsService
     ) {
         $this->documentManager = $documentManager;
         $this->translator = $translator;
-        $this->fosUserManager = $fosUserManager;
         $this->userService = $userService;
         $this->userStatsService = $userStatsService;
     }
@@ -67,7 +61,7 @@ class UserProfileController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && $user->isLocal()) {
-            $this->fosUserManager->updateUser($user);
+//            $this->fosUserManager->updateUser($user);
             $this->userService->update($user);
         }
 

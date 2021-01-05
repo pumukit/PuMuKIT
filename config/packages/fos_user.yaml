@@ -1,9 +1,0 @@
-fos_user:
-  service:
-    mailer: fos_user.mailer.twig_swift
-  db_driver: mongodb
-  firewall_name: main
-  user_class: Pumukit\SchemaBundle\Document\User
-  from_email:
-    address: "pumukit_mailer"
-    sender_name: "pumukit_mailer"

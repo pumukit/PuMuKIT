@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use FOS\UserBundle\Model\UserManagerInterface;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Regex;
 use Pumukit\CoreBundle\Services\PaginationService;
@@ -35,8 +34,6 @@ class UserController extends AdminController
 
     /** @var PersonService */
     private $personService;
-    /** @var UserManagerInterface */
-    private $fosUserUserManager;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -46,12 +43,10 @@ class UserController extends AdminController
         UserService $userService,
         PersonService $personService,
         TranslatorInterface $translator,
-        SessionInterface $session,
-        UserManagerInterface $fosUserUserManager
+        SessionInterface $session
     ) {
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
         $this->personService = $personService;
-        $this->fosUserUserManager = $fosUserUserManager;
     }
 
     /**
@@ -97,8 +92,6 @@ class UserController extends AdminController
 
     public function updateAction(Request $request)
     {
-        $userManager = $this->fosUserUserManager;
-
         $user = $this->findOr404($request);
 
         $locale = $request->getLocale();
@@ -116,7 +109,7 @@ class UserController extends AdminController
                             return $response;
                         }
                         // false to not flush
-                        $userManager->updateUser($user);
+//                        $userManager->updateUser($user);
                         // To update aditional fields added
                         $this->userService->update($user);
                     }
