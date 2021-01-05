@@ -38,6 +38,7 @@ class UserProfileController extends AbstractController
         $this->documentManager = $documentManager;
         $this->translator = $translator;
         $this->updateUserService = $updateUserService;
+
         $this->userStatsService = $userStatsService;
     }
 
