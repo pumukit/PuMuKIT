@@ -1261,7 +1261,7 @@ $(document).ajaxSuccess(function() {
 
 $(document).ajaxError(function(event, xhr, settings) {
   if (403 == xhr.status) {
-    window.location.href = window.location.href;  // "{{ path('fos_user_security_login') }}";
+    window.location.href = window.location.href;
   }
 });
 

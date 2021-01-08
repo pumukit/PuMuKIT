@@ -1,0 +1,4 @@
+pumukit_user:
+    resource: "@PumukitUserBundle/Controller/"
+    type:     annotation
+    prefix:   /

@@ -16,6 +16,7 @@ use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\GroupService;
 use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Services\UserService;
+use Pumukit\UserBundle\Services\CreateUserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -34,6 +35,7 @@ class UserController extends AdminController
 
     /** @var PersonService */
     private $personService;
+    private $createUserService;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -43,10 +45,12 @@ class UserController extends AdminController
         UserService $userService,
         PersonService $personService,
         TranslatorInterface $translator,
-        SessionInterface $session
+        SessionInterface $session,
+        CreateUserService $createUserService
     ) {
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
         $this->personService = $personService;
+        $this->createUserService = $createUserService;
     }
 
     /**
@@ -72,6 +76,7 @@ class UserController extends AdminController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+                $this->createUserService->create($username, $password, $email, true);
                 $user = $this->userService->create($user);
                 $this->personService->referencePersonIntoUser($user);
             } catch (\Exception $e) {

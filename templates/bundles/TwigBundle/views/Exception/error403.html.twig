@@ -2,14 +2,14 @@
 
 {% block fos_user_content %}
 <div class="body bg-gray">
-  {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}  
+  {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
   <div>
     {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
   </div>
-  {% endif %}  
+  {% endif %}
   <div>
     Access Forbidden: Check your role.
-    <a href="{{ path('fos_user_security_logout') }}">Logout</a>
+    <a href="{{ path('pumukit_logout') }}">Logout</a>
   </div>
 </div>
 {% endblock %}

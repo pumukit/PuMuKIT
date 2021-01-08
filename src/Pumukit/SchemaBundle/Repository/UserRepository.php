@@ -11,6 +11,13 @@ use Pumukit\SchemaBundle\Document\User;
 
 class UserRepository extends DocumentRepository
 {
+    public function userExists(string $username)
+    {
+        return $this->getDocumentManager()->getRepository(User::class)->findOneBy([
+            'username' => strtolower($username)
+        ]);
+    }
+
     public function findUsersInAnyGroups(array $groups)
     {
         $userRepo = $this->getDocumentManager()->getRepository(User::class);

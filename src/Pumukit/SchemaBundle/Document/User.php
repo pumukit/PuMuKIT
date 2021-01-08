@@ -35,17 +35,7 @@ class User implements UserInterface
     /**
      * @MongoDB\Field(type="string")
      */
-    protected $usernameCanonical;
-
-    /**
-     * @MongoDB\Field(type="string")
-     */
     protected $email;
-
-    /**
-     * @MongoDB\Field(type="string")
-     */
-    protected $emailCanonical;
 
     /**
      * @MongoDB\Field(type="bool")
@@ -126,6 +116,8 @@ class User implements UserInterface
         $this->groups = new ArrayCollection();
         $this->enabled = false;
         $this->roles = [];
+        $this->lastLogin = new \DateTime();
+        $this->lastLoginAttempt = new \DateTime();
     }
 
     public function __toString(): string

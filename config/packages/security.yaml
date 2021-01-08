@@ -15,16 +15,26 @@ security:
       http_basic:
         provider: pumukit
         realm:    "secure-api"
+
     main:
       pattern:   ^/
+      provider: pumukit
       context:   pumukit
+      remember_me:
+        secret:   '%kernel.secret%'
+        lifetime: 604800
+        path:     /
       form_login:
-        provider:             pumukit
         csrf_token_generator: security.csrf.token_manager
         failure_handler:      custom_authentication_failure_handler
         success_handler:      custom_authentication_success_handler
-      logout:    true
+      logout:
+        path: pumukit_logout
       anonymous: true
+      guard:
+        authenticators:
+          - Pumukit\UserBundle\Security\LoginFormAuthenticator
+
     dev:
       pattern:  ^/(_(profiler|wdt)|css|images|js)/
       security: false

@@ -52,13 +52,7 @@ class UserService
         $this->sendEmailWhenAddUserOwner = $sendEmailWhenAddUserOwner;
     }
 
-    /**
-     * Add owner user to MultimediaObject.
-     * Add user id of the creator of the Multimedia Object as property.
-     *
-     * @param mixed $executeFlush
-     */
-    public function addOwnerUserToMultimediaObject(MultimediaObject $multimediaObject, User $user, $executeFlush = true)
+    public function addOwnerUserToMultimediaObject(MultimediaObject $multimediaObject, User $user, bool $executeFlush = true)
     {
         $multimediaObject = $this->addOwnerUserToObject($multimediaObject, $user, $executeFlush);
         $this->addOwnerUserToObject($multimediaObject->getSeries(), $user, $executeFlush);
@@ -69,18 +63,7 @@ class UserService
         return $multimediaObject;
     }
 
-    /**
-     * Remove owner user from MultimediaObject.
-     *
-     * Remove user id of the
-     * Multimedia Object as property if
-     * is logged in user and not admin
-     *
-     * @param bool $executeFlush
-     *
-     * @return MultimediaObject
-     */
-    public function removeOwnerUserFromMultimediaObject(MultimediaObject $multimediaObject, User $user, $executeFlush = true)
+    public function removeOwnerUserFromMultimediaObject(MultimediaObject $multimediaObject, User $user, bool $executeFlush = true)
     {
         $multimediaObject = $this->removeOwnerUserFromObject($multimediaObject, $user, $executeFlush);
         $this->removeOwnerUserFromObject($multimediaObject->getSeries(), $user, $executeFlush);
@@ -88,11 +71,6 @@ class UserService
         return $multimediaObject;
     }
 
-    /**
-     * Create user.
-     *
-     * @return User
-     */
     public function create(User $user)
     {
         if (null !== ($permissionProfile = $user->getPermissionProfile())) {
@@ -108,18 +86,7 @@ class UserService
         return $user;
     }
 
-    /**
-     * Update user.
-     *
-     * @param bool $executeFlush
-     * @param bool $checkOrigin
-     * @param bool $execute_dispatch
-     *
-     * @throws \Exception
-     *
-     * @return User
-     */
-    public function update(User $user, $executeFlush = true, $checkOrigin = true, $execute_dispatch = true)
+    public function update(User $user, bool $executeFlush = true, bool $checkOrigin = true, bool $execute_dispatch = true)
     {
         if ($checkOrigin && !$user->isLocal()) {
             throw new \Exception('The user "'.$user->getUsername().'" is not local and can not be modified.');
@@ -154,12 +121,7 @@ class UserService
         return $user;
     }
 
-    /**
-     * Delete user.
-     *
-     * @param bool $executeFlush
-     */
-    public function delete(User $user, $executeFlush = true)
+    public function delete(User $user, bool $executeFlush = true)
     {
         $this->dm->remove($user);
         if ($executeFlush) {
@@ -169,15 +131,7 @@ class UserService
         $this->dispatcher->dispatchDelete($user);
     }
 
-    /**
-     * Add roles.
-     *
-     * @param array $permissions
-     * @param bool  $executeFlush
-     *
-     * @return User
-     */
-    public function addRoles(User $user, $permissions = [], $executeFlush = true)
+    public function addRoles(User $user, array $permissions = [], bool $executeFlush = true)
     {
         foreach ($permissions as $permission) {
             if (!$user->hasRole($permission)) {
@@ -192,18 +146,13 @@ class UserService
         return $user;
     }
 
-    /**
-     * Remove roles.
-     *
-     * @param array $permissions
-     * @param bool  $executeFlush
-     *
-     * @return User
-     */
-    public function removeRoles(User $user, $permissions = [], $executeFlush = true)
+    public function removeRoles(User $user, array $permissions = [], bool $executeFlush = true)
     {
         foreach ($permissions as $permission) {
-            if ($user->hasRole($permission) && (in_array($permission, array_keys($this->permissionService->getAllPermissions())))) {
+            if ($user->hasRole($permission) && (array_key_exists(
+                    $permission,
+                    $this->permissionService->getAllPermissions()
+                ))) {
                 $user->removeRole($permission);
             }
         }
@@ -215,11 +164,6 @@ class UserService
         return $user;
     }
 
-    /**
-     * Count Users with given permission profile.
-     *
-     * @return int
-     */
     public function countUsersWithPermissionProfile(PermissionProfile $permissionProfile)
     {
         return $this->repo->createQueryBuilder()
@@ -230,13 +174,6 @@ class UserService
         ;
     }
 
-    /**
-     * Get Users with given permission profile.
-     *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     *
-     * @return mixed
-     */
     public function getUsersWithPermissionProfile(PermissionProfile $permissionProfile)
     {
         return $this->repo->createQueryBuilder()
@@ -246,18 +183,11 @@ class UserService
         ;
     }
 
-    /**
-     * Get user permissions.
-     *
-     * @param array $userRoles
-     *
-     * @return array $userPermissions
-     */
-    public function getUserPermissions($userRoles = [])
+    public function getUserPermissions(array $userRoles = [])
     {
         $userPermissions = [];
         foreach ($userRoles as $userRole) {
-            if (in_array($userRole, array_keys($this->permissionService->getAllPermissions()))) {
+            if (array_key_exists($userRole, $this->permissionService->getAllPermissions())) {
                 $userPermissions[] = $userRole;
             }
         }
@@ -265,15 +195,7 @@ class UserService
         return $userPermissions;
     }
 
-    /**
-     * Set user scope.
-     *
-     * @param string $oldScope
-     * @param string $newScope
-     *
-     * @return User
-     */
-    public function setUserScope(User $user, $oldScope = '', $newScope = '')
+    public function setUserScope(User $user, string $oldScope = '', string $newScope = '')
     {
         if ($user->hasRole($oldScope)) {
             $user->removeRole($oldScope);
@@ -282,17 +204,10 @@ class UserService
         return $this->addUserScope($user, $newScope);
     }
 
-    /**
-     * Get user scope.
-     *
-     * @param array $userRoles
-     *
-     * @return string|null $userScope
-     */
-    public function getUserScope($userRoles = [])
+    public function getUserScope(array $userRoles = [])
     {
         foreach ($userRoles as $userRole) {
-            if (in_array($userRole, array_keys(PermissionProfile::$scopeDescription))) {
+            if (array_key_exists($userRole, PermissionProfile::$scopeDescription)) {
                 return $userRole;
             }
         }
@@ -300,14 +215,7 @@ class UserService
         return null;
     }
 
-    /**
-     * Add user scope.
-     *
-     * @param string $scope
-     *
-     * @return User
-     */
-    public function addUserScope(User $user, $scope = '')
+    public function addUserScope(User $user, string $scope = '')
     {
         if (array_key_exists($scope, PermissionProfile::$scopeDescription) && !$user->hasRole($scope)) {
             $user->addRole($scope);
@@ -318,18 +226,7 @@ class UserService
         return $user;
     }
 
-    /**
-     * Instantiate User.
-     *
-     * @param string $userName
-     * @param string $email
-     * @param bool   $enabled
-     *
-     * @throws \Exception
-     *
-     * @return User
-     */
-    public function instantiate($userName = '', $email = '', $enabled = true)
+    public function instantiate(string $userName = '',string  $email = '',bool $enabled = true)
     {
         $user = new User();
         if ($userName) {
@@ -348,14 +245,6 @@ class UserService
         return $user;
     }
 
-    /**
-     * Has Global Scope.
-     *
-     * Checks if the PermissionProfile
-     * of the User has Global Scope
-     *
-     * @return bool
-     */
     public function hasGlobalScope(User $user)
     {
         if ($user->getPermissionProfile()) {
@@ -365,14 +254,6 @@ class UserService
         return false;
     }
 
-    /**
-     * Has Personal Scope.
-     *
-     * Checks if the PermissionProfile
-     * of the User has Personal Scope
-     *
-     * @return bool
-     */
     public function hasPersonalScope(User $user)
     {
         if ($user->getPermissionProfile()) {
@@ -382,14 +263,6 @@ class UserService
         return false;
     }
 
-    /**
-     * Has None Scope.
-     *
-     * Checks if the PermissionProfile
-     * of the User has None Scope
-     *
-     * @return bool
-     */
     public function hasNoneScope(User $user)
     {
         if ($user->getPermissionProfile()) {
@@ -399,15 +272,7 @@ class UserService
         return false;
     }
 
-    /**
-     * Add group to user.
-     *
-     * @param bool $executeFlush
-     * @param bool $checkOrigin
-     *
-     * @throws \Exception
-     */
-    public function addGroup(Group $group, User $user, $executeFlush = true, $checkOrigin = true)
+    public function addGroup(Group $group, User $user, bool $executeFlush = true, bool $checkOrigin = true)
     {
         if (!$user->containsGroup($group)) {
             if ($checkOrigin) {
@@ -424,15 +289,7 @@ class UserService
         }
     }
 
-    /**
-     * Delete group from user.
-     *
-     * @param bool $executeFlush
-     * @param bool $checkOrigin
-     *
-     * @throws \Exception
-     */
-    public function deleteGroup(Group $group, User $user, $executeFlush = true, $checkOrigin = true)
+    public function deleteGroup(Group $group, User $user, bool $executeFlush = true, bool $checkOrigin = true)
     {
         if ($user->containsGroup($group)) {
             if ($checkOrigin) {
@@ -449,21 +306,11 @@ class UserService
         }
     }
 
-    /**
-     * Is allowed to modify group.
-     *
-     * @return bool
-     */
     public function isAllowedToModifyUserGroup(User $user, Group $group)
     {
         return !(!$user->isLocal() && !$group->isLocal());
     }
 
-    /**
-     * Find with group.
-     *
-     * @return mixed
-     */
     public function findWithGroup(Group $group)
     {
         return $this->repo->createQueryBuilder()
@@ -473,11 +320,6 @@ class UserService
         ;
     }
 
-    /**
-     * Delete all users from group.
-     *
-     * @throws \Exception
-     */
     public function deleteAllFromGroup(Group $group)
     {
         $users = $this->findWithGroup($group);
@@ -487,20 +329,7 @@ class UserService
         $this->dm->flush();
     }
 
-    /**
-     * Is User last relation.
-     *
-     * @param string|null $mmId
-     * @param string|null $personId
-     * @param array       $owners
-     * @param array       $addGroups
-     *
-     * @throws \Doctrine\ODM\MongoDB\LockException
-     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
-     *
-     * @return bool TRUE if the user is no longer related to multimedia object, FALSE otherwise
-     */
-    public function isUserLastRelation(User $loggedInUser, $mmId = null, $personId = null, $owners = [], $addGroups = [])
+    public function isUserLastRelation(User $loggedInUser, ?string $mmId = null,?string $personId = null,array  $owners = [], array $addGroups = [])
     {
         $personToRemoveIsLogged = $this->isLoggedPersonToRemoveFromOwner($loggedInUser, $personId);
         $userInOwners = $this->isUserInOwners($loggedInUser, $owners);
@@ -516,17 +345,7 @@ class UserService
         return false;
     }
 
-    /**
-     * Is logged in the person to be removed from owner of a multimedia object.
-     *
-     * @param \MongoId|string $personId
-     *
-     * @throws \Doctrine\ODM\MongoDB\LockException
-     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
-     *
-     * @return bool TRUE if person to remove from owner is logged in, FALSE otherwise
-     */
-    public function isLoggedPersonToRemoveFromOwner(User $loggedInUser, $personId)
+    public function isLoggedPersonToRemoveFromOwner(User $loggedInUser, string $personId)
     {
         $personToRemove = $this->personRepo->find($personId);
         if ($personToRemove) {
@@ -548,17 +367,7 @@ class UserService
         return false;
     }
 
-    /**
-     * Is user in owners array.
-     *
-     * @param array $owners
-     *
-     * @throws \Doctrine\ODM\MongoDB\LockException
-     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
-     *
-     * @return bool TRUE if user is in owners array, FALSE otherwise
-     */
-    public function isUserInOwners(User $loggedInUser, $owners = [])
+    public function isUserInOwners(User $loggedInUser,array  $owners = [])
     {
         $userInOwners = false;
         foreach ($owners as $owner) {
@@ -577,19 +386,7 @@ class UserService
         return $userInOwners;
     }
 
-    /**
-     * User has group in common with given groups array.
-     *
-     * @param string|null $mmId
-     * @param string|null $personId
-     * @param array       $groups
-     *
-     * @throws \Doctrine\ODM\MongoDB\LockException
-     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
-     *
-     * @return bool TRUE if user has a group in common with the given groups array, FALSE otherwise
-     */
-    public function isUserInGroups(User $loggedInUser, $mmId = null, $personId = null, $groups = [])
+    public function isUserInGroups(User $loggedInUser, ?string $mmId = null, ?string $personId = null, array $groups = [])
     {
         $userInAddGroups = false;
         $userGroups = $loggedInUser->getGroups()->toArray();
@@ -622,21 +419,14 @@ class UserService
         return $userInAddGroups;
     }
 
-    /**
-     * Add owner user to object.
-     * Add user id of the creator of the Multimedia Object or Series as property.
-     *
-     * @param mixed $object
-     * @param mixed $executeFlush
-     */
-    private function addOwnerUserToObject($object, User $user, $executeFlush = true)
+    private function addOwnerUserToObject($object, User $user, bool $executeFlush = true)
     {
         if (null !== $object) {
             $owners = $object->getProperty('owners');
             if (null === $owners) {
                 $owners = [];
             }
-            if (!in_array($user->getId(), $owners)) {
+            if (!in_array($user->getId(), $owners, true)) {
                 $owners[] = $user->getId();
                 $object->setProperty('owners', $owners);
                 $this->dm->persist($object);
@@ -653,11 +443,11 @@ class UserService
         return $object;
     }
 
-    private function removeOwnerUserFromObject($object, User $user, $executeFlush = true)
+    private function removeOwnerUserFromObject($object, User $user, bool $executeFlush = true)
     {
         if (null !== $object) {
             $owners = $object->getProperty('owners');
-            if (in_array($user->getId(), $owners)) {
+            if (in_array($user->getId(), $owners, true)) {
                 if ($object->isCollection()) {
                     // NOTE: Check all MultimediaObjects from the Series, even the prototype
                     $mmObjRepo = $this->dm->getRepository(MultimediaObject::class);
@@ -666,7 +456,7 @@ class UserService
                     $deleteOwnerInSeries = true;
                     foreach ($multimediaObjects as $multimediaObject) {
                         if (null !== $owners = $multimediaObject->getProperty('owners')) {
-                            if (in_array($user->getId(), $owners)) {
+                            if (in_array($user->getId(), $owners, true)) {
                                 $deleteOwnerInSeries = false;
                             }
                         }
@@ -683,10 +473,10 @@ class UserService
         return $object;
     }
 
-    private function removeUserFromOwnerProperty($object, User $user, $executeFlush = true)
+    private function removeUserFromOwnerProperty($object, User $user, bool $executeFlush = true)
     {
         if (null !== $object) {
-            $owners = array_filter($object->getProperty('owners'), function ($ownerId) use ($user) {
+            $owners = array_filter($object->getProperty('owners'), static function ($ownerId) use ($user) {
                 return $ownerId !== $user->getId();
             });
             $object->setProperty('owners', $owners);
