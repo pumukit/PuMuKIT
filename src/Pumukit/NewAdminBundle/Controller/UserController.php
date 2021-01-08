@@ -18,6 +18,7 @@ use Pumukit\SchemaBundle\Services\GroupService;
 use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Services\UpdateUserService;
 use Pumukit\SchemaBundle\Services\UserService;
+use Pumukit\UserBundle\Services\CreateUserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -87,6 +88,7 @@ class UserController extends AdminController
                     $userData['fullname'],
                     $this->getPermissionProfile($userData['permissionProfile'])
                 );
+
             } catch (\Exception $e) {
                 throw $e;
             }

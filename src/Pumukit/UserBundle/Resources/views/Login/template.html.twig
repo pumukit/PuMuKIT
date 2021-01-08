@@ -1,0 +1,29 @@
+{% extends "@PumukitWebTV/layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }} | {{ "Log in"|trans }}
+{% endblock title %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/pumukituser/css/login.css') }}" type="text/css" rel="stylesheet" media="screen"/>
+{% endblock %}
+
+{% block body_base %}
+
+    <div class="container">
+        <div class="login-block">
+            <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+                <div class="panel panel-default pumukit-login-panel">
+                    <div class="panel-heading pumukit-login-header text-center">
+                        <h3>{{ pumukit_info.title }}</h3>
+                    </div>
+                    <div class="panel-body pumukit-login-body">
+                        {% include "@PumukitUser/Login/login_form.html.twig" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
