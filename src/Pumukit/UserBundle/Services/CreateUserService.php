@@ -38,7 +38,7 @@ class CreateUserService
         return new User();
     }
 
-    public function autocomplete(string $username, string $password, string $email, bool $isSuperAdmin): bool
+    public function autocomplete(string $username, string $password, string $email): bool
     {
         if(!$this->validateUser($username)) {
             return true;
@@ -54,7 +54,7 @@ class CreateUserService
             throw new \Exception('Unable to assign a Permission Profile to the new User. There is no default Permission Profile');
         }
 
-        $this->setUserRoles($user, $isSuperAdmin);
+        $this->setUserRoles($user);
         $this->userService->create($user);
 
         $this->objectManager->persist($user);
