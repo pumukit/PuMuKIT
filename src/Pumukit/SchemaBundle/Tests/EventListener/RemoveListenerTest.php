@@ -86,12 +86,10 @@ class RemoveListenerTest extends PumukitTestCase
         static::assertCount(0, $this->repoJobs->findAll());
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Can not delete Multimedia Object with id
-     */
     public function testPreRemoveWithException()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Can not delete Multimedia Object with id');
         $series = $this->factoryService->createSeries();
         $multimediaObject = $this->factoryService->createMultimediaObject($series);
 

@@ -106,7 +106,7 @@ class InfoController extends AbstractController
     }
 
     /**
-     * @Route("/job/{id}", methods="GET", name="pumukit_encoder_job")
+     * @Route("/job/{id}", methods={"GET"}, name="pumukit_encoder_job")
      * @Template("@PumukitEncoder/Info/infoJob.html.twig")
      */
     public function infoJobAction(Job $job, Request $request, JobService $jobService): array
@@ -128,7 +128,7 @@ class InfoController extends AbstractController
     }
 
     /**
-     * @Route("/job", methods="POST", name="pumukit_encoder_update_job")
+     * @Route("/job", methods={"POST"}, name="pumukit_encoder_update_job")
      */
     public function updateJobPriorityAction(Request $request, JobService $jobService): JsonResponse
     {
@@ -143,7 +143,7 @@ class InfoController extends AbstractController
     }
 
     /**
-     * @Route("/job", methods="DELETE", name="pumukit_encoder_delete_job")
+     * @Route("/job", methods={"DELETE"}, name="pumukit_encoder_delete_job")
      */
     public function deleteJobAction(Request $request, JobService $jobService)
     {
@@ -154,7 +154,7 @@ class InfoController extends AbstractController
     }
 
     /**
-     * @Route("/job/retry/{id}", methods="POST", name="pumukit_encoder_retry_job")
+     * @Route("/job/retry/{id}", methods={"POST"}, name="pumukit_encoder_retry_job")
      */
     public function retryJobAction(Job $job, Request $request, JobService $jobService)
     {
@@ -167,7 +167,7 @@ class InfoController extends AbstractController
     }
 
     /**
-     * @Route("/mm/{id}", methods="GET", name="pumukit_encoder_mm")
+     * @Route("/mm/{id}", methods={"GET"}, name="pumukit_encoder_mm")
      */
     public function multimediaObjectAction(MultimediaObject $multimediaObject): RedirectResponse
     {

@@ -397,12 +397,10 @@ class UserServiceTest extends PumukitTestCase
         static::assertNotEquals($permissionProfile2, $user2->getPermissionProfile());
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Unable to assign a Permission Profile to the new User. There is no default Permission Profile
-     */
     public function testInstantiateException()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Unable to assign a Permission Profile to the new User. There is no default Permission Profile');
         $user = $this->userService->instantiate();
     }
 
@@ -617,12 +615,10 @@ class UserServiceTest extends PumukitTestCase
         static::assertTrue($this->userService->isAllowedToModifyUserGroup($casUser, $localGroup));
     }
 
-    /**
-     * @expectedException         \Exception
-     * @expectedExceptionMessage  is not local and can not be modified
-     */
     public function testUpdateException()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('is not local and can not be modified');
         $permissions1 = [Permission::ACCESS_DASHBOARD, Permission::ACCESS_ROLES];
         $permissionProfile1 = new PermissionProfile();
         $permissionProfile1->setPermissions($permissions1);
@@ -686,12 +682,10 @@ class UserServiceTest extends PumukitTestCase
         static::assertTrue($localUser->containsGroup($casGroup));
     }
 
-    /**
-     * @expectedException         \Exception
-     * @expectedExceptionMessage  Not allowed to add group
-     */
     public function testExceptionAddGroupCasCas()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Not allowed to add group');
         $casGroup = new Group();
         $casGroup->setKey('cas_key');
         $casGroup->setName('CAS Group');
@@ -763,12 +757,10 @@ class UserServiceTest extends PumukitTestCase
         static::assertFalse($localUser->containsGroup($casGroup));
     }
 
-    /**
-     * @expectedException         \Exception
-     * @expectedExceptionMessage  Not allowed to delete group
-     */
     public function testExceptionDeleteGroupCasCas()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Not allowed to delete group');
         $casGroup = new Group();
         $casGroup->setKey('cas_key');
         $casGroup->setName('CAS Group');

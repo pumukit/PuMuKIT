@@ -17,8 +17,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class APIRecordedController extends AbstractController
 {
     /**
-     * @Route("/mmobj/num_recorded.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
-     * @Route("/mmobj/recorded.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     * @Route("/mmobj/num_recorded.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
+     * @Route("/mmobj/recorded.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      */
     public function mmobjRecordedAction(Request $request, StatsService $recordsService, SerializerService $serializer)
     {
@@ -45,9 +45,9 @@ class APIRecordedController extends AbstractController
     }
 
     /**
-     * @Route("/series/num_recorded.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
-     * @Route("/series/recorded.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
-     * @Route("/series/published.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     * @Route("/series/num_recorded.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
+     * @Route("/series/recorded.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
+     * @Route("/series/published.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      */
     public function seriesRecordedAction(Request $request, StatsService $recordsService, SerializerService $serializer)
     {
@@ -74,8 +74,8 @@ class APIRecordedController extends AbstractController
     }
 
     /**
-     * @Route("/hours/num_recorded.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
-     * @Route("/hours/recorded.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     * @Route("/hours/num_recorded.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
+     * @Route("/hours/recorded.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      */
     public function hoursRecordedAction(Request $request, StatsService $recordsService, SerializerService $serializer)
     {
@@ -102,7 +102,7 @@ class APIRecordedController extends AbstractController
     }
 
     /**
-     * @Route("/mmobj/stats.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     * @Route("/mmobj/stats.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      *
      * TODO: add criteria??? (see processRequestData)
      */

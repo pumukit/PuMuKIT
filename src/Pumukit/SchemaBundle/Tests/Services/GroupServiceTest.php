@@ -186,12 +186,10 @@ class GroupServiceTest extends PumukitTestCase
         static::assertEquals($group, $this->repo->find($group->getId()));
     }
 
-    /**
-     * @expectedException         \Exception
-     * @expectedExceptionMessage  There is already a group created with key key and a group created with name name
-     */
     public function testCreateExceptionKeyAndName()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('There is already a group created with key key and a group created with name name');
         $key = 'key';
         $name = 'name';
 
@@ -208,12 +206,10 @@ class GroupServiceTest extends PumukitTestCase
         $group2 = $this->groupService->create($group2);
     }
 
-    /**
-     * @expectedException         \Exception
-     * @expectedExceptionMessage  There is already a group created with key
-     */
     public function testCreateExceptionKey()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('There is already a group created with key');
         $key = 'key';
         $name1 = 'name1';
 
@@ -232,12 +228,10 @@ class GroupServiceTest extends PumukitTestCase
         $group2 = $this->groupService->create($group2);
     }
 
-    /**
-     * @expectedException         \Exception
-     * @expectedExceptionMessage  There is already a group created with name
-     */
     public function testCreateExceptionName()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('There is already a group created with name');
         $name = 'name';
         $key1 = 'key1';
 
@@ -301,12 +295,10 @@ class GroupServiceTest extends PumukitTestCase
         static::assertEquals($name2, $updatedGroup->getName());
     }
 
-    /**
-     * @expectedException         \Exception
-     * @expectedExceptionMessage  There is already a group created with key
-     */
     public function testUpdateExceptionKey()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('There is already a group created with key');
         $key1 = 'key1';
         $name1 = 'name1';
 
@@ -329,12 +321,10 @@ class GroupServiceTest extends PumukitTestCase
         $group1 = $this->groupService->update($group1);
     }
 
-    /**
-     * @expectedException         \Exception
-     * @expectedExceptionMessage  There is already a group created with name
-     */
     public function testUpdateExceptionName()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('There is already a group created with name');
         $key1 = 'key1';
         $name1 = 'name1';
 
@@ -382,12 +372,10 @@ class GroupServiceTest extends PumukitTestCase
         static::assertCount(0, $this->repo->findAll());
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Not allowed to delete Group "key": is external Group and/or has existent relations with users and multimedia objects.
-     */
     public function testDeleteException()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Not allowed to delete Group "key": is external Group and/or has existent relations with users and multimedia objects.');
         static::assertCount(0, $this->repo->findAll());
 
         $key = 'key';

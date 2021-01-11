@@ -5,7 +5,7 @@
     "type": "project",
     "description": "Media Portal",
     "require": {
-        "php": ">=7.2.0",
+        "php": ">=7.4",
         "ext-curl": "*",
         "ext-fileinfo": "*",
         "ext-gd": "*",
@@ -44,7 +44,7 @@
         "phpstan/phpstan": "^0.12",
         "phpstan/phpstan-doctrine": "^0.12",
         "phpstan/phpstan-symfony": "^0.12",
-        "phpunit/phpunit": "8.3.*",
+        "phpunit/phpunit": "^9",
         "symfony/browser-kit": "^4.0",
         "symfony/debug-bundle": "^4.0",
         "symfony/phpunit-bridge": "^4.0",
@@ -71,7 +71,7 @@
         "php-stan": [
             "vendor/bin/phpstan analyse -l 1 src"
         ],
-        "tests": "APP_ENV=test bin/phpunit",
+        "tests": "APP_ENV=test vendor/bin/phpunit",
         "ci": [
             "@lint-yaml",
             "@lint-twig",

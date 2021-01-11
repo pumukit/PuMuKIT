@@ -31,7 +31,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
     }
 
     /**
-     * @Route("/mmobj/most_viewed.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     * @Route("/mmobj/most_viewed.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      */
     public function mmobjMostViewedAction(Request $request)
     {
@@ -62,7 +62,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
     }
 
     /**
-     * @Route("/series/most_viewed.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     * @Route("/series/most_viewed.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      */
     public function seriesMostViewedAction(Request $request)
     {
@@ -93,7 +93,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
     }
 
     /**
-     * @Route("/views.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     * @Route("/views.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      */
     public function viewsAction(Request $request)
     {
@@ -136,7 +136,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
     }
 
     /**
-     * @Route("/views/mmobj.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     * @Route("/views/mmobj.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      */
     public function viewsMmobjAction(Request $request)
     {
@@ -173,7 +173,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
     }
 
     /**
-     * @Route("/views/series.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     * @Route("/views/series.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      */
     public function viewsSeriesAction(Request $request)
     {

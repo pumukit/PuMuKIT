@@ -105,12 +105,10 @@ class EventPicServiceTest extends PumukitTestCase
         $this->deleteCreatedFiles();
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage for storing Pics does not exist
-     */
     public function testInvalidTargetPath()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('for storing Pics does not exist');
         $eventPicService = new LegacyEventPicService($this->dm, '/non/existing/path', '/uploads/pic', true);
     }
 

@@ -52,32 +52,21 @@ class LegacyController extends AbstractController implements WebTVControllerInte
     }
 
     /**
-     * @Route("/{_locale}/video/{pumukit1id}.html", defaults={"filter": false}, requirements={"_locale"=".."})
-     * @Route("/{_locale}/video/{pumukit1id}", defaults={"filter": false}, requirements={"_locale"=".."})
-     * @Route("/{_locale}/video/mm/{pumukit1id}.html", defaults={"filter": false})
-     * @Route("/{_locale}/video/mm/{pumukit1id}", defaults={"filter": false})
-     * @Route("/video/{pumukit1id}.html", requirements={
-     *     "pumukit1id": "\d+"
-     * }, defaults={"filter": false})
-     * @Route("/video/{pumukit1id}", requirements={
-     *     "pumukit1id": "\d+"
-     * }, defaults={"filter": false})
-     * @Route("/mmobj/index/id/{pumukit1id}.html", defaults={"filter": false})
-     * @Route("/mmobj/index/id/{pumukit1id}", requirements={
-     *     "pumukit1id": "\d+"
-     * }, defaults={"filter": false})
-     * @Route("/index.php/{_locale}/video/{pumukit1id}.html", defaults={"filter": false}, requirements={"_locale"=".."})
-     * @Route("/index.php/{_locale}/video/{pumukit1id}", defaults={"filter": false}, requirements={"_locale"=".."})
-     * @Route("/index.php/video/{pumukit1id}", requirements={
-     *     "pumukit1id": "\d+"
-     * }, defaults={"filter": false})
-     * @Route("/video/index/id/{pumukit1id}.html", defaults={"filter": false})
-     * @Route("/video/index/id/{pumukit1id}", defaults={"filter": false})
-     * @Route("/index.php/video/index/id/{pumukit1id}.html", defaults={"filter": false})
-     * @Route("/index.php/video/index/id/{pumukit1id}", defaults={"filter": false})
-     * Parameters:
-     * - {_locale} matches current locale
-     * - {pumukit1id} matches multimediaObject.properties("pumukit1id")
+     * @Route("/{_locale}/video/{pumukit1id}.html", defaults={"filter"=false}, requirements={"_locale"=".."})
+     * @Route("/{_locale}/video/{pumukit1id}", defaults={"filter"=false}, requirements={"_locale"=".."})
+     * @Route("/{_locale}/video/mm/{pumukit1id}.html", defaults={"filter"=false})
+     * @Route("/{_locale}/video/mm/{pumukit1id}", defaults={"filter"=false})
+     * @Route("/video/{pumukit1id}.html", requirements={"pumukit1id"="\d+"}, defaults={"filter"=false})
+     * @Route("/video/{pumukit1id}", requirements={"pumukit1id"="\d+"}, defaults={"filter"=false})
+     * @Route("/mmobj/index/id/{pumukit1id}.html", defaults={"filter"=false})
+     * @Route("/mmobj/index/id/{pumukit1id}", requirements={"pumukit1id"="\d+"}, defaults={"filter"=false})
+     * @Route("/index.php/{_locale}/video/{pumukit1id}.html", defaults={"filter"=false}, requirements={"_locale"=".."})
+     * @Route("/index.php/{_locale}/video/{pumukit1id}", defaults={"filter"=false}, requirements={"_locale"=".."})
+     * @Route("/index.php/video/{pumukit1id}", requirements={"pumukit1id"="\d+"}, defaults={"filter"=false})
+     * @Route("/video/index/id/{pumukit1id}.html", defaults={"filter"=false})
+     * @Route("/video/index/id/{pumukit1id}", defaults={"filter"=false})
+     * @Route("/index.php/video/index/id/{pumukit1id}.html", defaults={"filter"=false})
+     * @Route("/index.php/video/index/id/{pumukit1id}", defaults={"filter"=false})
      */
     public function multimediaObjectAction(string $pumukit1id)
     {
@@ -107,13 +96,9 @@ class LegacyController extends AbstractController implements WebTVControllerInte
     }
 
     /**
-     * @Route("/{_locale}/mmobj/iframe/id/{pumukit1id}", defaults={"filter": false}, requirements={"_locale"=".."})
-     * @Route("/{_locale}/video/iframe/{pumukit1id}.html", defaults={"filter": false}, requirements={"_locale"=".."})
-     * @Route("/index.php/{_locale}/video/iframe/{pumukit1id}.html", defaults={"filter": false}, requirements={"_locale"=".."})
-     *
-     * Parameters:
-     * - {_locale} matches the current locale
-     * - {pumukit1id} matches multimediaObject.properties("pumukit1id")
+     * @Route("/{_locale}/mmobj/iframe/id/{pumukit1id}", defaults={"filter"=false}, requirements={"_locale"=".."})
+     * @Route("/{_locale}/video/iframe/{pumukit1id}.html", defaults={"filter"=false}, requirements={"_locale"=".."})
+     * @Route("/index.php/{_locale}/video/iframe/{pumukit1id}.html", defaults={"filter"=false}, requirements={"_locale"=".."})
      */
     public function multimediaObjectIframeAction(string $pumukit1id)
     {
@@ -138,9 +123,6 @@ class LegacyController extends AbstractController implements WebTVControllerInte
      * @Route("/file/{pumukit1id}")
      * @Route("/{_locale}/file/{pumukit1id}.html", requirements={"_locale"=".."})
      * @Route("/{_locale}/file/{pumukit1id}", requirements={"_locale"=".."})
-     * Parameters:
-     * - {_locale} matches the current locale
-     * - {pumukit1id} matches the tag "pumukit1id:{pumukit1id}" in track.getTags()
      */
     public function trackAction(string $pumukit1id)
     {

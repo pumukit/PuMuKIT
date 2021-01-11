@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class APIKeywordsController extends AbstractController
 {
     /**
-     * @Route("/series.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     * @Route("/series.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      */
     public function seriesAction(Request $request, DocumentManager $documentManager, SerializerService $serializer)
     {
@@ -34,7 +34,7 @@ class APIKeywordsController extends AbstractController
     }
 
     /**
-     * @Route("/mmobj.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     * @Route("/mmobj.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      */
     public function mmobjAction(Request $request, DocumentManager $documentManager, SerializerService $serializer)
     {

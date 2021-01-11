@@ -23,7 +23,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
     public const API_SKIP = 0;
 
     /**
-     * @Route("/stats.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     * @Route("/stats.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      */
     public function statsAction(Request $request, DocumentManager $documentManager, SerializerService $serializer)
     {
@@ -53,7 +53,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
     }
 
     /**
-     * @Route("/mmobj.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     * @Route("/mmobj.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      */
     public function multimediaObjectsAction(Request $request, DocumentManager $documentManager, SerializerService $serializer)
     {
@@ -122,7 +122,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
     }
 
     /**
-     * @Route("/series.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     * @Route("/series.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      */
     public function seriesAction(Request $request, DocumentManager $documentManager, SerializerService $serializer)
     {
@@ -182,7 +182,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
     }
 
     /**
-     * @Route("/live.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     * @Route("/live.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      */
     public function liveAction(Request $request, DocumentManager $documentManager, SerializerService $serializer)
     {
@@ -234,7 +234,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
     }
 
     /**
-     * @Route("/locales.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     * @Route("/locales.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      */
     public function localesAction(Request $request, SerializerService $serializer, array $locales)
     {

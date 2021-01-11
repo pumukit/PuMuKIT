@@ -91,13 +91,11 @@ class ProfileServiceTest extends PumukitTestCase
         static::assertNull($this->profileService->getProfile('master'));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage for dir_out of the streamserver
-     */
     public function testInvalidTargetPath()
     {
-//        $profileService = new ProfileService($this->getDemoProfilesWithNonExistingPath(), $this->dm);
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('for dir_out of the streamserver');
+        //        $profileService = new ProfileService($this->getDemoProfilesWithNonExistingPath(), $this->dm);
         ProfileService::validateProfilesDir($this->getDemoProfilesWithNonExistingPath());
     }
 

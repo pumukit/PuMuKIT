@@ -80,7 +80,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
     }
 
     /**
-     * @Route("/multimediaobjects/tag/{tagCod}", name="pumukit_webtv_bytag_multimediaobjects", defaults={"tagCod": null})
+     * @Route("/multimediaobjects/tag/{tagCod}", name="pumukit_webtv_bytag_multimediaobjects", defaults={"tagCod"=null})
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"tagCod": "cod"}})
      * @Template("@PumukitWebTV/List/template.html.twig")
      */
@@ -123,7 +123,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
     }
 
     /**
-     * @Route("/series/tag/{tagCod}",  name="pumukit_webtv_bytag_series", defaults={"tagCod": null})
+     * @Route("/series/tag/{tagCod}", name="pumukit_webtv_bytag_series", defaults={"tagCod"=null})
      * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"tagCod": "cod"}})
      * @Template("@PumukitWebTV/List/template.html.twig")
      */
@@ -157,7 +157,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
     }
 
     /**
-     * @Route("/users/{username}", name="pumukit_webtv_byuser_multimediaobjects", defaults={"username": null})
+     * @Route("/users/{username}", name="pumukit_webtv_byuser_multimediaobjects", defaults={"username"=null})
      * @ParamConverter("user", class="PumukitSchemaBundle:User", options={"mapping": {"username": "username"}})
      * @Template("@PumukitWebTV/List/template.html.twig")
      */
@@ -191,7 +191,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
     }
 
     /**
-     * @Route("/users/{username}/series",  name="pumukit_webtv_byuser_series", defaults={"username": null})
+     * @Route("/users/{username}/series", name="pumukit_webtv_byuser_series", defaults={"username"=null})
      * @ParamConverter("user", class="PumukitSchemaBundle:User", options={"mapping": {"username": "username"}})
      * @Template("@PumukitWebTV/List/template.html.twig")
      */

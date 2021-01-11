@@ -42,12 +42,10 @@ class PermissionServiceTest extends WebTestCase
         static::assertEquals($externalPermissions, $permissionService->getExternalPermissions());
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage The permission with role 'ROLE_FOUR' is duplicated. Please check the configuration.
-     */
     public function testConstructorDuplicatedRoleException()
     {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('The permission with role \'ROLE_FOUR\' is duplicated. Please check the configuration.');
         $externalPermissions = $this->getExternalPermissions();
         $externalPermissions[] = [
             'role' => 'ROLE_FOUR',
@@ -57,12 +55,10 @@ class PermissionServiceTest extends WebTestCase
         $permissionService->getAllPermissionValues();
     }
 
-    /**
-     * @expectedException \UnexpectedValueException
-     * @expectedExceptionMessage Invalid permission: "INVALID_NAME". Permission must start with "ROLE_".
-     */
     public function testConstructorRoleNameException()
     {
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage('Invalid permission: "INVALID_NAME". Permission must start with "ROLE_".');
         $externalPermissions = $this->getExternalPermissions();
         $externalPermissions[] = [
             'role' => 'INVALID_NAME',
@@ -139,34 +135,28 @@ class PermissionServiceTest extends WebTestCase
         static::assertEquals([], $permissionService->getDependenciesByScope($externalPermissions[3]['role'], PermissionProfile::SCOPE_PERSONAL));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The permission with role 'ROLE_DOESNTEXIST' does not exist in the configuration
-     */
     public function testGetDependenciesByScopeInvalidPermission()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The permission with role \'ROLE_DOESNTEXIST\' does not exist in the configuration');
         $externalPermissions = $this->getExternalPermissions();
         $permissionService = new PermissionService($this->dm, $externalPermissions);
         $dependencies = $permissionService->getDependenciesByScope('ROLE_DOESNTEXIST', PermissionProfile::SCOPE_PERSONAL);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The scope 'NO_SCOPE' is not a valid scope (SCOPE_GLOBAL or SCOPE_PERSONAL)
-     */
     public function testGetDependenciesByScopeInvalidScope()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The scope \'NO_SCOPE\' is not a valid scope (SCOPE_GLOBAL or SCOPE_PERSONAL)');
         $externalPermissions = $this->getExternalPermissions();
         $permissionService = new PermissionService($this->dm, $externalPermissions);
         $dependencies = $permissionService->getDependenciesByScope($externalPermissions[3]['role'], 'NO_SCOPE');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The permission with role 'ROLE_DEPENDENCY' does not exist in the configuration
-     */
     public function testGetDependenciesByScopeInvalidDependency()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The permission with role \'ROLE_DEPENDENCY\' does not exist in the configuration');
         $erroringPermission = [
             'role' => 'ROLE_BROKEN_DEPENDENCY',
             'description' => 'Access Three',
@@ -181,12 +171,10 @@ class PermissionServiceTest extends WebTestCase
         $permissionService->getAllPermissionValues();
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Permission must start with "ROLE_"
-     */
     public function testExceptionRole()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Permission must start with "ROLE_"');
         $externalPermissions = [
             [
                 'role' => 'NOT_VALID',

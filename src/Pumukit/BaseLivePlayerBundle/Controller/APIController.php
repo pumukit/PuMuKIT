@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class APIController extends AbstractController
 {
     /**
-     * @Route("/events.{_format}", defaults={"_format"="json"}, requirements={"_format": "json"})
+     * @Route("/events.{_format}", defaults={"_format"="json"}, requirements={"_format"="json"})
      */
     public function eventsAction(Request $request, APIService $APIService, SerializerService $serializer): Response
     {
@@ -31,7 +31,7 @@ class APIController extends AbstractController
     }
 
     /**
-     * @Route("/lives.{_format}", defaults={"_format"="json"}, requirements={"_format": "json"})
+     * @Route("/lives.{_format}", defaults={"_format"="json"}, requirements={"_format"="json"})
      */
     public function livesAction(Request $request, APIService $APIService, SerializerService $serializer): Response
     {

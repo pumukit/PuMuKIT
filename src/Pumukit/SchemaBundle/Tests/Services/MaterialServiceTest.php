@@ -226,12 +226,10 @@ class MaterialServiceTest extends PumukitTestCase
         static::assertEquals($arrayMaterials, $mm->getMaterials()->toArray());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage for storing Materials does not exist
-     */
     public function testInvalidTargetPath()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('for storing Materials does not exist');
         $materialService = new MaterialService($this->dm, $this->materialDispatcher, '/non/existing/path', '/uploads/material', true);
     }
 

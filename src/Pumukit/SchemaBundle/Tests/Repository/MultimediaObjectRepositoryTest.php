@@ -258,10 +258,12 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $seriesNed = $this->repo->findSeriesFieldByPersonId($person_ned->getId());
 
         static::assertCount(2, $seriesBenjen);
+        $seriesBenjen = array_map(static function ($a) { return (string) $a; }, $seriesBenjen);
         static::assertContains($series_wall->getId(), $seriesBenjen);
         static::assertContains($series_main->getId(), $seriesBenjen);
 
         static::assertCount(2, $seriesNed);
+        $seriesNed = array_map(static function ($a) { return (string) $a; }, $seriesNed);
         static::assertContains($series_main->getId(), $seriesNed);
         static::assertContains($series_lhazar->getId(), $seriesNed);
 
@@ -273,31 +275,37 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $seriesNedHand = $this->repo->findSeriesFieldByPersonIdAndRoleCod($person_ned->getId(), $role_hand->getCod());
 
         static::assertCount(2, $seriesBenjenRanger);
+        $seriesBenjenRanger = array_map(static function ($a) { return (string) $a; }, $seriesBenjenRanger);
         static::assertContains($series_wall->getId(), $seriesBenjenRanger);
         static::assertContains($series_main->getId(), $seriesBenjenRanger);
         static::assertNotContains($series_lhazar->getId(), $seriesBenjenRanger);
 
         static::assertCount(0, $seriesNedRanger);
+        $seriesNedRanger = array_map(static function ($a) { return (string) $a; }, $seriesNedRanger);
         static::assertNotContains($series_wall->getId(), $seriesNedRanger);
         static::assertNotContains($series_main->getId(), $seriesNedRanger);
         static::assertNotContains($series_lhazar->getId(), $seriesNedRanger);
 
         static::assertCount(0, $seriesBenjenLord);
+        $seriesBenjenLord = array_map(static function ($a) { return (string) $a; }, $seriesBenjenLord);
         static::assertNotContains($series_wall->getId(), $seriesBenjenLord);
         static::assertNotContains($series_main->getId(), $seriesBenjenLord);
         static::assertNotContains($series_lhazar->getId(), $seriesBenjenLord);
 
         static::assertCount(1, $seriesNedLord);
+        $seriesNedLord = array_map(static function ($a) { return (string) $a; }, $seriesNedLord);
         static::assertNotContains($series_wall->getId(), $seriesNedLord);
         static::assertContains($series_main->getId(), $seriesNedLord);
         static::assertNotContains($series_lhazar->getId(), $seriesNedLord);
 
         static::assertCount(0, $seriesBenjenHand);
+        $seriesBenjenHand = array_map(static function ($a) { return (string) $a; }, $seriesBenjenHand);
         static::assertNotContains($series_wall->getId(), $seriesBenjenHand);
         static::assertNotContains($series_main->getId(), $seriesBenjenHand);
         static::assertNotContains($series_lhazar->getId(), $seriesBenjenHand);
 
         static::assertCount(1, $seriesNedHand);
+        $seriesNedHand = array_map(static function ($a) { return (string) $a; }, $seriesNedHand);
         static::assertNotContains($series_wall->getId(), $seriesNedHand);
         static::assertNotContains($series_main->getId(), $seriesNedHand);
         static::assertContains($series_lhazar->getId(), $seriesNedHand);
@@ -2253,21 +2261,27 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         static::assertCount(1, $seriesPerson2Role2User1);
         static::assertCount(0, $seriesPerson2Role3User1);
 
+        $seriesPerson1Role1User1 = array_map(static function ($a) { return (string) $a; }, $seriesPerson1Role1User1);
         static::assertContains($series1->getId(), $seriesPerson1Role1User1);
         static::assertNotContains($series2->getId(), $seriesPerson1Role1User1);
         static::assertNotContains($series3->getId(), $seriesPerson1Role1User1);
+        $seriesPerson1Role2User1 = array_map(static function ($a) { return (string) $a; }, $seriesPerson1Role2User1);
         static::assertNotContains($series1->getId(), $seriesPerson1Role2User1);
         static::assertNotContains($series2->getId(), $seriesPerson1Role2User1);
         static::assertNotContains($series3->getId(), $seriesPerson1Role2User1);
+        $seriesPerson1Role3User1 = array_map(static function ($a) { return (string) $a; }, $seriesPerson1Role3User1);
         static::assertNotContains($series1->getId(), $seriesPerson1Role3User1);
         static::assertNotContains($series2->getId(), $seriesPerson1Role3User1);
         static::assertContains($series3->getId(), $seriesPerson1Role3User1);
+        $seriesPerson2Role1User1 = array_map(static function ($a) { return (string) $a; }, $seriesPerson2Role1User1);
         static::assertNotContains($series1->getId(), $seriesPerson2Role1User1);
         static::assertNotContains($series2->getId(), $seriesPerson2Role1User1);
         static::assertNotContains($series3->getId(), $seriesPerson2Role1User1);
+        $seriesPerson2Role2User1 = array_map(static function ($a) { return (string) $a; }, $seriesPerson2Role2User1);
         static::assertNotContains($series1->getId(), $seriesPerson2Role2User1);
         static::assertContains($series2->getId(), $seriesPerson2Role2User1);
         static::assertNotContains($series3->getId(), $seriesPerson2Role2User1);
+        $seriesPerson2Role3User1 = array_map(static function ($a) { return (string) $a; }, $seriesPerson2Role3User1);
         static::assertNotContains($series1->getId(), $seriesPerson2Role3User1);
         static::assertNotContains($series2->getId(), $seriesPerson2Role3User1);
         static::assertNotContains($series3->getId(), $seriesPerson2Role3User1);
@@ -2286,21 +2300,27 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         static::assertCount(2, $seriesPerson2Role2User2);
         static::assertCount(1, $seriesPerson2Role3User2);
 
+        $seriesPerson1Role1User2 = array_map(static function ($a) { return (string) $a; }, $seriesPerson1Role1User2);
         static::assertContains($series1->getId(), $seriesPerson1Role1User2);
         static::assertNotContains($series2->getId(), $seriesPerson1Role1User2);
         static::assertNotContains($series3->getId(), $seriesPerson1Role1User2);
+        $seriesPerson1Role2User2 = array_map(static function ($a) { return (string) $a; }, $seriesPerson1Role2User2);
         static::assertContains($series1->getId(), $seriesPerson1Role2User2);
         static::assertNotContains($series2->getId(), $seriesPerson1Role2User2);
         static::assertNotContains($series3->getId(), $seriesPerson1Role2User2);
+        $seriesPerson1Role3User2 = array_map(static function ($a) { return (string) $a; }, $seriesPerson1Role3User2);
         static::assertContains($series1->getId(), $seriesPerson1Role3User2);
         static::assertNotContains($series2->getId(), $seriesPerson1Role3User2);
         static::assertContains($series3->getId(), $seriesPerson1Role3User2);
+        $seriesPerson2Role1User2 = array_map(static function ($a) { return (string) $a; }, $seriesPerson2Role1User2);
         static::assertContains($series1->getId(), $seriesPerson2Role1User2);
         static::assertNotContains($series2->getId(), $seriesPerson2Role1User2);
         static::assertNotContains($series3->getId(), $seriesPerson2Role1User2);
+        $seriesPerson2Role2User2 = array_map(static function ($a) { return (string) $a; }, $seriesPerson2Role2User2);
         static::assertContains($series1->getId(), $seriesPerson2Role2User2);
         static::assertContains($series2->getId(), $seriesPerson2Role2User2);
         static::assertNotContains($series3->getId(), $seriesPerson2Role2User2);
+        $seriesPerson2Role3User2 = array_map(static function ($a) { return (string) $a; }, $seriesPerson2Role3User2);
         static::assertContains($series1->getId(), $seriesPerson2Role3User2);
         static::assertNotContains($series2->getId(), $seriesPerson2Role3User2);
         static::assertNotContains($series3->getId(), $seriesPerson2Role3User2);
@@ -2319,21 +2339,27 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         static::assertCount(3, $seriesPerson2Role2User3);
         static::assertCount(2, $seriesPerson2Role3User3);
 
+        $seriesPerson1Role1User3 = array_map(static function ($a) { return (string) $a; }, $seriesPerson1Role1User3);
         static::assertContains($series1->getId(), $seriesPerson1Role1User3);
         static::assertNotContains($series2->getId(), $seriesPerson1Role1User3);
         static::assertContains($series3->getId(), $seriesPerson1Role1User3);
+        $seriesPerson1Role2User3 = array_map(static function ($a) { return (string) $a; }, $seriesPerson1Role2User3);
         static::assertContains($series1->getId(), $seriesPerson1Role2User3);
         static::assertNotContains($series2->getId(), $seriesPerson1Role2User3);
         static::assertContains($series3->getId(), $seriesPerson1Role2User3);
+        $seriesPerson1Role3User3 = array_map(static function ($a) { return (string) $a; }, $seriesPerson1Role3User3);
         static::assertContains($series1->getId(), $seriesPerson1Role3User3);
         static::assertNotContains($series2->getId(), $seriesPerson1Role3User3);
         static::assertContains($series3->getId(), $seriesPerson1Role3User3);
+        $seriesPerson2Role1User3 = array_map(static function ($a) { return (string) $a; }, $seriesPerson2Role1User3);
         static::assertContains($series1->getId(), $seriesPerson2Role1User3);
         static::assertNotContains($series2->getId(), $seriesPerson2Role1User3);
         static::assertContains($series3->getId(), $seriesPerson2Role1User3);
+        $seriesPerson2Role2User3 = array_map(static function ($a) { return (string) $a; }, $seriesPerson2Role2User3);
         static::assertContains($series1->getId(), $seriesPerson2Role2User3);
         static::assertContains($series2->getId(), $seriesPerson2Role2User3);
         static::assertContains($series3->getId(), $seriesPerson2Role2User3);
+        $seriesPerson2Role3User3 = array_map(static function ($a) { return (string) $a; }, $seriesPerson2Role3User3);
         static::assertContains($series1->getId(), $seriesPerson2Role3User3);
         static::assertNotContains($series2->getId(), $seriesPerson2Role3User3);
         static::assertContains($series3->getId(), $seriesPerson2Role3User3);
@@ -2352,21 +2378,27 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         static::assertCount(2, $seriesPerson2Role2User4);
         static::assertCount(2, $seriesPerson2Role3User4);
 
+        $seriesPerson1Role1User4 = array_map(static function ($a) { return (string) $a; }, $seriesPerson1Role1User4);
         static::assertContains($series1->getId(), $seriesPerson1Role1User4);
         static::assertContains($series2->getId(), $seriesPerson1Role1User4);
         static::assertNotContains($series3->getId(), $seriesPerson1Role1User4);
+        $seriesPerson1Role2User4 = array_map(static function ($a) { return (string) $a; }, $seriesPerson1Role2User4);
         static::assertContains($series1->getId(), $seriesPerson1Role2User4);
         static::assertContains($series2->getId(), $seriesPerson1Role2User4);
         static::assertNotContains($series3->getId(), $seriesPerson1Role2User4);
+        $seriesPerson1Role3User4 = array_map(static function ($a) { return (string) $a; }, $seriesPerson1Role3User4);
         static::assertContains($series1->getId(), $seriesPerson1Role3User4);
         static::assertContains($series2->getId(), $seriesPerson1Role3User4);
         static::assertContains($series3->getId(), $seriesPerson1Role3User4);
+        $seriesPerson2Role1User4 = array_map(static function ($a) { return (string) $a; }, $seriesPerson2Role1User4);
         static::assertContains($series1->getId(), $seriesPerson2Role1User4);
         static::assertContains($series2->getId(), $seriesPerson2Role1User4);
         static::assertNotContains($series3->getId(), $seriesPerson2Role1User4);
+        $seriesPerson2Role2User4 = array_map(static function ($a) { return (string) $a; }, $seriesPerson2Role2User4);
         static::assertContains($series1->getId(), $seriesPerson2Role2User4);
         static::assertContains($series2->getId(), $seriesPerson2Role2User4);
         static::assertNotContains($series3->getId(), $seriesPerson2Role2User4);
+        $seriesPerson2Role3User4 = array_map(static function ($a) { return (string) $a; }, $seriesPerson2Role3User4);
         static::assertContains($series1->getId(), $seriesPerson2Role3User4);
         static::assertContains($series2->getId(), $seriesPerson2Role3User4);
         static::assertNotContains($series3->getId(), $seriesPerson2Role3User4);
@@ -2385,21 +2417,27 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         static::assertCount(3, $seriesPerson2Role2User5);
         static::assertCount(2, $seriesPerson2Role3User5);
 
+        $seriesPerson1Role1User5 = array_map(static function ($a) { return (string) $a; }, $seriesPerson1Role1User5);
         static::assertContains($series1->getId(), $seriesPerson1Role1User5);
         static::assertNotContains($series2->getId(), $seriesPerson1Role1User5);
         static::assertContains($series3->getId(), $seriesPerson1Role1User5);
+        $seriesPerson1Role2User5 = array_map(static function ($a) { return (string) $a; }, $seriesPerson1Role2User5);
         static::assertContains($series1->getId(), $seriesPerson1Role2User5);
         static::assertNotContains($series2->getId(), $seriesPerson1Role2User5);
         static::assertContains($series3->getId(), $seriesPerson1Role2User5);
+        $seriesPerson1Role3User5 = array_map(static function ($a) { return (string) $a; }, $seriesPerson1Role3User5);
         static::assertContains($series1->getId(), $seriesPerson1Role3User5);
         static::assertNotContains($series2->getId(), $seriesPerson1Role3User5);
         static::assertContains($series3->getId(), $seriesPerson1Role3User5);
+        $seriesPerson2Role1User5 = array_map(static function ($a) { return (string) $a; }, $seriesPerson2Role1User5);
         static::assertContains($series1->getId(), $seriesPerson2Role1User5);
         static::assertNotContains($series2->getId(), $seriesPerson2Role1User5);
         static::assertContains($series3->getId(), $seriesPerson2Role1User5);
+        $seriesPerson2Role2User5 = array_map(static function ($a) { return (string) $a; }, $seriesPerson2Role2User5);
         static::assertContains($series1->getId(), $seriesPerson2Role2User5);
         static::assertContains($series2->getId(), $seriesPerson2Role2User5);
         static::assertContains($series3->getId(), $seriesPerson2Role2User5);
+        $seriesPerson2Role3User5 = array_map(static function ($a) { return (string) $a; }, $seriesPerson2Role3User5);
         static::assertContains($series1->getId(), $seriesPerson2Role3User5);
         static::assertNotContains($series2->getId(), $seriesPerson2Role3User5);
         static::assertContains($series3->getId(), $seriesPerson2Role3User5);
@@ -2418,21 +2456,27 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         static::assertCount(2, $seriesPerson2Role2User6);
         static::assertCount(2, $seriesPerson2Role3User6);
 
+        $seriesPerson1Role1User6 = array_map(static function ($a) { return (string) $a; }, $seriesPerson1Role1User6);
         static::assertContains($series1->getId(), $seriesPerson1Role1User6);
         static::assertContains($series2->getId(), $seriesPerson1Role1User6);
         static::assertNotContains($series3->getId(), $seriesPerson1Role1User6);
+        $seriesPerson1Role2User6 = array_map(static function ($a) { return (string) $a; }, $seriesPerson1Role2User6);
         static::assertContains($series1->getId(), $seriesPerson1Role2User6);
         static::assertContains($series2->getId(), $seriesPerson1Role2User6);
         static::assertNotContains($series3->getId(), $seriesPerson1Role2User6);
+        $seriesPerson1Role3User6 = array_map(static function ($a) { return (string) $a; }, $seriesPerson1Role3User6);
         static::assertContains($series1->getId(), $seriesPerson1Role3User6);
         static::assertContains($series2->getId(), $seriesPerson1Role3User6);
         static::assertContains($series3->getId(), $seriesPerson1Role3User6);
+        $seriesPerson2Role1User6 = array_map(static function ($a) { return (string) $a; }, $seriesPerson2Role1User6);
         static::assertContains($series1->getId(), $seriesPerson2Role1User6);
         static::assertContains($series2->getId(), $seriesPerson2Role1User6);
         static::assertNotContains($series3->getId(), $seriesPerson2Role1User6);
+        $seriesPerson2Role2User6 = array_map(static function ($a) { return (string) $a; }, $seriesPerson2Role2User6);
         static::assertContains($series1->getId(), $seriesPerson2Role2User6);
         static::assertContains($series2->getId(), $seriesPerson2Role2User6);
         static::assertNotContains($series3->getId(), $seriesPerson2Role2User6);
+        $seriesPerson2Role3User6 = array_map(static function ($a) { return (string) $a; }, $seriesPerson2Role3User6);
         static::assertContains($series1->getId(), $seriesPerson2Role3User6);
         static::assertContains($series2->getId(), $seriesPerson2Role3User6);
         static::assertNotContains($series3->getId(), $seriesPerson2Role3User6);
@@ -2451,21 +2495,27 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         static::assertCount(3, $seriesPerson2Role2User7);
         static::assertCount(3, $seriesPerson2Role3User7);
 
+        $seriesPerson1Role1User7 = array_map(static function ($a) { return (string) $a; }, $seriesPerson1Role1User7);
         static::assertContains($series1->getId(), $seriesPerson1Role1User7);
         static::assertContains($series2->getId(), $seriesPerson1Role1User7);
         static::assertContains($series3->getId(), $seriesPerson1Role1User7);
+        $seriesPerson1Role2User7 = array_map(static function ($a) { return (string) $a; }, $seriesPerson1Role2User7);
         static::assertContains($series1->getId(), $seriesPerson1Role2User7);
         static::assertContains($series2->getId(), $seriesPerson1Role2User7);
         static::assertContains($series3->getId(), $seriesPerson1Role2User7);
+        $seriesPerson1Role3User7 = array_map(static function ($a) { return (string) $a; }, $seriesPerson1Role3User7);
         static::assertContains($series1->getId(), $seriesPerson1Role3User7);
         static::assertContains($series2->getId(), $seriesPerson1Role3User7);
         static::assertContains($series3->getId(), $seriesPerson1Role3User7);
+        $seriesPerson2Role1User7 = array_map(static function ($a) { return (string) $a; }, $seriesPerson2Role1User7);
         static::assertContains($series1->getId(), $seriesPerson2Role1User7);
         static::assertContains($series2->getId(), $seriesPerson2Role1User7);
         static::assertContains($series3->getId(), $seriesPerson2Role1User7);
+        $seriesPerson2Role2User7 = array_map(static function ($a) { return (string) $a; }, $seriesPerson2Role2User7);
         static::assertContains($series1->getId(), $seriesPerson2Role2User7);
         static::assertContains($series2->getId(), $seriesPerson2Role2User7);
         static::assertContains($series3->getId(), $seriesPerson2Role2User7);
+        $seriesPerson2Role3User7 = array_map(static function ($a) { return (string) $a; }, $seriesPerson2Role3User7);
         static::assertContains($series1->getId(), $seriesPerson2Role3User7);
         static::assertContains($series2->getId(), $seriesPerson2Role3User7);
         static::assertContains($series3->getId(), $seriesPerson2Role3User7);
@@ -2484,21 +2534,27 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         static::assertCount(3, $seriesPerson2Role2User8);
         static::assertCount(3, $seriesPerson2Role3User8);
 
+        $seriesPerson1Role1User8 = array_map(static function ($a) { return (string) $a; }, $seriesPerson1Role1User8);
         static::assertContains($series1->getId(), $seriesPerson1Role1User8);
         static::assertContains($series2->getId(), $seriesPerson1Role1User8);
         static::assertContains($series3->getId(), $seriesPerson1Role1User8);
+        $seriesPerson1Role2User8 = array_map(static function ($a) { return (string) $a; }, $seriesPerson1Role2User8);
         static::assertContains($series1->getId(), $seriesPerson1Role2User8);
         static::assertContains($series2->getId(), $seriesPerson1Role2User8);
         static::assertContains($series3->getId(), $seriesPerson1Role2User8);
+        $seriesPerson1Role3User8 = array_map(static function ($a) { return (string) $a; }, $seriesPerson1Role3User8);
         static::assertContains($series1->getId(), $seriesPerson1Role3User8);
         static::assertContains($series2->getId(), $seriesPerson1Role3User8);
         static::assertContains($series3->getId(), $seriesPerson1Role3User8);
+        $seriesPerson2Role1User8 = array_map(static function ($a) { return (string) $a; }, $seriesPerson2Role1User8);
         static::assertContains($series1->getId(), $seriesPerson2Role1User8);
         static::assertContains($series2->getId(), $seriesPerson2Role1User8);
         static::assertContains($series3->getId(), $seriesPerson2Role1User8);
+        $seriesPerson2Role2User8 = array_map(static function ($a) { return (string) $a; }, $seriesPerson2Role2User8);
         static::assertContains($series1->getId(), $seriesPerson2Role2User8);
         static::assertContains($series2->getId(), $seriesPerson2Role2User8);
         static::assertContains($series3->getId(), $seriesPerson2Role2User8);
+        $seriesPerson2Role3User8 = array_map(static function ($a) { return (string) $a; }, $seriesPerson2Role3User8);
         static::assertContains($series1->getId(), $seriesPerson2Role3User8);
         static::assertContains($series2->getId(), $seriesPerson2Role3User8);
         static::assertContains($series3->getId(), $seriesPerson2Role3User8);
@@ -2815,6 +2871,11 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         static::assertCount(0, $loginSeriesField);
         static::assertCount(0, $groupsSeriesField);
 
+        $passwordSeriesField = array_map(static function ($a) { return (string) $a; }, $passwordSeriesField);
+        $publicSeriesField = array_map(static function ($a) { return (string) $a; }, $publicSeriesField);
+        $loginSeriesField = array_map(static function ($a) { return (string) $a; }, $loginSeriesField);
+        $groupsSeriesField = array_map(static function ($a) { return (string) $a; }, $groupsSeriesField);
+
         static::assertContains($series1->getId(), $passwordSeriesField);
         static::assertNotContains($series1->getId(), $publicSeriesField);
         static::assertNotContains($series1->getId(), $loginSeriesField);
@@ -2851,6 +2912,9 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         static::assertCount(0, $seriesGroups2);
         static::assertCount(0, $seriesGroups12);
 
+        $seriesGroups1 = array_map(static function ($a) { return (string) $a; }, $seriesGroups1);
+        $seriesGroups2 = array_map(static function ($a) { return (string) $a; }, $seriesGroups2);
+        $seriesGroups12 = array_map(static function ($a) { return (string) $a; }, $seriesGroups12);
         static::assertContains($series1->getId(), $seriesGroups1);
         static::assertNotContains($series2->getId(), $seriesGroups1);
         static::assertNotContains($series1->getId(), $seriesGroups2);
