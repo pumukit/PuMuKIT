@@ -93,7 +93,7 @@ class ProfileServiceTest extends PumukitTestCase
 
     public function testInvalidTargetPath()
     {
-$this->expectException(\InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('for dir_out of the streamserver');
         //        $profileService = new ProfileService($this->getDemoProfilesWithNonExistingPath(), $this->dm);
         ProfileService::validateProfilesDir($this->getDemoProfilesWithNonExistingPath());
