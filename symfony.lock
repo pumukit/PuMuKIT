@@ -1,0 +1,20 @@
+{
+    "babdev/pagerfanta-bundle": {
+        "version": "v2.8.0"
+    },
+    "php-parallel-lint/php-var-dump-check": {
+        "version": "v0.5"
+    },
+    "phpstan/phpdoc-parser": {
+        "version": "0.4.10"
+    },
+    "phpunit/php-invoker": {
+        "version": "3.1.1"
+    },
+    "sebastian/code-unit": {
+        "version": "1.0.8"
+    },
+    "sebastian/type": {
+        "version": "1.1.4"
+    }
+}
