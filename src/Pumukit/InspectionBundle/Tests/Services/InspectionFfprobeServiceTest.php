@@ -45,20 +45,16 @@ class InspectionFfprobeServiceTest extends TestCase
         parent::tearDown();
     }
 
-    /**
-     * @expectedException \BadMethodCallException
-     */
     public function testGetDurationFileNotExists(): void
     {
+        $this->expectException(\BadMethodCallException::class);
         $is = new InspectionFfprobeService();
         $is->getDuration('http://trololo.com');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testGetDurationFileWithoutMultimediaContent(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $is = new InspectionFfprobeService();
         $is->getDuration($this->wrong_file_textfile);
         $is = new InspectionFfprobeService();
@@ -76,21 +72,17 @@ class InspectionFfprobeServiceTest extends TestCase
         static::assertEquals(2, $is->getDuration($file2));
     }
 
-    /**
-     * @expectedException \BadMethodCallException
-     */
     public function testAutocompleteTrackWithoutPath(): void
     {
+        $this->expectException(\BadMethodCallException::class);
         $empty_track = new Track();
         $is = new InspectionFfprobeService();
         $is->autocompleteTrack($empty_track);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testAutocompleteTrackFileWithoutMultimediaContent(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $wrong_track = new Track();
         $is = new InspectionFfprobeService();
         $wrong_track->setPath($this->wrong_file_textfile);

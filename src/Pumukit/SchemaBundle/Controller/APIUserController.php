@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class APIUserController extends AbstractController
 {
     /**
-     * @Route("/users.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     * @Route("/users.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      */
     public function allAction(Request $request, DocumentManager $documentManager, SerializerService $serializer)
     {

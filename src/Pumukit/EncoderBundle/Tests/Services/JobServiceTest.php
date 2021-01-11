@@ -291,12 +291,10 @@ class JobServiceTest extends PumukitTestCase
         static::assertNull($this->jobService->getNextJob());
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Can't find given profile with name
-     */
     public function testExceptionProfileName()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Can\'t find given profile with name');
         $pathFile = $this->resourcesDir.'test.txt';
 
         $profile = 'non_existing';
@@ -311,23 +309,19 @@ class JobServiceTest extends PumukitTestCase
         $this->jobService->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Can't find job with id
-     */
     public function testExceptionJobId()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Can\'t find job with id');
         $this->jobService->pauseJob('non_existing');
         $this->jobService->resumeJob('non_existing');
         $this->jobService->cancelJob('non_existing');
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Trying to cancel job
-     */
     public function testExceptionCancelJobNotPausedOrWaiting()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Trying to cancel job');
         $job = $this->createNewJob(Job::STATUS_EXECUTING);
         $this->jobService->cancelJob($job->getId());
     }

@@ -639,12 +639,10 @@ class PersonServiceTest extends PumukitTestCase
         static::assertEquals($personBob->getId(), $mm1PeopleActor[2]->getId());
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage remove Person with id
-     */
     public function testDeletePerson()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('remove Person with id');
         static::assertCount(0, $this->repo->findAll());
 
         $person = new Person();

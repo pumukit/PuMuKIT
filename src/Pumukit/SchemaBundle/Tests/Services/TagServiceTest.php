@@ -61,12 +61,10 @@ class TagServiceTest extends PumukitTestCase
         static::assertEquals(1, $tag->getNumberMultimediaObjects());
     }
 
-    /**
-     * @expectedException         \Exception
-     * @expectedExceptionMessage  not found
-     */
     public function testTagFindNotExistinAdd()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('not found');
         $mmobj = $this->createMultimediaObject('titulo cualquiera');
         $tag = null;
 
@@ -291,12 +289,10 @@ class TagServiceTest extends PumukitTestCase
         static::assertEquals(1, $tag32->getNumberMultimediaObjects());
     }
 
-    /**
-     * @expectedException         \Exception
-     * @expectedExceptionMessage  not found
-     */
     public function testTagFindNotExistInRemove()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('not found');
         $mmobj = $this->createMultimediaObject('titulo cualquiera');
         $tag = null;
 
@@ -405,11 +401,9 @@ class TagServiceTest extends PumukitTestCase
         }
     }
 
-    /**
-     * @expectedException \Exception
-     */
     public function testDeleteUsedTag()
     {
+        $this->expectException(\Exception::class);
         $tag = $this->createTagWithTree('tag1');
         $series = $this->factoryService->createSeries();
         $mmObject0 = $this->factoryService->createMultimediaObject($series);

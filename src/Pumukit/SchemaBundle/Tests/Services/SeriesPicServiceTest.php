@@ -207,12 +207,10 @@ class SeriesPicServiceTest extends PumukitTestCase
         }
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage for storing Pics does not exist
-     */
     public function testInvalidTargetPath()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('for storing Pics does not exist');
         $seriespicService = new SeriesPicService($this->dm, $this->seriesDispatcher, ['gl'], '/non/existing/path', '/uploads/pic', true);
     }
 

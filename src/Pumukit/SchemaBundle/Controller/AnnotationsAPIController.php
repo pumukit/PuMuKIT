@@ -36,7 +36,7 @@ class AnnotationsAPIController extends AbstractController
     }
 
     /**
-     * @Route("/annotations.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"}, methods={"GET"})
+     * @Route("/annotations.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"}, methods={"GET"})
      */
     public function getAction(Request $request)
     {
@@ -91,7 +91,7 @@ class AnnotationsAPIController extends AbstractController
     }
 
     /**
-     * @Route("/{id}.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"}, methods={"GET"})
+     * @Route("/{id}.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"}, methods={"GET"})
      */
     public function getByIdAction(Request $request, Annotation $annotation)
     {

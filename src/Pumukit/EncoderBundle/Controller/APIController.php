@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class APIController extends AbstractController
 {
     /**
-     * @Route("/profiles.{_format}", defaults={"_format"="json"}, requirements={"_format": "json"})
+     * @Route("/profiles.{_format}", defaults={"_format"="json"}, requirements={"_format"="json"})
      */
     public function profilesAction(ProfileService $profileService): JsonResponse
     {
@@ -27,7 +27,7 @@ class APIController extends AbstractController
     }
 
     /**
-     * @Route("/cpus.{_format}", defaults={"_format"="json"}, requirements={"_format": "json"})
+     * @Route("/cpus.{_format}", defaults={"_format"="json"}, requirements={"_format"="json"})
      */
     public function cpusAction(CpuService $cpuService): JsonResponse
     {
@@ -37,7 +37,7 @@ class APIController extends AbstractController
     }
 
     /**
-     * @Route("/jobs.{_format}", defaults={"_format"="json"}, requirements={"_format": "json"})
+     * @Route("/jobs.{_format}", defaults={"_format"="json"}, requirements={"_format"="json"})
      */
     public function jobsAction(JobService $jobService): JsonResponse
     {
