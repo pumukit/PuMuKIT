@@ -63,7 +63,7 @@
         </service>
 
         <service id="pumukit_schema.schema.multimedia_object_add_owner" class="Pumukit\SchemaBundle\EventListener\MultimediaObjectAddOwnerListener">
-            <argument type="service" id="pumukit_notification.sender" />
+            <argument type="service" id="pumukit_notification.sender" on-invalid="ignore" />
             <argument>%pumukit_schema.multimedia_object_add_owner_subject%</argument>
             <argument>%pumukit_schema.multimedia_object_add_owner_template%</argument>
             <tag name="kernel.event_listener" event="multimedia_object.add_owner" method="add" />
