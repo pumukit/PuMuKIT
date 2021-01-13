@@ -24,13 +24,25 @@ class CreateUserCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->writeln('<fg=white;bg=cyan>Admin user creator</>');
+        $output->writeln(
+            ['<info> ***** Executing pumukit:create:user *****</info>']
+        );
 
         $username = $input->getArgument('username');
         $email = $input->getArgument('email');
         $password = $input->getArgument('password');
 
-        $this->createUserService->create($username, $password, $email, true);
+        $userWasCreated = $this->createUserService->createSuperAdmin($username, $password, $email);
+
+        if($userWasCreated) {
+            $message = '<info> User '. $username .' created </info>';
+        } else {
+            $message = '<error> User '. $username .' already on DB </error>';
+        }
+
+        $output->writeln(
+            [$message]
+        );
 
         return 0;
     }
@@ -58,4 +70,3 @@ class CreateUserCommand extends Command
         ;
     }
 }
-

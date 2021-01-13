@@ -88,7 +88,6 @@ class UserController extends AdminController
                     $userData['fullname'],
                     $this->getPermissionProfile($userData['permissionProfile'])
                 );
-
             } catch (\Exception $e) {
                 throw $e;
             }
