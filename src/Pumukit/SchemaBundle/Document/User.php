@@ -324,7 +324,7 @@ class User implements UserInterface
 
     public function setUsername(string $username): void
     {
-        $this->username = $username;
+        $this->username = strtolower($username);
     }
 
     public function getEmail()
@@ -334,7 +334,7 @@ class User implements UserInterface
 
     public function setEmail($email): void
     {
-        $this->email = $email;
+        $this->email = strtolower($email);
     }
 
     public function getEnabled(): bool

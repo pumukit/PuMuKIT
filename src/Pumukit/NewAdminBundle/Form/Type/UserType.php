@@ -81,26 +81,26 @@ class UserType extends AbstractType
                 ]
             )
         ;
-
-        $builder->addEventListener(
-            FormEvents::POST_SET_DATA,
-            function (FormEvent $event) {
-                $user = $event->getData();
-                if ($user->hasRole('ROLE_SUPER_ADMIN')) {
-                    $event->getForm()->remove('permissionProfile');
-                    $event->getForm()->add(
-                        'permissionProfilePlacebo',
-                        ChoiceType::class,
-                        [
-                            'mapped' => false,
-                            'choices' => ['System Super Administrator' => 'ROLE_SUPER_ADMIN'],
-                            'attr' => ['aria-label' => $this->translator->trans('Permission Profile', [], null, $this->locale)],
-                            'label' => $this->translator->trans('Permission Profile', [], null, $this->locale),
-                        ]
-                    );
-                }
-            }
-        );
+//
+//        $builder->addEventListener(
+//            FormEvents::POST_SET_DATA,
+//            function (FormEvent $event) {
+//                $user = $event->getData();
+//                if ($user->hasRole('ROLE_SUPER_ADMIN')) {
+//                    $event->getForm()->remove('permissionProfile');
+//                    $event->getForm()->add(
+//                        'permissionProfilePlacebo',
+//                        ChoiceType::class,
+//                        [
+//                            'mapped' => false,
+//                            'choices' => ['System Super Administrator' => 'ROLE_SUPER_ADMIN'],
+//                            'attr' => ['aria-label' => $this->translator->trans('Permission Profile', [], null, $this->locale)],
+//                            'label' => $this->translator->trans('Permission Profile', [], null, $this->locale),
+//                        ]
+//                    );
+//                }
+//            }
+//        );
     }
 
     public function configureOptions(OptionsResolver $resolver): void

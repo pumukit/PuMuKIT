@@ -356,54 +356,6 @@ class UserServiceTest extends PumukitTestCase
         static::assertCount(0, $this->repo->findAll());
     }
 
-    public function testInstantiate()
-    {
-        $permissionProfile1 = new PermissionProfile();
-        $permissionProfile1->setName('1');
-        $permissionProfile1->setDefault(false);
-
-        $permissionProfile2 = new PermissionProfile();
-        $permissionProfile2->setName('2');
-        $permissionProfile2->setDefault(true);
-
-        $this->dm->persist($permissionProfile1);
-        $this->dm->persist($permissionProfile2);
-        $this->dm->flush();
-
-        $user1 = $this->userService->instantiate('usernameTest', 'emailTest@teltek.es');
-
-        static::assertEquals('usernameTest', $user1->getUsername());
-        static::assertEquals('emailTest@teltek.es', $user1->getEmail());
-        static::assertTrue($user1->isEnabled());
-        static::assertNotEquals($permissionProfile1, $user1->getPermissionProfile());
-        static::assertEquals($permissionProfile2, $user1->getPermissionProfile());
-
-        $userName = 'test';
-        $email = 'test@mail.com';
-        $enabled = false;
-
-        $permissionProfile1->setDefault(true);
-        $permissionProfile2->setDefault(false);
-        $this->dm->persist($permissionProfile1);
-        $this->dm->persist($permissionProfile2);
-        $this->dm->flush();
-
-        $user2 = $this->userService->instantiate($userName, $email, $enabled);
-
-        static::assertEquals($userName, $user2->getUsername());
-        static::assertEquals($email, $user2->getEmail());
-        static::assertFalse($user2->isEnabled());
-        static::assertEquals($permissionProfile1, $user2->getPermissionProfile());
-        static::assertNotEquals($permissionProfile2, $user2->getPermissionProfile());
-    }
-
-    public function testInstantiateException()
-    {
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('Unable to assign a Permission Profile to the new User. There is no default Permission Profile');
-        $user = $this->userService->instantiate();
-    }
-
     public function testHasScopes()
     {
         $globalProfile = new PermissionProfile();
@@ -615,10 +567,12 @@ class UserServiceTest extends PumukitTestCase
         static::assertTrue($this->userService->isAllowedToModifyUserGroup($casUser, $localGroup));
     }
 
+    /**
+     * @expectedException         \Exception
+     * @expectedExceptionMessage  is not local and can not be modified
+     */
     public function testUpdateException()
     {
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('is not local and can not be modified');
         $permissions1 = [Permission::ACCESS_DASHBOARD, Permission::ACCESS_ROLES];
         $permissionProfile1 = new PermissionProfile();
         $permissionProfile1->setPermissions($permissions1);
@@ -682,10 +636,12 @@ class UserServiceTest extends PumukitTestCase
         static::assertTrue($localUser->containsGroup($casGroup));
     }
 
+    /**
+     * @expectedException         \Exception
+     * @expectedExceptionMessage  Not allowed to add group
+     */
     public function testExceptionAddGroupCasCas()
     {
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('Not allowed to add group');
         $casGroup = new Group();
         $casGroup->setKey('cas_key');
         $casGroup->setName('CAS Group');
@@ -757,10 +713,12 @@ class UserServiceTest extends PumukitTestCase
         static::assertFalse($localUser->containsGroup($casGroup));
     }
 
+    /**
+     * @expectedException         \Exception
+     * @expectedExceptionMessage  Not allowed to delete group
+     */
     public function testExceptionDeleteGroupCasCas()
     {
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('Not allowed to delete group');
         $casGroup = new Group();
         $casGroup->setKey('cas_key');
         $casGroup->setName('CAS Group');

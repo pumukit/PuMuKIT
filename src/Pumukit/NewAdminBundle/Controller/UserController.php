@@ -70,15 +70,19 @@ class UserController extends AdminController
 
     public function createAction(Request $request)
     {
-        $user = $this->userService->instantiate();
-        $form = $this->getForm($user, $request->getLocale());
+        $form = $this->getForm(null, $request->getLocale());
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->createUserService->create($username, $password, $email, true);
-                $user = $this->userService->create($user);
-                $this->personService->referencePersonIntoUser($user);
+                $userData = $request->get('pumukitnewadmin_user');
+                $this->createUserService->createUser(
+                    $userData['username'],
+                    $userData['plain_password']['first'],
+                    $userData['email'],
+                    $userData['fullname'],
+                    $this->getPermissionProfile($userData['permissionProfile'])
+                );
             } catch (\Exception $e) {
                 throw $e;
             }
@@ -86,13 +90,14 @@ class UserController extends AdminController
             return $this->redirect($this->generateUrl('pumukitnewadmin_user_list'));
         }
 
-        return $this->render(
-            '@PumukitNewAdmin/User/create.html.twig',
-            [
-                'user' => $user,
-                'form' => $form->createView(),
-            ]
-        );
+        return $this->render('@PumukitNewAdmin/User/create.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    private function getPermissionProfile(string $permissionProfileId)
+    {
+        return $this->documentManager->getRepository(PermissionProfile::class)->find(new ObjectId($permissionProfileId));
     }
 
     public function updateAction(Request $request)

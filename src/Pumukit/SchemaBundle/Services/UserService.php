@@ -226,25 +226,6 @@ class UserService
         return $user;
     }
 
-    public function instantiate(string $userName = '',string  $email = '',bool $enabled = true)
-    {
-        $user = new User();
-        if ($userName) {
-            $user->setUsername($userName);
-        }
-        if ($email) {
-            $user->setEmail($email);
-        }
-        $defaultPermissionProfile = $this->permissionProfileService->getDefault();
-        if (null === $defaultPermissionProfile) {
-            throw new \Exception('Unable to assign a Permission Profile to the new User. There is no default Permission Profile');
-        }
-        $user->setPermissionProfile($defaultPermissionProfile);
-        $user->setEnabled($enabled);
-
-        return $user;
-    }
-
     public function hasGlobalScope(User $user)
     {
         if ($user->getPermissionProfile()) {

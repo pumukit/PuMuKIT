@@ -118,11 +118,5 @@
             "allow-contrib": false,
             "require": "^4.0"
         }
-    },
-    "repositories": {
-        "teltekfosuserbundle": {
-            "type": "vcs",
-            "url": "https://github.com/teltek/FOSUserBundle"
-        }
     }
 }
