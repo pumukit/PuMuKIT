@@ -567,12 +567,10 @@ class UserServiceTest extends PumukitTestCase
         static::assertTrue($this->userService->isAllowedToModifyUserGroup($casUser, $localGroup));
     }
 
-    /**
-     * @expectedException         \Exception
-     * @expectedExceptionMessage  is not local and can not be modified
-     */
     public function testUpdateException()
     {
+        $this->expectExceptionMessage("is not local and can not be modified");
+        $this->expectException(\Exception::class);
         $permissions1 = [Permission::ACCESS_DASHBOARD, Permission::ACCESS_ROLES];
         $permissionProfile1 = new PermissionProfile();
         $permissionProfile1->setPermissions($permissions1);
@@ -636,12 +634,10 @@ class UserServiceTest extends PumukitTestCase
         static::assertTrue($localUser->containsGroup($casGroup));
     }
 
-    /**
-     * @expectedException         \Exception
-     * @expectedExceptionMessage  Not allowed to add group
-     */
     public function testExceptionAddGroupCasCas()
     {
+        $this->expectExceptionMessage("Not allowed to add group");
+        $this->expectException(\Exception::class);
         $casGroup = new Group();
         $casGroup->setKey('cas_key');
         $casGroup->setName('CAS Group');
@@ -713,12 +709,10 @@ class UserServiceTest extends PumukitTestCase
         static::assertFalse($localUser->containsGroup($casGroup));
     }
 
-    /**
-     * @expectedException         \Exception
-     * @expectedExceptionMessage  Not allowed to delete group
-     */
     public function testExceptionDeleteGroupCasCas()
     {
+        $this->expectExceptionMessage("Not allowed to delete group");
+        $this->expectException(\Exception::class);
         $casGroup = new Group();
         $casGroup->setKey('cas_key');
         $casGroup->setName('CAS Group');

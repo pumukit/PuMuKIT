@@ -81,9 +81,11 @@ class CreateUserServiceTest extends PumukitTestCase
             $userValues['permissionProfile']
         );
 
-        static::assertEquals($user->getUsername(), $userValues['username']);
+        static::assertNotEquals($user->getUsername(), $userValues['username']);
+        static::assertEquals($user->getUsername(), strtolower($userValues['username']));
         static::assertNotEquals($user->getPassword(), $userValues['password']);
-        static::assertEquals($user->getEmail(), $userValues['email']);
+        static::assertNotEquals($user->getEmail(), $userValues['email']);
+        static::assertEquals($user->getEmail(), strtolower($userValues['email']));
         static::assertFalse($user->isSuperAdmin());
 
         $associatedPermissionProfile = $userValues['permissionProfile'];
@@ -100,9 +102,11 @@ class CreateUserServiceTest extends PumukitTestCase
             $userValues['email']
         );
 
-        static::assertEquals($user->getUsername(), $userValues['username']);
+        static::assertNotEquals($user->getUsername(), $userValues['username']);
+        static::assertEquals($user->getUsername(), strtolower($userValues['username']));
         static::assertNotEquals($user->getPassword(), $userValues['password']);
-        static::assertEquals($user->getEmail(), $userValues['email']);
+        static::assertNotEquals($user->getEmail(), $userValues['email']);
+        static::assertEquals($user->getEmail(), strtolower($userValues['email']));
         static::assertEquals($user->getFullName(), $userValues['username']);
         static::assertTrue($user->isSuperAdmin());
     }
@@ -142,7 +146,7 @@ class CreateUserServiceTest extends PumukitTestCase
 
     private function getUserNameOfUserTest(): string
     {
-        return strtolower('UserTest');
+        return 'UserTest';
     }
 
     private function getPasswordOfUserTest(): string
@@ -152,7 +156,7 @@ class CreateUserServiceTest extends PumukitTestCase
 
     private function getEmailOfUserTest(): string
     {
-        return strtolower('user@examplemail.com');
+        return 'USER@examplemail.com';
     }
 
     private function getFullNameOfUserTest(): string
