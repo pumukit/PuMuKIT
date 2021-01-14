@@ -532,31 +532,6 @@ class UserServiceTest extends PumukitTestCase
         static::assertTrue($this->userService->isAllowedToModifyUserGroup($casUser, $localGroup));
     }
 
-//    public function testUpdateException()
-//    {
-//        $this->expectExceptionMessage("is not local and can not be modified");
-//        $this->expectException(\Exception::class);
-//        $permissions1 = [Permission::ACCESS_DASHBOARD, Permission::ACCESS_ROLES];
-//        $permissionProfile1 = new PermissionProfile();
-//        $permissionProfile1->setPermissions($permissions1);
-//        $permissionProfile1->setName('permissionprofile1');
-//        $permissionProfile1->setScope(PermissionProfile::SCOPE_PERSONAL);
-//        $this->dm->persist($permissionProfile1);
-//        $this->dm->flush();
-//
-//        $username = 'test';
-//        $email = 'test@mail.com';
-//        $user = new User();
-//        $user->setUsername($username);
-//        $user->setEmail($email);
-//        $user->setPermissionProfile($permissionProfile1);
-//        $user->setOrigin('cas');
-//
-//        $user = $this->userService->create($user);
-//        $user->setUsername('test2');
-//        $user = $this->userService->update($user);
-//    }
-
     public function testAddGroupLocalCas()
     {
         $localGroup = new Group();
