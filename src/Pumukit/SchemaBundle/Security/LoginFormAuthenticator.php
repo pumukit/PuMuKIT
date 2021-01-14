@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Pumukit\UserBundle\Security;
+namespace Pumukit\SchemaBundle\Security;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\User;

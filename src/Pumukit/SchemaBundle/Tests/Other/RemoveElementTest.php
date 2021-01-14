@@ -10,12 +10,12 @@ use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Services\CreateUserService;
 use Pumukit\SchemaBundle\Services\PermissionProfileEventDispatcherService;
 use Pumukit\SchemaBundle\Services\PermissionProfileService;
 use Pumukit\SchemaBundle\Services\PermissionService;
 use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Services\UserEventDispatcherService;
-use Pumukit\UserBundle\Services\CreateUserService;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 

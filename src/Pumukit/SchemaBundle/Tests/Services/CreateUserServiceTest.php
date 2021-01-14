@@ -2,19 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Pumukit\UserBundle\Tests\Services;
+namespace Pumukit\SchemaBundle\Tests\Services;
 
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
-use Pumukit\SchemaBundle\Document\User;
-use Pumukit\SchemaBundle\Security\Permission;
+use Pumukit\SchemaBundle\Services\CreateUserService;
 use Pumukit\SchemaBundle\Services\PermissionProfileEventDispatcherService;
 use Pumukit\SchemaBundle\Services\PermissionProfileService;
 use Pumukit\SchemaBundle\Services\PermissionService;
 use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Services\UserEventDispatcherService;
-use Pumukit\UserBundle\Services\CreateUserService;
-use Pumukit\UserBundle\Services\UpdateUserService;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 
@@ -22,11 +19,9 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
  * @internal
  * @coversNothing
  */
-class UpdateUserServiceTest extends PumukitTestCase
+class CreateUserServiceTest extends PumukitTestCase
 {
     private $createUserService;
-    private $userPasswordEncoder;
-    private $updateUserService;
 
     public function setUp(): void
     {
@@ -46,7 +41,7 @@ class UpdateUserServiceTest extends PumukitTestCase
             $permissionService
         );
 
-        $this->userPasswordEncoder = $this->getMockBuilder(UserPasswordEncoder::class)
+        $userPasswordEncoder = $this->getMockBuilder(UserPasswordEncoder::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;
@@ -58,16 +53,9 @@ class UpdateUserServiceTest extends PumukitTestCase
 
         $this->createUserService = new CreateUserService(
             $this->dm,
-            $this->userPasswordEncoder,
+            $userPasswordEncoder,
             $permissionProfileService,
             $personService,
-            $userDispatcher
-        );
-
-        $this->updateUserService = new UpdateUserService(
-            $this->dm,
-            $permissionProfileService,
-            $this->userPasswordEncoder,
             $userDispatcher
         );
     }
@@ -81,7 +69,7 @@ class UpdateUserServiceTest extends PumukitTestCase
         gc_collect_cycles();
     }
 
-    public function testShouldUpdateUser(): void
+    public function testShouldCreateUser(): void
     {
         $userValues = $this->generateRandomUserValues();
         $user = $this->createUserService->createUser(
@@ -92,39 +80,56 @@ class UpdateUserServiceTest extends PumukitTestCase
             $userValues['permissionProfile']
         );
 
-        $userName = 'test';
-        $password = 'newPassword';
-        $email = 'another@email.com';
-        $fullName = 'Full name test';
+        static::assertNotEquals($user->getUsername(), $userValues['username']);
+        static::assertEquals($user->getUsername(), strtolower($userValues['username']));
+        static::assertNotEquals($user->getPassword(), $userValues['password']);
+        static::assertNotEquals($user->getEmail(), $userValues['email']);
+        static::assertEquals($user->getEmail(), strtolower($userValues['email']));
+        static::assertFalse($user->isSuperAdmin());
 
-        $user->setUsername($userName);
-        $user->setPlainPassword($password);
-        $user->setEmail($email);
-        $user->setFullname($fullName);
+        $associatedPermissionProfile = $userValues['permissionProfile'];
+        $randomPermissionProfile = $this->generateRandomPermissionProfile();
+        static::assertNotEquals($randomPermissionProfile->getId(), $associatedPermissionProfile->getId());
+    }
 
-        $this->updateUserService->update($user);
+    public function testShouldCreateSuperAdminUser(): void
+    {
+        $userValues = $this->generateRandomUserValues();
+        $user = $this->createUserService->createSuperAdmin(
+            $userValues['username'],
+            $userValues['password'],
+            $userValues['email']
+        );
 
-        $savedUser = $this->dm->getRepository(User::class)->findOneBy(['username' => $userName]);
+        static::assertNotEquals($user->getUsername(), $userValues['username']);
+        static::assertEquals($user->getUsername(), strtolower($userValues['username']));
+        static::assertNotEquals($user->getPassword(), $userValues['password']);
+        static::assertNotEquals($user->getEmail(), $userValues['email']);
+        static::assertEquals($user->getEmail(), strtolower($userValues['email']));
+        static::assertEquals($user->getFullName(), $userValues['username']);
+        static::assertTrue($user->isSuperAdmin());
+    }
 
-        static::assertEquals($savedUser->getUsername(), $userName);
-        static::assertNull($savedUser->getPlainPassword());
+    public function testShouldFailWhenUserExists(): void
+    {
+        $this->expectExceptionMessage('Username already on database');
 
-        static::assertEquals($savedUser->getEmail(), $email);
-        static::assertEquals($savedUser->getFullName(), $fullName);
+        $userValues = $this->generateRandomUserValues();
+        $this->createUserService->createUser(
+            $userValues['username'],
+            $userValues['password'],
+            $userValues['email'],
+            $userValues['fullName'],
+            $userValues['permissionProfile']
+        );
 
-        static::assertTrue($savedUser->hasRole(Permission::ACCESS_DASHBOARD));
-        static::assertTrue($savedUser->hasRole(Permission::ACCESS_ROLES));
-        static::assertFalse($savedUser->hasRole(Permission::ACCESS_LIVE_EVENTS));
-
-        $user->setPermissionProfile($this->generateRandomPermissionProfile());
-
-        $this->updateUserService->update($user);
-
-        $savedUser = $this->dm->getRepository(User::class)->findOneBy(['username' => $userName]);
-
-        static::assertFalse($savedUser->hasRole(Permission::ACCESS_DASHBOARD));
-        static::assertFalse($savedUser->hasRole(Permission::ACCESS_ROLES));
-        static::assertTrue($savedUser->hasRole(Permission::ACCESS_LIVE_EVENTS));
+        $this->createUserService->createUser(
+            $userValues['username'],
+            $userValues['password'],
+            $userValues['email'],
+            $userValues['fullName'],
+            $userValues['permissionProfile']
+        );
     }
 
     private function generateRandomUserValues(): array
@@ -170,17 +175,10 @@ class UpdateUserServiceTest extends PumukitTestCase
 
     private function createPermissionProfile(string $name, bool $default = false): PermissionProfile
     {
-        $permissions = [Permission::ACCESS_LIVE_EVENTS];
-        if ($default) {
-            $permissions = [Permission::ACCESS_DASHBOARD, Permission::ACCESS_ROLES];
-        }
-
         $permissionProfile = new PermissionProfile();
 
         $permissionProfile->setName($name);
         $permissionProfile->setDefault($default);
-        $permissionProfile->setPermissions($permissions);
-        $permissionProfile->setScope(PermissionProfile::SCOPE_PERSONAL);
 
         $this->dm->persist($permissionProfile);
         $this->dm->flush();

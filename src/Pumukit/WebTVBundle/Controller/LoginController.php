@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Pumukit\UserBundle\Controller;
+namespace Pumukit\WebTVBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +23,7 @@ class LoginController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('@PumukitUser/Login/template.html.twig', [
+        return $this->render('@PumukitWebTV/Login/template.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
         ]);

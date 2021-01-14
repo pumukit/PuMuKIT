@@ -6,7 +6,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link href="{{ asset('bundles/pumukituser/css/login.css') }}" type="text/css" rel="stylesheet" media="screen"/>
+    <link href="{{ asset('bundles/pumukitwebtv/css/login.css') }}" type="text/css" rel="stylesheet" media="screen"/>
 {% endblock %}
 
 {% block body_base %}
@@ -19,7 +19,7 @@
                         <h3>{{ pumukit_info.title }}</h3>
                     </div>
                     <div class="panel-body pumukit-login-body">
-                        {% include "@PumukitUser/Login/login_form.html.twig" %}
+                        {% include "@PumukitWebTV/Login/login_form.html.twig" %}
                     </div>
                 </div>
             </div>

@@ -8,7 +8,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\NewAdminBundle\Form\Type\UserUpdateProfileType;
 use Pumukit\NewAdminBundle\Services\UserStatsService;
 use Pumukit\SchemaBundle\Document\User;
-use Pumukit\UserBundle\Services\UpdateUserService;
+use Pumukit\SchemaBundle\Services\UpdateUserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

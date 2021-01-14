@@ -33,7 +33,7 @@ security:
       anonymous: true
       guard:
         authenticators:
-          - Pumukit\UserBundle\Security\LoginFormAuthenticator
+          - Pumukit\SchemaBundle\Security\LoginFormAuthenticator
 
     dev:
       pattern:  ^/(_(profiler|wdt)|css|images|js)/

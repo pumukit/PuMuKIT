@@ -2,14 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Pumukit\UserBundle\Services;
+namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\User;
-use Pumukit\SchemaBundle\Services\PermissionProfileService;
-use Pumukit\SchemaBundle\Services\PersonService;
-use Pumukit\SchemaBundle\Services\UserEventDispatcherService;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 

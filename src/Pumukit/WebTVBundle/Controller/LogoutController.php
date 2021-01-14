@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Pumukit\UserBundle\Controller;
+namespace Pumukit\WebTVBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;

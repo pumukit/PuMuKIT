@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Pumukit\UserBundle\Command;
+namespace Pumukit\SchemaBundle\Command;
 
-use Pumukit\UserBundle\Services\CreateUserService;
+use Pumukit\SchemaBundle\Services\CreateUserService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

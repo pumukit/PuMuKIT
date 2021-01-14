@@ -25,7 +25,6 @@ return [
     Pumukit\WebTVBundle\PumukitWebTVBundle::class => ['all' => true],
     Pumukit\WizardBundle\PumukitWizardBundle::class => ['all' => true],
     Pumukit\WorkflowBundle\PumukitWorkflowBundle::class => ['all' => true],
-    Pumukit\UserBundle\PumukitUserBundle::class => ['all' => true],
     Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['dev' => true, 'test' => true],
     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true, 'test' => true],
     Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
