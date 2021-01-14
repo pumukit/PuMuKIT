@@ -85,6 +85,10 @@ class UserStatsService
         ];
         $result = iterator_to_array($collection->aggregate($pipeline, ['cursor' => []]));
 
+        if (!$result) {
+            return 0;
+        }
+
         return reset($result)['size'] / 1048576;
     }
 
@@ -106,6 +110,11 @@ class UserStatsService
             ],
         ];
         $result = iterator_to_array($collection->aggregate($pipeline, ['cursor' => []]));
+
+        if (!$result) {
+            return 0;
+        }
+
         $seconds = reset($result)['duration'];
 
         return gmdate('H:i:s', $seconds);

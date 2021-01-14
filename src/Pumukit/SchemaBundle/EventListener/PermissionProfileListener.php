@@ -5,27 +5,27 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Psr\Log\LoggerInterface;
 use Pumukit\SchemaBundle\Event\PermissionProfileEvent;
 use Pumukit\SchemaBundle\Services\UserService;
+use Pumukit\UserBundle\Services\UpdateUserService;
 
 class PermissionProfileListener
 {
+    private $objectManager;
+    private $updateUserService;
     private $userService;
-    private $dm;
-    private $logger;
 
-    public function __construct(DocumentManager $dm, UserService $userService, LoggerInterface $logger)
-    {
-        $this->dm = $dm;
+    public function __construct(
+        DocumentManager $objectManager,
+        UserService $userService,
+        UpdateUserService $updateUserService
+    ) {
+        $this->objectManager = $objectManager;
         $this->userService = $userService;
-        $this->logger = $logger;
+        $this->updateUserService = $updateUserService;
     }
 
-    /**
-     * @throws \Exception
-     */
-    public function postUpdate(PermissionProfileEvent $event)
+    public function postUpdate(PermissionProfileEvent $event): void
     {
         $permissionProfile = $event->getPermissionProfile();
         $countUsers = $this->userService->countUsersWithPermissionProfile($permissionProfile);
@@ -33,9 +33,9 @@ class PermissionProfileListener
             try {
                 $usersWithPermissionProfile = $this->userService->getUsersWithPermissionProfile($permissionProfile);
                 foreach ($usersWithPermissionProfile as $user) {
-                    $this->userService->update($user, false, false, false);
+                    $this->updateUserService->update($user, false, false, false);
                 }
-                $this->dm->flush();
+                $this->objectManager->flush();
             } catch (\Exception $exception) {
                 throw new \Exception($exception->getMessage());
             }

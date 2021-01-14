@@ -8,7 +8,16 @@ use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Services\PermissionProfileEventDispatcherService;
+use Pumukit\SchemaBundle\Services\PermissionProfileService;
+use Pumukit\SchemaBundle\Services\PermissionService;
+use Pumukit\SchemaBundle\Services\PersonService;
+use Pumukit\SchemaBundle\Services\UserEventDispatcherService;
+use Pumukit\UserBundle\Services\CreateUserService;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 
 /**
  * @internal
@@ -27,6 +36,8 @@ class RemoveElementTest extends PumukitTestCase
     private $mmsPicService;
     private $tagService;
     private $userRepo;
+    private $createUserService;
+    private $userPasswordEncoder;
 
     public function setUp(): void
     {
@@ -43,6 +54,39 @@ class RemoveElementTest extends PumukitTestCase
         $this->userService = static::$kernel->getContainer()->get('pumukitschema.user');
         $this->ebService = static::$kernel->getContainer()->get('pumukitschema.embeddedbroadcast');
         $this->groupService = static::$kernel->getContainer()->get('pumukitschema.group');
+        $personService = $this->getMockBuilder(PersonService::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $dispatcher = new EventDispatcher();
+        $userDispatcher = new UserEventDispatcherService($dispatcher);
+        $permissionProfileDispatcher = new PermissionProfileEventDispatcherService($dispatcher);
+
+        $permissionService = new PermissionService($this->dm);
+        $permissionProfileService = new PermissionProfileService(
+            $this->dm,
+            $permissionProfileDispatcher,
+            $permissionService
+        );
+
+        $this->userPasswordEncoder = $this->getMockBuilder(UserPasswordEncoder::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $personService = $this->getMockBuilder(PersonService::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $this->createUserService = new CreateUserService(
+            $this->dm,
+            $this->userPasswordEncoder,
+            $permissionProfileService,
+            $personService,
+            $userDispatcher
+        );
     }
 
     public function tearDown(): void
@@ -534,15 +578,21 @@ class RemoveElementTest extends PumukitTestCase
         $group2 = $this->createGroup($key2, $name2, false);
         $group2 = $this->groupService->create($group2);
 
-        $user1 = $this->createUser('user1');
-        $user2 = $this->createUser('user2');
-        $user3 = $this->createUser('user3');
-        $user4 = $this->createUser('user4');
+        $permissionProfile1 = new PermissionProfile();
+        $permissionProfile1->setName('permissionprofile1');
+        $permissionProfile1->setDefault(true);
+        $this->dm->persist($permissionProfile1);
+        $this->dm->flush();
 
-        $user1 = $this->userService->create($user1);
-        $user2 = $this->userService->create($user2);
-        $user3 = $this->userService->create($user3);
-        $user4 = $this->userService->create($user4);
+        $permissionProfile2 = new PermissionProfile();
+        $permissionProfile2->setName('permissionprofile2');
+        $this->dm->persist($permissionProfile2);
+        $this->dm->flush();
+
+        $user1 = $this->createUserService->createUser('user1', 'passwordExample', 'user1@mail.com', 'User name', $permissionProfile1);
+        $user2 = $this->createUserService->createUser('user2', 'passwordExample', 'user2@mail.com', 'User name', $permissionProfile2);
+        $user3 = $this->createUserService->createUser('user3', 'passwordExample', 'user3@mail.com', 'User name', $permissionProfile2);
+        $user4 = $this->createUserService->createUser('user4', 'passwordExample', 'user4@mail.com', 'User name', $permissionProfile1);
 
         $this->userService->addGroup($group1, $user1, false);
         $this->userService->deleteGroup($group2, $user1, false);
@@ -1248,14 +1298,5 @@ class RemoveElementTest extends PumukitTestCase
         }
 
         return $group;
-    }
-
-    private function createUser($username = 'user')
-    {
-        $user = new User();
-        $user->setUsername($username);
-        $user->setEmail($username.'@mail.com');
-
-        return $user;
     }
 }

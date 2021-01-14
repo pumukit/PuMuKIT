@@ -71,56 +71,6 @@ class UserService
         return $multimediaObject;
     }
 
-    public function create(User $user)
-    {
-        if (null !== ($permissionProfile = $user->getPermissionProfile())) {
-            $user = $this->setUserScope($user, '', $permissionProfile->getScope());
-
-            $user = $this->addRoles($user, $permissionProfile->getPermissions(), false);
-        }
-        $this->dm->persist($user);
-        $this->dm->flush();
-
-        $this->dispatcher->dispatchCreate($user);
-
-        return $user;
-    }
-
-    public function update(User $user, bool $executeFlush = true, bool $checkOrigin = true, bool $execute_dispatch = true)
-    {
-        if ($checkOrigin && !$user->isLocal()) {
-            throw new \Exception('The user "'.$user->getUsername().'" is not local and can not be modified.');
-        }
-        if (!$user->isSuperAdmin()) {
-            $permissionProfile = $user->getPermissionProfile();
-            if (null === $permissionProfile) {
-                throw new \Exception('The User "'.$user->getUsername().'" has no Permission Profile assigned.');
-            }
-            /** NOTE: User roles have:
-             * - permission profile scope.
-             */
-            $userScope = $this->getUserScope($user->getRoles());
-            if ($userScope !== $permissionProfile->getScope()) {
-                $user = $this->setUserScope($user, $userScope, $permissionProfile->getScope());
-            }
-            $userPermissions = $this->getUserPermissions($user->getRoles());
-            if ($userPermissions !== $permissionProfile->getPermissions()) {
-                $user = $this->removeRoles($user, $userPermissions, false);
-                $user = $this->addRoles($user, $permissionProfile->getPermissions(), false);
-            }
-        }
-        $this->dm->persist($user);
-        if ($executeFlush) {
-            $this->dm->flush();
-        }
-
-        if ($execute_dispatch) {
-            $this->dispatcher->dispatchUpdate($user);
-        }
-
-        return $user;
-    }
-
     public function delete(User $user, bool $executeFlush = true)
     {
         $this->dm->remove($user);
@@ -150,9 +100,9 @@ class UserService
     {
         foreach ($permissions as $permission) {
             if ($user->hasRole($permission) && (array_key_exists(
-                    $permission,
-                    $this->permissionService->getAllPermissions()
-                ))) {
+                $permission,
+                $this->permissionService->getAllPermissions()
+            ))) {
                 $user->removeRole($permission);
             }
         }
@@ -310,7 +260,7 @@ class UserService
         $this->dm->flush();
     }
 
-    public function isUserLastRelation(User $loggedInUser, ?string $mmId = null,?string $personId = null,array  $owners = [], array $addGroups = [])
+    public function isUserLastRelation(User $loggedInUser, ?string $mmId = null, ?string $personId = null, array $owners = [], array $addGroups = [])
     {
         $personToRemoveIsLogged = $this->isLoggedPersonToRemoveFromOwner($loggedInUser, $personId);
         $userInOwners = $this->isUserInOwners($loggedInUser, $owners);
@@ -348,7 +298,7 @@ class UserService
         return false;
     }
 
-    public function isUserInOwners(User $loggedInUser,array  $owners = [])
+    public function isUserInOwners(User $loggedInUser, array $owners = [])
     {
         $userInOwners = false;
         foreach ($owners as $owner) {

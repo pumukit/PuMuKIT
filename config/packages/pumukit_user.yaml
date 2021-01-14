@@ -17,3 +17,6 @@ services:
 
   Pumukit\UserBundle\Services\CreateUserService:
     class: Pumukit\UserBundle\Services\CreateUserService
+
+  Pumukit\UserBundle\Services\UpdateUserService:
+    class: Pumukit\UserBundle\Services\UpdateUserService

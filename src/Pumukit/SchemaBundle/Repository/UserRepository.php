@@ -15,7 +15,7 @@ class UserRepository extends DocumentRepository
     public function userExists(string $username)
     {
         return $this->dm->getRepository(User::class)->findOneBy([
-            'username' => strtolower($username)
+            'username' => strtolower($username),
         ]);
     }
 
@@ -41,7 +41,7 @@ class UserRepository extends DocumentRepository
         $this->dm->flush();
     }
 
-    public function persist(UserInterface $user)
+    public function persist(UserInterface $user): void
     {
         $this->dm->persist($user);
     }

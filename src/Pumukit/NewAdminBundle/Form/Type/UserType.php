@@ -6,15 +6,12 @@ namespace Pumukit\NewAdminBundle\Form\Type;
 
 use Pumukit\SchemaBundle\Document\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserType extends AbstractType
@@ -81,35 +78,13 @@ class UserType extends AbstractType
                 ]
             )
         ;
-//
-//        $builder->addEventListener(
-//            FormEvents::POST_SET_DATA,
-//            function (FormEvent $event) {
-//                $user = $event->getData();
-//                if ($user->hasRole('ROLE_SUPER_ADMIN')) {
-//                    $event->getForm()->remove('permissionProfile');
-//                    $event->getForm()->add(
-//                        'permissionProfilePlacebo',
-//                        ChoiceType::class,
-//                        [
-//                            'mapped' => false,
-//                            'choices' => ['System Super Administrator' => 'ROLE_SUPER_ADMIN'],
-//                            'attr' => ['aria-label' => $this->translator->trans('Permission Profile', [], null, $this->locale)],
-//                            'label' => $this->translator->trans('Permission Profile', [], null, $this->locale),
-//                        ]
-//                    );
-//                }
-//            }
-//        );
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(
-            [
-                'data_class' => User::class,
-            ]
-        );
+        $resolver->setDefaults([
+            'data_class' => User::class,
+        ]);
 
         $resolver->setRequired('translator');
         $resolver->setRequired('locale');
