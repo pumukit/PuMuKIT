@@ -29,7 +29,3 @@ pumukitnewadmin:
   resource: "@PumukitNewAdminBundle/Resources/config/routing.yml"
   prefix:   /
 
-pumukit_user:
-  resource: "@PumukitUserBundle/Resources/config/routing.yml"
-  prefix:   /
-
