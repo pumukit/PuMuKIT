@@ -40,7 +40,7 @@
                     {% if show_info|default(false) %}
                         <div class="date_and_visits pull-right">
                             {% if with_publicdate is defined and with_publicdate %}
-                                {{ object.publicDate|localizeddate('medium','none',app.request.getLocale()) }}
+                                {{ object.publicDate| format_datetime('medium','none',locale=app.request.getLocale()) }}
                             {% else %}
                                 {% if app.request.attributes.get('_route') != 'pumukit_webtv_announces_latestuploads_pager' and show_language  and not object.getProperty('externalplayer')%}
                                     <div class="language pull-left">

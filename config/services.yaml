@@ -59,11 +59,6 @@ services:
   doctrine:
     alias: doctrine_mongodb
 
-  twig.extension.intl:
-    class: Twig_Extensions_Extension_Intl
-    tags:
-      - { name: "twig.extension" }
-
   Gedmo\Tree\TreeListener:
     tags:
       - { name: doctrine.event_subscriber, connection: default }

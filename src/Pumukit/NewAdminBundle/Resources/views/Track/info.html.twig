@@ -61,7 +61,7 @@
                     </div>
                     <div class="form-group">
                         <label for="uploadData" class="control-label">{% trans %}Upload date{% endtrans %}:</label>
-                        {% set upload_date = (job is not null and job.getTimeIni() is not null) ? job.getTimeIni()| localizeddate('medium', 'medium', app.request.getLocale()) : '' %}
+                        {% set upload_date = (job is not null and job.getTimeIni() is not null) ? job.getTimeIni()|  format_datetime('medium', 'medium',locale=app.request.getLocale()) : '' %}
                         <input id="uploadData" name="uploadData" readonly="readonly" class="form-control" value="{{ upload_date }}" />
                     </div>
                 </div>

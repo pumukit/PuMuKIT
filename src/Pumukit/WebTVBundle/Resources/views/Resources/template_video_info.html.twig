@@ -23,7 +23,7 @@
 
     {% if show_video_date is defined and show_video_date %}
         <div class="col-xs-12 video-date">
-            {{ object.getRecordDate()|localizeddate('medium','none', app.request.getLocale()) }}
+            {{ object.getRecordDate()| format_datetime('medium','none',locale=app.request.getLocale()) }}
         </div>
     {% endif %}
 

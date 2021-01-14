@@ -47,7 +47,7 @@
                 </div>
             {% endif %}
             {% for mm in multimediaObjects %}
-                {% set current_date = mm.getRecordDate() | localizeddate('medium', 'none' , app.request.getLocale()) %}
+                {% set current_date = mm.getRecordDate() |  format_datetime('medium', 'none',locale=app.request.getLocale()) %}
                 {% set subserie_title = mm.getProperty('subseriestitle')[app.request.getLocale()]|default('') %}
                 {% if template == "place_subserial" and not precinct %}
                     {% set precinct = precinct_of_mmo(mm) %}

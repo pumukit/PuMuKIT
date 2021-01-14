@@ -34,7 +34,7 @@
 
                     {% if show_info|default(false) %}
                     <div class="date_and_visits pull-right">
-                        {{ object.publicDate| localizeddate("medium", "none", app.request.getLocale()) }}
+                        {{ object.publicDate|  format_datetime("medium", "none",locale=app.request.getLocale()) }}
                     </div>
                     {% endif %}
                 </div>

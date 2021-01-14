@@ -13,7 +13,7 @@
 </div>
 
 
-{% for child in form if (child.vars.id in ['pumukitnewadmin_series_i18n_header']) %}
+{% for child in form | filter(child => child.vars.id not in ['pumukitnewadmin_series_i18n_header']) %}
     <div class="hidden-naked form-group" style="display:none" id="{{ child.vars.id }}">
         <div>
             <a href="{{ path('pumukitnewadmin_seriespic_banner', {'id': series.id}) }}" style="float: right;" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}Add banner{% endtrans %}</a>
@@ -25,7 +25,7 @@
     </div>
 {% endfor %}
 
-{% for child in form if (child.vars.id in ['pumukitnewadmin_series_i18n_footer']) %}
+{% for child in form | filter(child => child.vars.id not in ['pumukitnewadmin_series_i18n_footer']) %}
     <div class="hidden-naked form-group" style="display:none" id="{{ child.vars.id }}">
         <label for="header" class="control-label">{{ child.vars.label }}</label>
         <div>
@@ -34,7 +34,7 @@
     </div>
 {% endfor %}
 
-{% for child in form if (child.vars.id in ['pumukitnewadmin_series_series_style']) %}
+{% for child in form | filter(child => child.vars.id not in ['pumukitnewadmin_series_series_style']) %}
     <div class="hidden-naked form-group" style="display:none" id="{{ child.vars.id }}">
         <label for="header" class="control-label">{{ child.vars.label }}</label>
         <div>

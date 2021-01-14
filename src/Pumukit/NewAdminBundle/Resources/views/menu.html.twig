@@ -22,7 +22,7 @@
                         <i style="font-size: 18px; vertical-align: middle" class="mdi-image-timer-auto"></i>{{ app.user.username }} <b class="caret"></b>
                       </a>
                       <ul class="dropdown-menu">
-                        <li class="dropdown-header">{% trans %}Login since{% endtrans %}: {{ app.user.lastLogin|localizeddate('medium','medium',app.request.getLocale()) }}</li>
+                        <li class="dropdown-header">{% trans %}Login since{% endtrans %}: {{ app.user.lastLogin| format_datetime('medium','medium',locale=app.request.getLocale()) }}</li>
                         <li class="dropdown-header">{{ app.user.email }}</li>
                           {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\WidgetController::languageselectAction') ) }}
                         <li class="divider"></li>

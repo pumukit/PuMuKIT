@@ -57,12 +57,12 @@
                     <td headers="th-rec-date" class="text-nowrap"
                         onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')"
                         ondblclick="dblclick_preview_mm('{{ mm.id }}')">
-                        {{ mm.getRecordDate()|localizeddate('medium','none',app.request.getLocale()) }}
+                        {{ mm.getRecordDate()| format_datetime('medium','none',locale=app.request.getLocale()) }}
                     </td>
                     <td headers="th-pub-date" class="text-nowrap"
                         onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')"
                         ondblclick="dblclick_preview_mm('{{ mm.id }}')">
-                        {{ mm.getPublicDate()|localizeddate('medium','none',app.request.getLocale()) }}
+                        {{ mm.getPublicDate()| format_datetime('medium','none',locale=app.request.getLocale()) }}
                     </td>
                 </tr>
             {% else %}

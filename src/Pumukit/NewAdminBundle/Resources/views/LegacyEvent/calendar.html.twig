@@ -48,7 +48,7 @@
                     {% endif %}
                   </span>
                   <a title="{% trans %}Edit Event{% endtrans %} {{ day_event.name }}" href="{{ path('pumukitnewadmin_event_update', {'id': day_event.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
-                    <i class="mdi-editor-mode-edit"></i> {{ day_event.date|localizeddate('none','medium',app.request.getLocale()) }} {{ day_event.name }}
+                    <i class="mdi-editor-mode-edit"></i> {{ day_event.date| format_datetime('none','medium',locale=app.request.getLocale()) }} {{ day_event.name }}
                   </a>
                 </li>
               {% endfor %}

@@ -1129,7 +1129,7 @@ class EmbeddedEventSessionService
         $pipeline = [];
         $pipeline[] = [
             '$match' => [
-                'embeddedEvent._id' => new ObjectId($eventId),
+                'embeddedEvent._id' => $eventId,
             ],
         ];
         $pipeline[] = [

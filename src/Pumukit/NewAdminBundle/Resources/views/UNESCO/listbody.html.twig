@@ -38,7 +38,7 @@
             {% set text = render_object_field(mm,app.request.getSession(),field) %}
             <td {% if all_custom_fields[field]['render_params']['break-word'] == true %}style="word-break: break-word;"{% endif %} headers="th-{{ loop.index }}" title="{{ text|striptags }}" onclick="{{ click_edit }}" ondblclick="{{ double_click_item }}">
                 {% if field in ['record_date','public_date'] %}
-                    {{ text|localizeddate('medium','none',app.request.getLocale()) }}
+                    {{ text| format_datetime('medium','none',locale=app.request.getLocale()) }}
                 {% else %}
                     {{ text|raw }}
                 {% endif %}

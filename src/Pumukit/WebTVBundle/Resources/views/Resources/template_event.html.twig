@@ -13,9 +13,9 @@
 {% endif %}
 
 {% if event['session'].getStart() is defined %}
-    {% set eventStarts = event['session'].getStart() | localizeddate('medium','medium', app.request.getLocale()) %}
+    {% set eventStarts = event['session'].getStart() |  format_datetime('medium','medium',locale=app.request.getLocale()) %}
 {% else %}
-    {% set eventStarts = event['session']['start'] |convertMongoDate| localizeddate('medium','medium', app.request.getLocale()) %}
+    {% set eventStarts = event['session']['start'] |convertMongoDate|  format_datetime('medium','medium',locale=app.request.getLocale()) %}
 {% endif %}
 
 {% set seriesTitle = object.getSeriesTitle()|default('') %}

@@ -4,7 +4,7 @@
 
 <div class="row">
     <div class="qa-player-recording-date col-xs-12 text-right">
-        {% trans %}Recording date{% endtrans %}: {{ multimediaObject.getRecordDate()|localizeddate('medium','none',app.request.getLocale()) }}
+        {% trans %}Recording date{% endtrans %}: {{ multimediaObject.getRecordDate()| format_datetime('medium','none',locale=app.request.getLocale()) }}
     </div>
 </div>
 
