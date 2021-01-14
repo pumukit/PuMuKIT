@@ -16,7 +16,8 @@ class CreateUserCommand extends Command
 
     private $createUserService;
 
-    public function __construct(CreateUserService $createUserService) {
+    public function __construct(CreateUserService $createUserService)
+    {
         $this->createUserService = $createUserService;
 
         parent::__construct();
@@ -34,10 +35,10 @@ class CreateUserCommand extends Command
 
         $userWasCreated = $this->createUserService->createSuperAdmin($username, $password, $email);
 
-        if($userWasCreated) {
-            $message = '<info> User '. $username .' created </info>';
+        if ($userWasCreated) {
+            $message = '<info> User '.$username.' created </info>';
         } else {
-            $message = '<error> User '. $username .' already on DB </error>';
+            $message = '<error> User '.$username.' already on DB </error>';
         }
 
         $output->writeln(
