@@ -1,9 +1,0 @@
-<form action="{{ path('fos_user_registration_register') }}" method="POST" class="fos_user_registration_register">
-    {{ form_widget(form) }}
-    <div class="footer">
-        <button type="submit" class="btn bg-olive btn-block">
-           {{ 'registration.submit'|trans({}, 'FOSUserBundle') }}
-    </button>
-        <a href="../login" class="text-center">I already have a membership</a>
-    </div>
-</form>

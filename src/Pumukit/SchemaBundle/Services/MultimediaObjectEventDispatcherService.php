@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Services;
 
-use FOS\UserBundle\Model\UserInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Event\MultimediaObjectAddOwnerEvent;
 use Pumukit\SchemaBundle\Event\MultimediaObjectCloneEvent;
 use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class MultimediaObjectEventDispatcherService
 {

@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use FOS\UserBundle\Model\UserManagerInterface;
 use Pumukit\NewAdminBundle\Form\Type\UserUpdateProfileType;
 use Pumukit\NewAdminBundle\Services\UserStatsService;
 use Pumukit\SchemaBundle\Document\User;
-use Pumukit\SchemaBundle\Services\UserService;
+use Pumukit\SchemaBundle\Services\UpdateUserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,32 +24,20 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class UserProfileController extends AbstractController
 {
-    /** @var DocumentManager */
     protected $documentManager;
-
-    /** @var TranslatorInterface */
     protected $translator;
-
-    /** @var UserManagerInterface */
-    protected $fosUserManager;
-
-    /** @var UserService */
-    protected $userService;
-
-    /** @var UserStatsService */
+    protected $updateUserService;
     protected $userStatsService;
 
     public function __construct(
         DocumentManager $documentManager,
-        UserService $userService,
+        UpdateUserService $updateUserService,
         TranslatorInterface $translator,
-        UserManagerInterface $fosUserManager,
         UserStatsService $userStatsService
     ) {
         $this->documentManager = $documentManager;
         $this->translator = $translator;
-        $this->fosUserManager = $fosUserManager;
-        $this->userService = $userService;
+        $this->updateUserService = $updateUserService;
         $this->userStatsService = $userStatsService;
     }
 
@@ -67,8 +54,7 @@ class UserProfileController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && $user->isLocal()) {
-            $this->fosUserManager->updateUser($user);
-            $this->userService->update($user);
+            $this->updateUserService->update($user);
         }
 
         return [

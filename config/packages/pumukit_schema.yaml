@@ -14,12 +14,6 @@ services:
     resource: '../../src/Pumukit/SchemaBundle/Command'
     tags: ['console.command']
 
-  Pumukit\SchemaBundle\Services\PasswordUpdater:
-    class:  Pumukit\SchemaBundle\Services\PasswordUpdater
-    public: false
-    arguments:
-      $genUserSalt: '%pumukitschema.gen_user_salt%'
-
   Pumukit\SchemaBundle\Services\LegacyEventPicService:
     class: Pumukit\SchemaBundle\Services\LegacyEventPicService
     arguments:
@@ -220,3 +214,12 @@ services:
     public: false
     arguments:
       $hierarchy: '%security.role_hierarchy.roles%'
+
+  Pumukit\SchemaBundle\Security\LoginFormAuthenticator:
+    class: Pumukit\SchemaBundle\Security\LoginFormAuthenticator
+
+  Pumukit\SchemaBundle\Services\CreateUserService:
+    class: Pumukit\SchemaBundle\Services\CreateUserService
+
+  Pumukit\SchemaBundle\Services\UpdateUserService:
+    class: Pumukit\SchemaBundle\Services\UpdateUserService

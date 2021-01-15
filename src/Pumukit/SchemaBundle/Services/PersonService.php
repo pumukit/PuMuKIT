@@ -335,7 +335,7 @@ class PersonService
 
         $person = new Person();
 
-        $person->setName($user->getFullname() ?: $user->getUsername());
+        $person->setName($user->getFullName() ?: $user->getUsername());
         $person->setEmail($user->getEmail());
 
         $this->dm->persist($person);

@@ -107,7 +107,7 @@ class UserEventDispatcherServiceTest extends PumukitTestCase
         $this->userDispatcher->dispatchUpdate($user);
 
         static::assertTrue(MockUpUserListener::$called);
-        static::assertEquals($updateUsername, MockUpUserListener::$name);
+        static::assertEquals(strtolower($updateUsername), MockUpUserListener::$name);
     }
 
     public function testDispatchDelete()

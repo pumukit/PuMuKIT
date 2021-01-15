@@ -10,14 +10,18 @@ use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\EventListener\PermissionProfileListener;
 use Pumukit\SchemaBundle\Security\Permission;
+use Pumukit\SchemaBundle\Services\CreateUserService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectEventDispatcherService;
 use Pumukit\SchemaBundle\Services\PermissionProfileEventDispatcherService;
 use Pumukit\SchemaBundle\Services\PermissionProfileService;
 use Pumukit\SchemaBundle\Services\PermissionService;
+use Pumukit\SchemaBundle\Services\PersonService;
+use Pumukit\SchemaBundle\Services\UpdateUserService;
 use Pumukit\SchemaBundle\Services\UserEventDispatcherService;
 use Pumukit\SchemaBundle\Services\UserService;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 
 /**
  * @internal
@@ -31,6 +35,9 @@ class PermissionProfileListenerTest extends PumukitTestCase
     private $permissionProfileService;
     private $listener;
     private $logger;
+    private $updateUserService;
+    private $userPasswordEncoder;
+    private $createUserService;
 
     public function setUp(): void
     {
@@ -64,12 +71,38 @@ class PermissionProfileListenerTest extends PumukitTestCase
             $personalScopeDeleteOwners,
             $sendEmailWhenAddUserOwner
         );
+
         $this->logger = $this->getMockBuilder(LoggerInterface::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;
 
-        $this->listener = new PermissionProfileListener($this->dm, $this->userService, $this->logger);
+        $this->userPasswordEncoder = $this->getMockBuilder(UserPasswordEncoder::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $personService = $this->getMockBuilder(PersonService::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $this->createUserService = new CreateUserService(
+            $this->dm,
+            $this->userPasswordEncoder,
+            $this->permissionProfileService,
+            $personService,
+            $userDispatcher
+        );
+
+        $this->updateUserService = new UpdateUserService(
+            $this->dm,
+            $this->permissionProfileService,
+            $this->userPasswordEncoder,
+            $userDispatcher
+        );
+
+        $this->listener = new PermissionProfileListener($this->dm, $this->userService, $this->updateUserService);
         $dispatcher->addListener('permissionprofile.update', [$this->listener, 'postUpdate']);
     }
 
@@ -87,33 +120,26 @@ class PermissionProfileListenerTest extends PumukitTestCase
 
     public function testPostUpdate()
     {
+        $permissions = [Permission::ACCESS_LIVE_CHANNELS];
+
         $permissionProfile1 = new PermissionProfile();
         $permissionProfile1->setName('permissionprofile1');
+        $permissionProfile1->setPermissions($permissions);
+        $permissionProfile1->setDefault(true);
+        $permissionProfile1->setScope(PermissionProfile::SCOPE_PERSONAL);
         $this->dm->persist($permissionProfile1);
         $this->dm->flush();
 
         $permissionProfile2 = new PermissionProfile();
         $permissionProfile2->setName('permissionprofile2');
+        $permissionProfile2->setPermissions($permissions);
+        $permissionProfile2->setScope(PermissionProfile::SCOPE_PERSONAL);
         $this->dm->persist($permissionProfile2);
         $this->dm->flush();
 
-        $user1 = new User();
-        $user1->setUsername('test1');
-        $user1->setEmail('test1@mail.com');
-        $user1->setPermissionProfile($permissionProfile1);
-        $user1 = $this->userService->create($user1);
-
-        $user2 = new User();
-        $user2->setUsername('test2');
-        $user2->setEmail('test2@mail.com');
-        $user2->setPermissionProfile($permissionProfile2);
-        $user2 = $this->userService->create($user2);
-
-        $user3 = new User();
-        $user3->setUsername('test3');
-        $user3->setEmail('test3@mail.com');
-        $user3->setPermissionProfile($permissionProfile1);
-        $user3 = $this->userService->create($user3);
+        $user1 = $this->createUserService->createUser('test1', 'passwordExample', 'test1@mail.com', 'User name', $permissionProfile1);
+        $user2 = $this->createUserService->createUser('test2', 'passwordExample', 'test2@mail.com', 'User name', $permissionProfile2);
+        $user3 = $this->createUserService->createUser('test3', 'passwordExample', 'test3@mail.com', 'User name', $permissionProfile1);
 
         $user1Roles = $user1->getRoles();
         static::assertContains('ROLE_USER', $user1Roles);

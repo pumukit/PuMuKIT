@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Pumukit\NewAdminBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use FOS\UserBundle\Model\UserInterface;
 use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\User;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserStatsService
 {
@@ -85,6 +85,10 @@ class UserStatsService
         ];
         $result = iterator_to_array($collection->aggregate($pipeline, ['cursor' => []]));
 
+        if (!$result) {
+            return 0;
+        }
+
         return reset($result)['size'] / 1048576;
     }
 
@@ -106,6 +110,11 @@ class UserStatsService
             ],
         ];
         $result = iterator_to_array($collection->aggregate($pipeline, ['cursor' => []]));
+
+        if (!$result) {
+            return 0;
+        }
+
         $seconds = reset($result)['duration'];
 
         return gmdate('H:i:s', $seconds);

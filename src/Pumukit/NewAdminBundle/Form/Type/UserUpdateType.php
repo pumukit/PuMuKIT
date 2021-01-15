@@ -62,7 +62,7 @@ class UserUpdateType extends AbstractType
                 EmailType::class,
                 [
                     'attr' => ['aria-label' => $this->translator->trans('Email', [], null, $this->locale)],
-                    'disabled' => !$user->isLocal(),
+                    'disabled' => !$user->isLocal() || !$user->hasRole('ROLE_SUPER_ADMIN'),
                     'label' => $this->translator->trans('Email', [], null, $this->locale),
                 ]
             )

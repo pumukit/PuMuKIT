@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\EventListener;
 
-use FOS\UserBundle\Model\UserInterface;
 use Pumukit\NotificationBundle\Services\SenderService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Event\MultimediaObjectAddOwnerEvent;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class MultimediaObjectAddOwnerListener
 {

@@ -1,0 +1,33 @@
+<form id="login_form" class="pumukit_login_form" action="{{ path('pumukit_login') }}" method="POST">
+
+    {% if error %}
+        <div class="alert alert-danger text-center">
+            {{ "Invalidad username/password"|trans }}
+        </div>
+    {% endif %}
+    <div class="form-group">
+        <label for="inputUsername" class="hidden">{{ "Username"|trans }}</label>
+        <input type="text" value="{{ last_username|default() }}" placeholder="{{ last_username|default("Username"|trans) }}" name="username" id="inputUsername" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="inputPassword" class="hidden">{{ "Password"|trans }}</label>
+        <input type="password" placeholder="{{ "Password"|trans }}" name="password" id="inputPassword" class="form-control" required >
+    </div>
+
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" name="_remember_me"> {{ "Remember"|trans }}
+        </label>
+    </div>
+
+    <div class="pumukit-panel-login-footer">
+        <button type="submit" id="_submit" name="_submit" class="btn btn-block btn-login-pumukit">
+            {{ 'Log in'|trans }}
+        </button>
+    </div>
+
+
+</form>

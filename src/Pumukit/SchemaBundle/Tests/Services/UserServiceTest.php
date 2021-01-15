@@ -13,14 +13,18 @@ use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\EventListener\PermissionProfileListener;
 use Pumukit\SchemaBundle\Security\Permission;
+use Pumukit\SchemaBundle\Services\CreateUserService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectEventDispatcherService;
 use Pumukit\SchemaBundle\Services\PermissionProfileEventDispatcherService;
 use Pumukit\SchemaBundle\Services\PermissionProfileService;
 use Pumukit\SchemaBundle\Services\PermissionService;
+use Pumukit\SchemaBundle\Services\PersonService;
+use Pumukit\SchemaBundle\Services\UpdateUserService;
 use Pumukit\SchemaBundle\Services\UserEventDispatcherService;
 use Pumukit\SchemaBundle\Services\UserService;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 
 /**
  * @internal
@@ -29,6 +33,9 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 class UserServiceTest extends PumukitTestCase
 {
     private $repo;
+    private $updateUserService;
+    private $createUserService;
+    private $userPasswordEncoder;
     private $permissionProfileRepo;
     private $userService;
     private $logger;
@@ -71,7 +78,32 @@ class UserServiceTest extends PumukitTestCase
             $sendEmailWhenAddUserOwner
         );
 
-        $listener = new PermissionProfileListener($this->dm, $this->userService, $this->logger);
+        $this->userPasswordEncoder = $this->getMockBuilder(UserPasswordEncoder::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $personService = $this->getMockBuilder(PersonService::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $this->createUserService = new CreateUserService(
+            $this->dm,
+            $this->userPasswordEncoder,
+            $permissionProfileService,
+            $personService,
+            $userDispatcher
+        );
+
+        $this->updateUserService = new UpdateUserService(
+            $this->dm,
+            $permissionProfileService,
+            $this->userPasswordEncoder,
+            $userDispatcher
+        );
+
+        $listener = new PermissionProfileListener($this->dm, $this->userService, $this->updateUserService);
         $dispatcher->addListener('permissionprofile.update', [$listener, 'postUpdate']);
     }
 
@@ -84,61 +116,6 @@ class UserServiceTest extends PumukitTestCase
         $this->permissionProfileRepo = null;
         $this->userService = null;
         gc_collect_cycles();
-    }
-
-    public function testCreateAndUpdate()
-    {
-        $permissions1 = [Permission::ACCESS_DASHBOARD, Permission::ACCESS_ROLES];
-        $permissionProfile1 = new PermissionProfile();
-        $permissionProfile1->setPermissions($permissions1);
-        $permissionProfile1->setName('permissionprofile1');
-        $permissionProfile1->setScope(PermissionProfile::SCOPE_PERSONAL);
-        $this->dm->persist($permissionProfile1);
-        $this->dm->flush();
-
-        $username = 'test';
-        $email = 'test@mail.com';
-        $user = new User();
-        $user->setUsername($username);
-        $user->setEmail($email);
-        $user->setPermissionProfile($permissionProfile1);
-
-        $user = $this->userService->create($user);
-
-        $user = $this->repo->find($user->getId());
-        $permissionProfile1 = $this->permissionProfileRepo->find($permissionProfile1->getId());
-
-        static::assertEquals($permissionProfile1, $user->getPermissionProfile());
-        static::assertTrue($user->hasRole(Permission::ACCESS_DASHBOARD));
-        static::assertTrue($user->hasRole(Permission::ACCESS_ROLES));
-        static::assertFalse($user->hasRole(Permission::ACCESS_TAGS));
-        static::assertFalse($user->hasRole(PermissionProfile::SCOPE_GLOBAL));
-        static::assertTrue($user->hasRole(PermissionProfile::SCOPE_PERSONAL));
-        static::assertFalse($user->hasRole(PermissionProfile::SCOPE_NONE));
-
-        $permissions2 = [Permission::ACCESS_TAGS];
-        $permissionProfile2 = new PermissionProfile();
-        $permissionProfile2->setPermissions($permissions2);
-        $permissionProfile2->setName('permissionprofile2');
-        $permissionProfile2->setScope(PermissionProfile::SCOPE_GLOBAL);
-        $this->dm->persist($permissionProfile2);
-        $this->dm->flush();
-
-        $user->setPermissionProfile($permissionProfile2);
-
-        $user = $this->userService->update($user);
-
-        $user = $this->repo->find($user->getId());
-        $permissionProfile2 = $this->permissionProfileRepo->find($permissionProfile2->getId());
-
-        static::assertNotEquals($permissionProfile1, $user->getPermissionProfile());
-        static::assertEquals($permissionProfile2, $user->getPermissionProfile());
-        static::assertFalse($user->hasRole(Permission::ACCESS_DASHBOARD));
-        static::assertFalse($user->hasRole(Permission::ACCESS_ROLES));
-        static::assertTrue($user->hasRole(Permission::ACCESS_TAGS));
-        static::assertTrue($user->hasRole(PermissionProfile::SCOPE_GLOBAL));
-        static::assertFalse($user->hasRole(PermissionProfile::SCOPE_PERSONAL));
-        static::assertFalse($user->hasRole(PermissionProfile::SCOPE_NONE));
     }
 
     public function testAddAndRemoveRoles()
@@ -173,6 +150,7 @@ class UserServiceTest extends PumukitTestCase
     {
         $permissionProfile1 = new PermissionProfile();
         $permissionProfile1->setName('permissionprofile1');
+        $permissionProfile1->setDefault(true);
         $this->dm->persist($permissionProfile1);
         $this->dm->flush();
 
@@ -181,23 +159,9 @@ class UserServiceTest extends PumukitTestCase
         $this->dm->persist($permissionProfile2);
         $this->dm->flush();
 
-        $user1 = new User();
-        $user1->setUsername('test1');
-        $user1->setEmail('test1@mail.com');
-        $user1->setPermissionProfile($permissionProfile1);
-        $user1 = $this->userService->create($user1);
-
-        $user2 = new User();
-        $user2->setUsername('test2');
-        $user2->setEmail('test2@mail.com');
-        $user2->setPermissionProfile($permissionProfile2);
-        $user2 = $this->userService->create($user2);
-
-        $user3 = new User();
-        $user3->setUsername('test3');
-        $user3->setEmail('test3@mail.com');
-        $user3->setPermissionProfile($permissionProfile1);
-        $user3 = $this->userService->create($user3);
+        $user1 = $this->createUserService->createUser('test1', 'passwordExample', 'test1@mail.com', 'User name', $permissionProfile1);
+        $user2 = $this->createUserService->createUser('test2', 'passwordExample', 'test2@mail.com', 'User name', $permissionProfile2);
+        $user3 = $this->createUserService->createUser('test3', 'passwordExample', 'test3@mail.com', 'User name', $permissionProfile1);
 
         static::assertEquals(2, $this->userService->countUsersWithPermissionProfile($permissionProfile1));
         static::assertEquals(1, $this->userService->countUsersWithPermissionProfile($permissionProfile2));
@@ -341,67 +305,20 @@ class UserServiceTest extends PumukitTestCase
 
     public function testDelete()
     {
-        $username = 'test';
-        $email = 'test@mail.com';
-        $user = new User();
-        $user->setUsername($username);
-        $user->setEmail($email);
+        $permissionProfile = new PermissionProfile();
+        $permissionProfile->setName('test');
+        $permissionProfile->setScope(PermissionProfile::SCOPE_PERSONAL);
+        $permissionProfile->setDefault(true);
+        $this->dm->persist($permissionProfile);
+        $this->dm->flush();
 
-        $user = $this->userService->create($user);
+        $user = $this->createUserService->createUser('test', 'passwordExample', 'test@mail.com', 'User name', $permissionProfile);
 
         static::assertCount(1, $this->repo->findAll());
 
-        $user = $this->userService->delete($user);
+        $this->userService->delete($user);
 
         static::assertCount(0, $this->repo->findAll());
-    }
-
-    public function testInstantiate()
-    {
-        $permissionProfile1 = new PermissionProfile();
-        $permissionProfile1->setName('1');
-        $permissionProfile1->setDefault(false);
-
-        $permissionProfile2 = new PermissionProfile();
-        $permissionProfile2->setName('2');
-        $permissionProfile2->setDefault(true);
-
-        $this->dm->persist($permissionProfile1);
-        $this->dm->persist($permissionProfile2);
-        $this->dm->flush();
-
-        $user1 = $this->userService->instantiate();
-
-        static::assertNull($user1->getUsername());
-        static::assertNull($user1->getEmail());
-        static::assertTrue($user1->isEnabled());
-        static::assertNotEquals($permissionProfile1, $user1->getPermissionProfile());
-        static::assertEquals($permissionProfile2, $user1->getPermissionProfile());
-
-        $userName = 'test';
-        $email = 'test@mail.com';
-        $enabled = false;
-
-        $permissionProfile1->setDefault(true);
-        $permissionProfile2->setDefault(false);
-        $this->dm->persist($permissionProfile1);
-        $this->dm->persist($permissionProfile2);
-        $this->dm->flush();
-
-        $user2 = $this->userService->instantiate($userName, $email, $enabled);
-
-        static::assertEquals($userName, $user2->getUsername());
-        static::assertEquals($email, $user2->getEmail());
-        static::assertFalse($user2->isEnabled());
-        static::assertEquals($permissionProfile1, $user2->getPermissionProfile());
-        static::assertNotEquals($permissionProfile2, $user2->getPermissionProfile());
-    }
-
-    public function testInstantiateException()
-    {
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('Unable to assign a Permission Profile to the new User. There is no default Permission Profile');
-        $user = $this->userService->instantiate();
     }
 
     public function testHasScopes()
@@ -615,31 +532,6 @@ class UserServiceTest extends PumukitTestCase
         static::assertTrue($this->userService->isAllowedToModifyUserGroup($casUser, $localGroup));
     }
 
-    public function testUpdateException()
-    {
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('is not local and can not be modified');
-        $permissions1 = [Permission::ACCESS_DASHBOARD, Permission::ACCESS_ROLES];
-        $permissionProfile1 = new PermissionProfile();
-        $permissionProfile1->setPermissions($permissions1);
-        $permissionProfile1->setName('permissionprofile1');
-        $permissionProfile1->setScope(PermissionProfile::SCOPE_PERSONAL);
-        $this->dm->persist($permissionProfile1);
-        $this->dm->flush();
-
-        $username = 'test';
-        $email = 'test@mail.com';
-        $user = new User();
-        $user->setUsername($username);
-        $user->setEmail($email);
-        $user->setPermissionProfile($permissionProfile1);
-        $user->setOrigin('cas');
-
-        $user = $this->userService->create($user);
-        $user->setUsername('test2');
-        $user = $this->userService->update($user);
-    }
-
     public function testAddGroupLocalCas()
     {
         $localGroup = new Group();
@@ -684,8 +576,8 @@ class UserServiceTest extends PumukitTestCase
 
     public function testExceptionAddGroupCasCas()
     {
-        $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Not allowed to add group');
+        $this->expectException(\Exception::class);
         $casGroup = new Group();
         $casGroup->setKey('cas_key');
         $casGroup->setName('CAS Group');
@@ -759,8 +651,8 @@ class UserServiceTest extends PumukitTestCase
 
     public function testExceptionDeleteGroupCasCas()
     {
-        $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Not allowed to delete group');
+        $this->expectException(\Exception::class);
         $casGroup = new Group();
         $casGroup->setKey('cas_key');
         $casGroup->setName('CAS Group');

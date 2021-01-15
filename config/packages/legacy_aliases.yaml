@@ -50,7 +50,6 @@ services:
   pumukitnewadmin.translatecontroller: '@Pumukit\NewAdminBundle\Controller\TranslateController'
   pumukit_notification.sender: '@Pumukit\NotificationBundle\Services\SenderService'
   pumukit_notification.listener: '@Pumukit\NotificationBundle\Services\JobNotificationService'
-  fos_user.util.password_updater: '@Pumukit\SchemaBundle\Services\PasswordUpdater'
   pumukitlive.legacyeventpic: '@Pumukit\SchemaBundle\Services\LegacyEventPicService'
   pumukitschema.schema.locale: '@Pumukit\SchemaBundle\EventListener\LocaleListener'
   pumukitschema.schema.remove: '@Pumukit\SchemaBundle\EventListener\RemoveListener'

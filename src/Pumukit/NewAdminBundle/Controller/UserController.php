@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use FOS\UserBundle\Model\UserManagerInterface;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Regex;
 use Pumukit\CoreBundle\Services\PaginationService;
@@ -13,9 +12,11 @@ use Pumukit\NewAdminBundle\Form\Type\UserUpdateType;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Services\CreateUserService;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\GroupService;
 use Pumukit\SchemaBundle\Services\PersonService;
+use Pumukit\SchemaBundle\Services\UpdateUserService;
 use Pumukit\SchemaBundle\Services\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -35,8 +36,8 @@ class UserController extends AdminController
 
     /** @var PersonService */
     private $personService;
-    /** @var UserManagerInterface */
-    private $fosUserUserManager;
+    private $createUserService;
+    private $updateUserService;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -47,11 +48,13 @@ class UserController extends AdminController
         PersonService $personService,
         TranslatorInterface $translator,
         SessionInterface $session,
-        UserManagerInterface $fosUserUserManager
+        CreateUserService $createUserService,
+        UpdateUserService $updateUserService
     ) {
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
         $this->personService = $personService;
-        $this->fosUserUserManager = $fosUserUserManager;
+        $this->createUserService = $createUserService;
+        $this->updateUserService = $updateUserService;
     }
 
     /**
@@ -71,14 +74,19 @@ class UserController extends AdminController
 
     public function createAction(Request $request)
     {
-        $user = $this->userService->instantiate();
-        $form = $this->getForm($user, $request->getLocale());
+        $form = $this->getForm(null, $request->getLocale());
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $user = $this->userService->create($user);
-                $this->personService->referencePersonIntoUser($user);
+                $userData = $request->get('pumukitnewadmin_user');
+                $this->createUserService->createUser(
+                    $userData['username'],
+                    $userData['plain_password']['first'],
+                    $userData['email'],
+                    $userData['fullname'],
+                    $this->getPermissionProfile($userData['permissionProfile'])
+                );
             } catch (\Exception $e) {
                 throw $e;
             }
@@ -86,46 +94,42 @@ class UserController extends AdminController
             return $this->redirect($this->generateUrl('pumukitnewadmin_user_list'));
         }
 
-        return $this->render(
-            '@PumukitNewAdmin/User/create.html.twig',
-            [
-                'user' => $user,
-                'form' => $form->createView(),
-            ]
-        );
+        return $this->render('@PumukitNewAdmin/User/create.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     public function updateAction(Request $request)
     {
-        $userManager = $this->fosUserUserManager;
-
         $user = $this->findOr404($request);
 
         $locale = $request->getLocale();
-        $form = $this->createForm(UserUpdateType::class, $user, ['translator' => $this->translator, 'locale' => $locale]);
+        $form = $this->createForm(
+            UserUpdateType::class,
+            $user,
+            [
+                'translator' => $this->translator,
+                'locale' => $locale,
+            ]
+        );
 
-        if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH'])) {
-            $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid()) {
-                try {
-                    if (!$user->isLocal()) {
-                        $user = $this->userService->update($user, true, false);
-                    } else {
-                        $response = $this->isAllowedToBeUpdated($user);
-                        if ($response instanceof Response) {
-                            return $response;
-                        }
-                        // false to not flush
-                        $userManager->updateUser($user);
-                        // To update aditional fields added
-                        $this->userService->update($user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid() && in_array($request->getMethod(), ['POST', 'PUT', 'PATCH'])) {
+            try {
+                if (!$user->isLocal()) {
+                    $this->updateUserService->update($user, true, false);
+                } else {
+                    $response = $this->isAllowedToBeUpdated($user);
+                    if ($response instanceof Response) {
+                        return $response;
                     }
-                } catch (\Exception $e) {
-                    throw $e;
+                    $this->updateUserService->update($user);
                 }
-
-                return $this->redirect($this->generateUrl('pumukitnewadmin_user_list'));
+            } catch (\Exception $e) {
+                throw $e;
             }
+
+            return $this->redirect($this->generateUrl('pumukitnewadmin_user_list'));
         }
 
         return $this->render(
@@ -284,7 +288,7 @@ class UserController extends AdminController
             foreach ($users as $user) {
                 if (!$user->hasRole('ROLE_SUPER_ADMIN')) {
                     $user->setPermissionProfile($profile);
-                    $this->userService->update($user, true, false);
+                    $this->updateUserService->update($user, true, false);
                 }
             }
         } catch (\Exception $e) {
@@ -292,6 +296,11 @@ class UserController extends AdminController
         }
 
         return new JsonResponse(['ok']);
+    }
+
+    private function getPermissionProfile(string $permissionProfileId)
+    {
+        return $this->documentManager->getRepository(PermissionProfile::class)->find(new ObjectId($permissionProfileId));
     }
 
     private function modifyUserGroups(User $user, array $addGroups = [], array $deleteGroups = [])

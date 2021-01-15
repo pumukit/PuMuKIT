@@ -156,7 +156,7 @@ class SearchService
 
     public function addSearchQueryBuilder(Builder $queryBuilder, string $locale, ?string $searchFound): Builder
     {
-        $searchFound = trim($searchFound);
+        $searchFound = trim($searchFound ?? '');
 
         if ((false !== strpos($searchFound, '*')) && (false === strpos($searchFound, ' '))) {
             $searchFound = str_replace('*', '.*', $searchFound);

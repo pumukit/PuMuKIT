@@ -169,11 +169,11 @@ class ListController extends AbstractController implements WebTVControllerInterf
         $multimediaObjectRepository = $this->documentManager->getRepository(MultimediaObject::class);
 
         $objects = $multimediaObjectRepository->createBuilderByPersonIdWithRoleCod($person->getId(), $roleCode, ['public_date' => -1]);
-        $this->updateBreadcrumbs($user->getFullname(), 'pumukit_webtv_byuser_multimediaobjects', ['username' => $user->getUsername()]);
+        $this->updateBreadcrumbs($user->getFullName(), 'pumukit_webtv_byuser_multimediaobjects', ['username' => $user->getUsername()]);
 
         $pager = $this->createPager($objects, $request->query->get('page', 1), $limit);
 
-        $title = $user->getFullname();
+        $title = $user->getFullName();
 
         return [
             'title' => $title,
@@ -204,9 +204,9 @@ class ListController extends AbstractController implements WebTVControllerInterf
         $series = $seriesRepository->createBuilderByPersonIdAndRoleCod($person->getId(), $roleCode, ['public_date' => -1]);
 
         $pager = $this->createPager($series, $request->query->get('page', 1), $limit);
-        $this->updateBreadcrumbs($user->getFullname(), 'pumukit_webtv_byuser_series', ['username' => $user->getUsername()]);
+        $this->updateBreadcrumbs($user->getFullName(), 'pumukit_webtv_byuser_series', ['username' => $user->getUsername()]);
 
-        $title = $user->getFullname();
+        $title = $user->getFullName();
 
         return [
             'title' => $title,

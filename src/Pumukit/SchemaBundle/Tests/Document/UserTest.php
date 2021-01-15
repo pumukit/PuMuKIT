@@ -22,9 +22,9 @@ class UserTest extends TestCase
         $user = new User();
 
         $user->setUsername($username);
-        $user->setFullname($fullname);
+        $user->setFullName($fullname);
         $user->setOrigin($origin1);
-        static::assertEquals($fullname, $user->getFullname());
+        static::assertEquals($fullname, $user->getFullName());
         static::assertEquals($origin1, $user->getOrigin());
         static::assertTrue($user->isLocal());
 
