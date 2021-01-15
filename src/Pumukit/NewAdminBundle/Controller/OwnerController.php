@@ -10,11 +10,11 @@ use Pumukit\SchemaBundle\Document\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class OwnerController extends Controller implements NewAdminControllerInterface
+class OwnerController extends AbstractController implements NewAdminControllerInterface
 {
     protected const CO_OWNER_ERROR_TEMPLATE = 'PumukitNewAdminBundle:MultimediaObject/Owner:error.html.twig';
 

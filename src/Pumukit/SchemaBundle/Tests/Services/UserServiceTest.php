@@ -578,6 +578,7 @@ class UserServiceTest extends PumukitTestCase
     {
         $this->expectExceptionMessage('Not allowed to add group');
         $this->expectException(\Exception::class);
+
         $casGroup = new Group();
         $casGroup->setKey('cas_key');
         $casGroup->setName('CAS Group');
@@ -653,6 +654,7 @@ class UserServiceTest extends PumukitTestCase
     {
         $this->expectExceptionMessage('Not allowed to delete group');
         $this->expectException(\Exception::class);
+
         $casGroup = new Group();
         $casGroup->setKey('cas_key');
         $casGroup->setName('CAS Group');

@@ -9,11 +9,11 @@
             {% if live_event_session(multimediaObject) != '' %}
                 {% set session = live_event_session(multimediaObject) %}
                 <span>
-                    {{ session.start|localizeddate('medium','none',app.request.getLocale()) }}
+                    {{ session.start| format_datetime('medium','none',locale=app.request.getLocale()) }}
                     {% trans %}From{% endtrans %}
-                    {{ session.start|localizeddate('none','medium',app.request.getLocale()) }}
+                    {{ session.start| format_datetime('none','medium',locale=app.request.getLocale()) }}
                     {% trans %}To{% endtrans %}
-                    {{ (session.start|date_modify("+" ~ session.duration ~ " seconds"))|localizeddate('none','medium',app.request.getLocale()) }}
+                    {{ (session.start|date_modify("+" ~ session.duration ~ " seconds"))| format_datetime('none','medium',locale=app.request.getLocale()) }}
                 </span>
             {% endif %}
 

@@ -21,7 +21,7 @@
         "nelmio/cors-bundle": "^2.1",
         "phpdocumentor/reflection-docblock": "^4.0",
         "sensio/framework-extra-bundle": "^5.5",
-        "suncat/mobile-detect-bundle": "1.1.*",
+        "suncat/mobile-detect-bundle": "dev-master",
         "symfony/asset": "^4.0",
         "symfony/css-selector": "^4.0",
         "symfony/dotenv": "^4.0",
@@ -35,10 +35,11 @@
         "symfony/swiftmailer-bundle": "^3.0",
         "symfony/templating": "^4.0",
         "symfony/translation": "^4.0",
+        "symfony/twig-bundle": "^4.0",
         "symfony/validator": "^4.0",
+        "twig/extra-bundle": "^3.0",
+        "twig/intl-extra": "^3.0",
         "teltek/pumukit-stats-ui-bundle": "dev-master",
-        "twig/extensions": "~1.0",
-        "twig/twig": "~2.0",
         "vipx/bot-detect-bundle": "^4.0"
     },
     "require-dev": {

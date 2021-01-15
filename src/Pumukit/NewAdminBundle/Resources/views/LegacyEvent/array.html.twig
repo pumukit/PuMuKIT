@@ -49,7 +49,7 @@
         </a>
       </td>
       <td headers="th-date" class="text-nowrap" onclick="click_fila_url('event', this, '{{ path('pumukitnewadmin_event_show', {'id': event.id}) }}');">
-        {{ event.date|localizeddate('medium','medium',app.request.getLocale()) }}
+        {{ event.date| format_datetime('medium','medium',locale=app.request.getLocale()) }}
       </td>
       <td headers="th-img" onclick="click_fila_url('event', this, '{{ path('pumukitnewadmin_event_show', {'id': event.id}) }}')">
         {% if event.getPic() is not empty %}

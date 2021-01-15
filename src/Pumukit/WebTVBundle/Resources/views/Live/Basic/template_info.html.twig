@@ -42,7 +42,7 @@
                 {% trans %}Date{% endtrans %}
             </td>
             <td>
-                {{ event ? event.date|localizeddate('medium','none',app.request.getLocale()) : '---' }}
+                {{ event ? event.date| format_datetime('medium','none',locale=app.request.getLocale()) : '---' }}
             </td>
         </tr>
         <tr>
@@ -50,7 +50,7 @@
                 {% trans %}Time{% endtrans %}
             </td>
             <td>
-                {{ event ? event.date|localizeddate('none','medium',app.request.getLocale()) : '---' }}
+                {{ event ? event.date| format_datetime('none','medium',locale=app.request.getLocale()) : '---' }}
             </td>
         </tr>
         </tbody>

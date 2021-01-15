@@ -79,12 +79,12 @@
                     {{ multimediaObject.getEmbeddedEvent().getEmbeddedEventSession() | length }} {% trans %} sessions{% endtrans %}
                 </td>
                 <td headers="th-create-date">
-                    {{ date_from_mongo_id(multimediaObject) | localizeddate('medium', 'none') }}
+                    {{ date_from_mongo_id(multimediaObject) |  format_datetime('medium', 'none',locale=app.request.getLocale()) }}
                 </td>
                 <td headers="th-date" width="12%">
                     {% set session = multimediaObject|next_session_event %}
                     {% if session %}
-                        {{ session[0].getStart() | localizeddate('medium', 'none') }}
+                        {{ session[0].getStart() |  format_datetime('medium', 'none',locale=app.request.getLocale()) }}
                     {% else %}
                         {% trans %}No future sessions{% endtrans %}
                     {% endif %}

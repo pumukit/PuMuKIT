@@ -80,10 +80,10 @@
                     {% endif %}
                 </td>
                 <td class="text-nowrap">
-                    {{ mm.getRecordDate()|localizeddate('medium','none',app.request.getLocale()) }}
+                    {{ mm.getRecordDate()| format_datetime('medium','none',locale=app.request.getLocale()) }}
                 </td>
                 <td class="text-nowrap">
-                    {{ mm.getPublicDate()|localizeddate('medium','none',app.request.getLocale()) }}
+                    {{ mm.getPublicDate()| format_datetime('medium','none',locale=app.request.getLocale()) }}
                 </td>
             </tr>
         {% else %}

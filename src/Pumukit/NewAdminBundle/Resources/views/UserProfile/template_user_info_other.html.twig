@@ -4,7 +4,7 @@
         <table class="table table-striped">
                 <tr>
                     <td>
-                        {{ user.getLastLogin()|localizeddate('medium','medium', app.request.getLocale()) }}
+                        {{ user.getLastLogin()| format_datetime('medium','medium',locale=app.request.getLocale()) }}
                     </td>
                 </tr>
         </table>
