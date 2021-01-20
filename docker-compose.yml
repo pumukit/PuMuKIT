@@ -30,8 +30,6 @@ services:
         - teltek/nginx
     depends_on:
       - php
-    env_file:
-      - ./doc/docker/.env
     volumes:
       # Comment out the next lines in production
       # - ./web/storage:/srv/pumukit/web/storage:ro
@@ -48,12 +46,12 @@ services:
     restart: always
     volumes:
       - db-data:/data/db:rw
-  
+
   redis:
     image: redis
     restart: always
     env_file:
-      - ./doc/docker/.env
+      - .env
 
 volumes:
   db-data: {}
