@@ -19,7 +19,7 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
         bin/console doctrine:mongodb:schema:create || true
         bin/console pumukit:init:repo all
     	if [ "$AUTOCREATE_PUMUKIT_USER" == 'true' ]; then
-	        php bin/console pumukit:create:user $PUMUKIT_USER $PUMUKIT_USER_MAIL $PUMUKIT_PASS --super-admin || true
+	        php bin/console pumukit:create:user $PUMUKIT_USER $PUMUKIT_USER_MAIL $PUMUKIT_PASS || true
 	    fi
         set -e
     fi
