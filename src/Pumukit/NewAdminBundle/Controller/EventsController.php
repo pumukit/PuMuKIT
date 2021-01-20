@@ -462,7 +462,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
                 if (isset($data['date'])) {
                     $event->setDate(new \DateTime($data['date']));
                 }
-                $event->setDuration($data['duration']);
+                $event->setDuration((int) $data['duration']);
                 $display = isset($data['display']) ? true : false;
                 $event->setDisplay($display);
                 $externalURL = $data['externalURL'] ?? '';
@@ -759,7 +759,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
             $form->get('start')->setData($start);
             $duration = clone $sessionData->getStart();
             $duration->add(new \DateInterval('PT'.$sessionData->getDuration().'S'));
-            $form->get('duration')->setData($duration);
+            $form->get('ends')->setData($duration);
             $form->get('notes')->setData($sessionData->getNotes());
         }
 
