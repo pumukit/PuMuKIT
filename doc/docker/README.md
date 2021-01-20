@@ -17,7 +17,7 @@ Quick Start
 You can clone this repository and launch a basic instance of PuMuKIT with the following command:
 
 ```sh
-$ docker-compose up -d
+$ make up
 ```
 
 You can access to the new local PuMuKIT docker instance with the following url: https://localhost
@@ -29,5 +29,5 @@ Build
 If you want to build the images yourself, use the following command :
 
 ```sh
-$ docker-compose build
+$ make build
 ```
