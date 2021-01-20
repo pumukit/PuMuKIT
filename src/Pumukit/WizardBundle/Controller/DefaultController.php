@@ -39,7 +39,7 @@ class DefaultController extends AbstractController
     public function licenseAction(Request $request, LicenseService $licenseService, bool $pumukitWizardShowTags, bool $pumukitWizardShowObjectLicense)
     {
         $formData = $request->get('pumukitwizard_form_data', []);
-        $sameSeries = $this->getSameSeriesValue($formData, $request->get('same_series', false));
+        $sameSeries = $this->getSameSeriesValue($formData, (bool) $request->get('same_series', false));
         $showSeries = !$sameSeries;
         $formData['same_series'] = $sameSeries ? 1 : 0;
         if (!$licenseService->isEnabled()) {
@@ -68,7 +68,7 @@ class DefaultController extends AbstractController
     public function seriesAction(Request $request, DocumentManager $documentManager, LicenseService $licenseService, bool $pumukitWizardShowTags, bool $pumukitWizardShowObjectLicense, bool $pumukitWizardMandatoryTitle, bool $pumukitWizardReuseSeries, bool $pumukitWizardReuseAdminSeries)
     {
         $formData = $request->get('pumukitwizard_form_data', []);
-        $sameSeries = $this->getSameSeriesValue($formData, $request->get('same_series', false));
+        $sameSeries = $this->getSameSeriesValue($formData, (bool) $request->get('same_series', false));
         $formData['same_series'] = $sameSeries ? 1 : 0;
         $licenseEnabledAndAccepted = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
         if (!$licenseEnabledAndAccepted) {
@@ -105,7 +105,7 @@ class DefaultController extends AbstractController
     public function typeAction(Request $request, DocumentManager $documentManager, LicenseService $licenseService, bool $pumukitWizardShowTags, bool $pumukitWizardShowObjectLicense, string $id)
     {
         $formData = $request->get('pumukitwizard_form_data', []);
-        $sameSeries = $this->getSameSeriesValue($formData, $request->get('same_series', false));
+        $sameSeries = $this->getSameSeriesValue($formData, (bool) $request->get('same_series', false));
         $showSeries = !$sameSeries;
         $formData['same_series'] = $sameSeries ? 1 : 0;
         if (!isset($formData['series']['new'])) {
@@ -155,7 +155,7 @@ class DefaultController extends AbstractController
     public function optionAction(Request $request, LicenseService $licenseService): RedirectResponse
     {
         $formData = $request->get('pumukitwizard_form_data', []);
-        $sameSeries = $this->getSameSeriesValue($formData, $request->get('same_series', false));
+        $sameSeries = $this->getSameSeriesValue($formData, (bool) $request->get('same_series', false));
         $formData['same_series'] = $sameSeries ? 1 : 0;
         $licenseEnabledAndAccepted = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
         if (!$licenseEnabledAndAccepted) {
@@ -178,7 +178,7 @@ class DefaultController extends AbstractController
     public function multimediaobjectAction(Request $request, DocumentManager $documentManager, LicenseService $licenseService, bool $pumukitWizardShowTags, $pumukitNewAdminLicenses, $pumukitSchemaDefaultLicense, bool $pumukitWizardShowObjectLicense, $pumukitWizardTagParentCod, bool $pumukitWizardMandatoryTitle)
     {
         $formData = $request->get('pumukitwizard_form_data', []);
-        $sameSeries = $this->getSameSeriesValue($formData, $request->get('same_series', false));
+        $sameSeries = $this->getSameSeriesValue($formData, (bool) $request->get('same_series', false));
         $showSeries = !$sameSeries;
         $formData['same_series'] = $sameSeries ? 1 : 0;
         if (!isset($formData['series']['new'])) {
@@ -236,7 +236,7 @@ class DefaultController extends AbstractController
     public function trackAction(Request $request, LicenseService $licenseService, ProfileService $profileService, FactoryService $factoryService, TranslatorInterface $translator, array $pumukitCustomLanguages, bool $pumukitWizardShowTags, bool $pumukitWizardShowObjectLicense)
     {
         $formData = $request->get('pumukitwizard_form_data', []);
-        $sameSeries = $this->getSameSeriesValue($formData, $request->get('same_series', false));
+        $sameSeries = $this->getSameSeriesValue($formData, (bool) $request->get('same_series', false));
         $showSeries = !$sameSeries;
         $formData['same_series'] = $sameSeries ? 1 : 0;
         $licenseEnabledAndAccepted = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
@@ -294,7 +294,7 @@ class DefaultController extends AbstractController
     public function uploadAction(Request $request, DocumentManager $documentManager, TagService $tagService, FactoryService $factoryService, WizardService $wizardService, SortedMultimediaObjectsService $pumukitSchemaSortedMultimediaObjectService, LicenseService $licenseService, ProfileService $profileService, JobService $jobService, InspectionFfprobeService $inspectionFfprobeService, FormEventDispatcherService $formEventDispatcherService, bool $pumukitWizardShowTags, bool $pumukitWizardShowObjectLicense, array $locales)
     {
         $formData = $request->get('pumukitwizard_form_data', []);
-        $sameSeries = $this->getSameSeriesValue($formData, $request->get('same_series', false));
+        $sameSeries = $this->getSameSeriesValue($formData, (bool) $request->get('same_series', false));
         $showSeries = !$sameSeries;
         $formData['same_series'] = $sameSeries ? 1 : 0;
         $licenseEnabledAndAccepted = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
