@@ -223,3 +223,11 @@ services:
 
   Pumukit\SchemaBundle\Services\UpdateUserService:
     class: Pumukit\SchemaBundle\Services\UpdateUserService
+
+  Pumukit\SchemaBundle\Services\MultimediaObjectAddOwnerListener:
+    class: Pumukit\SchemaBundle\Services\MultimediaObjectAddOwnerListener
+    arguments:
+      $addedOwnerEmailSubject: '%pumukit_schema.multimedia_object_add_owner_subject%'
+      $addedOwnerEmailTemplate: '%pumukit_schema.multimedia_object_add_owner_template%'
+    tags:
+      - { name: "kernel.event_listener", event: "multimedia_object.add_owner", method: "add" }
