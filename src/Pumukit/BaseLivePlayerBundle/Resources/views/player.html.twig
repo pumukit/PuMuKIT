@@ -6,8 +6,8 @@
         {% trans %}Please use 11.0 or higher version or use another browser.{% endtrans %}
     </div>
 {% else %}
-    <div>
-        <video id="directo-{{ id }}" class="video-js" data-setup='{}' style="width:100%; margin: 0 auto; position: relative;">
+    <div class="directo-{{ id }}">
+        <video id="directo-{{ id }}" class="video-js"></video>
     </div>
 
     {% if advance_live_events is defined and advance_live_events %}

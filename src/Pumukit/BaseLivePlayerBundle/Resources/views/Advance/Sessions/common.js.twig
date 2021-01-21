@@ -3,7 +3,7 @@
 
 var image = "<img src=\"{{  poster_image_url  }}\"";
 var width = 'width="100%">';
-var style = '<p class="warning" style="position: absolute; top: 40%; color: {{ poster_color }}; font-weight: bold; font-size: 20px; width:95%; line-height: 34px; text-align: center; word-break: break-word">';
+var style = '<p class="warning" style="position: absolute; top: 30%; color: {{ poster_color }}; font-weight: bold; font-size: 20px; width:95%; line-height: 34px; text-align: center; word-break: break-word">';
 
 var image = image + width;
 var text = '{{ event.getNotYetHeldMessage()|default('The event has not been held yet'|trans)|raw }}';
