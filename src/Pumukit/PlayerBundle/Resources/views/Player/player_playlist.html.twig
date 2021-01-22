@@ -1,0 +1,57 @@
+{% extends '@PumukitPlayer/Player/index.html.twig' %}
+
+{% block body_base %}
+    {% if playlist_mmobjs %}
+        <video id="player1" controls></video>
+        <script type="text/javascript">
+            videojs("player1").setup({
+                playlist: [{
+                    {% for mmobj in playlist_mmobjs %}
+                        sources: [{
+                            {% set track = mmobj|first_public_track %}
+                            src: "{{ absolute_url(track_url(track)) }}"
+                        }]
+                        {% set captions = captions(mmobj) %}
+                        {% if captions is not empty %}
+                        tracks: [
+                            {% for caption in captions %}
+                            {
+                                src: "{{ absolute_url(caption.url) }}",
+                                label: "{{ caption.language|language_name }}",
+                                kind: "captions"
+                            },
+                            {% endfor %}
+                        ],
+                        {% endif %}
+                        {% if ('true' != autostart|default("true")) or track.isOnlyAudio() %}
+                        poster: "{{ mmobj|first_url_pic(true) }}",
+                        {% endif %}
+                        }, {
+                    {% endfor %}
+                }],
+                startparam: "start",
+                autoplay: {{ autostart|default("true") }},
+                repeat: "false",
+                width: '100%',
+                aspectRatio: '16:9',
+                logo: {hide: true}
+            });
+            videojs('player1').resize(window.document.documentElement.clientWidth, window.document.documentElement.clientHeight);
+        </script>
+    {% else %}
+        <div style="color: white;
+                background: black;
+                text-align: center;
+                vertical-align: middle;
+                display: table-cell;" id="player1">No tracks.</div>
+    {% endif %}
+    <script type="text/javascript">
+        function resizeDiv() {
+            document.getElementById('player1').style.width = window.document.documentElement.clientWidth + 'px';
+            document.getElementById('player1').style.height = window.document.documentElement.clientHeight + 'px';
+        }
+
+        window.onresize = resizeDiv;
+        resizeDiv();
+    </script>
+{% endblock %}

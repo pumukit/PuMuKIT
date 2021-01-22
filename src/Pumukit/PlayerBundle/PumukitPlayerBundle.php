@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Pumukit\JWPlayerBundle;
+namespace Pumukit\PlayerBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class PumukitJWPlayerBundle extends Bundle
+class PumukitPlayerBundle extends Bundle
 {
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Pumukit\JWPlayerBundle\Controller;
+namespace Pumukit\PlayerBundle\Controller;
 
 use Pumukit\BasePlayerBundle\Controller\BasePlayerController as BasePlayerControllero;
 use Pumukit\BasePlayerBundle\Services\IntroService;
@@ -40,7 +40,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
 
     /**
      * @Route("/videoplayer/{id}", name="pumukit_videoplayer_index", defaults={"no_channels"=true} )
-     * @Template("@PumukitJWPlayer/JWPlayer/player.html.twig")
+     * @Template("@PumukitPlayer/Player/player.html.twig")
      */
     public function indexAction(Request $request, MultimediaObject $multimediaObject)
     {
@@ -71,7 +71,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
 
     /**
      * @Route("/videoplayer/magic/{secret}", name="pumukit_videoplayer_magicindex", defaults={"show_hide"=true, "no_channels"=true} )
-     * @Template("@PumukitJWPlayer/JWPlayer/player.html.twig")
+     * @Template("@PumukitPlayer/Player/player.html.twig")
      */
     public function magicAction(Request $request, MultimediaObject $multimediaObject)
     {

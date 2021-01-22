@@ -7,7 +7,7 @@ pumukit_stats_ui:
   prefix:   /
 
 pumukit_jw_player:
-  resource: "@PumukitJWPlayerBundle/Resources/config/routing.yml"
+  resource: "@PumukitPlayerBundle/Resources/config/routing.yml"
   prefix:   /
 
 pumukit_base_player:

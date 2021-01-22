@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Pumukit\JWPlayerBundle\Controller;
+namespace Pumukit\PlayerBundle\Controller;
 
 use Pumukit\BasePlayerBundle\Controller\BasePlaylistController;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
@@ -17,7 +17,7 @@ class PlaylistController extends BasePlaylistController
     /**
      * @Route("/playlist/{id}", name="pumukit_playlistplayer_index", defaults={"no_channels"=true} )
      * @Route("/playlist/magic/{secret}", name="pumukit_playlistplayer_magicindex", defaults={"show_hide"=true, "no_channels"=true} )
-     * @Template("@PumukitJWPlayer/JWPlayer/player_playlist.html.twig")
+     * @Template("@PumukitPlayer/JWPlayer/player_playlist.html.twig")
      */
     public function indexAction(Request $request, Series $series)
     {
