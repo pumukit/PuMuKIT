@@ -12,7 +12,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class FormEventDispatcherService
 {
-    /** @var EventDispatcherInterface */
     private $dispatcher;
 
     public function __construct(EventDispatcherInterface $dispatcher)

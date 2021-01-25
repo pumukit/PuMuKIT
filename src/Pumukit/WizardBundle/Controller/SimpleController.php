@@ -16,39 +16,94 @@ use Pumukit\SchemaBundle\Services\SortedMultimediaObjectsService;
 use Pumukit\WizardBundle\Services\FormEventDispatcherService;
 use Pumukit\WizardBundle\Services\LicenseService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_WIZARD_UPLOAD')")
+ * @Route("/admin/simplewizard")
  */
 class SimpleController extends AbstractController
 {
-    /**
-     * @Template("@PumukitWizard/Simple/index.html.twig")
-     */
-    public function indexAction(Request $request, LicenseService $licenseService, TranslatorInterface $translator, Series $series, array $pumukitCustomLanguages): array
-    {
-        $licenseContent = $licenseService->getLicenseContent($request->getLocale());
+    private $objectManager;
+    private $licenseService;
+    private $translator;
+    private $inspectionFfprobeService;
+    private $pumukitSchemaSortedMultimediaObjectService;
+    private $jobService;
+    private $profileService;
+    private $factoryService;
+    private $formEventDispatcherService;
+    private $locales;
+    private $pumukitWizardSimpleDefaultMasterProfile;
+    private $pumukitWizardShowSimpleMmTitle;
+    private $pumukitWizardShowSimpleSeriesTitle;
+    private $pumukitCustomLanguages;
 
-        $languages = CustomLanguageType::getLanguageNames($pumukitCustomLanguages, $translator);
-
-        return [
-            'series' => $series,
-            'languages' => $languages,
-            'show_license' => $licenseService->isEnabled(),
-            'license_text' => $licenseContent,
-        ];
+    public function __construct(
+        DocumentManager $objectManager,
+        LicenseService $licenseService,
+        TranslatorInterface $translator,
+        InspectionFfprobeService $inspectionFfprobeService,
+        SortedMultimediaObjectsService $pumukitSchemaSortedMultimediaObjectService,
+        JobService $jobService,
+        ProfileService $profileService,
+        FactoryService $factoryService,
+        FormEventDispatcherService $formEventDispatcherService,
+        array $locales,
+        bool $pumukitWizardShowSimpleMmTitle,
+        bool $pumukitWizardShowSimpleSeriesTitle,
+        array $pumukitCustomLanguages,
+        $pumukitWizardSimpleDefaultMasterProfile
+    ) {
+        $this->objectManager = $objectManager;
+        $this->licenseService = $licenseService;
+        $this->translator = $translator;
+        $this->inspectionFfprobeService = $inspectionFfprobeService;
+        $this->profileService = $profileService;
+        $this->pumukitSchemaSortedMultimediaObjectService = $pumukitSchemaSortedMultimediaObjectService;
+        $this->jobService = $jobService;
+        $this->profileService = $profileService;
+        $this->factoryService = $factoryService;
+        $this->formEventDispatcherService = $formEventDispatcherService;
+        $this->locales = $locales;
+        $this->pumukitWizardSimpleDefaultMasterProfile = $pumukitWizardSimpleDefaultMasterProfile;
+        $this->pumukitWizardShowSimpleMmTitle = $pumukitWizardShowSimpleMmTitle;
+        $this->pumukitWizardShowSimpleSeriesTitle = $pumukitWizardShowSimpleSeriesTitle;
+        $this->pumukitCustomLanguages = $pumukitCustomLanguages;
     }
 
-    public function uploadAction(Request $request, JobService $jobService, ProfileService $profileService, FactoryService $factoryService, array $locales, InspectionFfprobeService $inspectionFfprobeService, SortedMultimediaObjectsService $sortedMultimediaObjectsService, Series $series, $pumukitWizardSimpleDefaultMasterProfile)
+    /**
+     * @Route("/index/{id}", methods={"GET"}, name="pumukitwizard_simple_index")
+     */
+    public function indexAction(Request $request, Series $series): Response
+    {
+        $licenseContent = $this->licenseService->getLicenseContent($request->getLocale());
+
+        $languages = CustomLanguageType::getLanguageNames($this->pumukitCustomLanguages, $this->translator);
+
+        return $this->render(
+            '@PumukitWizard/Simple/index.html.twig',
+            [
+                'series' => $series,
+                'languages' => $languages,
+                'show_license' => $this->licenseService->isEnabled(),
+                'license_text' => $licenseContent,
+            ]
+        );
+    }
+
+    /**
+     * @Route("/upload/{id}", methods={"POST"}, name="pumukitwizard_simple_upload")
+     */
+    public function uploadAction(Request $request, Series $series): Response
     {
         $priority = 2;
-        $profile = $this->getDefaultMasterProfile($profileService, $pumukitWizardSimpleDefaultMasterProfile);
+        $profile = $this->getDefaultMasterProfile();
         $description = [];
         $language = $request->request->get('language', $request->getLocale());
         $file = $request->files->get('resource');
@@ -66,7 +121,7 @@ class SimpleController extends AbstractController
 
             try {
                 //exception if is not a mediafile (video or audio)
-                $duration = $inspectionFfprobeService->getDuration($filePath);
+                $duration = $this->inspectionFfprobeService->getDuration($filePath);
             } catch (\Exception $e) {
                 throw new \Exception('The file is not a valid video or audio file');
             }
@@ -76,10 +131,10 @@ class SimpleController extends AbstractController
             }
 
             $title = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $multimediaObject = $this->createMultimediaObject($factoryService, $locales, $title, $series);
+            $multimediaObject = $this->createMultimediaObject($title, $series);
             $multimediaObject->setDuration($duration);
 
-            $jobService->createTrackFromLocalHardDrive(
+            $this->jobService->createTrackFromLocalHardDrive(
                 $multimediaObject,
                 $file,
                 $profile,
@@ -94,29 +149,29 @@ class SimpleController extends AbstractController
             throw $e;
         }
 
-        $sortedMultimediaObjectsService->reorder($series);
+        $this->pumukitSchemaSortedMultimediaObjectService->reorder($series);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_shortener', ['id' => $multimediaObject->getId()]));
+        return $this->redirect(
+            $this->generateUrl('pumukitnewadmin_mms_shortener', ['id' => $multimediaObject->getId()])
+        );
     }
 
     /**
-     * @Template("@PumukitWizard/Simple/embedindex.html.twig")
-     *
-     * @param mixed $pumukitWizardShowSimpleMmTitle
-     * @param mixed $pumukitWizardShowSimpleSeriesTitle
+     * @Route("/embedindex", methods={"GET"}, name="pumukitwizard_simple_embedindex")
      */
-    public function embedindexAction(Request $request, DocumentManager $documentManager, LicenseService $licenseService, TranslatorInterface $translator, array $pumukitCustomLocales, $pumukitWizardShowSimpleMmTitle, $pumukitWizardShowSimpleSeriesTitle)
+    public function embedIndexAction(Request $request): Response
     {
         $seriesId = $request->get('series');
         $externalData = $request->get('externalData');
-        $series = $documentManager->getRepository(Series::class)->find($seriesId);
+        $series = $this->objectManager->getRepository(Series::class)->find($seriesId);
         if (!$series) {
-            $series = $this->getSeriesByExternalData($documentManager, $externalData);
+            $series = $this->getSeriesByExternalData($externalData);
         }
 
-        $canAccessSeries = null !== $series && $this->get('pumukitschema.series')->canUserAccessSeries($this->getUser(), $series);
-        $licenseContent = $licenseService->getLicenseContent($request->getLocale());
-        $languages = CustomLanguageType::getLanguageNames($pumukitCustomLocales, $translator);
+        $canAccessSeries = null !== $series
+                           && $this->get('pumukitschema.series')->canUserAccessSeries($this->getUser(), $series);
+        $licenseContent = $this->licenseService->getLicenseContent($request->getLocale());
+        $languages = CustomLanguageType::getLanguageNames($this->pumukitCustomLanguages, $this->translator);
 
         $seriesI18nTitle = [];
         if ($series) {
@@ -125,30 +180,36 @@ class SimpleController extends AbstractController
             $seriesI18nTitle = $externalData['title'];
         }
 
-        return [
-            'can_access_series' => $canAccessSeries,
-            'series' => $series,
-            'languages' => $languages,
-            'show_license' => $licenseService->isEnabled(),
-            'license_text' => $licenseContent,
-            'externalData' => $externalData,
-            'show_simple_mm_title' => $pumukitWizardShowSimpleMmTitle,
-            'show_simple_series_title' => $pumukitWizardShowSimpleSeriesTitle,
-            'series_i18n_title' => $seriesI18nTitle,
-        ];
+        return $this->render(
+            '@PumukitWizard/Simple/embedindex.html.twig',
+            [
+                'can_access_series' => $canAccessSeries,
+                'series' => $series,
+                'languages' => $languages,
+                'show_license' => $this->licenseService->isEnabled(),
+                'license_text' => $licenseContent,
+                'externalData' => $externalData,
+                'show_simple_mm_title' => $this->pumukitWizardShowSimpleMmTitle,
+                'show_simple_series_title' => $this->pumukitWizardShowSimpleSeriesTitle,
+                'series_i18n_title' => $seriesI18nTitle,
+            ]
+        );
     }
 
-    public function embeduploadAction(Request $request, DocumentManager $documentManager, ProfileService $profileService, JobService $jobService, FactoryService $factoryService, InspectionFfprobeService $inspectionFfprobeService, SortedMultimediaObjectsService $sortedMultimediaObjectsService, FormEventDispatcherService $formDispatcher, array $locales, $pumukitWizardSimpleDefaultMasterProfile)
+    /**
+     * @Route("/embedupload", methods={"GET","POST"},name="pumukitwizard_simple_embedupload")
+     */
+    public function embedUploadAction(Request $request): JsonResponse
     {
         $seriesId = $request->get('id');
-        $series = $documentManager->getRepository(Series::class)->find($seriesId);
+        $series = $this->objectManager->getRepository(Series::class)->find($seriesId);
         $externalData = $request->get('externalData');
         if (!$series) {
-            $series = $this->getSeriesByExternalData($documentManager, $externalData);
+            $series = $this->getSeriesByExternalData($externalData);
         }
 
         $priority = 2;
-        $profile = $this->getDefaultMasterProfile($profileService, $pumukitWizardSimpleDefaultMasterProfile);
+        $profile = $this->getDefaultMasterProfile();
         $description = [];
         $language = $request->request->get('language', $request->getLocale());
         $file = $request->files->get('resource');
@@ -180,7 +241,7 @@ class SimpleController extends AbstractController
 
             try {
                 //exception if is not a mediafile (video or audio)
-                $duration = $inspectionFfprobeService->getDuration($filePath);
+                $duration = $this->inspectionFfprobeService->getDuration($filePath);
             } catch (\Exception $e) {
                 $response = [
                     'status' => Response::HTTP_UNSUPPORTED_MEDIA_TYPE,
@@ -193,14 +254,16 @@ class SimpleController extends AbstractController
             if (0 === $duration) {
                 $response = [
                     'status' => Response::HTTP_UNSUPPORTED_MEDIA_TYPE,
-                    'errorMessage' => $this->get('translator')->trans('The file is not a valid video or audio file (duration is zero)'),
+                    'errorMessage' => $this->get('translator')->trans(
+                        'The file is not a valid video or audio file (duration is zero)'
+                    ),
                 ];
 
                 return new JsonResponse($response);
             }
 
             if (!$series) {
-                $series = $this->createSeries($factoryService, $externalData);
+                $series = $this->createSeries($externalData);
             }
 
             $showMmTitle = $this->getParameter('pumukit_wizard.show_simple_mm_title');
@@ -208,18 +271,18 @@ class SimpleController extends AbstractController
                 $i18nTitle = $request->request->get('multimediaobject_i18n_title', []);
                 if (!array_filter($i18nTitle)) {
                     $title = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                    $i18nTitle = $this->createI18nTitleFromFile($locales, $title);
+                    $i18nTitle = $this->createI18nTitleFromFile($title);
                 }
             } else {
                 $title = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                $i18nTitle = $this->createI18nTitleFromFile($locales, $title);
+                $i18nTitle = $this->createI18nTitleFromFile($title);
             }
-            $multimediaObject = $this->createMultimediaObjectWithI18nTitle($factoryService, $i18nTitle, $series);
+            $multimediaObject = $this->createMultimediaObjectWithI18nTitle($i18nTitle, $series);
             $multimediaObject->setDuration($duration);
 
-            $multimediaObject = $this->setExternalProperties($documentManager, $multimediaObject, $externalData);
+            $multimediaObject = $this->setExternalProperties($multimediaObject, $externalData);
 
-            $jobService->createTrackFromLocalHardDrive(
+            $this->jobService->createTrackFromLocalHardDrive(
                 $multimediaObject,
                 $file,
                 $profile,
@@ -231,12 +294,16 @@ class SimpleController extends AbstractController
                 JobService::ADD_JOB_NOT_CHECKS
             );
 
-            $formDispatcher->dispatchSubmit($this->getUser(), $multimediaObject, ['simple' => true, 'externalData' => $externalData]);
+            $this->formEventDispatcherService->dispatchSubmit(
+                $this->getUser(),
+                $multimediaObject,
+                ['simple' => true, 'externalData' => $externalData]
+            );
         } catch (\Exception $e) {
             throw $e;
         }
 
-        $sortedMultimediaObjectsService->reorder($series);
+        $this->pumukitSchemaSortedMultimediaObjectService->reorder($series);
 
         $response = [
             'url' => $this->generateUrl('pumukitnewadmin_mms_shortener', ['id' => $multimediaObject->getId()]),
@@ -246,79 +313,81 @@ class SimpleController extends AbstractController
         return new JsonResponse($response);
     }
 
-    private function createMultimediaObject(FactoryService $factoryService, array $locales, string $title, Series $series): MultimediaObject
+    private function createMultimediaObject(string $title, Series $series): MultimediaObject
     {
-        $multimediaObject = $factoryService->createMultimediaObject($series, true, $this->getUser());
+        $multimediaObject = $this->factoryService->createMultimediaObject($series, true, $this->getUser());
 
-        foreach ($locales as $locale) {
+        foreach ($this->locales as $locale) {
             $multimediaObject->setTitle($title, $locale);
         }
 
         return $multimediaObject;
     }
 
-    private function createMultimediaObjectWithI18nTitle(FactoryService $factoryService, $i18nTitle, Series $series): MultimediaObject
+    private function createMultimediaObjectWithI18nTitle(array $i18nTitle, Series $series): MultimediaObject
     {
-        $multimediaObject = $factoryService->createMultimediaObject($series, true, $this->getUser());
+        $multimediaObject = $this->factoryService->createMultimediaObject($series, true, $this->getUser());
         if (!array_filter($i18nTitle)) {
-            $i18nTitle = $factoryService->getDefaultMultimediaObjectI18nTitle();
+            $i18nTitle = $this->factoryService->getDefaultMultimediaObjectI18nTitle();
         }
         $multimediaObject->setI18nTitle($i18nTitle);
 
         return $multimediaObject;
     }
 
-    private function getSeriesByExternalData(DocumentManager $documentManager, array $externalData)
+    private function getSeriesByExternalData(array $externalData)
     {
         if (isset($externalData['seriesData']['title'])) {
-            return $documentManager->getRepository(Series::class)->findOneBy([
-                'title' => $externalData['seriesData']['title'],
-                'properties.owners' => $this->getUser()->getId(),
-            ]);
+            return $this->objectManager->getRepository(Series::class)->findOneBy(
+                [
+                    'title' => $externalData['seriesData']['title'],
+                    'properties.owners' => $this->getUser()->getId(),
+                ]
+            );
         }
 
         return null;
     }
 
-    private function createSeries(FactoryService $factoryService, array $externalData): Series
+    private function createSeries(array $externalData): Series
     {
         if (isset($externalData['seriesData']['title'])) {
-            return $factoryService->createSeries($this->getUser(), $externalData['seriesData']['title']);
+            return $this->factoryService->createSeries($this->getUser(), $externalData['seriesData']['title']);
         }
 
-        return $factoryService->createSeries($this->getUser());
+        return $this->factoryService->createSeries($this->getUser());
     }
 
-    private function createI18nTitleFromFile(array $locales, string $title): array
+    private function createI18nTitleFromFile(string $title): array
     {
         $i18nTitle = [];
-        foreach ($locales as $locale) {
+        foreach ($this->locales as $locale) {
             $i18nTitle[$locale] = $title;
         }
 
         return $i18nTitle;
     }
 
-    private function setExternalProperties(DocumentManager $documentManager, MultimediaObject $multimediaObject, array $externalData): MultimediaObject
+    private function setExternalProperties(MultimediaObject $multimediaObject, array $externalData): MultimediaObject
     {
         if (isset($externalData['mmobjData']['properties'])) {
             foreach ($externalData['mmobjData']['properties'] as $key => $value) {
                 $multimediaObject->setProperty($key, $value);
             }
 
-            $documentManager->persist($multimediaObject);
-            $documentManager->flush();
+            $this->objectManager->persist($multimediaObject);
+            $this->objectManager->flush();
         }
 
         return $multimediaObject;
     }
 
-    private function getDefaultMasterProfile(ProfileService $profileService, $pumukitWizardSimpleDefaultMasterProfile = null)
+    private function getDefaultMasterProfile()
     {
-        if ($pumukitWizardSimpleDefaultMasterProfile) {
-            return $pumukitWizardSimpleDefaultMasterProfile;
+        if ($this->pumukitWizardSimpleDefaultMasterProfile) {
+            return $this->pumukitWizardSimpleDefaultMasterProfile;
         }
 
-        return $profileService->getDefaultMasterProfile();
+        return $this->profileService->getDefaultMasterProfile();
     }
 }
