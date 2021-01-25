@@ -335,7 +335,7 @@ class SimpleController extends AbstractController
         return $multimediaObject;
     }
 
-    private function getSeriesByExternalData(array $externalData)
+    private function getSeriesByExternalData(?array $externalData)
     {
         if (isset($externalData['seriesData']['title'])) {
             return $this->objectManager->getRepository(Series::class)->findOneBy(
@@ -349,7 +349,7 @@ class SimpleController extends AbstractController
         return null;
     }
 
-    private function createSeries(array $externalData): Series
+    private function createSeries(?array $externalData): Series
     {
         if (isset($externalData['seriesData']['title'])) {
             return $this->factoryService->createSeries($this->getUser(), $externalData['seriesData']['title']);
@@ -368,7 +368,7 @@ class SimpleController extends AbstractController
         return $i18nTitle;
     }
 
-    private function setExternalProperties(MultimediaObject $multimediaObject, array $externalData): MultimediaObject
+    private function setExternalProperties(MultimediaObject $multimediaObject, ?array $externalData): MultimediaObject
     {
         if (isset($externalData['mmobjData']['properties'])) {
             foreach ($externalData['mmobjData']['properties'] as $key => $value) {

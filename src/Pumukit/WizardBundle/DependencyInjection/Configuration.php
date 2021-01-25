@@ -65,6 +65,7 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->enumNode('simple_default_master_profile')
             ->values($this->profiles)
+            ->defaultValue('broadcastable_master')
             ->info('Force a default master profile for multimedia objects created using the simple wizard (used by Moodle or by OpenEdx)')
             ->end()
             ->end()

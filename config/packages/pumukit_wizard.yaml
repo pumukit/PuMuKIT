@@ -14,9 +14,10 @@ services:
       $locales: '%pumukit.locales%'
       $pumukitWizardReuseSeries: '%pumukit_wizard.reuse_series%'
       $pumukitWizardReuseAdminSeries: '%pumukit_wizard.reuse_admin_series%'
-      $pumukitWizardSimpleDefaultMasterProfile: '@=parameter("pumukit_wizard.simple_default_master_profile") ? parameter("pumukit_wizard.simple_default_master_profile") : null'
+      $pumukitWizardSimpleDefaultMasterProfile: '%pumukit_wizard.simple_default_master_profile%'
       $pumukitWizardShowSimpleMmTitle: '%pumukit_wizard.show_simple_mm_title%'
       $pumukitWizardShowSimpleSeriesTitle: '%pumukit_wizard.show_simple_series_title%'
+
   Pumukit\WizardBundle\Controller\:
     resource: '../../src/Pumukit/WizardBundle/Controller/'
     tags: ['controller.service_arguments']
