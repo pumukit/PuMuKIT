@@ -8,7 +8,6 @@ use Pumukit\BasePlayerBundle\Controller\BasePlaylistController;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -31,7 +30,7 @@ class PlaylistController extends BasePlaylistController
             $mmobjs = $this->seriesPlaylistService->getPlaylistMmobjs($series);
         }
 
-        return $this->render('@PumukitPlayer/Player/player_playlist.html.twig',[
+        return $this->render('@PumukitPlayer/Player/player_playlist.html.twig', [
             'playlist_mmobjs' => $mmobjs,
             'object' => $series,
             'responsive' => true,
