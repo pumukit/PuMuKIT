@@ -893,7 +893,7 @@ class MultimediaObjectRepository extends DocumentRepository
             ->field('type')->notEqual(MultimediaObject::TYPE_LIVE);
     }
 
-    public function createAggregationStandardQueryBuilder(): \Doctrine\ODM\MongoDB\Aggregation\Stage\Match
+    public function createAggregationStandardQueryBuilder()
     {
         return $this->createAggregationBuilder()
             ->match()
