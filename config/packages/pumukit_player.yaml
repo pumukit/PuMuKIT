@@ -6,6 +6,6 @@ services:
     bind:
       $pumukitPlayerWhenDispatchViewEvent: '%pumukitplayer.when_dispatch_view_event%'
 
-  Pumukit\JWPlayerBundle\Controller\:
-    resource: '../../src/Pumukit/JWPlayerBundle/Controller/'
+  Pumukit\PlayerBundle\Controller\:
+    resource: '../../src/Pumukit/PlayerBundle/Controller/'
     tags: ['controller.service_arguments']

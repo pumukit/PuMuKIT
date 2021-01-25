@@ -1,4 +1,4 @@
-{% extends '@PumukitJWPlayer/JWPlayer/index.html.twig' %}
+{% extends '@PumukitPlayer/Player/index.html.twig' %}
 
 {% block body_base %}
     {% if track %}
@@ -8,7 +8,7 @@
                 tracks: [
                 {% for caption in captions %}
                     {
-                    file: "{{ absolute_url(caption.url) }}",
+                    src: "{{ absolute_url(caption.url) }}",
                     label: "{{ caption.language|language_name }}",
                     kind: "captions"
                     },
@@ -17,38 +17,43 @@
             {% endif %}
         {% endset %}
 
-        <video id="player1" controls></video>
+        <video id="player1" class="video-js" controls></video>
         <script type="text/javascript">
-            jwplayer("player1").setup({
+            videojs("player1", {
                 {% if intro %}
                 playlist: [{
-                    file: "{{ absolute_url(intro) }}",
+                    sources: [{
+                        src: "{{ absolute_url(intro) }}"
+                    }],
                     {% if 'true' != autostart %}
-                    image: "{{ object|first_url_pic(true) }}",
+                    poster: "{{ object|first_url_pic(true) }}",
                     {% endif %}
                 }, {
-                    file: "{{ absolute_url(track_url(track)) }}",
+                    sources: [{
+                        src: "{{ absolute_url(track_url(track)) }}"
+                    }],
                     {{ captions_block }}
                     {% if ('true' != autostart) or track.isOnlyAudio() %}
-                    image: "{{ object|first_url_pic(true) }}",
+                    poster: "{{ object|first_url_pic(true) }}",
                     {% endif %}
                 }],
                 {% else %}
-                file: "{{ absolute_url(track_url(track)) }}",
-                {{ captions_block }}
-                {% if (('true' != autostart) or track.isOnlyAudio()) %}
-                image: "{{ object|first_url_pic(true) }}",
-                {% endif %}
+                    sources: [{
+                        src: "{{ absolute_url(track_url(track)) }}"
+                    }],
+                    {{ captions_block }}
+                    {% if (('true' != autostart) or track.isOnlyAudio()) %}
+                    poster: "{{ object|first_url_pic(true) }}",
+                    {% endif %}
                 {% endif %}
                 startparam: "start",
-                autostart: {{ autostart|default("true") }},
+                autoplay: {{ autostart|default("true") }},
                 repeat: "false",
                 width: '100%',
-                aspectratio: '16:9',
-                logo: {hide: true}
+                aspectRatio: '16:9',
             });
             {% if 'on_play' == when_dispatch_view_event %}
-            jwplayer("player1").onPlay(function (e) {
+            videojs("player1").on('play', function (e) {
                 if (!window.notifyVideoPlayedReq) {
                     window.notifyVideoPlayedReq = new XMLHttpRequest();
                     window.notifyVideoPlayedReq.open('POST', '{{ path('pumukit_trackplayed_index', {id: track.id}) }}', true);
@@ -58,15 +63,7 @@
             {% endif %}
         </script>
     {% else %}
-        <div style="color: white;
-                background: black;
-                width: 100%;
-                height: 100%;
-                text-align: center;
-                vertical-align: middle;
-                display: table-cell;"
-             id="player1"
-        >
+        <div id="player1">
             No track.
         </div>
     {% endif %}

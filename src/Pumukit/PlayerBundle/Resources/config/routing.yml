@@ -1,4 +1,4 @@
 pumukit_jw_player:
-    resource: "@PumukitJWPlayerBundle/Controller/"
+    resource: "@PumukitPlayerBundle/Controller/"
     type:     annotation
     prefix:   /
