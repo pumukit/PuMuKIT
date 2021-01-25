@@ -4,8 +4,10 @@
     {% set absolute = "/pumoodle/embed" == app.request.pathInfo ? true : false %}
     {% if absolute %}
         <link href="{{ absolute_url('bundles/pumukitplayer/js/videojs/video-js.css') }}" type="text/css" rel="stylesheet" media="screen">
+        <link href="{{ absolute_url('bundles/pumukitplayer/css/player.css') }}" type="text/css" rel="stylesheet" media="screen">
     {% else %}
         <link href="{{ asset('bundles/pumukitplayer/js/videojs/video-js.css') }}" type="text/css" rel="stylesheet" media="screen">
+        <link href="{{ asset('bundles/pumukitplayer/css/player.css') }}" type="text/css" rel="stylesheet" media="screen">
     {% endif %}
     <style>
         body {

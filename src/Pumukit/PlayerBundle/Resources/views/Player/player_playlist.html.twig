@@ -39,11 +39,7 @@
             videojs('player1').resize(window.document.documentElement.clientWidth, window.document.documentElement.clientHeight);
         </script>
     {% else %}
-        <div style="color: white;
-                background: black;
-                text-align: center;
-                vertical-align: middle;
-                display: table-cell;" id="player1">No tracks.</div>
+        <div id="player1">No tracks.</div>
     {% endif %}
     <script type="text/javascript">
         function resizeDiv() {
