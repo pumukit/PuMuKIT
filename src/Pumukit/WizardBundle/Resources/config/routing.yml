@@ -8,10 +8,7 @@ pumukitwizard_js:
         sharedAge:    86400
         _format: js
 
-pumukitwizard_default:
-    resource: "@PumukitWizardBundle/Resources/config/routes/default.yml"
-    prefix: /admin/wizard
-
-pumukitwizard_simple:
-    resource: "@PumukitWizardBundle/Resources/config/routes/simple.yml"
-    prefix: /admin/simplewizard
+pumukit_wizard:
+  resource: "@PumukitWizardBundle/Controller/"
+  type:     annotation
+  prefix:   /

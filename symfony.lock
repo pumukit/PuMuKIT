@@ -2,6 +2,9 @@
     "babdev/pagerfanta-bundle": {
         "version": "v2.8.0"
     },
+    "friendsofphp/proxy-manager-lts": {
+        "version": "v1.0.3"
+    },
     "php-parallel-lint/php-var-dump-check": {
         "version": "v0.5"
     },

@@ -10,19 +10,8 @@ use Symfony\Component\EventDispatcher\Event;
 
 class FormEvent extends Event
 {
-    /**
-     * @var array
-     */
     protected $form;
-
-    /**
-     * @var MultimediaObject
-     */
     protected $multimediaObject;
-
-    /**
-     * @var User
-     */
     protected $user;
 
     public function __construct(User $user, MultimediaObject $multimediaObject, array $form)
@@ -32,26 +21,17 @@ class FormEvent extends Event
         $this->form = $form;
     }
 
-    /**
-     * @return User
-     */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @return MultimediaObject
-     */
-    public function getMultimediaObject()
+    public function getMultimediaObject(): MultimediaObject
     {
         return $this->multimediaObject;
     }
 
-    /**
-     * @return array
-     */
-    public function getForm()
+    public function getForm(): array
     {
         return $this->form;
     }

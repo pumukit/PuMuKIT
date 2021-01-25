@@ -16,13 +16,9 @@ use Symfony\Component\Process\Process;
 
 class WizardService
 {
-    /** @var DocumentManager */
     private $dm;
-    /** @var FactoryService */
     private $factoryService;
-    /** @var TagService */
     private $tagService;
-    /** @var User */
     private $user;
     private $inboxDepth;
     private $locales;
@@ -44,16 +40,6 @@ class WizardService
         $this->basePath = $basePath;
     }
 
-    /**
-     * @param User   $user
-     * @param string $files
-     * @param array  $seriesData
-     * @param array  $options
-     *
-     * @throws \Exception
-     *
-     * @return mixed|object|Series|null
-     */
     public function uploadMultipleFiles($user, $files, $seriesData, $options = [])
     {
         $series = $this->getSeries($seriesData);
@@ -80,11 +66,6 @@ class WizardService
         return $series;
     }
 
-    /**
-     * @throws \Exception
-     *
-     * @return mixed|object|Series|null
-     */
     public function getSeries(array $seriesData = [])
     {
         $seriesId = $this->getKeyData('id', $seriesData);
@@ -99,11 +80,6 @@ class WizardService
         return $series;
     }
 
-    /**
-     * @throws \Exception
-     *
-     * @return mixed|Series|null
-     */
     public function createSeries(array $seriesData = [])
     {
         if ($seriesData) {
@@ -122,24 +98,11 @@ class WizardService
         return null;
     }
 
-    /**
-     * @param string $key
-     *
-     * @return mixed
-     */
     public function getKeyData($key, array $formData, array $default = [])
     {
         return array_key_exists($key, $formData) ? $formData[$key] : $default;
     }
 
-    /**
-     * @param array  $resourceData
-     * @param string $fieldName
-     * @param string $defaultValue
-     * @param bool   $isI18nField
-     *
-     * @return array
-     */
     public function getDefaultFieldValuesInData($resourceData = [], $fieldName = '', $defaultValue = '', $isI18nField = false)
     {
         if ($fieldName && $defaultValue) {
@@ -156,13 +119,6 @@ class WizardService
         return $resourceData;
     }
 
-    /**
-     * @param object $resource
-     * @param array  $resourceData
-     * @param array  $keys
-     *
-     * @return mixed
-     */
     public function setData($resource, $resourceData, $keys)
     {
         foreach ($keys as $key) {
@@ -181,11 +137,6 @@ class WizardService
         return $resource;
     }
 
-    /**
-     * @param string $key
-     *
-     * @return string
-     */
     public function getUpperFieldName($key = '')
     {
         $pattern = '/_[a-z]?/';
@@ -200,13 +151,6 @@ class WizardService
         return ucfirst($aux);
     }
 
-    /**
-     * @param string $tagCode
-     *
-     * @throws \Exception
-     *
-     * @return array
-     */
     public function addTagToMultimediaObjectByCode(MultimediaObject $multimediaObject, $tagCode, User $user)
     {
         $addedTags = [];
@@ -223,11 +167,6 @@ class WizardService
         return $addedTags;
     }
 
-    /**
-     * @throws \Exception
-     *
-     * @return MultimediaObject
-     */
     public function createMultimediaObject(array $mmData, Series $series, User $user)
     {
         $multimediaObject = $this->factoryService->createMultimediaObject($series, true, $user);
@@ -240,11 +179,6 @@ class WizardService
         return $multimediaObject;
     }
 
-    /**
-     * @param array $aCommandArguments
-     *
-     * @return mixed
-     */
     public function createProcess($aCommandArguments = [])
     {
         $command = [
@@ -264,18 +198,6 @@ class WizardService
         shell_exec("nohup {$command} 1> /dev/null 2> /dev/null & echo $!");
     }
 
-    /**
-     * @param User   $user
-     * @param string $selectedPath
-     * @param string $series
-     * @param string $status
-     * @param string $profile
-     * @param string $priority
-     * @param string $language
-     * @param string $description
-     *
-     * @return mixed
-     */
     public function uploadFiles($user, $selectedPath, int $inboxDepth, $series, $status, array $pubChannel, $profile, $priority, $language, $description)
     {
         $aCommandArguments = [];
@@ -294,11 +216,6 @@ class WizardService
         return $this->createProcess($aCommandArguments);
     }
 
-    /**
-     * @param array $pubChannels
-     *
-     * @return string
-     */
     public function convertPubChannels($pubChannels)
     {
         $keys = [];
@@ -309,13 +226,6 @@ class WizardService
         return implode(',', $keys);
     }
 
-    /**
-     * @param array  $aCommandArguments
-     * @param string $sOption
-     * @param string $sValue
-     *
-     * @return mixed
-     */
     public function createCommandArguments($aCommandArguments, $sOption, $sValue)
     {
         //array_push($aCommandArguments, $sOption);

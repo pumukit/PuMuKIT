@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\WizardBundle\Services;
 
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class LicenseService
 {
@@ -13,15 +13,7 @@ class LicenseService
     private $locales;
     private $translator;
 
-    /**
-     * LicenseService constructor.
-     *
-     * @param bool   $showLicense
-     * @param string $licenseDir
-     *
-     * @throws \Exception
-     */
-    public function __construct($showLicense, $licenseDir, array $locales, TranslatorInterface $translator)
+    public function __construct(bool $showLicense, string $licenseDir, array $locales, TranslatorInterface $translator)
     {
         $this->translator = $translator;
         $this->showLicense = $showLicense;
@@ -33,46 +25,20 @@ class LicenseService
         $this->checkLicenseFiles();
     }
 
-    /**
-     * Is license enabled to be shown on wizard steps.
-     *
-     * @return bool
-     */
-    public function isEnabled()
+    public function isEnabled(): bool
     {
         return $this->showLicense;
     }
 
-    /**
-     * Is license enabled and accepted.
-     *
-     * @param array      $formData
-     * @param mixed|null $locale
-     *
-     * @return bool Returns FALSE if not enabled and not accepted, TRUE otherwise
-     */
-    public function isLicenseEnabledAndAccepted($formData = [], $locale = null)
+    public function isLicenseEnabledAndAccepted($formData = [], $locale = null): bool
     {
         if ($this->isEnabled()) {
-            if (isset($formData['license']['accept']) && $formData['license']['accept']) {
-                return true;
-            }
-
-            return false;
+            return isset($formData['license']['accept']) && $formData['license']['accept'];
         }
 
         return true;
     }
 
-    /**
-     * Get license content file.
-     *
-     * @param string|null $locale
-     *
-     * @throws \Exception
-     *
-     * @return bool|string
-     */
     public function getLicenseContent($locale = null)
     {
         if (!$this->isEnabled()) {
@@ -98,16 +64,9 @@ class LicenseService
     }
 
     /**
-     * Check license files.
-     *
-     * Checks if there is any valid file in license directory.
-     * Valid file names are {locale}.txt
-     *
-     * @throws \Exception
-     *
-     * @return bool
+     * Checks if there is any valid file in license directory.  Valid file names are {locale}.txt.
      */
-    private function checkLicenseFiles()
+    private function checkLicenseFiles(): bool
     {
         if (!$this->showLicense) {
             return true;
@@ -120,11 +79,6 @@ class LicenseService
         return true;
     }
 
-    /**
-     * Get any license file path in locales.
-     *
-     * @return string $filepath
-     */
     private function getAnyLicenseFile()
     {
         $licenseFile = false;
