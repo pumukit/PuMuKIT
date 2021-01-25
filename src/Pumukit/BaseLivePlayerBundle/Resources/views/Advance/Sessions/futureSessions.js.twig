@@ -11,7 +11,7 @@ if (date < new Date()) {
     location.reload();
 }
 
-$(".directo-{{ id }}").html(background);
+$(".live-{{ id }}").html(background);
 $("#warning").countdown(date, function (event) {
     $(this).text(event.strftime('%D ' + "{% trans %}days{% endtrans %}" + ' %-H:%M:%S'));
 }).on('finish.countdown', function (event) {

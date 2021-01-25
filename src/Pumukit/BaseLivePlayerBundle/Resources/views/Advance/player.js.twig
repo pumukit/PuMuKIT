@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var height = "{{ height }}";
     {% endif %}
 
-    var livePlayerInstance = videojs("directo-{{ id }}", {
+    var livePlayerInstance = videojs("live-{{ id }}", {
         controls: true,
         sources: [{
         {% if live is defined and live and event.url is empty %}
