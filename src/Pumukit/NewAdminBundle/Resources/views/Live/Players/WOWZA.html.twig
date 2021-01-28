@@ -1,13 +1,14 @@
 <div style="width:100%; margin: 0px auto; overflow-x: hidden;">
-    <video id="directo-sbs" class="video-js"></video>
+    <video id="live-sbs" class="video-js"></video>
 </div>
 
 <script type="text/javascript">
 $(function(){
-  videojs("directo-sbs", {
+  videojs("live-sbs", {
       controls: true,
       sources: [{
-        src: "{{ generate_hls_url(live) }}", type: 'application/x-mpegurl'
+        src: "{{ generate_hls_url(live) }}",
+        type: 'application/x-mpegurl'
       }],
       autoplay: true,
       width: "100%",
