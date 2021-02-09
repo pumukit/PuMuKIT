@@ -42,7 +42,7 @@ class MultimediaObjectAddOwnerListener
         ]);
 
         $this->senderService->sendNotification(
-            $user->getEmail(),
+            $coOwner->getEmail(),
             $subject,
             $this->getPredefinedEmailTemplate(),
             $this->generateParametersForEmail($multimediaObject, $user, $coOwner, $subject),
