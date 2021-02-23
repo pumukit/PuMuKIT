@@ -267,7 +267,7 @@ class MultimediaObjectRepository extends DocumentRepository
                 if ((null !== $element['people']['cod']) && (null !== $element['people']['people'])) {
                     if (0 === strpos($element['people']['cod'], $roleCode)) {
                         foreach ($element['people']['people'] as $person) {
-                            if (!in_array($person['_id']->{'$id'}, $people)) {
+                            if (isset($person['_id']->{'$id'}) && !in_array($person['_id']->{'$id'}, $people)) {
                                 $people[] = $person['_id']->{'$id'};
                             }
                         }
