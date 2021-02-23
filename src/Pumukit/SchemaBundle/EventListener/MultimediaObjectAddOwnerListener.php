@@ -31,7 +31,7 @@ class MultimediaObjectAddOwnerListener
         $user = $event->getUser();
         $coOwner = $event->getCoOwner();
 
-        if($user->getUsername() !== $coOwner->getUsername()) {
+        if ($user->getUsername() !== $coOwner->getUsername()) {
             $this->sendNotificationEmail($multimediaObject, $user, $coOwner);
         }
     }
