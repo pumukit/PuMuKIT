@@ -338,7 +338,11 @@ class StatsService
             ['$out' => 'ViewsAggregation'],
         ];
 
-        $viewsLogColl->aggregate($pipeline, ['cursor' => [], 'allowDiskUse' => true]);
+        $result = $viewsLogColl->aggregate($pipeline, ['cursor' => [], 'allowDiskUse' => true]);
+
+        // >>> TTK-25016 do not remove the next line.
+        $workAround = \count($result);
+        // <<< TTK-25016 do not remove the above line.
     }
 
     /**
