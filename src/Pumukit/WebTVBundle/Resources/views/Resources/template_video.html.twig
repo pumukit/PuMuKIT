@@ -13,10 +13,18 @@
         <a href="{{ videoPath }}" title="{{ videoTitle }}">
             <div class="embed-responsive embed-responsive-16by9">
                 <div class="embed-responsive-item text-center">
-                    <img alt="{{ videoTitle }}" src="{{ object|first_url_pic() }}" class="img-responsive img_adapter_4_3 dynamic_image"
-                         data-dynamic-pic="{{ object|first_dynamic_pic(true) }}"
-                         data-static-pic="{{ object|first_url_pic() }}"
-                    />
+                    {% if location is defined and location == 'wall-block' %}
+                        {% if object.getProperty('externalplayer') and not app.request.get('track_id') %}
+                                <iframe src="{{ object.getProperty('externalplayer') }}" width="100%" class="embed-responsive-item" frameborder="0" allowfullscreen></iframe>
+                        {% else %}
+                            {% include 'PumukitWebTVBundle:MultimediaObject:player.html.twig' with {'responsive': true, 'multimediaObject' : object, 'autostart': false} %}
+                        {% endif %}
+                    {% else %}
+                        <img alt="{{ videoTitle }}" src="{{ object|first_url_pic() }}" class="img-responsive img_adapter_4_3 dynamic_image"
+                            data-dynamic-pic="{{ object|first_dynamic_pic(true) }}"
+                            data-static-pic="{{ object|first_url_pic() }}"
+                        />
+                    {% endif %}
                     {% if show_video_options is defined and show_video_options is same as (true)%}
                         <div class="multimedia_object_edit_button" data-multimedia-object="{{ object.id }}" data-multimedia-object-status="{{ object.getStatus() }}" data-multimedia-object-title="{{ object.getTitle() }}">
                             <i class="fa fa-cog fa-2x"></i>
