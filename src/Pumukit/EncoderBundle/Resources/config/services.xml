@@ -39,6 +39,7 @@
             <argument>%pumukit.tmp%</argument>
             <argument>%pumukit.inbox%</argument>
             <argument>%pumukitencode.delete_inbox_files%</argument>
+            <argument>%pumukitencode.max_execution_job_seconds%</argument>
             <tag name="monolog.logger" channel="encoder"/>
         </service>
 

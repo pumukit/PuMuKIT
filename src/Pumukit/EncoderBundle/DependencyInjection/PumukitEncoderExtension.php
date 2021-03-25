@@ -33,6 +33,7 @@ class PumukitEncoderExtension extends Extension
         $loader->load('services.xml');
 
         $container->setParameter('pumukitencode.delete_inbox_files', $config['delete_inbox_files']);
+        $container->setParameter('pumukitencode.max_execution_job_seconds', $config['max_execution_job_seconds']);
         $container->setParameter('pumukitencode.cpulist', $config['cpus']);
         $container->setParameter('pumukitencode.profilelist', $config['profiles']);
         $container->setParameter('pumukitencode.target_default_profiles', $config['target_default_profiles']);
