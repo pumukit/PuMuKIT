@@ -135,7 +135,8 @@ class MaterialService
         $path = $materialFile->move($this->targetPath.'/'.$multimediaObject->getId(), $materialFile->getClientOriginalName());
 
         foreach ($this->locales as $locale) {
-            $material->setName($materialFile->getClientOriginalName(), $locale);
+            $i18nFileName = $formData['i18n_name'][$locale] ?? $formData['i18n_name'];
+            $material->setName($i18nFileName, $locale);
         }
         $material->setSize($materialFile->getClientSize());
 
