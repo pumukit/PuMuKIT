@@ -15,6 +15,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\TrackService;
+use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
@@ -101,7 +102,11 @@ class JobService
             throw new FileNotFoundException($trackFile->getPathname());
         }
 
-        $pathFile = $trackFile->move($this->tmpPath.'/'.$multimediaObject->getId(), $trackFile->getClientOriginalName());
+        $trackName = TextIndexUtils::cleanTextIndex(pathinfo($trackFile->getClientOriginalName())['filename']);
+
+        $trackName = preg_replace('([^A-Za-z0-9])', '', $trackName);
+
+        $pathFile = $trackFile->move($this->tmpPath.'/'.$multimediaObject->getId(), $trackName.".".pathinfo($trackFile->getClientOriginalName())['extension']);
 
         $this->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description, $initVars, $duration, $flags);
 
