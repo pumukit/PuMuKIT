@@ -144,18 +144,35 @@
 
     $('.event_option').on('click', function (event) {
         event.preventDefault();
-        $.ajax({
-            url: $(this).data('href'),
-            method: 'POST',
-            success: function (response) {
-                var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
-                $('#list_events').load(mm);
-                success(response.status);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                no_success(jqXHR.responseJSON.status);
+        if($(this).data('action') === 'delete') {
+            if(confirm('{% trans %}Are you sure?{% endtrans %}')) {
+                $.ajax({
+                    url: $(this).data('href'),
+                    method: 'POST',
+                    success: function (response) {
+                        var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
+                        $('#list_events').load(mm);
+                        success(response.status);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        no_success(jqXHR.responseJSON.status);
+                    }
+                });
             }
-        });
+        } else {
+            $.ajax({
+                url: $(this).data('href'),
+                method: 'POST',
+                success: function (response) {
+                    var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
+                    $('#list_events').load(mm);
+                    success(response.status);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    no_success(jqXHR.responseJSON.status);
+                }
+            });
+        }
         return false;
     });
 
