@@ -106,7 +106,7 @@ class JobService
 
         $trackName = preg_replace('([^A-Za-z0-9])', '', $trackName);
 
-        $pathFile = $trackFile->move($this->tmpPath.'/'.$multimediaObject->getId(), $trackName.".".pathinfo($trackFile->getClientOriginalName())['extension']);
+        $pathFile = $trackFile->move($this->tmpPath.'/'.$multimediaObject->getId(), $trackName.'.'.pathinfo($trackFile->getClientOriginalName())['extension']);
 
         $this->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description, $initVars, $duration, $flags);
 
