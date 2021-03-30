@@ -42,7 +42,7 @@ class Configuration implements ConfigurationInterface
             ->defaultValue(false)
             ->end()
             ->integerNode('max_execution_job_seconds')
-            ->min(43200)
+            ->min(3600)
             ->defaultValue(86400)
             ->info('The lifetime that job can be executing ( on seconds )')
             ->end()
