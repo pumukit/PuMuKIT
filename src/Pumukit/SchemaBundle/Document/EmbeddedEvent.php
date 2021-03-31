@@ -454,7 +454,7 @@ class EmbeddedEvent
     /**
      * @return bool
      */
-    public function getIframeUrl()
+    public function getIsIframeUrl()
     {
         return $this->isIframeUrl;
     }
@@ -462,7 +462,7 @@ class EmbeddedEvent
     /**
      * @param bool $isIframeUrl
      */
-    public function setIframeUrl($isIframeUrl)
+    public function setIsIframeUrl($isIframeUrl)
     {
         $this->isIframeUrl = $isIframeUrl;
     }

@@ -1,8 +1,12 @@
-{% if event.getIframeUrl() %}
+{% if event.isIframeUrl() %}
     <div class="embed-responsive embed-responsive-16by9">
-        <div id="directo-{{ id }}" class="embed-responsive-item text-center">
-            <iframe src="{{ event.getUrl() }}" width="100%" class="embed-responsive-item" frameborder="0" allowfullscreen></iframe>
+        <div id="live-{{ id }}" class="embed-responsive-item text-center">
+            <iframe src="{{ event.getUrl() }}" width="100%" class="embed-responsive-item" frameborder="0" allowfullscreen style="overflow:hidden;height:100%;width:100%"></iframe>
         </div>
+
+        {% if advance_live_events is defined and advance_live_events %}
+            <div id="countdownClock" hidden></div>
+        {% endif %}
     </div>
 {% else %}
     <div id="jwplayererror-{{ id }}" style="width:100%; margin: 0 auto; color:red;"></div>
@@ -21,7 +25,7 @@
                     <a target="_blank" style="color: white; text-decoration: underline; padding: 10px;" href="https://get.adobe.com/flashplayer/">https://get.adobe.com/flashplayer/</a>
                 </span>
             </div>
-            <div id="directo-{{ id }}" style="width:100%; margin: 0 auto; position: relative;"></div>
+            <div id="live-{{ id }}" style="width:100%; margin: 0 auto; position: relative;"></div>
         </div>
 
         {% if advance_live_events is defined and advance_live_events %}

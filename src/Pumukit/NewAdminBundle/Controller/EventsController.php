@@ -442,8 +442,8 @@ class EventsController extends Controller implements NewAdminControllerInterface
                 $event->setDisplay($display);
                 $externalURL = $data['externalURL'] ?? '';
                 $event->setUrl($externalURL);
-                $iframeURL = isset($data['iframeURL']) && isset($data['externalURL']) ? true : false;
-                $event->setIframeUrl($iframeURL);
+                $iframeURL = isset($data['iframeURL'], $data['externalURL']);
+                $event->setIsIframeUrl($iframeURL);
 
                 if (isset($data['live'])) {
                     $live = $dm->getRepository(Live::class)->findOneBy(

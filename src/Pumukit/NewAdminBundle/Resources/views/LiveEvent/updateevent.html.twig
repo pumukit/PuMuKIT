@@ -65,7 +65,7 @@
                     </label>
                 </div>
                 {% set iframeURL = '' %}
-                {% if multimediaObject.getEmbeddedEvent() is not null and multimediaObject.getEmbeddedEvent().getUrl() is not empty and multimediaObject.getEmbeddedEvent().getIframeUrl() %}
+                {% if multimediaObject.getEmbeddedEvent() is not null and multimediaObject.getEmbeddedEvent().getUrl() is not empty and multimediaObject.getEmbeddedEvent().isIframeUrl() %}
                     {% set iframeURL = 'checked' %}
                 {% endif %}
                 {% dump(externalURL) %}
