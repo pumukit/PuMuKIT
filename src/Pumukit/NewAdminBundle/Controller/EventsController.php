@@ -34,8 +34,6 @@ class EventsController extends Controller implements NewAdminControllerInterface
     private $regex = '/^[0-9a-z]{24}$/';
 
     /**
-     * @param Request $request
-     *
      * @return array
      *
      * @Route("index/", name="pumukit_new_admin_live_event_index")
@@ -73,8 +71,6 @@ class EventsController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @param Request $request
-     *
      * @throws \Exception
      *
      * @return RedirectResponse
@@ -144,7 +140,6 @@ class EventsController extends Controller implements NewAdminControllerInterface
     /**
      * List events.
      *
-     * @param Request     $request
      * @param string|null $type
      *
      * @return array
@@ -263,8 +258,6 @@ class EventsController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @param Request $request
-     *
      * @return JsonResponse
      *
      * @Route("add/sorting/", name="pumukit_new_admin_live_event_set_sorting")
@@ -313,8 +306,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
     /**
      * Event options .
      *
-     * @param string           $type
-     * @param MultimediaObject $multimediaObject
+     * @param string $type
      *
      * @return JsonResponse
      * @Route("list/options/{type}/{id}", name="pumukit_new_admin_live_event_options")
@@ -333,16 +325,19 @@ class EventsController extends Controller implements NewAdminControllerInterface
                 $message = $this->cloneEvent($multimediaObject);
 
                 break;
+
             case 'delete':
                 $message = $this->deleteEvent($multimediaObject);
                 $this->container->get('session')->set('admin/live/event/id', null);
 
                 break;
+
             case 'deleteAll':
                 $message = $this->deleteEventAndSeries($multimediaObject);
                 $this->container->get('session')->set('admin/live/event/id', null);
 
                 break;
+
             default:
                 $message = 'Option not allowed';
 
@@ -357,8 +352,6 @@ class EventsController extends Controller implements NewAdminControllerInterface
 
     /**
      * @Route("delete/selected/", name="pumukit_new_admin_live_event_delete_selected")
-     *
-     * @param Request $request
      *
      * @return JsonResponse
      * @return JsonResponse
@@ -381,8 +374,6 @@ class EventsController extends Controller implements NewAdminControllerInterface
     /**
      * Edit action, opens well with event data.
      *
-     * @param MultimediaObject $multimediaObject
-     *
      * @return array
      * @Route("edit/{id}", name="pumukit_new_admin_live_event_edit")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id":
@@ -403,9 +394,6 @@ class EventsController extends Controller implements NewAdminControllerInterface
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id":
      *                                     "id"}})
      * @Template("PumukitNewAdminBundle:LiveEvent:updateevent.html.twig")
-     *
-     * @param Request          $request
-     * @param MultimediaObject $multimediaObject
      *
      * @throws \Exception
      *
@@ -454,6 +442,8 @@ class EventsController extends Controller implements NewAdminControllerInterface
                 $event->setDisplay($display);
                 $externalURL = $data['externalURL'] ?? '';
                 $event->setUrl($externalURL);
+                $iframeURL = isset($data['iframeURL']) && isset($data['externalURL']) ? true : false;
+                $event->setIframeUrl($iframeURL);
 
                 if (isset($data['live'])) {
                     $live = $dm->getRepository(Live::class)->findOneBy(
@@ -525,9 +515,6 @@ class EventsController extends Controller implements NewAdminControllerInterface
      * @ParamConverter("series", class="PumukitSchemaBundle:Series", options={"mapping": {"id": "id"}})
      * @Template("PumukitNewAdminBundle:Series:updatemeta.html.twig")
      *
-     * @param Request $request
-     * @param Series  $series
-     *
      * @return array
      */
     public function seriesAction(Request $request, Series $series)
@@ -567,9 +554,6 @@ class EventsController extends Controller implements NewAdminControllerInterface
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id":
      *                                     "id"}})
      * @Template("PumukitNewAdminBundle:LiveEvent:updatesession.html.twig")
-     *
-     * @param Request          $request
-     * @param MultimediaObject $multimediaObject
      *
      * @return array|jsonResponse
      */
@@ -710,9 +694,8 @@ class EventsController extends Controller implements NewAdminControllerInterface
      * @Route("modal/{multimediaObject}/{session_id}", name="pumukit_new_admin_live_event_session_modal")
      * @Template("PumukitNewAdminBundle:LiveEvent:updatesessionmodal.html.twig")
      *
-     * @param Request $request
-     * @param string  $multimediaObject
-     * @param bool    $session_id
+     * @param string $multimediaObject
+     * @param bool   $session_id
      *
      * @throws \Exception
      *
@@ -757,8 +740,6 @@ class EventsController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @param Request $request
-     *
      * @return JsonResponse
      * @Route("series/suggest/", name="pumukit_new_admin_live_event_series_suggest")
      */
@@ -824,9 +805,6 @@ class EventsController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @param Request          $request
-     * @param MultimediaObject $multimediaObject
-     *
      * @return JsonResponse
      *
      * @Route("edit/series/{multimediaObject}", name="pumukitnewadmin_live_event_edit_series")
@@ -851,8 +829,6 @@ class EventsController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @param MultimediaObject $multimediaObject
-     *
      * @return array
      * @Route("show/{id}", name="pumukit_new_admin_live_event_show")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id":
@@ -867,9 +843,6 @@ class EventsController extends Controller implements NewAdminControllerInterface
     /**
      * @Route("autocomplete/series/with/event/data/{id}", name="pumukit_new_admin_autocomplete_series_with_event_data")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
-     *
-     * @param Request          $request
-     * @param MultimediaObject $multimediaObject
      *
      * @throws \Exception
      *
@@ -900,8 +873,6 @@ class EventsController extends Controller implements NewAdminControllerInterface
 
     /**
      * clone Event and series.
-     *
-     * @param MultimediaObject $multimediaObject
      *
      * @throws \Exception
      *
@@ -945,8 +916,6 @@ class EventsController extends Controller implements NewAdminControllerInterface
     /**
      * Delete event and multimediaObject.
      *
-     * @param MultimediaObject $multimediaObject
-     *
      * @return string
      */
     private function deleteEvent(MultimediaObject $multimediaObject)
@@ -959,8 +928,6 @@ class EventsController extends Controller implements NewAdminControllerInterface
 
     /**
      * Delete event, multimediaObject and series if serie have just one multimediaObject.
-     *
-     * @param MultimediaObject $multimediaObject
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *

@@ -64,6 +64,17 @@
                         <input type="checkbox" id="allowExternalURL" name="allowURLExternal" {{ externalURL }}>
                     </label>
                 </div>
+                {% set iframeURL = '' %}
+                {% if multimediaObject.getEmbeddedEvent() is not null and multimediaObject.getEmbeddedEvent().getUrl() is not empty and multimediaObject.getEmbeddedEvent().getIframeUrl() %}
+                    {% set iframeURL = 'checked' %}
+                {% endif %}
+                {% dump(externalURL) %}
+                <div class="checkbox iframeURL" {% if externalURL != 'checked' %} style="display:none;" {% endif %}>
+                    <strong>{% trans %}Iframe{% endtrans %}</strong>
+                    <label for="iframeURL">
+                        <input type="checkbox" id="iframeURL" name="pumukitnewadmin_live_event[iframeURL]" {{ iframeURL }}>
+                    </label>
+                </div>
                 <input id="externalURL" type="url" name="pumukitnewadmin_live_event[externalURL]" class="form-control" {% if externalURL != '' %}value="{{ multimediaObject.getEmbeddedEvent().getUrl() }}" {% else %}disabled{% endif %}/>
             </div>
 
@@ -233,11 +244,14 @@
 
     $('#allowExternalURL').on('click', function () {
         var externalURL = $('#externalURL');
+        var iframe = $('.iframeURL');
         var isDisabled = externalURL.prop('disabled');
         if (isDisabled) {
             externalURL.prop('disabled', false);
+            iframe.show();
         } else {
             externalURL.prop('disabled', true);
+            iframe.hide();
         }
     });
 
