@@ -213,10 +213,17 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $mm4 = $this->createMultimediaObjectAssignedToSeries('MmObject 4', $series_lhazar);
 
         $mm1->addPersonWithRole($person_ned, $role_lord);
+        $mm1->setStatus(MultimediaObject::STATUS_PUBLISHED);
+
         $mm2->addPersonWithRole($person_benjen, $role_ranger);
+        $mm2->setStatus(MultimediaObject::STATUS_PUBLISHED);
+
         $mm3->addPersonWithRole($person_ned, $role_lord);
         $mm3->addPersonWithRole($person_benjen, $role_ranger);
+        $mm3->setStatus(MultimediaObject::STATUS_PUBLISHED);
+
         $mm4->addPersonWithRole($person_ned, $role_hand);
+        $mm4->setStatus(MultimediaObject::STATUS_PUBLISHED);
 
         $this->dm->persist($mm1);
         $this->dm->persist($mm2);
@@ -1850,9 +1857,14 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->flush();
 
         $mm1 = $this->createMultimediaObjectAssignedToSeries('mm1', $series1);
+        $mm1->setStatus(MultimediaObject::STATUS_PUBLISHED);
         $mm2 = $this->createMultimediaObjectAssignedToSeries('mm2', $series1);
+        $mm2->setStatus(MultimediaObject::STATUS_PUBLISHED);
         $mm3 = $this->createMultimediaObjectAssignedToSeries('mm3', $series2);
+        $mm3->setStatus(MultimediaObject::STATUS_PUBLISHED);
         $mm4 = $this->createMultimediaObjectAssignedToSeries('mm4', $series3);
+        $mm4->setStatus(MultimediaObject::STATUS_PUBLISHED);
+        $this->dm->flush();
 
         $this->assertEquals(4, $this->repo->count());
         $this->assertEquals(492, $this->repo->countDuration());
