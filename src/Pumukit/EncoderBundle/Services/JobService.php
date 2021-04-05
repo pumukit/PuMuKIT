@@ -43,6 +43,7 @@ class JobService
     private $inboxPath;
     private $binPath;
     private $deleteInboxFiles;
+    private $maxExecutionJobSeconds;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -58,7 +59,8 @@ class JobService
         $environment = 'dev',
         $tmpPath = null,
         $inboxPath = null,
-        $deleteInboxFiles = false
+        $deleteInboxFiles = false,
+        $maxExecutionJobSeconds = 43200
     ) {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository(Job::class);
@@ -75,6 +77,7 @@ class JobService
         $this->propService = $propService;
         $this->binPath = $binPath;
         $this->deleteInboxFiles = $deleteInboxFiles;
+        $this->maxExecutionJobSeconds = $maxExecutionJobSeconds;
     }
 
     /**
@@ -838,6 +841,37 @@ class JobService
         return true;
     }
 
+    /**
+     * Check for blocked jobs.
+     */
+    public function checkService()
+    {
+        $existsJobsToUpdate = false;
+        $jobs = $this->repo->findWithStatus([Job::STATUS_EXECUTING]);
+
+        $nowDateTime = new \DateTime('now');
+
+        foreach ($jobs as $job) {
+            $maxExecutionJobTime = $job->getTimestart();
+            $maxExecutionJobTime->add(new \DateInterval('PT'.$this->maxExecutionJobSeconds.'S'));
+
+            if ($maxExecutionJobTime <= $nowDateTime) {
+                $job->setStatus(Job::STATUS_ERROR);
+                $message = '[checkService] Job executing for a long time, set status to ERROR. Máx execution time was '.$maxExecutionJobTime->format('Y-m-d H:i:s');
+                $job->appendOutput($message);
+                $this->logger->error(
+                    $message.$job->getId()
+                );
+
+                $existsJobsToUpdate = true;
+            }
+        }
+
+        if ($existsJobsToUpdate) {
+            $this->dm->flush();
+        }
+    }
+
     private function deleteTempFiles(Job $job)
     {
         if (false !== strpos($job->getPathIni(), $this->tmpPath)) {
@@ -943,33 +977,6 @@ class JobService
 
         $event = new JobEvent($job, $track, $multimediaObject);
         $this->dispatcher->dispatch($success ? EncoderEvents::JOB_SUCCESS : EncoderEvents::JOB_ERROR, $event);
-    }
-
-    /**
-     * Check for blocked jobs.
-     */
-    private function checkService()
-    {
-        $existsJobsToUpdate = false;
-        $jobs = $this->repo->findWithStatus([Job::STATUS_EXECUTING]);
-        $yesterday = new \DateTime('-1 day');
-
-        foreach ($jobs as $job) {
-            if ($job->getTimestart() < $yesterday) {
-                $job->setStatus(Job::STATUS_ERROR);
-                $message = '[checkService] Job executing for a long time, set status to ERROR ';
-                $job->appendOutput($message);
-                $this->logger->error(
-                    $message.$job->getId()
-                );
-
-                $existsJobsToUpdate = true;
-            }
-        }
-
-        if ($existsJobsToUpdate) {
-            $this->dm->flush();
-        }
     }
 
     /**
