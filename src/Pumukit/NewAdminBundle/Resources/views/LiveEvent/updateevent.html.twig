@@ -68,14 +68,19 @@
                 {% if multimediaObject.getEmbeddedEvent() is not null and multimediaObject.getEmbeddedEvent().getUrl() is not empty and multimediaObject.getEmbeddedEvent().isIframeUrl() %}
                     {% set iframeURL = 'checked' %}
                 {% endif %}
-                {% dump(externalURL) %}
-                <div class="checkbox iframeURL" {% if externalURL != 'checked' %} style="display:none;" {% endif %}>
-                    <strong>{% trans %}Iframe{% endtrans %}</strong>
-                    <label for="iframeURL">
-                        <input type="checkbox" id="iframeURL" name="pumukitnewadmin_live_event[iframeURL]" {{ iframeURL }}>
-                    </label>
+                <div class="row group-urliframe">
+                    <div class="col-md-3 iframeURL">
+                        <div class="checkbox">
+                            <strong>{% trans %}Iframe{% endtrans %}</strong>
+                            <label for="iframeURL">
+                                <input type="checkbox" id="iframeURL" name="pumukitnewadmin_live_event[iframeURL]" {{ iframeURL }} {% if externalURL == '' %}disabled{% endif %}>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-9 externalURL">
+                        <input id="externalURL" type="url" name="pumukitnewadmin_live_event[externalURL]" class="form-control" {% if externalURL != '' %}value="{{ multimediaObject.getEmbeddedEvent().getUrl() }}" {% else %}disabled{% endif %}/>
+                    </div>
                 </div>
-                <input id="externalURL" type="url" name="pumukitnewadmin_live_event[externalURL]" class="form-control" {% if externalURL != '' %}value="{{ multimediaObject.getEmbeddedEvent().getUrl() }}" {% else %}disabled{% endif %}/>
             </div>
 
             <div class="form-group">
@@ -244,14 +249,14 @@
 
     $('#allowExternalURL').on('click', function () {
         var externalURL = $('#externalURL');
-        var iframe = $('.iframeURL');
+        var iframe = $('#iframeURL');
         var isDisabled = externalURL.prop('disabled');
         if (isDisabled) {
             externalURL.prop('disabled', false);
-            iframe.show();
+            iframe.prop('disabled', false);
         } else {
             externalURL.prop('disabled', true);
-            iframe.hide();
+            iframe.prop('disabled', true);
         }
     });
 

@@ -27,7 +27,16 @@
   border-radius: 200px;
 }
 
-.iframeURL {
-  margin-top: 5px !important;
-  margin-bottom: 5px;
+.group-urliframe {
+  margin-top: 5px;
+}
+
+.group-urliframe .externalURL {
+  padding-left: 0;
+}
+
+.group-urliframe .iframeURL {
+  margin-top: 5px;
+  padding-left: 20px;
+  padding-right: 0;
 }
