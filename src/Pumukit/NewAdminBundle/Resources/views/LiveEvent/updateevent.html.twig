@@ -69,16 +69,16 @@
                     {% set iframeURL = 'checked' %}
                 {% endif %}
                 <div class="row group-urliframe">
+                    <div class="col-md-9 externalURL">
+                        <input id="externalURL" type="url" name="pumukitnewadmin_live_event[externalURL]" class="form-control" {% if externalURL != '' %}value="{{ multimediaObject.getEmbeddedEvent().getUrl() }}" {% else %}disabled{% endif %}/>
+                    </div>
                     <div class="col-md-3 iframeURL">
                         <div class="checkbox">
-                            <strong>{% trans %}Iframe{% endtrans %}</strong>
                             <label for="iframeURL">
                                 <input type="checkbox" id="iframeURL" name="pumukitnewadmin_live_event[iframeURL]" {{ iframeURL }} {% if externalURL == '' %}disabled{% endif %}>
                             </label>
+                            <strong>{% trans %}Iframe{% endtrans %}</strong>
                         </div>
-                    </div>
-                    <div class="col-md-9 externalURL">
-                        <input id="externalURL" type="url" name="pumukitnewadmin_live_event[externalURL]" class="form-control" {% if externalURL != '' %}value="{{ multimediaObject.getEmbeddedEvent().getUrl() }}" {% else %}disabled{% endif %}/>
                     </div>
                 </div>
             </div>
