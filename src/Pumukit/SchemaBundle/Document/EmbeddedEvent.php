@@ -95,6 +95,12 @@ class EmbeddedEvent
     private $url;
 
     /**
+     * @var bool
+     * @MongoDB\Field(type="boolean")
+     */
+    private $isIframeUrl = false;
+
+    /**
      * @var array<string, string>
      * @MongoDB\Field(type="raw")
      */
@@ -179,8 +185,6 @@ class EmbeddedEvent
 
     /**
      * Set I18n name.
-     *
-     * @param array $name
      */
     public function setI18nName(array $name)
     {
@@ -229,8 +233,6 @@ class EmbeddedEvent
 
     /**
      * Set I18n name.
-     *
-     * @param array $description
      */
     public function setI18nDescription(array $description)
     {
@@ -442,6 +444,30 @@ class EmbeddedEvent
     }
 
     /**
+     * @return bool
+     */
+    public function isIframeUrl()
+    {
+        return $this->isIframeUrl;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsIframeUrl()
+    {
+        return $this->isIframeUrl;
+    }
+
+    /**
+     * @param bool $isIframeUrl
+     */
+    public function setIsIframeUrl($isIframeUrl)
+    {
+        $this->isIframeUrl = $isIframeUrl;
+    }
+
+    /**
      * Set already held message.
      *
      * @param string     $message
@@ -476,8 +502,6 @@ class EmbeddedEvent
 
     /**
      * Set I18n Already Held Message.
-     *
-     * @param array $message
      */
     public function setI18nAlreadyHeldMessage(array $message)
     {
@@ -529,8 +553,6 @@ class EmbeddedEvent
 
     /**
      * Set I18n Not Yet Held Message.
-     *
-     * @param array $message
      */
     public function setI18nNotYetHeldMessage(array $message)
     {

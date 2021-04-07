@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
         {% endif %}
         document.getElementById('showFlashMessage-{{ id }}').style.display = 'table';
     }
-    var livePlayerInstance = jwplayer("directo-{{ id }}").setup({
+    var livePlayerInstance = jwplayer("live-{{ id }}").setup({
         {% if live is defined and live %}
         {% if live.broadcasting %}
         {% if mobile_device %}

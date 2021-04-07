@@ -1,7 +1,13 @@
 {% extends 'PumukitWebTVBundle::layout.html.twig' %}
+{% set isIframeLive = multimediaObject.getEmbeddedEvent().isIframeUrl() %}
 
 {% block stylesheets %}
     <style>
+        {% if isIframeLive is same as(true) %}
+            html, body, .embed-responsive-16by9, .embed-responsive-item {
+                height: 100%;
+            }
+        {% endif %}
         body {
             font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
             margin: 0;
@@ -13,8 +19,9 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/pumukitwebtv/js/jquery.countdown.js') }}" type="text/javascript"></script>
-
-    {% include('PumukitBaseLivePlayerBundle:Default:js.html.twig') %}
+    {% if isIframeLive is same as(false) %}
+        {% include('PumukitBaseLivePlayerBundle:Default:js.html.twig') %}
+    {% endif %}
 {% endblock%}
 
 {% block title %}{{ parent() }} - {{ multimediaObject.getEmbeddedEvent().getName(app.request.getLocale()) }}{% endblock %}
