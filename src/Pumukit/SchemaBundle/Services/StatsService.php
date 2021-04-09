@@ -142,7 +142,17 @@ class StatsService
         if (!empty($criteria)) {
             $mmobjIds = $this->getIdsWithCriteria($criteria, $this->repoMmobj);
             $matchExtra['_id'] = ['$in' => $mmobjIds];
+        } else {
+            $pipeline[] = [
+                '$match' => [
+                    'status' => [
+                        '$nin' => [MultimediaObject::STATUS_PROTOTYPE, MultimediaObject::STATUS_NEW],
+                    ],
+                    'type' => ['$ne' => MultimediaObject::TYPE_LIVE],
+                ],
+            ];
         }
+
         if (!$fromDate) {
             $fromDate = new \DateTime();
             $fromDate->setTime(0, 0, 0);
@@ -176,6 +186,9 @@ class StatsService
      */
     private function getIdsWithCriteria($criteria, $repo)
     {
-        return $repo->createQueryBuilder()->addAnd($criteria)->distinct('_id')->getQuery()->execute()->toArray();
+        return $repo->createQueryBuilder()
+            ->field('status')->notIn([MultimediaObject::STATUS_PROTOTYPE, MultimediaObject::STATUS_NEW])
+            ->field('type')->notEqual(MultimediaObject::TYPE_LIVE)
+            ->addAnd($criteria)->distinct('_id')->getQuery()->execute()->toArray();
     }
 }
