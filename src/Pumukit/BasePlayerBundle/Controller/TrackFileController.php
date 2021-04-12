@@ -38,7 +38,7 @@ class TrackFileController extends Controller
 
         [$mmobj, $track] = $this->getMmobjAndTrack($id);
 
-        if ($this->shouldIncreaseViews($track, $request)) {
+        if ($this->shouldIncreaseViews($request, $mmobj, $track)) {
             $this->dispatchViewEvent($mmobj, $track);
         }
 
@@ -122,13 +122,16 @@ class TrackFileController extends Controller
      *
      * @return bool
      */
-    protected function shouldIncreaseViews(Track $track, Request $request)
+    protected function shouldIncreaseViews(Request $request, MultimediaObject $multimediaObject, Track $track)
     {
         if ('on_load' != $this->container->getParameter('pumukitplayer.when_dispatch_view_event')) {
             return false;
         }
 
-        if ($track->containsTag('presentation/delivery')) {
+        $isMultiStream = $multimediaObject->isMultistream();
+        $haveOnlyDelivery = (count($multimediaObject->getTracksWithTag('display')) <= 2) && $multimediaObject->getTracksWithTag('sbs');
+        $isDelivery = $track->containsTag('presentation/delivery');
+        if ($isMultiStream && $isDelivery && !$haveOnlyDelivery) {
             return false;
         }
 
