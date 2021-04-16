@@ -132,7 +132,7 @@ class APIRecordedController extends Controller
 
     protected function processRequestData(Request $request)
     {
-        $MAX_LIMIT = 500;
+        $MAX_LIMIT = 1500;
         //Request variables.
         $criteria = $request->get('criteria') ?: [];
         $sort = (int) ($request->get('sort'));
