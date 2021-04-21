@@ -5,7 +5,29 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 To get the diff for a specific change, go to https://github.com/pumukit/PuMuKIT/commit/XXX where XXX is the change hash.
 To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/compare/3.0.0...3.1.x.
 
-## [3.5.0](https://github.com/pumukit/PuMuKIT/compare/3.5.0...3.4.0) - (2020-07-21)
+## [3.6.0](https://github.com/pumukit/PuMuKIT/compare/3.5.0...3.6.0) (Coming soon)
+
+#### Added
+- Added configuration to send notification when user is a co owner of Multimedia Object.
+- Added new method to get events from date.
+- Added confirmation when delete events.
+- Added configuration to set max time execution on jobs.
+- Added functionality to use external url on events as iframes.
+
+#### Fixed
+- Fix load notification service.
+- Fix remove pic from MultimediaObject when is used on series.
+- Fix save material name from advance upload form.
+- Fix upload files with special characters on name.
+- Fix modify broadcast from series.
+- Fix test.
+- Fix increase views on multimedia objects multi stream when have 1 screen track.
+- Fix APIRecorded to filter prototypes and events.
+
+#### Security
+- Update composer packages
+
+## [3.5.0](https://github.com/pumukit/PuMuKIT/compare/3.4.0...3.5.0) - (2020-07-21)
 
 #### Added
 - Added new permissions to edit multimedia object
@@ -16,7 +38,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 #### Fixed
 - Remove cancel button on wizard
 
-## [3.4.0](https://github.com/pumukit/PuMuKIT/compare/3.4.0...3.3.0) - (2020-06-18)
+## [3.4.0](https://github.com/pumukit/PuMuKIT/compare/3.3.0...3.4.0) - (2020-06-18)
 
 #### Added
 - Added CA translations
@@ -25,7 +47,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Fixed design on basic live chat
 - Fixed method to override a material file
 
-## [3.3.0](https://github.com/pumukit/PuMuKIT/compare/3.3.0...3.2.0) - (2020-03-30)
+## [3.3.0](https://github.com/pumukit/PuMuKIT/compare/3.2.0...3.3.0) - (2020-03-30)
 
 #### Added
 - Added method to override a material file added to use external API
@@ -36,7 +58,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Fixed embeddedSegments toString method
 - Fixed Pic toString method
 
-## [3.2.0](https://github.com/pumukit/PuMuKIT/compare/3.2.0...3.1.0) - (2020-03-09)
+## [3.2.0](https://github.com/pumukit/PuMuKIT/compare/3.1.0...3.2.0) - (2020-03-09)
 
 #### Added
 - New logic to read mp properties from Galicaster mediapackages in Opencast
@@ -49,7 +71,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Edge-case where removing a cloned object after changing the user would remove the original attached image.
 - Live events issue related to using mongo driver version 1.4.5 or lower
 
-## [3.1.0](https://github.com/pumukit/PuMuKIT/compare/3.1.0...3.0.0) - (2019-09-10)
+## [3.1.0](https://github.com/pumukit/PuMuKIT/compare/3.0.0...3.1.0) - (2019-09-10)
 
 #### Added
 - Fields to Series template to predefined values on MultimediaObjects
@@ -78,7 +100,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Add maximum number of login attempts to increase security
 
 
-## [3.0.0](https://github.com/campusdomar/PuMuKIT2/compare/3.0.0...2.6.0) - (2019-06-10)
+## [3.0.0](https://github.com/campusdomar/PuMuKIT2/compare/2.6.0...3.0.0) - (2019-06-10)
 
 #### Added
 - New web portal design
