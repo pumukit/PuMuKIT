@@ -90,22 +90,24 @@ class TagType extends AbstractType
                 $tag = $event->getData();
 
                 $fields = $tag->getProperty('customfield');
-                foreach (array_filter(preg_split('/[,\s]+/', $fields)) as $field) {
-                    $auxField = explode(':', $field);
-                    $formOptions = [
-                        'mapped' => false,
-                        'required' => false,
-                        'attr' => [
-                            'aria-label' => $this->translator->trans($auxField[0], [], null, $this->locale),
-                        ],
-                        'data' => $tag->getProperty($auxField[0]),
-                    ];
+                if($fields) {
+                    foreach (array_filter(preg_split('/[,\s]+/', $fields)) as $field) {
+                        $auxField = explode(':', $field);
+                        $formOptions = [
+                            'mapped'   => false,
+                            'required' => false,
+                            'attr'     => [
+                                'aria-label' => $this->translator->trans($auxField[0], [], null, $this->locale),
+                            ],
+                            'data'     => $tag->getProperty($auxField[0]),
+                        ];
 
-                    try {
-                        $type = $auxField[1] ?? TextType::class;
-                        $event->getForm()->add($auxField[0], $type, $formOptions);
-                    } catch (\InvalidArgumentException $e) {
-                        $event->getForm()->add($auxField[0], TextType::class, $formOptions);
+                        try {
+                            $type = $auxField[1] ?? TextType::class;
+                            $event->getForm()->add($auxField[0], $type, $formOptions);
+                        } catch (\InvalidArgumentException $e) {
+                            $event->getForm()->add($auxField[0], TextType::class, $formOptions);
+                        }
                     }
                 }
             }
@@ -117,10 +119,12 @@ class TagType extends AbstractType
                 $tag = $event->getData();
 
                 $fields = $tag->getProperty('customfield');
-                foreach (array_filter(preg_split('/[,\s]+/', $fields)) as $field) {
-                    $auxField = explode(':', $field);
-                    $data = $event->getForm()->get($auxField[0])->getData();
-                    $tag->setProperty($auxField[0], $data);
+                if($fields) {
+                    foreach (array_filter(preg_split('/[,\s]+/', $fields)) as $field) {
+                        $auxField = explode(':', $field);
+                        $data = $event->getForm()->get($auxField[0])->getData();
+                        $tag->setProperty($auxField[0], $data);
+                    }
                 }
             }
         );
