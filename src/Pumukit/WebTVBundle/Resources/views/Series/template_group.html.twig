@@ -8,18 +8,22 @@
 {% if template == "subserial" or template == "date_subserial" %}
     <!-- SUBSERIAL -->
     {% if subserie_title != last_subseriestitle %}
-        <div class="row subseries_title_wrapper">
-            <h3 class="text-center subseries_title"> {{ subserie_title }} </h3>
+        <div class="row subseries_title_wrapper text-center subseries_title">
+            {% if ('<br>' in subserie_title) %}
+                {{ ( subserie_title | split("<br>"))[0] | raw }}
+            {% else %}
+                {{ subserie_title | raw }}
+            {% endif %}
         </div>
     {% endif %}
 {% elseif template == "multisubserial" %}
     <!-- MULTISUBSERIAL -->
-    {% set subseries_now = ( subserie_title | split("\\n") ) %}
-    {% set subseries_before = ( last_subseriestitle  | split("\\n") ) %}
+    {% set subseries_now = ( subserie_title | split("<br>") ) %}
+    {% set subseries_before = ( last_subseriestitle  | split("<br>") ) %}
     {% for key, subserie_title in subseries_now %}
         {% if subserie_title is not same as ( subseries_before[key] | default('') ) %}
-            <div class="row">
-                <h3 class="text-center"> {{ subserie_title }} </h3>
+            <div class="row text-center">
+                {{ subserie_title | raw }} 
             </div>
         {% endif %}
     {% endfor %}
@@ -32,8 +36,8 @@
             </div>
         {% endif %}
         {% if subserie_title is not empty and current_date != last_date %}
-            <div class="row subseries_title_wrapper">
-                <h3 class="text-center subseries_title"> {{ subserie_title }} </h3>
+            <div class="row subseries_title_wrapper text-center subseries_title">
+                {{ subserie_title | raw }}
             </div>
         {% endif %}
         {% set last_precinct = series_precinct.getTitle() %}
