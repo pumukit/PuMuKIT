@@ -37,6 +37,7 @@ class JobService
     private $profileService;
     private $cpuService;
     private $inspectionService;
+    private $eventDispatcher;
     private $tmpPath;
     private $trackService;
     private $logger;
