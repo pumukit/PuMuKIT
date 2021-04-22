@@ -81,8 +81,7 @@ class EmbeddedEvent
     private $url;
 
     /**
-     * @var bool
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      */
     private $isIframeUrl = false;
 
