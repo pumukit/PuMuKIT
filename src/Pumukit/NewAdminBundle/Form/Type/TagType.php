@@ -90,16 +90,16 @@ class TagType extends AbstractType
                 $tag = $event->getData();
 
                 $fields = $tag->getProperty('customfield');
-                if($fields) {
+                if ($fields) {
                     foreach (array_filter(preg_split('/[,\s]+/', $fields)) as $field) {
                         $auxField = explode(':', $field);
                         $formOptions = [
-                            'mapped'   => false,
+                            'mapped' => false,
                             'required' => false,
-                            'attr'     => [
+                            'attr' => [
                                 'aria-label' => $this->translator->trans($auxField[0], [], null, $this->locale),
                             ],
-                            'data'     => $tag->getProperty($auxField[0]),
+                            'data' => $tag->getProperty($auxField[0]),
                         ];
 
                         try {
@@ -119,7 +119,7 @@ class TagType extends AbstractType
                 $tag = $event->getData();
 
                 $fields = $tag->getProperty('customfield');
-                if($fields) {
+                if ($fields) {
                     foreach (array_filter(preg_split('/[,\s]+/', $fields)) as $field) {
                         $auxField = explode(':', $field);
                         $data = $event->getForm()->get($auxField[0])->getData();
