@@ -8,6 +8,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
+use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
@@ -195,6 +196,7 @@ class MultimediaObjectPicService
     {
         $pic = $multimediaObject->getPicById($picId);
         $picPath = $pic->getPath();
+        $picUrl = $pic->getUrl();
 
         $multimediaObject->removePicById($picId);
         $this->dm->persist($multimediaObject);
@@ -202,7 +204,11 @@ class MultimediaObjectPicService
 
         if ($this->forceDeleteOnDisk && $picPath) {
             $otherPics = $this->repo->findBy(['pics.path' => $picPath]);
-            if (0 == count($otherPics)) {
+            $otherPicsUrl = $this->repo->findBy(['pics.url' => $picUrl]);
+            $seriesPicsUrl = $this->dm->getRepository(Series::class)->findBy(['pics.url' => $picUrl]);
+            $seriesPicsPath = $this->dm->getRepository(Series::class)->findBy(['pics.path' => $picPath]);
+            $totalPicsUses = count($otherPics) + count($otherPicsUrl) + count($seriesPicsUrl) + count($seriesPicsPath);
+            if (0 === $totalPicsUses) {
                 $this->deleteFileOnDisk($picPath, $multimediaObject);
             }
         }

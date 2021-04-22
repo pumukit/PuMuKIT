@@ -64,7 +64,23 @@
                         <input type="checkbox" id="allowExternalURL" name="allowURLExternal" {{ externalURL }}>
                     </label>
                 </div>
-                <input id="externalURL" type="url" name="pumukitnewadmin_live_event[externalURL]" class="form-control" {% if externalURL != '' %}value="{{ multimediaObject.getEmbeddedEvent().getUrl() }}" {% else %}disabled{% endif %}/>
+                {% set iframeURL = '' %}
+                {% if multimediaObject.getEmbeddedEvent() is not null and multimediaObject.getEmbeddedEvent().getUrl() is not empty and multimediaObject.getEmbeddedEvent().isIframeUrl() %}
+                    {% set iframeURL = 'checked' %}
+                {% endif %}
+                <div class="row group-urliframe">
+                    <div class="col-md-9 externalURL">
+                        <input id="externalURL" type="url" name="pumukitnewadmin_live_event[externalURL]" class="form-control" {% if externalURL != '' %}value="{{ multimediaObject.getEmbeddedEvent().getUrl() }}" {% else %}disabled{% endif %}/>
+                    </div>
+                    <div class="col-md-3 iframeURL">
+                        <div class="checkbox">
+                            <label for="iframeURL">
+                                <input type="checkbox" id="iframeURL" name="pumukitnewadmin_live_event[iframeURL]" {{ iframeURL }} {% if externalURL == '' %}disabled{% endif %}>
+                            </label>
+                            <strong>{% trans %}Iframe{% endtrans %}</strong>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="form-group">
@@ -233,11 +249,14 @@
 
     $('#allowExternalURL').on('click', function () {
         var externalURL = $('#externalURL');
+        var iframe = $('#iframeURL');
         var isDisabled = externalURL.prop('disabled');
         if (isDisabled) {
             externalURL.prop('disabled', false);
+            iframe.prop('disabled', false);
         } else {
             externalURL.prop('disabled', true);
+            iframe.prop('disabled', true);
         }
     });
 

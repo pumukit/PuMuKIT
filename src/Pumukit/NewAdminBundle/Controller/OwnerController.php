@@ -70,7 +70,8 @@ class OwnerController extends AbstractController implements NewAdminControllerIn
     protected function wasUsedRejectedLink(MultimediaObject $multimediaObject, User $coOwner): bool
     {
         $rejectedCoOwners = $multimediaObject->getProperty(OwnerService::MULTIMEDIA_OBJECT_CO_OWNERS_PROPERTY);
+        $owners = $multimediaObject->getProperty(OwnerService::MULTIMEDIA_OBJECT_OWNERS_PROPERTY);
 
-        return is_array($rejectedCoOwners) && in_array($coOwner->getId(), $rejectedCoOwners);
+        return is_array($rejectedCoOwners) && in_array($coOwner->getId(), $rejectedCoOwners) && !in_array($coOwner->getId(), $owners);
     }
 }

@@ -342,7 +342,7 @@ class StatsService
             ['$out' => 'ViewsAggregation'],
         ];
 
-        $viewsLogColl->aggregate($pipeline, ['cursor' => [], 'allowDiskUse' => true]);
+        return $viewsLogColl->aggregate($pipeline, ['cursor' => [], 'allowDiskUse' => true]);
     }
 
     /**

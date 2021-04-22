@@ -43,7 +43,7 @@ class TrackFileController extends AbstractController
 
         [$mmobj, $track] = $this->getMmobjAndTrack($documentManager, $id);
 
-        if ($this->shouldIncreaseViews($track, $request, $pumukitPlayerWhenDispatchViewEvent)) {
+        if ($this->shouldIncreaseViews($request, $mmobj, $track, $pumukitPlayerWhenDispatchViewEvent)) {
             $this->dispatchViewEvent($mmobj, $track);
         }
 
@@ -105,13 +105,16 @@ class TrackFileController extends AbstractController
         return str_replace('=', '', strtr(base64_encode(md5("{$timestamp}{$path}{$ip} {$secret}", true)), '+/', '-_'));
     }
 
-    protected function shouldIncreaseViews(Track $track, Request $request, string $pumukitPlayerWhenDispatchViewEvent): bool
+    protected function shouldIncreaseViews(Request $request, MultimediaObject $multimediaObject, Track $track, string $pumukitPlayerWhenDispatchViewEvent)
     {
         if ('on_load' !== $pumukitPlayerWhenDispatchViewEvent) {
             return false;
         }
 
-        if ($track->containsTag('presentation/delivery')) {
+        $isMultiStream = $multimediaObject->isMultistream();
+        $haveOnlyDelivery = (count($multimediaObject->getTracksWithTag('display')) <= 2) && $multimediaObject->getTracksWithTag('sbs');
+        $isDelivery = $track->containsTag('presentation/delivery');
+        if ($isMultiStream && $isDelivery && !$haveOnlyDelivery) {
             return false;
         }
 
