@@ -183,10 +183,17 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $mm4->setStatus(MultimediaObject::STATUS_PUBLISHED);
 
         $mm1->addPersonWithRole($person_ned, $role_lord);
+        $mm1->setStatus(MultimediaObject::STATUS_PUBLISHED);
+
         $mm2->addPersonWithRole($person_benjen, $role_ranger);
+        $mm2->setStatus(MultimediaObject::STATUS_PUBLISHED);
+
         $mm3->addPersonWithRole($person_ned, $role_lord);
         $mm3->addPersonWithRole($person_benjen, $role_ranger);
+        $mm3->setStatus(MultimediaObject::STATUS_PUBLISHED);
+
         $mm4->addPersonWithRole($person_ned, $role_hand);
+        $mm4->setStatus(MultimediaObject::STATUS_PUBLISHED);
 
         $this->dm->persist($mm1);
         $this->dm->persist($mm2);

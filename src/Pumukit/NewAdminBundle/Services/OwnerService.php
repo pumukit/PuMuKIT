@@ -46,11 +46,11 @@ class OwnerService
         }
 
         $owners = $multimediaObject->getProperty(self::MULTIMEDIA_OBJECT_OWNERS_PROPERTY);
-        $key = array_search($user->getId(), $owners);
+        $key = array_search($coOwner->getId(), $owners);
         if (false !== $key) {
             unset($owners[$key]);
             $multimediaObject->setProperty(self::MULTIMEDIA_OBJECT_OWNERS_PROPERTY, array_values($owners));
-            $multimediaObject->removePersonWithRole($user->getPerson(), $role);
+            $multimediaObject->removePersonWithRole($coOwner->getPerson(), $role);
         }
 
         $rejectedCoOwners = $multimediaObject->getProperty(self::MULTIMEDIA_OBJECT_CO_OWNERS_PROPERTY);

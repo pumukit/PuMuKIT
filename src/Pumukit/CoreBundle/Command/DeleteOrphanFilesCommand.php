@@ -50,9 +50,9 @@ class DeleteOrphanFilesCommand extends Command
                 Example to use:
 
                 1. List orphan files
-                    php app/console pumukit:files:delete:orphan --path="{pathToPuMuKITUploadsMaterialDir}"
+                    php app/console pumukit:files:delete:orphan --path="/var/www/html/pumukit2/web/uploads/material"
                 2. Delete orphan files
-                    php app/console pumukit:files:delete:orphan --path="{pathToPuMuKITUploadsMaterialDir}" --delete
+                    php app/console pumukit:files:delete:orphan --path="/var/www/html/pumukit2/web/uploads/material" --delete
 
 EOT
             )

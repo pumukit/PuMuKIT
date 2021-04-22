@@ -893,6 +893,58 @@ class EmbeddedEventSessionService
         return $this->collection->aggregate($pipeline, ['cursor' => []])->toArray();
     }
 
+    public function findEventsByCriteria(array $criteria = [])
+    {
+        $pipeline[] = [
+            '$match' => [
+                'type' => MultimediaObject::TYPE_LIVE,
+                'embeddedEvent.display' => true,
+                'embeddedEvent.embeddedEventSession' => ['$exists' => true],
+            ],
+        ];
+        $pipeline[] = [
+            '$project' => [
+                'multimediaObjectId' => '$_id',
+                'event' => '$embeddedEvent',
+                'sessions' => '$embeddedEvent.embeddedEventSession',
+            ],
+        ];
+        $pipeline[] = ['$unwind' => '$sessions'];
+
+        if (empty($criteria)) {
+            $pipeline[] = [
+                '$match' => [
+                    'sessions.start' => ['$exists' => true],
+                ],
+            ];
+        } else {
+            $pipeline[] = [
+                '$match' => $criteria,
+            ];
+        }
+
+        $pipeline[] = [
+            '$project' => [
+                'multimediaObjectId' => '$multimediaObjectId',
+                'event' => '$event',
+                'sessions' => '$sessions',
+                'session' => '$sessions',
+            ],
+        ];
+        $pipeline[] = [
+            '$group' => [
+                '_id' => '$multimediaObjectId',
+                'data' => [
+                    '$addToSet' => [
+                        'event' => '$event',
+                    ],
+                ],
+            ],
+        ];
+
+        return $this->collection->aggregate($pipeline, ['cursor' => []])->toArray();
+    }
+
     /**
      * Find next live events.
      *

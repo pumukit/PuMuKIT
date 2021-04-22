@@ -17,6 +17,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\TrackService;
+use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
@@ -45,8 +46,7 @@ class JobService
     private $inboxPath;
     private $binPath;
     private $deleteInboxFiles;
-    /** @var EventDispatcherInterface */
-    private $eventDispatcher;
+    private $maxExecutionJobSeconds;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -62,7 +62,8 @@ class JobService
         $environment = 'dev',
         $tmpPath = null,
         $inboxPath = null,
-        $deleteInboxFiles = false
+        $deleteInboxFiles = false,
+        $maxExecutionJobSeconds = 43200
     ) {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository(Job::class);
@@ -79,6 +80,7 @@ class JobService
         $this->propService = $propService;
         $this->binPath = $binPath;
         $this->deleteInboxFiles = $deleteInboxFiles;
+        $this->maxExecutionJobSeconds = $maxExecutionJobSeconds;
     }
 
     /**
@@ -106,7 +108,11 @@ class JobService
             throw new FileNotFoundException($trackFile->getPathname());
         }
 
-        $pathFile = $trackFile->move($this->tmpPath.'/'.$multimediaObject->getId(), $trackFile->getClientOriginalName());
+        $trackName = TextIndexUtils::cleanTextIndex(pathinfo($trackFile->getClientOriginalName())['filename']);
+
+        $trackName = preg_replace('([^A-Za-z0-9])', '', $trackName);
+
+        $pathFile = $trackFile->move($this->tmpPath.'/'.$multimediaObject->getId(), $trackName.'.'.pathinfo($trackFile->getClientOriginalName())['extension']);
 
         if (!is_string($pathFile)) {
             $pathFile = $pathFile->getPathname();
@@ -818,6 +824,37 @@ class JobService
         return true;
     }
 
+    /**
+     * Check for blocked jobs.
+     */
+    public function checkService()
+    {
+        $existsJobsToUpdate = false;
+        $jobs = $this->repo->findWithStatus([Job::STATUS_EXECUTING]);
+
+        $nowDateTime = new \DateTime('now');
+
+        foreach ($jobs as $job) {
+            $maxExecutionJobTime = $job->getTimestart();
+            $maxExecutionJobTime->add(new \DateInterval('PT'.$this->maxExecutionJobSeconds.'S'));
+
+            if ($maxExecutionJobTime <= $nowDateTime) {
+                $job->setStatus(Job::STATUS_ERROR);
+                $message = '[checkService] Job executing for a long time, set status to ERROR. Máx execution time was '.$maxExecutionJobTime->format('Y-m-d H:i:s');
+                $job->appendOutput($message);
+                $this->logger->error(
+                    $message.$job->getId()
+                );
+
+                $existsJobsToUpdate = true;
+            }
+        }
+
+        if ($existsJobsToUpdate) {
+            $this->dm->flush();
+        }
+    }
+
     private function deleteTempFiles(Job $job)
     {
         if (false !== strpos($job->getPathIni(), $this->tmpPath)) {
@@ -923,33 +960,6 @@ class JobService
 
         $event = new JobEvent($job, $track, $multimediaObject);
         $this->eventDispatcher->dispatch($event, $success ? EncoderEvents::JOB_SUCCESS : EncoderEvents::JOB_ERROR);
-    }
-
-    /**
-     * Check for blocked jobs.
-     */
-    private function checkService()
-    {
-        $existsJobsToUpdate = false;
-        $jobs = $this->repo->findWithStatus([Job::STATUS_EXECUTING]);
-        $yesterday = new \DateTime('-1 day');
-
-        foreach ($jobs as $job) {
-            if ($job->getTimestart() < $yesterday) {
-                $job->setStatus(Job::STATUS_ERROR);
-                $message = '[checkService] Job executing for a long time, set status to ERROR ';
-                $job->appendOutput($message);
-                $this->logger->error(
-                    $message.$job->getId()
-                );
-
-                $existsJobsToUpdate = true;
-            }
-        }
-
-        if ($existsJobsToUpdate) {
-            $this->dm->flush();
-        }
     }
 
     /**

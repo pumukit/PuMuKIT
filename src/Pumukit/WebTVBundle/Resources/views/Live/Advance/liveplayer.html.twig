@@ -13,6 +13,8 @@
         {% include "@PumukitBaseLivePlayer/Advance/Sessions/futureSessions.js.twig" %}
     } else if (nowSessionsCount > 0) {
         {% include "@PumukitBaseLivePlayer/Advance/Sessions/nowSessions.js.twig" %}
-        {% include "@PumukitBaseLivePlayer/Advance/player.js.twig" %}
+        {% if event.isIframeUrl() is same as(false) %}
+            {% include "@PumukitBaseLivePlayer/Advance/player.js.twig" %}
+        {% endif %}
     }
 </script>

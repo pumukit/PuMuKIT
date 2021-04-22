@@ -81,6 +81,12 @@ class EmbeddedEvent
     private $url;
 
     /**
+     * @var bool
+     * @MongoDB\Field(type="boolean")
+     */
+    private $isIframeUrl = false;
+
+    /**
      * @MongoDB\Field(type="raw")
      */
     private $alreadyHeldMessage = ['en' => ''];
@@ -297,7 +303,37 @@ class EmbeddedEvent
         $this->url = $url;
     }
 
-    public function setAlreadyHeldMessage(string $message, string $locale = null): void
+    /**
+     * @return bool
+     */
+    public function isIframeUrl()
+    {
+        return $this->isIframeUrl;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsIframeUrl()
+    {
+        return $this->isIframeUrl;
+    }
+
+    /**
+     * @param bool $isIframeUrl
+     */
+    public function setIsIframeUrl($isIframeUrl)
+    {
+        $this->isIframeUrl = $isIframeUrl;
+    }
+
+    /**
+     * Set already held message.
+     *
+     * @param string     $message
+     * @param mixed|null $locale
+     */
+    public function setAlreadyHeldMessage($message, $locale = null)
     {
         if (null === $locale) {
             $locale = $this->locale;
