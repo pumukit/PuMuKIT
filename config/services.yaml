@@ -7,17 +7,7 @@ parameters:
   pumukit.show_mms_list_all_menu:      false
   pumukit.inbox_depth:                 false
   pumukit.customlanguages:
-    - es
-    - gl
     - en
-    - pt
-    - fr
-    - it
-    - de
-    - ca
-    - eu
-    - lse
-    - lsi
   locale:                              "%env(string:PUMUKIT_LOCALE)%"
   secret:                              "%env(string:PUMUKIT_SECRET)%"
   debug_toolbar:                       true
