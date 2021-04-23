@@ -3,18 +3,8 @@
 {% block stylesheets %}
     {{ parent() }}
     <link href="{{ asset('/bundles/pumukitwizard/css/nav-wizard.bootstrap.css') }}" rel="stylesheet">
-    <link href="https://releases.transloadit.com/uppy/v1.22.0/uppy.min.css" rel="stylesheet">
-    <style>
-        .uppy-FileInput-btn {
-            border: 1px solid #ccc;
-            color: #000;
-        }
-        .uppy-FileInput-btn:hover {
-            border: 1px solid #000;
-            background-color: transparent;
-            color: #000;
-        }
-    </style>
+    <link href="{{ asset('/bundles/pumukitcore/css/uppy.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/bundles/pumukitcore/css/uppy_custom.css') }}" rel="stylesheet">
 {% endblock stylesheets %}
 
 {% block javascripts %}
@@ -71,31 +61,8 @@
                                 </select>
                             </div>
 
-                            <div class="form-group">
-                                <label for="url" class="control-label">{{ "Audio/video file"|trans }}:
-                                    <span style="color: red">
-                                        ({{ "Max."|trans }} {{ php_upload_max_filesize() }})
-                                    </span>
-                                </label>
-                                <div class="UppyForm">
-                                    <h5>Uppy was not loaded — slow connection, unsupported browser, weird JS error on a page — but the upload still works, because HTML is cool like that</h5>
-                                    <input id="wizard-input-file" type="file" name="resource[]">
-                                </div>
-                                <div class="grid">
-                                    <div class="column-full">
-                                        <div class="UppyInput"></div>
-                                        <div class="UppyInput-Progress"></div>
-                                    </div>
-                                </div>
-                                <div class="file-data" style="display:none;">
-                                    <p><b>{{ "File to upload"|trans }}:</b></p>
-                                    <span class="label label-default file-title"></span>
-                                    <span class="label label-primary file-size"></span>
-                                    <a href="#" id="uppy-remove-file" class="file-id uppy-remove-file" style="margin-left:10px;">
-                                        <i class="glyphicon glyphicon-remove"></i>
-                                    </a>
-                                </div>
-                            </div>
+                            {% include "@PumukitCore/Upload/uppy_input.html.twig" %}
+
                             {% if show_license %}
                                 {% include '@PumukitWizard/Simple/license.html.twig' with {'license_text': license_text} %}
                             {% endif %}
@@ -106,9 +73,9 @@
         </div>
     </div>
 
-    <script src="https://releases.transloadit.com/uppy/v1.22.0/uppy.min.js"></script>
+    <script src="{{ asset('/bundles/pumukitcore/js/uppy.min.js') }}"></script>
     <script>
         formElement = document.getElementById('pumukitwizard_simple_embed_track_form');
-        {% include "@PumukitWizard/Simple/uppy_xhr.js.twig" %}
+        {% include "@PumukitCore/Upload/uppy_xhr.js.twig" %}
     </script>
 {% endblock %}
