@@ -713,7 +713,7 @@ class DefaultController extends Controller
 
         foreach ($keys as $key) {
             $value = $this->getKeyData($key, $resourceData);
-            $filterValue = array_filter($value);
+            $filterValue = !is_array($value) ? [$value] : array_filter($value);
             if (0 !== count($filterValue)) {
                 $upperField = $this->getUpperFieldName($key);
                 $setField = 'set'.$upperField;
