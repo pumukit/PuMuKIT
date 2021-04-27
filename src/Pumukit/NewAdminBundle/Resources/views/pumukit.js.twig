@@ -2524,19 +2524,8 @@ function test_material_form_file_nmb(file){
     return true;
 }
 
-$(document).on('click', '#pumukitnewadmin_track_ok_button', function(event){
-    if ($('#radio_file').prop('checked')){
-        var file = $('#resource').val();
-    }else{
-        var file = $('#file').val();
-    }
-    var valid = test_material_form_file_nmb(file);
-    if (valid){
-        $('#file_upload_progress').show();
-        return true;
-    }else{
-        return false;
-    }
+$(document).on('click', '#pumukitnewadmin_track_ok_button', function(){
+    uppy.upload();
 });
 
 window.change_pics_page = function(route)

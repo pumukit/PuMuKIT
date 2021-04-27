@@ -28,7 +28,11 @@
     <link href="{{ asset('/bundles/pumukitnewadmin/css/materialize-tags.min.css') }}" rel="stylesheet">
     <!-- Pumukit CSS modifications -->
     <link href="{{ path('pumukitnewadmin_css') }}" rel="stylesheet">
+
+    <link href="{{ asset('/bundles/pumukitcore/css/uppy.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/bundles/pumukitcore/css/uppy_custom.css') }}" rel="stylesheet">
 {% endblock %}
+
 {% block javascripts %}
     <script src="{{ asset('/bundles/pumukitnewadmin/js/jquery-1.10.2.min.js') }}"></script>
     <script src="{{ asset('/bundles/pumukitnewadmin/js/bootstrap.min.js') }}"></script>
@@ -41,7 +45,10 @@
     <script src="{{ asset('/bundles/pumukitnewadmin/js/jquery-ui-1.11.3.custom.min.js') }}"></script>
     <script src="{{ asset('/bundles/pumukitnewadmin/js/typeahead.bundle.min.js') }}"></script>
     <script src="{{ asset('/bundles/pumukitnewadmin/js/materialize-tags.min.js') }}"></script>
+
+    <script src="{{ asset('/bundles/pumukitcore/js/uppy.min.js') }}"></script>
 {% endblock %}
+
 {% block body_base %}
     {% block naked_menu %}
         {% include is_naked() ? '@PumukitNewAdmin/naked_menu.html.twig' : '@PumukitNewAdmin/menu.html.twig' %}

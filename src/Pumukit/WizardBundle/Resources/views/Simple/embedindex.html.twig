@@ -3,8 +3,6 @@
 {% block stylesheets %}
     {{ parent() }}
     <link href="{{ asset('/bundles/pumukitwizard/css/nav-wizard.bootstrap.css') }}" rel="stylesheet">
-    <link href="{{ asset('/bundles/pumukitcore/css/uppy.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('/bundles/pumukitcore/css/uppy_custom.css') }}" rel="stylesheet">
 {% endblock stylesheets %}
 
 {% block javascripts %}
@@ -72,8 +70,6 @@
             </div>
         </div>
     </div>
-
-    <script src="{{ asset('/bundles/pumukitcore/js/uppy.min.js') }}"></script>
     <script>
         formElement = document.getElementById('pumukitwizard_simple_embed_track_form');
         {% include "@PumukitCore/Upload/uppy_xhr.js.twig" %}

@@ -5,9 +5,10 @@
 <div class="modal-body">
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
         {% form_theme form '@PumukitNewAdmin/Themes/fields.html.twig' %}
-        <form method="post" target="iframeUpload"
-              action="{{ path('pumukitnewadmin_track_upload', {'id': mm.id}) }}"
-              enctype="multipart/form-data" name="formulario">
+
+        {% set pathToUpload = path('pumukitnewadmin_track_upload', {'id': mm.id}) %}
+
+        <form id="pumukit_track_form" method="post" target="iframeUpload" action="{{ path('pumukitnewadmin_track_upload', {'id': mm.id}) }}" enctype="multipart/form-data">
             <iframe id="iframeUpload" name="iframeUpload" style="display:none" src=""></iframe>
 
             <fieldset>
@@ -42,24 +43,18 @@
                     <div class="form-group">
                         <label for="file_type" class="control-label">{% trans %}Mode{% endtrans %}</label>
                         <div class="radio">
-                            <label><input type="radio" name="file_type" id="radio_inbox" value="inbox" onclick="$('#pumukitnewadmin_track_file').hide();$('#pumukitnewadmin_track_inbox').show();"/> {% trans %}Inbox on server{% endtrans %}</label>
+                            <label><input type="radio" name="file_type" id="radio_inbox" value="inbox" onclick="$('#pumukit_file_input').hide();$('#pumukitnewadmin_track_inbox').show();"/> {% trans %}Inbox on server{% endtrans %}</label>
                         </div>
                         <div class="radio">
-                            <label><input type="radio" name="file_type" id="radio_file" value="file" checked="checked" onclick="{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}$('#pumukitnewadmin_track_inbox').hide();{% endif %}$('#pumukitnewadmin_track_file').show();"/> {% trans %}Local hard drive{% endtrans %}</label>
+                            <label><input type="radio" name="file_type" id="radio_file" value="file" checked="checked" onclick="{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}$('#pumukitnewadmin_track_inbox').hide();{% endif %}$('#pumukit_file_input').show();"/> {% trans %}Local hard drive{% endtrans %}</label>
                         </div>
                     </div>
                 {% else %}
                     <input type="hidden" name="file_type" id="radio_file" value="file"/>
                 {% endif %}
 
-                <div class="form-group" id="pumukitnewadmin_track_file">
-                    <label for="url" class="control-label">{% trans %}Resource{% endtrans %}:</label>
-                    <div class="input-group">
-                        <input class="advance_upload_file" type="file" name="resource" id="resource" value="" size="70" accept="audio/*,video/mp4,video/x-m4v,video/*">
-                        <span style="color: blue">({% trans %}Under{% endtrans %} {{ php_upload_max_filesize() }})</span>
-                        <span id="file_upload_progress" style="color:blue; display:none;">{% trans %}Progress{% endtrans %}...</span>
-                    </div>
-                </div>
+                {% include "@PumukitCore/Upload/uppy_input.html.twig" %}
+
                 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
                     <div class="form-group" id="pumukitnewadmin_track_inbox" style="display: none">
                         {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\InboxController::FormAction')) }}
@@ -76,3 +71,8 @@
         {% trans %}You don't have enough permissions to access this content.{% endtrans %}
     {% endif %}
 </div>
+
+<script>
+    formElement = document.getElementById('pumukit_track_form');
+    {% include "@PumukitCore/Upload/uppy_xhr.js.twig" %}
+</script>
