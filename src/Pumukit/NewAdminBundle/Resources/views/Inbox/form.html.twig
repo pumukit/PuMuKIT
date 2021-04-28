@@ -1,17 +1,17 @@
 {% extends '@PumukitNewAdmin/Inbox/base.html.twig' %}
 
 {% block inbox_body %}
-{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
-<a data-hash="root" data-path="root" class="list-group-item collapsed noload" href="#"
-   onclick="javascript:fileServerTree(this, '{{ onlyDir ? 'dir' : 'file'}}', '{{ dir }}', 1, 'explorer_videoserv'); return false;">
-  <span style="padding-left: 0px">
-    <i class="mdi- tag_icon"></i>
-  </span>
-  <span>
-    {{ dir }}
-  </span>
-</a>
-{% else %}
-  {% trans %}You don't have enough permissions to access this content.{% endtrans %}
-{% endif %}
+    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
+        <a data-hash="root" data-path="root" class="list-group-item collapsed noload" href="#"
+           onclick="fileServerTree(this, '{{ onlyDir ? 'dir' : 'file' }}', '{{ dir }}', 1, 'explorer_videoserv'); return false;">
+              <span style="padding-left: 0">
+                <i class="mdi- tag_icon"></i>
+              </span>
+              <span>
+                {{ dir }}
+              </span>
+        </a>
+    {% else %}
+        {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+    {% endif %}
 {% endblock %}

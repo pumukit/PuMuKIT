@@ -22,9 +22,11 @@ use Pumukit\WizardBundle\Services\WizardService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -369,201 +371,207 @@ class DefaultController extends AbstractController
         $formData['same_series'] = $sameSeries ? 1 : 0;
         $licenseEnabledAndAccepted = $this->licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
         if (!$licenseEnabledAndAccepted) {
-            return $this->redirect($this->generateUrl('pumukitwizard_default_license', ['pumukitwizard_form_data' => $formData, 'same_series' => $sameSeries]));
+            return $this->redirect($this->generateUrl('pumukitwizard_default_license', [
+                'pumukitwizard_form_data' => $formData,
+                'same_series' => $sameSeries,
+            ]));
+        }
+
+        if (!$formData) {
+            $endPage = $this->generateUrl('pumukitwizard_default_error', [
+                'errormessage' => 'Something was wrong. No data received',
+                'option' => null,
+                'show_series' => $showSeries,
+                'same_series' => $sameSeries,
+            ], UrlGeneratorInterface::ABSOLUTE_URL);
+
+            return new JsonResponse([
+                'endPage' => $endPage,
+            ]);
         }
 
         $series = null;
-        $seriesId = null;
         $multimediaObject = null;
         $mmId = null;
 
-        if ($formData) {
-            $seriesData = $this->getKeyData('series', $formData);
+        $seriesData = $this->getKeyData('series', $formData);
 
-            $seriesId = $this->getKeyData('id', $seriesData);
+        $seriesId = $this->getKeyData('id', $seriesData);
 
-            $typeData = $this->getKeyData('type', $formData);
-            $trackData = $this->getKeyData('track', $formData);
+        $typeData = $this->getKeyData('type', $formData);
+        $trackData = $this->getKeyData('track', $formData);
 
-            if (!$this->isGranted('ROLE_DISABLED_WIZARD_TRACK_PROFILES')) {
-                $profile = $this->getKeyData('profile', $trackData, null);
-            } else {
-                $profile = $this->profileService->getDefaultMasterProfile();
-            }
-            if (!$profile) {
-                throw new \Exception('Not exists master profile');
-            }
+        if (!$this->isGranted('ROLE_DISABLED_WIZARD_TRACK_PROFILES')) {
+            $profile = $this->getKeyData('profile', $trackData, null);
+        } else {
+            $profile = $this->profileService->getDefaultMasterProfile();
+        }
+        if (!$profile) {
+            throw new \Exception('Not exists master profile');
+        }
 
-            $priority = $this->getKeyData('priority', $trackData, 2);
-            $language = $this->getKeyData('language', $trackData);
-            $description = $this->getKeyData('description', $trackData);
+        $priority = $this->getKeyData('priority', $trackData, 2);
+        $language = $this->getKeyData('language', $trackData);
+        $description = $this->getKeyData('description', $trackData);
 
-            $pubchannel = $this->getKeyData('pubchannel', $trackData);
+        $pubchannel = $this->getKeyData('pubchannel', $trackData);
 
-            $status = null;
-            if (isset($formData['multimediaobject']['status'])) {
-                $status = $formData['multimediaobject']['status'];
-            }
+        $status = null;
+        if (isset($formData['multimediaobject']['status'])) {
+            $status = $formData['multimediaobject']['status'];
+        }
 
-            $option = $this->getKeyData('option', $typeData);
+        $option = $this->getKeyData('option', $typeData);
 
-            try {
-                if ('single' === $option) {
-                    $filePath = null;
-                    $filetype = $this->getKeyData('filetype', $trackData);
-                    if ('file' === $filetype) {
-                        $resourceFile = $request->files->get('resource');
-                        if ($resourceFile) {
-                            if (!$resourceFile->isValid()) {
-                                throw new \Exception($request->files->get('resource')->getErrorMessage());
-                            }
-                            $filePath = $resourceFile->getPathname();
+        try {
+            if ('single' === $option) {
+                $filePath = null;
+                $filetype = $this->getKeyData('filetype', $trackData);
+                $resourceFile = null;
+                if ('file' === $filetype) {
+                    $resourceFile = $request->files->get('resource');
+                    $resourceFile = reset($resourceFile);
+                    if ($resourceFile) {
+                        if (!$resourceFile->isValid()) {
+                            throw new \Exception($request->files->get('resource')->getErrorMessage());
                         }
-                    } elseif ('inbox' === $filetype) {
-                        $filePath = $request->get('file');
+                        $filePath = $resourceFile->getPathname();
                     }
+                } elseif ('inbox' === $filetype) {
+                    $filePath = $request->get('file');
+                }
 
-                    if (!$filePath) {
-                        throw new \Exception('Not uploaded file or inbox path');
+                if (!$filePath) {
+                    throw new \Exception('Not uploaded file or inbox path');
+                }
+
+                try {
+                    $duration = $this->inspectionFfprobeService->getDuration($filePath);
+                } catch (\Exception $e) {
+                    throw new \Exception('The file is not a valid video or audio file');
+                }
+
+                if (0 == $duration) {
+                    throw new \Exception('The file is not a valid video or audio file (duration is zero)');
+                }
+
+                $series = $this->getSeries($seriesData);
+                $multimediaObjectData = $this->getKeyData('multimediaobject', $formData);
+
+                $i18nTitle = $this->getKeyData('i18n_title', $multimediaObjectData);
+                if (empty(array_filter($i18nTitle))) {
+                    $multimediaObjectData = $this->getDefaultFieldValuesInData($multimediaObjectData, 'i18n_title', 'New', true);
+                }
+
+                $multimediaObject = $this->createMultimediaObject($multimediaObjectData, $series);
+                $multimediaObject->setDuration($duration);
+
+                if ($this->pumukitWizardShowObjectLicense) {
+                    $license = $this->getKeyData('license', $formData['multimediaobject']);
+                    if ($license && ('0' !== $license)) {
+                        $multimediaObject = $this->setData($multimediaObject, $formData['multimediaobject'], ['license']);
                     }
+                }
 
-                    try {
-                        //exception if is not a mediafile (video or audio)
-                        $duration = $this->inspectionFfprobeService->getDuration($filePath);
-                    } catch (\Exception $e) {
-                        throw new \Exception('The file is not a valid video or audio file');
-                    }
+                $this->formEventDispatcherService->dispatchSubmit($this->getUser(), $multimediaObject, $formData);
 
-                    if (0 == $duration) {
-                        throw new \Exception('The file is not a valid video or audio file (duration is zero)');
-                    }
-
-                    $series = $this->getSeries($seriesData);
-                    $multimediaObjectData = $this->getKeyData('multimediaobject', $formData);
-
-                    $i18nTitle = $this->getKeyData('i18n_title', $multimediaObjectData);
-                    if (empty(array_filter($i18nTitle))) {
-                        $multimediaObjectData = $this->getDefaultFieldValuesInData($multimediaObjectData, 'i18n_title', 'New', true);
-                    }
-
-                    $multimediaObject = $this->createMultimediaObject($multimediaObjectData, $series);
-                    $multimediaObject->setDuration($duration);
-
-                    if ($this->pumukitWizardShowObjectLicense) {
-                        $license = $this->getKeyData('license', $formData['multimediaobject']);
-                        if ($license && ('0' !== $license)) {
-                            $multimediaObject = $this->setData($multimediaObject, $formData['multimediaobject'], ['license']);
-                        }
-                    }
-
-                    $this->formEventDispatcherService->dispatchSubmit($this->getUser(), $multimediaObject, $formData);
-
-                    if ('file' === $filetype) {
-                        $multimediaObject = $this->jobService->createTrackFromLocalHardDrive(
-                            $multimediaObject,
-                            $request->files->get('resource'),
-                            $profile,
-                            $priority,
-                            $language,
-                            $description,
-                            [],
-                            $duration,
-                            JobService::ADD_JOB_NOT_CHECKS
-                        );
-                    } elseif ('inbox' === $filetype) {
-                        $this->denyAccessUnlessGranted(Permission::ACCESS_INBOX);
-                        $multimediaObject = $this->jobService->createTrackFromInboxOnServer(
-                            $multimediaObject,
-                            $request->get('file'),
-                            $profile,
-                            $priority,
-                            $language,
-                            $description,
-                            [],
-                            $duration,
-                            JobService::ADD_JOB_NOT_CHECKS
-                        );
-                    }
-
-                    if ($multimediaObject && $pubchannel) {
-                        foreach ($pubchannel as $tagCode => $valueOn) {
-                            $this->addTagToMultimediaObjectByCode($multimediaObject, $tagCode);
-                        }
-                    }
-
-                    if ($multimediaObject && isset($status)) {
-                        $multimediaObject->setStatus((int) $status);
-                    }
-
-                    if ($this->pumukitWizardShowTags) {
-                        $tagCode = $this->getKeyData('tag', $formData['multimediaobject']);
-                        if ('0' !== $tagCode) {
-                            $this->addTagToMultimediaObjectByCode($multimediaObject, $tagCode);
-                        }
-                    }
-                } elseif ('multiple' === $option) {
+                if ('file' === $filetype) {
+                    $multimediaObject = $this->jobService->createTrackFromLocalHardDrive(
+                        $multimediaObject,
+                        $resourceFile,
+                        $profile,
+                        $priority,
+                        $language,
+                        $description,
+                        [],
+                        $duration,
+                        JobService::ADD_JOB_NOT_CHECKS
+                    );
+                } elseif ('inbox' === $filetype) {
                     $this->denyAccessUnlessGranted(Permission::ACCESS_INBOX);
-
-                    $series = $this->wizardService->uploadMultipleFiles(
-                        $this->getUser()->getId(),
+                    $multimediaObject = $this->jobService->createTrackFromInboxOnServer(
+                        $multimediaObject,
                         $request->get('file'),
-                        $seriesData,
-                        [
-                            'status' => $status,
-                            'pubChannel' => $pubchannel,
-                            'profile' => $profile,
-                            'priority' => $priority,
-                            'language' => $language,
-                            'description' => $description,
-                        ]
+                        $profile,
+                        $priority,
+                        $language,
+                        $description,
+                        [],
+                        $duration,
+                        JobService::ADD_JOB_NOT_CHECKS
                     );
                 }
-                $this->objectManager->flush();
-            } catch (\Exception $e) {
-                $message = preg_replace("/\r|\n/", '', $e->getMessage());
 
-                return $this->render('@PumukitWizard/Default/upload.html.twig', [
-                    'uploaded' => 'failed',
-                    'message' => $message,
-                    'option' => $option,
-                    'seriesId' => $seriesId,
-                    'mmId' => null,
-                    'show_series' => $showSeries,
-                    'same_series' => $sameSeries,
-                ]);
+                if ($multimediaObject && $pubchannel) {
+                    foreach ($pubchannel as $tagCode => $valueOn) {
+                        $this->addTagToMultimediaObjectByCode($multimediaObject, $tagCode);
+                    }
+                }
+
+                if ($multimediaObject && isset($status)) {
+                    $multimediaObject->setStatus((int) $status);
+                }
+
+                if ($this->pumukitWizardShowTags) {
+                    $tagCode = $this->getKeyData('tag', $formData['multimediaobject']);
+                    if ('0' !== $tagCode) {
+                        $this->addTagToMultimediaObjectByCode($multimediaObject, $tagCode);
+                    }
+                }
+            } elseif ('multiple' === $option) {
+                $this->denyAccessUnlessGranted(Permission::ACCESS_INBOX);
+
+                $series = $this->wizardService->uploadMultipleFiles(
+                    $this->getUser()->getId(),
+                    $request->get('file'),
+                    $seriesData,
+                    [
+                        'status' => $status,
+                        'pubChannel' => $pubchannel,
+                        'profile' => $profile,
+                        'priority' => $priority,
+                        'language' => $language,
+                        'description' => $description,
+                    ]
+                );
             }
-        } else {
-            return $this->render('@PumukitWizard/Default/upload.html.twig', [
-                'uploaded' => 'failed',
-                'message' => 'No data received',
-                'option' => null,
+            $this->objectManager->flush();
+        } catch (\Exception $e) {
+            $endPage = $this->generateUrl('pumukitwizard_default_error', [
+                'errormessage' => preg_replace("/\r|\n/", '', $e->getMessage()),
+                'option' => $option,
                 'seriesId' => $seriesId,
                 'mmId' => null,
                 'show_series' => $showSeries,
                 'same_series' => $sameSeries,
+            ], UrlGeneratorInterface::ABSOLUTE_URL);
+
+            return new JsonResponse([
+                'endPage' => $endPage,
             ]);
         }
 
         if ($series) {
             $seriesId = $series->getId();
             $this->pumukitSchemaSortedMultimediaObjectService->reorder($series);
-        } else {
-            $seriesId = null;
-        }
-        if ($multimediaObject) {
-            $mmId = $multimediaObject->getId();
-        } else {
-            $mmId = null;
         }
 
-        return $this->render('@PumukitWizard/Default/upload.html.twig', [
-            'uploaded' => 'success',
-            'message' => 'Track(s) added',
-            'option' => $option,
+        if ($multimediaObject) {
+            $mmId = $multimediaObject->getId();
+        }
+
+        $endPage = $this->generateUrl('pumukitwizard_default_end', [
             'seriesId' => $seriesId,
             'mmId' => $mmId,
+            'option' => $option,
             'show_series' => $showSeries,
             'same_series' => $sameSeries,
+        ], UrlGeneratorInterface::ABSOLUTE_URL);
+
+        return new JsonResponse([
+            'uploaded' => 'success',
+            'message' => 'Track(s) added',
+            'endPage' => $endPage,
         ]);
     }
 
