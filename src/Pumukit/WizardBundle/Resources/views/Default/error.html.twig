@@ -1,24 +1,24 @@
+{% extends '@PumukitWizard/Default/index.html.twig' %}
+
 {% block wizard_body %}
+
     {{ render(controller('Pumukit\\WizardBundle\\Controller\\DefaultController::stepsAction', {'step': 5, 'option': option, 'show_series': show_series, 'same_series': same_series})) }}
-<div class="well">
 
-<h1 class="cS_h1_error">{{ message|raw }}</h1>
-
-{% trans %}Actions{% endtrans %}:
-<ul style="margin-left: 50px; margin-bottom: 10px">
-<li>
-  <a href="{{ path('pumukitwizard_default_series') }}">
-    {% trans %}Upload another video{% endtrans %}.
-  </a>
-</li>
-{% if series is defined %}
-<li>
-  <a href="{{ path('pumukitwizard_default_type', {'id': series.getId()}) }}">
-    {% trans %}Upload another Multimedia Object in same Series{% endtrans %}
-  </a>
-</li>
-{% endif %}
-</ul>
-
-</div>
+    <div class="well text-center">
+        <h1 class="cS_h1_error">{{ message|raw }}</h1>
+        <ul style="list-style-type:none; margin-left: 50px; margin-bottom: 10px">
+            <li>
+                <a href="{{ path('pumukitwizard_default_series') }}" class="btn btn-primary btn-raised">
+                    {% trans %}Upload another video{% endtrans %}.
+                </a>
+            </li>
+            {% if series is defined and series is not null %}
+                <li>
+                    <a href="{{ path('pumukitwizard_default_type', {'id': series.getId()}) }}" class="btn btn-primary btn-raised">
+                        {% trans %}Upload another Multimedia Object in same Series{% endtrans %}
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
 {% endblock wizard_body %}

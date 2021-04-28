@@ -72,19 +72,12 @@ $(function(){
         return false;
     });
 
-    $('#pumukitwizard_track_next_button').on('click', function(){
-        if ($('#radio_file').prop('checked')) {
-            var file = $('#resource').val();
-        }else{
-            var file = $('#file').val();
-        }
-        var valid = test_material_form_file_nmb(file);
-        if (valid){
-            $('#file_upload_progress').show();
-            return true;
-        }else{
-            return false;
-        }
+    $('#pumukitwizard_track_next_button').on('click', function(event){
+        event.preventDefault();
+        uppy.upload();
+        uppy.on('upload-success', (file, response) => {
+            location.href = response.body.endPage;
+        });
     });
 
     $('#pumukitwizard_simple_track_form').on('submit', function(e){

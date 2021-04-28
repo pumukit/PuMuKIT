@@ -1,71 +1,75 @@
+{% extends '@PumukitWizard/Default/index.html.twig' %}
+
 {% block wizard_body %}
     {{ render(controller('Pumukit\\WizardBundle\\Controller\\DefaultController::stepsAction', {'step': 4, 'option': option, 'show_series': show_series, 'same_series': same_series})) }}
-<div class="well">
-  <div class="well">
-    <h3>{% trans %}Audio/Video uploaded successfully{% endtrans %}</h3>
-    <h4>
-      {% trans %}The video will be encoded and available soon. An email will be sent to you when the encoding is finished notifying you the availability of your video.{% endtrans %}
-    </h4>
-    {% if mm is defined and mm%}
     <div class="well">
-      <div>
-        <span>{% trans %}SERIES{% endtrans %}: &nbsp;</span>
-        <span>{{ series.getTitle() }}</span>
-      </div>
-      {% if option != 'multiple' %}
-      <div>
-        <span>{% trans %}VIDEO{% endtrans %}: </span>
-        <span>{{ mm.getTitle() }}</span>
-      </div>
-      <div>
-        <span>{% trans %}DATE{% endtrans %}: </span>
-        <span>{{ mm.getPublicDate()| format_datetime('medium','none',locale=app.request.getLocale()) }}</span>
-      </div>
-      {% endif %}
-    </div>
-    {% endif %}
-    <div class="row">
-      <div class="col-md-6">
-        {% trans %}Main action{% endtrans %}:
-        <div style="padding-left: 50px;">
-          {% if series is defined and mm is defined and mm %}
-          <a href="{{ path('pumukitnewadmin_mms_shortener', {'id': mm.getId()}) }}" class="btn btn-primary btn-raised">
-            {% trans %}Edit Multimedia Object{% endtrans %}
-          </a>
-          {% elseif series is defined %}
-          <a href="{{ path('pumukitnewadmin_mms_index', {'id': series.getId()}) }}" class="btn btn-primary btn-raised">
-            {% trans %}Back to Series{% endtrans %}
-          </a>
-          {% endif %}
+        <div class="well">
+            <h3>{% trans %}Audio/Video uploaded successfully{% endtrans %}</h3>
+            <h4>
+                {% trans %}The video will be encoded and available soon. An email will be sent to you when the encoding is finished notifying you the availability of your video.{% endtrans %}
+            </h4>
+            {% if mm is defined and mm %}
+                <div class="well">
+                    <div>
+                        <span>{% trans %}SERIES{% endtrans %}: &nbsp;</span>
+                        <span>{{ series.getTitle() }}</span>
+                    </div>
+                    {% if option != 'multiple' %}
+                        <div>
+                            <span>{% trans %}VIDEO{% endtrans %}: </span>
+                            <span>{{ mm.getTitle() }}</span>
+                        </div>
+                        <div>
+                            <span>{% trans %}DATE{% endtrans %}: </span>
+                            <span>{{ mm.getPublicDate()| format_datetime('medium','none',locale=app.request.getLocale()) }}</span>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-md-6">
+                    {% trans %}Main action{% endtrans %}:
+                    <div style="padding-left: 50px;">
+                        {% if series is defined and mm is defined and mm %}
+                            <a href="{{ path('pumukitnewadmin_mms_shortener', {'id': mm.getId()}) }}"
+                               class="btn btn-primary btn-raised">
+                                {% trans %}Edit Multimedia Object{% endtrans %}
+                            </a>
+                        {% elseif series is defined %}
+                            <a href="{{ path('pumukitnewadmin_mms_index', {'id': series.getId()}) }}"
+                               class="btn btn-primary btn-raised">
+                                {% trans %}Back to Series{% endtrans %}
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    {% trans %}Other actions{% endtrans %}:
+                    <ul>
+                        {% if series is defined %}
+                            <li>
+                                <a href="{{ path('pumukitwizard_default_type', {'id': series.getId()}) }}{% if license_enabled %}?pumukitwizard_form_data%5Blicense%5D%5Baccept%5D=on{% endif %}">
+                                    {% trans %}Create another Multimedia Object in same Series{% endtrans %}
+                                </a>
+                            </li>
+                        {% endif %}
+                        <li>
+                            <a href="{{ path('pumukitwizard_default_series') }}{% if license_enabled %}?pumukitwizard_form_data%5Blicense%5D%5Baccept%5D=on{% endif %}">
+                                {% trans %}Create another Multimedia Object in a new Series{% endtrans %}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('pumukitnewadmin_series_index') }}">
+                                {% if is_naked() %}
+                                    {% trans %}back to My Multimedia Series{% endtrans %}
+                                {% else %}
+                                    {% trans %}Back to Media Manager{% endtrans %}
+                                {% endif %}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="col-md-6">
-        {% trans %}Other actions{% endtrans %}:
-        <ul>
-          {% if series is defined %}
-          <li>
-            <a href="{{ path('pumukitwizard_default_type', {'id': series.getId()}) }}{% if license_enabled %}?pumukitwizard_form_data%5Blicense%5D%5Baccept%5D=on{% endif %}">
-              {% trans %}Create another Multimedia Object in same Series{% endtrans %}
-            </a>
-          </li>
-          {% endif %}
-          <li>
-            <a href="{{ path('pumukitwizard_default_series') }}{% if license_enabled %}?pumukitwizard_form_data%5Blicense%5D%5Baccept%5D=on{% endif %}">
-              {% trans %}Create another Multimedia Object in a new Series{% endtrans %}
-            </a>
-          </li>
-          <li>
-            <a href="{{ path('pumukitnewadmin_series_index') }}">
-              {% if is_naked() %}
-                  {% trans %}back to My Multimedia Series{% endtrans %}
-              {% else %}
-                  {% trans %}Back to Media Manager{% endtrans %}
-              {% endif %}
-            </a>
-          </li>
-        </ul>
-      </div>
     </div>
-  </div>
-</div>
 {% endblock wizard_body %}

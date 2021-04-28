@@ -1,10 +1,9 @@
 {% extends '@PumukitWizard/Default/index.html.twig' %}
 {% block wizard_body %}
+    {% set pathToUpload = path('pumukitwizard_default_upload') %}
     {{ render(controller('Pumukit\\WizardBundle\\Controller\\DefaultController::stepsAction', {'step': 3, 'option': form_data.type.option, 'show_series': show_series, 'same_series': same_series})) }}
     <div class="well">
-        <form id="pumukitwizard_track_form"
-              enctype="multipart/form-data" target="iframeUpload"
-              action="{{ path('pumukitwizard_default_upload') }}" method="POST">
+        <form id="pumukitwizard_track_form" enctype="multipart/form-data" target="iframeUpload" action="{{ path('pumukitwizard_default_upload') }}" method="POST">
             <iframe name="iframeUpload" style="display:none" src="" title="{% trans %}Upload file{% endtrans %}"></iframe>
             {% include '@PumukitWizard/Default/hidden.html.twig' with {'step': 'track'} %}
             <fieldset class="well">
@@ -101,13 +100,13 @@
                             {% if 'single' == form_data.type.option %}
                                 <div class="radio">
                                     <label for="radio_inbox">
-                                        <input class="priority_checkbox" type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_inbox" value="inbox" onclick="$('#pumukitwizard_track_file').hide();$('#pumukitwizard_track_inbox').show();"/>
+                                        <input class="priority_checkbox" type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_inbox" value="inbox" onclick="$('#pumukit_file_input').hide();$('#pumukitwizard_track_inbox').show();"/>
                                         {% trans %}Inbox on server{% endtrans %}
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label for="radio_file">
-                                        <input class="priority_checkbox" type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_file" value="file" checked="checked" onclick="$('#pumukitwizard_track_inbox').hide();$('#pumukitwizard_track_file').show();"/>
+                                        <input class="priority_checkbox" type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_file" value="file" checked="checked" onclick="$('#pumukitwizard_track_inbox').hide();$('#pumukit_file_input').show();"/>
                                         {% trans %}Local hard drive{% endtrans %}
                                     </label>
                                 </div>
@@ -124,23 +123,9 @@
                         <input class="priority_checkbox"  type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_file" value="file" checked="checked" style="display:none"/>
                     {% endif %}
                     {% if 'single' == form_data.type.option %}
-                        <div class="form-group" id="pumukitwizard_track_file">
-                            <label for="url" id="pumukitwizard_track_file_label" class="control-label">
-                                {% trans %}Audio/video file{% endtrans %}:
-                            </label>
-                            <div class="input-group">
-                                <input type="file" name="resource" id="resource" value="" size="70" accept="audio/*,video/mp4,video/x-m4v,video/*" aria-labelledby="pumukitwizard_track_file_label">
-                                <span id="file_upload_progress" style="color:blue; display:none;">
-                                    {% trans %}Progress{% endtrans %}...
-                                </span>
-                            </div>
-                            <div class="alert-dismissible alert-danger" style="margin: 20px 0px; padding: 15px;">
-                                <strong>
-                                    <i class="mdi-action-info"></i>
-                                </strong>
-                                {% trans with {'%max_filesize%': php_upload_max_filesize()} %}Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.{% endtrans %}
-                            </div>
-                        </div>
+
+                        {% include "@PumukitCore/Upload/uppy_input.html.twig" %}
+
                         {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
                             <div class="form-group" id="pumukitwizard_track_inbox" style="display: none">
                                 {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\InboxController::FormAction')) }}
@@ -187,6 +172,9 @@
                 $('#pumukitwizard_track_pubchannel_' + aux).prop('checked', true)
             }
         })();
+
+        formElement = document.getElementById('pumukitwizard_track_form');
+        {% include "@PumukitCore/Upload/uppy_xhr.js.twig" %}
     </script>
 
 {% endblock wizard_body %}
