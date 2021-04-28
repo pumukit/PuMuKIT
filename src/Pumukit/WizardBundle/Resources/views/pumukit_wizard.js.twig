@@ -74,10 +74,22 @@ $(function(){
 
     $('#pumukitwizard_track_next_button').on('click', function(event){
         event.preventDefault();
-        uppy.upload();
-        uppy.on('upload-success', (file, response) => {
-            location.href = response.body.endPage;
-        });
+        if($('#pumukitwizard_track_next_button').data('multiple') != true) {
+            uppy.upload();
+            uppy.on('upload-success', (file, response) => {
+                location.href = response.body.endPage;
+            });
+        } else {
+            $.ajax({
+                url: $('#pumukitwizard_track_form').attr('action'),
+                type: 'POST',
+                data : $('#pumukitwizard_track_form').serialize(),
+                success: function(response){
+                    location.href = response.endPage;
+                }
+            });
+            return false;
+        }
     });
 
     $('#pumukitwizard_simple_track_form').on('submit', function(e){

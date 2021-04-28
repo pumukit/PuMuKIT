@@ -100,13 +100,13 @@
                             {% if 'single' == form_data.type.option %}
                                 <div class="radio">
                                     <label for="radio_inbox">
-                                        <input class="priority_checkbox" type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_inbox" value="inbox" onclick="$('#pumukit_file_input').hide();$('#pumukitwizard_track_inbox').show();"/>
+                                        <input class="priority_checkbox" type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_inbox" value="inbox" onclick="$('#pumukit_file_input').hide();$('#pumukitwizard_track_inbox').show();$('#pumukitwizard_track_next_button').data('multiple', true);"/>
                                         {% trans %}Inbox on server{% endtrans %}
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label for="radio_file">
-                                        <input class="priority_checkbox" type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_file" value="file" checked="checked" onclick="$('#pumukitwizard_track_inbox').hide();$('#pumukit_file_input').show();"/>
+                                        <input class="priority_checkbox" type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_file" value="file" checked="checked" onclick="$('#pumukitwizard_track_inbox').hide();$('#pumukit_file_input').show();$('#pumukitwizard_track_next_button').data('multiple', false);"/>
                                         {% trans %}Local hard drive{% endtrans %}
                                     </label>
                                 </div>
@@ -154,7 +154,7 @@
                         <button type="button" class="btn btn-default btn-raised pumukitwizard-btn-back">
                             &laquo; {% trans %}Back{% endtrans %}
                         </button>
-                        <button type="submit" class="btn btn-primary btn-raised" id="pumukitwizard_track_next_button">
+                        <button type="submit" class="btn btn-primary btn-raised" id="pumukitwizard_track_next_button" data-multiple="{{ form_data.type.option == 'multiple'}}">
                             {% trans %}Next{% endtrans %}
                             &raquo;
                         </button>
@@ -173,8 +173,11 @@
             }
         })();
 
-        formElement = document.getElementById('pumukitwizard_track_form');
-        {% include "@PumukitCore/Upload/uppy_xhr.js.twig" %}
+        option = "{{ form_data.type.option }}";
+        if(option != 'multiple') {
+            formElement = document.getElementById('pumukitwizard_track_form');
+            {% include "@PumukitCore/Upload/uppy_xhr.js.twig" %}
+        }
     </script>
 
 {% endblock wizard_body %}
