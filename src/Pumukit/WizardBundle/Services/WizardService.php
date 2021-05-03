@@ -191,7 +191,7 @@ class WizardService
      *
      * @return mixed
      */
-    public function getKeyData($key, array $formData, array $default = [])
+    public function getKeyData($key, array $formData, $default = [])
     {
         return array_key_exists($key, $formData) ? $formData[$key] : $default;
     }
