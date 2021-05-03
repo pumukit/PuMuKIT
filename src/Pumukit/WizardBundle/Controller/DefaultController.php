@@ -32,10 +32,21 @@ class DefaultController extends Controller
         $licenseService = $this->get('pumukit_wizard.license');
         if (!$licenseService->isEnabled()) {
             if ($sameSeries) {
-                return $this->redirect($this->generateUrl('pumukitwizard_default_type', ['pumukitwizard_form_data' => $formData, 'id' => $formData['series']['id'], 'same_series' => $sameSeries]));
+                return $this->redirect(
+                    $this->generateUrl('pumukitwizard_default_type', [
+                        'pumukitwizard_form_data' => $formData,
+                        'id' => $formData['series']['id'],
+                        'same_series' => $sameSeries,
+                    ])
+                );
             }
 
-            return $this->redirect($this->generateUrl('pumukitwizard_default_series', ['pumukitwizard_form_data' => $formData, 'same_series' => $sameSeries]));
+            return $this->redirect(
+                $this->generateUrl('pumukitwizard_default_series', [
+                    'pumukitwizard_form_data' => $formData,
+                    'same_series' => $sameSeries,
+                ])
+            );
         }
         $licenseContent = $licenseService->getLicenseContent($request->getLocale());
         $showTags = $this->container->getParameter('pumukit_wizard.show_tags');
@@ -326,17 +337,18 @@ class DefaultController extends Controller
         $mmId = null;
 
         $formDispatcher = $this->get('pumukit_wizard.form_dispatcher');
+        $wizardService = $this->get('pumukit_wizard.wizard');
 
         if ($formData) {
-            $seriesData = $this->getKeyData('series', $formData);
+            $seriesData = $wizardService->getKeyData('series', $formData);
 
-            $seriesId = $this->getKeyData('id', $seriesData);
+            $seriesId = $wizardService->getKeyData('id', $seriesData);
 
-            $typeData = $this->getKeyData('type', $formData);
-            $trackData = $this->getKeyData('track', $formData);
+            $typeData = $wizardService->getKeyData('type', $formData);
+            $trackData = $wizardService->getKeyData('track', $formData);
 
             if (!$this->isGranted('ROLE_DISABLED_WIZARD_TRACK_PROFILES')) {
-                $profile = $this->getKeyData('profile', $trackData, null);
+                $profile = $wizardService->getKeyData('profile', $trackData, null);
             } else {
                 $profile = $this->get('pumukitencoder.profile')->getDefaultMasterProfile();
             }
@@ -344,23 +356,23 @@ class DefaultController extends Controller
                 throw new \Exception('Not exists master profile');
             }
 
-            $priority = $this->getKeyData('priority', $trackData, 2);
-            $language = $this->getKeyData('language', $trackData);
-            $description = $this->getKeyData('description', $trackData);
+            $priority = $wizardService->getKeyData('priority', $trackData, 2);
+            $language = $wizardService->getKeyData('language', $trackData);
+            $description = $wizardService->getKeyData('description', $trackData);
 
-            $pubchannel = $this->getKeyData('pubchannel', $trackData);
+            $pubchannel = $wizardService->getKeyData('pubchannel', $trackData);
 
             $status = null;
             if (isset($formData['multimediaobject']['status'])) {
                 $status = $formData['multimediaobject']['status'];
             }
 
-            $option = $this->getKeyData('option', $typeData);
+            $option = $wizardService->getKeyData('option', $typeData);
 
             try {
                 if ('single' === $option) {
                     $filePath = null;
-                    $filetype = $this->getKeyData('filetype', $trackData);
+                    $filetype = $wizardService->getKeyData('filetype', $trackData);
                     if ('file' === $filetype) {
                         $resourceFile = $request->files->get('resource');
                         if ($resourceFile) {
@@ -388,28 +400,27 @@ class DefaultController extends Controller
                         throw new \Exception('The file is not a valid video or audio file (duration is zero)');
                     }
 
-                    $series = $this->getSeries($seriesData);
-                    $multimediaObjectData = $this->getKeyData('multimediaobject', $formData);
+                    $series = $wizardService->getSeries($seriesData);
+                    $multimediaObjectData = $wizardService->getKeyData('multimediaobject', $formData);
 
-                    $i18nTitle = $this->getKeyData('i18n_title', $multimediaObjectData);
+                    $i18nTitle = $wizardService->getKeyData('i18n_title', $multimediaObjectData);
                     if (empty(array_filter($i18nTitle))) {
-                        $multimediaObjectData = $this->getDefaultFieldValuesInData($multimediaObjectData, 'i18n_title', 'New', true);
+                        $multimediaObjectData = $wizardService->getDefaultFieldValuesInData($multimediaObjectData, 'i18n_title', 'New', true);
                     }
 
-                    $multimediaObject = $this->createMultimediaObject($multimediaObjectData, $series);
+                    $multimediaObject = $wizardService->createMultimediaObject($multimediaObjectData, $series, $this->getUser());
                     $multimediaObject->setDuration($duration);
 
                     if ($showObjectLicense) {
-                        $license = $this->getKeyData('license', $formData['multimediaobject']);
+                        $license = $wizardService->getKeyData('license', $formData['multimediaobject']);
                         if ($license && ('0' !== $license)) {
-                            $multimediaObject = $this->setData($multimediaObject, $formData['multimediaobject'], ['license']);
+                            $multimediaObject = $wizardService->setData($multimediaObject, $formData['multimediaobject'], ['license']);
                         }
                     }
 
                     $formDispatcher->dispatchSubmit($this->getUser(), $multimediaObject, $formData);
 
                     if ('file' === $filetype) {
-                        $selectedPath = $request->get('resource');
                         $multimediaObject = $jobService->createTrackFromLocalHardDrive(
                             $multimediaObject,
                             $request->files->get('resource'),
@@ -423,7 +434,6 @@ class DefaultController extends Controller
                         );
                     } elseif ('inbox' === $filetype) {
                         $this->denyAccessUnlessGranted(Permission::ACCESS_INBOX);
-                        $selectedPath = $request->get('file');
                         $multimediaObject = $jobService->createTrackFromInboxOnServer(
                             $multimediaObject,
                             $request->get('file'),
@@ -439,7 +449,7 @@ class DefaultController extends Controller
 
                     if ($multimediaObject && $pubchannel) {
                         foreach ($pubchannel as $tagCode => $valueOn) {
-                            $this->addTagToMultimediaObjectByCode($multimediaObject, $tagCode);
+                            $wizardService->addTagToMultimediaObjectByCode($multimediaObject, $tagCode, $this->getUser());
                         }
                     }
 
@@ -448,9 +458,9 @@ class DefaultController extends Controller
                     }
 
                     if ($showTags) {
-                        $tagCode = $this->getKeyData('tag', $formData['multimediaobject']);
+                        $tagCode = $wizardService->getKeyData('tag', $formData['multimediaobject']);
                         if ('0' != $tagCode) {
-                            $this->addTagToMultimediaObjectByCode($multimediaObject, $tagCode);
+                            $wizardService->addTagToMultimediaObjectByCode($multimediaObject, $tagCode, $this->getUser());
                         }
                     }
                 } elseif ('multiple' === $option) {
@@ -506,8 +516,6 @@ class DefaultController extends Controller
         }
         if ($multimediaObject) {
             $mmId = $multimediaObject->getId();
-        } else {
-            $mmId = null;
         }
 
         return [
@@ -593,200 +601,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * Get key data.
-     *
-     * @param mixed $key
-     * @param array $formData
-     * @param mixed $default
-     *
-     * @return mixed
-     */
-    private function getKeyData($key, array $formData, $default = [])
-    {
-        return array_key_exists($key, $formData) ? $formData[$key] : $default;
-    }
-
-    /**
-     * Get series (new or existing one).
-     *
-     * @param array $seriesData
-     *
-     * @return mixed|Series|void
-     */
-    private function getSeries($seriesData = [])
-    {
-        $seriesId = $this->getKeyData('id', $seriesData);
-        if ($seriesId && ('null' !== $seriesId)) {
-            $series = $this->findSeriesById($seriesId);
-        } else {
-            $series = $this->createSeries($seriesData);
-        }
-
-        return $series;
-    }
-
-    /**
-     * Create Series.
-     *
-     * @param array $seriesData
-     *
-     * @return mixed|Series|void
-     */
-    private function createSeries($seriesData = [])
-    {
-        if ($seriesData) {
-            $factoryService = $this->get('pumukitschema.factory');
-            $series = $factoryService->createSeries($this->getUser());
-
-            $i18nTitle = $this->getKeyData('i18n_title', $seriesData);
-            if (empty(array_filter($i18nTitle))) {
-                $seriesData = $this->getDefaultFieldValuesInData($seriesData, 'i18n_title', 'New', true);
-            }
-
-            $keys = ['i18n_title', 'i18n_subtitle', 'i18n_description'];
-
-            return $this->setData($series, $seriesData, $keys);
-        }
-    }
-
-    /**
-     * Create Multimedia Object.
-     *
-     * @param array  $mmData
-     * @param Series $series
-     *
-     * @return mixed|MultimediaObject|void
-     */
-    private function createMultimediaObject(array $mmData, Series $series)
-    {
-        $factoryService = $this->get('pumukitschema.factory');
-        $multimediaObject = $factoryService->createMultimediaObject($series, true, $this->getUser());
-
-        if ($mmData) {
-            $keys = ['i18n_title', 'i18n_subtitle', 'i18n_description', 'i18n_line2'];
-            $multimediaObject = $this->setData($multimediaObject, $mmData, $keys);
-        }
-
-        return $multimediaObject;
-    }
-
-    /**
-     * Add Tag to Multimedia Object by Code.
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param string           $tagCode
-     *
-     * @return array
-     */
-    private function addTagToMultimediaObjectByCode(MultimediaObject $multimediaObject, $tagCode)
-    {
-        $addedTags = [];
-
-        if ($this->isGranted(Permission::getRoleTagDisableForPubChannel($tagCode))) {
-            return $addedTags;
-        }
-
-        $tagService = $this->get('pumukitschema.tag');
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $tagRepo = $dm->getRepository(Tag::class);
-
-        $tag = $tagRepo->findOneByCod($tagCode);
-        if ($tag) {
-            $addedTags = $tagService->addTagToMultimediaObject($multimediaObject, $tag->getId());
-        }
-
-        return $addedTags;
-    }
-
-    /**
-     * Set data.
-     *
-     * @param object $resource
-     * @param array  $resourceData
-     * @param array  $keys
-     *
-     * @return mixed
-     */
-    private function setData($resource, $resourceData, $keys)
-    {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-
-        foreach ($keys as $key) {
-            $value = $this->getKeyData($key, $resourceData);
-            $filterValue = !is_array($value) ? [$value] : array_filter($value);
-            if (0 !== count($filterValue)) {
-                $upperField = $this->getUpperFieldName($key);
-                $setField = 'set'.$upperField;
-                $resource->{$setField}($value);
-            }
-        }
-
-        $dm->persist($resource);
-        $dm->flush();
-
-        return $resource;
-    }
-
-    /**
-     * Remove Invalid Multimedia Object.
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Series           $series
-     */
-    private function removeInvalidMultimediaObject(MultimediaObject $multimediaObject, Series $series)
-    {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $dm->remove($multimediaObject);
-        $dm->flush();
-    }
-
-    /**
-     * Get default field values in data
-     * for those important fields that can not be empty.
-     *
-     * @param array  $resourceData
-     * @param string $fieldName
-     * @param string $defaultValue
-     * @param bool   $isI18nField
-     *
-     * @return array
-     */
-    private function getDefaultFieldValuesInData($resourceData = [], $fieldName = '', $defaultValue = '', $isI18nField = false)
-    {
-        if ($fieldName && $defaultValue) {
-            if ($isI18nField) {
-                $resourceData[$fieldName] = [];
-                $locales = $this->container->getParameter('pumukit.locales');
-                foreach ($locales as $locale) {
-                    $resourceData[$fieldName][$locale] = $defaultValue;
-                }
-            } else {
-                $resourceData[$fieldName] = $defaultValue;
-            }
-        }
-
-        return $resourceData;
-    }
-
-    /**
-     * Get uppercase field name
-     * Converts something like 'i18n_title' into 'I18nTitle'.
-     *
-     * @param string $key
-     *
-     * @return string
-     */
-    private function getUpperFieldName($key = '')
-    {
-        $pattern = '/_[a-z]?/';
-        $aux = preg_replace_callback($pattern, function ($matches) {
-            return strtoupper(ltrim($matches[0], '_'));
-        }, $key);
-
-        return ucfirst($aux);
-    }
-
-    /**
      * Find Series in Repository.
      *
      * @param \MongoId|string $id
@@ -795,9 +609,7 @@ class DefaultController extends Controller
      */
     private function findSeriesById($id)
     {
-        $seriesRepo = $this->get('doctrine_mongodb.odm.document_manager')
-            ->getRepository(Series::class)
-        ;
+        $seriesRepo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(Series::class);
 
         return $seriesRepo->find($id);
     }
