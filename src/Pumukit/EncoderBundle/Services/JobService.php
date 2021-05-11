@@ -425,6 +425,7 @@ class JobService
             return null;
         }
 
+        $this->checkService();
         $nextJobToExecute = null;
 
         $SEMKey = 1234569;
@@ -848,20 +849,16 @@ class JobService
     {
         $existsJobsToUpdate = false;
         $jobs = $this->repo->findWithStatus([Job::STATUS_EXECUTING]);
-
-        $nowDateTime = new \DateTime('now');
+        $nowDateTime = new \DateTimeImmutable();
 
         foreach ($jobs as $job) {
             $maxExecutionJobTime = $job->getTimestart();
             $maxExecutionJobTime->add(new \DateInterval('PT'.$this->maxExecutionJobSeconds.'S'));
-
-            if ($maxExecutionJobTime <= $nowDateTime) {
+            if ($nowDateTime > $maxExecutionJobTime) {
                 $job->setStatus(Job::STATUS_ERROR);
                 $message = '[checkService] Job executing for a long time, set status to ERROR. Máx execution time was '.$maxExecutionJobTime->format('Y-m-d H:i:s');
                 $job->appendOutput($message);
-                $this->logger->error(
-                    $message.$job->getId()
-                );
+                $this->logger->error($message.' for JOB ID '.$job->getId());
 
                 $existsJobsToUpdate = true;
             }
