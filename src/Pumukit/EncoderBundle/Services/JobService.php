@@ -852,7 +852,7 @@ class JobService
         $nowDateTime = new \DateTimeImmutable();
 
         foreach ($jobs as $job) {
-            $maxExecutionJobTime = $job->getTimestart();
+            $maxExecutionJobTime = clone $job->getTimestart();
             $maxExecutionJobTime->add(new \DateInterval('PT'.$this->maxExecutionJobSeconds.'S'));
             if ($nowDateTime > $maxExecutionJobTime) {
                 $job->setStatus(Job::STATUS_ERROR);
@@ -861,6 +861,7 @@ class JobService
                 $this->logger->error($message.' for JOB ID '.$job->getId());
 
                 $existsJobsToUpdate = true;
+                $this->dispatch(false, $job);
             }
         }
 
