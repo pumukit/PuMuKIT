@@ -107,10 +107,10 @@ class StatsService
 
         $aggregation = $viewsLogColl->aggregate($pipeline, ['cursor' => []]);
 
-        $aggregation = $aggregation->toArray();
-        $totalInAggegation = count($aggregation);
+        $aggregationTotal = $aggregation->toArray();
+        $totalInAggegation = count($aggregationTotal);
         $total = count($mmobjIds);
-        $aggregation = $this->getPagedAggregation($aggregation, $options['page'], $options['limit']);
+        $aggregation = $this->getPagedAggregation($aggregationTotal, $options['page'], $options['limit']);
 
         $mostViewed = [];
         foreach ($aggregation as $element) {
@@ -124,29 +124,31 @@ class StatsService
         }
 
         //Add mmobj with zero views
-        if (count($aggregation) >= $options['limit']) {
-            return [$mostViewed, $total];
-        }
-        if (0 == count($aggregation)) {
-            $max = min((1 + $options['page']) * $options['limit'], $total);
-            for ($i = ($options['page'] * $options['limit']); $i < $max; ++$i) {
-                $multimediaObject = $this->repo->find($mmobjIds[$i - $totalInAggegation]);
-                if ($multimediaObject) {
-                    $mostViewed[] = ['mmobj' => $multimediaObject,
-                        'num_viewed' => 0,
-                    ];
-                }
-            }
-        } else {
-            foreach ($mmobjIds as $element) {
-                if (!in_array($element, $ids)) {
-                    $multimediaObject = $this->repo->find($element);
+        if (count($aggregation) < $options['limit']) {
+            if (0 == count($aggregation)) {
+                $max = min((1 + $options['page']) * $options['limit'], $total);
+                for ($i = ($options['page'] * $options['limit']); $i < $max; ++$i) {
+                    $multimediaObject = $this->repo->find($mmobjIds[$i]);
                     if ($multimediaObject) {
                         $mostViewed[] = ['mmobj' => $multimediaObject,
                             'num_viewed' => 0,
                         ];
-                        if (count($mostViewed) == $options['limit']) {
-                            break;
+                    }
+                }
+            } else {
+                foreach ($aggregationTotal as $element) {
+                    $idsWithVis[] = $element['_id'];
+                }
+                foreach ($mmobjIds as $element) {
+                    if (!in_array($element, $idsWithVis)) {
+                        $multimediaObject = $this->repo->find($element);
+                        if ($multimediaObject) {
+                            $mostViewed[] = ['mmobj' => $multimediaObject,
+                                'num_viewed' => 0,
+                            ];
+                            if (count($mostViewed) == $options['limit']) {
+                                break;
+                            }
                         }
                     }
                 }
