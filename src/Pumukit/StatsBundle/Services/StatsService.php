@@ -198,7 +198,7 @@ class StatsService
         if (count($aggregation) < $options['limit']) {
             if (0 == count($aggregation)) {
                 $max = min((1 + $options['page']) * $options['limit'], $total);
-                for ($i = ($options['page'] * $options['limit']); $i < $max; $i++) {
+                for ($i = ($options['page'] * $options['limit']); $i < $max; ++$i) {
                     $series = $this->repoSeries->find($seriesIds[$i]);
                     if ($series) {
                         $mostViewed[] = ['series' => $series,
