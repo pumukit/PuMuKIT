@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 To get the diff for a specific change, go to https://github.com/pumukit/PuMuKIT/commit/XXX where XXX is the change hash.
 To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/compare/3.0.0...3.1.x.
 
+## [3.7.x](https://github.com/pumukit/PuMuKIT/compare/3.6.0...3.7.x) - (Coming soon)
+
+#### Added
+- Added auto create personal series for each user using a new permission on permission profile.
+
 ## [3.6.0](https://github.com/pumukit/PuMuKIT/compare/3.5.0...3.6.0) - (2021-04-21)
 
 #### Added
