@@ -92,6 +92,7 @@ class StatsService
     public function getMmobjsMostViewedByRange(array $criteria = [], array $options = []): array
     {
         $ids = [];
+        $idsWithVis = [];
 
         $viewsLogColl = $this->dm->getDocumentCollection($this->collectionName);
 
@@ -164,6 +165,7 @@ class StatsService
     public function getSeriesMostViewedByRange(array $criteria = [], array $options = []): array
     {
         $ids = [];
+        $idsWithVis = [];
         $viewsLogColl = $this->dm->getDocumentCollection($this->collectionName);
 
         $matchExtra = [];
