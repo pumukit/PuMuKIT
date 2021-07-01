@@ -44,11 +44,6 @@ class User extends BaseUser
     protected $origin = self::ORIGIN_LOCAL;
 
     /**
-     * @MongoDB\Field(type="string")
-     */
-    protected $personalSeries;
-
-    /**
      * @MongoDB\ReferenceMany(targetDocument="Group", storeAs="id", sort={"key":1}, strategy="setArray")
      */
     protected $groups;
@@ -168,16 +163,6 @@ class User extends BaseUser
     public function isLocal(): bool
     {
         return self::ORIGIN_LOCAL === $this->origin;
-    }
-
-    public function getPersonalSeries()
-    {
-        return $this->personalSeries;
-    }
-
-    public function setPersonalSeries($personalSeries): void
-    {
-        $this->personalSeries = $personalSeries;
     }
 
     public function containsGroup(GroupInterface $group): bool

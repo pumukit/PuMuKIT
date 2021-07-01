@@ -39,7 +39,6 @@ class Permission
     public const DISABLED_TRACK_PROFILES = 'ROLE_DISABLED_WIZARD_TRACK_PROFILES';
     public const DISABLED_TRACK_PRIORITY = 'ROLE_DISABLED_WIZARD_TRACK_PRIORITY';
     public const ADD_EXTERNAL_PLAYER = 'ROLE_ADD_EXTERNAL_PLAYER';
-    public const AUTO_CREATE_PERSONAL_SERIES = 'ROLE_AUTO_CREATE_PERSONAL_SERIES';
 
     // Permissions for series metadata inputs
     public const ACCESS_SERIES_META_LAST_ANNOUNCES = 'ROLE_ACCESS_SERIES_META_LAST_ANNOUNCES';
@@ -299,13 +298,6 @@ class Permission
         ],
         self::ADD_EXTERNAL_PLAYER => [
             'description' => 'Add an external player (iframe) into a multimedia object',
-            'dependencies' => [
-                PermissionProfile::SCOPE_GLOBAL => [],
-                PermissionProfile::SCOPE_PERSONAL => [],
-            ],
-        ],
-        self::AUTO_CREATE_PERSONAL_SERIES => [
-            'description' => 'Auto create personal series for the user',
             'dependencies' => [
                 PermissionProfile::SCOPE_GLOBAL => [],
                 PermissionProfile::SCOPE_PERSONAL => [],

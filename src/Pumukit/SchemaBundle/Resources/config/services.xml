@@ -51,15 +51,6 @@
             <tag name="kernel.event_listener" event="series.update" method="postUpdate" />
         </service>
 
-        <service id="pumukitschema.schema.personal_series_listener" class="Pumukit\SchemaBundle\EventListener\PersonalSeriesListener">
-            <argument type="service" id="doctrine_mongodb.odm.document_manager" />
-            <argument type="service" id="pumukitschema.factory" />
-            <argument type="service" id="security.authorization_checker" />
-            <argument type="service" id="translator" />
-            <argument>%pumukit.locales%</argument>
-            <tag name="kernel.event_listener" event="security.interactive_login" method="onSecurityInteractiveLogin" />
-        </service>
-
         <service id="pumukitschema.schema.multimediaobject" class="Pumukit\SchemaBundle\EventListener\MultimediaObjectListener">
             <argument type="service" id="doctrine_mongodb.odm.document_manager" />
             <argument type="service" id="pumukitschema.text_index" />
