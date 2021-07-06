@@ -37,7 +37,7 @@
                         </label>
                         <div class="col-xs-10 input-group hidden-naked">
                             <input type="text" class="form-control" id="inputROMagicUrl" readonly onclick="select()" value="{{ magic_url }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}" />
-                            {% if is_hidden %}
+                            {% if (is_hidden or is_published) and is_playable %}
                                 <span class="input-group-addon">
                                     <a id="alinkROMagicUrl" href="{{ magic_url }}" target="_blank" title="{% trans %}Magic Url{% endtrans %}">
                                         <i class="mdi-action-exit-to-app"></i>
