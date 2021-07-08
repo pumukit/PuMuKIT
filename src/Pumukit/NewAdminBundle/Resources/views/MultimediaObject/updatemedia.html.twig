@@ -2,6 +2,8 @@
     <fieldset>
         <legend hidden>{% trans %}Update media{% endtrans %}</legend>
         <dl>
+            {% include 'PumukitNewAdminBundle:MultimediaObject:Playlist/_form.html.twig' with {'resource': mm, 'resource_name': 'mms'} %}
+
             <div class="form-row">
                 <dt>{% trans %}Thumbnails{% endtrans %}:</dt>
                 <dd>

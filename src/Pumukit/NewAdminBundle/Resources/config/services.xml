@@ -129,6 +129,11 @@
             <argument>%pumukitschema.personal_scope_role_code%</argument>
         </service>
 
+        <service id="pumukitnewadmin.twig_head_and_tail_extension" class="Pumukit\NewAdminBundle\Twig\HeadAndTailExtension">
+            <argument type="service" id="pumukit_schema.head_and_tail"/>
+            <tag name="twig.extension"/>
+        </service>
+
     </services>
 
 </container>

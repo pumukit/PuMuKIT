@@ -40,6 +40,8 @@ class Permission
     public const DISABLED_TRACK_PRIORITY = 'ROLE_DISABLED_WIZARD_TRACK_PRIORITY';
     public const ADD_EXTERNAL_PLAYER = 'ROLE_ADD_EXTERNAL_PLAYER';
     public const AUTO_CREATE_PERSONAL_SERIES = 'ROLE_AUTO_CREATE_PERSONAL_SERIES';
+    public const ACCESS_HEAD_AND_TAIL_MANAGER = 'ROLE_ACCESS_HEAD_AND_TAIL_MANAGER';
+    public const ADD_HEAD_AND_TAIL = 'ROLE_ADD_HEAD_AND_TAIL';
 
     // Permissions for series metadata inputs
     public const ACCESS_SERIES_META_LAST_ANNOUNCES = 'ROLE_ACCESS_SERIES_META_LAST_ANNOUNCES';
@@ -306,6 +308,20 @@ class Permission
         ],
         self::AUTO_CREATE_PERSONAL_SERIES => [
             'description' => 'Auto create personal series for the user',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::ACCESS_HEAD_AND_TAIL_MANAGER => [
+            'description' => 'Allow access to head and tail video manager',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::ADD_HEAD_AND_TAIL => [
+            'description' => 'Allow add head and tail video on multimedia objects and series',
             'dependencies' => [
                 PermissionProfile::SCOPE_GLOBAL => [],
                 PermissionProfile::SCOPE_PERSONAL => [],

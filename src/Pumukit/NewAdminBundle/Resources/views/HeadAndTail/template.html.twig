@@ -1,0 +1,21 @@
+{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+
+{% block body %}
+
+    {% include "PumukitNewAdminBundle:Misc:panel_title.html.twig" with { page_title: 'Head and tail manager'|trans } %}
+
+    <div class="row">
+        {% include "PumukitNewAdminBundle:HeadAndTail:_stats.html.twig" %}
+
+        {% include "PumukitNewAdminBundle:HeadAndTail:_list.html.twig" with {
+            titleList: 'Video head list'|trans,
+            elementList: videos_as_head()
+        } %}
+
+        {% include "PumukitNewAdminBundle:HeadAndTail:_list.html.twig" with {
+            titleList: 'Video tail list'|trans,
+            elementList: videos_as_tail()
+        } %}
+    </div>
+
+{% endblock %}

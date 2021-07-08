@@ -1,0 +1,21 @@
+{% if app.user and is_granted('ADD_HEAD_AND_TAIL_VIDEO') %}
+    <div class="form-row block-multimedia-object-playlist" style="margin-bottom:5rem;">
+        <dt>{% trans %}Introduction and final video{% endtrans %}:</dt>
+        <dd>
+            <div id="playlist_mms_{{ mm.id }}" style="margin-top:1rem;">
+                <div class="col-md-6">
+                    <select class="form form-control">
+                        <option value="">{{ "Default"|trans }}</option>
+                        <option value="test1">Test 1</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <select class="form form-control">
+                        <option value="">{{ "Default"|trans }}</option>
+                        <option value="test2">Test 2</option>
+                    </select>
+                </div>
+            </div>
+        </dd>
+    </div>
+{% endif %}

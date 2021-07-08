@@ -19,6 +19,8 @@ class MultimediaObject
 {
     use Traits\Keywords;
     use Traits\Properties;
+    use Traits\HeadAndTail;
+
     use Traits\Link {
         Traits\Link::__construct as private __LinkConstruct;
     }
@@ -205,12 +207,6 @@ class MultimediaObject
      * @MongoDB\Field(type="string")
      */
     private $copyright;
-
-    /**
-     * @var string
-     * @MongoDB\Field(type="string")
-     */
-    private $introductionVideo;
 
     /**
      * @var string
@@ -780,16 +776,6 @@ class MultimediaObject
     public function getCopyright()
     {
         return $this->copyright;
-    }
-
-    public function getIntroductionVideo(): ?string
-    {
-        return $this->introductionVideo;
-    }
-
-    public function setIntroductionVideo(string $introductionVideo): void
-    {
-        $this->introductionVideo = $introductionVideo;
     }
 
     /**
