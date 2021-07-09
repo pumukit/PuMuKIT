@@ -159,15 +159,12 @@ class StatsServiceTest extends PumukitTestCase
         static::assertEquals($total, 0);
         [$mostViewed, $total] = $service->getMmobjsMostViewedByRange(['title.en' => 'New'], ['limit' => 2, 'from_date' => new \DateTime('-11 days')]);
         static::assertEquals([$listMapped[1], $listMapped[2]], $mostViewed);
-        static::assertEquals(4, $total);
+        static::assertEquals(3, $total);
 
         [$mostViewed, $total] = $service->getMmobjsMostViewedByRange([], ['from_date' => new \DateTime('-21 days'), 'to_date' => new \DateTime('-9 days')]);
 
         static::assertEquals([$listMapped[0], $listMapped[1]], array_slice($mostViewed, 0, 2));
-        static::assertEquals(0, $mostViewed[2]['num_viewed']);
-        static::assertEquals(0, $mostViewed[3]['num_viewed']);
-        static::assertEquals(0, $mostViewed[4]['num_viewed']);
-        static::assertEquals(5, $total);
+        static::assertEquals(2, $total);
     }
 
     public function testGetSeriesMostViewedByRange(): void
@@ -214,10 +211,9 @@ class StatsServiceTest extends PumukitTestCase
 
         [$mostViewed, $total] = $service->getSeriesMostViewedByRange([], ['from_date' => new \DateTime('-19 days'), 'to_date' => new \DateTime('-9 days')]);
 
-        static::assertEquals(2, $total);
+        static::assertEquals(1, $total);
         static::assertCount($total, $mostViewed);
         static::assertEquals(1, $mostViewed[0]['num_viewed']);
-        static::assertEquals(0, $mostViewed[1]['num_viewed']);
     }
 
     private function logView($when, MultimediaObject $multimediaObject, Track $track = null)
