@@ -293,7 +293,7 @@ class Builder implements ContainerAwareInterface
             $root->addChild('Series style', $options);
         }
 
-        if($hasAccessToHeadAndTailManager) {
+        if ($hasAccessToHeadAndTailManager) {
             $options = ['route' => 'pumukit_newadmin_head_and_tail', 'attributes' => ['class' => 'menu_head_and_tail']];
             $root->addChild('Head & tail manager', $options);
         }
