@@ -301,5 +301,12 @@
             <argument type="service" id="security.encoder_factory" />
             <argument>%pumukitschema.gen_user_salt%</argument>
         </service>
+
+        <service id="pumukit_schema.head_and_tail" class="Pumukit\SchemaBundle\Services\HeadAndTailService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument>%pumukit_schema.default_head_video%</argument>
+            <argument>%pumukit_schema.default_tail_video%</argument>
+        </service>
+
     </services>
 </container>

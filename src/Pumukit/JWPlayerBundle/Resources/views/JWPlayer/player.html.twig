@@ -20,19 +20,32 @@
         <video id="player1" controls></video>
         <script type="text/javascript">
             jwplayer("player1").setup({
-                {% if intro %}
-                playlist: [{
-                    file: "{{ absolute_url(intro) }}",
-                    {% if 'true' != autostart %}
-                    image: "{{ object|first_url_pic(true) }}",
+                {% if intro or tail %}
+                playlist: [
+                    {% if intro %}
+                    {
+                        file: "{{ absolute_url(track_url(intro)) }}",
+                        {% if 'true' != autostart %}
+                        image: "{{ object|first_url_pic(true) }}",
+                        {% endif %}
+                    },
                     {% endif %}
-                }, {
-                    file: "{{ absolute_url(track_url(track)) }}",
-                    {{ captions_block }}
-                    {% if ('true' != autostart) or track.isOnlyAudio() %}
-                    image: "{{ object|first_url_pic(true) }}",
+                    {
+                        file: "{{ absolute_url(track_url(track)) }}",
+                        {{ captions_block }}
+                        {% if ('true' != autostart) or track.isOnlyAudio() %}
+                        image: "{{ object|first_url_pic(true) }}",
+                        {% endif %}
+                    }
+                    {% if tail %}
+                    ,{
+                        file: "{{ absolute_url(track_url(tail)) }}",
+                        {% if 'true' != autostart %}
+                        image: "{{ object|first_url_pic(true) }}",
+                        {% endif %}
+                    },
                     {% endif %}
-                }],
+                ],
                 {% else %}
                 file: "{{ absolute_url(track_url(track)) }}",
                 {{ captions_block }}

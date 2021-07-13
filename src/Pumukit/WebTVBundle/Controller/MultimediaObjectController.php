@@ -64,6 +64,7 @@ class MultimediaObjectController extends Controller implements WebTVControllerIn
         return [
             'autostart' => $request->query->get('autostart', 'true'),
             'intro' => $basePlayerIntroService->getVideoIntroduction($multimediaObject, $request->query->getBoolean('intro')),
+            'tail' => $basePlayerIntroService->getVideoTail($multimediaObject),
             'multimediaObject' => $multimediaObject,
             'track' => $track,
             'editor_chapters' => $editorChapters,
