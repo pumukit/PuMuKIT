@@ -27,12 +27,12 @@ class HeadAndTailExtension extends AbstractExtension
         ];
     }
 
-    public function getSystemDefaultHeader(): string
+    public function getSystemDefaultHeader(): ?string
     {
         return $this->headAndTailService->getSystemDefaultHeader();
     }
 
-    public function getSystemDefaultTail(): string
+    public function getSystemDefaultTail(): ?string
     {
         return $this->headAndTailService->getSystemDefaultTail();
     }
