@@ -9,11 +9,13 @@
 
         {% include "PumukitNewAdminBundle:HeadAndTail:_list.html.twig" with {
             titleList: 'Video head list'|trans,
+            type: 'Head',
             elementList: videos_as_head()
         } %}
 
         {% include "PumukitNewAdminBundle:HeadAndTail:_list.html.twig" with {
             titleList: 'Video tail list'|trans,
+            type: 'Tail',
             elementList: videos_as_tail()
         } %}
     </div>

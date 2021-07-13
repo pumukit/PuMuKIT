@@ -4,17 +4,21 @@
         <table class="table">
             <thead>
             <tr>
-                <th scope="col">#</th>
                 <th>{{ "Image"|trans }}</th>
                 <th>{{ "Title"|trans }}</th>
                 <th>{{ "Serie"|trans }}</th>
+                <th>{{ "Status"|trans }}</th>
+                <th>{{ "WebTV"|trans }}</th>
+                <th>{{ "Track"|trans }}</th>
                 <th>{{ "Actions"|trans }}</th>
             </tr>
             </thead>
             <tbody>
+            {% set greenIcon = '<i class="fa fa-check" style="color:green"></i>' %}
+            {% set redIcon = '<i class="fa fa-times" style="color:red"></i>' %}
+
             {% for element in elementList %}
                 <tr>
-                    <td>{{ loop.index }}</td>
                     <td>
                         <div class="embed-responsive embed-responsive-16by9">
                             <div class="embed-responsive-item text-center">
@@ -22,12 +26,47 @@
                             </div>
                         </div>
                     </td>
-                    <td>{{ element.getTitle() }}</td>
+                    <td>
+                        <a href="{{ path('pumukitnewadmin_mms_shortener', {'id': element.id }) }}">{{ element.getTitle() }}</a></td>
                     <td>{{ element.getSeriesTitle() }}</td>
-                    <td>XXX</td>
+                    <td>{{ element.isPublished() ? greenIcon|raw : redIcon|raw }}</td>
+                    <td>{{ element.containsTagWithCod('PUCHWEBTV') ? greenIcon|raw : redIcon|raw }}</td>
+                    <td>{{ element.getDisplayTrack() ? greenIcon|raw : redIcon|raw }}</td>
+                    <td>
+                        <a class="{{ type }}_element_actions" href="#" title="{{ ("Remove " ~ type)|trans }}">
+                            <i class="fa fa-trash" data-type="{{ type }}" data-element="{{ element.id }}"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7" align="center">{{ "No videos selected"|trans }}</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
+
+<script>
+    document.querySelector('.'+ "{{ type }}" +'_element_actions').addEventListener('click', (event) => {
+        let route =  '{{ path('pumukit_newadmin_head_and_tail_manager_remove_item', {
+            'type': '__type__',
+            'element': '__element__'
+        }) }}';
+
+        route = route.replace('__element__', event.target.getAttribute('data-element'));
+        route = route.replace('__type__', event.target.getAttribute('data-type'));
+        $.ajax({
+            url: route,
+            method: 'POST',
+            success: function (response) {
+                success(response.success);
+                location.reload();
+            },
+            error: function (response) {
+                success(response.error);
+            }
+        });
+    });
+</script>

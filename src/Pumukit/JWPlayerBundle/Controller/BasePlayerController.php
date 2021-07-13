@@ -43,6 +43,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
         return [
             'autostart' => $playerParameters['autoStart'],
             'intro' => $playerParameters['intro'],
+            'tail' => $playerParameters['tail'],
             'multimediaObject' => $multimediaObject,
             'object' => $multimediaObject,
             'when_dispatch_view_event' => $playerParameters['whenDispatchViewEvent'],
@@ -80,6 +81,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
         return [
             'autostart' => $playerParameters['autoStart'],
             'intro' => $playerParameters['intro'],
+            'tail' => $playerParameters['tail'],
             'object' => $multimediaObject,
             'when_dispatch_view_event' => $playerParameters['whenDispatchViewEvent'],
             'track' => $track,
@@ -123,6 +125,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
         return [
             'autoStart' => $request->query->get('autostart', 'false'),
             'intro' => $basePlayerIntroService->getVideoIntroduction($multimediaObject, $request->query->getBoolean('intro')),
+            'tail' => $basePlayerIntroService->getVideoTail($multimediaObject),
             'whenDispatchViewEvent' => $this->container->getParameter('pumukitplayer.when_dispatch_view_event'),
         ];
     }

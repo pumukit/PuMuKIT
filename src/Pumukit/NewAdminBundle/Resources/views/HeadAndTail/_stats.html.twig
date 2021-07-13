@@ -1,9 +1,18 @@
+{% set defaultVideoHead = default_video_head() %}
+{% set defaultVideoTail = default_video_tail() %}
+
 <div class="col-xs-12 col-sm-6 col-md-6 text-center">
     <div class="well">
         <h3>{{ "Default system header configuration"|trans }}</h3>
         <br />
         <p>
-            {{ default_video_head()|trans }}
+            {% if defaultVideoHead %}
+                <a href="{{ path('pumukitnewadmin_mms_shortener', {'id': defaultVideoHead }) }}">
+                    {{ defaultVideoHead }}
+                </a>
+            {% else %}
+                {{ "No video head configured"|trans }}
+            {% endif %}
         </p>
     </div>
 </div>
@@ -12,30 +21,15 @@
         <h3>{{ "Default system tail configuration"|trans }}</h3>
         <br />
         <p>
-            {{ default_video_tail()|trans }}
+
+            {% if defaultVideoTail %}
+                <a href="{{ path('pumukitnewadmin_mms_shortener', {'id': defaultVideoTail }) }}">
+                    {{ defaultVideoTail }}
+                </a>
+            {% else %}
+                {{ "No video tail configured"|trans }}
+            {% endif %}
         </p>
-    </div>
-</div>
-
-<div class="col-xs-12 col-sm-6 col-md-6">
-    <div class="info-box">
-        <span class="info-box-icon bg-pumukit">
-            <i class="glyphicon glyphicon-user"></i>
-        </span>
-        <div class="info-box-content">
-            {{ "Series stats"|trans }}
-        </div>
-    </div>
-</div>
-
-<div class="col-xs-12 col-sm-6 col-md-6">
-    <div class="info-box">
-        <span class="info-box-icon bg-pumukit">
-            <i class="glyphicon glyphicon-user"></i>
-        </span>
-        <div class="info-box-content">
-            {{ "Multimedia object stats"|trans }}
-        </div>
     </div>
 </div>
 

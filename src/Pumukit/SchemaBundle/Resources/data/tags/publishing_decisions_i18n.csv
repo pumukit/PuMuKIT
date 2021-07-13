@@ -8,4 +8,4 @@ id;cod;tree_parent_cod;metatag;display;name_es;name_gl;name_en
 6;PUDEUNI;PUBDECISIONS;0;1;"Universidad";"Universidad";"University"
 7;PUDEWALL;PUBDECISIONS;0;1;"Mural";"Mural";"Wall"
 8;PUDEVIDEOHEAD;PUBDECISIONS;0;1;"Video de cabecera";"Video de cabecera";"Head video"
-9;PUDEVIDEOTAIL;PUBDECISIONS;0;1;"Vídeo final";"Vídeo final";"Tail video"
+9;PUDEVIDEOTAIL;PUBDECISIONS;0;1;"Vídeo de cola";"Vídeo de cola";"Tail video"
