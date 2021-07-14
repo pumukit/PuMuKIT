@@ -40,7 +40,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="7" align="center">{{ "No videos selected"|trans }}</td>
+                    <td colspan="7" style="text-align: center;">{{ "No videos selected"|trans }}</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -49,7 +49,8 @@
 </div>
 
 <script>
-    document.querySelector('.'+ "{{ type }}" +'_element_actions').addEventListener('click', (event) => {
+    $('.'+ "{{ type }}" +'_element_actions').on('click', function(event) {
+        event.preventDefault();
         let route =  '{{ path('pumukit_newadmin_head_and_tail_manager_remove_item', {
             'type': '__type__',
             'element': '__element__'
