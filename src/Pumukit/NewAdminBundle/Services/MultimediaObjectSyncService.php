@@ -50,8 +50,6 @@ class MultimediaObjectSyncService
 
     /**
      * MultimediaObjectSyncService constructor.
-     *
-     * @param DocumentManager $documentManager
      */
     public function __construct(DocumentManager $documentManager)
     {
@@ -67,8 +65,6 @@ class MultimediaObjectSyncService
     }
 
     /**
-     * @param MultimediaObject $multimediaObject
-     *
      * @return array
      */
     public function getMultimediaObjectsToSync(MultimediaObject $multimediaObject)
@@ -83,10 +79,6 @@ class MultimediaObjectSyncService
     }
 
     /**
-     * @param array            $multimediaObjects
-     * @param MultimediaObject $originData
-     * @param array            $syncFieldsSelected
-     *
      * @return array
      */
     public function syncMetadata(array $multimediaObjects, MultimediaObject $originData, array $syncFieldsSelected)
@@ -102,10 +94,6 @@ class MultimediaObjectSyncService
     }
 
     /**
-     * @param MultimediaObject $multimediaObject
-     * @param MultimediaObject $originData
-     * @param array            $syncFieldsSelected
-     *
      * @return bool
      */
     public function doSyncMetadata(MultimediaObject $multimediaObject, MultimediaObject $originData, array $syncFieldsSelected)
@@ -129,10 +117,6 @@ class MultimediaObjectSyncService
         return true;
     }
 
-    /**
-     * @param MultimediaObject $multimediaObject
-     * @param MultimediaObject $originData
-     */
     public function syncComments(MultimediaObject $multimediaObject, MultimediaObject $originData)
     {
         $comments = $originData->getComments();
@@ -140,10 +124,6 @@ class MultimediaObjectSyncService
         $multimediaObject->setComments($comments);
     }
 
-    /**
-     * @param MultimediaObject $multimediaObject
-     * @param MultimediaObject $originData
-     */
     public function syncCopyright(MultimediaObject $multimediaObject, MultimediaObject $originData)
     {
         $copyright = $originData->getCopyright();
@@ -151,10 +131,6 @@ class MultimediaObjectSyncService
         $multimediaObject->setCopyright($copyright);
     }
 
-    /**
-     * @param MultimediaObject $multimediaObject
-     * @param MultimediaObject $originData
-     */
     public function syncDescription(MultimediaObject $multimediaObject, MultimediaObject $originData)
     {
         $description = $originData->getI18nDescription();
@@ -162,10 +138,6 @@ class MultimediaObjectSyncService
         $multimediaObject->setI18nDescription($description);
     }
 
-    /**
-     * @param MultimediaObject $multimediaObject
-     * @param MultimediaObject $originData
-     */
     public function syncHeadline(MultimediaObject $multimediaObject, MultimediaObject $originData)
     {
         $line2 = $originData->getI18nLine2();
@@ -173,10 +145,6 @@ class MultimediaObjectSyncService
         $multimediaObject->setI18nLine2($line2);
     }
 
-    /**
-     * @param MultimediaObject $multimediaObject
-     * @param MultimediaObject $originData
-     */
     public function syncKeywords(MultimediaObject $multimediaObject, MultimediaObject $originData)
     {
         $keywords = $originData->getI18nKeywords();
@@ -184,10 +152,6 @@ class MultimediaObjectSyncService
         $multimediaObject->setI18nKeywords($keywords);
     }
 
-    /**
-     * @param MultimediaObject $multimediaObject
-     * @param MultimediaObject $originData
-     */
     public function syncLicense(MultimediaObject $multimediaObject, MultimediaObject $originData)
     {
         $license = $originData->getLicense();
@@ -195,10 +159,6 @@ class MultimediaObjectSyncService
         $multimediaObject->setLicense($license);
     }
 
-    /**
-     * @param MultimediaObject $multimediaObject
-     * @param MultimediaObject $originData
-     */
     public function syncPublicDate(MultimediaObject $multimediaObject, MultimediaObject $originData)
     {
         $publicDate = $originData->getPublicDate();
@@ -206,10 +166,6 @@ class MultimediaObjectSyncService
         $multimediaObject->setPublicDate($publicDate);
     }
 
-    /**
-     * @param MultimediaObject $multimediaObject
-     * @param MultimediaObject $originData
-     */
     public function syncRecordDate(MultimediaObject $multimediaObject, MultimediaObject $originData)
     {
         $recordDate = $originData->getRecordDate();
@@ -217,10 +173,6 @@ class MultimediaObjectSyncService
         $multimediaObject->setRecordDate($recordDate);
     }
 
-    /**
-     * @param MultimediaObject $multimediaObject
-     * @param MultimediaObject $originData
-     */
     public function syncSubSeries(MultimediaObject $multimediaObject, MultimediaObject $originData)
     {
         $subSeriesTitle = $originData->getProperty('subseriestitle');
@@ -230,10 +182,6 @@ class MultimediaObjectSyncService
         $multimediaObject->setProperty('subseries', $subSeries);
     }
 
-    /**
-     * @param MultimediaObject $multimediaObject
-     * @param MultimediaObject $originData
-     */
     public function syncGroups(MultimediaObject $multimediaObject, MultimediaObject $originData)
     {
         foreach ($multimediaObject->getGroups() as $group) {
@@ -246,10 +194,6 @@ class MultimediaObjectSyncService
         }
     }
 
-    /**
-     * @param MultimediaObject $multimediaObject
-     * @param MultimediaObject $originData
-     */
     public function syncOwners(MultimediaObject $multimediaObject, MultimediaObject $originData)
     {
         $roleOwner = $this->dm->getRepository(Role::class)->findOneBy(
@@ -270,9 +214,6 @@ class MultimediaObjectSyncService
     }
 
     /**
-     * @param MultimediaObject $multimediaObject
-     * @param MultimediaObject $originData
-     *
      * @return bool
      */
     public function syncPublishingDecisions(MultimediaObject $multimediaObject, MultimediaObject $originData)
@@ -305,9 +246,7 @@ class MultimediaObjectSyncService
     }
 
     /**
-     * @param MultimediaObject $multimediaObject
-     * @param MultimediaObject $originData
-     * @param string           $tagId
+     * @param string $tagId
      */
     public function syncTags(MultimediaObject $multimediaObject, MultimediaObject $originData, $tagId)
     {
@@ -333,9 +272,7 @@ class MultimediaObjectSyncService
     }
 
     /**
-     * @param MultimediaObject $multimediaObject
-     * @param MultimediaObject $originData
-     * @param string           $roleId
+     * @param string $roleId
      */
     public function syncRoles(MultimediaObject $multimediaObject, MultimediaObject $originData, $roleId)
     {

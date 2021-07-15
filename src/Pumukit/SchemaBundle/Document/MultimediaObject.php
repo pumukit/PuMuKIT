@@ -20,7 +20,6 @@ class MultimediaObject
     use Traits\Keywords;
     use Traits\Properties;
     use Traits\HeadAndTail;
-
     use Traits\Link {
         Traits\Link::__construct as private __LinkConstruct;
     }
@@ -561,8 +560,6 @@ class MultimediaObject
 
     /**
      * Set I18n title.
-     *
-     * @param array $title
      */
     public function setI18nTitle(array $title)
     {
@@ -614,8 +611,6 @@ class MultimediaObject
 
     /**
      * Set I18n subtitle.
-     *
-     * @param array $subtitle
      */
     public function setI18nSubtitle(array $subtitle)
     {
@@ -667,8 +662,6 @@ class MultimediaObject
 
     /**
      * Set I18n description.
-     *
-     * @param array $description
      */
     public function setI18nDescription(array $description)
     {
@@ -740,8 +733,6 @@ class MultimediaObject
 
     /**
      * Set I18n line2.
-     *
-     * @param array $line2
      */
     public function setI18nLine2(array $line2)
     {
@@ -877,8 +868,6 @@ class MultimediaObject
 
     /**
      * Set series.
-     *
-     * @param Series $series
      */
     public function setSeries(Series $series)
     {
@@ -929,8 +918,6 @@ class MultimediaObject
 
     /**
      * Set embedded broadcast.
-     *
-     * @param EmbeddedBroadcast $embeddedBroadcast
      */
     public function setEmbeddedBroadcast(EmbeddedBroadcast $embeddedBroadcast)
     {
@@ -949,8 +936,6 @@ class MultimediaObject
 
     /**
      * Set embeddedEvent.
-     *
-     * @param EmbeddedEvent $embeddedEvent
      */
     public function setEmbeddedEvent(EmbeddedEvent $embeddedEvent)
     {
@@ -973,17 +958,12 @@ class MultimediaObject
         $this->embeddedSegments = $embeddedSegments;
     }
 
-    /**
-     * @param EmbeddedSegment $embeddedSegment
-     */
     public function addEmbeddedSegment(EmbeddedSegment $embeddedSegment)
     {
         $this->embeddedSegments[] = $embeddedSegment;
     }
 
     /**
-     * @param EmbeddedSegment $embeddedSegment
-     *
      * @return bool
      */
     public function removeEmbeddedSegment(EmbeddedSegment $embeddedSegment)
@@ -1036,8 +1016,6 @@ class MultimediaObject
 
     /**
      * Set embedded social.
-     *
-     * @param EmbeddedSocial $embeddedSocial
      */
     public function setEmbeddedSocial(EmbeddedSocial $embeddedSocial)
     {
@@ -1159,8 +1137,6 @@ class MultimediaObject
      * The original string tag logic used array_intersect and count to check it.
      * This function uses doctrine2 arrayCollection contains function instead.
      *
-     * @param array $tags
-     *
      * @return bool TRUE if this multimedia_object contained all tags, FALSE otherwise
      */
     public function containsAllTags(array $tags)
@@ -1178,8 +1154,6 @@ class MultimediaObject
      * Contains all tags with codes
      * The original string tag logic used array_intersect and count to check it.
      * This function uses doctrine2 arrayCollection contains function instead.
-     *
-     * @param array $tagCodes
      *
      * @return bool TRUE if this multimedia_object contained all tags, FALSE otherwise
      */
@@ -1199,8 +1173,6 @@ class MultimediaObject
      * The original string tag logic used array_intersect and count to check it.
      * This function uses doctrine2 arrayCollection contains function instead.
      *
-     * @param array $tags
-     *
      * @return bool TRUE if this multimedia_object contained any tag of the list, FALSE otherwise
      */
     public function containsAnyTag(array $tags)
@@ -1219,8 +1191,6 @@ class MultimediaObject
      * The original string tag logic used array_intersect and count to check it.
      * This function uses doctrine2 arrayCollection contains function instead.
      *
-     * @param array $tagCodes
-     *
      * @return bool TRUE if this multimedia_object contained any tag of the list, FALSE otherwise
      */
     public function containsAnyTagWithCodes(array $tagCodes)
@@ -1238,8 +1208,6 @@ class MultimediaObject
 
     /**
      * Add track.
-     *
-     * @param Track $track
      */
     public function addTrack(Track $track)
     {
@@ -1252,8 +1220,6 @@ class MultimediaObject
 
     /**
      * Remove track.
-     *
-     * @param Track $track
      */
     public function removeTrack(Track $track)
     {
@@ -1298,8 +1264,6 @@ class MultimediaObject
 
     /**
      * Contains track.
-     *
-     * @param Track $track
      *
      * @return bool
      */
@@ -1377,8 +1341,6 @@ class MultimediaObject
     /**
      * Get tracks with all tags.
      *
-     * @param array $tags
-     *
      * @return array
      */
     public function getTracksWithAllTags(array $tags)
@@ -1397,8 +1359,6 @@ class MultimediaObject
     /**
      * Get tracks with all tags.
      *
-     * @param array $tags
-     *
      * @return Track|null
      */
     public function getTrackWithAllTags(array $tags)
@@ -1414,8 +1374,6 @@ class MultimediaObject
 
     /**
      * Get tracks with any tag.
-     *
-     * @param array $tags
      *
      * @return array
      */
@@ -1434,8 +1392,6 @@ class MultimediaObject
 
     /**
      * Get track with any tag.
-     *
-     * @param array $tags
      *
      * @return Track|null
      */
@@ -1509,11 +1465,7 @@ class MultimediaObject
     /**
      * Get filtered tracks with tags.
      *
-     * @param array $any_tags
-     * @param array $all_tags
-     * @param array $not_any_tags
-     * @param array $not_all_tags
-     * @param bool  $all
+     * @param bool $all
      *
      * @return array
      */
@@ -1547,11 +1499,7 @@ class MultimediaObject
     /**
      * Get filtered track with tags.
      *
-     * @param array $any_tags
-     * @param array $all_tags
-     * @param array $not_any_tags
-     * @param array $not_all_tags
-     * @param bool  $all
+     * @param bool $all
      *
      * @return Track|null
      */
@@ -1692,7 +1640,6 @@ class MultimediaObject
      * Contains person with all roles.
      *
      * @param EmbeddedPerson|Person $person
-     * @param array                 $roles
      *
      * @return bool
      */
@@ -1711,7 +1658,6 @@ class MultimediaObject
      * Contains person with any role.
      *
      * @param EmbeddedPerson|Person $person
-     * @param array                 $roles
      *
      * @return bool
      */
@@ -1942,8 +1888,6 @@ class MultimediaObject
     /**
      * Contains group.
      *
-     * @param Group $group
-     *
      * @return bool
      */
     public function containsGroup(Group $group)
@@ -1954,8 +1898,6 @@ class MultimediaObject
     /**
      * add admin group.
      *
-     * @param Group $group
-     *
      * @return bool
      */
     public function addGroup(Group $group)
@@ -1965,8 +1907,6 @@ class MultimediaObject
 
     /**
      * Remove admin group.
-     *
-     * @param Group $group
      */
     public function removeGroup(Group $group)
     {

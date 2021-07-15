@@ -205,9 +205,6 @@ class CategoriesService
     }
 
     /**
-     * @param Tag         $tag
-     * @param string|null $provider
-     *
      * @return mixed
      */
     private function countGeneralMmobjsInTag(Tag $tag, string $provider = null)

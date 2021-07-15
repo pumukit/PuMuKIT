@@ -22,8 +22,6 @@ class SortedMultimediaObjectsService
 
     /**
      * Reorder multimedia objects of a series using the current sorting attribute.
-     *
-     * @param Series $series
      */
     public function reorder(Series $series)
     {

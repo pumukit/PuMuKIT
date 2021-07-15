@@ -10,9 +10,6 @@ use Pumukit\SchemaBundle\Utils\Search\SearchUtils;
 class MultimediaObjectSearchService
 {
     /**
-     * @param array  $reqCriteria
-     * @param string $locale
-     *
      * @return array
      */
     public function processMMOCriteria(array $reqCriteria, string $locale = 'en')

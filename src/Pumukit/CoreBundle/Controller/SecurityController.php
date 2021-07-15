@@ -20,8 +20,7 @@ class SecurityController extends Controller
      * @Route("/security/edit/{id}", name="pumukit_webtv_can_edit_multimediaobject")
      * @Template("PumukitCoreBundle:Security:editButton.html.twig")
      *
-     * @param Request $request
-     * @param string  $id
+     * @param string $id
      *
      * @return array
      */

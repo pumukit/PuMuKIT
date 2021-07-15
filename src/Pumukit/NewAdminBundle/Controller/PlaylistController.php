@@ -85,8 +85,8 @@ class PlaylistController extends CollectionController
         $form = $this->createForm(PlaylistType::class, $series, ['translator' => $translator, 'locale' => $locale]);
 
         $method = $request->getMethod();
-        if (in_array($method, ['POST', 'PUT', 'PATCH']) &&
-            $form->handleRequest($request)->isValid()) {
+        if (in_array($method, ['POST', 'PUT', 'PATCH'])
+            && $form->handleRequest($request)->isValid()) {
             $dm = $this->get('doctrine_mongodb.odm.document_manager');
             $dm->persist($series);
             $dm->flush();
@@ -110,9 +110,6 @@ class PlaylistController extends CollectionController
     }
 
     /**
-     * @param Series  $playlist
-     * @param Request $request
-     *
      * @return Response|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Series $playlist, Request $request)
@@ -243,6 +240,6 @@ class PlaylistController extends CollectionController
             $key .= '.'.$request->getLocale();
         }
 
-        return  [$key => $value];
+        return [$key => $value];
     }
 }

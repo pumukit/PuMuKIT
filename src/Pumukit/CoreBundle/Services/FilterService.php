@@ -52,10 +52,7 @@ class FilterService
     /**
      * FilterService constructor.
      *
-     * @param DocumentManager $dm
-     * @param PersonService   $personService
-     * @param TokenStorage    $securityContext
-     * @param bool            $addUserAsPerson
+     * @param bool $addUserAsPerson
      */
     public function __construct(DocumentManager $dm, PersonService $personService, TokenStorage $securityContext, $addUserAsPerson = true)
     {
@@ -66,8 +63,6 @@ class FilterService
     }
 
     /**
-     * @param FilterControllerEvent $event
-     *
      * @return bool
      */
     public function checkFilterActivation(FilterControllerEvent $event)
@@ -88,8 +83,6 @@ class FilterService
     }
 
     /**
-     * @param FilterControllerEvent $event
-     *
      * @return array
      */
     public function getEventData(FilterControllerEvent $event)
@@ -104,10 +97,6 @@ class FilterService
         ];
     }
 
-    /**
-     * @param BsonFilter $filter
-     * @param array      $routeParams
-     */
     public function setGenericFilterParameters(BsonFilter $filter, array $routeParams)
     {
         if (isset($routeParams['show_hide']) && $routeParams['show_hide']) {
@@ -129,10 +118,6 @@ class FilterService
         }
     }
 
-    /**
-     * @param BsonFilter $filter
-     * @param array      $routeParams
-     */
     public function setFrontendFilterParameters(BsonFilter $filter, array $routeParams)
     {
         if (!isset($routeParams['no_channels']) || !$routeParams['no_channels']) {
@@ -143,9 +128,6 @@ class FilterService
     }
 
     /**
-     * @param BsonFilter $filter
-     * @param User|null  $user
-     *
      * @throws \MongoException
      */
     public function setAdminParameters(BsonFilter $filter, User $user = null)
@@ -179,9 +161,6 @@ class FilterService
     }
 
     /**
-     * @param BsonFilter $filter
-     * @param User       $user
-     *
      * @throws \MongoException
      */
     public function setPersonalFilterParameters(BsonFilter $filter, User $user)
@@ -231,8 +210,6 @@ class FilterService
      * Query in MongoDB:
      * {"people":{"$elemMatch":{"people._id":{"$id":"___MongoID_of_Person___"},"cod":"___Role_cod___"}}}
      *
-     * @param Person|null $person
-     *
      * @throws \MongoException
      *
      * @return array
@@ -258,8 +235,6 @@ class FilterService
      *
      * Query in MongoDB:
      * {"groups":{"$in":["___MongoID_of_Group_1___", "___MongoID_of_Group_2___"...]}}
-     *
-     * @param User $user
      *
      * @return array $groups
      */

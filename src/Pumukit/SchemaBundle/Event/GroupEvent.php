@@ -12,9 +12,6 @@ class GroupEvent extends Event
      */
     protected $group;
 
-    /**
-     * @param Group $group
-     */
     public function __construct(Group $group)
     {
         $this->group = $group;

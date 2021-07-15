@@ -28,9 +28,7 @@ class TrackService
     /**
      * Add track to multimedia object.
      *
-     * @param MultimediaObject $multimediaObject
-     * @param Track            $track
-     * @param bool             $executeFlush
+     * @param bool $executeFlush
      *
      * @return MultimediaObject
      */

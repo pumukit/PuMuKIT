@@ -20,9 +20,6 @@ class PublicationSubmitEvent extends Event
 
     /**
      * PublicationSubmitEvent constructor.
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Request          $request
      */
     public function __construct(MultimediaObject $multimediaObject, Request $request)
     {

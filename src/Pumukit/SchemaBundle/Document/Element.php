@@ -135,8 +135,6 @@ class Element
 
     /**
      * Set tags.
-     *
-     * @param array $tags
      */
     public function setTags(array $tags)
     {
@@ -200,8 +198,6 @@ class Element
     /**
      * Contains all tags.
      *
-     * @param array $tags
-     *
      * @return bool TRUE if this pic contained all tags, FALSE otherwise
      */
     public function containsAllTags(array $tags)
@@ -211,8 +207,6 @@ class Element
 
     /**
      * Contains any tags.
-     *
-     * @param array $tags
      *
      * @return bool TRUE if this pic contained any tag of the list, FALSE otherwise
      */
@@ -366,8 +360,6 @@ class Element
 
     /**
      * Set I18n description.
-     *
-     * @param array $description
      */
     public function setI18nDescription(array $description)
     {

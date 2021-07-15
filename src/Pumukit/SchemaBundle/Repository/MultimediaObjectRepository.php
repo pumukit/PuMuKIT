@@ -22,10 +22,8 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find all multimedia objects in a series with given status.
      *
-     * @param Series $series
-     * @param array  $status
-     * @param int    $limit
-     * @param int    $page
+     * @param int $limit
+     * @param int $page
      *
      * @return mixed
      */
@@ -40,8 +38,6 @@ class MultimediaObjectRepository extends DocumentRepository
 
     /**
      * Find multimedia object prototype.
-     *
-     * @param Series $series
      *
      * @return array|object|null
      */
@@ -59,8 +55,6 @@ class MultimediaObjectRepository extends DocumentRepository
      * Find multimedia objects in a series
      * without the template (prototype).
      *
-     * @param Series $series
-     *
      * @return mixed
      */
     public function findWithoutPrototype(Series $series)
@@ -77,8 +71,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Count multimedia objects in a series
      * without the template (prototype).
-     *
-     * @param Series $series
      *
      * @return int
      */
@@ -505,7 +497,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find multimedia objects by tag id.
      *
-     * @param Tag   $tag
      * @param array $sort
      * @param int   $limit
      * @param int   $page
@@ -524,7 +515,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find multimedia objects by tag id without tag children.
      *
-     * @param Tag   $tag
      * @param array $sort
      * @param int   $limit
      * @param int   $page
@@ -543,7 +533,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Create QueryBuilder to find multimedia objects by tag id.
      *
-     * @param Tag   $tag
      * @param array $sort
      *
      * @return \Doctrine\MongoDB\Query\Builder|mixed
@@ -558,8 +547,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Create QueryBuilder to find multimedia objects by series.
      *
-     * @param Series $series
-     * @param array  $sort
+     * @param array $sort
      *
      * @return mixed
      */
@@ -573,9 +561,8 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Create QueryBuilder to find multimedia objects by series and status.
      *
-     * @param Series $series
-     * @param array  $status
-     * @param array  $sort
+     * @param array $status
+     * @param array $sort
      *
      * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
@@ -589,7 +576,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Create QueryBuilder to find multimedia objects with Tag and without any Tag children.
      *
-     * @param Tag   $tag
      * @param array $sort
      *
      * @return \Doctrine\MongoDB\Query\Builder|mixed
@@ -603,8 +589,6 @@ class MultimediaObjectRepository extends DocumentRepository
 
     /**
      * Find one multimedia object by tag id.
-     *
-     * @param Tag $tag
      *
      * @return array|object|null
      */
@@ -671,7 +655,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find multimedia objects without tag id.
      *
-     * @param Tag   $tag
      * @param array $sort
      * @param int   $limit
      * @param int   $page
@@ -689,8 +672,6 @@ class MultimediaObjectRepository extends DocumentRepository
 
     /**
      * Find one multimedia object without tag id.
-     *
-     * @param Tag $tag
      *
      * @return array|object|null
      */
@@ -722,8 +703,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find series with tag.
      *
-     * @param Tag $tag
-     *
      * @return mixed
      */
     public function findSeriesFieldWithTag(Tag $tag)
@@ -738,8 +717,6 @@ class MultimediaObjectRepository extends DocumentRepository
 
     /**
      * Find one series with tag.
-     *
-     * @param Tag $tag
      *
      * @return array|object|null
      */
@@ -793,8 +770,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find distinct url pics in series.
      *
-     * @param Series $series
-     *
      * @return mixed
      */
     public function findDistinctUrlPicsInSeries(Series $series)
@@ -815,8 +790,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find by series.
      *
-     * @param Series $series
-     *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
      * @return mixed
@@ -829,9 +802,8 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find by series.
      *
-     * @param Series $series
-     * @param int    $limit
-     * @param int    $page
+     * @param int $limit
+     * @param int $page
      *
      * @return mixed
      */
@@ -847,7 +819,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find by series, tag code and status. Not needed (Using findBySeries and filter).
      *
-     * @param Series $series
      * @param string $tagCod
      * @param array  $status
      *
@@ -868,8 +839,6 @@ class MultimediaObjectRepository extends DocumentRepository
 
     /**
      * Find by embedded broadcast.
-     *
-     * @param EmbeddedBroadcast $embeddedBroadcast
      *
      * @return mixed
      */
@@ -917,8 +886,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find ordered by fieldName: asc/desc.
      *
-     * @param Series $series
-     * @param array  $sort
+     * @param array $sort
      *
      * @return mixed
      */
@@ -932,8 +900,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find ordered by fieldName: asc/desc.
      *
-     * @param Series $series
-     * @param array  $sort
+     * @param array $sort
      *
      * @return mixed
      */
@@ -978,8 +945,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Finds a single standard MultimediaObject (not prototype) by a set of criteria.
      *
-     * @param array $criteria
-     *
      * @throws \Doctrine\ODM\MongoDB\LockException
      *
      * @return object|null
@@ -995,8 +960,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * Find similar multimedia objects to a given one with same tags, from different series,
      * broadcast public, status normal, maximum 20 and random.
      *
-     * @param MultimediaObject $multimediaObject
-     * @param string           $tagBase
+     * @param string $tagBase
      *
      * @return mixed
      */
@@ -1168,7 +1132,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Create QueryBuilder to find multimedia objects with group.
      *
-     * @param Group $group
      * @param array $sort
      *
      * @return \Doctrine\MongoDB\Query\Builder|mixed
@@ -1183,7 +1146,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find multimedia objects with group.
      *
-     * @param Group $group
      * @param array $sort
      * @param int   $limit
      * @param int   $page
@@ -1202,7 +1164,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Count multimedia objects with group.
      *
-     * @param Group $group
      * @param array $sort
      * @param int   $limit
      * @param int   $page
@@ -1221,7 +1182,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Create QueryBuilder to find multimedia objects with group.
      *
-     * @param Group $group
      * @param array $sort
      *
      * @return \Doctrine\MongoDB\Query\Builder|mixed
@@ -1236,7 +1196,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find multimedia objects with group.
      *
-     * @param Group $group
      * @param array $sort
      * @param int   $limit
      * @param int   $page
@@ -1255,7 +1214,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Count multimedia objects with group in embedded broadcast.
      *
-     * @param Group $group
      * @param array $sort
      * @param int   $limit
      * @param int   $page
@@ -1274,7 +1232,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Count in series with embedded broadcast type.
      *
-     * @param Series $series
      * @param string $type
      *
      * @return mixed
@@ -1287,7 +1244,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Count in series with embedded broadcast password.
      *
-     * @param Series $series
      * @param string $type
      * @param string $password
      *
@@ -1301,7 +1257,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Count in series with embedded broadcast groups.
      *
-     * @param Series $series
      * @param string $type
      * @param array  $groups
      *
@@ -1317,8 +1272,6 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Count number of all multimedia objects in a Series
      * (including prototype).
-     *
-     * @param Series $series
      *
      * @return mixed
      */
@@ -1743,8 +1696,6 @@ class MultimediaObjectRepository extends DocumentRepository
 
     /**
      * Get mongo ids.
-     *
-     * @param array $documents
      *
      * @return array
      */

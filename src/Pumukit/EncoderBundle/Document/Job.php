@@ -367,7 +367,6 @@ class Job
     /**
      * Set name.
      *
-     * @param string      $name
      * @param string|null $locale
      */
     public function setName(string $name, $locale = null)
@@ -399,8 +398,6 @@ class Job
 
     /**
      * Set I18n name.
-     *
-     * @param array $name
      */
     public function setI18nName(array $name)
     {
@@ -452,8 +449,6 @@ class Job
 
     /**
      * Set I18n description.
-     *
-     * @param array $description
      */
     public function setI18nDescription(array $description)
     {

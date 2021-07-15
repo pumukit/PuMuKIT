@@ -18,8 +18,7 @@ class MediaLibraryController extends Controller implements WebTVControllerInterf
      * @Route("/mediateca/{sort}", defaults={"sort" = "date"}, requirements={"sort" = "alphabetically|date|tags"}, name="pumukit_webtv_medialibrary_index")
      * @Template("PumukitWebTVBundle:MediaLibrary:template.html.twig")
      *
-     * @param Request $request
-     * @param string  $sort
+     * @param string $sort
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *

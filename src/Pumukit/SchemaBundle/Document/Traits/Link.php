@@ -48,8 +48,6 @@ trait Link
 
     /**
      * Add link.
-     *
-     * @param DocumentLink $link
      */
     public function addLink(DocumentLink $link)
     {
@@ -58,8 +56,6 @@ trait Link
 
     /**
      * Remove link.
-     *
-     * @param DocumentLink $link
      */
     public function removeLink(DocumentLink $link)
     {
@@ -100,8 +96,6 @@ trait Link
 
     /**
      * Contains link.
-     *
-     * @param DocumentLink $link
      *
      * @return bool
      */
@@ -169,8 +163,6 @@ trait Link
     /**
      * Get links with all tags.
      *
-     * @param array $tags
-     *
      * @return array
      */
     public function getLinksWithAllTags(array $tags)
@@ -189,8 +181,6 @@ trait Link
     /**
      * Get links with all tags.
      *
-     * @param array $tags
-     *
      * @return DocumentLink|null
      */
     public function getLinkWithAllTags(array $tags)
@@ -206,8 +196,6 @@ trait Link
 
     /**
      * Get links with any tag.
-     *
-     * @param array $tags
      *
      * @return array
      */
@@ -227,8 +215,6 @@ trait Link
     /**
      * Get link with any tag.
      *
-     * @param array $tags
-     *
      * @return DocumentLink|null
      */
     public function getLinkWithAnyTag(array $tags)
@@ -244,11 +230,6 @@ trait Link
 
     /**
      * Get filtered links with tags.
-     *
-     * @param array $any_tags
-     * @param array $all_tags
-     * @param array $not_any_tags
-     * @param array $not_all_tags
      *
      * @return array
      */

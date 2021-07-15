@@ -617,8 +617,7 @@ class DefaultController extends Controller
     /**
      * Complete Form with Series metadata.
      *
-     * @param array  $formData
-     * @param Series $series
+     * @param array $formData
      *
      * @return array
      */

@@ -54,6 +54,7 @@ EOT
                 $this->generateNewNumericalID();
 
                 break;
+
             default:
                 $output->writeln(' ***** Please select an valid step');
         }

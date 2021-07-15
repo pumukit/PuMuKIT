@@ -17,8 +17,6 @@ class LinkEventDispatcherService
 
     /**
      * Constructor.
-     *
-     * @param EventDispatcherInterface $dispatcher
      */
     public function __construct(EventDispatcherInterface $dispatcher)
     {
@@ -31,9 +29,6 @@ class LinkEventDispatcherService
      * Dispatchs the event LINK_CREATE
      * 'link.create' passing
      * the multimedia object and the link
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Link             $link
      */
     public function dispatchCreate(MultimediaObject $multimediaObject, Link $link)
     {
@@ -47,9 +42,6 @@ class LinkEventDispatcherService
      * Dispatchs the event LINK_UPDATE
      * 'link.update' passing
      * the multimedia object and the link
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Link             $link
      */
     public function dispatchUpdate(MultimediaObject $multimediaObject, Link $link)
     {
@@ -63,9 +55,6 @@ class LinkEventDispatcherService
      * Dispatchs the event LINK_DELETE
      * 'link.delete' passing
      * the multimedia object and the link
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Link             $link
      */
     public function dispatchDelete(MultimediaObject $multimediaObject, Link $link)
     {

@@ -71,6 +71,7 @@ EOT
                 }
 
                 break;
+
             case 'tag':
                 $errorExecuting = $this->executeTags($input, $output);
                 if (-1 === $errorExecuting) {
@@ -78,6 +79,7 @@ EOT
                 }
 
                 break;
+
             case 'role':
                 $errorExecuting = $this->executeRoles($input, $output);
                 if (-1 === $errorExecuting) {
@@ -85,6 +87,7 @@ EOT
                 }
 
                 break;
+
             case 'permissionprofile':
                 $errorExecuting = $this->executePermissionProfiles($input, $output);
                 if (-1 === $errorExecuting) {
@@ -257,9 +260,9 @@ EOT
         $importedTags = [];
         while (false !== ($currentRow = fgetcsv($file, 0, ';'))) {
             $number = count($currentRow);
-            if (('tag' === $repoName) ||
-                (('role' === $repoName) && (7 == $number || 10 == $number)) ||
-                (('permissionprofile' === $repoName) && (6 == $number))) {
+            if (('tag' === $repoName)
+                || (('role' === $repoName) && (7 == $number || 10 == $number))
+                || (('permissionprofile' === $repoName) && (6 == $number))) {
                 //Check header rows
                 if ('id' == trim($currentRow[0])) {
                     continue;
@@ -293,16 +296,18 @@ EOT
                                 $output->writeln('<comment>'.$e->getMessage().'</comment>');
                             }
 
-                            continue;
+                            break;
                         }
                         $output->writeln('<info>Tag persisted - new id: '.$tag->getId().' cod: '.$tag->getCod().'</info>');
 
                         break;
+
                     case 'role':
                         $role = $this->createRoleFromCsvArray($currentRow);
                         $output->writeln('Role persisted - new id: '.$role->getId().' code: '.$role->getCod());
 
                         break;
+
                     case 'permissionprofile':
                         $permissionProfile = $this->createPermissionProfileFromCsvArray($currentRow);
                         $output->writeln('PermissionProfile persisted - new id: '.$permissionProfile->getId().' name: '.$permissionProfile->getName());
@@ -410,9 +415,9 @@ EOT
         $permissionProfile->setName($csv_array[1]);
         $permissionProfile->setSystem($csv_array[2]);
         $permissionProfile->setDefault($csv_array[3]);
-        if ((PermissionProfile::SCOPE_GLOBAL === $csv_array[4]) ||
-            (PermissionProfile::SCOPE_PERSONAL === $csv_array[4]) ||
-            (PermissionProfile::SCOPE_NONE === $csv_array[4])) {
+        if ((PermissionProfile::SCOPE_GLOBAL === $csv_array[4])
+            || (PermissionProfile::SCOPE_PERSONAL === $csv_array[4])
+            || (PermissionProfile::SCOPE_NONE === $csv_array[4])) {
             $permissionProfile->setScope($csv_array[4]);
         }
         foreach (array_filter(preg_split('/[,\s]+/', $csv_array[5])) as $permission) {

@@ -20,9 +20,6 @@ class SeriesController extends Controller implements WebTVControllerInterface
      * @Route("/series/{id}", name="pumukit_webtv_series_index")
      * @Template("PumukitWebTVBundle:Series:template.html.twig")
      *
-     * @param Series  $series
-     * @param Request $request
-     *
      * @throws \Exception
      *
      * @return array
@@ -47,9 +44,6 @@ class SeriesController extends Controller implements WebTVControllerInterface
      * @Route("/series/magic/{secret}", name="pumukit_webtv_series_magicindex", defaults={"show_hide":true, "broadcast":false})
      * @Template("PumukitWebTVBundle:Series:template.html.twig")
      *
-     * @param Series  $series
-     * @param Request $request
-     *
      * @throws \Exception
      *
      * @return array
@@ -73,9 +67,6 @@ class SeriesController extends Controller implements WebTVControllerInterface
         ];
     }
 
-    /**
-     * @param Series $series
-     */
     private function updateBreadcrumbs(Series $series)
     {
         $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');

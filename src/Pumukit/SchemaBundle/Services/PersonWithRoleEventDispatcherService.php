@@ -20,8 +20,6 @@ class PersonWithRoleEventDispatcherService
 
     /**
      * Constructor.
-     *
-     * @param EventDispatcherInterface $dispatcher
      */
     public function __construct(EventDispatcherInterface $dispatcher)
     {
@@ -35,7 +33,6 @@ class PersonWithRoleEventDispatcherService
      * 'personwithrole.create' passing
      * the multimedia object and the personwithrole
      *
-     * @param MultimediaObject      $multimediaObject
      * @param embeddedPerson|Person $person
      * @param EmbeddedRole|Role     $role
      */
@@ -52,7 +49,6 @@ class PersonWithRoleEventDispatcherService
      * 'personwithrole.update' passing
      * the multimedia object and the personwithrole
      *
-     * @param MultimediaObject      $multimediaObject
      * @param EmbeddedPerson|Person $person
      * @param EmbeddedRole|Role     $role
      */
@@ -69,7 +65,6 @@ class PersonWithRoleEventDispatcherService
      * 'personwithrole.delete' passing
      * the multimedia object and the personwithrole
      *
-     * @param MultimediaObject      $multimediaObject
      * @param EmbeddedPerson|Person $person
      * @param EmbeddedRole|Role     $role
      */

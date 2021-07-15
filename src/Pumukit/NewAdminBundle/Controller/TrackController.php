@@ -91,9 +91,6 @@ class TrackController extends Controller implements NewAdminControllerInterface
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      *
-     * @param MultimediaObject $multimediaObject
-     * @param Request          $request
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function toggleHideAction(MultimediaObject $multimediaObject, Request $request)
@@ -188,8 +185,8 @@ class TrackController extends Controller implements NewAdminControllerInterface
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
         if ($track) {
-            if (($track->containsTag('opencast') && $multimediaObject->isMultistream()) ||
-                ($track->isMaster() && !$this->isGranted(Permission::ACCESS_ADVANCED_UPLOAD))) {
+            if (($track->containsTag('opencast') && $multimediaObject->isMultistream())
+                || ($track->isMaster() && !$this->isGranted(Permission::ACCESS_ADVANCED_UPLOAD))) {
                 return new Response('You don\'t have enough permissions to delete this track. Contact your administrator.', Response::HTTP_FORBIDDEN);
             }
             $multimediaObject = $this->get('pumukitschema.track')->removeTrackFromMultimediaObject($multimediaObject, $request->get('id'));

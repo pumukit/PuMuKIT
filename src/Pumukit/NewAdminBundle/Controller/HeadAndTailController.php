@@ -31,9 +31,9 @@ class HeadAndTailController extends AdminController implements NewAdminControlle
         $headAndTailService = $this->get('pumukit_schema.head_and_tail');
 
         if ($headAndTailService->removeElement($type, $element)) {
-            return new JsonResponse(['success' => "${type} element removed"]);
+            return new JsonResponse(['success' => "{$type} element removed"]);
         }
 
-        return new JsonResponse(['error' => "${type} element with id ${element} couldn't be removed"]);
+        return new JsonResponse(['error' => "{$type} element with id {$element} couldn't be removed"]);
     }
 }

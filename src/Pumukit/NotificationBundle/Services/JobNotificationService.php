@@ -48,8 +48,6 @@ class JobNotificationService
     /**
      * On job success.
      *
-     * @param JobEvent $event
-     *
      * @return bool
      */
     public function onJobSuccess(JobEvent $event)
@@ -59,8 +57,6 @@ class JobNotificationService
 
     /**
      * On job error.
-     *
-     * @param JobEvent $event
      *
      * @return bool
      */
@@ -73,8 +69,7 @@ class JobNotificationService
      * Send job notification according if the job
      * was succeeded or not.
      *
-     * @param JobEvent $event
-     * @param bool     $error
+     * @param bool $error
      *
      * @return bool
      */
@@ -118,7 +113,6 @@ class JobNotificationService
     /**
      * Get message.
      *
-     * @param Job  $job
      * @param bool $error
      *
      * @return string
@@ -135,7 +129,6 @@ class JobNotificationService
     /**
      * Get subject email in parameters.
      *
-     * @param Job  $job
      * @param bool $error
      *
      * @return string
@@ -150,7 +143,6 @@ class JobNotificationService
     /**
      * Get subject email.
      *
-     * @param Job  $job
      * @param bool $error
      *
      * @return string
@@ -180,9 +172,7 @@ class JobNotificationService
     /**
      * Get parameters email.
      *
-     * @param Job              $job
-     * @param MultimediaObject $multimediaObject
-     * @param string           $subject
+     * @param string $subject
      *
      * @return array
      */
@@ -204,9 +194,6 @@ class JobNotificationService
 
     /**
      * Get emails.
-     *
-     * @param Job              $job
-     * @param MultimediaObject $multimediaObject
      *
      * @return array|string
      */

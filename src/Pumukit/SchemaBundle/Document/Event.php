@@ -179,8 +179,6 @@ class Event
 
     /**
      * Set I18n description.
-     *
-     * @param array $description
      */
     public function setI18nDescription(array $description)
     {
@@ -343,8 +341,6 @@ class Event
 
     /**
      * Set pic.
-     *
-     * @param Pic $pic
      */
     public function setPic(Pic $pic)
     {

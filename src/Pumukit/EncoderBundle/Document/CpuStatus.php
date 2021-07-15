@@ -55,8 +55,6 @@ class CpuStatus
 
     /**
      * Set name.
-     *
-     * @param string $name
      */
     public function setName(string $name)
     {
@@ -75,8 +73,6 @@ class CpuStatus
 
     /**
      * Set status.
-     *
-     * @param int $status
      */
     public function setStatus(int $status)
     {
