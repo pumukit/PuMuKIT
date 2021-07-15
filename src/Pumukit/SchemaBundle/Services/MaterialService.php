@@ -34,8 +34,6 @@ class MaterialService
     /**
      * Returns the target path for an object.
      *
-     * @param MultimediaObject $multimediaObject
-     *
      * @return string
      */
     public function getTargetPath(MultimediaObject $multimediaObject)
@@ -46,8 +44,6 @@ class MaterialService
     /**
      * Returns the target url for an object.
      *
-     * @param MultimediaObject $multimediaObject
-     *
      * @return string
      */
     public function getTargetUrl(MultimediaObject $multimediaObject)
@@ -57,9 +53,6 @@ class MaterialService
 
     /**
      * Update Material in Multimedia Object.
-     *
-     * @param MultimediaObject $multimediaObject
-     * @param Material         $material
      *
      * @return MultimediaObject
      */
@@ -76,9 +69,8 @@ class MaterialService
     /**
      * Set a material from an url into the multimediaObject.
      *
-     * @param MultimediaObject $multimediaObject
-     * @param string           $url
-     * @param array            $formData
+     * @param string $url
+     * @param array  $formData
      *
      * @return MultimediaObject
      */
@@ -101,9 +93,7 @@ class MaterialService
     /**
      * Add a material from a file into the multimediaObject.
      *
-     * @param MultimediaObject $multimediaObject
-     * @param UploadedFile     $materialFile
-     * @param array            $formData
+     * @param array $formData
      *
      * @throws \Exception
      *
@@ -187,8 +177,7 @@ class MaterialService
     /**
      * Remove Material from Multimedia Object.
      *
-     * @param MultimediaObject $multimediaObject
-     * @param \MongoId|string  $materialId
+     * @param \MongoId|string $materialId
      *
      * @throws \Exception
      *
@@ -219,8 +208,7 @@ class MaterialService
     /**
      * Up Material in Multimedia Object.
      *
-     * @param MultimediaObject $multimediaObject
-     * @param \MongoId|string  $materialId
+     * @param \MongoId|string $materialId
      *
      * @return MultimediaObject
      */
@@ -236,8 +224,7 @@ class MaterialService
     /**
      * Down Material in Multimedia Object.
      *
-     * @param MultimediaObject $multimediaObject
-     * @param \MongoId|string  $materialId
+     * @param \MongoId|string $materialId
      *
      * @return MultimediaObject
      */
@@ -253,8 +240,6 @@ class MaterialService
     /**
      * Get VTT captions.
      *
-     * @param MultimediaObject $multimediaObject
-     *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getCaptions(MultimediaObject $multimediaObject)
@@ -269,8 +254,7 @@ class MaterialService
     /**
      * Save form data of Material.
      *
-     * @param Material $material
-     * @param array    $formData
+     * @param array $formData
      *
      * @return Material
      */

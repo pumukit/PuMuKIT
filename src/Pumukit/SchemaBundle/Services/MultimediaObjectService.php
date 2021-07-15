@@ -102,8 +102,6 @@ class MultimediaObjectService
     /**
      * Update multimedia object.
      *
-     * @param MultimediaObject $multimediaObject
-     *
      * @return MultimediaObject
      */
     public function updateMultimediaObject(MultimediaObject $multimediaObject)
@@ -118,8 +116,6 @@ class MultimediaObjectService
 
     /**
      * Inc num view of multimedia object.
-     *
-     * @param MultimediaObject $multimediaObject
      */
     public function incNumView(MultimediaObject $multimediaObject)
     {
@@ -130,9 +126,7 @@ class MultimediaObjectService
     /**
      * Add  group to multimediaObject.
      *
-     * @param Group            $group
-     * @param MultimediaObject $multimediaObject
-     * @param bool             $executeFlush
+     * @param bool $executeFlush
      */
     public function addGroup(Group $group, MultimediaObject $multimediaObject, $executeFlush = true)
     {
@@ -149,9 +143,7 @@ class MultimediaObjectService
     /**
      * Delete  group to multimediaObject.
      *
-     * @param Group            $group
-     * @param MultimediaObject $multimediaObject
-     * @param bool             $executeFlush
+     * @param bool $executeFlush
      */
     public function deleteGroup(Group $group, MultimediaObject $multimediaObject, $executeFlush = true)
     {
@@ -191,8 +183,6 @@ class MultimediaObjectService
 
     /**
      * Delete all multimedia objects from group.
-     *
-     * @param Group $group
      */
     public function deleteAllFromGroup(Group $group)
     {
@@ -205,8 +195,6 @@ class MultimediaObjectService
 
     /**
      * Removes this multimedia object reference from all existing playlists.
-     *
-     * @param MultimediaObject $multimediaObject
      */
     public function removeFromAllPlaylists(MultimediaObject $multimediaObject)
     {

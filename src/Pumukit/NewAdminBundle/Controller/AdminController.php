@@ -32,8 +32,6 @@ class AdminController extends ResourceController implements NewAdminControllerIn
      * Overwrite to return list and not index
      * and show toast message.
      *
-     * @param Request $request
-     *
      * @return JsonResponse|Response|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
@@ -72,8 +70,6 @@ class AdminController extends ResourceController implements NewAdminControllerIn
      * Update Action
      * Overwrite to return list and not index
      * and show toast message.
-     *
-     * @param Request $request
      *
      * @return JsonResponse|Response|\Symfony\Component\HttpFoundation\RedirectResponse
      */

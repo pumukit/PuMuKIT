@@ -25,11 +25,8 @@ class PersonService
     /**
      * Constructor.
      *
-     * @param DocumentManager                      $documentManager
-     * @param PersonWithRoleEventDispatcherService $dispatcher
-     * @param UserService                          $userService
-     * @param bool                                 $addUserAsPerson
-     * @param string                               $personalScopeRoleCode
+     * @param bool   $addUserAsPerson
+     * @param string $personalScopeRoleCode
      */
     public function __construct(DocumentManager $documentManager, PersonWithRoleEventDispatcherService $dispatcher, UserService $userService, $addUserAsPerson = true, $personalScopeRoleCode = 'owner')
     {
@@ -46,8 +43,6 @@ class PersonService
     /**
      * Save Person.
      *
-     * @param Person $person
-     *
      * @return Person
      */
     public function savePerson(Person $person)
@@ -60,8 +55,6 @@ class PersonService
 
     /**
      * Save Role.
-     *
-     * @param Role $role
      *
      * @return Role
      */
@@ -112,8 +105,6 @@ class PersonService
     /**
      * Update update person.
      *
-     * @param Person $person
-     *
      * @return Person
      */
     public function updatePerson(Person $person)
@@ -137,8 +128,6 @@ class PersonService
 
     /**
      * Update update role.
-     *
-     * @param Role $role
      *
      * @return Role
      */
@@ -169,8 +158,7 @@ class PersonService
     /**
      * Find series with person.
      *
-     * @param Person $person
-     * @param int    $limit  Number of series, all by default
+     * @param int $limit Number of series, all by default
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -199,11 +187,8 @@ class PersonService
     /**
      * Create relation person.
      *
-     * @param Person           $person
-     * @param Role             $role
-     * @param MultimediaObject $multimediaObject
-     * @param mixed            $flush
-     * @param mixed            $dispatch
+     * @param mixed $flush
+     * @param mixed $dispatch
      *
      * @return MultimediaObject
      */
@@ -235,7 +220,6 @@ class PersonService
      * Returns people with partial name in it
      *
      * @param string $name
-     * @param array  $exclude
      * @param bool   $checkAccents
      *
      * @return ArrayCollection
@@ -262,10 +246,6 @@ class PersonService
     /**
      * Up person with role.
      *
-     * @param Person           $person
-     * @param Role             $role
-     * @param MultimediaObject $multimediaObject
-     *
      * @return MultimediaObject
      */
     public function upPersonWithRole(Person $person, Role $role, MultimediaObject $multimediaObject)
@@ -280,10 +260,6 @@ class PersonService
     /**
      * Down person with role.
      *
-     * @param Person           $person
-     * @param Role             $role
-     * @param MultimediaObject $multimediaObject
-     *
      * @return MultimediaObject
      */
     public function downPersonWithRole(Person $person, Role $role, MultimediaObject $multimediaObject)
@@ -297,10 +273,6 @@ class PersonService
 
     /**
      * Delete relation of embedded person with role in multimedia object.
-     *
-     * @param Person           $person
-     * @param Role             $role
-     * @param MultimediaObject $multimediaObject
      *
      * @return MultimediaObject $multimediaObject
      */
@@ -343,8 +315,6 @@ class PersonService
 
     /**
      * Batch delete person.
-     *
-     * @param Person $person
      */
     public function batchDeletePerson(Person $person)
     {
@@ -379,8 +349,6 @@ class PersonService
     /**
      * Reference Person into User.
      *
-     * @param User $user
-     *
      * @return User
      */
     public function referencePersonIntoUser(User $user)
@@ -405,8 +373,6 @@ class PersonService
      * Get the Person referenced
      * in the logged in User
      * It there is none, it creates it
-     *
-     * @param User|null $loggedInUser
      *
      * @return Person|null
      */
@@ -475,9 +441,7 @@ class PersonService
     /**
      * Remove User from Person.
      *
-     * @param User   $user
-     * @param Person $person
-     * @param bool   $executeFlush
+     * @param bool $executeFlush
      */
     public function removeUserFromPerson(User $user, Person $person, $executeFlush = true)
     {
@@ -490,8 +454,6 @@ class PersonService
 
     /**
      * Create from User.
-     *
-     * @param User $user
      *
      * @return Person
      */
@@ -520,9 +482,6 @@ class PersonService
 
     /**
      * Update embedded person.
-     *
-     * @param Person         $person
-     * @param EmbeddedPerson $embeddedPerson
      *
      * @return EmbeddedPerson
      */

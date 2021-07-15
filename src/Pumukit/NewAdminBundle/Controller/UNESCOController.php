@@ -69,8 +69,6 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
      * @Route("/", name="pumukitnewadmin_unesco_index")
      * @Template("PumukitNewAdminBundle:UNESCO:index.html.twig")
      *
-     * @param Request $request
-     *
      * @throws \Exception
      *
      * @return array
@@ -265,8 +263,6 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
     /**
      * @Route("/add/criteria", name="pumukitnewadmin_unesco_addcriteria")
      *
-     * @param Request $request
-     *
      * @return JsonResponse
      */
     public function addCriteriaSessionAction(Request $request)
@@ -280,9 +276,6 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @param Request          $request
-     * @param MultimediaObject $multimediaObject
-     *
      * @throws \Exception
      *
      * @return array|Response
@@ -402,7 +395,6 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @param Request $request
      * @Route("/advance/search/form", name="pumukitnewadmin_unesco_advance_search_form")
      * @Template("PumukitNewAdminBundle:UNESCO:search_view.html.twig")
      *
@@ -527,8 +519,7 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @param Request $request
-     * @param string  $option
+     * @param string $option
      *
      * @return JsonResponse
      * @Route("/option/selected/{option}", name="pumukitnewadmin_unesco_options_list")
@@ -553,6 +544,7 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
             }
 
             break;
+
         case 'invert_announce_selected':
             $tagService = $this->container->get('pumukitschema.tag');
             $pudeNew = $dm->getRepository(Tag::class)->findOneBy(['cod' => 'PUDENEW']);
@@ -566,6 +558,7 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
             }
 
             break;
+
         default:
             break;
         }
@@ -627,8 +620,6 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
     /**
      * @Template("PumukitNewAdminBundle:UNESCO:custom_fields.html.twig")
      *
-     * @param Request $request
-     *
      * @return array
      */
     public function customFieldsAction(Request $request)
@@ -648,8 +639,6 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
 
     /**
      * @Route("/custom/fields/add", name="pumukitnewadmin_catalogue_custom_fields")
-     *
-     * @param Request $request
      *
      * @return JsonResponse
      */
@@ -702,6 +691,7 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
                 ;
 
                 break;
+
             case 'tag':
                 $selectedTag = $dm->getRepository(Tag::class)->findOneBy(['cod' => $tag]);
                 $query = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder()
@@ -710,6 +700,7 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
                 ;
 
                 break;
+
             case '2':
             default:
                 // NOTE: All videos

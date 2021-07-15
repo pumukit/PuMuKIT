@@ -236,8 +236,6 @@ class Role
 
     /**
      * Set I18n name.
-     *
-     * @param array $name
      */
     public function setI18nName(array $name)
     {
@@ -289,8 +287,6 @@ class Role
 
     /**
      * Set I18n text.
-     *
-     * @param array $text
      */
     public function setI18nText(array $text)
     {

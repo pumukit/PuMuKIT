@@ -17,8 +17,6 @@ class CategoriesController extends Controller implements WebTVControllerInterfac
      * @Route("/categories", name="pumukit_webtv_categories_index")
      * @Template("PumukitWebTVBundle:Categories:template.html.twig")
      *
-     * @param Request $request
-     *
      * @return array
      */
     public function indexAction(Request $request)

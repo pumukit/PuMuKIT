@@ -24,9 +24,6 @@ class ChatController extends Controller
      * @Route("/show/{id}", name="pumukit_live_chat_show")
      * @Template("PumukitWebTVBundle:Live/Chat:show.html.twig")
      *
-     * @param MultimediaObject $multimediaObject
-     * @param Request          $request
-     *
      * @return array
      */
     public function showAction(MultimediaObject $multimediaObject, Request $request)
@@ -54,9 +51,6 @@ class ChatController extends Controller
      * @ParamConverter("live", class="PumukitSchemaBundle:Live", options={"id" = "id"})
      * @Route("/basic/show/{id}", name="pumukit_live_chat_basic_show")
      * @Template("PumukitWebTVBundle:Live/Chat:basicLiveShow.html.twig")
-     *
-     * @param Request $request
-     * @param Live    $live
      *
      * @return array
      */
@@ -87,9 +81,6 @@ class ChatController extends Controller
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "id"})
      * @Route("/post/{id}", name="pumukit_live_chat_post")
      *
-     * @param MultimediaObject $multimediaObject
-     * @param Request          $request
-     *
      * @throws \Exception
      *
      * @return JsonResponse
@@ -118,9 +109,6 @@ class ChatController extends Controller
     /**
      * @ParamConverter("live", class="PumukitSchemaBundle:Live", options={"id" = "id"})
      * @Route("/basic/post/{id}", name="pumukit_live_chat_basic_post")
-     *
-     * @param Live    $live
-     * @param Request $request
      *
      * @throws \Exception
      *
@@ -154,8 +142,6 @@ class ChatController extends Controller
      * @Route("/list/{id}", name="pumukit_live_chat_list")
      * @Template("PumukitWebTVBundle:Live/Chat:list.html.twig")
      *
-     * @param MultimediaObject $multimediaObject
-     *
      * @return array
      */
     public function listAction(MultimediaObject $multimediaObject)
@@ -176,8 +162,6 @@ class ChatController extends Controller
      * @ParamConverter("live", class="PumukitSchemaBundle:Live", options={"id" = "id"})
      * @Route("/basic/list/{id}", name="pumukit_live_chat_basic_list")
      * @Template("PumukitWebTVBundle:Live/Chat:list.html.twig")
-     *
-     * @param Live $live
      *
      * @return array
      */

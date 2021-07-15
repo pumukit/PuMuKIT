@@ -16,8 +16,6 @@ class GroupEventDispatcherService
 
     /**
      * Constructor.
-     *
-     * @param EventDispatcherInterface $dispatcher
      */
     public function __construct(EventDispatcherInterface $dispatcher)
     {
@@ -30,8 +28,6 @@ class GroupEventDispatcherService
      * Dispatchs the event GROUP_CREATE
      * 'group.create' passing
      * the group
-     *
-     * @param Group $group
      */
     public function dispatchCreate(Group $group)
     {
@@ -45,8 +41,6 @@ class GroupEventDispatcherService
      * Dispatchs the event GROUP_UPDATE
      * 'group.update' passing
      * the group
-     *
-     * @param Group $group
      */
     public function dispatchUpdate(Group $group)
     {
@@ -60,8 +54,6 @@ class GroupEventDispatcherService
      * Dispatchs the event GROUP_DELETE
      * 'group.delete' passing
      * the group
-     *
-     * @param Group $group
      */
     public function dispatchDelete(Group $group)
     {

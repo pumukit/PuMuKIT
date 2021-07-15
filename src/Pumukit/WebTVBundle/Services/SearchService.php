@@ -123,27 +123,30 @@ class SearchService
     }
 
     /**
-     * @param Builder $queryBuilder
-     * @param string  $typeFound
+     * @param string $typeFound
      *
      * @return Builder
      */
     public function addTypeQueryBuilder(Builder $queryBuilder, $typeFound)
     {
         $type = '';
+
         switch ($typeFound) {
             case 'audio':
                 $type = MultimediaObject::TYPE_AUDIO;
 
                 break;
+
             case 'video':
                 $type = MultimediaObject::TYPE_VIDEO;
 
                 break;
+
             case 'external':
                 $type = MultimediaObject::TYPE_EXTERNAL;
 
                 break;
+
             default:
         }
         if ('' !== $type) {
@@ -154,8 +157,7 @@ class SearchService
     }
 
     /**
-     * @param Builder $queryBuilder
-     * @param string  $durationFound
+     * @param string $durationFound
      *
      * @return Builder
      */
@@ -183,9 +185,8 @@ class SearchService
     }
 
     /**
-     * @param Builder $queryBuilder
-     * @param string  $locale
-     * @param string  $searchFound
+     * @param string $locale
+     * @param string $searchFound
      *
      * @throws \MongoException
      *
@@ -211,11 +212,10 @@ class SearchService
     }
 
     /**
-     * @param Builder $queryBuilder
-     * @param string  $startFound
-     * @param string  $endFound
-     * @param string  $yearFound
-     * @param string  $dateField
+     * @param string $startFound
+     * @param string $endFound
+     * @param string $yearFound
+     * @param string $dateField
      *
      * @return mixed
      */
@@ -242,8 +242,7 @@ class SearchService
     }
 
     /**
-     * @param Builder $queryBuilder
-     * @param string  $languageFound
+     * @param string $languageFound
      *
      * @return Builder
      */
@@ -257,10 +256,7 @@ class SearchService
     }
 
     /**
-     * @param Builder    $queryBuilder
-     * @param array|null $tagsFound
-     * @param Tag|null   $blockedTag
-     * @param bool       $useTagAsGeneral
+     * @param bool $useTagAsGeneral
      *
      * @throws \MongoException
      *
@@ -287,8 +283,6 @@ class SearchService
     }
 
     /**
-     * @param Builder $queryBuilder
-     *
      * @return Builder
      */
     public function addValidSeriesQueryBuilder(Builder $queryBuilder)
@@ -305,8 +299,7 @@ class SearchService
     }
 
     /**
-     * @param Builder $queryBuilder
-     * @param string  $license
+     * @param string $license
      *
      * @return Builder
      */

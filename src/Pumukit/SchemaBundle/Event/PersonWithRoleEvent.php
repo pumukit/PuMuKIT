@@ -27,7 +27,6 @@ class PersonWithRoleEvent extends Event
     protected $role;
 
     /**
-     * @param MultimediaObject      $multimediaObject
      * @param EmbeddedPerson|Person $person
      * @param EmbeddedRole|Role     $role
      */

@@ -13,8 +13,6 @@ class SeriesSearchService
 
     /**
      * SeriesSearchService constructor.
-     *
-     * @param DocumentManager $documentManager
      */
     public function __construct(DocumentManager $documentManager)
     {

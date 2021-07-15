@@ -193,7 +193,7 @@ class HeadAndTailService
             return $tag;
         }
 
-        throw new \Exception("Tag with code ${code} not found");
+        throw new \Exception("Tag with code {$code} not found");
     }
 
     private function getElementsByTagCode(string $tagCode): array

@@ -159,9 +159,8 @@ class EmbeddedEventSessionService
     /**
      * EmbeddedEventSessionService constructor.
      *
-     * @param DocumentManager $documentManager
-     * @param string          $defaultPoster
-     * @param string          $defaultThumbnail
+     * @param string $defaultPoster
+     * @param string $defaultThumbnail
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
@@ -440,8 +439,7 @@ class EmbeddedEventSessionService
     /**
      * Get sessions to show on menu of WebTV.
      *
-     * @param array $criteria
-     * @param int   $limit
+     * @param int $limit
      *
      * @return array
      */
@@ -532,8 +530,6 @@ class EmbeddedEventSessionService
      *
      * @deprecated: Use getEventPicPoster
      *
-     * @param EmbeddedEvent $event
-     *
      * @return string
      */
     public function getEventPoster(EmbeddedEvent $event)
@@ -545,8 +541,6 @@ class EmbeddedEventSessionService
 
     /**
      * Get event poster.
-     *
-     * @param MultimediaObject $multimediaObject
      *
      * @return string
      */
@@ -571,8 +565,6 @@ class EmbeddedEventSessionService
 
     /**
      * Get event thumbnail.
-     *
-     * @param EmbeddedEvent $event
      *
      * @return string
      */
@@ -626,8 +618,6 @@ class EmbeddedEventSessionService
      *
      * @deprecated NOTE: Use multimediaObject.getProperty('postertextcolor') to get text color and getDefaultPosterTextColor
      *
-     * @param MultimediaObject $multimediaObject
-     *
      * @return string
      */
     public function getPicPosterTextColor(MultimediaObject $multimediaObject)
@@ -644,8 +634,6 @@ class EmbeddedEventSessionService
      * Get poster text color.
      *
      * @deprecated Use getPicPosterTextColor
-     *
-     * @param EmbeddedEvent $event
      *
      * @return string
      */
@@ -670,13 +658,13 @@ class EmbeddedEventSessionService
      */
     public function validateHtmlColor($color)
     {
-        if (in_array(strtolower($color), $this->validColors) ||
-        preg_match('/^#[a-f0-9]{3}$/i', $color) ||
-        preg_match('/^#[a-f0-9]{6}$/i', $color)) {
+        if (in_array(strtolower($color), $this->validColors)
+        || preg_match('/^#[a-f0-9]{3}$/i', $color)
+        || preg_match('/^#[a-f0-9]{6}$/i', $color)) {
             return $color;
         }
-        if (preg_match('/^[a-f0-9]{6}$/i', $color) ||
-        preg_match('/^[a-f0-9]{3}$/i', $color)) {
+        if (preg_match('/^[a-f0-9]{6}$/i', $color)
+        || preg_match('/^[a-f0-9]{3}$/i', $color)) {
             return '#'.$color;
         }
 
@@ -686,8 +674,7 @@ class EmbeddedEventSessionService
     /**
      * Get current session date.
      *
-     * @param EmbeddedEvent $event
-     * @param bool          $start
+     * @param bool $start
      *
      * @return \DateTime
      */
@@ -708,8 +695,7 @@ class EmbeddedEventSessionService
     /**
      * Get first session date.
      *
-     * @param EmbeddedEvent $event
-     * @param bool          $start
+     * @param bool $start
      *
      * @return \DateTime
      */
@@ -771,8 +757,7 @@ class EmbeddedEventSessionService
     /**
      * Get current session date.
      *
-     * @param EmbeddedEvent $event
-     * @param bool          $start
+     * @param bool $start
      *
      * @return bool
      */
@@ -1224,8 +1209,6 @@ class EmbeddedEventSessionService
      *
      * @deprecated: Use getPicPoster
      *
-     * @param array $pics
-     *
      * @return string
      */
     private function getPoster(array $pics)
@@ -1243,8 +1226,6 @@ class EmbeddedEventSessionService
 
     /**
      * Get poster.
-     *
-     * @param MultimediaObject $multimediaObject
      *
      * @return string
      */

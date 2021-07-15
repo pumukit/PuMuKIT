@@ -165,10 +165,12 @@ class PumukitAdminExtension extends AbstractExtension
                 $iconClass = 'mdi-device-signal-wifi-4-bar';
 
                 break;
+
             case MultimediaObject::STATUS_HIDDEN:
                 $iconClass = 'mdi-device-signal-wifi-0-bar';
 
                 break;
+
             case MultimediaObject::STATUS_BLOCKED:
                 $iconClass = 'mdi-device-wifi-lock';
 
@@ -193,10 +195,12 @@ class PumukitAdminExtension extends AbstractExtension
                 }
 
                 break;
+
             case MultimediaObject::STATUS_HIDDEN:
                 $iconText = $this->translator->trans('Hidden: is not listed in the Series but can be played with magic URL');
 
                 break;
+
             case MultimediaObject::STATUS_BLOCKED:
                 $iconText = $this->translator->trans('Blocked: cannot be accessed outside the back-end');
 
@@ -502,10 +506,12 @@ class PumukitAdminExtension extends AbstractExtension
                     $mmobjsPublished = $mmobjCount['count'];
 
                     break;
+
                 case MultimediaObject::STATUS_HIDDEN:
                     $mmobjsHidden = $mmobjCount['count'];
 
                     break;
+
                 case MultimediaObject::STATUS_BLOCKED:
                     $mmobjsBlocked = $mmobjCount['count'];
 

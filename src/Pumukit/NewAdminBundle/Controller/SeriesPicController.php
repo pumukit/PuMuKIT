@@ -18,9 +18,6 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
     /**
      * @Template("PumukitNewAdminBundle:Pic:create.html.twig")
      *
-     * @param Series  $series
-     * @param Request $request
-     *
      * @return array
      */
     public function createAction(Series $series, Request $request)
@@ -33,8 +30,6 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
 
     /**
      * @Template("PumukitNewAdminBundle:Pic:list.html.twig")
-     *
-     * @param Series $series
      *
      * @return array
      */
@@ -50,9 +45,6 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
      * Assign a picture from an url or from an existing one to the series.
      *
      * @Template("PumukitNewAdminBundle:Pic:list.html.twig")
-     *
-     * @param Series  $series
-     * @param Request $request
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -78,9 +70,6 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
 
     /**
      * @Template("PumukitNewAdminBundle:Pic:upload.html.twig")
-     *
-     * @param Series  $series
-     * @param Request $request
      *
      * @return array
      */
@@ -120,8 +109,6 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
     /**
      * Delete pic.
      *
-     * @param Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request)
@@ -143,8 +130,6 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
 
     /**
      * Up pic.
-     *
-     * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -172,8 +157,6 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
     /**
      * Down pic.
      *
-     * @param Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function downAction(Request $request)
@@ -199,9 +182,6 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
 
     /**
      * @Template("PumukitNewAdminBundle:Pic:picstoaddlist.html.twig")
-     *
-     * @param Series  $series
-     * @param Request $request
      *
      * @return array
      */
@@ -232,9 +212,6 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
 
     /**
      * @Template("PumukitNewAdminBundle:Pic:banner.html.twig")
-     *
-     * @param Series  $series
-     * @param Request $request
      *
      * @return array
      */

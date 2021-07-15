@@ -117,8 +117,6 @@ class SeriesType
 
     /**
      * Set I18n name.
-     *
-     * @param array $name
      */
     public function setI18nName(array $name)
     {
@@ -170,8 +168,6 @@ class SeriesType
 
     /**
      * Set I18n description.
-     *
-     * @param array $description
      */
     public function setI18nDescription(array $description)
     {
@@ -230,8 +226,6 @@ class SeriesType
 
     /**
      * Contains series.
-     *
-     * @param Series $series
      *
      * @return bool
      */

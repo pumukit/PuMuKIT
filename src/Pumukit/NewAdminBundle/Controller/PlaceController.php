@@ -20,8 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
 class PlaceController extends Controller implements NewAdminControllerInterface
 {
     /**
-     * @param Request $request
-     *
      * @return array
      *
      * @Route("/", name="pumukitnewadmin_places_index")
@@ -38,8 +36,6 @@ class PlaceController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @param Request $request
-     *
      * @return array
      *
      * @Route("/parent/", name="pumukitnewadmin_places_parent")
@@ -56,8 +52,6 @@ class PlaceController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @param Tag $tag
-     *
      * @return array
      *
      * @Route("/children/{id}", name="pumukitnewadmin_places_children")
@@ -72,8 +66,6 @@ class PlaceController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @param Tag $tag
-     *
      * @return array
      *
      * @Route("/preview/{id}", name="pumukitnewadmin_places_children_preview")
@@ -95,7 +87,6 @@ class PlaceController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @param Request     $request
      * @param string|null $id
      *
      * @return array|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -140,9 +131,6 @@ class PlaceController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @param Request $request
-     * @param Tag     $tag
-     *
      * @throws \Exception
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -166,9 +154,6 @@ class PlaceController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @param Request $request
-     * @param Tag     $tag
-     *
      * @return array|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @Route("/update/{id}", name="pumukitnewadmin_places_update")
@@ -196,7 +181,6 @@ class PlaceController extends Controller implements NewAdminControllerInterface
     }
 
     /**
-     * @param Tag  $parent
      * @param bool $isPrecinct
      *
      * @return int|string

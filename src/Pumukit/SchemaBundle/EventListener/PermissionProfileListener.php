@@ -21,8 +21,6 @@ class PermissionProfileListener
     }
 
     /**
-     * @param PermissionProfileEvent $event
-     *
      * @throws \Exception
      */
     public function postUpdate(PermissionProfileEvent $event)

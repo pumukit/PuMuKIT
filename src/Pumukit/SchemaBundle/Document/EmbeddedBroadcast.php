@@ -164,8 +164,6 @@ class EmbeddedBroadcast
     /**
      * Contains group.
      *
-     * @param Group $group
-     *
      * @return bool
      */
     public function containsGroup(Group $group)
@@ -175,8 +173,6 @@ class EmbeddedBroadcast
 
     /**
      * Add admin group.
-     *
-     * @param Group $group
      */
     public function addGroup(Group $group)
     {
@@ -185,8 +181,6 @@ class EmbeddedBroadcast
 
     /**
      * Remove admin group.
-     *
-     * @param Group $group
      */
     public function removeGroup(Group $group)
     {
@@ -208,7 +202,7 @@ class EmbeddedBroadcast
      */
     public function isPasswordValid()
     {
-        return (self::TYPE_PUBLIC == $this->getType()) ||
-                ((self::TYPE_PASSWORD == $this->getType()) && ('' != $this->getPassword()));
+        return (self::TYPE_PUBLIC == $this->getType())
+                || ((self::TYPE_PASSWORD == $this->getType()) && ('' != $this->getPassword()));
     }
 }

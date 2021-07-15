@@ -98,6 +98,7 @@ class StatsService
     private function getMongoProjectDateArray($groupBy, $dateField = '$date')
     {
         $mongoProjectDate = [];
+
         switch ($groupBy) {
         case 'hour':
             $mongoProjectDate[] = 'H';

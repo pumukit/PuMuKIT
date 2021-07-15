@@ -22,9 +22,8 @@ class TagService
     /**
      * Add Tag to Multimedia Object.
      *
-     * @param MultimediaObject $mmobj
-     * @param string           $tagId
-     * @param bool             $executeFlush
+     * @param string $tagId
+     * @param bool   $executeFlush
      *
      *@throws \Exception
      *
@@ -43,9 +42,8 @@ class TagService
     /**
      * Add Tag to Multimedia Object.
      *
-     * @param MultimediaObject $mmobj
-     * @param string           $tagCod
-     * @param bool             $executeFlush
+     * @param string $tagCod
+     * @param bool   $executeFlush
      *
      * @throws \Exception
      *
@@ -64,9 +62,7 @@ class TagService
     /**
      * Add Tag to Multimedia Object.
      *
-     * @param MultimediaObject $mmobj
-     * @param Tag              $tag
-     * @param bool             $executeFlush
+     * @param bool $executeFlush
      *
      * @return array[Tag] addded tags
      */
@@ -102,9 +98,8 @@ class TagService
     /**
      * Remove Tag from Multimedia Object.
      *
-     * @param MultimediaObject $mmobj
-     * @param string           $tagId
-     * @param bool             $executeFlush
+     * @param string $tagId
+     * @param bool   $executeFlush
      *
      * @throws \Exception
      *
@@ -123,9 +118,7 @@ class TagService
     /**
      * Remove Tag from Multimedia Object.
      *
-     * @param MultimediaObject $mmobj
-     * @param Tag              $tag
-     * @param bool             $executeFlush
+     * @param bool $executeFlush
      *
      * @return array[Tag] removed tags
      */
@@ -160,9 +153,8 @@ class TagService
     /**
      * Remove one Tag from Multimedia Object.
      *
-     * @param MultimediaObject $mmobj
-     * @param string           $tagId
-     * @param bool             $executeFlush
+     * @param string $tagId
+     * @param bool   $executeFlush
      *
      * @throws \Exception
      *
@@ -181,9 +173,7 @@ class TagService
     /**
      * Remove one Tag from Multimedia Object.
      *
-     * @param MultimediaObject $mmobj
-     * @param Tag              $tag
-     * @param bool             $executeFlush
+     * @param bool $executeFlush
      *
      * @return array[Tag] removed tags
      */
@@ -211,8 +201,6 @@ class TagService
 
     /**
      * Update Tag.
-     *
-     * @param Tag $tag
      *
      * @return Tag
      */
@@ -247,8 +235,6 @@ class TagService
     /**
      * Save Tag.
      *
-     * @param Tag $tag
-     *
      * @return Tag
      */
     public function saveTag(Tag $tag)
@@ -263,8 +249,6 @@ class TagService
 
     /**
      * Delete Tag.
-     *
-     * @param Tag $tag
      *
      * @throws \Exception
      *
@@ -295,8 +279,6 @@ class TagService
 
     /**
      * Delete Tag.
-     *
-     * @param Tag $tag
      *
      * @return bool
      */
@@ -362,10 +344,8 @@ class TagService
     /**
      * Reset the descendent tags of an array of MultimediaObjects and set the target.
      *
-     * @param MultimediaObject $mmobj
-     * @param Tag[]            $newTags
-     * @param Tag              $parentTag
-     * @param bool             $executeFlush
+     * @param Tag[] $newTags
+     * @param bool  $executeFlush
      */
     public function syncTags(MultimediaObject $mmobj, array $newTags, Tag $parentTag, $executeFlush = true)
     {
@@ -401,9 +381,6 @@ class TagService
     /**
      * Resets only the 'Categories' tags. Those are all except for the 'PUBCHANNEL' and 'PUBDECISION' tags.
      *
-     * @param array $mmobjs
-     * @param array $newTags
-     *
      * @throws \Doctrine\ODM\MongoDB\LockException
      * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      */
@@ -423,9 +400,7 @@ class TagService
     /**
      * Resets only the 'Categories' tags. Those are all except for the 'PUBCHANNEL' and 'PUBDECISION' tags.
      *
-     * @param MultimediaObject $mmobj
-     * @param array            $newTags
-     * @param bool             $executeFlush
+     * @param bool $executeFlush
      *
      * @throws \Doctrine\ODM\MongoDB\LockException
      * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException

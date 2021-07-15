@@ -14,8 +14,6 @@ class PlayerService
 
     /**
      * PlayerService constructor.
-     *
-     * @param RouterInterface $router
      */
     public function __construct(RouterInterface $router)
     {
@@ -23,8 +21,6 @@ class PlayerService
     }
 
     /**
-     * @param MultimediaObject $multimediaObject
-     *
      * @return mixed
      */
     public function getPublicControllerPlayer(MultimediaObject $multimediaObject)
@@ -37,8 +33,6 @@ class PlayerService
     }
 
     /**
-     * @param MultimediaObject $multimediaObject
-     *
      * @return mixed
      */
     public function getMagicControllerPlayer(MultimediaObject $multimediaObject)

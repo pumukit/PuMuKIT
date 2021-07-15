@@ -37,9 +37,7 @@ class PicExtractorService
     /**
      * Extract pics on batch.
      *
-     * @param MultimediaObject $multimediaObject
-     * @param Track            $track
-     * @param array            $marks
+     * @param array $marks
      *
      * @return bool|string
      */
@@ -62,9 +60,7 @@ class PicExtractorService
     /**
      * Extract Pic.
      *
-     * @param MultimediaObject $multimediaObject
-     * @param Track            $track
-     * @param int|null         $numframe
+     * @param int|null $numframe
      *
      * @return string $message
      */
@@ -93,9 +89,7 @@ class PicExtractorService
      * Utilizando la libreria ffmpeg_php se genera un Pic que se asocia con el objeto
      * multimedia al que pertenece el archivo.
      *
-     * @param MultimediaObject $multimediaObject
-     * @param Track            $track
-     * @param int              $frame            numero del frame donde se realiza la captura
+     * @param int $frame numero del frame donde se realiza la captura
      *
      * @return bool|null
      */
@@ -156,8 +150,6 @@ class PicExtractorService
      * Get aspect
      * Return aspect ratio. Check is not zero.
      *
-     * @param Track $track
-     *
      * @return float|int aspect ratio
      */
     private function getAspect(Track $track)
@@ -193,8 +185,7 @@ class PicExtractorService
      * Private method needed because MmsPicService::addPicUrl doesn't return
      * the Pic instance (#9065).
      *
-     * @param MultimediaObject $multimediaObject
-     * @param string           $picUrl
+     * @param string $picUrl
      *
      * @return Pic|null
      */

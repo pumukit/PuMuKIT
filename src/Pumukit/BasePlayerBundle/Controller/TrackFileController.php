@@ -23,8 +23,7 @@ class TrackFileController extends Controller
      * @Route("/trackfile/{id}.{ext}", name="pumukit_trackfile_index")
      * @Route("/trackfile/{id}", name="pumukit_trackfile_index_no_ext")
      *
-     * @param string  $id
-     * @param Request $request
+     * @param string $id
      *
      * @throws \Exception
      *
@@ -72,8 +71,7 @@ class TrackFileController extends Controller
     /**
      * @Route("/trackplayed/{id}", name="pumukit_trackplayed_index")
      *
-     * @param Request $request
-     * @param string  $id
+     * @param string $id
      *
      * @throws \Exception
      *
@@ -101,7 +99,6 @@ class TrackFileController extends Controller
     }
 
     /**
-     * @param Track     $track
      * @param float|int $timestamp
      * @param string    $secret
      * @param string    $ip
@@ -117,9 +114,6 @@ class TrackFileController extends Controller
     }
 
     /**
-     * @param Track   $track
-     * @param Request $request
-     *
      * @return bool
      */
     protected function shouldIncreaseViews(Request $request, MultimediaObject $multimediaObject, Track $track)
@@ -150,10 +144,6 @@ class TrackFileController extends Controller
         return false;
     }
 
-    /**
-     * @param MultimediaObject $multimediaObject
-     * @param Track|null       $track
-     */
     protected function dispatchViewEvent(MultimediaObject $multimediaObject, Track $track = null)
     {
         $event = new ViewedEvent($multimediaObject, $track);

@@ -325,16 +325,19 @@ class EventsController extends Controller implements NewAdminControllerInterface
                 $message = $this->cloneEvent($multimediaObject);
 
                 break;
+
             case 'delete':
                 $message = $this->deleteEvent($multimediaObject);
                 $this->container->get('session')->set('admin/live/event/id', null);
 
                 break;
+
             case 'deleteAll':
                 $message = $this->deleteEventAndSeries($multimediaObject);
                 $this->container->get('session')->set('admin/live/event/id', null);
 
                 break;
+
             default:
                 $message = 'Option not allowed';
 

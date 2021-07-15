@@ -42,8 +42,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
      *
      * @Template
      *
-     * @param Request $request
-     *
      * @throws \Doctrine\ODM\MongoDB\LockException
      * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      *
@@ -1095,8 +1093,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     /**
      * User last relation.
      *
-     * @param Request $request
-     *
      * @return JsonResponse
      */
     public function userLastRelationAction(Request $request)
@@ -1294,8 +1290,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     /**
      * Gets the list of resources according to a criteria.
      *
-     * @param Request $request
-     * @param mixed   $criteria
+     * @param mixed $criteria
      *
      * @return Pagerfanta
      */
@@ -1345,7 +1340,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             $key .= '.'.$request->getLocale();
         }
 
-        return  [$key => $value];
+        return [$key => $value];
     }
 
     public function getResourceName()
@@ -1371,9 +1366,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
     /**
      * Sync selected metadata on all mmobjs of the series.
-     *
-     * @param Request          $request
-     * @param MultimediaObject $multimediaObject
      *
      * @throws \Exception
      *
@@ -1414,9 +1406,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * @param Request          $request
-     * @param MultimediaObject $multimediaObject
-     *
      * @return JsonResponse
      */
     public function updateMultimediaObjectSyncAction(Request $request, MultimediaObject $multimediaObject)
@@ -1451,9 +1440,9 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     {
         if (null !== $checkedTags) {
             foreach ($resource->getTags() as $tag) {
-                if ((0 == strpos($tag->getCod(), $codStart)) && (false !== strpos($tag->getCod(), $codStart)) &&
-                    (!in_array($tag->getCod(), $checkedTags)) &&
-                    (!$this->isGranted(Permission::getRoleTagDisableForPubChannel($tag->getCod())))) {
+                if ((0 == strpos($tag->getCod(), $codStart)) && (false !== strpos($tag->getCod(), $codStart))
+                    && (!in_array($tag->getCod(), $checkedTags))
+                    && (!$this->isGranted(Permission::getRoleTagDisableForPubChannel($tag->getCod())))) {
                     $resource->removeTag($tag);
                 }
             }
@@ -1465,9 +1454,9 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             }
         } else {
             foreach ($resource->getTags() as $tag) {
-                if ((0 == strpos($tag->getCod(), $codStart)) &&
-                    (false !== strpos($tag->getCod(), $codStart)) &&
-                    (!$this->isGranted(Permission::getRoleTagDisableForPubChannel($tag->getCod())))) {
+                if ((0 == strpos($tag->getCod(), $codStart))
+                    && (false !== strpos($tag->getCod(), $codStart))
+                    && (!$this->isGranted(Permission::getRoleTagDisableForPubChannel($tag->getCod())))) {
                     $resource->removeTag($tag);
                 }
             }
@@ -1538,9 +1527,9 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             $personService = $this->get('pumukitschema.person');
             $person = $personService->getPersonFromLoggedInUser($loggedInUser);
             $role = $personService->getPersonalScopeRole();
-            if (!$person ||
-                !$resource->containsPersonWithRole($person, $role) ||
-                count($resource->getPeopleByRole($role, true)) > 1) {
+            if (!$person
+                || !$resource->containsPersonWithRole($person, $role)
+                || count($resource->getPeopleByRole($role, true)) > 1) {
                 return false;
             }
         }

@@ -64,22 +64,26 @@ class EmbeddedBroadcastService
     public function createEmbeddedBroadcastByType($type = null)
     {
         $embeddedBroadcast = new EmbeddedBroadcast();
+
         switch ($type) {
         case EmbeddedBroadcast::TYPE_PASSWORD:
             $embeddedBroadcast->setType(EmbeddedBroadcast::TYPE_PASSWORD);
             $embeddedBroadcast->setName(EmbeddedBroadcast::NAME_PASSWORD);
 
             break;
+
         case EmbeddedBroadcast::TYPE_LOGIN:
             $embeddedBroadcast->setType(EmbeddedBroadcast::TYPE_LOGIN);
             $embeddedBroadcast->setName(EmbeddedBroadcast::NAME_LOGIN);
 
             break;
+
         case EmbeddedBroadcast::TYPE_GROUPS:
             $embeddedBroadcast->setType(EmbeddedBroadcast::TYPE_GROUPS);
             $embeddedBroadcast->setName(EmbeddedBroadcast::NAME_GROUPS);
 
             break;
+
         default:
             $embeddedBroadcast->setType(EmbeddedBroadcast::TYPE_PUBLIC);
             $embeddedBroadcast->setName(EmbeddedBroadcast::NAME_PUBLIC);

@@ -13,7 +13,6 @@ use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\TagService;
 use Symfony\Component\Process\ProcessBuilder;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
@@ -68,16 +67,9 @@ class WizardService
     /**
      * WizardService constructor.
      *
-     * @param DocumentManager               $documentManager
-     * @param FactoryService                $factoryService
-     * @param InspectionServiceInterface    $inspectionService
-     * @param FormEventDispatcherService    $formEventDispatcher
-     * @param JobService                    $jobService
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param TagService                    $tagService
-     * @param string                        $basePath
-     * @param array                         $locales
-     * @param bool|null                     $inboxDepth
+     * @param string    $basePath
+     * @param array     $locales
+     * @param bool|null $inboxDepth
      */
     public function __construct(
         DocumentManager $documentManager,
@@ -140,8 +132,6 @@ class WizardService
     }
 
     /**
-     * @param array $seriesData
-     *
      * @throws \Exception
      *
      * @return mixed|object|Series|null
@@ -161,8 +151,6 @@ class WizardService
     }
 
     /**
-     * @param array $seriesData
-     *
      * @throws \Exception
      *
      * @return mixed|Series|null
@@ -186,7 +174,6 @@ class WizardService
 
     /**
      * @param string $key
-     * @param array  $formData
      * @param array  $default
      *
      * @return mixed
@@ -265,9 +252,7 @@ class WizardService
     }
 
     /**
-     * @param MultimediaObject $multimediaObject
-     * @param string           $tagCode
-     * @param User             $user
+     * @param string $tagCode
      *
      * @throws \Exception
      *
@@ -290,10 +275,6 @@ class WizardService
     }
 
     /**
-     * @param array  $mmData
-     * @param Series $series
-     * @param User   $user
-     *
      * @throws \Exception
      *
      * @return MultimediaObject
@@ -337,10 +318,8 @@ class WizardService
     /**
      * @param User   $user
      * @param string $selectedPath
-     * @param int    $inboxDepth
      * @param string $series
      * @param string $status
-     * @param array  $pubChannel
      * @param string $profile
      * @param string $priority
      * @param string $language
