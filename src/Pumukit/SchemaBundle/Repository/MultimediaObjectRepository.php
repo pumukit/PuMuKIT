@@ -1760,4 +1760,21 @@ class MultimediaObjectRepository extends DocumentRepository
 
         return $this->addLimitToQueryBuilder($qb, $limit, $page);
     }
+
+    /**
+     * Find multimedia object by om id and status diferent to prtoype or new.
+     *
+     * @param string $idOM
+     * 
+     * @return array|object|null
+     */
+    public function findOneById($idOM)
+    {
+        return $this->createQueryBuilder()
+        ->field('_id')->equals(new \MongoId($idOM))
+        ->field('status')->notIn([MultimediaObject::STATUS_PROTOTYPE, MultimediaObject::STATUS_NEW])
+        ->getQuery()
+        ->getSingleResult()
+        ;
+    }
 }
