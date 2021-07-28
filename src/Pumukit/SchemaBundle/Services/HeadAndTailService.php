@@ -87,15 +87,26 @@ class HeadAndTailService
 
     public function getDisplayTrackFromMultimediaObjectId(string $multimediaObjectId): ?Track
     {
+        if ($this->documentManager->getFilterCollection()->isEnabled('frontend')) {
+            $this->documentManager->getFilterCollection()->disable('frontend');
+        }
+        
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy([
             '_id' => new ObjectId($multimediaObjectId),
+            'status' => ['$ne' => [MultimediaObject::STATUS_PROTOTYPE, MultimediaObject::STATUS_NEW]],
         ]);
+
+        $this->documentManager->getFilterCollection()->enable('frontend');
 
         if (!$multimediaObject instanceof MultimediaObject) {
             throw new \Exception('Multimedia Object not found');
         }
 
-        return $multimediaObject->getDisplayTrack();
+        if ($multimediaObject->isPublished() && $multimediaObject->containsTagWithCod('PUCHWEBTV')) {
+            return $multimediaObject->getDisplayTrack();
+        }
+
+        return null;
     }
 
     public function getTailToPlay(MultimediaObject $multimediaObject): ?string
