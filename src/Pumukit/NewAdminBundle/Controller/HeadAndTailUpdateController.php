@@ -21,6 +21,7 @@ class HeadAndTailUpdateController extends AdminController implements NewAdminCon
     {
         $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
         $translator = $this->get('translator');
+        $headAndTailService = $this->get('pumukit_schema.head_and_tail');
 
         $multimediaObject = $documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObject)]);
         if ($multimediaObject instanceof MultimediaObject) {
@@ -29,7 +30,9 @@ class HeadAndTailUpdateController extends AdminController implements NewAdminCon
             $documentManager->flush();
 
             $message = $translator->trans('Multimedia Object removed as head');
-            if ($isHead) {
+            if (!$isHead) {
+                $headAndTailService->removeHeadElementOnAllMultimediaObjectsAndSeries($multimediaObject->getId());
+            } else {
                 $message = $translator->trans('Multimedia Object set as head');
             }
 
@@ -47,6 +50,7 @@ class HeadAndTailUpdateController extends AdminController implements NewAdminCon
     {
         $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
         $translator = $this->get('translator');
+        $headAndTailService = $this->get('pumukit_schema.head_and_tail');
 
         $multimediaObject = $documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObject)]);
         if ($multimediaObject instanceof MultimediaObject) {
@@ -55,7 +59,9 @@ class HeadAndTailUpdateController extends AdminController implements NewAdminCon
             $documentManager->flush();
 
             $message = $translator->trans('Multimedia Object removed as tail');
-            if ($isTail) {
+            if (!$isTail) {
+                $headAndTailService->removeTailElementOnAllMultimediaObjectsAndSeries($multimediaObject->getId());
+            } else {
                 $message = $translator->trans('Multimedia Object set as tail');
             }
 

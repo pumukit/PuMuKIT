@@ -161,12 +161,12 @@ class HeadAndTailService
         return false;
     }
 
-    private function removeHeadElementOnAllMultimediaObjectsAndSeries(string $element)
+    public function removeHeadElementOnAllMultimediaObjectsAndSeries(string $element)
     {
         $this->removeElementOnMultimediaObjectAndSeries('head', $element);
     }
 
-    private function removeTailElementOnAllMultimediaObjectsAndSeries(string $element)
+    public function removeTailElementOnAllMultimediaObjectsAndSeries(string $element)
     {
         $this->removeElementOnMultimediaObjectAndSeries('tail', $element);
     }
