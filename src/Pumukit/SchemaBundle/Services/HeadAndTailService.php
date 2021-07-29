@@ -8,7 +8,6 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Track;
 
 class HeadAndTailService
@@ -36,34 +35,34 @@ class HeadAndTailService
 
     public function isHead(MultimediaObject $multimediaObject): bool
     {
-        return $multimediaObject->containsTagWithCod($this->getHeadTagCode());
+        return $multimediaObject->isHead();
     }
 
     public function isTail(MultimediaObject $multimediaObject): bool
     {
-        return $multimediaObject->containsTagWithCod($this->getTailTagCode());
+        return $multimediaObject->isTail();
     }
 
     public function getVideosAsHead(): array
     {
-        return $this->getElementsByTagCode($this->getHeadTagCode());
+        return $this->getHeadElements();
     }
 
     public function getVideosAsTail(): array
     {
-        return $this->getElementsByTagCode($this->getTailTagCode());
+        return $this->getTailElements();
     }
 
     public function getHead(): array
     {
-        $elements = $this->getElementsByTagCode($this->getHeadTagCode());
+        $elements = $this->getHeadElements();
 
         return $this->processReturnData($elements);
     }
 
     public function getTail(): array
     {
-        $elements = $this->getElementsByTagCode($this->getTailTagCode());
+        $elements = $this->getTailElements();
 
         return $this->processReturnData($elements);
     }
@@ -90,7 +89,7 @@ class HeadAndTailService
         if ($this->documentManager->getFilterCollection()->isEnabled('frontend')) {
             $this->documentManager->getFilterCollection()->disable('frontend');
         }
-        
+
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy([
             '_id' => new ObjectId($multimediaObjectId),
             'status' => ['$ne' => [MultimediaObject::STATUS_PROTOTYPE, MultimediaObject::STATUS_NEW]],
@@ -142,8 +141,7 @@ class HeadAndTailService
         }
 
         if ('head' === strtolower($type)) {
-            $tag = $this->getTagWithCode($this->getHeadTagCode());
-            $multimediaObject->removeTag($tag);
+            $multimediaObject->setHead(false);
             $this->documentManager->flush();
 
             $this->removeHeadElementOnAllMultimediaObjectsAndSeries($element);
@@ -152,8 +150,7 @@ class HeadAndTailService
         }
 
         if ('tail' === strtolower($type)) {
-            $tag = $this->getTagWithCode($this->getTailTagCode());
-            $multimediaObject->removeTag($tag);
+            $multimediaObject->setTags(false);
             $this->documentManager->flush();
 
             $this->removeTailElementOnAllMultimediaObjectsAndSeries($element);
@@ -197,20 +194,17 @@ class HeadAndTailService
         $this->documentManager->flush();
     }
 
-    private function getTagWithCode(string $code): Tag
-    {
-        $tag = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => $code]);
-        if ($tag instanceof Tag) {
-            return $tag;
-        }
-
-        throw new \Exception("Tag with code {$code} not found");
-    }
-
-    private function getElementsByTagCode(string $tagCode): array
+    private function getHeadElements(): array
     {
         return $this->documentManager->getRepository(MultimediaObject::class)->findBy([
-            'tags.cod' => $tagCode,
+            'head' => true,
+        ]);
+    }
+
+    private function getTailElements(): array
+    {
+        return $this->documentManager->getRepository(MultimediaObject::class)->findBy([
+            'tail' => true,
         ]);
     }
 
@@ -222,15 +216,5 @@ class HeadAndTailService
         }
 
         return $resultData;
-    }
-
-    private function getHeadTagCode(): string
-    {
-        return 'PUDEVIDEOHEAD';
-    }
-
-    private function getTailTagCode(): string
-    {
-        return 'PUDEVIDEOTAIL';
     }
 }

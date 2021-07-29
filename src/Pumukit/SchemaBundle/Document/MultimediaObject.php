@@ -232,6 +232,16 @@ class MultimediaObject
     private $people;
 
     /**
+     * @MongoDB\Field(type="boolean")
+     */
+    private $head = false;
+
+    /**
+     * @MongoDB\Field(type="boolean")
+     */
+    private $tail = false;
+
+    /**
      * @var array
      * @MongoDB\Field(type="raw")
      */
@@ -2020,6 +2030,26 @@ class MultimediaObject
     public function getSecondaryTextIndex()
     {
         return $this->secondarytextindex;
+    }
+
+    public function setHead(bool $isHead): void
+    {
+        $this->head = $isHead;
+    }
+
+    public function isHead(): bool
+    {
+        return $this->head;
+    }
+
+    public function setTail(bool $isTail): void
+    {
+        $this->tail = $isTail;
+    }
+
+    public function isTail(): bool
+    {
+        return $this->tail;
     }
 
     /**
