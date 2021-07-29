@@ -15,6 +15,58 @@ class HeadAndTailUpdateController extends AdminController implements NewAdminCon
 {
     /**
      * @Security("is_granted('ROLE_ADD_HEAD_AND_TAIL')")
+     * @Route("/head/update/{multimediaObject}/{isHead}", name="pumukit_newadmin_head_and_tail_set_head", methods={"POST"})
+     */
+    public function updateVideoHeadStatus(string $multimediaObject, string $isHead): JsonResponse
+    {
+        $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
+        $translator = $this->get('translator');
+
+        $multimediaObject = $documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObject)]);
+        if ($multimediaObject instanceof MultimediaObject) {
+            $isHead = 'true' === $isHead;
+            $multimediaObject->setHead($isHead);
+            $documentManager->flush();
+
+            $message = $translator->trans('Multimedia Object removed as head');
+            if ($isHead) {
+                $message = $translator->trans('Multimedia Object set as head');
+            }
+
+            return new JsonResponse(['success' => $message]);
+        }
+
+        return new JsonResponse(['success' => $translator->trans('Multimedia Object not found')]);
+    }
+
+    /**
+     * @Security("is_granted('ROLE_ADD_HEAD_AND_TAIL')")
+     * @Route("/tail/update/{multimediaObject}/{isTail}", name="pumukit_newadmin_head_and_tail_set_tail", methods={"POST"})
+     */
+    public function updateVideoTailStatus(string $multimediaObject, string $isTail): JsonResponse
+    {
+        $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
+        $translator = $this->get('translator');
+
+        $multimediaObject = $documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObject)]);
+        if ($multimediaObject instanceof MultimediaObject) {
+            $isTail = 'true' === $isTail;
+            $multimediaObject->setTail($isTail);
+            $documentManager->flush();
+
+            $message = $translator->trans('Multimedia Object removed as tail');
+            if ($isTail) {
+                $message = $translator->trans('Multimedia Object set as tail');
+            }
+
+            return new JsonResponse(['success' => $message]);
+        }
+
+        return new JsonResponse(['success' => $translator->trans('Multimedia Object not found')]);
+    }
+
+    /**
+     * @Security("is_granted('ROLE_ADD_HEAD_AND_TAIL')")
      * @Route("/headandtail/update/{multimediaObject}/{type}/{element}", name="pumukit_newadmin_head_and_tail_update", methods={"POST"})
      */
     public function updateHeadAndTail(string $type, string $multimediaObject, string $element): JsonResponse
