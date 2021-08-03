@@ -1,0 +1,29 @@
+parameters:
+  breadcrumbs_home_title: 'Prueba Media Portal '
+  search.parent_tag.cod: UNESCO
+  categories_tag_cod:        UNESCO                      # Cod of Root Tag to create the Categories page.
+  pumukit_web_tv.media_library.filter_tags:
+      - UNESCO
+  pumukit_web_tv.primary_color:   'white'
+  menu.search_title: "Full Catalogue"
+  pumukit_web_tv.secondary_color: '#333'
+  pumukit_web_tv.cinema_mode: false
+  limit_objs_bytag:          30                           # ByTag Pager limit.   (Default 10)
+  limit_objs_search:         30                           # Search Pager limit.  (Default 10)
+  limit_objs_series:         10                           # Search Pager limit.  (Default 10)
+  limit_objs_player_series:  30                           # Limit for mmobjs to appear on the mmobj player (Default 10)menu.show_stats
+  menu.show_stats: true
+  show_latest_with_pudenew: true
+  limit_objs_mostviewed:     4                            # Mostviewed limit.     (Default 3)
+  limit_objs_recentlyadded:  8                            # Recentlyadded limit.    (Default 3)
+  limit_objs_hightlight: 3                                # HightLight limit.    (Default 3)
+  columns_objs_announces:    4                            # Number of columns for announces. (Default 1)
+  columns_objs_bytag:        4                            # Number of columns for bytag.  (Default 2)
+  columns_objs_catalogue:    4                            # Number of columns for full catalogue. (Default 1)
+  columns_objs_search:       4                            # Number of columns for search. (Default 2)
+  columns_objs_byuser:       4                            # Number of columns for byuser.  (Default 2)
+  limit_objs_byuser:         30                           # ByUser Pager limit.   (Default 10)
+  catalogue_thumbnails:      true
+  pumukit_web_tv.breadcrumbs_parentweb:
+      title:  'Inicio'
+      url:    'https://www.google.com/es'

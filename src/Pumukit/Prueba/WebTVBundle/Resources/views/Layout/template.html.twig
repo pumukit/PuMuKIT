@@ -1,0 +1,89 @@
+<!doctype html>
+<html class="{% block html_class %}{% endblock %}" lang="{{ app.request.getLocale()|default(locales[0]) }}">
+<head>
+    {% block meta %}
+        <meta name="viewport" content="initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta charset="UTF-8"/>
+        {% if app.request.attributes.get('noindex') %}
+            <meta name="robots" content="none, noindex, nofollow"/>
+        {% else %}
+            <meta name="robots" content="index, follow"/>
+        {% endif %}
+        <meta name="revisit-after" content="1 days"/>
+        <meta name="language" content="{{ app.request.locale }}"/>
+        <meta name="keywords" content="{% block keywords %}{{ pumukit_info.keywords }}{% endblock %}"/>
+    {% endblock %}
+    <title>{% block title %}{{ pumukit_info.title|default('PuMuKIT') }}{% endblock %}</title>
+
+    {% block stylesheets %}
+        <link href="{{ asset('bundles/pumukitwebtv/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" media="screen"/>
+        <link href="{{ asset('bundles/pumukitwebtv/css/font-awesome.min.css') }}" type="text/css" rel="stylesheet" media="screen"/>
+        <link href="{{ path('pumukit_webtv_default_css') }}" type="text/css" rel="stylesheet" media="screen"/>
+        {% if app.request.attributes.has('microsite_custom_css') %}
+            <link href="{{ asset(app.request.attributes.get('microsite_custom_css')) }}" type="text/css" rel="stylesheet" media="screen"/>
+        {% endif %}
+    {% endblock %}
+
+    {% block javascripts %}
+        <script src="{{ asset('bundles/pumukitwebtv/js/jquery.min.js') }}"></script>
+        <script src="{{ asset('bundles/pumukitwebtv/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('bundles/pumukitwebtv/js/template_video.js') }}"></script>
+    {% endblock %}
+
+    {% block favicon %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('bundles/pumukitwebtv/images/favicon.ico') }}"/>
+    {% endblock %}
+</head>
+
+<body class="{% block body_class %}{% endblock %}">
+    {% block body_base %}
+
+        {% include "PumukitWebTVBundle:Layout:template_header_top.html.twig" %}
+        
+        <div class="template-menu-pmk">
+            <div style="margin-bottom:20px;">
+                {% include 'PumukitWebTVBundle:Menu:template.html.twig' %}
+            </div>
+        </div>
+
+        {% include 'PumukitWebTVBundle:Layout:template_header.html.twig' %}
+
+        {% if app.request.get('_route') != 'pumukit_webtv_index_index' %}
+            {{ render(controller('PumukitWebTVBundle:Modules:breadcrumbs')) }}
+        {% endif %}
+
+        {% block custom_block_before_body %}{% endblock %}
+
+        <div class="container-fluid content-pmk">
+            {% block body_without_container %}
+                <div class="container main-content">
+                    <div class="row">
+                        {% block body_without_bar %}
+                            {% block body %}
+                            {% endblock %}
+                        {% endblock %}
+                    </div>
+                </div>
+            {% endblock %}
+        </div>
+
+        {% block custom_block_after_body %}{% endblock %}
+
+        {% include "PumukitWebTVBundle:Layout:template_footer.html.twig" %}
+
+        <div class="container-fluid powered_by">
+            <div class="row">
+                {# Removing the original copyright line from footer breaks the AGPL license #}
+                <div class="container text-right">
+                    <img alt="PuMuKIT icon" src="{{ asset('bundles/pumukitwebtv/images/favicon.ico') }}" />
+                    <a href="http://pumukit.org">
+                        {{ "Powered by"|trans }} <span class="version">PuMuKIT {{constant('Pumukit\\PumukitVersion::VERSION')}}</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    {% endblock %}
+</body>
+</html>

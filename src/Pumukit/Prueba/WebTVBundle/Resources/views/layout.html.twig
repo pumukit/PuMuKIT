@@ -1,0 +1,12 @@
+{% extends 'PumukitWebTVBundle:Layout:template.html.twig' %}
+
+{% block favicon %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('bundles/pumukitpruebawebtv/images/barrera.png') }}" />
+{% endblock %}
+
+{% block title %}Prueba TV{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700" media="all" />
+{% endblock %}

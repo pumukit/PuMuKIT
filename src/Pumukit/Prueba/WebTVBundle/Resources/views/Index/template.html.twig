@@ -1,0 +1,23 @@
+{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+
+{% block favicon %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('bundles/pumukitpruebamwebtv/images/indice.png') }}"/>
+{% endblock %}
+
+{% block body %}
+    
+    {{ render(controller('PumukitWebTVBundle:Modules:highlight')) }}
+
+    {{ render(controller('PumukitWebTVBundle:Modules:recentlyAddedWithoutHighlight')) }}
+
+    <div class="col-xs-12 text-right show_more_link">
+        <a href="{{ path('pumukit_webtv_medialibrary_index') }}" title="{{ "Full Catalogue"|trans }}">
+            {{ "Show more"|trans }}...
+        </a>
+    </div>
+
+    {% if menu_stats|default(false) %}
+        {{ render(controller('PumukitWebTVBundle:Modules:stats')) }}
+    {% endif %}
+
+{% endblock %}

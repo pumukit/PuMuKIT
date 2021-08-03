@@ -1,0 +1,17 @@
+<div class="container-fluid header-bottom-pmk">
+    <div class="container">
+        <div class="header-logo">
+
+            <div class="hidden-xs col-sm-4 col-md-4">
+                {% include 'PumukitWebTVBundle:Misc:search_box.html.twig' with {'id': 'desktop' } %}
+            </div>
+            <div class="col-xs-6 col-sm-4 col-md-5 pull-right">
+
+                    {% block logo_url %}
+                        {% include 'PumukitWebTVBundle:Misc:logo.html.twig' %}
+                    {% endblock %}
+            </div>
+
+        </div>
+    </div>
+</div>

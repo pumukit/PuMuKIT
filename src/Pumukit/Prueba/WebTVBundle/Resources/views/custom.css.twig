@@ -1,0 +1,184 @@
+{% extends 'PumukitWebTVBundle::default.css.twig' %}
+
+{% block body %}
+{% autoescape false %}
+
+{% set breadcrumbs_background = '#ffffff ' %}
+{% set breadcrumbs_font_color = '#000000' %}
+{% set breadcrumbs_separator = '\002f' %}
+{% set big_breadcrumbs = false %}
+
+{% set page_background = '#fff' %}
+{% set default_content_font = '#000' %}
+
+{% set menu_background = '#fff' %}
+{% set menu_font_color = '#006d38' %}
+{% set menu_selected_font_color = '#006d38' %}
+
+{{ parent() }}
+
+/* General */
+body {
+    color: #175fc9;
+    background-color: #e5e5e7;
+    font-size: 12px;
+}
+
+h2 {
+    font-weight: normal;
+}
+
+footer {
+    background: #ffffff;
+    color: #6610f2;
+    border-top:30px solid #6610f2;
+    font-size: 12px;
+}
+
+.panel-pmk>.panel-heading {
+    background-color: #f90;
+}
+
+.label-pmk {
+    background-color: #f90;
+}
+
+.label-pmk a {
+    color: #ffffff;
+}
+
+.btn-pmk {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.menu-pmk {
+    background-color: #ff737c;
+    margin-top:15px;
+    font-size:18px;
+}
+
+.menu-pmk .navbar-custom {
+    background-color: #ff737c;
+    color:  #000000;
+    font-size: 20px;
+    border: 50px;
+}
+
+.footer-pmk .footer-content-pmk div {
+    color: #ff737c;
+    font-size: 18px;
+}
+
+.main-content h1 {
+    color: #6610f2;
+}
+
+@media (max-width:1199.98px) {
+
+    .search-box {
+        margin-top:25px;
+    }
+
+    .languages {
+        margin-top:5px;
+        margin-bottom:5px;
+    }
+}
+
+@media (max-width:991.98px) {
+    .search-box {
+        margin-top:25px;
+    }
+
+    .languages {
+        margin-top:5px;
+        margin-bottom:5px;
+    }
+}
+
+@media (max-width:767.98px) {
+    .footer-image-content {
+        margin-top:10px;
+        margin-bottom:10px;
+    }
+    .search-box {
+        margin-top:25px;
+    }
+
+    .search-box {
+        margin:8px;
+    }
+
+    .search-box .input-group-addon {
+        border: none;
+    }
+
+    .navbar-custom-links {
+        margin:8px;
+    }
+}
+
+.pagination>li>a, .pagination>li>span {
+    color: #f90 !important;
+}
+
+.pagination>li>a:hover {
+    color: #fff !important;
+    background-color: #f90;
+    border: 1px solid transparent;
+}
+
+.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus {
+    background-color: #f90;
+    color: #fff !important;
+    border-color: #dddddd;
+}
+
+.search-form a {
+    color: #205383;
+}
+
+.highlight h1, .recently h1 {
+    font-size:30px;
+    color: #000000;
+}
+
+.recently .image_representation .title_image_representation {
+    font-size:17px;
+}
+
+.highlight .image_representation .title_image_representation {
+    font-size:22px;
+}
+
+.second_line_image_representation, .date_and_visits {
+    color: #666666;
+    font-size:14px;
+}
+
+.image_representation .title_image_representation {
+    margin: 10px 0 0 0;
+}
+.image_representation .second_line_image_representation, .image_representation  .date_and_visits  {
+    margin:0;
+}
+
+@media (max-width: 992px) {
+    .highlight .image_representation .title_image_representation {
+        font-size:24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .recently .image_representation .title_image_representation {
+        font-size:24px;
+    }
+
+    .highlight .image_representation .title_image_representation {
+        font-size:24px;
+    }
+}
+
+{% endautoescape %}
+{% endblock %}
