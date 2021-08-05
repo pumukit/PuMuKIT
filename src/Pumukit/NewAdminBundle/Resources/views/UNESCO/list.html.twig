@@ -110,16 +110,18 @@
         });
 
         var option = $( "#options_mms option:selected" ).val();
-        var url = "{{ path('pumukitnewadmin_unesco_options_list', {'option': '__option__'}) }}";
-        var url = url.replace('__option__', option);
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: {'data': mmobjs},
-            success: function (response) {
-                location.reload();
-            }
-        });
+        if (confirm('{% trans %}Are you sure?{% endtrans %}')) {
+            var url = "{{ path('pumukitnewadmin_unesco_options_list', {'option': '__option__'}) }}";
+            var url = url.replace('__option__', option);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: {'data': mmobjs},
+                success: function (response) {
+                    location.reload();
+                }
+            });
+        }
    });
 
     $('.sort_unesco').on('click',function(event){
