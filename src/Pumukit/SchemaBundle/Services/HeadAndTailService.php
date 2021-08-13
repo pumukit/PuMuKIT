@@ -98,7 +98,7 @@ class HeadAndTailService
         $this->documentManager->getFilterCollection()->enable('frontend');
 
         if (!$multimediaObject instanceof MultimediaObject) {
-            throw new \Exception('Multimedia Object not found');
+            return null;
         }
 
         if ($multimediaObject->isPublished() && $multimediaObject->containsTagWithCod('PUCHWEBTV')) {
