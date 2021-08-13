@@ -30,7 +30,7 @@ class SeriesPicService
         $this->locales = $locales;
         $this->targetPath = realpath($targetPath);
         if (!$this->targetPath) {
-            throw new \InvalidArgumentException("The path '".$targetPath."' for storing Pics does not exist.");
+            throw new \InvalidArgumentException("The path '" . $targetPath . "' for storing Pics does not exist.");
         }
         $this->targetUrl = $targetUrl;
         $this->repoMmobj = $this->dm->getRepository(MultimediaObject::class);
@@ -42,7 +42,7 @@ class SeriesPicService
      */
     public function getTargetPath(Series $series)
     {
-        return $this->targetPath.'/series/'.$series->getId();
+        return $this->targetPath . '/series/' . $series->getId();
     }
 
     /**
@@ -50,7 +50,7 @@ class SeriesPicService
      */
     public function getTargetUrl(Series $series)
     {
-        return $this->targetUrl.'/series/'.$series->getId();
+        return $this->targetUrl . '/series/' . $series->getId();
     }
 
     /**
@@ -104,7 +104,14 @@ class SeriesPicService
             throw new FileNotFoundException($picFile->getPathname());
         }
 
-        $path = $picFile->move($this->getTargetPath($series), $picFile->getClientOriginalName());
+        if (file_exists($this->getTargetPath($series) . "/" . $picFile->getClientOriginalName())) {
+            $i = rand(0, 15);
+            $name = $picFile->getClientOriginalName() . $i;
+        } else {
+            $name = $picFile->getClientOriginalName();
+        }
+
+        $path = $picFile->move($this->getTargetPath($series), $name);
 
         $pic = new Pic();
         $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
@@ -164,7 +171,7 @@ class SeriesPicService
         try {
             $deleted = unlink($path);
             if (!$deleted) {
-                throw new \Exception("Error deleting file '".$path."' on disk");
+                throw new \Exception("Error deleting file '" . $path . "' on disk");
             }
             if (0 < strpos($dirname, $series->getId())) {
                 $finder = new Finder();
@@ -172,7 +179,7 @@ class SeriesPicService
                 if (0 === $finder->count()) {
                     $dirDeleted = rmdir($dirname);
                     if (!$dirDeleted) {
-                        throw new \Exception("Error deleting directory '".$dirname."'on disk");
+                        throw new \Exception("Error deleting directory '" . $dirname . "'on disk");
                     }
                 }
             }
