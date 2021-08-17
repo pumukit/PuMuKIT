@@ -5,6 +5,26 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
+    <trans-unit id="ed775784850e11e8adc0fa7ae01bbebc" resname="Este sitio web utiliza cookies propias y de terceros, para ofrecerle una mejor experiencia y servicio. Puedes revisar nuestra política de cookies en cualquier momento. Si estás de acuerdo marca la casilla correspondiente.">
+        <source>Este sitio web utiliza cookies propias y de terceros, para ofrecerle una mejor experiencia y servicio. Puedes revisar nuestra política de cookies en cualquier momento. Si estás de acuerdo marca la casilla correspondiente.</source>
+        <target>This website uses session and third-party cookies, to ensure you get the best experience and service. You can check our cookies policy anytime. If you agree check the following checkbox.</target>
+    </trans-unit>
+    <trans-unit id="ed775cd4850e11e8adc0fa7ae01bbebc" resname="Uso de cookies">
+        <source>Uso de cookies</source>
+        <target>Cookies</target>
+    </trans-unit>
+    <trans-unit id="ed775e46850e11e8adc0fa7ae01bbebc" resname="Politica de cookies">
+        <source>Politica de cookies</source>
+        <target>Cookies policy</target>
+    </trans-unit>
+    <trans-unit id="ed775f86850e11e8adc0fa7ae01bbebc" resname="Acepto">
+        <source>Acepto</source>
+        <target>Accept</target>
+    </trans-unit>
+    <trans-unit id="ed7760a8850e11e8adc0fa7ae01bbebc" resname="Aviso legal">
+        <source>Aviso legal</source>
+        <target>Legal warning</target>
+    </trans-unit>
       <trans-unit id="e1wLqeS" resname="Health Sciences">
         <source>Health Sciences</source>
         <target>Health Sciences</target>

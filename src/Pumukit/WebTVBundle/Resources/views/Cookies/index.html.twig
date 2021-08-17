@@ -1,0 +1,27 @@
+<div id="headercookie" class="cookielaw">
+    <div class="titlecookie">
+        <h2>{% trans %}Uso de cookies{% endtrans %}</h2>
+        <div class="textcookie">
+            {% include 'PumukitWebTVBundle:Cookies:cookies_text.html.twig' %}
+            <div class="clearfix"></div>
+            <button class="btn btn-default btn-accept-cookies">{% trans %}Acepto{% endtrans %}</button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function insertCookieUser() {
+        var a = getCookie("hasVisited");
+        if (typeof a == 'undefined' || (typeof a != 'undefined' && a.indexOf("yes") == -1)) {
+            $('#headercookie').show();
+        } else {
+            $('#headercookie').hide();
+        }
+    }
+    $('.btn-accept-cookies').on('click', function(event) {
+        event.preventDefault();
+        setCookieUser("hasVisited", "yes", 0, '/');
+        $('#headercookie').hide();
+    });
+    insertCookieUser();
+</script>
