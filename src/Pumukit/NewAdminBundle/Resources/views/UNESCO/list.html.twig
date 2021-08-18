@@ -120,8 +120,13 @@
                     location.reload();
                 }
             });
+            $( "#options_mms option:selected" ).val('default'); 
+        } else {
+            $( "#options_mms option:selected" ).val('default'); 
+            location.reload();
         }
-   });
+        
+    });
 
     $('.sort_unesco').on('click',function(event){
         event.preventDefault();
