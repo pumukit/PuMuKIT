@@ -80,7 +80,9 @@
                 </div>
             </div>
         </div>
-    {% include "@PumukitWebTV/Cookies/index.html.twig" %}
+        {% if (enable_cookie_banner == "true") %}
+            {% include "@PumukitWebTV/Cookies/index.html.twig" %}
+        {% endif %}
     {% endblock %}
 </body>
 </html>

@@ -1,11 +1,11 @@
 <div id="headercookie" class="cookielaw">
     <div class="titlecookie">
-        <h2>{% trans %}Uso de cookies{% endtrans %}</h2>
-        <div class="textcookie">
-            {% include 'PumukitWebTVBundle:Cookies:cookies_text.html.twig' %}
-            <div class="clearfix"></div>
-            <button class="btn btn-default btn-accept-cookies">{% trans %}Acepto{% endtrans %}</button>
-        </div>
+        {% trans %}Uso de cookies{% endtrans %}
+    </div>
+    <div class="textcookie">
+        {% include 'PumukitWebTVBundle:Cookies:cookies_text.html.twig' %}
+        <div class="clearfix"></div>
+        <button class="btn btn-default btn-accept-cookies" style="margin-top: 9px">{% trans %}Acepto{% endtrans %}</button>
     </div>
 </div>
 
@@ -23,5 +23,5 @@
         setCookieUser("hasVisited", "yes", 0, '/');
         $('#headercookie').hide();
     });
-    insertCookieUser();
+    insertCookieUser(); 
 </script>

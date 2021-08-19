@@ -1,4 +1,6 @@
 {{ "Este sitio web utiliza cookies propias y de terceros, para ofrecerle una mejor experiencia y servicio. Puedes revisar nuestra política de cookies en cualquier momento. Si estás de acuerdo marca la casilla correspondiente."|trans }}
-<a target="_blank" href="https://localhost/">
-    {% trans %}Politica de cookies{% endtrans %}
-</a> 
+{% if ("empty" != cookie_banner_privacy_link) %}
+    <a target="_blank" href={{ cookie_banner_privacy_link }} style="color: #ffffff">
+        {% trans %}Politica de cookies{% endtrans %}
+    </a> 
+{% endif %}
