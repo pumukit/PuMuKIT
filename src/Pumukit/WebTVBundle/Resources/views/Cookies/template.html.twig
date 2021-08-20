@@ -1,13 +1,12 @@
-
 {% if enable_cookie_banner is defined and enable_cookie_banner %}
     <div id="headercookie" class="cookielaw">
         <div class="titlecookie">
-            {% trans %}Uso de cookies{% endtrans %}
+            {{ "Cookies"|trans }}
         </div>
         <div class="textcookie">
             {% include 'PumukitWebTVBundle:Cookies:cookies_text.html.twig' %}
             <div class="clearfix"></div>
-            <button class="btn btn-default btn-accept-cookies" style="margin-top: 9px">{% trans %}Acepto{% endtrans %}</button>
+            <button class="btn btn-default btn-accept-cookies" style="margin-top: 9px">{{ "Accept"|trans }}</button>
         </div>
     </div>
 {% endif %}
@@ -15,7 +14,7 @@
 <script type="text/javascript">
     function insertCookieUser() {
         var a = getCookie("hasVisited");
-        if (typeof a == 'undefined' || (typeof a != 'undefined' && a.indexOf("yes") == -1)) {
+        if (typeof a == 'undefined' || (typeof a != 'undefined' && a.indexOf("yes") === -1)) {
             $('#headercookie').show();
         } else {
             $('#headercookie').hide();
@@ -26,5 +25,5 @@
         setCookieUser("hasVisited", "yes", 0, '/');
         $('#headercookie').hide();
     });
-    insertCookieUser(); 
+    insertCookieUser();
 </script>
