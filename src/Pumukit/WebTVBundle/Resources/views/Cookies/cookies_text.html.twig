@@ -1,0 +1,7 @@
+{{ "This website uses its own and third-party cookies to offer you a better experience and service. You can review our cookie policy at any time. If you agree, check the corresponding box."|trans }}
+
+{% if cookie_banner_privacy_link is defined and cookie_banner_privacy_link is not empty %}
+    <a target="_blank" href="{{ cookie_banner_privacy_link }}" style="color: #ffffff">
+        {% trans %}Cookie policy{% endtrans %}
+    </a>
+{% endif %}

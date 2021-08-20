@@ -28,8 +28,6 @@ parameters:
     pumukit.tmp:             "%env(PUMUKIT_TMP)%"
     pumukit.delete_on_disk:  "%env(bool:PUMUKIT_DELETE_ON_DISK)%"
 
-
-
 framework:
     #esi:             ~
     translator:      { fallback: "%locale%" }
@@ -59,6 +57,8 @@ twig:
     globals:
         pumukit_info:  "%pumukit.info%"
         locales:       "%pumukit.locales%"
+        enable_cookie_banner: '%env(bool:ENABLE_COOKIE_BANNER)%'
+        cookie_banner_privacy_link: "%env(COOKIE_BANNER_PRIVACY_LINK)%"
 
 # MongoDB configuration
 doctrine_mongodb:
