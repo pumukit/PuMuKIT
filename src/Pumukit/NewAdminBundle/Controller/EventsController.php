@@ -119,7 +119,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
         $event->setDate(new \DateTime());
 
         foreach ($languages as $language) {
-            $event->setName($translator->trans('New'), $language);
+            $event->setName($translator->trans('New', [], 'messages', $language), $language);
             $event->setDescription('', $language);
         }
 
