@@ -1584,7 +1584,7 @@
       </trans-unit>
       <trans-unit id="p3MjPS9" resname="Tag successfully updated.">
         <source>Tag successfully updated.</source>
-        <target state="translated">Categoría creada correctamente.</target>
+        <target state="translated">Categoría actualizada correctamente.</target>
       </trans-unit>
       <trans-unit id="yjTGzd8" resname="Duration(min)">
         <source>Duration(min)</source>
