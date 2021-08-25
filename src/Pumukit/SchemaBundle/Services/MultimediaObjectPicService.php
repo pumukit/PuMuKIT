@@ -26,7 +26,7 @@ class MultimediaObjectPicService
         $this->dispatcher = $dispatcher;
         $this->targetPath = realpath($targetPath);
         if (!$this->targetPath) {
-            throw new \InvalidArgumentException("The path '".$targetPath."' for storing Pics does not exist.");
+            throw new \InvalidArgumentException("The path '" . $targetPath . "' for storing Pics does not exist.");
         }
         $this->targetUrl = $targetUrl;
         $this->repo = $this->dm->getRepository(MultimediaObject::class);
@@ -40,7 +40,7 @@ class MultimediaObjectPicService
      */
     public function getTargetPath(MultimediaObject $multimediaObject)
     {
-        return $this->targetPath.'/series/'.$multimediaObject->getSeries()->getId().'/video/'.$multimediaObject->getId();
+        return $this->targetPath . '/series/' . $multimediaObject->getSeries()->getId() . '/video/' . $multimediaObject->getId();
     }
 
     /**
@@ -50,7 +50,7 @@ class MultimediaObjectPicService
      */
     public function getTargetUrl(MultimediaObject $multimediaObject)
     {
-        return $this->targetUrl.'/series/'.$multimediaObject->getSeries()->getId().'/video/'.$multimediaObject->getId();
+        return $this->targetUrl . '/series/' . $multimediaObject->getSeries()->getId() . '/video/' . $multimediaObject->getId();
     }
 
     /**
@@ -114,7 +114,14 @@ class MultimediaObjectPicService
             throw new FileNotFoundException($picFile->getPathname());
         }
 
-        $path = $picFile->move($this->getTargetPath($multimediaObject), $picFile->getClientOriginalName());
+        if (file_exists($this->getTargetPath($multimediaObject) . "/" . $picFile->getClientOriginalName())) {
+            $i = rand(0, 15);
+            $name = $picFile->getClientOriginalName() . $i;
+        } else {
+            $name = $picFile->getClientOriginalName();
+        }
+
+        $path = $picFile->move($this->getTargetPath($multimediaObject), $name);
 
         $pic = new Pic();
         $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
@@ -150,12 +157,12 @@ class MultimediaObjectPicService
 
         $mongoId = new \MongoId();
 
-        $fileName = $mongoId.'.'.$format;
-        $path = $absCurrentDir.'/'.$fileName;
+        $fileName = $mongoId . '.' . $format;
+        $path = $absCurrentDir . '/' . $fileName;
         while (file_exists($path)) {
             $mongoId = new \MongoId();
-            $fileName = $mongoId.'.'.$format;
-            $path = $absCurrentDir.'/'.$fileName;
+            $fileName = $mongoId . '.' . $format;
+            $path = $absCurrentDir . '/' . $fileName;
         }
 
         file_put_contents($path, $pic);
@@ -221,7 +228,7 @@ class MultimediaObjectPicService
         try {
             $deleted = unlink($path);
             if (!$deleted) {
-                throw new \Exception("Error deleting file '".$path."' on disk");
+                throw new \Exception("Error deleting file '" . $path . "' on disk");
             }
             if (0 < strpos($dirname, $multimediaObject->getId())) {
                 $finder = new Finder();
@@ -229,7 +236,7 @@ class MultimediaObjectPicService
                 if (0 === $finder->count()) {
                     $dirDeleted = rmdir($dirname);
                     if (!$dirDeleted) {
-                        throw new \Exception("Error deleting directory '".$dirname."'on disk");
+                        throw new \Exception("Error deleting directory '" . $dirname . "'on disk");
                     }
                 }
             }
