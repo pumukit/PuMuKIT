@@ -10,14 +10,9 @@
             <label class="col-xs-4 control-label" style="word-break: break-all; overflow: hidden; white-space: nowrap;">Default layout:</label>
             <div class="col-xs-8 input-group">
             <select class="form-control" id="paella-layout">
-              <option value="slide_professor" {% if mm.getProperty("paellalayout") == "slide_professor" %} selected="selected" {% endif %}>Slide - Professor</option>
               <option value="professor_slide" {% if mm.getProperty("paellalayout") == "professor_slide" %} selected="selected" {% endif %}>Professor - Slide</option>
               <option value="professor" {% if mm.getProperty("paellalayout") == "professor" %} selected="selected" {% endif %}>Professor</option>
               <option value="slide" {% if mm.getProperty("paellalayout") == "slide" %} selected="selected" {% endif %}>Slide</option>
-              <option value="slide_over_professor" {% if mm.getProperty("paellalayout") == "slide_over_professor" %} selected="selected" {% endif %}>Slide over Professor left</option>
-              <option value="slide_over_professor_right" {% if mm.getProperty("paellalayout") == "slide_over_professor_right" %} selected="selected" {% endif %}>Slide over Professor right</option>
-              <option value="professor_over_slide" {% if mm.getProperty("paellalayout") == "professor_over_slide" %} selected="selected" {% endif %}>Professor over Slide left</option>
-              <option value="professor_over_slide_right" {% if mm.getProperty("paellalayout") == "professor_over_slide_right" %} selected="selected" {% endif %}>Professor over Slide right</option>
             </select>
           </div>
         </div>
