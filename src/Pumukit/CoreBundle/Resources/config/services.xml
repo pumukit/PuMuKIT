@@ -56,5 +56,23 @@
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
 
+        <service id="tus_file_store" class="TusPhp\Cache\FileStore">
+            <argument>%kernel.project_dir%/app/cache/</argument>
+        </service>
+
+        <service id="tus_redis_store" class="TusPhp\Cache\RedisStore" />
+
+        <service id="tus_file_server"  class="TusPhp\Tus\Server">
+            <argument type="service" id="tus_redis_store" />
+        </service>
+
+<!--        <service id="pumukit.tus_upload" class="Pumukit\CoreBundle\Services\TusService">-->
+<!--            <argument>%pumukit.inbox%</argument>-->
+<!--        </service>-->
+<!--        -->
+        <service id="pumukit.tus_upload" class="Pumukit\CoreBundle\Services\TusService">
+            <argument type="service" id="tus_file_server" />
+        </service>
+
     </services>
 </container>
