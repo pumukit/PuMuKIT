@@ -53,7 +53,8 @@
         "symfony/debug-bundle": "^4.0",
         "symfony/maker-bundle": "^1.26",
         "symfony/phpunit-bridge": "^4.0",
-        "symfony/profiler-pack": "^1.0"
+        "symfony/stopwatch": "^4.4",
+        "symfony/web-profiler-bundle": "^4.4"
     },
     "scripts": {
         "post-install-cmd": [
