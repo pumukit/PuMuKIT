@@ -17,7 +17,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
  */
 class GroupEventDispatcherServiceTest extends PumukitTestCase
 {
-    const EMPTY_NAME = 'EMTPY_NAME';
+    public const EMPTY_NAME = 'EMTPY_NAME';
 
     private $dispatcher;
     private $groupDispatcher;

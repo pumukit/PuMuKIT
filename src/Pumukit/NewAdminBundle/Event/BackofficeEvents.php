@@ -15,5 +15,5 @@ final class BackofficeEvents
      *
      * @var string
      */
-    const PUBLICATION_SUBMIT = 'publication.submit';
+    public const PUBLICATION_SUBMIT = 'publication.submit';
 }

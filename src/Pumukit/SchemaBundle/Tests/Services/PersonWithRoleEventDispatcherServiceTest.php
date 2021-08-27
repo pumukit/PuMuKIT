@@ -18,9 +18,9 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class PersonWithRoleEventDispatcherServiceTest extends WebTestCase
 {
-    const EMPTY_TITLE = 'EMTPY TITLE';
-    const EMPTY_NAME = 'EMTPY NAME';
-    const EMPTY_CODE = 'EMTPY CODE';
+    public const EMPTY_TITLE = 'EMTPY TITLE';
+    public const EMPTY_NAME = 'EMTPY NAME';
+    public const EMPTY_CODE = 'EMTPY CODE';
 
     private $personWithRoleDispatcher;
     private $dispatcher;

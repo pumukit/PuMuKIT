@@ -17,7 +17,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class JobNotificationService
 {
-    const PERSONAL_SCOPE_ROLE_CODE = 'owner';
+    public const PERSONAL_SCOPE_ROLE_CODE = 'owner';
     protected $dm;
     protected $senderService;
     protected $jobService;

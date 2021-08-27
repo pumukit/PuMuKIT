@@ -17,8 +17,8 @@ use Pumukit\SchemaBundle\Services\MaterialEventDispatcherService;
  */
 class MaterialEventDispatcherServiceTest extends PumukitTestCase
 {
-    const EMPTY_TITLE = 'EMTPY TITLE';
-    const EMPTY_URL = 'EMTPY URL';
+    public const EMPTY_TITLE = 'EMTPY TITLE';
+    public const EMPTY_URL = 'EMTPY URL';
 
     private $materialDispatcher;
     private $dispatcher;

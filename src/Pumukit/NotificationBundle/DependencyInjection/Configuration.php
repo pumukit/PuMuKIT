@@ -9,9 +9,9 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-    const TEMPLATE = '@PumukitNotification/Email/job.html.twig';
-    const SENDER_EMAIL = 'notifications@pumukit.org';
-    const ADMIN_EMAIL = 'admin@pumukit.org';
+    public const TEMPLATE = '@PumukitNotification/Email/job.html.twig';
+    public const SENDER_EMAIL = 'notifications@pumukit.org';
+    public const ADMIN_EMAIL = 'admin@pumukit.org';
 
     public function getConfigTreeBuilder(): TreeBuilder
     {

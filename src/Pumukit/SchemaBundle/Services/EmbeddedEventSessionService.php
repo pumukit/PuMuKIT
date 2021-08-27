@@ -12,7 +12,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class EmbeddedEventSessionService
 {
-    const DEFAULT_COLOR = '#ffffff';
+    public const DEFAULT_COLOR = '#ffffff';
     private $dm;
     private $collection;
     private $defaultPoster;

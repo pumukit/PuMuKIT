@@ -15,7 +15,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const SERIES_UPDATE = 'series.update';
+    public const SERIES_UPDATE = 'series.update';
 
     /**
      * The series.create event is thrown each time a
@@ -26,7 +26,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const SERIES_CREATE = 'series.create';
+    public const SERIES_CREATE = 'series.create';
 
     /**
      * The series.delete event is thrown each time a
@@ -37,7 +37,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const SERIES_DELETE = 'series.delete';
+    public const SERIES_DELETE = 'series.delete';
 
     /**
      * The multimediaobject.update event is thrown each time a
@@ -48,7 +48,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const MULTIMEDIAOBJECT_UPDATE = 'multimediaobject.update';
+    public const MULTIMEDIAOBJECT_UPDATE = 'multimediaobject.update';
 
     /**
      * The multimediaobject.create event is thrown each time a
@@ -59,7 +59,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const MULTIMEDIAOBJECT_CREATE = 'multimediaobject.create';
+    public const MULTIMEDIAOBJECT_CREATE = 'multimediaobject.create';
 
     /**
      * The multimediaobject.clone event is thrown each time a
@@ -71,7 +71,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const MULTIMEDIAOBJECT_CLONE = 'multimediaobject.clone';
+    public const MULTIMEDIAOBJECT_CLONE = 'multimediaobject.clone';
 
     /**
      * The multimediaobject.delete event is thrown each time a
@@ -82,12 +82,12 @@ final class SchemaEvents
      *
      * @var string
      */
-    const MULTIMEDIAOBJECT_DELETE = 'multimediaobject.delete';
+    public const MULTIMEDIAOBJECT_DELETE = 'multimediaobject.delete';
 
     /**
      * This event is thrown each time a owner is added on multimedia object.
      */
-    const MULTIMEDIA_OBJECT_ADD_OWNER = 'multimedia_object.add_owner';
+    public const MULTIMEDIA_OBJECT_ADD_OWNER = 'multimedia_object.add_owner';
 
     /**
      * The material.create event is thrown each time a
@@ -98,7 +98,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const MATERIAL_CREATE = 'material.create';
+    public const MATERIAL_CREATE = 'material.create';
 
     /**
      * The material.update event is thrown each time a
@@ -109,7 +109,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const MATERIAL_UPDATE = 'material.update';
+    public const MATERIAL_UPDATE = 'material.update';
 
     /**
      * The material.delete event is thrown each time a
@@ -120,7 +120,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const MATERIAL_DELETE = 'material.delete';
+    public const MATERIAL_DELETE = 'material.delete';
 
     /**
      * The track.create event is thrown each time a
@@ -131,7 +131,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const TRACK_CREATE = 'track.create';
+    public const TRACK_CREATE = 'track.create';
 
     /**
      * The track.update event is thrown each time a
@@ -142,7 +142,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const TRACK_UPDATE = 'track.update';
+    public const TRACK_UPDATE = 'track.update';
 
     /**
      * The track.delete event is thrown each time a
@@ -153,7 +153,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const TRACK_DELETE = 'track.delete';
+    public const TRACK_DELETE = 'track.delete';
 
     /**
      * The link.create event is thrown each time a
@@ -164,7 +164,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const LINK_CREATE = 'link.create';
+    public const LINK_CREATE = 'link.create';
 
     /**
      * The link.update event is thrown each time a
@@ -175,7 +175,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const LINK_UPDATE = 'link.update';
+    public const LINK_UPDATE = 'link.update';
 
     /**
      * The link.delete event is thrown each time a
@@ -186,7 +186,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const LINK_DELETE = 'link.delete';
+    public const LINK_DELETE = 'link.delete';
 
     /**
      * The pic.create event is thrown each time a
@@ -197,7 +197,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const PIC_CREATE = 'pic.create';
+    public const PIC_CREATE = 'pic.create';
 
     /**
      * The pic.update event is thrown each time a
@@ -208,7 +208,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const PIC_UPDATE = 'pic.update';
+    public const PIC_UPDATE = 'pic.update';
 
     /**
      * The pic.delete event is thrown each time a
@@ -219,7 +219,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const PIC_DELETE = 'pic.delete';
+    public const PIC_DELETE = 'pic.delete';
 
     /**
      * The personwithrole.create event is thrown each time a
@@ -230,7 +230,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const PERSONWITHROLE_CREATE = 'personwithrole.create';
+    public const PERSONWITHROLE_CREATE = 'personwithrole.create';
 
     /**
      * The personwithrole.update event is thrown each time a
@@ -241,7 +241,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const PERSONWITHROLE_UPDATE = 'personwithrole.update';
+    public const PERSONWITHROLE_UPDATE = 'personwithrole.update';
 
     /**
      * The personwithrole.delete event is thrown each time a
@@ -252,7 +252,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const PERSONWITHROLE_DELETE = 'personwithrole.delete';
+    public const PERSONWITHROLE_DELETE = 'personwithrole.delete';
 
     /**
      * The permissionprofile.create event is thrown each time a
@@ -263,7 +263,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const PERMISSIONPROFILE_CREATE = 'permissionprofile.create';
+    public const PERMISSIONPROFILE_CREATE = 'permissionprofile.create';
 
     /**
      * The permissionprofile.update event is thrown each time a
@@ -274,7 +274,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const PERMISSIONPROFILE_UPDATE = 'permissionprofile.update';
+    public const PERMISSIONPROFILE_UPDATE = 'permissionprofile.update';
 
     /**
      * The permissionprofile.delete event is thrown each time a
@@ -285,7 +285,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const PERMISSIONPROFILE_DELETE = 'permissionprofile.delete';
+    public const PERMISSIONPROFILE_DELETE = 'permissionprofile.delete';
 
     /**
      * The user.create event is thrown each time a
@@ -296,7 +296,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const USER_CREATE = 'user.create';
+    public const USER_CREATE = 'user.create';
 
     /**
      * The user.update event is thrown each time a
@@ -307,7 +307,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const USER_UPDATE = 'user.update';
+    public const USER_UPDATE = 'user.update';
 
     /**
      * The user.delete event is thrown each time a
@@ -318,7 +318,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const USER_DELETE = 'user.delete';
+    public const USER_DELETE = 'user.delete';
 
     /**
      * The group.create event is thrown each time a
@@ -329,7 +329,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const GROUP_CREATE = 'group.create';
+    public const GROUP_CREATE = 'group.create';
 
     /**
      * The group.update event is thrown each time a
@@ -340,7 +340,7 @@ final class SchemaEvents
      *
      * @var string
      */
-    const GROUP_UPDATE = 'group.update';
+    public const GROUP_UPDATE = 'group.update';
 
     /**
      * The group.delete event is thrown each time a
@@ -351,5 +351,5 @@ final class SchemaEvents
      *
      * @var string
      */
-    const GROUP_DELETE = 'group.delete';
+    public const GROUP_DELETE = 'group.delete';
 }

@@ -17,8 +17,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class PicEventDispatcherServiceTest extends WebTestCase
 {
-    const EMPTY_TITLE = 'EMTPY TITLE';
-    const EMPTY_URL = 'EMTPY URL';
+    public const EMPTY_TITLE = 'EMTPY TITLE';
+    public const EMPTY_URL = 'EMTPY URL';
 
     private $picDispatcher;
     private $dispatcher;

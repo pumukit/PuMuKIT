@@ -16,7 +16,7 @@ use Pumukit\SchemaBundle\Services\MultimediaObjectEventDispatcherService;
  */
 class MultimediaObjectEventDispatcherServiceTest extends PumukitTestCase
 {
-    const EMPTY_TITLE = 'EMTPY TITLE';
+    public const EMPTY_TITLE = 'EMTPY TITLE';
 
     private $multimediaObjectDispatcher;
     private $dispatcher;
