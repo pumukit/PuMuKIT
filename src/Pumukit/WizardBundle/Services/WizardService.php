@@ -227,7 +227,6 @@ class WizardService
 
     public function createCommandArguments($aCommandArguments, $sOption, $sValue)
     {
-        //array_push($aCommandArguments, $sOption);
         array_push($aCommandArguments, $sValue);
 
         return $aCommandArguments;

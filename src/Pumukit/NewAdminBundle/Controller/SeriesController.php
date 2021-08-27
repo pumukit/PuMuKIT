@@ -406,7 +406,6 @@ class SeriesController extends AdminController
     public function getCriteria($criteria)
     {
         $request = $this->requestStack->getCurrentRequest();
-        //$criteria = $request->get('criteria', []);
 
         $emptySeries = [];
         if ($request->query->has('empty_series') || $this->session->has('admin/series/empty_series')) {
