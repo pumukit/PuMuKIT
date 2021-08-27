@@ -24,7 +24,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ModulesController extends AbstractController implements WebTVControllerInterface
 {
-    public static $menuResponse = null;
+    public static $menuResponse;
     private $menuTemplate = '@PumukitWebTV/Modules/widget_menu.html.twig';
 
     /** @var TranslatorInterface */
