@@ -46,13 +46,13 @@
                         </dl>
                     </div>
 
-                    {% include 'PumukitNewAdminBundle:Series:HeadAndTail/_form.html.twig' %}
+                    {% include '@PumukitNewAdmin/Series/HeadAndTail/_form.html.twig' %}
 
                     <div class="hidden-naked">
                         {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_SERIES_META_HTML_CONFIGURATION')) %}
                             {% include '@PumukitNewAdmin/Series/html_configuration.html.twig' %}
                         {% endif %}
-                        
+
                         {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_SERIES_META_HEADLINE')) %}
                             {{ form_row(form['i18n_line2']) }}
                         {% endif %}

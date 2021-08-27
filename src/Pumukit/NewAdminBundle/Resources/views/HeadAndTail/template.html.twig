@@ -1,19 +1,19 @@
-{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+{% extends '@PumukitNewAdmin/layout.html.twig' %}
 
 {% block body %}
 
-    {% include "PumukitNewAdminBundle:Misc:panel_title.html.twig" with { page_title: 'Head and tail manager'|trans } %}
+    {% include "@PumukitNewAdmin/Misc/panel_title.html.twig" with { page_title: 'Head and tail manager'|trans } %}
 
     <div class="row">
-        {% include "PumukitNewAdminBundle:HeadAndTail:_stats.html.twig" %}
+        {% include "@PumukitNewAdmin/HeadAndTail/_stats.html.twig" %}
 
-        {% include "PumukitNewAdminBundle:HeadAndTail:_list.html.twig" with {
+        {% include "@PumukitNewAdmin/HeadAndTail/_list.html.twig" with {
             titleList: 'Video head list'|trans,
             type: 'Head',
             elementList: videos_as_head()
         } %}
 
-        {% include "PumukitNewAdminBundle:HeadAndTail:_list.html.twig" with {
+        {% include "@PumukitNewAdmin/HeadAndTail/_list.html.twig" with {
             titleList: 'Video tail list'|trans,
             type: 'Tail',
             elementList: videos_as_tail()
