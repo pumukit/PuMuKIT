@@ -103,8 +103,6 @@ class APIRecordedController extends AbstractController
 
     /**
      * @Route("/mmobj/stats.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
-     *
-     * TODO: add criteria??? (see processRequestData)
      */
     public function globalStatsAction(Request $request, StatsService $recordsService, SerializerService $serializer)
     {
