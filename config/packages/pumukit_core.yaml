@@ -35,6 +35,8 @@ services:
 
   Pumukit\CoreBundle\Twig\CoreExtension:
     class: Pumukit\CoreBundle\Twig\CoreExtension
+    arguments:
+      $kernelBundles: '%kernel.bundles%'
     tags:
       - { name: "twig.extension" }
 

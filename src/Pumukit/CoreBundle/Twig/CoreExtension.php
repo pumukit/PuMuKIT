@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace Pumukit\CoreBundle\Twig;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class CoreExtension extends AbstractExtension
 {
-    protected $container;
+    protected $kernelBundles;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(array $kernelBundles)
     {
-        $this->container = $container;
+        $this->kernelBundles = $kernelBundles;
     }
 
     public function getFunctions(): array
@@ -28,7 +27,7 @@ class CoreExtension extends AbstractExtension
     {
         return array_key_exists(
             $bundle,
-            $this->container->getParameter('kernel.bundles')
+            $this->kernelBundles
         );
     }
 }

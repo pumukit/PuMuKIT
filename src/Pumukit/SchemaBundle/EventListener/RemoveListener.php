@@ -4,24 +4,57 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\EventListener;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use MongoDB\BSON\ObjectId;
 use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
+use Pumukit\SchemaBundle\Services\MaterialService;
+use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
+use Pumukit\SchemaBundle\Services\MultimediaObjectService;
+use Pumukit\SchemaBundle\Services\SeriesPicService;
+use Pumukit\SchemaBundle\Services\TagService;
+use Pumukit\SchemaBundle\Services\UserService;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RemoveListener
 {
-    private $container;
+    private $documentManager;
+    private $multimediaObjectService;
+    private $materialService;
+    private $multimediaObjectPicService;
+    private $seriesPicService;
+    private $jobService;
+    private $tagService;
+    private $embeddedBroadcastService;
+    private $userService;
     private $translator;
 
-    public function __construct(ContainerInterface $container, TranslatorInterface $translator)
-    {
-        //NOTE: using container instead of tag service to avoid ServiceCircularReferenceException.
-        $this->container = $container;
+    public function __construct(
+        DocumentManager $documentManager,
+        MultimediaObjectService $multimediaObjectService,
+        MaterialService $materialService,
+        MultimediaObjectPicService $multimediaObjectPicService,
+        SeriesPicService $seriesPicService,
+        JobService $jobService,
+        TagService $tagService,
+        EmbeddedBroadcastService $embeddedBroadcastService,
+        UserService $userService,
+        TranslatorInterface $translator
+    ) {
+        $this->documentManager = $documentManager;
+        $this->multimediaObjectService = $multimediaObjectService;
+        $this->materialService = $materialService;
+        $this->multimediaObjectPicService = $multimediaObjectPicService;
+        $this->seriesPicService = $seriesPicService;
+        $this->jobService = $jobService;
+        $this->tagService = $tagService;
+        $this->embeddedBroadcastService = $embeddedBroadcastService;
+        $this->userService = $userService;
         $this->translator = $translator;
     }
 
@@ -30,15 +63,13 @@ class RemoveListener
         $document = $args->getDocument();
 
         if ($document instanceof Series) {
-            $seriesPicService = $this->container->get('pumukitschema.seriespic');
             foreach ($document->getPics() as $pic) {
-                $document = $seriesPicService->removePicFromSeries($document, $pic->getId());
+                $document = $this->seriesPicService->removePicFromSeries($document, $pic->getId());
             }
         }
 
         if ($document instanceof MultimediaObject) {
-            $dm = $this->container->get('doctrine_mongodb.odm.document_manager');
-            $jobRepo = $dm->getRepository(Job::class);
+            $jobRepo = $this->documentManager->getRepository(Job::class);
             $executingJobs = $jobRepo->findBy(['status' => Job::STATUS_EXECUTING, 'mm_id' => $document->getId()]);
 
             $countExecutingJobs = count($executingJobs);
@@ -53,46 +84,38 @@ class RemoveListener
                     )
                 );
             }
-            $mmsService = $this->container->get('pumukitschema.multimedia_object');
-            $mmsService->removeFromAllPlaylists($document);
 
-            $tagService = $this->container->get('pumukitschema.tag');
+            $this->multimediaObjectService->removeFromAllPlaylists($document);
+
             foreach ($document->getTags() as $tag) {
                 if ($document->containsTag($tag)) {
-                    $tagService->removeTagFromMultimediaObject($document, $tag->getId());
+                    $this->tagService->removeTagFromMultimediaObject($document, $tag->getId());
                 }
             }
 
-            $jobService = $this->container->get('pumukitencoder.job');
             $allJobs = $jobRepo->findByMultimediaObjectId($document->getId());
             foreach ($allJobs as $job) {
-                $jobService->deleteJob($job->getId());
+                $this->jobService->deleteJob($job->getId());
             }
 
-            $trackService = $this->container->get('pumukitschema.track');
             foreach ($document->getTracks() as $track) {
-                $trackService->removeTrackFromMultimediaObject($document, $track->getId());
+                $this->jobService->removeTrack($document, $track->getId());
             }
 
-            $mmsPicService = $this->container->get('pumukitschema.mmspic');
             foreach ($document->getPics() as $pic) {
-                $document = $mmsPicService->removePicFromMultimediaObject($document, $pic->getId());
+                $document = $this->multimediaObjectPicService->removePicFromMultimediaObject($document, $pic->getId());
             }
 
-            $materialService = $this->container->get('pumukitschema.material');
             foreach ($document->getMaterials() as $material) {
-                $document = $materialService->removeMaterialFromMultimediaObject($document, $material->getId());
+                $document = $this->materialService->removeMaterialFromMultimediaObject($document, $material->getId());
             }
         }
 
         if ($document instanceof Group) {
-            $dm = $this->container->get('doctrine_mongodb.odm.document_manager');
-            $mmsService = $this->container->get('pumukitschema.multimedia_object');
-            $embBroadcastService = $this->container->get('pumukitschema.embeddedbroadcast');
-            $mmobjRepo = $dm->getRepository(MultimediaObject::class);
+            $mmobjRepo = $this->documentManager->getRepository(MultimediaObject::class);
             $multimediaObjects = $mmobjRepo->findWithGroup($document);
             foreach ($multimediaObjects as $multimediaObject) {
-                $mmsService->deleteGroup($document, $multimediaObject, false);
+                $this->multimediaObjectService->deleteGroup($document, $multimediaObject, false);
             }
             $multimediaObjects = $mmobjRepo->createQueryBuilder()
                 ->field('embeddedBroadcast.groups')->in([new ObjectId($document->getId())])
@@ -100,14 +123,14 @@ class RemoveListener
                 ->execute()
             ;
             foreach ($multimediaObjects as $multimediaObject) {
-                $embBroadcastService->deleteGroup($document, $multimediaObject, false);
+                $this->embeddedBroadcastService->deleteGroup($document, $multimediaObject, false);
             }
-            $userService = $this->container->get('pumukitschema.user');
-            $users = $userService->findWithGroup($document);
+
+            $users = $this->userService->findWithGroup($document);
             foreach ($users as $user) {
-                $userService->deleteGroup($document, $user, false);
+                $this->userService->deleteGroup($document, $user, false);
             }
-            $dm->flush();
+            $this->documentManager->flush();
         }
     }
 }
