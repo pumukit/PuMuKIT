@@ -37,8 +37,8 @@ class JobService
     private $profileService;
     private $cpuService;
     private $inspectionService;
-    private $eventDispatcher;
     private $tmpPath;
+    private $eventDispatcher;
     private $trackService;
     private $logger;
     private $environment;
@@ -54,7 +54,7 @@ class JobService
         ProfileService $profileService,
         CpuService $cpuService,
         InspectionFfprobeService $inspectionService,
-        EventDispatcherInterface $dispatcher,
+        EventDispatcherInterface $eventDispatcher,
         LoggerInterface $logger,
         TrackService $trackService,
         TokenStorageInterface $tokenStorage,
@@ -76,7 +76,7 @@ class JobService
         $this->logger = $logger;
         $this->trackService = $trackService;
         $this->tokenStorage = $tokenStorage;
-        $this->eventDispatcher = $dispatcher;
+        $this->eventDispatcher = $eventDispatcher;
         $this->environment = $environment;
         $this->propService = $propService;
         $this->binPath = $binPath;
@@ -432,6 +432,7 @@ class JobService
             return null;
         }
 
+        $this->checkService();
         $nextJobToExecute = null;
 
         $SEMKey = 1234569;
@@ -832,22 +833,19 @@ class JobService
     {
         $existsJobsToUpdate = false;
         $jobs = $this->repo->findWithStatus([Job::STATUS_EXECUTING]);
-
-        $nowDateTime = new \DateTime('now');
+        $nowDateTime = new \DateTimeImmutable();
 
         foreach ($jobs as $job) {
-            $maxExecutionJobTime = $job->getTimestart();
+            $maxExecutionJobTime = clone $job->getTimestart();
             $maxExecutionJobTime->add(new \DateInterval('PT'.$this->maxExecutionJobSeconds.'S'));
-
-            if ($maxExecutionJobTime <= $nowDateTime) {
+            if ($nowDateTime > $maxExecutionJobTime) {
                 $job->setStatus(Job::STATUS_ERROR);
                 $message = '[checkService] Job executing for a long time, set status to ERROR. Máx execution time was '.$maxExecutionJobTime->format('Y-m-d H:i:s');
                 $job->appendOutput($message);
-                $this->logger->error(
-                    $message.$job->getId()
-                );
+                $this->logger->error($message.' for JOB ID '.$job->getId());
 
                 $existsJobsToUpdate = true;
+                $this->dispatch(false, $job);
             }
         }
 

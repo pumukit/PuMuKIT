@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 To get the diff for a specific change, go to https://github.com/pumukit/PuMuKIT/commit/XXX where XXX is the change hash.
 To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/compare/3.0.0...3.1.x.
 
+## [3.7.x](https://github.com/pumukit/PuMuKIT/compare/3.6.0...3.7.x) - (Coming soon)
+
+#### Added
+- Added auto create personal series for each user using a new permission on permission profile.
+
 ## [3.6.0](https://github.com/pumukit/PuMuKIT/compare/3.5.0...3.6.0) - (2021-04-21)
 
 #### Added
@@ -85,10 +90,10 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 #### Changed
 - PuMuKIT to the new [repository]((https://github.com/pumukit/PuMuKIT) on github
 - Moved deactivated core bundles to [new repository](https://github.com/pumukit)
-- Update Resources/doc/Configuration.md of all bundles 
+- Update Resources/doc/Configuration.md of all bundles
 - Updating code to use Doctrine ODM 2.0
 
-#### Removed 
+#### Removed
 - Broadcast code references
 - Unused files ( InterfaceTest, default files, ... )
 - Changelog info of versions lower than PuMuKIT 3.0
@@ -107,7 +112,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - AGPL License on PuMuKIT
 - Magic URL behavior
 - Support to multiple inbox
-- Dockers 
+- Dockers
 
 #### Changed
 - Updated PHP technology stack (PHP7, Symfony 3.4...)

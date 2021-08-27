@@ -1,0 +1,36 @@
+{% set defaultVideoHead = default_video_head() %}
+{% set defaultVideoTail = default_video_tail() %}
+
+<div class="col-xs-12 col-sm-6 col-md-6 text-center">
+    <div class="well">
+        <h3>{{ "Default system header configuration"|trans }}</h3>
+        <br />
+        <p>
+            {% if defaultVideoHead %}
+                <a href="{{ path('pumukitnewadmin_mms_shortener', {'id': defaultVideoHead }) }}">
+                    {{ defaultVideoHead }}
+                </a>
+            {% else %}
+                {{ "No video head configured"|trans }}
+            {% endif %}
+        </p>
+    </div>
+</div>
+<div class="col-xs-12 col-sm-6 col-md-6 text-center">
+    <div class="well">
+        <h3>{{ "Default system tail configuration"|trans }}</h3>
+        <br />
+        <p>
+
+            {% if defaultVideoTail %}
+                <a href="{{ path('pumukitnewadmin_mms_shortener', {'id': defaultVideoTail }) }}">
+                    {{ defaultVideoTail }}
+                </a>
+            {% else %}
+                {{ "No video tail configured"|trans }}
+            {% endif %}
+        </p>
+    </div>
+</div>
+
+<div class="clearfix"></div>

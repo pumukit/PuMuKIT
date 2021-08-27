@@ -264,6 +264,7 @@ class Builder implements ContainerAwareInterface
         $showImporterTab = $this->container->hasParameter('pumukit_opencast.show_importer_tab') && $this->container->getParameter('pumukit_opencast.show_importer_tab');
         $hasAccessToImporter = $showImporterTab && $this->authorizationChecker->isGranted('ROLE_ACCESS_IMPORTER');
         $hasAccessToSeriesStyle = $this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_STYLE);
+        $hasAccessToHeadAndTailManager = $this->authorizationChecker->isGranted(Permission::ACCESS_HEAD_AND_TAIL_MANAGER);
 
         $externalTools = [];
         foreach ($this->container->get('pumukitnewadmin.menu')->items() as $item) {
@@ -274,7 +275,7 @@ class Builder implements ContainerAwareInterface
         }
 
         $hasAccessToAnyExternalTool = count($externalTools) > 0;
-        $hasAccessToAnyTool = $hasAccessToImporter || $hasAccessToSeriesStyle || $hasAccessToAnyExternalTool;
+        $hasAccessToAnyTool = $hasAccessToImporter || $hasAccessToSeriesStyle || $hasAccessToAnyExternalTool || $hasAccessToHeadAndTailManager;
 
         if (!$hasAccessToAnyTool) {
             return;
@@ -291,6 +292,11 @@ class Builder implements ContainerAwareInterface
         if ($hasAccessToSeriesStyle) {
             $options = ['route' => 'pumukit_newadmin_series_styles', 'attributes' => ['class' => 'menu_series_styles']];
             $root->addChild('Series style', $options);
+        }
+
+        if ($hasAccessToHeadAndTailManager) {
+            $options = ['route' => 'pumukit_newadmin_head_and_tail', 'attributes' => ['class' => 'menu_head_and_tail']];
+            $root->addChild('Head & tail manager', $options);
         }
 
         foreach ($externalTools as $item) {

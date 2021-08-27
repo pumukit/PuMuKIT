@@ -27,8 +27,6 @@ services:
 
   Pumukit\BasePlayerBundle\Services\IntroService:
     class: Pumukit\BasePlayerBundle\Services\IntroService
-    arguments:
-      $globalUrlIntroduction: '%pumukit.intro%'
 
   Pumukit\BasePlayerBundle\Services\PlayerService:
     class: Pumukit\BasePlayerBundle\Services\PlayerService

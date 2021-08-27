@@ -1,0 +1,73 @@
+{% if app.user and is_granted('ROLE_ADD_HEAD_AND_TAIL') %}
+    <div class="form-row block-series-playlist" style="margin-bottom:5rem;">
+        <dt>{% trans %}Head and tail video{% endtrans %}:</dt>
+        <dd>
+            <div id="head_and_tail_series_{{ series.id }}" style="margin-top:1rem;">
+                <div class="col-md-6">
+                    <label for="head_video_select" hidden>{{ "Head"|trans }}</label>
+                    <select id="head_video_select" name="head_video_select" class="form form-control head_video_select">
+                        <option value="default">{{ "Default"|trans }}</option>
+                        {% for element in videos_as_head() %}
+                            <option value="{{ element.id }}" {% if series.getVideoHead()|default(null) == element.id %}selected{% endif %}>{{ element.getTitle() }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="tail_video_select" hidden>{{ "Tail"|trans }}</label>
+                    <select id="tail_video_select" name="tail_video_select" class="form form-control tail_video_select">
+                        <option value="default">{{ "Default"|trans }}</option>
+                        {% for element in videos_as_tail() %}
+                            <option value="{{ element.id }}" {% if series.getVideoTail()|default(null) == element.id %}selected{% endif %}>{{ element.getTitle() }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </dd>
+    </div>
+
+    <script>
+        const headVideoSelector = document.querySelector('.head_video_select');
+        const tailVideoSelector = document.querySelector('.tail_video_select');
+        const seriesID = "{{ series.id }}";
+
+        headVideoSelector.addEventListener('change', (event) => {
+            let route =  '{{ path('pumukit_newadmin_head_and_tail_series_update', {
+                'type': 'head',
+                'series': '__series__',
+                'element': '__element__'
+            }) }}';
+            route = route.replace('__series__', seriesID);
+            route = route.replace('__element__', event.target.value);
+            $.ajax({
+                url: route,
+                method: 'POST',
+                success: function (response) {
+                    success(response.success);
+                },
+                error: function (response) {
+                    success(response.error);
+                }
+            });
+        });
+
+        tailVideoSelector.addEventListener('change', (event) => {
+            let route =  '{{ path('pumukit_newadmin_head_and_tail_series_update', {
+                'type': 'tail',
+                'series': '__series__',
+                'element': '__element__'
+            }) }}';
+            route = route.replace('__series__', seriesID);
+            route = route.replace('__element__', event.target.value);
+            $.ajax({
+                url: route,
+                method: 'POST',
+                success: function (response) {
+                    success(response.success);
+                },
+                error: function (response) {
+                    success(response.error);
+                }
+            });
+        });
+    </script>
+{% endif %}

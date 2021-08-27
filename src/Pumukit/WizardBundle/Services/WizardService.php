@@ -83,14 +83,13 @@ class WizardService
     public function createSeries(array $seriesData = [])
     {
         if ($seriesData) {
-            $series = $this->factoryService->createSeries($this->user);
-
             $i18nTitle = $this->getKeyData('i18n_title', $seriesData);
             if (empty(array_filter($i18nTitle))) {
                 $seriesData = $this->getDefaultFieldValuesInData($seriesData, 'i18n_title', 'New', true);
             }
 
             $keys = ['i18n_title', 'i18n_subtitle', 'i18n_description'];
+            $series = $this->factoryService->createSeries($this->user, $seriesData['i18n_title']);
 
             return $this->setData($series, $seriesData, $keys);
         }

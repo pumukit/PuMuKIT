@@ -6,6 +6,7 @@ Configuration:
 ```
 pumukit_encoder:
   delete_inbox_files: false
+  max_execution_job_seconds: 86400
   thumbnail:
     width: 768
     height: 432
@@ -176,6 +177,7 @@ pumukit_encoder:
       audio: "audio_aac"
       video: "video_h264 audio_aac"
 ```
+
 
 ##### Global configuration
 

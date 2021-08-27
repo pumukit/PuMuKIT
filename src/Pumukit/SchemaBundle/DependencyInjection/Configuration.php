@@ -16,6 +16,14 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+            ->scalarNode('default_head_video')
+            ->defaultFalse()
+            ->info('Default head video on platform')
+            ->end()
+            ->scalarNode('default_tail_video')
+            ->defaultFalse()
+            ->info('Default tail video on platform')
+            ->end()
             ->booleanNode('send_email_on_user_added_as_owner')
             ->defaultFalse()
             ->info('Activate send email on user added as owner')

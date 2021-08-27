@@ -5,17 +5,19 @@ declare(strict_types=1);
 namespace Pumukit\BasePlayerBundle\Services;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\SchemaBundle\Services\HeadAndTailService;
 
 class IntroService
 {
-    private $globalUrlIntroduction;
+    private $headAndTailService;
 
-    public function __construct($globalUrlIntroduction)
+    public function __construct(HeadAndTailService $headAndTailService)
     {
-        $this->globalUrlIntroduction = $globalUrlIntroduction;
+        $this->headAndTailService = $headAndTailService;
     }
 
-    public function getVideoIntroduction(MultimediaObject $multimediaObject, $activateIntroFromRequest = true): ?string
+    public function getVideoIntroduction(MultimediaObject $multimediaObject, $activateIntroFromRequest = true): ?Track
     {
         $activateIntroFromRequest = false === filter_var($activateIntroFromRequest, FILTER_VALIDATE_BOOLEAN);
 
@@ -23,16 +25,31 @@ class IntroService
             return null;
         }
 
-        $urlIntroduction = $multimediaObject->getIntroductionVideo();
-
-        if ($urlIntroduction && filter_var($urlIntroduction, FILTER_VALIDATE_URL)) {
-            return $urlIntroduction;
-        }
-
-        if (!$this->globalUrlIntroduction) {
+        $videoIntro = $this->headAndTailService->getHeadToPlay($multimediaObject);
+        if (!$videoIntro) {
             return null;
         }
+        $videoTrack = $this->headAndTailService->getDisplayTrackFromMultimediaObjectId($videoIntro);
 
-        return $this->globalUrlIntroduction;
+        if ($videoTrack instanceof Track) {
+            return $videoTrack;
+        }
+
+        return null;
+    }
+
+    public function getVideoTail(MultimediaObject $multimediaObject): ?Track
+    {
+        $videoTail = $this->headAndTailService->getTailToPlay($multimediaObject);
+        if (!$videoTail) {
+            return null;
+        }
+        $videoTrack = $this->headAndTailService->getDisplayTrackFromMultimediaObjectId($videoTail);
+
+        if ($videoTrack instanceof Track) {
+            return $videoTrack;
+        }
+
+        return null;
     }
 }

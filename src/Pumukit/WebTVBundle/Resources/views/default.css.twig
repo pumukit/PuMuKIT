@@ -131,7 +131,27 @@
         text-align: left;
     }
 
-    {% include '@PumukitWebTV/Css/template_video.css.twig' %}
+    .titlecookie {
+        font-weight: bold;
+        color: ·ffffff;
+        font-size: 30px;
+    }
+
+    .cookielaw {
+        display: block; position: fixed;
+        padding: 10px;
+        bottom: 0;
+        left: 0;
+        width: 100%;min-height: 60px;
+        background: rgb(0,0,0,0.7);
+        color: #efefef;
+        font-size: 100%;
+        text-align: center;
+        z-index: 1000000;
+        overflow: hidden;
+    }
+
+{% include '@PumukitWebTV/Css/template_video.css.twig' %}
     {% include '@PumukitWebTV/Css/template_series.css.twig' %}
     {% include '@PumukitWebTV/Css/template_stats.css.twig' %}
     {% include '@PumukitWebTV/Css/template_header.css.twig' %}

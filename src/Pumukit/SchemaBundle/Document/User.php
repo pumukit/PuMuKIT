@@ -74,6 +74,11 @@ class User implements UserInterface
     /**
      * @MongoDB\Field(type="string")
      */
+    protected $personalSeries;
+
+    /**
+     * @MongoDB\Field(type="string")
+     */
     protected $plainPassword;
 
     /**
@@ -229,6 +234,16 @@ class User implements UserInterface
     public function isLocal(): bool
     {
         return self::ORIGIN_LOCAL === $this->origin;
+    }
+
+    public function getPersonalSeries()
+    {
+        return $this->personalSeries;
+    }
+
+    public function setPersonalSeries($personalSeries): void
+    {
+        $this->personalSeries = $personalSeries;
     }
 
     public function containsGroup(GroupInterface $group): bool
