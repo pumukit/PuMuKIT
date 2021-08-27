@@ -15,5 +15,5 @@ final class BasePlayerEvents
      *
      * @var string
      */
-    const MULTIMEDIAOBJECT_VIEW = 'multimediaobject.view';
+    public const MULTIMEDIAOBJECT_VIEW = 'multimediaobject.view';
 }

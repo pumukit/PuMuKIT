@@ -11,5 +11,5 @@ final class WizardEvents
      *
      * The event listener receives a Pumukit\WizardBundle\Event\FormEvent instance.
      */
-    const FORM_SUBMIT = 'wizard.form.submit';
+    public const FORM_SUBMIT = 'wizard.form.submit';
 }

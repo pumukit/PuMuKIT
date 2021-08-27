@@ -29,8 +29,8 @@ use Twig\Loader\ArrayLoader;
 
 class JobService
 {
-    const ADD_JOB_UNIQUE = 1;
-    const ADD_JOB_NOT_CHECKS = 2;
+    public const ADD_JOB_UNIQUE = 1;
+    public const ADD_JOB_NOT_CHECKS = 2;
 
     private $dm;
     private $repo;

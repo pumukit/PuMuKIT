@@ -14,9 +14,9 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 class MultimediaObjectVoter extends Voter
 {
-    const EDIT = 'edit';
-    const PLAY = 'play';
-    const VIEW_METADATA = 'view_metadata';
+    public const EDIT = 'edit';
+    public const PLAY = 'play';
+    public const VIEW_METADATA = 'view_metadata';
 
     private $mmobjService;
     private $requestStack;

@@ -8,11 +8,11 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 
 class ProfileService
 {
-    const STREAMSERVER_STORE = 'store';
-    const STREAMSERVER_DOWNLOAD = 'download';
-    const STREAMSERVER_WMV = 'wmv';
-    const STREAMSERVER_FMS = 'fms';
-    const STREAMSERVER_RED5 = 'red5';
+    public const STREAMSERVER_STORE = 'store';
+    public const STREAMSERVER_DOWNLOAD = 'download';
+    public const STREAMSERVER_WMV = 'wmv';
+    public const STREAMSERVER_FMS = 'fms';
+    public const STREAMSERVER_RED5 = 'red5';
     private $dm;
     private $profiles;
     private $default_profiles;

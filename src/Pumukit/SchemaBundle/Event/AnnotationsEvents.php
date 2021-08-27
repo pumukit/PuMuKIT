@@ -15,6 +15,6 @@ final class AnnotationsEvents
      *
      * @var string
      */
-    const UPDATE = 'annotations.update';
-    const GET = 'annotations.get';
+    public const UPDATE = 'annotations.update';
+    public const GET = 'annotations.get';
 }

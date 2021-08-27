@@ -20,8 +20,8 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class FactoryService
 {
-    const DEFAULT_SERIES_TITLE = 'New';
-    const DEFAULT_MULTIMEDIAOBJECT_TITLE = 'New';
+    public const DEFAULT_SERIES_TITLE = 'New';
+    public const DEFAULT_MULTIMEDIAOBJECT_TITLE = 'New';
 
     private $dm;
     private $tagService;

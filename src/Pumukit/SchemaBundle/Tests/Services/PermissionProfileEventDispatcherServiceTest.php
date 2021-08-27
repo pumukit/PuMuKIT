@@ -17,7 +17,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
  */
 class PermissionProfileEventDispatcherServiceTest extends PumukitTestCase
 {
-    const EMPTY_NAME = 'EMTPY_NAME';
+    public const EMPTY_NAME = 'EMTPY_NAME';
 
     private $permissionProfileDispatcher;
     private $dispatcher;

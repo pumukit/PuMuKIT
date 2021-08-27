@@ -17,7 +17,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
  */
 class SeriesEventDispatcherServiceTest extends PumukitTestCase
 {
-    const EMPTY_TITLE = 'EMPTY_TITLE';
+    public const EMPTY_TITLE = 'EMPTY_TITLE';
 
     private $seriesDispatcher;
     private $dispatcher;

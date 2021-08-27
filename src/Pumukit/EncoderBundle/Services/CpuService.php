@@ -10,9 +10,9 @@ use Pumukit\EncoderBundle\Document\Job;
 
 class CpuService
 {
-    const TYPE_LINUX = 'linux';
-    const TYPE_WINDOWS = 'windows';
-    const TYPE_GSTREAMER = 'gstreamer';
+    public const TYPE_LINUX = 'linux';
+    public const TYPE_WINDOWS = 'windows';
+    public const TYPE_GSTREAMER = 'gstreamer';
     private $dm;
     private $cpus;
     private $jobRepo;

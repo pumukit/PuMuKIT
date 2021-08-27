@@ -15,7 +15,7 @@ final class EncoderEvents
      *
      * @var string
      */
-    const JOB_SUCCESS = 'job.success';
+    public const JOB_SUCCESS = 'job.success';
 
     /**
      * The job.success event is thrown each time a job fails
@@ -26,5 +26,5 @@ final class EncoderEvents
      *
      * @var string
      */
-    const JOB_ERROR = 'job.error';
+    public const JOB_ERROR = 'job.error';
 }

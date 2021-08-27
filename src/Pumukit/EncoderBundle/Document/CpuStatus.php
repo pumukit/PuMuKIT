@@ -13,8 +13,8 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  */
 class CpuStatus
 {
-    const STATUS_MAINTENANCE = -1;
-    const STATUS_WORKING = 0;
+    public const STATUS_MAINTENANCE = -1;
+    public const STATUS_WORKING = 0;
 
     /**
      * Status codes translation table.

@@ -18,7 +18,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
  */
 class FormEventDispatcherServiceTest extends PumukitTestCase
 {
-    const EMPTY_TITLE = 'EMTPY TITLE';
+    public const EMPTY_TITLE = 'EMTPY TITLE';
 
     private $formDispatcher;
     private $dispatcher;

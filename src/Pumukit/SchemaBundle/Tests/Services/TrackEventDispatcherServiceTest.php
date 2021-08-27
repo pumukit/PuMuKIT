@@ -17,8 +17,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class TrackEventDispatcherServiceTest extends WebTestCase
 {
-    const EMPTY_TITLE = 'EMTPY TITLE';
-    const EMPTY_URL = 'EMTPY URL';
+    public const EMPTY_TITLE = 'EMTPY TITLE';
+    public const EMPTY_URL = 'EMTPY URL';
 
     private $trackDispatcher;
     private $dispatcher;

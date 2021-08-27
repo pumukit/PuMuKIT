@@ -14,11 +14,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Job
 {
-    const STATUS_ERROR = -1;
-    const STATUS_PAUSED = 0;
-    const STATUS_WAITING = 1;
-    const STATUS_EXECUTING = 2;
-    const STATUS_FINISHED = 3;
+    public const STATUS_ERROR = -1;
+    public const STATUS_PAUSED = 0;
+    public const STATUS_WAITING = 1;
+    public const STATUS_EXECUTING = 2;
+    public const STATUS_FINISHED = 3;
 
     /**
      * Status codes translation table.
