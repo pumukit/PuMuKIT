@@ -94,7 +94,7 @@ class CategoriesService
             if (isset($counterMmobjs[$cod])) {
                 $numMmobjs += $counterMmobjs[$cod];
             }
-            if ($this->excludeEmptyTags and $numMmobjs <= 0) {
+            if ($this->excludeEmptyTags && $numMmobjs <= 0) {
                 continue;
             }
             $allGrounds[$id] = [];
@@ -128,7 +128,7 @@ class CategoriesService
                 if (isset($counterMmobjs[$cod])) {
                     $numMmobjs += $counterMmobjs[$cod];
                 }
-                if ($this->excludeEmptyTags and $numMmobjs <= 0) {
+                if ($this->excludeEmptyTags && $numMmobjs <= 0) {
                     continue;
                 }
                 $allGrounds[$id]['children'][$id2] = [];
