@@ -39,5 +39,3 @@ TAGS
 /public/bundles/
 /var/
 ###< symfony/framework-bundle ###
-
-.idea/
