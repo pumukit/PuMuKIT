@@ -1,2 +1,4 @@
 exclude_patterns:
     - doc/*
+    - public/*
+    - config/bootstrap.php
