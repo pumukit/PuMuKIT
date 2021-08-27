@@ -184,11 +184,6 @@ class MultimediaObject
     /**
      * @MongoDB\Field(type="string")
      */
-    private $introductionVideo;
-
-    /**
-     * @MongoDB\Field(type="string")
-     */
     private $license;
 
     /**
@@ -205,6 +200,16 @@ class MultimediaObject
      * @MongoDB\EmbedMany(targetDocument=EmbeddedRole::class)
      */
     private $people;
+
+    /**
+     * @MongoDB\Field(type="boolean")
+     */
+    private $head = false;
+
+    /**
+     * @MongoDB\Field(type="boolean")
+     */
+    private $tail = false;
 
     /**
      * @MongoDB\Field(type="raw")
@@ -500,17 +505,7 @@ class MultimediaObject
         return $this->copyright;
     }
 
-    public function getIntroductionVideo(): ?string
-    {
-        return $this->introductionVideo;
-    }
-
-    public function setIntroductionVideo(string $introductionVideo): void
-    {
-        $this->introductionVideo = $introductionVideo;
-    }
-
-    public function setLicense($license): void
+    public function setLicense($license)
     {
         $this->license = $license;
     }
@@ -1283,7 +1278,33 @@ class MultimediaObject
         return $this->secondarytextindex;
     }
 
-    private function reorderTrackById($trackId, $up = true): void
+    public function setHead(bool $isHead): void
+    {
+        $this->head = $isHead;
+    }
+
+    public function isHead(): bool
+    {
+        return $this->head;
+    }
+
+    public function setTail(bool $isTail): void
+    {
+        $this->tail = $isTail;
+    }
+
+    public function isTail(): bool
+    {
+        return $this->tail;
+    }
+
+    /**
+     * Reorder track by id.
+     *
+     * @param string $trackId
+     * @param bool   $up
+     */
+    private function reorderTrackById($trackId, $up = true)
     {
         $snapshot = array_values($this->tracks->toArray());
         $this->tracks->clear();

@@ -185,7 +185,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
         $event->setDate(new \DateTime());
 
         foreach ($this->locales as $language) {
-            $event->setName($this->translator->trans('New'), $language);
+            $event->setName($this->translator->trans('New', [], 'messages', $language), $language);
             $event->setDescription('', $language);
         }
 
@@ -467,6 +467,8 @@ class EventsController extends AbstractController implements NewAdminControllerI
                 $event->setDisplay($display);
                 $externalURL = $data['externalURL'] ?? '';
                 $event->setUrl($externalURL);
+                $iframeURL = isset($data['iframeURL'], $data['externalURL']);
+                $event->setIsIframeUrl($iframeURL);
 
                 if (isset($data['live'])) {
                     $live = $this->documentManager->getRepository(Live::class)->findOneBy(

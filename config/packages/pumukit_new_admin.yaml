@@ -125,3 +125,8 @@ services:
     class: Pumukit\NewAdminBundle\Services\OwnerService
     arguments:
       $personalScopeRoleCode: '%pumukitschema.personal_scope_role_code%'
+
+  Pumukit\NewAdminBundle\Twig\HeadAndTailExtension:
+    class: Pumukit\NewAdminBundle\Twig\HeadAndTailExtension
+    tags:
+      - { name: "twig.extension" }

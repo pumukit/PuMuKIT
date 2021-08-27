@@ -72,7 +72,62 @@
                 {% endfor %}
 
                 {{ form_rest(form_pub) }}
+
+                {% if app.user and is_granted('ROLE_ACCESS_HEAD_AND_TAIL_MANAGER') and not mm.isMultistream() %}
+                    <label style="margin-top:1rem;">{{ "Video options"|trans }}</label>
+                    <div class="checkbox" style="margin-bottom:4px;">
+                        <label>
+                            <input id="video_head_option" type="checkbox" name="video_head_option" {% if mm.isHead()|default(false) %}checked{% endif %}> {{ "Video head"|trans }}
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input id="video_tail_option" type="checkbox" name="video_tail_option" {% if mm.isTail()|default(false) %}checked{% endif %}> {{ "Video tail"|trans }}
+                        </label>
+                    </div>
+                {% endif %}
             </div>
         </fieldset>
     </form>
 </div>
+
+{% if app.user and is_granted('ROLE_ACCESS_HEAD_AND_TAIL_MANAGER') and not mm.isMultistream() %}
+<script>
+    $('#video_head_option').on('click', function(){
+        let route =  '{{ path('pumukit_newadmin_head_and_tail_set_head', {
+            'multimediaObject': '__multimediaObject__',
+            'isHead': '__isHead__'
+        }) }}';
+        route = route.replace('__multimediaObject__', "{{ mm.id }}");
+        route = route.replace('__isHead__', $('#video_head_option').is(":checked"));
+        $.ajax({
+            url: route,
+            method: 'POST',
+            success: function (response) {
+                success(response.success);
+            },
+            error: function (response) {
+                success(response.error);
+            }
+        });
+    });
+
+    $('#video_tail_option').on('click', function(){
+        let route =  '{{ path('pumukit_newadmin_head_and_tail_set_tail', {
+            'multimediaObject': '__multimediaObject__',
+            'isTail': '__isTail__'
+        }) }}';
+        route = route.replace('__multimediaObject__', "{{ mm.id }}");
+        route = route.replace('__isTail__', $('#video_tail_option').is(":checked"));
+        $.ajax({
+            url: route,
+            method: 'POST',
+            success: function (response) {
+                success(response.success);
+            },
+            error: function (response) {
+                success(response.error);
+            }
+        });    });
+</script>
+{% endif %}

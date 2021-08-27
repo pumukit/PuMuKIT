@@ -77,9 +77,6 @@ class SimpleController extends AbstractController
         $this->pumukitCustomLanguages = $pumukitCustomLanguages;
     }
 
-    /**
-     * @Route("/index/{id}", methods={"GET"}, name="pumukitwizard_simple_index")
-     */
     public function indexAction(Request $request, Series $series): Response
     {
         $licenseContent = $this->licenseService->getLicenseContent($request->getLocale());

@@ -723,6 +723,27 @@
         <source>Advanced search</source>
         <target state="translated">Búsqueda avanzada</target>
       </trans-unit>
+      <trans-unit id="FBOV6zV" resname="Cookies">
+        <source>Cookies</source>
+        <target>Cookies</target>
+      </trans-unit>
+      <trans-unit id="iXE7nJw" resname="Accept">
+        <source>Accept</source>
+        <target>Aceptar</target>
+      </trans-unit>
+      <trans-unit id="GG_yIeU" resname="This website uses its own and third-party cookies to offer you a better experience and service. You can review our cookie policy at any time. If you agree, check the corresponding box.">
+        <source>This website uses its own and third-party cookies to offer you a better experience and service. You can review our cookie policy at any time. If you agree, check the corresponding box.</source>
+        <target>
+          Este sitio web utiliza cookies propias e de terceiros, para ofrecerlle unha mellor experiencia e servicio. Podes revisar a nosa política de cookies en cualqer momento. Se estás de acordo marca a casilla correspondente.</target>
+      </trans-unit>
+      <trans-unit id="7dWy.Z9" resname="Cookie policy">
+        <source>Cookie policy</source>
+        <target>Política de cookies</target>
+      </trans-unit>
+      <trans-unit id="1c5E_XE" resname="External player">
+        <source>External player</source>
+        <target>Reproductor externo</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

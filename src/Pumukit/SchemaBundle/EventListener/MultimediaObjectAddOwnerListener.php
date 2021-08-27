@@ -16,7 +16,7 @@ class MultimediaObjectAddOwnerListener
     private $addedOwnerEmailTemplate;
 
     public function __construct(
-        SenderService $senderService,
+        ?SenderService $senderService,
         string $addedOwnerEmailSubject,
         string $addedOwnerEmailTemplate
     ) {

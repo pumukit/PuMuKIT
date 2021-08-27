@@ -104,7 +104,14 @@ class SeriesPicService
             throw new FileNotFoundException($picFile->getPathname());
         }
 
-        $path = $picFile->move($this->getTargetPath($series), $picFile->getClientOriginalName());
+        if (file_exists($this->getTargetPath($series).'/'.$picFile->getClientOriginalName())) {
+            $i = rand(0, 15);
+            $name = $picFile->getClientOriginalName().$i;
+        } else {
+            $name = $picFile->getClientOriginalName();
+        }
+
+        $path = $picFile->move($this->getTargetPath($series), $name);
 
         $pic = new Pic();
         $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));

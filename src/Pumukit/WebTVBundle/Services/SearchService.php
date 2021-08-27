@@ -67,14 +67,21 @@ class SearchService
     {
         if (self::MULTIMEDIA_OBJECT === $type) {
             $pipeline = [
+                ['$match' => [
+                    'status' => MultimediaObject::STATUS_PUBLISHED,
+                    'tags.cod' => 'PUCHWEBTV',
+                ]],
                 ['$group' => ['_id' => ['$year' => '$public_date']]],
                 ['$sort' => ['_id' => 1]],
             ];
-            $class = Series::class;
+            $class = MultimediaObject::class;
         } else {
             $pipeline = [
-                ['$match' => ['status' => MultimediaObject::STATUS_PUBLISHED]],
-                ['$group' => ['_id' => ['$year' => '$record_date']]],
+                ['$match' => [
+                    'status' => MultimediaObject::STATUS_PUBLISHED,
+                    'tags.cod' => 'PUCHWEBTV',
+                ]],
+                ['$group' => ['_id' => '$series']],
                 ['$sort' => ['_id' => 1]],
             ];
             $class = MultimediaObject::class;
@@ -82,12 +89,20 @@ class SearchService
 
         $yearResults = $this->documentManager->getDocumentCollection($class)->aggregate($pipeline, ['cursor' => []]);
         $years = [];
-
-        foreach ($yearResults as $year) {
-            $years[] = $year['_id'];
+        if (self::MULTIMEDIA_OBJECT === $type) {
+            foreach ($yearResults as $year) {
+                $years[] = $year['_id'];
+            }
+        } else {
+            foreach ($yearResults as $series) {
+                $series = $this->documentManager->getRepository(Series::class)->findOneBy(['_id' => $series['_id']]);
+                if ($series) {
+                    $years[] = $series->getPublicDate()->format('Y');
+                }
+            }
         }
 
-        return $years;
+        return array_unique($years);
     }
 
     public function getLanguages()
