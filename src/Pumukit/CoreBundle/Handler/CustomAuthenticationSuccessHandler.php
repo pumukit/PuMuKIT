@@ -14,7 +14,6 @@ use Symfony\Component\Security\Http\HttpUtils;
 
 class CustomAuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
 {
-    private const EXCEPTION_MESSAGE = 'Invalid login';
     private $documentManager;
 
     public function __construct(HttpUtils $httpUtils, DocumentManager $documentManager)
