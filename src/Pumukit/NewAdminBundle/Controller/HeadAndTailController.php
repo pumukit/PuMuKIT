@@ -20,7 +20,7 @@ class HeadAndTailController extends AdminController
      */
     public function indexAction(Request $request): Response
     {
-        return $this->render('PumukitNewAdminBundle:HeadAndTail:template.html.twig');
+        return $this->render('@PumukitNewAdmin/HeadAndTail/template.html.twig');
     }
 
     /**
