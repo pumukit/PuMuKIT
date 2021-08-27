@@ -95,8 +95,6 @@ class MultimediaObjectSearchService
             } catch (\Exception $exception) {
                 $isMongoId = false;
             }
-            // Only in Mongo 1.5.0
-            // NOTE: $isMongoId = \MongoId::isValid($personName);
             if ($isMongoId) {
                 $peopleCriteria = new ObjectId($personName);
                 $new_criteria['people'] = ['$elemMatch' => ['cod' => $roleCode, 'people._id' => $peopleCriteria]];
@@ -112,8 +110,6 @@ class MultimediaObjectSearchService
             } catch (\Exception $exception) {
                 $isMongoId = false;
             }
-            // Only in Mongo 1.5.0
-            // NOTE: $isMongoId = \MongoId::isValid($personName);
             if ($isMongoId) {
                 $peopleCriteria = new ObjectId($personName);
                 $new_criteria += ['people.people._id' => $peopleCriteria];
