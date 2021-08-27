@@ -7,11 +7,11 @@ namespace Pumukit\NewAdminBundle\Controller;
 use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Annotation\Route;
 
-class HeadAndTailUpdateController extends AdminController implements NewAdminControllerInterface
+class HeadAndTailUpdateController extends AdminController
 {
     /**
      * @Security("is_granted('ROLE_ADD_HEAD_AND_TAIL')")

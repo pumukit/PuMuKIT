@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_HEAD_AND_TAIL_MANAGER')")
  */
-class HeadAndTailController extends AdminController implements NewAdminControllerInterface
+class HeadAndTailController extends AdminController
 {
     /**
      * @Route("/headandtail/manager", name="pumukit_newadmin_head_and_tail")
