@@ -99,8 +99,17 @@ class JobService
      *
      * @return MultimediaObject
      */
-    public function createTrackFromLocalHardDrive(MultimediaObject $multimediaObject, UploadedFile $trackFile, $profile, $priority, $language, $description, $initVars = [], $duration = 0, $flags = 0)
-    {
+    public function createTrackFromLocalHardDrive(
+        MultimediaObject $multimediaObject,
+        UploadedFile $trackFile,
+        $profile,
+        $priority,
+        $language,
+        $description,
+        $initVars = [],
+        $duration = 0,
+        $flags = 0
+    ) {
         if (!$trackFile->isValid()) {
             throw new \Exception($trackFile->getErrorMessage());
         }
@@ -113,12 +122,25 @@ class JobService
 
         $trackName = preg_replace('([^A-Za-z0-9])', '', $trackName);
 
-        $pathFile = $trackFile->move($this->tmpPath.'/'.$multimediaObject->getId(), $trackName.'.'.pathinfo($trackFile->getClientOriginalName())['extension']);
+        $pathFile = $trackFile->move(
+            $this->tmpPath.'/'.$multimediaObject->getId(),
+            $trackName.'.'.pathinfo($trackFile->getClientOriginalName())['extension']
+        );
 
         if (!is_string($pathFile)) {
             $pathFile = $pathFile->getPathname();
         }
-        $this->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description, $initVars, $duration, $flags);
+        $this->addJob(
+            $pathFile,
+            $profile,
+            $priority,
+            $multimediaObject,
+            $language,
+            $description,
+            $initVars,
+            $duration,
+            $flags
+        );
 
         return $multimediaObject;
     }
@@ -139,13 +161,32 @@ class JobService
      *
      * @return MultimediaObject
      */
-    public function createTrackFromInboxOnServer(MultimediaObject $multimediaObject, $trackUrl, $profile, $priority, $language, $description, $initVars = [], $duration = 0, $flags = 0)
-    {
+    public function createTrackFromInboxOnServer(
+        MultimediaObject $multimediaObject,
+        $trackUrl,
+        $profile,
+        $priority,
+        $language,
+        $description,
+        $initVars = [],
+        $duration = 0,
+        $flags = 0
+    ) {
         if (!is_file($trackUrl)) {
             throw new FileNotFoundException($trackUrl);
         }
 
-        $this->addJob($trackUrl, $profile, $priority, $multimediaObject, $language, $description, $initVars, $duration, $flags);
+        $this->addJob(
+            $trackUrl,
+            $profile,
+            $priority,
+            $multimediaObject,
+            $language,
+            $description,
+            $initVars,
+            $duration,
+            $flags
+        );
 
         return $multimediaObject;
     }
@@ -163,9 +204,26 @@ class JobService
      * @throws \Exception
      * @deprecated: Use addJob with JobService::ADD_JOB_UNIQUE flag.
      */
-    public function addUniqueJob($pathFile, $profile, $priority, MultimediaObject $multimediaObject, $language = null, $description = [], $initVars = [])
-    {
-        $this->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description, $initVars, 0, self::ADD_JOB_UNIQUE);
+    public function addUniqueJob(
+        $pathFile,
+        $profile,
+        $priority,
+        MultimediaObject $multimediaObject,
+        $language = null,
+        $description = [],
+        $initVars = []
+    ) {
+        $this->addJob(
+            $pathFile,
+            $profile,
+            $priority,
+            $multimediaObject,
+            $language,
+            $description,
+            $initVars,
+            0,
+            self::ADD_JOB_UNIQUE
+        );
     }
 
     /**
@@ -184,8 +242,17 @@ class JobService
      *
      * @return Job
      */
-    public function addJob($pathFile, $profileName, $priority, MultimediaObject $multimediaObject, $language = null, $description = [], $initVars = [], $duration = 0, $flags = 0)
-    {
+    public function addJob(
+        $pathFile,
+        $profileName,
+        $priority,
+        MultimediaObject $multimediaObject,
+        $language = null,
+        $description = [],
+        $initVars = [],
+        $duration = 0,
+        $flags = 0
+    ) {
         if (self::ADD_JOB_UNIQUE & $flags) {
             $job = $this->repo->findOneBy(['profile' => $profileName, 'mm_id' => $multimediaObject->getId()]);
 
@@ -345,7 +412,11 @@ class JobService
             throw new \Exception("Can't find job with id ".$id);
         }
         if (Job::STATUS_EXECUTING === $job->getStatus()) {
-            $msg = sprintf('[deleteJob] Trying to delete job "%s" that has executing status. Given status is %s', $id, $job->getStatus());
+            $msg = sprintf(
+                '[deleteJob] Trying to delete job "%s" that has executing status. Given status is %s',
+                $id,
+                $job->getStatus()
+            );
             $this->logger->error($msg);
 
             throw new \Exception($msg);
@@ -469,7 +540,11 @@ class JobService
         $this->propService->setJobAsExecuting($multimediaObject, $job);
 
         $command = [
-            'php', "{$this->binPath}/console", sprintf('--env=%s', $this->environment), 'pumukit:encoder:job', $job->getId(),
+            'php',
+            "{$this->binPath}/console",
+            sprintf('--env=%s', $this->environment),
+            'pumukit:encoder:job',
+            $job->getId(),
         ];
 
         $process = new Process($command);
@@ -572,7 +647,9 @@ class JobService
 
         $duration_conf = 25;
         if (($durationIn < $durationEnd - $duration_conf) || ($durationIn > $durationEnd + $duration_conf)) {
-            throw new \Exception(sprintf('Final duration (%s) and initial duration (%s) are differents', $durationEnd, $durationIn));
+            throw new \Exception(
+                sprintf('Final duration (%s) and initial duration (%s) are differents', $durationEnd, $durationIn)
+            );
         }
 
         return true;
@@ -681,7 +758,14 @@ class JobService
 
         $multimediaObject = $this->getMultimediaObject($job);
 
-        return $this->createTrack($multimediaObject, $job->getPathEnd(), $job->getProfile(), $job->getLanguageId(), $job->getI18nDescription(), $job->getPathIni());
+        return $this->createTrack(
+            $multimediaObject,
+            $job->getPathEnd(),
+            $job->getProfile(),
+            $job->getLanguageId(),
+            $job->getI18nDescription(),
+            $job->getPathIni()
+        );
     }
 
     /**
@@ -694,8 +778,13 @@ class JobService
      *
      * @return Track
      */
-    public function createTrackWithFile($pathFile, $profileName, MultimediaObject $multimediaObject, $language = null, $description = [])
-    {
+    public function createTrackWithFile(
+        $pathFile,
+        $profileName,
+        MultimediaObject $multimediaObject,
+        $language = null,
+        $description = []
+    ) {
         $this->logger->info('Create new track with file '.$pathFile.' and profileName '.$profileName);
 
         $profile = $this->profileService->getProfile($profileName);
@@ -723,8 +812,14 @@ class JobService
      *
      * @return Track
      */
-    public function createTrack(MultimediaObject $multimediaObject, $pathEnd, $profileName, $language = null, $description = [], $pathFile = null)
-    {
+    public function createTrack(
+        MultimediaObject $multimediaObject,
+        $pathEnd,
+        $profileName,
+        $language = null,
+        $description = [],
+        $pathFile = null
+    ) {
         $profile = $this->profileService->getProfile($profileName);
 
         $track = new Track();
@@ -756,7 +851,13 @@ class JobService
 
         $track->setPath($pathEnd);
         if (isset($profile['streamserver']['url_out'])) {
-            $track->setUrl(str_replace(realpath($profile['streamserver']['dir_out']), $profile['streamserver']['url_out'], $pathEnd));
+            $track->setUrl(
+                str_replace(
+                    realpath($profile['streamserver']['dir_out']),
+                    $profile['streamserver']['url_out'],
+                    $pathEnd
+                )
+            );
         }
 
         $this->inspectionService->autocompleteTrack($track);
@@ -840,7 +941,8 @@ class JobService
             $maxExecutionJobTime->add(new \DateInterval('PT'.$this->maxExecutionJobSeconds.'S'));
             if ($nowDateTime > $maxExecutionJobTime) {
                 $job->setStatus(Job::STATUS_ERROR);
-                $message = '[checkService] Job executing for a long time, set status to ERROR. Máx execution time was '.$maxExecutionJobTime->format('Y-m-d H:i:s');
+                $message = '[checkService] Job executing for a long time, set status to ERROR. Máx execution time was '.
+                           $maxExecutionJobTime->format('Y-m-d H:i:s');
                 $job->appendOutput($message);
                 $this->logger->error($message.' for JOB ID '.$job->getId());
 
@@ -852,6 +954,11 @@ class JobService
         if ($existsJobsToUpdate) {
             $this->dm->flush();
         }
+    }
+
+    public function removeTrack(MultimediaObject $multimediaObject, string $trackId): MultimediaObject
+    {
+        return $this->trackService->removeTrackFromMultimediaObject($multimediaObject, $trackId);
     }
 
     private function deleteTempFiles(Job $job)
@@ -918,7 +1025,11 @@ class JobService
         $profile = $this->profileService->getProfile($job->getProfile());
 
         if (!$profile) {
-            $errorMsg = sprintf('[createTrackWithJob] Profile %s not found when the job %s creates the track', $job->getProfile(), $job->getId());
+            $errorMsg = sprintf(
+                '[createTrackWithJob] Profile %s not found when the job %s creates the track',
+                $job->getProfile(),
+                $job->getId()
+            );
             $this->logger->error($errorMsg);
 
             throw new \Exception($errorMsg);
@@ -937,7 +1048,11 @@ class JobService
         $multimediaObject = $this->dm->getRepository(MultimediaObject::class)->find($job->getMmId());
 
         if (!$multimediaObject) {
-            $errorMsg = sprintf('[createTrackWithJob] Multimedia object %s not found when the job %s creates the track', $job->getMmId(), $job->getId());
+            $errorMsg = sprintf(
+                '[createTrackWithJob] Multimedia object %s not found when the job %s creates the track',
+                $job->getMmId(),
+                $job->getId()
+            );
             $this->logger->error($errorMsg);
 
             throw new \Exception($errorMsg);
@@ -975,7 +1090,10 @@ class JobService
         }
 
         if ($job) {
-            $otherJob = $this->repo->findOneBy(['mm_id' => $job->getMmId(), 'email' => ['$exists' => true]], ['timeini' => 1]);
+            $otherJob = $this->repo->findOneBy(
+                ['mm_id' => $job->getMmId(), 'email' => ['$exists' => true]],
+                ['timeini' => 1]
+            );
             if ($otherJob && $otherJob->getEmail()) {
                 return $otherJob->getEmail();
             }
