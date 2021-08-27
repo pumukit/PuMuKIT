@@ -1,5 +1,5 @@
 # Finds console.log() calls for javascript code
-# TODO: This grep is excluding the 'public' directories on purpose, although most of the js code is there.
+# This grep is excluding the 'public' directories on purpose, although most of the js code is there.
 #       The issue is that there are external libraries with console.logs on their code as of now, and since we don't
 #       use a dependencies manager for web assets (bower, jam, ...) those libraries are included in the code.
 if egrep --color=auto -nr 'console.log\(' src/Pumukit/ --include \*.html* --include \*.js* --exclude-dir=public ; then
