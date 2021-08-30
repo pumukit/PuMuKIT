@@ -7,6 +7,8 @@ services:
       $locale: '%locale%'
       $locales: '%pumukit.locales%'
       $pumukitPublicDir: '%pumukit.public_dir%'
+      $inboxUploadURL: '%pumukit.inboxUploadURL%'
+      $inboxUploadLIMIT: '%pumukit.inboxUploadLIMIT%'
 
   Pumukit\CoreBundle\Controller\:
     resource: '../../src/Pumukit/CoreBundle/Controller'

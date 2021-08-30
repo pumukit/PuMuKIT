@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "api-platform/core": {
         "version": "2.5",
         "recipe": {
@@ -12,10 +13,15 @@
             "config/routes/api_platform.yaml",
             "src/Entity/.gitignore"
         ]
+=======
+    "ankitpokhrel/tus-php": {
+        "version": "v1.3.1"
+>>>>>>> [WIP] TUS Protocol
     },
     "babdev/pagerfanta-bundle": {
         "version": "v2.8.0"
     },
+<<<<<<< HEAD
     "behat/transliterator": {
         "version": "v1.3.0"
     },
@@ -45,6 +51,10 @@
     },
     "doctrine/common": {
         "version": "3.1.2"
+=======
+    "brick/math": {
+        "version": "0.9.3"
+>>>>>>> [WIP] TUS Protocol
     },
     "doctrine/deprecations": {
         "version": "v0.5.3"
@@ -97,6 +107,7 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.3"
     },
+<<<<<<< HEAD
     "gedmo/doctrine-extensions": {
         "version": "v3.1.0"
     },
@@ -165,6 +176,19 @@
     },
     "php-cs-fixer/diff": {
         "version": "v1.3.1"
+=======
+    "guzzlehttp/guzzle": {
+        "version": "7.3.0"
+    },
+    "guzzlehttp/promises": {
+        "version": "1.4.1"
+    },
+    "guzzlehttp/psr7": {
+        "version": "2.0.0"
+    },
+    "nesbot/carbon": {
+        "version": "2.51.1"
+>>>>>>> [WIP] TUS Protocol
     },
     "php-parallel-lint/php-var-dump-check": {
         "version": "v0.5"
@@ -202,6 +226,7 @@
     "phpunit/php-invoker": {
         "version": "3.1.1"
     },
+<<<<<<< HEAD
     "phpunit/php-text-template": {
         "version": "2.0.4"
     },
@@ -236,6 +261,28 @@
     },
     "psr/log": {
         "version": "1.1.4"
+=======
+    "predis/predis": {
+        "version": "v1.1.7"
+    },
+    "psr/http-client": {
+        "version": "1.0.1"
+    },
+    "psr/http-factory": {
+        "version": "1.0.1"
+    },
+    "psr/http-message": {
+        "version": "1.0.1"
+    },
+    "ralouphie/getallheaders": {
+        "version": "3.0.3"
+    },
+    "ramsey/collection": {
+        "version": "1.2.1"
+    },
+    "ramsey/uuid": {
+        "version": "4.2.1"
+>>>>>>> [WIP] TUS Protocol
     },
     "sebastian/code-unit": {
         "version": "1.0.8"

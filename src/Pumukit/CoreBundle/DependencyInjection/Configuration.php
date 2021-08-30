@@ -80,6 +80,12 @@ class Configuration implements ConfigurationInterface
             ->booleanNode('full_magic_url')
             ->defaultFalse()
             ->end()
+            ->scalarNode('inboxUploadURL')
+            ->defaultValue('https://localhost/tus')
+            ->end()
+            ->scalarNode('inboxUploadLIMIT')
+            ->defaultValue(5)
+            ->end()
             ->end()
         ;
 

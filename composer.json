@@ -12,6 +12,7 @@
         "ext-json": "*",
         "ext-mongodb": "*",
         "ext-sysvsem": "*",
+        "ankitpokhrel/tus-php": "1.*",
         "api-platform/core": "^2.5",
         "babdev/pagerfanta-bundle": "^2.8",
         "doctrine/mongodb-odm-bundle": "~4",
@@ -37,9 +38,9 @@
         "symfony/translation": "^4.0",
         "symfony/twig-bundle": "^4.0",
         "symfony/validator": "^4.0",
+        "teltek/pumukit-stats-ui-bundle": "dev-master",
         "twig/extra-bundle": "^3.0",
         "twig/intl-extra": "^3.0",
-        "teltek/pumukit-stats-ui-bundle": "dev-master",
         "vipx/bot-detect-bundle": "^4.0"
     },
     "require-dev": {
