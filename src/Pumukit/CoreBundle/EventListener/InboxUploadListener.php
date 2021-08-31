@@ -1,0 +1,34 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Pumukit\CoreBundle\EventListener;
+
+use Pumukit\CoreBundle\Event\InboxUploadEvent;
+use Symfony\Component\Process\Process;
+
+class InboxUploadListener
+{
+    private $inboxPath;
+
+    public function __construct(string $inboxPath)
+    {
+        $this->inboxPath = $inboxPath;
+    }
+
+    public function autoImport(InboxUploadEvent $event): void
+    {
+        $command = [
+            'php',
+            'bin/console',
+            'pumukit:import:inbox',
+            $this->inboxPath.'/'.$event->getFileName(),
+        ];
+
+        $process = new Process($command);
+
+        $command = $process->getCommandLine();
+
+        shell_exec("nohup {$command} 1> /dev/null 2> /dev/null & echo $!");
+    }
+}

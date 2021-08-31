@@ -1,12 +1,11 @@
 const uppyTUS = Uppy.Core({
-        debug: true,
+        debug: false,
         autoProceed: true,
         restrictions: {
             maxFileSize: convertSizeToBytes("{{ php_upload_max_filesize() }}"),
             allowedFileTypes: ['audio/*','video/*']
         },
         onBeforeFileAdded:  (currentFile) => {
-            console.log(currentFile);
             currentFile.name = `${Date.now()}_${currentFile.name}`;
         }
     })
@@ -22,6 +21,7 @@ const uppyTUS = Uppy.Core({
 
 uppyTUS.on('upload-success', (file, response) => {
     uppyTUS.setFileState(file.id, { uploadURL: `${response.url}/get` })
+    sendXHRImportRequest(file);
 })
 
 function convertSizeToBytes(size)
@@ -35,4 +35,12 @@ function convertSizeToBytes(size)
     }
 
     return 1024*1024*1024;
+}
+
+function sendXHRImportRequest(file)
+{
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", '/dispatchImport', true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.send("fileName="+file.name);
 }

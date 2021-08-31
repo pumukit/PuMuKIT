@@ -2,12 +2,9 @@
 
 namespace Pumukit\CoreBundle\Controller;
 
-use TusPhp\Tus\Server;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
+use TusPhp\Tus\Server;
 
 class TUSUploadController extends AbstractController
 {

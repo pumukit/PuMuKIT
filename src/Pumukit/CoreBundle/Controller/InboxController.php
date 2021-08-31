@@ -2,21 +2,26 @@
 
 namespace Pumukit\CoreBundle\Controller;
 
-use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Pumukit\CoreBundle\Services\UploadDispatcherService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Security("is_granted('ROLE_UPLOAD_INBOX')")
  */
 class InboxController extends AbstractController
 {
+    private $uploadDispatcherService;
     private $inboxUploadURL;
     private $inboxUploadLIMIT;
 
-    public function __construct(string $inboxUploadURL, string $inboxUploadLIMIT)
+    public function __construct(UploadDispatcherService $uploadDispatcherService, string $inboxUploadURL, string $inboxUploadLIMIT)
     {
+        $this->uploadDispatcherService = $uploadDispatcherService;
         $this->inboxUploadURL = $inboxUploadURL;
         $this->inboxUploadLIMIT = $inboxUploadLIMIT;
     }
@@ -29,7 +34,21 @@ class InboxController extends AbstractController
     {
         return [
             'inboxUploadURL' => $this->inboxUploadURL,
-            'inboxUploadLIMIT' => $this->inboxUploadLIMIT
+            'inboxUploadLIMIT' => $this->inboxUploadLIMIT,
         ];
+    }
+
+    /**
+     * @Route("/dispatchImport", name="inbox_auto_import")
+     */
+    public function dispatchImport(Request $request): JsonResponse
+    {
+        try {
+            $this->uploadDispatcherService->dispatchUploadFromInbox($this->getUser(), $request->get('fileName'));
+        } catch (\Exception $exception) {
+            return new JsonResponse(['success' => false]);
+        }
+
+        return new JsonResponse(['success' => true]);
     }
 }
