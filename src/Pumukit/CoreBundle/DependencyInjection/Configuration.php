@@ -69,7 +69,7 @@ class Configuration implements ConfigurationInterface
             ->defaultFalse()
             ->end()
             ->scalarNode('inboxUploadURL')
-            ->defaultValue('https://localhost/tus')
+            ->defaultValue('https://localhost/app_dev.php/tus/')
             ->end()
             ->scalarNode('inboxUploadLIMIT')
             ->defaultValue(5)

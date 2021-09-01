@@ -1,15 +1,16 @@
+{% include "@PumukitCore/Upload/common.js.twig" %}
+
 const uppyTUS = Uppy.Core({
-        debug: true,
-        autoProceed: true,
-        restrictions: {
-            maxFileSize: convertSizeToBytes("{{ php_upload_max_filesize() }}"),
-            allowedFileTypes: ['audio/*','video/*']
-        },
-        onBeforeFileAdded:  (currentFile) => {
-            console.log(currentFile);
-            currentFile.name = `${Date.now()}_${currentFile.name}`;
-        }
-    })
+    debug: false,
+    autoProceed: true,
+    restrictions: {
+        maxFileSize: convertSizeToBytes("{{ php_upload_max_filesize() }}"),
+        allowedFileTypes: ['audio/*','video/*']
+    },
+    onBeforeFileAdded:  (currentFile) => {
+        currentFile.name = `${Date.now()}_${currentFile.name}`;
+    }
+})
     .use(Uppy.Dashboard, {
         target: '#uploader_drag_and_drop',
         inline: true
@@ -20,19 +21,4 @@ const uppyTUS = Uppy.Core({
     })
     .run()
 
-uppyTUS.on('upload-success', (file, response) => {
-    uppyTUS.setFileState(file.id, { uploadURL: `${response.url}/get` })
-})
-
-function convertSizeToBytes(size)
-{
-    if(size.indexOf('GB') !== -1) {
-        return parseInt(size.replace("GB","")) * 1024 * 1024 * 1024;
-    }
-
-    if(size.indexOf('MB') !== -1) {
-        return parseInt(size.replace("MB","")) * 1024 * 1024;
-    }
-
-    return 1024*1024*1024;
-}
+{% include "@PumukitCore/Upload/uppy_dispatch.js.twig" %}

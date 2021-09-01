@@ -3,21 +3,28 @@
 namespace Pumukit\CoreBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use TusPhp\Tus\Server;
 
 class TUSUploadController extends AbstractController
 {
+    private $kernelProjectDir;
+
+    public function __construct(string $kernelProjectDir)
+    {
+        $this->kernelProjectDir = $kernelProjectDir;
+    }
+
     /**
      * @Route("/tus/", name="tus_post")
-     * @Route("/tus/{token?}", name="tus_post_token", requirements={"token"=".+"})
-     * @Route("/files/{token?}", name="tus_files", requirements={"token"=".+"})
+     * @Route("/tus/{token}", name="tus_post_token", requirements={"token"=".+"})
+     * @Route("/files/{token}", name="tus_files", requirements={"token"=".+"})
      */
-    public function server(): Server
+    public function server(Server $server)
     {
-        $tusService = $this->container->get('pumukit.tus_upload');
+        $server->setUploadDir($this->kernelProjectDir.'/web/storage/inbox');
+        $server->setApiPath('/files');
 
-        return $tusService->getServer()->serve();
+        return $server->serve();
     }
 }
