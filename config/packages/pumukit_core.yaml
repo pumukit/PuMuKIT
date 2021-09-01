@@ -10,6 +10,7 @@ services:
       $inboxUploadURL: '%pumukit.inboxUploadURL%'
       $inboxUploadLIMIT: '%pumukit.inboxUploadLIMIT%'
       $inboxPath: '%pumukit.inbox%'
+      $kernelProjectDir: '%kernel.project_dir%'
 
   Pumukit\CoreBundle\Controller\:
     resource: '../../src/Pumukit/CoreBundle/Controller'

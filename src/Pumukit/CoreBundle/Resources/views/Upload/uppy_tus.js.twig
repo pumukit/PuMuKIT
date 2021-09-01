@@ -1,3 +1,5 @@
+{% include "@PumukitCore/Upload/common.js.twig" %}
+
 const uppyTUS = Uppy.Core({
         debug: false,
         autoProceed: true,
@@ -19,28 +21,4 @@ const uppyTUS = Uppy.Core({
     })
     .run()
 
-uppyTUS.on('upload-success', (file, response) => {
-    uppyTUS.setFileState(file.id, { uploadURL: `${response.url}/get` })
-    sendXHRImportRequest(file);
-})
-
-function convertSizeToBytes(size)
-{
-    if(size.indexOf('GB') !== -1) {
-        return parseInt(size.replace("GB","")) * 1024 * 1024 * 1024;
-    }
-
-    if(size.indexOf('MB') !== -1) {
-        return parseInt(size.replace("MB","")) * 1024 * 1024;
-    }
-
-    return 1024*1024*1024;
-}
-
-function sendXHRImportRequest(file)
-{
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", '/dispatchImport', true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.send("fileName="+file.name);
-}
+{% include "@PumukitCore/Upload/uppy_dispatch.js.twig" %}

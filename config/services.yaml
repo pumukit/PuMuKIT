@@ -81,10 +81,13 @@ services:
   SunCat\MobileDetectBundle\DeviceDetector\MobileDetector:
     class: SunCat\MobileDetectBundle\DeviceDetector\MobileDetector
 
+#  TusPhp\Cache\FileStore:
+#    class: TusPhp\Cache\FileStore
+#    arguments:
+#      $cacheDir: '%kernel.project_dir%/var/cache/'
+
   TusPhp\Cache\FileStore:
-    class: TusPhp\Cache\FileStore
-    arguments:
-      $cacheDir: '%kernel.project_dir%/var/cache/'
+    class: TusPhp\Cache\RedisStore
 
   TusPhp\Tus\Server:
     class: TusPhp\Tus\Server

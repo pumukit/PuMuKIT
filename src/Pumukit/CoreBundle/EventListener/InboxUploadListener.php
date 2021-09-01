@@ -10,23 +10,24 @@ use Symfony\Component\Process\Process;
 class InboxUploadListener
 {
     private $inboxPath;
+    private $kernelProjectDir;
 
-    public function __construct(string $inboxPath)
+    public function __construct(string $inboxPath, string $kernelProjectDir)
     {
         $this->inboxPath = $inboxPath;
+        $this->kernelProjectDir = $kernelProjectDir;
     }
 
     public function autoImport(InboxUploadEvent $event): void
     {
         $command = [
             'php',
-            'bin/console',
+            $this->kernelProjectDir.'/' .'bin/console',
             'pumukit:import:inbox',
             $this->inboxPath.'/'.$event->getFileName(),
         ];
 
         $process = new Process($command);
-
         $command = $process->getCommandLine();
 
         shell_exec("nohup {$command} 1> /dev/null 2> /dev/null & echo $!");
