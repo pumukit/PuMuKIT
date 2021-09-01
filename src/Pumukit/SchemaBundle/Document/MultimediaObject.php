@@ -16,6 +16,7 @@ class MultimediaObject
 {
     use Traits\Keywords;
     use Traits\Properties;
+    use Traits\HeadAndTail;
     use Traits\Link {
         Traits\Link::__construct as private __LinkConstruct;
     }

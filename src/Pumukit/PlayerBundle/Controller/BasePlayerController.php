@@ -60,6 +60,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
         return $this->render('@PumukitPlayer/Player/player.html.twig', [
             'autostart' => $playerParameters['autoStart'],
             'intro' => $playerParameters['intro'],
+            'tail' => $playerParameters['tail'],
             'multimediaObject' => $multimediaObject,
             'object' => $multimediaObject,
             'when_dispatch_view_event' => $playerParameters['whenDispatchViewEvent'],
@@ -94,6 +95,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
         return $this->render('@PumukitPlayer/Player/player.html.twig', [
             'autostart' => $playerParameters['autoStart'],
             'intro' => $playerParameters['intro'],
+            'tail' => $playerParameters['tail'],
             'object' => $multimediaObject,
             'when_dispatch_view_event' => $playerParameters['whenDispatchViewEvent'],
             'track' => $track,
@@ -106,6 +108,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
         return [
             'autoStart' => $request->query->get('autostart', 'false'),
             'intro' => $this->basePlayerIntroService->getVideoIntroduction($multimediaObject, $request->query->getBoolean('intro')),
+            'tail' => $this->basePlayerIntroService->getVideoTail($multimediaObject),
             'whenDispatchViewEvent' => $this->pumukitPlayerWhenDispatchViewEvent,
         ];
     }

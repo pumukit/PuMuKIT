@@ -4,42 +4,62 @@ declare(strict_types=1);
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\CoreBundle\Services\PaginationService;
+use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\SchemaBundle\Services\GroupService;
+use Pumukit\SchemaBundle\Services\UserService;
+use Pumukit\SchemaBundle\Services\HeadAndTailService;
 use Pumukit\SchemaBundle\Document\Series;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class HeadAndTailUpdateController extends AdminController
 {
+    private $headAndTailService;
+
+    public function __construct(
+        DocumentManager $documentManager,
+        PaginationService $paginationService,
+        FactoryService $factoryService,
+        GroupService $groupService,
+        UserService $userService,
+        HeadAndTailService $headAndTailService,
+        SessionInterface $session,
+        TranslatorInterface $translator
+    ) {
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
+        $this->headAndTailService = $headAndTailService;
+    }
+
     /**
      * @Security("is_granted('ROLE_ADD_HEAD_AND_TAIL')")
      * @Route("/head/update/{multimediaObject}/{isHead}", name="pumukit_newadmin_head_and_tail_set_head", methods={"POST"})
      */
     public function updateVideoHeadStatus(string $multimediaObject, string $isHead): JsonResponse
     {
-        $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
-        $translator = $this->get('translator');
-        $headAndTailService = $this->get('pumukit_schema.head_and_tail');
-
-        $multimediaObject = $documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObject)]);
+        $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObject)]);
         if ($multimediaObject instanceof MultimediaObject) {
             $isHead = 'true' === $isHead;
             $multimediaObject->setHead($isHead);
-            $documentManager->flush();
+            $this->documentManager->flush();
 
-            $message = $translator->trans('Multimedia Object removed as head');
+            $message = $this->translator->trans('Multimedia Object removed as head');
             if (!$isHead) {
-                $headAndTailService->removeHeadElementOnAllMultimediaObjectsAndSeries($multimediaObject->getId());
+                $this->headAndTailService->removeHeadElementOnAllMultimediaObjectsAndSeries($multimediaObject->getId());
             } else {
-                $message = $translator->trans('Multimedia Object set as head');
+                $message = $this->translator->trans('Multimedia Object set as head');
             }
 
             return new JsonResponse(['success' => $message]);
         }
 
-        return new JsonResponse(['success' => $translator->trans('Multimedia Object not found')]);
+        return new JsonResponse(['success' => $this->translator->trans('Multimedia Object not found')]);
     }
 
     /**
@@ -48,27 +68,23 @@ class HeadAndTailUpdateController extends AdminController
      */
     public function updateVideoTailStatus(string $multimediaObject, string $isTail): JsonResponse
     {
-        $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
-        $translator = $this->get('translator');
-        $headAndTailService = $this->get('pumukit_schema.head_and_tail');
-
-        $multimediaObject = $documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObject)]);
+        $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObject)]);
         if ($multimediaObject instanceof MultimediaObject) {
             $isTail = 'true' === $isTail;
             $multimediaObject->setTail($isTail);
-            $documentManager->flush();
+            $this->documentManager->flush();
 
-            $message = $translator->trans('Multimedia Object removed as tail');
+            $message = $this->translator->trans('Multimedia Object removed as tail');
             if (!$isTail) {
-                $headAndTailService->removeTailElementOnAllMultimediaObjectsAndSeries($multimediaObject->getId());
+                $this->headAndTailService->removeTailElementOnAllMultimediaObjectsAndSeries($multimediaObject->getId());
             } else {
-                $message = $translator->trans('Multimedia Object set as tail');
+                $message = $this->translator->trans('Multimedia Object set as tail');
             }
 
             return new JsonResponse(['success' => $message]);
         }
 
-        return new JsonResponse(['success' => $translator->trans('Multimedia Object not found')]);
+        return new JsonResponse(['success' => $this->translator->trans('Multimedia Object not found')]);
     }
 
     /**
@@ -77,8 +93,7 @@ class HeadAndTailUpdateController extends AdminController
      */
     public function updateHeadAndTail(string $type, string $multimediaObject, string $element): JsonResponse
     {
-        $documentManager = $this->get('doctrine_mongodb.odm.document_manager');
-        $multimediaObject = $documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObject)]);
+        $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObject)]);
         if (!$multimediaObject instanceof MultimediaObject) {
             return new JsonResponse(['error' => 'Multimedia Object not found']);
         }
@@ -89,20 +104,19 @@ class HeadAndTailUpdateController extends AdminController
 
         if ('default' === $element && 'head' === $type) {
             $multimediaObject->setVideoHead(null);
-            $documentManager->flush();
+            $this->documentManager->flush();
 
             return new JsonResponse(['success' => 'Head removed successfully']);
         }
 
         if ('default' === $element && 'tail' === $type) {
             $multimediaObject->setVideoTail(null);
-            $documentManager->flush();
+            $this->documentManager->flush();
 
             return new JsonResponse(['success' => 'Tail removed successfully']);
         }
 
-        $headAndTailService = $this->get('pumukit_schema.head_and_tail');
-        $headOrTail = $documentManager->getRepository(MultimediaObject::class)->findOneBy([
+        $headOrTail = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy([
             '_id' => new ObjectId($element),
         ]);
 
@@ -110,24 +124,24 @@ class HeadAndTailUpdateController extends AdminController
             return new JsonResponse(['error' => 'Head or tail not found']);
         }
 
-        if ('head' === $type && !$headAndTailService->isHead($headOrTail)) {
+        if ('head' === $type && !$this->headAndTailService->isHead($headOrTail)) {
             return new JsonResponse(['error' => 'Wrong head element']);
         }
 
-        if ('tail' === $type && !$headAndTailService->isTail($headOrTail)) {
+        if ('tail' === $type && !$this->headAndTailService->isTail($headOrTail)) {
             return new JsonResponse(['error' => 'Wrong tail element']);
         }
 
         if ('head' === $type) {
             $multimediaObject->setVideoHead($headOrTail->getId());
-            $documentManager->flush();
+            $this->documentManager->flush();
 
             return new JsonResponse(['success' => 'Head added successfully']);
         }
 
         if ('tail' === $type) {
             $multimediaObject->setVideoTail($headOrTail->getId());
-            $documentManager->flush();
+            $this->documentManager->flush();
 
             return new JsonResponse(['success' => 'Tail added successfully']);
         }
@@ -141,8 +155,7 @@ class HeadAndTailUpdateController extends AdminController
      */
     public function updateSeriesHeadAndTail(string $type, string $series, string $element): JsonResponse
     {
-        $documentManager = $this->get('doctrine_mongodb.odm.document_manager');
-        $series = $documentManager->getRepository(Series::class)->findOneBy(['_id' => new ObjectId($series)]);
+        $series = $this->documentManager->getRepository(Series::class)->findOneBy(['_id' => new ObjectId($series)]);
         if (!$series instanceof Series) {
             return new JsonResponse(['error' => 'Series not found']);
         }
@@ -153,20 +166,19 @@ class HeadAndTailUpdateController extends AdminController
 
         if ('default' === $element && 'head' === $type) {
             $series->setVideoHead(null);
-            $documentManager->flush();
+            $this->documentManager->flush();
 
             return new JsonResponse(['success' => 'Head removed successfully']);
         }
 
         if ('default' === $element && 'tail' === $type) {
             $series->setVideoTail(null);
-            $documentManager->flush();
+            $this->documentManager->flush();
 
             return new JsonResponse(['success' => 'Tail removed successfully']);
         }
 
-        $headAndTailService = $this->get('pumukit_schema.head_and_tail');
-        $headOrTail = $documentManager->getRepository(MultimediaObject::class)->findOneBy([
+        $headOrTail = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy([
             '_id' => new ObjectId($element),
         ]);
 
@@ -174,24 +186,24 @@ class HeadAndTailUpdateController extends AdminController
             return new JsonResponse(['error' => 'Head or tail not found']);
         }
 
-        if ('head' === $type && !$headAndTailService->isHead($headOrTail)) {
+        if ('head' === $type && !$this->headAndTailService->isHead($headOrTail)) {
             return new JsonResponse(['error' => 'Wrong head element']);
         }
 
-        if ('tail' === $type && !$headAndTailService->isTail($headOrTail)) {
+        if ('tail' === $type && !$this->headAndTailService->isTail($headOrTail)) {
             return new JsonResponse(['error' => 'Wrong tail element']);
         }
 
         if ('head' === $type) {
             $series->setVideoHead($headOrTail->getId());
-            $documentManager->flush();
+            $this->documentManager->flush();
 
             return new JsonResponse(['success' => 'Head added successfully']);
         }
 
         if ('tail' === $type) {
             $series->setVideoTail($headOrTail->getId());
-            $documentManager->flush();
+            $this->documentManager->flush();
 
             return new JsonResponse(['success' => 'Tail added successfully']);
         }
