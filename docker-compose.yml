@@ -42,8 +42,5 @@ services:
     volumes:
       - db-data:/data/db:rw
 
-  redis:
-    image: redis
-
 volumes:
   db-data: {}
