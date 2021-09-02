@@ -15,6 +15,7 @@ class Series
 {
     use Traits\Keywords;
     use Traits\Properties;
+    use Traits\HeadAndTail;
     use Traits\Pic {
         Traits\Pic::__construct as private __PicConstruct;
     }

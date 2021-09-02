@@ -19,39 +19,42 @@
 
         <video id="player1" class="video-js" controls></video>
         <script type="text/javascript">
-            videojs("player1", {
-                {% if intro %}
-                playlist: [{
-                    sources: [{
-                        src: "{{ absolute_url(intro) }}"
-                    }],
-                    {% if 'true' != autostart %}
-                    poster: "{{ object|first_url_pic(true) }}",
-                    {% endif %}
-                }, {
-                    sources: [{
-                        src: "{{ absolute_url(track_url(track)) }}"
-                    }],
-                    {{ captions_block }}
-                    {% if ('true' != autostart) or track.isOnlyAudio() %}
-                    poster: "{{ object|first_url_pic(true) }}",
-                    {% endif %}
-                }],
-                {% else %}
-                    sources: [{
-                        src: "{{ absolute_url(track_url(track)) }}"
-                    }],
-                    {{ captions_block }}
-                    {% if (('true' != autostart) or track.isOnlyAudio()) %}
-                    poster: "{{ object|first_url_pic(true) }}",
-                    {% endif %}
-                {% endif %}
+            var player = videojs("player1", {
                 startparam: "start",
                 autoplay: {{ autostart|default("true") }},
                 repeat: "false",
                 width: '100%',
                 aspectRatio: '16:9',
             });
+
+            player.playlist([
+                {% if intro %}
+                {
+                    sources: [{
+                        src: "{{ absolute_url(intro) }}"
+                    }]
+                },
+                {% endif %}
+                {
+                    sources: [{
+                        src: "{{ absolute_url(track_url(track)) }}"
+                    }]
+                    {{ captions_block }}
+                    {% if ('true' != autostart) or track.isOnlyAudio() %}
+                    , poster: "{{ object|first_url_pic(true) }}",
+                    {% endif %}
+                }
+                {% if tail %}
+                ,{
+                    sources: [{
+                        src: "{{ absolute_url(tail) }}"
+                    }]
+                }
+                {% endif %}
+                ]);
+            player.playlist.autoadvance(0);
+
+
             {% if 'on_play' == when_dispatch_view_event %}
             videojs("player1").on('play', function (e) {
                 if (!window.notifyVideoPlayedReq) {
