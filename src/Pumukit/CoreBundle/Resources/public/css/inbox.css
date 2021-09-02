@@ -1,0 +1,38 @@
+body {
+    background: #eee;
+    letter-spacing: 0.5px;
+    line-height: 1.5em;
+    margin-top: 40px;
+}
+
+.container {
+    position: relative;
+    background: #fff;
+    margin: 0 auto;
+    font-weight: 300;
+    font-size: 1.1em;
+    border-top: 5px solid #70B7FD;
+}
+
+h1 {
+    font-size: 2em;
+    line-height: 1.3em;
+}
+
+.uppy-Dashboard-inner {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+
+@keyframes octocat-wave {
+    0%, 100% {
+        transform: rotate(0)
+    }
+    20%, 60% {
+        transform: rotate(-25deg)
+    }
+    40%, 80% {
+        transform: rotate(10deg)
+    }
+}
