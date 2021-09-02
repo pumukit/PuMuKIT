@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>{{ "PuMuKIT inbox"|trans }}</title>
+
+    <link href="{{ asset('bundles/pumukitwebtv/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" media="screen"/>
+    <link href="{{ asset('bundles/pumukitcore/css/uppy.min.css') }}" type="text/css" rel="stylesheet" media="screen"/>
+    <link href="{{ asset('bundles/pumukitcore/css/inbox.css') }}" type="text/css" rel="stylesheet" media="screen"/>
+
+    <script src="{{ asset('bundles/pumukitwebtv/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('bundles/pumukitwebtv/js/bootstrap.min.js') }}"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>{{ "PuMuKIT inbox"|trans }}</h1>
+                <br />
+                <div class="panel-body">
+                    {% include "@PumukitCore/Upload/uppy_drag_and_drop.html.twig" %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ asset('bundles/pumukitcore/js/uppy.min.js') }}"></script>
+    <script>{% include "@PumukitCore/Upload/uppy_tus.js.twig" %}</script>
+</body>
+</html>

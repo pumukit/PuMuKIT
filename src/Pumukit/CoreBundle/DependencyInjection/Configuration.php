@@ -68,6 +68,14 @@ class Configuration implements ConfigurationInterface
             ->booleanNode('full_magic_url')
             ->defaultFalse()
             ->end()
+            ->scalarNode('inboxUploadURL')
+            ->defaultValue('tus')
+            ->info('URL to process uploaded files. Ex: https://localhost/tus')
+            ->end()
+            ->scalarNode('inboxUploadLIMIT')
+            ->defaultValue(5)
+            ->info('Max number of files to upload at the same time')
+            ->end()
             ->end()
         ;
 

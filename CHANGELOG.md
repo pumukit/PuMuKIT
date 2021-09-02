@@ -9,6 +9,11 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 #### Added
 - Added auto create personal series for each user using a new permission on permission profile.
+- Added new feature of headers and tails on multimedia objects.
+
+#### Fixed
+- Fix search multimedia object years filter.
+
 
 ## [3.6.0](https://github.com/pumukit/PuMuKIT/compare/3.5.0...3.6.0) - (2021-04-21)
 

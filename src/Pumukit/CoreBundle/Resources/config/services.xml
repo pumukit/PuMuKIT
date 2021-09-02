@@ -56,5 +56,14 @@
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
 
+        <service id="pumukit.upload_dispatcher_service" class="Pumukit\CoreBundle\Services\UploadDispatcherService">
+            <argument type="service" id="event_dispatcher"/>
+        </service>
+
+        <service id="pumukit.inbox_upload_listener" class="Pumukit\CoreBundle\EventListener\InboxUploadListener">
+            <argument>%pumukit.inbox%</argument>
+            <argument>%kernel.project_dir%</argument>
+            <tag name="kernel.event_listener" event="upload.inbox" method="autoImport"/>
+        </service>
     </services>
 </container>
