@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class ModulesController extends Controller implements WebTVControllerInterface
 {
-    public static $menuResponse = null;
+    public static $menuResponse;
     private $menuTemplate = 'PumukitWebTVBundle:Modules:widget_menu.html.twig';
 
     /**
