@@ -56,10 +56,6 @@
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
 
-        <service id="tus_file_store" class="TusPhp\Cache\FileStore">
-            <argument>%kernel.project_dir%/app/cache/</argument>
-        </service>
-
         <service id="pumukit.upload_dispatcher_service" class="Pumukit\CoreBundle\Services\UploadDispatcherService">
             <argument type="service" id="event_dispatcher"/>
         </service>

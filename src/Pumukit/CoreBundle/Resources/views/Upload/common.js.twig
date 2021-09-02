@@ -14,7 +14,7 @@ function convertSizeToBytes(size)
 function sendInboxXHRImportRequest(file)
 {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", '/dispatchImport', true);
+    xhr.open("POST", "{{ path('inbox_auto_import') }}", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send("fileName="+file.name);
 }

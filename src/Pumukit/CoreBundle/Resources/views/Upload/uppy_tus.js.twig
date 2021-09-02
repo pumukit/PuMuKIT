@@ -8,9 +8,11 @@ const uppyTUS = Uppy.Core({
         allowedFileTypes: ['audio/*','video/*']
     },
     onBeforeFileAdded:  (currentFile) => {
-        currentFile.name = `${Date.now()}_${currentFile.name}`;
-    }
-})
+            var fileName = currentFile.name;
+            fileName = fileName.replace(/[\W_]+/g,"_");
+            currentFile.name = `${Date.now()}_${fileName}`;
+        }
+    })
     .use(Uppy.Dashboard, {
         target: '#uploader_drag_and_drop',
         inline: true

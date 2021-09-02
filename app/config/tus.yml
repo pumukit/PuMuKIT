@@ -13,12 +13,10 @@ services:
     calls:
       - method: setUploadDir
         arguments:
-          - '%kernel.project_dir%/web/storage/inbox'
+          - '%pumukit.inbox%'
       - method: setApiPath
         arguments:
           - '/files'
 
   Pumukit\CoreBundle\Controller\TUSUploadController:
     class: Pumukit\CoreBundle\Controller\TUSUploadController
-    arguments:
-      $kernelProjectDir: '%kernel.project_dir%'
