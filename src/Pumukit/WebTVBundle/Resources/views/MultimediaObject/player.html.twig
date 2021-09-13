@@ -8,6 +8,10 @@
     $(window).resize(function () {
         resizeFrame($('#paellaiframe'));
     });
+
+    $(window).on("load", function() {
+        $("#paellaiframe").focus();
+    });
 </script>
 
 {% set iframe_route = 'pumukit_videoplayer_index' %}
