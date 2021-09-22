@@ -741,6 +741,22 @@
         <source>External player</source>
         <target>External player</target>
       </trans-unit>
+      <trans-unit id="tajUwR_" resname="Invalidad username/password">
+        <source>Invalidad username/password</source>
+        <target>Invalidad username/password</target>
+      </trans-unit>
+      <trans-unit id="47ienTP" resname="Username">
+        <source>Username</source>
+        <target>Username</target>
+      </trans-unit>
+      <trans-unit id="588_9PF" resname="Password">
+        <source>Password</source>
+        <target>Password</target>
+      </trans-unit>
+      <trans-unit id="gJanvZo" resname="Remember">
+        <source>Remember</source>
+        <target>Remember</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

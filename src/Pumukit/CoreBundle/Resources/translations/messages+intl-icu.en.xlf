@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="PWlKoNH" resname="Edit multimedia object">
+        <source>Edit multimedia object</source>
+        <target>Edit multimedia object</target>
+      </trans-unit>
+      <trans-unit id="a1b7xcD" resname="Upload local file">
+        <source>Upload local file</source>
+        <target>Upload local file</target>
+      </trans-unit>
+      <trans-unit id="v1S3IJZ" resname="Audio/video file">
+        <source>Audio/video file</source>
+        <target>Audio/video file</target>
+      </trans-unit>
+      <trans-unit id="A9ZCBUt" resname="Max.">
+        <source>Max.</source>
+        <target>Max.</target>
+      </trans-unit>
+      <trans-unit id="BoZqIfc" resname="There was an error loading uppy plugin">
+        <source>There was an error loading uppy plugin</source>
+        <target>There was an error loading uppy plugin</target>
+      </trans-unit>
+      <trans-unit id="zikl0Vc" resname="File to upload">
+        <source>File to upload</source>
+        <target>File to upload</target>
+      </trans-unit>
+      <trans-unit id="ZI.xJ3." resname="ERROR!!">
+        <source>ERROR!!</source>
+        <target>ERROR!!</target>
+      </trans-unit>
+      <trans-unit id="7b1Qa7i" resname="Pumukit Bundle Versions">
+        <source>Pumukit Bundle Versions</source>
+        <target>Pumukit Bundle Versions</target>
+      </trans-unit>
+      <trans-unit id="uq3fcPt" resname="Type">
+        <source>Type</source>
+        <target>Type</target>
+      </trans-unit>
+      <trans-unit id="3NHVIj9" resname="Name">
+        <source>Name</source>
+        <target>Name</target>
+      </trans-unit>
+      <trans-unit id="3RZ5Bd4" resname="Version">
+        <source>Version</source>
+        <target>Version</target>
+      </trans-unit>
+      <trans-unit id="gqnEb.p" resname="Commit">
+        <source>Commit</source>
+        <target>Commit</target>
+      </trans-unit>
+      <trans-unit id="EzEnW8U" resname="Tags">
+        <source>Tags</source>
+        <target>Tags</target>
+      </trans-unit>
+      <trans-unit id="Um4Ah8w" resname="Description">
+        <source>Description</source>
+        <target>Description</target>
+      </trans-unit>
+      <trans-unit id="fQD8IDp" resname="Other packages">
+        <source>Other packages</source>
+        <target>Other packages</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

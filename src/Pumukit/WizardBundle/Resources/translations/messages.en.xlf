@@ -345,6 +345,10 @@
         <source>Uploading file</source>
         <target>Uploading file</target>
       </trans-unit>
+      <trans-unit id="SWUsDc_" resname="There was an error">
+        <source>There was an error</source>
+        <target>There was an error</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
