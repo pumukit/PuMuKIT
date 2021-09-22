@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c0598b2705c8a39159fbd5eb4d216e00",
+    "content-hash": "38a9fe900cc452de1ecfc144e180e97d",
     "packages": [
         {
             "name": "ankitpokhrel/tus-php",
@@ -2032,6 +2032,58 @@
                 "source": "https://github.com/guzzle/psr7/tree/2.0.0"
             },
             "time": "2021-06-30T20:03:07+00:00"
+        },
+        {
+            "name": "jaybizzle/crawler-detect",
+            "version": "v1.2.106",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/JayBizzle/Crawler-Detect.git",
+                "reference": "78bf6792cbf9c569dc0bf2465481978fd2ed0de9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/78bf6792cbf9c569dc0bf2465481978fd2ed0de9",
+                "reference": "78bf6792cbf9c569dc0bf2465481978fd2ed0de9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8|^5.5|^6.5|^9.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jaybizzle\\CrawlerDetect\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Beech",
+                    "email": "m@rkbee.ch",
+                    "role": "Developer"
+                }
+            ],
+            "description": "CrawlerDetect is a PHP class for detecting bots/crawlers/spiders via the user agent",
+            "homepage": "https://github.com/JayBizzle/Crawler-Detect/",
+            "keywords": [
+                "crawler",
+                "crawler detect",
+                "crawler detector",
+                "crawlerdetect",
+                "php crawler detect"
+            ],
+            "support": {
+                "issues": "https://github.com/JayBizzle/Crawler-Detect/issues",
+                "source": "https://github.com/JayBizzle/Crawler-Detect/tree/v1.2.106"
+            },
+            "time": "2021-05-24T20:30:32+00:00"
         },
         {
             "name": "jean85/pretty-package-versions",
@@ -8992,12 +9044,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/teltek/PumukitStatsUIBundle.git",
-                "reference": "ceface51de421e8a01940c7edd063bb051cfaed8"
+                "reference": "eb4087770f2102060726a8a9094874f2c4f6ab1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teltek/PumukitStatsUIBundle/zipball/ceface51de421e8a01940c7edd063bb051cfaed8",
-                "reference": "ceface51de421e8a01940c7edd063bb051cfaed8",
+                "url": "https://api.github.com/repos/teltek/PumukitStatsUIBundle/zipball/eb4087770f2102060726a8a9094874f2c4f6ab1c",
+                "reference": "eb4087770f2102060726a8a9094874f2c4f6ab1c",
                 "shasum": ""
             },
             "require": {
@@ -9035,7 +9087,7 @@
                 "issues": "https://github.com/teltek/PumukitStatsUIBundle/issues",
                 "source": "https://github.com/teltek/PumukitStatsUIBundle/tree/master"
             },
-            "time": "2021-07-09T06:08:36+00:00"
+            "time": "2021-09-22T10:31:01+00:00"
         },
         {
             "name": "twig/extra-bundle",
@@ -9259,117 +9311,6 @@
                 }
             ],
             "time": "2021-09-17T08:44:23+00:00"
-        },
-        {
-            "name": "vipx/bot-detect",
-            "version": "v2.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/lennerd/vipx-bot-detect.git",
-                "reference": "b35c10c99841f6372646dd26429ed140137febb1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/lennerd/vipx-bot-detect/zipball/b35c10c99841f6372646dd26429ed140137febb1",
-                "reference": "b35c10c99841f6372646dd26429ed140137febb1",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.6|^7.0",
-                "symfony/config": "^2.7|^3.0|^4.0",
-                "symfony/yaml": "^2.7|^3.0|^4.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^5.7|^6.4"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Vipx\\BotDetect\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Lennart Hildebrandt",
-                    "email": "hello@lennerd.com"
-                }
-            ],
-            "description": "Bot detector library",
-            "homepage": "http://lennerd.com/",
-            "keywords": [
-                "bot"
-            ],
-            "support": {
-                "issues": "https://github.com/lennerd/vipx-bot-detect/issues",
-                "source": "https://github.com/lennerd/vipx-bot-detect/tree/master"
-            },
-            "time": "2017-10-24T11:29:51+00:00"
-        },
-        {
-            "name": "vipx/bot-detect-bundle",
-            "version": "4.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/lennerd/VipxBotDetectBundle.git",
-                "reference": "946fb8be6b9af8734fbb0722312ef3b58f38e671"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/lennerd/VipxBotDetectBundle/zipball/946fb8be6b9af8734fbb0722312ef3b58f38e671",
-                "reference": "946fb8be6b9af8734fbb0722312ef3b58f38e671",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.6|^7.0",
-                "symfony/framework-bundle": "^2.8|^3.0|^4.0",
-                "symfony/security-bundle": "^2.8|^3.0|^4.0",
-                "vipx/bot-detect": "~2.0"
-            },
-            "require-dev": {
-                "php-coveralls/php-coveralls": "^2.1",
-                "phpunit/phpunit": "^5.7|^6.5"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Vipx\\BotDetectBundle\\": "./"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Lennart Hildebrandt",
-                    "email": "hello@lennerd.com"
-                }
-            ],
-            "description": "Symfony VipxBotDetectBundle",
-            "homepage": "http://lennerd.com/",
-            "keywords": [
-                "bot",
-                "security"
-            ],
-            "support": {
-                "issues": "https://github.com/lennerd/VipxBotDetectBundle/issues",
-                "source": "https://github.com/lennerd/VipxBotDetectBundle/tree/master"
-            },
-            "time": "2018-09-04T21:24:18+00:00"
         },
         {
             "name": "webmozart/assert",

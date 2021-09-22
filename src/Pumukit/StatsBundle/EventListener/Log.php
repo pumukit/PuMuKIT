@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\StatsBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Jaybizzle\CrawlerDetect\CrawlerDetect;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\StatsBundle\Document\ViewsLog;
@@ -16,23 +17,41 @@ class Log
     private $dm;
     private $requestStack;
     private $tokenStorage;
+    private $crawlerDetect;
 
-    public function __construct(DocumentManager $documentManager, RequestStack $requestStack, TokenStorageInterface $tokenStorage)
-    {
+    public function __construct(
+        DocumentManager $documentManager,
+        RequestStack $requestStack,
+        TokenStorageInterface $tokenStorage
+    ) {
         $this->dm = $documentManager;
         $this->requestStack = $requestStack;
         $this->tokenStorage = $tokenStorage;
+        $this->crawlerDetect = new CrawlerDetect();
     }
 
-    public function onMultimediaObjectViewed(ViewedEvent $event)
+    public function onMultimediaObjectViewed(ViewedEvent $event): void
     {
-        $req = $this->requestStack->getMasterRequest();
+        $request = $this->requestStack->getMasterRequest();
+        if (!$request) {
+            return;
+        }
+
+        $userAgent = utf8_encode($request->headers->get('user-agent'));
+
+        if (false !== strpos($userAgent, 'TTK Zabbix Agent')) {
+            return;
+        }
+
+        if ($this->crawlerDetect->isCrawler($userAgent)) {
+            return;
+        }
 
         $log = new ViewsLog(
-            $req->getUri(),
-            $req->getClientIp(),
-            utf8_encode($req->headers->get('user-agent')),
-            $req->headers->get('referer'),
+            $request->getUri(),
+            $request->getClientIp(),
+            $userAgent,
+            $request->headers->get('referer'),
             $event->getMultimediaObject()->getId(),
             $event->getMultimediaObject()->getSeries()->getId(),
             $event->getTrack() ? $event->getTrack()->getId() : null,
@@ -43,12 +62,10 @@ class Log
         $this->dm->flush();
     }
 
-    private function getUser()
+    private function getUser(): ?string
     {
-        if (null !== $token = $this->tokenStorage->getToken()) {
-            if (($user = $token->getUser()) instanceof User) {
-                return $user->getUsername();
-            }
+        if ((null !== $token = $this->tokenStorage->getToken()) && ($user = $token->getUser()) instanceof User) {
+            return $user->getUsername();
         }
 
         return null;
