@@ -29,11 +29,9 @@ class SeriesService
     /**
      * Resets the magic url for a given series. Returns the secret id.
      *
-     * @param Series $series
-     *
      * @return string
      */
-    public function resetMagicUrl($series)
+    public function resetMagicUrl(Series $series)
     {
         $series->resetSecret();
         $this->dm->persist($series);

@@ -50,11 +50,11 @@ class SeriesStylesController extends AbstractController
      * @Route("/list", name="pumukit_newadmin_series_styles_list")
      * @Template("@PumukitNewAdmin/SeriesStyle/list.html.twig")
      */
-    public function listAction()
+    public function listAction(): array
     {
         $styles = $this->documentManager->getRepository(SeriesStyle::class)->findAll();
 
-        usort($styles, function ($a, $b) {
+        usort($styles, static function (SeriesStyle $a, SeriesStyle $b) {
             return strtolower($a->getName()) > strtolower($b->getName());
         });
 

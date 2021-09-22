@@ -685,7 +685,7 @@ class FactoryService
         return $multimediaObject;
     }
 
-    private function generateNumericalIDMultimediaObject($mm)
+    private function generateNumericalIDMultimediaObject(MultimediaObject $mm)
     {
         $SEMKey = 55555;
         $seg = sem_get($SEMKey, 1, 0666, -1);
@@ -721,7 +721,7 @@ class FactoryService
         sem_release($seg);
     }
 
-    private function generateNumericalIDSeries($oneSeries)
+    private function generateNumericalIDSeries(Series $oneSeries)
     {
         $SEMKey = 66666;
         $seg = sem_get($SEMKey, 1, 0666, -1);

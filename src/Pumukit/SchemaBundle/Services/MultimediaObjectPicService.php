@@ -226,12 +226,9 @@ class MultimediaObjectPicService
     }
 
     /**
-     * @param string           $path
-     * @param Multimediaobject $multimediaObject
-     *
      * @throws \Exception
      */
-    private function deleteFileOnDisk($path, $multimediaObject)
+    private function deleteFileOnDisk(string $path, MultimediaObject $multimediaObject)
     {
         $dirname = pathinfo($path, PATHINFO_DIRNAME);
 

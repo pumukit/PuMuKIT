@@ -688,7 +688,7 @@ class MultimediaObject
         return false;
     }
 
-    public function removeTag($tagToRemove): bool
+    public function removeTag(TagInterface $tagToRemove): bool
     {
         foreach ($this->tags as $tag) {
             if ($tag->getCod() === $tagToRemove->getCod()) {
@@ -699,7 +699,7 @@ class MultimediaObject
         return false;
     }
 
-    public function containsTag($tagToCheck): bool
+    public function containsTag(TagInterface $tagToCheck): bool
     {
         foreach ($this->tags as $tag) {
             if ($tag->getCod() === $tagToCheck->getCod()) {
@@ -783,7 +783,7 @@ class MultimediaObject
 
     public function removeTrackById($trackId): void
     {
-        $this->tracks = $this->tracks->filter(function ($track) use ($trackId) {
+        $this->tracks = $this->tracks->filter(function (Track $track) use ($trackId) {
             return $track->getId() !== $trackId;
         });
 
@@ -999,7 +999,7 @@ class MultimediaObject
         return $aux;
     }
 
-    public function getAllEmbeddedPeopleByPerson($person): array
+    public function getAllEmbeddedPeopleByPerson(PersonInterface $person): array
     {
         $aux = [];
 
@@ -1014,7 +1014,7 @@ class MultimediaObject
         return $aux;
     }
 
-    public function getAllEmbeddedRolesByPerson($person): array
+    public function getAllEmbeddedRolesByPerson(PersonInterface $person): array
     {
         $aux = [];
 
@@ -1031,7 +1031,7 @@ class MultimediaObject
         return $aux;
     }
 
-    public function containsPerson($person): bool
+    public function containsPerson(PersonInterface $person): bool
     {
         foreach ($this->getPeople() as $embeddedPerson) {
             if ($person->getId() === $embeddedPerson->getId()) {
@@ -1075,7 +1075,7 @@ class MultimediaObject
         return false;
     }
 
-    public function getPeopleByRole($role = null, $always = false): array
+    public function getPeopleByRole(?RoleInterface $role = null, $always = false): array
     {
         return $this->getPeopleByRoleCod($role ? $role->getCod() : null, $always);
     }
@@ -1160,7 +1160,7 @@ class MultimediaObject
         $this->reorderPersonWithRole($person, $role, false);
     }
 
-    public function reorderPersonWithRole($person, $role, $up = true): void
+    public function reorderPersonWithRole(PersonInterface $person, $role, $up = true): void
     {
         $people = array_values($this->getPeopleByRole($role, true));
         $this->getEmbeddedRole($role)->getPeople()->clear();

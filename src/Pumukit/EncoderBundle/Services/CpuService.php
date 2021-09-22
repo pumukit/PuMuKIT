@@ -138,7 +138,7 @@ class CpuService
     {
         $cpus = $this->cpuRepo->findBy(['status' => CpuStatus::STATUS_MAINTENANCE]);
 
-        return array_map(function ($a) {
+        return array_map(static function (CpuStatus $a) {
             return $a->getName();
         }, $cpus);
     }

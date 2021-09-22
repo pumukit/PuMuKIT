@@ -434,7 +434,7 @@ class PicService
         return $newPic;
     }
 
-    private function hideOriginalImage($multimediaObject, $pic)
+    private function hideOriginalImage(MultimediaObject $multimediaObject, $pic): void
     {
         foreach ($multimediaObject->getPics() as $mmsPic) {
             if ($mmsPic->getPath() === $pic['path']) {
@@ -445,7 +445,7 @@ class PicService
         }
     }
 
-    private function updateOriginalImage($multimediaObject, $picPath, $pic)
+    private function updateOriginalImage(MultimediaObject $multimediaObject, $picPath, $pic): void
     {
         $url = $this->mmsPicService->getTargetUrl($multimediaObject);
         $url .= '/'.basename($picPath);

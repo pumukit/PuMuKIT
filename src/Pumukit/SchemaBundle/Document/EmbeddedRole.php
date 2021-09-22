@@ -185,7 +185,7 @@ class EmbeddedRole implements RoleInterface
             return true;
         }
 
-        $aux = $this->people->filter(static function ($i) use ($embeddedPerson) {
+        $aux = $this->people->filter(static function (PersonInterface $i) use ($embeddedPerson) {
             return $i->getId() !== $embeddedPerson->getId();
         });
 

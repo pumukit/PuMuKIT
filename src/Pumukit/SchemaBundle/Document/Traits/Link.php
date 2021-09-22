@@ -53,7 +53,7 @@ trait Link
 
     public function removeLinkById($linkId): void
     {
-        $this->links = $this->links->filter(function ($link) use ($linkId) {
+        $this->links = $this->links->filter(function (DocumentLink $link) use ($linkId) {
             return $link->getId() !== $linkId;
         });
     }

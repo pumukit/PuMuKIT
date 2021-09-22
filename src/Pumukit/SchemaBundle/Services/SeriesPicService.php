@@ -164,7 +164,7 @@ class SeriesPicService
         return $series;
     }
 
-    private function deleteFileOnDisk($path, $series)
+    private function deleteFileOnDisk(string $path, Series $series)
     {
         $dirname = pathinfo($path, PATHINFO_DIRNAME);
 

@@ -248,7 +248,7 @@ class MaterialService
     {
         $mimeTypeCaptions = CaptionService::$mimeTypeCaptions;
 
-        return $multimediaObject->getMaterials()->filter(function ($material) use ($mimeTypeCaptions) {
+        return $multimediaObject->getMaterials()->filter(function (Material $material) use ($mimeTypeCaptions) {
             return in_array($material->getMimeType(), $mimeTypeCaptions);
         });
     }

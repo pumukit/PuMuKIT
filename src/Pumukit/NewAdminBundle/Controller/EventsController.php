@@ -921,7 +921,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
     {
         $date = new \DateTime();
 
-        usort($multimediaObjects, function ($a, $b) use ($sortType, $date) {
+        usort($multimediaObjects, static function (MultimediaObject $a, MultimediaObject $b) use ($sortType, $date) {
             $validSessionA = null;
             foreach ($a->getEmbeddedEvent()->getEmbeddedEventSession() as $sessionA) {
                 if ($sessionA->getStart() > $date || ($sessionA->getStart() <= $date && $sessionA->getEnds() > $date)) {
