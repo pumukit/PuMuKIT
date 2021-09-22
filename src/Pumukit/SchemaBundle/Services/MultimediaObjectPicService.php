@@ -120,7 +120,14 @@ class MultimediaObjectPicService
             throw new FileNotFoundException($picFile->getPathname());
         }
 
-        $path = $picFile->move($this->getTargetPath($multimediaObject), $picFile->getClientOriginalName());
+        if (file_exists($this->getTargetPath($multimediaObject).'/'.$picFile->getClientOriginalName())) {
+            $i = rand(0, 15);
+            $name = $picFile->getClientOriginalName().$i;
+        } else {
+            $name = $picFile->getClientOriginalName();
+        }
+
+        $path = $picFile->move($this->getTargetPath($multimediaObject), $name);
 
         $pic = new Pic();
         $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));

@@ -1,0 +1,26 @@
+{% include "@PumukitCore/Upload/common.js.twig" %}
+
+const uppyTUS = Uppy.Core({
+    debug: false,
+    autoProceed: true,
+    restrictions: {
+        maxFileSize: convertSizeToBytes("{{ php_upload_max_filesize() }}"),
+        allowedFileTypes: ['audio/*','video/*']
+    },
+    onBeforeFileAdded:  (currentFile) => {
+            var fileName = currentFile.name;
+            fileName = fileName.replace(/[\W_]+/g,"_");
+            currentFile.name = `${Date.now()}_${fileName}`;
+        }
+    })
+    .use(Uppy.Dashboard, {
+        target: '#uploader_drag_and_drop',
+        inline: true
+    })
+    .use(Uppy.Tus, {
+        endpoint: "{{ inboxUploadURL }}",
+        limit: {{ inboxUploadLIMIT }}
+    })
+    .run()
+
+{% include "@PumukitCore/Upload/uppy_dispatch.js.twig" %}

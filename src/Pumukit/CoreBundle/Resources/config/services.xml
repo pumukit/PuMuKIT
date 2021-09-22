@@ -1,0 +1,69 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <defaults public="true" />
+
+        <service id="twig.extension.intl" class="Twig_Extensions_Extension_Intl">
+            <tag name="twig.extension"/>
+        </service>
+
+        <service id="pumukitcore.ajax_session_close_listener" class="Pumukit\CoreBundle\EventListener\AjaxSessionCloseListener">
+            <tag name="kernel.event_listener" event="kernel.request" priority="-255"/>
+        </service>
+
+        <service id="pumukitcore.filter" class="Pumukit\CoreBundle\EventListener\FilterListener">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument type="service" id="pumukitcore.filter_service"/>
+            <tag name="kernel.event_listener" event="kernel.controller"/>
+        </service>
+
+        <service id="pumukitcore.twig_extension" class="Pumukit\CoreBundle\Twig\CoreExtension">
+            <tag name="twig.extension"/>
+            <argument type="service" id="service_container"/>
+        </service>
+
+        <service id="pumukitcore.listener.command_exception" class="Pumukit\CoreBundle\EventListener\ConsoleExceptionListener">
+            <argument type="service" id="logger"/>
+            <tag name="kernel.event_listener" event="console.exception"/>
+        </service>
+
+        <service id="pumukitcore.filter_service" class="Pumukit\CoreBundle\Services\FilterService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument type="service" id="pumukitschema.person"/>
+            <argument type="service" id="security.token_storage"/>
+            <argument>%pumukitschema.enable_add_user_as_person%</argument>
+        </service>
+
+        <service id="pumukitcore.import_mapping_data" class="Pumukit\CoreBundle\Services\ImportMappingDataService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument type="service" id="pumukitschema.tag"/>
+            <argument type="service" id="pumukitschema.person"/>
+        </service>
+
+        <service id="custom_authentication_failure_handler" class="Pumukit\CoreBundle\Handler\CustomAuthenticationFailureHandler">
+            <argument type="service" id="kernel"/>
+            <argument type="service" id="security.http_utils"/>
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+        </service>
+
+        <service id="custom_authentication_success_handler" class="Pumukit\CoreBundle\Handler\CustomAuthenticationSuccessHandler">
+            <argument type="service" id="security.http_utils"/>
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+        </service>
+
+        <service id="pumukit.upload_dispatcher_service" class="Pumukit\CoreBundle\Services\UploadDispatcherService">
+            <argument type="service" id="event_dispatcher"/>
+        </service>
+
+        <service id="pumukit.inbox_upload_listener" class="Pumukit\CoreBundle\EventListener\InboxUploadListener">
+            <argument>%pumukit.inbox%</argument>
+            <argument>%kernel.project_dir%</argument>
+            <tag name="kernel.event_listener" event="upload.inbox" method="autoImport"/>
+        </service>
+    </services>
+</container>

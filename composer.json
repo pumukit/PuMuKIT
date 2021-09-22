@@ -40,7 +40,8 @@
         "twig/extra-bundle": "^3.0",
         "twig/intl-extra": "^3.0",
         "teltek/pumukit-stats-ui-bundle": "dev-master",
-        "vipx/bot-detect-bundle": "^4.0"
+        "vipx/bot-detect-bundle": "^4.0",
+        "ankitpokhrel/tus-php": "1.*"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3",
@@ -64,10 +65,12 @@
             "@auto-scripts"
         ],
         "lint-yaml": [
-            "bin/console lint:yaml src"
+            "bin/console lint:yaml src",
+            "bin/console lint:yaml config"
         ],
         "lint-twig": [
-            "bin/console lint:twig src"
+            "bin/console lint:twig src",
+            "bin/console lint:twig templates"
         ],
         "lint-generic": [
             "find src -type f -name '.php' -print0 | xargs -0 -n1 -P8 php -l",

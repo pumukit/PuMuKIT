@@ -87,9 +87,6 @@ class LiveType extends AbstractType
                     'attr' => ['aria-label' => $this->translator->trans('Technology', [], null, $this->locale)],
                     'choices' => [
                         'WOWZA' => Live::LIVE_TYPE_WOWZA,
-                        'Adobe Media Server' => Live::LIVE_TYPE_AMS,
-                        'FMS (deprecated use WOWZA or AMS)' => Live::LIVE_TYPE_FMS,
-                        'WMS (deprecated)' => Live::LIVE_TYPE_WMS,
                     ],
                     'label' => $this->translator->trans('Technology', [], null, $this->locale),
                 ]

@@ -7,6 +7,9 @@ services:
       $locale: '%locale%'
       $locales: '%pumukit.locales%'
       $pumukitPublicDir: '%pumukit.public_dir%'
+      $inboxUploadURL: '%pumukit.inboxUploadURL%'
+      $inboxUploadLIMIT: '%pumukit.inboxUploadLIMIT%'
+
 
   Pumukit\CoreBundle\Controller\:
     resource: '../../src/Pumukit/CoreBundle/Controller'
@@ -64,3 +67,14 @@ services:
 
   Pumukit\CoreBundle\Services\SerializerService:
     class: Pumukit\CoreBundle\Services\SerializerService
+
+  Pumukit\CoreBundle\Services\UploadDispatcherService:
+    class: Pumukit\CoreBundle\Services\UploadDispatcherService
+
+  Pumukit\CoreBundle\EventListener\InboxUploadListener:
+    class: Pumukit\CoreBundle\EventListener\InboxUploadListener
+    arguments:
+      $inboxPath: '%pumukit.inbox%'
+      $kernelProjectDir: '%kernel.project_dir%'
+    tags:
+      - { name: "kernel.event_listener", event: "upload.inbox", method: "autoImport" }
