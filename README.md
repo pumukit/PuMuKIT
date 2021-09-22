@@ -1,20 +1,22 @@
-PuMuKIT [![Build Status](https://travis-ci.org/pumukit/PuMuKIT.svg?branch=3.0.x)](https://travis-ci.org/pumukit/PuMuKIT) [![](https://dockerbuildbadges.quelltext.eu/status.svg?organization=teltek&repository=pumukit)](https://hub.docker.com/r/teltek/pumukit/builds/)
-=======
-
+<h1 align="center">PuMuKIT</h1>
 
 PuMuKIT is an Open Source Video Platform that provides unparalleled organization, flexibility, accessibility, and scalability.
 Well-designed and well-engineered PuMuKIT is the ideal solution for any organization with large collections of video or audio.
 
-Project Website
----------------
+### Build Status
+
+![Build Status](https://github.com/pumukit/PuMuKIT/actions/workflows/ci.yml/badge.svg)
+
+### PuMuKIT Website
+
 http://pumukit.org
 
 
-PuMuKIT Documentation Project
--------------------------------
+### PuMuKIT Documentation
+
 https://github.com/pumukit/PuMuKIT-doc
 
 
-Third Party Bundles
--------------------
+### PuMuKIT Third Party Bundles
+
 [Third Party Bundles List](https://github.com/pumukit/PuMuKIT-doc/blob/master/ThirdPartyBundlesList.md)
