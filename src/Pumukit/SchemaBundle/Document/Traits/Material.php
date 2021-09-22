@@ -48,7 +48,7 @@ trait Material
 
     public function removeMaterialById($materialId): void
     {
-        $this->materials = $this->materials->filter(function ($material) use ($materialId) {
+        $this->materials = $this->materials->filter(function (DocumentMaterial $material) use ($materialId) {
             return $material->getId() !== $materialId;
         });
     }

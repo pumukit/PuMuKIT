@@ -48,7 +48,7 @@ trait Pic
 
     public function removePicById($picId): void
     {
-        $this->pics = $this->pics->filter(function ($pic) use ($picId) {
+        $this->pics = $this->pics->filter(function (DocumentPic $pic) use ($picId) {
             return $pic->getId() !== $picId;
         });
     }

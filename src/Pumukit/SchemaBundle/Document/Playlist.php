@@ -96,7 +96,7 @@ class Playlist
     public function getMultimediaObjectsIdList(): array
     {
         return array_map(
-            static function ($m) {
+            static function (MultimediaObject $m) {
                 return new ObjectId($m->getId());
             },
             $this->multimedia_objects->toArray()

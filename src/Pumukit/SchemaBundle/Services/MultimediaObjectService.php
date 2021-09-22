@@ -30,12 +30,9 @@ class MultimediaObjectService
     /**
      * Returns true if the $mm is published. ( Keep updated with SchemaFilter->getCriteria() ).
      *
-     * @param MultimediaObject $mm
-     * @param string           $pubChannelCod
-     *
      * @return bool
      */
-    public function isPublished($mm, $pubChannelCod)
+    public function isPublished(MultimediaObject $mm, string $pubChannelCod)
     {
         $hasStatus = MultimediaObject::STATUS_PUBLISHED == $mm->getStatus();
         $hasPubChannel = $mm->containsTagWithCod($pubChannelCod);
@@ -46,12 +43,9 @@ class MultimediaObjectService
     /**
      * Returns true if the $mm is hidden. Not 404 on its magic url. ( Keep updated with MultimediaObjectController:magicIndexAction ).
      *
-     * @param MultimediaObject $mm
-     * @param string           $pubChannelCod
-     *
      * @return bool
      */
-    public function isHidden($mm, $pubChannelCod)
+    public function isHidden(MultimediaObject $mm, string $pubChannelCod)
     {
         $hasStatus = in_array($mm->getStatus(), [MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDDEN]);
         $hasPubChannel = $mm->containsTagWithCod($pubChannelCod);
@@ -62,11 +56,9 @@ class MultimediaObjectService
     /**
      * Returns true if the $mm has a playable resource. ( Keep updated with SchemaFilter->getCriteria() ).
      *
-     * @param MultimediaObject $mm
-     *
      * @return bool
      */
-    public function hasPlayableResource($mm)
+    public function hasPlayableResource(MultimediaObject $mm)
     {
         $externalplayer = $mm->getProperty('externalplayer');
 
@@ -76,12 +68,9 @@ class MultimediaObjectService
     /**
      * Returns true if the $mm is being displayed on the baseplayer. ( Keep updated with SchemaFilter->getCriteria() ).
      *
-     * @param MultimediaObject $mm
-     * @param string           $pubChannelCod
-     *
      * @return bool
      */
-    public function canBeDisplayed($mm, $pubChannelCod)
+    public function canBeDisplayed(MultimediaObject $mm, string $pubChannelCod)
     {
         return $this->isPublished($mm, $pubChannelCod) && $this->hasPlayableResource($mm);
     }
@@ -89,11 +78,9 @@ class MultimediaObjectService
     /**
      * Resets the magic url for a given multimedia object. Returns the secret id.
      *
-     * @param MultimediaObject $mm
-     *
      * @return string
      */
-    public function resetMagicUrl($mm)
+    public function resetMagicUrl(MultimediaObject $mm)
     {
         $mm->resetSecret();
         $this->dm->persist($mm);
@@ -214,11 +201,9 @@ class MultimediaObjectService
     /**
      * Returns a boolean with whether the mmobj will be played on a playlist or not.
      *
-     * @param MultimediaObject $mmobj
-     *
      * @return bool
      */
-    public function isPlayableOnPlaylist($mmobj)
+    public function isPlayableOnPlaylist(MultimediaObject $mmobj)
     {
         $broadcast = $mmobj->getEmbeddedBroadcast();
         if (($broadcast && EmbeddedBroadcast::TYPE_PUBLIC != $broadcast->getType())

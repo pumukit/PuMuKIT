@@ -124,12 +124,7 @@ class MultimediaObjectSearchService
         return $new_criteria;
     }
 
-    /**
-     * @param string  $text
-     * @param Builder $queryBuilder
-     * @param string  $locale
-     */
-    public function completeSearchQueryBuilder($text, $queryBuilder, $locale = 'en')
+    public function completeSearchQueryBuilder(string $text, Builder $queryBuilder, ?string $locale = 'en'): void
     {
         $text = trim($text);
         if ((false !== strpos($text, '*')) && (false === strpos($text, ' '))) {

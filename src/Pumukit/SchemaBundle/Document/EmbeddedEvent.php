@@ -251,7 +251,7 @@ class EmbeddedEvent
     public function getEmbeddedEventSession(): array
     {
         $embeddedEventSession = $this->embeddedEventSession->toArray();
-        usort($embeddedEventSession, static function ($a, $b) {
+        usort($embeddedEventSession, static function (EmbeddedEventSession $a, EmbeddedEventSession $b) {
             return $a->getStart() > $b->getStart();
         });
 
@@ -268,7 +268,7 @@ class EmbeddedEvent
         return $this->embeddedEventSession->add($embeddedEventSession);
     }
 
-    public function removeEmbeddedEventSession($embeddedEventSession): bool
+    public function removeEmbeddedEventSession(EmbeddedEventSession $embeddedEventSession): bool
     {
         foreach ($this->embeddedEventSession as $session) {
             if ($session->getId() === $embeddedEventSession->getId()) {

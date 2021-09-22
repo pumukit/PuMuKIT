@@ -275,7 +275,7 @@ class User implements UserInterface
             //See PersistentCollection class (coll + mongoData)
             return array_merge(
                 array_map(
-                    static function ($g) {
+                    static function (GroupInterface $g) {
                         return new ObjectId($g->getId());
                     },
                     $this->groups->unwrap()->toArray()
@@ -285,7 +285,7 @@ class User implements UserInterface
         }
 
         return array_map(
-            static function ($g) {
+            static function (GroupInterface $g) {
                 return new ObjectId($g->getId());
             },
             $this->groups->toArray()

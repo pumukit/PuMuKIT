@@ -225,7 +225,7 @@ class JobNotificationService
         return $emailsTo;
     }
 
-    private function getMultimediaObjectAdminLink($multimediaObject, $id = '')
+    private function getMultimediaObjectAdminLink(MultimediaObject $multimediaObject, $id = ''): string
     {
         if (null !== $multimediaObject) {
             return $this->router->generate('pumukitnewadmin_mms_shortener', ['id' => $multimediaObject->getId()], UrlGeneratorInterface::ABSOLUTE_URL);

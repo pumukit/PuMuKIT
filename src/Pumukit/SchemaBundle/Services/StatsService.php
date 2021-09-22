@@ -6,6 +6,7 @@ namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\UTCDateTime;
+use MongoDB\Collection;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 
@@ -140,7 +141,7 @@ class StatsService
      * @param mixed      $sort
      * @param mixed      $groupBy
      */
-    private function getAggrRecordedGroupedBy($dmColl, $mongoGroup, $dateName = 'record_date', $fromDate = null, $toDate = null, $limit = 100, $page = 0, $criteria = [], $sort = -1, $groupBy = 'month')
+    private function getAggrRecordedGroupedBy(Collection $dmColl, $mongoGroup, $dateName = 'record_date', $fromDate = null, $toDate = null, $limit = 100, $page = 0, $criteria = [], $sort = -1, $groupBy = 'month')
     {
         $matchExtra = [];
         if (!empty($criteria)) {

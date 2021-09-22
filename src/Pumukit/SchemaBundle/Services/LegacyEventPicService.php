@@ -91,7 +91,7 @@ class LegacyEventPicService
         return $event;
     }
 
-    private function deleteFileOnDisk($path, $event)
+    private function deleteFileOnDisk(string $path, Event $event)
     {
         $dirname = pathinfo($path, PATHINFO_DIRNAME);
 

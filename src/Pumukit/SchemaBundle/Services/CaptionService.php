@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Services;
 
+use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class CaptionService
@@ -19,7 +20,7 @@ class CaptionService
     {
         $mimeTypeCaptions = self::$mimeTypeCaptions;
 
-        return $multimediaObject->getMaterials()->filter(function ($material) use ($mimeTypeCaptions) {
+        return $multimediaObject->getMaterials()->filter(function (Material $material) use ($mimeTypeCaptions) {
             return in_array($material->getMimeType(), $mimeTypeCaptions);
         });
     }

@@ -19,7 +19,7 @@ class MultimediaObjectListener
         $this->textIndexService = $textIndexService;
     }
 
-    public function postUpdate($event)
+    public function postUpdate($event): void
     {
         $multimediaObject = $event->getMultimediaObject();
         $this->updateType($multimediaObject);
