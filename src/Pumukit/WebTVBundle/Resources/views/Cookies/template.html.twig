@@ -4,26 +4,49 @@
             {{ "Cookies"|trans }}
         </div>
         <div class="textcookie">
-            {% include 'PumukitWebTVBundle:Cookies:cookies_text.html.twig' %}
+            {% include '@PumukitWebTV/Cookies/cookies_text.html.twig' %}
             <div class="clearfix"></div>
-            <button class="btn btn-default btn-accept-cookies" style="margin-top: 9px">{{ "Accept"|trans }}</button>
+            <button id="btn-accept-cookies" class="btn btn-default btn-accept-cookies" style="margin-top: 9px">{{ "Accept"|trans }}</button>
         </div>
     </div>
 {% endif %}
 
 <script type="text/javascript">
-    function insertCookieUser() {
-        var a = getCookie("hasVisited");
-        if (typeof a == 'undefined' || (typeof a != 'undefined' && a.indexOf("yes") === -1)) {
+    insertCookieUser("{{ app.request.getHttpHost() }}");
+
+    $('.btn-accept-cookies').on('click', function(event) {
+        event.preventDefault();
+        setCookie("{{ app.request.getHttpHost() }}", "full", 0);
+        $('#headercookie').hide();
+    });
+
+    function insertCookieUser(domain) {
+        let pumukitCookie = getCookie(domain);
+        if (pumukitCookie == null || typeof pumukitCookie == 'undefined' || (typeof pumukitCookie != 'undefined' && pumukitCookie.indexOf("full") === -1)) {
             $('#headercookie').show();
         } else {
             $('#headercookie').hide();
         }
     }
-    $('.btn-accept-cookies').on('click', function(event) {
-        event.preventDefault();
-        setCookieUser("hasVisited", "yes", 0, '/');
-        $('#headercookie').hide();
-    });
-    insertCookieUser();
+
+    function setCookie(name,value,days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days*24*60*60*1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+    }
+
+    function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(let i=0;i < ca.length;i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    }
 </script>

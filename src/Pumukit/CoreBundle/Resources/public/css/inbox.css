@@ -1,0 +1,16 @@
+.uppy-Dashboard-inner {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.login-box-pmk, .search-box, .menu-pmk, .breadcrumb-pmk-list , .language-pmk {
+    display: none;
+}
+
+.breadcrumbs_color, .mobile_header.navbar-toggle {
+    display: none;
+}
+
+#uploader_drag_and_drop {
+    border-top: 5px groove #c05800;
+}
