@@ -1,8 +1,7 @@
 .uppy-Dashboard-inner {
     width: 100%;
-    margin-bottom: 15px;
+    margin: 0 auto;
 }
-
 
 .login-box-pmk, .search-box, .menu-pmk, .breadcrumb-pmk-list , .language-pmk {
     display: none;
