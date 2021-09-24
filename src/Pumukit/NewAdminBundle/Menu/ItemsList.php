@@ -6,9 +6,6 @@ namespace Pumukit\NewAdminBundle\Menu;
 
 class ItemsList
 {
-    /**
-     * @var array
-     */
     private $items;
 
     public function __construct()
@@ -21,8 +18,14 @@ class ItemsList
         $this->items[] = $item;
     }
 
-    public function items(): array
+    public function items(?string $serviceTag = null): array
     {
+        if ($serviceTag) {
+            return array_filter($this->items, static function (ItemInterface $item) use ($serviceTag) {
+                return $item->getServiceTag() === $serviceTag;
+            });
+        }
+
         return $this->items;
     }
 }
