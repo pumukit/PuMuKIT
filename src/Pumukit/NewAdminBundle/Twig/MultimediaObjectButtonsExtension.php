@@ -32,16 +32,16 @@ class MultimediaObjectButtonsExtension extends AbstractExtension
 
     public function getMmobjExtraButtons(): array
     {
-        return $this->mmobjListButtons->items();
+        return $this->mmobjListButtons->items('mmobjlistbuttons');
     }
 
     public function getSeriesExtraMenuItems(): array
     {
-        return $this->seriesMenu->items();
+        return $this->seriesMenu->items('seriesmenu');
     }
 
     public function getMmobjExtraMenuItems(): array
     {
-        return $this->mmobjMenu->items();
+        return $this->mmobjMenu->items('mmobjmenu');
     }
 }

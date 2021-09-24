@@ -11,4 +11,6 @@ interface ItemInterface
     public function getUri(): string;
 
     public function getAccessRole(): string;
+
+    public function getServiceTag(): string;
 }

@@ -117,7 +117,8 @@ class Builder implements ContainerAwareInterface
 
     protected function addLiveMenu(KnpItemInterface $menu): void
     {
-        $advanceLiveEvent = $this->container->hasParameter('pumukit_new_admin.advance_live_event') ? $this->container->getParameter('pumukit_new_admin.advance_live_event') : false;
+        $advanceLiveEvent = $this->container->hasParameter('pumukit_new_admin.advance_live_event')
+                            && $this->container->getParameter('pumukit_new_admin.advance_live_event');
         $options = ['attributes' => ['class' => 'menu_live']];
         if ($this->authorizationChecker->isGranted(Permission::ACCESS_LIVE_EVENTS) || $this->authorizationChecker->isGranted(Permission::ACCESS_LIVE_CHANNELS)) {
             $live = $menu->addChild('Live management', $options);
@@ -163,9 +164,10 @@ class Builder implements ContainerAwareInterface
 
     protected function addTablesMenu(KnpItemInterface $menu): void
     {
-        if (($this->authorizationChecker->isGranted(Permission::ACCESS_PEOPLE) && $this->authorizationChecker->isGranted(Permission::SHOW_PEOPLE_MENU))
-            || $this->authorizationChecker->isGranted(Permission::ACCESS_TAGS)
-            || $this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_TYPES)) {
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_TAGS)
+            || $this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_TYPES)
+            || ($this->authorizationChecker->isGranted(Permission::ACCESS_PEOPLE) && $this->authorizationChecker->isGranted(Permission::SHOW_PEOPLE_MENU))
+            ) {
             $options = ['attributes' => ['class' => 'menu_tables']];
             $tables = $menu->addChild('Tables', $options);
 
@@ -194,8 +196,9 @@ class Builder implements ContainerAwareInterface
 
     protected function addPlaceAndPrecinctMenu(KnpItemInterface $tables): void
     {
-        $menuPlaceAndPrecinct = $this->container->hasParameter('pumukit_new_admin.show_menu_place_and_precinct') ? $this->container->getParameter('pumukit_new_admin.show_menu_place_and_precinct') : false;
-        if ($this->authorizationChecker->isGranted(Permission::ACCESS_TAGS) && $menuPlaceAndPrecinct) {
+        $menuPlaceAndPrecinct = $this->container->hasParameter('pumukit_new_admin.show_menu_place_and_precinct')
+                                && $this->container->getParameter('pumukit_new_admin.show_menu_place_and_precinct');
+        if ($menuPlaceAndPrecinct && $this->authorizationChecker->isGranted(Permission::ACCESS_TAGS)) {
             $options = ['route' => 'pumukitnewadmin_places_index', 'attributes' => ['class' => 'menu_places_and_precinct']];
             $tables->addChild('Places and precinct', $options);
         }
@@ -266,8 +269,14 @@ class Builder implements ContainerAwareInterface
         $hasAccessToHeadAndTailManager = $this->authorizationChecker->isGranted(Permission::ACCESS_HEAD_AND_TAIL_MANAGER);
 
         $externalTools = [];
-        foreach ($this->container->get('pumukitnewadmin.menu')->items() as $item) {
-            if (!$this->authorizationChecker->isGranted($item->getAccessRole())) {
+
+        $menuItems = $this->container->get('pumukitnewadmin.menu');
+        if (!$menuItems) {
+            return;
+        }
+
+        foreach ($menuItems->items() as $item) {
+            if ('menu' !== $item->getServiceTag() || !$this->authorizationChecker->isGranted($item->getAccessRole())) {
                 continue;
             }
             $externalTools[] = $item;
@@ -320,7 +329,12 @@ class Builder implements ContainerAwareInterface
 
     protected function addCustomMenu(KnpItemInterface $menu): void
     {
-        foreach ($this->container->get('pumukitnewadmin.block')->items() as $item) {
+        $blockItems = $this->container->get('pumukitnewadmin.block');
+        if (!$blockItems) {
+            return;
+        }
+
+        foreach ($blockItems->items() as $item) {
             $class = 'menu_tools_'.strtolower(str_replace(' ', '_', $item->getName()));
             $options = ['route' => $item->getUri(), 'attributes' => ['class' => $class]];
             $menu->addChild($item->getName(), $options);
