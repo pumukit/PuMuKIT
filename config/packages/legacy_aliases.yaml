@@ -44,6 +44,7 @@ services:
   pumukitnewadmin.menu: '@Pumukit\NewAdminBundle\Menu\ItemsList'
   pumukitnewadmin.mmobjlistbuttons: '@Pumukit\NewAdminBundle\Menu\ItemsList'
   pumukitnewadmin.mmobjmenu: '@Pumukit\NewAdminBundle\Menu\ItemsList'
+  pumukitnewadmin.block: '@Pumukit\NewAdminBundle\Menu\BlocksList'
   pumukitnewadmin.seriesmenu: '@Pumukit\NewAdminBundle\Menu\ItemsList'
   pumukitnewadmin.twig_mmobjbuttons_extension: '@Pumukit\NewAdminBundle\Twig\MultimediaObjectButtonsExtension'
   pumukitnewadmin.catalogue_extension: '@Pumukit\NewAdminBundle\Twig\CatalogueExtension'

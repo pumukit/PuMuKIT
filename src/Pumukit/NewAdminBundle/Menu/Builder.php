@@ -20,7 +20,6 @@ class Builder implements ContainerAwareInterface
     {
         $menu = $factory->createItem('root');
 
-        // @var AuthorizationCheckerInterface
         $this->authorizationChecker = $this->container->get('security.authorization_checker');
 
         $this->addDashboardMenu($menu);
@@ -319,8 +318,12 @@ class Builder implements ContainerAwareInterface
         }
     }
 
-    protected function addCustomMenu(KnpItemInterface $management): void
+    protected function addCustomMenu(KnpItemInterface $menu): void
     {
-        // NOTE: Override this function to add new item menu in PuMuKIT
+        foreach ($this->container->get('pumukitnewadmin.block')->items() as $item) {
+            $class = 'menu_tools_'.strtolower(str_replace(' ', '_', $item->getName()));
+            $options = ['route' => $item->getUri(), 'attributes' => ['class' => $class]];
+            $menu->addChild($item->getName(), $options);
+        }
     }
 }

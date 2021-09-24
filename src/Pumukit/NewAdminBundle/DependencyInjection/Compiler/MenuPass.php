@@ -14,6 +14,8 @@ class MenuPass implements CompilerPassInterface
     {
         // The services tagged as pumukitnewadmin.menuitem (notice the extra 'item' in the name) will be added here
         $this->addItems($container, 'pumukitnewadmin.menu');
+        // The services tagged as pumukitnewadmin.blockitem (notice the extra 'item' in the name) will be added here
+        $this->addItems($container, 'pumukitnewadmin.block');
         // The services tagged as pumukitnewadmin.mmobjlistbuttonsitem will be added here
         $this->addItems($container, 'pumukitnewadmin.mmobjlistbuttons');
         // The services tagged as pumukitnewadmin.mmobjmenuitem will be added here
@@ -30,7 +32,6 @@ class MenuPass implements CompilerPassInterface
         }
 
         $definition = $container->findDefinition($serviceName);
-
         // find all service IDs with the item tag
         $taggedServices = $container->findTaggedServiceIds($serviceName.'item');
         foreach ($taggedServices as $id => $tags) {
