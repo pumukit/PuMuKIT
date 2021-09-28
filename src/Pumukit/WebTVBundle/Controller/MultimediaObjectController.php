@@ -193,6 +193,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
         $series = $multimediaObject->getSeries();
 
         $referer = $request->headers->get('referer');
+
         $fromSecret = false;
         if (!$series->isHide() && $series->getSecret()) {
             $secretSeriesUrl = $this->generateUrl(
@@ -200,10 +201,16 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
                 ['secret' => $series->getSecret()],
                 UrlGeneratorInterface::ABSOLUTE_URL
             );
-            $fromSecret = 0 === strpos($referer, $secretSeriesUrl);
+            if ($referer) {
+                $fromSecret = 0 === strpos($referer, $secretSeriesUrl);
+            }
         }
 
-        $relatedLink = strpos($referer, 'magic');
+        $relatedLink = false;
+        if ($referer) {
+            $relatedLink = strpos($referer, 'magic');
+        }
+
         $multimediaObjectMagicUrl = $request->get('magicUrl', false);
 
         $showMagicUrl = ($fromSecret || $relatedLink || $multimediaObjectMagicUrl);
