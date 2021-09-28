@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\WebTVBundle\Controller;
 
+use Detection\MobileDetect;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use Psr\Log\LoggerInterface;
@@ -15,7 +16,6 @@ use Pumukit\WebTVBundle\Form\Type\ContactType;
 use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use SunCat\MobileDetectBundle\DeviceDetector\MobileDetector;
 use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -29,7 +29,6 @@ class DefaultController extends AbstractController
     private $breadcrumbService;
     private $embeddedEventSessionService;
     private $translator;
-    private $mobileDetectorService;
     private $logger;
     private $mailer;
     private $captchaPublicKey;
@@ -38,6 +37,7 @@ class DefaultController extends AbstractController
     private $pumukitIntro;
     private $pumukitNotificationSenderEmail;
     private $pumukitInfo;
+    private $mobileDetector;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -46,7 +46,6 @@ class DefaultController extends AbstractController
         TranslatorInterface $translator,
         LoggerInterface $logger,
         \Swift_Mailer $mailer,
-        MobileDetector $mobileDetector,
         $captchaPublicKey,
         $captchaPrivateKey,
         $pumukitLiveEventContactAndShare,
@@ -58,7 +57,6 @@ class DefaultController extends AbstractController
         $this->breadcrumbService = $breadcrumbService;
         $this->embeddedEventSessionService = $embeddedEventSessionService;
         $this->translator = $translator;
-        $this->mobileDetectorService = $mobileDetector;
         $this->logger = $logger;
         $this->mailer = $mailer;
         $this->captchaPublicKey = $captchaPublicKey;
@@ -67,6 +65,8 @@ class DefaultController extends AbstractController
         $this->pumukitIntro = $pumukitIntro;
         $this->pumukitNotificationSenderEmail = $pumukitNotificationSenderEmail;
         $this->pumukitInfo = $pumukitInfo;
+
+        $this->mobileDetector = new MobileDetect();
     }
 
     /**
@@ -144,8 +144,8 @@ class DefaultController extends AbstractController
 
         $userAgent = $request->headers->get('user-agent');
 
-        $mobileDevice = ($this->mobileDetectorService->isMobile($userAgent) || $this->mobileDetectorService->isTablet($userAgent));
-        $isIE = $this->mobileDetectorService->version('IE');
+        $mobileDevice = ($this->mobileDetector->isMobile($userAgent) || $this->mobileDetector->isTablet($userAgent));
+        $isIE = $this->mobileDetector->version('IE');
         $versionIE = $isIE ? (float) $isIE : 11.0;
 
         $locale = $request->getLocale();
@@ -320,8 +320,8 @@ class DefaultController extends AbstractController
             ]);
         }
         $userAgent = $request->headers->get('user-agent');
-        $mobileDevice = ($this->mobileDetectorService->isMobile($userAgent) || $this->mobileDetectorService->isTablet($userAgent));
-        $isIE = $this->mobileDetectorService->version('IE');
+        $mobileDevice = ($this->mobileDetector->isMobile($userAgent) || $this->mobileDetector->isTablet($userAgent));
+        $isIE = $this->mobileDetector->version('IE');
         $versionIE = $isIE ? (float) $isIE : 11.0;
 
         return [
