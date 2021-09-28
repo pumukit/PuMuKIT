@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "72c6d070b3d283a91394086a16f15292",
+    "content-hash": "3008031531e6625b8a02f7b2ee2b7aed",
     "packages": [
         {
             "name": "ankitpokhrel/tus-php",
@@ -8975,21 +8975,21 @@
         },
         {
             "name": "teltek/pumukit-stats-ui-bundle",
-            "version": "3.0.x-dev",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teltek/PumukitStatsUIBundle.git",
-                "reference": "fd3b9ca8b1617144494c58732f145022b7040e7b"
+                "reference": "3bd66fec41076cae5f32512c887bbb5ef818a325"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teltek/PumukitStatsUIBundle/zipball/fd3b9ca8b1617144494c58732f145022b7040e7b",
-                "reference": "fd3b9ca8b1617144494c58732f145022b7040e7b",
+                "url": "https://api.github.com/repos/teltek/PumukitStatsUIBundle/zipball/3bd66fec41076cae5f32512c887bbb5ef818a325",
+                "reference": "3bd66fec41076cae5f32512c887bbb5ef818a325",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.2",
-                "pumukit/pumukit": "^4.0"
+                "pumukit/pumukit": ">=4.0"
             },
             "type": "symfony-bundle",
             "autoload": {
@@ -9004,7 +9004,7 @@
             "authors": [
                 {
                     "name": "Teltek Team",
-                    "homepage": "http://teltek.es"
+                    "homepage": "https://teltek.es"
                 }
             ],
             "description": "Stats UI for PuMuKIT",
@@ -9019,9 +9019,9 @@
             ],
             "support": {
                 "issues": "https://github.com/teltek/PumukitStatsUIBundle/issues",
-                "source": "https://github.com/teltek/PumukitStatsUIBundle/tree/master"
+                "source": "https://github.com/teltek/PumukitStatsUIBundle/tree/3.0.0"
             },
-            "time": "2021-09-28T06:05:45+00:00"
+            "time": "2021-09-28T07:25:12+00:00"
         },
         {
             "name": "twig/extra-bundle",
@@ -12109,9 +12109,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "teltek/pumukit-stats-ui-bundle": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
