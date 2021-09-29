@@ -20,6 +20,7 @@
             <tbody>
             {% for oneseries in series %}
                 {% set numV = oneseries|count_multimedia_objects %}
+                {% set numLE = oneseries|count_live_events %}
                 <tr style="cursor: pointer" {% if(app.session.get('admin/series/id') == oneseries.id ) %} class="success" {% endif %}>
                     <td headers="th-checkbox">
                         <div class="checkbox">
@@ -63,6 +64,9 @@
                     <td headers="th-mm" onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
                         {{ numV }}
                     </td>
+                     <td headers="th-le">
+                        {{ numLE }}
+                    </td>
                 </tr>
             {% else %}
                 <tr>
@@ -84,6 +88,7 @@
                         <td headers="th-title">&nbsp;</td>
                         <td headers="th-date">&nbsp;</td>
                         <td headers="th-mm">&nbsp;</td>
+                        <td headers="th-le">&nbsp;</td>
                     </tr>
                 {% endfor %}
             {% endif %}
