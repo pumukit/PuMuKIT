@@ -348,6 +348,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
             if ($resetCache) {
                 foreach ($pager->getCurrentPageResults() as $result) {
                     $session->set('admin/live/event/id', $result->getId());
+
                     break;
                 }
             }
