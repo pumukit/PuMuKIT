@@ -48,7 +48,7 @@
                         </td>
                     {% endif %}
                     <td headers="th-icons">
-                        {% include '@PumukitNewAdmin/Series/updatemenu.html.twig' with {'oneseries': oneseries, 'numV': numV} %}
+                        {% include '@PumukitNewAdmin/Series/updatemenu.html.twig' with {'oneseries': oneseries, 'numV': numV, 'numLE': numLE} %}
                     </td>
                     <td headers="th-img" onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
                         {% include "@PumukitNewAdmin/Misc/img_list.html.twig" with {'object': oneseries, 'type' : 'series'} %}
