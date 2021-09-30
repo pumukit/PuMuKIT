@@ -29,6 +29,9 @@
                     <div id="list_mms">
                         {% include '@PumukitNewAdmin/MultimediaObject/list.html.twig' %}
                     </div>
+                    <div id="list_events">
+                            {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\EventsController::listEventActionBySerie')) }}
+                    </div>
                     <div class="row">
                         <div class="col-xs-4">
                             <select id="options_mms" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('mm', $(this), 'mms', '{{ series.id }}');">
