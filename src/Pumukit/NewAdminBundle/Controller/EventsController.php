@@ -307,11 +307,11 @@ class EventsController extends AbstractController implements NewAdminControllerI
             $session->remove('admin/live/event/id');
         }
 
-        return ['multimediaObjects' => $pager, 'default_event_pic' => $eventPicDefault, 'multimediaObjectsArray' => $multimediaObjects];
+        return ['multimediaObjects' => $pager, 'default_event_pic' => $eventPicDefault, 'multimediaObjectsArray' => $multimediaObjects, 'inSerie' => 0];
     }
 
     /**
-     * @Route("list/event/{type}", name="pumukit_new_admin_live_event_list_by_serie")
+     * @Route("serie/list/event/{type}", name="pumukit_new_admin_live_event_list_by_serie")
      * @Template("@PumukitNewAdmin/LiveEvent/list.html.twig")
      *
      * @param mixed|null $type
@@ -348,7 +348,6 @@ class EventsController extends AbstractController implements NewAdminControllerI
             if ($resetCache) {
                 foreach ($pager->getCurrentPageResults() as $result) {
                     $session->set('admin/live/event/id', $result->getId());
-
                     break;
                 }
             }
@@ -356,7 +355,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
             $session->remove('admin/live/event/id');
         }
 
-        return ['multimediaObjects' => $pager, 'default_event_pic' => $eventPicDefault];
+        return ['multimediaObjects' => $pager, 'default_event_pic' => $eventPicDefault, 'inSerie' => 1];
     }
 
     /**
