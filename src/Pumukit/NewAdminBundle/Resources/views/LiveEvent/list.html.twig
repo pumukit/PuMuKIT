@@ -186,7 +186,11 @@
                 'field' : $(this).data('type')
             },
             success: function () {
-                var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
+                if ({{ inSerie }} == 0) {
+                    var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
+                } else {
+                    var mm = "{{ path('pumukit_new_admin_live_event_list_by_serie') }}";
+                }
                 $('#list_events').load(mm);
             }
         });
