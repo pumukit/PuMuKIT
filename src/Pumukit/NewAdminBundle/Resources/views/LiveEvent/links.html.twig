@@ -1,6 +1,8 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
     {% set video_url = url('pumukit_live_event_id', {id: multimediaObject.id}) %}
     {% set video_iframe_url = url('pumukit_live_event_iframe_id', {id: multimediaObject.id}) %}
+    {% set video_series_url = url('pumukit_webtv_series_index', {id: multimediaObject.getSeries().getID()}) %}
+
     <div class="row">
         <div class="background_id col-lg-6">
             <form class="form-horizontal">
@@ -33,6 +35,15 @@
                                 </a>
                             </span>
                         </div>
+                        <label for="inputROUrl" class="col-xs-2 control-label hidden-naked">Series Url:</label>
+                        <div class="col-xs-10 input-group hidden-naked">
+                            <input type="text" class="form-control" id="inputROUrl" readonly onclick="select()" value="{{ video_series_url }}">
+                            <span class="input-group-addon">
+                                <a href="{{ video_series_url }}" target="_blank" title="{% trans %}Series URL{% endtrans %}">
+                                    <i class="mdi-action-exit-to-app"></i>
+                                </a>
+                            </span>
+                        </div>                        
                     </div>
                 </fieldset>
                 <button title="{% trans %}Read only form{% endtrans %}" aria-label="{% trans %}Read only form{% endtrans %}" hidden="true"></button>
