@@ -31,7 +31,6 @@
         "white-october/pagerfanta-bundle": "^1.2",
         "knplabs/knp-menu-bundle": "~2.0",
         "gedmo/doctrine-extensions": "@stable",
-        "jasig/phpcas": "1.3.*",
         "suncat/mobile-detect-bundle": "1.1.*",
         "vipx/bot-detect-bundle": "^4.0",
         "teltek/pumukit-stats-ui-bundle": "2.0.*",
