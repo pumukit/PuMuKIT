@@ -9,7 +9,7 @@ Well-designed and well-engineered PuMuKIT is the ideal solution for any organiza
 
 ### PuMuKIT Website
 
-http://pumukit.org
+https://pumukit.org
 
 
 ### PuMuKIT Documentation
