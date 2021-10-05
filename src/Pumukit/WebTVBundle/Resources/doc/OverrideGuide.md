@@ -195,7 +195,7 @@ Below is the full parameter rules and their explanation:
 
   pumukit_web_tv.breadcrumbs_parentweb:             # 'If set to an array, a 'parent' will always appear as first element in the breadcrumbs service.
     title:  'Pumukit University'
-    url:    'http://www.pumukit.org'
+    url:    'https://www.pumukit.org'
 
   pumukit_web_tv.default_pic: '/bundles/pumukitwebtv/images/no_pic.jpg'
   pumukit_web_tv.linktagtosearch: false             # If set to true, the links to tags will link to a search template with the tag already selected on the search.
