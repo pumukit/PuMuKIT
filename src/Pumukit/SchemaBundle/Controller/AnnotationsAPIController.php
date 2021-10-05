@@ -124,7 +124,7 @@ class AnnotationsAPIController extends AbstractController
         $episode = $request->get('episode');
         $type = $request->get('type');
         $value = $request->get('value');
-        $inPoint = $request->get('in');
+        $inPoint = $request->query->getInt('in');
         $outPoint = $request->get('out') ?: 100;
         $isPrivate = $request->get('isPrivate') ?: false;
 
