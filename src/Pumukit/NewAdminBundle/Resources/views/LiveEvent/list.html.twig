@@ -23,7 +23,6 @@
                     {% endif %}
                 </a>
             </th>
-
             <th id="th-number-sessions" width="12%">{% trans %}Sessions number{% endtrans %}</th>
             <th id="th-create-date" width="12%">
                 <a href="#" class="sort_field" data-type="_id">
@@ -35,7 +34,7 @@
                 {% trans %}Create date{% endtrans %}
                 </a>
             </th>
-            <th id="th-date" width="12%">
+            <th id="th-date" width="14%">
                 <a href="#" class="sort_field" data-type="embeddedEvent.embeddedEventSession.start">
                     {% trans %}Broadcasting date{% endtrans %}
                     {% if app.session.get('admin/live/event/sort/field') is not null and app.session.get('admin/live/event/sort/field') is not empty %}
