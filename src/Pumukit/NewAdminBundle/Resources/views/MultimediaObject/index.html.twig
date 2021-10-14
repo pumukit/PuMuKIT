@@ -23,26 +23,38 @@
     </h3>
 
     <div class="row">
-        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}     
             <div id="tv_admin_content" class="col-md-10">
                 <div class="well">
-                    <div id="list_mms">
-                        {% include '@PumukitNewAdmin/MultimediaObject/list.html.twig' %}
+
+                    <div role="tabpanel"> 
+                        <ul id="menuTab" class="nav nav-tabs" role="tablist">
+                            <li>
+                                <a href="#list_VoD" aria-controls="mm" role="tab" data-toggle="tab">{% trans %}VoD{% endtrans %}</a>
+                            </li>
+                            <li>
+                                <a href="#list_events" aria-controls="event" data-toggle="tab">{% trans %}Events{% endtrans %}</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="list_VoD" role="tabpanel" class="tab-pane active">
+                                    {% include '@PumukitNewAdmin/MultimediaObject/list.html.twig' %}
+                            </div>
+                            <div id="list_events" role="tabpanel" class="tab-pane">
+                                    {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\EventsController::listEventActionBySerie')) }}
+                            </div>
+                        </div>
                     </div>
-                    <div id="list_events">
-                            {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\EventsController::listEventActionBySerie')) }}
-                    </div>
+
                     <div class="row">
                         <div class="col-xs-4">
                             <select id="options_mms" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('mm', $(this), 'mms', '{{ series.id }}');">
                                 <option value="default" selected="selected">{% trans %}Select an action{% endtrans %}...</option>
                                 <option disabled="">---</option>
                                 <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
-
                                 {% if not is_naked() %}
                                     <option {% if disable_pudenew %}disabled=""{% endif %} value="invert_announce_selected">{% trans %}Announce/Not announce selected{% endtrans %}</option>
                                 {% endif %}
-
                                 <option disabled="">---</option>
                                 <option value="order_manual" data-type="sort" {% if series.sorting == constant('SORT_MANUAL', series) %}data-active="1"{% endif %}>
                                     {% trans %}List multimedia objects in a manual order{% endtrans %}
@@ -82,6 +94,7 @@
                                 {% endif %}
                             </select>
                         </div>
+
                         <div class="col-xs-8 text-right">
                             {# RENDERS ANY BUTTONS DEFINED IN AN EXTRA PLUGIN #}
                             {% for item in get_extra_buttons() %}
@@ -98,7 +111,6 @@
                                     {% trans %}Wizard{% endtrans %}
                                 </a>
                             {% endif %}
-
                             {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADVANCED_UPLOAD')) %}
                                 <a title="{% trans %}Create new multimedia object{% endtrans %}" id="pumukitnewadmin_mms_new_button" class="extra_button btn btn-pumukit btn-raised" href="#">
                                     <i class="fas fa-plus"></i>
@@ -107,7 +119,9 @@
                             {% endif %}
                         </div>
                     </div>
+
                 </div>
+
                 <div id="edit_mm">
                     {% if(app.session.has('admin/series/id') and app.session.has('admin/mms/id')) %}
                         {{ render(url('pumukitnewadmin_mms_edit', {'id': app.session.get('admin/mms/id'), 'seriesId': app.session.get('admin/series/id')})) }}

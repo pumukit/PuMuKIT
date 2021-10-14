@@ -326,34 +326,33 @@ class EventsController extends AbstractController implements NewAdminControllerI
         $multimediaObjects = $this->listEventAction($request, $type)['multimediaObjectsArray'];
         $i = 0;
         foreach ($multimediaObjects as $multimediaObject) {
-            if ($multimediaObject->getSeries()->getId() == $id) {
-                ++$i;
-            } else {
+            if ($multimediaObject->getSeries()->getId() != $id) {
                 unset($multimediaObjects[$i]);
-                ++$i;
             }
+            ++$i;
         }
 
         $pager = $this->paginationService->createArrayAdapter($multimediaObjects, $page, 10);
 
-        if ($pager->getNbResults() > 0) {
-            $resetCache = true;
-            foreach ($pager->getCurrentPageResults() as $result) {
-                if ($session->get('admin/live/event/id') == $result->getId()) {
-                    $resetCache = false;
-
-                    break;
-                }
-            }
-            if ($resetCache) {
-                foreach ($pager->getCurrentPageResults() as $result) {
-                    $session->set('admin/live/event/id', $result->getId());
-
-                    break;
-                }
-            }
-        } else {
+        if ($pager->getNbResults() <= 0) {
             $session->remove('admin/live/event/id');
+        }
+
+        $resetCache = true;
+        foreach ($pager->getCurrentPageResults() as $result) {
+            if ($session->get('admin/live/event/id') == $result->getId()) {
+                $resetCache = false;
+
+                break;
+            }
+        }
+
+        if ($resetCache) {
+            foreach ($pager->getCurrentPageResults() as $result) {
+                $session->set('admin/live/event/id', $result->getId());
+
+                break;
+            }
         }
 
         return ['multimediaObjects' => $pager, 'default_event_pic' => $eventPicDefault, 'inSerie' => 1];
