@@ -1,5 +1,4 @@
 {% form_theme form '@PumukitNewAdmin/Themes/fields.html.twig' %}
-
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <h4 class="modal-title" id="myModalLabel">{% trans %}Create/Update session{% endtrans %}</h4>
@@ -54,6 +53,7 @@
                         var message = '{% trans %}There was an error in updating the event session.{% endtrans %}';
                         no_success(message);
                     } else {
+                        if (response.overlap == 1) window.alert("{% trans %}This session overlaps with others of the same event{% endtrans %}");
                         var mm = "{{ path('pumukit_new_admin_live_event_session_list', {'id': multimediaObject.getId()}) }}";
                         var pathList = "{{ path('pumukit_new_admin_live_event_list') }}";
                         $('#list_events').load(pathList);
@@ -67,6 +67,7 @@
                     no_success(errorThrown + ': ' + textStatus);
                 }
             });
+    
             return false;
         } else {
             no_success('{% trans %}Session must start before ends{% endtrans %}');

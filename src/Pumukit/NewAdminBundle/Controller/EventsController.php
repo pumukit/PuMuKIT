@@ -657,6 +657,27 @@ class EventsController extends AbstractController implements NewAdminControllerI
         ];
     }
 
+    public function checkOverlap($data, $start, $end, $multimediaObject)
+    {
+        $overlap = 0;
+        $id = 0;
+        if (isset($data['id'])) {
+            $id = $data['id'];
+        }
+        foreach ($multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession() as $session) {
+            if ($session->getId() == $id) {
+                continue;
+            }
+            if ($start >= $session->getStart() && $start <= $session->getEnds()) {
+                $overlap = 1;
+            } elseif ($end >= $session->getStart() && $end <= $session->getEnds()) {
+                $overlap = 1;
+            }
+        }
+
+        return $overlap;
+    }
+
     /**
      * @Route("session/{id}", name="pumukit_new_admin_live_event_sessiontab")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
@@ -678,6 +699,8 @@ class EventsController extends AbstractController implements NewAdminControllerI
                 $notes = $data->getNotes();
 
                 $data = $request->request->get('pumukitnewadmin_event_session');
+                $overlap = self::checkOverlap($data, $start, $end, $multimediaObject);
+
                 if (isset($data['id'])) {
                     foreach ($multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession(
                     ) as $embeddedEventSession) {
@@ -706,7 +729,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
             }
 
             return new JsonResponse(
-                ['sessions' => $multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession()]
+                ['sessions' => $multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession(), 'overlap' => $overlap]
             );
         }
 
