@@ -173,7 +173,7 @@ class PumukitExtension extends AbstractExtension
         return $minutes."' ".$seconds."''";
     }
 
-    public function getDurationString(int $duration): string
+    public function getDurationString(?string $duration = null): string
     {
         if (!$duration) {
             return '';
