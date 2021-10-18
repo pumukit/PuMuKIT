@@ -7,7 +7,7 @@ namespace Pumukit\SchemaBundle\Event;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PersonInterface;
 use Pumukit\SchemaBundle\Document\RoleInterface;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class PersonWithRoleEvent extends Event
 {

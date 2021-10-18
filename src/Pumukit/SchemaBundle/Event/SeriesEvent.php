@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Event;
 
 use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class SeriesEvent extends Event
 {

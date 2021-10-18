@@ -6,7 +6,7 @@ namespace Pumukit\BasePlayerBundle\Event;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class ViewedEvent extends Event
 {
