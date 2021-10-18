@@ -1009,6 +1009,30 @@ class EmbeddedEventSessionService
     }
 
     /**
+     * Checks if a session overlaps with others in the same Event.
+     */
+    public function validateLiveSessionOverlaped(array $data, \DateTime $start, \DateTime $end, MultimediaObject $multimediaObject)
+    {
+        $overlap = 0;
+        $id = 0;
+        if (isset($data['id'])) {
+            $id = $data['id'];
+        }
+        foreach ($multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession() as $session) {
+            if ($session->getId() == $id) {
+                continue;
+            }
+            if ($start >= $session->getStart() && $start <= $session->getEnds()) {
+                $overlap = 1;
+            } elseif ($end >= $session->getStart() && $end <= $session->getEnds()) {
+                $overlap = 1;
+            }
+        }
+
+        return $overlap;
+    }
+
+    /**
      * Add element with session sec.
      *
      * @param array $orderSession
