@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Event;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Symfony\Contracts\EventDispatcher\Event;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class MultimediaObjectAddOwnerEvent extends Event
 {
