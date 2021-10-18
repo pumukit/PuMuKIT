@@ -6,7 +6,7 @@ namespace Pumukit\WizardBundle\Event;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class FormEvent extends Event
 {
