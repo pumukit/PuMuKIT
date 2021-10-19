@@ -1,0 +1,129 @@
+<div class="well">
+    <table class="table  table-striped">
+        <thead>
+        <tr>
+            <th id="th-videos-vod" width="8%">{% trans %}Videos VOD{% endtrans %}</th>
+            <th id="th-image" width="5%"></th>
+            <th id="th-title">
+                <a href="#" class="sort_field" data-type="embeddedEvent.name">
+                    {% trans %}Event name{% endtrans %}
+                    {% if app.session.get('admin/live/event/sort/field') is not null and app.session.get('admin/live/event/sort/field') is not empty %}
+                        {% set type = app.session.get('admin/live/event/sort/field')|split('.') %}
+                        {% if type[1] is defined and 'name' == type[1] %}
+                            {{ app.session.get('admin/live/event/sort/type')=='desc'?'&#x25BE;':'&#x25B4;' }}
+                        {% endif %}
+                    {% endif %}
+                </a>
+            </th>
+            <th id="th-number-sessions" width="12%">{% trans %}Sessions number{% endtrans %}</th>
+            <th id="th-create-date" width="12%">
+                <a href="#" class="sort_field" data-type="_id">
+                {% if app.session.get('admin/live/event/sort/field') is not null and app.session.get('admin/live/event/sort/field') is not empty %}
+                    {% if '_id' == app.session.get('admin/live/event/sort/field') %}
+                        {{ app.session.get('admin/live/event/sort/type')=='desc'?'&#x25BE;':'&#x25B4;' }}
+                    {% endif %}
+                {% endif %}
+                {% trans %}Create date{% endtrans %}
+                </a>
+            </th>
+            <th id="th-date" width="14%">
+                <a href="#" class="sort_field" data-type="embeddedEvent.embeddedEventSession.start">
+                    {% trans %}Broadcasting date{% endtrans %}
+                    {% if app.session.get('admin/live/event/sort/field') is not null and app.session.get('admin/live/event/sort/field') is not empty %}
+                        {% if 'embeddedEvent.embeddedEventSession.start' == app.session.get('admin/live/event/sort/field') %}
+                            {{ app.session.get('admin/live/event/sort/type')=='desc'?'&#x25BE;':'&#x25B4;' }}
+                        {% endif %}
+                    {% endif %}
+                </a>
+            </th>
+            <th id="th-public" width="2%">{% trans %}Public{% endtrans %}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for multimediaObject in multimediaObjects %}
+            {% set series = multimediaObject.getSeries() %}
+            {% set loadPath = path('pumukit_new_admin_live_event_edit', {'id': multimediaObject.id} ) %}
+            {% set showPath = path('pumukit_new_admin_live_event_show', {'id': multimediaObject.id} ) %}
+            <tr {% if app.request.session.has('admin/live/event/id') and app.request.session.get('admin/live/event/id') == multimediaObject.getId() %}class="success"{% endif %}>
+               
+                <td headers="th-videos-vod" width="12%">
+                    {{ series|count_multimedia_objects }} {% trans %} videos{% endtrans %}
+
+                </td>
+                <td headers="th-image" style="cursor: pointer" width="3%" onclick="click_fila_edit_urls('events', this, '{{ showPath }}', '{{ loadPath }}')"  id="event_{{ multimediaObject.getId() }}">
+                    {% include "@PumukitNewAdmin/Misc/img_list.html.twig" with {'object' : multimediaObject, 'type' : 'event'} %}
+                </td>
+                <td headers="th-title" style="cursor: pointer" onclick="click_fila_edit_urls('events', this, '{{ showPath  }}', '{{ loadPath }}')">
+                    {{ multimediaObject.getEmbeddedEvent().getName(app.request.getLocale()) }}
+                </td>
+                <td headers="th-number-sessions" width="8%">
+                    {{ multimediaObject.getEmbeddedEvent().getEmbeddedEventSession() | length }} {% trans %} sessions{% endtrans %}
+                </td>
+                <td headers="th-create-date">
+                    {{ date_from_mongo_id(multimediaObject) |  format_datetime('medium', 'none',locale=app.request.getLocale()) }}
+                </td>
+                <td headers="th-date" width="12%">
+                    {% set session = multimediaObject|next_session_event %}
+                    {% if session %}
+                        {{ session[0].getStart() |  format_datetime('medium', 'none',locale=app.request.getLocale()) }}
+                    {% else %}
+                        {% trans %}No future sessions{% endtrans %}
+                    {% endif %}
+                </td>
+                <td headers="th-public" width="2%">{{ multimediaObject.getEmbeddedEvent().display ? 'Yes' : 'No' }}</td>
+            </tr>
+        {% endfor %}
+        {% if (multimediaObjects.currentPageResults|length) < 10 %}
+            {% for i in (multimediaObjects.currentPageResults|length) .. 9 %}
+                <tr>
+                    <td colspan="9">&nbsp;</td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="9" class="foot-td">
+                    <div class="row">
+                        <div class="col-md-8">
+                            {{ multimediaObjects|length }} {% trans %}Live events{% endtrans %}
+                       </div>
+                       <div class="col-md-4 text-right">
+                            <div class="pagerfanta">
+                                {% set pagerClass = 'twitter_bootstrap3' %}
+                                {% set pagerStyles = {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukit_new_admin_live_event_index"} %}
+                                {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects' : multimediaObjects, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles} %}
+                                <input title="{% trans %}Go to page{% endtrans %}" type="number"
+                                       style="width: 25px;text-align:center;cursor:pointer;"
+                                       value="{{ multimediaObjects.getCurrentPage() }}"
+                                       onchange="window.location.search = '?page=' + this.value; return false;" />
+                            </div>
+                       </div>
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<script type="text/javascript">
+    $('.sort_field').on('click', function(event) {
+        event.preventDefault();
+        $.ajax({
+            url: "{{ path('pumukit_new_admin_live_event_set_sorting') }}",
+            method: 'POST',
+            data: {
+                'field' : $(this).data('type')
+            },
+            success: function () {
+                if ({{ inSerie }} == 0) {
+                    var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
+                } else {
+                    var mm = "{{ path('pumukit_new_admin_live_event_list_by_serie') }}";
+                }
+                $('#list_events').load(mm);
+            }
+        });
+        return false;
+    })
+</script>

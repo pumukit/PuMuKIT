@@ -312,7 +312,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("serie/list/event/{type}", name="pumukit_new_admin_live_event_list_by_serie")
-     * @Template("@PumukitNewAdmin/LiveEvent/list.html.twig")
+     * @Template("@PumukitNewAdmin/MultimediaObject/listLiveEvents.html.twig")
      *
      * @param mixed|null $type
      */

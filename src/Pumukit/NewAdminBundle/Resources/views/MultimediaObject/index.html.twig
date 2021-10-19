@@ -21,40 +21,46 @@
             <input type="hidden" name="series_id" id="mms_series_id" value="{{ series.id }}"/>
         {% endif %}
     </h3>
-
     <div class="row">
-        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}     
+        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
             <div id="tv_admin_content" class="col-md-10">
                 <div class="well">
+                    <ul id="menuTab" class="nav nav-tabs" role="tablist">
+                         <li id='VoD'>
+                            <a href="#list_mms" aria-controls="list_mms" role="tab" data-toggle="tab" aria-selected="true">{% trans %}VoD{% endtrans %}</a>
+                        </li>
+                        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_LIVE_EVENTS')) %}
+                            <li id='events'>
+                                <a href="#list_events" aria-controls="list_mms" role="tab" data-toggle="tab">{% trans %}Events{% endtrans %}</a>
+                            </li>
+                        {% endif %}
+{# 
+                <li class="{% if is_naked() or not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %}active{% endif %} task_metadata">
+                    <a href="#list_mms" aria-controls="metaMm" role="tab" data-toggle="tab">{% trans %}Basic Metadata{% endtrans %}</a>
+                </li> #}
 
-                    <div role="tabpanel"> 
-                        <ul id="menuTab" class="nav nav-tabs" role="tablist">
-                            <li>
-                                <a href="#list_VoD" aria-controls="mm" role="tab" data-toggle="tab">{% trans %}VoD{% endtrans %}</a>
-                            </li>
-                            <li>
-                                <a href="#list_events" aria-controls="event" data-toggle="tab">{% trans %}Events{% endtrans %}</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content">
-                            <div id="list_VoD" role="tabpanel" class="tab-pane active">
-                                    {% include '@PumukitNewAdmin/MultimediaObject/list.html.twig' %}
-                            </div>
-                            <div id="list_events" role="tabpanel" class="tab-pane">
-                                    {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\EventsController::listEventActionBySerie')) }}
-                            </div>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="list_mms" role="tabpanel" class="tab-pane active">
+                            {% include '@PumukitNewAdmin/MultimediaObject/list.html.twig' %}
                         </div>
-                    </div>
-
-                    <div class="row">
+                        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_LIVE_EVENTS')) %}
+                            <div id="list_events" role="tabpanel" class="tab-pane">
+                                {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\EventsController::listEventActionBySerie')) }}
+                            </div>
+                        {% endif %}
+                    </div>   
+                    <div class="row" id='buttons'>
                         <div class="col-xs-4">
                             <select id="options_mms" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('mm', $(this), 'mms', '{{ series.id }}');">
                                 <option value="default" selected="selected">{% trans %}Select an action{% endtrans %}...</option>
                                 <option disabled="">---</option>
                                 <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
+
                                 {% if not is_naked() %}
                                     <option {% if disable_pudenew %}disabled=""{% endif %} value="invert_announce_selected">{% trans %}Announce/Not announce selected{% endtrans %}</option>
                                 {% endif %}
+
                                 <option disabled="">---</option>
                                 <option value="order_manual" data-type="sort" {% if series.sorting == constant('SORT_MANUAL', series) %}data-active="1"{% endif %}>
                                     {% trans %}List multimedia objects in a manual order{% endtrans %}
@@ -94,7 +100,6 @@
                                 {% endif %}
                             </select>
                         </div>
-
                         <div class="col-xs-8 text-right">
                             {# RENDERS ANY BUTTONS DEFINED IN AN EXTRA PLUGIN #}
                             {% for item in get_extra_buttons() %}
@@ -111,6 +116,7 @@
                                     {% trans %}Wizard{% endtrans %}
                                 </a>
                             {% endif %}
+
                             {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADVANCED_UPLOAD')) %}
                                 <a title="{% trans %}Create new multimedia object{% endtrans %}" id="pumukitnewadmin_mms_new_button" class="extra_button btn btn-pumukit btn-raised" href="#">
                                     <i class="fas fa-plus"></i>
@@ -119,9 +125,7 @@
                             {% endif %}
                         </div>
                     </div>
-
                 </div>
-
                 <div id="edit_mm">
                     {% if(app.session.has('admin/series/id') and app.session.has('admin/mms/id')) %}
                         {{ render(url('pumukitnewadmin_mms_edit', {'id': app.session.get('admin/mms/id'), 'seriesId': app.session.get('admin/series/id')})) }}
@@ -170,9 +174,20 @@
               });
             };
             */
+            $('#events').on('click', function() {
+                $('#buttons').hide();
+            });
+            $('#VoD').on('click', function() {
+                $('#buttons').show();
+            });
+            $('document').ready(function(event) {
+                $('#events').removeClass("active");
+                $('#list_events').removeClass("active");
+                $('#VoD').addClass("active");
+                $('#list_mms').addClass("active");
+            });
 
             window.setInterval(window.update_mms_status_wrapper, 15000);
-
             window.update_preview_mms = function (id) {
                 var route = "{{ path('pumukitnewadmin_mms_show', {id: '__id__'}) }}";
                 $.ajax({
@@ -183,7 +198,6 @@
                     }
                 });
             }
-
             var url = "{{ path('pumukit_schema_apikeywords_mmobj', {'_format':'json'})|raw }}";
             window.mmobjkeywords = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('_id'),
@@ -193,9 +207,7 @@
                     ttl: 1800000
                 }
             });
-
             window.mmobjkeywords.initialize();
-
         </script>
     {% endif %}
 {% endblock %}
