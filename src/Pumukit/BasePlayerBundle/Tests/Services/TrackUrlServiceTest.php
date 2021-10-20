@@ -24,6 +24,7 @@ class TrackUrlServiceTest extends PumukitTestCase
     {
         parent::setUp();
 
+        self::ensureKernelShutdown();
         $this->client = static::createClient();
         $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
         $this->trackurlService = static::$kernel->getContainer()->get('pumukit_baseplayer.trackurl');

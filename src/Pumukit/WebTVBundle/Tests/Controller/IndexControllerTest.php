@@ -16,6 +16,7 @@ class IndexControllerTest extends WebTestCase
 {
     public function testIndex()
     {
+        self::ensureKernelShutdown();
         $client = static::createClient();
         $crawler = $client->request('GET', '/');
 
