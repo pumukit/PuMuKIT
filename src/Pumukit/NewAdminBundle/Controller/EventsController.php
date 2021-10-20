@@ -24,14 +24,16 @@ use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
+use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Services\SeriesEventDispatcherService;
+use Pumukit\SchemaBundle\Services\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -40,7 +42,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  * @Security("is_granted('ROLE_ACCESS_LIVE_EVENTS')")
  * @Route("liveevent/")
  */
-class EventsController extends AbstractController implements NewAdminControllerInterface
+class EventsController extends AdminController implements NewAdminControllerInterface
 {
     protected static $regex = '/^[0-9a-z]{24}$/';
 
@@ -59,7 +61,11 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /** @var EmbeddedEventSessionService */
     protected $eventsService;
     /** @var SessionInterface */
-    private $session;
+    protected $session;
+    /** @var UserService */
+    protected $userService;
+    /** @var PersonService */
+    private $personService;
 
     private $pumukitNewAdminAdvanceLiveEventCreateSeriesPic;
     private $pumukitUseSeriesChannels;
@@ -82,6 +88,8 @@ class EventsController extends AbstractController implements NewAdminControllerI
         PaginationService $paginationService,
         EmbeddedEventSessionService $eventsService,
         SessionInterface $session,
+        PersonService $personService,
+        UserService $userService,
         $pumukitNewAdminAdvanceLiveEventCreateSeriesPic,
         $pumukitUseSeriesChannels,
         $locales,
@@ -113,6 +121,8 @@ class EventsController extends AbstractController implements NewAdminControllerI
         $this->pumukitLiveTwitterAccountsLinkColor = $pumukitLiveTwitterAccountsLinkColor;
         $this->pumukitNewAdminAdvanceLiveEventAutocompleteSeries = $pumukitNewAdminAdvanceLiveEventAutocompleteSeries;
         $this->pumukitSchemaPersonalScopeRoleCode = $pumukitSchemaPersonalScopeRoleCode;
+        $this->personService = $personService;
+        $this->userService = $userService;
     }
 
     /**
@@ -463,11 +473,32 @@ class EventsController extends AbstractController implements NewAdminControllerI
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
      * @Template("@PumukitNewAdmin/LiveEvent/edit.html.twig")
      */
-    public function editEventAction(MultimediaObject $multimediaObject)
+    public function editEventAction(Request $request, MultimediaObject $multimediaObject)
     {
         $this->session->set('admin/live/event/id', $multimediaObject->getId());
 
-        return ['multimediaObject' => $multimediaObject];
+        $allGroups = $this->getAllGroups();
+        $personalScopeRoleCode = $this->personService->getPersonalScopeRoleCode();
+
+        try {
+            $personalScopeRole = $this->personService->getPersonalScopeRole();
+        } catch (\Exception $e) {
+            return new Response($e, Response::HTTP_BAD_REQUEST);
+        }
+
+        $roles = $this->personService->getRoles();
+        if (null === $roles) {
+            throw new \Exception('Not found any role.');
+        }
+
+        $resource = $this->findOr404($request, 'MultimediaObject');
+        $template = $resource->isPrototype() ? '_template' : '';
+
+        return ['multimediaObject' => $multimediaObject,
+            'template' => $template,
+            'groups' => $allGroups,
+            'personal_scope_role' => $personalScopeRole,
+            'personal_scope_role_code' => $personalScopeRoleCode, ];
     }
 
     /**
@@ -865,9 +896,11 @@ class EventsController extends AbstractController implements NewAdminControllerI
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
      * @Template("@PumukitNewAdmin/LiveEvent/show.html.twig")
      */
-    public function showAction(MultimediaObject $multimediaObject)
+    public function showAction(Request $request)
     {
-        return ['multimediaObject' => $multimediaObject];
+        $mm = $this->findOr404($request);
+
+        return ['multimediaObject' => $mm];
     }
 
     /**
