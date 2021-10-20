@@ -203,7 +203,7 @@ class JobService
         $duration = 0,
         $flags = 0
     ) {
-        if (self::ADD_JOB_UNIQUE & $flags) {
+        if (self::ADD_JOB_UNIQUE && $flags) {
             $job = $this->repo->findOneBy(['profile' => $profileName, 'mm_id' => $multimediaObject->getId()]);
 
             if ($job) {
@@ -219,7 +219,7 @@ class JobService
 
         $checkduration = !(isset($profile['nocheckduration']) && $profile['nocheckduration']);
 
-        if ($checkduration && !(self::ADD_JOB_NOT_CHECKS & $flags)) {
+        if ($checkduration && !(self::ADD_JOB_NOT_CHECKS && $flags)) {
             if (!is_file($pathFile)) {
                 $this->logger->error('[addJob] FileNotFoundException: Could not find file "'.$pathFile);
 

@@ -47,7 +47,7 @@ class PicExtractorServiceTest extends PumukitTestCase
         $mmsPicService = new MultimediaObjectPicService($this->dm, $this->picEventDispatcher, $this->targetPath, $this->targetUrl, false);
         $width = 304;
         $height = 242;
-        $command = 'ffmpeg -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"';
+        $command = 'ffmpeg -ss {{ss}} -y -i {{input}} -r 1 -vframes 1 -s {{size}} -f image2 {{output}}';
         $this->picExtractor = new PicExtractorService($this->dm, $mmsPicService, $width, $height, $this->targetPath, $this->targetUrl, $command);
     }
 
