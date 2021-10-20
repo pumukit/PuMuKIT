@@ -7,6 +7,7 @@ namespace Pumukit\NewAdminBundle\Controller;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pagerfanta\Pagerfanta;
 use Pumukit\CoreBundle\Services\PaginationService;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -54,7 +55,7 @@ class ResourceController extends AbstractController
         return [];
     }
 
-    public function findOr404(Request $request, array $criteria = [])
+    public function findOr404(Request $request, string $repositoryClass = '', array $criteria = [])
     {
         $default = [];
         if ($request->request->has('slug') || $request->attributes->has('slug') || $request->query->has('slug')) {
@@ -67,7 +68,11 @@ class ResourceController extends AbstractController
 
         $criteria = array_merge($default, $criteria);
 
-        $repo = $this->getRepository();
+        if ('MultimediaObject' == $repositoryClass) {
+            $repo = $this->documentManager->getRepository(MultimediaObject::class);
+        } else {
+            $repo = $this->getRepository();
+        }
 
         if (!$resource = $repo->findOneBy($criteria)) {
             throw new NotFoundHttpException(
