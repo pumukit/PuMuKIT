@@ -23,6 +23,7 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\SchemaBundle\Services\GroupService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
 use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Services\SeriesEventDispatcherService;
@@ -64,6 +65,8 @@ class EventsController extends AdminController implements NewAdminControllerInte
     protected $session;
     /** @var UserService */
     protected $userService;
+    /** @var GroupService */
+    protected $groupService;
     /** @var PersonService */
     private $personService;
 
@@ -90,6 +93,7 @@ class EventsController extends AdminController implements NewAdminControllerInte
         SessionInterface $session,
         PersonService $personService,
         UserService $userService,
+        GroupService $groupService,
         $pumukitNewAdminAdvanceLiveEventCreateSeriesPic,
         $pumukitUseSeriesChannels,
         $locales,
@@ -123,6 +127,7 @@ class EventsController extends AdminController implements NewAdminControllerInte
         $this->pumukitSchemaPersonalScopeRoleCode = $pumukitSchemaPersonalScopeRoleCode;
         $this->personService = $personService;
         $this->userService = $userService;
+        $this->groupService = $groupService;
     }
 
     /**
