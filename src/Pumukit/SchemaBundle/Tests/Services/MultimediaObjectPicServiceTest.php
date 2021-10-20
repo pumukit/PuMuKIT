@@ -131,7 +131,7 @@ class MultimediaObjectPicServiceTest extends PumukitTestCase
 
         $picPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'picCopy.png';
         if (copy($this->originalPicPath, $picPath)) {
-            $picFile = new UploadedFile($picPath, 'pic.png', null, null, null, true);
+            $picFile = new UploadedFile($picPath, 'pic.png', null, null, true);
             $mm = $this->mmsPicService->addPicFile($mm, $picFile);
             $mm = $this->repo->find($mm->getId());
 
@@ -154,7 +154,7 @@ class MultimediaObjectPicServiceTest extends PumukitTestCase
 
         $picPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'picCopy.png';
         if (copy($this->originalPicPath, $picPath)) {
-            $picFile = new UploadedFile($picPath, 'pic.png', null, null, null, true);
+            $picFile = new UploadedFile($picPath, 'pic.png', null, null, true);
             $mm = $this->mmsPicService->addPicFile($mm, $picFile);
 
             static::assertCount(1, $mm->getPics());

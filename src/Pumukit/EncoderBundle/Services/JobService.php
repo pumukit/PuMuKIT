@@ -84,21 +84,6 @@ class JobService
         $this->maxExecutionJobSeconds = $maxExecutionJobSeconds;
     }
 
-    /**
-     * Create track from local hard drive with job service. AddJob method wrapper.
-     *
-     * @param array  $profile
-     * @param int    $priority
-     * @param string $language
-     * @param array  $description
-     * @param array  $initVars
-     * @param int    $duration
-     * @param int    $flags
-     *
-     * @throws \Exception
-     *
-     * @return MultimediaObject
-     */
     public function createTrackFromLocalHardDrive(
         MultimediaObject $multimediaObject,
         UploadedFile $trackFile,
@@ -145,22 +130,6 @@ class JobService
         return $multimediaObject;
     }
 
-    /**
-     * Create track from inbox on server with job service. AddJob method wrapper.
-     *
-     * @param string $trackUrl
-     * @param string $profile
-     * @param int    $priority
-     * @param string $language
-     * @param array  $description
-     * @param array  $initVars
-     * @param int    $duration
-     * @param int    $flags
-     *
-     * @throws \Exception
-     *
-     * @return MultimediaObject
-     */
     public function createTrackFromInboxOnServer(
         MultimediaObject $multimediaObject,
         $trackUrl,
@@ -192,17 +161,14 @@ class JobService
     }
 
     /**
-     * Add job checking if not exists.
+     * @deprecated use addJob with JobService::ADD_JOB_UNIQUE flag
      *
-     * @param string      $pathFile
-     * @param string      $profile
-     * @param int         $priority
-     * @param string|null $language
-     * @param array       $description
-     * @param array       $initVars
-     *
-     * @throws \Exception
-     * @deprecated: Use addJob with JobService::ADD_JOB_UNIQUE flag.
+     * @param mixed      $pathFile
+     * @param mixed      $profile
+     * @param mixed      $priority
+     * @param mixed|null $language
+     * @param mixed      $description
+     * @param mixed      $initVars
      */
     public function addUniqueJob(
         $pathFile,
@@ -226,22 +192,6 @@ class JobService
         );
     }
 
-    /**
-     * Add a encoder job.
-     *
-     * @param string $pathFile    Absolute path of the multimedia object
-     * @param string $profileName Encoder profile name
-     * @param int    $priority    Priority of the new job
-     * @param string $language
-     * @param array  $description
-     * @param array  $initVars    Init values of the Job
-     * @param int    $duration    Only necessary in JobService::ADD_JOB_NOT_CHECKS
-     * @param int    $flags       A bit field of constants to customize the job creation: JobService::ADD_JOB_UNIQUE, JobService::ADD_JOB_NOT_CHECKS
-     *
-     * @throws \Exception
-     *
-     * @return Job
-     */
     public function addJob(
         $pathFile,
         $profileName,
@@ -253,7 +203,7 @@ class JobService
         $duration = 0,
         $flags = 0
     ) {
-        if (self::ADD_JOB_UNIQUE & $flags) {
+        if (self::ADD_JOB_UNIQUE && $flags) {
             $job = $this->repo->findOneBy(['profile' => $profileName, 'mm_id' => $multimediaObject->getId()]);
 
             if ($job) {
@@ -269,7 +219,7 @@ class JobService
 
         $checkduration = !(isset($profile['nocheckduration']) && $profile['nocheckduration']);
 
-        if ($checkduration && !(self::ADD_JOB_NOT_CHECKS & $flags)) {
+        if ($checkduration && !(self::ADD_JOB_NOT_CHECKS && $flags)) {
             if (!is_file($pathFile)) {
                 $this->logger->error('[addJob] FileNotFoundException: Could not find file "'.$pathFile);
 
@@ -328,15 +278,6 @@ class JobService
         return $job;
     }
 
-    /**
-     * Pause job.
-     *
-     * Given an id, pauses the job only if it's waiting
-     *
-     * @param \MongoId|string $id
-     *
-     * @throws \Exception
-     */
     public function pauseJob($id)
     {
         $job = $this->repo->find($id);
@@ -349,15 +290,6 @@ class JobService
         $this->changeStatus($job, Job::STATUS_WAITING, Job::STATUS_PAUSED);
     }
 
-    /**
-     * Resume Job.
-     *
-     * Given an id, if the job status is waiting, pauses it
-     *
-     * @param \MongoId|string $id
-     *
-     * @throws \Exception
-     */
     public function resumeJob($id)
     {
         $job = $this->repo->find($id);
@@ -370,15 +302,6 @@ class JobService
         $this->changeStatus($job, Job::STATUS_PAUSED, Job::STATUS_WAITING);
     }
 
-    /**
-     * Cancel job.
-     *
-     * Given an id, if the job status is paused or waiting, delete it. Throw exception otherwise
-     *
-     * @param \MongoId|string $id
-     *
-     * @throws \Exception
-     */
     public function cancelJob($id)
     {
         $job = $this->repo->find($id);
@@ -397,11 +320,6 @@ class JobService
         $this->dm->flush();
     }
 
-    /**
-     * @param \MongoId|string $id
-     *
-     * @throws \Exception
-     */
     public function deleteJob($id)
     {
         $job = $this->repo->find($id);
@@ -425,12 +343,6 @@ class JobService
         $this->dm->flush();
     }
 
-    /**
-     * @param \MongoId|string $id
-     * @param int             $priority
-     *
-     * @throws \Exception
-     */
     public function updateJobPriority($id, $priority)
     {
         $job = $this->repo->find($id);
@@ -446,11 +358,6 @@ class JobService
         $this->dm->flush();
     }
 
-    /**
-     * Get all jobs status.
-     *
-     * @return array
-     */
     public function getAllJobsStatus()
     {
         return [
@@ -462,13 +369,6 @@ class JobService
         ];
     }
 
-    /**
-     * Get all jobs status.
-     *
-     * @param mixed $owner
-     *
-     * @return array
-     */
     public function getAllJobsStatusWithOwner($owner)
     {
         return [
@@ -480,23 +380,11 @@ class JobService
         ];
     }
 
-    /**
-     * Get next job.
-     *
-     * Returns the job in waiting status with higher priority (tie: timeini older)
-     *
-     * @return mixed
-     */
     public function getNextJob()
     {
         return $this->repo->findHigherPriorityWithStatus([Job::STATUS_WAITING]);
     }
 
-    /**
-     * Exec next job.
-     *
-     * @return mixed|null
-     */
     public function executeNextJob()
     {
         if ('test' == $this->environment) {
@@ -554,9 +442,6 @@ class JobService
         shell_exec("nohup {$command} 1> /dev/null 2> /dev/null & echo $!");
     }
 
-    /**
-     * @throws \Exception
-     */
     public function execute(Job $job)
     {
         set_time_limit(0);
@@ -627,17 +512,6 @@ class JobService
         $this->executeNextJob();
     }
 
-    /**
-     * Throw a exception if error executing the job.
-     *
-     * @param array $profile
-     * @param int   $durationIn
-     * @param int   $durationEnd
-     *
-     * @throws \Exception
-     *
-     * @return bool
-     */
     public function searchError($profile, $durationIn, $durationEnd)
     {
         // This allows to configure a profile for videos without timestamps to be reindexed.
@@ -655,16 +529,6 @@ class JobService
         return true;
     }
 
-    /**
-     * Get bat auto.
-     *
-     * Generates execution line replacing %1 %2 %3 by
-     * in, out and cfg files
-     *
-     * @throws \Exception
-     *
-     * @return string commandLine
-     */
     public function renderBat(Job $job)
     {
         $profile = $this->getProfile($job);
@@ -708,11 +572,6 @@ class JobService
         return $commandLine;
     }
 
-    /**
-     * Set path end auto.
-     *
-     * @throws \Exception
-     */
     public function setPathEndAndExtensions(Job $job)
     {
         if (!file_exists($job->getPathIni())) {
@@ -747,11 +606,6 @@ class JobService
         $this->dm->flush();
     }
 
-    /**
-     * @throws \Exception
-     *
-     * @return Track
-     */
     public function createTrackWithJob(Job $job)
     {
         $this->logger->info('Create new track with job '.$job->getId().' and profileName '.$job->getProfile());
@@ -768,16 +622,6 @@ class JobService
         );
     }
 
-    /**
-     * @param string      $pathFile
-     * @param string      $profileName
-     * @param string|null $language
-     * @param array       $description
-     *
-     * @throws \Exception
-     *
-     * @return Track
-     */
     public function createTrackWithFile(
         $pathFile,
         $profileName,
@@ -803,15 +647,6 @@ class JobService
         return $this->createTrack($multimediaObject, $pathEnd, $profileName, $language, $description, $pathFile);
     }
 
-    /**
-     * @param string      $pathEnd
-     * @param string      $profileName
-     * @param string|null $language
-     * @param array       $description
-     * @param mixed|null  $pathFile
-     *
-     * @return Track
-     */
     public function createTrack(
         MultimediaObject $multimediaObject,
         $pathEnd,
@@ -872,35 +707,16 @@ class JobService
         return $track;
     }
 
-    /**
-     * Get not finished jobs with multimedia object id.
-     *
-     * @param \MongoId|string $mmId
-     *
-     * @return mixed $jobs with mmId
-     */
     public function getNotFinishedJobsByMultimediaObjectId($mmId)
     {
         return $this->repo->findNotFinishedByMultimediaObjectId($mmId);
     }
 
-    /**
-     * Get status error.
-     *
-     * @return int Job status error
-     */
     public function getStatusError()
     {
         return Job::STATUS_ERROR;
     }
 
-    /**
-     * Retry job.
-     *
-     * @throws \Exception
-     *
-     * @return bool
-     */
     public function retryJob(Job $job)
     {
         if (Job::STATUS_ERROR !== $job->getStatus()) {
@@ -927,9 +743,6 @@ class JobService
         return true;
     }
 
-    /**
-     * Check for blocked jobs.
-     */
     public function checkService()
     {
         $existsJobsToUpdate = false;
@@ -970,12 +783,6 @@ class JobService
         }
     }
 
-    /**
-     * Change status of a given job.
-     *
-     * @param int $actualStatus
-     * @param int $newStatus
-     */
     private function changeStatus(Job $job, $actualStatus, $newStatus)
     {
         if ($actualStatus === $job->getStatus()) {
@@ -985,13 +792,6 @@ class JobService
         }
     }
 
-    /**
-     * @param string $dir
-     * @param string $file
-     * @param string $extension
-     *
-     * @return string
-     */
     private function getPathEnd(array $profile, $dir, $file, $extension)
     {
         $finalExtension = $profile['extension'] ?? $extension;
@@ -1003,11 +803,6 @@ class JobService
         return realpath($tempDir).'/'.$file.'.'.$finalExtension;
     }
 
-    /**
-     * @param array $cpu
-     *
-     * @return LocalExecutor|RemoteHTTPExecutor
-     */
     private function getExecutor($cpu)
     {
         $localhost = ['localhost', '127.0.0.1'];
@@ -1015,11 +810,6 @@ class JobService
         return (in_array($cpu['host'], $localhost)) ? new LocalExecutor() : new RemoteHTTPExecutor();
     }
 
-    /**
-     * @throws \Exception
-     *
-     * @return mixed|null
-     */
     private function getProfile(Job $job)
     {
         $profile = $this->profileService->getProfile($job->getProfile());
@@ -1038,11 +828,6 @@ class JobService
         return $profile;
     }
 
-    /**
-     * @throws \Exception
-     *
-     * @return mixed
-     */
     private function getMultimediaObject(Job $job)
     {
         $multimediaObject = $this->dm->getRepository(MultimediaObject::class)->find($job->getMmId());
@@ -1061,13 +846,6 @@ class JobService
         return $multimediaObject;
     }
 
-    /**
-     * Emit an event to notify finished job.
-     *
-     * @param bool $success
-     *
-     * @throws \Exception
-     */
     private function dispatch($success, Job $job, Track $track = null)
     {
         $multimediaObject = $this->getMultimediaObject($job);
@@ -1076,11 +854,6 @@ class JobService
         $this->eventDispatcher->dispatch($event, $success ? EncoderEvents::JOB_SUCCESS : EncoderEvents::JOB_ERROR);
     }
 
-    /**
-     * Get user email.
-     *
-     * Gets the email of the user who executed the job, if no session get the user info from other jobs of the same mm.
-     */
     private function getUserEmail(Job $job = null)
     {
         if (null !== $token = $this->tokenStorage->getToken()) {
@@ -1102,10 +875,7 @@ class JobService
         return null;
     }
 
-    /**
-     * @param string $path
-     */
-    private function mkdir($path)
+    private function mkdir(string $path)
     {
         $fs = new Filesystem();
         $fs->mkdir($path);

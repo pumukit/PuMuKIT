@@ -19,10 +19,14 @@ class LocalExecutorTest extends WebTestCase
         static::bootKernel($options);
     }
 
-    public function testSimple()
+    public function testSimple(): void
     {
         $executor = new LocalExecutor();
-        $out = $executor->execute('sleep 1 && echo a');
-        static::assertEquals("a\n\n", "{$out}");
+        $command = [
+            'echo',
+            'a',
+        ];
+        $out = $executor->execute($command);
+        static::assertEquals("a\n\n", $out);
     }
 }
