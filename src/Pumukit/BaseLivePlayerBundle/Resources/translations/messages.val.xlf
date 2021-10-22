@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="val" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="RoN3Re7" resname="Current live event">
+        <source>Current live event</source>
+        <target state="translated">Esdeveniment actual en directe</target>
+      </trans-unit>
+      <trans-unit id="QcHoioP" resname="Next live event">
+        <source>Next live event</source>
+        <target state="translated">Proper esdeveniment en directe</target>
+      </trans-unit>
+      <trans-unit id="s8XJFie" resname="EVENT">
+        <source>EVENT</source>
+        <target state="translated">ESDEVENIMENT</target>
+      </trans-unit>
+      <trans-unit id="BohT_Se" resname="PLACE">
+        <source>PLACE</source>
+        <target state="translated">LLOC</target>
+      </trans-unit>
+      <trans-unit id="F.mgpRK" resname="DATE">
+        <source>DATE</source>
+        <target state="translated">DATA</target>
+      </trans-unit>
+      <trans-unit id="WIhnXZm" resname="TIME">
+        <source>TIME</source>
+        <target state="translated">HORA</target>
+      </trans-unit>
+      <trans-unit id="MKOwLL7" resname="No title">
+        <source>No title</source>
+        <target state="translated">Sense títol</target>
+      </trans-unit>
+      <trans-unit id="Th9Jqci" resname="Event">
+        <source>Event</source>
+        <target state="translated">Esdeveniment</target>
+      </trans-unit>
+      <trans-unit id="6UY9zPB" resname="Place">
+        <source>Place</source>
+        <target state="translated">Lloc</target>
+      </trans-unit>
+      <trans-unit id="mcQKtAW" resname="Date">
+        <source>Date</source>
+        <target state="translated">Data</target>
+      </trans-unit>
+      <trans-unit id="M7k0ds9" resname="Time">
+        <source>Time</source>
+        <target state="translated">Hora</target>
+      </trans-unit>
+      <trans-unit id="VXRvY92" resname="JWPlayer does not support your browser version">
+        <source>JWPlayer does not support your browser version</source>
+        <target state="translated">El JWPlayer no és compatible amb la versió del vostre navegador</target>
+      </trans-unit>
+      <trans-unit id="e9X3KLs" resname="Please use 9.0 or higher version or use another browser.">
+        <source>Please use 9.0 or higher version or use another browser.</source>
+        <target state="translated">Utilitzeu la versió 9.0 (o superior) o bé un altre navegador.</target>
+      </trans-unit>
+      <trans-unit id="wlNtjtj" resname="The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.">
+        <source>The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</source>
+        <target state="translated">Cal que instal·leu el connector del Flash. El JWPlayer necessita almenys la versió 10.1.82.76 del Flash per poder fer la transmissió.</target>
+      </trans-unit>
+      <trans-unit id="Xypi4__" resname="The event has not been held yet">
+        <source>The event has not been held yet</source>
+        <target state="translated">L’esdeveniment encara no s’ha celebrat</target>
+      </trans-unit>
+      <trans-unit id="i7YNXXs" resname="The event has already been held">
+        <source>The event has already been held</source>
+        <target state="translated">L’esdeveniment ja s’ha celebrat</target>
+      </trans-unit>
+      <trans-unit id="tkrAXxf" resname="Live">
+        <source>Live</source>
+        <target state="translated">En directe</target>
+      </trans-unit>
+      <trans-unit id="OxlkZOz" resname="Private Video">
+        <source>Private Video</source>
+        <target state="translated">Vídeo privat</target>
+      </trans-unit>
+      <trans-unit id="BcxKeUd" resname="This video is private with restricted access">
+        <source>This video is private with restricted access</source>
+        <target state="translated">Aquest vídeo és privat i té l’accés restringit</target>
+      </trans-unit>
+      <trans-unit id="hrl4QaS" resname="Enter a valid password to watch it">
+        <source>Enter a valid password to watch it</source>
+        <target state="translated">Introduïu una contrasenya vàlida per mirar-lo</target>
+      </trans-unit>
+      <trans-unit id="AmXL6i2" resname="Introduce a password">
+        <source>Introduce a password</source>
+        <target state="translated">Introduïu una contrasenya</target>
+      </trans-unit>
+      <trans-unit id="DyCJYAX" resname="Password is not valid">
+        <source>Password is not valid</source>
+        <target state="translated">La contrasenya no és vàlida</target>
+      </trans-unit>
+      <trans-unit id="Le1KPuZ" resname="Log In">
+        <source>Log In</source>
+        <target state="translated">Inicieu la sessió</target>
+      </trans-unit>
+      <trans-unit id="8aBdu0t" resname="Enter pass">
+        <source>Enter pass</source>
+        <target state="translated">Introduïu la contrasenya</target>
+      </trans-unit>
+      <trans-unit id="7tKy0KB" resname="New contact from live event">
+        <source>New contact from live event</source>
+        <target state="translated">Contacte nou de l’esdeveniment en directe</target>
+      </trans-unit>
+      <trans-unit id="q1EATp1" resname="days">
+        <source>days</source>
+        <target state="translated">dies</target>
+      </trans-unit>
+      <trans-unit id="R70pB1_" resname="Content">
+        <source>Content</source>
+        <target state="translated">Contingut</target>
+      </trans-unit>
+      <trans-unit id="ZYNLahi" resname="Obsolete browser">
+        <source>Obsolete browser</source>
+        <target state="translated">Navegador obsolet</target>
+      </trans-unit>
+      <trans-unit id="F_V94dr" resname="Iframe">
+        <source>Iframe</source>
+        <target state="translated">Iframe</target>
+      </trans-unit>
+      <trans-unit id="2SnrnwG" resname="Media Thumbnail">
+        <source>Media Thumbnail</source>
+        <target state="translated">Miniatura de l’objecte multimèdia</target>
+      </trans-unit>
+      <trans-unit id="70fBjSz" resname="There aren't events at this moment">
+        <source>There aren't events at this moment</source>
+        <target state="translated">No hi ha esdeveniments ara mateix</target>
+      </trans-unit>
+      <trans-unit id="kxQCXu4" resname="email send">
+        <source>email send</source>
+        <target state="translated">el correu electrònic s’ha enviat</target>
+      </trans-unit>
+      <trans-unit id="TPzY.dq" resname="please verify form data">
+        <source>please verify form data</source>
+        <target state="translated">verifiqueu les dades del formulari</target>
+      </trans-unit>
+      <trans-unit id="nCmGYqT" resname="Event chat">
+        <source>Event chat</source>
+        <target state="translated">Xat de l’esdeveniment</target>
+      </trans-unit>
+      <trans-unit id="3NHVIj9" resname="Name">
+        <source>Name</source>
+        <target state="translated">Nom</target>
+      </trans-unit>
+      <trans-unit id="lhXIE3s" resname="Name cannot be empty">
+        <source>Name cannot be empty</source>
+        <target state="translated">El nom no pot estar buit</target>
+      </trans-unit>
+      <trans-unit id="L3dmip3" resname="Message">
+        <source>Message</source>
+        <target state="translated">Missatge</target>
+      </trans-unit>
+      <trans-unit id="pCwHVEo" resname="Sorry but there was an error">
+        <source>Sorry but there was an error</source>
+        <target state="translated">S’ha produït un error</target>
+      </trans-unit>
+      <trans-unit id="NvvDhQX" resname="Chat icon">
+        <source>Chat icon</source>
+        <target state="translated">Icona del xat</target>
+      </trans-unit>
+      <trans-unit id="HHzHKHy" resname="Live chat">
+        <source>Live chat</source>
+        <target state="translated">Xat en directe</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
