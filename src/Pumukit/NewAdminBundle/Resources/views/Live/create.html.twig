@@ -10,13 +10,19 @@
               action="{{ path('pumukitnewadmin_live_create') }}" method="POST">
             <fieldset>
                 {% for key,child in form %}
+
                     {% if key == 'chat' and (not enableChat or advanceLiveEvent) %}
                         <div style="display:none">
                             {{ form_row(child) }}
                         </div>
+                    {% elseif key == 'source_name2' %}
+                        <div style="display:none" id="stream2">
+                            {{ form_row(child) }}
+                        </div>
                     {% else %}
                         {{ form_row(child) }}
-                    {% endif %}
+                    {% endif %} 
+
                 {% endfor %}
             </fieldset>
             <div class="modal-footer">
@@ -28,3 +34,20 @@
         {% trans %}You don't have enough permissions to access this content.{% endtrans %}
     {% endif %}
 </div>
+
+<script type="text/javascript">
+    $('#pumukitnewadmin_live_live_type').on('change', function(e){
+        var select = document.getElementById('pumukitnewadmin_live_live_type');
+        var selectedOption = this.options[select.selectedIndex];
+        var stream2 = document.getElementById('stream2');
+        var inputStream2 = document.getElementById('pumukitnewadmin_live_source_name2');
+
+        if (selectedOption.text == 'WOWZA-DUAL-STREAM') {
+            stream2.style = "display:revert";
+        } else if (selectedOption.text == 'WOWZA') {
+            stream2.style = "display:none";
+            inputStream2.required = false;
+            inputStream2.value = "";
+        }
+    });
+</script>
