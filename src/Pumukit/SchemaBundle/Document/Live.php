@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Live
 {
     public const LIVE_TYPE_WOWZA = 'WOWZA';
+    public const LIVE_TYPE_WOWZA_DUAL_STREAM = 'WOWZA_DUAL_STREAM';
     public const LIVE_TYPE_AMS = 'AMS';
     public const LIVE_TYPE_FMS = 'FMS'; //Kept for backwards compatibility
     public const LIVE_TYPE_WMS = 'WMS'; //Kept for backwards compatibility
@@ -66,6 +67,11 @@ class Live
      * @Assert\NotBlank()
      */
     private $source_name;
+
+    /**
+     * @MongoDB\Field(type="string")
+     */
+    private $source_name2;
 
     /**
      * @MongoDB\Field(type="bool")
@@ -147,6 +153,7 @@ class Live
     {
         return in_array($this->live_type, [
             self::LIVE_TYPE_WOWZA,
+            self::LIVE_TYPE_WOWZA_DUAL_STREAM,
             self::LIVE_TYPE_AMS,
             self::LIVE_TYPE_WMS,
             self::LIVE_TYPE_FMS,
@@ -198,9 +205,19 @@ class Live
         $this->source_name = $source_name;
     }
 
+    public function setSourceName2($source_name): void
+    {
+        $this->source_name2 = $source_name;
+    }
+
     public function getSourceName()
     {
         return $this->source_name;
+    }
+
+    public function getSourceName2()
+    {
+        return $this->source_name2;
     }
 
     public function setIndexPlay($index_play): void
@@ -333,6 +350,8 @@ class Live
 
     public function getInfo(): string
     {
-        return sprintf('%s (%s/%s)', $this->getName(), $this->getUrl(), $this->getSourceName());
+        // if (!empty($source_name2))
+        return sprintf('%s (%s/%s)', $this->getName(), $this->getUrl(), $this->getSourceName(), $this->getSourceName2());
+        // return sprintf('%s (%s/%s)', $this->getName(), $this->getUrl(), $this->getSourceName());
     }
 }

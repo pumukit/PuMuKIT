@@ -58,8 +58,16 @@ class LiveType extends AbstractType
                 'source_name',
                 TextType::class,
                 [
-                    'attr' => ['aria-label' => $this->translator->trans('STREAM', [], null, $this->locale)],
-                    'label' => $this->translator->trans('STREAM', [], null, $this->locale),
+                    'attr' => ['aria-label' => $this->translator->trans('STREAM 1', [], null, $this->locale)],
+                    'label' => $this->translator->trans('STREAM 1', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'source_name2',
+                TextType::class,
+                [
+                    'attr' => ['aria-label' => $this->translator->trans('STREAM 2', [], null, $this->locale)],
+                    'label' => $this->translator->trans('STREAM 2', [], null, $this->locale),
                 ]
             )
             ->add(
@@ -87,6 +95,7 @@ class LiveType extends AbstractType
                     'attr' => ['aria-label' => $this->translator->trans('Technology', [], null, $this->locale)],
                     'choices' => [
                         'WOWZA' => Live::LIVE_TYPE_WOWZA,
+                        'WOWZA-DUAL-STREAM' => Live::LIVE_TYPE_WOWZA_DUAL_STREAM,
                     ],
                     'label' => $this->translator->trans('Technology', [], null, $this->locale),
                 ]
