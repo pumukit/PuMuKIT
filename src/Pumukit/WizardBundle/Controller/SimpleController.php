@@ -39,7 +39,7 @@ class SimpleController extends AbstractController
     private $profileService;
     private $factoryService;
     private $formEventDispatcherService;
-    private $seriesService;
+    private $seriesServices;
     private $locales;
     private $pumukitWizardSimpleDefaultMasterProfile;
     private $pumukitWizardShowSimpleMmTitle;
