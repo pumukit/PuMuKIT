@@ -12,6 +12,7 @@ use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\SchemaBundle\Services\SeriesService;
 use Pumukit\SchemaBundle\Services\SortedMultimediaObjectsService;
 use Pumukit\WizardBundle\Services\FormEventDispatcherService;
 use Pumukit\WizardBundle\Services\LicenseService;
@@ -38,6 +39,7 @@ class SimpleController extends AbstractController
     private $profileService;
     private $factoryService;
     private $formEventDispatcherService;
+    private $seriesService;
     private $locales;
     private $pumukitWizardSimpleDefaultMasterProfile;
     private $pumukitWizardShowSimpleMmTitle;
@@ -54,6 +56,7 @@ class SimpleController extends AbstractController
         ProfileService $profileService,
         FactoryService $factoryService,
         FormEventDispatcherService $formEventDispatcherService,
+        SeriesService $seriesService,
         array $locales,
         bool $pumukitWizardShowSimpleMmTitle,
         bool $pumukitWizardShowSimpleSeriesTitle,
@@ -70,6 +73,7 @@ class SimpleController extends AbstractController
         $this->profileService = $profileService;
         $this->factoryService = $factoryService;
         $this->formEventDispatcherService = $formEventDispatcherService;
+        $this->seriesServices = $seriesService;
         $this->locales = $locales;
         $this->pumukitWizardSimpleDefaultMasterProfile = $pumukitWizardSimpleDefaultMasterProfile;
         $this->pumukitWizardShowSimpleMmTitle = $pumukitWizardShowSimpleMmTitle;
@@ -166,7 +170,7 @@ class SimpleController extends AbstractController
         }
 
         $canAccessSeries = null !== $series
-                           && $this->get('pumukitschema.series')->canUserAccessSeries($this->getUser(), $series);
+                           && $this->seriesServices->canUserAccessSeries($this->getUser(), $series);
         $licenseContent = $this->licenseService->getLicenseContent($request->getLocale());
         $languages = CustomLanguageType::getLanguageNames($this->pumukitCustomLanguages, $this->translator);
 
