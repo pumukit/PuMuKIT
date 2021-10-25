@@ -1,5 +1,7 @@
 <div style="width:100%; margin: 0px auto; overflow-x: hidden;">
     <video id="live-sbs" class="video-js"></video>
+    <br/>
+    <video id="live-sbs2" class="video-js"></video>
 </div>
 
 <script type="text/javascript">
@@ -8,6 +10,21 @@ $(function(){
       controls: true,
       sources: [{
         src: "{{ generate_hls_url(live) }}",
+        type: 'application/x-mpegurl'
+      }],
+      autoplay: true,
+      width: "100%",
+      aspectRatio: "16:9",
+      logo: {hide: true},
+      analytics: {enabled: false},
+      androidhls: true,
+      hlshtml: true,
+      primary: "html5"
+  });
+  videojs("live-sbs2", {
+      controls: true,
+      sources: [{
+        src: "{{ generate_hls_url(live, 2) }}",
         type: 'application/x-mpegurl'
       }],
       autoplay: true,
