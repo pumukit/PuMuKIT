@@ -350,8 +350,6 @@ class Live
 
     public function getInfo(): string
     {
-        // if (!empty($source_name2))
-        return sprintf('%s (%s/%s)', $this->getName(), $this->getUrl(), $this->getSourceName(), $this->getSourceName2());
-        // return sprintf('%s (%s/%s)', $this->getName(), $this->getUrl(), $this->getSourceName());
+        return sprintf('%s (%s/%s/%s)', $this->getName(), $this->getUrl(), $this->getSourceName(), $this->getSourceName2());
     }
 }
