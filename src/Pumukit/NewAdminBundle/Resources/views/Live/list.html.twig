@@ -13,7 +13,8 @@
     <th colspan="2" width="5%" id="th-icons"></th>
     <th id="th-name">{% trans %}Name{% endtrans %}</th>
     <th id="th-url">{% trans %}URL{% endtrans %}</th>
-    <th id="th-source-name">{% trans %}Source Name{% endtrans %}</th>
+    <th id="th-source-name">{% trans %}Source Name 1{% endtrans %}</th>
+    <th id="th-source-name">{% trans %}Source Name 2{% endtrans %}</th>
     <th width="8%" id="th-type">{% trans %}Type{% endtrans %}</th>
       </tr>
     </thead>
@@ -52,6 +53,9 @@
             </td>
             <td headers="th-source-name" onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
               {{ live.getSourceName() }}
+            </td>
+            <td headers="th-source-name" onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
+              {{ live.getSourceName2() }}
             </td>
             <td headers="th-type" onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
               {{ live.getLiveType }}
