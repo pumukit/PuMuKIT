@@ -7,16 +7,36 @@ namespace Pumukit\NewAdminBundle\Controller;
 use Pumukit\NewAdminBundle\Services\OwnerService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Twig\Environment as TemplatingEngine;
 
 class OwnerController extends AbstractController implements NewAdminControllerInterface
 {
-    protected const CO_OWNER_ERROR_TEMPLATE = 'PumukitNewAdminBundle:MultimediaObject/Owner:error.html.twig';
+    protected const CO_OWNER_ERROR_TEMPLATE = '@PumukitNewAdmin/MultimediaObject/Owner/error.html.twig';
+    private $translator;
+    private $multimediaObjectService;
+    private $ownerService;
+    private $templating;
+
+    public function __construct(
+        TranslatorInterface $translator,
+        MultimediaObjectService $multimediaObjectService,
+        OwnerService $ownerService,
+        TemplatingEngine $templating
+    ) {
+        $this->translator = $translator;
+        $this->multimediaObjectService = $multimediaObjectService;
+        $this->ownerService = $ownerService;
+        $this->templating = $templating;
+    }
 
     /**
      * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
@@ -24,33 +44,30 @@ class OwnerController extends AbstractController implements NewAdminControllerIn
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id"="id"})
      * @ParamConverter("owner", class="PumukitSchemaBundle:User", options={"id"="owner"})
      * @ParamConverter("coOwner", class="PumukitSchemaBundle:User", options={"id"="coOwner"})
-     * @Template("PumukitNewAdminBundle:MultimediaObject:Owner/reject.html.twig")
+     * @Template("@PumukitNewAdmin/MultimediaObject/Owner/reject.html.twig")
      */
     public function rejectCoOwnerAction(MultimediaObject $multimediaObject, User $owner, User $coOwner)
     {
-        $translator = $this->get('translator');
-        $multimediaObjectService = $this->get('pumukitschema.multimedia_object');
-        $ownerService = $this->get('pumukitnewadmin.owner');
         $user = $this->getUser();
         $errorMessage = '';
 
         if (!$user) {
-            $errorMessage = $translator->trans("You're not allowed to access this link. You're not the holder user.");
+            $errorMessage = $this->translator->trans("You're not allowed to access this link. You're not the holder user.");
         }
 
         if ($this->wasUsedRejectedLink($multimediaObject, $coOwner)) {
-            $errorMessage = $translator->trans('This link was already used by co-owner.');
+            $errorMessage = $this->translator->trans('This link was already used by co-owner.');
         }
 
-        if (!$multimediaObjectService->isUserOwner($user, $multimediaObject)) {
-            $errorMessage = $translator->trans("You're not allowed to access this link. You're not the owner user of this multimedia object.");
+        if (!$this->multimediaObjectService->isUserOwner($user, $multimediaObject)) {
+            $errorMessage = $this->translator->trans("You're not allowed to access this link. You're not the owner user of this multimedia object.");
         }
 
-        if (!$user || $this->wasUsedRejectedLink($multimediaObject, $coOwner) || !$multimediaObjectService->isUserOwner($user, $multimediaObject)) {
+        if (!$user || $this->wasUsedRejectedLink($multimediaObject, $coOwner) || !$this->multimediaObjectService->isUserOwner($user, $multimediaObject)) {
             return $this->renderErrorTemplate($errorMessage);
         }
 
-        $multimediaObject = $ownerService->rejectCoOwnerFromMultimediaObject($multimediaObject, $user, $coOwner);
+        $multimediaObject = $this->ownerService->rejectCoOwnerFromMultimediaObject($multimediaObject, $user, $coOwner);
 
         return [
             'multimedia_object_id' => $multimediaObject->getId(),
@@ -61,8 +78,7 @@ class OwnerController extends AbstractController implements NewAdminControllerIn
 
     protected function renderErrorTemplate(string $message = ''): Response
     {
-        $templating = $this->get('templating');
-        $renderedView = $templating->render(self::CO_OWNER_ERROR_TEMPLATE, ['message' => $message]);
+        $renderedView = $this->templating->render(self::CO_OWNER_ERROR_TEMPLATE, ['message' => $message]);
 
         return new Response($renderedView, Response::HTTP_FORBIDDEN);
     }

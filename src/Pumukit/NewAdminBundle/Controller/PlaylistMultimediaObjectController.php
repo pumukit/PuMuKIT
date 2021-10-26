@@ -250,7 +250,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         $value = $request->query->get('search', '');
 
         // Filter doesnt work here because add conditions like $or and createStandardQueryBuilder is a generic condition. This is a WA.
-        $queryBuilder = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
+        $queryBuilder = $this->documentManager->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
         $queryBuilder = $this->searchVideos($queryBuilder, $value, $request->getLocale());
         $queryBuilder->limit($limit);
         $queryBuilder->sortMeta('score', 'textScore');
@@ -401,9 +401,8 @@ class PlaylistMultimediaObjectController extends AbstractController
      */
     public function addModalAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $repoSeries = $dm->getRepository(Series::class);
-        $repoMms = $dm->getRepository(MultimediaObject::class);
+        $repoSeries = $this->documentManager->getRepository(Series::class);
+        $repoMms = $this->documentManager->getRepository(MultimediaObject::class);
 
         if ($this->isGranted(PermissionProfile::SCOPE_GLOBAL)) {
             $series = $repoSeries->createQueryBuilder()
@@ -413,7 +412,7 @@ class PlaylistMultimediaObjectController extends AbstractController
                 ->execute()
             ;
         } else {
-            $user = $this->get('security.token_storage')->getToken()->getUser();
+            $user = $this->securityTokenStorage->getToken()->getUser();
             $series = $repoSeries->findBy([
                 'type' => Series::TYPE_PLAYLIST,
                 'properties.owners' => $user->getId(),
@@ -542,8 +541,7 @@ class PlaylistMultimediaObjectController extends AbstractController
 
     private function getPersonalVideos()
     {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $builder = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
+        $builder = $this->documentManager->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
 
         $builder
             ->field('people')->elemMatch(
