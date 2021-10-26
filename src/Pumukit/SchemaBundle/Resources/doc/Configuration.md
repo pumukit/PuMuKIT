@@ -8,7 +8,7 @@ pumukit_schema:
     send_email_on_user_added_as_owner: false
     user_can_reject_owner_of_multimedia_object: true
     multimedia_object_add_owner_subject: 'Email subject on event add owner to multimedia object'
-    multimedia_object_add_owner_template: 'PumukitNewAdminBundle:MultimediaObject:Owner/email.html.twig'
+    multimedia_object_add_owner_template: '@PumukitNewAdmin/MultimediaObject/Owner/email.html.twig'
     default_copyright: ''
     default_license: ''
     default_series_pic: /bundles/pumukitschema/images/series_folder.png
@@ -36,4 +36,4 @@ pumukit_schema:
 * `enable_add_user_as_person` Add logged in User as Person to MultimediaObjects
 * `personal_scope_role_code` Role code related to Personal Scope User to use as EmbeddedPerson
 * `personal_scope_delete_owners` Allow Personal Scope users to delete other owners of Series and MultimediaObjects
-* `gen_user_salt` Disable the generation of a random user salt. Required to use PuMuKIT as a CAS user provider. 
+* `gen_user_salt` Disable the generation of a random user salt. Required to use PuMuKIT as a CAS user provider.
