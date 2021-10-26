@@ -37,7 +37,7 @@ class Configuration implements ConfigurationInterface
             ->info('Email subject on event add owner to multimedia object')
             ->end()
             ->scalarNode('multimedia_object_add_owner_template')
-            ->defaultValue('PumukitNewAdminBundle:MultimediaObject:Owner/email.html.twig')
+            ->defaultValue('@PumukitNewAdmin/MultimediaObject/Owner/email.html.twig')
             ->info('Email template on add owner to multimedia object')
             ->end()
             ->scalarNode('default_copyright')

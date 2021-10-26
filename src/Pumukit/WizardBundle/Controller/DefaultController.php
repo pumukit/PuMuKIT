@@ -27,6 +27,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -56,6 +57,7 @@ class DefaultController extends AbstractController
     private $jobService;
     private $inspectionFfprobeService;
     private $formEventDispatcherService;
+    private $authorizationChecker;
     private $locales;
     private $pumukitCustomLanguages;
 
@@ -71,6 +73,7 @@ class DefaultController extends AbstractController
         JobService $jobService,
         InspectionFfprobeService $inspectionFfprobeService,
         FormEventDispatcherService $formEventDispatcherService,
+        AuthorizationCheckerInterface $authorizationChecker,
         bool $pumukitWizardShowTags,
         bool $pumukitWizardShowObjectLicense,
         string $pumukitWizardMandatoryTitle,
@@ -99,6 +102,7 @@ class DefaultController extends AbstractController
         $this->wizardService = $wizardService;
         $this->pumukitSchemaSortedMultimediaObjectService = $pumukitSchemaSortedMultimediaObjectService;
         $this->jobService = $jobService;
+        $this->authorizationChecker = $authorizationChecker;
         $this->inspectionFfprobeService = $inspectionFfprobeService;
         $this->formEventDispatcherService = $formEventDispatcherService;
         $this->locales = $locales;
@@ -202,7 +206,7 @@ class DefaultController extends AbstractController
         if ($series) {
             $formData = $this->completeFormWithSeries($formData, $series);
         }
-        if (false === $this->get('security.authorization_checker')->isGranted(Permission::ACCESS_INBOX)) {
+        if (false === $this->authorizationChecker->isGranted(Permission::ACCESS_INBOX)) {
             $formData['series']['id'] = $id;
             $formData['type']['option'] = 'single';
 
@@ -237,7 +241,7 @@ class DefaultController extends AbstractController
         if (!$licenseEnabledAndAccepted) {
             return $this->redirect($this->generateUrl('pumukitwizard_default_license', ['pumukitwizard_form_data' => $formData, 'same_series' => $sameSeries]));
         }
-        if (('multiple' === $formData['type']['option']) && (false !== $this->get('security.authorization_checker')->isGranted(Permission::ACCESS_INBOX))) {
+        if (('multiple' === $formData['type']['option']) && (false !== $this->authorizationChecker->isGranted(Permission::ACCESS_INBOX))) {
             return $this->redirect($this->generateUrl('pumukitwizard_default_track', ['pumukitwizard_form_data' => $formData, 'same_series' => $sameSeries]));
         }
 

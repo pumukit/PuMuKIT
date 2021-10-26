@@ -223,7 +223,7 @@ class SimpleController extends AbstractController
             if (!$file) {
                 $response = [
                     'status' => Response::HTTP_BAD_REQUEST,
-                    'errorMessage' => $this->get('translator')->trans('No file found'),
+                    'errorMessage' => $this->translator->trans('No file found'),
                 ];
 
                 return new JsonResponse($response);
@@ -232,7 +232,7 @@ class SimpleController extends AbstractController
             if (!$file->isValid()) {
                 $response = [
                     'status' => Response::HTTP_BAD_REQUEST,
-                    'errorMessage' => $this->get('translator')->trans($file->getErrorMessage()),
+                    'errorMessage' => $this->translator->trans($file->getErrorMessage()),
                 ];
 
                 return new JsonResponse($response);
@@ -246,7 +246,7 @@ class SimpleController extends AbstractController
             } catch (\Exception $e) {
                 $response = [
                     'status' => Response::HTTP_UNSUPPORTED_MEDIA_TYPE,
-                    'errorMessage' => $this->get('translator')->trans('The file is not a valid video or audio file'),
+                    'errorMessage' => $this->translator->trans('The file is not a valid video or audio file'),
                 ];
 
                 return new JsonResponse($response);
@@ -255,7 +255,7 @@ class SimpleController extends AbstractController
             if (0 === $duration) {
                 $response = [
                     'status' => Response::HTTP_UNSUPPORTED_MEDIA_TYPE,
-                    'errorMessage' => $this->get('translator')->trans(
+                    'errorMessage' => $this->translator->trans(
                         'The file is not a valid video or audio file (duration is zero)'
                     ),
                 ];

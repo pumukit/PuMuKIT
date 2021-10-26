@@ -41,7 +41,7 @@ class CPUsController extends AbstractController
             throw $this->createNotFoundException("There is no required 'activate' or 'deactivate' parameter");
         }
 
-        return $this->forward('PumukitEncoderBundle:CPUs:switchMaintenance', [
+        return $this->forward('@PumukitEncoder/CPUs/switchMaintenance', [
             'activateMaintenance' => $activateMaintenance,
             'cpuName' => $cpuName,
         ]);
