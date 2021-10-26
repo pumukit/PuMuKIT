@@ -546,7 +546,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         $builder
             ->field('people')->elemMatch(
                 $builder->expr()
-                    ->field('people._id')->equals(new \MongoId($this->getUser()->getPerson()->getId()))
+                    ->field('people._id')->equals(new ObjectId($this->getUser()->getPerson()->getId()))
                     ->field('cod')->equals('owner')
             );
         $builder->getQuery()->execute();
@@ -561,7 +561,7 @@ class PlaylistMultimediaObjectController extends AbstractController
                 $builder->expr()
                     ->field('people')->elemMatch(
                         $builder->expr()
-                            ->field('people._id')->equals(new \MongoId($this->getUser()->getPerson()->getId()))
+                            ->field('people._id')->equals(new ObjectId($this->getUser()->getPerson()->getId()))
                             ->field('cod')->equals('owner')
                     )
             )
