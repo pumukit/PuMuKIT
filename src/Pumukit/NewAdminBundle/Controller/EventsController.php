@@ -247,6 +247,8 @@ class EventsController extends AdminController implements NewAdminControllerInte
                     'start' => ['$gte' => $dateStart],
                     'ends' => ['$lte' => $dateEnds],
                 ]];
+            } elseif ('past' === $type) {
+                $criteria['embeddedEvent.embeddedEventSession.ends'] = ['$lte' => $date];
             } else {
                 $criteria['embeddedEvent.embeddedEventSession.start'] = ['$gt' => $date];
             }
