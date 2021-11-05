@@ -9,22 +9,25 @@ use Symfony\Component\Process\Process;
 
 class LocalExecutor
 {
-    public function execute($command, array $cpu = null)
+    public function execute($command, array $cpu = null): string
     {
         $fs = new Filesystem();
 
-        $tempfile = tempnam(sys_get_temp_dir(), '');
-        if (file_exists($tempfile)) {
-            unlink($tempfile);
+        $tempFile = tempnam(sys_get_temp_dir(), '');
+        if (file_exists($tempFile)) {
+            unlink($tempFile);
         }
-        $fs->mkdir($tempfile);
+        $fs->mkdir($tempFile);
 
-        $process = new Process($command, $tempfile);
+        if (is_string($command)) {
+            $command = explode(' ', $command);
+        }
+        $process = new Process($command, $tempFile);
         $process->setTimeout(null);
         $process->setIdleTimeout(null);
         $process->run();
 
-        $fs->remove($tempfile);
+        $fs->remove($tempFile);
 
         if (!$process->isSuccessful()) {
             throw new ExecutorException($process->getErrorOutput());

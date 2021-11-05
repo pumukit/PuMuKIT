@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Event;
 
 use Pumukit\SchemaBundle\Document\Group;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class GroupEvent extends Event
 {

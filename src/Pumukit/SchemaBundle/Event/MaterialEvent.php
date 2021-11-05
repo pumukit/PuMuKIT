@@ -6,7 +6,7 @@ namespace Pumukit\SchemaBundle\Event;
 
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class MaterialEvent extends Event
 {

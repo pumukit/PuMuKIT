@@ -6,7 +6,7 @@ namespace Pumukit\SchemaBundle\Event;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class TrackEvent extends Event
 {

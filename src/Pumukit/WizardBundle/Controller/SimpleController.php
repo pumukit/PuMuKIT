@@ -12,6 +12,7 @@ use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\SchemaBundle\Services\SeriesService;
 use Pumukit\SchemaBundle\Services\SortedMultimediaObjectsService;
 use Pumukit\WizardBundle\Services\FormEventDispatcherService;
 use Pumukit\WizardBundle\Services\LicenseService;
@@ -38,6 +39,7 @@ class SimpleController extends AbstractController
     private $profileService;
     private $factoryService;
     private $formEventDispatcherService;
+    private $seriesServices;
     private $locales;
     private $pumukitWizardSimpleDefaultMasterProfile;
     private $pumukitWizardShowSimpleMmTitle;
@@ -54,6 +56,7 @@ class SimpleController extends AbstractController
         ProfileService $profileService,
         FactoryService $factoryService,
         FormEventDispatcherService $formEventDispatcherService,
+        SeriesService $seriesService,
         array $locales,
         bool $pumukitWizardShowSimpleMmTitle,
         bool $pumukitWizardShowSimpleSeriesTitle,
@@ -70,6 +73,7 @@ class SimpleController extends AbstractController
         $this->profileService = $profileService;
         $this->factoryService = $factoryService;
         $this->formEventDispatcherService = $formEventDispatcherService;
+        $this->seriesServices = $seriesService;
         $this->locales = $locales;
         $this->pumukitWizardSimpleDefaultMasterProfile = $pumukitWizardSimpleDefaultMasterProfile;
         $this->pumukitWizardShowSimpleMmTitle = $pumukitWizardShowSimpleMmTitle;
@@ -166,7 +170,7 @@ class SimpleController extends AbstractController
         }
 
         $canAccessSeries = null !== $series
-                           && $this->get('pumukitschema.series')->canUserAccessSeries($this->getUser(), $series);
+                           && $this->seriesServices->canUserAccessSeries($this->getUser(), $series);
         $licenseContent = $this->licenseService->getLicenseContent($request->getLocale());
         $languages = CustomLanguageType::getLanguageNames($this->pumukitCustomLanguages, $this->translator);
 
@@ -219,7 +223,7 @@ class SimpleController extends AbstractController
             if (!$file) {
                 $response = [
                     'status' => Response::HTTP_BAD_REQUEST,
-                    'errorMessage' => $this->get('translator')->trans('No file found'),
+                    'errorMessage' => $this->translator->trans('No file found'),
                 ];
 
                 return new JsonResponse($response);
@@ -228,7 +232,7 @@ class SimpleController extends AbstractController
             if (!$file->isValid()) {
                 $response = [
                     'status' => Response::HTTP_BAD_REQUEST,
-                    'errorMessage' => $this->get('translator')->trans($file->getErrorMessage()),
+                    'errorMessage' => $this->translator->trans($file->getErrorMessage()),
                 ];
 
                 return new JsonResponse($response);
@@ -242,7 +246,7 @@ class SimpleController extends AbstractController
             } catch (\Exception $e) {
                 $response = [
                     'status' => Response::HTTP_UNSUPPORTED_MEDIA_TYPE,
-                    'errorMessage' => $this->get('translator')->trans('The file is not a valid video or audio file'),
+                    'errorMessage' => $this->translator->trans('The file is not a valid video or audio file'),
                 ];
 
                 return new JsonResponse($response);
@@ -251,7 +255,7 @@ class SimpleController extends AbstractController
             if (0 === $duration) {
                 $response = [
                     'status' => Response::HTTP_UNSUPPORTED_MEDIA_TYPE,
-                    'errorMessage' => $this->get('translator')->trans(
+                    'errorMessage' => $this->translator->trans(
                         'The file is not a valid video or audio file (duration is zero)'
                     ),
                 ];

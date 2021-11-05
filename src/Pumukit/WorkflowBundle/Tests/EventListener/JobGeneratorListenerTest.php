@@ -56,7 +56,7 @@ class JobGeneratorListenerTest extends PumukitTestCase
             ->getMock()
         ;
         $jobService->expects(static::any())
-            ->method('addUniqueJob')
+            ->method('addJob')
             ->will(static::returnArgument(1))
         ;
 

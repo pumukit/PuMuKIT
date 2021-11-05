@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Event;
 
 use Pumukit\SchemaBundle\Document\PermissionProfile;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class PermissionProfileEvent extends Event
 {

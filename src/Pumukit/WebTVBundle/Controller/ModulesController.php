@@ -305,7 +305,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
             'objectByCol' => $cols,
             'objects' => $tags,
             'objectsData' => $categories,
-            'title' => $this->get('translator')->trans($title),
+            'title' => $this->translator->trans($title),
             'class' => $class,
         ];
     }

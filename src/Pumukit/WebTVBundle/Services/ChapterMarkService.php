@@ -9,9 +9,6 @@ use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\Annotation;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
-/**
- * Class LinkService.
- */
 class ChapterMarkService
 {
     private $documentManager;
@@ -21,16 +18,8 @@ class ChapterMarkService
         $this->documentManager = $documentManager;
     }
 
-    /**
-     * @throws \MongoException
-     *
-     * @return array
-     */
-    public function getChapterMarks(MultimediaObject $multimediaObject)
+    public function getChapterMarks(MultimediaObject $multimediaObject): array
     {
-        //Get editor chapters for the editor template.
-        //Once the chapter marks player plugin is created, this part won't be needed.
-        /** @var Annotation|null */
         $marks = $this->documentManager
             ->getRepository(Annotation::class)
             ->createQueryBuilder()
@@ -38,7 +27,6 @@ class ChapterMarkService
             ->field('multimediaObject')->equals(new ObjectId($multimediaObject->getId()))
             ->getQuery()->getSingleResult();
 
-        /** @var Annotation|null */
         $trimming = $this->documentManager
             ->getRepository(Annotation::class)
             ->createQueryBuilder()
@@ -48,35 +36,30 @@ class ChapterMarkService
 
         $editorChapters = [];
 
-        if (!$marks) {
-            return $editorChapters;
-        }
+        if ($marks) {
+            $marks = json_decode($marks->getValue(), true);
+            if ($trimming) {
+                $trimming = json_decode($trimming->getValue(), true);
+                if (isset($trimming['trimming'])) {
+                    $trimming = $trimming['trimming'];
+                }
 
-        $marks = json_decode($marks->getValue(), true);
-        if ($trimming) {
-            $trimming = json_decode($trimming->getValue(), true);
-            if (isset($trimming['trimming'])) {
-                $trimming = $trimming['trimming'];
-            }
-
-            foreach ($marks['marks'] as $chapt) {
-                $time = $chapt['s'];
-                if ($trimming['start'] <= $time && $trimming['end'] >= $time) {
-                    $editorChapters[] = [
-                        'title' => $chapt['name'],
-                        'real_time' => $time,
-                        'time_to_show' => $time - $trimming['start'],
-                    ];
+                foreach ($marks['marks'] as $chapter) {
+                    $time = $chapter['s'];
+                    if ($trimming['start'] <= $time && $trimming['end'] >= $time) {
+                        $editorChapters[] = [
+                            'title' => $chapter['name'],
+                            'real_time' => $time,
+                            'time_to_show' => $time - $trimming['start'],
+                        ];
+                    }
                 }
             }
-        }
 
-        usort(
-            $editorChapters,
-            function ($a, $b) {
+            usort($editorChapters, static function ($a, $b) {
                 return $a['real_time'] > $b['real_time'];
-            }
-        );
+            });
+        }
 
         return $editorChapters;
     }
