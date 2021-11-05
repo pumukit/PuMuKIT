@@ -17,6 +17,9 @@
     "nesbot/carbon": {
         "version": "2.53.1"
     },
+    "phpmetrics/phpmetrics": {
+        "version": "v2.7.4"
+    },
     "phpunit/php-token-stream": {
         "version": "4.0.4"
     },
