@@ -16,7 +16,7 @@ pumukit_encoder:
       framerate: 0
       channels: 1
       audio: false
-      bat: 'cp "{{ input }}" "{{ output }}"'
+      bat: cp "{{ input }}" "{{ output }}"
       streamserver:
         name: Localmaster
         type: store
