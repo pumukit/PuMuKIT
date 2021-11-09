@@ -66,6 +66,7 @@ class LiveType extends AbstractType
                 'source_name2',
                 TextType::class,
                 [
+                    'required' => false,
                     'attr' => ['aria-label' => $this->translator->trans('STREAM 2', [], null, $this->locale)],
                     'label' => $this->translator->trans('STREAM 2', [], null, $this->locale),
                 ]
