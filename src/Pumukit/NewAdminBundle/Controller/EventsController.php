@@ -903,11 +903,9 @@ class EventsController extends AdminController implements NewAdminControllerInte
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
      * @Template("@PumukitNewAdmin/LiveEvent/show.html.twig")
      */
-    public function showAction(Request $request)
+    public function showActionLiveEvent(MultimediaObject $multimediaObject)
     {
-        $mm = $this->findOr404($request);
-
-        return ['multimediaObject' => $mm];
+        return ['multimediaObject' => $multimediaObject];
     }
 
     /**

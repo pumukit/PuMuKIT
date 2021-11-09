@@ -41,13 +41,13 @@
         var selectedOption = this.options[select.selectedIndex];
         var stream2 = document.getElementById('stream2');
         var inputStream2 = document.getElementById('pumukitnewadmin_live_source_name2');
-
         if (selectedOption.text == 'WOWZA-DUAL-STREAM') {
             stream2.style = "display:revert";
+            inputStream2.required = "required:required";
         } else if (selectedOption.text == 'WOWZA') {
             stream2.style = "display:none";
             inputStream2.required = false;
             inputStream2.value = "";
         }
     });
-</script>
+</script> 
