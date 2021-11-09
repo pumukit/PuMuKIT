@@ -29,7 +29,6 @@
               action="{{ path('pumukitnewadmin_live_update', {'id': live.id}) }}" method="POST">
             <fieldset>
                 {% for key, child in form %}
-
                     {% if key == 'chat' and (not enableChat or advanceLiveEvent) %}
                         <div style="display:none">
                             {{ form_row(child) }}
@@ -64,14 +63,12 @@
         var selectedOption = this.options[select.selectedIndex];
         var stream2 = document.getElementById('stream2');
         var inputStream2 = document.getElementById('pumukitnewadmin_live_source_name2');
-
         if (selectedOption.text == 'WOWZA-DUAL-STREAM') {
             stream2.style = "display:revert";
-            stream2.required = "required:required";
+            inputStream2.required = "required:required";
         } else if (selectedOption.text == 'WOWZA') {
             stream2.style = "display:none";
             inputStream2.required = false;
             inputStream2.value = "";
         }
     });
-</script>
