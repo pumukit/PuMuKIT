@@ -16,7 +16,7 @@ pumukit_encoder:
       framerate: 0
       channels: 1
       audio: false
-      bat: cp "{{ input }}" "{{ output }}"
+      bat: cp {{ input }} {{ output }}
       streamserver:
         name: Localmaster
         type: store
@@ -40,8 +40,7 @@ pumukit_encoder:
       framerate: 25
       channels: 1
       audio: false
-      bat: |
-        ffmpeg -y -i "{{input}}" -acodec aac -vcodec libx264 -preset slow -crf 15 -threads 0 "{{output}}"
+      bat: ffmpeg -y -i {{ input }} -acodec aac -vcodec libx264 -preset slow -crf 15 -threads 0 {{ output }}
       streamserver:
         name: Localmaster
         type: store
@@ -66,8 +65,7 @@ pumukit_encoder:
       framerate: 25
       channels: 1
       audio: false
-      bat: |
-        ffmpeg -y -i "{{input}}" -acodec aac -vcodec libx264 -preset slow -crf 22 -movflags faststart -threads 0 "{{output}}"
+      bat: ffmpeg -y -i {{ input }} -acodec aac -vcodec libx264 -preset slow -crf 22 -movflags faststart -threads 0 {{ output }}
       streamserver:
         name: Localhost
         type: download
@@ -94,8 +92,7 @@ pumukit_encoder:
       framerate: 25
       channels: 1
       audio: false
-      bat: |
-        ffmpeg -y -i "{{input}}" -acodec aac -vcodec libx264 -preset slow -crf 22 -movflags faststart -threads 0 "{{output}}"
+      bat: ffmpeg -y -i {{ input }} -acodec aac -vcodec libx264 -preset slow -crf 22 -movflags faststart -threads 0 {{ output }}
       streamserver:
         name: Localhost
         type: download
@@ -122,35 +119,7 @@ pumukit_encoder:
       framerate: 0
       channels: 1
       audio: true
-      bat: |
-        ffmpeg -y -i "{{input}}" -acodec aac -vn -threads 0 "{{output}}"
-      streamserver:
-        name: Localhost
-        type: download
-        host: 127.0.0.1
-        description: Local download server
-        dir_out: "%pumukit.downloads%"
-        url_out: "/storage/downloads"
-      app: ffmpeg
-      rel_duration_size: 1
-      rel_duration_trans: 1
-    sbs:
-      display: true
-      wizard: false
-      master: false
-      tags: html5, sbs, podcast
-      format: mp4
-      codec: aac
-      mime_type: 'video/x-mp4'
-      extension: mp4
-      resolution_hor: 0
-      resolution_ver: 0
-      bitrate: 1 Mbps
-      framerate: 0
-      channels: 1
-      audio: false
-      bat: |
-        ffmpeg -i {{ properties.opencastinvert ? tracks_video['presenter/delivery'] : tracks_video['presentation/delivery']  }}  -i {{ properties.opencastinvert ? tracks_video['presentation/delivery'] : tracks_video['presenter/delivery']  }} -filter_complex "[0:v]scale=640:-1[a],[a]pad=1280:720:0:120+((480-in_h)/2) [bg],[1:v]scale=640:-1[b],[bg][b]overlay=w:120+((480-h)/2)" -r 25 -vcodec libx264 -preset medium -crf 22 -maxrate 1100k -bufsize 1835k -acodec aac -ac 2 -ar 44100 -b:a 128k -f mp4 -y "{{output}}"
+      bat: ffmpeg -y -i {{ input }} -acodec aac -vn -threads 0 {{ output }}
       streamserver:
         name: Localhost
         type: download
