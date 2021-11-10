@@ -27,6 +27,12 @@
             <div id="liveplayer">
                 {% include('@PumukitWebTV/Live/Advance/liveplayer.html.twig') with {stretching: 'exactfit', aspectratio: '16:9'} %}
             </div>
+            <br/>
+            <div id="liveplayer2">
+                {% if "WOWZA_DUAL_STREAM" == live.getLiveType %}
+                    {% include('@PumukitWebTV/Live/Advance/liveplayer.html.twig') with {stretching: 'exactfit', aspectratio: '16:9', stream: '2'} %}
+                {% endif %}
+            </div>
             {% include('@PumukitWebTV/Live/Advance/template_info.html.twig') %}
         </div>
 
