@@ -329,6 +329,7 @@ class DefaultController extends AbstractController
             'mobile_device' => $mobileDevice,
             'isIE' => $isIE,
             'versionIE' => $versionIE,
+            'iframe' => $iframe,
         ];
     }
 

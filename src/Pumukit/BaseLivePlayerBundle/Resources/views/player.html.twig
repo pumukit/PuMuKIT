@@ -1,13 +1,11 @@
-{% if event.isIframeUrl() %}
-    <div class="embed-responsive embed-responsive-16by9">
-        <div id="live-{{ id }}" class="embed-responsive-item text-center">
-            <iframe src="{{ event.getUrl() }}" width="100%" class="embed-responsive-item" frameborder="0" allowfullscreen style="overflow:hidden;height:100%;width:100%"></iframe>
-        </div>
-
-        {% if advance_live_events is defined and advance_live_events %}
-            <div id="countdownClock" hidden></div>
-        {% endif %}
+{% if (iframe is defined and iframe) or (event is defined and event.isIframeURL()) %}
+    <div data-vjs-player>
+        <video id="live-{{ id }}" class="video-js"></video>
     </div>
+
+    {% if advance_live_events is defined and advance_live_events %}
+        <div id="countdownClock" hidden></div>
+    {% endif %}
 {% else %}
     <div id="videojserror-{{ id }}" style="width:100%; margin: 0 auto; color:red;"></div>
 
