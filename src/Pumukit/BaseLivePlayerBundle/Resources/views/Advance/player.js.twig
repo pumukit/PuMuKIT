@@ -8,7 +8,11 @@ document.addEventListener('DOMContentLoaded', function () {
         sources: [{
         {% if live is defined and live and event.url is empty %}
             {% if live.broadcasting %}
+                {% if stream is defined %}
+                    src: "{{ generate_hls_url(live, 2) }}", type: 'application/x-mpegurl'
+                {% else %}    
                     src: "{{ generate_hls_url(live) }}", type: 'application/x-mpegurl'
+                {% endif %}
             {% else %}
                 playlist: "{{ path('pumukit_live_playlist_id', { 'id': live.id }) }}",
             {% endif %}
