@@ -5,11 +5,15 @@ document.addEventListener('DOMContentLoaded', function () {
     var livePlayerInstance = videojs("live-{{ id }}", {
         controls: true,
         sources: [{
-        {% if (live is defined and live and event.url is empty) or (event.url is not empty and event.isIframeUrl() is same as(false))  %}
+         {% if (live is defined and live and event.url is empty) or (event.url is not empty and event.isIframeUrl() is same as(false))  %}
             {% if live.broadcasting and event.url is empty %}
+                {% if stream is defined %}
+                    src: "{{ generate_hls_url(live, 2) }}", type: 'application/x-mpegurl'
+                {% else %}
                     src: "{{ generate_hls_url(live) }}", type: 'application/x-mpegurl'
+                {% endif %}
             {% elseif event.url is not empty %}
-                    src: "{{ generate_hls_url_event(event.url) }}", type: 'application/x-mpegurl'
+                src: "{{ generate_hls_url_event(event.url) }}", type: 'application/x-mpegurl'
             {% else %}
                 playlist: "{{ path('pumukit_live_playlist_id', { 'id': live.id }) }}",
             {% endif %}

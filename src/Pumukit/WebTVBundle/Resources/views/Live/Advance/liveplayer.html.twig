@@ -3,7 +3,6 @@
 {% set advance_live_events = true %}
 
 {% include "@PumukitBaseLivePlayer/player.html.twig" %}
-
 <script type="text/javascript">
     {% include "@PumukitBaseLivePlayer/Advance/Sessions/common.js.twig" %}
 
@@ -15,6 +14,9 @@
         {% include "@PumukitBaseLivePlayer/Advance/Sessions/nowSessions.js.twig" %}
         {% if event.isIframeUrl() is same as(false) %}
             {% include "@PumukitBaseLivePlayer/Advance/player.js.twig" %}
+            {%if stream is defined %}
+                {% include ("@PumukitBaseLivePlayer/Advance/player.js.twig") with {stream: '2'} %}
+            {% endif %}
         {% endif %}
     }
 </script>
