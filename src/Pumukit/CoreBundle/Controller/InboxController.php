@@ -21,16 +21,49 @@ class InboxController extends AbstractController
      */
     public function inbox(): array
     {
-        $inboxUploadURL = $this->container->getParameter('pumukit.inboxUploadURL');
-        $inboxUploadLIMIT = $this->container->getParameter('pumukit.inboxUploadLIMIT');
         $inboxPath = $this->container->getParameter('pumukit.inbox');
         $folders = FinderUtils::getDirectoriesFromPath($inboxPath);
 
         return [
-            'inboxUploadURL' => $inboxUploadURL,
-            'inboxUploadLIMIT' => $inboxUploadLIMIT,
             'folders' => $folders,
         ];
+    }
+
+    /**
+     * @Route("/upload", name="file_upload")
+     * @Template("@PumukitCore/Upload/uppy_drag_and_drop.html.twig")
+     */
+    public function folder(Request $request)
+    {
+        $formData = $request->get('inbox_form_data', []);
+
+        if (!$formData) {
+            return $this->redirect($this->generateUrl('inbox'));
+        }
+
+        $inboxUploadURL = $this->container->getParameter('pumukit.inboxUploadURL');
+        $inboxUploadLIMIT = $this->container->getParameter('pumukit.inboxUploadLIMIT');
+        $inboxPath = $this->container->getParameter('pumukit.inbox');
+        $this->checkFolderAndCreateIfNotExist($formData['folder']);
+        
+        return [
+            'form_data' => $inboxPath."/".$formData['folder'],
+            'inboxUploadURL' => $inboxUploadURL,
+            'inboxUploadLIMIT' => $inboxUploadLIMIT,
+        ];
+    }
+
+    /**
+     * Create folder if not exixt.
+     */
+    public function checkFolderAndCreateIfNotExist(string $folder)
+    {
+        $inboxPath = $this->container->getParameter('pumukit.inbox');
+        $uploadDispatcherService = $this->get('pumukit.upload_dispatcher_service');
+        $userFolder = $folder;
+        $folder = $inboxPath."/".$userFolder;
+
+        $uploadDispatcherService->createFolderIfNotExists($folder);
     }
 
     /**
@@ -41,7 +74,7 @@ class InboxController extends AbstractController
         $uploadDispatcherService = $this->get('pumukit.upload_dispatcher_service');
 
         try {
-            $uploadDispatcherService->dispatchUploadFromInbox($this->getUser(), $request->get('fileName'));
+            $uploadDispatcherService->dispatchUploadFromInbox($this->getUser(), $request->get('fileName'), $request->get('folder'));
         } catch (\Exception $exception) {
             return new JsonResponse(['success' => false]);
         }

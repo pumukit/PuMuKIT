@@ -18,7 +18,7 @@ const uppyTUS = Uppy.Core({
         inline: true
     })
     .use(Uppy.Tus, {
-        endpoint: "{{ inboxUploadURL }}",
+        endpoint: "{{ inboxUploadURL }}" + "?folder_path={{ form_data }}",
         limit: {{ inboxUploadLIMIT }}
     })
     .run()

@@ -15,3 +15,7 @@
 #uploader_drag_and_drop {
     border-top: 5px groove #c05800;
 }
+
+.error_folder {
+    display: none;
+}

@@ -24,7 +24,7 @@ class InboxUploadListener
             'php',
             $this->kernelProjectDir.'/'.'bin/console',
             'import:inbox',
-            $this->inboxPath.'/'.$event->getFileName(),
+            $this->inboxPath.'/'.$event->getFolder().'/'.$event->getFileName(),
         ];
 
         $process = new Process($command);

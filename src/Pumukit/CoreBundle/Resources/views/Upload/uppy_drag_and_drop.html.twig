@@ -1,4 +1,8 @@
-<div id="uploader_drag_and_drop"></div>
+{% extends 'PumukitCoreBundle:Inbox:template.html.twig' %}
 
-<script src="{{ asset('bundles/pumukitcore/js/uppy.min.js') }}"></script>
-<script>{% include "@PumukitCore/Upload/uppy_tus.js.twig" %}</script>
+{% block inbox_body %}
+    <div id="uploader_drag_and_drop"></div>
+
+    <script src="{{ asset('bundles/pumukitcore/js/uppy.min.js') }}"></script>
+    <script>{% include "@PumukitCore/Upload/uppy_tus.js.twig" %}</script>
+{% endblock inbox_body %}
