@@ -16,6 +16,29 @@
     border-top: 5px groove #c05800;
 }
 
+#inbox_folder_form {
+    padding: 20px;
+    background: #fafafa;
+    border: 1px solid hsla(0,0%,58%,.2);
+    border-top: 5px groove #c05800;
+}
+
 .error_folder {
     display: none;
+}
+
+.btn-next {
+    background-color: #c05800;
+    color: rgba(255, 255, 255, .84);
+    padding: 8px 30px;
+    box-shadow: 0 1px 6px rgb(0 0 0 / 12%), 0 1px 6px rgb(0 0 0 / 12%);
+    transition: box-shadow .28s cubic-bezier(.4,0,.2,1);
+    border: 0;
+    border-radius: 2px;
+}
+
+.btn-next:hover {
+    background-color: #c05800;
+    color: rgba(255, 255, 255, .84);
+    box-shadow: 0 6px 10px rgb(0 0 0 / 23%), 0 10px 30px rgb(0 0 0 / 19%);
 }
