@@ -1,0 +1,41 @@
+{% extends 'PumukitCoreBundle:Inbox:template.html.twig' %}
+
+{% block inbox_body %}
+    <form id="inbox_folder_form"
+            action="" method="POST">
+        <div class="form-group">
+            <label for="file" class="control-label">{% trans %}Choose or create a folder{% endtrans %}:</label>
+            <div class="input-group">
+                <input type="text" list="items" id="folder_inbox" required/>
+                <span class="error_folder text-danger"> {% trans %}The given folder name is not valid{% endtrans %}.</span>
+                <datalist id="items">
+                    {% for folder in folders %}
+                        <option value="{{ folder.filename }}">{{ folder.filename }}</option>
+                    {% endfor %}
+                </datalist>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <a href="" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</a>
+            </div>
+            <div class="col-md-8">
+            <div class="text-right">
+                <button type="submit" class="btn btn-primary btn-raised">{% trans %}Next{% endtrans %} &raquo;</button>
+            </div>
+            </div>
+        </div>
+    </form>
+    <script type="text/javascript">
+    $('#folder_inbox').on('input', function(){
+        var folderName = $(this).val();
+        var pattern = /^[\w\u00E0-\u00FC]+$/i;
+        if (!pattern.test(folderName)) {
+            $('.error_folder').show();
+            return;
+        } else {
+            $('.error_folder').hide();
+        }
+    });
+    </script>
+{% endblock inbox_body %}
