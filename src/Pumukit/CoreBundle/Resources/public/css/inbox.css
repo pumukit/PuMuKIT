@@ -37,8 +37,8 @@
     border-radius: 2px;
 }
 
-.btn-next:hover {
-    background-color: #c05800;
+.btn-next:hover, .btn-next[disabled] {
+    background-color: #c05800 !important;
     color: rgba(255, 255, 255, .84);
     box-shadow: 0 6px 10px rgb(0 0 0 / 23%), 0 10px 30px rgb(0 0 0 / 19%);
 }

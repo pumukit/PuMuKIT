@@ -29,9 +29,10 @@
         var pattern = /^[\w\u00E0-\u00FC]+$/i;
         if (!pattern.test(folderName)) {
             $('.error_folder').show();
-            return;
+            $('.btn-next').prop('disabled', true);
         } else {
             $('.error_folder').hide();
+            $('.btn-next').prop('disabled', false);
         }
     });
     </script>
