@@ -32,9 +32,9 @@ class UploadDispatcherService
             if (!$filesystem->exists($folder)) {
                 $filesystem->mkdir($folder);
             }
-            
+            return true;
         } catch (\Exception $exception) {
-            throw new \Exception($exception->getMessage());
+            return false;
         }
     }
 }

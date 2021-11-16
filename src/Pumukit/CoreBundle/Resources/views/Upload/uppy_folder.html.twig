@@ -6,7 +6,7 @@
         <div class="form-group">
             <label for="file" class="control-label">{% trans %}Choose or create a folder{% endtrans %}:</label>
             <div class="input-group">
-                <input type="text" list="items" name="inbox_form_data[folder]" id="folder_inbox" required/>
+                <input type="text" list="items" name="inbox_form_data[folder]" id="folder_inbox" autocomplete="off" required/>
                 <span class="error_folder text-danger"> {% trans %}The given folder name is not valid{% endtrans %}.</span>
                 <datalist id="items">
                     {% for folder in folders %}

@@ -37,14 +37,13 @@ class InboxController extends AbstractController
     {
         $formData = $request->get('inbox_form_data', []);
 
-        if (!$formData) {
+        if (!$formData || empty($formData['folder']) || !$this->checkFolderAndCreateIfNotExist($formData['folder'])) {
             return $this->redirect($this->generateUrl('inbox'));
         }
 
         $inboxUploadURL = $this->container->getParameter('pumukit.inboxUploadURL');
         $inboxUploadLIMIT = $this->container->getParameter('pumukit.inboxUploadLIMIT');
         $inboxPath = $this->container->getParameter('pumukit.inbox');
-        $this->checkFolderAndCreateIfNotExist($formData['folder']);
         
         return [
             'form_data' => $inboxPath."/".$formData['folder'],
@@ -55,7 +54,7 @@ class InboxController extends AbstractController
     }
 
     /**
-     * Create folder if not exixt.
+     * Create folder if not exist.
      */
     public function checkFolderAndCreateIfNotExist(string $folder)
     {
@@ -64,7 +63,7 @@ class InboxController extends AbstractController
         $userFolder = $folder;
         $folder = $inboxPath."/".$userFolder;
 
-        $uploadDispatcherService->createFolderIfNotExist($folder);
+        return $uploadDispatcherService->createFolderIfNotExist($folder);
     }
 
     /**
