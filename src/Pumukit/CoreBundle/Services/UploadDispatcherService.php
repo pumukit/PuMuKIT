@@ -25,7 +25,7 @@ class UploadDispatcherService
         $this->dispatcher->dispatch(UploadEvents::UPLOAD_FROM_INBOX, $event);
     }
 
-    public function createFolderIfNotExists(string $folder)  
+    public function createFolderIfNotExist(string $folder)
     {
         try {
             $filesystem = new Filesystem();

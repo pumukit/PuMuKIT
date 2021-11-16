@@ -1,6 +1,7 @@
 {% extends 'PumukitCoreBundle:Inbox:template.html.twig' %}
 
 {% block inbox_body %}
+    <h2><i class="fa fa-folder-open"></i> {{ folder }}</h2>
     <div id="uploader_drag_and_drop"></div>
 
     <script src="{{ asset('bundles/pumukitcore/js/uppy.min.js') }}"></script>

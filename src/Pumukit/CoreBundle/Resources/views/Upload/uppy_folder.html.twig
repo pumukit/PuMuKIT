@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="text-right">
-                    <button type="submit" class="btn btn-primary btn-raised btn-next">{% trans %}Next{% endtrans %} &raquo;</button>
+                    <button type="submit" class="btn btn-primary btn-raised btn-next" disabled>{% trans %}Next{% endtrans %} &raquo;</button>
                 </div>
             </div>
         </div>
@@ -26,14 +26,16 @@
     <script type="text/javascript">
     $('#folder_inbox').on('input', function(){
         var folderName = $(this).val();
-        var pattern = /^[\w\u00E0-\u00FC]+$/i;
-        if (!pattern.test(folderName)) {
-            $('.error_folder').show();
-            $('.btn-next').prop('disabled', true);
-        } else {
-            $('.error_folder').hide();
-            $('.btn-next').prop('disabled', false);
-        }
+        $.post('{{ path('check_folder_before_creating') }}', { folder : folderName })
+        .done(function(data){
+            if(data) {
+                $('.btn-next').prop('disabled', false);
+                $('.error_folder').hide();
+            } else {
+                $('.error_folder').show();
+                $('.btn-next').prop('disabled', true);
+            }
+        });
     });
     </script>
 {% endblock inbox_body %}
