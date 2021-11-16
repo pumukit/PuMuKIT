@@ -5,7 +5,39 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 To get the diff for a specific change, go to https://github.com/pumukit/PuMuKIT/commit/XXX where XXX is the change hash.
 To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/compare/3.0.0...3.1.x.
 
-## [3.7.x](https://github.com/pumukit/PuMuKIT/compare/3.6.0...3.7.x) - (Coming soon)
+## [4.0.0](https://github.com/pumukit/PuMuKIT/compare/3.7.0...4.0.0) - (Coming soon)
+
+#### Added
+- Added GitHub Actions workflows.
+- Added Symfony Flex.
+- Added new Symfony components.
+- Added VideoJS basic player to core.
+- Update code to make it compatible with PHP 7.4.
+- Added val translations.
+- Added new upload method using TUS protocol on core.
+- Added new inbox upload page with drag and drop and auto import feature.
+
+#### Changed
+- Update Symfony framework from 3.4 to 4.4 using new structure.
+- Replace BotDetectBundle by CrawlerDetect
+- Replace MongoDB objects (MongoId(), MongoDate(), ...) by new generic objects defined by namespaces.
+- Replace deprecated FOSUserBundle by custom login.
+- Rename JWPlayerBundle by generic name PlayerBundle
+
+#### Removed
+- Remove Travis workflows.
+- Remove JWPlayer basic player from core.
+- Remove deprecated MobileDetectBundle.
+- Remove untranslated languages.
+
+#### Fixed
+- Reported issues
+
+#### Security
+- Added latest stable versions of 3rd party libraries.
+
+
+## [3.7.x](https://github.com/pumukit/PuMuKIT/compare/3.6.0...3.7.x) - (2021-09-15)
 
 #### Added
 - Added auto create personal series for each user using a new permission on permission profile.
