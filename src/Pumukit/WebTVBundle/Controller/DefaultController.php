@@ -311,7 +311,7 @@ class DefaultController extends AbstractController
         ]);
     }
 
-    protected function doLive(Live $live, Request $request)
+    protected function doLive(Live $live, Request $request, bool $iframe = true)
     {
         if ($live->getPasswd() && $live->getPasswd() !== $request->get('broadcast_password')) {
             return $this->render($iframe ? '@PumukitWebTV/Live/Basic/template_iframe_password.html.twig' : '@PumukitWebTV/Live/Basic/template_password.html.twig', [
