@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 playlist: "{{ path('pumukit_live_playlist_id', { 'id': live.id }) }}",
             {% endif %}
         {% elseif event.url is defined and event.url is not empty %}
-            src: "{{ event.url }}",
+            src: "{{ event.url }}", "type": "video/youtube"
         {% endif %}
         }],
         {% if isIE and versionIE == 10 %}

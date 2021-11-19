@@ -77,7 +77,7 @@ class DefaultController extends AbstractController
     {
         $this->updateBreadcrumbs($live->getName(), 'pumukit_live_id', ['id' => $live->getId()]);
 
-        return $this->doLive($live, $request, false);
+        return $this->doLive($live, $request);
     }
 
     /**
@@ -245,7 +245,7 @@ class DefaultController extends AbstractController
 
         $this->updateBreadcrumbs($live->getName(), 'pumukit_live', ['id' => $live->getId()]);
 
-        return $this->doLive($live, $request, false);
+        return $this->doLive($live, $request);
     }
 
     /**
@@ -329,7 +329,6 @@ class DefaultController extends AbstractController
             'mobile_device' => $mobileDevice,
             'isIE' => $isIE,
             'versionIE' => $versionIE,
-            'iframe' => $iframe,
         ];
     }
 
