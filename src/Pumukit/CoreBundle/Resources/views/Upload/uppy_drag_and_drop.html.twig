@@ -1,6 +1,6 @@
 {% extends 'PumukitCoreBundle:Inbox:template.html.twig' %}
 
 {% block inbox_body %}
-    <h2><i class="fa fa-folder-open"></i> {{ folder }}</h2>
+    <h2><i class="fa fa-folder-open"></i> {{ "Upload video to: %folder%"|trans({"%folder%": folder}) }}</h2>
     <div id="uploader_drag_and_drop"></div>
 {% endblock inbox_body %}
