@@ -15,7 +15,7 @@ class InboxUploadEvent extends Event
 
     protected $folder;
 
-    public function __construct(UserInterface $user, string $fileName, string $folder)
+    public function __construct(UserInterface $user, string $fileName, string $folder = null)
     {
         $this->user = $user;
         $this->fileName = $fileName;
@@ -32,7 +32,7 @@ class InboxUploadEvent extends Event
         return $this->fileName;
     }
 
-    public function getFolder(): string
+    public function getFolder(): ?string
     {
         return $this->folder;
     }

@@ -16,5 +16,9 @@ function sendInboxXHRImportRequest(file)
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "{{ path('inbox_auto_import') }}", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.send("fileName="+file.name+"&folder={{ folder }}");
+    var xhrSend = "fileName="+file.name;
+    {% if folder %}
+        xhrSend = "fileName="+file.name+"&folder={{ folder }}";
+    {% endif %}
+    xhr.send(xhrSend);
 }

@@ -16,7 +16,7 @@ class TUSUploadController extends AbstractController
      */
     public function server(Request $request, Server $server)
     {
-        if ($request->attributes->get('_route') === "tus_post") {
+        if ($request->attributes->get('_route') === "tus_post" && !empty($request->get('folder_path'))) {
             $server->setUploadDir($request->get('folder_path'));
         }
         return $server->serve();

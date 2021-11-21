@@ -36,18 +36,21 @@ class InboxController extends AbstractController
     public function folder(Request $request)
     {
         $formData = $request->get('inbox_form_data', []);
-
-        if (!$formData || empty($formData['folder']) || !$this->checkFolderAndCreateIfNotExist($formData['folder'])) {
-            return $this->redirect($this->generateUrl('inbox'));
-        }
-
         $inboxUploadURL = $this->container->getParameter('pumukit.inboxUploadURL');
         $inboxUploadLIMIT = $this->container->getParameter('pumukit.inboxUploadLIMIT');
         $inboxPath = $this->container->getParameter('pumukit.inbox');
+
+        $folder = $formData['folder'];
+        $urlUpload = $inboxPath."/".$formData['folder'];
+
+        if (!$formData || empty($formData['folder']) || !$this->checkFolderAndCreateIfNotExist($formData['folder'])) {
+            $folder = "";
+            $urlUpload = "";
+        }
         
         return [
-            'form_data' => $inboxPath."/".$formData['folder'],
-            'folder' => $formData['folder'],
+            'form_data' => $urlUpload,
+            'folder' => $folder,
             'inboxUploadURL' => $inboxUploadURL,
             'inboxUploadLIMIT' => $inboxUploadLIMIT,
         ];

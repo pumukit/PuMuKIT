@@ -20,11 +20,17 @@ class InboxUploadListener
 
     public function autoImport(InboxUploadEvent $event): void
     {
+        $urlUpload = $this->inboxPath.'/'.$event->getFileName();
+
+        if (null !== $event->getFolder()) {
+            $urlUpload = $this->inboxPath.'/'.$event->getFolder().'/'.$event->getFileName();
+        }
+
         $command = [
             'php',
             $this->kernelProjectDir.'/'.'bin/console',
             'import:inbox',
-            $this->inboxPath.'/'.$event->getFolder().'/'.$event->getFileName(),
+            $urlUpload,
         ];
 
         $process = new Process($command);
