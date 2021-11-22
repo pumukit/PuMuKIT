@@ -10,19 +10,19 @@ final class FinderUtils
 {
     public static function getDirectoriesFromPath(string $path)
     {
-        (new self)->isValidPath($path);
+        self::isValidPath($path);
 
-        $finder = (new self)->getFinder();
+        $finder = self::getFinder();
 
         return $finder->depth('0')->directories()->in($path);
     }
 
-    private function getFinder()
+    private static function getFinder()
     {
         return new Finder();
     }
 
-    private function isValidPath(string $path)
+    private static function isValidPath(string $path)
     {
         if (realpath($path)) {
             return true;
