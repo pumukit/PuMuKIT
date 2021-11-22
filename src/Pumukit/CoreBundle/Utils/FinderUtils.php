@@ -17,12 +17,12 @@ final class FinderUtils
         return $finder->depth('0')->directories()->in($path);
     }
 
-    private static function getFinder()
+    public static function getFinder()
     {
         return new Finder();
     }
 
-    private static function isValidPath(string $path)
+    public static function isValidPath(string $path)
     {
         if (realpath($path)) {
             return true;
