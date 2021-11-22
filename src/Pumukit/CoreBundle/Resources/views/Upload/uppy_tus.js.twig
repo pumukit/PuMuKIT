@@ -1,5 +1,11 @@
 {% include "@PumukitCore/Upload/common.js.twig" %}
 
+var endpoint = "{{ inboxUploadURL }}" + "?folder_path={{ form_data }}";
+
+{% if form_data is same as("") %}
+    endpoint = "{{ inboxUploadURL }}";
+{% endif %}
+
 const uppyTUS = Uppy.Core({
     debug: false,
     autoProceed: true,
@@ -18,7 +24,7 @@ const uppyTUS = Uppy.Core({
         inline: true
     })
     .use(Uppy.Tus, {
-        endpoint: "{{ inboxUploadURL }}",
+        endpoint: endpoint,
         limit: {{ inboxUploadLIMIT }}
     })
     .run()

@@ -5,7 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 To get the diff for a specific change, go to https://github.com/pumukit/PuMuKIT/commit/XXX where XXX is the change hash.
 To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/compare/3.0.0...3.1.x.
 
-## [3.7.x](https://github.com/pumukit/PuMuKIT/compare/3.6.0...3.7.x) - (Coming soon)
+## [3.8.x](https://github.com/pumukit/PuMuKIT/compare/3.7.0...3.8.x) - (Coming soon)
+
+#### Added
+- Added new feature on inbox to upload on a new folder o default inbox folder.
+
+## [3.7.x](https://github.com/pumukit/PuMuKIT/compare/3.6.0...3.7.x) - (2021-09-15)
 
 #### Added
 - Added auto create personal series for each user using a new permission on permission profile.

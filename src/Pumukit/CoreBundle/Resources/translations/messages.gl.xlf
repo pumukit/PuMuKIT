@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="gl" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="df56ghd" resname="Select the folder or create a new one where you want to upload the videos. Once this is done, press continue to start uploading the corresponding files">
+        <source>Select the folder or create a new one where you want to upload the videos. Once this is done, press continue to start uploading the corresponding files</source>
+        <target state="translated">Selecciona un cartafol ou crea un novo onde queiras cargar os vídeos. Unha vez feito isto, prema continuar para comezar a cargar os ficheiros correspondentes</target>
+      </trans-unit>
+      <trans-unit id="Qc5fioP" resname="The folder name is not valid">
+        <source>The folder name is not valid</source>
+        <target state="translated">O nome do cartafol non é válido</target>
+      </trans-unit>
+      <trans-unit id="Fsmkf5f" resname="Upload video to: %folder%">
+        <source>Upload video to: %folder%</source>
+        <target>Cargar vídeo en: %folder%</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

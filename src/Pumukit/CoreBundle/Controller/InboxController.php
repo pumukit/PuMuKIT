@@ -2,6 +2,7 @@
 
 namespace Pumukit\CoreBundle\Controller;
 
+use Pumukit\CoreBundle\Utils\FinderUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,17 +17,71 @@ class InboxController extends AbstractController
 {
     /**
      * @Route("/inbox", name="inbox")
-     * @Template("@PumukitCore/Inbox/template.html.twig")
+     * @Template("@PumukitCore/Upload/uppy_folder.html.twig")
      */
     public function inbox(): array
     {
-        $inboxUploadURL = $this->container->getParameter('pumukit.inboxUploadURL');
-        $inboxUploadLIMIT = $this->container->getParameter('pumukit.inboxUploadLIMIT');
+        $inboxPath = $this->container->getParameter('pumukit.inbox');
+        $folders = FinderUtils::getDirectoriesFromPath($inboxPath);
 
         return [
+            'folders' => $folders,
+        ];
+    }
+
+    /**
+     * @Route("/upload", name="file_upload")
+     * @Template("@PumukitCore/Upload/uppy_drag_and_drop.html.twig")
+     */
+    public function folder(Request $request)
+    {
+        $formData = $request->get('inbox_form_data', []);
+        $inboxUploadURL = $this->container->getParameter('pumukit.inboxUploadURL');
+        $inboxUploadLIMIT = $this->container->getParameter('pumukit.inboxUploadLIMIT');
+        $inboxPath = $this->container->getParameter('pumukit.inbox');
+
+        $folder = $formData['folder'];
+        $urlUpload = $inboxPath.'/'.$formData['folder'];
+
+        if (!$formData || empty($formData['folder']) || !$this->checkFolderAndCreateIfNotExist($formData['folder'])) {
+            $folder = '';
+            $urlUpload = '';
+        }
+
+        return [
+            'form_data' => $urlUpload,
+            'folder' => $folder,
             'inboxUploadURL' => $inboxUploadURL,
             'inboxUploadLIMIT' => $inboxUploadLIMIT,
         ];
+    }
+
+    /**
+     * Create folder if not exist.
+     */
+    public function checkFolderAndCreateIfNotExist(string $folder)
+    {
+        $inboxPath = $this->container->getParameter('pumukit.inbox');
+        $uploadDispatcherService = $this->get('pumukit.upload_dispatcher_service');
+        $userFolder = $folder;
+        $folder = $inboxPath.'/'.$userFolder;
+
+        return $uploadDispatcherService->createFolderIfNotExist($folder);
+    }
+
+    /**
+     * @Route("/check_folder", name="check_folder_before_creating")
+     */
+    public function checkFolderBeforeCreating(Request $request)
+    {
+        $folderName = $request->get('folder');
+        $uploadDispatcherService = $this->get('pumukit.upload_dispatcher_service');
+
+        if (!preg_match('/^[\w]+$/', $folderName)) {
+            return new JsonResponse(false);
+        }
+
+        return new JsonResponse($folderName);
     }
 
     /**
@@ -37,7 +92,7 @@ class InboxController extends AbstractController
         $uploadDispatcherService = $this->get('pumukit.upload_dispatcher_service');
 
         try {
-            $uploadDispatcherService->dispatchUploadFromInbox($this->getUser(), $request->get('fileName'));
+            $uploadDispatcherService->dispatchUploadFromInbox($this->getUser(), $request->get('fileName'), $request->get('folder'));
         } catch (\Exception $exception) {
             return new JsonResponse(['success' => false]);
         }
