@@ -3,8 +3,8 @@
 namespace Pumukit\CoreBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use TusPhp\Tus\Server;
 
 class TUSUploadController extends AbstractController
@@ -16,9 +16,10 @@ class TUSUploadController extends AbstractController
      */
     public function server(Request $request, Server $server)
     {
-        if ($request->attributes->get('_route') === "tus_post" && !empty($request->get('folder_path'))) {
+        if ('tus_post' === $request->attributes->get('_route') && !empty($request->get('folder_path'))) {
             $server->setUploadDir($request->get('folder_path'));
         }
+
         return $server->serve();
     }
 }

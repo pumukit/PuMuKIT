@@ -6,7 +6,7 @@ namespace Pumukit\CoreBundle\Utils;
 
 use Symfony\Component\Finder\Finder;
 
-final class FinderUtils 
+final class FinderUtils
 {
     public static function getDirectoriesFromPath(string $path)
     {
@@ -23,12 +23,12 @@ final class FinderUtils
         return new Finder();
     }
 
-    private function isValidPath(string $path) 
+    private function isValidPath(string $path)
     {
         if (realpath($path)) {
             return true;
         }
 
-        throw new \Exception("Path not valid.");
+        throw new \Exception('Path not valid.');
     }
 }

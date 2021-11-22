@@ -7,8 +7,8 @@ namespace Pumukit\CoreBundle\Services;
 use Pumukit\CoreBundle\Event\InboxUploadEvent;
 use Pumukit\CoreBundle\Event\UploadEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class UploadDispatcherService
 {
@@ -32,6 +32,7 @@ class UploadDispatcherService
             if (!$filesystem->exists($folder)) {
                 $filesystem->mkdir($folder);
             }
+
             return true;
         } catch (\Exception $exception) {
             return false;

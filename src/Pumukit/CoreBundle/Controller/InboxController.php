@@ -2,13 +2,13 @@
 
 namespace Pumukit\CoreBundle\Controller;
 
+use Pumukit\CoreBundle\Utils\FinderUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Pumukit\CoreBundle\Utils\FinderUtils;
 
 /**
  * @Security("is_granted('ROLE_UPLOAD_INBOX')")
@@ -41,13 +41,13 @@ class InboxController extends AbstractController
         $inboxPath = $this->container->getParameter('pumukit.inbox');
 
         $folder = $formData['folder'];
-        $urlUpload = $inboxPath."/".$formData['folder'];
+        $urlUpload = $inboxPath.'/'.$formData['folder'];
 
         if (!$formData || empty($formData['folder']) || !$this->checkFolderAndCreateIfNotExist($formData['folder'])) {
-            $folder = "";
-            $urlUpload = "";
+            $folder = '';
+            $urlUpload = '';
         }
-        
+
         return [
             'form_data' => $urlUpload,
             'folder' => $folder,
@@ -64,7 +64,7 @@ class InboxController extends AbstractController
         $inboxPath = $this->container->getParameter('pumukit.inbox');
         $uploadDispatcherService = $this->get('pumukit.upload_dispatcher_service');
         $userFolder = $folder;
-        $folder = $inboxPath."/".$userFolder;
+        $folder = $inboxPath.'/'.$userFolder;
 
         return $uploadDispatcherService->createFolderIfNotExist($folder);
     }
