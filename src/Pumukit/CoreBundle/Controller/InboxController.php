@@ -40,10 +40,10 @@ class InboxController extends AbstractController
         $inboxUploadLIMIT = $this->container->getParameter('pumukit.inboxUploadLIMIT');
         $inboxPath = $this->container->getParameter('pumukit.inbox');
 
-        $folder = $formData['folder'];
+        $folder = trim($formData['folder']);
         $urlUpload = $inboxPath.'/'.$formData['folder'];
 
-        if (!$formData || empty($formData['folder']) || !$this->checkFolderAndCreateIfNotExist($formData['folder'])) {
+        if (!$formData || empty($folder) || !$this->checkFolderAndCreateIfNotExist($folder)) {
             $folder = '';
             $urlUpload = '';
         }
@@ -67,21 +67,6 @@ class InboxController extends AbstractController
         $folder = $inboxPath.'/'.$userFolder;
 
         return $uploadDispatcherService->createFolderIfNotExist($folder);
-    }
-
-    /**
-     * @Route("/check_folder", name="check_folder_before_creating")
-     */
-    public function checkFolderBeforeCreating(Request $request)
-    {
-        $folderName = $request->get('folder');
-        $uploadDispatcherService = $this->get('pumukit.upload_dispatcher_service');
-
-        if (!preg_match('/^[\w]+$/', $folderName)) {
-            return new JsonResponse(false);
-        }
-
-        return new JsonResponse($folderName);
     }
 
     /**
