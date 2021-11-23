@@ -13,25 +13,9 @@
                     {% endfor %}
                 </datalist>
             </div>
-            <p class="error_folder text-danger"> {{ "The folder name is not valid"|trans }}.</p>
         </div>
         <div class="button-next">
             <button type="submit" class="btn btn-primary btn-raised btn-next">{% trans %}Next{% endtrans %} &raquo;</button>
         </div>
     </form>
-    <script type="text/javascript">
-    $('#folder_inbox').on('input', function(){
-        var folderName = $(this).val();
-        $.post('{{ path('check_folder_before_creating') }}', { folder : folderName })
-        .done(function(data){
-            if(data || folderName == "") {
-                $('.btn-next').prop('disabled', false);
-                $('.error_folder').hide();
-            } else {
-                $('.error_folder').show();
-                $('.btn-next').prop('disabled', true);
-            }
-        });
-    });
-    </script>
 {% endblock inbox_body %}
