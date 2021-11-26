@@ -10,9 +10,9 @@ const uppyTUS = Uppy.Core({
     debug: false,
     autoProceed: true,
     restrictions: {
-        minFileSize: convertSizeToBytes("1MB"),
-        maxFileSize: convertSizeToBytes("20GB"),
-        maxNumberOfFiles: 10,
+        minFileSize: convertSizeToBytes("{{ minFileSize }}"),
+        maxFileSize: convertSizeToBytes("{{ maxFileSize }}"),
+        maxNumberOfFiles: {{ maxNumberOfFiles }},
         allowedFileTypes: ['audio/*','video/*']
     },
     onBeforeFileAdded:  (currentFile) => {

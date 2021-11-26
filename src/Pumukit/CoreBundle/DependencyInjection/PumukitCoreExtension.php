@@ -33,6 +33,9 @@ class PumukitCoreExtension extends Extension
         $container->setParameter('pumukit.full_magic_url', $config['full_magic_url']);
         $container->setParameter('pumukit.inboxUploadURL', $config['inboxUploadURL']);
         $container->setParameter('pumukit.inboxUploadLIMIT', $config['inboxUploadLIMIT']);
+        $container->setParameter('pumukit.maxFileSize', $config['maxFileSize']);
+        $container->setParameter('pumukit.minFileSize', $config['minFileSize']);
+        $container->setParameter('pumukit.maxNumberOfFiles', $config['maxNumberOfFiles']);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');

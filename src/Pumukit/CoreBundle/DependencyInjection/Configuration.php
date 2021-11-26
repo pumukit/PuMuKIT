@@ -76,6 +76,18 @@ class Configuration implements ConfigurationInterface
             ->defaultValue(5)
             ->info('Max number of files to upload at the same time')
             ->end()
+            ->scalarNode('minFileSize')
+            ->defaultValue('1MB')
+            ->info('Minimum file size in bytes for each')
+            ->end()
+            ->scalarNode('maxNumberOfFiles')
+            ->defaultValue(10)
+            ->info('Total number of files that can be selected')
+            ->end()
+            ->scalarNode('maxFileSize')
+            ->defaultValue('20GB')
+            ->info('Maximum file size in bytes for each individual file')
+            ->end()
             ->end()
         ;
 
