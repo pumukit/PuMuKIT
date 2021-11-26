@@ -10,7 +10,9 @@ const uppyTUS = Uppy.Core({
     debug: false,
     autoProceed: true,
     restrictions: {
-        maxFileSize: convertSizeToBytes("{{ php_upload_max_filesize() }}"),
+        minFileSize: convertSizeToBytes("1MB"),
+        maxFileSize: convertSizeToBytes("20GB"),
+        maxNumberOfFiles: 10,
         allowedFileTypes: ['audio/*','video/*']
     },
     onBeforeFileAdded:  (currentFile) => {
