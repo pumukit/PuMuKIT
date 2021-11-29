@@ -5,12 +5,12 @@
         {% set captions = captions(object) %}
         {% set captions_block %}
             {% if captions is not empty %}
-                tracks: [
+                , tracks: [
                 {% for caption in captions %}
                     {
-                    src: "{{ absolute_url(caption.url) }}",
-                    label: "{{ caption.language|language_name }}",
-                    kind: "captions"
+                    src: '{{ absolute_url(caption.url) }}',
+                    kind: 'captions',
+                    label: '{{ caption.language|language_name }}',
                     },
                 {% endfor %}
                 ],
@@ -22,6 +22,7 @@
             var player = videojs("player1", {
                 startparam: "start",
                 autoplay: {{ autostart|default("true") }},
+                playbackRates: [0.5, 1, 1.5, 2],
                 repeat: "false",
                 width: '100%',
                 aspectRatio: '16:9',
