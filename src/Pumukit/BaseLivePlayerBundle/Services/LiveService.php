@@ -24,7 +24,7 @@ class LiveService
         return $hls;
     }
 
-    public function genHlsUrlEvent(string $urlEvent): string 
+    public function genHlsUrlEvent(string $urlEvent): string
     {
         return sprintf('%s/playlist.m3u8', str_replace(['rtmp://', 'rtmpt://'], '//', $urlEvent));
     }
