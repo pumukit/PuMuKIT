@@ -38,6 +38,9 @@ class InboxController extends AbstractController
         $formData = $request->get('inbox_form_data', []);
         $inboxUploadURL = $this->container->getParameter('pumukit.inboxUploadURL');
         $inboxUploadLIMIT = $this->container->getParameter('pumukit.inboxUploadLIMIT');
+        $minFileSize = $this->container->getParameter('pumukit.minFileSize');
+        $maxFileSize = $this->container->getParameter('pumukit.maxFileSize');
+        $maxNumberOfFiles = $this->container->getParameter('pumukit.maxNumberOfFiles');
         $inboxPath = $this->container->getParameter('pumukit.inbox');
 
         $folder = trim($formData['folder']);
@@ -53,6 +56,9 @@ class InboxController extends AbstractController
             'folder' => $folder,
             'inboxUploadURL' => $inboxUploadURL,
             'inboxUploadLIMIT' => $inboxUploadLIMIT,
+            'minFileSize' => $minFileSize,
+            'maxFileSize' => $maxFileSize,
+            'maxNumberOfFiles' => $maxNumberOfFiles,
         ];
     }
 
