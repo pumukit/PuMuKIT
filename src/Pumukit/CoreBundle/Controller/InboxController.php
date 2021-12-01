@@ -76,6 +76,21 @@ class InboxController extends AbstractController
     }
 
     /**
+     * @Route("/check_folder", name="check_folder_before_creating")
+     */
+    public function checkFolderBeforeCreating(Request $request)
+    {
+        $folderName = $request->get('folder');
+        $uploadDispatcherService = $this->get('pumukit.upload_dispatcher_service');
+
+        if (false !== strpos($folderName, '#')) {
+            return new JsonResponse(false);
+        }
+
+        return new JsonResponse($folderName);
+    }
+
+    /**
      * @Route("/dispatchImport", name="inbox_auto_import")
      */
     public function dispatchImport(Request $request): JsonResponse
