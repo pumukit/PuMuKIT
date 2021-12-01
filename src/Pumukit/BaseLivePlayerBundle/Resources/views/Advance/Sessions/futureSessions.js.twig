@@ -10,10 +10,13 @@ if (secondsToEvent) {
 if (date < new Date()) {
     location.reload();
 }
-
-$(".live-{{ id }}").html(background);
-$("#warning").countdown(date, function (event) {
-    $(this).text(event.strftime('%D ' + "{% trans %}days{% endtrans %}" + ' %-H:%M:%S'));
-}).on('finish.countdown', function (event) {
-    location.reload();
-});
+{% if event.isIframeUrl() is same as(false) %}
+    $(".live-{{ id }}").html(background);
+{% else %}
+    $("#live-{{ id }}").html(background);
+{% endif %}
+    $("#warning").countdown(date, function (event) {
+        $(this).text(event.strftime('%D ' + "{% trans %}days{% endtrans %}" + ' %-H:%M:%S'));
+    }).on('finish.countdown', function (event) {
+        location.reload();
+    });
