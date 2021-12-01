@@ -49,9 +49,9 @@ class LiveTwigExtension extends AbstractExtension
      * Original twig template:
      *    {{ live.url|replace({'rtmp://':'http://', 'rtmpt://': 'http://'}) }}/{{ live.sourcename }}/playlist.m3u8
      */
-    public function genHlsUrl(Live $live): string
+    public function genHlsUrl(Live $live, int $numStream = null): string
     {
-        return $this->liveService->generateHlsUrl($live);
+        return $this->liveService->generateHlsUrl($live, $numStream);
     }
 
     /**

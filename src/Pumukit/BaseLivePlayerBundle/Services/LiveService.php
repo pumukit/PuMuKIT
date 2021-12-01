@@ -14,10 +14,8 @@ class LiveService
      */
     public function generateHlsUrl(Live $live, int $numStream = null): string
     {
-        $sourceName = $live->getSourceName();
-        $sourceName2 = $live->getSourceName2();
-
-        if (null !== $numStream and 2 == $numStream) {
+        if (2 == $numStream) {
+            $sourceName2 = $live->getSourceName2();
             if (Live::LIVE_TYPE_AMS === $live->getLiveType()) {
                 $hls2 = sprintf('%s/%s/%s.m3u8', str_replace(['rtmp://', 'rtmpt://'], '//', $live->getUrl()), $sourceName2, $sourceName2);
             } else {
@@ -27,6 +25,7 @@ class LiveService
             return $hls2;
         }
 
+        $sourceName = $live->getSourceName();
         if (Live::LIVE_TYPE_AMS === $live->getLiveType()) {
             $hls = sprintf('%s/%s/%s.m3u8', str_replace(['rtmp://', 'rtmpt://'], '//', $live->getUrl()), $sourceName, $sourceName);
         } else {
