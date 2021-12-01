@@ -22,17 +22,16 @@
                 {{ event.getName(app.request.getLocale())|default("No title"|trans) }}
             </h1>
         </div>
-
         <div class="col-xs-12 col-sm-8 col-md-8">
             <div id="liveplayer">
                 {% include('@PumukitWebTV/Live/Advance/liveplayer.html.twig') with {stretching: 'exactfit', aspectratio: '16:9'} %}
             </div>
             <br/>
-            <div id="liveplayer2">
-                {% if "WOWZA_DUAL_STREAM" == live.getLiveType %}
-                    {% include('@PumukitWebTV/Live/Advance/liveplayer.html.twig') with {stretching: 'exactfit', aspectratio: '16:9', stream: '2'} %}
-                {% endif %}
-            </div>
+            {% if "WOWZA_DUAL_STREAM" == live.getLiveType %}
+                <div id="liveplayer2">
+                    {% include('@PumukitWebTV/Live/Advance/liveplayer.html.twig') with {stretching: 'exactfit', aspectratio: '16:9', stream: '2'} %}             
+                </div>
+            {% endif %}
             {% include('@PumukitWebTV/Live/Advance/template_info.html.twig') %}
         </div>
 

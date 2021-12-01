@@ -13,8 +13,9 @@
     } else if (nowSessionsCount > 0) {
         {% include "@PumukitBaseLivePlayer/Advance/Sessions/nowSessions.js.twig" %}
         {% if event.isIframeUrl() is same as(false) %}
-            {% include "@PumukitBaseLivePlayer/Advance/player.js.twig" %}
-            {%if stream is defined %}
+            {% if stream is not defined %}
+                {% include "@PumukitBaseLivePlayer/Advance/player.js.twig" %}
+            {% else %}
                 {% include ("@PumukitBaseLivePlayer/Advance/player.js.twig") with {stream: '2'} %}
             {% endif %}
         {% endif %}
