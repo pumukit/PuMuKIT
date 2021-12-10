@@ -99,6 +99,7 @@ class MultimediaObjectController extends SortableAdminController
     private $warningOnUnpublished;
     private $kernelBundles;
     private $pumukitNewAdminMultimediaObjectLabel;
+    private $enablePlaylist;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -126,7 +127,8 @@ class MultimediaObjectController extends SortableAdminController
         $pumukitNewAdminShowNakedPubTab,
         $warningOnUnpublished,
         $kernelBundles,
-        $pumukitNewAdminMultimediaObjectLabel
+        $pumukitNewAdminMultimediaObjectLabel,
+        $enablePlaylist
     ) {
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
         $this->requestStack = $requestStack;
@@ -148,6 +150,7 @@ class MultimediaObjectController extends SortableAdminController
         $this->warningOnUnpublished = $warningOnUnpublished;
         $this->kernelBundles = $kernelBundles;
         $this->pumukitNewAdminMultimediaObjectLabel = $pumukitNewAdminMultimediaObjectLabel;
+        $this->enablePlaylist = $enablePlaylist;
     }
 
     /**
@@ -194,6 +197,7 @@ class MultimediaObjectController extends SortableAdminController
             'series' => $series,
             'mms' => $mms,
             'disable_pudenew' => !$this->showLatestWithPudeNew,
+            'enable_playlist' => $this->enablePlaylist,
         ];
     }
 

@@ -74,7 +74,7 @@
                                 {% else %}
                                     <option value="paste_mm" id="paste_mm" style="display:none"></option>
                                 {% endif %}
-                                {% if app.user and is_granted('ROLE_ACCESS_EDIT_PLAYLIST') %}
+                                {% if app.user and is_granted('ROLE_ACCESS_EDIT_PLAYLIST') and enable_playlist %}
                                     <option value="add_playlist">{% trans %}Add to playlist{% endtrans %}</option>
                                 {% endif %}
                             </select>
