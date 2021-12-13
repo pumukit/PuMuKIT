@@ -5,6 +5,9 @@
     "brick/math": {
         "version": "0.9.3"
     },
+    "composer/pcre": {
+        "version": "1.0.0"
+    },
     "guzzlehttp/guzzle": {
         "version": "7.3.0"
     },
