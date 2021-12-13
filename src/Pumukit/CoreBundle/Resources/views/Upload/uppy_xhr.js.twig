@@ -6,6 +6,12 @@ const uppy = new Uppy.Core({
         maxFileSize: convertSizeToBytes("{{ php_upload_max_filesize() }}"),
         maxNumberOfFiles: 1,
         allowedFileTypes: ['audio/*','video/*']
+    },
+    onBeforeFileAdded:  (currentFile) => {
+        if (currentFile) {
+            $('#pumukitnewadmin_track_ok_button').prop('disabled', false);
+            $('#pumukitwizard_track_next_button').prop('disabled', false);
+        }
     }
 })
 
@@ -73,6 +79,9 @@ uppy.on('upload-success', (file, response) => {
 
 $('#uppy-remove-file').on('click', function(event) {
     event.preventDefault();
+
+    $('#pumukitnewadmin_track_ok_button').prop('disabled', true);
+    $('#pumukitwizard_track_next_button').prop('disabled', true);
 
     uppy.removeFile($(this).data('file-id'));
     uppy.cancelAll();

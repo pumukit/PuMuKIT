@@ -33,6 +33,7 @@ class LiveTwigExtension extends AbstractExtension
     {
         return [
             new TwigFunction('generate_hls_url', [$this, 'genHlsUrl']),
+            new TwigFunction('generate_hls_url_event', [$this, 'genHlsUrlEvent']),
             new TwigFunction('future_and_not_finished_event', [$this, 'getFutureAndNotFinishedEvent']),
             new TwigFunction('poster_pic', [$this, 'getPosterPic']),
             new TwigFunction('poster_pic_text_color', [$this, 'getPosterPicTextColor']),
@@ -52,6 +53,14 @@ class LiveTwigExtension extends AbstractExtension
     public function genHlsUrl(Live $live): string
     {
         return $this->liveService->generateHlsUrl($live);
+    }
+
+    /**
+     * Generate HLS URL from RTMP url.
+     */
+    public function genHlsUrlevent(string $event): string
+    {
+        return $this->liveService->genHlsUrlEvent($event);
     }
 
     /**

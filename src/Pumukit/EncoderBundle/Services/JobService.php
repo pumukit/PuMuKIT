@@ -535,6 +535,9 @@ class JobService
         $mmobj = $this->getMultimediaObject($job);
 
         $vars = $job->getInitVars();
+        if (!is_array($vars)) {
+            $vars = [];
+        }
 
         $vars['tracks'] = [];
         $vars['tracks_audio'] = [];

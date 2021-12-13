@@ -1,4 +1,4 @@
-{% if event.isIframeUrl() %}
+{% if (event is defined and event.isIframeURL()) %}
     <div class="embed-responsive embed-responsive-16by9">
         <div id="live-{{ id }}" class="embed-responsive-item text-center">
             <iframe src="{{ event.getUrl() }}" width="100%" class="embed-responsive-item" frameborder="0" allowfullscreen style="overflow:hidden;height:100%;width:100%"></iframe>
