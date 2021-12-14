@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class DashboardController extends Controller implements NewAdminControllerInterface
 {
     /**
-     * @Route("/dashboard", name="pumukit_newadmin_dashboard_index")
+     * @Route("/dashboard")
      * @Route("/dashboard/default", name="pumukit_newadmin_dashboard_index_default")
      * @Template
      */
