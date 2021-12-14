@@ -87,6 +87,7 @@ class APIController extends Controller implements NewAdminControllerInterface
             $qb = $mmRepo->createStandardQueryBuilder();
         }
 
+        //  WA TTK-25379 - Add dates range
         if ($criteria) {
             if (isset($criteria['public_date_init'], $criteria['public_date_finish'])) {
                 $qb->addAnd($qb->expr()->field('public_date')->range(
