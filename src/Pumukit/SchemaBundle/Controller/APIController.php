@@ -88,7 +88,27 @@ class APIController extends Controller implements NewAdminControllerInterface
         }
 
         if ($criteria) {
-            $qb = $qb->addAnd($criteria);
+            if (isset($criteria['public_date_init']) && isset($criteria['public_date_finish'])) {
+                $qb->addAnd($qb->expr()->field('public_date')->range(new \MongoDate(strtotime($criteria['public_date_init'])),
+                    new \MongoDate(strtotime($criteria['public_date_finish']))));
+                unset($criteria['public_date_init']);
+                unset($criteria['public_date_finish']);
+            } elseif (isset($criteria['public_date_init']) && !empty($criteria['public_date_init'])) {
+                $date = date($criteria['public_date_init'].'T23:59:59');
+                $qb->addAnd($qb->expr()->field('public_date')->range(new \MongoDate(strtotime($criteria['public_date_init'])),
+                new \MongoDate(strtotime($date))));
+                unset($criteria['public_date_init']);
+            } elseif ((isset($criteria['public_date_finish']) && !empty($criteria['public_date_finish']))) {
+                $date = date($criteria['public_date_finish'].'T23:59:59');
+                $qb->addAnd($qb->expr()->field('public_date')->range(
+                    new \MongoDate(strtotime($criteria['public_date_finish'])),
+                    new \MongoDate(strtotime($date))
+                ));
+                unset($criteria['public_date_finish']);
+            }
+            if ($criteria) {
+                $qb->addAnd($criteria);
+            }
         }
 
         $qb_mmobjs = clone $qb;
