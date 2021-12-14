@@ -18,8 +18,6 @@ class LiveTest extends TestCase
         $url = 'http://www.pumukit.com/liveo1';
         $passwd = 'password';
         $live_type = Live::LIVE_TYPE_FMS;
-        $width = 640;
-        $height = 480;
         $qualities = 'high';
         $ip_source = '127.0.0.1';
         $source_name = 'localhost';
@@ -29,15 +27,12 @@ class LiveTest extends TestCase
         $locale = 'en';
         $name = 'liveo 1';
         $description = 'liveo channel';
-        $resolution = ['width' => $width, 'height' => $height];
 
         $liveo = new Live();
 
         $liveo->setUrl($url);
         $liveo->setPasswd($passwd);
         $liveo->setLiveType($live_type);
-        $liveo->setWidth($width);
-        $liveo->setHeight($height);
         $liveo->setQualities($qualities);
         $liveo->setIpSource($ip_source);
         $liveo->setSourceName($source_name);
@@ -47,13 +42,10 @@ class LiveTest extends TestCase
         $liveo->setLocale($locale);
         $liveo->setName($name, $locale);
         $liveo->setDescription($description, $locale);
-        $liveo->setResolution($resolution);
 
         static::assertEquals($url, $liveo->getUrl());
         static::assertEquals($passwd, $liveo->getPasswd());
         static::assertEquals($live_type, $liveo->getLiveType());
-        static::assertEquals($width, $liveo->getWidth());
-        static::assertEquals($height, $liveo->getHeight());
         static::assertEquals($qualities, $liveo->getQualities());
         static::assertEquals($ip_source, $liveo->getIpSource());
         static::assertEquals($source_name, $liveo->getSourceName());
@@ -65,7 +57,6 @@ class LiveTest extends TestCase
         static::assertEquals($name, $liveo->getName());
         static::assertEquals($description, $liveo->getDescription($liveo->getLocale()));
         static::assertEquals($description, $liveo->getDescription());
-        static::assertEquals($resolution, $liveo->getResolution());
 
         $liveo->setDescription($description);
         static::assertEquals($description, $liveo->getDescription($liveo->getLocale()));
