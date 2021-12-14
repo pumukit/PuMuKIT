@@ -101,7 +101,6 @@ class APIController extends Controller implements NewAdminControllerInterface
                     new \MongoDate(strtotime($criteria['public_date_init'])),
                     new \MongoDate(strtotime($date))
                 ));
-                dump('hola');
                 $tempCriteria = ['public_date_init' => $criteria['public_date_init']];
                 unset($criteria['public_date_init']);
             } elseif ((isset($criteria['public_date_finish']) && !empty($criteria['public_date_finish']))) {
@@ -140,7 +139,7 @@ class APIController extends Controller implements NewAdminControllerInterface
             if ($criteria) {
                 $qb->addAnd($criteria);
             }
-            if ($tempCriteria) {
+            if (isset($tempCriteria)) {
                 $criteria = array_merge($criteria, $tempCriteria);
             }
         }
