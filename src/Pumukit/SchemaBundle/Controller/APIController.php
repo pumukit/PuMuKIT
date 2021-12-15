@@ -89,12 +89,20 @@ class APIController extends Controller implements NewAdminControllerInterface
 
         //  WA TTK-25379 - Add dates range
         if ($criteria) {
+            if (isset($criteria['owner'])) {
+                $qb->addAnd($qb->expr()->field('people')->elemMatch(
+                    $qb->expr()->field('cod')->equals('owner')->field('people.name')->equals($criteria['owner'])
+                ));
+                $tempCriteria['owner'] = $criteria['owner'];
+                unset($criteria['owner']);
+            }
             if (isset($criteria['public_date_init'], $criteria['public_date_finish'])) {
                 $qb->addAnd($qb->expr()->field('public_date')->range(
                     new \MongoDate(strtotime($criteria['public_date_init'])),
                     new \MongoDate(strtotime($criteria['public_date_finish']))
                 ));
-                $tempCriteria = ['public_date_init' => $criteria['public_date_init'], 'public_date_finish' => $criteria['public_date_finish']];
+                $tempCriteria['public_date_init'] = $criteria['public_date_init'];
+                $tempCriteria['public_date_finish'] = $criteria['public_date_finish'];
                 unset($criteria['public_date_init'], $criteria['public_date_finish']);
             } elseif (isset($criteria['public_date_init']) && !empty($criteria['public_date_init'])) {
                 $date = date($criteria['public_date_init'].'T23:59:59');
@@ -102,7 +110,7 @@ class APIController extends Controller implements NewAdminControllerInterface
                     new \MongoDate(strtotime($criteria['public_date_init'])),
                     new \MongoDate(strtotime($date))
                 ));
-                $tempCriteria = ['public_date_init' => $criteria['public_date_init']];
+                $tempCriteria['public_date_init'] = $criteria['public_date_init'];
                 unset($criteria['public_date_init']);
             } elseif ((isset($criteria['public_date_finish']) && !empty($criteria['public_date_finish']))) {
                 $date = date($criteria['public_date_finish'].'T23:59:59');
@@ -110,7 +118,7 @@ class APIController extends Controller implements NewAdminControllerInterface
                     new \MongoDate(strtotime($criteria['public_date_finish'])),
                     new \MongoDate(strtotime($date))
                 ));
-                $tempCriteria = ['public_date_finish' => $criteria['public_date_finish']];
+                $tempCriteria['public_date_finish'] = $criteria['public_date_finish'];
                 unset($criteria['public_date_finish']);
             }
             if (isset($criteria['record_date_init'], $criteria['record_date_finish'])) {
@@ -118,7 +126,8 @@ class APIController extends Controller implements NewAdminControllerInterface
                     new \MongoDate(strtotime($criteria['record_date_init'])),
                     new \MongoDate(strtotime($criteria['record_date_finish']))
                 ));
-                $tempCriteria = ['record_date_init' => $criteria['record_date_init'], 'record_date_finish' => $criteria['record_date_finish']];
+                $tempCriteria['record_date_init'] = $criteria['record_date_init'];
+                $tempCriteria['record_date_finish'] = $criteria['record_date_finish'];
                 unset($criteria['record_date_init'], $criteria['record_date_finish']);
             } elseif (isset($criteria['record_date_init']) && !empty($criteria['record_date_init'])) {
                 $date = date($criteria['record_date_init'].'T23:59:59');
@@ -126,7 +135,7 @@ class APIController extends Controller implements NewAdminControllerInterface
                     new \MongoDate(strtotime($criteria['record_date_init'])),
                     new \MongoDate(strtotime($date))
                 ));
-                $tempCriteria = ['record_date_init' => $criteria['record_date_init']];
+                $tempCriteria['record_date_init'] = $criteria['record_date_init'];
                 unset($criteria['record_date_init']);
             } elseif ((isset($criteria['record_date_finish']) && !empty($criteria['record_date_finish']))) {
                 $date = date($criteria['record_date_finish'].'T23:59:59');
@@ -134,7 +143,7 @@ class APIController extends Controller implements NewAdminControllerInterface
                     new \MongoDate(strtotime($criteria['record_date_finish'])),
                     new \MongoDate(strtotime($date))
                 ));
-                $tempCriteria = ['record_date_finish' => $criteria['record_date_finish']];
+                $tempCriteria['record_date_finish'] = $criteria['record_date_finish'];
                 unset($criteria['record_date_finish']);
             }
             if ($criteria) {
