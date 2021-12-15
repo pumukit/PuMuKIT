@@ -114,7 +114,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     private $showLatestWithPudeNew;
     private $pumukitNewAdminBaseCatalogueTag;
     private $kernelBundles;
-    private $enablePlaylist;
 
     public function __construct(
         PaginationService $paginationService,
@@ -134,8 +133,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         MultimediaObjectSearchService $multimediaObjectSearchService,
         $showLatestWithPudeNew,
         $pumukitNewAdminBaseCatalogueTag,
-        $kernelBundles,
-        $enablePlaylist
+        $kernelBundles
     ) {
         $this->paginationService = $paginationService;
         $this->tagCatalogueService = $tagCatalogueService;
@@ -155,7 +153,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $this->pumukitNewAdminBaseCatalogueTag = $pumukitNewAdminBaseCatalogueTag;
         $this->kernelBundles = $kernelBundles;
         $this->multimediaObjectSearchService = $multimediaObjectSearchService;
-        $this->enablePlaylist = $enablePlaylist;
     }
 
     /**
@@ -310,7 +307,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         return [
             'mms' => $pager,
             'disable_pudenew' => !$this->showLatestWithPudeNew,
-            'enable_playlist' => $this->enablePlaylist,
         ];
     }
 
