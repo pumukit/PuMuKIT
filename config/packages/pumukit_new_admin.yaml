@@ -29,6 +29,7 @@ services:
       $pumukitLdapEnable: '%pumukit_ldap.ldap%'
       $pumukitNewAdminBaseCatalogueTag: '%pumukit_new_admin.base_catalogue_tag%'
       $personalScopeRoleCode: '%pumukitschema.personal_scope_role_code%'
+      $enablePlaylist: '%pumukit_new_admin.enable_playlist%'
 
   Pumukit\NewAdminBundle\Controller\:
     resource: '../../src/Pumukit/NewAdminBundle/Controller/'
