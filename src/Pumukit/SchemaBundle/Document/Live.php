@@ -42,16 +42,6 @@ class Live
     private $live_type = self::LIVE_TYPE_WOWZA;
 
     /**
-     * @MongoDB\Field(type="int")
-     */
-    private $width = 720;
-
-    /**
-     * @MongoDB\Field(type="int")
-     */
-    private $height = 576;
-
-    /**
      * @MongoDB\Field(type="raw")
      */
     private $qualities;
@@ -151,26 +141,6 @@ class Live
             self::LIVE_TYPE_WMS,
             self::LIVE_TYPE_FMS,
         ]);
-    }
-
-    public function setWidth($width): void
-    {
-        $this->width = $width;
-    }
-
-    public function getWidth(): int
-    {
-        return $this->width;
-    }
-
-    public function setHeight($height): void
-    {
-        $this->height = $height;
-    }
-
-    public function getHeight(): int
-    {
-        return $this->height;
     }
 
     public function setQualities($qualities): void
@@ -313,22 +283,6 @@ class Live
         $aux->id = null;
 
         return $aux;
-    }
-
-    public function getResolution(): array
-    {
-        return [
-            'width' => $this->width,
-            'height' => $this->height,
-        ];
-    }
-
-    public function setResolution($resolution): void
-    {
-        if ((!empty($resolution['width'])) && (!empty($resolution['height']))) {
-            $this->width = $resolution['width'];
-            $this->height = $resolution['height'];
-        }
     }
 
     public function getInfo(): string

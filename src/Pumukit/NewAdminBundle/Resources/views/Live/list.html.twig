@@ -14,14 +14,13 @@
     <th id="th-name">{% trans %}Name{% endtrans %}</th>
     <th id="th-url">{% trans %}URL{% endtrans %}</th>
     <th id="th-source-name">{% trans %}Source Name{% endtrans %}</th>
-    <th width="1%" id="th-resolution">{% trans %}Resolution{% endtrans %}</th>
     <th width="8%" id="th-type">{% trans %}Type{% endtrans %}</th>
       </tr>
     </thead>
     <tbody>
       {% if lives|length == 0 %}
       <tr>
-    <td colspan="10" headers="th-checkbox th-icons th-icons th-name th-resolution th-type th-url">
+    <td colspan="10" headers="th-checkbox th-icons th-icons th-name th-type th-url">
       {% trans %}There are no live channels with those values.{% endtrans %}
     </td>
       </tr>
@@ -53,9 +52,6 @@
             </td>
             <td headers="th-source-name" onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
               {{ live.getSourceName() }}
-            </td>
-            <td headers="th-resolution" onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
-              {{ live.getWidth }}x{{ live.getHeight }}
             </td>
             <td headers="th-type" onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
               {{ live.getLiveType }}

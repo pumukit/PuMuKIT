@@ -37,8 +37,6 @@ class LiveRepositoryTest extends PumukitTestCase
         $url = 'http://www.pumukit.com/liveo1';
         $passwd = 'password';
         $live_type = Live::LIVE_TYPE_FMS;
-        $width = 640;
-        $height = 480;
         $qualities = 'high';
         $ip_source = '127.0.0.1';
         $source_name = 'localhost';
@@ -54,8 +52,6 @@ class LiveRepositoryTest extends PumukitTestCase
         $liveo->setUrl($url);
         $liveo->setPasswd($passwd);
         $liveo->setLiveType($live_type);
-        $liveo->setWidth($width);
-        $liveo->setHeight($height);
         $liveo->setQualities($qualities);
         $liveo->setIpSource($ip_source);
         $liveo->setSourceName($source_name);
