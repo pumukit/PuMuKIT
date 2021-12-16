@@ -6,6 +6,7 @@ use Pumukit\NewAdminBundle\Controller\NewAdminControllerInterface;
 use Pumukit\SchemaBundle\Document\Live;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,6 +55,7 @@ class APIController extends Controller implements NewAdminControllerInterface
     {
         $mmRepo = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
         $serializer = $this->get('jms_serializer');
+        $userRepo = $this->get('doctrine_mongodb')->getRepository(User::class);
 
         $limit = (int) $request->get('limit');
         $page = (int) $request->get('page');
@@ -90,8 +92,9 @@ class APIController extends Controller implements NewAdminControllerInterface
         //  WA TTK-25379 - Add dates range
         if ($criteria) {
             if (isset($criteria['owner'])) {
+                $user = $userRepo->createQueryBuilder()->field('username')->equals($criteria['owner'])->getQuery()->getSingleResult();
                 $qb->addAnd($qb->expr()->field('people')->elemMatch(
-                    $qb->expr()->field('cod')->equals('owner')->field('people.name')->equals($criteria['owner'])
+                    $qb->expr()->field('cod')->equals('owner')->field('people.id')->equals($user->getPerson()->getId())
                 ));
                 $tempCriteria['owner'] = $criteria['owner'];
                 unset($criteria['owner']);
