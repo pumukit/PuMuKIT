@@ -5,9 +5,9 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
-      <trans-unit id="df56ghd" resname="Select the folder or create a new one where you want to upload the videos. Once this is done, press continue to start uploading the corresponding files">
-        <source>Select the folder or create a new one where you want to upload the videos. Once this is done, press continue to start uploading the corresponding files</source>
-        <target state="translated">Selecciona un cartafol ou crea un novo onde queiras cargar os vídeos. Unha vez feito isto, prema continuar para comezar a cargar os ficheiros correspondentes</target>
+      <trans-unit id="df56ghd" resname="Select the folder or create a new one where you want to upload the videos(maximum 5 videos per upload). Once this is done, press continue to start uploading the corresponding files">
+        <source>Select the folder or create a new one where you want to upload the videos(maximum 5 videos per upload). Once this is done, press continue to start uploading the corresponding files</source>
+        <target state="translated">Selecciona un cartafol ou crea un novo onde queiras cargar os vídeos(máximo 5 vídeos en cada carga). Unha vez feito isto, prema continuar para comezar a cargar os ficheiros correspondentes</target>
       </trans-unit>
       <trans-unit id="Qc5fioP" resname="The folder name is not valid">
         <source>The folder name is not valid</source>
@@ -16,6 +16,10 @@
       <trans-unit id="Fsmkf5f" resname="Upload video to: %folder%">
         <source>Upload video to: %folder%</source>
         <target>Cargar vídeo en: %folder%</target>
+      </trans-unit>
+      <trans-unit id="adfth4j" resname="Batch file upload">
+        <source>Batch file upload</source>
+        <target>Carga de ficheiros por lotes</target>
       </trans-unit>
     </body>
   </file>
