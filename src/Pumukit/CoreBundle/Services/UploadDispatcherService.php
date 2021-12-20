@@ -7,7 +7,6 @@ namespace Pumukit\CoreBundle\Services;
 use Pumukit\CoreBundle\Event\InboxUploadEvent;
 use Pumukit\CoreBundle\Event\UploadEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class UploadDispatcherService
@@ -21,21 +20,8 @@ class UploadDispatcherService
 
     public function dispatchUploadFromInbox(UserInterface $user, string $fileName, ?string $folder): void
     {
+        sleep(1);
         $event = new InboxUploadEvent($user, $fileName, $folder);
         $this->dispatcher->dispatch(UploadEvents::UPLOAD_FROM_INBOX, $event);
-    }
-
-    public function createFolderIfNotExist(string $folder)
-    {
-        try {
-            $filesystem = new Filesystem();
-            if (!$filesystem->exists($folder)) {
-                $filesystem->mkdir($folder);
-            }
-
-            return true;
-        } catch (\Exception $exception) {
-            return false;
-        }
     }
 }

@@ -31,6 +31,7 @@ class PumukitCoreExtension extends Extension
         $container->setParameter('pumukit.delete_on_disk', $config['delete_on_disk']);
         $container->setParameter('pumukit.use_series_channels', $config['use_series_channels']);
         $container->setParameter('pumukit.full_magic_url', $config['full_magic_url']);
+        $container->setParameter('pumukit.inboxDebug', $config['inboxDebug']);
         $container->setParameter('pumukit.inboxUploadURL', $config['inboxUploadURL']);
         $container->setParameter('pumukit.inboxUploadLIMIT', $config['inboxUploadLIMIT']);
         $container->setParameter('pumukit.maxFileSize', $config['maxFileSize']);

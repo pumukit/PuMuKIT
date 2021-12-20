@@ -8,7 +8,7 @@ use Symfony\Component\Finder\Finder;
 
 final class FinderUtils
 {
-    public static function getDirectoriesFromPath(string $path)
+    public static function getDirectoriesFromPath(string $path): Finder
     {
         self::isValidPath($path);
 
@@ -17,12 +17,12 @@ final class FinderUtils
         return $finder->depth('0')->directories()->in($path);
     }
 
-    public static function getFinder()
+    public static function getFinder(): Finder
     {
         return new Finder();
     }
 
-    public static function isValidPath(string $path)
+    public static function isValidPath(string $path): bool
     {
         if (realpath($path)) {
             return true;

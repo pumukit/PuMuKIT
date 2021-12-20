@@ -65,5 +65,20 @@
             <argument>%kernel.project_dir%</argument>
             <tag name="kernel.event_listener" event="upload.inbox" method="autoImport"/>
         </service>
+
+        <service id="pumukit.inbox_service_configuration" class="Pumukit\CoreBundle\Services\InboxService">
+            <argument>%pumukit.inboxUploadURL%</argument>
+            <argument>%pumukit.inboxUploadLIMIT%</argument>
+            <argument>%pumukit.minFileSize%</argument>
+            <argument>%pumukit.maxFileSize%</argument>
+            <argument>%pumukit.maxNumberOfFiles%</argument>
+            <argument>%pumukit.inbox%</argument>
+            <argument>%pumukit.inboxDebug%</argument>
+        </service>
+
+        <service id="pumukitcore.inbox_extension" class="Pumukit\CoreBundle\Twig\InboxExtension">
+            <tag name="twig.extension"/>
+            <argument type="service" id="pumukit.inbox_service_configuration"/>
+        </service>
     </services>
 </container>

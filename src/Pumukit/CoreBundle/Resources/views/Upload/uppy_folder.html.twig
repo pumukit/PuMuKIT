@@ -1,10 +1,11 @@
 {% extends 'PumukitCoreBundle:Inbox:template.html.twig' %}
 
 {% block inbox_body %}
-    <form id="inbox_folder_form"
-            action="{{ path('file_upload') }}" method="POST">
+    <form id="inbox_folder_form" action="{{ path('file_upload') }}" method="POST">
         <div class="form-group">
-            <label for="file" class="control-label text-center">{{ "Select the folder or create a new one where you want to upload the videos. Once this is done, press continue to start uploading the corresponding files"|trans }}:</label>
+            <label for="file" class="control-label text-center">
+                {{ "Select the folder or create a new one where you want to upload the videos. Once this is done, press continue to start uploading the corresponding files"|trans }}:
+            </label>
             <div class="input-group">
                 <input type="text" class="form-control" list="items" name="inbox_form_data[folder]" id="folder_inbox" autocomplete="off"/>
                 <datalist id="items">
@@ -24,8 +25,7 @@
         var folderName = $(this).val();
         $.post('{{ path('check_folder_before_creating') }}', { folder : folderName })
         .done(function(data){
-            console.log(data);
-            if(data || folderName == "") {
+            if(data || folderName === "") {
                 $('.btn-next').prop('disabled', false);
                 $('.error_folder').hide();
             } else {
