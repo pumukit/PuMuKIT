@@ -85,7 +85,7 @@ class Configuration implements ConfigurationInterface
             ->info('Minimum file size in bytes for each')
             ->end()
             ->scalarNode('maxNumberOfFiles')
-            ->defaultValue(10)
+            ->defaultValue(50)
             ->info('Total number of files that can be selected')
             ->end()
             ->scalarNode('maxFileSize')

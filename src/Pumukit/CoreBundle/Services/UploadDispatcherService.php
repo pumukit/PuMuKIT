@@ -20,7 +20,6 @@ class UploadDispatcherService
 
     public function dispatchUploadFromInbox(UserInterface $user, string $fileName, ?string $folder): void
     {
-        sleep(1);
         $event = new InboxUploadEvent($user, $fileName, $folder);
         $this->dispatcher->dispatch(UploadEvents::UPLOAD_FROM_INBOX, $event);
     }
