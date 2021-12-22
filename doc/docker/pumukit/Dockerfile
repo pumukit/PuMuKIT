@@ -102,6 +102,10 @@ RUN set -eux; \
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY php.ini /usr/local/etc/php/php.ini
 
+
+COPY ./www.conf /usr/local/etc/php-fpm.d/www.conf
+
+
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
