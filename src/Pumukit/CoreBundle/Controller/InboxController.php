@@ -2,6 +2,7 @@
 
 namespace Pumukit\CoreBundle\Controller;
 
+use Pumukit\CoreBundle\Utils\FileSystemUtils;
 use Pumukit\CoreBundle\Utils\FinderUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -21,7 +22,7 @@ class InboxController extends AbstractController
      */
     public function inbox(): array
     {
-        $inboxPath = $this->container->getParameter('pumukit.inbox');
+        $inboxPath = $this->getInboxServiceConfiguration()->inboxPath();
         $folders = FinderUtils::getDirectoriesFromPath($inboxPath);
 
         return [
@@ -33,15 +34,15 @@ class InboxController extends AbstractController
      * @Route("/upload", name="file_upload")
      * @Template("@PumukitCore/Upload/uppy_drag_and_drop.html.twig")
      */
-    public function folder(Request $request)
+    public function folder(Request $request): array
     {
         $formData = $request->get('inbox_form_data', []);
-        $inboxUploadURL = $this->container->getParameter('pumukit.inboxUploadURL');
-        $inboxUploadLIMIT = $this->container->getParameter('pumukit.inboxUploadLIMIT');
-        $minFileSize = $this->container->getParameter('pumukit.minFileSize');
-        $maxFileSize = $this->container->getParameter('pumukit.maxFileSize');
-        $maxNumberOfFiles = $this->container->getParameter('pumukit.maxNumberOfFiles');
-        $inboxPath = $this->container->getParameter('pumukit.inbox');
+        $inboxUploadURL = $this->getInboxServiceConfiguration()->inboxUploadURL();
+        $inboxUploadLIMIT = $this->getInboxServiceConfiguration()->inboxUploadLIMIT();
+        $minFileSize = $this->getInboxServiceConfiguration()->minFileSize();
+        $maxFileSize = $this->getInboxServiceConfiguration()->maxFileSize();
+        $maxNumberOfFiles = $this->getInboxServiceConfiguration()->maxNumberOfFiles();
+        $inboxPath = $this->getInboxServiceConfiguration()->inboxPath();
 
         $folder = trim($formData['folder']);
         $urlUpload = $inboxPath.'/'.$formData['folder'];
@@ -65,23 +66,21 @@ class InboxController extends AbstractController
     /**
      * Create folder if not exist.
      */
-    public function checkFolderAndCreateIfNotExist(string $folder)
+    public function checkFolderAndCreateIfNotExist(string $folder): bool
     {
-        $inboxPath = $this->container->getParameter('pumukit.inbox');
-        $uploadDispatcherService = $this->get('pumukit.upload_dispatcher_service');
+        $inboxPath = $this->getInboxServiceConfiguration()->inboxPath();
         $userFolder = $folder;
         $folder = $inboxPath.'/'.$userFolder;
 
-        return $uploadDispatcherService->createFolderIfNotExist($folder);
+        return FileSystemUtils::createFolder($folder);
     }
 
     /**
      * @Route("/check_folder", name="check_folder_before_creating")
      */
-    public function checkFolderBeforeCreating(Request $request)
+    public function checkFolderBeforeCreating(Request $request): JsonResponse
     {
         $folderName = $request->get('folder');
-        $uploadDispatcherService = $this->get('pumukit.upload_dispatcher_service');
 
         if (false !== strpos($folderName, '#')) {
             return new JsonResponse(false);
@@ -98,11 +97,20 @@ class InboxController extends AbstractController
         $uploadDispatcherService = $this->get('pumukit.upload_dispatcher_service');
 
         try {
-            $uploadDispatcherService->dispatchUploadFromInbox($this->getUser(), $request->get('fileName'), $request->get('folder'));
+            $uploadDispatcherService->dispatchUploadFromInbox(
+                $this->getUser(),
+                $request->get('fileName'),
+                $request->get('folder')
+            );
         } catch (\Exception $exception) {
             return new JsonResponse(['success' => false]);
         }
 
         return new JsonResponse(['success' => true]);
+    }
+
+    private function getInboxServiceConfiguration()
+    {
+        return $this->container->get('pumukit.inbox_service_configuration');
     }
 }
