@@ -6,6 +6,7 @@ use Pumukit\NewAdminBundle\Controller\NewAdminControllerInterface;
 use Pumukit\SchemaBundle\Document\Live;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,6 +55,7 @@ class APIController extends Controller implements NewAdminControllerInterface
     {
         $mmRepo = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
         $serializer = $this->get('jms_serializer');
+        $userRepo = $this->get('doctrine_mongodb')->getRepository(User::class);
 
         $limit = (int) $request->get('limit');
         $page = (int) $request->get('page');
@@ -87,8 +89,72 @@ class APIController extends Controller implements NewAdminControllerInterface
             $qb = $mmRepo->createStandardQueryBuilder();
         }
 
+        //  WA TTK-25379 - Add dates range
         if ($criteria) {
-            $qb = $qb->addAnd($criteria);
+            if (isset($criteria['owner'])) {
+                $user = $userRepo->createQueryBuilder()->field('username')->equals($criteria['owner'])->getQuery()->getSingleResult();
+                $qb->addAnd($qb->expr()->field('people')->elemMatch(
+                    $qb->expr()->field('cod')->equals('owner')->field('people.id')->equals($user->getPerson()->getId())
+                ));
+                $tempCriteria['owner'] = $criteria['owner'];
+                unset($criteria['owner']);
+            }
+            if (isset($criteria['public_date_init'], $criteria['public_date_finish'])) {
+                $qb->addAnd($qb->expr()->field('public_date')->range(
+                    new \MongoDate(strtotime($criteria['public_date_init'])),
+                    new \MongoDate(strtotime($criteria['public_date_finish']))
+                ));
+                $tempCriteria['public_date_init'] = $criteria['public_date_init'];
+                $tempCriteria['public_date_finish'] = $criteria['public_date_finish'];
+                unset($criteria['public_date_init'], $criteria['public_date_finish']);
+            } elseif (isset($criteria['public_date_init']) && !empty($criteria['public_date_init'])) {
+                $date = date($criteria['public_date_init'].'T23:59:59');
+                $qb->addAnd($qb->expr()->field('public_date')->range(
+                    new \MongoDate(strtotime($criteria['public_date_init'])),
+                    new \MongoDate(strtotime($date))
+                ));
+                $tempCriteria['public_date_init'] = $criteria['public_date_init'];
+                unset($criteria['public_date_init']);
+            } elseif ((isset($criteria['public_date_finish']) && !empty($criteria['public_date_finish']))) {
+                $date = date($criteria['public_date_finish'].'T23:59:59');
+                $qb->addAnd($qb->expr()->field('public_date')->range(
+                    new \MongoDate(strtotime($criteria['public_date_finish'])),
+                    new \MongoDate(strtotime($date))
+                ));
+                $tempCriteria['public_date_finish'] = $criteria['public_date_finish'];
+                unset($criteria['public_date_finish']);
+            }
+            if (isset($criteria['record_date_init'], $criteria['record_date_finish'])) {
+                $qb->addAnd($qb->expr()->field('record_date')->range(
+                    new \MongoDate(strtotime($criteria['record_date_init'])),
+                    new \MongoDate(strtotime($criteria['record_date_finish']))
+                ));
+                $tempCriteria['record_date_init'] = $criteria['record_date_init'];
+                $tempCriteria['record_date_finish'] = $criteria['record_date_finish'];
+                unset($criteria['record_date_init'], $criteria['record_date_finish']);
+            } elseif (isset($criteria['record_date_init']) && !empty($criteria['record_date_init'])) {
+                $date = date($criteria['record_date_init'].'T23:59:59');
+                $qb->addAnd($qb->expr()->field('record_date')->range(
+                    new \MongoDate(strtotime($criteria['record_date_init'])),
+                    new \MongoDate(strtotime($date))
+                ));
+                $tempCriteria['record_date_init'] = $criteria['record_date_init'];
+                unset($criteria['record_date_init']);
+            } elseif ((isset($criteria['record_date_finish']) && !empty($criteria['record_date_finish']))) {
+                $date = date($criteria['record_date_finish'].'T23:59:59');
+                $qb->addAnd($qb->expr()->field('record_date')->range(
+                    new \MongoDate(strtotime($criteria['record_date_finish'])),
+                    new \MongoDate(strtotime($date))
+                ));
+                $tempCriteria['record_date_finish'] = $criteria['record_date_finish'];
+                unset($criteria['record_date_finish']);
+            }
+            if ($criteria) {
+                $qb->addAnd($criteria);
+            }
+            if (isset($tempCriteria)) {
+                $criteria = array_merge($criteria, $tempCriteria);
+            }
         }
 
         $qb_mmobjs = clone $qb;
