@@ -116,9 +116,6 @@ COPY ./www.conf /usr/local/etc/php-fpm.d/www.conf
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
-RUN set -eux; \
-    composer global require "rubenrua/symfony-clean-tags-composer-plugin" "dev-master" -a
-
 # Download and install pumukit to get the composer cache and improve build times
 RUN git clone https://github.com/pumukit/pumukit /srv/pumukit; \
 	cd /srv/pumukit; \
