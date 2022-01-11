@@ -72,7 +72,13 @@ class InboxController extends AbstractController
         $userFolder = $folder;
         $folder = $inboxPath.'/'.$userFolder;
 
-        return FileSystemUtils::createFolder($folder);
+        try {
+            FileSystemUtils::createFolder($folder);
+
+            return true;
+        } catch (\Exception $exception) {
+            return false;
+        }
     }
 
     /**
