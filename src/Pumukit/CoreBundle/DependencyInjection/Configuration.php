@@ -69,7 +69,7 @@ class Configuration implements ConfigurationInterface
             ->defaultFalse()
             ->end()
             ->booleanNode('inboxDebug')
-            ->defaultTrue()
+            ->defaultFalse()
             ->info('Show debug info on console')
             ->end()
             ->scalarNode('inboxUploadURL')
