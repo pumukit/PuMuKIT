@@ -1,0 +1,38 @@
+{% extends 'PumukitCoreBundle:Inbox:template.html.twig' %}
+
+{% block inbox_body %}
+    <form id="inbox_folder_form" action="{{ path('file_upload') }}" method="POST">
+        <div class="form-group">
+            <label for="file" class="control-label text-center">
+                {{ "Select the folder or create a new one where you want to upload the videos. Once this is done, press continue to start uploading the corresponding files"|trans }}:
+            </label>
+            <div class="input-group">
+                <input type="text" class="form-control" list="items" name="inbox_form_data[folder]" id="folder_inbox" autocomplete="off"/>
+                <datalist id="items">
+                    {% for folder in folders %}
+                        <option value="{{ folder.filename }}">{{ folder.filename }}</option>
+                    {% endfor %}
+                </datalist>
+            </div>
+            <p class="error_folder text-danger"> {{ "The folder name is not valid"|trans }}.</p>
+        </div>
+        <div class="button-next">
+            <button type="submit" class="btn btn-primary btn-raised btn-next">{% trans %}Next{% endtrans %} &raquo;</button>
+        </div>
+    </form>
+    <script type="text/javascript">
+    $('#folder_inbox').on('input', function(){
+        var folderName = $(this).val();
+        $.post('{{ path('check_folder_before_creating') }}', { folder : folderName })
+        .done(function(data){
+            if(data || folderName === "") {
+                $('.btn-next').prop('disabled', false);
+                $('.error_folder').hide();
+            } else {
+                $('.error_folder').show();
+                $('.btn-next').prop('disabled', true);
+            }
+        });
+    });
+    </script>
+{% endblock inbox_body %}

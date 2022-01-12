@@ -1,0 +1,22 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  TusPhp\Cache\FileStore:
+    class: TusPhp\Cache\RedisStore
+
+  TusPhp\Tus\Server:
+    class: TusPhp\Tus\Server
+    arguments:
+      $cacheAdapter: '@TusPhp\Cache\FileStore'
+    calls:
+      - method: setUploadDir
+        arguments:
+          - '%pumukit.inbox%'
+      - method: setApiPath
+        arguments:
+          - '/files'
+
+  Pumukit\CoreBundle\Controller\TUSUploadController:
+    class: Pumukit\CoreBundle\Controller\TUSUploadController

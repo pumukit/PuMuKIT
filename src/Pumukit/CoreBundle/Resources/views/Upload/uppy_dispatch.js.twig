@@ -2,3 +2,8 @@ uppyTUS.on('upload-success', (file, response) => {
     uppyTUS.setFileState(file.id, { uploadURL: `${response.url}/get` })
     sendInboxXHRImportRequest(file);
 });
+
+uppyTUS.on('upload-error', (file, error, response) => {
+  console.log('error with file:', file.id)
+  console.log('error message:', error)
+});

@@ -36,6 +36,10 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 #### Security
 - Added latest stable versions of 3rd party libraries.
 
+## [3.8.x](https://github.com/pumukit/PuMuKIT/compare/3.7.0...3.8.x) - (Coming soon)
+
+#### Added
+- Added new feature on inbox to upload on a new folder o default inbox folder.
 
 ## [3.7.x](https://github.com/pumukit/PuMuKIT/compare/3.6.0...3.7.x) - (2021-09-15)
 
