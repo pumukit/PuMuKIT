@@ -80,5 +80,9 @@
             <tag name="twig.extension"/>
             <argument type="service" id="pumukit.inbox_service_configuration"/>
         </service>
+
+        <service id="pumukit.redis_listener" class="Pumukit\CoreBundle\EventListener\RedisListener">
+            <tag name="kernel.event_listener" event="file.removed" method="findAndCleanKeyOfFile"/>
+        </service>
     </services>
 </container>
