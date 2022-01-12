@@ -104,7 +104,8 @@ class APIController extends AbstractController implements NewAdminControllerInte
                     ->field('username')
                     ->equals($criteria['owner'])
                     ->getQuery()
-                    ->getSingleResult();
+                    ->getSingleResult()
+                ;
                 $qb->addAnd($qb->expr()->field('people')->elemMatch(
                     $qb->expr()->field('cod')->equals('owner')->field('people.id')->equals($user->getPerson()->getId())
                 ));
