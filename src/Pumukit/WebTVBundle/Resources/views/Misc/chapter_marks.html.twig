@@ -10,7 +10,7 @@
                            paella_video.trimStart().then(result => {
                                 paella_video.seekToTime({{ chapter.real_time }} - result)
                             });">
-                    {{ date("00:00:00 + " ~ (chapter.time_to_show|round) ~ " seconds")|localizeddate('none','medium',app.request.getLocale()) }}
+                    {{ date("00:00:00 + " ~ (chapter.time_to_show|round) ~ " seconds") | format_datetime('none', 'medium',locale=app.request.getLocale()) }}
                 </a>
             </li>
         {% endfor %}

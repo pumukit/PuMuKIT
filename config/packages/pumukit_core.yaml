@@ -7,9 +7,6 @@ services:
       $locale: '%locale%'
       $locales: '%pumukit.locales%'
       $pumukitPublicDir: '%pumukit.public_dir%'
-      $inboxUploadURL: '%pumukit.inboxUploadURL%'
-      $inboxUploadLIMIT: '%pumukit.inboxUploadLIMIT%'
-
 
   Pumukit\CoreBundle\Controller\:
     resource: '../../src/Pumukit/CoreBundle/Controller'
@@ -70,6 +67,22 @@ services:
 
   Pumukit\CoreBundle\Services\UploadDispatcherService:
     class: Pumukit\CoreBundle\Services\UploadDispatcherService
+
+  Pumukit\CoreBundle\Services\InboxService:
+    class: Pumukit\CoreBundle\Services\InboxService
+    arguments:
+      $inboxUploadURL: '%pumukit.inboxUploadURL%'
+      $inboxUploadLIMIT: '%pumukit.inboxUploadLIMIT%'
+      $minFileSize: '%pumukit.minFileSize%'
+      $maxFileSize: '%pumukit.maxFileSize%'
+      $maxNumberOfFiles: '%pumukit.maxNumberOfFiles%'
+      $inboxPath: '%pumukit.inbox%'
+      $debug: '%pumukit.inboxDebug%'
+
+  Pumukit\CoreBundle\Twig\InboxExtension:
+    class: Pumukit\CoreBundle\Twig\InboxExtension
+    tags:
+      - { name: "twig.extension" }
 
   Pumukit\CoreBundle\EventListener\InboxUploadListener:
     class: Pumukit\CoreBundle\EventListener\InboxUploadListener

@@ -3,7 +3,3 @@ uppyTUS.on('upload-success', (file, response) => {
     sendInboxXHRImportRequest(file);
 });
 
-uppyTUS.on('upload-error', (file, error, response) => {
-  console.log('error with file:', file.id)
-  console.log('error message:', error)
-});
