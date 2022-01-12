@@ -130,7 +130,7 @@ EOT
         $SEMKey = 123456999;
         $seg = sem_get($SEMKey, 1, 0666, -1);
         sem_acquire($seg);
-        
+
         $series = $this->seriesRepo->findOneBy(['title.'.$locale => $seriesTitle]);
         if (!$series) {
             $seriesTitleAllLocales = [$locale => $seriesTitle];
