@@ -78,6 +78,9 @@ test-lint-yaml:
 test-lint-twig:
 	docker-compose -f docker-compose.yml run --service-ports php composer lint-twig
 
+test-lint-xliff:
+	docker-compose -f docker-compose.yml run --service-ports php composer lint-xliff
+
 test-lint-generic:
 	docker-compose -f docker-compose.yml run --service-ports php composer lint-generic
 
