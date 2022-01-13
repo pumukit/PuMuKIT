@@ -2,3 +2,4 @@ uppyTUS.on('upload-success', (file, response) => {
     uppyTUS.setFileState(file.id, { uploadURL: `${response.url}/get` })
     sendInboxXHRImportRequest(file);
 });
+
