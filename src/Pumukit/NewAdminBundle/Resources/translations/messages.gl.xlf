@@ -3881,49 +3881,138 @@
         <source>My stats</source>
         <target state="needs-translation">My stats</target>
       </trans-unit>
-      <trans-unit id="f4d09e54e9e3e5c30365ebf536f2e4f5" resname="You're not allowed to access this link. You're not the holder user.">
+      <trans-unit id="OQIpXE4" resname="You're not allowed to access this link. You're not the holder user.">
         <source>You're not allowed to access this link. You're not the holder user.</source>
         <target>Non ten permisos suficientes a esta ligazón. Usted non é o usuario propietario.</target>
       </trans-unit>
-      <trans-unit id="839425ae7f420452b93e56bd6f0633aa" resname="This link was already used by co-owner.">
+      <trans-unit id="rkv41In" resname="This link was already used by co-owner.">
         <source>This link was already used by co-owner.</source>
         <target>Esta ligazón xa foi usada polo co-propietario.</target>
       </trans-unit>
-      <trans-unit id="ca798e42d818eaf0bb742e3545af4f50" resname="You're not allowed to access this link. You're not the owner user of this multimedia object.">
+      <trans-unit id="Dezy.jb" resname="You're not allowed to access this link. You're not the owner user of this multimedia object.">
         <source>You're not allowed to access this link. You're not the owner user of this multimedia object.</source>
         <target>Non ten permisos suficientes a esta ligazón. Usted non é o propietario do obxecto multimedia.</target>
       </trans-unit>
-      <trans-unit id="bd631e7d782c3f134eba94fa25116fcd" resname="The user '%user%' has added you as co-owner of the video:">
+      <trans-unit id="Oob_u0K" resname="The user '%user%' has added you as co-owner of the video:">
         <source>The user '%user%' has added you as co-owner of the video:</source>
         <target>O usuario '%user%' añadiulle como co-propietario do video:</target>
       </trans-unit>
-      <trans-unit id="3e1d8d5e659e87b8b3907904a9975bfa" resname="You can reject being co-owner in the following URL link:">
+      <trans-unit id="oSLy2_6" resname="You can reject being co-owner in the following URL link:">
         <source>You can reject being co-owner in the following URL link:</source>
         <target>Pode rechazar ser ó co-propietario na seguinte ligazón:</target>
       </trans-unit>
-      <trans-unit id="b25dbdd9f0cf292aa2e79348c6fd533d" resname="Error on reject of a publication">
+      <trans-unit id="Dyk7WPz" resname="Error on reject of a publication">
         <source>Error on reject of a publication</source>
         <target>Error ó rechazar unha publicación</target>
       </trans-unit>
-      <trans-unit id="29abe05fed22c6f7dc46cd7f3459ebd5" resname="Check the URL is valid.">
+      <trans-unit id="jm0oub9" resname="Check the URL is valid.">
         <source>Check the URL is valid.</source>
         <target>Comprobe que a ligazón é válido.</target>
       </trans-unit>
-      <trans-unit id="2528d799b77457ae4e52dcd038da26ca" resname="Back to index">
+      <trans-unit id="G.l7GCV" resname="Back to index">
         <source>Back to index</source>
         <target>Volver ó índice</target>
       </trans-unit>
-      <trans-unit id="2f2437fb0d28c1d662c6dad6c120fb7d" resname="Reject/report of publication in my name">
+      <trans-unit id="qsBEVQq" resname="Reject/report of publication in my name">
         <source>Reject/report of publication in my name</source>
         <target>Rechazo/denuncia da publicación no meu nome</target>
       </trans-unit>
-      <trans-unit id="507493d262a6bd30c0bb030413dda1e3" resname="You've been deleted as owner of the following multimedia object">
+      <trans-unit id="ge0Gbk8" resname="You've been deleted as owner of the following multimedia object">
         <source>You've been deleted as owner of the following multimedia object</source>
         <target>Ha sido borrado como propietario do siguiente vídeo</target>
       </trans-unit>
-      <trans-unit id="7587ebf6ad75aa7005b9d4d0e035def8" resname="NOTE: This is an URL of one single use, if you attempt to access it again, an error message will be shown.">
+      <trans-unit id="gvpvekT" resname="NOTE: This is an URL of one single use, if you attempt to access it again, an error message will be shown.">
         <source>NOTE: This is an URL of one single use, if you attempt to access it again, an error message will be shown.</source>
         <target>NOTA: Ésta é unha ligzaón de un solo uso, si intenta acceder de novo, mostrarase una mensaxe de error.</target>
+      </trans-unit>
+
+      <trans-unit id="MLMItXS" resname="Video options">
+        <source>Video options</source>
+        <target>Opciones del vídeo</target>
+      </trans-unit>
+      <trans-unit id="kMMeE3r" resname="Video head">
+        <source>Video head</source>
+        <target>Video de cabecera</target>
+      </trans-unit>
+      <trans-unit id="ICtUyCV" resname="Video tail">
+        <source>Video tail</source>
+        <target>Video de cola</target>
+      </trans-unit>
+      <trans-unit id="0tHgmzW" resname="Multimedia Object Id">
+        <source>Multimedia Object Id</source>
+        <target>Id Objeto multimedia</target>
+      </trans-unit>
+      <trans-unit id="CscPjL9" resname="i18n.one.Series">
+        <source>i18n.one.Series</source>
+        <target>Serie</target>
+      </trans-unit>
+      <trans-unit id="QFUsnzv" resname="Technical info">
+        <source>Technical info</source>
+        <target>Información técnica</target>
+      </trans-unit>
+      <trans-unit id="cS3R70y" resname="Head and tail video">
+        <source>Head and tail video</source>
+        <target>Vídeo de cabecera y cola</target>
+      </trans-unit>
+      <trans-unit id="m7CqzG1" resname="Head">
+        <source>Head</source>
+        <target>Cabecera</target>
+      </trans-unit>
+      <trans-unit id="rpw70R9" resname="Tail">
+        <source>Tail</source>
+        <target>Cola</target>
+      </trans-unit>
+      <trans-unit id="F_V94dr" resname="Iframe">
+        <source>Iframe</source>
+        <target>Iframe</target>
+      </trans-unit>
+      <trans-unit id="GqTLC8y" resname="Image">
+        <source>Image</source>
+        <target>Imagen</target>
+      </trans-unit>
+      <trans-unit id="q3dDpK2" resname="Serie">
+        <source>Serie</source>
+        <target>Serie</target>
+      </trans-unit>
+      <trans-unit id="BR8B8JW" resname="Track">
+        <source>Track</source>
+        <target>Track</target>
+      </trans-unit>
+      <trans-unit id=".4BZ3Gd" resname="Actions">
+        <source>Actions</source>
+        <target>Acciones</target>
+      </trans-unit>
+      <trans-unit id="bY.FPa8" resname="No videos selected">
+        <source>No videos selected</source>
+        <target>Ningún vídeo seleccionado</target>
+      </trans-unit>
+      <trans-unit id="fTYUYZE" resname="Default system header configuration">
+        <source>Default system header configuration</source>
+        <target>Cabecera por defecto del sistema</target>
+      </trans-unit>
+      <trans-unit id="Ot22Fs0" resname="No video head configured">
+        <source>No video head configured</source>
+        <target>Ninguna cabecera configurada</target>
+      </trans-unit>
+      <trans-unit id="izUTcEy" resname="Default system tail configuration">
+        <source>Default system tail configuration</source>
+        <target>Cola por defecto del sistema</target>
+      </trans-unit>
+      <trans-unit id="qAxfDBU" resname="No video tail configured">
+        <source>No video tail configured</source>
+        <target>Ninguna cola configurada</target>
+      </trans-unit>
+      <trans-unit id="lYYIDRi" resname="Head and tail manager">
+        <source>Head and tail manager</source>
+        <target>Gestor de cabeceras y colas</target>
+      </trans-unit>
+      <trans-unit id="1ZPHvob" resname="Video head list">
+        <source>Video head list</source>
+        <target>Listado de vídeos de cabecera</target>
+      </trans-unit>
+      <trans-unit id="o.hlqWT" resname="Video tail list">
+        <source>Video tail list</source>
+        <target>Listado de vídeos de cola</target>
       </trans-unit>
     </body>
   </file>
