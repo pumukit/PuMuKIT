@@ -878,10 +878,10 @@ class JobService
             unlink($job->getPathIni());
         } elseif ($this->deleteInboxFiles && false !== strpos($job->getPathIni(), $this->inboxPath)) {
             unlink($job->getPathIni());
-        }
 
-        $event = new FileRemovedEvent($job->getPathIni());
-        $this->dispatcher->dispatch(FileEvents::FILE_REMOVED, $event);
+            $event = new FileRemovedEvent($job->getPathIni());
+            $this->dispatcher->dispatch(FileEvents::FILE_REMOVED, $event);
+        }
     }
 
     /**
