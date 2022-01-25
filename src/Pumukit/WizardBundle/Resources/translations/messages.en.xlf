@@ -349,6 +349,14 @@
         <source>There was an error</source>
         <target>There was an error</target>
       </trans-unit>
+      <trans-unit id="A9ZCBUt" resname="Max.">
+        <source>Max.</source>
+        <target>Max.</target>
+      </trans-unit>
+      <trans-unit id="zikl0Vc" resname="File to upload">
+        <source>File to upload</source>
+        <target>File to upload</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

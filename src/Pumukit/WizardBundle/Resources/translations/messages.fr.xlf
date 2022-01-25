@@ -345,6 +345,18 @@
         <source>Uploading file</source>
         <target>Uploading file</target>
       </trans-unit>
+      <trans-unit id="SWUsDc_" resname="There was an error">
+        <source>There was an error</source>
+        <target>There was an error</target>
+      </trans-unit>
+      <trans-unit id="A9ZCBUt" resname="Max.">
+        <source>Max.</source>
+        <target>Max.</target>
+      </trans-unit>
+      <trans-unit id="zikl0Vc" resname="File to upload">
+        <source>File to upload</source>
+        <target>File to upload</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

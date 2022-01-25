@@ -437,7 +437,7 @@
         <source>International Sign Language</source>
         <target>International Sign Language</target>
       </trans-unit>
-      <trans-unit id="Td6gpZm" resname="Valencian">
+      <trans-unit id="NOqPcLO" resname="Valencian">
         <source>Valencian</source>
         <target>Valencian</target>
       </trans-unit>
@@ -744,22 +744,6 @@
       <trans-unit id="1c5E_XE" resname="External player">
         <source>External player</source>
         <target>External player</target>
-      </trans-unit>
-      <trans-unit id="tajUwR_" resname="Invalidad username/password">
-        <source>Invalidad username/password</source>
-        <target>Invalidad username/password</target>
-      </trans-unit>
-      <trans-unit id="47ienTP" resname="Username">
-        <source>Username</source>
-        <target>Username</target>
-      </trans-unit>
-      <trans-unit id="588_9PF" resname="Password">
-        <source>Password</source>
-        <target>Password</target>
-      </trans-unit>
-      <trans-unit id="gJanvZo" resname="Remember">
-        <source>Remember</source>
-        <target>Remember</target>
       </trans-unit>
     </body>
   </file>
