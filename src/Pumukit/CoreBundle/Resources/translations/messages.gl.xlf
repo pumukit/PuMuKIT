@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="gl" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="df56ghd" resname="Select the folder or create a new one where you want to upload the videos. Once this is done, press continue to start uploading the corresponding files">
+        <source>Select the folder or create a new one where you want to upload the videos. Once this is done, press continue to start uploading the corresponding files</source>
+        <target state="translated">Selecciona un cartafol ou crea un novo onde queiras cargar os vídeos. Unha vez feito isto, prema continuar para comezar a cargar os ficheiros correspondentes</target>
+      </trans-unit>
+      <trans-unit id="Qc5fioP" resname="The folder name is not valid">
+        <source>The folder name is not valid</source>
+        <target state="translated">O nome do cartafol non é válido</target>
+      </trans-unit>
+      <trans-unit id="Fsmkf5f" resname="Upload video to: %folder%">
+        <source>Upload video to: %folder%</source>
+        <target>Cargar vídeo en: %folder%</target>
+      </trans-unit>
+      <trans-unit id="7b1Qa7i" resname="Pumukit Bundle Versions">
+        <source>Pumukit Bundle Versions</source>
+        <target>Versiones bundles PuMuKIT</target>
+      </trans-unit>
+      <trans-unit id="uq3fcPt" resname="Type">
+        <source>Type</source>
+        <target>Tipo</target>
+      </trans-unit>
+      <trans-unit id="3NHVIj9" resname="Name">
+        <source>Name</source>
+        <target>Nome</target>
+      </trans-unit>
+      <trans-unit id="3RZ5Bd4" resname="Version">
+        <source>Version</source>
+        <target>Versión</target>
+      </trans-unit>
+      <trans-unit id="gqnEb.p" resname="Commit">
+        <source>Commit</source>
+        <target>Commit</target>
+      </trans-unit>
+      <trans-unit id="EzEnW8U" resname="Tags">
+        <source>Tags</source>
+        <target>Categorías</target>
+      </trans-unit>
+      <trans-unit id="Um4Ah8w" resname="Description">
+        <source>Description</source>
+        <target>Descripción</target>
+      </trans-unit>
+      <trans-unit id="fQD8IDp" resname="Other packages">
+        <source>Other packages</source>
+        <target>Outros paquetes</target>
+      </trans-unit>
+      <trans-unit id="PWlKoNH" resname="Edit multimedia object">
+        <source>Edit multimedia object</source>
+        <target>Editar obxecto multimedia</target>
+      </trans-unit>
+      <trans-unit id="a1b7xcD" resname="Upload local file">
+        <source>Upload local file</source>
+        <target>Subir ficheiro local</target>
+      </trans-unit>
+      <trans-unit id="H.V6Kdf" resname="Next">
+        <source>Next</source>
+        <target>Seguinte</target>
+      </trans-unit>
+      <trans-unit id="dpAPG.0" resname="Back">
+        <source>Back</source>
+        <target>Atrás</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

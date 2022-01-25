@@ -453,6 +453,10 @@
         <source>International Sign Language</source>
         <target state="translated">lengua de signos internacional</target>
       </trans-unit>
+      <trans-unit id="NOqPcLO" resname="Valencian">
+        <source>Valencian</source>
+        <target>Valenciano</target>
+      </trans-unit>
       <trans-unit id="W7zF64l" resname="Latest Uploads">
         <source>Latest Uploads</source>
         <target state="translated">Lo último</target>

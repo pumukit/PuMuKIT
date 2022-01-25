@@ -14,7 +14,7 @@
       {% elseif multimediaObject.getProperty('externalplayer') %}
           <iframe src="{{ multimediaObject.getProperty('externalplayer') }}" width="100%" class="embed-responsive-item" frameborder="0" allowfullscreen></iframe>
       {% else%}
-          <iframe src="{{ url('pumukit_videoplayer_index', {'id': multimediaObject.id}) }}"
+          <iframe src="{{ url('pumukit_videoplayer_index', {'id': multimediaObject.id }) }}"
                   id="paellaiframe_{{ multimediaObject.id }}"
                   frameborder="0"
                   border="0"

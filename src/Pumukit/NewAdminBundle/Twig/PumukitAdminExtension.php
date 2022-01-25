@@ -36,8 +36,9 @@ class PumukitAdminExtension extends AbstractExtension
     private $mmobjService;
     private $specialTranslationService;
     private $eventService;
+    private $enablePlaylist;
 
-    public function __construct(ProfileService $profileService, DocumentManager $documentManager, TranslatorInterface $translator, RouterInterface $router, MultimediaObjectService $mmobjService, SpecialTranslationService $specialTranslationService, EmbeddedEventSessionService $eventService)
+    public function __construct(ProfileService $profileService, DocumentManager $documentManager, TranslatorInterface $translator, RouterInterface $router, MultimediaObjectService $mmobjService, SpecialTranslationService $specialTranslationService, EmbeddedEventSessionService $eventService, $enablePlaylist)
     {
         $this->dm = $documentManager;
         $this->languages = Languages::getNames();
@@ -47,6 +48,7 @@ class PumukitAdminExtension extends AbstractExtension
         $this->mmobjService = $mmobjService;
         $this->specialTranslationService = $specialTranslationService;
         $this->eventService = $eventService;
+        $this->enablePlaylist = $enablePlaylist;
     }
 
     public function getFilters(): array
@@ -82,6 +84,7 @@ class PumukitAdminExtension extends AbstractExtension
             new TwigFunction('is_mmobj_owner', [$this, 'isUserOwner']),
             new TwigFunction('broadcast_description', [$this, 'getBroadcastDescription']),
             new TwigFunction('is_naked', [$this, 'isNaked'], ['needs_environment' => true]),
+            new TwigFunction('is_playlist_enabled', [$this, 'isPlaylistEnabled']),
             new TwigFunction('trans_i18n_broadcast', [$this, 'getI18nEmbeddedBroadcast']),
             new TwigFunction('date_from_mongo_id', [$this, 'getDateFromMongoId']),
             new TwigFunction('default_poster', [$this, 'getDefaultPoster']),
@@ -415,6 +418,11 @@ class PumukitAdminExtension extends AbstractExtension
         }
 
         return false;
+    }
+
+    public function isPlaylistEnabled()
+    {
+        return $this->enablePlaylist;
     }
 
     public function getI18nEmbeddedBroadcast(EmbeddedBroadcast $embeddedBroadcast, ?string $locale = 'en'): string

@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\UTCDateTime;
 use Pumukit\CoreBundle\Services\SerializerService;
 use Pumukit\NewAdminBundle\Controller\NewAdminControllerInterface;
 use Pumukit\SchemaBundle\Document\Live;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -94,8 +96,78 @@ class APIController extends AbstractController implements NewAdminControllerInte
             $qb = $mmRepo->createStandardQueryBuilder();
         }
 
+        //  WA TTK-25379 - Add dates range
         if ($criteria) {
-            $qb = $qb->addAnd($criteria);
+            if (isset($criteria['owner'])) {
+                $user = $documentManager->getRepository(User::class)
+                    ->createQueryBuilder()
+                    ->field('username')
+                    ->equals($criteria['owner'])
+                    ->getQuery()
+                    ->getSingleResult()
+                ;
+                $qb->addAnd($qb->expr()->field('people')->elemMatch(
+                    $qb->expr()->field('cod')->equals('owner')->field('people.id')->equals($user->getPerson()->getId())
+                ));
+                $tempCriteria['owner'] = $criteria['owner'];
+                unset($criteria['owner']);
+            }
+            if (isset($criteria['public_date_init'], $criteria['public_date_finish'])) {
+                $qb->addAnd($qb->expr()->field('public_date')->range(
+                    new UTCDateTime(strtotime($criteria['public_date_init'])),
+                    new UTCDateTime(strtotime($criteria['public_date_finish']))
+                ));
+                $tempCriteria['public_date_init'] = $criteria['public_date_init'];
+                $tempCriteria['public_date_finish'] = $criteria['public_date_finish'];
+                unset($criteria['public_date_init'], $criteria['public_date_finish']);
+            } elseif (isset($criteria['public_date_init']) && !empty($criteria['public_date_init'])) {
+                $date = date($criteria['public_date_init'].'T23:59:59');
+                $qb->addAnd($qb->expr()->field('public_date')->range(
+                    new UTCDateTime(strtotime($criteria['public_date_init'])),
+                    new UTCDateTime(strtotime($date))
+                ));
+                $tempCriteria['public_date_init'] = $criteria['public_date_init'];
+                unset($criteria['public_date_init']);
+            } elseif ((isset($criteria['public_date_finish']) && !empty($criteria['public_date_finish']))) {
+                $date = date($criteria['public_date_finish'].'T23:59:59');
+                $qb->addAnd($qb->expr()->field('public_date')->range(
+                    new UTCDateTime(strtotime($criteria['public_date_finish'])),
+                    new UTCDateTime(strtotime($date))
+                ));
+                $tempCriteria['public_date_finish'] = $criteria['public_date_finish'];
+                unset($criteria['public_date_finish']);
+            }
+            if (isset($criteria['record_date_init'], $criteria['record_date_finish'])) {
+                $qb->addAnd($qb->expr()->field('record_date')->range(
+                    new UTCDateTime(strtotime($criteria['record_date_init'])),
+                    new UTCDateTime(strtotime($criteria['record_date_finish']))
+                ));
+                $tempCriteria['record_date_init'] = $criteria['record_date_init'];
+                $tempCriteria['record_date_finish'] = $criteria['record_date_finish'];
+                unset($criteria['record_date_init'], $criteria['record_date_finish']);
+            } elseif (isset($criteria['record_date_init']) && !empty($criteria['record_date_init'])) {
+                $date = date($criteria['record_date_init'].'T23:59:59');
+                $qb->addAnd($qb->expr()->field('record_date')->range(
+                    new UTCDateTime(strtotime($criteria['record_date_init'])),
+                    new UTCDateTime(strtotime($date))
+                ));
+                $tempCriteria['record_date_init'] = $criteria['record_date_init'];
+                unset($criteria['record_date_init']);
+            } elseif ((isset($criteria['record_date_finish']) && !empty($criteria['record_date_finish']))) {
+                $date = date($criteria['record_date_finish'].'T23:59:59');
+                $qb->addAnd($qb->expr()->field('record_date')->range(
+                    new UTCDateTime(strtotime($criteria['record_date_finish'])),
+                    new UTCDateTime(strtotime($date))
+                ));
+                $tempCriteria['record_date_finish'] = $criteria['record_date_finish'];
+                unset($criteria['record_date_finish']);
+            }
+            if ($criteria) {
+                $qb->addAnd($criteria);
+            }
+            if (isset($tempCriteria)) {
+                $criteria = array_merge($criteria, $tempCriteria);
+            }
         }
 
         $qb_mmobjs = clone $qb;

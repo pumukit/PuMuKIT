@@ -137,6 +137,10 @@ EOT
             throw new \Exception('The file ('.$path.') is not a valid video or audio file (duration is zero)');
         }
 
+        $SEMKey = 123456999;
+        $seg = sem_get($SEMKey, 1, 0666, -1);
+        sem_acquire($seg);
+
         $series = $this->documentManager->getRepository(Series::class)->findOneBy(['title.'.$locale => $seriesTitle]);
         if (!$series) {
             $seriesTitleAllLocales = [$locale => $seriesTitle];
@@ -156,6 +160,8 @@ EOT
         $this->tagService->addTagByCodToMultimediaObject($multimediaObject, 'PUCHWEBTV');
 
         $this->jobService->createTrackFromInboxOnServer($multimediaObject, $path, $profile, 2, $locale, []);
+
+        sem_release($seg);
 
         return 0;
     }

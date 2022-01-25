@@ -7,6 +7,7 @@ use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\UTCDateTime;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\StatsBundle\Document\ViewsAggregation;
 use Pumukit\StatsBundle\Document\ViewsLog;
 
 class StatsService
@@ -23,7 +24,7 @@ class StatsService
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository(MultimediaObject::class);
         $this->repoSeries = $this->dm->getRepository(Series::class);
-        $this->collectionName = $useAggregation ? 'PumukitStatsBundle:ViewsAggregation' : 'PumukitStatsBundle:ViewsLog';
+        $this->collectionName = $useAggregation ? ViewsAggregation::class : ViewsLog::class;
         $this->sumValue = $useAggregation ? '$numView' : 1;
     }
 

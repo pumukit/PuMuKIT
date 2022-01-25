@@ -33,6 +33,7 @@ jobs:
         run:  |
               make test-lint-yaml
               make test-lint-twig
+              make test-lint-xliff
               make test-lint-generic
 
       - name: PHPCSFixer
