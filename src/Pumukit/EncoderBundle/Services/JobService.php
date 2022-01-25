@@ -787,7 +787,7 @@ class JobService
             unlink($job->getPathIni());
 
             $event = new FileRemovedEvent($job->getPathIni());
-            $this->dispatcher->dispatch(FileEvents::FILE_REMOVED, $event);
+            $this->eventDispatcher->dispatch(FileEvents::FILE_REMOVED, $event);
         }
 
         $event = new FileRemovedEvent($job->getPathIni());
