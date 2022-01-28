@@ -165,7 +165,7 @@ class MultimediaObjectMetaType extends AbstractType
             )
                 ->add(
                     'subseriestitle',
-                    TextI18nType::class,
+                    TextareaI18nType::class,
                     [
                         'mapped' => false,
                         'required' => false,
