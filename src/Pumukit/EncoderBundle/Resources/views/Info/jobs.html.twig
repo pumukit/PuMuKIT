@@ -1,79 +1,84 @@
 {% import "@PumukitEncoder/macros.html.twig" as macros %}
 
-<h3>{{ title|default("Jobs"|trans)}}</h3>
+<h3>{{ title|default("Jobs"|trans) }}</h3>
 
-{% if jobs.total == 0%}
-<div>
-  {% trans %}No{% endtrans %} {{title|lower}}.
-</div>
+{% if jobs.total == 0 %}
+    <div>
+        {% trans %}No{% endtrans %} {{ title|lower }}.
+    </div>
 {% elseif jobs.jobs|length == 0 %}
-<div>
-  {% trans %}No showing {% endtrans %} {{title|lower}}. {% trans %}Please change the filter or {% endtrans %} <a href="#" onclick="window.location.href=window.location.pathname">{% trans %} reset it {% endtrans %}</a>.
-</div>
+    <div>
+        {% trans %}No showing {% endtrans %} {{ title|lower }}. {% trans %}Please change the filter or {% endtrans %}
+        <a href="#" onclick="window.location.href=window.location.pathname">{% trans %} reset it {% endtrans %}</a>.
+    </div>
 {% else %}
-<table class="table table-striped table-hover ">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>{% trans %}Status{% endtrans %}</th>
-      <th>{% trans %}MM{% endtrans %}</th>
-      <th>{% trans %}Profile{% endtrans %}</th>
-      <th>{% trans %}Cpu{% endtrans %}</th>
-      <th>{% trans %}Priority{% endtrans %}</th>
-      <th>{% trans %}Timeini{% endtrans %}</th>
-      <th>{% trans %}Timestart{% endtrans %}</th>
-      <th>{% trans %}Timeend{% endtrans %}</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for job in jobs.jobs %}
-    <tr class="
-               {% if job.failed  %} danger
-               {% elseif job.executing %} warning
-               {% endif %}
-               ">
-      <td>
-        <a title="{% trans %}Encoder Job info{% endtrans %}" style="color:inherit" data-toggle="modal" data-backdrop="static"
-           data-dismiss="modal" data-target="#myModal" href="{{ path('pumukit_encoder_job', {id: job.id}) }}">
-          <i class="mdi-action-info"></i>
-        </a>
-      </td>
-      <td style="padding-top: 12px; color: {{ macros.job_status_color(job.getStatus()) }}">
-        <i class="{{ macros.job_status_icon(job.getStatus()) }}"
-           style="color: #FFF; font-size: 16px; padding: 8px; border-radius: 100%; background: {{ macros.job_status_color(job.getStatus()) }}"></i>
-        {{ job.getStatusText()|trans }}
-      </td>
-      <td><a href="{{ path('pumukit_encoder_mm', {'id':job.getMmId()}) }}">{{ job.getMmId() }}</a></td>
-      <td>{{ job.getProfile() }}</td>
-      <td>{{ job.getCpu() }}</td>
-      <td>{{ job.getPriority() }}</td>
-      <td>{{ job.getTimeini()| format_datetime('medium','medium',locale=app.request.getLocale()) }}</td>
-      <td>{{ job.getTimestart()| format_datetime('medium','medium',locale=app.request.getLocale()) }}</td>
-      <td>{{ job.getTimeend()| format_datetime('medium','medium',locale=app.request.getLocale()) }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-  <tfoot>
-    <tr>
-      <th colspan="9">
-        <div class="row">
-          <div class="col-md-8" id="numberJobs">
-            {{ jobs.total }}
-              {{ "{0} jobs|{1} job|]1,Inf] jobs"|trans({'%count%':  jobs.total}) }}
-          </div>
-          <div class="col-md-4 text-right">
-            <div class="pagerfanta">
-                {% set pagerClass = 'twitter_bootstrap3' %}
-                {% set pagerStyles = {"css_container_class": "pagination pagination-sm",
-                    "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukit_encoder_info",
-                    "pageParameter": pageParameter, "routeParams": app.request.query.all} %}
-                {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects': jobs.jobs, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles } %}
-            </div>
-          </div>
-        </div>
-      </th>
-    </tr>
-  </tfoot>
+    <table class="table table-striped table-hover ">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>{% trans %}Status{% endtrans %}</th>
+            <th>{% trans %}Job{% endtrans %}</th>
+            <th>{% trans %}Multimedia Object{% endtrans %}</th>
+            <th>{% trans %}Profile{% endtrans %}</th>
+            <th>{% trans %}Cpu{% endtrans %}</th>
+            <th>{% trans %}Priority{% endtrans %}</th>
+            <th>{% trans %}Started{% endtrans %}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for job in jobs.jobs %}
+            <tr class="{% if job.failed %} danger{% elseif job.executing %} warning{% endif %}">
+                <td style="width:3%">
+                    <a title="{% trans %}Encoder Job info{% endtrans %}" style="color:inherit" data-toggle="modal"
+                       data-backdrop="static"
+                       data-dismiss="modal" data-target="#myModal"
+                       href="{{ path('pumukit_encoder_job', {id: job.id}) }}">
+                        <i class="mdi-action-info"></i>
+                    </a>
+                </td>
+                <td style="padding-top: 12px; color: {{ macros.job_status_color(job.getStatus()) }}">
+                    <i class="{{ macros.job_status_icon(job.getStatus()) }}" style="color: #FFF; font-size: 16px; padding: 8px; border-radius: 100%; background: {{ macros.job_status_color(job.getStatus()) }}"></i>
+                    {{ job.getStatusText()|trans }}
+                </td>
+                <td>{{ job.id }}</td>
+                <td style="width:30%">
+                    {% set multimediaObject = multimedia_object_from_id(job.getMmId()) %}
+                    {% if multimediaObject is not null %}
+                    <a href="{{ path('pumukit_encoder_mm', {'id':job.getMmId()}) }}">
+                        {{ multimedia_object_from_id(job.getMmId()).title() }}
+                    </a>
+                    {% else %}
+                        <span class="text-danger">{{ "Multimedia object removed"|trans }}</span>
+                    {% endif %}
+                </td>
+                <td>{{ job.getProfile() }}</td>
+                <td>{{ job.getCpu() }}</td>
+                <td>{{ job.getPriority() }}</td>
+                <td>{{ job.getTimestart()| format_datetime('medium','medium',locale=app.request.getLocale()) }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <th colspan="9">
+                <div class="row">
+                    <div class="col-md-8" id="numberJobs">
+                        {{ jobs.total }}
+                        {{ "{0} jobs|{1} job|]1,Inf] jobs"|trans({'%count%':  jobs.total}) }}
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <div class="pagerfanta">
+                            {% set pagerClass = 'twitter_bootstrap3' %}
+                            {% set pagerStyles = {"css_container_class": "pagination pagination-sm",
+                                "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukit_encoder_info",
+                                "pageParameter": pageParameter, "routeParams": app.request.query.all} %}
+                            {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects': jobs.jobs, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles } %}
+                        </div>
+                    </div>
+                </div>
+            </th>
+        </tr>
+        </tfoot>
 
-</table>
+    </table>
 {% endif %}
