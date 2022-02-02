@@ -1,0 +1,11 @@
+services:
+  _defaults:
+    autowire:      true
+    autoconfigure: true
+    public:        true
+
+
+  Pumukit\StatsUIBundle\Controller\:
+    resource: '../../vendor/teltek/pumukit-stats-ui-bundle/Controller/'
+    tags: [ 'controller.service_arguments' ]
+
