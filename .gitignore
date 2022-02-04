@@ -6,6 +6,8 @@
 !/public/storage/downloads/.gitignore
 /public/storage/masters/*
 !/public/storage/masters/.gitignore
+/public/storage/inbox/*
+!/public/storage/inbox/.gitignore
 /public/storage/tmp/*
 /build/
 /vendor/

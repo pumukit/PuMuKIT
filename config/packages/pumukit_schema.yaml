@@ -245,3 +245,6 @@ services:
     arguments:
       $defaultHeadVideo: '%pumukit_schema.default_head_video%'
       $defaultTailVideo: '%pumukit_schema.default_tail_video%'
+
+  Pumukit\SchemaBundle\Twig\MultimediaObjectExtension:
+    class: Pumukit\SchemaBundle\Twig\MultimediaObjectExtension

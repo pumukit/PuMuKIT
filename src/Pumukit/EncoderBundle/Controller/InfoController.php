@@ -176,6 +176,6 @@ class InfoController extends AbstractController
 
     private function createPager(PaginationService $paginationService, $objects, $page, $limit = 5)
     {
-        return $paginationService->createDoctrineODMMongoDBAdapter($objects, $page, $limit);
+        return $paginationService->createDoctrineODMMongoDBAdapter($objects, (int) $page, (int) $limit);
     }
 }
