@@ -53,12 +53,6 @@ services:
   Pumukit\CoreBundle\Services\ImportMappingDataService:
     class: Pumukit\CoreBundle\Services\ImportMappingDataService
 
-  Pumukit\CoreBundle\Handler\CustomAuthenticationFailureHandler:
-    class: Pumukit\CoreBundle\Handler\CustomAuthenticationFailureHandler
-
-  Pumukit\CoreBundle\Handler\CustomAuthenticationSuccessHandler:
-    class: Pumukit\CoreBundle\Handler\CustomAuthenticationSuccessHandler
-
   Pumukit\CoreBundle\Services\PaginationService:
     class: Pumukit\CoreBundle\Services\PaginationService
 

@@ -16,8 +16,6 @@ services:
   pumukitcore.listener.command_exception: '@Pumukit\CoreBundle\EventListener\ConsoleExceptionListener'
   pumukitcore.filter_service: '@Pumukit\CoreBundle\Services\FilterService'
   pumukitcore.import_mapping_data: '@Pumukit\CoreBundle\Services\ImportMappingDataService'
-  custom_authentication_failure_handler: '@Pumukit\CoreBundle\Handler\CustomAuthenticationFailureHandler'
-  custom_authentication_success_handler: '@Pumukit\CoreBundle\Handler\CustomAuthenticationSuccessHandler'
   pumukit_core.pagination_service: '@Pumukit\CoreBundle\Services\PaginationService'
   pumukitencoder.cpu: '@Pumukit\EncoderBundle\Services\CpuService'
   pumukitencoder.profile: '@Pumukit\EncoderBundle\Services\ProfileService'
