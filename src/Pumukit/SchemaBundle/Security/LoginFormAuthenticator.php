@@ -11,8 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -27,6 +29,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     use TargetPathTrait;
 
     public const LOGIN_ROUTE = 'pumukit_login';
+    private const EXCEPTION_MESSAGE = 'Invalid login';
 
     private $objectManager;
     private $urlGenerator;
@@ -75,6 +78,10 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
             throw new CustomUserMessageAuthenticationException('Username could not be found.');
         }
 
+        if (!$user->isEnabled() && !$user->isResetLoginAttemptsAllowed()) {
+            throw new CustomUserMessageAuthenticationException('User deactivated, please wait at least '.User::RESET_LOGIN_ATTEMPTS_INTERVAL.' to retry');
+        }
+
         return $user;
     }
 
@@ -95,6 +102,12 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): RedirectResponse
     {
+        $user = $token->getUser();
+        if ($user instanceof User) {
+            $user->resetLoginAttempts();
+            $this->objectManager->flush();
+        }
+
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }
@@ -102,8 +115,36 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         return new RedirectResponse($this->urlGenerator->generate('homepage'));
     }
 
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): RedirectResponse
+    {
+        $username = $request->request->get('username');
+        if (!$username) {
+            throw new UsernameNotFoundException(self::EXCEPTION_MESSAGE);
+        }
+
+        $user = $this->objectManager->getRepository(User::class)->findOneBy(['username' => $username]);
+        if (!$user) {
+            throw new UsernameNotFoundException(self::EXCEPTION_MESSAGE);
+        }
+
+        $this->updateUser($user);
+
+        return new RedirectResponse($this->urlGenerator->generate(self::LOGIN_ROUTE));
+    }
+
     protected function getLoginUrl(): string
     {
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
+    }
+
+    private function updateUser(User $user): void
+    {
+        $user->addLoginAttempt();
+
+        if ($user->isResetLoginAttemptsAllowed()) {
+            $user->resetLoginAttempts();
+        }
+
+        $this->objectManager->flush();
     }
 }
