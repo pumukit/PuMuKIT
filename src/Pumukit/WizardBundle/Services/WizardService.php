@@ -207,6 +207,9 @@ class WizardService
         $aCommandArguments = $this->createCommandArguments($aCommandArguments, '--status', $status);
 
         $tags = $this->convertPubChannels($pubChannel);
+        if ('' === $tags) {
+            $tags = 0;
+        }
         $aCommandArguments = $this->createCommandArguments($aCommandArguments, '--channels', $tags);
         $aCommandArguments = $this->createCommandArguments($aCommandArguments, '--profile', $profile);
         $aCommandArguments = $this->createCommandArguments($aCommandArguments, '--priority', $priority);

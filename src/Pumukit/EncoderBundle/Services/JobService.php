@@ -244,10 +244,6 @@ class JobService
             }
         }
 
-        if ($checkduration && 0 == $duration) {
-            throw new \Exception('The media file duration is zero');
-        }
-
         $this->logger->info('[addJob] new Job');
 
         $job = new Job();
@@ -788,7 +784,7 @@ class JobService
         }
 
         $event = new FileRemovedEvent($job->getPathIni());
-        $this->eventDispatcher->dispatch(FileEvents::FILE_REMOVED, $event);
+        $this->eventDispatcher->dispatch($event, FileEvents::FILE_REMOVED);
     }
 
     private function changeStatus(Job $job, $actualStatus, $newStatus)
