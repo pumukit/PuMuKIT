@@ -1,8 +1,11 @@
 <form id="login_form" class="pumukit_login_form" action="{{ path('pumukit_login') }}" method="POST">
-
-    {% if error %}
+    {% if app.session.flashBag.has('error_max_attempt') %}
         <div class="alert alert-danger text-center">
-            {{ "Invalidad username/password"|trans }}
+            {{ app.session.flashBag.get('error_max_attempt')[0] |trans }}
+        </div>
+    {% elseif app.session.flashbag.has('error') %}
+        <div class="alert alert-danger text-center">
+            {{ app.session.flashBag.get('error')[0] |trans }}
         </div>
     {% endif %}
     <div class="form-group">

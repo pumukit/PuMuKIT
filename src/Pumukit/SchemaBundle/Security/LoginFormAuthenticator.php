@@ -129,6 +129,12 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
         $this->updateUser($user);
 
+        if ($user->canLogin()) {
+            $request->getSession()->getFlashBag()->add('error', 'Username or password invalid');
+        } else {
+            $request->getSession()->getFlashBag()->add('error_max_attempt', 'Please, wait '.User::RESET_LOGIN_ATTEMPTS_INTERVAL.' before trying again.');
+        }
+
         return new RedirectResponse($this->urlGenerator->generate(self::LOGIN_ROUTE));
     }
 
