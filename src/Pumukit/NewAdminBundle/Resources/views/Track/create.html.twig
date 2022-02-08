@@ -43,10 +43,10 @@
                     <div class="form-group">
                         <label for="file_type" class="control-label">{% trans %}Mode{% endtrans %}</label>
                         <div class="radio">
-                            <label><input type="radio" name="file_type" id="radio_inbox" value="inbox" onclick="$('#pumukit_file_input').hide();$('#pumukitnewadmin_track_inbox').show();"/> {% trans %}Inbox on server{% endtrans %}</label>
+                            <label><input type="radio" name="file_type" id="radio_inbox" value="inbox" onclick="$('#pumukit_file_input').hide();$('#pumukitnewadmin_track_inbox').show();$('#pumukitnewadmin_track_ok_button').prop('disabled', false);"/> {% trans %}Inbox on server{% endtrans %}</label>
                         </div>
                         <div class="radio">
-                            <label><input type="radio" name="file_type" id="radio_file" value="file" checked="checked" onclick="{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}$('#pumukitnewadmin_track_inbox').hide();{% endif %}$('#pumukit_file_input').show();"/> {% trans %}Local hard drive{% endtrans %}</label>
+                            <label><input type="radio" name="file_type" id="radio_file" value="file" checked="checked" onclick="{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}$('#pumukitnewadmin_track_inbox').hide();{% endif %}$('#pumukit_file_input').show();$('#pumukitnewadmin_track_ok_button').prop('disabled', true);"/> {% trans %}Local hard drive{% endtrans %}</label>
                         </div>
                     </div>
                 {% else %}
