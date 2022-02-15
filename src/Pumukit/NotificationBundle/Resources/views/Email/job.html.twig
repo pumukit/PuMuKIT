@@ -1,78 +1,94 @@
-<h2>{{ subject }}</h2>
+{% extends '@PumukitNotification/Email/template.html.twig' %}
 
+{% block body %}
+    <h2>{{ subject }}</h2>
 
-<p>
-{% trans %}Multimedia Object Admin Link{% endtrans %}: <a href="{{ multimedia_object_admin_link }}" target="_blank">{{ multimedia_object_admin_link }}</a>
-</p>
+    <p>
+        {% trans %}Multimedia Object Admin Link{% endtrans %}:
+        <a href="{{ multimedia_object_admin_link }}" target="_blank">{{ multimedia_object_admin_link }}</a>
+    </p>
 
+    <details>
+        <summary>{% trans %}Metadata{% endtrans %}</summary>
 
-<details>
-<summary>{% trans %}Metadata{% endtrans %}</summary>
+        <ul>
+            <li>
+                <strong>{% trans %}Multimedia Object Id{% endtrans %}:</strong>
+                {{ multimedia_object.getId() }}
+            </li>
+            <li>
+                <strong>{% trans %}Multimedia Object Title{% endtrans %}:</strong>
+                {{ multimedia_object.getTitle() }}
+            </li>
+            <li>
+                <strong>{% trans %}Series Id{% endtrans %}:</strong>
+                {{ multimedia_object.getSeries().getId() }}
+            </li>
+            <li>
+                <strong>{% trans %}Series Title{% endtrans %}:</strong>
+                {{ multimedia_object.getSeries().getTitle() }}
+            </li>
+        </ul>
+    </details>
 
-<ul>
-<li>
-<strong>{% trans %}Multimedia Object Id{% endtrans %}:</strong> {{ multimedia_object.getId() }}
-</li>
-<li>
-<strong>{% trans %}Multimedia Object Title{% endtrans %}:</strong> {{ multimedia_object.getTitle() }}
-</li>
-<li>
-<strong>{% trans %}Series Id{% endtrans %}:</strong> {{ multimedia_object.getSeries().getId() }}
-</li>
-<li>
-<strong>{% trans %}Series Title{% endtrans %}:</strong> {{ multimedia_object.getSeries().getTitle() }}
-</li>
-</ul>
-</details>
+    <details>
+        <summary>{% trans %}Technical info{% endtrans %}</summary>
 
+        <ul>
+            <li>
+                <strong>{% trans %}Status{% endtrans %}:</strong>
+                {{ job_status }}
+            </li>
+            <li>
+                <strong>{% trans %}Job Id{% endtrans %}:</strong>
+                {{ job.getId() }}
+            </li>
+            <li>
+                <strong>{% trans %}Profile{% endtrans %}:</strong>
+                {{ job.getProfile() }}
+            </li>
+            <li>
+                <strong>{% trans %}Cpu{% endtrans %}:</strong>
+                {{ job.getCpu() }}
+            </li>
+            <li>
+                <strong>{% trans %}Priority{% endtrans %}:</strong>
+                {{ job.getPriority() }}
+            </li>
+            <li>
+                <strong>{% trans %}Duration{% endtrans %}:</strong>
+                {{ job.getDuration() }}
+            </li>
+            <li>
+                <strong>{% trans %}New Duration{% endtrans %}:</strong>
+                {{ job.getNewDuration() }}
+            </li>
+            <li>
+                <strong>{% trans %}Initial Time{% endtrans %}:</strong>
+                {{ job.getTimeini()|localizeddate('medium','medium',app.request.getLocale()|default("en")) }}
+            </li>
+            <li>
+                <strong>{% trans %}Start Time{% endtrans %}:</strong>
+                {{ job.getTimestart()|localizeddate('medium','medium',app.request.getLocale()|default("en")) }}
+            </li>
+            <li>
+                <strong>{% trans %}End Time{% endtrans %}:</strong>
+                {{ job.getTimeend()|localizeddate('medium','medium',app.request.getLocale()|default("en")) }}
+            </li>
+            <li>
+                <strong>{% trans %}Command{% endtrans %}:</strong>
+                <code>
+                    {{ commandLine|nl2br }}
+                </code>
+            </li>
+            <li>
+                <strong>{% trans %}Output{% endtrans %}:</strong>
+                <code>
+                    {{ job.getOutput()|nl2br }}
+                </code>
+            </li>
+        </ul>
+    </details>
 
-<details>
-<summary>{% trans %}Technical info{% endtrans %}</summary>
-
-<ul>
-<li>
-<strong>{% trans %}Status{% endtrans %}:</strong> {{ job_status }}
-</li>
-<li>
-<strong>{% trans %}Job Id{% endtrans %}:</strong> {{ job.getId() }}
-</li>
-<li>
-<strong>{% trans %}Profile{% endtrans %}:</strong> {{ job.getProfile() }}
-</li>
-<li>
-<strong>{% trans %}Cpu{% endtrans %}:</strong> {{ job.getCpu() }}
-</li>
-<li>
-<strong>{% trans %}Priority{% endtrans %}:</strong> {{ job.getPriority() }}
-</li>
-<li>
-<strong>{% trans %}Duration{% endtrans %}:</strong> {{ job.getDuration() }}
-</li>
-<li>
-<strong>{% trans %}New Duration{% endtrans %}:</strong> {{ job.getNewDuration() }}
-</li>
-<li>
-<strong>{% trans %}Initial Time{% endtrans %}:</strong> {{ job.getTimeini()|localizeddate('medium','medium',app.request.getLocale()|default("en")) }}
-</li>
-<li>
-<strong>{% trans %}Start Time{% endtrans %}:</strong> {{ job.getTimestart()|localizeddate('medium','medium',app.request.getLocale()|default("en")) }}
-</li>
-<li>
-<strong>{% trans %}End Time{% endtrans %}:</strong> {{ job.getTimeend()|localizeddate('medium','medium',app.request.getLocale()|default("en")) }}
-</li>
-<li>
-<strong>{% trans %}Command{% endtrans %}:</strong>
-<code>
-{{ commandLine|nl2br }}
-</code>
-</li>
-<li>
-<strong>{% trans %}Output{% endtrans %}:</strong>
-<code>
-{{ job.getOutput()|nl2br }}
-</code>
-</li>
-</ul>
-</details>
-
-{{ sender_name }}
+    {{ sender_name }}
+{% endblock %}

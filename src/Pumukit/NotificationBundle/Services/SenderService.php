@@ -210,6 +210,7 @@ class SenderService
                 ->addReplyTo($this->senderEmail, $this->senderName)
                 ->setTo($email)
                 ->setBody($body, 'text/html')
+                ->addPart($body, 'text/html')
             ;
 
             $error = $this->mailer->send($message);
@@ -285,6 +286,7 @@ class SenderService
             ->addReplyTo($this->senderEmail, $this->senderName)
             ->setTo($email)
             ->setBody($body, 'text/html')
+            ->addPart($body, 'text/html')
         ;
 
         return $message;
