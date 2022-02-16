@@ -2,13 +2,11 @@
 
 {% block body %}
     <h2>{{ subject }}</h2>
-    <br/>
-    <ul>
+    <br />
     {% for email in body %}
-        <li>{{ email }}</li>
+        &nbsp;&nbsp;&nbsp;&nbsp; &bull; {{ email }} <br />
     {% endfor %}
-    </ul>
-    <br/>
-    <br/>
+    <br />
+    <br />
     {{ sender_name }}
 {% endblock %}

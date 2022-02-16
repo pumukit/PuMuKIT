@@ -10,84 +10,31 @@
 
     <details>
         <summary>{% trans %}Metadata{% endtrans %}</summary>
-
-        <ul>
-            <li>
-                <strong>{% trans %}Multimedia Object Id{% endtrans %}:</strong>
-                {{ multimedia_object.getId() }}
-            </li>
-            <li>
-                <strong>{% trans %}Multimedia Object Title{% endtrans %}:</strong>
-                {{ multimedia_object.getTitle() }}
-            </li>
-            <li>
-                <strong>{% trans %}Series Id{% endtrans %}:</strong>
-                {{ multimedia_object.getSeries().getId() }}
-            </li>
-            <li>
-                <strong>{% trans %}Series Title{% endtrans %}:</strong>
-                {{ multimedia_object.getSeries().getTitle() }}
-            </li>
-        </ul>
+        <br />
+        &nbsp;&nbsp;&nbsp;&nbsp; &bull; <b>{% trans %}Multimedia Object Id{% endtrans %}:</b> {{ multimedia_object.getId() }} <br />
+        &nbsp;&nbsp;&nbsp;&nbsp; &bull; <b>{% trans %}Multimedia Object Title{% endtrans %}:</b> {{ multimedia_object.getTitle() }} <br />
+        &nbsp;&nbsp;&nbsp;&nbsp; &bull; <b>{% trans %}Series Id{% endtrans %}:</b> {{ multimedia_object.getSeries().getId() }} <br />
+        &nbsp;&nbsp;&nbsp;&nbsp; &bull; <b>{% trans %}Series Title{% endtrans %}:</b> {{ multimedia_object.getSeries().getTitle() }} <br />
     </details>
 
     <details>
         <summary>{% trans %}Technical info{% endtrans %}</summary>
-
-        <ul>
-            <li>
-                <strong>{% trans %}Status{% endtrans %}:</strong>
-                {{ job_status }}
-            </li>
-            <li>
-                <strong>{% trans %}Job Id{% endtrans %}:</strong>
-                {{ job.getId() }}
-            </li>
-            <li>
-                <strong>{% trans %}Profile{% endtrans %}:</strong>
-                {{ job.getProfile() }}
-            </li>
-            <li>
-                <strong>{% trans %}Cpu{% endtrans %}:</strong>
-                {{ job.getCpu() }}
-            </li>
-            <li>
-                <strong>{% trans %}Priority{% endtrans %}:</strong>
-                {{ job.getPriority() }}
-            </li>
-            <li>
-                <strong>{% trans %}Duration{% endtrans %}:</strong>
-                {{ job.getDuration() }}
-            </li>
-            <li>
-                <strong>{% trans %}New Duration{% endtrans %}:</strong>
-                {{ job.getNewDuration() }}
-            </li>
-            <li>
-                <strong>{% trans %}Initial Time{% endtrans %}:</strong>
-                {{ job.getTimeini()|localizeddate('medium','medium',app.request.getLocale()|default("en")) }}
-            </li>
-            <li>
-                <strong>{% trans %}Start Time{% endtrans %}:</strong>
-                {{ job.getTimestart()|localizeddate('medium','medium',app.request.getLocale()|default("en")) }}
-            </li>
-            <li>
-                <strong>{% trans %}End Time{% endtrans %}:</strong>
-                {{ job.getTimeend()|localizeddate('medium','medium',app.request.getLocale()|default("en")) }}
-            </li>
-            <li>
-                <strong>{% trans %}Command{% endtrans %}:</strong>
-                <code>
-                    {{ commandLine|nl2br }}
-                </code>
-            </li>
-            <li>
-                <strong>{% trans %}Output{% endtrans %}:</strong>
-                <code>
-                    {{ job.getOutput()|nl2br }}
-                </code>
-            </li>
-        </ul>
+        <br />
+        &nbsp;&nbsp;&nbsp;&nbsp; &bull; <b>{% trans %}Status{% endtrans %}:</b> {{ job_status }} <br />
+        &nbsp;&nbsp;&nbsp;&nbsp; &bull; <b>{% trans %}Job Id{% endtrans %}:</b> {{ job.getId() }} <br />
+        &nbsp;&nbsp;&nbsp;&nbsp; &bull; <b>{% trans %}Profile{% endtrans %}:</b> {{ job.getProfile() }} <br />
+        &nbsp;&nbsp;&nbsp;&nbsp; &bull; <b>{% trans %}Cpu{% endtrans %}:</b> {{ job.getCpu() }} <br />
+        &nbsp;&nbsp;&nbsp;&nbsp; &bull; <b>{% trans %}Priority{% endtrans %}:</b> {{ job.getPriority() }} <br />
+        &nbsp;&nbsp;&nbsp;&nbsp; &bull; <b>{% trans %}Duration{% endtrans %}:</b> {{ job.getDuration() }} <br />
+        &nbsp;&nbsp;&nbsp;&nbsp; &bull; <b>{% trans %}New Duration{% endtrans %}:</b> {{ job.getNewDuration() }} <br />
+        &nbsp;&nbsp;&nbsp;&nbsp; &bull; <b>{% trans %}Initial Time{% endtrans %}:</b>
+        {{ job.getTimeini()|localizeddate('medium','medium',app.request.getLocale()|default("en")) }} <br />
+        &nbsp;&nbsp;&nbsp;&nbsp; &bull; <b>{% trans %}Start Time{% endtrans %}:</b>
+        {{ job.getTimestart()|localizeddate('medium','medium',app.request.getLocale()|default("en")) }} <br />
+        &nbsp;&nbsp;&nbsp;&nbsp; &bull; <b>{% trans %}End Time{% endtrans %}:</b>
+        {{ job.getTimeend()|localizeddate('medium','medium',app.request.getLocale()|default("en")) }} <br />
+        &nbsp;&nbsp;&nbsp;&nbsp; &bull; <b>{% trans %}Command{% endtrans %}:</b> <code>{{ commandLine|nl2br }}</code> <br />
+        &nbsp;&nbsp;&nbsp;&nbsp; &bull; <b>{% trans %}Output{% endtrans %}:</b> <code>{{ job.getOutput()|nl2br }}</code><br />
     </details>
 
     {{ sender_name }}
