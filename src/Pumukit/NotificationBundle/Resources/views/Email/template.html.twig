@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="{{ app.request.getLocale()|default(locales[0]) }}">
+    <head>
+        <meta name="viewport" content="initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>{{ "PuMuKIT notifications"|trans }}</title>
+    </head>
+
+    <body>
+        {% block body %}{% endblock %}
+    </body>
+</html>
