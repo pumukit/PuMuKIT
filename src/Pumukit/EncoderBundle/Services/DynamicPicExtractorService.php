@@ -93,7 +93,11 @@ class DynamicPicExtractorService
 
     private function executeProcess($commandLine): void
     {
-        $process = new Process($commandLine);
+        if (is_string($commandLine)) {
+            $process = Process::fromShellCommandline($commandLine);
+        } else {
+            $process = new Process($commandLine);
+        }
         $process->setTimeout(60);
         $process->run();
         if (!$process->isSuccessful()) {

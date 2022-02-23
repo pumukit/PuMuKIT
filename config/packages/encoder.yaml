@@ -16,7 +16,7 @@ pumukit_encoder:
       framerate: 0
       channels: 1
       audio: false
-      bat: cp {{ input }} {{ output }}
+      bat: cp "{{input}}" "{{output}}"
       streamserver:
         name: Localmaster
         type: store
@@ -40,7 +40,7 @@ pumukit_encoder:
       framerate: 25
       channels: 1
       audio: false
-      bat: ffmpeg -y -i {{ input }} -acodec aac -vcodec libx264 -preset slow -crf 15 -threads 0 {{ output }}
+      bat: ffmpeg -y -i "{{input}}" -acodec aac -vcodec libx264 -preset slow -crf 15 -threads 0 "{{output}}"
       streamserver:
         name: Localmaster
         type: store
@@ -65,7 +65,7 @@ pumukit_encoder:
       framerate: 25
       channels: 1
       audio: false
-      bat: ffmpeg -y -i {{ input }} -acodec aac -vcodec libx264 -preset slow -crf 22 -movflags faststart -threads 0 {{ output }}
+      bat: ffmpeg -y -i "{{input}}" -acodec aac -vcodec libx264 -preset slow -crf 22 -movflags faststart -threads 0 "{{output}}"
       streamserver:
         name: Localhost
         type: download
@@ -92,7 +92,7 @@ pumukit_encoder:
       framerate: 25
       channels: 1
       audio: false
-      bat: ffmpeg -y -i {{ input }} -acodec aac -vcodec libx264 -preset slow -crf 22 -movflags faststart -threads 0 {{ output }}
+      bat: ffmpeg -y -i "{{input}}" -acodec aac -vcodec libx264 -preset slow -crf 22 -movflags faststart -threads 0 "{{output}}"
       streamserver:
         name: Localhost
         type: download
@@ -119,7 +119,7 @@ pumukit_encoder:
       framerate: 0
       channels: 1
       audio: true
-      bat: ffmpeg -y -i {{ input }} -acodec aac -vn -threads 0 {{ output }}
+      bat: ffmpeg -y -i "{{input}}" -acodec aac -vn -threads 0 "{{output}}"
       streamserver:
         name: Localhost
         type: download

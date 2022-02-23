@@ -20,9 +20,10 @@ class LocalExecutor
         $fs->mkdir($tempFile);
 
         if (is_string($command)) {
-            $command = explode(' ', $command);
+            $process = Process::fromShellCommandline($command);
+        } else {
+            $process = new Process($command, $tempFile);
         }
-        $process = new Process($command, $tempFile);
         $process->setTimeout(null);
         $process->setIdleTimeout(null);
         $process->run();

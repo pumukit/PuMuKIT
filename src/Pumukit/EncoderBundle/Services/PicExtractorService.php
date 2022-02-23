@@ -110,9 +110,11 @@ class PicExtractorService
 
         $commandLine = str_replace(array_keys($vars), array_values($vars), $this->command);
         if (is_string($commandLine)) {
-            $commandLine = explode(' ', $commandLine);
+            $process = Process::fromShellCommandline($commandLine);
+        } else {
+            $process = new Process($commandLine);
         }
-        $process = new Process($commandLine);
+
         $process->setTimeout(60);
         $process->run();
         if (!$process->isSuccessful()) {
