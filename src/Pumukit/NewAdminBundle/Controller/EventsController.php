@@ -729,15 +729,17 @@ class EventsController extends AdminController implements NewAdminControllerInte
                         }
                     }
                 } else {
-                    $embeddedEventSession = new EmbeddedEventSession();
+                    if ($overlap != 1) {
+                        $embeddedEventSession = new EmbeddedEventSession();
 
-                    $embeddedEventSession->setStart($start);
-                    $embeddedEventSession->setEnds($end);
-                    $embeddedEventSession->setDuration($duration);
-                    $embeddedEventSession->setNotes($notes);
-                    $this->documentManager->persist($embeddedEventSession);
+                        $embeddedEventSession->setStart($start);
+                        $embeddedEventSession->setEnds($end);
+                        $embeddedEventSession->setDuration($duration);
+                        $embeddedEventSession->setNotes($notes);
+                        $this->documentManager->persist($embeddedEventSession);
 
-                    $multimediaObject->getEmbeddedEvent()->addEmbeddedEventSession($embeddedEventSession);
+                        $multimediaObject->getEmbeddedEvent()->addEmbeddedEventSession($embeddedEventSession);
+                    }
                 }
 
                 $this->documentManager->flush();
