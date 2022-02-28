@@ -729,7 +729,7 @@ class EventsController extends AdminController implements NewAdminControllerInte
                         }
                     }
                 } else {
-                    if ($overlap != 1) {
+                    if (1 != $overlap) {
                         $embeddedEventSession = new EmbeddedEventSession();
 
                         $embeddedEventSession->setStart($start);
