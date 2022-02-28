@@ -14,6 +14,12 @@
     "guzzlehttp/psr7": {
         "version": "2.0.0"
     },
+    "lcobucci/clock": {
+        "version": "2.0.0"
+    },
+    "lcobucci/jwt": {
+        "version": "4.1.5"
+    },
     "nesbot/carbon": {
         "version": "2.53.1"
     },
@@ -144,6 +150,9 @@
             "src/Kernel.php"
         ]
     },
+    "symfony/http-client": {
+        "version": "v4.4.38"
+    },
     "symfony/http-client-contracts": {
         "version": "v2.4.0"
     },
@@ -158,6 +167,21 @@
     },
     "symfony/intl": {
         "version": "v4.4.31"
+    },
+    "symfony/mercure": {
+        "version": "v0.6.1"
+    },
+    "symfony/mercure-bundle": {
+        "version": "0.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "0.3",
+            "ref": "e0a854b5439186e04b28fb8887b42c54f24a0d32"
+        },
+        "files": [
+            "config/packages/mercure.yaml"
+        ]
     },
     "symfony/mime": {
         "version": "v4.4.31"
