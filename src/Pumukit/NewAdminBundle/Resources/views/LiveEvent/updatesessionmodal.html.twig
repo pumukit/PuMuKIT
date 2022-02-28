@@ -53,7 +53,7 @@
                         var message = '{% trans %}There was an error in updating the event session.{% endtrans %}';
                         no_success(message);
                     } else {
-                        if (response.overlap == 1) window.alert("{% trans %}This session overlaps with others of the same event{% endtrans %}");
+                        if (response.overlap == 1) no_success("{% trans %}This session overlaps with others of the same event{% endtrans %}");
                         var mm = "{{ path('pumukit_new_admin_live_event_session_list', {'id': multimediaObject.getId()}) }}";
                         var pathList = "{{ path('pumukit_new_admin_live_event_list') }}";
                         $('#list_events').load(pathList);
