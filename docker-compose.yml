@@ -1,12 +1,6 @@
 version: '3.4'
 
 services:
-  mercure:
-    image: dunglas/mercure:legacy-latest
-    env_file:
-      - .env
-    ports:
-      - "9091:80"
   php:
     image: teltek/pumukit:4.x
     env_file:
@@ -58,6 +52,13 @@ services:
     restart: always
     env_file:
       - .env
+
+  mercure:
+    image: dunglas/mercure:legacy-latest
+    env_file:
+      - .env
+    ports:
+      - "8080:80"
 
 volumes:
   db-data: {}
