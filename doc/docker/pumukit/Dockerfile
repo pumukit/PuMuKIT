@@ -99,6 +99,7 @@ RUN set -eux; \
 		sysvshm \
  		zip \
 		xsl \
+		soap \
  	; \
  	pecl install \
  		apcu-${APCU_VERSION} \
