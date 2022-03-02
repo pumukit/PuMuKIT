@@ -88,6 +88,7 @@ RUN set -eux; \
  		zip \
 		wddx \
 		xsl \
+		soap \
  	; \
  	pecl install \
  		apcu-${APCU_VERSION} \
