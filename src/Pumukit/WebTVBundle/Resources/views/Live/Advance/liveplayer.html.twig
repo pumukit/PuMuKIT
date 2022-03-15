@@ -5,7 +5,6 @@
 {% include "@PumukitBaseLivePlayer/player.html.twig" %}
 <script type="text/javascript">
     {% include "@PumukitBaseLivePlayer/Advance/Sessions/common.js.twig" %}
-
     if(nextSessionsCount === 0 && nowSessionsCount === 0) {
         {% include "@PumukitBaseLivePlayer/Advance/Sessions/withoutSessions.js.twig" %}
     } else if (nextSessionsCount > 0 && nowSessionsCount === 0) {
@@ -14,10 +13,27 @@
         {% include "@PumukitBaseLivePlayer/Advance/Sessions/nowSessions.js.twig" %}
         {% if event.isIframeUrl() is same as(false) %}
             {% if stream is not defined %}
-                {% include "@PumukitBaseLivePlayer/Advance/player.js.twig" %}
+
+                {% if generate_hls_url(live) != 0 %}
+                    {% include "@PumukitBaseLivePlayer/Advance/player.js.twig" %}
+                {% else %}
+                    {% include "@PumukitBaseLivePlayer/Advance/Sessions/noRealSession.js.twig" %}
+                {% endif %}
+
+                {% include "@PumukitBaseLivePlayer/Advance/wowzaSuscriber.js.twig" %}
+
             {% else %}
-                {% include ("@PumukitBaseLivePlayer/Advance/player.js.twig") with {stream: '2'} %}
+
+                {% if generate_hls_url(live, 2) != 0 %}
+                    {% include ("@PumukitBaseLivePlayer/Advance/player.js.twig") with {stream: '2'} %}
+                {% else %}
+                    {% include "@PumukitBaseLivePlayer/Advance/Sessions/noRealSession.js.twig" %}
+                {% endif %}
+
+                {% include ("@PumukitBaseLivePlayer/Advance/wowzaSuscriber.js.twig")  with {stream: '2'} %}
+
             {% endif %}
         {% endif %}
     }
+
 </script>

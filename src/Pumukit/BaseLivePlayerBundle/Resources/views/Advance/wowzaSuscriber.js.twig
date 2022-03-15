@@ -1,0 +1,6 @@
+const eventSource = new EventSource("http://localhost:8080/.well-known/mercure?topic=" + encodeURIComponent('https://hola'));
+    eventSource.onmessage = (event) => {
+        console.log("Hey");
+        document.getElementById('live-{{ id }}_html5_api').muted = true;
+        document.getElementById('live-{{ id }}_html5_api').play();
+    }
