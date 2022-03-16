@@ -38,7 +38,7 @@ services:
       # Comment out the next line for dev
       - ./:/srv/pumukit
     ports:
-      - "80:80"
+      - "81:80"
       - "443:443"
 
   db:
@@ -52,6 +52,13 @@ services:
     restart: always
     env_file:
       - .env
+
+  mercure:
+    image: dunglas/mercure:legacy-latest
+    env_file:
+      - .env
+    ports:
+      - "8080:80"
 
 volumes:
   db-data: {}
