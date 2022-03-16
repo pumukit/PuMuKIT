@@ -1,6 +1,5 @@
 const eventSource = new EventSource("http://localhost:8080/.well-known/mercure?topic=" + encodeURIComponent('https://hola'));
     eventSource.onmessage = (event) => {
-        console.log("Hey");
         $.ajax({
             url: "{{ path('pumukit_webtv_events', {"datosEnviar": live.id()}) }}",
             method: 'POST',
