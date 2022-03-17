@@ -242,17 +242,3 @@ services:
     arguments:
       $defaultHeadVideo: '%pumukit_schema.default_head_video%'
       $defaultTailVideo: '%pumukit_schema.default_tail_video%'
-
-  Pumukit\SchemaBundle\Twig\MultimediaObjectExtension:
-    class: Pumukit\SchemaBundle\Twig\MultimediaObjectExtension
-
-  Pumukit\SchemaBundle\Services\CloneService:
-    class: Pumukit\SchemaBundle\Services\CloneService
-
-  Pumukit\SchemaBundle\Services\PersonalSeriesService:
-    class: Pumukit\SchemaBundle\Services\PersonalSeriesService
-    arguments:
-      $personalScopeRoleCode: '%pumukitschema.personal_scope_role_code%'
-
-  Pumukit\SchemaBundle\Services\AutoNumericValueService:
-    class: Pumukit\SchemaBundle\Services\AutoNumericValueService

@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     {% if height is defined %}
         var height = "{{ height }}";
     {% endif %}
+
     var livePlayerInstance = videojs("live-{{ id }}", {
         controls: true,
         sources: [{

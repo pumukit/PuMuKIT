@@ -58,7 +58,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - API filter by user
 - Email HTML header and alternative text email
 
-## [3.7.x](https://github.com/pumukit/PuMuKIT/compare/3.6.0...3.7.0) - (2021-09-15)
+## [3.7.x](https://github.com/pumukit/PuMuKIT/compare/3.6.0...3.7.x) - (2021-09-15)
 
 #### Added
 - Added auto create personal series for each user using a new permission on permission profile.

@@ -1,4 +1,4 @@
-<div class="table-responsive well" style="overflow:invisible;">
+<div class="table-responsive well" style="overflow:visible;">
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_LIVE_CHANNELS')) %}
   <table class="table table-striped table-hover">
     <thead>
@@ -15,7 +15,6 @@
     <th width="20%" id="th-url">{% trans %}URL{% endtrans %}</th>
     <th id="th-source-name" style="text-align:center">{% trans %}Source Name 1{% endtrans %}</th>
     <th id="th-source-name" style="text-align:center">{% trans %}Source Name 2{% endtrans %}</th>
-    <th id="th-resolution">{% trans %}Resolution{% endtrans %}</th>
     <th width="8%" id="th-type">{% trans %}Type{% endtrans %}</th>
       </tr>
     </thead>
@@ -55,9 +54,11 @@
             <td headers="th-source-name" onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
               {{ live.getSourceName() }}
             </td>
-            <td headers="th-source-name" onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
-              {{ live.getSourceName2() }}
-            </td>
+              <td headers="th-source-name" style="text-align:center" onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
+                  {% if live.getSourceName2() != "" %}
+                      <li class="fas fa-link" style="font-size:13px;color:grey" data-toggle="tooltip" data-placement="top" title= {{ live.getSourceName2() }}></li>
+                  {% endif %}
+              </td>
             <td headers="th-resolution" onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
               {{ live.getWidth }}x{{ live.getHeight }}
             </td>
