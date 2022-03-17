@@ -54,33 +54,32 @@ class LiveTwigExtension extends AbstractExtension
     {
         // return $this->liveService->generateHlsUrl($live, $numStream);
         $hls = $this->liveService->generateHlsUrl($live, $numStream);
-        
+
         $ch = curl_init();
-        $options = array(
-            CURLOPT_URL            => "https:".$hls,
+        $options = [
+            CURLOPT_URL => 'https:'.$hls,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_HEADER         => true,
+            CURLOPT_HEADER => true,
             CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_ENCODING       => "",
-            CURLOPT_AUTOREFERER    => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_AUTOREFERER => true,
             CURLOPT_CONNECTTIMEOUT => 120,
-            CURLOPT_TIMEOUT        => 120,
-            CURLOPT_MAXREDIRS      => 10,
-        );
-        curl_setopt_array($ch, $options );
-        $response = curl_exec($ch); 
+            CURLOPT_TIMEOUT => 120,
+            CURLOPT_MAXREDIRS => 10,
+        ];
+        curl_setopt_array($ch, $options);
+        $response = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
-        echo($httpCode);
-        echo($hls);
+        echo $httpCode;
+        echo $hls;
 
-        if ( $httpCode != 200 ) {
-            return "0";    
-        } else {
-            return $hls;    
+        if (200 != $httpCode) {
+            return '0';
         }
 
+        return $hls;
     }
 
     /**
