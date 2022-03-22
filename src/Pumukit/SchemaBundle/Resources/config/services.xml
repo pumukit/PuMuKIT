@@ -51,16 +51,6 @@
             <tag name="kernel.event_listener" event="series.update" method="postUpdate" />
         </service>
 
-        <service id="pumukitschema.schema.personal_series_listener" class="Pumukit\SchemaBundle\EventListener\PersonalSeriesListener">
-            <argument type="service" id="doctrine_mongodb.odm.document_manager" />
-            <argument type="service" id="pumukitschema.factory" />
-            <argument type="service" id="security.authorization_checker" />
-            <argument type="service" id="translator" />
-            <argument>%pumukit.locales%</argument>
-            <argument>%pumukitschema.personal_scope_role_code%</argument>
-            <tag name="kernel.event_listener" event="security.interactive_login" method="onSecurityInteractiveLogin" />
-        </service>
-
         <service id="pumukitschema.schema.multimediaobject" class="Pumukit\SchemaBundle\EventListener\MultimediaObjectListener">
             <argument type="service" id="doctrine_mongodb.odm.document_manager" />
             <argument type="service" id="pumukitschema.text_index" />
@@ -306,6 +296,21 @@
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument>%pumukit_schema.default_head_video%</argument>
             <argument>%pumukit_schema.default_tail_video%</argument>
+        </service>
+
+        <service id="pumukit_schema.personal_series" class="Pumukit\SchemaBundle\Services\PersonalSeriesService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager" />
+            <argument type="service" id="pumukitschema.factory" />
+            <argument type="service" id="security.authorization_checker" />
+            <argument type="service" id="security.token_storage" />
+            <argument type="service" id="translator" />
+            <argument>%pumukit.locales%</argument>
+            <argument>%pumukitschema.personal_scope_role_code%</argument>
+        </service>
+
+        <service id="pumukitschema.schema.personal_series_listener" class="Pumukit\SchemaBundle\EventListener\PersonalSeriesListener">
+            <argument type="service" id="pumukit_schema.personal_series" />
+            <tag name="kernel.event_listener" event="security.interactive_login" method="onSecurityInteractiveLogin" />
         </service>
 
     </services>
