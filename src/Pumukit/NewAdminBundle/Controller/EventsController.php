@@ -665,11 +665,12 @@ class EventsController extends AdminController implements NewAdminControllerInte
     }
 
     /**
-     * @Route("series/tab/{id}", name="pumukit_new_admin_live_event_seriestab")
-     * @ParamConverter("series", class="PumukitSchemaBundle:Series", options={"mapping": {"id": "id"}})
+     * @Route("series/tab/{id}/series/{series}", name="pumukit_new_admin_live_event_seriestab")
+     * @ParamConverter("series", class="PumukitSchemaBundle:Series", options={"id"="series"})
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject",  options={"id"="id"})
      * @Template("@PumukitNewAdmin/Series/updatemeta.html.twig")
      */
-    public function seriesAction(Request $request, Series $series)
+    public function seriesAction(Request $request, Series $series, MultimediaObject $multimediaObject)
     {
         $locale = $request->getLocale();
         $disablePudenew = !$this->showLatestWithPudeNew;
@@ -692,6 +693,7 @@ class EventsController extends AdminController implements NewAdminControllerInte
             'series' => $series,
             'exclude_fields' => $exclude_fields,
             'show_later_fields' => $show_later_fields,
+            'multimediaObject' => $multimediaObject,
         ];
     }
 

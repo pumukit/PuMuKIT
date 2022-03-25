@@ -36,7 +36,7 @@
                 {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\EventsController::sessionAction', {'id': multimediaObject.getId() })) }}
             </div>
             <div id="series" role="tabpanel" class="tab-pane">
-                {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\EventsController::seriesAction', {'id' : multimediaObject.getSeries().getId() })) }}
+                {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\EventsController::seriesAction', {'series' : multimediaObject.getSeries().getId(), 'id': multimediaObject.getId()})) }}
             </div>
             {% if not is_naked() %}
                 {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_OWNER_TAB')) %}
