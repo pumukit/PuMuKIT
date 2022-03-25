@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 To get the diff for a specific change, go to https://github.com/pumukit/PuMuKIT/commit/XXX where XXX is the change hash.
 To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/compare/3.0.0...3.1.x.
 
+## [3.9.x](https://github.com/pumukit/PuMuKIT/compare/3.8.0...3.9.x) - (Coming soon)
+
+#### Added
+- Access personal series from external bundles.
+
 ## [3.8.x](https://github.com/pumukit/PuMuKIT/compare/3.7.0...3.8.x) - (2022-01-24)
 
 #### Added
