@@ -52,7 +52,6 @@ class LiveTwigExtension extends AbstractExtension
      */
     public function genHlsUrl(Live $live, int $numStream = null): string
     {
-        // return $this->liveService->generateHlsUrl($live, $numStream);
         $hls = $this->liveService->generateHlsUrl($live, $numStream);
 
         $ch = curl_init();
@@ -71,9 +70,6 @@ class LiveTwigExtension extends AbstractExtension
         $response = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
-
-        echo $httpCode;
-        echo $hls;
 
         if (200 != $httpCode) {
             return '0';
