@@ -283,11 +283,13 @@ class MultimediaObjectController extends SortableAdminController
         $resource = $this->findOr404($request);
 
         $locale = $request->getLocale();
+
         if ($resource->isPrototype()) {
             $formMeta = $this->createForm(MultimediaObjectTemplateMetaType::class, $resource, ['translator' => $this->translator, 'locale' => $locale]);
         } else {
             $formMeta = $this->createForm(MultimediaObjectMetaType::class, $resource, ['translator' => $this->translator, 'locale' => $locale]);
         }
+
         $options = [
             'not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS),
             'translator' => $this->translator,
@@ -327,7 +329,6 @@ class MultimediaObjectController extends SortableAdminController
             'mm' => $resource,
             'form_meta' => $formMeta->createView(),
             'form_pub' => $formPub->createView(),
-            //'series' => $series,
             'roles' => $roles,
             'personal_scope_role' => $personalScopeRole,
             'personal_scope_role_code' => $personalScopeRoleCode,
@@ -508,6 +509,7 @@ class MultimediaObjectController extends SortableAdminController
 
             if ($isPrototype) {
                 $resource->setStatus(MultimediaObject::STATUS_PROTOTYPE);
+                $resource->setProperty('default_status', $request->get('pumukitnewadmin_mms_pub')['status']);
             }
 
             $event = new PublicationSubmitEvent($resource, $request);

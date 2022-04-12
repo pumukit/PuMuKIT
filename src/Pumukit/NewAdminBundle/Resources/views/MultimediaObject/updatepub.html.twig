@@ -1,4 +1,5 @@
 {% form_theme form_pub '@PumukitNewAdmin/Themes/fields.html.twig' %}
+{% set is_prototype = mm.isPrototype() %}
 
 <div id="tv_admin_container_pub" class="well">
     <form id="pumukitnewadmin_mms_updatepub_form"
@@ -40,8 +41,17 @@
             <legend hidden>{% trans %}Update publication{% endtrans %}</legend>
             <div class="col-md-7">
                 <div class="form-group">
-                    {{ form_label(form_pub['status'],{},  {'label_attr': {'class': 'update_pub_status_label' }}) }}
-                    {{ form_widget(form_pub['status'], {'attr': {'class' : 'update_pub_status'}}) }}
+                    {% if not is_prototype %}
+
+                        {{ form_label(form_pub['status'],{}) }}
+                        {{ form_widget(form_pub['status']) }}
+                        
+                    {% else %}
+            
+                        {{ form_label(form_pub['status'],{} ) }}
+                        {{ form_widget(form_pub['status'], {'value': mm.getProperty('default_status') | default("1")}) }}
+
+                    {% endif %}
                 </div>
 
                 <div class="form-group" id="pumukitnewadmin_mms_pub_channel" {{ (mm.getStatus() == 1)?'style="background-color: #f2f2f2"':'' }}>
@@ -111,7 +121,6 @@
             }
         });
     });
-
     $('#video_tail_option').on('click', function(){
         let route =  '{{ path('pumukit_newadmin_head_and_tail_set_tail', {
             'multimediaObject': '__multimediaObject__',
