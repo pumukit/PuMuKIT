@@ -190,7 +190,11 @@ class FactoryService
         $mm->setPublicDate(new \DateTime('now'));
         $mm->setRecordDate($mm->getPublicDate());
 
-        $mm->setStatus((int) $prototype->getProperty('default_status'));
+        if (null == $prototype->getProperty('default_status')) {
+            $mm->setStatus(MultimediaObject::STATUS_BLOCKED);
+        } else {
+            $mm->setStatus((int) $prototype->getProperty('default_status'));
+        }
 
         if ($loggedInUser) {
             if ($loggedInUser->hasRole(Permission::INIT_STATUS_PUBLISHED)) {
