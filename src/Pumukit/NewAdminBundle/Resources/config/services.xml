@@ -134,6 +134,22 @@
             <tag name="twig.extension"/>
         </service>
 
+        <service id="pumukitnewadmin.immutable_service" class="Pumukit\NewAdminBundle\Services\ImmutableService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument type="service" id="security.authorization_checker" />
+        </service>
+
+        <service id="pumukitnewadmin.archive_service" class="Pumukit\NewAdminBundle\Services\MultimediaObjectArchiveService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument type="service" id="pumukit_schema.clone_service" />
+            <argument type="service" id="pumukitnewadmin.immutable_service" />
+            <argument type="service" id="pumukitschema.person"/>
+            <argument type="service" id="security.token_storage" />
+            <argument type="service" id="pumukitschema.user" />
+            <argument type="service" id="translator"/>
+            <argument>%pumukit_new_admin.multimedia_object_archive_user_assign%</argument>
+        </service>
+
     </services>
 
 </container>

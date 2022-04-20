@@ -28,6 +28,7 @@ class PumukitNewAdminExtension extends Extension
         $container->setParameter('pumukit_new_admin.show_menu_place_and_precinct', $config['show_menu_place_and_precinct']);
         $container->setParameter('pumukit_new_admin.show_naked_pub_tab', $config['show_naked_pub_tab']);
         $container->setParameter('pumukit_new_admin.base_catalogue_tag', $config['base_catalogue_tag']);
+        $container->setParameter('pumukit_new_admin.multimedia_object_archive_user_assign', $config['multimedia_object_archive_user_assign']);
         $container->setParameter('pumukit_new_admin.metadata_translators', []);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));

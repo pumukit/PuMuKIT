@@ -9,6 +9,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 #### Added
 - Access personal series from external bundles.
+- Archive multimedia objects. 
 
 ## [3.8.x](https://github.com/pumukit/PuMuKIT/compare/3.7.0...3.8.x) - (2022-01-24)
 

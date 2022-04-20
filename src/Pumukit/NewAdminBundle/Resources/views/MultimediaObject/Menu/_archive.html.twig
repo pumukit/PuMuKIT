@@ -1,0 +1,7 @@
+{% if is_granted("ROLE_ACCESS_MULTIMEDIA_IMMUTABLE") and (mm.immutable.value is not defined or mm.immutable.value() is same as false) %}
+<li>
+    <a href="{{ path('pumukit_multimedia_object_archive', {'id': mm.id }) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+        <i class="mdi-action-lock"></i> {{ "Archive multimedia object"|trans }}
+    </a>
+</li>
+{% endif %}

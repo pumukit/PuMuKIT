@@ -452,6 +452,17 @@ class PersonService
         }
     }
 
+    public function removeOwnersFromMultimediaObject(MultimediaObject $multimediaObject): array
+    {
+        $removedOwners = [];
+        foreach ($multimediaObject->getPeopleByRoleCod($this->getPersonalScopeRoleCode(), true) as $person) {
+            $multimediaObject->removePersonWithRole($person, $this->getPersonalScopeRole());
+            $removedOwners[] = $person->getId();
+        }
+
+        return $removedOwners;
+    }
+
     /**
      * Create from User.
      *

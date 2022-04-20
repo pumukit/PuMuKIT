@@ -10,7 +10,7 @@ use Pumukit\SchemaBundle\Document\Link as DocumentLink;
 trait Link
 {
     /*
-        Warning - To use trait MATERIAL you must do:
+        Warning - To use trait LINK you must do:
 
         use Traits\Link {
             Traits\Link::__construct as private __LinkConstruct;
