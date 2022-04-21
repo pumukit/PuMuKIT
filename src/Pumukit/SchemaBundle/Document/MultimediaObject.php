@@ -6,10 +6,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Pumukit\SchemaBundle\Document\ObjectValue\Immutable;
 
 /**
- * Pumukit\SchemaBundle\Document\MultimediaObject.
- *
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\MultimediaObjectRepository")
  * @MongoDB\Indexes({
  *   @MongoDB\Index(name="text_index", keys={"textindex.text"="text", "secondarytextindex.text"="text"}, options={"language_override"="indexlanguage", "default_language"="none", "weights"={"textindex.text"=10, "secondarytextindex.text"=1}})
@@ -72,6 +71,11 @@ class MultimediaObject
      * @MongoDB\UniqueIndex(safe=1)
      */
     private $numerical_id;
+
+    /**
+     * @MongoDB\EmbedOne(name="immutable", targetDocument="Pumukit\SchemaBundle\Document\ObjectValue\Immutable")
+     */
+    private $immutable;
 
     /**
      * @var int
@@ -323,6 +327,16 @@ class MultimediaObject
     public function setNumericalID($numericalID)
     {
         return $this->numerical_id = $numericalID;
+    }
+
+    public function getImmutable(): ?Immutable
+    {
+        return $this->immutable;
+    }
+
+    public function setImmutable(Immutable $immutable): void
+    {
+        $this->immutable = $immutable;
     }
 
     /**

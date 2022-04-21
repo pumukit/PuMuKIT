@@ -17,8 +17,6 @@ use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
-use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
-use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Security\Permission;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -443,38 +441,32 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                 $resource = $this->updateTags($request->get('pub_channels', null), 'PUCH', $resource);
             }
 
-            if ($formPub->isSubmitted() && $formPub->isValid()) {
-                if ($changePubChannel) {
-                    $resource = $this->updateTags($request->get('pub_channels', null), 'PUCH', $resource);
-                }
-
-                if ($isPrototype) {
-                    $resource->setStatus(MultimediaObject::STATUS_PROTOTYPE);
-                }
-
-                $event = new PublicationSubmitEvent($resource, $request);
-                $this->get('event_dispatcher')->dispatch(BackofficeEvents::PUBLICATION_SUBMIT, $event);
-
-                $resource = $this->updateTags($request->get('pub_decisions', null), 'PUDE', $resource);
-
-                $this->update($resource);
-
-                $this->dispatchUpdate($resource);
-                $this->get('pumukitschema.sorted_multimedia_object')->reorder($series);
-
-                $mms = $this->getListMultimediaObjects($series);
-                if (false === strpos($request->server->get('HTTP_REFERER'), 'mmslist')) {
-                    return $this->render(
-                        'PumukitNewAdminBundle:MultimediaObject:list.html.twig',
-                        [
-                            'series' => $series,
-                            'mms' => $mms,
-                        ]
-                    );
-                }
-
-                return $this->redirectToRoute('pumukitnewadmin_mms_listall', [], 301);
+            if ($isPrototype) {
+                $resource->setStatus(MultimediaObject::STATUS_PROTOTYPE);
             }
+
+            $event = new PublicationSubmitEvent($resource, $request);
+            $this->get('event_dispatcher')->dispatch(BackofficeEvents::PUBLICATION_SUBMIT, $event);
+
+            $resource = $this->updateTags($request->get('pub_decisions', null), 'PUDE', $resource);
+
+            $this->update($resource);
+
+            $this->dispatchUpdate($resource);
+            $this->get('pumukitschema.sorted_multimedia_object')->reorder($series);
+
+            $mms = $this->getListMultimediaObjects($series);
+            if (false === strpos($request->server->get('HTTP_REFERER'), 'mmslist')) {
+                return $this->render(
+                    'PumukitNewAdminBundle:MultimediaObject:list.html.twig',
+                    [
+                        'series' => $series,
+                        'mms' => $mms,
+                    ]
+                );
+            }
+
+            return $this->redirectToRoute('pumukitnewadmin_mms_listall', [], 301);
         }
 
         $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
@@ -853,7 +845,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
             $dm->persist($multimediaObject);
 
-            $this->get('pumukitschema.multimediaobject_dispatcher')->dispatchUpdate($multimediaObject);
+            $this->dispatchUpdate($multimediaObject);
         }
 
         $dm->persist($series);
@@ -1156,7 +1148,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             $multimediaObject->setProperty('externalplayer', $data['url']);
             $dm->flush();
 
-            $this->get('pumukitschema.multimediaobject_dispatcher')->dispatchUpdate($multimediaObject);
+            $this->dispatchUpdate($multimediaObject);
 
             return $this->forward('PumukitNewAdminBundle:Track:list', ['multimediaObject' => $multimediaObject]);
         }
@@ -1175,7 +1167,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $multimediaObject->removeProperty('externalplayer');
         $dm->flush();
 
-        $this->get('pumukitschema.multimediaobject_dispatcher')->dispatchUpdate($multimediaObject);
+        $this->dispatchUpdate($multimediaObject);
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]));
     }
@@ -1499,10 +1491,10 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         return $mms;
     }
 
-    protected function dispatchUpdate($multimediaObject)
+    protected function dispatchUpdate(MultimediaObject $multimediaObject)
     {
-        $event = new MultimediaObjectEvent($multimediaObject);
-        $this->get('event_dispatcher')->dispatch(SchemaEvents::MULTIMEDIAOBJECT_UPDATE, $event);
+        $multimediaObjectDispatcher = $this->get('pumukitschema.multimediaobject_dispatcher');
+        $multimediaObjectDispatcher->dispatchUpdate($multimediaObject);
     }
 
     //Workaround function to check if the VideoEditorBundle is installed.
