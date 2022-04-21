@@ -79,6 +79,18 @@ class MultimediaObjectTemplateMetaType extends AbstractType
                     'label' => $this->translator->trans('Headline', [], null, $this->locale),
                 ]
             )
+            ->add(
+                'license',
+                TextType::class,
+                [
+                    'required' => false,
+                    'attr' => [
+                        'groupclass' => 'hidden-naked',
+                        'aria-label' => $this->translator->trans('License', [], null, $this->locale),
+                    ],
+                    'label' => $this->translator->trans('License', [], null, $this->locale),
+                ]
+            )
         ;
     }
 
