@@ -3,7 +3,8 @@ const uppy = new Uppy.Core({
     allowMultipleUploads: false,
     debug: true,
     restrictions: {
-        maxFileSize: convertSizeToBytes("{{ php_upload_max_filesize() }}"),
+        minFileSize: convertSizeToBytes("{{ inbox_min_file_size() }}"),
+        maxFileSize: convertSizeToBytes("{{ inbox_max_file_size() }}"),
         maxNumberOfFiles: 1,
         allowedFileTypes: ['audio/*','video/*']
     },
@@ -63,16 +64,15 @@ uppy.on('restriction-failed', (file, error) => {
 })
 
 uppy.on('upload-success', (file, response) => {
-    if(response.status && response.status === 200 && !response.body.errorMessage ) {
-        if ('url' in response.body) {
-            window.location.href =  response.body.url;
+    if(response.uploaded && response.uploaded === 'success') {
+        if ('endPage' in response) {
+            window.location.href =  response.endPage;
         }
         if ('window' in parent && 'mmId' in  response.body) {
             parent.window.postMessage({'mmId':  response.body.mmId}, '*');
         }
     } else {
-        file_data_clear()
-        window.alert(' {{ "ERROR!!"|trans }}\n\n' + response.body.errorMessage);
+        file_data_clear();
         return false;
     }
 })

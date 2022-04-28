@@ -1,7 +1,7 @@
 parameters:
-  pumukit.inspection.command:          ffprobe -v quiet -print_format json -show_format -show_streams {{file}}
-  pumukit.picextractor.command:        ffmpeg -ss {{ss}} -y -i {{input}} -r 1 -vframes 1 -s {{size}} -f image2 {{output}}
-  pumukit.dynamicpicextractor.command: ffmpeg -i {{input}} -ss 00:00:05 -t 3 -quality 80 -r 10 -s {{width}}x{{height}} {{output}}
+  pumukit.inspection.command:          ffprobe -v quiet -print_format json -show_format -show_streams "{{file}}"
+  pumukit.picextractor.command:        ffmpeg -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"
+  pumukit.dynamicpicextractor.command: ffmpeg -i "{{input}}" -ss 00:00:05 -t 3 -quality 80 -r 10 -s {{width}}x{{height}} "{{output}}"
   pumukit.warning_on_unpublished:      false
   pumukit.show_dashboard_tab:          true
   pumukit.show_mms_list_all_menu:      false

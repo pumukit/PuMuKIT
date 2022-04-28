@@ -24,7 +24,7 @@ pumukit_encoder:
       framerate: 0
       channels: 1
       audio: false
-      bat: 'cp "{{ input }}" "{{ output }}"'
+      bat: 'cp "{{input}}" "{{output}}"'
       streamserver:
         name: Localmaster
         type: store
@@ -223,7 +223,7 @@ pumukit_encoder:
 * `profiles` `{profileName}` `framerate` Framerate of the track
 * `profiles` `{profileName}` `channels` Available Channels
 * `profiles` `{profileName}` `audio` The track is only audio
-* `profiles` `{profileName}` `bat` Command line to execute transcodification of track. Available variables: {{ input }}, {{ output }}, {{ tmpfile1 }}, {{ tmpfile2 }}, ... {{ tmpfile9 }}.
+* `profiles` `{profileName}` `bat` Command line to execute transcodification of track. Available variables: {{input}}, {{output}}, {{tmpfile1}}, {{tmpfile2}}, ... {{tmpfile9}}.
 * `profiles` `{profileName}` `file_cfg` Configuration file
 * `profiles` `{profileName}` `streamserver` Type of streamserver for transcodification and data
 * `profiles` `{profileName}` `streamserver` `{streamserverName}`

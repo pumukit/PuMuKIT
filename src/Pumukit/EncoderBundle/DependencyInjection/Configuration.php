@@ -33,7 +33,7 @@ class Configuration implements ConfigurationInterface
             ->children()
             ->booleanNode('delete_inbox_files')
             ->info('Delete imported inbox files')
-            ->defaultValue(false)
+            ->defaultValue(true)
             ->end()
             ->integerNode('max_execution_job_seconds')
             ->min(3600)
