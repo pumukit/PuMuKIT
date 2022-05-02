@@ -224,6 +224,10 @@ class JobService
             throw new \Exception('The media file duration is zero');
         }
 
+        $SEMKey = 92332378248;
+        $seg = sem_get($SEMKey, 1, 0666, -1);
+        sem_acquire($seg);
+
         $this->logger->info('[addJob] new Job');
 
         $job = new Job();
@@ -250,6 +254,8 @@ class JobService
 
         $this->logger->info('[addJob] Added job with id: '.$job->getId());
         $this->propService->addJob($multimediaObject, $job);
+
+        sem_release($seg);
 
         $this->executeNextJob();
 
