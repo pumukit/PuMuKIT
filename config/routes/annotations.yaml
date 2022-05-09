@@ -29,3 +29,6 @@ pumukitnewadmin:
   resource: "@PumukitNewAdminBundle/Resources/config/routing.yml"
   prefix:   /
 
+pumukit_live_player:
+  resource: "@PumukitPaellaLiveBundle/Resources/config/routing.yml"
+  prefix:   /
