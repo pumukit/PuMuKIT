@@ -41,6 +41,10 @@ class Configuration implements ConfigurationInterface
             ->defaultValue(null)
             ->info('Code of the tag to use on catalogue')
             ->end()
+            ->scalarNode('multimedia_object_archive_user_assign')
+            ->defaultValue(null)
+            ->info('Email of user to assign all videos.')
+            ->end()
             ->end()
         ;
 

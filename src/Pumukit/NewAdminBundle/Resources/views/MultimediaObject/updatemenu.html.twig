@@ -1,43 +1,29 @@
 <div class="dropdown">
-  <i class="mdi-navigation-menu" id="list_pics_mm_{{ mm.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-  <ul class="dropdown-menu" role="menu" aria-labelledby="list_pics_mm_{{ mm.id }}">
-    <li>
-      <a href="#" onclick="window.submit_delete_mms('{{ mm.id }}'); return false;">
-        <i class="mdi-content-clear"></i>{% trans %}Delete multimedia object{% endtrans %}
-      </a>
-    </li>
-    {% if app.user and is_playlist_enabled() and is_granted('ROLE_ACCESS_EDIT_PLAYLIST') %}
-    <li>
-      <a href="{{ url('pumukitnewadmin_playlistmms_modal_add', {'id': mm.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
-        <i class="mdi-av-playlist-add"></i>{% trans %}Add to playlist{% endtrans %}
-      </a>
-    </li>
-    {% endif %}
-    <li>
-      <a href="#" onclick="window.submit_clone_mms('{{ mm.id }}'); return false;">
-        <i class="mdi-content-content-copy"></i>{% trans %}Clone multimedia object{% endtrans %}
-      </a>
-    </li>
-    <li>
-      <a href="{{ path('pumukitnewadmin_mms_listproperties', {'id': mm.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
-        <i class="mdi-action-list"></i> {% trans %}Show properties{% endtrans %}
-      </a>
-    </li>
+    <i class="mdi-navigation-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
 
-    {% for item in get_extra_menu_items() %}
-      {% if app.user and is_granted(item.accessRole) %}
+    <ul class="dropdown-menu" role="menu" aria-labelledby="list_pics_mm_{{ mm.id }}">
+
         <li>
-          <a href="{{ path(item.uri, {'id': mm.id}) }}" {% if not item.fullscreen|default(false) %} class="{{ item.class|default('')}}" data-toggle="modal" data-backdrop="static" data-target="#myModal" {% endif %}>
-            <i class="{{ item.icon|default('mdi-action-list')}}"></i> {{ item.name | trans }}
-          </a>
+            <a href="#" class="qa-button-delete-mms" onclick="window.submit_delete_mms('{{ mm.id }}'); return false;">
+                <i class="mdi-content-clear"></i>{% trans %}Delete multimedia object{% endtrans %}
+            </a>
         </li>
-      {% endif %}
-    {% endfor %}
 
-    <li>
-      <a href="#" onclick="return false;">
-        <strong>{% trans %}Cancel{% endtrans %}...</strong>
-      </a>
-    </li>
-  </ul>
+        {% include "PumukitNewAdminBundle:MultimediaObject:Menu/_playlist.html.twig" %}
+
+        <li>
+            <a href="#" class="qa-button-clone-mms" onclick="window.submit_clone_mms('{{ mm.id }}'); return false;">
+                <i class="mdi-content-content-copy"></i>{% trans %}Clone multimedia object{% endtrans %}
+            </a>
+        </li>
+
+        {% include "PumukitNewAdminBundle:MultimediaObject:Menu/_properties.html.twig" %}
+
+        {% include "PumukitNewAdminBundle:MultimediaObject:Menu/_archive.html.twig" %}
+
+        {% include "@PumukitNewAdmin/MultimediaObject/Menu/_dynamic_menu.html.twig" %}
+
+        {% include "@PumukitNewAdmin/MultimediaObject/Menu/_cancel.html.twig" %}
+
+    </ul>
 </div>

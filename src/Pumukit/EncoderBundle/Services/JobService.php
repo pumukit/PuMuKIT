@@ -244,6 +244,14 @@ class JobService
             }
         }
 
+        if ($checkduration && 0 == $duration) {
+            throw new \Exception('The media file duration is zero');
+        }
+
+        $SEMKey = 92332378248;
+        $seg = sem_get($SEMKey, 1, 0666, -1);
+        sem_acquire($seg);
+
         $this->logger->info('[addJob] new Job');
 
         $job = new Job();
@@ -270,6 +278,8 @@ class JobService
 
         $this->logger->info('[addJob] Added job with id: '.$job->getId());
         $this->propService->addJob($multimediaObject, $job);
+
+        sem_release($seg);
 
         $this->executeNextJob();
 
@@ -781,10 +791,10 @@ class JobService
             unlink($job->getPathIni());
         } elseif ($this->deleteInboxFiles && false !== strpos($job->getPathIni(), $this->inboxPath)) {
             unlink($job->getPathIni());
-        }
 
-        $event = new FileRemovedEvent($job->getPathIni());
-        $this->eventDispatcher->dispatch($event, FileEvents::FILE_REMOVED);
+            $event = new FileRemovedEvent($job->getPathIni());
+            $this->eventDispatcher->dispatch($event, FileEvents::FILE_REMOVED);
+        }
     }
 
     private function changeStatus(Job $job, $actualStatus, $newStatus)

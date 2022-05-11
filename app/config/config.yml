@@ -1,0 +1,116 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: doctrine_extensions.yml }
+    - { resource: parameters_deploy.yml, ignore_errors: true }
+    - { resource: encoder.yml }
+
+parameters:
+    locale:  "%env(PUMUKIT_LOCALE)%"
+    secret:  "%env(PUMUKIT_SECRET)%"
+
+    debug_toolbar:          true
+    debug_redirects:        false
+    use_assetic_controller: true
+
+    pumukit.info:
+        title:               "%env(PUMUKIT_TITLE)%"
+        description:         "%env(PUMUKIT_DESCRIPTION)%"
+        keywords:            "%env(PUMUKIT_KEYWORDS)%"
+        email:               "%env(PUMUKIT_EMAIL)%"
+        logo:                "%env(PUMUKIT_LOGO)%"
+        primary_color:       "%env(PUMUKIT_PRIMARY_COLOR)%"
+        font_color:          "%env(PUMUKIT_FONT_COLOR)%"
+    pumukit.locales:         "%env(json:PUMUKIT_LOCALES)%"
+    pumukit.uploads_dir:     "%env(PUMUKIT_UPLOADS_DIR)%"
+    pumukit.uploads_url:     "%env(PUMUKIT_UPLOADS_URL)%"
+    pumukit.inbox:           "%env(PUMUKIT_INBOX)%"
+    pumukit.tmp:             "%env(PUMUKIT_TMP)%"
+    pumukit.delete_on_disk:  "%env(bool:PUMUKIT_DELETE_ON_DISK)%"
+
+framework:
+    #esi:             ~
+    translator:      { fallback: "%locale%" }
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+        #assets_version: SomeVersionScheme
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    session:
+        # handler_id set to null will use default session handler from php.ini
+        name: pumukit
+        handler_id:  ~
+    fragments:       ~
+    http_method_override: true
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    globals:
+        pumukit_info:  "%pumukit.info%"
+        locales:       "%pumukit.locales%"
+        enable_cookie_banner: '%env(bool:ENABLE_COOKIE_BANNER)%'
+        cookie_banner_privacy_link: "%env(COOKIE_BANNER_PRIVACY_LINK)%"
+
+# MongoDB configuration
+doctrine_mongodb:
+    connections:
+        default:
+            server: "%env(PUMUKIT_MONGODB_SERVER)%"
+            options: {}
+    default_database: "%env(PUMUKIT_MONGODB_DATABASE)%"
+    auto_generate_hydrator_classes: true
+    auto_generate_proxy_classes: true
+    document_managers:
+        default:
+            auto_mapping: true
+            filters:
+                frontend:
+                    class:     Pumukit\CoreBundle\Filter\WebTVFilter
+                    enabled:   false
+                backoffice:
+                    class:     Pumukit\CoreBundle\Filter\AdminFilter
+                    enabled:   false
+                personal:
+                    class:     Pumukit\CoreBundle\Filter\PersonalFilter
+                    enabled:   false
+                microsite:
+                    class:     Pumukit\CoreBundle\Filter\MicrositeFilter
+                    enabled:   false
+
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: "%env(PUMUKIT_MAILER_TRANSPORT)%"
+    host:      "%env(PUMUKIT_MAILER_HOST)%"
+    username:  "%env(PUMUKIT_MAILER_USER)%"
+    password:  "%env(PUMUKIT_MAILER_PASSWORD)%"
+    spool:     { type: memory }
+
+# FOSUser Configuration
+fos_user:
+    db_driver: mongodb
+    firewall_name: main
+    user_class: Pumukit\SchemaBundle\Document\User
+    from_email:
+        address: "pumukit_mailer"
+        sender_name: "pumukit_mailer"
+
+
+# MobileDetectBundle Configuration
+mobile_detect:
+    redirect:
+        mobile: ~
+        tablet: ~
+    switch_device_view: ~
+
+vipx_bot_detect:
+    metadata_file: extended.yml

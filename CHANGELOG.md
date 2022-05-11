@@ -36,12 +36,29 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 #### Security
 - Added latest stable versions of 3rd party libraries.
 
-## [3.8.x](https://github.com/pumukit/PuMuKIT/compare/3.7.0...3.8.x) - (Coming soon)
+## [3.9.x](https://github.com/pumukit/PuMuKIT/compare/3.8.0...3.9.0) - (Coming soon)
+
+#### Added
+- Access personal series from external bundles.
+- Archive multimedia objects.
+- License on multimedia object template.
+
+## [3.8.x](https://github.com/pumukit/PuMuKIT/compare/3.7.0...3.8.0) - (2022-01-24)
 
 #### Added
 - Added new feature on inbox to upload on a new folder o default inbox folder.
+- New envs to configure docker PHP FPM.
+- Soap extension by default on docker.
 
-## [3.7.x](https://github.com/pumukit/PuMuKIT/compare/3.6.0...3.7.x) - (2021-09-15)
+#### Changed
+- Convert texti18n subseries to textareai18n.
+
+#### Fixed
+- API filter by date range
+- API filter by user
+- Email HTML header and alternative text email
+
+## [3.7.x](https://github.com/pumukit/PuMuKIT/compare/3.6.0...3.7.0) - (2021-09-15)
 
 #### Added
 - Added auto create personal series for each user using a new permission on permission profile.
@@ -53,7 +70,6 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Fix search multimedia object years filter.
 - Fix upload series image with the same name.
 - Fix internationalize events default name.
-
 
 ## [3.6.0](https://github.com/pumukit/PuMuKIT/compare/3.5.0...3.6.0) - (2021-04-21)
 

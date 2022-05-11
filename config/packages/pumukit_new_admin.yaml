@@ -134,3 +134,11 @@ services:
     class: Pumukit\NewAdminBundle\Twig\HeadAndTailExtension
     tags:
       - { name: "twig.extension" }
+
+  Pumukit\NewAdminBundle\Services\ImmutableService:
+    class: Pumukit\NewAdminBundle\Services\ImmutableService
+
+  Pumukit\NewAdminBundle\Services\MultimediaObjectArchiveService:
+    class: Pumukit\NewAdminBundle\Services\MultimediaObjectArchiveService
+    arguments:
+      $multimediaObjectArchivedUserAssign: '%pumukit_new_admin.multimedia_object_archive_user_assign%'

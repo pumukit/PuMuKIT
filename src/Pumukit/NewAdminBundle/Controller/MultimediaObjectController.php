@@ -1140,6 +1140,7 @@ class MultimediaObjectController extends SortableAdminController
             $this->documentManager->flush();
 
             $this->pumukitSchemaMultimediaObjectDispatcher->dispatchUpdate($multimediaObject);
+            $this->dispatchUpdate($multimediaObject);
 
             return $this->forward('PumukitNewAdminBundle:Track:list', ['multimediaObject' => $multimediaObject]);
         }
@@ -1412,7 +1413,7 @@ class MultimediaObjectController extends SortableAdminController
         return $this->paginationService->createDoctrineODMMongoDBAdapter($mmsQueryBuilder, $page);
     }
 
-    protected function dispatchUpdate($multimediaObject)
+    protected function dispatchUpdate(MultimediaObject $multimediaObject)
     {
         $event = new MultimediaObjectEvent($multimediaObject);
         $this->eventDispatcher->dispatch($event, SchemaEvents::MULTIMEDIAOBJECT_UPDATE);

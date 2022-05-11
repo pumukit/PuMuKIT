@@ -60,6 +60,7 @@ class Permission
     public const ACCESS_SERIES_EDIT_TEMPLATE = 'ROLE_ACCESS_SERIES_EDIT_TEMPLATE';
 
     // Permission for multimedia object
+    public const ACCESS_MULTIMEDIA_IMMUTABLE = 'ROLE_ACCESS_MULTIMEDIA_IMMUTABLE';
     public const ACCESS_MULTIMEDIA_META_COPYRIGHT = 'ROLE_ACCESS_MULTIMEDIA_META_COPYRIGHT';
     public const ACCESS_MULTIMEDIA_META_HEADLINE = 'ROLE_ACCESS_MULTIMEDIA_META_HEADLINE';
     public const ACCESS_MULTIMEDIA_META_KEYWORDS = 'ROLE_ACCESS_MULTIMEDIA_META_KEYWORDS';
@@ -409,6 +410,13 @@ class Permission
         ],
         self::ACCESS_SERIES_EDIT_TEMPLATE => [
             'description' => 'Show tab edit template on series',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::ACCESS_MULTIMEDIA_IMMUTABLE => [
+            'description' => 'Set multimedia object as immutable',
             'dependencies' => [
                 PermissionProfile::SCOPE_GLOBAL => [],
                 PermissionProfile::SCOPE_PERSONAL => [],
