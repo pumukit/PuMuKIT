@@ -8,10 +8,10 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use Pumukit\NewAdminBundle\Services\MultimediaObjectArchiveService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class MultimediaObjectArchiveController extends AbstractController implements NewAdminControllerInterface
 {

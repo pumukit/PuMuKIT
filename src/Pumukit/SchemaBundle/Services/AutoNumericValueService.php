@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\CoreBundle\Utils\SemaphoreUtils;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 
@@ -19,30 +20,28 @@ class AutoNumericValueService
 
     public function numericalIDForMultimediaObject(MultimediaObject $multimediaObject): void
     {
-        $SEMKey = 55555;
-        $seg = sem_get($SEMKey, 1, 0666, -1);
-        sem_acquire($seg);
+        $semaphore = SemaphoreUtils::acquire(55555);
 
         $enableFilters = $this->disableFilters();
 
         $this->setNumericalIDOnMultimediaObject($multimediaObject);
 
         $this->enableFilters($enableFilters);
-        sem_release($seg);
+
+        SemaphoreUtils::release($semaphore);
     }
 
     public function numericalIDForSeries(Series $series): void
     {
-        $SEMKey = 66666;
-        $seg = sem_get($SEMKey, 1, 0666, -1);
-        sem_acquire($seg);
+        $semaphore = SemaphoreUtils::acquire(66666);
 
         $enableFilters = $this->disableFilters();
 
         $this->setNumericalIDOnSeries($series);
 
         $this->enableFilters($enableFilters);
-        sem_release($seg);
+
+        SemaphoreUtils::release($semaphore);
     }
 
     private function disableFilters(): array
