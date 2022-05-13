@@ -1128,16 +1128,16 @@
         },
         {
             "name": "doctrine/mongodb-odm",
-            "version": "2.4.1",
+            "version": "2.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/mongodb-odm.git",
-                "reference": "21d650f15f07df708365f7dc3c8851bcbc806f9b"
+                "reference": "9066f03ce94d1da7c9dd7d34e571d37abf27c460"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/mongodb-odm/zipball/21d650f15f07df708365f7dc3c8851bcbc806f9b",
-                "reference": "21d650f15f07df708365f7dc3c8851bcbc806f9b",
+                "url": "https://api.github.com/repos/doctrine/mongodb-odm/zipball/9066f03ce94d1da7c9dd7d34e571d37abf27c460",
+                "reference": "9066f03ce94d1da7c9dd7d34e571d37abf27c460",
                 "shasum": ""
             },
             "require": {
@@ -1221,7 +1221,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/mongodb-odm/issues",
-                "source": "https://github.com/doctrine/mongodb-odm/tree/2.4.1"
+                "source": "https://github.com/doctrine/mongodb-odm/tree/2.4.2"
             },
             "funding": [
                 {
@@ -1237,7 +1237,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-10T07:39:30+00:00"
+            "time": "2022-05-12T20:21:37+00:00"
         },
         {
             "name": "doctrine/mongodb-odm-bundle",
