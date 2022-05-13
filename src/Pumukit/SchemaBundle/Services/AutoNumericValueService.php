@@ -20,7 +20,7 @@ class AutoNumericValueService
 
     public function numericalIDForMultimediaObject(MultimediaObject $multimediaObject): void
     {
-        $semaphore = SemaphoreUtils::acquire(55555);
+        $semaphore = SemaphoreUtils::acquire(1000005);
 
         $enableFilters = $this->disableFilters();
 
@@ -33,7 +33,7 @@ class AutoNumericValueService
 
     public function numericalIDForSeries(Series $series): void
     {
-        $semaphore = SemaphoreUtils::acquire(66666);
+        $semaphore = SemaphoreUtils::acquire(1000006);
 
         $enableFilters = $this->disableFilters();
 

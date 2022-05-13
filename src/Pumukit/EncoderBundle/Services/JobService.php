@@ -249,7 +249,7 @@ class JobService
             throw new \Exception('The media file duration is zero');
         }
 
-        $semaphore = SemaphoreUtils::acquire(92332378248);
+        $semaphore = SemaphoreUtils::acquire(1000002);
 
         $this->logger->info('[addJob] new Job');
 
@@ -401,7 +401,7 @@ class JobService
         $this->checkService();
         $nextJobToExecute = null;
 
-        $semaphore = SemaphoreUtils::acquire(1234569);
+        $semaphore = SemaphoreUtils::acquire(1000003);
 
         $nextJob = $this->getNextJob();
         if (!isset($nextJob)) {

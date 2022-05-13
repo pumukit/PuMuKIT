@@ -42,7 +42,7 @@ class PicExtractorListener
             return;
         }
 
-        $semaphore = SemaphoreUtils::acquire(1234568);
+        $semaphore = SemaphoreUtils::acquire(1000004);
 
         $this->generatePic($event->getMultimediaObject(), $event->getTrack());
 

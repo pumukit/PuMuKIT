@@ -138,7 +138,7 @@ EOT
             throw new \Exception('The file ('.$path.') is not a valid video or audio file (duration is zero)');
         }
 
-        $semaphore = SemaphoreUtils::acquire(123456999);
+        $semaphore = SemaphoreUtils::acquire(1000001);
 
         $series = $this->documentManager->getRepository(Series::class)->findOneBy(['title.'.$locale => $seriesTitle]);
         if (!$series) {
