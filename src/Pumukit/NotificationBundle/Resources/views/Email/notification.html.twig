@@ -1,6 +1,10 @@
-<h2>{{ subject }}</h2>
-<br/>
-{{ body|raw }}
-<br/>
-<br/>
-{{ sender_name }}
+{% extends '@PumukitNotification/Email/template.html.twig' %}
+
+{% block body %}
+    <h2>{{ subject }}</h2>
+    <br />
+    {{ body|raw }}
+    <br />
+    <br />
+    {{ sender_name }}
+{% endblock %}

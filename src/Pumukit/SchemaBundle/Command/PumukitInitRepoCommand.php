@@ -129,9 +129,10 @@ EOT
             default:
         }
 
+        $output->writeln('***** Executing pumukit:init:repo *****');
         foreach ($result as $element) {
             foreach ($element as $key => $value) {
-                $output->writeln($key.' - '.$value);
+                $output->writeln('<info>'.$key.' - '.$value.'</info>');
             }
         }
 

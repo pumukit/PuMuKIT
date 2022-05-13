@@ -6,6 +6,7 @@ namespace Pumukit\WorkflowBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
+use Pumukit\CoreBundle\Utils\SemaphoreUtils;
 use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\EncoderBundle\Services\PicExtractorService;
 use Pumukit\EncoderBundle\Services\ProfileService;
@@ -41,12 +42,11 @@ class PicExtractorListener
             return;
         }
 
-        $SEMKey = 1234568;
-        $seg = sem_get($SEMKey, 1, 0666, -1);
-        sem_acquire($seg);
+        $semaphore = SemaphoreUtils::acquire(1000004);
+
         $this->generatePic($event->getMultimediaObject(), $event->getTrack());
 
-        sem_release($seg);
+        SemaphoreUtils::release($semaphore);
     }
 
     private function generatePic(MultimediaObject $multimediaObject, Track $track): bool

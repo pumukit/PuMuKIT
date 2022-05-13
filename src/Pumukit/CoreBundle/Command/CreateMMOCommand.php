@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\CoreBundle\Command;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\CoreBundle\Utils\SemaphoreUtils;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
@@ -137,9 +138,7 @@ EOT
             throw new \Exception('The file ('.$path.') is not a valid video or audio file (duration is zero)');
         }
 
-        $SEMKey = 123456999;
-        $seg = sem_get($SEMKey, 1, 0666, -1);
-        sem_acquire($seg);
+        $semaphore = SemaphoreUtils::acquire(1000001);
 
         $series = $this->documentManager->getRepository(Series::class)->findOneBy(['title.'.$locale => $seriesTitle]);
         if (!$series) {
@@ -161,7 +160,7 @@ EOT
 
         $this->jobService->createTrackFromInboxOnServer($multimediaObject, $path, $profile, 2, $locale, []);
 
-        sem_release($seg);
+        SemaphoreUtils::release($semaphore);
 
         return 0;
     }

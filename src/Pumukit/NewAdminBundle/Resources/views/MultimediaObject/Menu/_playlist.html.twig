@@ -1,0 +1,7 @@
+{% if app.user and is_granted('ROLE_ACCESS_EDIT_PLAYLIST') %}
+    <li>
+        <a href="{{ url('pumukitnewadmin_playlistmms_modal_add', {'id': mm.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+            <i class="mdi-av-playlist-add"></i>{{ "Add to playlist"|trans }}
+        </a>
+    </li>
+{% endif %}

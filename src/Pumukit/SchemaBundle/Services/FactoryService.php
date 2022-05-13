@@ -16,7 +16,7 @@ use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Security\Permission;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FactoryService
 {
@@ -32,14 +32,30 @@ class FactoryService
     private $mmsDispatcher;
     private $seriesDispatcher;
     private $translator;
+    private $autoNumericValueService;
     private $locales;
     private $defaultCopyright;
     private $defaultLicense;
     private $addUserAsPerson;
     private $textIndexService;
 
-    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, UserService $userService, EmbeddedBroadcastService $embeddedBroadcastService, SeriesService $seriesService, MultimediaObjectEventDispatcherService $mmsDispatcher, SeriesEventDispatcherService $seriesDispatcher, TranslatorInterface $translator, $addUserAsPerson = true, array $locales = [], $defaultCopyright = '', $defaultLicense = '', TextIndexService $textIndexService = null)
-    {
+    public function __construct(
+        DocumentManager $documentManager,
+        TagService $tagService,
+        PersonService $personService,
+        UserService $userService,
+        EmbeddedBroadcastService $embeddedBroadcastService,
+        SeriesService $seriesService,
+        MultimediaObjectEventDispatcherService $mmsDispatcher,
+        SeriesEventDispatcherService $seriesDispatcher,
+        TranslatorInterface $translator,
+        AutoNumericValueService $autoNumericValueService,
+        $addUserAsPerson = true,
+        array $locales = [],
+        $defaultCopyright = '',
+        $defaultLicense = '',
+        TextIndexService $textIndexService = null
+    ) {
         $this->dm = $documentManager;
         $this->tagService = $tagService;
         $this->personService = $personService;
@@ -49,6 +65,7 @@ class FactoryService
         $this->mmsDispatcher = $mmsDispatcher;
         $this->seriesDispatcher = $seriesDispatcher;
         $this->translator = $translator;
+        $this->autoNumericValueService = $autoNumericValueService;
         $this->locales = $locales;
         $this->defaultCopyright = $defaultCopyright;
         $this->defaultLicense = $defaultLicense;
@@ -687,73 +704,11 @@ class FactoryService
 
     private function generateNumericalIDMultimediaObject(MultimediaObject $mm)
     {
-        $SEMKey = 55555;
-        $seg = sem_get($SEMKey, 1, 0666, -1);
-        sem_acquire($seg);
-
-        $enableFilters = array_keys($this->dm->getFilterCollection()->getEnabledFilters());
-        foreach ($enableFilters as $enableFilter) {
-            $this->dm->getFilterCollection()->disable($enableFilter);
-        }
-
-        /** @var MultimediaObject|null */
-        $multimediaObject = $this->dm->getRepository(MultimediaObject::class)->createQueryBuilder()
-            ->field('numerical_id')->exists(true)
-            ->sort(['numerical_id' => -1])
-            ->getQuery()
-            ->getSingleResult()
-        ;
-
-        $lastNumericalID = 0;
-        if ($multimediaObject) {
-            $lastNumericalID = $multimediaObject->getNumericalID();
-        }
-
-        $newNumericalID = $lastNumericalID + 1;
-
-        $mm->setNumericalID($newNumericalID);
-        $this->dm->flush();
-
-        foreach ($enableFilters as $enableFilter) {
-            $this->dm->getFilterCollection()->enable($enableFilter);
-        }
-
-        sem_release($seg);
+        $this->autoNumericValueService->numericalIDForMultimediaObject($mm);
     }
 
     private function generateNumericalIDSeries(Series $oneSeries)
     {
-        $SEMKey = 66666;
-        $seg = sem_get($SEMKey, 1, 0666, -1);
-        sem_acquire($seg);
-
-        $enableFilters = array_keys($this->dm->getFilterCollection()->getEnabledFilters());
-        foreach ($enableFilters as $enableFilter) {
-            $this->dm->getFilterCollection()->disable($enableFilter);
-        }
-
-        /** @var Series|null */
-        $series = $this->dm->getRepository(Series::class)->createQueryBuilder()
-            ->field('numerical_id')->exists(true)
-            ->sort(['numerical_id' => -1])
-            ->getQuery()
-            ->getSingleResult()
-        ;
-
-        $lastNumericalID = 0;
-        if ($series) {
-            $lastNumericalID = $series->getNumericalID();
-        }
-
-        $newNumericalID = $lastNumericalID + 1;
-
-        $oneSeries->setNumericalID($newNumericalID);
-        $this->dm->flush();
-
-        foreach ($enableFilters as $enableFilter) {
-            $this->dm->getFilterCollection()->enable($enableFilter);
-        }
-
-        sem_release($seg);
+        $this->autoNumericValueService->numericalIDForSeries($oneSeries);
     }
 }
