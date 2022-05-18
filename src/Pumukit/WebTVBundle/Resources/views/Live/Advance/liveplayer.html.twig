@@ -14,11 +14,7 @@
         {% if event.isIframeUrl() is same as(false) %}
 
             {% if generate_hls_url(live) != 0 %}
-                {% if dual is not defined %}
-                    {% include "@PumukitBaseLivePlayer/Advance/player.js.twig" %}
-                {% else %} 
-                    <iframe src="{{ url('pumukit_livevideoplayer_index', {'id': live.id }) }}">
-                {% endif %}
+                {% include "@PumukitBaseLivePlayer/Advance/player.js.twig" %}
             {% else %}
                 {% include "@PumukitBaseLivePlayer/Advance/Sessions/noRealSession.js.twig" %}
             {% endif %}

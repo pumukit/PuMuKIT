@@ -25,7 +25,8 @@
         
        <div class="col-xs-12 col-sm-8 col-md-8">
             {% if "WOWZA_DUAL_STREAM" == live.getLiveType %}
-                    {% include('@PumukitWebTV/Live/Advance/liveplayer.html.twig') with {stretching: 'exactfit', aspectratio: '16:9', dual: '1'} %}
+                {% dump("ey") %}
+                <iframe src="{{ url('pumukit_livevideoplayer_index', {'id': live.id }) }}">
             {% else %}
                 <div id="liveplayer">
                     {% include('@PumukitWebTV/Live/Advance/liveplayer.html.twig') with {stretching: 'exactfit', aspectratio: '16:9'} %}
