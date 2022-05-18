@@ -12,27 +12,19 @@
     } else if (nowSessionsCount > 0) {
         {% include "@PumukitBaseLivePlayer/Advance/Sessions/nowSessions.js.twig" %}
         {% if event.isIframeUrl() is same as(false) %}
-            {% if stream is not defined %}
 
-                {% if generate_hls_url(live) != 0 %}
+            {% if generate_hls_url(live) != 0 %}
+                {% if dual is not defined %}
                     {% include "@PumukitBaseLivePlayer/Advance/player.js.twig" %}
-                {% else %}
-                    {% include "@PumukitBaseLivePlayer/Advance/Sessions/noRealSession.js.twig" %}
+                {% else %} 
+                    <iframe src="{{ url('pumukit_livevideoplayer_index', {'id': live.id }) }}">
                 {% endif %}
-
-                {% include "@PumukitBaseLivePlayer/Advance/wowzaSuscriber.js.twig" %}
-
             {% else %}
-
-                {% if generate_hls_url(live, 2) != 0 %}
-                    {% include ("@PumukitBaseLivePlayer/Advance/player.js.twig") with {stream: '2'} %}
-                {% else %}
-                    {% include "@PumukitBaseLivePlayer/Advance/Sessions/noRealSession.js.twig" %}
-                {% endif %}
-
-                {% include ("@PumukitBaseLivePlayer/Advance/wowzaSuscriber.js.twig")  with {stream: '2'} %}
-
+                {% include "@PumukitBaseLivePlayer/Advance/Sessions/noRealSession.js.twig" %}
             {% endif %}
+
+            {% include "@PumukitBaseLivePlayer/Advance/wowzaSuscriber.js.twig" %}
+
         {% endif %}
     }
 
