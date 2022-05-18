@@ -2,6 +2,7 @@
 
 namespace Pumukit\NewAdminBundle\Form\Type;
 
+use Pumukit\NewAdminBundle\Form\Type\Base\LicenseType;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nAdvanceType;
 use Pumukit\NewAdminBundle\Form\Type\Other\Html5dateType;
@@ -81,7 +82,7 @@ class MultimediaObjectTemplateMetaType extends AbstractType
             )
             ->add(
                 'license',
-                TextType::class,
+                LicenseType::class,
                 [
                     'required' => false,
                     'attr' => [
