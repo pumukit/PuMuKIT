@@ -56,7 +56,7 @@ class LiveTwigExtension extends AbstractExtension
 
         $ch = curl_init();
         $options = [
-            CURLOPT_URL => 'https:'.$hls,
+            CURLOPT_URL => 'http:'.$hls,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => true,
             CURLOPT_FOLLOWLOCATION => true,
