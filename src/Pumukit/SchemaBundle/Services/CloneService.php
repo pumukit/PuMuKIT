@@ -62,6 +62,7 @@ class CloneService
         $multimediaObject->setCopyright($baseMultimediaObject->getCopyright());
         $multimediaObject->setLicense($baseMultimediaObject->getLicense());
         $multimediaObject->setNumview(0);
+        $multimediaObject->setComments($baseMultimediaObject->getComments());
 
         $this->cloneProperties($multimediaObject, $baseMultimediaObject);
         $this->cloneTags($multimediaObject, $baseMultimediaObject->getTags());
