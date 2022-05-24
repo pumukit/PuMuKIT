@@ -477,6 +477,7 @@ class FactoryService
         $new->setCopyright($src->getCopyright());
         $new->setLicense($src->getLicense());
         $new->setNumview(0);
+        $new->setComments($src->getComments());
 
         // NOTE: #7408 Specify which properties are clonable
         $new->setProperty('subseries', $src->getProperty('subseries'));
