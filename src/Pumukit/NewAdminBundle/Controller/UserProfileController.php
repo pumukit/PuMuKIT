@@ -26,6 +26,7 @@ class UserProfileController extends AdminController
     public function profileAction(Request $request): array
     {
         $user = $this->getUser();
+        $seriesService = $this->get('pumukitschema.series');
 
         $translator = $this->get('translator');
         $locale = $request->getLocale();
@@ -38,9 +39,12 @@ class UserProfileController extends AdminController
             $this->get('pumukitschema.user')->update($user);
         }
 
+        $seriesOfUser = $seriesService->getSeriesOfUser($user, false, 'owner', [ "public_date" => "desc"]);
+
         return [
             'user' => $user,
             'form' => $form->createView(),
+            'seriesOfUser' => $seriesOfUser,
         ];
     }
 
