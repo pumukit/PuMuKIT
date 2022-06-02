@@ -247,11 +247,14 @@ class APIController extends Controller implements NewAdminControllerInterface
     public function userSeriesAction(Request $request)
     {
         $seriesService = $this->get('pumukitschema.series');
+        $personService = $this->get('pumukitschema.person');
         $userRepo = $this->get('doctrine_mongodb')->getRepository(User::class);
         $serializer = $this->get('jms_serializer');
         $sort = $request->get('sort') ?: [];
         $onlyAdminSeries = $request->get('adminSeries') ?: false;
         $limit = (int) $request->get('limit');
+
+        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
 
         try {
             $criteria = $this->getCriteria($request->get('criteria'), $request->get('criteriajson'));
@@ -268,7 +271,7 @@ class APIController extends Controller implements NewAdminControllerInterface
 
         $user = $userRepo->createQueryBuilder()->field('username')->equals($criteria['owner'])->getQuery()->getSingleResult();
 
-        $seriesOfUser = $seriesService->getSeriesOfUser($user, $onlyAdminSeries, 'owner', $sort, $limit);
+        $seriesOfUser = $seriesService->getSeriesOfUser($user, $onlyAdminSeries, $personalScopeRoleCode, $sort, $limit);
 
         $seriesOfUser = [
             'total' => count($seriesOfUser),

@@ -27,6 +27,9 @@ class UserProfileController extends AdminController
     {
         $user = $this->getUser();
         $seriesService = $this->get('pumukitschema.series');
+        $personService = $this->get('pumukitschema.person');
+
+        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
 
         $translator = $this->get('translator');
         $locale = $request->getLocale();
@@ -39,7 +42,7 @@ class UserProfileController extends AdminController
             $this->get('pumukitschema.user')->update($user);
         }
 
-        $seriesOfUser = $seriesService->getSeriesOfUser($user, false, 'owner', [ "public_date" => "desc"]);
+        $seriesOfUser = $seriesService->getSeriesOfUser($user, false, $personalScopeRoleCode, [ "public_date" => "desc"]);
 
         return [
             'user' => $user,
