@@ -42,7 +42,7 @@ class UserProfileController extends AdminController
             $this->get('pumukitschema.user')->update($user);
         }
 
-        $seriesOfUser = $seriesService->getSeriesOfUser($user, false, $personalScopeRoleCode, [ "public_date" => "desc"]);
+        $seriesOfUser = $seriesService->getSeriesOfUser($user, false, $personalScopeRoleCode, ['public_date' => 'desc']);
 
         return [
             'user' => $user,
