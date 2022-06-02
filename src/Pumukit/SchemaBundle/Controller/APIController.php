@@ -242,6 +242,48 @@ class APIController extends Controller implements NewAdminControllerInterface
     }
 
     /**
+     * @Route("/series/user.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     */
+    public function userSeriesAction(Request $request)
+    {
+        $seriesService = $this->get('pumukitschema.series');
+        $userRepo = $this->get('doctrine_mongodb')->getRepository(User::class);
+        $serializer = $this->get('jms_serializer');
+        $sort = $request->get('sort') ?: [];
+        $onlyAdminSeries = $request->get('adminSeries') ?: false;
+        $limit = (int) $request->get('limit');
+
+        try {
+            $criteria = $this->getCriteria($request->get('criteria'), $request->get('criteriajson'));
+        } catch (\Exception $e) {
+            $error = ['error' => sprintf('Invalid criteria (%s)', $e->getMessage())];
+            $data = $serializer->serialize($error, $request->getRequestFormat());
+
+            return new Response($data, 400);
+        }
+
+        if (!$limit || $limit > 100) {
+            $limit = 100;
+        }
+
+        $user = $userRepo->createQueryBuilder()->field('username')->equals($criteria['owner'])->getQuery()->getSingleResult();
+
+        $seriesOfUser = $seriesService->getSeriesOfUser($user, $onlyAdminSeries, 'owner', $sort, $limit);
+
+        $seriesOfUser = [
+            'total' => count($seriesOfUser),
+            'limit' => $limit,
+            'sort' => $sort,
+            'criteria' => $criteria,
+            'seriesOfUser' => $seriesOfUser->toArray(),
+        ];
+
+        $data = $serializer->serialize($seriesOfUser, $request->getRequestFormat());
+
+        return new Response($data);
+    }
+
+    /**
      * @Route("/live.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
      */
     public function liveAction(Request $request)
