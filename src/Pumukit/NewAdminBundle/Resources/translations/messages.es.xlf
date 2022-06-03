@@ -3865,6 +3865,10 @@
         <source>No groups found</source>
         <target state="translated">Ningún grupo encontrado</target>
       </trans-unit>
+      <trans-unit id="Rj1lgLT" resname="No series found">
+        <source>No series found</source>
+        <target state="translated">Ninguna serie encontrada</target>
+      </trans-unit>
       <trans-unit id="ITD9xUa" resname="Email already in use">
         <source>Email already in use</source>
         <target state="translated">El correo electrónico ya está en uso</target>
