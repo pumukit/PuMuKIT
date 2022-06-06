@@ -42,3 +42,11 @@ TAGS
 /public/bundles/
 /var/
 ###< symfony/framework-bundle ###
+node_modules
+
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###

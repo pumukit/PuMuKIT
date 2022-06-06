@@ -6,9 +6,9 @@ pumukit_stats_ui:
   resource: "@PumukitStatsUIBundle/Resources/config/routing.yml"
   prefix:   /
 
-pumukit_jw_player:
-  resource: "@PumukitPlayerBundle/Resources/config/routing.yml"
-  prefix:   /
+# pumukit_jw_player:
+#   resource: "@PumukitPlayerBundle/Resources/config/routing.yml"
+#   prefix:   /
 
 pumukit_base_player:
   resource: "@PumukitBasePlayerBundle/Resources/config/routing.yml"
@@ -29,3 +29,6 @@ pumukitnewadmin:
   resource: "@PumukitNewAdminBundle/Resources/config/routing.yml"
   prefix:   /
 
+pumukit_player:
+  resource: "@PumukitPaellaPlayerBundle/Resources/config/routing.yml"
+  prefix:   /

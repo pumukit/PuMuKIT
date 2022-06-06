@@ -12,7 +12,6 @@ return [
     Pumukit\CoreBundle\PumukitCoreBundle::class => ['all' => true],
     Pumukit\EncoderBundle\PumukitEncoderBundle::class => ['all' => true],
     Pumukit\InspectionBundle\PumukitInspectionBundle::class => ['all' => true],
-    Pumukit\PlayerBundle\PumukitPlayerBundle::class => ['all' => true],
     Pumukit\NewAdminBundle\PumukitNewAdminBundle::class => ['all' => true],
     Pumukit\NotificationBundle\PumukitNotificationBundle::class => ['all' => true],
     Pumukit\SchemaBundle\PumukitSchemaBundle::class => ['all' => true],
@@ -31,4 +30,6 @@ return [
     Twig\Extra\TwigExtraBundle\TwigExtraBundle::class => ['all' => true],
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
     Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],
+    Pumukit\PaellaPlayerBundle\PumukitPaellaPlayerBundle::class => ['all' => true],
+    Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
 ];
