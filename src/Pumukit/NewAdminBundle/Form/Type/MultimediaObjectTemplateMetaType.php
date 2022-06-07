@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\NewAdminBundle\Form\Type;
 
+use Pumukit\NewAdminBundle\Form\Type\Base\LicenseType;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nAdvanceType;
 use Pumukit\NewAdminBundle\Form\Type\Other\Html5dateType;
@@ -79,6 +80,18 @@ class MultimediaObjectTemplateMetaType extends AbstractType
                         'aria-label' => $this->translator->trans('Headline', [], null, $this->locale),
                     ],
                     'label' => $this->translator->trans('Headline', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'license',
+                LicenseType::class,
+                [
+                    'required' => false,
+                    'attr' => [
+                        'groupclass' => 'hidden-naked',
+                        'aria-label' => $this->translator->trans('License', [], null, $this->locale),
+                    ],
+                    'label' => $this->translator->trans('License', [], null, $this->locale),
                 ]
             )
         ;

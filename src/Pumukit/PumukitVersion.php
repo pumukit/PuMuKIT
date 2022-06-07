@@ -6,5 +6,5 @@ namespace Pumukit;
 
 class PumukitVersion
 {
-    public const VERSION = '4.0.0-RC1';
+    public const VERSION = '4.0.0-RC2';
 }

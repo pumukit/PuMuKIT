@@ -91,6 +91,7 @@ class PumukitAdminExtension extends AbstractExtension
             new TwigFunction('sort_roles', [$this, 'getSortRoles']),
             new TwigFunction('status_string_text_by_value', [$this, 'getStatusTextByValue']),
             new TwigFunction('role_string_text_by_value', [$this, 'getRoleTextByValue']),
+            new TwigFunction('is_immutable', [$this, 'isImmutable']),
         ];
     }
 
@@ -486,6 +487,11 @@ class PumukitAdminExtension extends AbstractExtension
         }
 
         return $aRoles;
+    }
+
+    public function isImmutable(MultimediaObject $multimediaObject): bool
+    {
+        return $multimediaObject->getImmutable() && $multimediaObject->getImmutable()->value();
     }
 
     private function getProfileFromTags(array $tags): string

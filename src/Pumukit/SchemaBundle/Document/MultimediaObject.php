@@ -7,6 +7,7 @@ namespace Pumukit\SchemaBundle\Document;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Pumukit\SchemaBundle\Document\ObjectValue\Immutable;
 
 /**
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\MultimediaObjectRepository")
@@ -65,6 +66,11 @@ class MultimediaObject
      * @MongoDB\UniqueIndex()
      */
     private $numerical_id;
+
+    /**
+     * @MongoDB\EmbedOne(name="immutable", targetDocument="Pumukit\SchemaBundle\Document\ObjectValue\Immutable")
+     */
+    private $immutable;
 
     /**
      * @MongoDB\Field(type="int")
@@ -267,6 +273,16 @@ class MultimediaObject
     public function setNumericalID(int $numericalID): void
     {
         $this->numerical_id = $numericalID;
+    }
+
+    public function getImmutable(): ?Immutable
+    {
+        return $this->immutable;
+    }
+
+    public function setImmutable(Immutable $immutable): void
+    {
+        $this->immutable = $immutable;
     }
 
     public function getSecret(): string

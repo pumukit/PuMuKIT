@@ -29,6 +29,7 @@ class PumukitNewAdminExtension extends Extension
         $container->setParameter('pumukit_new_admin.show_naked_pub_tab', $config['show_naked_pub_tab']);
         $container->setParameter('pumukit_new_admin.base_catalogue_tag', $config['base_catalogue_tag']);
         $container->setParameter('pumukit_new_admin.enable_playlist', $config['enable_playlist']);
+        $container->setParameter('pumukit_new_admin.multimedia_object_archive_user_assign', $config['multimedia_object_archive_user_assign']);
         $container->setParameter('pumukit_new_admin.metadata_translators', []);
 
         if ($container->hasParameter('pumukit.naked_backoffice_domain')) {
