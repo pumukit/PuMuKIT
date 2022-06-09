@@ -59,9 +59,6 @@
                       <li class="fas fa-link" style="font-size:13px;color:grey" data-toggle="tooltip" data-placement="top" title= {{ live.getSourceName2() }}></li>
                   {% endif %}
               </td>
-            <td headers="th-resolution" onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
-              {{ live.getWidth }}x{{ live.getHeight }}
-            </td>
             <td headers="th-type" onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
               {{ live.getLiveType }}
             </td>
