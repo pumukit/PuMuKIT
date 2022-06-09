@@ -6,6 +6,8 @@ namespace Pumukit\NewAdminBundle\Form\Type\Base;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,14 +25,18 @@ abstract class AbstractI18nType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+            $this->addChildren($event->getForm(), $event->getData());
+        });
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             [
-                'compound' => false,
                 'multiple' => false,
+                'compound' => true,
+                'allow_extra_fields' => true,
             ]
         );
     }
@@ -39,5 +45,26 @@ abstract class AbstractI18nType extends AbstractType
     {
         $view->vars['locales'] = $this->locales;
         $view->vars['translators'] = $this->translators;
+    }
+
+    public function addChildren(FormInterface $form, $data)
+    {
+        if (is_array($data)) {
+            foreach ($data as $name => $value) {
+                if (!is_array($value)) {
+                    $form->add($name);
+                } else {
+                    $form->add($name, null, [
+                        'compound' => true,
+                    ]);
+
+                    $this->addChildren($form->get($name), $value);
+                }
+            }
+        } else {
+            $form->add($data, null, [
+                'compound' => false,
+            ]);
+        }
     }
 }
