@@ -2,26 +2,55 @@
 {% set live = event.live %}
 {% set advance_live_events = true %}
 
-{% include "@PumukitBaseLivePlayer/player.html.twig" %}
-<script type="text/javascript">
-    {% include "@PumukitBaseLivePlayer/Advance/Sessions/common.js.twig" %}
-    if(nextSessionsCount === 0 && nowSessionsCount === 0) {
-        {% include "@PumukitBaseLivePlayer/Advance/Sessions/withoutSessions.js.twig" %}
-    } else if (nextSessionsCount > 0 && nowSessionsCount === 0) {
-        {% include "@PumukitBaseLivePlayer/Advance/Sessions/futureSessions.js.twig" %}
-    } else if (nowSessionsCount > 0) {
-        {% include "@PumukitBaseLivePlayer/Advance/Sessions/nowSessions.js.twig" %}
-        {% if event.isIframeUrl() is same as(false) %}
-
-            {% if generate_hls_url(live) != 0 %}
-                {% include "@PumukitBaseLivePlayer/Advance/player.js.twig" %}
-            {% else %}
-                {% include "@PumukitBaseLivePlayer/Advance/Sessions/noRealSession.js.twig" %}
-            {% endif %}
-
-            {% include "@PumukitBaseLivePlayer/Advance/wowzaSuscriber.js.twig" %}
-
-        {% endif %}
+{% if "WOWZA_DUAL_STREAM" == live.getLiveType %}
+    <div class="live-{{ id }}">
+        <iframe src="{{ url('pumukit_livevideoplayer_index', {'id': multimediaObject.id}) }}"
+            id="paellaiframe"
+            onload="resizeFrame(this)"
+            frameborder="0"
+            width="100%"
+            height="500px"
+            scrolling="no"
+            title="player"
+            allowfullscreen>
+        </iframe>
+    </div>
+    <script>
+    function resizeFrame(elem) {
+        var width = $(elem).width();
+        var height = width / 16 * 9;
+        $(elem).height(height);
     }
 
+    $(window).resize(function () {
+        resizeFrame($('#paellaiframe'));
+    });
+
+    $(window).on("load", function() {
+        $("#paellaiframe").focus();
+    });
+</script>
+{% else %}
+    {% include "@PumukitBaseLivePlayer/player.html.twig" %}
+{% endif %}
+<script type="text/javascript">
+{% include "@PumukitBaseLivePlayer/Advance/Sessions/common.js.twig" %}
+if(nextSessionsCount === 0 && nowSessionsCount === 0) {
+    {% include "@PumukitBaseLivePlayer/Advance/Sessions/withoutSessions.js.twig" %}
+} else if (nextSessionsCount > 0 && nowSessionsCount === 0) {
+    {% include "@PumukitBaseLivePlayer/Advance/Sessions/futureSessions.js.twig" %}
+} else if (nowSessionsCount > 0) {
+    {% include "@PumukitBaseLivePlayer/Advance/Sessions/nowSessions.js.twig" %}
+    {% if event.isIframeUrl() is same as(false) %}
+
+        {% if generate_hls_url(live) != 0 %}
+            {% include "@PumukitBaseLivePlayer/Advance/player.js.twig" %}
+        {% else %}
+            {% include "@PumukitBaseLivePlayer/Advance/Sessions/noRealSession.js.twig" %}
+        {% endif %}
+
+        {% include "@PumukitBaseLivePlayer/Advance/wowzaSuscriber.js.twig" %}
+
+    {% endif %}
+}
 </script>

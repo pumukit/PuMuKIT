@@ -24,16 +24,9 @@
         </div>
         
        <div class="col-xs-12 col-sm-8 col-md-8">
-            {% if "WOWZA_DUAL_STREAM" == live.getLiveType %}
-                {% dump("ey") %}
-                <div id="liveplayer">
-                    {{ render(controller('Pumukit\\PaellaLiveBundle\\Controller\\BaseLivePlayerController::indexAction', {'id': multimediaObject.id})) }}
-                </div>
-            {% else %}
-                <div id="liveplayer">
-                    {% include('@PumukitWebTV/Live/Advance/liveplayer.html.twig') with {stretching: 'exactfit', aspectratio: '16:9'} %}
-                </div>
-            {% endif %}
+            <div id="liveplayer">
+                {% include('@PumukitWebTV/Live/Advance/liveplayer.html.twig') with {stretching: 'exactfit', aspectratio: '16:9'} %}
+            </div>
             {% include('@PumukitWebTV/Live/Advance/template_info.html.twig') %}
         </div>
 
