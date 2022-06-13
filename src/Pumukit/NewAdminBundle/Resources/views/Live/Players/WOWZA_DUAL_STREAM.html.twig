@@ -1,3 +1,26 @@
-<div style="width:100%; margin: 0px auto; overflow-x: hidden;">
-    <iframe src="{{ url('pumukit_livevideoplayer_index', {'id': live.id }) }}">
+<div>
+    <iframe src="{{ url('pumukit_livevideoplayer_index', {'id': multimediaObject.id}) }}"
+        id="paellaiframe"
+        onload="resizeFrame(this)"
+        frameborder="0"
+        width="100%"
+        height="500px"
+        scrolling="no"
+        title="player"
+        allowfullscreen>
+    </iframe>
 </div>
+
+    <script>
+    function resizeFrame(elem) {
+        var width = $(elem).width();
+        var height = width / 16 * 9;
+        $(elem).height(height);
+    }
+    $(window).resize(function () {
+        resizeFrame($('#paellaiframe'));
+    });
+    $(window).on("load", function() {
+        $("#paellaiframe").focus();
+    });
+</script> 
