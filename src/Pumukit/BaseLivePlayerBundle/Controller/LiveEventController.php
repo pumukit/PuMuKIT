@@ -21,6 +21,7 @@ class LiveEventController
         );
 
         $publisher($update);
+
         return new Response($stream);
     }
 }
