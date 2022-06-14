@@ -19,8 +19,8 @@ class LiveEventController
         $update = new Update(
             'https://livestream',
             json_encode(['extra' => $extra,
-                         'app' => $app,
-                         'stream' => $stream])
+                'app' => $app,
+                'stream' => $stream, ])
         );
 
         $publisher($update);
