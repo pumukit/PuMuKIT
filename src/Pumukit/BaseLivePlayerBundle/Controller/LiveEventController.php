@@ -12,28 +12,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class LiveEventController
 {
     /**
-     * @Route("/livestream/rtmp://{extra}/{app}/{stream}/{status}")
+     * @Route("/livestream/rtmp://{extra}/{app}/{stream}")
      */
-    public function publish(PublisherInterface $publisher, string $extra, string $app, string $stream, string $status): Response
+    public function publish(PublisherInterface $publisher, string $extra, string $app, string $stream): Response
     {
         $update = new Update(
-            // 'https://wowza-10-10-18-11.nip.io/'.$app."/".$stream,
-            'https://hola',
-            json_encode(['status' => 'up'])
+            'https://livestream',
+            json_encode(['extra' => $extra,
+                         'app' => $app,
+                         'stream' => $stream])
         );
-
-        // $update = new Update(
-        //     // 'https://wowza-10-10-18-11.nip.io/'.$app."/".$stream,
-        //     'https://'.$app.'/'.$stream,
-        //     json_encode(['status' => $status])
-        // );
-        echo $extra;
-        echo $app;
-        echo $stream;
-        echo $status;
 
         $publisher($update);
 
-        return new Response($status);
+        return new Response($stream);
     }
 }
