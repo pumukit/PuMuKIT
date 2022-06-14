@@ -17,14 +17,10 @@ class LiveEventController
     public function publish(PublisherInterface $publisher, string $extra, string $app, string $stream): Response
     {
         $update = new Update(
-            'https://livestream',
-            json_encode(['extra' => $extra,
-                'app' => $app,
-                'stream' => $stream, ])
+            'https://livestream/rtmp://' + $extra + '/' + $app + '/' + $stream
         );
 
         $publisher($update);
-
         return new Response($stream);
     }
 }

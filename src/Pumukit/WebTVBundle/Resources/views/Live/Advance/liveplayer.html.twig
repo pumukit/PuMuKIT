@@ -49,7 +49,7 @@ if(nextSessionsCount === 0 && nowSessionsCount === 0) {
             {% include "@PumukitBaseLivePlayer/Advance/Sessions/noRealSession.js.twig" %}
         {% endif %}
 
-        {% include "@PumukitBaseLivePlayer/Advance/wowzaSuscriber.js.twig" %}
+        {% include "@PumukitBaseLivePlayer/Advance/wowzaSuscriber.js.twig" with {'url': live.url, 'source1': live.getSourceName(), 'source2': live.getSourceName2() } %}
 
     {% endif %}
 }
