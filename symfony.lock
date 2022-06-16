@@ -718,6 +718,9 @@
     "symfony/yaml": {
         "version": "v4.4.29"
     },
+    "teltek/pumukit-paella-player-bundle": {
+        "version": "dev-test_paella_7_II"
+    },
     "teltek/pumukit-stats-ui-bundle": {
         "version": "3.0.1"
     },
