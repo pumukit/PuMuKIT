@@ -17,11 +17,11 @@ class LiveEventController
     public function publish(PublisherInterface $publisher, string $extra, string $app, string $stream): Response
     {
         $update = new Update(
-            'https://livestream/rtmp://' + $extra + '/' + $app + '/' + $stream
+            'https://livestream/rtmp://' . $extra . '/'. $app . '/' . $stream,
         );
 
         $publisher($update);
 
-        return new Response($stream);
+        return new Response('OK');
     }
 }
