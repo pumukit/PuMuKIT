@@ -1,12 +1,14 @@
-const url = new URL('http://localhost:8080/.well-known/mercure');
-url.searchParams.append('topic', 'https://livestream/{{ url }}/{{ source1 }}');
-url.searchParams.append('topic', 'https://livestream/{{ url }}/{{ source2 }}');
+const url = new URL('https://pumukit-10-10-18-10.nip.io/.well-known/mercure');
+
+{# url.searchParams.append('topic', 'https://livestream/{{ url }}/{{ source1 }}');
+url.searchParams.append('topic', 'https://livestream/{{ url }}/{{ source2 }}'); #}
 
 const eventSource = new EventSource(url);
 
 eventSource.onmessage = (event) => {
-    $.ajax({
+    console.log("mensaje");
+     {# $.ajax({
         url: "{{ path('pumukit_live_event_id', {"id": live.id()}) }}",
         method: 'POST',
-    });
+     }) #}
 }
