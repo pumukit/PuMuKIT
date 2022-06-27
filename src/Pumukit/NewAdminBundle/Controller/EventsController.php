@@ -163,14 +163,30 @@ class EventsController extends Controller implements NewAdminControllerInterface
                     'ends' => ['$gte' => $date],
                 ]];
             } elseif ('today' === $type) {
-                $dateStart = new \DateTime(date('Y-m-d'));
+                $now = new \DateTime('now');
+                $dateStart = new \DateTime(date('Y-m-d 00:00:00'));
                 $dateEnds = new \DateTime(date('Y-m-d 23:59:59'));
                 $dateStart = new \MongoDate($dateStart->getTimestamp());
                 $dateEnds = new \MongoDate($dateEnds->getTimestamp());
-                $criteria['embeddedEvent.embeddedEventSession'] = ['$elemMatch' => [
-                    'start' => ['$gte' => $dateStart],
-                    'ends' => ['$lte' => $dateEnds],
-                ]];
+                $criteria['$or'] = [
+                    [
+                        'embeddedEvent.embeddedEventSession' => [
+                            '$elemMatch' => [
+                                'start' => ['$gte' => $dateStart],
+                                'ends' => ['$lte' => $dateEnds],
+                            ]
+                        ]
+                    ],
+                    [
+                        'embeddedEvent.embeddedEventSession' => [
+                            '$elemMatch' => [
+                                'start' => ['$lte' => new \MongoDate($now->getTimestamp())],
+                                'ends' => ['$gte' => new \MongoDate($now->getTimestamp())],
+                            ]
+                        ]
+                    ]
+                ];
+
             } else {
                 $criteria['embeddedEvent.embeddedEventSession.start'] = ['$gt' => $date];
             }
