@@ -174,19 +174,18 @@ class EventsController extends Controller implements NewAdminControllerInterface
                             '$elemMatch' => [
                                 'start' => ['$gte' => $dateStart],
                                 'ends' => ['$lte' => $dateEnds],
-                            ]
-                        ]
+                            ],
+                        ],
                     ],
                     [
                         'embeddedEvent.embeddedEventSession' => [
                             '$elemMatch' => [
                                 'start' => ['$lte' => new \MongoDate($now->getTimestamp())],
                                 'ends' => ['$gte' => new \MongoDate($now->getTimestamp())],
-                            ]
-                        ]
-                    ]
+                            ],
+                        ],
+                    ],
                 ];
-
             } else {
                 $criteria['embeddedEvent.embeddedEventSession.start'] = ['$gt' => $date];
             }
