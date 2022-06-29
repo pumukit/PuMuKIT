@@ -354,7 +354,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("list/options/{type}/{id}", name="pumukit_new_admin_live_event_options")
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
+     * @ParamConverter("multimediaObject", options={"mapping": {"id": "id"}})
      * @Template("@PumukitNewAdmin/LiveEvent/updatemenu.html.twig")
      *
      * @param mixed $type
@@ -412,7 +412,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("edit/{id}", name="pumukit_new_admin_live_event_edit")
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
+     * @ParamConverter("multimediaObject", options={"mapping": {"id": "id"}})
      * @Template("@PumukitNewAdmin/LiveEvent/edit.html.twig")
      */
     public function editEventAction(MultimediaObject $multimediaObject)
@@ -424,7 +424,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("event/{id}", name="pumukit_new_admin_live_event_eventtab")
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
+     * @ParamConverter("multimediaObject", options={"mapping": {"id": "id"}})
      * @Template("@PumukitNewAdmin/LiveEvent/updateevent.html.twig")
      */
     public function eventAction(Request $request, MultimediaObject $multimediaObject)
@@ -580,7 +580,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("series/tab/{id}", name="pumukit_new_admin_live_event_seriestab")
-     * @ParamConverter("series", class="PumukitSchemaBundle:Series", options={"mapping": {"id": "id"}})
+     * @ParamConverter("series", options={"mapping": {"id": "id"}})
      * @Template("@PumukitNewAdmin/Series/updatemeta.html.twig")
      */
     public function seriesAction(Request $request, Series $series)
@@ -611,7 +611,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("session/{id}", name="pumukit_new_admin_live_event_sessiontab")
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
+     * @ParamConverter("multimediaObject", options={"mapping": {"id": "id"}})
      * @Template("@PumukitNewAdmin/LiveEvent/updatesession.html.twig")
      */
     public function sessionAction(Request $request, MultimediaObject $multimediaObject)
@@ -812,7 +812,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("show/{id}", name="pumukit_new_admin_live_event_show")
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
+     * @ParamConverter("multimediaObject", options={"mapping": {"id": "id"}})
      * @Template("@PumukitNewAdmin/LiveEvent/show.html.twig")
      */
     public function showAction(MultimediaObject $multimediaObject)
@@ -822,7 +822,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("autocomplete/series/with/event/data/{id}", name="pumukit_new_admin_autocomplete_series_with_event_data")
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
+     * @ParamConverter("multimediaObject", options={"mapping": {"id": "id"}})
      */
     public function autocompleteSeriesWithEventDataAction(Request $request, MultimediaObject $multimediaObject)
     {
