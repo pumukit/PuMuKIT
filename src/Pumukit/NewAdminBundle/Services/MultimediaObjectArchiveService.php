@@ -54,7 +54,17 @@ class MultimediaObjectArchiveService
         $addToTitle = $this->translator->trans('ARCHIVED').' '.date('Y');
         $this->cloneService->cloneTitle($multimediaObject, $clonedMultimediaObject, $addToTitle);
 
-        $this->immutableService->setImmutableValues(true, $multimediaObject, $this->tokenStorage->getToken()->getUser());
+        try {
+            $token = $this->tokenStorage->getToken();
+            if ($token) {
+                $user = $token->getUser();
+            } else {
+                $user = null;
+            }
+        } catch (\Exception $exception) {
+            $user = null;
+        }
+        $this->immutableService->setImmutableValues(true, $multimediaObject, $user);
 
         $formerOwnersIds = $this->personService->removeOwnersFromMultimediaObject($multimediaObject);
         $this->addFormerOwner($multimediaObject, $formerOwnersIds);
