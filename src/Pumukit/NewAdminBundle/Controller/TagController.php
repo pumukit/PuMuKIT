@@ -61,7 +61,6 @@ class TagController extends AbstractController implements NewAdminControllerInte
     }
 
     /**
-     * @ParamConverter("tag", class="PumukitSchemaBundle:Tag")
      * @Template("@PumukitNewAdmin/Tag/children.html.twig")
      */
     public function childrenAction(Tag $tag)
@@ -72,9 +71,6 @@ class TagController extends AbstractController implements NewAdminControllerInte
         ];
     }
 
-    /**
-     * @ParamConverter("tag", class="PumukitSchemaBundle:Tag")
-     */
     public function deleteAction(Tag $tag)
     {
         try {
@@ -93,10 +89,9 @@ class TagController extends AbstractController implements NewAdminControllerInte
     }
 
     /**
-     * @ParamConverter("tag", class="PumukitSchemaBundle:Tag")
      * @Template("@PumukitNewAdmin/Tag/update.html.twig")
      */
-    public function updateAction(Request $request, TagInterface $tag)
+    public function updateAction(Request $request, Tag $tag)
     {
         $locale = $request->getLocale();
         $form = $this->createForm(TagType::class, $tag, ['translator' => $this->translator, 'locale' => $locale]);
@@ -116,10 +111,10 @@ class TagController extends AbstractController implements NewAdminControllerInte
     }
 
     /**
-     * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"id" = "parent"})
+     * @ParamConverter("tag", options={"id" = "parent"})
      * @Template("@PumukitNewAdmin/Tag/create.html.twig")
      */
-    public function createAction(Request $request, TagInterface $parent)
+    public function createAction(Request $request, Tag $parent)
     {
         $tag = new Tag();
         $tag->setParent($parent);

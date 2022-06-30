@@ -537,7 +537,7 @@ class SeriesController extends AdminController
     }
 
     /**
-     * @ParamConverter("series", class="PumukitSchemaBundle:Series", options={"id" = "id"})
+     * @ParamConverter("series", options={"id" = "id"})
      * @Template("@PumukitNewAdmin/Series/updatebroadcast.html.twig")
      */
     public function updateBroadcastAction(Series $series, Request $request)

@@ -40,9 +40,9 @@ class OwnerController extends AbstractController implements NewAdminControllerIn
     /**
      * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
      * @Route("/reject/{id}/owner/{owner}/coowner/{coOwner}", name="pumukit_multimedia_object_reject_co_owner")
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id"="id"})
-     * @ParamConverter("owner", class="PumukitSchemaBundle:User", options={"id"="owner"})
-     * @ParamConverter("coOwner", class="PumukitSchemaBundle:User", options={"id"="coOwner"})
+     * @ParamConverter("multimediaObject", options={"id"="id"})
+     * @ParamConverter("owner", options={"id"="owner"})
+     * @ParamConverter("coOwner", options={"id"="coOwner"})
      * @Template("@PumukitNewAdmin/MultimediaObject/Owner/reject.html.twig")
      */
     public function rejectCoOwnerAction(MultimediaObject $multimediaObject, User $owner, User $coOwner)

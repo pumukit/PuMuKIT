@@ -340,7 +340,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("edit/{id}", name="pumukit_new_admin_unesco_edit")
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id":"id"}})
+     * @ParamConverter("multimediaObject", options={"mapping": {"id":"id"}})
      * @Template("@PumukitNewAdmin/UNESCO/edit.html.twig")
      */
     public function editUNESCOAction(Request $request, MultimediaObject $multimediaObject)

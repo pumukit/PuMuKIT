@@ -69,7 +69,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
 
     /**
      * @Route("/children/{id}", name="pumukitnewadmin_places_children")
-     * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"id": "id"}})
+     * @ParamConverter("tag", options={"mapping": {"id": "id"}})
      * @Template("@PumukitNewAdmin/Place/children_list.html.twig")
      */
     public function childrenAction(Tag $tag)
@@ -81,10 +81,10 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
 
     /**
      * @Route("/preview/{id}", name="pumukitnewadmin_places_children_preview")
-     * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"id": "id"}})
+     * @ParamConverter("tag", options={"mapping": {"id": "id"}})
      * @Template("@PumukitNewAdmin/Place/preview_data.html.twig")
      */
-    public function previewAction(TagInterface $tag)
+    public function previewAction(Tag $tag)
     {
         $multimediaObjects = $this->documentManager->getRepository(MultimediaObject::class)->findBy(['tags._id' => new ObjectId($tag->getId())]);
 
@@ -137,9 +137,9 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
 
     /**
      * @Route("/delete/{id}", name="pumukitnewadmin_places_delete")
-     * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"id": "id"}})
+     * @ParamConverter("tag", options={"mapping": {"id": "id"}})
      */
-    public function deletePlaceAction(Request $request, TagInterface $tag)
+    public function deletePlaceAction(Request $request, Tag $tag)
     {
         try {
             $this->tagService->deleteTag($tag);
@@ -153,10 +153,10 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
 
     /**
      * @Route("/update/{id}", name="pumukitnewadmin_places_update")
-     * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"id": "id"}})
+     * @ParamConverter("tag", options={"mapping": {"id": "id"}})
      * @Template("@PumukitNewAdmin/Place/update.html.twig")
      */
-    public function updateAction(Request $request, TagInterface $tag)
+    public function updateAction(Request $request, Tag $tag)
     {
         $locale = $request->getLocale();
         $form = $this->createForm(TagType::class, $tag, ['translator' => $this->translator, 'locale' => $locale]);

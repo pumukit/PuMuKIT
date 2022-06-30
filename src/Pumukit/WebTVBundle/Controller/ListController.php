@@ -81,10 +81,10 @@ class ListController extends AbstractController implements WebTVControllerInterf
 
     /**
      * @Route("/multimediaobjects/tag/{tagCod}", name="pumukit_webtv_bytag_multimediaobjects", defaults={"tagCod"=null})
-     * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"tagCod": "cod"}})
+     * @ParamConverter("tag", options={"mapping": {"tagCod": "cod"}})
      * @Template("@PumukitWebTV/List/template.html.twig")
      */
-    public function multimediaObjectsByTagAction(Request $request, TagInterface $tag)
+    public function multimediaObjectsByTagAction(Request $request, Tag $tag)
     {
         [$scrollList, $numberCols, $limit] = $this->getParametersByTag();
 
@@ -124,10 +124,10 @@ class ListController extends AbstractController implements WebTVControllerInterf
 
     /**
      * @Route("/series/tag/{tagCod}", name="pumukit_webtv_bytag_series", defaults={"tagCod"=null})
-     * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"tagCod": "cod"}})
+     * @ParamConverter("tag", options={"mapping": {"tagCod": "cod"}})
      * @Template("@PumukitWebTV/List/template.html.twig")
      */
-    public function seriesByTagAction(Request $request, TagInterface $tag)
+    public function seriesByTagAction(Request $request, Tag $tag)
     {
         [$scrollList, $numberCols, $limit] = $this->getParametersByTag();
 
@@ -158,7 +158,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
 
     /**
      * @Route("/users/{username}", name="pumukit_webtv_byuser_multimediaobjects", defaults={"username"=null})
-     * @ParamConverter("user", class="PumukitSchemaBundle:User", options={"mapping": {"username": "username"}})
+     * @ParamConverter("user", options={"mapping": {"username": "username"}})
      * @Template("@PumukitWebTV/List/template.html.twig")
      */
     public function multimediaObjectsByUserAction(Request $request, User $user)
@@ -192,7 +192,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
 
     /**
      * @Route("/users/{username}/series", name="pumukit_webtv_byuser_series", defaults={"username"=null})
-     * @ParamConverter("user", class="PumukitSchemaBundle:User", options={"mapping": {"username": "username"}})
+     * @ParamConverter("user", options={"mapping": {"username": "username"}})
      * @Template("@PumukitWebTV/List/template.html.twig")
      */
     public function seriesByUserAction(Request $request, User $user)
@@ -225,7 +225,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
 
     /**
      * @Route("/users/{username}/pager/{type}", name="pumukit_webtv_byuser_objects_pager", defaults={"username": null, "type": "multimediaobject"})
-     * @ParamConverter("user", class="PumukitSchemaBundle:User", options={"mapping": {"username": "username"}})
+     * @ParamConverter("user", options={"mapping": {"username": "username"}})
      */
     public function userObjectsPagerAction(Request $request, User $user)
     {
@@ -259,9 +259,9 @@ class ListController extends AbstractController implements WebTVControllerInterf
 
     /**
      * @Route("/bytag/{tagCod}/pager/{type}", name="pumukit_webtv_bytag_objects_pager", defaults={"tagCod": null, "type": "multimediaobject"})
-     * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"tagCod": "cod"}})
+     * @ParamConverter("tag", options={"mapping": {"tagCod": "cod"}})
      */
-    public function byTagObjectsPagerAction(Request $request, TagInterface $tag)
+    public function byTagObjectsPagerAction(Request $request, Tag $tag)
     {
         [$scroll_list, $numberCols, $limit] = $this->getParametersByTag();
 

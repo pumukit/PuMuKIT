@@ -36,7 +36,6 @@ class MaterialController extends AbstractController implements NewAdminControlle
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
      * @Template("@PumukitNewAdmin/Material/create.html.twig")
      */
     public function createAction(MultimediaObject $multimediaObject, Request $request)
@@ -53,7 +52,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      */
     public function updateAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -83,7 +82,6 @@ class MaterialController extends AbstractController implements NewAdminControlle
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
      * @Template("@PumukitNewAdmin/Material/upload.html.twig")
      */
     public function uploadAction(MultimediaObject $multimediaObject, Request $request)
@@ -117,7 +115,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      */
     public function deleteAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -127,7 +125,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      */
     public function upAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -139,7 +137,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      */
     public function downAction(MultimediaObject $multimediaObject, Request $request)
     {

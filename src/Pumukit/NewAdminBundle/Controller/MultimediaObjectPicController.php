@@ -74,7 +74,6 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
     /**
      * Assign a picture from an url or from an existing one to the multimedia object.
      *
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
      * @Template("@PumukitNewAdmin/Pic/list.html.twig")
      */
     public function updateAction(MultimediaObject $multimediaObject, Request $request)
@@ -92,7 +91,6 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
      * @Template("@PumukitNewAdmin/Pic/upload.html.twig")
      */
     public function uploadAction(MultimediaObject $multimediaObject, Request $request)

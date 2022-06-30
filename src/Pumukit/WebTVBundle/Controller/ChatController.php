@@ -56,7 +56,7 @@ class ChatController extends AbstractController
     }
 
     /**
-     * @ParamConverter("live", class="PumukitSchemaBundle:Live", options={"id" = "id"})
+     * @ParamConverter("live", options={"id" = "id"})
      * @Route("/basic/show/{id}", name="pumukit_live_chat_basic_show")
      * @Template("@PumukitWebTV/Live/Chat/basicLiveShow.html.twig")
      */
@@ -104,7 +104,7 @@ class ChatController extends AbstractController
     }
 
     /**
-     * @ParamConverter("live", class="PumukitSchemaBundle:Live", options={"id" = "id"})
+     * @ParamConverter("live", options={"id" = "id"})
      * @Route("/basic/post/{id}", name="pumukit_live_chat_basic_post")
      */
     public function postBasicAction(Live $live, Request $request): JsonResponse
@@ -145,7 +145,7 @@ class ChatController extends AbstractController
     }
 
     /**
-     * @ParamConverter("live", class="PumukitSchemaBundle:Live", options={"id" = "id"})
+     * @ParamConverter("live", options={"id" = "id"})
      * @Route("/basic/list/{id}", name="pumukit_live_chat_basic_list")
      * @Template("@PumukitWebTV/Live/Chat/list.html.twig")
      */

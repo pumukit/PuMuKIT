@@ -304,7 +304,7 @@ class GroupController extends AdminController
     }
 
     /**
-     * @ParamConverter("user", class="PumukitSchemaBundle:User", options={"id" = "userId"})
+     * @ParamConverter("user", options={"id" = "userId"})
      */
     public function deleteUserAction(User $user, Request $request)
     {
@@ -316,7 +316,7 @@ class GroupController extends AdminController
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      */
     public function deleteMultimediaObjectAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -328,7 +328,7 @@ class GroupController extends AdminController
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      */
     public function deleteEmbeddedBroadcastAction(MultimediaObject $multimediaObject, Request $request)
     {
