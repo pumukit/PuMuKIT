@@ -17,7 +17,9 @@ trait Keywords
     {
         $keywords = [];
         foreach ($keyword as $lang => $value) {
-            $keywords[$lang] = array_values(array_filter(array_map('trim', explode(',', $value))));
+            if (null !== $value) {
+                $keywords[$lang] = array_values(array_filter(array_map('trim', explode(',', $value))));
+            }
         }
 
         $this->keywords = $keywords;
