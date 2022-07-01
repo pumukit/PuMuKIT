@@ -279,7 +279,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
      * See: Pumukit\EncoderBundle\Controller\InfoController::retryJobAction.
      *
      * @ParamConverter("multimediaObject", options={"id" = "mmId"})
-     * @ParamConverter("job", class="PumukitEncoderBundle:Job", options={"id" = "jobId"})
+     * @ParamConverter("job", options={"id" = "jobId"})
      */
     public function retryJobAction(MultimediaObject $multimediaObject, Job $job)
     {
@@ -293,7 +293,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
      * See: Pumukit\EncoderBundle\Controller\InfoController::infoJobAction.
      *
      * @ParamConverter("multimediaObject", options={"id" = "mmId"})
-     * @ParamConverter("job", class="PumukitEncoderBundle:Job", options={"id" = "jobId"})
+     * @ParamConverter("job", options={"id" = "jobId"})
      * @Template("@PumukitNewAdmin/Track/infoJob.html.twig")
      */
     public function infoJobAction(MultimediaObject $multimediaObject, Job $job)
