@@ -70,7 +70,6 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
     /**
      * @Security("is_granted('ROLE_ACCESS_ADVANCED_UPLOAD')")
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
      * @Template("@PumukitNewAdmin/Track/create.html.twig")
      */
     public function createAction(Request $request, MultimediaObject $multimediaObject)
@@ -90,7 +89,6 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
      * @Template("@PumukitNewAdmin/Track/upload.html.twig")
      * @Security("is_granted('ROLE_ACCESS_ADVANCED_UPLOAD')")
      */
@@ -131,7 +129,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      */
     public function toggleHideAction(Request $request, MultimediaObject $multimediaObject)
     {
@@ -148,7 +146,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      */
     public function updateAction(Request $request, MultimediaObject $multimediaObject)
     {
@@ -181,7 +179,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      * @Template("@PumukitNewAdmin/Track/info.html.twig")
      */
     public function infoAction(Request $request, MultimediaObject $multimediaObject)
@@ -205,7 +203,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      * @Template("@PumukitNewAdmin/Track/play.html.twig")
      */
     public function playAction(Request $request, MultimediaObject $multimediaObject)
@@ -216,7 +214,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      */
     public function deleteAction(Request $request, MultimediaObject $multimediaObject)
     {
@@ -233,7 +231,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      */
     public function upAction(Request $request, MultimediaObject $multimediaObject)
     {
@@ -245,7 +243,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      */
     public function downAction(Request $request, MultimediaObject $multimediaObject)
     {
@@ -280,8 +278,8 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     /**
      * See: Pumukit\EncoderBundle\Controller\InfoController::retryJobAction.
      *
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     * @ParamConverter("job", class="PumukitEncoderBundle:Job", options={"id" = "jobId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("job", options={"id" = "jobId"})
      */
     public function retryJobAction(MultimediaObject $multimediaObject, Job $job)
     {
@@ -294,8 +292,8 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     /**
      * See: Pumukit\EncoderBundle\Controller\InfoController::infoJobAction.
      *
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     * @ParamConverter("job", class="PumukitEncoderBundle:Job", options={"id" = "jobId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("job", options={"id" = "jobId"})
      * @Template("@PumukitNewAdmin/Track/infoJob.html.twig")
      */
     public function infoJobAction(MultimediaObject $multimediaObject, Job $job)
@@ -308,7 +306,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     /**
      * See: Pumukit\EncoderBundle\Controller\InfoController::deleteJobAction.
      *
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      */
     public function deleteJobAction(Request $request, MultimediaObject $multimediaObject)
     {
@@ -332,7 +330,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      */
     public function autocompleteAction(Request $request, MultimediaObject $multimediaObject)
     {
@@ -345,7 +343,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      * @Template("@PumukitNewAdmin/Pic/list.html.twig")
      */
     public function picAction(Request $request, MultimediaObject $multimediaObject)
@@ -365,7 +363,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      */
     public function downloadAction(Request $request, MultimediaObject $multimediaObject)
     {
@@ -383,7 +381,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      */
     public function retranscodeAction(Request $request, MultimediaObject $multimediaObject)
     {

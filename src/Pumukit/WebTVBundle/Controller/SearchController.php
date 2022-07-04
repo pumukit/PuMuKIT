@@ -11,7 +11,6 @@ use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
-use Pumukit\SchemaBundle\Document\TagInterface;
 use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Pumukit\WebTVBundle\Services\SearchService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -113,10 +112,10 @@ class SearchController extends AbstractController implements WebTVControllerInte
 
     /**
      * @Route("/searchmultimediaobjects/{tagCod}/{useTagAsGeneral}", defaults={"tagCod"=null, "useTagAsGeneral"=false}, name="pumukit_webtv_search_multimediaobjects")
-     * @ParamConverter("blockedTag", class="PumukitSchemaBundle:Tag", options={"mapping": {"tagCod": "cod"}})
+     * @ParamConverter("blockedTag", options={"mapping": {"tagCod": "cod"}})
      * @Template("@PumukitWebTV/Search/template.html.twig")
      */
-    public function multimediaObjectsAction(Request $request, TagInterface $blockedTag = null, bool $useTagAsGeneral = false)
+    public function multimediaObjectsAction(Request $request, Tag $blockedTag = null, bool $useTagAsGeneral = false)
     {
         $templateTitle = $this->menuSearchTitle ?? 'Multimedia objects search';
         $this->breadcrumbsService->addList($blockedTag ? $blockedTag->getTitle() : $this->translator->trans($templateTitle), 'pumukit_webtv_search_multimediaobjects');

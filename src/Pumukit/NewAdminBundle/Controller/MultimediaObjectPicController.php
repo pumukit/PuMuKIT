@@ -8,7 +8,6 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -74,7 +73,6 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
     /**
      * Assign a picture from an url or from an existing one to the multimedia object.
      *
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
      * @Template("@PumukitNewAdmin/Pic/list.html.twig")
      */
     public function updateAction(MultimediaObject $multimediaObject, Request $request)
@@ -92,7 +90,6 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
      * @Template("@PumukitNewAdmin/Pic/upload.html.twig")
      */
     public function uploadAction(MultimediaObject $multimediaObject, Request $request)

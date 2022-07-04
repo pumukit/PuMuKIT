@@ -1037,7 +1037,7 @@ class MultimediaObjectController extends SortableAdminController
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "id"})
+     * @ParamConverter("multimediaObject", options={"id" = "id"})
      * @Template("@PumukitNewAdmin/MultimediaObject/updatebroadcast.html.twig")
      */
     public function updateBroadcastAction(MultimediaObject $multimediaObject, Request $request)
@@ -1319,7 +1319,7 @@ class MultimediaObjectController extends SortableAdminController
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "id"})
+     * @ParamConverter("multimediaObject", options={"id" = "id"})
      * @Template("@PumukitNewAdmin/MultimediaObject/modalsyncmetadata.html.twig")
      */
     public function modalSyncMedatadaAction(Request $request, MultimediaObject $multimediaObject)
