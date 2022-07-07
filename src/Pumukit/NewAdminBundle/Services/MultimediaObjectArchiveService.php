@@ -14,7 +14,7 @@ use Pumukit\SchemaBundle\Services\CloneService;
 use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Services\UserService;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class MultimediaObjectArchiveService
 {
@@ -54,7 +54,17 @@ class MultimediaObjectArchiveService
         $addToTitle = $this->translator->trans('ARCHIVED').' '.date('Y');
         $this->cloneService->cloneTitle($multimediaObject, $clonedMultimediaObject, $addToTitle);
 
-        $this->immutableService->setImmutableValues(true, $multimediaObject, $this->tokenStorage->getToken()->getUser());
+        try {
+            $token = $this->tokenStorage->getToken();
+            if ($token) {
+                $user = $token->getUser();
+            } else {
+                $user = null;
+            }
+        } catch (\Exception $exception) {
+            $user = null;
+        }
+        $this->immutableService->setImmutableValues(true, $multimediaObject, $user);
 
         $formerOwnersIds = $this->personService->removeOwnersFromMultimediaObject($multimediaObject);
         $this->addFormerOwner($multimediaObject, $formerOwnersIds);

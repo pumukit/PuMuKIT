@@ -33,4 +33,23 @@
             {% endfor %}
         </table>
     </div>
+    <div class="col-md-12 user_profile_group_block">
+        <h5><strong>{{ "My Series"|trans }}</strong></h5>
+        <table class="table table-striped">
+            {% for series in seriesOfUser %}
+                <tr>
+                    <td>
+                        <a href="{{ path('pumukitnewadmin_mms_index', {'id': series.id }) }}">
+                            {{ series.id }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ series.title }}
+                    </td>
+                </tr>
+            {% else %}
+                <tr><td>{{ "No series found"|trans }}</td></tr>
+            {% endfor %}
+        </table>
+    </div>
 </div>
