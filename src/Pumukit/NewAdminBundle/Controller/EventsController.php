@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -224,14 +222,32 @@ class EventsController extends AbstractController implements NewAdminControllerI
                     'ends' => ['$gte' => $date],
                 ]];
             } elseif ('today' === $type) {
-                $dateStart = new \DateTime(date('Y-m-d'));
+                $now = new \DateTime('now');
+                $dateStart = new \DateTime(date('Y-m-d 00:00:00'));
                 $dateEnds = new \DateTime(date('Y-m-d 23:59:59'));
-                $dateStart = new UTCDateTime($dateStart);
-                $dateEnds = new UTCDateTime($dateEnds);
-                $criteria['embeddedEvent.embeddedEventSession'] = ['$elemMatch' => [
-                    'start' => ['$gte' => $dateStart],
-                    'ends' => ['$lte' => $dateEnds],
-                ]];
+                $dateStart = new UTCDateTime($dateStart->getTimestamp());
+                $dateEnds = new UTCDateTime($dateEnds->getTimestamp());
+                $criteria['$or'] = [
+                    [
+                        'embeddedEvent.embeddedEventSession' => [
+                            '$elemMatch' => [
+                                'start' => ['$gte' => $dateStart],
+                                'ends' => ['$lte' => $dateEnds],
+                            ],
+                        ],
+                    ],
+                    [
+                        'embeddedEvent.embeddedEventSession' => [
+                            '$elemMatch' => [
+                                'start' => ['$lte' => new UTCDateTime($now->getTimestamp())],
+                                'ends' => ['$gte' => new UTCDateTime($now->getTimestamp())],
+                            ],
+                        ],
+                    ],
+                    [
+                        'embeddedEvent.embeddedEventSession.start' => ['$gte' => $dateStart, '$lte' => $dateEnds],
+                    ],
+                ];
             } else {
                 $criteria['embeddedEvent.embeddedEventSession.start'] = ['$gt' => $date];
             }
