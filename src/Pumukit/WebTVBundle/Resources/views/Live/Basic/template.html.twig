@@ -2,7 +2,6 @@
 {% set hide_slidebar = true %}
 {% block javascripts %}
     {{ parent() }}
-    {% include('@PumukitBaseLivePlayer/Default/js.html.twig') %}
 {% endblock%}
 
 {% block title %}{{ parent() }} - {{ live.name }}{% endblock %}

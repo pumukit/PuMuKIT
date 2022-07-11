@@ -12,21 +12,19 @@
           {% trans with {'%title%': multimediaObject.title} %}The multimedia object '%title%' is not playable{% endtrans %}.
         </span>
       {% elseif multimediaObject.getProperty('externalplayer') %}
-          <iframe src="{{ multimediaObject.getProperty('externalplayer') }}" width="100%" class="embed-responsive-item" frameborder="0" allowfullscreen></iframe>
+          <iframe src="{{ multimediaObject.getProperty('externalplayer') }}" width="100%" class="embed-responsive-item" allowfullscreen></iframe>
       {% else%}
           <iframe src="{{ url('pumukit_videoplayer_index', {'id': multimediaObject.id }) }}"
-                  id="paellaiframe_{{ multimediaObject.id }}"
-                  frameborder="0"
+                  id="video_iframe_{{ multimediaObject.id }}"
                   border="0"
                   width="100%"
                   class="embed-responsive-item"
-                  scrolling="no"
                   allowfullscreen>
           </iframe>
           <script type="text/javascript">
               $('#myModal').one('hide.bs.modal', function (e) {
-                  var paellaiframe = document.getElementById('paellaiframe_{{ multimediaObject.id }}');
-                  if (paellaiframe) paellaiframe.parentNode.removeChild(paellaiframe);
+                  var videoIframe = document.getElementById('video_iframe_{{ multimediaObject.id }}');
+                  if (videoIframe) videoIframe.parentNode.removeChild(videoIframe);
               })
           </script>
       {% endif %}

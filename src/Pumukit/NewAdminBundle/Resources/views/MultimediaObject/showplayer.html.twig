@@ -1,7 +1,13 @@
-{% set html5_track = mm.getTrackWithTag('html5') %}
+{% set html5_track = mm.getDisplayTrack() %}
 {% if html5_track and not active_editor %}
-    <video id="player" src="{{ track_url(html5_track) }}" controls="" style="background: black; width: 100%;">
-    </video>
+    <iframe src="{{ url('pumukit_videoplayer_index', {'id': mm.id }) }}"
+            id="video_iframe_{{ mm.id }}"
+            width="100%"
+            class="embed-responsive-item"
+            allowfullscreen
+            style="border:none;"
+    >
+    </iframe>
 {% else %}
     <div class="well" style="padding: 3px;">
         <div class="embed-responsive embed-responsive-16by9">

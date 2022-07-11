@@ -17,7 +17,7 @@ class LiveTest extends TestCase
     {
         $url = 'http://www.pumukit.com/liveo1';
         $passwd = 'password';
-        $live_type = Live::LIVE_TYPE_FMS;
+        $live_type = Live::LIVE_TYPE_WOWZA;
         $qualities = 'high';
         $ip_source = '127.0.0.1';
         $source_name = 'localhost';
@@ -98,7 +98,7 @@ class LiveTest extends TestCase
     {
         $live = new Live();
 
-        $live_type = Live::LIVE_TYPE_FMS;
+        $live_type = Live::LIVE_TYPE_WOWZA;
         $live->setLiveType($live_type);
 
         static::assertTrue($live->isValidLiveType());

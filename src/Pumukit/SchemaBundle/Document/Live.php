@@ -13,9 +13,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Live
 {
     public const LIVE_TYPE_WOWZA = 'WOWZA';
-    public const LIVE_TYPE_AMS = 'AMS';
-    public const LIVE_TYPE_FMS = 'FMS'; //Kept for backwards compatibility
-    public const LIVE_TYPE_WMS = 'WMS'; //Kept for backwards compatibility
 
     protected static $instances = [];
 
@@ -137,9 +134,6 @@ class Live
     {
         return in_array($this->live_type, [
             self::LIVE_TYPE_WOWZA,
-            self::LIVE_TYPE_AMS,
-            self::LIVE_TYPE_WMS,
-            self::LIVE_TYPE_FMS,
         ]);
     }
 

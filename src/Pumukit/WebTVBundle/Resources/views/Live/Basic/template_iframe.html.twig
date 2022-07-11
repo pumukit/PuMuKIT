@@ -9,10 +9,6 @@
     </style>
 {% endblock %}
 
-{% block javascripts %}
-  {% include('@PumukitBaseLivePlayer/Default/js.html.twig') %}
-{% endblock%}
-
 {% block title %}{{ parent() }} - {{ live.name }}{% endblock %}
 
 {% block body_base %}

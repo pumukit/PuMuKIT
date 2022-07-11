@@ -120,7 +120,7 @@ class EventPicServiceTest extends PumukitTestCase
         $live->setUrl('rtmpt://streaming.campusdomar.es:80/live');
         $live->setSourceName('stream');
         $live->setBroadcasting(true);
-        $live->setLiveType(Live::LIVE_TYPE_FMS);
+        $live->setLiveType(Live::LIVE_TYPE_WOWZA);
         $live->setIpSource('*');
 
         $this->dm->persist($live);

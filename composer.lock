@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0b6270f51a8aba4184b3e245fb96817a",
+    "content-hash": "a92bf38eea9fe820849b379e8be01f80",
     "packages": [
         {
             "name": "ankitpokhrel/tus-php",
@@ -8916,77 +8916,6 @@
             "time": "2022-01-02T09:41:36+00:00"
         },
         {
-            "name": "symfony/webpack-encore-bundle",
-            "version": "v1.14.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/webpack-encore-bundle.git",
-                "reference": "6b18be99bf2a5a402b80a2c00043fe0b365fe836"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/webpack-encore-bundle/zipball/6b18be99bf2a5a402b80a2c00043fe0b365fe836",
-                "reference": "6b18be99bf2a5a402b80a2c00043fe0b365fe836",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1.3",
-                "symfony/asset": "^4.4 || ^5.0 || ^6.0",
-                "symfony/config": "^4.4 || ^5.0 || ^6.0",
-                "symfony/dependency-injection": "^4.4 || ^5.0 || ^6.0",
-                "symfony/http-kernel": "^4.4 || ^5.0 || ^6.0",
-                "symfony/service-contracts": "^1.0 || ^2.0 || ^3.0"
-            },
-            "require-dev": {
-                "symfony/framework-bundle": "^4.4 || ^5.0 || ^6.0",
-                "symfony/phpunit-bridge": "^5.3 || ^6.0",
-                "symfony/twig-bundle": "^4.4 || ^5.0 || ^6.0",
-                "symfony/web-link": "^4.4 || ^5.0 || ^6.0"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "thanks": {
-                    "name": "symfony/webpack-encore",
-                    "url": "https://github.com/symfony/webpack-encore"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\WebpackEncoreBundle\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Integration with your Symfony app & Webpack Encore!",
-            "support": {
-                "issues": "https://github.com/symfony/webpack-encore-bundle/issues",
-                "source": "https://github.com/symfony/webpack-encore-bundle/tree/v1.14.1"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2022-05-03T17:55:32+00:00"
-        },
-        {
             "name": "symfony/yaml",
             "version": "v4.4.43",
             "source": {
@@ -9056,6 +8985,57 @@
                 }
             ],
             "time": "2022-06-20T08:31:17+00:00"
+        },
+        {
+            "name": "teltek/pumukit-paella-player-bundle",
+            "version": "3.0.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/teltek/PumukitPaellaPlayerBundle.git",
+                "reference": "7bc64539540acd60effc804a72d3f589c4e74519"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/teltek/PumukitPaellaPlayerBundle/zipball/7bc64539540acd60effc804a72d3f589c4e74519",
+                "reference": "7bc64539540acd60effc804a72d3f589c4e74519",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2",
+                "pumukit/pumukit": "^4.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Pumukit\\PaellaPlayerBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Teltek Team",
+                    "homepage": "https://teltek.es"
+                }
+            ],
+            "description": "Paella Player Bundle",
+            "homepage": "https://github.com/teltek/PumukitPaellaPlayerBundle",
+            "keywords": [
+                "bundle",
+                "paella",
+                "player",
+                "pumukit",
+                "symfony",
+                "teltek",
+                "theming"
+            ],
+            "support": {
+                "issues": "https://github.com/teltek/PumukitPaellaPlayerBundle/issues",
+                "source": "https://github.com/teltek/PumukitPaellaPlayerBundle/tree/3.0.x"
+            },
+            "time": "2022-07-07T11:18:08+00:00"
         },
         {
             "name": "teltek/pumukit-stats-ui-bundle",
@@ -12268,7 +12248,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "teltek/pumukit-paella-player-bundle": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
