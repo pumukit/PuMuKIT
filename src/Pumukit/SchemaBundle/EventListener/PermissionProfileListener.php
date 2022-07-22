@@ -26,17 +26,13 @@ class PermissionProfileListener
     public function postUpdate(PermissionProfileEvent $event)
     {
         $permissionProfile = $event->getPermissionProfile();
-        $countUsers = $this->userService->countUsersWithPermissionProfile($permissionProfile);
-        if (0 < $countUsers) {
-            try {
-                $usersWithPermissionProfile = $this->userService->getUsersWithPermissionProfile($permissionProfile);
-                foreach ($usersWithPermissionProfile as $user) {
-                    $this->userService->update($user, false, false, false);
-                }
-                $this->dm->flush();
-            } catch (\Exception $exception) {
-                throw new \Exception($exception->getMessage());
-            }
+        $permissions = $permissionProfile->getPermissions();
+        $permissions[] = $permissionProfile->getScope();
+
+        try {
+            $this->userService->updatePermissionProfile($permissionProfile, $permissions, false);
+        } catch (\Exception $exception) {
+            throw new \Exception($exception->getMessage());
         }
     }
 }
