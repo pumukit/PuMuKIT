@@ -156,14 +156,20 @@ class PermissionProfileListenerTest extends PumukitTestCase
         $permissionProfile1->addPermission(Permission::ACCESS_DASHBOARD);
         $this->permissionProfileService->update($permissionProfile1);
 
+        // Necessary to remove cached permissions.
+        $this->dm->clear();
+
+        $user1 = $this->userRepo->findOneBy(['username' => 'test1']);
         $user1Roles = $user1->getRoles();
         static::assertContains('ROLE_USER', $user1Roles);
         static::assertContains(Permission::ACCESS_DASHBOARD, $user1Roles);
 
+        $user2 = $this->userRepo->findOneBy(['username' => 'test2']);
         $user2Roles = $user2->getRoles();
         static::assertContains('ROLE_USER', $user2Roles);
         static::assertNotContains(Permission::ACCESS_DASHBOARD, $user2Roles);
 
+        $user3 = $this->userRepo->findOneBy(['username' => 'test3']);
         $user3Roles = $user3->getRoles();
         static::assertContains('ROLE_USER', $user3Roles);
         static::assertContains(Permission::ACCESS_DASHBOARD, $user3Roles);

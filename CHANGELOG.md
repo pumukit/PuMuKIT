@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 To get the diff for a specific change, go to https://github.com/pumukit/PuMuKIT/commit/XXX where XXX is the change hash.
 To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/compare/3.0.0...3.1.x.
 
-## [4.0.0](https://github.com/pumukit/PuMuKIT/compare/3.7.0...4.0.0) - (Coming soon)
+## [4.0.0](https://github.com/pumukit/PuMuKIT/compare/3.9.0...4.0.0) - (Coming soon)
 
 #### Added
 - Added GitHub Actions workflows.
@@ -36,7 +36,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 #### Security
 - Added latest stable versions of 3rd party libraries.
 
-## [3.9.x](https://github.com/pumukit/PuMuKIT/compare/3.8.0...3.9.0) - (Coming soon)
+## [3.9.x](https://github.com/pumukit/PuMuKIT/compare/3.8.0...3.9.0) - (2022-07-14)
 
 #### Added
 - Access personal series from external bundles.
@@ -58,7 +58,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - API filter by user
 - Email HTML header and alternative text email
 
-## [3.7.x](https://github.com/pumukit/PuMuKIT/compare/3.6.0...3.7.0) - (2021-09-15)
+## [3.7.x](https://github.com/pumukit/PuMuKIT/compare/3.6.0...3.7.x) - (2021-09-15)
 
 #### Added
 - Added auto create personal series for each user using a new permission on permission profile.
