@@ -496,11 +496,10 @@ class FactoryService
         $new->setNumview(0);
         $new->setComments($src->getComments());
 
-        // NOTE: #7408 Specify which properties are clonable
-        $new->setProperty('subseries', $src->getProperty('subseries'));
-        $new->setProperty('subseriestitle', $src->getProperty('subseriestitle'));
-        $new->setProperty('owners', $src->getProperty('owners'));
-        $new->setProperty('externalplayer', $src->getProperty('externalplayer'));
+        // NOTE: #25933 Clone should clone all properties and other bundles should connect on cloneEvent to remove
+        // modify properties.
+        $new->setProperties($src->getProperties());
+
         $new->setProperty('clonedfrom', $src->getId());
 
         foreach ($src->getTags() as $tag) {

@@ -6,8 +6,6 @@ namespace Pumukit\EncoderBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
-use Pumukit\CoreBundle\Event\FileEvents;
-use Pumukit\CoreBundle\Event\FileRemovedEvent;
 use Pumukit\CoreBundle\Utils\SemaphoreUtils;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Event\EncoderEvents;
@@ -788,9 +786,6 @@ class JobService
             unlink($job->getPathIni());
         } elseif ($this->deleteInboxFiles && false !== strpos($job->getPathIni(), $this->inboxPath)) {
             unlink($job->getPathIni());
-
-            $event = new FileRemovedEvent($job->getPathIni());
-            $this->eventDispatcher->dispatch($event, FileEvents::FILE_REMOVED);
         }
     }
 

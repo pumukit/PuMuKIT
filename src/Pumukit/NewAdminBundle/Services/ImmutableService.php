@@ -24,7 +24,7 @@ class ImmutableService
 
     public function setImmutableValues(bool $immutableValue, MultimediaObject $multimediaObject, ?UserInterface $user): MultimediaObject
     {
-        if (!$this->canBeEdited()) {
+        if ($user && !$this->canBeEdited()) {
             return $multimediaObject;
         }
 

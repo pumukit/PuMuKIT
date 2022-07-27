@@ -47,7 +47,7 @@ class MultimediaObjectArchiveService
         $this->multimediaObjectArchivedUserAssign = $multimediaObjectArchivedUserAssign;
     }
 
-    public function archiveMultimediaObject(MultimediaObject $multimediaObject): MultimediaObject
+    public function archiveMultimediaObject(MultimediaObject $multimediaObject, bool $flush = true): MultimediaObject
     {
         $clonedMultimediaObject = $this->cloneService->cloneMultimediaObject($multimediaObject);
 
@@ -71,7 +71,9 @@ class MultimediaObjectArchiveService
         $this->assignUserOnArchivedMultimediaObject($multimediaObject);
 
         $this->documentManager->persist($multimediaObject);
-        $this->documentManager->flush();
+        if ($flush) {
+            $this->documentManager->flush();
+        }
 
         return $multimediaObject;
     }

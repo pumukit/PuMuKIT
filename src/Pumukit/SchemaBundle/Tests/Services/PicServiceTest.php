@@ -238,7 +238,7 @@ class PicServiceTest extends PumukitTestCase
 
         // MULTIMEDIA OBJECT SECTION
         // Workaround for detached Series document
-        $this->dm->clear(get_class($series));
+        $this->dm->clear();
         $series = $this->dm->find(Series::class, $series->getId());
 
         $mm = $this->factoryService->createMultimediaObject($series);
