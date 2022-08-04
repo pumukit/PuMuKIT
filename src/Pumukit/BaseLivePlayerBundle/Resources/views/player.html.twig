@@ -1,29 +1,23 @@
 {% if (event is defined and event.isIframeURL()) %}
     <div class="embed-responsive embed-responsive-16by9">
         <div id="live-{{ id }}" class="embed-responsive-item text-center">
-            <iframe src="{{ event.getUrl() }}" width="100%" class="embed-responsive-item" frameborder="0" allowfullscreen style="overflow:hidden;height:100%;width:100%"></iframe>
+            <iframe src="{{ event.getUrl() }}" width="100%" class="embed-responsive-item" allowfullscreen style="overflow:hidden;height:100%;width:100%"></iframe>
         </div>
-
-        {% if advance_live_events is defined and advance_live_events %}
-            <div id="countdownClock" hidden></div>
-        {% endif %}
+    </div>
+{% elseif multimediaObject is defined %}
+    <div class="embed-responsive embed-responsive-16by9">
+        <div id="live-{{ id }}" class="embed-responsive-item text-center">
+            {{ render(path('pumukit_livevideoplayer_index', {'id': multimediaObject.id })) }}
+        </div>
     </div>
 {% else %}
-    <div id="videojserror-{{ id }}" style="width:100%; margin: 0 auto; color:red;"></div>
-
-    {% if isIE and versionIE < 11.0 %}
-        <div style="width:100%; margin: 0 auto; color:red;">
-            {% trans %}VideoJS does not support your browser version{% endtrans %} {{ isIE }}.
-            {% trans %}Please use 11.0 or higher version or use another browser.{% endtrans %}
+    <div class="embed-responsive embed-responsive-16by9">
+        <div id="live-{{ live.id }}" class="embed-responsive-item text-center">
+            {{ render(path('pumukit_live_channel_videoplayer', {'id': live.id })) }}
         </div>
-    {% else %}
-        <div class="live-{{ id }}">
-            <video id="live-{{ id }}" class="video-js"></video>
-        </div>
+    </div>
+{% endif %}
 
-        {% if advance_live_events is defined and advance_live_events %}
-            <div id="countdownClock" hidden></div>
-        {% endif %}
-    {% endif %}
-
+{% if advance_live_events is defined and advance_live_events %}
+    <div id="countdownClock" hidden></div>
 {% endif %}

@@ -1253,10 +1253,10 @@ $.ajaxSetup({
 });
 
 $(document).ajaxSuccess(function() {
-  $.material.init();
-  $("body").tooltip({
-    selector: '[data-toggle="tooltip"]'
-  });
+    $.material.init();
+    $("body").tooltip({
+        selector: '[data-toggle="tooltip"]'
+    });
 });
 
 $(document).ajaxError(function(event, xhr, settings) {

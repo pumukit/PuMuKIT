@@ -4,10 +4,6 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('bundles/pumukitwebtv/js/jquery.countdown.js') }}" type="text/javascript"></script>
-    {% if multimediaObject.getEmbeddedEvent().isIframeUrl() is same as(false) %}
-        {% include('@PumukitBaseLivePlayer/Default/js.html.twig') %}
-    {% endif %}
 {% endblock %}
 
 {% block title %}{{ parent() }} - {{ multimediaObject.getEmbeddedEvent().getName(app.request.getLocale()) }}{% endblock %}

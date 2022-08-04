@@ -43,7 +43,8 @@
         "symfony/yaml": "^4.0",
         "teltek/pumukit-stats-ui-bundle": "^3.0",
         "twig/extra-bundle": "^3.0",
-        "twig/intl-extra": "^3.0"
+        "twig/intl-extra": "^3.0",
+        "teltek/pumukit-paella-player-bundle": "^3.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3",
@@ -74,7 +75,6 @@
             "bin/console lint:xliff src/Pumukit/InspectionBundle",
             "bin/console lint:xliff src/Pumukit/NewAdminBundle",
             "bin/console lint:xliff src/Pumukit/NotificationBundle",
-            "bin/console lint:xliff src/Pumukit/PlayerBundle",
             "bin/console lint:xliff src/Pumukit/SchemaBundle",
             "bin/console lint:xliff src/Pumukit/StatsBundle",
             "bin/console lint:xliff src/Pumukit/WebTVBundle",
