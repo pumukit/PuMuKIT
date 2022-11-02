@@ -186,8 +186,12 @@ class EventsController extends Controller implements NewAdminControllerInterface
                         ],
                     ],
                     [
-                        'embeddedEvent.embeddedEventSession.start' => ['$gte' => $dateStart, '$lte' => $dateEnds],
-                    ],
+                        'embeddedEvent.embeddedEventSession' => [
+                            '$elemMatch' => [
+                                'start' => ['$gte' => $dateStart, '$lte' => $dateEnds]
+                            ],
+                        ],
+                    ]
                 ];
             } else {
                 $criteria['embeddedEvent.embeddedEventSession.start'] = ['$gt' => $date];
