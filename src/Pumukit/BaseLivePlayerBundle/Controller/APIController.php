@@ -87,7 +87,7 @@ class APIController extends Controller
     {
         $limit = $request->get('limit');
         $sort = $request->get('sort') ?: [];
-        
+
         if (!$limit || $limit > 100) {
             $limit = 100;
         }
@@ -108,7 +108,7 @@ class APIController extends Controller
         ];
     }
 
-     /**
+    /**
      * Get criteria to filter objects from the requets.
      *
      * JSON criteria has priority over row criteria.

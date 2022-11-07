@@ -74,8 +74,9 @@ class APIService
 
         $qb_live_events = clone $qb;
 
-        $qb_live_events= $qb_live_events->limit($limit)
-            ->sort($sort);
+        $qb_live_events = $qb_live_events->limit($limit)
+            ->sort($sort)
+        ;
 
         return [
             'total' => $qb->count()->getQuery()->execute(),
