@@ -4,5 +4,5 @@ namespace Pumukit;
 
 class PumukitVersion
 {
-    const VERSION = '3.8.4-dev';
+    const VERSION = '3.8.4';
 }
