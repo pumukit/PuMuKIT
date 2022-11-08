@@ -85,6 +85,9 @@ class APIController extends Controller
 
     private function getParameters(Request $request): array
     {
+        /** @var Serializer */
+        $serializer = $this->get('jms_serializer');
+        
         $limit = $request->get('limit');
         $sort = $request->get('sort') ?: [];
 
