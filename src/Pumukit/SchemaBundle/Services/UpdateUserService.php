@@ -11,9 +11,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class UpdateUserService extends CommonUserService
 {
+    protected $userRepository;
     private $dispatcher;
     private $userPasswordEncoder;
-    private $userRepository;
 
     public function __construct(
         DocumentManager $objectManager,

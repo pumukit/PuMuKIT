@@ -227,10 +227,10 @@ class JobNotificationService
 
     private function getMultimediaObjectAdminLink(MultimediaObject $multimediaObject, $id = ''): string
     {
-        if (null !== $multimediaObject) {
-            return $this->router->generate('pumukitnewadmin_mms_shortener', ['id' => $multimediaObject->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-        }
-
-        return 'No link found to Multimedia Object with id "'.$id.'".';
+        return $this->router->generate(
+            'pumukitnewadmin_mms_shortener',
+            ['id' => $multimediaObject->getId()],
+            UrlGeneratorInterface::ABSOLUTE_URL
+        );
     }
 }

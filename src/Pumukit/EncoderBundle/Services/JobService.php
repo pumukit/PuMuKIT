@@ -6,6 +6,8 @@ namespace Pumukit\EncoderBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
+use Pumukit\CoreBundle\Event\FileEvents;
+use Pumukit\CoreBundle\Event\FileRemovedEvent;
 use Pumukit\CoreBundle\Utils\SemaphoreUtils;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Event\EncoderEvents;
@@ -247,8 +249,6 @@ class JobService
             throw new \Exception('The media file duration is zero');
         }
 
-        $semaphore = SemaphoreUtils::acquire(1000002);
-
         $this->logger->info('[addJob] new Job');
 
         $job = new Job();
@@ -275,8 +275,6 @@ class JobService
 
         $this->logger->info('[addJob] Added job with id: '.$job->getId());
         $this->propService->addJob($multimediaObject, $job);
-
-        SemaphoreUtils::release($semaphore);
 
         $this->executeNextJob();
 
@@ -786,6 +784,9 @@ class JobService
             unlink($job->getPathIni());
         } elseif ($this->deleteInboxFiles && false !== strpos($job->getPathIni(), $this->inboxPath)) {
             unlink($job->getPathIni());
+
+            $event = new FileRemovedEvent($job->getPathIni());
+            $this->eventDispatcher->dispatch(FileEvents::FILE_REMOVED, $event);
         }
     }
 

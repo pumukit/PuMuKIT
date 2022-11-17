@@ -29,7 +29,6 @@ class PermissionProfileListener
     {
         $permissionProfile = $event->getPermissionProfile();
         $permissions = $permissionProfile->getPermissions();
-
         $permissions[] = $permissionProfile->getScope();
 
         try {

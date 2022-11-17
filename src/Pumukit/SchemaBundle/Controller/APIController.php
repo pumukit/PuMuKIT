@@ -59,7 +59,8 @@ class APIController extends AbstractController implements NewAdminControllerInte
      */
     public function multimediaObjectsAction(Request $request, DocumentManager $documentManager, SerializerService $serializer)
     {
-        $mmRepo = $documentManager->getRepository(MultimediaObject::class);
+        $mmRepo = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
+        $serializer = $this->get('jms_serializer');
 
         $limit = (int) $request->get('limit');
         $page = (int) $request->get('page');
@@ -99,13 +100,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
         //  WA TTK-25379 - Add dates range
         if ($criteria) {
             if (isset($criteria['owner'])) {
-                $user = $documentManager->getRepository(User::class)
-                    ->createQueryBuilder()
-                    ->field('username')
-                    ->equals($criteria['owner'])
-                    ->getQuery()
-                    ->getSingleResult()
-                ;
+                $user = $documentManager->getRepository(User::class)->createQueryBuilder()->field('username')->equals($criteria['owner'])->getQuery()->getSingleResult();
                 $qb->addAnd($qb->expr()->field('people')->elemMatch(
                     $qb->expr()->field('cod')->equals('owner')->field('people.id')->equals($user->getPerson()->getId())
                 ));

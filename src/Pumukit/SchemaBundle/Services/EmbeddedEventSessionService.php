@@ -697,14 +697,7 @@ class EmbeddedEventSessionService
         return $date;
     }
 
-    /**
-     * Get first session date.
-     *
-     * @param bool $start
-     *
-     * @return \DateTime
-     */
-    public function getFirstSessionDate(EmbeddedEvent $event, $start = true)
+    public function getFirstSessionDate(EmbeddedEvent $event, $start = true): \DateTimeInterface
     {
         $now = new \DateTime('now');
         foreach ($event->getEmbeddedEventSession() as $session) {

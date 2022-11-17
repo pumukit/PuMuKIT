@@ -127,20 +127,6 @@ class StatsService
         return ['$concat' => array_reverse($mongoProjectDate)];
     }
 
-    /**
-     * Returns an aggregation of objects grouped by date.
-     *
-     * @param mixed      $dmColl
-     * @param mixed      $mongoGroup
-     * @param mixed      $dateName
-     * @param mixed|null $fromDate
-     * @param mixed|null $toDate
-     * @param mixed      $limit
-     * @param mixed      $page
-     * @param mixed      $criteria
-     * @param mixed      $sort
-     * @param mixed      $groupBy
-     */
     private function getAggrRecordedGroupedBy(Collection $dmColl, $mongoGroup, $dateName = 'record_date', $fromDate = null, $toDate = null, $limit = 100, $page = 0, $criteria = [], $sort = -1, $groupBy = 'month')
     {
         $matchExtra = [];

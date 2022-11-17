@@ -245,7 +245,11 @@ class EventsController extends AbstractController implements NewAdminControllerI
                         ],
                     ],
                     [
-                        'embeddedEvent.embeddedEventSession.start' => ['$gte' => $dateStart, '$lte' => $dateEnds],
+                        'embeddedEvent.embeddedEventSession' => [
+                            '$elemMatch' => [
+                                'start' => ['$gte' => $dateStart, '$lte' => $dateEnds],
+                            ],
+                        ],
                     ],
                 ];
             } else {
