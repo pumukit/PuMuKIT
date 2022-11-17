@@ -12,10 +12,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class CreateUserService extends CommonUserService
 {
+    protected $userRepository;
     private $userPasswordEncoder;
     private $personService;
     private $dispatcher;
-    protected $userRepository;
 
     public function __construct(
         DocumentManager $objectManager,
