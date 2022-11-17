@@ -24,8 +24,97 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ModulesController extends AbstractController implements WebTVControllerInterface
 {
-    public static $menuResponse = null;
-    private $menuTemplate = 'PumukitWebTVBundle:Modules:widget_menu.html.twig';
+    public static $menuResponse;
+    private $menuTemplate = '@PumukitWebTV/Modules/widget_menu.html.twig';
+
+    /** @var TranslatorInterface */
+    private $translator;
+    /** @var StatsService */
+    private $statService;
+    /** @var AnnounceService */
+    private $pumukitSchemaAnnounce;
+    /** @var MenuService */
+    private $menuService;
+    /** @var ListService */
+    private $listService;
+    /** @var DocumentManager */
+    private $documentManager;
+    /** @var RequestStack */
+    private $requestStack;
+    /** @var BreadcrumbsService */
+    private $breadcrumbService;
+
+    private $byTagBlockObjectsByCol;
+    private $limitObjsMostViewed;
+    private $showMostViewedLastMonth;
+    private $mostViewedObjectsByCol;
+    private $showLatestWithPudeNew;
+    private $limitObjsHightlight;
+    private $hightlightObjectsByCol;
+    private $menuHomeTitle;
+    private $menuAnnouncesTitle;
+    private $menuSearchTitle;
+    private $menuMediatecaTitle;
+    private $menuCategoriesTitle;
+    private $limitObjsLiveBlock;
+    private $liveBlockObjectsByCol;
+    private $locales;
+    private $limitObjsRecentlyAdded;
+    private $recentlyAddedObjectsByCol;
+
+    public function __construct(
+        TranslatorInterface $translator,
+        StatsService $statService,
+        AnnounceService $pumukitSchemaAnnounce,
+        MenuService $menuService,
+        ListService $listService,
+        DocumentManager $documentManager,
+        RequestStack $requestStack,
+        BreadcrumbsService $breadcrumbService,
+        $byTagBlockObjectsByCol,
+        $limitObjsMostViewed,
+        $showMostViewedLastMonth,
+        $mostViewedObjectsByCol,
+        $showLatestWithPudeNew,
+        $limitObjsHightlight,
+        $hightlightObjectsByCol,
+        $menuHomeTitle,
+        $menuAnnouncesTitle,
+        $menuSearchTitle,
+        $menuMediatecaTitle,
+        $menuCategoriesTitle,
+        $limitObjsLiveBlock,
+        $liveBlockObjectsByCol,
+        $locales,
+        $limitObjsRecentlyAdded,
+        $recentlyAddedObjectsByCol
+    ) {
+        $this->translator = $translator;
+        $this->statService = $statService;
+        $this->pumukitSchemaAnnounce = $pumukitSchemaAnnounce;
+        $this->menuService = $menuService;
+        $this->listService = $listService;
+        $this->documentManager = $documentManager;
+        $this->requestStack = $requestStack;
+        $this->breadcrumbService = $breadcrumbService;
+        $this->byTagBlockObjectsByCol = $byTagBlockObjectsByCol;
+        $this->limitObjsMostViewed = $limitObjsMostViewed;
+        $this->showMostViewedLastMonth = $showMostViewedLastMonth;
+        $this->mostViewedObjectsByCol = $mostViewedObjectsByCol;
+        $this->showLatestWithPudeNew = $showLatestWithPudeNew;
+        $this->limitObjsHightlight = $limitObjsHightlight;
+        $this->hightlightObjectsByCol = $hightlightObjectsByCol;
+        $this->menuHomeTitle = $menuHomeTitle;
+        $this->menuAnnouncesTitle = $menuAnnouncesTitle;
+        $this->menuSearchTitle = $menuSearchTitle;
+        $this->menuMediatecaTitle = $menuMediatecaTitle;
+        $this->menuCategoriesTitle = $menuCategoriesTitle;
+        $this->limitObjsLiveBlock = $limitObjsLiveBlock;
+        $this->liveBlockObjectsByCol = $liveBlockObjectsByCol;
+        $this->locales = $locales;
+        $this->limitObjsRecentlyAdded = $limitObjsRecentlyAdded;
+        $this->recentlyAddedObjectsByCol = $recentlyAddedObjectsByCol;
+    }
 
     /**
      * @Template("@PumukitWebTV/Modules/widget_media.html.twig")

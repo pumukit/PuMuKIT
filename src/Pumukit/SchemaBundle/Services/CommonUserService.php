@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class CommonUserService
 {
     public const SUPER_ADMIN_USER_ROLES = ['ROLE_SUPER_ADMIN'];
-    private $userRepository;
+    protected $userRepository;
     private $permissionProfileService;
 
     public function __construct(

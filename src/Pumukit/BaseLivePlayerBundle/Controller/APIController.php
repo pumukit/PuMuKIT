@@ -80,7 +80,7 @@ class APIController extends AbstractController
             $criteria_type = $this->getCriteria($request->get('criteria'), $request->get('criteriajson'));
         } catch (\Exception $e) {
             $error = ['error' => sprintf('Invalid criteria (%s)', $e->getMessage())];
-            $data = $this->serializer->serialize($error, $request->getRequestFormat());
+            $data = $this->serializer->dataSerialize($error, $request->getRequestFormat());
 
             return new Response($data, 400);
         }

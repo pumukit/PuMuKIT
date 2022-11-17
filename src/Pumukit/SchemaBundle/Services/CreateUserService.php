@@ -15,7 +15,7 @@ class CreateUserService extends CommonUserService
     private $userPasswordEncoder;
     private $personService;
     private $dispatcher;
-    private $userRepository;
+    protected $userRepository;
 
     public function __construct(
         DocumentManager $objectManager,

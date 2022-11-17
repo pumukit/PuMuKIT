@@ -6,9 +6,9 @@ namespace Pumukit\EncoderBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
-use Pumukit\CoreBundle\Utils\SemaphoreUtils;
 use Pumukit\CoreBundle\Event\FileEvents;
 use Pumukit\CoreBundle\Event\FileRemovedEvent;
+use Pumukit\CoreBundle\Utils\SemaphoreUtils;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Event\EncoderEvents;
 use Pumukit\EncoderBundle\Event\JobEvent;

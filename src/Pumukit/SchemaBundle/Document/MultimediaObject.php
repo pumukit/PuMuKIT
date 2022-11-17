@@ -280,12 +280,12 @@ class MultimediaObject
         return $this->immutable;
     }
 
-    /**
-     * Get secret.
-     *
-     * @return string
-     */
-    public function getSecret()
+    public function setImmutable(Immutable $immutable): void
+    {
+        $this->immutable = $immutable;
+    }
+
+    public function getSecret(): string
     {
         return $this->secret;
     }

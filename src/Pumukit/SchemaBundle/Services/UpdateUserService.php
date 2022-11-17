@@ -13,7 +13,7 @@ class UpdateUserService extends CommonUserService
 {
     private $dispatcher;
     private $userPasswordEncoder;
-    private $userRepository;
+    protected $userRepository;
 
     public function __construct(
         DocumentManager $objectManager,
