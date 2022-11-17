@@ -16,16 +16,25 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class APIController extends AbstractController
 {
+    private $APIService;
+    private $serializer;
+
+    public function __construct(APIService $APIService, SerializerService $serializer)
+    {
+        $this->APIService = $APIService;
+        $this->serializer = $serializer;
+    }
+
     /**
      * @Route("/events.{_format}", defaults={"_format"="json"}, requirements={"_format"="json"})
      */
-    public function eventsAction(Request $request, APIService $APIService, SerializerService $serializer): Response
+    public function eventsAction(Request $request): Response
     {
         [$criteria, $sort, $limit] = $this->getParameters($request);
 
-        $counts = $APIService->getEventsByCriteria($criteria, $sort, $limit);
+        $counts = $this->APIService->getEventsByCriteria($criteria, $sort, $limit);
 
-        $data = $serializer->dataSerialize($counts, $request->getRequestFormat());
+        $data = $this->serializer->dataSerialize($counts, $request->getRequestFormat());
 
         return new Response($data);
     }
@@ -33,28 +42,68 @@ class APIController extends AbstractController
     /**
      * @Route("/lives.{_format}", defaults={"_format"="json"}, requirements={"_format"="json"})
      */
-    public function livesAction(Request $request, APIService $APIService, SerializerService $serializer): Response
+    public function livesAction(Request $request): Response
     {
         [$criteria, $sort, $limit] = $this->getParameters($request);
 
-        $counts = $APIService->getLivesByCriteria($criteria, $sort, $limit);
+        $counts = $this->APIService->getLivesByCriteria($criteria, $sort, $limit);
 
-        $data = $serializer->dataSerialize($counts, $request->getRequestFormat());
+        $data = $this->serializer->dataSerialize($counts, $request->getRequestFormat());
 
         return new Response($data);
     }
 
-    private function getParameters(Request $request): array
+    /**
+     * @Route("/live_events.{_format}", defaults={"_format"="json"}, requirements={"_format": "json"})
+     */
+    public function liveEventsAction(Request $request): Response
+    {
+        [$criteria, $sort, $limit] = $this->getParameters($request);
+
+        $counts = $this->APIService->getLiveEventsByCriteria($criteria, $sort, $limit);
+
+        $data = $this->serializer->dataSerialize($counts, $request->getRequestFormat());
+
+        return new Response($data);
+    }
+
+    private function getParameters(Request $request)
     {
         $limit = $request->get('limit');
+        $sort = $request->get('sort') ?: [];
+
         if (!$limit || $limit > 100) {
             $limit = 100;
         }
 
+        try {
+            $criteria_type = $this->getCriteria($request->get('criteria'), $request->get('criteriajson'));
+        } catch (\Exception $e) {
+            $error = ['error' => sprintf('Invalid criteria (%s)', $e->getMessage())];
+            $data = $this->serializer->serialize($error, $request->getRequestFormat());
+
+            return new Response($data, 400);
+        }
+
         return [
-            $criteria = $request->get('criteria') ?: [],
-            $sort = $request->get('sort') ?: '',
+            $criteria_type ?: [],
+            $sort,
             $limit,
         ];
+    }
+
+    private function getCriteria($row, $json)
+    {
+        if ($json) {
+            $criteria = json_decode($json, true);
+
+            if (JSON_ERROR_NONE !== json_last_error()) {
+                throw new \InvalidArgumentException(json_last_error_msg());
+            }
+        } else {
+            $criteria = (array) $row;
+        }
+
+        return $criteria;
     }
 }
