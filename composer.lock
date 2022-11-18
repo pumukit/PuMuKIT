@@ -9124,21 +9124,21 @@
         },
         {
             "name": "teltek/pumukit-stats-ui-bundle",
-            "version": "3.0.1",
+            "version": "3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teltek/PumukitStatsUIBundle.git",
-                "reference": "1413a211d17349521ea8c7903e80a5e874b889fc"
+                "reference": "ec5f63705f9a830e6e5d38f5a4dd156ef7ba6b99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teltek/PumukitStatsUIBundle/zipball/1413a211d17349521ea8c7903e80a5e874b889fc",
-                "reference": "1413a211d17349521ea8c7903e80a5e874b889fc",
+                "url": "https://api.github.com/repos/teltek/PumukitStatsUIBundle/zipball/ec5f63705f9a830e6e5d38f5a4dd156ef7ba6b99",
+                "reference": "ec5f63705f9a830e6e5d38f5a4dd156ef7ba6b99",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.2",
-                "pumukit/pumukit": ">=4.0"
+                "pumukit/pumukit": "^4.0"
             },
             "type": "symfony-bundle",
             "autoload": {
@@ -9168,9 +9168,9 @@
             ],
             "support": {
                 "issues": "https://github.com/teltek/PumukitStatsUIBundle/issues",
-                "source": "https://github.com/teltek/PumukitStatsUIBundle/tree/3.0.1"
+                "source": "https://github.com/teltek/PumukitStatsUIBundle/tree/3.0.2"
             },
-            "time": "2021-12-17T07:23:58+00:00"
+            "time": "2022-01-31T07:52:33+00:00"
         },
         {
             "name": "twig/extra-bundle",
