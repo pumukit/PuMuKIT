@@ -1,9 +1,3 @@
 swiftmailer:
     url: '%env(MAILER_URL)%'
     spool: { type: 'memory' }
-
-# MAILER_URL is composer by all this env variables
-#    transport: "%env(PUMUKIT_MAILER_TRANSPORT)%"
-#    host:      "%env(PUMUKIT_MAILER_HOST)%"
-#    username:  "%env(PUMUKIT_MAILER_USER)%"
-#    password:  "%env(PUMUKIT_MAILER_PASSWORD)%"

@@ -188,9 +188,6 @@
     "nikic/php-parser": {
         "version": "v4.13.2"
     },
-    "pagerfanta/pagerfanta": {
-        "version": "v2.7.3"
-    },
     "phar-io/manifest": {
         "version": "1.0.3"
     },
@@ -343,9 +340,6 @@
             "config/packages/sensio_framework_extra.yaml"
         ]
     },
-    "swiftmailer/swiftmailer": {
-        "version": "v6.3.0"
-    },
     "symfony/asset": {
         "version": "v4.4.27"
     },
@@ -476,6 +470,18 @@
     "symfony/intl": {
         "version": "v4.4.31"
     },
+    "symfony/mailer": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "4.3",
+            "ref": "97a61eabb351d7f6cb7702039bcfe07fe9d7e03c"
+        },
+        "files": [
+            "config/packages/mailer.yaml"
+        ]
+    },
     "symfony/maker-bundle": {
         "version": "1.39",
         "recipe": {
@@ -525,9 +531,6 @@
         ]
     },
     "symfony/polyfill-ctype": {
-        "version": "v1.25.0"
-    },
-    "symfony/polyfill-iconv": {
         "version": "v1.25.0"
     },
     "symfony/polyfill-intl-icu": {

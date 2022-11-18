@@ -750,13 +750,13 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
                 new UTCDateTime(strtotime($public_date_init) * 1000),
                 new UTCDateTime(strtotime($public_date_finish) * 1000)
             );
-        } elseif (isset($public_date_init) && !empty($public_date_init)) {
+        } elseif (isset($public_date_init)) {
             $date = date($public_date_init.'T23:59:59');
             $query->field('public_date')->range(
                 new UTCDateTime(strtotime($public_date_init) * 1000),
                 new UTCDateTime(strtotime($date) * 1000)
             );
-        } elseif (isset($public_date_finish) && !empty($public_date_finish)) {
+        } elseif (isset($public_date_finish)) {
             $date = date($public_date_finish.'T23:59:59');
             $query->field('public_date')->range(
                 new UTCDateTime(strtotime($public_date_finish) * 1000),
