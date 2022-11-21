@@ -12,15 +12,5 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/src',
     ]);
 
-    $rectorConfig->import(\Rector\Set\ValueObject\SetList::PHP_52);
-    $rectorConfig->import(\Rector\Set\ValueObject\SetList::PHP_53);
-    $rectorConfig->import(\Rector\Set\ValueObject\SetList::PHP_54);
-    $rectorConfig->import(\Rector\Set\ValueObject\SetList::PHP_55);
-    $rectorConfig->import(\Rector\Set\ValueObject\SetList::PHP_56);
-
-    $rectorConfig->import(\Rector\Set\ValueObject\SetList::PHP_70);
-    $rectorConfig->import(\Rector\Set\ValueObject\SetList::PHP_71);
-    $rectorConfig->import(\Rector\Set\ValueObject\SetList::PHP_72);
-    $rectorConfig->import(\Rector\Set\ValueObject\SetList::PHP_73);
-
+    $rectorConfig->import(\Rector\Set\ValueObject\LevelSetList::UP_TO_PHP_73);
 };
