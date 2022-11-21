@@ -69,6 +69,7 @@ class AnnounceService
         usort($last, function ($a, $b) {
             $date_a = $a->getPublicDate();
             $date_b = $b->getPublicDate();
+
             return $date_b <=> $date_a;
         });
 
