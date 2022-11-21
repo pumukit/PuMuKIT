@@ -725,7 +725,7 @@ class MultimediaObjectController extends SortableAdminController
         $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {
-            $ids = json_decode($ids, true);
+            $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
         }
 
         foreach ($ids as $id) {
@@ -771,7 +771,7 @@ class MultimediaObjectController extends SortableAdminController
         $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {
-            $ids = json_decode($ids, true);
+            $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
         }
 
         $tagNew = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PUDENEW']);
@@ -828,7 +828,7 @@ class MultimediaObjectController extends SortableAdminController
     {
         $ids = $request->get('ids');
         if ('string' === gettype($ids)) {
-            $ids = json_decode($ids, true);
+            $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
         }
         $this->session->set('admin/mms/cut', $ids);
 
@@ -964,11 +964,11 @@ class MultimediaObjectController extends SortableAdminController
         if ('POST' === $request->getMethod()) {
             $addGroups = $request->get('addGroups', []);
             if ('string' === gettype($addGroups)) {
-                $addGroups = json_decode($addGroups, true);
+                $addGroups = json_decode($addGroups, true, 512, JSON_THROW_ON_ERROR);
             }
             $deleteGroups = $request->get('deleteGroups', []);
             if ('string' === gettype($deleteGroups)) {
-                $deleteGroups = json_decode($deleteGroups, true);
+                $deleteGroups = json_decode($deleteGroups, true, 512, JSON_THROW_ON_ERROR);
             }
 
             try {
@@ -1049,11 +1049,11 @@ class MultimediaObjectController extends SortableAdminController
                 $password = $request->get('password', null);
                 $addGroups = $request->get('addGroups', []);
                 if ('string' === gettype($addGroups)) {
-                    $addGroups = json_decode($addGroups, true);
+                    $addGroups = json_decode($addGroups, true, 512, JSON_THROW_ON_ERROR);
                 }
                 $deleteGroups = $request->get('deleteGroups', []);
                 if ('string' === gettype($deleteGroups)) {
-                    $deleteGroups = json_decode($deleteGroups, true);
+                    $deleteGroups = json_decode($deleteGroups, true, 512, JSON_THROW_ON_ERROR);
                 }
                 $this->modifyBroadcastGroups($multimediaObject, $type, $password, $addGroups, $deleteGroups);
             } catch (\Exception $e) {
@@ -1092,7 +1092,7 @@ class MultimediaObjectController extends SortableAdminController
                 $owners = $request->get('owners', []);
                 $addGroups = $request->get('addGroups', []);
                 if ('string' === gettype($addGroups)) {
-                    $addGroups = json_decode($addGroups, true);
+                    $addGroups = json_decode($addGroups, true, 512, JSON_THROW_ON_ERROR);
                 }
                 $response = $this->userService->isUserLastRelation($loggedInUser, $mmId, $personId, $owners, $addGroups);
             } catch (\Exception $e) {
@@ -1368,7 +1368,7 @@ class MultimediaObjectController extends SortableAdminController
     {
         if (null !== $checkedTags) {
             foreach ($resource->getTags() as $tag) {
-                if ((0 == strpos($tag->getCod(), $codStart)) && (false !== strpos($tag->getCod(), $codStart))
+                if ((0 == strpos($tag->getCod(), (string) $codStart)) && (false !== strpos($tag->getCod(), (string) $codStart))
                     && (!in_array($tag->getCod(), $checkedTags))
                     && (!$this->isGranted(Permission::getRoleTagDisableForPubChannel($tag->getCod())))) {
                     $resource->removeTag($tag);
@@ -1382,8 +1382,8 @@ class MultimediaObjectController extends SortableAdminController
             }
         } else {
             foreach ($resource->getTags() as $tag) {
-                if ((0 == strpos($tag->getCod(), $codStart))
-                    && (false !== strpos($tag->getCod(), $codStart))
+                if ((0 == strpos($tag->getCod(), (string) $codStart))
+                    && (false !== strpos($tag->getCod(), (string) $codStart))
                     && (!$this->isGranted(Permission::getRoleTagDisableForPubChannel($tag->getCod())))) {
                     $resource->removeTag($tag);
                 }

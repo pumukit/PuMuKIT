@@ -237,7 +237,7 @@ class MultimediaObjectPicService
             if (!$deleted) {
                 throw new \Exception("Error deleting file '".$path."' on disk");
             }
-            if (0 < strpos($dirname, $multimediaObject->getId())) {
+            if (0 < strpos($dirname, (string) $multimediaObject->getId())) {
                 $finder = new Finder();
                 $finder->files()->in($dirname);
                 if (0 === $finder->count()) {

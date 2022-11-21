@@ -74,7 +74,7 @@ class ResourceController extends AbstractController
                 sprintf(
                     'Requested %s does not exist with these criteria: %s.',
                     $this->getResourceName(),
-                    json_encode($criteria)
+                    json_encode($criteria, JSON_THROW_ON_ERROR)
                 )
             );
         }

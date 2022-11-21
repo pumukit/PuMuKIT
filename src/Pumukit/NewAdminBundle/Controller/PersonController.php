@@ -577,7 +577,7 @@ class PersonController extends AdminController
         $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {
-            $ids = json_decode($ids, true);
+            $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
         }
 
         $mmRepo = $this->documentManager->getRepository(MultimediaObject::class);

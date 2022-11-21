@@ -21,4 +21,6 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->import(\Rector\Set\ValueObject\SetList::PHP_70);
     $rectorConfig->import(\Rector\Set\ValueObject\SetList::PHP_71);
     $rectorConfig->import(\Rector\Set\ValueObject\SetList::PHP_72);
+    $rectorConfig->import(\Rector\Set\ValueObject\SetList::PHP_73);
+
 };

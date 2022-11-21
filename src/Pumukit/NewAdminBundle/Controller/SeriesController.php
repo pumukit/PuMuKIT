@@ -292,7 +292,7 @@ class SeriesController extends AdminController
         $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {
-            $ids = json_decode($ids, true);
+            $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
         }
 
         $deleteSeriesCount = 0;
@@ -336,7 +336,7 @@ class SeriesController extends AdminController
         $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {
-            $ids = json_decode($ids, true);
+            $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
         }
 
         foreach ($ids as $id) {
@@ -394,7 +394,7 @@ class SeriesController extends AdminController
         if ('POST' === $request->getMethod()) {
             $values = $request->get('values');
             if ('string' === gettype($values)) {
-                $values = json_decode($values, true);
+                $values = json_decode($values, true, 512, JSON_THROW_ON_ERROR);
             }
 
             $this->modifyMultimediaObjectsStatus($values);
@@ -568,11 +568,11 @@ class SeriesController extends AdminController
                 $password = $request->get('password', null);
                 $addGroups = $request->get('addGroups', []);
                 if ('string' === gettype($addGroups)) {
-                    $addGroups = json_decode($addGroups, true);
+                    $addGroups = json_decode($addGroups, true, 512, JSON_THROW_ON_ERROR);
                 }
                 $deleteGroups = $request->get('deleteGroups', []);
                 if ('string' === gettype($deleteGroups)) {
-                    $deleteGroups = json_decode($deleteGroups, true);
+                    $deleteGroups = json_decode($deleteGroups, true, 512, JSON_THROW_ON_ERROR);
                 }
 
                 foreach ($multimediaObjects as $multimediaObject) {

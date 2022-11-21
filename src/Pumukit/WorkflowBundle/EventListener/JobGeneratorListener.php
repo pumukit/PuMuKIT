@@ -68,7 +68,7 @@ class JobGeneratorListener
         //NOTE: See TTK-7482
         foreach ($tag->getChildren() as $pubchannel) {
             if ($multimediaObject->containsTag($pubchannel)) {
-                if (!$master->containsTag('ENCODED_'.$pubchannel->getCod()) && false === strpos($profile['target'], $pubchannel->getCod())) {
+                if (!$master->containsTag('ENCODED_'.$pubchannel->getCod()) && false === strpos($profile['target'], (string) $pubchannel->getCod())) {
                     $master->addTag('ENCODED_'.$pubchannel->getCod());
                     $this->generateJobs($multimediaObject, $pubchannel->getCod());
                 }
@@ -111,10 +111,10 @@ class JobGeneratorListener
                 if (!isset($default_profiles[$pubChannelCod])) {
                     continue;
                 }
-                if (!$multimediaObject->isOnlyAudio() && false === strpos($default_profiles[$pubChannelCod]['video'], $targetProfile)) {
+                if (!$multimediaObject->isOnlyAudio() && false === strpos($default_profiles[$pubChannelCod]['video'], (string) $targetProfile)) {
                     continue;
                 }
-                if ($multimediaObject->isOnlyAudio() && false === strpos($default_profiles[$pubChannelCod]['audio'], $targetProfile)) {
+                if ($multimediaObject->isOnlyAudio() && false === strpos($default_profiles[$pubChannelCod]['audio'], (string) $targetProfile)) {
                     continue;
                 }
             }

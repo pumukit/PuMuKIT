@@ -114,7 +114,7 @@ EOT
             }
 
             $track = $multimediaObject->getMaster();
-            if (false === strpos($track->getPath(), $this->origin)) {
+            if (false === strpos($track->getPath(), (string) $this->origin)) {
                 $this->logger->error('the root directory does not match on multimedia object '.$multimediaObject->getId());
 
                 continue;

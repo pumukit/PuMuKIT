@@ -37,9 +37,9 @@ class ChapterMarkService
         $editorChapters = [];
 
         if ($marks) {
-            $marks = json_decode($marks->getValue(), true);
+            $marks = json_decode($marks->getValue(), true, 512, JSON_THROW_ON_ERROR);
             if ($trimming) {
-                $trimming = json_decode($trimming->getValue(), true);
+                $trimming = json_decode($trimming->getValue(), true, 512, JSON_THROW_ON_ERROR);
                 if (isset($trimming['trimming'])) {
                     $trimming = $trimming['trimming'];
                 }

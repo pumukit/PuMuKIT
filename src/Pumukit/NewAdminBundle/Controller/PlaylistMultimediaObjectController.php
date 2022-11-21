@@ -296,7 +296,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         }
 
         if ('string' === gettype($mmobjIds)) {
-            $mmobjIds = json_decode($mmobjIds, true);
+            $mmobjIds = json_decode($mmobjIds, true, 512, JSON_THROW_ON_ERROR);
         }
 
         $mmobjRepo = $this->documentManager->getRepository(MultimediaObject::class);
@@ -321,7 +321,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         }
 
         if ('string' === gettype($mmobjIds)) {
-            $mmobjIds = json_decode($mmobjIds, true);
+            $mmobjIds = json_decode($mmobjIds, true, 512, JSON_THROW_ON_ERROR);
         }
 
         $mms = $playlist->getPlaylist()->getMultimediaObjects();
@@ -423,7 +423,7 @@ class PlaylistMultimediaObjectController extends AbstractController
 
         $count = 0;
         if ($request->get('ids')) {
-            $ids = json_decode($request->get('ids'));
+            $ids = json_decode($request->get('ids'), null, 512, JSON_THROW_ON_ERROR);
             $count = is_countable($ids) ? count($ids) : 0;
         }
 
@@ -530,7 +530,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         if ($request->request->has($idsKey)) {
             $ids = $request->request->get($idsKey);
             if ('string' === gettype($ids)) {
-                return json_decode($ids, true);
+                return json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
             }
 
             return $ids;

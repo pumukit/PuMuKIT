@@ -780,9 +780,9 @@ class JobService
 
     private function deleteTempFiles(Job $job)
     {
-        if (false !== strpos($job->getPathIni(), $this->tmpPath)) {
+        if (false !== strpos($job->getPathIni(), (string) $this->tmpPath)) {
             unlink($job->getPathIni());
-        } elseif ($this->deleteInboxFiles && false !== strpos($job->getPathIni(), $this->inboxPath)) {
+        } elseif ($this->deleteInboxFiles && false !== strpos($job->getPathIni(), (string) $this->inboxPath)) {
             unlink($job->getPathIni());
 
             $event = new FileRemovedEvent($job->getPathIni());

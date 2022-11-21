@@ -198,10 +198,10 @@ class PermissionProfileController extends AdminController
         $checkedPermissions = $request->get('checked_permissions');
 
         if ('string' === gettype($selectedScopes)) {
-            $selectedScopes = json_decode($selectedScopes, true);
+            $selectedScopes = json_decode($selectedScopes, true, 512, JSON_THROW_ON_ERROR);
         }
         if ('string' === gettype($checkedPermissions)) {
-            $checkedPermissions = json_decode($checkedPermissions, true);
+            $checkedPermissions = json_decode($checkedPermissions, true, 512, JSON_THROW_ON_ERROR);
         }
 
         $newDefaultPermissionProfile = $this->find($selectedDefault);
