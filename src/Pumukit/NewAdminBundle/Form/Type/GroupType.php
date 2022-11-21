@@ -58,7 +58,7 @@ class GroupType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Pumukit\SchemaBundle\Document\Group',
+                'data_class' => \Pumukit\SchemaBundle\Document\Group::class,
             ]
         );
 

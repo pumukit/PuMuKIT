@@ -42,7 +42,7 @@ class MultimediaObjectPubType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Pumukit\SchemaBundle\Document\MultimediaObject',
+                'data_class' => \Pumukit\SchemaBundle\Document\MultimediaObject::class,
                 'not_granted_change_status' => true,
             ]
         );

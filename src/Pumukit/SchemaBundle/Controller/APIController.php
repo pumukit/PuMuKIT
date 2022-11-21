@@ -59,6 +59,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
      */
     public function multimediaObjectsAction(Request $request, DocumentManager $documentManager, SerializerService $serializer)
     {
+        $tempCriteria = [];
         $mmRepo = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
         $serializer = $this->get('jms_serializer');
 

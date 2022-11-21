@@ -209,6 +209,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
      */
     public function listEventAction(Request $request, $type = null)
     {
+        $criteria = [];
         $session = $this->session;
         $eventPicDefault = $this->pumukitNewAdminAdvanceLiveEventCreateDefaultPic;
         $page = ($this->session->get('admin/live/event/page')) ?: ($request->query->get('page') ?: 1);

@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-use Rector\CodeQuality\Rector\Class_\InlineConstructorDefaultToPropertyRector;
 use Rector\Config\RectorConfig;
-use Rector\Set\ValueObject\LevelSetList;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->paths([
@@ -14,13 +12,9 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/src',
     ]);
 
-    // register a single rule
-    $rectorConfig->rule(InlineConstructorDefaultToPropertyRector::class);
-
-    // define sets of rules
-    $rectorConfig->sets([
-        \Rector\Symfony\Set\SymfonyLevelSetList::UP_TO_SYMFONY_44
-    ]);
-
-    $rectorConfig->import(\Rector\Symfony\Set\SymfonySetList::SYMFONY_CONSTRUCTOR_INJECTION);
+    $rectorConfig->import(\Rector\Set\ValueObject\SetList::PHP_52);
+    $rectorConfig->import(\Rector\Set\ValueObject\SetList::PHP_53);
+    $rectorConfig->import(\Rector\Set\ValueObject\SetList::PHP_54);
+    $rectorConfig->import(\Rector\Set\ValueObject\SetList::PHP_55);
+    $rectorConfig->import(\Rector\Set\ValueObject\SetList::PHP_56);
 };

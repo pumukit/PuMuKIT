@@ -256,7 +256,7 @@ class TagService
     public function deleteTag(TagInterface $tag)
     {
         if ($this->canDeleteTag($tag)) {
-            $this->dm->clear('Pumukit\SchemaBundle\Document\MultimediaObject');
+            $this->dm->clear(\Pumukit\SchemaBundle\Document\MultimediaObject::class);
             $qb = $this->dm->createQueryBuilder(MultimediaObject::class);
 
             $query = $qb

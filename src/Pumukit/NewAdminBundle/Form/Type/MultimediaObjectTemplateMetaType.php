@@ -101,7 +101,7 @@ class MultimediaObjectTemplateMetaType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Pumukit\SchemaBundle\Document\MultimediaObject',
+                'data_class' => \Pumukit\SchemaBundle\Document\MultimediaObject::class,
             ]
         );
 

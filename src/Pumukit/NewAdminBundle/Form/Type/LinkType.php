@@ -50,7 +50,7 @@ class LinkType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Pumukit\SchemaBundle\Document\Link',
+                'data_class' => \Pumukit\SchemaBundle\Document\Link::class,
             ]
         );
 

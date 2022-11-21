@@ -487,7 +487,7 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $authorizationChecker = $this->getMockBuilder('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface')
+        $authorizationChecker = $this->getMockBuilder(\Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;
@@ -497,7 +497,7 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         ;
 
         $content = 'test';
-        $templating = $this->getMockBuilder('Twig\Environment')
+        $templating = $this->getMockBuilder(\Twig\Environment::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;
@@ -518,7 +518,7 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         static::assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         static::assertEquals($content, $response->getContent());
 
-        $authorizationChecker = $this->getMockBuilder('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface')
+        $authorizationChecker = $this->getMockBuilder(\Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;

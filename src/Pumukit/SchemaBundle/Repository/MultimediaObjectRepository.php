@@ -1333,6 +1333,7 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function findNextEventSessions($multimediaObjectId)
     {
+        $pipeline = [];
         $dm = $this->getDocumentManager();
         $collection = $dm->getDocumentCollection(MultimediaObject::class);
 
@@ -1415,6 +1416,7 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function findNowEventSessions($multimediaObjectId = null, $limit = 0)
     {
+        $pipeline = [];
         $dm = $this->getDocumentManager();
         $collection = $dm->getDocumentCollection(MultimediaObject::class);
 

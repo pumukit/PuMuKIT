@@ -844,6 +844,7 @@ class EmbeddedEventSessionService
      */
     public function findAllEvents()
     {
+        $pipeline = [];
         $pipeline[] = [
             '$match' => [
                 'type' => MultimediaObject::TYPE_LIVE,
@@ -888,6 +889,7 @@ class EmbeddedEventSessionService
 
     public function findEventsByCriteria(array $criteria = [])
     {
+        $pipeline = [];
         $pipeline[] = [
             '$match' => [
                 'type' => MultimediaObject::TYPE_LIVE,
@@ -1110,6 +1112,7 @@ class EmbeddedEventSessionService
      */
     private function getFutureEventsPipeline($multimediaObjectId)
     {
+        $pipeline = [];
         if ($multimediaObjectId) {
             $pipeline[] = [
                 '$match' => [
@@ -1286,6 +1289,7 @@ class EmbeddedEventSessionService
      */
     private function getNextLiveEventsPipeline($multimediaObjectId)
     {
+        $pipeline = [];
         if ($multimediaObjectId) {
             $pipeline[] = [
                 '$match' => [

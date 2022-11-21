@@ -56,7 +56,7 @@ class SeriestypeType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Pumukit\SchemaBundle\Document\SeriesType',
+                'data_class' => \Pumukit\SchemaBundle\Document\SeriesType::class,
             ]
         );
 

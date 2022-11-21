@@ -54,6 +54,7 @@ class MaterialServiceTest extends PumukitTestCase
 
     public function testAddMaterialUrl()
     {
+        $formData = [];
         $series = $this->factoryService->createSeries();
         $mm = $this->factoryService->createMultimediaObject($series);
 
@@ -73,6 +74,7 @@ class MaterialServiceTest extends PumukitTestCase
 
     public function testUpdateMaterialInMultimediaObject()
     {
+        $formData = [];
         $series = $this->factoryService->createSeries();
         $mm = $this->factoryService->createMultimediaObject($series);
 
@@ -104,6 +106,7 @@ class MaterialServiceTest extends PumukitTestCase
 
     public function testAddMaterialFile()
     {
+        $formData = [];
         $series = $this->factoryService->createSeries();
         $mm = $this->factoryService->createMultimediaObject($series);
         $mm = $this->repoMmobj->findAll()[0];
@@ -136,6 +139,7 @@ class MaterialServiceTest extends PumukitTestCase
 
     public function testRemoveMaterialFromMultimediaObject()
     {
+        $formData = [];
         $series = $this->factoryService->createSeries();
         $mm = $this->factoryService->createMultimediaObject($series);
 
@@ -173,6 +177,7 @@ class MaterialServiceTest extends PumukitTestCase
 
     public function testUpAndDownMaterialInMultimediaObject()
     {
+        $formData = [];
         $series = $this->factoryService->createSeries();
         $mm = $this->factoryService->createMultimediaObject($series);
 
