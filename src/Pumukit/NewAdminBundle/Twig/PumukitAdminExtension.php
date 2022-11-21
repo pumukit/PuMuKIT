@@ -480,7 +480,7 @@ class PumukitAdminExtension extends AbstractExtension
         $aRoles = [];
         foreach ($roles as $role) {
             $embeddedRole = $multimediaObject->getEmbeddedRole($role);
-            if ($embeddedRole && 0 !== count($embeddedRole->getPeople())) {
+            if ($embeddedRole && 0 !== (is_countable($embeddedRole->getPeople()) ? count($embeddedRole->getPeople()) : 0)) {
                 $aRoles[] = $embeddedRole;
             }
         }

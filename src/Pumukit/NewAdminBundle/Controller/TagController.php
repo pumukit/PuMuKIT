@@ -77,7 +77,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
         } catch (\Exception $e) {
             $msg = sprintf(
                 'Tag with children (%d) and multimedia objects (%d)',
-                count($tag->getChildren()),
+                is_countable($tag->getChildren()) ? count($tag->getChildren()) : 0,
                 $tag->getNumberMultimediaObjects()
             );
 
@@ -183,7 +183,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
         if (0 !== count($tagsWithChildren)) {
             $message = '';
             foreach ($tagsWithChildren as $tag) {
-                $message .= "Tag '".$tag->getCod()."' with children (".count($tag->getChildren()).'). ';
+                $message .= "Tag '".$tag->getCod()."' with children (".(is_countable($tag->getChildren()) ? count($tag->getChildren()) : 0).'). ';
             }
 
             return new JsonResponse(['status' => $message], JsonResponse::HTTP_CONFLICT);

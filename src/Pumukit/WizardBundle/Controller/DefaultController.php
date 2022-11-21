@@ -713,7 +713,7 @@ class DefaultController extends AbstractController
         foreach ($keys as $key) {
             $value = $this->getKeyData($key, $resourceData);
             $filterValue = array_filter($value);
-            if (0 !== count($filterValue)) {
+            if (0 !== count((array) $filterValue)) {
                 $upperField = $this->getUpperFieldName($key);
                 $setField = 'set'.$upperField;
                 $resource->{$setField}($value);

@@ -165,7 +165,7 @@ class Series
 
     public function __construct()
     {
-        $this->secret = base_convert(sha1(uniqid((string) mt_rand(), true)), 16, 36);
+        $this->secret = base_convert(sha1(uniqid((string) random_int(0, mt_getrandmax()), true)), 16, 36);
         $this->playlist = new Playlist();
         $this->__PicConstruct();
     }
@@ -202,7 +202,7 @@ class Series
 
     public function resetSecret(): string
     {
-        $this->secret = base_convert(sha1(uniqid((string) mt_rand(), true)), 16, 36);
+        $this->secret = base_convert(sha1(uniqid((string) random_int(0, mt_getrandmax()), true)), 16, 36);
 
         return $this->secret;
     }

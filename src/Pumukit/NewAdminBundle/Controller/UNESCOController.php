@@ -190,7 +190,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
             foreach ($configuredTag->getChildren() as $child) {
                 if ($child->getDisplay()) {
                     $children = $child->getChildren();
-                    if (count($children) > 0) {
+                    if ((is_countable($children) ? count($children) : 0) > 0) {
                         foreach ($children as $elem) {
                             if ($elem->getDisplay()) {
                                 $menuTags[$child->getTitle()][] = $elem;
@@ -710,7 +710,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $request = $this->requestStack->getMasterRequest();
 
         foreach ($criteria as $key => $field) {
-            if ('roles' === $key && count($field) >= 1) {
+            if ('roles' === $key && (is_countable($field) ? count($field) : 0) >= 1) {
                 foreach ($field as $key2 => $value) {
                     $query->field('people')->elemMatch($query->expr()->field('cod')->equals($key2)->field('people.name')->equals($value));
                 }

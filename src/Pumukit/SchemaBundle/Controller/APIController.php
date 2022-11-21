@@ -282,7 +282,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
         $seriesOfUser = $seriesService->getSeriesOfUser($user, $onlyAdminSeries, $personalScopeRoleCode, $sort, $limit);
 
         $seriesOfUser = [
-            'total' => count($seriesOfUser),
+            'total' => is_countable($seriesOfUser) ? count($seriesOfUser) : 0,
             'limit' => $limit,
             'sort' => $sort,
             'criteria' => $criteria,

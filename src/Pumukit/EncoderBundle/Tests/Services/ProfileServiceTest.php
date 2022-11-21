@@ -40,7 +40,7 @@ class ProfileServiceTest extends PumukitTestCase
     public function testGetProfiles()
     {
         $profiles = $this->getDemoProfiles();
-        static::assertCount(count($profiles), $this->profileService->getProfiles());
+        static::assertCount(is_countable($profiles) ? count($profiles) : 0, $this->profileService->getProfiles());
 
         static::assertCount(0, $this->profileService->getProfiles(true));
         static::assertCount(0, $this->profileService->getProfiles(null, false));
@@ -59,7 +59,7 @@ class ProfileServiceTest extends PumukitTestCase
     public function testGetMasterProfiles()
     {
         $profiles = $this->getDemoProfiles();
-        static::assertCount(count($profiles), $this->profileService->getMasterProfiles(true));
+        static::assertCount(is_countable($profiles) ? count($profiles) : 0, $this->profileService->getMasterProfiles(true));
         static::assertCount(0, $this->profileService->getMasterProfiles(false));
     }
 

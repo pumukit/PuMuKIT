@@ -120,7 +120,7 @@ class ListService
                     if (!isset($result[$key][$title])) {
                         $result[$key][$title] = $serie;
                     } else {
-                        $result[$key][$title.rand()] = $serie;
+                        $result[$key][$title.random_int(0, mt_getrandmax())] = $serie;
                     }
                 }
 

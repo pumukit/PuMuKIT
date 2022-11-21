@@ -52,7 +52,7 @@ class InboxController extends AbstractController implements NewAdminControllerIn
             $finder->depth('< 1')->directories()->followLinks()->in($dir);
             $finder->sortByName();
             foreach ($finder as $f) {
-                if (0 !== (count(glob("{$f}/*")))) {
+                if (0 !== (is_countable(glob("{$f}/*")) ? count(glob("{$f}/*")) : 0)) {
                     $contentFinder = new Finder();
                     if (!$this->pumukitInboxDepth) {
                         $contentFinder->depth('== 0');

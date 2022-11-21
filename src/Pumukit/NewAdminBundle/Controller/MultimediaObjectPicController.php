@@ -204,7 +204,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
 
         $urlPics = $this->multimediaObjectPicService->getRecommendedPics($series);
 
-        $total = (int) (ceil(count($urlPics) / $limit));
+        $total = (int) (ceil((is_countable($urlPics) ? count($urlPics) : 0) / $limit));
 
         $pics = $this->getPaginatedPics($urlPics, $limit, $page);
 

@@ -103,7 +103,7 @@ EOT
     {
         $multimediaObjects = $this->getMultimediaObjects();
 
-        $progress = new ProgressBar($this->output, count($multimediaObjects));
+        $progress = new ProgressBar($this->output, is_countable($multimediaObjects) ? count($multimediaObjects) : 0);
         $progress->setFormat('verbose');
         $progress->start();
 

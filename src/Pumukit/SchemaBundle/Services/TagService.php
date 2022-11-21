@@ -282,7 +282,7 @@ class TagService
      */
     public function canDeleteTag(TagInterface $tag)
     {
-        return (bool) ((0 == count($tag->getChildren())) && (0 == $tag->getNumberMultimediaObjects()));
+        return (bool) ((0 == (is_countable($tag->getChildren()) ? count($tag->getChildren()) : 0)) && (0 == $tag->getNumberMultimediaObjects()));
     }
 
     /**

@@ -640,11 +640,11 @@ class TagCatalogueService
      */
     private function criteriaRenderField(MultimediaObject $object, SessionInterface $session)
     {
-        if (!$session->has('UNESCO/criteria') || 0 === count($session->get('UNESCO/criteria'))) {
+        if (!$session->has('UNESCO/criteria') || 0 === (is_countable($session->get('UNESCO/criteria')) ? count($session->get('UNESCO/criteria')) : 0)) {
             return $this->translator->trans('Without criteria');
         }
 
-        if (count($session->get('UNESCO/criteria')) > 1) {
+        if ((is_countable($session->get('UNESCO/criteria')) ? count($session->get('UNESCO/criteria')) : 0) > 1) {
             return $this->translator->trans('Multiple criteria');
         }
 

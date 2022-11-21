@@ -99,7 +99,7 @@ class BreadcrumbsService
 
     public function addSeries(Series $series)
     {
-        if (1 == count($this->breadcrumbs)) {
+        if (1 == (is_countable($this->breadcrumbs) ? count($this->breadcrumbs) : 0)) {
             $this->add(
                 $this->session->get('breadcrumbs/title', $this->allTitle),
                 $this->session->get('breadcrumbs/routeName', $this->allRoute),

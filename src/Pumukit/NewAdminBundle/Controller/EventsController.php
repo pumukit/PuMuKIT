@@ -169,7 +169,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
         if (!$createSeries) {
             $seriesPics = $series->getPics();
-            if (count($seriesPics) > 0) {
+            if ((is_countable($seriesPics) ? count($seriesPics) : 0) > 0) {
                 $eventPicSeriesDefault = $series->getPic();
                 $this->multimediaObjectPicService->addPicUrl($multimediaObject, $eventPicSeriesDefault->getUrl(), false);
             } else {

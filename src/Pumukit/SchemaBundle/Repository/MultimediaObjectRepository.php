@@ -958,7 +958,7 @@ class MultimediaObjectRepository extends DocumentRepository
         $qb->field('tags.cod')->in($codes);
 
         // Limit 20 and random order
-        $qb->limit(20)->sort('rank', mt_rand(0, 1) ? 1 : -1);
+        $qb->limit(20)->sort('rank', random_int(0, 1) ? 1 : -1);
 
         return $qb->getQuery()->execute();
     }

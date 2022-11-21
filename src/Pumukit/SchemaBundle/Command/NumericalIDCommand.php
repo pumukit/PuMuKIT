@@ -120,7 +120,7 @@ EOT
         if ($multimediaObjects || $series) {
             $this->output->writeln(
                 [
-                    '<error>'.sprintf('There are %s multimedia objects and %s series with pumukit1id and not numerical ID, please execute query first', count($multimediaObjects), count($series)).'</error>',
+                    '<error>'.sprintf('There are %s multimedia objects and %s series with pumukit1id and not numerical ID, please execute query first', is_countable($multimediaObjects) ? count($multimediaObjects) : 0, is_countable($series) ? count($series) : 0).'</error>',
                 ]
             );
 
@@ -187,7 +187,7 @@ EOT
 
     private function generateNumericalID($elements, $lastNumericalID)
     {
-        $progressBar = new ProgressBar($this->output, count($elements));
+        $progressBar = new ProgressBar($this->output, is_countable($elements) ? count($elements) : 0);
         $progressBar->setFormat('verbose');
         $progressBar->start();
 

@@ -186,7 +186,7 @@ class SeriesPicController extends AbstractController implements NewAdminControll
 
         $urlPics = $this->seriesPicService->getRecommendedPics($series);
 
-        $total = (int) (ceil(count($urlPics) / $limit));
+        $total = (int) (ceil((is_countable($urlPics) ? count($urlPics) : 0) / $limit));
 
         $pics = $this->getPaginatedPics($urlPics, $limit, $page);
 

@@ -584,7 +584,7 @@ class PersonController extends AdminController
 
         foreach ($ids as $id) {
             $person = $this->find($id);
-            if (0 !== count($mmRepo->findByPersonId($person->getId()))) {
+            if (0 !== (is_countable($mmRepo->findByPersonId($person->getId())) ? count($mmRepo->findByPersonId($person->getId())) : 0)) {
                 return new Response($this->translator->trans("Can not delete Person '").$person->getName()."'. ", Response::HTTP_BAD_REQUEST);
             }
         }

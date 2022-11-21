@@ -105,7 +105,7 @@ class SeriesPicService
         }
 
         if (file_exists($this->getTargetPath($series).'/'.$picFile->getClientOriginalName())) {
-            $i = rand(0, 15);
+            $i = random_int(0, 15);
             $name = $picFile->getClientOriginalName().$i;
         } else {
             $name = $picFile->getClientOriginalName();

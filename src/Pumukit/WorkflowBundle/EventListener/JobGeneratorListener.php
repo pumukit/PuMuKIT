@@ -107,7 +107,7 @@ class JobGeneratorListener
                 continue;
             }
 
-            if (0 !== count($default_profiles)) {
+            if (0 !== (is_countable($default_profiles) ? count($default_profiles) : 0)) {
                 if (!isset($default_profiles[$pubChannelCod])) {
                     continue;
                 }

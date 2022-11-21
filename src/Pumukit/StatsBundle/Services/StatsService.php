@@ -108,8 +108,8 @@ class StatsService
         $aggregation = $viewsLogColl->aggregate($pipeline, ['cursor' => []]);
 
         $aggregationTotal = $aggregation->toArray();
-        $totalInAggegation = count($aggregationTotal);
-        $total = count($mmobjIds);
+        $totalInAggegation = is_countable($aggregationTotal) ? count($aggregationTotal) : 0;
+        $total = is_countable($mmobjIds) ? count($mmobjIds) : 0;
         $aggregation = $this->getPagedAggregation($aggregationTotal, $options['page'], $options['limit']);
 
         $mostViewed = [];
@@ -148,8 +148,8 @@ class StatsService
 
         $aggregation = $viewsLogColl->aggregate($pipeline, ['cursor' => []]);
         $aggregationTotal = $aggregation->toArray();
-        $totalInAggegation = count($aggregationTotal);
-        $total = count($seriesIds);
+        $totalInAggegation = is_countable($aggregationTotal) ? count($aggregationTotal) : 0;
+        $total = is_countable($seriesIds) ? count($seriesIds) : 0;
         $aggregation = $this->getPagedAggregation($aggregationTotal, $options['page'], $options['limit']);
 
         $mostViewed = [];
@@ -221,7 +221,7 @@ class StatsService
 
         $aggregation = $viewsLogColl->aggregate($pipeline, ['cursor' => []])->toArray();
 
-        $total = count($aggregation);
+        $total = is_countable($aggregation) ? count($aggregation) : 0;
         $aggregation = $this->getPagedAggregation($aggregation, $options['page'], $options['limit']);
 
         return [$aggregation, $total];
@@ -308,7 +308,7 @@ class StatsService
             $date = ['date' => $date];
         }
 
-        if (count($matchExtra) > 0 || count($date) > 0) {
+        if ((is_countable($matchExtra) ? count($matchExtra) : 0) > 0 || count($date) > 0) {
             $pipeline[] = ['$match' => array_merge($matchExtra, $date)];
         }
 

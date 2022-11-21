@@ -49,7 +49,7 @@ class PicService
     {
         $pics = $object->getPics();
         $picUrl = null;
-        if (0 === count($pics)) {
+        if (0 === (is_countable($pics) ? count($pics) : 0)) {
             return $this->getDefaultUrlPicForObject($object, $absolute, $hd);
         }
         foreach ($pics as $pic) {
@@ -182,7 +182,7 @@ class PicService
     {
         $pics = $object->getPics();
         $picPath = null;
-        if (0 === count($pics)) {
+        if (0 === (is_countable($pics) ? count($pics) : 0)) {
             return $this->getDefaultPathPicForObject($object, $hd);
         }
         foreach ($pics as $pic) {
@@ -258,7 +258,7 @@ class PicService
     {
         $pics = $object->getPics();
         $picUrl = null;
-        if (0 === count($pics)) {
+        if (0 === (is_countable($pics) ? count($pics) : 0)) {
             return $picUrl;
         }
 
@@ -281,7 +281,7 @@ class PicService
     {
         $pics = $object->getPics();
         $picUrl = null;
-        if (0 === count($pics)) {
+        if (0 === (is_countable($pics) ? count($pics) : 0)) {
             return $picUrl;
         }
 

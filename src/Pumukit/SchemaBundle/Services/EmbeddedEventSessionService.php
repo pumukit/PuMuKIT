@@ -834,7 +834,7 @@ class EmbeddedEventSessionService
         $pipeline = $this->getFutureEventsPipeline($multimediaObjectId);
         $result = $this->collection->aggregate($pipeline, ['cursor' => []])->toArray();
 
-        return count($result);
+        return is_countable($result) ? count($result) : 0;
     }
 
     /**
