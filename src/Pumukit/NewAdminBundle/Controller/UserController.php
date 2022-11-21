@@ -91,7 +91,7 @@ class UserController extends AdminController
                 throw $e;
             }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_user_list'));
+            return $this->redirectToRoute('pumukitnewadmin_user_list');
         }
 
         return $this->render('@PumukitNewAdmin/User/create.html.twig', [
@@ -129,7 +129,7 @@ class UserController extends AdminController
                 throw $e;
             }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_user_list'));
+            return $this->redirectToRoute('pumukitnewadmin_user_list');
         }
 
         return $this->render(
@@ -205,7 +205,7 @@ class UserController extends AdminController
             $this->modifyUserGroups($user, $addGroups, $deleteGroups);
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_user_list'));
+        return $this->redirectToRoute('pumukitnewadmin_user_list');
     }
 
     public function getGroupsAction(Request $request)

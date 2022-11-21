@@ -76,7 +76,7 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
         }
 
         if ($isBanner) {
-            return $this->redirect($this->generateUrl('pumukitnewadmin_playlist_update', ['id' => $playlist->getId()]));
+            return $this->redirectToRoute('pumukitnewadmin_playlist_update', ['id' => $playlist->getId()]);
         }
 
         return [
@@ -132,7 +132,7 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
 
         $playlist = $this->seriesPicService->removePicFromSeries($playlist, $picId);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_playlist_update', ['id' => $playlist->getId()]));
+        return $this->redirectToRoute('pumukitnewadmin_playlist_update', ['id' => $playlist->getId()]);
     }
 
     public function upAction(Request $request)
@@ -150,7 +150,7 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
         $this->documentManager->persist($playlist);
         $this->documentManager->flush();
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_playlistpic_list', ['id' => $playlist->getId()]));
+        return $this->redirectToRoute('pumukitnewadmin_playlistpic_list', ['id' => $playlist->getId()]);
     }
 
     public function downAction(Request $request)
@@ -169,7 +169,7 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
         $this->documentManager->persist($playlist);
         $this->documentManager->flush();
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_playlistpic_list', ['id' => $playlist->getId()]));
+        return $this->redirectToRoute('pumukitnewadmin_playlistpic_list', ['id' => $playlist->getId()]);
     }
 
     /**

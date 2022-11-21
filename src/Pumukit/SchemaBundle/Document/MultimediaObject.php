@@ -76,7 +76,7 @@ class MultimediaObject
      * @MongoDB\Field(type="int")
      * @MongoDB\Index
      */
-    private $type;
+    private $type = self::TYPE_UNKNOWN;
 
     /**
      * @MongoDB\Field(type="string")
@@ -238,7 +238,6 @@ class MultimediaObject
         $this->tags = new ArrayCollection();
         $this->people = new ArrayCollection();
         $this->groups = new ArrayCollection();
-        $this->type = self::TYPE_UNKNOWN;
 
         $this->__LinkConstruct();
         $this->__PicConstruct();

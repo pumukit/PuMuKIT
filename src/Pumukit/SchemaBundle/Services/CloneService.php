@@ -10,7 +10,6 @@ use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\Annotation;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\ObjectValue\Immutable;
-use Symfony\Component\Translation\TranslatorInterface;
 
 class CloneService
 {
@@ -25,7 +24,7 @@ class CloneService
 
     public function __construct(
         DocumentManager $documentManager,
-        TranslatorInterface $translator,
+        \Symfony\Contracts\Translation\TranslatorInterface $translator,
         TagService $tagService,
         TextIndexService $textIndexService,
         EmbeddedBroadcastService $embeddedBroadcastService,

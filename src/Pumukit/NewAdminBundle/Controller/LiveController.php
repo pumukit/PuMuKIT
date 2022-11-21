@@ -90,7 +90,7 @@ class LiveController extends AdminController
                 return new JsonResponse(['status' => $e->getMessage()], 409);
             }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
+            return $this->redirectToRoute('pumukitnewadmin_'.$resourceName.'_list');
         }
 
         return $this->render(
@@ -186,7 +186,7 @@ class LiveController extends AdminController
             }
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
+        return $this->redirectToRoute('pumukitnewadmin_'.$resourceName.'_list');
     }
 
     public function createNew()

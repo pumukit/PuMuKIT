@@ -310,7 +310,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         }
         $this->documentManager->flush();
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_playlistmms_list', ['id' => $playlist->getId()]));
+        return $this->redirectToRoute('pumukitnewadmin_playlistmms_list', ['id' => $playlist->getId()]);
     }
 
     public function deleteBatchAction(Series $playlist, Request $request)
@@ -333,7 +333,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         $this->documentManager->persist($playlist);
         $this->documentManager->flush();
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_playlistmms_list', ['id' => $playlist->getId()]));
+        return $this->redirectToRoute('pumukitnewadmin_playlistmms_list', ['id' => $playlist->getId()]);
     }
 
     /**
@@ -480,7 +480,7 @@ class PlaylistMultimediaObjectController extends AbstractController
 
     protected function moveAction(Series $playlist, $initPos, $endPos)
     {
-        $actionResponse = $this->redirect($this->generateUrl('pumukitnewadmin_playlistmms_index', ['id' => $playlist->getId()]));
+        $actionResponse = $this->redirectToRoute('pumukitnewadmin_playlistmms_index', ['id' => $playlist->getId()]);
 
         $playlist->getPlaylist()->moveMultimediaObject($initPos, $endPos);
         $this->documentManager->persist($playlist);

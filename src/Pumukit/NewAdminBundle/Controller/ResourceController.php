@@ -41,7 +41,7 @@ class ResourceController extends AbstractController
 
     public function redirectToIndex(): RedirectResponse
     {
-        return $this->redirect($this->generateUrl($this->getRedirectRoute()));
+        return $this->redirectToRoute($this->getRedirectRoute());
     }
 
     public function getRepository()

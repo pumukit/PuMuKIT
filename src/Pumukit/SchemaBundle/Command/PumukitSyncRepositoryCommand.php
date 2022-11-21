@@ -40,7 +40,7 @@ EOT
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->mmRepo = $this->dm->getRepository(MultimediaObject::class);
 

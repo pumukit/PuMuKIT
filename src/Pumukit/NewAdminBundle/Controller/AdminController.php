@@ -88,10 +88,10 @@ class AdminController extends ResourceController implements NewAdminControllerIn
             }
 
             if (null === $resource) {
-                return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
+                return $this->redirectToRoute('pumukitnewadmin_'.$resourceName.'_list');
             }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
+            return $this->redirectToRoute('pumukitnewadmin_'.$resourceName.'_list');
         }
 
         return $this->render(
@@ -126,7 +126,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
                 return new JsonResponse(['status' => $e->getMessage()], 409);
             }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
+            return $this->redirectToRoute('pumukitnewadmin_'.$resourceName.'_list');
         }
 
         return $this->render(
@@ -183,7 +183,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
             $this->session->remove('admin/'.$resourceName.'/id');
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
+        return $this->redirectToRoute('pumukitnewadmin_'.$resourceName.'_list');
     }
 
     /**
@@ -239,7 +239,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
             }
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
+        return $this->redirectToRoute('pumukitnewadmin_'.$resourceName.'_list');
     }
 
     public function find($id)

@@ -158,7 +158,7 @@ class PlaylistController extends CollectionController
             }
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_playlist_list', []));
+        return $this->redirectToRoute('pumukitnewadmin_playlist_list', []);
     }
 
     public function batchDeleteAction(Request $request): RedirectResponse
@@ -183,7 +183,7 @@ class PlaylistController extends CollectionController
             $this->session->remove('admin/mms/id');
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_playlist_list', []));
+        return $this->redirectToRoute('pumukitnewadmin_playlist_list', []);
     }
 
     public function searchAction(Request $req): RedirectResponse
@@ -191,7 +191,7 @@ class PlaylistController extends CollectionController
         $q = $req->get('q');
         $this->session->set('admin/playlist/criteria', ['search' => $q]);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_playlist_index'));
+        return $this->redirectToRoute('pumukitnewadmin_playlist_index');
     }
 
     public function getCriteria(Request $request): array

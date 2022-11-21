@@ -75,7 +75,7 @@ class SeriesPicController extends AbstractController implements NewAdminControll
         }
 
         if ($isBanner) {
-            return $this->redirect($this->generateUrl('pumukitnewadmin_series_update', ['id' => $series->getId()]));
+            return $this->redirectToRoute('pumukitnewadmin_series_update', ['id' => $series->getId()]);
         }
 
         return [
@@ -132,7 +132,7 @@ class SeriesPicController extends AbstractController implements NewAdminControll
 
         $series = $this->seriesPicService->removePicFromSeries($series, $picId);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_series_update', ['id' => $series->getId()]));
+        return $this->redirectToRoute('pumukitnewadmin_series_update', ['id' => $series->getId()]);
     }
 
     public function upAction(Request $request)
@@ -151,7 +151,7 @@ class SeriesPicController extends AbstractController implements NewAdminControll
         $this->documentManager->persist($series);
         $this->documentManager->flush();
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_seriespic_list', ['id' => $series->getId()]));
+        return $this->redirectToRoute('pumukitnewadmin_seriespic_list', ['id' => $series->getId()]);
     }
 
     public function downAction(Request $request)
@@ -170,7 +170,7 @@ class SeriesPicController extends AbstractController implements NewAdminControll
         $this->documentManager->persist($series);
         $this->documentManager->flush();
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_seriespic_list', ['id' => $series->getId()]));
+        return $this->redirectToRoute('pumukitnewadmin_seriespic_list', ['id' => $series->getId()]);
     }
 
     /**

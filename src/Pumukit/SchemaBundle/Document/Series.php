@@ -166,7 +166,6 @@ class Series
     public function __construct()
     {
         $this->secret = base_convert(sha1(uniqid((string) mt_rand(), true)), 16, 36);
-        $this->hide = false;
         $this->playlist = new Playlist();
         $this->__PicConstruct();
     }

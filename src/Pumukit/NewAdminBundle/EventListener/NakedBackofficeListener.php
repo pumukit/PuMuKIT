@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Pumukit\NewAdminBundle\EventListener;
 
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-
 class NakedBackofficeListener
 {
     private $domain;
@@ -21,7 +19,7 @@ class NakedBackofficeListener
         $this->customCssURL = $customCssURL;
     }
 
-    public function onKernelController(FilterControllerEvent $event)
+    public function onKernelController(\Symfony\Component\HttpKernel\Event\ControllerEvent $event)
     {
         $req = $event->getRequest();
 

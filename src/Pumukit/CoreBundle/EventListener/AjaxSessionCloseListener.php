@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace Pumukit\CoreBundle\EventListener;
 
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
  * See: https://tideways.io/profiler/blog/slow-ajax-requests-in-your-symfony-application-apply-this-simple-fix.
  */
 class AjaxSessionCloseListener
 {
-    public function onKernelRequest(GetResponseEvent $event): void
+    public function onKernelRequest(\Symfony\Component\HttpKernel\Event\RequestEvent $event): void
     {
         $request = $event->getRequest();
 

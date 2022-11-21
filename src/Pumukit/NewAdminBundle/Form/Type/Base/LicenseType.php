@@ -53,12 +53,4 @@ class LicenseType extends AbstractType
 
         return ChoiceType::class;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'license';
-    }
 }

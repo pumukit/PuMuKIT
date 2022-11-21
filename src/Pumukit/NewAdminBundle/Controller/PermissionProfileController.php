@@ -124,10 +124,10 @@ class PermissionProfileController extends AdminController
                 return new JsonResponse(['status' => $e->getMessage()], 409);
             }
             if (null === $permissionProfile) {
-                return $this->redirect($this->generateUrl('pumukitnewadmin_permissionprofile_list'));
+                return $this->redirectToRoute('pumukitnewadmin_permissionprofile_list');
             }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_permissionprofile_list', ['id' => $permissionProfile->getId()]));
+            return $this->redirectToRoute('pumukitnewadmin_permissionprofile_list', ['id' => $permissionProfile->getId()]);
         }
 
         return [
@@ -152,7 +152,7 @@ class PermissionProfileController extends AdminController
                 return new JsonResponse(['status' => $e->getMessage()], 409);
             }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_permissionprofile_list'));
+            return $this->redirectToRoute('pumukitnewadmin_permissionprofile_list');
         }
 
         return [
@@ -186,7 +186,7 @@ class PermissionProfileController extends AdminController
             throw $e;
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_permissionprofile_list'));
+        return $this->redirectToRoute('pumukitnewadmin_permissionprofile_list');
     }
 
     public function batchUpdateAction(Request $request)
@@ -229,7 +229,7 @@ class PermissionProfileController extends AdminController
         }
         $this->documentManager->flush();
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_permissionprofile_list'));
+        return $this->redirectToRoute('pumukitnewadmin_permissionprofile_list');
     }
 
     public function getResources(Request $request, $criteria)

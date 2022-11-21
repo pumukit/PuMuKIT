@@ -9,11 +9,10 @@ class BlocksList
     /**
      * @var array
      */
-    private $items;
+    private $items = [];
 
     public function __construct()
     {
-        $this->items = [];
     }
 
     public function add(BlockInterface $item): void

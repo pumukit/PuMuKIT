@@ -103,7 +103,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
                 return new JsonResponse(['status' => $e->getMessage()], JsonResponse::HTTP_CONFLICT);
             }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_tag_list'));
+            return $this->redirectToRoute('pumukitnewadmin_tag_list');
         }
 
         return ['tag' => $tag, 'form' => $form->createView()];
@@ -131,7 +131,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
                 return new JsonResponse(['status' => $e->getMessage()], JsonResponse::HTTP_CONFLICT);
             }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_tag_list'));
+            return $this->redirectToRoute('pumukitnewadmin_tag_list');
         }
 
         return ['tag' => $tag, 'form' => $form->createView()];
@@ -195,6 +195,6 @@ class TagController extends AbstractController implements NewAdminControllerInte
 
         $this->addFlash('success', 'delete');
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_tag_list'));
+        return $this->redirectToRoute('pumukitnewadmin_tag_list');
     }
 }

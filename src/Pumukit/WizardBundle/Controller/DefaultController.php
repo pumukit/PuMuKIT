@@ -120,10 +120,10 @@ class DefaultController extends AbstractController
         $formData['same_series'] = $sameSeries ? 1 : 0;
         if (!$this->licenseService->isEnabled()) {
             if ($sameSeries) {
-                return $this->redirect($this->generateUrl('pumukitwizard_default_type', ['pumukitwizard_form_data' => $formData, 'id' => $formData['series']['id'], 'same_series' => $sameSeries]));
+                return $this->redirectToRoute('pumukitwizard_default_type', ['pumukitwizard_form_data' => $formData, 'id' => $formData['series']['id'], 'same_series' => $sameSeries]);
             }
 
-            return $this->redirect($this->generateUrl('pumukitwizard_default_series', ['pumukitwizard_form_data' => $formData, 'same_series' => $sameSeries]));
+            return $this->redirectToRoute('pumukitwizard_default_series', ['pumukitwizard_form_data' => $formData, 'same_series' => $sameSeries]);
         }
         $licenseContent = $this->licenseService->getLicenseContent($request->getLocale());
 
@@ -149,7 +149,7 @@ class DefaultController extends AbstractController
         $formData['same_series'] = $sameSeries ? 1 : 0;
         $licenseEnabledAndAccepted = $this->licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
         if (!$licenseEnabledAndAccepted) {
-            return $this->redirect($this->generateUrl('pumukitwizard_default_license', ['pumukitwizard_form_data' => $formData, 'same_series' => $sameSeries]));
+            return $this->redirectToRoute('pumukitwizard_default_license', ['pumukitwizard_form_data' => $formData, 'same_series' => $sameSeries]);
         }
         $mandatoryTitle = $this->pumukitWizardMandatoryTitle ? 1 : 0;
         $userSeries = [];
@@ -210,12 +210,12 @@ class DefaultController extends AbstractController
             $formData['series']['id'] = $id;
             $formData['type']['option'] = 'single';
 
-            return $this->redirect($this->generateUrl('pumukitwizard_default_option', ['pumukitwizard_form_data' => $formData, 'same_series' => $sameSeries]));
+            return $this->redirectToRoute('pumukitwizard_default_option', ['pumukitwizard_form_data' => $formData, 'same_series' => $sameSeries]);
         }
 
         $licenseEnabledAndAccepted = $this->licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
         if (!$licenseEnabledAndAccepted) {
-            return $this->redirect($this->generateUrl('pumukitwizard_default_license', ['show_series' => $showSeries, 'pumukitwizard_form_data' => $formData, 'same_series' => $sameSeries]));
+            return $this->redirectToRoute('pumukitwizard_default_license', ['show_series' => $showSeries, 'pumukitwizard_form_data' => $formData, 'same_series' => $sameSeries]);
         }
 
         return $this->render('@PumukitWizard/Default/type.html.twig', [
@@ -239,13 +239,13 @@ class DefaultController extends AbstractController
         $formData['same_series'] = $sameSeries ? 1 : 0;
         $licenseEnabledAndAccepted = $this->licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
         if (!$licenseEnabledAndAccepted) {
-            return $this->redirect($this->generateUrl('pumukitwizard_default_license', ['pumukitwizard_form_data' => $formData, 'same_series' => $sameSeries]));
+            return $this->redirectToRoute('pumukitwizard_default_license', ['pumukitwizard_form_data' => $formData, 'same_series' => $sameSeries]);
         }
         if (('multiple' === $formData['type']['option']) && (false !== $this->authorizationChecker->isGranted(Permission::ACCESS_INBOX))) {
-            return $this->redirect($this->generateUrl('pumukitwizard_default_track', ['pumukitwizard_form_data' => $formData, 'same_series' => $sameSeries]));
+            return $this->redirectToRoute('pumukitwizard_default_track', ['pumukitwizard_form_data' => $formData, 'same_series' => $sameSeries]);
         }
 
-        return $this->redirect($this->generateUrl('pumukitwizard_default_multimediaobject', ['pumukitwizard_form_data' => $formData, 'same_series' => $sameSeries]));
+        return $this->redirectToRoute('pumukitwizard_default_multimediaobject', ['pumukitwizard_form_data' => $formData, 'same_series' => $sameSeries]);
     }
 
     /**
@@ -274,7 +274,7 @@ class DefaultController extends AbstractController
         }
         $licenseEnabledAndAccepted = $this->licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
         if (!$licenseEnabledAndAccepted) {
-            return $this->redirect($this->generateUrl('pumukitwizard_default_license', ['pumukitwizard_form_data' => $formData, 'same_series' => $sameSeries]));
+            return $this->redirectToRoute('pumukitwizard_default_license', ['pumukitwizard_form_data' => $formData, 'same_series' => $sameSeries]);
         }
 
         $availableTags = [];
@@ -317,7 +317,7 @@ class DefaultController extends AbstractController
         $formData['same_series'] = $sameSeries ? 1 : 0;
         $licenseEnabledAndAccepted = $this->licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
         if (!$licenseEnabledAndAccepted) {
-            return $this->redirect($this->generateUrl('pumukitwizard_default_license', ['pumukitwizard_form_data' => $formData, 'same_series' => $sameSeries]));
+            return $this->redirectToRoute('pumukitwizard_default_license', ['pumukitwizard_form_data' => $formData, 'same_series' => $sameSeries]);
         }
 
         $masterProfiles = $this->profileService->getMasterProfiles(true);
@@ -375,10 +375,10 @@ class DefaultController extends AbstractController
         $formData['same_series'] = $sameSeries ? 1 : 0;
         $licenseEnabledAndAccepted = $this->licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
         if (!$licenseEnabledAndAccepted) {
-            return $this->redirect($this->generateUrl('pumukitwizard_default_license', [
+            return $this->redirectToRoute('pumukitwizard_default_license', [
                 'pumukitwizard_form_data' => $formData,
                 'same_series' => $sameSeries,
-            ]));
+            ]);
         }
 
         if (!$formData) {

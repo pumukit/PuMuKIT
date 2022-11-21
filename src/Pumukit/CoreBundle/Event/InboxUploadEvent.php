@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Pumukit\CoreBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class InboxUploadEvent extends Event
+class InboxUploadEvent extends \Symfony\Contracts\EventDispatcher\Event
 {
     protected $user;
 

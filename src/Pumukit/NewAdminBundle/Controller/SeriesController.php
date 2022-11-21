@@ -328,7 +328,7 @@ class SeriesController extends AdminController
             return new Response('0 series deleted', Response::HTTP_BAD_REQUEST);
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_series_list', []));
+        return $this->redirectToRoute('pumukitnewadmin_series_list', []);
     }
 
     public function invertAnnounceAction(Request $request)
@@ -355,7 +355,7 @@ class SeriesController extends AdminController
         }
         $this->documentManager->flush();
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_series_list'));
+        return $this->redirectToRoute('pumukitnewadmin_series_list');
     }
 
     /**
@@ -400,7 +400,7 @@ class SeriesController extends AdminController
             $this->modifyMultimediaObjectsStatus($values);
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_series_list'));
+        return $this->redirectToRoute('pumukitnewadmin_series_list');
     }
 
     public function getCriteria($criteria)
@@ -533,7 +533,7 @@ class SeriesController extends AdminController
         $q = $req->get('q');
         $this->session->set('admin/series/criteria', ['search' => $q]);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_series_index'));
+        return $this->redirectToRoute('pumukitnewadmin_series_index');
     }
 
     /**

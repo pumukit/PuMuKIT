@@ -21,7 +21,7 @@ class Element
     /**
      * @MongoDB\Field(type="collection")
      */
-    private $tags;
+    private $tags = [];
 
     /**
      * @MongoDB\Field(type="string")
@@ -60,7 +60,6 @@ class Element
 
     public function __construct()
     {
-        $this->tags = [];
     }
 
     public function __clone()

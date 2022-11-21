@@ -17,9 +17,4 @@ class TrackdurationType extends AbstractType
             ]
         );
     }
-
-    public function getBlockPrefix()
-    {
-        return 'trackduration';
-    }
 }

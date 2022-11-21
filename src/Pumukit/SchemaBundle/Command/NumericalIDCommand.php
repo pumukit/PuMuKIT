@@ -52,7 +52,7 @@ EOT
         $this->output = $output;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         switch ($this->step) {
             case 'generate':

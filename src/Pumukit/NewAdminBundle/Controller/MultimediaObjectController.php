@@ -717,10 +717,7 @@ class MultimediaObjectController extends SortableAdminController
             $this->session->remove('admin/mms/id');
         }
 
-        return $this->redirect($this->generateUrl(
-            'pumukitnewadmin_mms_list',
-            ['seriesId' => $seriesId]
-        ));
+        return $this->redirectToRoute('pumukitnewadmin_mms_list', ['seriesId' => $seriesId]);
     }
 
     public function batchDeleteAction(Request $request)
@@ -747,7 +744,7 @@ class MultimediaObjectController extends SortableAdminController
             }
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));
+        return $this->redirectToRoute('pumukitnewadmin_mms_list');
     }
 
     public function generateMagicUrlAction(Request $request)
@@ -766,10 +763,7 @@ class MultimediaObjectController extends SortableAdminController
 
         $this->factoryService->cloneMultimediaObject($resource);
 
-        return $this->redirect($this->generateUrl(
-            'pumukitnewadmin_mms_list',
-            ['seriesId' => $seriesId]
-        ));
+        return $this->redirectToRoute('pumukitnewadmin_mms_list', ['seriesId' => $seriesId]);
     }
 
     public function invertAnnounceAction(Request $request)
@@ -795,7 +789,7 @@ class MultimediaObjectController extends SortableAdminController
             }
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));
+        return $this->redirectToRoute('pumukitnewadmin_mms_list');
     }
 
     public function listAction(Request $request)
@@ -880,7 +874,7 @@ class MultimediaObjectController extends SortableAdminController
 
         $this->sortedMultimediaObjectService->reorder($series);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));
+        return $this->redirectToRoute('pumukitnewadmin_mms_list');
     }
 
     public function reorderAction(Request $request)
@@ -895,7 +889,7 @@ class MultimediaObjectController extends SortableAdminController
 
         $this->sortedMultimediaObjectService->reorder($series);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));
+        return $this->redirectToRoute('pumukitnewadmin_mms_list');
     }
 
     public function syncTagsAction(Request $request)
@@ -1158,7 +1152,7 @@ class MultimediaObjectController extends SortableAdminController
 
         $this->pumukitSchemaMultimediaObjectDispatcher->dispatchUpdate($multimediaObject);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]));
+        return $this->redirectToRoute('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]);
     }
 
     /**

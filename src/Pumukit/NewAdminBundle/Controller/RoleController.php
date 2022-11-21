@@ -77,7 +77,7 @@ class RoleController extends SortableAdminController
                     return new JsonResponse(['status' => $e->getMessage()], 409);
                 }
 
-                return $this->redirect($this->generateUrl('pumukitnewadmin_role_list'));
+                return $this->redirectToRoute('pumukitnewadmin_role_list');
             }
             $errors = $this->validator->validate($role);
             $textStatus = '';
@@ -135,7 +135,7 @@ class RoleController extends SortableAdminController
             $this->session->remove('admin/'.$resourceName.'/id');
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
+        return $this->redirectToRoute('pumukitnewadmin_'.$resourceName.'_list');
     }
 
     public function batchDeleteAction(Request $request)
@@ -164,7 +164,7 @@ class RoleController extends SortableAdminController
             }
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
+        return $this->redirectToRoute('pumukitnewadmin_'.$resourceName.'_list');
     }
 
     public function createNew()

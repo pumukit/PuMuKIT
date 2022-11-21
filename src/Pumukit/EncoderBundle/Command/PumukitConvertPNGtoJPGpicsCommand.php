@@ -64,7 +64,7 @@ EOT
         $this->deletePngFiles = $this->input->getArgument('delete');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $criteria = [
             'pics' => ['$exists' => true],

@@ -96,7 +96,7 @@ class PersonController extends AdminController
                     $this->addFlash('error', $e->getMessage());
                 }
 
-                return $this->redirect($this->generateUrl('pumukitnewadmin_person_list'));
+                return $this->redirectToRoute('pumukitnewadmin_person_list');
             }
             $errors = $this->validator->validate($person);
             $textStatus = '';
@@ -133,7 +133,7 @@ class PersonController extends AdminController
                     $this->addFlash('error', $e->getMessage());
                 }
 
-                return $this->redirect($this->generateUrl('pumukitnewadmin_person_list'));
+                return $this->redirectToRoute('pumukitnewadmin_person_list');
             }
             $errors = $this->validator->validate($person);
             $textStatus = '';
@@ -566,7 +566,7 @@ class PersonController extends AdminController
             return new Response($this->translator->trans("Can't delete Person'").' '.$person->getName()."'. ", 409);
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_person_list'));
+        return $this->redirectToRoute('pumukitnewadmin_person_list');
     }
 
     /**
@@ -602,7 +602,7 @@ class PersonController extends AdminController
             }
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_person_list'));
+        return $this->redirectToRoute('pumukitnewadmin_person_list');
     }
 
     public function getCriteria($criteria, $locale = 'en')
