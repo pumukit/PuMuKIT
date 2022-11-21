@@ -161,7 +161,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
             if ($criteria) {
                 $qb->addAnd($criteria);
             }
-            if (isset($tempCriteria)) {
+            if (!empty($tempCriteria)) {
                 $criteria = array_merge($criteria, $tempCriteria);
             }
         }
