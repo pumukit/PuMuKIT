@@ -100,7 +100,7 @@ class LegacyEventPicService
             if (!$deleted) {
                 throw new \Exception("Error deleting file '".$path."' on disk");
             }
-            if (0 < strpos($dirname, $event->getId())) {
+            if (0 < strpos($dirname, (string) $event->getId())) {
                 $finder = new Finder();
                 $finder->files()->in($dirname);
                 if (0 === $finder->count()) {

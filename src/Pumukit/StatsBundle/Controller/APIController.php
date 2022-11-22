@@ -35,6 +35,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
      */
     public function mmobjMostViewedAction(Request $request)
     {
+        $options = [];
         [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
 
         $options['from_date'] = $fromDate;
@@ -66,6 +67,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
      */
     public function seriesMostViewedAction(Request $request)
     {
+        $options = [];
         [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
 
         $options['from_date'] = $fromDate;
@@ -97,6 +99,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
      */
     public function viewsAction(Request $request)
     {
+        $options = [];
         [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
 
         $groupBy = $request->get('group_by') ?: 'month';
@@ -140,6 +143,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
      */
     public function viewsMmobjAction(Request $request)
     {
+        $options = [];
         $mmobjId = $request->get('mmobj');
 
         [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
@@ -177,6 +181,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
      */
     public function viewsSeriesAction(Request $request)
     {
+        $options = [];
         $seriesId = $request->get('series');
 
         [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);

@@ -51,7 +51,7 @@ class JobGeneratorListenerTest extends PumukitTestCase
             'audio2' => ['target' => 'TAGB*, TAGC', 'resolution_hor' => 0, 'resolution_ver' => 0, 'audio' => true, 'streamserver' => $streamserver], ];
         $profileService = new ProfileService($testProfiles, $this->dm);
 
-        $jobService = $this->getMockBuilder('Pumukit\EncoderBundle\Services\JobService')
+        $jobService = $this->getMockBuilder(\Pumukit\EncoderBundle\Services\JobService::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;

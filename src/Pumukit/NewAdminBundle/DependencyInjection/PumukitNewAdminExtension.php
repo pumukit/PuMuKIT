@@ -46,7 +46,7 @@ class PumukitNewAdminExtension extends Extension
                 $arguments[] = '%pumukit.naked_custom_css_url%';
             }
 
-            $definition = new Definition('Pumukit\NewAdminBundle\EventListener\NakedBackofficeListener', $arguments);
+            $definition = new Definition(\Pumukit\NewAdminBundle\EventListener\NakedBackofficeListener::class, $arguments);
             $definition->addTag('kernel.event_listener', ['event' => 'kernel.controller', 'method' => 'onKernelController']);
             $container->setDefinition('pumukitnewadmin.nakedbackoffice', $definition);
         }

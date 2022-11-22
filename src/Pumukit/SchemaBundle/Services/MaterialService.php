@@ -103,6 +103,7 @@ class MaterialService
      */
     public function addMaterialFile(MultimediaObject $multimediaObject, UploadedFile $materialFile, $formData)
     {
+        $i18nName = [];
         if (UPLOAD_ERR_OK !== $materialFile->getError()) {
             throw new \Exception($materialFile->getErrorMessage());
         }

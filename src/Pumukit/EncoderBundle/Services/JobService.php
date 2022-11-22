@@ -375,11 +375,11 @@ class JobService
     public function getAllJobsStatusWithOwner($owner)
     {
         return [
-            'paused' => count($this->repo->findWithStatusAndOwner([Job::STATUS_PAUSED], [], $owner)),
-            'waiting' => count($this->repo->findWithStatusAndOwner([Job::STATUS_WAITING], [], $owner)),
-            'executing' => count($this->repo->findWithStatusAndOwner([Job::STATUS_EXECUTING], [], $owner)),
-            'finished' => count($this->repo->findWithStatusAndOwner([Job::STATUS_FINISHED], [], $owner)),
-            'error' => count($this->repo->findWithStatusAndOwner([Job::STATUS_ERROR], [], $owner)),
+            'paused' => is_countable($this->repo->findWithStatusAndOwner([Job::STATUS_PAUSED], [], $owner)) ? count($this->repo->findWithStatusAndOwner([Job::STATUS_PAUSED], [], $owner)) : 0,
+            'waiting' => is_countable($this->repo->findWithStatusAndOwner([Job::STATUS_WAITING], [], $owner)) ? count($this->repo->findWithStatusAndOwner([Job::STATUS_WAITING], [], $owner)) : 0,
+            'executing' => is_countable($this->repo->findWithStatusAndOwner([Job::STATUS_EXECUTING], [], $owner)) ? count($this->repo->findWithStatusAndOwner([Job::STATUS_EXECUTING], [], $owner)) : 0,
+            'finished' => is_countable($this->repo->findWithStatusAndOwner([Job::STATUS_FINISHED], [], $owner)) ? count($this->repo->findWithStatusAndOwner([Job::STATUS_FINISHED], [], $owner)) : 0,
+            'error' => is_countable($this->repo->findWithStatusAndOwner([Job::STATUS_ERROR], [], $owner)) ? count($this->repo->findWithStatusAndOwner([Job::STATUS_ERROR], [], $owner)) : 0,
         ];
     }
 
@@ -560,7 +560,7 @@ class JobService
         $vars['output'] = $job->getPathEnd();
 
         foreach (range(1, 9) as $identifier) {
-            $vars['tmpfile'.$identifier] = $this->tmpPath.'/'.rand();
+            $vars['tmpfile'.$identifier] = $this->tmpPath.'/'.random_int(0, mt_getrandmax());
         }
 
         $loader = new ArrayLoader(['bat' => $profile['bat']]);
@@ -780,13 +780,13 @@ class JobService
 
     private function deleteTempFiles(Job $job)
     {
-        if (false !== strpos($job->getPathIni(), $this->tmpPath)) {
+        if (false !== strpos($job->getPathIni(), (string) $this->tmpPath)) {
             unlink($job->getPathIni());
-        } elseif ($this->deleteInboxFiles && false !== strpos($job->getPathIni(), $this->inboxPath)) {
+        } elseif ($this->deleteInboxFiles && false !== strpos($job->getPathIni(), (string) $this->inboxPath)) {
             unlink($job->getPathIni());
 
             $event = new FileRemovedEvent($job->getPathIni());
-            $this->eventDispatcher->dispatch(FileEvents::FILE_REMOVED, $event);
+            $this->eventDispatcher->dispatch($event, FileEvents::FILE_REMOVED);
         }
     }
 

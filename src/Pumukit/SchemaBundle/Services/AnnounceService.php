@@ -58,7 +58,7 @@ class AnnounceService
 
         foreach ($lastSeries as $serie) {
             $haveMmojb = $this->mmobjRepo->findBy(['series' => new ObjectId($serie->getId())]);
-            if (0 !== count($haveMmojb)) {
+            if (0 !== (is_countable($haveMmojb) ? count($haveMmojb) : 0)) {
                 $last[] = $serie;
             }
         }
@@ -69,11 +69,8 @@ class AnnounceService
         usort($last, function ($a, $b) {
             $date_a = $a->getPublicDate();
             $date_b = $b->getPublicDate();
-            if ($date_a == $date_b) {
-                return 0;
-            }
 
-            return $date_a < $date_b ? 1 : -1;
+            return $date_b <=> $date_a;
         });
 
         return $last;
@@ -145,7 +142,7 @@ class AnnounceService
         $z = 0;
         foreach ($lastSeries as $series) {
             $isValidSeries = $this->mmobjRepo->findStandardBy(['series' => $series->getId()]);
-            if (count($isValidSeries) <= 0) {
+            if ((is_countable($isValidSeries) ? count($isValidSeries) : 0) <= 0) {
                 unset($lastSeries[$z]);
             }
             ++$z;

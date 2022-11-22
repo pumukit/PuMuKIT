@@ -18,7 +18,6 @@ use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Pumukit\SchemaBundle\Services\SpecialTranslationService;
 use Symfony\Component\Intl\Languages;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -38,7 +37,7 @@ class PumukitAdminExtension extends AbstractExtension
     private $eventService;
     private $enablePlaylist;
 
-    public function __construct(ProfileService $profileService, DocumentManager $documentManager, TranslatorInterface $translator, RouterInterface $router, MultimediaObjectService $mmobjService, SpecialTranslationService $specialTranslationService, EmbeddedEventSessionService $eventService, $enablePlaylist)
+    public function __construct(ProfileService $profileService, DocumentManager $documentManager, \Symfony\Contracts\Translation\TranslatorInterface $translator, RouterInterface $router, MultimediaObjectService $mmobjService, SpecialTranslationService $specialTranslationService, EmbeddedEventSessionService $eventService, $enablePlaylist)
     {
         $this->dm = $documentManager;
         $this->languages = Languages::getNames();
@@ -481,7 +480,7 @@ class PumukitAdminExtension extends AbstractExtension
         $aRoles = [];
         foreach ($roles as $role) {
             $embeddedRole = $multimediaObject->getEmbeddedRole($role);
-            if ($embeddedRole && 0 !== count($embeddedRole->getPeople())) {
+            if ($embeddedRole && 0 !== (is_countable($embeddedRole->getPeople()) ? count($embeddedRole->getPeople()) : 0)) {
                 $aRoles[] = $embeddedRole;
             }
         }

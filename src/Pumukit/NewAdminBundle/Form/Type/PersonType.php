@@ -102,7 +102,7 @@ class PersonType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Pumukit\SchemaBundle\Document\Person',
+                'data_class' => \Pumukit\SchemaBundle\Document\Person::class,
             ]
         );
 

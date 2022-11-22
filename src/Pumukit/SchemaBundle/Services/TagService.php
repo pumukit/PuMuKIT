@@ -256,7 +256,7 @@ class TagService
     public function deleteTag(TagInterface $tag)
     {
         if ($this->canDeleteTag($tag)) {
-            $this->dm->clear('Pumukit\SchemaBundle\Document\MultimediaObject');
+            $this->dm->clear(\Pumukit\SchemaBundle\Document\MultimediaObject::class);
             $qb = $this->dm->createQueryBuilder(MultimediaObject::class);
 
             $query = $qb
@@ -282,7 +282,7 @@ class TagService
      */
     public function canDeleteTag(TagInterface $tag)
     {
-        return (bool) ((0 == count($tag->getChildren())) && (0 == $tag->getNumberMultimediaObjects()));
+        return (bool) ((0 == (is_countable($tag->getChildren()) ? count($tag->getChildren()) : 0)) && (0 == $tag->getNumberMultimediaObjects()));
     }
 
     /**

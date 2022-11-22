@@ -64,7 +64,7 @@ class LogTest extends PumukitTestCase
     private function createMockRequestStack()
     {
         $request = Request::create('/');
-        $requestStack = $this->getMockBuilder('Symfony\Component\HttpFoundation\RequestStack')->getMock();
+        $requestStack = $this->getMockBuilder(\Symfony\Component\HttpFoundation\RequestStack::class)->getMock();
         $requestStack->expects(static::once())->method('getMasterRequest')->willReturn($request);
 
         return $requestStack;

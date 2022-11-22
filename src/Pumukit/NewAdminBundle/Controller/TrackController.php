@@ -142,7 +142,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
             return new Response($e->getMessage(), 400);
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', ['reload_links' => true, 'id' => $multimediaObject->getId()]));
+        return $this->redirectToRoute('pumukitnewadmin_track_list', ['reload_links' => true, 'id' => $multimediaObject->getId()]);
     }
 
     /**
@@ -164,7 +164,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
                 return new Response($e->getMessage(), 400);
             }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', ['reload_links' => true, 'id' => $multimediaObject->getId()]));
+            return $this->redirectToRoute('pumukitnewadmin_track_list', ['reload_links' => true, 'id' => $multimediaObject->getId()]);
         }
 
         return $this->render(
@@ -227,7 +227,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
             $multimediaObject = $this->trackService->removeTrackFromMultimediaObject($multimediaObject, $request->get('id'));
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]));
+        return $this->redirectToRoute('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]);
     }
 
     /**
@@ -239,7 +239,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
         $this->addFlash('success', 'up');
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]));
+        return $this->redirectToRoute('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]);
     }
 
     /**
@@ -251,7 +251,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
         $this->addFlash('success', 'down');
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]));
+        return $this->redirectToRoute('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]);
     }
 
     /**
@@ -286,7 +286,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         $flashMessage = $this->jobService->retryJob($job);
         $this->addFlash('success', $flashMessage);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]));
+        return $this->redirectToRoute('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]);
     }
 
     /**
@@ -314,7 +314,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
         $this->addFlash('success', 'delete job');
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]));
+        return $this->redirectToRoute('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]);
     }
 
     /**
@@ -339,7 +339,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         $this->inspectionService->autocompleteTrack($track);
         $this->trackService->updateTrackInMultimediaObject($multimediaObject, $track);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]));
+        return $this->redirectToRoute('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]);
     }
 
     /**
@@ -391,7 +391,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
         $this->jobService->addJob($track->getPath(), $profile, $priority, $multimediaObject, $track->getLanguage(), $track->getI18nDescription());
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]));
+        return $this->redirectToRoute('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]);
     }
 
     private function getArrayData($formData)

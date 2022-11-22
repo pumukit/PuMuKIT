@@ -134,7 +134,7 @@ class TagType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Pumukit\SchemaBundle\Document\Tag',
+                'data_class' => \Pumukit\SchemaBundle\Document\Tag::class,
             ]
         );
 

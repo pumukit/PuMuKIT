@@ -46,7 +46,7 @@ EOT
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $tagCode = $input->getArgument('tag');
         $tag = $this->tagRepo->findOneByCod($tagCode);

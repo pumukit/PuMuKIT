@@ -63,7 +63,7 @@ class PicExtractorService
         $num_frames = $track->getNumFrames();
 
         if ((null === $numframe || (0 == $num_frames))) {
-            $num = 125 * (count($multimediaObject->getPics())) + 1;
+            $num = 125 * (is_countable($multimediaObject->getPics()) ? count($multimediaObject->getPics()) : 0) + 1;
         } elseif ('%' === substr($numframe, -1, 1)) {
             $num = (int) $numframe * $num_frames / 100;
         } else {
@@ -84,7 +84,7 @@ class PicExtractorService
 
         $picFileName = date('ymdGis').'.jpg';
         while (file_exists($absCurrentDir.'/'.$picFileName)) {
-            $picFileName = date('ymdGis').rand().'.jpg';
+            $picFileName = date('ymdGis').random_int(0, mt_getrandmax()).'.jpg';
         }
 
         $aspectTrack = $this->getAspect($track);

@@ -366,7 +366,7 @@ class PicService
         \imagecopyresampled($image_p, $image, 0, 0, 0, 0, $width, $height, $originalWidth, $originalHeight);
 
         if ($no_replace) {
-            $name = dirname($pic['path']).'/'.rand().'.jpg';
+            $name = dirname($pic['path']).'/'.random_int(0, mt_getrandmax()).'.jpg';
             \imagejpeg($image_p, $name, $params['quality']);
         } else {
             $name = $pic['path'];

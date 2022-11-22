@@ -17,9 +17,4 @@ class LivequalitiesType extends AbstractType
             ]
         );
     }
-
-    public function getBlockPrefix()
-    {
-        return 'livequalities';
-    }
 }

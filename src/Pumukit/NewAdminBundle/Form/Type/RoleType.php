@@ -83,7 +83,7 @@ class RoleType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Pumukit\SchemaBundle\Document\Role',
+                'data_class' => \Pumukit\SchemaBundle\Document\Role::class,
             ]
         );
 

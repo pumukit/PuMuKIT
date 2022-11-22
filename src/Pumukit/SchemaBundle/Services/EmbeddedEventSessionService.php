@@ -305,7 +305,7 @@ class EmbeddedEventSessionService
     {
         static $currentSessions = [];
 
-        $encryptCriteria = md5(json_encode($criteria).(string) $limit.(string) $all);
+        $encryptCriteria = md5(json_encode($criteria, JSON_THROW_ON_ERROR).(string) $limit.(string) $all);
 
         if (isset($currentSessions[$encryptCriteria])) {
             return $currentSessions[$encryptCriteria];
@@ -374,7 +374,7 @@ class EmbeddedEventSessionService
     {
         static $findNextSessions;
 
-        $encryptCriteria = md5(json_encode($criteria).(string) $limit.(string) $all);
+        $encryptCriteria = md5(json_encode($criteria, JSON_THROW_ON_ERROR).(string) $limit.(string) $all);
 
         if (isset($findNextSessions[$encryptCriteria])) {
             return $findNextSessions[$encryptCriteria];
@@ -834,7 +834,7 @@ class EmbeddedEventSessionService
         $pipeline = $this->getFutureEventsPipeline($multimediaObjectId);
         $result = $this->collection->aggregate($pipeline, ['cursor' => []])->toArray();
 
-        return count($result);
+        return is_countable($result) ? count($result) : 0;
     }
 
     /**
@@ -844,6 +844,7 @@ class EmbeddedEventSessionService
      */
     public function findAllEvents()
     {
+        $pipeline = [];
         $pipeline[] = [
             '$match' => [
                 'type' => MultimediaObject::TYPE_LIVE,
@@ -888,6 +889,7 @@ class EmbeddedEventSessionService
 
     public function findEventsByCriteria(array $criteria = [])
     {
+        $pipeline = [];
         $pipeline[] = [
             '$match' => [
                 'type' => MultimediaObject::TYPE_LIVE,
@@ -1110,6 +1112,7 @@ class EmbeddedEventSessionService
      */
     private function getFutureEventsPipeline($multimediaObjectId)
     {
+        $pipeline = [];
         if ($multimediaObjectId) {
             $pipeline[] = [
                 '$match' => [
@@ -1286,6 +1289,7 @@ class EmbeddedEventSessionService
      */
     private function getNextLiveEventsPipeline($multimediaObjectId)
     {
+        $pipeline = [];
         if ($multimediaObjectId) {
             $pipeline[] = [
                 '$match' => [

@@ -8,7 +8,6 @@ use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -31,7 +30,7 @@ class LocaleListener implements EventSubscriberInterface
     /**
      * @throws \Exception
      */
-    public function onKernelRequest(GetResponseEvent $event)
+    public function onKernelRequest(\Symfony\Component\HttpKernel\Event\RequestEvent $event)
     {
         $this->fixRequestLocale($event->getRequest());
     }

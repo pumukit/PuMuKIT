@@ -85,7 +85,7 @@ EOT
         $this->type = $this->input->getOption('type');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $validInput = $this->checkInputOptions();
         if (!$validInput['success']) {

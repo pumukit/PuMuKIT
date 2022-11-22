@@ -105,7 +105,7 @@ class SeriesPicService
         }
 
         if (file_exists($this->getTargetPath($series).'/'.$picFile->getClientOriginalName())) {
-            $i = rand(0, 15);
+            $i = random_int(0, 15);
             $name = $picFile->getClientOriginalName().$i;
         } else {
             $name = $picFile->getClientOriginalName();
@@ -146,7 +146,7 @@ class SeriesPicService
         $picUrl = $pic->getUrl();
         if (in_array('banner', $pic->getTags())) {
             foreach ($this->locales as $locale) {
-                if (0 < strpos($series->getHeader($locale), $picUrl)) {
+                if (0 < strpos($series->getHeader($locale), (string) $picUrl)) {
                     $series->setHeader('', $locale);
                 }
             }
@@ -173,7 +173,7 @@ class SeriesPicService
             if (!$deleted) {
                 throw new \Exception("Error deleting file '".$path."' on disk");
             }
-            if (0 < strpos($dirname, $series->getId())) {
+            if (0 < strpos($dirname, (string) $series->getId())) {
                 $finder = new Finder();
                 $finder->files()->in($dirname);
                 if (0 === $finder->count()) {

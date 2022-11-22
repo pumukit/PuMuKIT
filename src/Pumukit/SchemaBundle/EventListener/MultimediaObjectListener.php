@@ -55,7 +55,7 @@ class MultimediaObjectListener
 
     private function getTracksType($tracks)
     {
-        if (0 === count($tracks)) {
+        if (0 === (is_countable($tracks) ? count($tracks) : 0)) {
             return MultimediaObject::TYPE_UNKNOWN;
         }
 

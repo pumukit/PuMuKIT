@@ -26,12 +26,12 @@ trait Tag
             return false;
         }
 
-        return 0 === strpos($this->getPath(), $tag->getPath());
+        return 0 === strpos($this->getPath(), (string) $tag->getPath());
     }
 
     public function equalsOrDescendantOf(TagInterface $tag): bool
     {
-        return 0 === strpos($this->getPath(), $tag->getPath());
+        return 0 === strpos($this->getPath(), (string) $tag->getPath());
     }
 
     public function isDescendantOfByCod(string $tagCod): bool

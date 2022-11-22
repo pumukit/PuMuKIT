@@ -94,7 +94,7 @@ class GroupController extends AdminController
                     return new JsonResponse([$e->getMessage()], Response::HTTP_BAD_REQUEST);
                 }
 
-                return $this->redirect($this->generateUrl('pumukitnewadmin_group_list'));
+                return $this->redirectToRoute('pumukitnewadmin_group_list');
             }
 
             return new JsonResponse(['Form not valid'], Response::HTTP_BAD_REQUEST);
@@ -126,7 +126,7 @@ class GroupController extends AdminController
                 return new JsonResponse(['status' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
             }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_group_list'));
+            return $this->redirectToRoute('pumukitnewadmin_group_list');
         }
 
         return $this->render(
@@ -151,7 +151,7 @@ class GroupController extends AdminController
             return new Response("Can not delete Group '".$group->getName()."'. ".$e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_group_list'));
+        return $this->redirectToRoute('pumukitnewadmin_group_list');
     }
 
     public function batchDeleteAction(Request $request)
@@ -159,7 +159,7 @@ class GroupController extends AdminController
         $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {
-            $ids = json_decode($ids, true);
+            $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
         }
 
         $notDeleted = [];
@@ -312,7 +312,7 @@ class GroupController extends AdminController
         $group = $this->findOr404($request);
         $user = $this->userService->deleteGroup($group, $user);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', ['id' => $group->getId(), 'resourceName' => 'user', 'action' => $action]));
+        return $this->redirectToRoute('pumukitnewadmin_group_data_resources', ['id' => $group->getId(), 'resourceName' => 'user', 'action' => $action]);
     }
 
     /**
@@ -324,7 +324,7 @@ class GroupController extends AdminController
         $group = $this->findOr404($request);
         $this->multimediaObjectService->deleteGroup($group, $multimediaObject);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', ['id' => $group->getId(), 'resourceName' => 'multimediaobject', 'action' => $action]));
+        return $this->redirectToRoute('pumukitnewadmin_group_data_resources', ['id' => $group->getId(), 'resourceName' => 'multimediaobject', 'action' => $action]);
     }
 
     /**
@@ -336,7 +336,7 @@ class GroupController extends AdminController
         $group = $this->findOr404($request);
         $this->embeddedBroadcastService->deleteGroup($group, $multimediaObject);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', ['id' => $group->getId(), 'resourceName' => 'embeddedbroadcast', 'action' => $action]));
+        return $this->redirectToRoute('pumukitnewadmin_group_data_resources', ['id' => $group->getId(), 'resourceName' => 'embeddedbroadcast', 'action' => $action]);
     }
 
     public function canBeDeletedAction(Group $group, Request $request)
@@ -365,7 +365,7 @@ class GroupController extends AdminController
             return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', ['id' => $group->getId(), 'resourceName' => 'user']));
+        return $this->redirectToRoute('pumukitnewadmin_group_data_resources', ['id' => $group->getId(), 'resourceName' => 'user']);
     }
 
     public function deleteAllMultimediaObjectsAction(Group $group)
@@ -376,7 +376,7 @@ class GroupController extends AdminController
             return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', ['id' => $group->getId(), 'resourceName' => 'multimediaobject']));
+        return $this->redirectToRoute('pumukitnewadmin_group_data_resources', ['id' => $group->getId(), 'resourceName' => 'multimediaobject']);
     }
 
     public function deleteAllEmbeddedBroadcastsAction(Group $group)
@@ -387,7 +387,7 @@ class GroupController extends AdminController
             return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', ['id' => $group->getId(), 'resourceName' => 'embeddedbroadcast']));
+        return $this->redirectToRoute('pumukitnewadmin_group_data_resources', ['id' => $group->getId(), 'resourceName' => 'embeddedbroadcast']);
     }
 
     public function getCriteria($criteria)

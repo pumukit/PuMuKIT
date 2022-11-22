@@ -13,11 +13,11 @@ class ExceptionListener
     /**
      * Handles security related exceptions.
      *
-     * @param GetResponseForExceptionEvent $event An GetResponseForExceptionEvent instance
+     * @param \Symfony\Component\HttpKernel\Event\ExceptionEvent $event An GetResponseForExceptionEvent instance
      */
-    public function onKernelException(GetResponseForExceptionEvent $event)
+    public function onKernelException(\Symfony\Component\HttpKernel\Event\ExceptionEvent $event)
     {
-        $exception = $event->getException();
+        $exception = $event->getThrowable();
         do {
             if ($exception instanceof AccessDeniedException) {
                 return $this->handleAccessDeniedException($event, $exception);
@@ -25,11 +25,11 @@ class ExceptionListener
         } while (null !== $exception = $exception->getPrevious());
     }
 
-    private function handleAccessDeniedException(GetResponseForExceptionEvent $event, AccessDeniedException $exception)
+    private function handleAccessDeniedException(\Symfony\Component\HttpKernel\Event\ExceptionEvent $event, AccessDeniedException $exception)
     {
         $req = $event->getRequest();
         if ($req->isXmlHttpRequest()) {
-            $exception = $event->getException();
+            $exception = $event->getThrowable();
 
             $response = new Response();
             $response->setContent($exception->getMessage());

@@ -269,7 +269,7 @@ EOT
                 case 'tag':
                     $csvTagsArray = [];
 
-                    $limit = count($currentRow);
+                    $limit = count((array) $currentRow);
 
                     for ($i = 0; $i < $limit; ++$i) {
                         $key = $csvTagHeaders[$i];
@@ -293,7 +293,7 @@ EOT
                 case 'role':
                     $csvRolesArray = [];
 
-                    $limit = count($currentRow);
+                    $limit = count((array) $currentRow);
 
                     for ($i = 0; $i < $limit; ++$i) {
                         $key = $csvTagHeaders[$i];

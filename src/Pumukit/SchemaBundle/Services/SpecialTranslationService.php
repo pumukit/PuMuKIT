@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Services;
 
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
-use Symfony\Component\Translation\TranslatorInterface;
 
 class SpecialTranslationService
 {
@@ -14,7 +13,7 @@ class SpecialTranslationService
     /**
      * Constructor.
      */
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(\Symfony\Contracts\Translation\TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }

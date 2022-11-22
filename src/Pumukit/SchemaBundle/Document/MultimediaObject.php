@@ -76,7 +76,7 @@ class MultimediaObject
      * @MongoDB\Field(type="int")
      * @MongoDB\Index
      */
-    private $type;
+    private $type = self::TYPE_UNKNOWN;
 
     /**
      * @MongoDB\Field(type="string")
@@ -233,12 +233,11 @@ class MultimediaObject
 
     public function __construct()
     {
-        $this->secret = base_convert(sha1(uniqid((string) mt_rand(), true)), 16, 36);
+        $this->secret = base_convert(sha1(uniqid((string) random_int(0, mt_getrandmax()), true)), 16, 36);
         $this->tracks = new ArrayCollection();
         $this->tags = new ArrayCollection();
         $this->people = new ArrayCollection();
         $this->groups = new ArrayCollection();
-        $this->type = self::TYPE_UNKNOWN;
 
         $this->__LinkConstruct();
         $this->__PicConstruct();
@@ -292,7 +291,7 @@ class MultimediaObject
 
     public function resetSecret(): string
     {
-        $this->secret = base_convert(sha1(uniqid((string) mt_rand(), true)), 16, 36);
+        $this->secret = base_convert(sha1(uniqid((string) random_int(0, mt_getrandmax()), true)), 16, 36);
 
         return $this->secret;
     }
@@ -1150,7 +1149,7 @@ class MultimediaObject
 
         $hasRemoved = $embeddedRole->removePerson($person);
 
-        if (0 === count($embeddedRole->getPeople())) {
+        if (0 === (is_countable($embeddedRole->getPeople()) ? count($embeddedRole->getPeople()) : 0)) {
             $this->people->removeElement($embeddedRole);
         }
 

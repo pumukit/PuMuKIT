@@ -133,7 +133,7 @@ class EventsType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Pumukit\SchemaBundle\Document\EmbeddedEvent',
+                'data_class' => \Pumukit\SchemaBundle\Document\EmbeddedEvent::class,
             ]
         );
 

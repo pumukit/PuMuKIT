@@ -53,7 +53,7 @@ class DynamicPicExtractorListener
         }
 
         $message = 'Extracted dynamic pic from track '.$track->getId().' into MultimediaObject "'.$multimediaObject->getId();
-        $this->logger->info(__CLASS__.'['.__FUNCTION__.'] '.$message.'"');
+        $this->logger->info(self::class.'['.__FUNCTION__.'] '.$message.'"');
 
         return true;
     }

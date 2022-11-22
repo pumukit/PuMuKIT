@@ -84,7 +84,7 @@ class MaterialType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Pumukit\SchemaBundle\Document\Material',
+                'data_class' => \Pumukit\SchemaBundle\Document\Material::class,
             ]
         );
 

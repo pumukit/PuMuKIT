@@ -121,7 +121,7 @@ class MultimediaObjectPicService
         }
 
         if (file_exists($this->getTargetPath($multimediaObject).'/'.$picFile->getClientOriginalName())) {
-            $i = rand(0, 15);
+            $i = random_int(0, 15);
             $name = $picFile->getClientOriginalName().$i;
         } else {
             $name = $picFile->getClientOriginalName();
@@ -214,7 +214,7 @@ class MultimediaObjectPicService
             $otherPicsUrl = $this->repo->findBy(['pics.url' => $picUrl]);
             $seriesPicsUrl = $this->dm->getRepository(Series::class)->findBy(['pics.url' => $picUrl]);
             $seriesPicsPath = $this->dm->getRepository(Series::class)->findBy(['pics.path' => $picPath]);
-            $totalPicsUses = count($otherPics) + count($otherPicsUrl) + count($seriesPicsUrl) + count($seriesPicsPath);
+            $totalPicsUses = (is_countable($otherPics) ? count($otherPics) : 0) + (is_countable($otherPicsUrl) ? count($otherPicsUrl) : 0) + count($seriesPicsUrl) + count($seriesPicsPath);
             if (0 === $totalPicsUses) {
                 $this->deleteFileOnDisk($picPath, $multimediaObject);
             }
@@ -237,7 +237,7 @@ class MultimediaObjectPicService
             if (!$deleted) {
                 throw new \Exception("Error deleting file '".$path."' on disk");
             }
-            if (0 < strpos($dirname, $multimediaObject->getId())) {
+            if (0 < strpos($dirname, (string) $multimediaObject->getId())) {
                 $finder = new Finder();
                 $finder->files()->in($dirname);
                 if (0 === $finder->count()) {
