@@ -49,7 +49,6 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.4.0",
-        "php-parallel-lint/php-var-dump-check": "^0.5.0",
         "phpstan/phpstan": "^1.9.0",
         "phpstan/phpstan-doctrine": "^1.3.0",
         "phpstan/phpstan-symfony": "^1.2.0",
@@ -94,12 +93,13 @@
         ],
         "lint-generic": [
             "find src -type f -name '.php' -print0 | xargs -0 -n1 -P8 php -l",
-            "bin/travis_checks/check_var_dumps"
+            "bin/check/var_dump"
         ],
         "php-cs-fixer": "vendor/bin/php-cs-fixer fix src --dry-run -v",
         "php-stan": [
             "vendor/bin/phpstan analyse -l 1 src"
         ],
+        "php-rector": "vendor/bin/rector process src --dry-run",
         "tests": "APP_ENV=test vendor/bin/phpunit",
         "ci": [
             "@lint-yaml",
@@ -108,6 +108,7 @@
             "@lint-generic",
             "@php-cs-fixer",
             "@php-stan",
+            "@php-rector",
             "@tests"
         ],
         "auto-scripts": {

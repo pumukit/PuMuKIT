@@ -67,7 +67,7 @@ composer-validate:
 fixtures:
 	docker-compose -f docker-compose.yml run --service-ports php bin/console pumukit:init:repo all --force
 
-test-all: test test-lint-yaml test-lint-twig test-lint-generic test-php-cs-fixer test-php-stan
+test-all: test test-lint-yaml test-lint-twig test-lint-generic test-php-cs-fixer test-php-stan test-rector
 
 test:
 	docker-compose -f docker-compose.yml run --service-ports php composer tests
@@ -89,6 +89,9 @@ test-php-cs-fixer:
 
 test-php-stan:
 	docker-compose -f docker-compose.yml run --service-ports php composer php-stan
+
+test-rector:
+	docker-compose -f docker-compose.yml run --service-ports php composer php-rector
 
 shell:
 	docker-compose -f docker-compose.yml run --service-ports php sh

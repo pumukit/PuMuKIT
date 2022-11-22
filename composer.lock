@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fa82ad8a379a89cf98b64c3ca994c7f1",
+    "content-hash": "26ad6abd53bbed77527cbd60d268c3ae",
     "packages": [
         {
             "name": "ankitpokhrel/tus-php",
@@ -10097,59 +10097,6 @@
             },
             "abandoned": true,
             "time": "2020-10-14T08:32:19+00:00"
-        },
-        {
-            "name": "php-parallel-lint/php-var-dump-check",
-            "version": "v0.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-parallel-lint/PHP-Var-Dump-Check.git",
-                "reference": "8b880e559a2ab38b091d650f1a36caf161444c0c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-parallel-lint/PHP-Var-Dump-Check/zipball/8b880e559a2ab38b091d650f1a36caf161444c0c",
-                "reference": "8b880e559a2ab38b091d650f1a36caf161444c0c",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0"
-            },
-            "replace": {
-                "jakub-onderka/php-var-dump-check": "*"
-            },
-            "require-dev": {
-                "php-parallel-lint/php-parallel-lint": "^1.0",
-                "phpunit/phpunit": "^4.8.36"
-            },
-            "suggest": {
-                "php-parallel-lint/php-console-highlighter": "For colored console output"
-            },
-            "bin": [
-                "var-dump-check"
-            ],
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "JakubOnderka\\PhpVarDumpCheck\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-2-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Jakub Onderka",
-                    "email": "jakub.onderka@gmail.com"
-                }
-            ],
-            "description": "Find forgotten variables dump in PHP source code.",
-            "support": {
-                "issues": "https://github.com/php-parallel-lint/PHP-Var-Dump-Check/issues",
-                "source": "https://github.com/php-parallel-lint/PHP-Var-Dump-Check/tree/master"
-            },
-            "time": "2020-08-17T12:12:52+00:00"
         },
         {
             "name": "phpstan/phpstan",

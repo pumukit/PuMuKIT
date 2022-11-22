@@ -197,9 +197,6 @@
     "php-cs-fixer/diff": {
         "version": "v2.0.2"
     },
-    "php-parallel-lint/php-var-dump-check": {
-        "version": "v0.5"
-    },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
     },
