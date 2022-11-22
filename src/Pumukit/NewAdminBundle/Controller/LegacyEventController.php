@@ -257,7 +257,7 @@ class LegacyEventController extends AdminController
         $m = $this->session->get('admin/event/month', date('m'));
         $y = $this->session->get('admin/event/year', date('Y'));
 
-        $calendar = static::generateArray($m, $y);
+        $calendar = $this->generateArray($m, $y);
 
         return [$m, $y, $calendar];
     }

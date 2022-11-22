@@ -180,7 +180,7 @@ class PumukitExtension extends AbstractExtension
         }
 
         if ($duration > 0) {
-            $min = floor($duration / 60);
+            $min = floor((int) $duration / 60);
             $seg = $duration % 60;
 
             if ($seg < 10) {
