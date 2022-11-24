@@ -39,6 +39,7 @@ if (!isset($username)) {
         header('HTTP/1.0 200 OK');
         header('Content-Type: text/html');
 
+        $tempDir = '';
         if (isset($_POST['command'])) {
             set_time_limit(0);
             ini_set('memory_set', '-1');
