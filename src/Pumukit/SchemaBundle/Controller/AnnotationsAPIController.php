@@ -44,8 +44,8 @@ class AnnotationsAPIController extends AbstractController
         $type = $request->get('type');
         $day = $request->get('day');
 
-        $limit = $request->get('limit') ?: 10;
-        $offset = $request->get('offset') ?: 0;
+        $limit = (int) $request->get('limit') ?: 10;
+        $offset = (int) $request->get('offset') ?: 0;
 
         $annonRepo = $this->documentManager->getRepository(Annotation::class);
         $annonQB = $annonRepo->createQueryBuilder();

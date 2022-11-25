@@ -32,7 +32,7 @@ class LinkService
         $this->dispatcher->dispatchCreate($multimediaObject, $link);
 
         // NOTE Workaround to fix embedded documents modifications
-        $this->dm->clear(get_class($multimediaObject));
+        $this->dm->clear();
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
 
@@ -52,7 +52,7 @@ class LinkService
         $this->dispatcher->dispatchUpdate($multimediaObject, $link);
 
         // NOTE Workaround to fix embedded documents modifications
-        $this->dm->clear(get_class($multimediaObject));
+        $this->dm->clear();
 
         return $this->dm->find(MultimediaObject::class, $multimediaObject->getId());
     }
@@ -75,7 +75,7 @@ class LinkService
         $this->dispatcher->dispatchDelete($multimediaObject, $link);
 
         // NOTE Workaround to fix embedded documents modifications
-        $this->dm->clear(get_class($multimediaObject));
+        $this->dm->clear();
 
         return $this->dm->find(MultimediaObject::class, $multimediaObject->getId());
     }
@@ -94,7 +94,7 @@ class LinkService
         $this->dm->flush();
 
         // NOTE Workaround to fix embedded documents modifications
-        $this->dm->clear(get_class($multimediaObject));
+        $this->dm->clear();
 
         return $this->dm->find(MultimediaObject::class, $multimediaObject->getId());
     }
@@ -113,7 +113,7 @@ class LinkService
         $this->dm->flush();
 
         // NOTE Workaround to fix embedded documents modifications
-        $this->dm->clear(get_class($multimediaObject));
+        $this->dm->clear();
 
         return $this->dm->find(MultimediaObject::class, $multimediaObject->getId());
     }

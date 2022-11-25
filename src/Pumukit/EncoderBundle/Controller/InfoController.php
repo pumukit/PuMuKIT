@@ -171,7 +171,7 @@ class InfoController extends AbstractController
      */
     public function multimediaObjectAction(MultimediaObject $multimediaObject): RedirectResponse
     {
-        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_shortener', ['id' => $multimediaObject->getId()]));
+        return $this->redirectToRoute('pumukitnewadmin_mms_shortener', ['id' => $multimediaObject->getId()]);
     }
 
     private function createPager(PaginationService $paginationService, $objects, $page, $limit = 5)

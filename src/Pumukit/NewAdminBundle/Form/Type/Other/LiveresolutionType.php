@@ -17,9 +17,4 @@ class LiveresolutionType extends AbstractType
             ]
         );
     }
-
-    public function getBlockPrefix()
-    {
-        return 'liveresolution';
-    }
 }

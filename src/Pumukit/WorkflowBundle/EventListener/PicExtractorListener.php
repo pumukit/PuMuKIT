@@ -61,7 +61,7 @@ class PicExtractorListener
 
                 return $this->generatePicFromVideo($multimediaObject, $track);
             } catch (\Exception $e) {
-                $this->logger->error(__CLASS__.'['.__FUNCTION__.'] '
+                $this->logger->error(self::class.'['.__FUNCTION__.'] '
                                     .'There was an error in extracting a pic for MultimediaObject "'
                                     .$multimediaObject->getId().'" from Track "'.$track->getId()
                                     .'". Error message: '.$e->getMessage());
@@ -79,7 +79,7 @@ class PicExtractorListener
         if (false !== strpos($outputMessage, 'Error')) {
             throw new \Exception($outputMessage.". MultimediaObject '".$multimediaObject->getId()."' with track '".$track->getId()."'");
         }
-        $this->logger->info(__CLASS__.'['.__FUNCTION__.'] '
+        $this->logger->info(self::class.'['.__FUNCTION__.'] '
                             .'Extracted pic from track '.
                             $track->getId().' into MultimediaObject "'
                             .$multimediaObject->getId().'"');

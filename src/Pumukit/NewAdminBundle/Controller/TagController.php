@@ -7,7 +7,6 @@ namespace Pumukit\NewAdminBundle\Controller;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\NewAdminBundle\Form\Type\TagType;
 use Pumukit\SchemaBundle\Document\Tag;
-use Pumukit\SchemaBundle\Document\TagInterface;
 use Pumukit\SchemaBundle\Services\TagService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -61,7 +60,6 @@ class TagController extends AbstractController implements NewAdminControllerInte
     }
 
     /**
-     * @ParamConverter("tag", class="PumukitSchemaBundle:Tag")
      * @Template("@PumukitNewAdmin/Tag/children.html.twig")
      */
     public function childrenAction(Tag $tag)
@@ -72,9 +70,6 @@ class TagController extends AbstractController implements NewAdminControllerInte
         ];
     }
 
-    /**
-     * @ParamConverter("tag", class="PumukitSchemaBundle:Tag")
-     */
     public function deleteAction(Tag $tag)
     {
         try {
@@ -82,7 +77,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
         } catch (\Exception $e) {
             $msg = sprintf(
                 'Tag with children (%d) and multimedia objects (%d)',
-                count($tag->getChildren()),
+                is_countable($tag->getChildren()) ? count($tag->getChildren()) : 0,
                 $tag->getNumberMultimediaObjects()
             );
 
@@ -93,10 +88,9 @@ class TagController extends AbstractController implements NewAdminControllerInte
     }
 
     /**
-     * @ParamConverter("tag", class="PumukitSchemaBundle:Tag")
      * @Template("@PumukitNewAdmin/Tag/update.html.twig")
      */
-    public function updateAction(Request $request, TagInterface $tag)
+    public function updateAction(Request $request, Tag $tag)
     {
         $locale = $request->getLocale();
         $form = $this->createForm(TagType::class, $tag, ['translator' => $this->translator, 'locale' => $locale]);
@@ -109,17 +103,17 @@ class TagController extends AbstractController implements NewAdminControllerInte
                 return new JsonResponse(['status' => $e->getMessage()], JsonResponse::HTTP_CONFLICT);
             }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_tag_list'));
+            return $this->redirectToRoute('pumukitnewadmin_tag_list');
         }
 
         return ['tag' => $tag, 'form' => $form->createView()];
     }
 
     /**
-     * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"id" = "parent"})
+     * @ParamConverter("tag", options={"id" = "parent"})
      * @Template("@PumukitNewAdmin/Tag/create.html.twig")
      */
-    public function createAction(Request $request, TagInterface $parent)
+    public function createAction(Request $request, Tag $parent)
     {
         $tag = new Tag();
         $tag->setParent($parent);
@@ -137,7 +131,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
                 return new JsonResponse(['status' => $e->getMessage()], JsonResponse::HTTP_CONFLICT);
             }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_tag_list'));
+            return $this->redirectToRoute('pumukitnewadmin_tag_list');
         }
 
         return ['tag' => $tag, 'form' => $form->createView()];
@@ -172,7 +166,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
         $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {
-            $ids = json_decode($ids, true);
+            $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
         }
 
         $tags = [];
@@ -189,7 +183,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
         if (0 !== count($tagsWithChildren)) {
             $message = '';
             foreach ($tagsWithChildren as $tag) {
-                $message .= "Tag '".$tag->getCod()."' with children (".count($tag->getChildren()).'). ';
+                $message .= "Tag '".$tag->getCod()."' with children (".(is_countable($tag->getChildren()) ? count($tag->getChildren()) : 0).'). ';
             }
 
             return new JsonResponse(['status' => $message], JsonResponse::HTTP_CONFLICT);
@@ -201,6 +195,6 @@ class TagController extends AbstractController implements NewAdminControllerInte
 
         $this->addFlash('success', 'delete');
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_tag_list'));
+        return $this->redirectToRoute('pumukitnewadmin_tag_list');
     }
 }

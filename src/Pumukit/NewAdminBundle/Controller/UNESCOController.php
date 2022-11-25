@@ -190,7 +190,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
             foreach ($configuredTag->getChildren() as $child) {
                 if ($child->getDisplay()) {
                     $children = $child->getChildren();
-                    if (count($children) > 0) {
+                    if ((is_countable($children) ? count($children) : 0) > 0) {
                         foreach ($children as $elem) {
                             if ($elem->getDisplay()) {
                                 $menuTags[$child->getTitle()][] = $elem;
@@ -340,7 +340,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("edit/{id}", name="pumukit_new_admin_unesco_edit")
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id":"id"}})
+     * @ParamConverter("multimediaObject", options={"mapping": {"id":"id"}})
      * @Template("@PumukitNewAdmin/UNESCO/edit.html.twig")
      */
     public function editUNESCOAction(Request $request, MultimediaObject $multimediaObject)
@@ -710,7 +710,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $request = $this->requestStack->getMasterRequest();
 
         foreach ($criteria as $key => $field) {
-            if ('roles' === $key && count($field) >= 1) {
+            if ('roles' === $key && (is_countable($field) ? count($field) : 0) >= 1) {
                 foreach ($field as $key2 => $value) {
                     $query->field('people')->elemMatch($query->expr()->field('cod')->equals($key2)->field('people.name')->equals($value));
                 }
@@ -750,13 +750,13 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
                 new UTCDateTime(strtotime($public_date_init) * 1000),
                 new UTCDateTime(strtotime($public_date_finish) * 1000)
             );
-        } elseif (isset($public_date_init) && !empty($public_date_init)) {
+        } elseif (isset($public_date_init)) {
             $date = date($public_date_init.'T23:59:59');
             $query->field('public_date')->range(
                 new UTCDateTime(strtotime($public_date_init) * 1000),
                 new UTCDateTime(strtotime($date) * 1000)
             );
-        } elseif (isset($public_date_finish) && !empty($public_date_finish)) {
+        } elseif (isset($public_date_finish)) {
             $date = date($public_date_finish.'T23:59:59');
             $query->field('public_date')->range(
                 new UTCDateTime(strtotime($public_date_finish) * 1000),

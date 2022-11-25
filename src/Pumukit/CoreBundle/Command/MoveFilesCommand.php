@@ -65,7 +65,7 @@ EOT
         $this->output = $output;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
             $this->checkInputs();
@@ -103,7 +103,7 @@ EOT
     {
         $multimediaObjects = $this->getMultimediaObjects();
 
-        $progress = new ProgressBar($this->output, count($multimediaObjects));
+        $progress = new ProgressBar($this->output, is_countable($multimediaObjects) ? count($multimediaObjects) : 0);
         $progress->setFormat('verbose');
         $progress->start();
 
@@ -114,7 +114,7 @@ EOT
             }
 
             $track = $multimediaObject->getMaster();
-            if (false === strpos($track->getPath(), $this->origin)) {
+            if (false === strpos($track->getPath(), (string) $this->origin)) {
                 $this->logger->error('the root directory does not match on multimedia object '.$multimediaObject->getId());
 
                 continue;

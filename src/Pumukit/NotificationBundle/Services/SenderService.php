@@ -132,14 +132,14 @@ class SenderService
         }
 
         if (!$this->enable) {
-            $this->logger->info(__CLASS__.'['.__FUNCTION__.'] The email sender service is disabled. Not sending emails to "'.implode(', ', $emailsTo).'"');
+            $this->logger->info(self::class.'['.__FUNCTION__.'] The email sender service is disabled. Not sending emails to "'.implode(', ', $emailsTo).'"');
 
             return;
         }
 
         foreach ($emailsTo as $email) {
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { //No need for a separate filtering function when "filtering" is a single function call.
-                $this->logger->warning(__CLASS__.'['.__FUNCTION__.'] The email "'.$email.'" appears as invalid. Message will not be sent.');
+                $this->logger->warning(self::class.'['.__FUNCTION__.'] The email "'.$email.'" appears as invalid. Message will not be sent.');
 
                 continue;
             }

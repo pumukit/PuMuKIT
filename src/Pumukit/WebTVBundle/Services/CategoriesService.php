@@ -8,7 +8,6 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\TagInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class PaginationService.
@@ -26,14 +25,14 @@ class CategoriesService
     private $linkService;
 
     /**
-     * @var TranslatorInterface
+     * @var \Symfony\Contracts\Translation\TranslatorInterface
      */
     private $translator;
     private $parentCod;
     private $listGeneralParam;
     private $excludeEmptyTags;
 
-    public function __construct(DocumentManager $documentManager, LinkService $linkService, TranslatorInterface $translator, $parentCod, $listGeneralParam, $excludeEmptyTags)
+    public function __construct(DocumentManager $documentManager, LinkService $linkService, \Symfony\Contracts\Translation\TranslatorInterface $translator, $parentCod, $listGeneralParam, $excludeEmptyTags)
     {
         $this->documentManager = $documentManager;
         $this->parentCod = $parentCod;

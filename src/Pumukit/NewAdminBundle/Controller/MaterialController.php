@@ -36,7 +36,6 @@ class MaterialController extends AbstractController implements NewAdminControlle
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
      * @Template("@PumukitNewAdmin/Material/create.html.twig")
      */
     public function createAction(MultimediaObject $multimediaObject, Request $request)
@@ -53,7 +52,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      */
     public function updateAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -69,7 +68,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
                 $this->addFlash('error', $e->getMessage());
             }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_material_list', ['id' => $multimediaObject->getId()]));
+            return $this->redirectToRoute('pumukitnewadmin_material_list', ['id' => $multimediaObject->getId()]);
         }
 
         return $this->render(
@@ -83,7 +82,6 @@ class MaterialController extends AbstractController implements NewAdminControlle
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
      * @Template("@PumukitNewAdmin/Material/upload.html.twig")
      */
     public function uploadAction(MultimediaObject $multimediaObject, Request $request)
@@ -117,17 +115,17 @@ class MaterialController extends AbstractController implements NewAdminControlle
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      */
     public function deleteAction(MultimediaObject $multimediaObject, Request $request)
     {
         $multimediaObject = $this->materialService->removeMaterialFromMultimediaObject($multimediaObject, $request->get('id'));
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_material_list', ['id' => $multimediaObject->getId()]));
+        return $this->redirectToRoute('pumukitnewadmin_material_list', ['id' => $multimediaObject->getId()]);
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      */
     public function upAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -135,11 +133,11 @@ class MaterialController extends AbstractController implements NewAdminControlle
 
         $this->addFlash('success', 'up');
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_material_list', ['id' => $multimediaObject->getId()]));
+        return $this->redirectToRoute('pumukitnewadmin_material_list', ['id' => $multimediaObject->getId()]);
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      */
     public function downAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -147,7 +145,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
 
         $this->addFlash('success', 'down');
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_material_list', ['id' => $multimediaObject->getId()]));
+        return $this->redirectToRoute('pumukitnewadmin_material_list', ['id' => $multimediaObject->getId()]);
     }
 
     /**

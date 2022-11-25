@@ -91,7 +91,7 @@ class DefaultController extends AbstractController
 
     /**
      * @Route("/live/event/{id}", name="pumukit_live_event_id")
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
+     * @ParamConverter("multimediaObject", options={"mapping": {"id": "id"}})
      * @Template("@PumukitWebTV/Live/Advance/template.html.twig")
      */
     public function indexEventAction(MultimediaObject $multimediaObject, Request $request)
@@ -114,10 +114,10 @@ class DefaultController extends AbstractController
         $qb = $this->getMultimediaObjects($series->getId());
         $multimediaObjects = $qb->getQuery()->execute()->toArray();
 
-        if (1 === count($multimediaObjects) && $multimediaObjects[0]->getDisplayTrack()) {
+        if (1 === (is_countable($multimediaObjects) ? count($multimediaObjects) : 0) && $multimediaObjects[0]->getDisplayTrack()) {
             return $this->redirectToRoute('pumukit_webtv_multimediaobject_index', ['id' => $multimediaObjects[0]->getId()]);
         }
-        if (count($multimediaObjects) > 1 && !$series->isHide()) {
+        if ((is_countable($multimediaObjects) ? count($multimediaObjects) : 0) > 1 && !$series->isHide()) {
             return $this->redirectToRoute('pumukit_webtv_series_index', ['id' => $series->getId()]);
         }
 
@@ -126,7 +126,7 @@ class DefaultController extends AbstractController
 
     /**
      * @Route("/live/event/iframe/{id}", name="pumukit_live_event_iframe_id")
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
+     * @ParamConverter("multimediaObject", options={"mapping": {"id": "id"}})
      * @Template("@PumukitWebTV/Live/Advance/iframe.html.twig")
      */
     public function iframeEventAction(MultimediaObject $multimediaObject, Request $request, bool $iframe = true)
@@ -273,7 +273,7 @@ class DefaultController extends AbstractController
 
     /**
      * @Route("/event/contact/{id}", name="pumukit_webtv_contact_event")
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
+     * @ParamConverter("multimediaObject", options={"mapping": {"id": "id"}})
      */
     public function contactAction(MultimediaObject $multimediaObject, Request $request): JsonResponse
     {
@@ -360,7 +360,7 @@ class DefaultController extends AbstractController
             'response' => $response,
         ]);
 
-        return json_decode($response, true)->success;
+        return json_decode($response, true, 512, JSON_THROW_ON_ERROR)->success;
     }
 
     /**

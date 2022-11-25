@@ -47,6 +47,58 @@ ENV PHP_FPM_PM="dynamic" \
 	PHP_DEFAULT_LOCALE=es \
 	PHP_DEFAULT_CHARSET=UTF-8
 
+ENV PHP_FPM_PM="dynamic" \
+	PHP_FPM_MAX_CHILDREN="5" \ 
+	PHP_FPM_START_SERVERS="2" \
+	PHP_FPM_MIN_SPARE_SERVERS="1" \
+	PHP_FPM_MAX_SPARE_SERVERS="2" \
+	PHP_FPM_MAX_REQUESTS="1000" \
+	PHP_MAX_EXECUTION_TIME=30 \
+	PHP_MEMORY_LIMIT=512M \
+	PHP_UPLOAD_MAX_FILESIZE=10G \
+	PHP_UPLOAD_TMP_DIR=/tmp \
+	PHP_DEFAULT_LOCALE=es \
+	PHP_DEFAULT_CHARSET=UTF-8
+
+ENV PHP_FPM_PM="dynamic" \
+	PHP_FPM_MAX_CHILDREN="5" \ 
+	PHP_FPM_START_SERVERS="2" \
+	PHP_FPM_MIN_SPARE_SERVERS="1" \
+	PHP_FPM_MAX_SPARE_SERVERS="2" \
+	PHP_FPM_MAX_REQUESTS="1000" \
+	PHP_MAX_EXECUTION_TIME=30 \
+	PHP_MEMORY_LIMIT=512M \
+	PHP_UPLOAD_MAX_FILESIZE=10G \
+	PHP_UPLOAD_TMP_DIR=/tmp \
+	PHP_DEFAULT_LOCALE=es \
+	PHP_DEFAULT_CHARSET=UTF-8
+
+ENV PHP_FPM_PM="dynamic" \
+	PHP_FPM_MAX_CHILDREN="5" \ 
+	PHP_FPM_START_SERVERS="2" \
+	PHP_FPM_MIN_SPARE_SERVERS="1" \
+	PHP_FPM_MAX_SPARE_SERVERS="2" \
+	PHP_FPM_MAX_REQUESTS="1000" \
+	PHP_MAX_EXECUTION_TIME=30 \
+	PHP_MEMORY_LIMIT=512M \
+	PHP_UPLOAD_MAX_FILESIZE=10G \
+	PHP_UPLOAD_TMP_DIR=/tmp \
+	PHP_DEFAULT_LOCALE=es \
+	PHP_DEFAULT_CHARSET=UTF-8
+
+ENV PHP_FPM_PM="dynamic" \
+	PHP_FPM_MAX_CHILDREN="5" \ 
+	PHP_FPM_START_SERVERS="2" \
+	PHP_FPM_MIN_SPARE_SERVERS="1" \
+	PHP_FPM_MAX_SPARE_SERVERS="2" \
+	PHP_FPM_MAX_REQUESTS="1000" \
+	PHP_MAX_EXECUTION_TIME=30 \
+	PHP_MEMORY_LIMIT=512M \
+	PHP_UPLOAD_MAX_FILESIZE=10G \
+	PHP_UPLOAD_TMP_DIR=/tmp \
+	PHP_DEFAULT_LOCALE=es \
+	PHP_DEFAULT_CHARSET=UTF-8
+
 RUN apk  add --no-cache \
     	    --update \
 	     	libgcc \
@@ -140,6 +192,22 @@ RUN set -eux; \
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY php.ini /usr/local/etc/php/php.ini
 COPY php-cli.ini /usr/local/etc/php/php-cli.ini
+
+
+COPY ./www.conf /usr/local/etc/php-fpm.d/www.conf
+
+
+
+COPY ./www.conf /usr/local/etc/php-fpm.d/www.conf
+
+
+
+COPY ./www.conf /usr/local/etc/php-fpm.d/www.conf
+
+
+
+COPY ./www.conf /usr/local/etc/php-fpm.d/www.conf
+
 
 
 COPY ./www.conf /usr/local/etc/php-fpm.d/www.conf

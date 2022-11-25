@@ -36,7 +36,6 @@ class LinkController extends AbstractController implements NewAdminControllerInt
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
      * @Template("@PumukitNewAdmin/Link/create.html.twig")
      */
     public function createAction(MultimediaObject $multimediaObject, Request $request)
@@ -70,7 +69,7 @@ class LinkController extends AbstractController implements NewAdminControllerInt
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      * @Template("@PumukitNewAdmin/Link/update.html.twig")
      */
     public function updateAction(MultimediaObject $multimediaObject, Request $request)
@@ -104,7 +103,7 @@ class LinkController extends AbstractController implements NewAdminControllerInt
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      * @Template("@PumukitNewAdmin/Link/list.html.twig")
      */
     public function deleteAction(MultimediaObject $multimediaObject, Request $request)
@@ -120,7 +119,7 @@ class LinkController extends AbstractController implements NewAdminControllerInt
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      * @Template("@PumukitNewAdmin/Link/list.html.twig")
      */
     public function upAction(MultimediaObject $multimediaObject, Request $request)
@@ -136,7 +135,7 @@ class LinkController extends AbstractController implements NewAdminControllerInt
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      * @Template("@PumukitNewAdmin/Link/list.html.twig")
      */
     public function downAction(MultimediaObject $multimediaObject, Request $request)

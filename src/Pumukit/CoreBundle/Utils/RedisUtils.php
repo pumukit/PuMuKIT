@@ -22,7 +22,7 @@ final class RedisUtils
     {
         $result = (new self())->findValuesFromKey($key);
 
-        return json_decode($result, true);
+        return json_decode($result, true, 512, JSON_THROW_ON_ERROR);
     }
 
     public static function removeKey(string $key): int

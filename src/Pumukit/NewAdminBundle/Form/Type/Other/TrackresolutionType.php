@@ -17,9 +17,4 @@ class TrackresolutionType extends AbstractType
             ]
         );
     }
-
-    public function getBlockPrefix()
-    {
-        return 'trackresolution';
-    }
 }

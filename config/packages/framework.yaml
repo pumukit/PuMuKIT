@@ -21,4 +21,3 @@ sensio_framework_extra:
   view:        { annotations: true }
   cache:       { annotations: true }
   security:    { annotations: true }
-  psr_message: { enabled: false } # Defaults to true if the PSR-7 bridge is installed

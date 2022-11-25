@@ -114,7 +114,7 @@ class RoleRepositoryTest extends PumukitTestCase
 
     private function getRole()
     {
-        $rand = rand();
+        $rand = random_int(0, mt_getrandmax());
 
         $cod = (string) $rand;
         $xml = "<xml contenido del xml {$rand} />";

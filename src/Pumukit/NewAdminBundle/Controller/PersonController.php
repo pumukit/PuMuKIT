@@ -12,7 +12,6 @@ use Pumukit\NewAdminBundle\Form\Type\PersonType;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
-use Pumukit\SchemaBundle\Document\RoleInterface;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\GroupService;
 use Pumukit\SchemaBundle\Services\PersonService;
@@ -97,7 +96,7 @@ class PersonController extends AdminController
                     $this->addFlash('error', $e->getMessage());
                 }
 
-                return $this->redirect($this->generateUrl('pumukitnewadmin_person_list'));
+                return $this->redirectToRoute('pumukitnewadmin_person_list');
             }
             $errors = $this->validator->validate($person);
             $textStatus = '';
@@ -134,7 +133,7 @@ class PersonController extends AdminController
                     $this->addFlash('error', $e->getMessage());
                 }
 
-                return $this->redirect($this->generateUrl('pumukitnewadmin_person_list'));
+                return $this->redirectToRoute('pumukitnewadmin_person_list');
             }
             $errors = $this->validator->validate($person);
             $textStatus = '';
@@ -190,11 +189,11 @@ class PersonController extends AdminController
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("role", options={"id" = "roleId"})
      * @Template("@PumukitNewAdmin/Person/listautocomplete.html.twig")
      */
-    public function listAutocompleteAction(Request $request, MultimediaObject $multimediaObject, RoleInterface $role)
+    public function listAutocompleteAction(Request $request, MultimediaObject $multimediaObject, Role $role)
     {
         if ($role->getCod() === $this->pumukitSchemaPersonalScopeRoleCode) {
             $this->denyAccessUnlessGranted('ROLE_ADD_OWNER');
@@ -227,11 +226,11 @@ class PersonController extends AdminController
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("role", options={"id" = "roleId"})
      * @Template("@PumukitNewAdmin/Person/createrelation.html.twig")
      */
-    public function createRelationAction(Request $request, MultimediaObject $multimediaObject, RoleInterface $role)
+    public function createRelationAction(Request $request, MultimediaObject $multimediaObject, Role $role)
     {
         if ($role->getCod() === $this->pumukitSchemaPersonalScopeRoleCode) {
             $this->denyAccessUnlessGranted('ROLE_MODIFY_OWNER');
@@ -297,10 +296,10 @@ class PersonController extends AdminController
 
     /**
      * @Template("@PumukitNewAdmin/Person/updaterelation.html.twig")
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("role", options={"id" = "roleId"})
      */
-    public function updateRelationAction(Request $request, MultimediaObject $multimediaObject, RoleInterface $role)
+    public function updateRelationAction(Request $request, MultimediaObject $multimediaObject, Role $role)
     {
         if ($role->getCod() === $this->pumukitSchemaPersonalScopeRoleCode) {
             $this->denyAccessUnlessGranted('ROLE_MODIFY_OWNER');
@@ -364,10 +363,10 @@ class PersonController extends AdminController
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("role", options={"id" = "roleId"})
      */
-    public function linkAction(Request $request, MultimediaObject $multimediaObject, RoleInterface $role): Response
+    public function linkAction(Request $request, MultimediaObject $multimediaObject, Role $role): Response
     {
         if ($role->getCod() === $this->pumukitSchemaPersonalScopeRoleCode) {
             $this->denyAccessUnlessGranted('ROLE_ADD_OWNER');
@@ -405,10 +404,10 @@ class PersonController extends AdminController
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("role", options={"id" = "roleId"})
      */
-    public function autoCompleteAction(Request $request, MultimediaObject $multimediaObject, RoleInterface $role): JsonResponse
+    public function autoCompleteAction(Request $request, MultimediaObject $multimediaObject, Role $role): JsonResponse
     {
         $name = $request->get('term');
 
@@ -433,10 +432,10 @@ class PersonController extends AdminController
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("role",  options={"id" = "roleId"})
      */
-    public function upAction(Request $request, MultimediaObject $multimediaObject, RoleInterface $role)
+    public function upAction(Request $request, MultimediaObject $multimediaObject, Role $role)
     {
         if ($role->getCod() === $this->pumukitSchemaPersonalScopeRoleCode) {
             $this->denyAccessUnlessGranted('ROLE_ADD_OWNER');
@@ -470,10 +469,10 @@ class PersonController extends AdminController
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("role", options={"id" = "roleId"})
      */
-    public function downAction(Request $request, MultimediaObject $multimediaObject, RoleInterface $role)
+    public function downAction(Request $request, MultimediaObject $multimediaObject, Role $role)
     {
         if ($role->getCod() === $this->pumukitSchemaPersonalScopeRoleCode) {
             $this->denyAccessUnlessGranted('ROLE_ADD_OWNER');
@@ -507,10 +506,10 @@ class PersonController extends AdminController
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
+     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("role", options={"id" = "roleId"})
      */
-    public function deleteRelationAction(Request $request, MultimediaObject $multimediaObject, RoleInterface $role)
+    public function deleteRelationAction(Request $request, MultimediaObject $multimediaObject, Role $role)
     {
         $person = $this->personService->findPersonById($request->get('id'));
 
@@ -567,7 +566,7 @@ class PersonController extends AdminController
             return new Response($this->translator->trans("Can't delete Person'").' '.$person->getName()."'. ", 409);
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_person_list'));
+        return $this->redirectToRoute('pumukitnewadmin_person_list');
     }
 
     /**
@@ -578,14 +577,14 @@ class PersonController extends AdminController
         $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {
-            $ids = json_decode($ids, true);
+            $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
         }
 
         $mmRepo = $this->documentManager->getRepository(MultimediaObject::class);
 
         foreach ($ids as $id) {
             $person = $this->find($id);
-            if (0 !== count($mmRepo->findByPersonId($person->getId()))) {
+            if (0 !== (is_countable($mmRepo->findByPersonId($person->getId())) ? count($mmRepo->findByPersonId($person->getId())) : 0)) {
                 return new Response($this->translator->trans("Can not delete Person '").$person->getName()."'. ", Response::HTTP_BAD_REQUEST);
             }
         }
@@ -603,7 +602,7 @@ class PersonController extends AdminController
             }
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_person_list'));
+        return $this->redirectToRoute('pumukitnewadmin_person_list');
     }
 
     public function getCriteria($criteria, $locale = 'en')

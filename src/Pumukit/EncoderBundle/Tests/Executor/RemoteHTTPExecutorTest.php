@@ -23,7 +23,7 @@ class RemoteHTTPExecutorTest extends WebTestCase
     {
         static::markTestSkipped('Remote cpu not available in test.');
 
-        $cpu = [
+        /*$cpu = [
             'host' => '127.0.0.1:9000',
             'user' => 'pumukit',
             'password' => 'PUMUKIT',
@@ -31,6 +31,6 @@ class RemoteHTTPExecutorTest extends WebTestCase
 
         $executor = new RemoteHTTPExecutor();
         $out = $executor->execute('sleep 1 && echo a', $cpu);
-        static::assertEquals("a\n", "{$out}");
+        static::assertEquals("a\n", "{$out}");*/
     }
 }

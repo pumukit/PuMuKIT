@@ -1,12 +1,12 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_LIVE_EVENTS')) %}
     {% if multimediaObject.getEmbeddedEvent() is not null %}
         <p>{{ multimediaObject.getEmbeddedEvent().getName(app.request.getLocale()) }}</p>
-        <div class="well">
+
             {% if multimediaObject.getEmbeddedEvent().getLive() is not null and (multimediaObject.getEmbeddedEvent().getUrl() is not defined or multimediaObject.getEmbeddedEvent().getUrl() is empty) %}
                 {% include('@PumukitNewAdmin/Live/Players/'~multimediaObject.getEmbeddedEvent().getLive().getLiveType()~'.html.twig') with {'live': multimediaObject.getEmbeddedEvent().getLive()} %}
             {% elseif multimediaObject.getEmbeddedEvent().getUrl() is not null and multimediaObject.getEmbeddedEvent().getUrl() is not empty %}
                 <p><strong>{% trans %}URL external{% endtrans %}:</strong></p>
-                <input type="text" value="{{ multimediaObject.getEmbeddedEvent().getUrl() }}" disabled/>
+                <input type="text" value="{{ multimediaObject.getEmbeddedEvent().getUrl() }}" disabled />
             {% endif %}
             {% if (multimediaObject.getEmbeddedEvent().getEmbeddedEventSession() | length) > 0 %}
                 <p style="margin-top:10px;"><strong>{% trans %}Starts{% endtrans %}: </strong></p>
@@ -22,7 +22,7 @@
             {% else %}
                 <p style="margin-top:10px">{% trans %}No sessions defined.{% endtrans %}</p>
             {% endif %}
-        </div>
+
     {% else %}
         <p>{% trans %}Select or create any live event.{% endtrans %}</p>
     {% endif %}

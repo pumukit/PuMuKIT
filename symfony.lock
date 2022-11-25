@@ -188,9 +188,6 @@
     "nikic/php-parser": {
         "version": "v4.13.2"
     },
-    "pagerfanta/pagerfanta": {
-        "version": "v2.7.3"
-    },
     "phar-io/manifest": {
         "version": "1.0.3"
     },
@@ -199,9 +196,6 @@
     },
     "php-cs-fixer/diff": {
         "version": "v2.0.2"
-    },
-    "php-parallel-lint/php-var-dump-check": {
-        "version": "v0.5"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
@@ -343,9 +337,6 @@
             "config/packages/sensio_framework_extra.yaml"
         ]
     },
-    "swiftmailer/swiftmailer": {
-        "version": "v6.3.0"
-    },
     "symfony/asset": {
         "version": "v4.4.27"
     },
@@ -476,6 +467,18 @@
     "symfony/intl": {
         "version": "v4.4.31"
     },
+    "symfony/mailer": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "4.3",
+            "ref": "97a61eabb351d7f6cb7702039bcfe07fe9d7e03c"
+        },
+        "files": [
+            "config/packages/mailer.yaml"
+        ]
+    },
     "symfony/maker-bundle": {
         "version": "1.39",
         "recipe": {
@@ -525,9 +528,6 @@
         ]
     },
     "symfony/polyfill-ctype": {
-        "version": "v1.25.0"
-    },
-    "symfony/polyfill-iconv": {
         "version": "v1.25.0"
     },
     "symfony/polyfill-intl-icu": {
@@ -696,8 +696,30 @@
             "config/routes/dev/web_profiler.yaml"
         ]
     },
+    "symfony/webpack-encore-bundle": {
+        "version": "1.14",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.9",
+            "ref": "f466b6384e592cfda11ca2361bbf7c7287b58f55"
+        },
+        "files": [
+            "assets/app.js",
+            "assets/bootstrap.js",
+            "assets/controllers.json",
+            "assets/controllers/hello_controller.js",
+            "assets/styles/app.css",
+            "config/packages/webpack_encore.yaml",
+            "package.json",
+            "webpack.config.js"
+        ]
+    },
     "symfony/yaml": {
         "version": "v4.4.29"
+    },
+    "teltek/pumukit-paella-player-bundle": {
+        "version": "dev-test_paella_7_II"
     },
     "teltek/pumukit-stats-ui-bundle": {
         "version": "3.0.1"

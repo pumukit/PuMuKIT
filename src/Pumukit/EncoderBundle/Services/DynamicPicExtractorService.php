@@ -85,7 +85,7 @@ class DynamicPicExtractorService
         $extension = '.webp';
         $fileName = date('ymdGis').$extension;
         while (file_exists($absCurrentDir.'/'.$fileName)) {
-            $fileName = date('ymdGis').mt_rand().$extension;
+            $fileName = date('ymdGis').random_int(0, mt_getrandmax()).$extension;
         }
 
         return $fileName;

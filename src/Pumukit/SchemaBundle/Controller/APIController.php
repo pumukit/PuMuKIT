@@ -59,7 +59,9 @@ class APIController extends AbstractController implements NewAdminControllerInte
      */
     public function multimediaObjectsAction(Request $request, DocumentManager $documentManager, SerializerService $serializer)
     {
-        $mmRepo = $documentManager->getRepository(MultimediaObject::class);
+        $tempCriteria = [];
+        $mmRepo = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
+        $serializer = $this->get('jms_serializer');
 
         $limit = (int) $request->get('limit');
         $page = (int) $request->get('page');
@@ -99,13 +101,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
         //  WA TTK-25379 - Add dates range
         if ($criteria) {
             if (isset($criteria['owner'])) {
-                $user = $documentManager->getRepository(User::class)
-                    ->createQueryBuilder()
-                    ->field('username')
-                    ->equals($criteria['owner'])
-                    ->getQuery()
-                    ->getSingleResult()
-                ;
+                $user = $documentManager->getRepository(User::class)->createQueryBuilder()->field('username')->equals($criteria['owner'])->getQuery()->getSingleResult();
                 $qb->addAnd($qb->expr()->field('people')->elemMatch(
                     $qb->expr()->field('cod')->equals('owner')->field('people.id')->equals($user->getPerson()->getId())
                 ));
@@ -165,7 +161,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
             if ($criteria) {
                 $qb->addAnd($criteria);
             }
-            if (isset($tempCriteria)) {
+            if (!empty($tempCriteria)) {
                 $criteria = array_merge($criteria, $tempCriteria);
             }
         }
@@ -249,6 +245,51 @@ class APIController extends AbstractController implements NewAdminControllerInte
         ];
 
         $data = $serializer->dataSerialize($counts, $request->getRequestFormat());
+
+        return new Response($data);
+    }
+
+    /**
+     * @Route("/series/user.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     */
+    public function userSeriesAction(Request $request)
+    {
+        $seriesService = $this->get('pumukitschema.series');
+        $personService = $this->get('pumukitschema.person');
+        $userRepo = $this->get('doctrine_mongodb')->getRepository(User::class);
+        $serializer = $this->get('jms_serializer');
+        $sort = $request->get('sort') ?: [];
+        $onlyAdminSeries = $request->get('adminSeries') ?: false;
+        $limit = (int) $request->get('limit');
+
+        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
+
+        try {
+            $criteria = $this->getCriteria($request->get('criteria'), $request->get('criteriajson'));
+        } catch (\Exception $e) {
+            $error = ['error' => sprintf('Invalid criteria (%s)', $e->getMessage())];
+            $data = $serializer->serialize($error, $request->getRequestFormat());
+
+            return new Response($data, 400);
+        }
+
+        if (!$limit || $limit > 100) {
+            $limit = 100;
+        }
+
+        $user = $userRepo->createQueryBuilder()->field('username')->equals($criteria['owner'])->getQuery()->getSingleResult();
+
+        $seriesOfUser = $seriesService->getSeriesOfUser($user, $onlyAdminSeries, $personalScopeRoleCode, $sort, $limit);
+
+        $seriesOfUser = [
+            'total' => is_countable($seriesOfUser) ? count($seriesOfUser) : 0,
+            'limit' => $limit,
+            'sort' => $sort,
+            'criteria' => $criteria,
+            'seriesOfUser' => $seriesOfUser->toArray(),
+        ];
+
+        $data = $serializer->serialize($seriesOfUser, $request->getRequestFormat());
 
         return new Response($data);
     }

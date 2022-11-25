@@ -12,6 +12,6 @@ class PumukitNewAdminBundle extends Bundle
 {
     public function build(ContainerBuilder $container)
     {
-        $container->addCompilerPass(new MenuPass());
+        $container->addCompilerPass(new MenuPass(), \Symfony\Component\DependencyInjection\Compiler\PassConfig::TYPE_BEFORE_OPTIMIZATION, 0);
     }
 }

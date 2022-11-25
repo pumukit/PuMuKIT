@@ -67,7 +67,7 @@ class MultimediaObjectPropertyJobService
             $positionValue = array_search($value, $propertyValue, true);
             if (false !== $positionValue) {
                 unset($propertyValue[$positionValue]);
-                if (0 === count($propertyValue)) {
+                if (0 === (is_countable($propertyValue) ? count($propertyValue) : 0)) {
                     $multimediaObject->removeProperty($key);
                 } else {
                     $multimediaObject->setProperty($key, array_values($propertyValue));

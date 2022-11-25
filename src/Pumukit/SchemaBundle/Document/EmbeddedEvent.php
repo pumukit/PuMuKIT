@@ -21,12 +21,12 @@ class EmbeddedEvent
     /**
      * @MongoDB\Field(type="raw")
      */
-    private $name;
+    private $name = ['en' => ''];
 
     /**
      * @MongoDB\Field(type="raw")
      */
-    private $description;
+    private $description = ['en' => ''];
 
     /**
      * @MongoDB\Field(type="string")
@@ -51,7 +51,7 @@ class EmbeddedEvent
     /**
      * @MongoDB\Field(type="int")
      */
-    private $duration;
+    private $duration = 0;
 
     /**
      * @MongoDB\Field(type="bool")
@@ -107,10 +107,7 @@ class EmbeddedEvent
 
     public function __construct()
     {
-        $this->duration = 0;
         $this->embeddedEventSession = new ArrayCollection();
-        $this->name = ['en' => ''];
-        $this->description = ['en' => ''];
     }
 
     public function __toString(): string

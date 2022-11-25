@@ -55,7 +55,7 @@ class PlaylistType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Pumukit\SchemaBundle\Document\Series',
+                'data_class' => \Pumukit\SchemaBundle\Document\Series::class,
             ]
         );
 

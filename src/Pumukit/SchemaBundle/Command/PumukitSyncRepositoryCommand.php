@@ -40,7 +40,7 @@ EOT
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->mmRepo = $this->dm->getRepository(MultimediaObject::class);
 
@@ -179,8 +179,8 @@ EOT
 
         $tags = $tagRepo->findAll();
         foreach ($tags as $tag) {
-            $countMms = isset($tagsInMM[$tag->getCod()]) ? $tagsInMM[$tag->getCod()] : 0;
-            $numOfChildren = isset($tagParents[$tag->getId()]) ? $tagParents[$tag->getId()] : 0;
+            $countMms = $tagsInMM[$tag->getCod()] ?? 0;
+            $numOfChildren = $tagParents[$tag->getId()] ?? 0;
             $output->writeln(sprintf('%s: %d mmobj and %d children', $tag->getCod(), $countMms, $numOfChildren));
             $tag->setNumberMultimediaObjects($countMms);
             $tag->setNumberOfChildren($numOfChildren);
@@ -197,8 +197,8 @@ EOT
         $roles = $rolesRepo->findAll();
         foreach ($roles as $role) {
             $people = $this->mmRepo->findPeopleWithRoleCode($role->getCod());
-            $output->writeln($role->getName().': '.count($people));
-            $role->setNumberPeopleInMultimediaObject(count($people));
+            $output->writeln($role->getName().': '.(is_countable($people) ? count($people) : 0));
+            $role->setNumberPeopleInMultimediaObject(is_countable($people) ? count($people) : 0);
             $this->dm->persist($role);
         }
         $this->dm->flush();

@@ -32,7 +32,11 @@ class Immutable
     {
         $this->value = $value;
         $this->date = new \DateTime();
-        $this->user = new ObjectId($user->getId());
+        if ($user) {
+            $this->user = new ObjectId($user->getId());
+        } else {
+            $this->user = null;
+        }
     }
 
     public static function create(bool $value, ?UserInterface $user): self

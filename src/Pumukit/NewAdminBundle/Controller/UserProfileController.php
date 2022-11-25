@@ -48,6 +48,10 @@ class UserProfileController extends AbstractController
     public function profileAction(Request $request): array
     {
         $user = $this->getUser();
+        $seriesService = $this->get('pumukitschema.series');
+        $personService = $this->get('pumukitschema.person');
+
+        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
 
         $locale = $request->getLocale();
         $form = $this->createForm(UserUpdateProfileType::class, $user, ['translator' => $this->translator, 'locale' => $locale]);
@@ -57,9 +61,12 @@ class UserProfileController extends AbstractController
             $this->updateUserService->update($user);
         }
 
+        $seriesOfUser = $seriesService->getSeriesOfUser($user, false, $personalScopeRoleCode, ['public_date' => 'desc']);
+
         return [
             'user' => $user,
             'form' => $form->createView(),
+            'seriesOfUser' => $seriesOfUser,
         ];
     }
 

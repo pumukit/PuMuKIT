@@ -68,7 +68,7 @@ EOT
         $this->delete = $this->input->getOption('delete');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if (!file_exists($this->path)) {
             throw new \Exception('Path doesnt exists');

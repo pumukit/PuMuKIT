@@ -717,10 +717,7 @@ class MultimediaObjectController extends SortableAdminController
             $this->session->remove('admin/mms/id');
         }
 
-        return $this->redirect($this->generateUrl(
-            'pumukitnewadmin_mms_list',
-            ['seriesId' => $seriesId]
-        ));
+        return $this->redirectToRoute('pumukitnewadmin_mms_list', ['seriesId' => $seriesId]);
     }
 
     public function batchDeleteAction(Request $request)
@@ -728,7 +725,7 @@ class MultimediaObjectController extends SortableAdminController
         $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {
-            $ids = json_decode($ids, true);
+            $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
         }
 
         foreach ($ids as $id) {
@@ -747,7 +744,7 @@ class MultimediaObjectController extends SortableAdminController
             }
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));
+        return $this->redirectToRoute('pumukitnewadmin_mms_list');
     }
 
     public function generateMagicUrlAction(Request $request)
@@ -766,10 +763,7 @@ class MultimediaObjectController extends SortableAdminController
 
         $this->factoryService->cloneMultimediaObject($resource);
 
-        return $this->redirect($this->generateUrl(
-            'pumukitnewadmin_mms_list',
-            ['seriesId' => $seriesId]
-        ));
+        return $this->redirectToRoute('pumukitnewadmin_mms_list', ['seriesId' => $seriesId]);
     }
 
     public function invertAnnounceAction(Request $request)
@@ -777,7 +771,7 @@ class MultimediaObjectController extends SortableAdminController
         $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {
-            $ids = json_decode($ids, true);
+            $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
         }
 
         $tagNew = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PUDENEW']);
@@ -795,7 +789,7 @@ class MultimediaObjectController extends SortableAdminController
             }
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));
+        return $this->redirectToRoute('pumukitnewadmin_mms_list');
     }
 
     public function listAction(Request $request)
@@ -834,7 +828,7 @@ class MultimediaObjectController extends SortableAdminController
     {
         $ids = $request->get('ids');
         if ('string' === gettype($ids)) {
-            $ids = json_decode($ids, true);
+            $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
         }
         $this->session->set('admin/mms/cut', $ids);
 
@@ -880,7 +874,7 @@ class MultimediaObjectController extends SortableAdminController
 
         $this->sortedMultimediaObjectService->reorder($series);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));
+        return $this->redirectToRoute('pumukitnewadmin_mms_list');
     }
 
     public function reorderAction(Request $request)
@@ -895,7 +889,7 @@ class MultimediaObjectController extends SortableAdminController
 
         $this->sortedMultimediaObjectService->reorder($series);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));
+        return $this->redirectToRoute('pumukitnewadmin_mms_list');
     }
 
     public function syncTagsAction(Request $request)
@@ -970,11 +964,11 @@ class MultimediaObjectController extends SortableAdminController
         if ('POST' === $request->getMethod()) {
             $addGroups = $request->get('addGroups', []);
             if ('string' === gettype($addGroups)) {
-                $addGroups = json_decode($addGroups, true);
+                $addGroups = json_decode($addGroups, true, 512, JSON_THROW_ON_ERROR);
             }
             $deleteGroups = $request->get('deleteGroups', []);
             if ('string' === gettype($deleteGroups)) {
-                $deleteGroups = json_decode($deleteGroups, true);
+                $deleteGroups = json_decode($deleteGroups, true, 512, JSON_THROW_ON_ERROR);
             }
 
             try {
@@ -1037,7 +1031,7 @@ class MultimediaObjectController extends SortableAdminController
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "id"})
+     * @ParamConverter("multimediaObject", options={"id" = "id"})
      * @Template("@PumukitNewAdmin/MultimediaObject/updatebroadcast.html.twig")
      */
     public function updateBroadcastAction(MultimediaObject $multimediaObject, Request $request)
@@ -1055,11 +1049,11 @@ class MultimediaObjectController extends SortableAdminController
                 $password = $request->get('password', null);
                 $addGroups = $request->get('addGroups', []);
                 if ('string' === gettype($addGroups)) {
-                    $addGroups = json_decode($addGroups, true);
+                    $addGroups = json_decode($addGroups, true, 512, JSON_THROW_ON_ERROR);
                 }
                 $deleteGroups = $request->get('deleteGroups', []);
                 if ('string' === gettype($deleteGroups)) {
-                    $deleteGroups = json_decode($deleteGroups, true);
+                    $deleteGroups = json_decode($deleteGroups, true, 512, JSON_THROW_ON_ERROR);
                 }
                 $this->modifyBroadcastGroups($multimediaObject, $type, $password, $addGroups, $deleteGroups);
             } catch (\Exception $e) {
@@ -1098,7 +1092,7 @@ class MultimediaObjectController extends SortableAdminController
                 $owners = $request->get('owners', []);
                 $addGroups = $request->get('addGroups', []);
                 if ('string' === gettype($addGroups)) {
-                    $addGroups = json_decode($addGroups, true);
+                    $addGroups = json_decode($addGroups, true, 512, JSON_THROW_ON_ERROR);
                 }
                 $response = $this->userService->isUserLastRelation($loggedInUser, $mmId, $personId, $owners, $addGroups);
             } catch (\Exception $e) {
@@ -1158,7 +1152,7 @@ class MultimediaObjectController extends SortableAdminController
 
         $this->pumukitSchemaMultimediaObjectDispatcher->dispatchUpdate($multimediaObject);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]));
+        return $this->redirectToRoute('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]);
     }
 
     /**
@@ -1319,7 +1313,7 @@ class MultimediaObjectController extends SortableAdminController
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "id"})
+     * @ParamConverter("multimediaObject", options={"id" = "id"})
      * @Template("@PumukitNewAdmin/MultimediaObject/modalsyncmetadata.html.twig")
      */
     public function modalSyncMedatadaAction(Request $request, MultimediaObject $multimediaObject)
@@ -1374,7 +1368,7 @@ class MultimediaObjectController extends SortableAdminController
     {
         if (null !== $checkedTags) {
             foreach ($resource->getTags() as $tag) {
-                if ((0 == strpos($tag->getCod(), $codStart)) && (false !== strpos($tag->getCod(), $codStart))
+                if ((0 == strpos($tag->getCod(), (string) $codStart)) && (false !== strpos($tag->getCod(), (string) $codStart))
                     && (!in_array($tag->getCod(), $checkedTags))
                     && (!$this->isGranted(Permission::getRoleTagDisableForPubChannel($tag->getCod())))) {
                     $resource->removeTag($tag);
@@ -1388,8 +1382,8 @@ class MultimediaObjectController extends SortableAdminController
             }
         } else {
             foreach ($resource->getTags() as $tag) {
-                if ((0 == strpos($tag->getCod(), $codStart))
-                    && (false !== strpos($tag->getCod(), $codStart))
+                if ((0 == strpos($tag->getCod(), (string) $codStart))
+                    && (false !== strpos($tag->getCod(), (string) $codStart))
                     && (!$this->isGranted(Permission::getRoleTagDisableForPubChannel($tag->getCod())))) {
                     $resource->removeTag($tag);
                 }

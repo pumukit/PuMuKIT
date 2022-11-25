@@ -160,7 +160,7 @@ class TrackUpdateType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Pumukit\SchemaBundle\Document\Track',
+                'data_class' => \Pumukit\SchemaBundle\Document\Track::class,
                 'is_super_admin' => false,
             ]
         );

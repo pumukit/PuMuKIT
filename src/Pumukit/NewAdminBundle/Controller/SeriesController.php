@@ -292,7 +292,7 @@ class SeriesController extends AdminController
         $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {
-            $ids = json_decode($ids, true);
+            $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
         }
 
         $deleteSeriesCount = 0;
@@ -328,7 +328,7 @@ class SeriesController extends AdminController
             return new Response('0 series deleted', Response::HTTP_BAD_REQUEST);
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_series_list', []));
+        return $this->redirectToRoute('pumukitnewadmin_series_list', []);
     }
 
     public function invertAnnounceAction(Request $request)
@@ -336,7 +336,7 @@ class SeriesController extends AdminController
         $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {
-            $ids = json_decode($ids, true);
+            $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
         }
 
         foreach ($ids as $id) {
@@ -355,7 +355,7 @@ class SeriesController extends AdminController
         }
         $this->documentManager->flush();
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_series_list'));
+        return $this->redirectToRoute('pumukitnewadmin_series_list');
     }
 
     /**
@@ -394,13 +394,13 @@ class SeriesController extends AdminController
         if ('POST' === $request->getMethod()) {
             $values = $request->get('values');
             if ('string' === gettype($values)) {
-                $values = json_decode($values, true);
+                $values = json_decode($values, true, 512, JSON_THROW_ON_ERROR);
             }
 
             $this->modifyMultimediaObjectsStatus($values);
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_series_list'));
+        return $this->redirectToRoute('pumukitnewadmin_series_list');
     }
 
     public function getCriteria($criteria)
@@ -533,11 +533,11 @@ class SeriesController extends AdminController
         $q = $req->get('q');
         $this->session->set('admin/series/criteria', ['search' => $q]);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_series_index'));
+        return $this->redirectToRoute('pumukitnewadmin_series_index');
     }
 
     /**
-     * @ParamConverter("series", class="PumukitSchemaBundle:Series", options={"id" = "id"})
+     * @ParamConverter("series", options={"id" = "id"})
      * @Template("@PumukitNewAdmin/Series/updatebroadcast.html.twig")
      */
     public function updateBroadcastAction(Series $series, Request $request)
@@ -568,11 +568,11 @@ class SeriesController extends AdminController
                 $password = $request->get('password', null);
                 $addGroups = $request->get('addGroups', []);
                 if ('string' === gettype($addGroups)) {
-                    $addGroups = json_decode($addGroups, true);
+                    $addGroups = json_decode($addGroups, true, 512, JSON_THROW_ON_ERROR);
                 }
                 $deleteGroups = $request->get('deleteGroups', []);
                 if ('string' === gettype($deleteGroups)) {
-                    $deleteGroups = json_decode($deleteGroups, true);
+                    $deleteGroups = json_decode($deleteGroups, true, 512, JSON_THROW_ON_ERROR);
                 }
 
                 foreach ($multimediaObjects as $multimediaObject) {
@@ -637,7 +637,7 @@ class SeriesController extends AdminController
             $allMmobjs = $mmobjRepo->createStandardQueryBuilder()->field('series')->equals($series->getId())->getQuery()->execute();
             foreach ($allMmobjs as $resource) {
                 if (!$resource->containsPersonWithRole($person, $role)
-                    || count($resource->getPeopleByRole($role, true)) > 1) {
+                    || (is_countable($resource->getPeopleByRole($role, true)) ? count($resource->getPeopleByRole($role, true)) : 0) > 1) {
                     if ($enableFilter) {
                         $this->documentManager->getFilterCollection()->enable('backoffice');
                     }

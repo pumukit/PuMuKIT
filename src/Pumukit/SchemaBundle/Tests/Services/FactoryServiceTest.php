@@ -122,7 +122,7 @@ class FactoryServiceTest extends PumukitTestCase
         $this->dm->flush();
 
         //Workaround to fix reference method initialization.
-        $this->dm->clear(get_class($series_type1));
+        $this->dm->clear();
         $series_type1 = $this->dm->getRepository(SeriesType::class)->findOneBy(['_id' => $series_type1->getId()]);
         $series_type2 = $this->dm->getRepository(SeriesType::class)->findOneBy(['_id' => $series_type2->getId()]);
 
@@ -331,12 +331,12 @@ class FactoryServiceTest extends PumukitTestCase
         static::assertEquals($new->getEmbeddedBroadcast()->getType(), $src->getEmbeddedBroadcast()->getType());
         static::assertEquals($new->getEmbeddedBroadcast()->getName(), $src->getEmbeddedBroadcast()->getName());
         static::assertEquals($new->getEmbeddedBroadcast()->getPassword(), $src->getEmbeddedBroadcast()->getPassword());
-        static::assertCount(count($new->getEmbeddedBroadcast()->getGroups()), $src->getEmbeddedBroadcast()->getGroups());
+        static::assertCount(is_countable($new->getEmbeddedBroadcast()->getGroups()) ? count($new->getEmbeddedBroadcast()->getGroups()) : 0, $src->getEmbeddedBroadcast()->getGroups());
         foreach ($src->getEmbeddedBroadcast()->getGroups() as $group) {
             static::assertTrue($new->getEmbeddedBroadcast()->containsGroup($group));
         }
-        static::assertCount(count($new->getRoles()), $src->getRoles());
-        static::assertCount(count($new->getTags()), $src->getTags());
+        static::assertCount(is_countable($new->getRoles()) ? count($new->getRoles()) : 0, $src->getRoles());
+        static::assertCount(is_countable($new->getTags()) ? count($new->getTags()) : 0, $src->getTags());
     }
 
     public function testGetDefaultMultimediaObjectI18nTitle(): void

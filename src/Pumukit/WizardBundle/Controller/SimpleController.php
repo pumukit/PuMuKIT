@@ -152,9 +152,7 @@ class SimpleController extends AbstractController
 
         $this->pumukitSchemaSortedMultimediaObjectService->reorder($series);
 
-        return $this->redirect(
-            $this->generateUrl('pumukitnewadmin_mms_shortener', ['id' => $multimediaObject->getId()])
-        );
+        return $this->redirectToRoute('pumukitnewadmin_mms_shortener', ['id' => $multimediaObject->getId()]);
     }
 
     /**
@@ -267,7 +265,7 @@ class SimpleController extends AbstractController
                 $series = $this->createSeries($externalData);
             }
 
-            $showMmTitle = $this->getParameter('pumukit_wizard.show_simple_mm_title');
+            $showMmTitle = $this->pumukitWizardShowSimpleMmTitle;
             if ($showMmTitle) {
                 $i18nTitle = $request->request->get('multimediaobject_i18n_title', []);
                 if (!array_filter($i18nTitle)) {

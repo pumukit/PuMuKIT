@@ -350,7 +350,22 @@ class UserService
         return $userInAddGroups;
     }
 
-    private function addOwnerUserToObject($object, User $user, bool $executeFlush = true)
+    public function updatePermissionProfile(PermissionProfile $permissionProfile, array $permissions, $checkOrigin = true)
+    {
+        $queryBuilder = $this->dm->createQueryBuilder(User::class);
+        $queryBuilder->updateMany();
+        $queryBuilder->field('permissionProfile')->equals(new ObjectId($permissionProfile->getId()));
+        if ($checkOrigin) {
+            $queryBuilder->field('origin')->equals('local');
+        }
+
+        // Permissions have SCOPE added on array.
+        $queryBuilder->field('roles')->set($permissions);
+        $queryBuilder->field('permissionProfile')->set($permissionProfile->getId());
+        $queryBuilder->getQuery()->execute();
+    }
+
+    private function addOwnerUserToObject($object, User $user, $executeFlush = true)
     {
         if (null !== $object) {
             $owners = $object->getProperty('owners');

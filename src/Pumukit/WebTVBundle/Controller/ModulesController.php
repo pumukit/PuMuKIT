@@ -258,7 +258,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
      */
     public function languageAction()
     {
-        if (count($this->locales) <= 1) {
+        if ((is_countable($this->locales) ? count($this->locales) : 0) <= 1) {
             return new Response('');
         }
 

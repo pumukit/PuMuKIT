@@ -32,7 +32,8 @@ class FuncionalTest extends PumukitTestCase
     public function setUp(): void
     {
         static::markTestSkipped('Functional tests not available. (A little better, but still broken)');
-        $options = ['environment' => 'test'];
+
+        /*$options = ['environment' => 'test'];
         static::bootKernel($options);
         parent::setUp();
         $this->repo = $this->dm->getRepository(Job::class);
@@ -61,7 +62,7 @@ class FuncionalTest extends PumukitTestCase
             $this->tokenStorage,
             $this->propService,
             'test'
-        );
+        );*/
     }
 
     public function tearDown(): void
