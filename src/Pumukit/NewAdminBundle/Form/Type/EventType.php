@@ -94,7 +94,7 @@ class EventType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Pumukit\SchemaBundle\Document\Event',
+                'data_class' => \Pumukit\SchemaBundle\Document\Event::class,
             ]
         );
 

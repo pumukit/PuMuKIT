@@ -26,7 +26,7 @@ class DoctrineODMMongoDBAdapter implements AdapterInterface
     {
         if ($this->query) {
             //Take adventage of Mongo re-using the complete query from getSlice.
-            return count($this->query);
+            return is_countable($this->query) ? count($this->query) : 0;
         }
 
         return $this->queryBuilder->count()->getQuery()->execute();

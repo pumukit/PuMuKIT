@@ -44,7 +44,7 @@ class LegacyEventPicController extends AbstractController implements NewAdminCon
             $this->legacyEventPicService->addPicUrl($event, $url);
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_event_list'));
+        return $this->redirectToRoute('pumukitnewadmin_event_list');
     }
 
     /**
@@ -78,6 +78,6 @@ class LegacyEventPicController extends AbstractController implements NewAdminCon
     {
         $this->legacyEventPicService->removePicFromEvent($event);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_event_list'));
+        return $this->redirectToRoute('pumukitnewadmin_event_list');
     }
 }

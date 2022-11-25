@@ -35,7 +35,7 @@ class PermissionProfileType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Pumukit\SchemaBundle\Document\PermissionProfile',
+                'data_class' => \Pumukit\SchemaBundle\Document\PermissionProfile::class,
             ]
         );
 

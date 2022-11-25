@@ -17,9 +17,4 @@ class Html5dateType extends AbstractType
             ]
         );
     }
-
-    public function getBlockPrefix()
-    {
-        return 'html5date';
-    }
 }

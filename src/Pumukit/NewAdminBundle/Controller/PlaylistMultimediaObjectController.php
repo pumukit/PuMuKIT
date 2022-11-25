@@ -296,7 +296,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         }
 
         if ('string' === gettype($mmobjIds)) {
-            $mmobjIds = json_decode($mmobjIds, true);
+            $mmobjIds = json_decode($mmobjIds, true, 512, JSON_THROW_ON_ERROR);
         }
 
         $mmobjRepo = $this->documentManager->getRepository(MultimediaObject::class);
@@ -310,7 +310,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         }
         $this->documentManager->flush();
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_playlistmms_list', ['id' => $playlist->getId()]));
+        return $this->redirectToRoute('pumukitnewadmin_playlistmms_list', ['id' => $playlist->getId()]);
     }
 
     public function deleteBatchAction(Series $playlist, Request $request)
@@ -321,7 +321,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         }
 
         if ('string' === gettype($mmobjIds)) {
-            $mmobjIds = json_decode($mmobjIds, true);
+            $mmobjIds = json_decode($mmobjIds, true, 512, JSON_THROW_ON_ERROR);
         }
 
         $mms = $playlist->getPlaylist()->getMultimediaObjects();
@@ -333,7 +333,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         $this->documentManager->persist($playlist);
         $this->documentManager->flush();
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_playlistmms_list', ['id' => $playlist->getId()]));
+        return $this->redirectToRoute('pumukitnewadmin_playlistmms_list', ['id' => $playlist->getId()]);
     }
 
     /**
@@ -371,7 +371,7 @@ class PlaylistMultimediaObjectController extends AbstractController
     public function downAction(Series $playlist, Request $request)
     {
         $initPos = $request->query->get('mm_pos');
-        $numMmobjs = count($playlist->getPlaylist()->getMultimediaObjects());
+        $numMmobjs = is_countable($playlist->getPlaylist()->getMultimediaObjects()) ? count($playlist->getPlaylist()->getMultimediaObjects()) : 0;
         $lastPos = $numMmobjs - 1;
         $endPos = ($initPos >= $lastPos) ? $lastPos : $initPos + 1;
 
@@ -423,8 +423,8 @@ class PlaylistMultimediaObjectController extends AbstractController
 
         $count = 0;
         if ($request->get('ids')) {
-            $ids = json_decode($request->get('ids'));
-            $count = count($ids);
+            $ids = json_decode($request->get('ids'), null, 512, JSON_THROW_ON_ERROR);
+            $count = is_countable($ids) ? count($ids) : 0;
         }
 
         return [
@@ -480,7 +480,7 @@ class PlaylistMultimediaObjectController extends AbstractController
 
     protected function moveAction(Series $playlist, $initPos, $endPos)
     {
-        $actionResponse = $this->redirect($this->generateUrl('pumukitnewadmin_playlistmms_index', ['id' => $playlist->getId()]));
+        $actionResponse = $this->redirectToRoute('pumukitnewadmin_playlistmms_index', ['id' => $playlist->getId()]);
 
         $playlist->getPlaylist()->moveMultimediaObject($initPos, $endPos);
         $this->documentManager->persist($playlist);
@@ -530,7 +530,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         if ($request->request->has($idsKey)) {
             $ids = $request->request->get($idsKey);
             if ('string' === gettype($ids)) {
-                return json_decode($ids, true);
+                return json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
             }
 
             return $ids;

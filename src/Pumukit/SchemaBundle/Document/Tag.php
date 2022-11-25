@@ -90,7 +90,7 @@ class Tag implements TagInterface
     /**
      * @MongoDB\ReferenceMany(targetDocument=Tag::class, mappedBy="parent", sort={"cod": 1})
      */
-    private $children;
+    private $children = [];
 
     /**
      * @MongoDB\Field(type="int", strategy="increment" )
@@ -117,7 +117,6 @@ class Tag implements TagInterface
 
     public function __construct()
     {
-        $this->children = [];
     }
 
     public function __toString(): string

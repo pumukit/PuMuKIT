@@ -3,12 +3,5 @@ includes:
     - vendor/phpstan/phpstan-symfony/extension.neon
 
 parameters:
-    reportUnmatchedIgnoredErrors: false
-    inferPrivatePropertyTypeFromConstructor: true
     doctrine:
         objectManagerLoader: doc/object-manager.php
-    ignoreErrors:
-    - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\).#'
-    - '#Method Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface::dispatch\(\) invoked with 2 parameters, 1 required.#'
-    excludes_analyse:
-        - src/Pumukit/TemplateBundle/EventListener/RouteFoundHttpListener.php

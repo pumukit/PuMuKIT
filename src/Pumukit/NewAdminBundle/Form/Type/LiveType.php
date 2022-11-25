@@ -107,7 +107,7 @@ class LiveType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Pumukit\SchemaBundle\Document\Live',
+                'data_class' => \Pumukit\SchemaBundle\Document\Live::class,
             ]
         );
 

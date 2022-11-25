@@ -59,6 +59,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
      */
     public function multimediaObjectsAction(Request $request, DocumentManager $documentManager, SerializerService $serializer)
     {
+        $tempCriteria = [];
         $mmRepo = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
         $serializer = $this->get('jms_serializer');
 
@@ -160,7 +161,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
             if ($criteria) {
                 $qb->addAnd($criteria);
             }
-            if (isset($tempCriteria)) {
+            if (!empty($tempCriteria)) {
                 $criteria = array_merge($criteria, $tempCriteria);
             }
         }
@@ -281,7 +282,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
         $seriesOfUser = $seriesService->getSeriesOfUser($user, $onlyAdminSeries, $personalScopeRoleCode, $sort, $limit);
 
         $seriesOfUser = [
-            'total' => count($seriesOfUser),
+            'total' => is_countable($seriesOfUser) ? count($seriesOfUser) : 0,
             'limit' => $limit,
             'sort' => $sort,
             'criteria' => $criteria,

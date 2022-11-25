@@ -16,7 +16,6 @@ use Pumukit\SchemaBundle\Utils\Search\SearchUtils;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class TagCatalogueService.
@@ -29,7 +28,7 @@ class TagCatalogueService
     private $dm;
 
     /**
-     * @var TranslatorInterface
+     * @var \Symfony\Contracts\Translation\TranslatorInterface
      */
     private $translator;
 
@@ -51,7 +50,7 @@ class TagCatalogueService
      * @param string $configuredTag
      * @param array  $locales
      */
-    public function __construct(DocumentManager $documentManager, TranslatorInterface $translator, RouterInterface $router, $configuredTag, $locales)
+    public function __construct(DocumentManager $documentManager, \Symfony\Contracts\Translation\TranslatorInterface $translator, RouterInterface $router, $configuredTag, $locales)
     {
         $this->dm = $documentManager;
         $this->translator = $translator;
@@ -641,11 +640,11 @@ class TagCatalogueService
      */
     private function criteriaRenderField(MultimediaObject $object, SessionInterface $session)
     {
-        if (!$session->has('UNESCO/criteria') || 0 === count($session->get('UNESCO/criteria'))) {
+        if (!$session->has('UNESCO/criteria') || 0 === (is_countable($session->get('UNESCO/criteria')) ? count($session->get('UNESCO/criteria')) : 0)) {
             return $this->translator->trans('Without criteria');
         }
 
-        if (count($session->get('UNESCO/criteria')) > 1) {
+        if ((is_countable($session->get('UNESCO/criteria')) ? count($session->get('UNESCO/criteria')) : 0) > 1) {
             return $this->translator->trans('Multiple criteria');
         }
 

@@ -14,7 +14,6 @@ use Pumukit\SchemaBundle\Services\CloneService;
 use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Services\UserService;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 
 class MultimediaObjectArchiveService
 {
@@ -34,7 +33,7 @@ class MultimediaObjectArchiveService
         PersonService $personService,
         TokenStorageInterface $tokenStorage,
         UserService $userService,
-        TranslatorInterface $translator,
+        \Symfony\Contracts\Translation\TranslatorInterface $translator,
         ?string $multimediaObjectArchivedUserAssign
     ) {
         $this->documentManager = $documentManager;

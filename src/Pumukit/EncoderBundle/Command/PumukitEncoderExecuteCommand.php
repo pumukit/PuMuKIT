@@ -41,7 +41,7 @@ EOT
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if (null === ($id = $input->getArgument('id'))) {
             throw new \RuntimeException("Argument 'ID' is required in order to execute this command correctly.");

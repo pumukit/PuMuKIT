@@ -22,26 +22,26 @@ if (is_array($env = @include dirname(__DIR__).'/.env.local.php') && ($_SERVER['A
     } else {
         // fallback code in case your Dotenv component is not 4.2 or higher (when loadEnv() was added)
 
-        if (file_exists($path) || !file_exists($p = "$path.dist")) {
+        if (file_exists($path) || !file_exists($p = "{$path}.dist")) {
             $dotenv->load($path);
         } else {
             $dotenv->load($p);
         }
 
         if (null === $env = $_SERVER['APP_ENV'] ?? $_ENV['APP_ENV'] ?? null) {
-            $dotenv->populate(array('APP_ENV' => $env = 'dev'));
+            $dotenv->populate(['APP_ENV' => $env = 'dev']);
         }
 
-        if ('test' !== $env && file_exists($p = "$path.local")) {
+        if ('test' !== $env && file_exists($p = "{$path}.local")) {
             $dotenv->load($p);
             $env = $_SERVER['APP_ENV'] ?? $_ENV['APP_ENV'] ?? $env;
         }
 
-        if (file_exists($p = "$path.$env")) {
+        if (file_exists($p = "{$path}.{$env}")) {
             $dotenv->load($p);
         }
 
-        if (file_exists($p = "$path.$env.local")) {
+        if (file_exists($p = "{$path}.{$env}.local")) {
             $dotenv->load($p);
         }
     }

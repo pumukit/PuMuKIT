@@ -6,11 +6,10 @@ namespace Pumukit\NewAdminBundle\Menu;
 
 class ItemsList
 {
-    private $items;
+    private $items = [];
 
     public function __construct()
     {
-        $this->items = [];
     }
 
     public function add(ItemInterface $item): void

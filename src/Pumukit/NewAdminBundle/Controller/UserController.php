@@ -91,7 +91,7 @@ class UserController extends AdminController
                 throw $e;
             }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_user_list'));
+            return $this->redirectToRoute('pumukitnewadmin_user_list');
         }
 
         return $this->render('@PumukitNewAdmin/User/create.html.twig', [
@@ -129,7 +129,7 @@ class UserController extends AdminController
                 throw $e;
             }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_user_list'));
+            return $this->redirectToRoute('pumukitnewadmin_user_list');
         }
 
         return $this->render(
@@ -160,7 +160,7 @@ class UserController extends AdminController
         $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {
-            $ids = json_decode($ids, true);
+            $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
         }
 
         foreach ($ids as $id) {
@@ -195,17 +195,17 @@ class UserController extends AdminController
         if ('POST' === $request->getMethod()) {
             $addGroups = $request->get('addGroups', []);
             if ('string' === gettype($addGroups)) {
-                $addGroups = json_decode($addGroups, true);
+                $addGroups = json_decode($addGroups, true, 512, JSON_THROW_ON_ERROR);
             }
             $deleteGroups = $request->get('deleteGroups', []);
             if ('string' === gettype($deleteGroups)) {
-                $deleteGroups = json_decode($deleteGroups, true);
+                $deleteGroups = json_decode($deleteGroups, true, 512, JSON_THROW_ON_ERROR);
             }
 
             $this->modifyUserGroups($user, $addGroups, $deleteGroups);
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_user_list'));
+        return $this->redirectToRoute('pumukitnewadmin_user_list');
     }
 
     public function getGroupsAction(Request $request)

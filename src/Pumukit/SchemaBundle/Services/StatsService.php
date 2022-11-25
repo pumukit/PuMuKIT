@@ -129,6 +129,7 @@ class StatsService
 
     private function getAggrRecordedGroupedBy(Collection $dmColl, $mongoGroup, $dateName = 'record_date', $fromDate = null, $toDate = null, $limit = 100, $page = 0, $criteria = [], $sort = -1, $groupBy = 'month')
     {
+        $pipeline = [];
         $matchExtra = [];
         if (!empty($criteria)) {
             $mmobjIds = $this->getIdsWithCriteria($criteria, $this->repoMmobj);

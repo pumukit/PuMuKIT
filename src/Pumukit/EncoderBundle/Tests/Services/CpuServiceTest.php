@@ -84,7 +84,7 @@ class CpuServiceTest extends PumukitTestCase
         $cpus = $this->getDemoCpus();
 
         static::assertCount(4, $this->cpuService->getCpus());
-        static::assertCount(count($cpus), $this->cpuService->getCpus());
+        static::assertCount(is_countable($cpus) ? count($cpus) : 0, $this->cpuService->getCpus());
     }
 
     public function testGetCpuByName()

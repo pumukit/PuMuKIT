@@ -51,7 +51,7 @@ class BatchPicExtractorListener
         if (false !== strpos($outputMessage, 'Error')) {
             throw new \Exception($outputMessage.". MultimediaObject '".$multimediaObject->getId()."' with track '".$track->getId()."'");
         }
-        $this->logger->info(__CLASS__.'['.__FUNCTION__.'] '
+        $this->logger->info(self::class.'['.__FUNCTION__.'] '
                           .'Extracted pic from track '.
                           $track->getId().' into MultimediaObject "'
                           .$multimediaObject->getId().'"');

@@ -120,7 +120,7 @@ EOT
         $this->no_replace = $this->input->getOption('no_replace');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if (!extension_loaded('gd')) {
             throw new \Exception('GD extension not installed. See http://php.net/manual/en/image.installation.php for installation options.');

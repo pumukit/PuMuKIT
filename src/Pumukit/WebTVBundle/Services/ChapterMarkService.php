@@ -36,10 +36,10 @@ class ChapterMarkService
 
         $editorChapters = [];
 
-        if ($marks) {
-            $marks = json_decode($marks->getValue(), true);
-            if ($trimming) {
-                $trimming = json_decode($trimming->getValue(), true);
+        if ($marks instanceof Annotation) {
+            $marks = json_decode($marks->getValue(), true, 512, JSON_THROW_ON_ERROR);
+            if ($trimming instanceof Annotation) {
+                $trimming = json_decode($trimming->getValue(), true, 512, JSON_THROW_ON_ERROR);
                 if (isset($trimming['trimming'])) {
                     $trimming = $trimming['trimming'];
                 }

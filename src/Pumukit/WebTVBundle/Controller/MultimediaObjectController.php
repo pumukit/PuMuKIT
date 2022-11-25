@@ -135,7 +135,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
     {
         if ($this->multimediaObjectService->isPublished($multimediaObject, 'PUCHWEBTV')) {
             if ($this->multimediaObjectService->hasPlayableResource($multimediaObject) && $multimediaObject->isPublicEmbeddedBroadcast()) {
-                return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_index', ['id' => $multimediaObject->getId()]));
+                return $this->redirectToRoute('pumukit_webtv_multimediaobject_index', ['id' => $multimediaObject->getId()]);
             }
         } elseif ((MultimediaObject::STATUS_PUBLISHED != $multimediaObject->getStatus() && MultimediaObject::STATUS_HIDDEN != $multimediaObject->getStatus()) || !$multimediaObject->containsTagWithCod('PUCHWEBTV')) {
             return $this->render('@PumukitWebTV/Index/404notfound.html.twig');

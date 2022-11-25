@@ -40,7 +40,7 @@ class User implements UserInterface
     /**
      * @MongoDB\Field(type="bool")
      */
-    protected $enabled;
+    protected $enabled = false;
 
     /**
      * @MongoDB\Field(type="string")
@@ -99,7 +99,7 @@ class User implements UserInterface
     /**
      * @MongoDB\Field(type="raw")
      */
-    protected $roles;
+    protected $roles = [];
 
     /**
      * @MongoDB\ReferenceMany(targetDocument=Group::class, storeAs="id", sort={"key":1}, strategy="setArray")
@@ -119,8 +119,6 @@ class User implements UserInterface
     public function __construct()
     {
         $this->groups = new ArrayCollection();
-        $this->enabled = false;
-        $this->roles = [];
         $this->lastLogin = new \DateTime();
         $this->lastLoginAttempt = new \DateTime();
     }

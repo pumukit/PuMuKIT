@@ -140,7 +140,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
 
         $multimediaObject = $this->multimediaObjectPicService->removePicFromMultimediaObject($multimediaObject, $picId);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_mmspic_list', ['id' => $multimediaObject->getId(), 'is_event_poster' => $isEventPoster]));
+        return $this->redirectToRoute('pumukitnewadmin_mmspic_list', ['id' => $multimediaObject->getId(), 'is_event_poster' => $isEventPoster]);
     }
 
     /**
@@ -162,7 +162,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
         $this->documentManager->persist($multimediaObject);
         $this->documentManager->flush();
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_mmspic_list', ['id' => $multimediaObject->getId()]));
+        return $this->redirectToRoute('pumukitnewadmin_mmspic_list', ['id' => $multimediaObject->getId()]);
     }
 
     /**
@@ -184,7 +184,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
         $this->documentManager->persist($multimediaObject);
         $this->documentManager->flush();
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_mmspic_list', ['id' => $multimediaObject->getId()]));
+        return $this->redirectToRoute('pumukitnewadmin_mmspic_list', ['id' => $multimediaObject->getId()]);
     }
 
     /**
@@ -204,7 +204,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
 
         $urlPics = $this->multimediaObjectPicService->getRecommendedPics($series);
 
-        $total = (int) (ceil(count($urlPics) / $limit));
+        $total = (int) (ceil((is_countable($urlPics) ? count($urlPics) : 0) / $limit));
 
         $pics = $this->getPaginatedPics($urlPics, $limit, $page);
 

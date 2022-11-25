@@ -18,9 +18,4 @@ class EventscheduleType extends AbstractType
             ]
         );
     }
-
-    public function getBlockPrefix()
-    {
-        return 'eventschedule';
-    }
 }

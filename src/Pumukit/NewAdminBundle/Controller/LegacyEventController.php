@@ -141,7 +141,7 @@ class LegacyEventController extends AdminController
                     return new JsonResponse(['status' => $e->getMessage()], 409);
                 }
 
-                return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
+                return $this->redirectToRoute('pumukitnewadmin_'.$resourceName.'_list');
             }
         }
 
@@ -257,7 +257,7 @@ class LegacyEventController extends AdminController
         $m = $this->session->get('admin/event/month', date('m'));
         $y = $this->session->get('admin/event/year', date('Y'));
 
-        $calendar = static::generateArray($m, $y);
+        $calendar = self::generateArray($m, $y);
 
         return [$m, $y, $calendar];
     }

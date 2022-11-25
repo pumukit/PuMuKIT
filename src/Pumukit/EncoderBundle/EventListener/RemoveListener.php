@@ -42,7 +42,7 @@ class RemoveListener
     public function checkIfMultimediaObjectHaveJustMasterTrack(MultimediaObject $multimediaObject): bool
     {
         $tracks = $multimediaObject->getTracks();
-        if (1 === count($tracks)) {
+        if (1 === (is_countable($tracks) ? count($tracks) : 0)) {
             $masterTrack = $multimediaObject->getMaster();
             if ($masterTrack) {
                 return true;
