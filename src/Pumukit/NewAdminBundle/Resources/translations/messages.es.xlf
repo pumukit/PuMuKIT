@@ -1976,6 +1976,10 @@
         <source>Are you sure you want to delete this thumbnail?</source>
         <target state="translated">¿Está seguro de querer eliminar esta miniatura?</target>
       </trans-unit>
+      <trans-unit id="YUG7gTi" resname="If it corresponds to the one associated with the banner, the entire header will also be removed.">
+        <source>If it corresponds to the one associated with the banner, the entire header will also be removed.</source>
+        <target state="translated">Si se corresponde con la asociada al banner, se eliminará también toda la cabecera.</target>
+      </trans-unit>
       <trans-unit id="Eru2JsX" resname="Thumbnail removed.">
         <source>Thumbnail removed.</source>
         <target state="translated">Miniatura eliminada.</target>

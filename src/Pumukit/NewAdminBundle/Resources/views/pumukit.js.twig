@@ -270,7 +270,7 @@ window.delete_eventpic = function(eventId) {
 }
 
 window.delete_seriespic = function(id, seriesId) {
-    if (window.confirm('{% trans %}Are you sure you want to delete this thumbnail?{% endtrans %}')) {
+    if (window.confirm('{% trans %}Are you sure you want to delete this thumbnail?{% endtrans %} {% trans %}If it corresponds to the one associated with the banner, the entire header will also be removed.{% endtrans %}')) {
         var url = '{{ path('pumukitnewadmin_seriespic_delete', {'id': '___id___'})|raw }}';
         $('#edit_series').load(url.replace('___id___', id), {'_method': 'DELETE'}, function(){success('{% trans %}Thumbnail removed.{% endtrans %}');});
     }
