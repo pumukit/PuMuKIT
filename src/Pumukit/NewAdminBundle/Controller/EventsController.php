@@ -467,9 +467,10 @@ class EventsController extends Controller implements NewAdminControllerInterface
                 $iframeURL = isset($data['iframeURL'], $data['externalURL']);
                 $event->setIsIframeUrl($iframeURL);
 
-                if (isset($data['live'])) {
+                $liveData = $request->request->get('live_channel_input_id');
+                if (isset($liveData)) {
                     $live = $dm->getRepository(Live::class)->findOneBy(
-                        ['_id' => new \MongoId($data['live'])]
+                        ['_id' => new \MongoId($liveData)]
                     );
                     $event->setLive($live);
                 }
@@ -891,6 +892,27 @@ class EventsController extends Controller implements NewAdminControllerInterface
         $this->get('pumukitschema.series_dispatcher')->dispatchUpdate($series);
 
         return new JsonResponse(['success']);
+    }
+
+    /**
+     * @Route("channel/suggest/", name="pumukit_new_admin_live_event_channel_suggest")
+     */
+    public function suggestChannelAction(Request $request): JsonResponse
+    {
+        $result = [];
+        $filterChannelName = $request->query->get('term');
+
+        $documentManager = $this->get('doctrine_mongodb.odm.document_manager');
+        $locale = $request->getLocale();
+        $lives = $documentManager->getRepository(Live::class)->findBy(["name.{$locale}" => new \MongoRegex('/^'.$filterChannelName.'/')]);
+        foreach ($lives as $live) {
+            $result[] = [
+                'id' => $live->getId(),
+                'name' => $live->getName(),
+            ];
+        }
+
+        return new JsonResponse($result);
     }
 
     /**
