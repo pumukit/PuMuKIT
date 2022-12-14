@@ -36,7 +36,6 @@ class CreateMMOCommand extends ContainerAwareCommand
             ->setDescription('This command create a multimedia object from a file')
             ->addArgument('file', InputArgument::REQUIRED, 'multimedia file path')
             ->addArgument('inotify_event', InputArgument::OPTIONAL, 'inotify event, only works with IN_CLOSE_WRITE', 'IN_CLOSE_WRITE')
-            ->addArgument('inotify_event', InputArgument::OPTIONAL, 'inotify event, only works with IN_CLOSE_WRITE', 'IN_CLOSE_WRITE')
             ->addOption('status', null, InputOption::VALUE_OPTIONAL, 'Multimedia object initial status (\'published\', \'blocked\' or \'hidden\')')
             ->addOption('user', null, InputOption::VALUE_OPTIONAL, 'User was upload video')
             ->setHelp(
