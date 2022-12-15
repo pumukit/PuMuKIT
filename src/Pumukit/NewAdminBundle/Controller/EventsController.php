@@ -904,7 +904,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
 
         $documentManager = $this->get('doctrine_mongodb.odm.document_manager');
         $locale = $request->getLocale();
-        $lives = $documentManager->getRepository(Live::class)->findBy(["name.{$locale}" => new \MongoRegex('/^'.$filterChannelName.'/')]);
+        $lives = $documentManager->getRepository(Live::class)->findBy(["name.{$locale}" => new \MongoRegex('/'.$filterChannelName.'/i')]);
         foreach ($lives as $live) {
             $result[] = [
                 'id' => $live->getId(),
