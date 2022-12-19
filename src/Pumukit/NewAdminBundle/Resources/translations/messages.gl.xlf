@@ -4066,6 +4066,14 @@
         <source>ARCHIVED</source>
         <target>ARQUIVADO</target>
       </trans-unit>
+      <trans-unit id="NtsMHOJ" resname="Search Channels">
+        <source>Search Channels</source>
+        <target>Buscar canles</target>
+      </trans-unit>
+      <trans-unit id="uIEWO1i" resname="Selected Channel">
+        <source>Selected Channel</source>
+        <target>Canle seleccionado</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
