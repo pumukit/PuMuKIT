@@ -57,7 +57,7 @@
                 <div class="col-sm-6">
                     <label for="live_channel_input_name">{% trans %}Selected Channel{% endtrans %}</label>
                     <input id="live_channel_input_id" type="hidden" name="live_channel_input_id" class="form-control" value="{{ multimediaObject.getEmbeddedEvent().getLive().getId()|default('') }}" />
-                    <input id="live_channel_input_name" type="text" name="live_channel_input_name" class="form-control" value="{{ multimediaObject.getEmbeddedEvent().getLive().getName()|default('') }}"/>
+                    <input id="live_channel_input_name" type="text" readonly name="live_channel_input_name" class="form-control" value="{{ multimediaObject.getEmbeddedEvent().getLive().getName()|default('') }}"/>
                 </div>
             </div>
 
