@@ -17,7 +17,7 @@
                     <div class="ripple-wrapper"></div>
                 </button>
                 {% if autocomplete_series is defined and autocomplete_series %}
-                    <button id="pumukit_new_admin_autocomplete_series" type="button" class="btn btn-primary btn-raidsed" data-id="{{ multimediaObject.id }}">
+                    <button id="pumukit_new_admin_autocomplete_series" type="button" class="btn btn-primary btn-raised" data-id="{{ multimediaObject.id }}">
                         {% trans %}Autocomplete series{% endtrans %}
                     </button>
                 {% endif %}
@@ -25,7 +25,7 @@
             </div>
         </div>
     </div>
-    <div class="col-xs-4">
+    <div class="col-xs-6">
         <fieldset>
             <div class="form-group">
                 {{ form_row(form.i18n_name) }}
@@ -49,8 +49,16 @@
                 {{ form_row(form.place) }}
             </div>
 
-            <div class="form-group">
-                {{ form_row(form.live) }}
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <label for="live_channel_input">{% trans %}Search Channels{% endtrans %}</label>
+                    <input id="live_channel_input" type="text" name="channelSuggestAutocomplete" class="form-control" />
+                </div>
+                <div class="col-sm-6">
+                    <label for="live_channel_input_name">{% trans %}Selected Channel{% endtrans %}</label>
+                    <input id="live_channel_input_id" type="hidden" name="live_channel_input_id" class="form-control" value="{{ multimediaObject.getEmbeddedEvent().getLive().getId()|default('') }}" />
+                    <input id="live_channel_input_name" type="text" readonly name="live_channel_input_name" class="form-control" value="{{ multimediaObject.getEmbeddedEvent().getLive().getName()|default('') }}"/>
+                </div>
             </div>
 
             <div class="form-group">
@@ -282,4 +290,20 @@
         });
         return false;
     });
+
+
+    $("#live_channel_input").autocomplete({
+        source: "{{ path('pumukit_new_admin_live_event_channel_suggest') }}",
+        delay: 250,
+        minLength: 2,
+        select: function (event, ui) {
+            $("#live_channel_input_name").val(ui.item.name);
+            $("#live_channel_input_id").val(ui.item.id);
+        }
+    }).autocomplete("instance")._renderItem = function (ul, item) {
+        return $("<li>")
+            .append("<a class='channel_select'>" + item.name + "<br><span class='form-control'>" + "</span></a>")
+            .appendTo(ul)
+    };
+
 </script>
