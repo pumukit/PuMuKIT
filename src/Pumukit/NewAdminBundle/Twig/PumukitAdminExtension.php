@@ -67,6 +67,7 @@ class PumukitAdminExtension extends AbstractExtension
             new TwigFilter('filter_profiles', [$this, 'filterProfiles']),
             new TwigFilter('count_multimedia_objects', [$this, 'countMultimediaObjects']),
             new TwigFilter('next_session_event', [$this, 'getNextEventSession']),
+            new TwigFilter('unescape', [$this, 'unescapeLabel']),
         ];
     }
 
@@ -474,6 +475,11 @@ class PumukitAdminExtension extends AbstractExtension
     public function isImmutable(MultimediaObject $multimediaObject): bool
     {
         return $multimediaObject->getImmutable() && $multimediaObject->getImmutable()->value();
+    }
+
+    public function unescapeLabel($value)
+    {
+        return html_entity_decode($value);
     }
 
     private function getProfileFromTags(array $tags): string

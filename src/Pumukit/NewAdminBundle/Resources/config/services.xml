@@ -24,6 +24,8 @@
 
         <service id="form.type.multimedia_object_meta_type" class="Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType">
             <argument type="service" id="security.authorization_checker" />
+            <argument>%pumukit.copyright_info_url%</argument>
+            <argument>%pumukit.license_info_url%</argument>
             <tag name="form.type" />
         </service>
 
