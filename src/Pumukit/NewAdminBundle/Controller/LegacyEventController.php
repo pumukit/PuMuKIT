@@ -289,7 +289,7 @@ class LegacyEventController extends AdminController
     {
         $aux = [];
 
-        $dweek = (int) (date('N', mktime(0, 0, 0, $month, 1, $year))) - 1;
+        $dweek = (int) (date('N', mktime(0, 0, 0, (int) $month, 1, (int) $year))) - 1;
         foreach (range(1, self::getDaysInMonth($month, $year)) as $i) {
             $aux[(int) ($dweek / 7)][($dweek % 7)] = $i;
             ++$dweek;

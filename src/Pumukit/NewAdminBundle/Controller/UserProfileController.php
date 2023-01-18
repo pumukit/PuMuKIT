@@ -8,6 +8,8 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\NewAdminBundle\Form\Type\UserUpdateProfileType;
 use Pumukit\NewAdminBundle\Services\UserStatsService;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Services\PersonService;
+use Pumukit\SchemaBundle\Services\SeriesService;
 use Pumukit\SchemaBundle\Services\UpdateUserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -28,17 +30,23 @@ class UserProfileController extends AbstractController
     protected $translator;
     protected $updateUserService;
     protected $userStatsService;
+    protected $seriesService;
+    protected $personService;
 
     public function __construct(
         DocumentManager $documentManager,
         UpdateUserService $updateUserService,
         TranslatorInterface $translator,
-        UserStatsService $userStatsService
+        UserStatsService $userStatsService,
+        SeriesService $seriesService,
+        PersonService $personService
     ) {
         $this->documentManager = $documentManager;
         $this->translator = $translator;
         $this->updateUserService = $updateUserService;
         $this->userStatsService = $userStatsService;
+        $this->seriesService = $seriesService;
+        $this->personService = $personService;
     }
 
     /**
@@ -48,10 +56,8 @@ class UserProfileController extends AbstractController
     public function profileAction(Request $request): array
     {
         $user = $this->getUser();
-        $seriesService = $this->get('pumukitschema.series');
-        $personService = $this->get('pumukitschema.person');
 
-        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
+        $personalScopeRoleCode = $this->personService->getPersonalScopeRoleCode();
 
         $locale = $request->getLocale();
         $form = $this->createForm(UserUpdateProfileType::class, $user, ['translator' => $this->translator, 'locale' => $locale]);
@@ -61,7 +67,7 @@ class UserProfileController extends AbstractController
             $this->updateUserService->update($user);
         }
 
-        $seriesOfUser = $seriesService->getSeriesOfUser($user, false, $personalScopeRoleCode, ['public_date' => 'desc']);
+        $seriesOfUser = $this->seriesService->getSeriesOfUser($user, false, $personalScopeRoleCode, ['public_date' => 'desc']);
 
         return [
             'user' => $user,
