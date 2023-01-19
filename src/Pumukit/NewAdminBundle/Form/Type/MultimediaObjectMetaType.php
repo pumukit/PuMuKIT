@@ -26,10 +26,14 @@ class MultimediaObjectMetaType extends AbstractType
     private $translator;
     private $locale;
     private $authorizationChecker;
+    private $copyrightInfoUrl;
+    private $licenseInfoUrl;
 
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker, string $copyrightInfoUrl, string $licenseInfoUrl)
     {
         $this->authorizationChecker = $authorizationChecker;
+        $this->copyrightInfoUrl = $copyrightInfoUrl;
+        $this->licenseInfoUrl = $licenseInfoUrl;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -94,24 +98,35 @@ class MultimediaObjectMetaType extends AbstractType
         }
 
         if ($this->authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_META_COPYRIGHT)) {
+            if ($this->copyrightInfoUrl) {
+                $label = $this->translator->trans('Copyright <a href="%urlCopyright%" target="__blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>', ['%urlCopyright%' => $this->copyrightInfoUrl], null, $this->locale);
+            } else {
+                $label = $this->translator->trans('Copyright', [], null, $this->locale);
+            }
+
             $builder->add(
                 'copyright',
                 TextType::class,
                 [
                     'required' => false,
                     'attr' => ['aria-label' => $this->translator->trans('Copyright', [], null, $this->locale)],
-                    'label' => $this->translator->trans('Copyright', [], null, $this->locale),
+                    'label' => $label,
                 ]
             );
         }
         if ($this->authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_META_LICENSE)) {
+            if ($this->licenseInfoUrl) {
+                $label = $this->translator->trans('License <a href="%urlLicense%" target="__blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>', ['%urlLicense%' => $this->licenseInfoUrl], null, $this->locale);
+            } else {
+                $label = $this->translator->trans('License', [], null, $this->locale);
+            }
             $builder->add(
                 'license',
                 LicenseType::class,
                 [
                     'required' => false,
                     'attr' => ['aria-label' => $this->translator->trans('License', [], null, $this->locale)],
-                    'label' => $this->translator->trans('License', [], null, $this->locale),
+                    'label' => $label,
                 ]
             );
         }

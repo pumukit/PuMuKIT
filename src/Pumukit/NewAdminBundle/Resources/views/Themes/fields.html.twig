@@ -136,9 +136,10 @@
 
 {# Labels #}
 
-{% block form_label -%}
+{% block form_label %}
     {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' control-label')|trim}) %}
-    {{- parent() -}}
+    {% set label = parent() %}
+    {{ label|unescape|raw }}
 {%- endblock form_label %}
 
 {% block choice_label %}
