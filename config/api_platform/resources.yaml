@@ -1,0 +1,4 @@
+#resources:
+#  Pumukit\EncoderBundle\Document\CpuStatus: ~
+#  Pumukit\EncoderBundle\Document\Job: ~
+#  Pumukit\SchemaBundle\Document\Group: ~
