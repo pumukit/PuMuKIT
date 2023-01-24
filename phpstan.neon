@@ -3,5 +3,7 @@ includes:
     - vendor/phpstan/phpstan-symfony/extension.neon
 
 parameters:
+    ignoreErrors:
+        - '#^Method Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface::dispatch\(\) invoked with 2 parameters, 1 required#'
     doctrine:
         objectManagerLoader: doc/object-manager.php

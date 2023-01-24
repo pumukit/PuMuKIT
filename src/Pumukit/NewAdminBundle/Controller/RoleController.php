@@ -58,9 +58,6 @@ class RoleController extends SortableAdminController
         $this->validator = $validator;
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Role/update.html.twig")
-     */
     public function updateAction(Request $request)
     {
         $role = $this->personService->findRoleById($request->get('id'));
@@ -88,10 +85,10 @@ class RoleController extends SortableAdminController
             return new Response($textStatus, 409);
         }
 
-        return [
+        return $this->render("@PumukitNewAdmin/Role/update.html.twig", [
             'role' => $role,
             'form' => $form->createView(),
-        ];
+        ]);
     }
 
     public function getResources(Request $request, $criteria)

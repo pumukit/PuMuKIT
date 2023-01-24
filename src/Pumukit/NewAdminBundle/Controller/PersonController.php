@@ -79,7 +79,6 @@ class PersonController extends AdminController
 
     /**
      * @Security("is_granted('ROLE_ACCESS_PEOPLE')")
-     * @Template("@PumukitNewAdmin/Person/create.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -107,15 +106,14 @@ class PersonController extends AdminController
             return new Response($textStatus, 409);
         }
 
-        return [
+        return $this->render("@PumukitNewAdmin/Person/create.html.twig", [
             'person' => $person,
             'form' => $form->createView(),
-        ];
+        ]);
     }
 
     /**
      * @Security("is_granted('ROLE_ACCESS_PEOPLE')")
-     * @Template("@PumukitNewAdmin/Person/update.html.twig")
      */
     public function updateAction(Request $request)
     {
@@ -144,10 +142,10 @@ class PersonController extends AdminController
             return new Response($textStatus, 409);
         }
 
-        return [
+        return $this->render("@PumukitNewAdmin/Person/update.html.twig", [
             'person' => $person,
             'form' => $form->createView(),
-        ];
+        ]);
     }
 
     /**
