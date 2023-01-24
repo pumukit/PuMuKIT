@@ -108,9 +108,6 @@ class PermissionProfileController extends AdminController
         ];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/PermissionProfile/create.html.twig")
-     */
     public function createAction(Request $request)
     {
         $permissionProfile = new PermissionProfile();
@@ -130,15 +127,12 @@ class PermissionProfileController extends AdminController
             return $this->redirectToRoute('pumukitnewadmin_permissionprofile_list', ['id' => $permissionProfile->getId()]);
         }
 
-        return [
+        return $this->render('@PumukitNewAdmin/PermissionProfile/create.html.twig', [
             'permissionprofile' => $permissionProfile,
             'form' => $form->createView(),
-        ];
+        ]);
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/PermissionProfile/update.html.twig")
-     */
     public function updateAction(Request $request)
     {
         $permissionProfile = $this->findOr404($request);
@@ -155,10 +149,10 @@ class PermissionProfileController extends AdminController
             return $this->redirectToRoute('pumukitnewadmin_permissionprofile_list');
         }
 
-        return [
+        return $this->render('@PumukitNewAdmin/PermissionProfile/update.html.twig', [
             'permissionprofile' => $permissionProfile,
             'form' => $form->createView(),
-        ];
+        ]);
     }
 
     public function getForm($permissionProfile = null, $locale = 'en')

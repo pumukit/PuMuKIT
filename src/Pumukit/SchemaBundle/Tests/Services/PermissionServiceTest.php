@@ -15,7 +15,6 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class PermissionServiceTest extends WebTestCase
 {
-    private $permissionService;
     private $dm;
 
     public function setUp(): void
@@ -24,12 +23,10 @@ class PermissionServiceTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->permissionService = static::$kernel->getContainer()->get('pumukitschema.permission');
     }
 
     public function tearDown(): void
     {
-        $this->permissionService = null;
         gc_collect_cycles();
         parent::tearDown();
     }

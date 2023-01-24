@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\EventListener;
 
-use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\User;
@@ -30,11 +29,9 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 class PermissionProfileListenerTest extends PumukitTestCase
 {
     private $userRepo;
-    private $permissionProfileRepo;
     private $userService;
     private $permissionProfileService;
     private $listener;
-    private $logger;
     private $updateUserService;
     private $userPasswordEncoder;
     private $createUserService;
@@ -45,7 +42,6 @@ class PermissionProfileListenerTest extends PumukitTestCase
         static::bootKernel($options);
         parent::setUp();
         $this->userRepo = $this->dm->getRepository(User::class);
-        $this->permissionProfileRepo = $this->dm->getRepository(PermissionProfile::class);
         $dispatcher = new EventDispatcher();
         $userDispatcher = new UserEventDispatcherService($dispatcher);
         $permissionProfileDispatcher = new PermissionProfileEventDispatcherService($dispatcher);
@@ -71,11 +67,6 @@ class PermissionProfileListenerTest extends PumukitTestCase
             $personalScopeDeleteOwners,
             $sendEmailWhenAddUserOwner
         );
-
-        $this->logger = $this->getMockBuilder(LoggerInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
 
         $this->userPasswordEncoder = $this->getMockBuilder(UserPasswordEncoder::class)
             ->disableOriginalConstructor()
@@ -111,7 +102,6 @@ class PermissionProfileListenerTest extends PumukitTestCase
         parent::tearDown();
 
         $this->userRepo = null;
-        $this->permissionProfileRepo = null;
         $this->permissionProfileService = null;
         $this->userService = null;
         $this->listener = null;

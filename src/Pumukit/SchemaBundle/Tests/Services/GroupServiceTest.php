@@ -21,7 +21,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 class GroupServiceTest extends PumukitTestCase
 {
     private $repo;
-    private $userRepo;
+
     private $groupService;
 
     public function setUp(): void
@@ -30,7 +30,6 @@ class GroupServiceTest extends PumukitTestCase
         static::bootKernel($options);
         parent::setUp();
         $this->repo = $this->dm->getRepository(Group::class);
-        $this->userRepo = $this->dm->getRepository(User::class);
 
         $dispatcher = new EventDispatcher();
         $groupDispatcher = new GroupEventDispatcherService($dispatcher);
@@ -45,7 +44,6 @@ class GroupServiceTest extends PumukitTestCase
         $this->dm->close();
 
         $this->repo = null;
-        $this->userRepo = null;
         $this->groupService = null;
         gc_collect_cycles();
     }

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Tests\EventListener;
 
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
-use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\EventListener\MultimediaObjectListener;
@@ -19,29 +18,21 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
  */
 class MultimediaObjectListenerTest extends PumukitTestCase
 {
-    private $mmRepo;
     private $listener;
     private $trackDispatcher;
     private $trackService;
-    private $factoryService;
-    private $context;
-    private $rootDir;
-    private $webDir;
-    private $localhost;
-    private $picService;
 
     public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
         parent::setUp();
-        $this->mmRepo = $this->dm->getRepository(MultimediaObject::class);
 
         $dispatcher = new EventDispatcher();
         $this->listener = new MultimediaObjectListener($this->dm, new TextIndexService());
         $dispatcher->addListener('multimediaobject.update', [$this->listener, 'postUpdate']);
         $this->trackDispatcher = static::$kernel->getContainer()->get('pumukitschema.track_dispatcher');
-        $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
+
         $this->trackService = new TrackService($this->dm, $this->trackDispatcher, null, true);
     }
 
@@ -49,16 +40,9 @@ class MultimediaObjectListenerTest extends PumukitTestCase
     {
         parent::tearDown();
 
-        $this->mmRepo = null;
         $this->listener = null;
         $this->trackDispatcher = null;
         $this->trackService = null;
-        $this->factoryService = null;
-        $this->context = null;
-        $this->rootDir = null;
-        $this->webDir = null;
-        $this->localhost = null;
-        $this->picService = null;
         gc_collect_cycles();
     }
 
@@ -116,59 +100,5 @@ class MultimediaObjectListenerTest extends PumukitTestCase
         $this->trackService->addTrackToMultimediaObject($mm, $track3, true);
         static::assertEquals($track3, $mm->getMaster());
         static::assertEquals($track3, $mm->getMaster(false));
-    }
-
-    private function getDemoProfiles()
-    {
-        return [
-            'MASTER_COPY' => [
-                'display' => false,
-                'wizard' => true,
-                'master' => true,
-                'resolution_hor' => 0,
-                'resolution_ver' => 0,
-                'framerate' => '0',
-                'channels' => 1,
-                'audio' => false,
-                'bat' => 'cp "{{input}}" "{{output}}"',
-                'streamserver' => [
-                    'type' => ProfileService::STREAMSERVER_STORE,
-                    'host' => '127.0.0.1',
-                    'name' => 'Localmaster',
-                    'description' => 'Local masters server',
-                    'dir_out' => __DIR__.'/../Resources/dir_out',
-                ],
-                'app' => 'cp',
-                'rel_duration_size' => 1,
-                'rel_duration_trans' => 1,
-            ],
-            'MASTER_VIDEO_H264' => [
-                'display' => false,
-                'wizard' => true,
-                'master' => true,
-                'format' => 'mp4',
-                'codec' => 'h264',
-                'mime_type' => 'video/x-mp4',
-                'extension' => 'mp4',
-                'resolution_hor' => 0,
-                'resolution_ver' => 0,
-                'bitrate' => '1 Mbps',
-                'framerate' => '25/1',
-                'channels' => 1,
-                'audio' => false,
-                'bat' => 'ffmpeg -y -i "{{input}}" -acodec aac -vcodec libx264 -preset slow -crf 15 -threads 0 "{{output}}"',
-                'streamserver' => [
-                    'type' => ProfileService::STREAMSERVER_STORE,
-                    'host' => '192.168.5.125',
-                    'name' => 'Download',
-                    'description' => 'Download server',
-                    'dir_out' => __DIR__.'/../Resources/dir_out',
-                    'url_out' => 'http://localhost:8000/downloads/',
-                ],
-                'app' => 'ffmpeg',
-                'rel_duration_size' => 1,
-                'rel_duration_trans' => 1,
-            ],
-        ];
     }
 }

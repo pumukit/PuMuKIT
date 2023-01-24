@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
-use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -36,21 +35,15 @@ class UserServiceTest extends PumukitTestCase
     private $updateUserService;
     private $createUserService;
     private $userPasswordEncoder;
-    private $permissionProfileRepo;
     private $userService;
-    private $logger;
 
     public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
         parent::setUp();
-        $this->logger = $this->getMockBuilder(LoggerInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
+
         $this->repo = $this->dm->getRepository(User::class);
-        $this->permissionProfileRepo = $this->dm->getRepository(PermissionProfile::class);
 
         $dispatcher = new EventDispatcher();
         $userDispatcher = new UserEventDispatcherService($dispatcher);
@@ -113,7 +106,6 @@ class UserServiceTest extends PumukitTestCase
         $this->dm->close();
 
         $this->repo = null;
-        $this->permissionProfileRepo = null;
         $this->userService = null;
         gc_collect_cycles();
     }

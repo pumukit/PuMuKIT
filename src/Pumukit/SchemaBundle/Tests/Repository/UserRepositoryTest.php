@@ -18,7 +18,6 @@ class UserRepositoryTest extends PumukitTestCase
 {
     private $repo;
     private $groupRepo;
-    private $factoryService;
 
     public function setUp(): void
     {
@@ -27,7 +26,6 @@ class UserRepositoryTest extends PumukitTestCase
         parent::setUp();
         $this->repo = $this->dm->getRepository(User::class);
         $this->groupRepo = $this->dm->getRepository(Group::class);
-        $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
     }
 
     public function tearDown(): void
@@ -36,7 +34,6 @@ class UserRepositoryTest extends PumukitTestCase
         $this->dm->close();
 
         $this->repo = null;
-        $this->factoryService = null;
         gc_collect_cycles();
     }
 

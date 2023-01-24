@@ -22,7 +22,6 @@ use Pumukit\SchemaBundle\Document\Tag;
 class SeriesRepositoryTest extends PumukitTestCase
 {
     private $repo;
-    private $personService;
     private $factoryService;
 
     public function setUp(): void
@@ -31,7 +30,6 @@ class SeriesRepositoryTest extends PumukitTestCase
         static::bootKernel($options);
         parent::setUp();
         $this->repo = $this->dm->getRepository(Series::class);
-        $this->personService = static::$kernel->getContainer()->get('pumukitschema.person');
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
     }
 
@@ -41,7 +39,6 @@ class SeriesRepositoryTest extends PumukitTestCase
         $this->dm->close();
 
         $this->repo = null;
-        $this->personService = null;
         $this->factoryService = null;
         gc_collect_cycles();
     }

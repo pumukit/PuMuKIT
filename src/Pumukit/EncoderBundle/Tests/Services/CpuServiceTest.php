@@ -14,7 +14,6 @@ use Pumukit\EncoderBundle\Services\CpuService;
  */
 class CpuServiceTest extends PumukitTestCase
 {
-    private $repo;
     private $cpuService;
 
     public function setUp(): void
@@ -22,7 +21,6 @@ class CpuServiceTest extends PumukitTestCase
         $options = ['environment' => 'test'];
         static::bootKernel($options);
         parent::setUp();
-        $this->repo = $this->dm->getRepository(Job::class);
 
         $this->cpuService = new CpuService($this->getDemoCpus(), $this->dm);
     }
@@ -32,15 +30,12 @@ class CpuServiceTest extends PumukitTestCase
         parent::tearDown();
         $this->dm->close();
 
-        $this->repo = null;
         $this->cpuService = null;
         gc_collect_cycles();
     }
 
     public function testGetFreeCpu()
     {
-        $cpus = $this->getDemoCpus();
-
         static::assertEquals('CPU_REMOTE', $this->cpuService->getFreeCpu('video_h264'));
 
         $job = new Job();
