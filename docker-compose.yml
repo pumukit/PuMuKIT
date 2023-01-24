@@ -3,6 +3,7 @@ version: '3.4'
 services:
   php:
     image: teltek/pumukit:4.x
+    restart: unless-stopped
     env_file:
       - .env
     build:
@@ -21,6 +22,7 @@ services:
 
   h2-proxy:
     image: teltek/nginx:4.x
+    restart: unless-stopped
     env_file:
       - .env
     build:
@@ -43,13 +45,13 @@ services:
 
   db:
     image: mongo:4.0
-    restart: always
+    restart: unless-stopped
     volumes:
       - db-data:/data/db:rw
 
   redis:
     image: redis
-    restart: always
+    restart: unless-stopped
     env_file:
       - .env
 
