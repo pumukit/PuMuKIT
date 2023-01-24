@@ -32,7 +32,6 @@ use Pumukit\SchemaBundle\Document\User;
 class MultimediaObjectRepositoryTest extends PumukitTestCase
 {
     private $repo;
-    private $qb;
     private $factoryService;
     private $mmsPicService;
     private $tagService;

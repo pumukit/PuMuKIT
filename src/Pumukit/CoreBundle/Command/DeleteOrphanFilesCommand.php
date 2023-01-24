@@ -16,7 +16,6 @@ use Symfony\Component\Finder\Finder;
 class DeleteOrphanFilesCommand extends Command
 {
     private $documentManager;
-    private $output;
     private $input;
     private $path;
     private $delete;
@@ -61,7 +60,6 @@ EOT
 
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        $this->output = $output;
         $this->input = $input;
 
         $this->path = $this->input->getOption('path');

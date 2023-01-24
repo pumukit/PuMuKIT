@@ -19,7 +19,6 @@ class InspectionFfprobeServiceTest extends TestCase
     private $wrong_file_textfile;
     private $wrong_file_zerofile;
     private $wrong_file_subtitle;
-    private $vid_no_audio;
 
     public function setUp(): void
     {
@@ -31,7 +30,6 @@ class InspectionFfprobeServiceTest extends TestCase
         $this->wrong_file_textfile = $this->resources_dir.'textfile.txt';
         $this->wrong_file_zerofile = $this->resources_dir.'zerosizefile.txt';
         $this->wrong_file_subtitle = $this->resources_dir.'subtitle.vtt';
-        $this->vid_no_audio = $this->resources_dir.'SCREEN.mp4';
     }
 
     public function tearDown(): void
@@ -40,7 +38,6 @@ class InspectionFfprobeServiceTest extends TestCase
         $this->wrong_file_textfile = null;
         $this->wrong_file_zerofile = null;
         $this->wrong_file_subtitle = null;
-        $this->vid_no_audio = null;
         gc_collect_cycles();
         parent::tearDown();
     }

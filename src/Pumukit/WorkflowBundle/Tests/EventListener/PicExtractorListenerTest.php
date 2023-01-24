@@ -7,7 +7,6 @@ namespace Pumukit\WorkflowBundle\Tests\EventListener;
 use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Services\PicExtractorService;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
@@ -19,7 +18,6 @@ use Pumukit\WorkflowBundle\EventListener\PicExtractorListener;
  */
 class PicExtractorListenerTest extends PumukitTestCase
 {
-    private $repo;
     private $logger;
     private $picExtractorListener;
     private $videoPath;
@@ -32,7 +30,6 @@ class PicExtractorListenerTest extends PumukitTestCase
         $options = ['environment' => 'test'];
         static::bootKernel($options);
         parent::setUp();
-        $this->repo = $this->dm->getRepository(MultimediaObject::class);
         $this->logger = $this->getMockBuilder(LoggerInterface::class)
             ->disableOriginalConstructor()
             ->getMock()
@@ -59,7 +56,6 @@ class PicExtractorListenerTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->repo = null;
         $this->logger = null;
         $this->videoPath = null;
         $this->factoryService = null;

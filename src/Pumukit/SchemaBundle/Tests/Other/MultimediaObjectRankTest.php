@@ -14,8 +14,6 @@ use Pumukit\SchemaBundle\Document\Series;
  */
 class MultimediaObjectRankTest extends PumukitTestCase
 {
-    private $repo;
-    private $qb;
     private $factoryService;
 
     public function setUp(): void
@@ -25,7 +23,6 @@ class MultimediaObjectRankTest extends PumukitTestCase
 
         parent::setUp();
 
-        $this->repo = $this->dm->getRepository(MultimediaObject::class);
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
     }
 
@@ -34,7 +31,6 @@ class MultimediaObjectRankTest extends PumukitTestCase
         parent::tearDown();
         $this->dm->close();
 
-        $this->repo = null;
         $this->factoryService = null;
         gc_collect_cycles();
     }

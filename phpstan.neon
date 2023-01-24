@@ -5,5 +5,7 @@ includes:
 parameters:
     ignoreErrors:
         - '#^Method Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface::dispatch\(\) invoked with 2 parameters, 1 required#'
+        # Remove rule for documents that doesnt have setId() method
+        - '#^Property Pumukit\\[a-zA-Z0-9\\_]+\\Document\\[a-zA-Z0-9\\_]+::\$id is never written, only read#'
     doctrine:
         objectManagerLoader: doc/object-manager.php

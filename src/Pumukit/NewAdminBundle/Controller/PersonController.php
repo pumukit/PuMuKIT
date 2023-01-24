@@ -106,7 +106,7 @@ class PersonController extends AdminController
             return new Response($textStatus, 409);
         }
 
-        return $this->render("@PumukitNewAdmin/Person/create.html.twig", [
+        return $this->render('@PumukitNewAdmin/Person/create.html.twig', [
             'person' => $person,
             'form' => $form->createView(),
         ]);
@@ -142,7 +142,7 @@ class PersonController extends AdminController
             return new Response($textStatus, 409);
         }
 
-        return $this->render("@PumukitNewAdmin/Person/update.html.twig", [
+        return $this->render('@PumukitNewAdmin/Person/update.html.twig', [
             'person' => $person,
             'form' => $form->createView(),
         ]);

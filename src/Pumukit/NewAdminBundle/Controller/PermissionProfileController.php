@@ -127,7 +127,7 @@ class PermissionProfileController extends AdminController
             return $this->redirectToRoute('pumukitnewadmin_permissionprofile_list', ['id' => $permissionProfile->getId()]);
         }
 
-        return $this->render("@PumukitNewAdmin/PermissionProfile/create.html.twig", [
+        return $this->render('@PumukitNewAdmin/PermissionProfile/create.html.twig', [
             'permissionprofile' => $permissionProfile,
             'form' => $form->createView(),
         ]);
@@ -149,7 +149,7 @@ class PermissionProfileController extends AdminController
             return $this->redirectToRoute('pumukitnewadmin_permissionprofile_list');
         }
 
-        return $this->render("@PumukitNewAdmin/PermissionProfile/update.html.twig", [
+        return $this->render('@PumukitNewAdmin/PermissionProfile/update.html.twig', [
             'permissionprofile' => $permissionProfile,
             'form' => $form->createView(),
         ]);

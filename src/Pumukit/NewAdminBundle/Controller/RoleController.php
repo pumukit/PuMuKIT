@@ -14,7 +14,6 @@ use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Services\RoleService;
 use Pumukit\SchemaBundle\Services\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -85,7 +84,7 @@ class RoleController extends SortableAdminController
             return new Response($textStatus, 409);
         }
 
-        return $this->render("@PumukitNewAdmin/Role/update.html.twig", [
+        return $this->render('@PumukitNewAdmin/Role/update.html.twig', [
             'role' => $role,
             'form' => $form->createView(),
         ]);

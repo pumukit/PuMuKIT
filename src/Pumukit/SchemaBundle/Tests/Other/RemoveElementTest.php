@@ -32,9 +32,6 @@ class RemoveElementTest extends PumukitTestCase
     private $userService;
     private $ebService;
     private $groupService;
-    private $repo;
-    private $mmsPicService;
-    private $tagService;
     private $userRepo;
     private $createUserService;
     private $userPasswordEncoder;
@@ -54,10 +51,6 @@ class RemoveElementTest extends PumukitTestCase
         $this->userService = static::$kernel->getContainer()->get('pumukitschema.user');
         $this->ebService = static::$kernel->getContainer()->get('pumukitschema.embeddedbroadcast');
         $this->groupService = static::$kernel->getContainer()->get('pumukitschema.group');
-        $personService = $this->getMockBuilder(PersonService::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
 
         $dispatcher = new EventDispatcher();
         $userDispatcher = new UserEventDispatcherService($dispatcher);
@@ -93,11 +86,8 @@ class RemoveElementTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-
-        $this->repo = null;
         $this->factoryService = null;
-        $this->mmsPicService = null;
-        $this->tagService = null;
+
         gc_collect_cycles();
     }
 

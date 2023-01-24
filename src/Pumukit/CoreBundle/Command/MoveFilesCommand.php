@@ -20,7 +20,6 @@ class MoveFilesCommand extends Command
     private $origin;
     private $destiny;
     private $limit;
-    private $input;
     private $output;
     private $fileSystem;
     private $logger;
@@ -61,7 +60,6 @@ EOT
 
         $this->fileSystem = new Filesystem();
 
-        $this->input = $input;
         $this->output = $output;
     }
 
