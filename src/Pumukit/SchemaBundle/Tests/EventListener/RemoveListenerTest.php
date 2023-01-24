@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\EventListener;
 
-use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\ProfileService;
@@ -25,10 +24,7 @@ class RemoveListenerTest extends PumukitTestCase
     private $repoSeries;
     private $repoUser;
     private $factoryService;
-    private $resourcesDir;
     private $embeddedBroadcastService;
-    private $logger;
-    private $tokenStorage;
 
     public function setUp(): void
     {
@@ -37,34 +33,23 @@ class RemoveListenerTest extends PumukitTestCase
 
         parent::setUp();
 
-        $this->logger = $this->getMockBuilder(LoggerInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
-
         $this->repoJobs = $this->dm->getRepository(Job::class);
         $this->repoMmobj = $this->dm->getRepository(MultimediaObject::class);
         $this->repoSeries = $this->dm->getRepository(Series::class);
         $this->repoUser = $this->dm->getRepository(User::class);
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->embeddedBroadcastService = static::$kernel->getContainer()->get('pumukitschema.embeddedbroadcast');
-        $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
-
-        $this->resourcesDir = realpath(__DIR__.'/../Resources');
     }
 
     public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();
-        $this->logger = null;
 
         $this->repoJobs = null;
         $this->repoMmobj = null;
         $this->repoSeries = null;
         $this->factoryService = null;
-        $this->tokenStorage = null;
-        $this->resourcesDir = null;
         gc_collect_cycles();
     }
 

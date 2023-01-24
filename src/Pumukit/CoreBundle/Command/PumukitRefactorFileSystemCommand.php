@@ -13,7 +13,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 use UnexpectedValueException;
@@ -23,7 +22,6 @@ class PumukitRefactorFileSystemCommand extends Command
     private $dm;
     private $output;
     private $input;
-    private $finder;
     private $pics;
     private $materials;
     private $force;
@@ -93,7 +91,6 @@ EOT
         $this->materials = $this->input->getOption('materials');
         $this->id = $this->input->getOption('id');
         $this->force = (true === $input->getOption('force'));
-        $this->finder = new Finder();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

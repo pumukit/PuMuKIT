@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Tests\Services;
 
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * @internal
@@ -13,7 +12,6 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
  */
 class MultimediaObjectDurationServiceTest extends PumukitTestCase
 {
-    private $mmRepo;
     private $factory;
     private $mmsService;
 
@@ -22,7 +20,6 @@ class MultimediaObjectDurationServiceTest extends PumukitTestCase
         $options = ['environment' => 'test'];
         static::bootKernel($options);
         parent::setUp();
-        $this->mmRepo = $this->dm->getRepository(MultimediaObject::class);
         $this->factory = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->mmsService = static::$kernel->getContainer()->get('pumukitschema.mmsduration');
     }
@@ -32,7 +29,6 @@ class MultimediaObjectDurationServiceTest extends PumukitTestCase
         parent::tearDown();
         $this->dm->close();
 
-        $this->mmRepo = null;
         $this->factory = null;
         $this->mmsService = null;
         gc_collect_cycles();

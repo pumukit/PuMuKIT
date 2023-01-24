@@ -491,9 +491,10 @@ class EventsController extends AbstractController implements NewAdminControllerI
                 $iframeURL = isset($data['iframeURL'], $data['externalURL']);
                 $event->setIsIframeUrl($iframeURL);
 
-                if (isset($data['live'])) {
+                $liveData = $request->request->get('live_channel_input_id');
+                if (isset($liveData)) {
                     $live = $this->documentManager->getRepository(Live::class)->findOneBy(
-                        ['_id' => new ObjectId($data['live'])]
+                        ['_id' => new ObjectId($liveData)]
                     );
                     $event->setLive($live);
                 }
@@ -865,6 +866,33 @@ class EventsController extends AbstractController implements NewAdminControllerI
         return new JsonResponse(['success']);
     }
 
+    /**
+     * @Route("channel/suggest/", name="pumukit_new_admin_live_event_channel_suggest")
+     */
+    public function suggestChannelAction(Request $request): JsonResponse
+    {
+        $result = [];
+        $filterChannelName = $request->query->get('term');
+
+        $locale = $request->getLocale();
+        $lives = $this->documentManager->getRepository(Live::class)->findBy(["name.{$locale}" => new \MongoRegex('/'.$filterChannelName.'/i')]);
+        foreach ($lives as $live) {
+            $result[] = [
+                'id' => $live->getId(),
+                'name' => $live->getName(),
+            ];
+        }
+
+        return new JsonResponse($result);
+    }
+
+    /**
+     * clone Event and series.
+     *
+     * @throws \Exception
+     *
+     * @return string
+     */
     private function cloneEvent(MultimediaObject $multimediaObject)
     {
         $cloneMultimediaObject = $this->factoryService->cloneMultimediaObject($multimediaObject);

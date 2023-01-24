@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Tests\Services;
 
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
-use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Track;
@@ -14,7 +13,6 @@ use Pumukit\SchemaBundle\Services\PicService;
 use Pumukit\SchemaBundle\Services\TextIndexService;
 use Pumukit\SchemaBundle\Services\TrackService;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\Routing\RequestContext;
 
 /**
  * @internal
@@ -24,7 +22,6 @@ class PicServiceTest extends PumukitTestCase
 {
     private $factoryService;
     private $picService;
-    private $context;
     private $defaultSeriesPic = '/images/series.jpg';
     private $defaultPlaylistPic = '/images/playlist.jpg';
     private $defaultVideoPic = '/images/video.jpg';
@@ -34,7 +31,6 @@ class PicServiceTest extends PumukitTestCase
     private $listener;
     private $trackDispatcher;
     private $trackService;
-    private $rootDir;
     private $absoluteDomain;
 
     public function setUp(): void
@@ -45,12 +41,6 @@ class PicServiceTest extends PumukitTestCase
         parent::setUp();
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
 
-        $this->context = $this->getMockBuilder(RequestContext::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
-
-        $this->rootDir = static::$kernel->getContainer()->getParameter('kernel.root_dir');
         $publicDir = static::$kernel->getContainer()->getParameter('pumukit.public_dir');
         $scheme = static::$kernel->getContainer()->getParameter('router.request_context.scheme');
         $host = static::$kernel->getContainer()->getParameter('router.request_context.host');
@@ -63,7 +53,6 @@ class PicServiceTest extends PumukitTestCase
         $this->listener = new MultimediaObjectListener($this->dm, new TextIndexService());
         $dispatcher->addListener('multimediaobject.update', [$this->listener, 'postUpdate']);
         $this->trackDispatcher = static::$kernel->getContainer()->get('pumukitschema.track_dispatcher');
-        $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
         $this->trackService = new TrackService($this->dm, $this->trackDispatcher, null, true);
     }
 
@@ -73,8 +62,6 @@ class PicServiceTest extends PumukitTestCase
         $this->dm->close();
 
         $this->factoryService = null;
-        $this->context = null;
-        $this->rootDir = null;
         $this->webDir = null;
         $this->picService = null;
         $this->listener = null;
@@ -286,59 +273,5 @@ class PicServiceTest extends PumukitTestCase
         $this->dm->flush();
 
         static::assertEquals($mmPath2, $this->picService->getFirstPathPic($mm));
-    }
-
-    private function getDemoProfiles()
-    {
-        return [
-            'MASTER_COPY' => [
-                'display' => false,
-                'wizard' => true,
-                'master' => true,
-                'resolution_hor' => 0,
-                'resolution_ver' => 0,
-                'framerate' => '0',
-                'channels' => 1,
-                'audio' => false,
-                'bat' => 'cp "{{input}}" "{{output}}"',
-                'streamserver' => [
-                    'type' => ProfileService::STREAMSERVER_STORE,
-                    'host' => '127.0.0.1',
-                    'name' => 'Localmaster',
-                    'description' => 'Local masters server',
-                    'dir_out' => __DIR__.'/../Resources/dir_out',
-                ],
-                'app' => 'cp',
-                'rel_duration_size' => 1,
-                'rel_duration_trans' => 1,
-            ],
-            'MASTER_VIDEO_H264' => [
-                'display' => false,
-                'wizard' => true,
-                'master' => true,
-                'format' => 'mp4',
-                'codec' => 'h264',
-                'mime_type' => 'video/x-mp4',
-                'extension' => 'mp4',
-                'resolution_hor' => 0,
-                'resolution_ver' => 0,
-                'bitrate' => '1 Mbps',
-                'framerate' => '25/1',
-                'channels' => 1,
-                'audio' => false,
-                'bat' => 'ffmpeg -y -i "{{input}}" -acodec aac -vcodec libx264 -preset slow -crf 15 -threads 0 "{{output}}"',
-                'streamserver' => [
-                    'type' => ProfileService::STREAMSERVER_STORE,
-                    'host' => '192.168.5.125',
-                    'name' => 'Download',
-                    'description' => 'Download server',
-                    'dir_out' => __DIR__.'/../Resources/dir_out',
-                    'url_out' => 'http://localhost:8000/downloads/',
-                ],
-                'app' => 'ffmpeg',
-                'rel_duration_size' => 1,
-                'rel_duration_trans' => 1,
-            ],
-        ];
     }
 }

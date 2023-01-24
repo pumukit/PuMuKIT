@@ -4,26 +4,20 @@ declare(strict_types=1);
 
 namespace Pumukit\WorkflowBundle\EventListener;
 
-use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
 use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\EncoderBundle\Services\PicExtractorService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
-use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
 
 class BatchPicExtractorListener
 {
-    private $dm;
     private $logger;
-    private $mmsPicService;
     private $picExtractorService;
     private $enable;
 
-    public function __construct(DocumentManager $documentManager, MultimediaObjectPicService $mmsPicService, PicExtractorService $picExtractorService, LoggerInterface $logger, $enable = true)
+    public function __construct(PicExtractorService $picExtractorService, LoggerInterface $logger, $enable = true)
     {
-        $this->dm = $documentManager;
-        $this->mmsPicService = $mmsPicService;
         $this->picExtractorService = $picExtractorService;
         $this->logger = $logger;
         $this->enable = $enable;

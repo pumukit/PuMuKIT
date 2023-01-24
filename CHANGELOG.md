@@ -11,18 +11,18 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Added GitHub Actions workflows.
 - Added Symfony Flex.
 - Added new Symfony components.
-- Added VideoJS basic player to core.
+- Added PaellaPlayer v7 to core.
 - Update code to make it compatible with PHP 7.4.
 - Added val translations.
 - Added new upload method using TUS protocol on core.
 - Added new inbox upload page with drag and drop and auto import feature.
+- Update 3rd party libraries to allow to migrate PHP8.
 
 #### Changed
 - Update Symfony framework from 3.4 to 4.4 using new structure.
 - Replace BotDetectBundle by CrawlerDetect
 - Replace MongoDB objects (MongoId(), MongoDate(), ...) by new generic objects defined by namespaces.
 - Replace deprecated FOSUserBundle by custom login.
-- Rename JWPlayerBundle by generic name PlayerBundle
 
 #### Removed
 - Remove Travis workflows.

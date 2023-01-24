@@ -25,8 +25,6 @@ class PicExtractorServiceTest extends PumukitTestCase
     private $targetPath;
     private $targetUrl;
     private $picEventDispatcher;
-    private $inspectionService;
-    private $mmsPicService;
 
     public function setUp(): void
     {
@@ -40,7 +38,6 @@ class PicExtractorServiceTest extends PumukitTestCase
         $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
         $this->factory = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->picEventDispatcher = static::$kernel->getContainer()->get('pumukitschema.pic_dispatcher');
-        $this->inspectionService = static::$kernel->getContainer()->get('pumukit.inspection');
         $this->resourcesDir = realpath(__DIR__.'/../Resources');
         $this->targetPath = $this->resourcesDir;
         $this->targetUrl = '/uploads';
@@ -57,8 +54,6 @@ class PicExtractorServiceTest extends PumukitTestCase
 
         $this->mmobjRepo = null;
         $this->factory = null;
-        $this->mmsPicService = null;
-        $this->inspectionService = null;
         $this->resourcesDir = null;
         $this->targetPath = null;
         $this->targetUrl = null;

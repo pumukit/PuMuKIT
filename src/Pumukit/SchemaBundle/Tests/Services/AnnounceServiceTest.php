@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Tests\Services;
 
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 
@@ -15,8 +14,6 @@ use Pumukit\SchemaBundle\Document\Tag;
  */
 class AnnounceServiceTest extends PumukitTestCase
 {
-    private $mmobjRepo;
-    private $seriesRepo;
     private $announceService;
     private $factoryService;
     private $tagService;
@@ -26,8 +23,6 @@ class AnnounceServiceTest extends PumukitTestCase
         $options = ['environment' => 'test'];
         static::bootKernel($options);
         parent::setUp();
-        $this->seriesRepo = $this->dm->getRepository(Series::class);
-        $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
 
         $this->announceService = static::$kernel->getContainer()->get('pumukitschema.announce');
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
@@ -38,8 +33,6 @@ class AnnounceServiceTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->seriesRepo = null;
-        $this->mmobjRepo = null;
         $this->announceService = null;
         $this->factoryService = null;
         $this->tagService = null;

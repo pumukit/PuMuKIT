@@ -30,6 +30,8 @@ services:
       $pumukitNewAdminBaseCatalogueTag: '%pumukit_new_admin.base_catalogue_tag%'
       $personalScopeRoleCode: '%pumukitschema.personal_scope_role_code%'
       $enablePlaylist: '%pumukit_new_admin.enable_playlist%'
+      $copyrightInfoUrl: '%pumukit.copyright_info_url%'
+      $licenseInfoUrl: '%pumukit.license_info_url%'
 
   Pumukit\NewAdminBundle\Controller\:
     resource: '../../src/Pumukit/NewAdminBundle/Controller/'

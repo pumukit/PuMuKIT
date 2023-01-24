@@ -22,7 +22,6 @@ class MaterialEventDispatcherServiceTest extends PumukitTestCase
 
     private $materialDispatcher;
     private $dispatcher;
-    private $linkDispatcher;
 
     public function setUp(): void
     {
@@ -42,7 +41,6 @@ class MaterialEventDispatcherServiceTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dispatcher = null;
-        $this->linkDispatcher = null;
         gc_collect_cycles();
     }
 

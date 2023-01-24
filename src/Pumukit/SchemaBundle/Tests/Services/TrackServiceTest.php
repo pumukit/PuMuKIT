@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
-use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Document\Job;
-use Pumukit\EncoderBundle\Services\CpuService;
-use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Services\TrackService;
@@ -23,45 +20,32 @@ class TrackServiceTest extends PumukitTestCase
     private $repoMmobj;
     private $trackService;
     private $factoryService;
-    private $logger;
-    private $tokenStorage;
     private $trackDispatcher;
-    private $tmpDir;
 
     public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
         parent::setUp();
-        $this->logger = $this->getMockBuilder(LoggerInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
+
         $this->repoJobs = $this->dm->getRepository(Job::class);
         $this->repoMmobj = $this->dm->getRepository(MultimediaObject::class);
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->trackDispatcher = static::$kernel->getContainer()->get('pumukitschema.track_dispatcher');
-        $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
 
-        $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
         $this->trackService = new TrackService($this->dm, $this->trackDispatcher, null, true);
-
-        $this->tmpDir = $this->trackService->getTempDirs()[0];
     }
 
     public function tearDown(): void
     {
         parent::tearDown();
         $this->dm->close();
-        $this->logger = null;
 
         $this->repoJobs = null;
         $this->repoMmobj = null;
         $this->factoryService = null;
         $this->trackDispatcher = null;
-        $this->tokenStorage = null;
         $this->trackService = null;
-        $this->tmpDir = null;
         gc_collect_cycles();
     }
 
@@ -185,97 +169,5 @@ class TrackServiceTest extends PumukitTestCase
 
         $arrayTracks = [$track1, $track3, $track2, $track5, $track4];
         static::assertEquals($arrayTracks, $multimediaObject->getTracks()->toArray());
-    }
-
-    private function createFormData($number)
-    {
-        return [
-            'profile' => 'MASTER_COPY',
-            'priority' => 2,
-            'language' => 'en',
-            'i18n_description' => [
-                'en' => 'track description '.$number,
-                'es' => 'descripción del archivo '.$number,
-            ],
-        ];
-    }
-
-    private function getDemoCpus()
-    {
-        return [
-            'CPU_LOCAL' => [
-                'id' => 1,
-                'host' => '127.0.0.1',
-                'max' => 1,
-                'number' => 1,
-                'type' => CpuService::TYPE_LINUX,
-                'user' => 'transco1',
-                'password' => 'PUMUKIT',
-                'description' => 'Pumukit transcoder',
-            ],
-            'CPU_REMOTE' => [
-                'id' => 2,
-                'host' => '192.168.5.123',
-                'max' => 2,
-                'number' => 1,
-                'type' => CpuService::TYPE_LINUX,
-                'user' => 'transco2',
-                'password' => 'PUMUKIT',
-                'description' => 'Pumukit transcoder',
-            ],
-        ];
-    }
-
-    private function getDemoProfiles()
-    {
-        return [
-            'MASTER_COPY' => [
-                'display' => false,
-                'wizard' => true,
-                'master' => true,
-                'resolution_hor' => 0,
-                'resolution_ver' => 0,
-                'framerate' => '0',
-                'channels' => 1,
-                'audio' => false,
-                'bat' => 'cp "{{input}}" "{{output}}"',
-                'streamserver' => [
-                    'type' => ProfileService::STREAMSERVER_STORE,
-                    'host' => '127.0.0.1',
-                    'name' => 'Localmaster',
-                    'description' => 'Local masters server',
-                    'dir_out' => __DIR__.'/../Resources/dir_out',                                                         ],
-                'app' => 'cp',
-                'rel_duration_size' => 1,
-                'rel_duration_trans' => 1,
-            ],
-            'MASTER_VIDEO_H264' => [
-                'display' => false,
-                'wizard' => true,
-                'master' => true,
-                'format' => 'mp4',
-                'codec' => 'h264',
-                'mime_type' => 'video/x-mp4',
-                'extension' => 'mp4',
-                'resolution_hor' => 0,
-                'resolution_ver' => 0,
-                'bitrate' => '1 Mbps',
-                'framerate' => '25/1',
-                'channels' => 1,
-                'audio' => false,
-                'bat' => 'ffmpeg -y -i "{{input}}" -acodec aac -vcodec libx264 -preset slow -crf 15 -threads 0 "{{output}}"',
-                'streamserver' => [
-                    'type' => ProfileService::STREAMSERVER_STORE,
-                    'host' => '192.168.5.125',
-                    'name' => 'Download',
-                    'description' => 'Download server',
-                    'dir_out' => __DIR__.'/../Resources/dir_out',
-                    'url_out' => 'http://localhost:8000/downloads/',
-                ],
-                'app' => 'ffmpeg',
-                'rel_duration_size' => 1,
-                'rel_duration_trans' => 1,
-            ],
-        ];
     }
 }

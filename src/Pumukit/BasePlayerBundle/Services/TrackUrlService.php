@@ -4,21 +4,18 @@ declare(strict_types=1);
 
 namespace Pumukit\BasePlayerBundle\Services;
 
-use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\Track;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class TrackUrlService
 {
-    private $dm;
     private $router;
     private $secret;
     private $secureDuration;
 
-    public function __construct(DocumentManager $dm, UrlGeneratorInterface $router, $secret, $secureDuration)
+    public function __construct(UrlGeneratorInterface $router, $secret, $secureDuration)
     {
-        $this->dm = $dm;
         $this->router = $router;
         $this->secret = $secret;
         $this->secureDuration = $secureDuration;

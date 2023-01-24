@@ -1962,6 +1962,10 @@
         <source>Are you sure you want to delete this thumbnail?</source>
         <target>Are you sure you want to delete this thumbnail?</target>
       </trans-unit>
+      <trans-unit id="YUG7gTi" resname="If it corresponds to the one associated with the banner, the entire header will also be removed.">
+        <source>If it corresponds to the one associated with the banner, the entire header will also be removed.</source>
+        <target>If it corresponds to the one associated with the banner, the entire header will also be removed.</target>
+      </trans-unit>
       <trans-unit id="Eru2JsX" resname="Thumbnail removed.">
         <source>Thumbnail removed.</source>
         <target>Thumbnail removed.</target>
@@ -2350,9 +2354,17 @@
         <source>Copyright</source>
         <target>Copyright</target>
       </trans-unit>
+      <trans-unit id="jfx56q0C" resname="Copyright &lt;a href=&quot;%urlCopyright%&quot; target=&quot;__blank&quot;&gt;&lt;i class=&quot;fa fa-info-circle&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/a&gt;">
+        <source>Copyright &lt;a href="%urlCopyright%" target="__blank"&gt;&lt;i class="fa fa-info-circle" aria-hidden="true">&lt;/i&gt;&lt;/a&gt;</source>
+        <target><![CDATA[Copyright <a href="%urlCopyright%" target="__blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>]]></target>
+      </trans-unit>
       <trans-unit id="wBHWCXv" resname="License">
         <source>License</source>
         <target>License</target>
+      </trans-unit>
+      <trans-unit id="wBd345fCXv" resname="License &lt;a href=&quot;%urlLicense%&quot; target=&quot;__blank&quot;&gt;&lt;i class=&quot;fa fa-info-circle&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/a&gt;">
+        <source>License &lt;a href="%urlLicense%" target="__blank"&gt;&lt;i class="fa fa-info-circle" aria-hidden="true">&lt;/i&gt;&lt;/a&gt;</source>
+        <target><![CDATA[License <a href="%urlLicense%" target="__blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>]]></target>
       </trans-unit>
       <trans-unit id="os.h5dY" resname="Publication Date">
         <source>Publication Date</source>
@@ -4044,6 +4056,14 @@
       <trans-unit id="1" resname="ARCHIVED">
         <source>ARCHIVED</source>
         <target>ARCHIVED</target>
+      </trans-unit>
+      <trans-unit id="NtsMHOJ" resname="Search Channels">
+        <source>Search Channels</source>
+        <target>Search Channels</target>
+      </trans-unit>
+      <trans-unit id="uIEWO1i" resname="Selected Channel">
+        <source>Selected Channel</source>
+        <target>Selected Channel</target>
       </trans-unit>
     </body>
   </file>

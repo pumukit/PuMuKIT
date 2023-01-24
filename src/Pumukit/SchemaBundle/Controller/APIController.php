@@ -12,6 +12,8 @@ use Pumukit\SchemaBundle\Document\Live;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Services\PersonService;
+use Pumukit\SchemaBundle\Services\SeriesService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,14 +26,31 @@ class APIController extends AbstractController implements NewAdminControllerInte
 {
     public const API_SKIP = 0;
 
+    protected $documentManager;
+    protected $serializer;
+    protected $seriesService;
+    protected $personService;
+
+    public function __construct(
+        DocumentManager $documentManager,
+        SerializerService $serializer,
+        SeriesService $seriesService,
+        PersonService $personService
+    ) {
+        $this->documentManager = $documentManager;
+        $this->serializer = $serializer;
+        $this->seriesService = $seriesService;
+        $this->personService = $personService;
+    }
+
     /**
      * @Route("/stats.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      */
-    public function statsAction(Request $request, DocumentManager $documentManager, SerializerService $serializer)
+    public function statsAction(Request $request)
     {
-        $mmRepo = $documentManager->getRepository(MultimediaObject::class);
-        $seriesRepo = $documentManager->getRepository(Series::class);
-        $liveRepo = $documentManager->getRepository(Live::class);
+        $mmRepo = $this->documentManager->getRepository(MultimediaObject::class);
+        $seriesRepo = $this->documentManager->getRepository(Series::class);
+        $liveRepo = $this->documentManager->getRepository(Live::class);
 
         $totalSeries = $seriesRepo->countPublic();
         $totalMmobjs = $mmRepo->count();
@@ -49,7 +68,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
             'live_channels' => $totalLiveChannels,
         ];
 
-        $data = $serializer->dataSerialize($counts, $request->getRequestFormat());
+        $data = $this->serializer->dataSerialize($counts, $request->getRequestFormat());
 
         return new Response($data);
     }
@@ -57,11 +76,10 @@ class APIController extends AbstractController implements NewAdminControllerInte
     /**
      * @Route("/mmobj.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      */
-    public function multimediaObjectsAction(Request $request, DocumentManager $documentManager, SerializerService $serializer)
+    public function multimediaObjectsAction(Request $request)
     {
         $tempCriteria = [];
-        $mmRepo = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
-        $serializer = $this->get('jms_serializer');
+        $mmRepo = $this->documentManager->getRepository(MultimediaObject::class);
 
         $limit = (int) $request->get('limit');
         $page = (int) $request->get('page');
@@ -71,7 +89,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
             $criteria = $this->getMultimediaObjectCriteria($request->get('criteria'), $request->get('criteriajson'));
         } catch (\Exception $e) {
             $error = ['error' => sprintf('Invalid criteria (%s)', $e->getMessage())];
-            $data = $serializer->dataSerialize($error, $request->getRequestFormat());
+            $data = $this->serializer->dataSerialize($error, $request->getRequestFormat());
 
             return new Response($data, 400);
         }
@@ -101,7 +119,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
         //  WA TTK-25379 - Add dates range
         if ($criteria) {
             if (isset($criteria['owner'])) {
-                $user = $documentManager->getRepository(User::class)->createQueryBuilder()->field('username')->equals($criteria['owner'])->getQuery()->getSingleResult();
+                $user = $this->documentManager->getRepository(User::class)->createQueryBuilder()->field('username')->equals($criteria['owner'])->getQuery()->getSingleResult();
                 $qb->addAnd($qb->expr()->field('people')->elemMatch(
                     $qb->expr()->field('cod')->equals('owner')->field('people.id')->equals($user->getPerson()->getId())
                 ));
@@ -184,7 +202,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
             'mmobjs' => $mmobjs,
         ];
 
-        $data = $serializer->dataSerialize($counts, $request->getRequestFormat());
+        $data = $this->serializer->dataSerialize($counts, $request->getRequestFormat());
 
         return new Response($data);
     }
@@ -192,9 +210,9 @@ class APIController extends AbstractController implements NewAdminControllerInte
     /**
      * @Route("/series.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      */
-    public function seriesAction(Request $request, DocumentManager $documentManager, SerializerService $serializer)
+    public function seriesAction(Request $request)
     {
-        $seriesRepo = $documentManager->getRepository(Series::class);
+        $seriesRepo = $this->documentManager->getRepository(Series::class);
         $limit = (int) $request->get('limit');
         $page = (int) $request->get('page');
         $skip = (int) ($request->get('skip') ?? self::API_SKIP);
@@ -203,7 +221,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
             $criteria = $this->getCriteria($request->get('criteria'), $request->get('criteriajson'));
         } catch (\Exception $e) {
             $error = ['error' => sprintf('Invalid criteria (%s)', $e->getMessage())];
-            $data = $serializer->dataSerialize($error, $request->getRequestFormat());
+            $data = $this->serializer->dataSerialize($error, $request->getRequestFormat());
 
             return new Response($data, 400);
         }
@@ -244,7 +262,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
             'series' => $series,
         ];
 
-        $data = $serializer->dataSerialize($counts, $request->getRequestFormat());
+        $data = $this->serializer->dataSerialize($counts, $request->getRequestFormat());
 
         return new Response($data);
     }
@@ -254,21 +272,18 @@ class APIController extends AbstractController implements NewAdminControllerInte
      */
     public function userSeriesAction(Request $request)
     {
-        $seriesService = $this->get('pumukitschema.series');
-        $personService = $this->get('pumukitschema.person');
-        $userRepo = $this->get('doctrine_mongodb')->getRepository(User::class);
-        $serializer = $this->get('jms_serializer');
+        $userRepo = $this->documentManager->getRepository(User::class);
         $sort = $request->get('sort') ?: [];
         $onlyAdminSeries = $request->get('adminSeries') ?: false;
         $limit = (int) $request->get('limit');
 
-        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
+        $personalScopeRoleCode = $this->personService->getPersonalScopeRoleCode();
 
         try {
             $criteria = $this->getCriteria($request->get('criteria'), $request->get('criteriajson'));
         } catch (\Exception $e) {
             $error = ['error' => sprintf('Invalid criteria (%s)', $e->getMessage())];
-            $data = $serializer->serialize($error, $request->getRequestFormat());
+            $data = $this->serializer->dataSerialize($error, $request->getRequestFormat());
 
             return new Response($data, 400);
         }
@@ -277,9 +292,12 @@ class APIController extends AbstractController implements NewAdminControllerInte
             $limit = 100;
         }
 
+        if (!isset($criteria['owner'])) {
+            return new Response('');
+        }
         $user = $userRepo->createQueryBuilder()->field('username')->equals($criteria['owner'])->getQuery()->getSingleResult();
 
-        $seriesOfUser = $seriesService->getSeriesOfUser($user, $onlyAdminSeries, $personalScopeRoleCode, $sort, $limit);
+        $seriesOfUser = $this->seriesService->getSeriesOfUser($user, $onlyAdminSeries, $personalScopeRoleCode, $sort, $limit);
 
         $seriesOfUser = [
             'total' => is_countable($seriesOfUser) ? count($seriesOfUser) : 0,
@@ -289,7 +307,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
             'seriesOfUser' => $seriesOfUser->toArray(),
         ];
 
-        $data = $serializer->serialize($seriesOfUser, $request->getRequestFormat());
+        $data = $this->serializer->dataSerialize($seriesOfUser, $request->getRequestFormat());
 
         return new Response($data);
     }
@@ -297,9 +315,9 @@ class APIController extends AbstractController implements NewAdminControllerInte
     /**
      * @Route("/live.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      */
-    public function liveAction(Request $request, DocumentManager $documentManager, SerializerService $serializer)
+    public function liveAction(Request $request)
     {
-        $liveRepo = $documentManager->getRepository(Live::class);
+        $liveRepo = $this->documentManager->getRepository(Live::class);
 
         $limit = $request->get('limit');
         if (!$limit || $limit > 100) {
@@ -310,7 +328,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
             $criteria = $this->getCriteria($request->get('criteria'), $request->get('criteriajson'));
         } catch (\Exception $e) {
             $error = ['error' => sprintf('Invalid criteria (%s)', $e->getMessage())];
-            $data = $serializer->dataSerialize($error, $request->getRequestFormat());
+            $data = $this->serializer->dataSerialize($error, $request->getRequestFormat());
 
             return new Response($data, 400);
         }
@@ -341,7 +359,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
             'live' => $live,
         ];
 
-        $data = $serializer->dataSerialize($counts, $request->getRequestFormat());
+        $data = $this->serializer->dataSerialize($counts, $request->getRequestFormat());
 
         return new Response($data);
     }
@@ -349,9 +367,9 @@ class APIController extends AbstractController implements NewAdminControllerInte
     /**
      * @Route("/locales.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      */
-    public function localesAction(Request $request, SerializerService $serializer, array $locales)
+    public function localesAction(Request $request, array $locales)
     {
-        $data = $serializer->dataSerialize($locales, $request->getRequestFormat());
+        $data = $this->serializer->dataSerialize($locales, $request->getRequestFormat());
 
         return new Response($data);
     }

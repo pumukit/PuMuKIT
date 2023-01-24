@@ -17,7 +17,6 @@ use Pumukit\StatsBundle\Services\StatsService;
  */
 class StatsServiceTest extends PumukitTestCase
 {
-    private $repo;
     private $factoryService;
     private $viewsService;
 
@@ -26,7 +25,6 @@ class StatsServiceTest extends PumukitTestCase
         $options = ['environment' => 'test'];
         static::bootKernel($options);
         parent::setUp();
-        $this->repo = $this->dm->getRepository(ViewsLog::class);
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->viewsService = static::$kernel->getContainer()->get('pumukit_stats.stats');
     }
@@ -36,7 +34,6 @@ class StatsServiceTest extends PumukitTestCase
         parent::tearDown();
         $this->dm->close();
 
-        $this->repo = null;
         $this->factoryService = null;
         $this->viewsService = null;
         gc_collect_cycles();

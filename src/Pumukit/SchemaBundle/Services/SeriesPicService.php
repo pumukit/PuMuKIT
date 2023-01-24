@@ -196,7 +196,11 @@ class SeriesPicService
                 $banner = str_replace('#', $bannerTargetUrl, $banner);
             }
             foreach ($this->locales as $locale) {
-                $series->setHeader($banner, $locale);
+                $header = $banner;
+                if (!empty($series->getHeader($locale))) {
+                    $header = $series->getHeader($locale).$banner;
+                }
+                $series->setHeader($header, $locale);
             }
         }
 

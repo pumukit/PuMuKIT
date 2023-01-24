@@ -221,6 +221,9 @@ services:
   Pumukit\SchemaBundle\Services\CreateUserService:
     class: Pumukit\SchemaBundle\Services\CreateUserService
 
+  Pumukit\SchemaBundle\Services\PasswordService:
+    class: Pumukit\SchemaBundle\Services\PasswordService
+
   Pumukit\SchemaBundle\Services\UpdateUserService:
     class: Pumukit\SchemaBundle\Services\UpdateUserService
 

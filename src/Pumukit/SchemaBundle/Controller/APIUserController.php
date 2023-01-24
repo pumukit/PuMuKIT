@@ -17,15 +17,28 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class APIUserController extends AbstractController
 {
+    protected $documentManager;
+    protected $serializer;
+
+    public function __construct(DocumentManager $documentManager, SerializerService $serializer)
+    {
+        $this->documentManager = $documentManager;
+        $this->serializer = $serializer;
+    }
+
     /**
      * @Route("/users.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      */
-    public function allAction(Request $request, DocumentManager $documentManager, SerializerService $serializer)
+    public function allAction(Request $request): Response
     {
-        $repo = $documentManager->getRepository(User::class);
+        $users = $this->documentManager->getRepository(User::class)->findAll();
 
-        $users = $repo->findAll();
-        $data = $serializer->dataSerialize($users, $request->getRequestFormat());
+        $userData = [
+            'total' => is_countable($users) ? count($users) : 0,
+            'users' => $users,
+        ];
+
+        $data = $this->serializer->dataSerialize($userData, $request->getRequestFormat());
 
         return new Response($data);
     }

@@ -21,8 +21,6 @@ class RemoveListenerTest extends PumukitTestCase
     private $repoSeries;
     private $trackService;
     private $factoryService;
-    private $resourcesDir;
-    private $tokenStorage;
 
     public function setUp(): void
     {
@@ -36,9 +34,6 @@ class RemoveListenerTest extends PumukitTestCase
         $this->repoSeries = $this->dm->getRepository(Series::class);
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->trackService = static::$kernel->getContainer()->get('pumukitschema.track');
-        $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
-
-        $this->resourcesDir = realpath(__DIR__.'/../Resources');
     }
 
     public function tearDown(): void
@@ -51,8 +46,6 @@ class RemoveListenerTest extends PumukitTestCase
         $this->repoSeries = null;
         $this->factoryService = null;
         $this->trackService = null;
-        $this->tokenStorage = null;
-        $this->resourcesDir = null;
         gc_collect_cycles();
     }
 

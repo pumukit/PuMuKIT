@@ -1,6 +1,8 @@
 <?php
 
-declare(strict_types=1); /**
+declare(strict_types=1);
+
+/**
  * This test signs a bug in 'doctrine/mongodb-odm'. The bug is similar to #981.
  * Pumukit has the next workaround while the bug is not fixed:.
  *
@@ -11,7 +13,6 @@ declare(strict_types=1); /**
 namespace Pumukit\SchemaBundle\Tests\Other;
 
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 
 /**
@@ -21,7 +22,6 @@ use Pumukit\SchemaBundle\Document\Series;
 class MultimediaObjectInSeriesTest extends PumukitTestCase
 {
     private $seriesRepo;
-    private $mmobjRepo;
     private $factoryService;
 
     public function setUp(): void
@@ -32,7 +32,6 @@ class MultimediaObjectInSeriesTest extends PumukitTestCase
         $container = static::$kernel->getContainer();
         $this->factoryService = $container->get('pumukitschema.factory');
         $this->seriesRepo = $this->dm->getRepository(Series::class);
-        $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
     }
 
     public function tearDown(): void
@@ -42,7 +41,6 @@ class MultimediaObjectInSeriesTest extends PumukitTestCase
         $this->factoryService = null;
 
         $this->seriesRepo = null;
-        $this->mmobjRepo = null;
         gc_collect_cycles();
     }
 

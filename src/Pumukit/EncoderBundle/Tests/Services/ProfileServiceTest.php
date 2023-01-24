@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Pumukit\EncoderBundle\Tests\Services;
 
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
-use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\ProfileService;
 
 /**
@@ -14,7 +13,6 @@ use Pumukit\EncoderBundle\Services\ProfileService;
  */
 class ProfileServiceTest extends PumukitTestCase
 {
-    private $repo;
     private $profileService;
 
     public function setUp(): void
@@ -22,7 +20,6 @@ class ProfileServiceTest extends PumukitTestCase
         $options = ['environment' => 'test'];
         static::bootKernel($options);
         parent::setUp();
-        $this->repo = $this->dm->getRepository(Job::class);
         $this->profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
     }
 
@@ -31,8 +28,6 @@ class ProfileServiceTest extends PumukitTestCase
         parent::tearDown();
 
         $this->dm->close();
-
-        $this->repo = null;
         $this->profileService = null;
         gc_collect_cycles();
     }

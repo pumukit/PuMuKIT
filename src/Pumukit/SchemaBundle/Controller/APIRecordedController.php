@@ -16,17 +16,26 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class APIRecordedController extends AbstractController
 {
+    protected $statsService;
+    protected $serializer;
+
+    public function __construct(StatsService $statsService, SerializerService $serializer)
+    {
+        $this->statsService = $statsService;
+        $this->serializer = $serializer;
+    }
+
     /**
      * @Route("/mmobj/num_recorded.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      * @Route("/mmobj/recorded.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      */
-    public function mmobjRecordedAction(Request $request, StatsService $recordsService, SerializerService $serializer)
+    public function mmobjRecordedAction(Request $request)
     {
         [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
 
         $groupBy = $request->get('group_by') ?: 'month';
 
-        $views = $recordsService->getMmobjRecordedGroupedBy($fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy);
+        $views = $this->statsService->getMmobjRecordedGroupedBy($fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy);
 
         $views = [
             'limit' => $limit,
@@ -39,7 +48,7 @@ class APIRecordedController extends AbstractController
             'views' => $views,
         ];
 
-        $data = $serializer->dataSerialize($views, $request->getRequestFormat());
+        $data = $this->serializer->dataSerialize($views, $request->getRequestFormat());
 
         return new Response($data);
     }
@@ -49,13 +58,13 @@ class APIRecordedController extends AbstractController
      * @Route("/series/recorded.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      * @Route("/series/published.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      */
-    public function seriesRecordedAction(Request $request, StatsService $recordsService, SerializerService $serializer)
+    public function seriesRecordedAction(Request $request)
     {
         [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
 
         $groupBy = $request->get('group_by') ?: 'month';
 
-        $views = $recordsService->getSeriesRecordedGroupedBy($fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy);
+        $views = $this->statsService->getSeriesRecordedGroupedBy($fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy);
 
         $views = [
             'limit' => $limit,
@@ -68,7 +77,7 @@ class APIRecordedController extends AbstractController
             'views' => $views,
         ];
 
-        $data = $serializer->dataSerialize($views, $request->getRequestFormat());
+        $data = $this->serializer->dataSerialize($views, $request->getRequestFormat());
 
         return new Response($data);
     }
@@ -77,13 +86,13 @@ class APIRecordedController extends AbstractController
      * @Route("/hours/num_recorded.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      * @Route("/hours/recorded.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      */
-    public function hoursRecordedAction(Request $request, StatsService $recordsService, SerializerService $serializer)
+    public function hoursRecordedAction(Request $request)
     {
         [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
 
         $groupBy = $request->get('group_by') ?: 'month';
 
-        $views = $recordsService->getHoursRecordedGroupedBy($fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy);
+        $views = $this->statsService->getHoursRecordedGroupedBy($fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy);
 
         $views = [
             'limit' => $limit,
@@ -96,7 +105,7 @@ class APIRecordedController extends AbstractController
             'views' => $views,
         ];
 
-        $data = $serializer->dataSerialize($views, $request->getRequestFormat());
+        $data = $this->serializer->dataSerialize($views, $request->getRequestFormat());
 
         return new Response($data);
     }
@@ -104,18 +113,18 @@ class APIRecordedController extends AbstractController
     /**
      * @Route("/mmobj/stats.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
      */
-    public function globalStatsAction(Request $request, StatsService $recordsService, SerializerService $serializer)
+    public function globalStatsAction(Request $request)
     {
         $groupBy = $request->get('group_by') ?: 'month';
 
-        $stats = $recordsService->getGlobalStats($groupBy);
+        $stats = $this->statsService->getGlobalStats($groupBy);
 
         $stats = [
             'group_by' => $groupBy,
             'stats' => $stats,
         ];
 
-        $data = $serializer->dataSerialize($stats, $request->getRequestFormat());
+        $data = $this->serializer->dataSerialize($stats, $request->getRequestFormat());
 
         return new Response($data);
     }
@@ -126,8 +135,8 @@ class APIRecordedController extends AbstractController
         //Request variables.
         $criteria = $request->get('criteria') ?: [];
         $sort = (int) ($request->get('sort'));
-        $fromDate = $request->get('from_date');
-        $toDate = $request->get('to_date');
+        $fromDate = $request->get('from_date') ?? date('Y-m-d');
+        $toDate = $request->get('to_date') ?? date('Y-m-d');
         $limit = (int) ($request->get('limit'));
         $page = $request->get('page') ?: 0;
 
