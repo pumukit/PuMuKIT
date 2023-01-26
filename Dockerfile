@@ -12,7 +12,7 @@ RUN source .env
 
 RUN set -eux; \
     mkdir -p var/cache var/log var/sessions && \
-    composer install --prefer-dist --no-scripts --no-progress --classmap-authoritative --no-interaction && \
+    composer update --prefer-dist --no-scripts --no-progress --classmap-authoritative --no-interaction && \
     chown -R www-data var && \
     php bin/console a:i
 
