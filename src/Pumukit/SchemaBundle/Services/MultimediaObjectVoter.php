@@ -47,14 +47,14 @@ class MultimediaObjectVoter extends Voter
         $user = $token->getUser();
 
         switch ($attribute) {
-        case self::EDIT:
-            return $this->canEdit($multimediaObject, $user);
+            case self::EDIT:
+                return $this->canEdit($multimediaObject, $user);
 
-        case self::PLAY:
-            return $this->canPlay($multimediaObject, $user);
+            case self::PLAY:
+                return $this->canPlay($multimediaObject, $user);
 
-        case self::VIEW_METADATA:
-            return $this->canViewMetadata($multimediaObject, $user);
+            case self::VIEW_METADATA:
+                return $this->canViewMetadata($multimediaObject, $user);
         }
 
         throw new \LogicException('This code should not be reached!');

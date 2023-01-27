@@ -13,7 +13,7 @@ namespace Pumukit\BasePlayerBundle\Utils;
  */
 class CountableAppendIterator extends \AppendIterator implements \Countable
 {
-    public function count()
+    public function count(): int
     {
         return iterator_count($this);
     }

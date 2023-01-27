@@ -11,6 +11,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class EmbeddedEventSessionServiceTest extends PumukitTestCase
@@ -43,7 +44,7 @@ class EmbeddedEventSessionServiceTest extends PumukitTestCase
         $this->dm->persist($series);
         $this->dm->flush();
 
-        //Today object
+        // Today object
         $mm11 = $this->factoryService->createMultimediaObject($series);
         $mm11->setType(MultimediaObject::TYPE_LIVE);
         $event = new EmbeddedEvent();
@@ -70,7 +71,7 @@ class EmbeddedEventSessionServiceTest extends PumukitTestCase
         $next = $this->service->findNextEvents();
         static::assertCount(0, $next);
 
-        //Add session yesterday
+        // Add session yesterday
         $start = new \DateTime('-33 hour');
         $end = new \DateTime('-32 hour');
         $duration = $end->getTimestamp() - $start->getTimestamp();
@@ -90,7 +91,7 @@ class EmbeddedEventSessionServiceTest extends PumukitTestCase
         $next = $this->service->findNextEvents();
         static::assertCount(0, $next);
 
-        //Add session tomorrow
+        // Add session tomorrow
         $start = new \DateTime('+33 hour');
         $end = new \DateTime('+34 hour');
         $duration = $end->getTimestamp() - $start->getTimestamp();
@@ -110,7 +111,7 @@ class EmbeddedEventSessionServiceTest extends PumukitTestCase
         $next = $this->service->findNextEvents();
         static::assertCount(1, $next);
 
-        //Other today object
+        // Other today object
         $mm12 = $this->factoryService->createMultimediaObject($series);
         $mm12->setType(MultimediaObject::TYPE_LIVE);
         $event = new EmbeddedEvent();
@@ -142,7 +143,7 @@ class EmbeddedEventSessionServiceTest extends PumukitTestCase
         $next = $this->service->findNextEvents();
         static::assertCount(1, $next);
 
-        //Other future object
+        // Other future object
         $mm12 = $this->factoryService->createMultimediaObject($series);
         $mm12->setType(MultimediaObject::TYPE_LIVE);
         $event = new EmbeddedEvent();
@@ -174,7 +175,7 @@ class EmbeddedEventSessionServiceTest extends PumukitTestCase
             $next[1]['data']['session']['start']
         );
 
-        //Other future object
+        // Other future object
         $mm12 = $this->factoryService->createMultimediaObject($series);
         $mm12->setType(MultimediaObject::TYPE_LIVE);
         $event = new EmbeddedEvent();

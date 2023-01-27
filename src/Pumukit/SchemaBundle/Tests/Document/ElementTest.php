@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\Element;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class ElementTest extends TestCase
@@ -70,7 +71,7 @@ class ElementTest extends TestCase
         $element->removeTag('t');
         static::assertFalse($element->containsTag('t'));
 
-        //Repeat Tag
+        // Repeat Tag
         static::assertFalse($element->containsTag('t'));
         $element->addTag('t');
         $element->addTag('t');
@@ -79,7 +80,7 @@ class ElementTest extends TestCase
         static::assertFalse($element->containsTag('t'));
         static::assertFalse($element->removeTag('t'));
 
-        //containsAllTag and containsAnyTag
+        // containsAllTag and containsAnyTag
         $element->addTag('t1');
         $element->addTag('t2');
         $element->addTag('t3');

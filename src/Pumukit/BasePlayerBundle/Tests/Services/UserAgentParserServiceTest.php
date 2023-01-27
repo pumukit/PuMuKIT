@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class UserAgentParserServiceTest extends WebTestCase
@@ -21,7 +22,7 @@ class UserAgentParserServiceTest extends WebTestCase
         static::bootKernel($options);
 
         $this->agentService = static::$kernel->getContainer()->get('pumukit_baseplayer.useragent_parser');
-        //Setting up user agent strings taken from random browsers:
+        // Setting up user agent strings taken from random browsers:
         $this->agentStrings = [
             ['string' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20130401 Firefox/31.0', 'old' => true],
             ['string' => 'Mozilla/5.0 (X11; U; Linux i686; ru-RU; rv:1.9.2a1pre) Gecko/20090405 Ubuntu/9.04 (jaunty) Firefox/3.6a1pre', 'old' => true],

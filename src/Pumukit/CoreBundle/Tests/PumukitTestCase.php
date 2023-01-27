@@ -27,6 +27,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class PumukitTestCase extends WebTestCase

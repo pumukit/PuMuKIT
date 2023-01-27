@@ -142,7 +142,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
                 ));
                 $tempCriteria['public_date_init'] = $criteria['public_date_init'];
                 unset($criteria['public_date_init']);
-            } elseif ((isset($criteria['public_date_finish']) && !empty($criteria['public_date_finish']))) {
+            } elseif (isset($criteria['public_date_finish']) && !empty($criteria['public_date_finish'])) {
                 $date = date($criteria['public_date_finish'].'T23:59:59');
                 $qb->addAnd($qb->expr()->field('public_date')->range(
                     new UTCDateTime(strtotime($criteria['public_date_finish'])),
@@ -167,7 +167,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
                 ));
                 $tempCriteria['record_date_init'] = $criteria['record_date_init'];
                 unset($criteria['record_date_init']);
-            } elseif ((isset($criteria['record_date_finish']) && !empty($criteria['record_date_finish']))) {
+            } elseif (isset($criteria['record_date_finish']) && !empty($criteria['record_date_finish'])) {
                 $date = date($criteria['record_date_finish'].'T23:59:59');
                 $qb->addAnd($qb->expr()->field('record_date')->range(
                     new UTCDateTime(strtotime($criteria['record_date_finish'])),

@@ -110,7 +110,7 @@ class CpuService
     public function deactivateMaintenance($cpuName, $flush = true)
     {
         $cpuStatus = $this->cpuRepo->findOneBy(['name' => $cpuName]);
-        //So far, if it exists in the db, it IS in maintenance mode. This may change in the future. Change this logic accordingly.
+        // So far, if it exists in the db, it IS in maintenance mode. This may change in the future. Change this logic accordingly.
         if ($cpuStatus) {
             $this->dm->remove($cpuStatus);
             if ($flush) {

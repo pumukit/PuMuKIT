@@ -23,16 +23,21 @@ class PersonService
 {
     /** @var DocumentManager */
     private $dm;
+
     /** @var PersonWithRoleEventDispatcherService */
     private $dispatcher;
+
     /** @var PersonRepository */
     private $repoPerson;
+
     /** @var MultimediaObjectRepository */
     private $repoMmobj;
+
     /** @var UserService */
     private $userService;
     private $addUserAsPerson;
     private $personalScopeRoleCode;
+
     /** @var RoleRepository */
     private $repoRole;
 
@@ -168,7 +173,7 @@ class PersonService
     public function autoCompletePeopleByName(string $name, array $exclude = [], bool $checkAccents = false)
     {
         if ($checkAccents) {
-            //Wating for Mongo 4 and https://docs.mongodb.com/manual/reference/collation/
+            // Wating for Mongo 4 and https://docs.mongodb.com/manual/reference/collation/
             $name = SearchUtils::scapeTildes($name);
         }
 
@@ -239,7 +244,7 @@ class PersonService
         foreach ($this->repoMmobj->findByPersonId($person->getId()) as $mmobj) {
             foreach ($mmobj->getRoles() as $embeddedRole) {
                 if ($mmobj->containsPersonWithRole($person, $embeddedRole)) {
-                    if (!($mmobj->removePersonWithRole($person, $embeddedRole))) {
+                    if (!$mmobj->removePersonWithRole($person, $embeddedRole)) {
                         throw new \Exception('There was an error removing person '.$person->getId().' with role '.$embeddedRole->getCod().' in multimedia object '.$mmobj->getId());
                     }
                     $this->dispatcher->dispatchDelete($mmobj, $person, $embeddedRole);

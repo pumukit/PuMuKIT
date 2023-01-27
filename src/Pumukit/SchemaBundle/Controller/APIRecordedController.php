@@ -132,15 +132,15 @@ class APIRecordedController extends AbstractController
     protected function processRequestData(Request $request)
     {
         $MAX_LIMIT = 1500;
-        //Request variables.
+        // Request variables.
         $criteria = $request->get('criteria') ?: [];
-        $sort = (int) ($request->get('sort'));
+        $sort = (int) $request->get('sort');
         $fromDate = $request->get('from_date') ?? date('Y-m-d');
         $toDate = $request->get('to_date') ?? date('Y-m-d');
-        $limit = (int) ($request->get('limit'));
+        $limit = (int) $request->get('limit');
         $page = $request->get('page') ?: 0;
 
-        //Processing variables.
+        // Processing variables.
         if (!$limit || $limit > $MAX_LIMIT) {
             $limit = $MAX_LIMIT;
         }

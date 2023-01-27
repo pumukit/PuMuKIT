@@ -15,6 +15,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class FuncionalTest extends PumukitTestCase

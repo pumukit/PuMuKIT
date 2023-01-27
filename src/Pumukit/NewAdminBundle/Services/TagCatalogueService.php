@@ -60,9 +60,9 @@ class TagCatalogueService
     }
 
     /**
-     * @throws \Exception
-     *
      * @return object|Tag
+     *
+     * @throws \Exception
      */
     public function getConfiguredTag()
     {
@@ -184,7 +184,7 @@ class TagCatalogueService
             }
         }
 
-        if (!empty($tag)) {
+        if (count($tag) > 0) {
             if ('all' === $tag[0]) {
                 array_shift($tag);
             }
@@ -227,9 +227,9 @@ class TagCatalogueService
     /**
      * @param string $field
      *
-     * @throws \Exception
-     *
      * @return string
+     *
+     * @throws \Exception
      */
     public function renderField(MultimediaObject $object, SessionInterface $session, $field)
     {

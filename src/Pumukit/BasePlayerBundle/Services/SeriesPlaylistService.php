@@ -16,6 +16,7 @@ class SeriesPlaylistService
 {
     /** @var DocumentManager */
     private $dm;
+
     /** @var MultimediaObjectRepository */
     private $mmobjRepo;
 
@@ -140,8 +141,8 @@ class SeriesPlaylistService
         $playlistMmobjsFiltered = $this->createQueryPlaylistMmobjs($playlistMmobjs, $criteria)->getQuery()->execute();
 
         $playlist = [];
-        //This foreach orders the $playlistMmobjsFiltered results according to the order they appear in $playlistMmobjs.
-        //Ideally, mongo should return them ordered already, but I couldn't find how to achieve that.
+        // This foreach orders the $playlistMmobjsFiltered results according to the order they appear in $playlistMmobjs.
+        // Ideally, mongo should return them ordered already, but I couldn't find how to achieve that.
         foreach ($playlistMmobjs as $playMmobj) {
             foreach ($playlistMmobjsFiltered as $mmobj) {
                 // NOTE: dont use strict mode comparation because getId returns string

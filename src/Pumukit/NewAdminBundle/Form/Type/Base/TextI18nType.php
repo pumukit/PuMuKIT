@@ -6,7 +6,7 @@ namespace Pumukit\NewAdminBundle\Form\Type\Base;
 
 class TextI18nType extends AbstractI18nType
 {
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'texti18n';
     }

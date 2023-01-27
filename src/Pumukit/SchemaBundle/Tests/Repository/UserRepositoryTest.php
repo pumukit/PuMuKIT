@@ -12,6 +12,7 @@ use Pumukit\SchemaBundle\Document\User;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class UserRepositoryTest extends PumukitTestCase

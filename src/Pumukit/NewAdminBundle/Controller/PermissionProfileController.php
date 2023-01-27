@@ -33,8 +33,10 @@ class PermissionProfileController extends AdminController
 
     /** @var PermissionProfileService */
     protected $permissionProfileService;
+
     /** @var PermissionService */
     private $permissionService;
+
     /** @var PermissionProfileEventDispatcherService */
     private $pumukitSchemaPermissionProfileDispatcher;
     private $pumukitUseSeriesChannels;
@@ -206,7 +208,7 @@ class PermissionProfileController extends AdminController
 
         $allPermissionProfiles = $repo->findAll();
 
-        //Doing a batch update for all checked profiles. This will remove everything except the checked permissions.
+        // Doing a batch update for all checked profiles. This will remove everything except the checked permissions.
         $permissionProfiles = $this->buildPermissionProfiles($checkedPermissions, $selectedScopes);
         foreach ($permissionProfiles as $profileId => $p) {
             $permissionProfile = $this->findPermissionProfile($allPermissionProfiles, $profileId);
@@ -268,7 +270,7 @@ class PermissionProfileController extends AdminController
     private function buildPermissionProfiles($checkedPermissions, $selectedScopes): array
     {
         $permissionProfiles = [];
-        //Adds scope and checked permissions to permissions.
+        // Adds scope and checked permissions to permissions.
         foreach ($checkedPermissions as $permission) {
             $data = $this->separateAttributePermissionProfilesIds($permission);
             $permissionProfiles[$data['profileId']]['permissions'][] = $data['attribute'];

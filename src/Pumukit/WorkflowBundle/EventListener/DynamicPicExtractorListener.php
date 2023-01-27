@@ -14,6 +14,7 @@ class DynamicPicExtractorListener
 {
     /** @var LoggerInterface */
     private $logger;
+
     /** @var DynamicPicExtractorService */
     private $dynamicPicExtractorService;
     private $enableDynamicPicExtract;

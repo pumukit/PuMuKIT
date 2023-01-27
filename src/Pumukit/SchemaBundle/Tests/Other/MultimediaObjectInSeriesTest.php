@@ -17,6 +17,7 @@ use Pumukit\SchemaBundle\Document\Series;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class MultimediaObjectInSeriesTest extends PumukitTestCase

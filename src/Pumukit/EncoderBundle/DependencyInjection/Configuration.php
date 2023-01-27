@@ -40,7 +40,7 @@ class Configuration implements ConfigurationInterface
             ->defaultValue(86400)
             ->info('The lifetime that job can be executing ( on seconds )')
             ->end()
-            ;
+        ;
     }
 
     public static function addProfilesSection(ArrayNodeDefinition $node): void
@@ -64,7 +64,7 @@ class Configuration implements ConfigurationInterface
             ->info('The track is master copy')->end()
             ->booleanNode('downloadable')->defaultValue(false)
             ->info('The track generated is downloadable')->end()
-                            //Used in JobGeneratorListener
+                            // Used in JobGeneratorListener
             ->scalarNode('target')->defaultValue('')
             ->info('Profile is used to generate a new track when a multimedia object is tagged with a publication channel tag name with this value. List of names')->end()
             ->scalarNode('tags')->defaultValue('')->info('Tags used in tracks created with this profiles')->end()
@@ -115,7 +115,7 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->end()
             ->end()
-          ;
+        ;
     }
 
     public function addCpusSection(ArrayNodeDefinition $node): void
@@ -129,7 +129,7 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('host')->isRequired()->cannotBeEmpty()
             ->info('Encoder Hostnames (or IPs)')->end()
             ->integerNode('number')->min(0)->defaultValue(1)
-                                //BC Delete in Pumukit 2.2
+                                // BC Delete in Pumukit 2.2
             ->info('Deprecated since version 2, to be removed in 2.2.')->end()
             ->integerNode('max')->min(0)->defaultValue(1)
             ->info('Top for the maximum number of concurrent encoding jobs')->end()
@@ -188,6 +188,6 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->end()
             ->end()
-         ;
+        ;
     }
 }

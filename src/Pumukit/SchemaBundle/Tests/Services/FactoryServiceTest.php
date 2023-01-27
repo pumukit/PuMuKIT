@@ -15,6 +15,7 @@ use Pumukit\SchemaBundle\Services\FactoryService;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class FactoryServiceTest extends PumukitTestCase
@@ -56,12 +57,12 @@ class FactoryServiceTest extends PumukitTestCase
         static::assertCount(1, $this->seriesRepo->findAll());
         static::assertCount(1, $this->multimediaObjectRepo->findAll());
         static::assertEquals($series, $this->multimediaObjectRepo->findAll()[0]->getSeries());
-        //NOTE getMultimediaObjects gives us all multimedia objects in the series except prototype
+        // NOTE getMultimediaObjects gives us all multimedia objects in the series except prototype
         static::assertEquals($series, $this->seriesRepo->findAll()[0]);
         static::assertCount(0, $this->seriesRepo->getMultimediaObjects($series));
 
-        //NOTE series.multimedia_objects have diferent internal initialized value.
-        //$this->assertEquals($series, $this->mmobjRepo->findAll()[0]->getSeries());
+        // NOTE series.multimedia_objects have diferent internal initialized value.
+        // $this->assertEquals($series, $this->mmobjRepo->findAll()[0]->getSeries());
         static::assertEquals($series->getId(), $this->multimediaObjectRepo->findAll()[0]->getSeries()->getId());
         static::assertTrue($this->multimediaObjectRepo->findAll()[0]->isPrototype());
     }
@@ -121,7 +122,7 @@ class FactoryServiceTest extends PumukitTestCase
         $this->dm->persist($series_type2);
         $this->dm->flush();
 
-        //Workaround to fix reference method initialization.
+        // Workaround to fix reference method initialization.
         $this->dm->clear();
         $series_type1 = $this->dm->getRepository(SeriesType::class)->findOneBy(['_id' => $series_type1->getId()]);
         $series_type2 = $this->dm->getRepository(SeriesType::class)->findOneBy(['_id' => $series_type2->getId()]);

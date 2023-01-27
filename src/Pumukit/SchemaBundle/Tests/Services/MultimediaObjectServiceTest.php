@@ -13,6 +13,7 @@ use Pumukit\SchemaBundle\Document\User;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class MultimediaObjectServiceTest extends PumukitTestCase

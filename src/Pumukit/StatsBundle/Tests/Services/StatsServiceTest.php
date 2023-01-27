@@ -13,6 +13,7 @@ use Pumukit\StatsBundle\Services\StatsService;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class StatsServiceTest extends PumukitTestCase
@@ -120,14 +121,14 @@ class StatsServiceTest extends PumukitTestCase
         $list = $this->initContext();
         $this->initTags($list);
         $service = new StatsService($this->dm);
-        //Maps the list to give an output similar to function
+        // Maps the list to give an output similar to function
         $listMapped = array_map(function ($a) {
             return [
                 'mmobj' => $a,
                 'num_viewed' => $a->getNumview(),
             ];
         }, $list);
-        //Sorts by least viewed
+        // Sorts by least viewed
         usort($listMapped, function ($a, $b) {
             return $a['num_viewed'] > $b['num_viewed'];
         });
@@ -136,7 +137,7 @@ class StatsServiceTest extends PumukitTestCase
 
         static::assertEquals($listMapped, $mostViewed);
 
-        //Sorts by most viewed
+        // Sorts by most viewed
         usort($listMapped, function ($a, $b) {
             return $a['num_viewed'] < $b['num_viewed'];
         });
@@ -166,7 +167,7 @@ class StatsServiceTest extends PumukitTestCase
 
     public function testGetSeriesMostViewedByRange(): void
     {
-        //Init Context (but series)
+        // Init Context (but series)
         $seriesList = [];
         $seriesList[0] = [];
         $seriesList[0][0] = $this->factoryService->createSeries();

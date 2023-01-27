@@ -1,12 +1,12 @@
-ARG PHP_VERSION=7.4
-ARG ALPINE_VERSION=3.11
+ARG PHP_VERSION=8.2
+ARG ALPINE_VERSION=3.16
 
 FROM php:${PHP_VERSION}-fpm-alpine${ALPINE_VERSION} as base
-MAINTAINER Pablo Nieto, pnieto@teltek.es
+LABEL org.opencontainers.image.authors="Pablo Nieto, pnieto@teltek.es"
 
-ARG APCU_VERSION=5.1.19
-ARG PHP_MONGODB_VERSION=1.9.0
-ARG XDEBUG_VERSION=3.0.1
+ARG APCU_VERSION=5.1.22
+ARG PHP_MONGODB_VERSION=1.14.2
+ARG XDEBUG_VERSION=3.2.0
 
 ENV PHP_FPM_PM="dynamic" \
 	PHP_FPM_MAX_CHILDREN="5" \ 
@@ -108,10 +108,9 @@ RUN apk  add --no-cache \
 			libssl1.1 \
 			libgomp \
 			expat \
-			python \
-			py-setuptools \
-			py-argparse \
-			py2-pip \
+			python3 \
+			py3-configargparse \
+			py3-pip \
 			grep \
 ;
 
@@ -141,6 +140,7 @@ RUN set -eux; \
 		libxslt-dev \
 		jpeg-dev \
 		freetype-dev \
+		linux-headers \
  	; \
  	\
  	docker-php-ext-configure zip; \
@@ -225,11 +225,11 @@ COPY ./www.conf /usr/local/etc/php-fpm.d/www.conf
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
 # Download and install pumukit to get the composer cache and improve build times
-RUN git clone https://github.com/pumukit/pumukit /srv/pumukit; \
-	cd /srv/pumukit; \
-	git checkout master; \
-	composer install -a -n --no-scripts
-RUN rm -rf /srv/pumukit
+# RUN git clone https://github.com/pumukit/pumukit /srv/pumukit; \
+# 	cd /srv/pumukit; \
+# 	git checkout 4.0.x; \
+# 	composer install -a -n --no-scripts
+# RUN rm -rf /srv/pumukit
 
 ENV PATH="${PATH}:/root/.composer/vendor/bin"
 

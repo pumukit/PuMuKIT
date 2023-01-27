@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\Role;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class RoleTest extends TestCase
@@ -28,7 +29,7 @@ class RoleTest extends TestCase
         $role = new Role();
 
         $locale = 'en';
-        $cod = 'rol1'; //String - max length = 5
+        $cod = 'rol1'; // String - max length = 5
         $xml = 'string <xml>';
         $display = true;
         $name1 = 'Presenter';

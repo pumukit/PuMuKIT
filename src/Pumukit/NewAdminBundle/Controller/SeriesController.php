@@ -45,20 +45,28 @@ class SeriesController extends AdminController
 
     /** @var EmbeddedBroadcastService */
     protected $embeddedBroadcastService;
+
     /** @var TranslatorInterface */
     protected $translator;
+
     /** @var SortedMultimediaObjectsService */
     protected $sortedMultimediaObjectService;
+
     /** @var PersonService */
     protected $personService;
+
     /** @var TagService */
     protected $tagService;
+
     /** @var SeriesService */
     protected $seriesService;
+
     /** @var SeriesSearchService */
     protected $seriesSearchService;
+
     /** @var RequestStack */
     private $requestStack;
+
     /** @var SeriesEventDispatcherService */
     private $pumukitSchemaSeriesDispatcher;
     private $pumukitUseSerieschannels;
@@ -221,7 +229,7 @@ class SeriesController extends AdminController
 
         $pubDecisionsTags = $this->factoryService->getTagsByCod('PUBDECISIONS', true);
 
-        //These fields are form fields that are rendered separately, so they should be 'excluded' from the generic foreach.
+        // These fields are form fields that are rendered separately, so they should be 'excluded' from the generic foreach.
         $exclude_fields = [];
         $show_later_fields = ['pumukitnewadmin_series_i18n_header', 'pumukitnewadmin_series_i18n_footer', 'pumukitnewadmin_series_i18n_line2', 'pumukitnewadmin_series_template', 'pumukitnewadmin_series_sorting', 'pumukitnewadmin_series_series_style'];
         if (!$this->pumukitUseSerieschannels) {
@@ -467,7 +475,7 @@ class SeriesController extends AdminController
         $sorting = $this->getSorting($request);
         $session = $this->session;
         $session_namespace = 'admin/series';
-        //Added TYPE_SERIES to criteria (and type null, for backwards compatibility)
+        // Added TYPE_SERIES to criteria (and type null, for backwards compatibility)
         $criteria = array_merge($criteria, ['type' => ['$in' => [Series::TYPE_SERIES, null]]]);
 
         if (array_key_exists('multimedia_objects', $sorting)) {
@@ -511,7 +519,7 @@ class SeriesController extends AdminController
             }
 
             $maxPerPage = $session->get($session_namespace.'/paginate', 10);
-            $page = (int) (ceil($position / $maxPerPage));
+            $page = (int) ceil($position / $maxPerPage);
             if (!$findSerie) {
                 $page = 1;
             }
@@ -554,7 +562,7 @@ class SeriesController extends AdminController
         if ($sameBroadcast && $firstFound) {
             $embeddedBroadcast = $firstFound->getEmbeddedBroadcast();
         }
-        if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
+        if ($request->isMethod('PUT') || $request->isMethod('POST')) {
             if ($request->request->has('ids')) {
                 $ids = $request->get('ids');
                 $multimediaObjects = $mmRepo
@@ -667,10 +675,10 @@ class SeriesController extends AdminController
                         $mustContainsTag = ('true' == $mustContainsTag);
                         $tag = $repoTags->find($channelId);
                         if ($tag && !$this->isGranted(Permission::getRoleTagDisableForPubChannel($tag->getCod()))) {
-                            if ($mustContainsTag && (!($mm->containsTag($tag)))) {
+                            if ($mustContainsTag && (!$mm->containsTag($tag))) {
                                 $this->tagService->addTag($mm, $tag, false);
                                 $executeFlush = true;
-                            } elseif ((!($mustContainsTag)) && $mm->containsTag($tag)) {
+                            } elseif ((!$mustContainsTag) && $mm->containsTag($tag)) {
                                 $this->tagService->removeTag($mm, $tag, false);
                                 $executeFlush = true;
                             }

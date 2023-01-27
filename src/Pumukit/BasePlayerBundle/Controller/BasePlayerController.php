@@ -22,6 +22,7 @@ abstract class BasePlayerController extends AbstractController
 {
     public const MULTISTREAM_DEFAULT_TAG_TRACK_PRESENTER = 'presenter/delivery';
     public const MULTISTREAM_DEFAULT_TAG_TRACK_PRESENTATION = 'presentation/delivery';
+
     /** @var EventDispatcherInterface */
     protected $eventDispatcher;
     protected $embeddedBroadcastService;
@@ -53,6 +54,7 @@ abstract class BasePlayerController extends AbstractController
     public function validateAccess(Request $request, MultimediaObject $multimediaObject)
     {
         $password = $request->get('broadcast_password');
+
         /** @var User|null $user */
         $user = $this->getUser();
         $response = $this->embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $user, $password);

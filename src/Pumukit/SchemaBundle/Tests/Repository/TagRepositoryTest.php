@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\Tag;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class TagRepositoryTest extends PumukitTestCase
@@ -17,7 +18,7 @@ class TagRepositoryTest extends PumukitTestCase
 
     public function setUp(): void
     {
-        //INIT TEST SUITE
+        // INIT TEST SUITE
         $options = ['environment' => 'test'];
         static::bootKernel($options);
         parent::setUp();
@@ -158,23 +159,23 @@ class TagRepositoryTest extends PumukitTestCase
         $tagB = $this->repo->findOneByCod('B');
         $tagB2A = $this->repo->findOneByCod('B2A');
 
-        //Test rename
+        // Test rename
         $tag->setCod('ROOT2');
         $this->dm->persist($tag);
         $this->dm->flush();
         static::assertEquals(4, $tagB2A->getLevel());
         static::assertCount(6, $this->repo->findAll());
 
-        //Test move
+        // Test move
         $tagB->setParent($tagA);
         $this->dm->persist($tag);
         $this->dm->flush();
         static::assertEquals(5, $tagB2A->getLevel());
         static::assertCount(6, $this->repo->findAll());
 
-        //Test delete
+        // Test delete
         $this->dm->remove($tagB);
         $this->dm->flush();
-        static::assertCount(2, $this->repo->findAll()); //When a parent is deleted all the descendant.
+        static::assertCount(2, $this->repo->findAll()); // When a parent is deleted all the descendant.
     }
 }

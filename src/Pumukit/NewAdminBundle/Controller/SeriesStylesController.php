@@ -19,14 +19,17 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route ("/series/styles")
+ *
  * @Security("is_granted('ROLE_ACCESS_SERIES_STYLE')")
  */
 class SeriesStylesController extends AbstractController
 {
     /** @var DocumentManager */
     private $documentManager;
+
     /** @var TranslatorInterface */
     private $translator;
+
     /** @var SessionInterface */
     private $session;
 

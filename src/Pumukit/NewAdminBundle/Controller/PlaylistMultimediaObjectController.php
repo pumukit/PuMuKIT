@@ -32,22 +32,31 @@ class PlaylistMultimediaObjectController extends AbstractController
 {
     /** @var SessionInterface */
     private $session;
+
     /** @var FactoryService */
     private $factoryService;
+
     /** @var PersonService */
     private $personService;
+
     /** @var MultimediaObjectService */
     private $multimediaObjectService;
+
     /** @var DocumentManager */
     private $documentManager;
+
     /** @var PaginationService */
     private $paginationService;
+
     /** @var MultimediaObjectSearchService */
     private $multimediaObjectSearchService;
+
     /** @var EmbeddedBroadcastService */
     private $embeddedBroadcastService;
+
     /** @var RouterInterface */
     private $router;
+
     /** @var TokenStorageInterface */
     private $securityTokenStorage;
     private $warningOnUnpublished;
@@ -189,7 +198,7 @@ class PlaylistMultimediaObjectController extends AbstractController
     public function modalAction(Series $playlist, Request $request)
     {
         $limit = $request->get('modal_limit', 20);
-        //Get all multimedia objects. The filter will do the rest.
+        // Get all multimedia objects. The filter will do the rest.
         $mmobjs = $this->documentManager->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
         $total = $mmobjs->count()->getQuery()->execute();
 
@@ -489,7 +498,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         return $actionResponse;
     }
 
-    //Workaround function to check if the VideoEditorBundle is installed.
+    // Workaround function to check if the VideoEditorBundle is installed.
     protected function checkHasEditor()
     {
         $routes = $this->router->getRouteCollection()->all();
@@ -497,7 +506,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         return array_key_exists('pumukit_videoeditor_index', $routes);
     }
 
-    //Disables the standard backoffice filter and enables the 'personal' filter. (Check own videos or public videos)
+    // Disables the standard backoffice filter and enables the 'personal' filter. (Check own videos or public videos)
     protected function enableFilter(): void
     {
         $user = $this->securityTokenStorage->getToken()->getUser();

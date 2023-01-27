@@ -44,18 +44,25 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
     /** @var DocumentManager */
     protected $documentManager;
+
     /** @var TranslatorInterface */
     protected $translator;
+
     /** @var FactoryService */
     protected $factoryService;
+
     /** @var MultimediaObjectPicService */
     protected $multimediaObjectPicService;
+
     /** @var SeriesEventDispatcherService */
     protected $seriesDispatcher;
+
     /** @var PaginationService */
     protected $paginationService;
+
     /** @var EmbeddedEventSessionService */
     protected $eventsService;
+
     /** @var SessionInterface */
     private $session;
 
@@ -344,7 +351,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
                 $field = 'embeddedEvent.name.'.$request->getLocale();
             }
             if ($session->has('admin/live/event/sort/field') && $session->get('admin/live/event/sort/field') === $field) {
-                $session->set('admin/live/event/sort/type', (('desc' == $session->get('admin/live/event/sort/type')) ? 'asc' : 'desc'));
+                $session->set('admin/live/event/sort/type', ('desc' == $session->get('admin/live/event/sort/type')) ? 'asc' : 'desc');
             } else {
                 $session->set('admin/live/event/sort/type', 'desc');
             }
@@ -386,27 +393,27 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
         try {
             switch ($type) {
-            case 'clone':
-                $message = $this->cloneEvent($multimediaObject);
+                case 'clone':
+                    $message = $this->cloneEvent($multimediaObject);
 
-                break;
+                    break;
 
-            case 'delete':
-                $message = $this->deleteEvent($multimediaObject);
-                $this->session->set('admin/live/event/id', null);
+                case 'delete':
+                    $message = $this->deleteEvent($multimediaObject);
+                    $this->session->set('admin/live/event/id', null);
 
-                break;
+                    break;
 
-            case 'deleteAll':
-                $message = $this->deleteEventAndSeries($multimediaObject);
-                $this->session->set('admin/live/event/id', null);
+                case 'deleteAll':
+                    $message = $this->deleteEventAndSeries($multimediaObject);
+                    $this->session->set('admin/live/event/id', null);
 
-                break;
+                    break;
 
-            default:
-                $message = 'Option not allowed';
+                default:
+                    $message = 'Option not allowed';
 
-                break;
+                    break;
             }
         } catch (\Exception $e) {
             return new JsonResponse(['status' => $e->getMessage()], 409);
@@ -875,7 +882,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
         $filterChannelName = $request->query->get('term');
 
         $locale = $request->getLocale();
-        $lives = $this->documentManager->getRepository(Live::class)->findBy(["name.{$locale}" => new \MongoRegex('/'.$filterChannelName.'/i')]);
+        $lives = $this->documentManager->getRepository(Live::class)->findBy(["name.{$locale}" => new Regex($filterChannelName, 'i')]);
         foreach ($lives as $live) {
             $result[] = [
                 'id' => $live->getId(),
@@ -889,9 +896,9 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /**
      * clone Event and series.
      *
-     * @throws \Exception
-     *
      * @return string
+     *
+     * @throws \Exception
      */
     private function cloneEvent(MultimediaObject $multimediaObject)
     {

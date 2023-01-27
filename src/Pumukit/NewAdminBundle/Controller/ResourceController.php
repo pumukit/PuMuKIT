@@ -20,6 +20,7 @@ class ResourceController extends AbstractController
 
     /** @var DocumentManager */
     protected $documentManager;
+
     /** @var PaginationService */
     protected $paginationService;
 
@@ -90,7 +91,7 @@ class ResourceController extends AbstractController
 
     public function createNew()
     {
-        //trace of remove "sylius/resource-bundle" version 0.12.
+        // trace of remove "sylius/resource-bundle" version 0.12.
         throw new \LogicException('createNew method should be overide in the final Controller.');
     }
 

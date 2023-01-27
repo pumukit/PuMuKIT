@@ -63,7 +63,7 @@ class MultimediaObjectPropertyJobService
 
     private function delPropertyInArray(MultimediaObject $multimediaObject, string $key, string $value): bool
     {
-        if (($propertyValue = $multimediaObject->getProperty($key))) {
+        if ($propertyValue = $multimediaObject->getProperty($key)) {
             $positionValue = array_search($value, $propertyValue, true);
             if (false !== $positionValue) {
                 unset($propertyValue[$positionValue]);

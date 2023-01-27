@@ -10,6 +10,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 class AnnotationsUpdateEvent extends Event
 {
     public const EVENT_NAME = 'annotations.update';
+
     /**
      * @var MultimediaObject
      */

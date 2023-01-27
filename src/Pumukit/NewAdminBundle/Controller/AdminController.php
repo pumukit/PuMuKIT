@@ -21,12 +21,16 @@ class AdminController extends ResourceController implements NewAdminControllerIn
 {
     /** @var FactoryService */
     protected $factoryService;
+
     /** @var GroupService */
     protected $groupService;
+
     /** @var UserService */
     protected $userService;
+
     /** @var SessionInterface */
     protected $session;
+
     /** @var TranslatorInterface */
     protected $translator;
 
@@ -262,7 +266,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
 
         $new_criteria = [];
         foreach ($criteria as $property => $value) {
-            //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
+            // preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
             if ('' !== $value) {
                 $new_criteria[$property] = new Regex($value, 'i');
             }

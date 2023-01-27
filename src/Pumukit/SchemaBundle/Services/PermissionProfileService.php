@@ -197,7 +197,7 @@ class PermissionProfileService
      */
     public function batchUpdate(PermissionProfile $permissionProfile, $permissionsList, $executeFlush = true)
     {
-        //Clears all permissions for this permissionProfile.
+        // Clears all permissions for this permissionProfile.
         $permissionProfile->setPermissions([]);
         foreach ($permissionsList as $permission) {
             $this->doAddPermission($permissionProfile, $permission, false);

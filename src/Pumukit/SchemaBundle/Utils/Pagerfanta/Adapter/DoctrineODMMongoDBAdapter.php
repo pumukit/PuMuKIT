@@ -25,7 +25,7 @@ class DoctrineODMMongoDBAdapter implements AdapterInterface
     public function getNbResults()
     {
         if ($this->query) {
-            //Take adventage of Mongo re-using the complete query from getSlice.
+            // Take adventage of Mongo re-using the complete query from getSlice.
             return is_countable($this->query) ? count($this->query) : 0;
         }
 

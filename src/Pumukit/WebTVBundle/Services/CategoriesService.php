@@ -55,6 +55,7 @@ class CategoriesService
         }
 
         $allGrounds = [];
+
         /** @var Tag[] */
         $tagsTree = $this->documentManager
             ->getRepository(Tag::class)
@@ -103,7 +104,7 @@ class CategoriesService
             $allGrounds[$id]['children'] = [];
 
             $numMmobjsGeneral = $this->countGeneralMmobjsInTag($parent['__object'], $provider);
-            //Add 'General' Tag
+            // Add 'General' Tag
             if ($this->listGeneralParam && (!$this->excludeEmptyTags || $numMmobjsGeneral > 0)) {
                 $allGrounds[$id]['children']['general'] = [];
                 $allGrounds[$id]['children']['general']['title'] = $this->translator->trans(
@@ -172,9 +173,9 @@ class CategoriesService
      * @param string|null $provider
      * @param mixed|null  $parentCod
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     *
      * @return array
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     private function countMmobjInTags($provider = null, $parentCod = null)
     {
@@ -220,6 +221,6 @@ class CategoriesService
         return $qb->count()
             ->getQuery()
             ->execute()
-            ;
+        ;
     }
 }

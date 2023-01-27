@@ -61,6 +61,7 @@ class User implements UserInterface
      * @MongoDB\Field(type="string")
      */
     protected $origin = self::ORIGIN_LOCAL;
+
     /**
      * @MongoDB\Field(type="string")
      */
@@ -270,7 +271,7 @@ class User implements UserInterface
     {
         // Performance boost (Don't repeat it, only if it's exceptionally necessary)
         if ($this->groups instanceof \Doctrine\ODM\MongoDB\PersistentCollection && !$this->groups->isDirty()) {
-            //See PersistentCollection class (coll + mongoData)
+            // See PersistentCollection class (coll + mongoData)
             return array_merge(
                 array_map(
                     static function (GroupInterface $g) {

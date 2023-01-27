@@ -101,18 +101,18 @@ EOT
     private function cleanJobsProperties($type, OutputInterface $output)
     {
         switch ($type) {
-        case 'pending':
-            $statuses = [Job::STATUS_PAUSED, Job::STATUS_WAITING];
+            case 'pending':
+                $statuses = [Job::STATUS_PAUSED, Job::STATUS_WAITING];
 
-            break;
+                break;
 
-        case 'executing':
-            $statuses = [Job::STATUS_EXECUTING];
+            case 'executing':
+                $statuses = [Job::STATUS_EXECUTING];
 
-            break;
+                break;
 
-        default:
-            throw new \InvalidArgumentException('type argument should be "pending" or "executing". Not'.$type);
+            default:
+                throw new \InvalidArgumentException('type argument should be "pending" or "executing". Not'.$type);
         }
 
         $jobRepo = $this->dm->getRepository(Job::class);

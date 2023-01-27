@@ -15,6 +15,7 @@ use Pumukit\SchemaBundle\Document\Track;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class MultimediaObjectTest extends TestCase
@@ -586,7 +587,7 @@ class MultimediaObjectTest extends TestCase
         $mm->removeTag($tag1);
         static::assertFalse($mm->containsTagWithCod($tag1->getCod()));
 
-        //Repeat Tag
+        // Repeat Tag
         static::assertFalse($mm->containsTag($tag1));
         $mm->addTag($tag1);
         $mm->addTag($tag1);
@@ -595,7 +596,7 @@ class MultimediaObjectTest extends TestCase
         static::assertFalse($mm->containsTag($tag1));
         static::assertFalse($mm->removeTag($tag1));
 
-        //containsAllTag and containsAnyTag
+        // containsAllTag and containsAnyTag
         $mm->addTag($tag1);
         $mm->addTag($tag2);
         $mm->addTag($tag3);
@@ -607,7 +608,7 @@ class MultimediaObjectTest extends TestCase
         static::assertFalse($mm->containsAllTags([$tag0, $tag2]));
         static::assertFalse($mm->containsAllTags([$tag0, $tag1, $tag2, $tag3]));
 
-        //containsAllTagsWithCodes and containsAnyTagWithCodes
+        // containsAllTagsWithCodes and containsAnyTagWithCodes
         $mm->removeTag($tag1);
         $mm->removeTag($tag2);
         $mm->removeTag($tag3);

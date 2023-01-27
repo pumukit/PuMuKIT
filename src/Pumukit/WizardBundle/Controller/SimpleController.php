@@ -121,7 +121,7 @@ class SimpleController extends AbstractController
             $filePath = $file->getPathname();
 
             try {
-                //exception if is not a mediafile (video or audio)
+                // exception if is not a mediafile (video or audio)
                 $duration = $this->inspectionFfprobeService->getDuration($filePath);
             } catch (\Exception $e) {
                 throw new \Exception('The file is not a valid video or audio file');
@@ -239,7 +239,7 @@ class SimpleController extends AbstractController
             $filePath = $file->getPathname();
 
             try {
-                //exception if is not a mediafile (video or audio)
+                // exception if is not a mediafile (video or audio)
                 $duration = $this->inspectionFfprobeService->getDuration($filePath);
             } catch (\Exception $e) {
                 $response = [

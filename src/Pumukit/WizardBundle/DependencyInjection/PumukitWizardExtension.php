@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\WizardBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
@@ -30,7 +31,7 @@ class PumukitWizardExtension extends Extension
         }
     }
 
-    public function getConfiguration(array $config, ContainerBuilder $container)
+    public function getConfiguration(array $config, ContainerBuilder $container): ?ConfigurationInterface
     {
         return new Configuration(array_keys($container->getParameter('pumukitencode.profilelist')));
     }

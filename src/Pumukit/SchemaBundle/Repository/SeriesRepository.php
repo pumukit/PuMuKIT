@@ -366,9 +366,9 @@ class SeriesRepository extends DocumentRepository
      * @param User $user
      * @param bool $onlyAdminSeries
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     *
      * @return array
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function findUserSeries($user, $onlyAdminSeries = false)
     {

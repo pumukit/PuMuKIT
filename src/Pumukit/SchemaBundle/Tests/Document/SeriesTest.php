@@ -11,6 +11,7 @@ use Pumukit\SchemaBundle\Document\SeriesType;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class SeriesTest extends TestCase

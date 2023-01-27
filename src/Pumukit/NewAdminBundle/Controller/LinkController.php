@@ -23,8 +23,10 @@ class LinkController extends AbstractController implements NewAdminControllerInt
 {
     /** @var TranslatorInterface */
     private $translator;
+
     /** @var LinkService */
     private $linkService;
+
     /** @var SessionInterface */
     private $session;
 

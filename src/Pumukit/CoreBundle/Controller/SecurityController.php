@@ -21,7 +21,7 @@ class SecurityController extends AbstractController
      */
     public function canEditAction(Request $request, DocumentManager $documentManager, string $id)
     {
-        //Performance: No queries for anonymous users
+        // Performance: No queries for anonymous users
         $request->attributes->set('noindex', true);
         if (!$this->isGranted(PermissionProfile::SCOPE_PERSONAL) && !$this->isGranted(PermissionProfile::SCOPE_GLOBAL)) {
             return ['access' => false, 'multimediaObject' => null];

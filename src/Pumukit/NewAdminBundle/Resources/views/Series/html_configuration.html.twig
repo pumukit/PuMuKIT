@@ -23,9 +23,11 @@
                 <a href="{{ path('pumukitnewadmin_seriespic_banner', {'id': series.id}) }}" style="float: right;" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}Add banner{% endtrans %}</a>
             </div>
         {% endif %}
-        <label for="header" class="control-label">{{ child.vars.label }}</label>
-        <div>
-            {{ form_widget(child) }}
-        </div>
+        {% if child.vars.id != 'pumukitnewadmin_series_series_style' %}
+            <label for="header" class="control-label">{{ child.vars.label }}</label>
+            <div>
+                {{ form_widget(child) }}
+            </div>
+        {% endif %}
     </div>
 {% endfor %}

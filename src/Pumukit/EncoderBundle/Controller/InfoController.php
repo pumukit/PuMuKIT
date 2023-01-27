@@ -93,7 +93,7 @@ class InfoController extends AbstractController
                     'jobs' => $this->createPager($paginationService, $pendingJobs, $request->query->get('page_pending', 1)),
                 ],
                 'executing' => [
-                    'total' => ($stats['executing']),
+                    'total' => $stats['executing'],
                     'jobs' => $this->createPager($paginationService, $executingJobs, $request->query->get('page_executing', 1), 20),
                 ],
                 'executed' => [

@@ -33,6 +33,7 @@ class FilterService
 
     /** @var PersonService; */
     private $personService;
+
     /** @var TokenStorageInterface */
     private $securityContext;
     private $addUserAsPerson;

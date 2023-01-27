@@ -29,7 +29,7 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->scalarNode('license_dir')
             ->defaultValue('')
-            ->info("Path dir of the license files to show in first step if enabled according to locale. E.g.: '%kernel.root_dir%/../src/Pumukit/WizardBundle/Resources/data/license/'. In this folder there should be files named after its locale language: es.txt, en.txt, fr.txt, etc.")
+            ->info("Path dir of the license files to show in first step if enabled according to locale. E.g.: '%kernel.project_dir%/src/Pumukit/WizardBundle/Resources/data/license/'. In this folder there should be files named after its locale language: es.txt, en.txt, fr.txt, etc.")
             ->end()
             ->booleanNode('show_tags')
             ->defaultFalse()

@@ -23,10 +23,13 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
 {
     /** @var DocumentManager */
     private $documentManager;
+
     /** @var PaginationService */
     private $paginationService;
+
     /** @var SessionInterface */
     private $session;
+
     /** @var MultimediaObjectPicService */
     private $multimediaObjectPicService;
 
@@ -197,14 +200,14 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
         if ($request->get('page', null)) {
             $this->session->set('admin/mmspic/page', $request->get('page', 1));
         }
-        $page = (int) ($this->session->get('admin/mmspic/page', 1));
+        $page = (int) $this->session->get('admin/mmspic/page', 1);
         $limit = 12;
 
         $series = $multimediaObject->getSeries();
 
         $urlPics = $this->multimediaObjectPicService->getRecommendedPics($series);
 
-        $total = (int) (ceil((is_countable($urlPics) ? count($urlPics) : 0) / $limit));
+        $total = (int) ceil((is_countable($urlPics) ? count($urlPics) : 0) / $limit);
 
         $pics = $this->getPaginatedPics($urlPics, $limit, $page);
 

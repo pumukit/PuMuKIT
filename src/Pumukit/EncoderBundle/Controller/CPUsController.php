@@ -58,18 +58,18 @@ class CPUsController extends AbstractController
         }
 
         switch ($activateMaintenance) {
-        case 'activate':
-            $cpuService->activateMaintenance($cpuName);
+            case 'activate':
+                $cpuService->activateMaintenance($cpuName);
 
-            break;
+                break;
 
-        case 'deactivate':
-            $cpuService->deactivateMaintenance($cpuName);
-            for ($i = 0; $i < $cpu['max']; ++$i) {
-                $jobService->executeNextJob();
-            }
+            case 'deactivate':
+                $cpuService->deactivateMaintenance($cpuName);
+                for ($i = 0; $i < $cpu['max']; ++$i) {
+                    $jobService->executeNextJob();
+                }
 
-            break;
+                break;
         }
 
         return new Response();

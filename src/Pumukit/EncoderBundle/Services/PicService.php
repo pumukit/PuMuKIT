@@ -43,9 +43,9 @@ class PicService
      * @param string|null $exists
      * @param string|null $type
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     *
      * @return \Doctrine\MongoDB\Iterator|mixed|null
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function findPicsByOptions($id = null, $size = null, $path = null, $extension = null, $tags = null, $exists = null, $type = null)
     {
@@ -191,9 +191,9 @@ class PicService
      * @param string $exists
      * @param string $type
      *
-     * @throws \Exception
-     *
      * @return array
+     *
+     * @throws \Exception
      */
     public function formatInputs($id, $size, $path, $extension, $tags, $exists, $type)
     {
@@ -225,9 +225,9 @@ class PicService
      * @param array $data
      * @param bool  $no_replace
      *
-     * @throws \Exception
-     *
      * @return array
+     *
+     * @throws \Exception
      */
     public function convertImage($data, array $params, $no_replace = false)
     {

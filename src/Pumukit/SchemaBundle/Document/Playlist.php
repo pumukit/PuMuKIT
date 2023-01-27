@@ -111,9 +111,9 @@ class Playlist
         }
         if (0 === $posStart - $posEnd
            || $posStart < 0 || $posStart > $maxPos) {
-            return false; //If start is out of range or start/end is the same, do nothing.
+            return false; // If start is out of range or start/end is the same, do nothing.
         }
-        $posEnd %= $maxPos; //Out of bounds.
+        $posEnd %= $maxPos; // Out of bounds.
         if ($posEnd < 0) {
             $posEnd = $maxPos + $posEnd;
         }

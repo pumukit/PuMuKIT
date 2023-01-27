@@ -407,7 +407,7 @@ class JobService
         }
         $profile = $nextJob->getProfile();
         $freeCpu = $this->cpuService->getFreeCpu($profile);
-        if (($freeCpu) && ($nextJob) && ($this->cpuService->isActive($freeCpu))) {
+        if ($freeCpu && $nextJob && $this->cpuService->isActive($freeCpu)) {
             $nextJob->setCpu($freeCpu);
             $nextJob->setTimestart(new \DateTime('now'));
             $nextJob->setStatus(Job::STATUS_EXECUTING);
@@ -458,13 +458,13 @@ class JobService
         try {
             $this->mkdir(dirname($job->getPathEnd()));
 
-            //Throws exception when the multimedia object is not found.
+            // Throws exception when the multimedia object is not found.
             $multimediaObject = $this->getMultimediaObject($job);
             $this->propService->setJobAsExecuting($multimediaObject, $job);
-            //Executes the job. It can throw exceptions if the executor has issues.
+            // Executes the job. It can throw exceptions if the executor has issues.
             $out = $executor->execute($commandLine, $cpu);
             $job->setOutput($out);
-            //Throws exception if the video does not exist or does not have video/audio tracks.
+            // Throws exception if the video does not exist or does not have video/audio tracks.
             $duration = $this->inspectionService->getDuration($job->getPathEnd());
             $job->setNewDuration($duration);
 
@@ -475,13 +475,13 @@ class JobService
             $this->logger->info('[execute] job duration: '.$job->getDuration());
             $this->logger->info('[execute] duration: '.$duration);
 
-            //Check for different durations. Throws exception if they don't match.
+            // Check for different durations. Throws exception if they don't match.
             $this->searchError($profile, $job->getDuration(), $duration);
 
             $job->setTimeend(new \DateTime('now'));
             $job->setStatus(Job::STATUS_FINISHED);
 
-            $multimediaObject = $this->getMultimediaObject($job); //Necesary to refresh the document
+            $multimediaObject = $this->getMultimediaObject($job); // Necesary to refresh the document
             $this->dm->refresh($multimediaObject);
 
             $track = $this->createTrackWithJob($job);
@@ -498,7 +498,7 @@ class JobService
             $this->logger->error('[execute] error job output: '.$e->getMessage());
             $this->dispatch(false, $job);
 
-            $multimediaObject = $this->getMultimediaObject($job);  //Necesary to refresh the document
+            $multimediaObject = $this->getMultimediaObject($job);  // Necesary to refresh the document
             $this->propService->errorJob($multimediaObject, $job);
             // If the transco is disconnected or there is an authentication issue, we don't want to send more petitions to this transco.
             if ($e instanceof ExecutorException && 'prod' == $this->environment) {

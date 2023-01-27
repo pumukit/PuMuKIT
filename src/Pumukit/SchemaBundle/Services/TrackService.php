@@ -13,6 +13,7 @@ class TrackService
 {
     /** @var DocumentManager */
     private $dm;
+
     /** @var TrackEventDispatcherService */
     private $dispatcher;
     private $tmpPath;

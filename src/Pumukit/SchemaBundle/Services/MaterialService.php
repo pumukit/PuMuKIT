@@ -97,9 +97,9 @@ class MaterialService
      *
      * @param array $formData
      *
-     * @throws \Exception
-     *
      * @return MultimediaObject
+     *
+     * @throws \Exception
      */
     public function addMaterialFile(MultimediaObject $multimediaObject, UploadedFile $materialFile, $formData)
     {
@@ -134,7 +134,7 @@ class MaterialService
         $material->setSize($path->getSize());
 
         $material->setPath($path->getPathname());
-        $material->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
+        $material->setUrl(str_replace($this->targetPath, $this->targetUrl, $path->getPathname()));
 
         $multimediaObject->addMaterial($material);
         $this->dm->persist($multimediaObject);
@@ -165,7 +165,7 @@ class MaterialService
         $material->setName($materialFile->getClientOriginalName());
 
         $material->setPath($path->getPathname());
-        $material->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
+        $material->setUrl(str_replace($this->targetPath, $this->targetUrl, $path->getPathname()));
 
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
@@ -182,9 +182,9 @@ class MaterialService
      *
      * @param \MongoId|string $materialId
      *
-     * @throws \Exception
-     *
      * @return MultimediaObject
+     *
+     * @throws \Exception
      */
     public function removeMaterialFromMultimediaObject(MultimediaObject $multimediaObject, $materialId)
     {

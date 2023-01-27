@@ -99,10 +99,10 @@ class UserService
     public function removeRoles(User $user, array $permissions = [], bool $executeFlush = true)
     {
         foreach ($permissions as $permission) {
-            if ($user->hasRole($permission) && (array_key_exists(
+            if ($user->hasRole($permission) && array_key_exists(
                 $permission,
                 $this->permissionService->getAllPermissions()
-            ))) {
+            )) {
                 $user->removeRole($permission);
             }
         }

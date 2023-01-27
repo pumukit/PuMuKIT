@@ -94,9 +94,9 @@ class FactoryService
     /**
      * Wrapper for createColletion. Creates a TYPE_PLAYLIST collection.
      *
-     * @throws \Exception
-     *
      * @return Series
+     *
+     * @throws \Exception
      */
     public function createPlaylist(User $loggedInUser = null, array $title = null)
     {
@@ -108,9 +108,9 @@ class FactoryService
      *
      * @param int $collectionType
      *
-     * @throws \Exception
-     *
      * @return Series
+     *
+     * @throws \Exception
      */
     public function doCreateCollection($collectionType, User $loggedInUser = null, array $title = null)
     {
@@ -145,9 +145,9 @@ class FactoryService
      *
      * @param int $collectionType
      *
-     * @throws \Exception
-     *
      * @return Series
+     *
+     * @throws \Exception
      */
     public function createCollection($collectionType, User $loggedInUser = null, array $title = null)
     {
@@ -164,13 +164,13 @@ class FactoryService
      * @param bool $flush
      * @param User $loggedInUser
      *
-     * @throws \Exception
-     *
      * @return MultimediaObject
+     *
+     * @throws \Exception
      */
     public function doCreateMultimediaObject(Series $series, $flush = true, User $loggedInUser = null)
     {
-        $dispatch = false; //doCreateMultimediaObject does not dispatch events by definition
+        $dispatch = false; // doCreateMultimediaObject does not dispatch events by definition
         $prototype = $this->getMultimediaObjectPrototype($series);
 
         if (null !== $prototype) {
@@ -233,9 +233,9 @@ class FactoryService
      * @param bool $flush
      * @param User $loggedInUser
      *
-     * @throws \Exception
-     *
      * @return MultimediaObject
+     *
+     * @throws \Exception
      */
     public function createMultimediaObject(Series $series, $flush = true, User $loggedInUser = null)
     {
@@ -252,10 +252,10 @@ class FactoryService
      * @param string|null $id
      * @param string|null $sessionId
      *
+     * @return object|null Series
+     *
      * @throws \Doctrine\ODM\MongoDB\LockException
      * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
-     *
-     * @return object|null Series
      */
     public function findSeriesById($id, $sessionId = null)
     {
@@ -277,10 +277,10 @@ class FactoryService
      *
      * @param string $id
      *
+     * @return object
+     *
      * @throws \Doctrine\ODM\MongoDB\LockException
      * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
-     *
-     * @return object
      */
     public function findMultimediaObjectById($id)
     {
@@ -292,9 +292,9 @@ class FactoryService
     /**
      * Get parent tags.
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     *
      * @return object
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function getParentTags()
     {
@@ -308,9 +308,9 @@ class FactoryService
      *
      * @param Series $series
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     *
      * @return object|null
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function getMultimediaObjectPrototype(Series $series = null)
     {
@@ -326,9 +326,9 @@ class FactoryService
      * @param string $cod
      * @param bool   $getChildren
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     *
      * @return mixed $tags
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function getTagsByCod($cod, $getChildren)
     {
@@ -463,9 +463,9 @@ class FactoryService
      *
      * @param mixed $addClonedToTitle
      *
-     * @throws \Exception
-     *
      * @return MultimediaObject
+     *
+     * @throws \Exception
      */
     public function cloneMultimediaObject(MultimediaObject $src, Series $series = null, $addClonedToTitle = true)
     {
@@ -609,9 +609,9 @@ class FactoryService
      *
      * @param User $loggedInUser
      *
-     * @throws \Exception
-     *
      * @return MultimediaObject
+     *
+     * @throws \Exception
      */
     private function createMultimediaObjectPrototype(Series $series, User $loggedInUser = null)
     {
@@ -639,9 +639,9 @@ class FactoryService
     /**
      * Create multimedia object from prototype.
      *
-     * @throws \Exception
-     *
      * @return MultimediaObject
+     *
+     * @throws \Exception
      */
     private function createMultimediaObjectFromPrototype(MultimediaObject $prototype)
     {
@@ -687,9 +687,9 @@ class FactoryService
      * @param mixed $flush
      * @param mixed $dispatch
      *
-     * @throws \Exception
-     *
      * @return MultimediaObject
+     *
+     * @throws \Exception
      */
     private function addLoggedInUserAsPerson(MultimediaObject $multimediaObject, User $loggedInUser = null, $flush = true, $dispatch = true)
     {

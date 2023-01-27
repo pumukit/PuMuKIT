@@ -13,6 +13,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class PermissionProfileEventDispatcherServiceTest extends PumukitTestCase

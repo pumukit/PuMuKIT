@@ -23,8 +23,10 @@ class MaterialController extends AbstractController implements NewAdminControlle
 {
     /** @var TranslatorInterface */
     private $translator;
+
     /** @var SessionInterface */
     private $session;
+
     /** @var MaterialService */
     private $materialService;
 
@@ -94,7 +96,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
             if (0 === $request->files->count() && 0 === $request->request->count()) {
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
             }
-            if (($request->files->has('file')) && (!$request->get('url', null))) {
+            if ($request->files->has('file') && (!$request->get('url', null))) {
                 $multimediaObject = $materialService->addMaterialFile($multimediaObject, $request->files->get('file'), $formData);
             } elseif ($request->get('url', null)) {
                 $multimediaObject = $materialService->addMaterialUrl($multimediaObject, $request->get('url'), $formData);

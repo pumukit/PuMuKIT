@@ -21,7 +21,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("/user_profile")
- *
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
 class UserProfileController extends AbstractController

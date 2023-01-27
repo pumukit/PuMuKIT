@@ -9,6 +9,7 @@ use Pumukit\EncoderBundle\Document\Job;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class JobTest extends TestCase

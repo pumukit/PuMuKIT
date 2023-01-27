@@ -28,7 +28,7 @@ class InboxUploadListener
 
         $command = [
             'php',
-            $this->kernelProjectDir.'/'.'bin/console',
+            $this->kernelProjectDir.'/bin/console',
             'pumukit:import:inbox',
             $urlUpload,
         ];

@@ -51,7 +51,7 @@ class MultimediaObjectPubType extends AbstractType
         $resolver->setRequired('locale');
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'pumukitnewadmin_mms_pub';
     }

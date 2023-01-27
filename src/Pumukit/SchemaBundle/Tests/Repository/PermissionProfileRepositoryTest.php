@@ -11,6 +11,7 @@ use Pumukit\SchemaBundle\Services\PermissionService;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class PermissionProfileRepositoryTest extends PumukitTestCase

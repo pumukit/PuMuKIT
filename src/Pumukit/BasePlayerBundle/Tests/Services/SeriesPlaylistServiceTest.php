@@ -11,6 +11,7 @@ use Pumukit\SchemaBundle\Document\Track;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class SeriesPlaylistServiceTest extends PumukitTestCase

@@ -173,7 +173,7 @@ class EmbeddedRole implements RoleInterface
 
     public function addPerson(PersonInterface $person): void
     {
-        if (!($this->containsPerson($person))) {
+        if (!$this->containsPerson($person)) {
             $this->people[] = $this->createEmbeddedPerson($person);
         }
     }
@@ -210,7 +210,7 @@ class EmbeddedRole implements RoleInterface
     public function containsAllPeople(array $people): bool
     {
         foreach ($people as $person) {
-            if (!($this->containsPerson($person))) {
+            if (!$this->containsPerson($person)) {
                 return false;
             }
         }
@@ -221,7 +221,7 @@ class EmbeddedRole implements RoleInterface
     public function containsAnyPerson(array $people): bool
     {
         foreach ($people as $person) {
-            if (!($this->containsPerson($person))) {
+            if (!$this->containsPerson($person)) {
                 return true;
             }
         }

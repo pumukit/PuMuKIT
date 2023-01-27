@@ -14,6 +14,7 @@ use Pumukit\WorkflowBundle\EventListener\PicExtractorListener;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class PicExtractorListenerTest extends PumukitTestCase

@@ -15,7 +15,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
-use UnexpectedValueException;
 
 class PumukitRefactorFileSystemCommand extends Command
 {
@@ -446,7 +445,7 @@ EOT
             }
             $aResult = json_decode($process->getOutput(), true);
             if (JSON_ERROR_NONE !== json_last_error()) {
-                throw new UnexpectedValueException(json_last_error_msg());
+                throw new \UnexpectedValueException(json_last_error_msg());
             }
 
             return $aResult;

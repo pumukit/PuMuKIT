@@ -82,7 +82,7 @@ class Configuration implements ConfigurationInterface
             ->info('Email or list of emails of the administrators of the platform.')
             ->end()
             ->end()
-          ;
+        ;
 
         return $treeBuilder;
     }

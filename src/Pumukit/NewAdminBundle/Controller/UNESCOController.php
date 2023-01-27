@@ -39,7 +39,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("/unesco")
- *
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
 class UNESCOController extends AbstractController implements NewAdminControllerInterface
@@ -83,32 +82,46 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
     /** @var PaginationService */
     private $paginationService;
+
     /** @var TagCatalogueService */
     private $tagCatalogueService;
+
     /** @var PersonService */
     private $personService;
+
     /** @var FactoryService */
     private $factoryService;
+
     /** @var JobService */
     private $jobService;
+
     /** @var ProfileService */
     private $profileService;
+
     /** @var TagService */
     private $tagService;
+
     /** @var DocumentManager */
     private $documentManager;
+
     /** @var TranslatorInterface */
     private $translator;
+
     /** @var UserService */
     private $userService;
+
     /** @var GroupService */
     private $groupService;
+
     /** @var SessionInterface */
     private $session;
+
     /** @var RequestStack */
     private $requestStack;
+
     /** @var RouterInterface */
     private $router;
+
     /** @var MultimediaObjectSearchService */
     private $multimediaObjectSearchService;
     private $showLatestWithPudeNew;
@@ -372,7 +385,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $session = $this->session;
         $session->set('admin/unesco/id', $multimediaObject->getId());
 
-        //If the 'pudenew' tag is not being used, set the display to 'false'.
+        // If the 'pudenew' tag is not being used, set the display to 'false'.
         if (!$this->showLatestWithPudeNew) {
             $this->documentManager->getRepository(Tag::class)->findOneByCod('PUDENEW')->setDisplay(false);
         }
@@ -552,29 +565,29 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $data = $request->request->get('data');
 
         switch ($option) {
-        case 'delete_selected':
-            foreach ($data as $multimediaObjectId) {
-                $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
-                $this->factoryService->deleteMultimediaObject($multimediaObject);
-            }
-
-            break;
-
-        case 'invert_announce_selected':
-            $pudeNew = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PUDENEW']);
-            foreach ($data as $multimediaObjectId) {
-                $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
-                if ($multimediaObject->containsTag($pudeNew)) {
-                    $this->tagService->removeTagFromMultimediaObject($multimediaObject, $pudeNew->getId());
-                } else {
-                    $this->tagService->addTagToMultimediaObject($multimediaObject, $pudeNew->getId());
+            case 'delete_selected':
+                foreach ($data as $multimediaObjectId) {
+                    $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
+                    $this->factoryService->deleteMultimediaObject($multimediaObject);
                 }
-            }
 
-            break;
+                break;
 
-        default:
-            break;
+            case 'invert_announce_selected':
+                $pudeNew = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PUDENEW']);
+                foreach ($data as $multimediaObjectId) {
+                    $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
+                    if ($multimediaObject->containsTag($pudeNew)) {
+                        $this->tagService->removeTagFromMultimediaObject($multimediaObject, $pudeNew->getId());
+                    } else {
+                        $this->tagService->addTagToMultimediaObject($multimediaObject, $pudeNew->getId());
+                    }
+                }
+
+                break;
+
+            default:
+                break;
         }
 
         return new JsonResponse(['success']);

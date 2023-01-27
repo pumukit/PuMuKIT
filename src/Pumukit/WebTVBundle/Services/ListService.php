@@ -55,9 +55,9 @@ class ListService
     }
 
     /**
-     * @throws \Exception
-     *
      * @return array
+     *
+     * @throws \Exception
      */
     public function getWallVideos()
     {
@@ -73,9 +73,9 @@ class ListService
      * @param string $locale
      * @param null   $parentTag
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     *
      * @return array
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function getMediaLibrary(array $criteria = [], $sort = 'date', $locale = 'en', $parentTag = null)
     {
@@ -183,9 +183,9 @@ class ListService
     }
 
     /**
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     *
      * @return array
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function getNextElementsByQueryBuilder(Builder $qb, \DateTime $date)
     {
@@ -227,9 +227,9 @@ class ListService
     /**
      * @param string|null $tagCod
      *
-     * @throws \Exception
-     *
      * @return object|Tag|null
+     *
+     * @throws \Exception
      */
     public function getEmbedVideoBlock($tagCod = null)
     {
@@ -251,9 +251,9 @@ class ListService
     }
 
     /**
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     *
      * @return mixed
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     private function getNextElementsByDates(Builder $qb, \DateTime $dateStart, \DateTime $dateEnd)
     {
