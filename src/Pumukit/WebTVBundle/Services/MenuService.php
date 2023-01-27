@@ -18,6 +18,7 @@ class MenuService
      * @var DocumentManager
      */
     private $dm;
+
     /**
      * @var EmbeddedEventSessionService
      */
@@ -37,9 +38,9 @@ class MenuService
     }
 
     /**
-     * @throws \Exception
-     *
      * @return array
+     *
+     * @throws \Exception
      */
     public function getMenuEventsElement()
     {
@@ -53,9 +54,9 @@ class MenuService
     }
 
     /**
-     * @throws \Exception
-     *
      * @return array
+     *
+     * @throws \Exception
      */
     private function getAdvanceEvents()
     {

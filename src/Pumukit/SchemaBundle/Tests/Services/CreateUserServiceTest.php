@@ -17,6 +17,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class CreateUserServiceTest extends PumukitTestCase

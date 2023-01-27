@@ -97,9 +97,9 @@ class MaterialService
      *
      * @param array $formData
      *
-     * @throws \Exception
-     *
      * @return MultimediaObject
+     *
+     * @throws \Exception
      */
     public function addMaterialFile(MultimediaObject $multimediaObject, UploadedFile $materialFile, $formData)
     {
@@ -182,9 +182,9 @@ class MaterialService
      *
      * @param \MongoId|string $materialId
      *
-     * @throws \Exception
-     *
      * @return MultimediaObject
+     *
+     * @throws \Exception
      */
     public function removeMaterialFromMultimediaObject(MultimediaObject $multimediaObject, $materialId)
     {

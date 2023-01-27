@@ -343,7 +343,7 @@ class UserController extends AdminController
 
         $numberAdminUsers = $this->getNumberAdminUsers();
 
-        if ((1 === $numberAdminUsers) && ($userToDelete->isSuperAdmin())) {
+        if ((1 === $numberAdminUsers) && $userToDelete->isSuperAdmin()) {
             return new Response("Can not delete this unique admin user '".$userToDelete->getUsername()."'", 409);
         }
 
@@ -373,7 +373,7 @@ class UserController extends AdminController
     {
         $numberAdminUsers = $this->getNumberAdminUsers();
 
-        if ((1 === $numberAdminUsers)) {
+        if (1 === $numberAdminUsers) {
             if (($userToUpdate === $this->getUniqueAdminUser()) && (!$userToUpdate->isSuperAdmin())) {
                 return new Response("Can not update this unique admin user '".$userToUpdate->getUsername()."'", 409);
             }

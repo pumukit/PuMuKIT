@@ -693,7 +693,7 @@ class MultimediaObject
 
     public function addTag($tag): bool
     {
-        if (!($this->containsTag($tag))) {
+        if (!$this->containsTag($tag)) {
             $embedTag = EmbeddedTag::getEmbeddedTag($this->tags, $tag);
             $this->tags[] = $embedTag;
 
@@ -739,7 +739,7 @@ class MultimediaObject
     public function containsAllTags(array $tags): bool
     {
         foreach ($tags as $tag) {
-            if (!($this->containsTag($tag))) {
+            if (!$this->containsTag($tag)) {
                 return false;
             }
         }
@@ -750,7 +750,7 @@ class MultimediaObject
     public function containsAllTagsWithCodes(array $tagCodes): bool
     {
         foreach ($tagCodes as $tagCode) {
-            if (!($this->containsTagWithCod($tagCode))) {
+            if (!$this->containsTagWithCod($tagCode)) {
                 return false;
             }
         }
@@ -1071,7 +1071,7 @@ class MultimediaObject
     public function containsPersonWithAllRoles(PersonInterface $person, array $roles): bool
     {
         foreach ($roles as $role) {
-            if (!($this->containsPersonWithRole($person, $role))) {
+            if (!$this->containsPersonWithRole($person, $role)) {
                 return false;
             }
         }
@@ -1128,7 +1128,7 @@ class MultimediaObject
 
     public function addPersonWithRole(PersonInterface $person, RoleInterface $role): void
     {
-        if (!($this->containsPersonWithRole($person, $role))) {
+        if (!$this->containsPersonWithRole($person, $role)) {
             if ($embeddedRole = $this->getEmbeddedRole($role)) {
                 $embeddedRole->addPerson($person);
             } else {
@@ -1141,7 +1141,7 @@ class MultimediaObject
 
     public function removePersonWithRole(PersonInterface $person, RoleInterface $role): bool
     {
-        if (!($this->containsPersonWithRole($person, $role))) {
+        if (!$this->containsPersonWithRole($person, $role)) {
             return false;
         }
 
@@ -1185,7 +1185,7 @@ class MultimediaObject
             if ($person->getId() === $embeddedPerson->getId()) {
                 $out[($key * 10) + ($up ? -11 : 11)] = $embeddedPerson;
             } else {
-                $out[($key * 10)] = $embeddedPerson;
+                $out[$key * 10] = $embeddedPerson;
             }
         }
 

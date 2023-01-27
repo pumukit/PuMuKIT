@@ -39,7 +39,7 @@ class StatsService
             ['$match' => ['date' => ['$gte' => $fromMongoDate]]],
             ['$group' => ['_id' => '$multimediaObject', 'numView' => ['$sum' => $this->sumValue]]],
             ['$sort' => ['numView' => -1]],
-            ['$limit' => $limit * 2], //Get more elements due to tags post-filter.
+            ['$limit' => $limit * 2], // Get more elements due to tags post-filter.
         ];
 
         $aggregation = $viewsLogColl->aggregate($pipeline, ['cursor' => []]);
@@ -262,7 +262,7 @@ class StatsService
                                 'format' => '%Y-%m-%d',
                                 'date' => '$date',
                                 // New in MongoDB version 3.6
-                                //'timezone' => date_default_timezone_get(),
+                                // 'timezone' => date_default_timezone_get(),
                             ],
                         ],
                     ],
@@ -360,7 +360,7 @@ class StatsService
                 'format' => $format,
                 'date' => $dateField,
                 // New in MongoDB version 3.6
-                //'timezone' => date_default_timezone_get(),
+                // 'timezone' => date_default_timezone_get(),
             ], ];
     }
 

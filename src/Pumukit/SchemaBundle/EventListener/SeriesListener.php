@@ -18,6 +18,7 @@ class SeriesListener
 {
     /** @var DocumentManager */
     private $dm;
+
     /** @var MultimediaObjectRepository */
     private $mmRepo;
     private $textIndexService;

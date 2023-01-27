@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Document\Tag;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class EmbedRelationsTest extends PumukitTestCase

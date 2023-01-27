@@ -14,6 +14,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class PicExtractorServiceTest extends PumukitTestCase

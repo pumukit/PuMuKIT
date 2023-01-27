@@ -217,15 +217,15 @@ class APIController extends AbstractController implements NewAdminControllerInte
     protected function processRequestData(Request $request)
     {
         $MAX_LIMIT = 1000;
-        //Request variables.
+        // Request variables.
         $criteria = $request->get('criteria') ?: [];
-        $sort = (int) ($request->get('sort'));
+        $sort = (int) $request->get('sort');
         $fromDate = $request->get('from_date');
         $toDate = $request->get('to_date');
-        $limit = (int) ($request->get('limit'));
+        $limit = (int) $request->get('limit');
         $page = (int) ($request->get('page')) ?: 0;
 
-        //Processing variables.
+        // Processing variables.
         if (!$limit || $limit > $MAX_LIMIT) {
             $limit = $MAX_LIMIT;
         }

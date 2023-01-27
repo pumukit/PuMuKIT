@@ -63,6 +63,7 @@ class EventController extends AbstractController implements WebTVControllerInter
 
     /**
      * @Route ("/events/", defaults={"filter"=false}, name="pumukit_webtv_events")
+     *
      * @Template("@PumukitWebTV/Live/template.html.twig")
      */
     public function indexAction(Request $request)

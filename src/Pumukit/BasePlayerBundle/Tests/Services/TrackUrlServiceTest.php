@@ -12,6 +12,7 @@ use Pumukit\SchemaBundle\Document\Track;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class TrackUrlServiceTest extends PumukitTestCase
@@ -67,7 +68,7 @@ class TrackUrlServiceTest extends PumukitTestCase
         static::assertEquals($genUrl, '/trackfile/'.$track->getId().'.mp4');
         static::assertEquals(302, $this->client->getResponse()->getStatusCode());
         static::assertEquals($track->getUrl(), $this->client->getResponse()->getTargetUrl());
-        //Reload mmobj to check for new views.
+        // Reload mmobj to check for new views.
         $this->dm->clear();
         $mmobj = $this->mmobjRepo->find($mmobj->getId());
         static::assertEquals(1, $mmobj->getNumview());
@@ -75,22 +76,22 @@ class TrackUrlServiceTest extends PumukitTestCase
         $this->dm->clear();
         $mmobj = $this->mmobjRepo->find($mmobj->getId());
         static::assertEquals(1, $mmobj->getNumview());
-        //Views should work if range = 0
+        // Views should work if range = 0
         $this->client->request('GET', $genUrl, [], [], ['HTTP_RANGE' => 'bytes=0-1256']);
         $this->client->request('GET', $genUrl, [], [], ['HTTP_RANGE' => 'bytes=0-']);
         $this->dm->clear();
         $mmobj = $this->mmobjRepo->find($mmobj->getId());
         static::assertEquals(3, $mmobj->getNumview());
-        //Start should also work
+        // Start should also work
         $this->client->request('GET', $genUrl, [], [], ['HTTP_START' => 0]);
-        //xTreme case: If either 'start' or 'range' is valid, it adds a numView.
+        // xTreme case: If either 'start' or 'range' is valid, it adds a numView.
         $this->client->request('GET', $genUrl, [], [], ['HTTP_START' => 1254, 'HTTP_RANGE' => 'bytes=0-1256']);
         $this->client->request('GET', $genUrl, [], [], ['HTTP_START' => 0, 'HTTP_RANGE' => 'bytes=123-1256']);
         $this->client->request('GET', $genUrl, [], [], ['HTTP_START' => 1254, 'HTTP_RANGE' => 'bytes=123-1256']);
         $this->dm->clear();
         $mmobj = $this->mmobjRepo->find($mmobj->getId());
         static::assertEquals(6, $mmobj->getNumview());
-        //With GET params
+        // With GET params
         $getParams = '?1=2&forcedl=1';
         $genUrl = $this->trackurlService->generateTrackFileUrl($track);
         $this->client->request('GET', $genUrl.$getParams);

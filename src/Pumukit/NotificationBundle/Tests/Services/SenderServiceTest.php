@@ -11,6 +11,7 @@ use Twig\Environment;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class SenderServiceTest extends PumukitTestCase

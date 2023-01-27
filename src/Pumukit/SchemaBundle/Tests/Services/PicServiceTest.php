@@ -16,6 +16,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class PicServiceTest extends PumukitTestCase

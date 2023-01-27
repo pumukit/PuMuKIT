@@ -29,9 +29,9 @@ class TagService
      * @param string $tagId
      * @param bool   $executeFlush
      *
-     *@throws \Exception
-     *
      * @return array[Tag] addded tags
+     *
+     *@throws \Exception
      */
     public function addTagToMultimediaObject(MultimediaObject $mmobj, $tagId, $executeFlush = true)
     {
@@ -49,9 +49,9 @@ class TagService
      * @param string $tagCod
      * @param bool   $executeFlush
      *
-     * @throws \Exception
-     *
      * @return array[Tag] addded tags
+     *
+     * @throws \Exception
      */
     public function addTagByCodToMultimediaObject(MultimediaObject $mmobj, $tagCod, $executeFlush = true)
     {
@@ -105,9 +105,9 @@ class TagService
      * @param string $tagId
      * @param bool   $executeFlush
      *
-     * @throws \Exception
-     *
      * @return array[Tag] removed tags
+     *
+     * @throws \Exception
      */
     public function removeTagFromMultimediaObject(MultimediaObject $mmobj, $tagId, $executeFlush = true)
     {
@@ -132,7 +132,7 @@ class TagService
 
         do {
             $children = $tag->getChildren();
-            if (!($mmobj->containsAnyTag($children->toArray()))) {
+            if (!$mmobj->containsAnyTag($children->toArray())) {
                 $removeTags[] = $tag;
                 $removed = $mmobj->removeTag($tag);
                 if ($removed && !$mmobj->isPrototype()) {
@@ -160,9 +160,9 @@ class TagService
      * @param string $tagId
      * @param bool   $executeFlush
      *
-     * @throws \Exception
-     *
      * @return array[Tag] removed tags
+     *
+     * @throws \Exception
      */
     public function removeOneTagFromMultimediaObject(MultimediaObject $mmobj, $tagId, $executeFlush = true)
     {
@@ -249,9 +249,9 @@ class TagService
     /**
      * Delete Tag.
      *
-     * @throws \Exception
-     *
      * @return bool
+     *
+     * @throws \Exception
      */
     public function deleteTag(TagInterface $tag)
     {

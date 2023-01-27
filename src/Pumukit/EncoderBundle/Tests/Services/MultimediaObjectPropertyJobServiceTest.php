@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class MultimediaObjectPropertyJobServiceTest extends PumukitTestCase
@@ -90,7 +91,7 @@ class MultimediaObjectPropertyJobServiceTest extends PumukitTestCase
         static::assertEquals([$job->getId()], $mm->getProperty('finished_jobs'));
         static::assertEquals(null, $mm->getProperty('error_jobs'));
 
-        $this->service->finishJob($mm, $otherJob); //Invalid step. No properties change.
+        $this->service->finishJob($mm, $otherJob); // Invalid step. No properties change.
 
         $this->dm->clear();
         $mm = $this->dm->getRepository(MultimediaObject::class)->find($mmId);

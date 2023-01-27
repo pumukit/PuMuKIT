@@ -777,7 +777,7 @@ class DefaultController extends AbstractController
     private function getSameSeriesValue(array $formData = [], bool $sameSeriesFromRequest = false): bool
     {
         if (isset($formData['same_series'])) {
-            return (bool) ($formData['same_series']);
+            return (bool) $formData['same_series'];
         }
 
         return $sameSeriesFromRequest;

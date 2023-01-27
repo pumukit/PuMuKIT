@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\Role;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class RoleRepositoryTest extends PumukitTestCase

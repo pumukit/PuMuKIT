@@ -33,6 +33,7 @@ class PersonController extends AdminController
 
     /** @var PersonService */
     protected $personService;
+
     /** @var ValidatorInterface */
     private $validator;
     private $pumukitLdapEnable;
@@ -86,7 +87,7 @@ class PersonController extends AdminController
         $person = new Person();
         $form = $this->createForm(PersonType::class, $person, ['translator' => $this->translator, 'locale' => $locale]);
 
-        if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
+        if ($request->isMethod('PUT') || $request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 try {
@@ -122,7 +123,7 @@ class PersonController extends AdminController
         $locale = $request->getLocale();
         $form = $this->createForm(PersonType::class, $person, ['translator' => $this->translator, 'locale' => $locale]);
 
-        if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
+        if ($request->isMethod('PUT') || $request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 try {
@@ -242,7 +243,7 @@ class PersonController extends AdminController
 
         $form = $this->createForm(PersonType::class, $person, ['translator' => $this->translator, 'locale' => $locale]);
 
-        if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
+        if ($request->isMethod('PUT') || $request->isMethod('POST')) {
             $personalScopeRoleCode = $this->personService->getPersonalScopeRoleCode();
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
@@ -311,7 +312,7 @@ class PersonController extends AdminController
 
         $form = $this->createForm(PersonType::class, $person, ['translator' => $this->translator, 'locale' => $locale]);
 
-        if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
+        if ($request->isMethod('PUT') || $request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 try {
@@ -679,7 +680,7 @@ class PersonController extends AdminController
                 ++$position;
             }
             $maxPerPage = $session->get('admin/person/paginate', 10);
-            $page = (int) (ceil($position / $maxPerPage));
+            $page = (int) ceil($position / $maxPerPage);
         } else {
             $maxPerPage = $session->get('admin/person/paginate', 10);
             $page = $session->get('admin/person/page', 1);

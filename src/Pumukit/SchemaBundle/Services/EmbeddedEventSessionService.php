@@ -657,9 +657,9 @@ class EmbeddedEventSessionService
      *
      * @param string $color
      *
-     * @throws \Exception
-     *
      * @return string
+     *
+     * @throws \Exception
      */
     public function validateHtmlColor($color)
     {
@@ -984,9 +984,9 @@ class EmbeddedEventSessionService
     /**
      * Is live broadcasting.
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     *
      * @return bool
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function isLiveBroadcasting()
     {

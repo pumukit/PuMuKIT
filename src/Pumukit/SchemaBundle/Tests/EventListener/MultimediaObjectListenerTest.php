@@ -14,6 +14,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class MultimediaObjectListenerTest extends PumukitTestCase

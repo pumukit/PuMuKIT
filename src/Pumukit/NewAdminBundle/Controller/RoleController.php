@@ -28,12 +28,16 @@ class RoleController extends SortableAdminController
 {
     public static $resourceName = 'role';
     public static $repoName = Role::class;
+
     /** @var PersonService */
     protected $personService;
+
     /** @var TranslatorInterface */
     protected $translator;
+
     /** @var RoleService */
     protected $roleService;
+
     /** @var ValidatorInterface */
     private $validator;
 
@@ -64,7 +68,7 @@ class RoleController extends SortableAdminController
         $locale = $request->getLocale();
         $form = $this->createForm(RoleType::class, $role, ['translator' => $this->translator, 'locale' => $locale]);
 
-        if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
+        if ($request->isMethod('PUT') || $request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 try {

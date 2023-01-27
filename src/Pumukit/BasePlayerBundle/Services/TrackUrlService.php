@@ -42,9 +42,9 @@ class TrackUrlService
     }
 
     /**
-     * @throws \Exception
-     *
      * @return string
+     *
+     * @throws \Exception
      */
     public function generateDirectTrackFileUrl(Track $track, Request $request)
     {

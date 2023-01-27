@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\Person;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class PersonTest extends TestCase

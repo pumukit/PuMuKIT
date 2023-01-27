@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Document\Tag;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class AnnounceServiceTest extends PumukitTestCase
@@ -74,16 +75,16 @@ class AnnounceServiceTest extends PumukitTestCase
     public function testNextLatestUploads()
     {
         $tagPudenew = new Tag();
-        $tagPudenew->setCod('PUDENEW'); //This tag must be added to mmobjs in order for them to appear on 'Latests Uploads'
+        $tagPudenew->setCod('PUDENEW'); // This tag must be added to mmobjs in order for them to appear on 'Latests Uploads'
 
-        //We create a serie to hold our mmobjs
+        // We create a serie to hold our mmobjs
         $series2 = $this->factoryService->createSeries();
         $series2->setPublicDate(\DateTime::createFromFormat('d/m/Y', '30/05/1999'));
         $series2->setAnnounce(true);
         $this->dm->persist($series2);
         $this->dm->flush();
 
-        //We create three mmobjs to run tests with
+        // We create three mmobjs to run tests with
         $mm11 = $this->factoryService->createMultimediaObject($series2);
         $mm22 = $this->factoryService->createMultimediaObject($series2);
         $mm33 = $this->factoryService->createMultimediaObject($series2);
@@ -97,31 +98,31 @@ class AnnounceServiceTest extends PumukitTestCase
         $this->dm->persist($mm33);
         $this->dm->flush();
 
-        //We create initial date to request
+        // We create initial date to request
         $date = \DateTime::createFromFormat('d/m/Y', '01/08/1999');
 
-        //We check the response is correct (returns objects within the same month)
+        // We check the response is correct (returns objects within the same month)
         [$dateEnd, $last] = $this->announceService->getNextLatestUploads($date);
         static::assertEquals('05/1999', $dateEnd->format('m/Y'));
         static::assertEquals([$series2, $mm11], $last);
 
-        //We check the response is correct (returns objects within the same month and doesn't return series) with not 'tagPudenew'
+        // We check the response is correct (returns objects within the same month and doesn't return series) with not 'tagPudenew'
         [$dateEnd, $last] = $this->announceService->getNextLatestUploads($date, false);
         static::assertEquals([$mm33, $mm11], $last);
 
-        //We reuse the series and change the date
+        // We reuse the series and change the date
         $series2->setPublicDate(\DateTime::createFromFormat('d/m/Y', '05/04/1999'));
         $series2->setAnnounce(false);
         $this->dm->persist($series2);
         $this->dm->flush();
 
-        //Now we take the returned date and decrease it by one month (as in the AJAX request)
+        // Now we take the returned date and decrease it by one month (as in the AJAX request)
         $dateEnd->modify('first day of last month');
-        //We check again for a correct answer (the series shouldn't be here at all)
+        // We check again for a correct answer (the series shouldn't be here at all)
         [$dateEnd, $last] = $this->announceService->getNextLatestUploads($dateEnd);
         static::assertEquals([$mm22], $last);
 
-        //Finally, we check the answer is empty after searching for 24 months. (calling it two times)
+        // Finally, we check the answer is empty after searching for 24 months. (calling it two times)
         $dateEnd->modify('first day of last month');
         [$dateEnd, $last] = $this->announceService->getNextLatestUploads($dateEnd);
         static::assertEquals([], $last);

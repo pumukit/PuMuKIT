@@ -52,7 +52,7 @@ class Pic extends Element
 
         foreach ($this->getTags() as $tag) {
             if (0 === strpos($tag, 'time_')) {
-                return (float) (substr($tag, 5));
+                return (float) substr($tag, 5);
             }
         }
 

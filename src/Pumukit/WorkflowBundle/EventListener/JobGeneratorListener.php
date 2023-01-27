@@ -65,7 +65,7 @@ class JobGeneratorListener
         }
         $profile = $this->profiles[$profileName];
 
-        //NOTE: See TTK-7482
+        // NOTE: See TTK-7482
         foreach ($tag->getChildren() as $pubchannel) {
             if ($multimediaObject->containsTag($pubchannel)) {
                 if (!$master->containsTag('ENCODED_'.$pubchannel->getCod()) && false === strpos($profile['target'], (string) $pubchannel->getCod())) {
@@ -119,7 +119,7 @@ class JobGeneratorListener
                 }
             }
 
-            if ((in_array($pubChannelCod, $targets['standard']))
+            if (in_array($pubChannelCod, $targets['standard'])
                && ($multimediaObject->isOnlyAudio() == $profile['audio'])) {
                 if (!$multimediaObject->isOnlyAudio() && 0 != $profile['resolution_ver']) {
                     $profileAspectRatio = $profile['resolution_hor'] / $profile['resolution_ver'];

@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Document\Track;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class MultimediaObjectMaxDurationTest extends PumukitTestCase

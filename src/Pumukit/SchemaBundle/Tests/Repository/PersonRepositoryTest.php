@@ -11,6 +11,7 @@ use Pumukit\SchemaBundle\Document\User;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class PersonRepositoryTest extends PumukitTestCase

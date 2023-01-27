@@ -12,6 +12,7 @@ use Pumukit\SchemaBundle\Services\MultimediaObjectEventDispatcherService;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class MultimediaObjectEventDispatcherServiceTest extends PumukitTestCase

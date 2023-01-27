@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\Comments;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class CommentsTest extends TestCase

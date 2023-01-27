@@ -74,29 +74,29 @@ class EmbeddedBroadcastService
         $embeddedBroadcast = new EmbeddedBroadcast();
 
         switch ($type) {
-        case EmbeddedBroadcast::TYPE_PASSWORD:
-            $embeddedBroadcast->setType(EmbeddedBroadcast::TYPE_PASSWORD);
-            $embeddedBroadcast->setName(EmbeddedBroadcast::NAME_PASSWORD);
+            case EmbeddedBroadcast::TYPE_PASSWORD:
+                $embeddedBroadcast->setType(EmbeddedBroadcast::TYPE_PASSWORD);
+                $embeddedBroadcast->setName(EmbeddedBroadcast::NAME_PASSWORD);
 
-            break;
+                break;
 
-        case EmbeddedBroadcast::TYPE_LOGIN:
-            $embeddedBroadcast->setType(EmbeddedBroadcast::TYPE_LOGIN);
-            $embeddedBroadcast->setName(EmbeddedBroadcast::NAME_LOGIN);
+            case EmbeddedBroadcast::TYPE_LOGIN:
+                $embeddedBroadcast->setType(EmbeddedBroadcast::TYPE_LOGIN);
+                $embeddedBroadcast->setName(EmbeddedBroadcast::NAME_LOGIN);
 
-            break;
+                break;
 
-        case EmbeddedBroadcast::TYPE_GROUPS:
-            $embeddedBroadcast->setType(EmbeddedBroadcast::TYPE_GROUPS);
-            $embeddedBroadcast->setName(EmbeddedBroadcast::NAME_GROUPS);
+            case EmbeddedBroadcast::TYPE_GROUPS:
+                $embeddedBroadcast->setType(EmbeddedBroadcast::TYPE_GROUPS);
+                $embeddedBroadcast->setName(EmbeddedBroadcast::NAME_GROUPS);
 
-            break;
+                break;
 
-        default:
-            $embeddedBroadcast->setType(EmbeddedBroadcast::TYPE_PUBLIC);
-            $embeddedBroadcast->setName(EmbeddedBroadcast::NAME_PUBLIC);
+            default:
+                $embeddedBroadcast->setType(EmbeddedBroadcast::TYPE_PUBLIC);
+                $embeddedBroadcast->setName(EmbeddedBroadcast::NAME_PUBLIC);
 
-            break;
+                break;
         }
 
         return $embeddedBroadcast;
@@ -338,7 +338,7 @@ class EmbeddedBroadcastService
     private function isPasswordCorrect(MultimediaObject $multimediaObject, $password = null)
     {
         $invalidPassword = false;
-        if (($password) && ($embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast())) {
+        if ($password && ($embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast())) {
             $embeddedPassword = $embeddedBroadcast->getPassword();
             if (($password == $embeddedPassword) && (null !== $embeddedPassword)) {
                 return true;

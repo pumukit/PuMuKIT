@@ -128,7 +128,7 @@ EOT
         $title = substr(basename($path), 0, -4);
 
         try {
-            //exception if is not a mediafile (video or audio)
+            // exception if is not a mediafile (video or audio)
             $duration = $this->inspectionService->getDuration($path);
         } catch (\Exception $e) {
             throw new \Exception('The file  ('.$path.') is not a valid video or audio file');

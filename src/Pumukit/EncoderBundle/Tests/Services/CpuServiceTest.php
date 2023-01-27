@@ -10,6 +10,7 @@ use Pumukit\EncoderBundle\Services\CpuService;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class CpuServiceTest extends PumukitTestCase
@@ -89,7 +90,7 @@ class CpuServiceTest extends PumukitTestCase
         static::assertEquals($cpus['CPU_LOCAL'], $this->cpuService->getCpuByName('CPU_LOCAL'));
         static::assertEquals($cpus['CPU_REMOTE'], $this->cpuService->getCpuByName('CPU_REMOTE'));
         static::assertEquals($cpus['CPU_CLOUD'], $this->cpuService->getCpuByName('CPU_CLOUD'));
-        static::assertNull($this->cpuService->getCpuByName('CPU_local')); //Case sensitive
+        static::assertNull($this->cpuService->getCpuByName('CPU_local')); // Case sensitive
         static::assertNull($this->cpuService->getCpuByName('CPU_LO'));
     }
 

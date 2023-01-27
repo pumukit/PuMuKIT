@@ -104,24 +104,24 @@ class StatsService
         $mongoProjectDate = [];
 
         switch ($groupBy) {
-        case 'hour':
-            $mongoProjectDate[] = 'H';
-            $mongoProjectDate[] = ['$substr' => [$dateField, 0, 2]];
-            $mongoProjectDate[] = 'T';
+            case 'hour':
+                $mongoProjectDate[] = 'H';
+                $mongoProjectDate[] = ['$substr' => [$dateField, 0, 2]];
+                $mongoProjectDate[] = 'T';
+                // no break
+            case 'day':
+                $mongoProjectDate[] = ['$substr' => [$dateField, 8, 2]];
+                $mongoProjectDate[] = '-';
             // no break
-        case 'day':
-            $mongoProjectDate[] = ['$substr' => [$dateField, 8, 2]];
-            $mongoProjectDate[] = '-';
-            // no break
-        default: //If it doesn't exists, it's 'month'
-        case 'month':
-            $mongoProjectDate[] = ['$substr' => [$dateField, 5, 2]];
-            $mongoProjectDate[] = '-';
-            // no break
-        case 'year':
-            $mongoProjectDate[] = ['$substr' => [$dateField, 0, 4]];
+            default: // If it doesn't exists, it's 'month'
+            case 'month':
+                $mongoProjectDate[] = ['$substr' => [$dateField, 5, 2]];
+                $mongoProjectDate[] = '-';
+                // no break
+            case 'year':
+                $mongoProjectDate[] = ['$substr' => [$dateField, 0, 4]];
 
-            break;
+                break;
         }
 
         return ['$concat' => array_reverse($mongoProjectDate)];

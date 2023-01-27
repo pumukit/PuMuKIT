@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class LinkServiceTest extends PumukitTestCase

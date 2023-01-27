@@ -23,6 +23,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
 {
     /** @var DocumentManager */
     private $documentManager;
+
     /** @var TagService */
     private $tagService;
 

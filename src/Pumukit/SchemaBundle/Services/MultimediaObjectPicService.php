@@ -61,9 +61,9 @@ class MultimediaObjectPicService
      *
      * @param MultimediaObject $multimediaObject
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     *
      * @return mixed
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function getRecommendedPics($multimediaObject)
     {
@@ -106,9 +106,9 @@ class MultimediaObjectPicService
      *
      * @param bool $isEventPoster
      *
-     * @throws \Exception
-     *
      * @return MultimediaObject
+     *
+     * @throws \Exception
      */
     public function addPicFile(MultimediaObject $multimediaObject, UploadedFile $picFile, $isEventPoster = false)
     {
@@ -195,9 +195,9 @@ class MultimediaObjectPicService
      *
      * @param \MongoId|string $picId
      *
-     * @throws \Exception
-     *
      * @return MultimediaObject
+     *
+     * @throws \Exception
      */
     public function removePicFromMultimediaObject(MultimediaObject $multimediaObject, $picId)
     {

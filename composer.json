@@ -95,7 +95,7 @@
             "find src -type f -name '.php' -print0 | xargs -0 -n1 -P8 php -l",
             "bin/check/var_dump"
         ],
-        "php-cs-fixer": "vendor/bin/php-cs-fixer fix src --dry-run -v",
+        "php-cs-fixer": "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix src --dry-run -v",
         "php-stan": [
             "vendor/bin/phpstan analyse -l 1 src"
         ],

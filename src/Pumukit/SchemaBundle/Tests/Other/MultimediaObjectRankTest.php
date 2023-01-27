@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Document\Series;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class MultimediaObjectRankTest extends PumukitTestCase

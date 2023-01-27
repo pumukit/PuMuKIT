@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class MultimediaObjectPicServiceTest extends PumukitTestCase

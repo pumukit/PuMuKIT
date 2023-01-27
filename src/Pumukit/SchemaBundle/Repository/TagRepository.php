@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Repository;
 
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
-use Gedmo\Tree\Document\MongoDB\Repository\MaterializedPathRepository;
 use Pumukit\SchemaBundle\Document\Tag;
 
 /**

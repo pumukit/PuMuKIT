@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\Live;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class LiveRepositoryTest extends PumukitTestCase

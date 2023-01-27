@@ -13,6 +13,7 @@ use Pumukit\SchemaBundle\Document\Tag;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class MultimediaObjectSyncServiceTest extends PumukitTestCase

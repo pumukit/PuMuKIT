@@ -19,6 +19,7 @@ class FilterListener
      * @var DocumentManager
      */
     private $dm;
+
     /**
      * @var FilterService
      */

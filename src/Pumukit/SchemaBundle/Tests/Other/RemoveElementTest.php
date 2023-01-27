@@ -21,6 +21,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class RemoveElementTest extends PumukitTestCase
@@ -539,7 +540,7 @@ class RemoveElementTest extends PumukitTestCase
         // This test should fail using removeElement from ArrayCollection
         // Solved with strategy="setArray"
         static::assertFalse($mm2->containsGroup($group1));
-        //This test should fail using removeElement from ArrayCollection
+        // This test should fail using removeElement from ArrayCollection
         // Solved with strategy="setArray"
         static::assertTrue($mm2->containsGroup($group2));
         static::assertFalse($mm3->containsGroup($group1));
@@ -863,7 +864,7 @@ class RemoveElementTest extends PumukitTestCase
         // This test should fail using removeElement from ArrayCollection
         // Solved with strategy="setArray"
         static::assertFalse($user2->containsGroup($group1));
-        //This test should fail using removeElement from ArrayCollection
+        // This test should fail using removeElement from ArrayCollection
         // Solved with strategy="setArray"
         static::assertTrue($user2->containsGroup($group2));
         static::assertFalse($user3->containsGroup($group1));
@@ -1258,7 +1259,7 @@ class RemoveElementTest extends PumukitTestCase
         // This test should fail using removeElement from ArrayCollection
         // Solved with strategy="setArray"
         static::assertFalse($eb2->containsGroup($group1));
-        //This test should fail using removeElement from ArrayCollection
+        // This test should fail using removeElement from ArrayCollection
         // Solved with strategy="setArray"
         static::assertTrue($eb2->containsGroup($group2));
         static::assertFalse($eb3->containsGroup($group1));

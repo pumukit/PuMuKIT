@@ -13,6 +13,7 @@ use Pumukit\SchemaBundle\Services\MaterialEventDispatcherService;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class MaterialEventDispatcherServiceTest extends PumukitTestCase

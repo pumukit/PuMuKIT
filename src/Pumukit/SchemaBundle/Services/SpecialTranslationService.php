@@ -27,7 +27,7 @@ class SpecialTranslationService
     {
         $groups = $embeddedBroadcast->getGroups();
         $groupsDescription = '';
-        if ((EmbeddedBroadcast::TYPE_GROUPS === $embeddedBroadcast->getType()) && ($groups)) {
+        if ((EmbeddedBroadcast::TYPE_GROUPS === $embeddedBroadcast->getType()) && $groups) {
             $groupsDescription = ': ';
             foreach ($groups as $group) {
                 $groupsDescription .= $group->getName();

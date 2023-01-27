@@ -11,6 +11,7 @@ use Pumukit\SchemaBundle\Document\Live;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class EmbeddedEventTest extends TestCase

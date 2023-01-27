@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\Link;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class LinkTest extends TestCase

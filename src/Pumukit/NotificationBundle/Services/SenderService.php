@@ -34,6 +34,7 @@ class SenderService
     private $subject = "Can't send email to this address.";
     private $template = self::TEMPLATE_ERROR;
     private $logger;
+
     /** @var PersonRepository */
     private $personRepo;
     private $enable;
@@ -138,7 +139,7 @@ class SenderService
         }
 
         foreach ($emailsTo as $email) {
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { //No need for a separate filtering function when "filtering" is a single function call.
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { // No need for a separate filtering function when "filtering" is a single function call.
                 $this->logger->warning(self::class.'['.__FUNCTION__.'] The email "'.$email.'" appears as invalid. Message will not be sent.');
 
                 continue;

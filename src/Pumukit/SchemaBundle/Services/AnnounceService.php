@@ -26,7 +26,7 @@ class AnnounceService
         if ($withPudenewTag) {
             $return = $this->getLastMmobjsWithSeries($limit, $useRecordDate);
         } else {
-            //Get recently added mmobjs
+            // Get recently added mmobjs
             $sortKey = $useRecordDate ? 'record_date' : 'public_date';
             $return = $this->mmobjRepo->findStandardBy([], [$sortKey => -1], $limit, 0);
         }
