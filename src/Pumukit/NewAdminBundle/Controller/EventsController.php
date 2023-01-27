@@ -882,7 +882,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
         $filterChannelName = $request->query->get('term');
 
         $locale = $request->getLocale();
-        $lives = $this->documentManager->getRepository(Live::class)->findBy(["name.{$locale}" => new Regex('/'.$filterChannelName.'/i')]);
+        $lives = $this->documentManager->getRepository(Live::class)->findBy(["name.{$locale}" => new Regex($filterChannelName, 'i')]);
         foreach ($lives as $live) {
             $result[] = [
                 'id' => $live->getId(),

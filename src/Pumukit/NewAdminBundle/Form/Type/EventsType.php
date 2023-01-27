@@ -6,7 +6,6 @@ namespace Pumukit\NewAdminBundle\Form\Type;
 
 use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
-use Pumukit\SchemaBundle\Repository\LiveRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -53,18 +52,6 @@ class EventsType extends AbstractType
                 [
                     'required' => false,
                     'label' => $this->translator->trans('Location', [], null, $this->locale),
-                    'attr' => ['class' => 'form-control'],
-                ]
-            )
-            ->add(
-                'live',
-                null,
-                [
-                    'choice_label' => 'info',
-                    'query_builder' => function (LiveRepository $repo) {
-                        return $repo->createAbcSortQueryBuilder($this->locale);
-                    },
-                    'label' => $this->translator->trans('Channels', [], null, $this->locale),
                     'attr' => ['class' => 'form-control'],
                 ]
             )
