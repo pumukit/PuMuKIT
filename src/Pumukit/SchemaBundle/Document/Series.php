@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\SeriesRepository")
@@ -88,7 +88,7 @@ class Series
 
     /**
      * @MongoDB\EmbedOne(targetDocument=Playlist::class)
-     * @Serializer\Exclude
+     * @Ignore()
      */
     private $playlist;
 

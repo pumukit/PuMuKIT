@@ -17,7 +17,6 @@
         "doctrine/mongodb-odm-bundle": "^4.5",
         "gedmo/doctrine-extensions": "^3.10",
         "jaybizzle/crawler-detect": "^1.2",
-        "jms/serializer-bundle": "^5.2",
         "knplabs/knp-menu-bundle": "^3.2",
         "mobiledetect/mobiledetectlib": "^2.8",
         "nelmio/cors-bundle": "^2.2",
