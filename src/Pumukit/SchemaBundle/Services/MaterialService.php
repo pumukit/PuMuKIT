@@ -134,7 +134,7 @@ class MaterialService
         $material->setSize($path->getSize());
 
         $material->setPath($path->getPathname());
-        $material->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
+        $material->setUrl(str_replace($this->targetPath, $this->targetUrl, $path->getPathname()));
 
         $multimediaObject->addMaterial($material);
         $this->dm->persist($multimediaObject);
@@ -165,7 +165,7 @@ class MaterialService
         $material->setName($materialFile->getClientOriginalName());
 
         $material->setPath($path->getPathname());
-        $material->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
+        $material->setUrl(str_replace($this->targetPath, $this->targetUrl, $path->getPathname()));
 
         $this->dm->persist($multimediaObject);
         $this->dm->flush();

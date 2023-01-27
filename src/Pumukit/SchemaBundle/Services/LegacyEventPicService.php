@@ -62,7 +62,7 @@ class LegacyEventPicService
         $path = $picFile->move($this->targetPath.'/'.$event->getId(), $picFile->getClientOriginalName());
 
         $pic = new Pic();
-        $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
+        $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path->getPathname()));
         $pic->setPath($path->getPathname());
 
         $event->setPic($pic);
