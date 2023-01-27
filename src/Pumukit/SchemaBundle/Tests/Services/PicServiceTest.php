@@ -42,12 +42,6 @@ class PicServiceTest extends PumukitTestCase
         parent::setUp();
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
 
-        $this->context = $this->getMockBuilder(RequestContext::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
-
-        $this->rootDir = static::$kernel->getContainer()->getParameter('kernel.root_dir');
         $publicDir = static::$kernel->getContainer()->getParameter('pumukit.public_dir');
         $scheme = static::$kernel->getContainer()->getParameter('router.request_context.scheme');
         $host = static::$kernel->getContainer()->getParameter('router.request_context.host');
