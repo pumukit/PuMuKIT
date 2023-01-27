@@ -1,5 +1,7 @@
 .PHONY: help debug stop start clean pull build test-all shell ps logs cc composer-validate fixtures composer-install
 
+DOCKER_COMP = docker-compose
+
 help:
 	@echo ''
 	@echo 'PuMuKIT makefile'
@@ -26,32 +28,32 @@ current-dir := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 dynamic_docker_php_name := $(shell echo $(notdir $(shell pwd) | tr A-Z a-z))_php_1
 
 up:
-	docker-compose up -d
+	@$(DOCKER_COMP) up -d
 
 start:
-	docker-compose start
+	@$(DOCKER_COMP) start
 
 stop:
-	docker-compose stop
+	@$(DOCKER_COMP) stop
 
 clean: stop
-	docker-compose rm -f
+	@$(DOCKER_COMP) rm -f
 
 debug:
-	docker-compose up
+	@$(DOCKER_COMP) up
 
 pull:
-	docker-compose pull
+	@$(DOCKER_COMP) pull
 
 build:
-	docker-compose build
+	@$(DOCKER_COMP) build
 
 cc-envs:
-	docker-compose -f docker-compose.yml run --service-ports php bin/console c:c
-	docker-compose -f docker-compose.yml run --service-ports php bin/console c:c --env=prod
+	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php bin/console c:c
+	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php bin/console c:c --env=prod
 
 ai:
-	docker-compose -f docker-compose.yml run --service-ports php bin/console a:i --symlink --relative
+	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php bin/console a:i --symlink --relative
 
 cc: cc-envs ai
 
@@ -59,45 +61,45 @@ cc: cc-envs ai
 composer-install: CMD=install
 composer-update: CMD=update
 composer-install composer-update:
-	docker-compose -f docker-compose.yml run --service-ports php composer $(CMD)
+	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php composer $(CMD)
 
 composer-validate:
-	docker-compose -f docker-compose.yml run --service-ports php composer validate
+	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php composer validate
 
 fixtures:
-	docker-compose -f docker-compose.yml run --service-ports php bin/console pumukit:init:repo all --force
+	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php bin/console pumukit:init:repo all --force
 
 test-all: test test-lint-yaml test-lint-twig test-lint-generic test-php-cs-fixer test-php-stan test-rector
 
 test:
-	docker-compose -f docker-compose.yml run --service-ports php composer tests
+	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php composer tests
 
 test-lint-yaml:
-	docker-compose -f docker-compose.yml run --service-ports php composer lint-yaml
+	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php composer lint-yaml
 
 test-lint-twig:
-	docker-compose -f docker-compose.yml run --service-ports php composer lint-twig
+	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php composer lint-twig
 
 test-lint-xliff:
-	docker-compose -f docker-compose.yml run --service-ports php composer lint-xliff
+	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php composer lint-xliff
 
 test-lint-generic:
-	docker-compose -f docker-compose.yml run --service-ports php composer lint-generic
+	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php composer lint-generic
 
 test-php-cs-fixer:
-	docker-compose -f docker-compose.yml run --service-ports php composer php-cs-fixer
+	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php composer php-cs-fixer
 
 test-php-stan:
-	docker-compose -f docker-compose.yml run --service-ports php composer php-stan
+	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php composer php-stan
 
 test-rector:
-	docker-compose -f docker-compose.yml run --service-ports php composer php-rector
+	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php composer php-rector
 
 shell:
-	docker-compose -f docker-compose.yml run --service-ports php sh
+	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php sh
 
 ps:
-	docker-compose ps
+	@$(DOCKER_COMP) ps
 
 logs:
-	docker-compose logs -f --tail=100
+	@$(DOCKER_COMP) logs -f --tail=100
