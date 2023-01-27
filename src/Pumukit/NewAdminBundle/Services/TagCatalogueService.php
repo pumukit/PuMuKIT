@@ -184,7 +184,7 @@ class TagCatalogueService
             }
         }
 
-        if (!empty($tag)) {
+        if (count($tag) > 0) {
             if ('all' === $tag[0]) {
                 array_shift($tag);
             }
