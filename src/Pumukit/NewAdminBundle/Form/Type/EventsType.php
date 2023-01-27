@@ -141,7 +141,7 @@ class EventsType extends AbstractType
         $resolver->setRequired('locale');
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'pumukitnewadmin_live_event';
     }
