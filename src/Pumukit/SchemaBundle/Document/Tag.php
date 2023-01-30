@@ -9,7 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\TagRepository")
+ * @MongoDB\Document(repositoryClass="Gedmo\Tree\Document\MongoDB\Repository\MaterializedPathRepository")
  * @Gedmo\Tree(type="materializedPath", activateLocking=false)
  */
 class Tag implements TagInterface

@@ -309,7 +309,7 @@ class MultimediaObjectController extends SortableAdminController
         if (!$this->showLatestWithPudeNew) {
             $this->documentManager
                 ->getRepository(Tag::class)
-                ->findOneByCod('PUDENEW')
+                ->findOneBy(['cod' => 'PUDENEW'])
                 ->setDisplay(false)
             ;
         }

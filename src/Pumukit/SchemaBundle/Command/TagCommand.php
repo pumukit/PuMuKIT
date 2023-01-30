@@ -49,7 +49,7 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $tagCode = $input->getArgument('tag');
-        $tag = $this->tagRepo->findOneByCod($tagCode);
+        $tag = $this->tagRepo->findOneBy(['cod' => $tagCode]);
 
         if (!$tag) {
             throw new \InvalidArgumentException(sprintf('No tag with code %s', $tagCode));

@@ -48,7 +48,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
         $repo = $this->documentManager->getRepository(Tag::class);
 
         $root_name = 'ROOT';
-        $root = $repo->findOneByCod($root_name);
+        $root = $repo->findOneBy(['cod' => $root_name]);
 
         if (null !== $root) {
             $children = $root->getChildren();
@@ -146,7 +146,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
         $repo = $this->documentManager->getRepository(Tag::class);
 
         $root_name = 'ROOT';
-        $root = $repo->findOneByCod($root_name);
+        $root = $repo->findOneBy(['cod' => $root_name]);
 
         if (null !== $root) {
             $children = $root->getChildren();

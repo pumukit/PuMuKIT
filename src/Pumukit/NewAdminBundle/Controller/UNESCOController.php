@@ -387,7 +387,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
         // If the 'pudenew' tag is not being used, set the display to 'false'.
         if (!$this->showLatestWithPudeNew) {
-            $this->documentManager->getRepository(Tag::class)->findOneByCod('PUDENEW')->setDisplay(false);
+            $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PUDENEW'])->setDisplay(false);
         }
         $pubChannelsTags = $this->factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $this->factoryService->getTagsByCod('PUBDECISIONS', true);
@@ -461,8 +461,8 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
         $roles = $this->documentManager->getRepository(Role::class)->findAll();
 
-        $pudeRadio = $this->documentManager->getRepository(Tag::class)->findOneByCod('PUDERADIO');
-        $pudeTV = $this->documentManager->getRepository(Tag::class)->findOneByCod('PUDETV');
+        $pudeRadio = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PUDERADIO']);
+        $pudeTV = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PUDETV']);
 
         $statusPub = [
             MultimediaObject::STATUS_PUBLISHED => $this->translator->trans('Published'),
@@ -483,7 +483,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
             MultimediaObject::TYPE_EXTERNAL => $this->translator->trans('External player'),
         ];
 
-        $genreParent = $this->documentManager->getRepository(Tag::class)->findOneByCod('GENRE');
+        $genreParent = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'GENRE']);
         if ($genreParent) {
             $genres = $this->documentManager->getRepository(Tag::class)->findBy(['parent.$id' => new ObjectId($genreParent->getId())]);
             $aGenre = [];
@@ -517,7 +517,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     {
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
 
-        $tag = $this->documentManager->getRepository(Tag::class)->findOneByCod($tagCod);
+        $tag = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => $tagCod]);
         $tagConfigured = $this->getConfiguredTag();
         $removedTags = [];
 
@@ -539,7 +539,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     {
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
 
-        $tag = $this->documentManager->getRepository(Tag::class)->findOneByCod($tagCod);
+        $tag = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => $tagCod]);
         if ($multimediaObject->containsTag($tag)) {
             return new JsonResponse(['error' => JsonResponse::HTTP_BAD_REQUEST]);
         }
