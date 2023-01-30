@@ -21,12 +21,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/admin/encoder")
+ *
  * @Security("is_granted('ROLE_ACCESS_JOBS')")
  */
 class InfoController extends AbstractController
 {
     /**
      * @Route("/", name="pumukit_encoder_info")
+     *
      * @Template("@PumukitEncoder/Info/index.html.twig")
      */
     public function indexAction(Request $request, DocumentManager $documentManager, CpuService $cpuService, JobService $jobService, PaginationService $paginationService): array
@@ -107,6 +109,7 @@ class InfoController extends AbstractController
 
     /**
      * @Route("/job/{id}", methods={"GET"}, name="pumukit_encoder_job")
+     *
      * @Template("@PumukitEncoder/Info/infoJob.html.twig")
      */
     public function infoJobAction(Job $job, Request $request, JobService $jobService): array

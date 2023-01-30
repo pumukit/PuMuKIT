@@ -26,6 +26,7 @@ class ViewsAggregation
      * @var \DateTime
      *
      * @MongoDB\Field(type="date")
+     *
      * @MongoDB\Index
      */
     private $date;
@@ -34,6 +35,7 @@ class ViewsAggregation
      * @var string
      *
      * @MongoDB\Field(type="object_id")
+     *
      * @MongoDB\Index
      */
     private $multimediaObject;
@@ -42,6 +44,7 @@ class ViewsAggregation
      * @var string
      *
      * @MongoDB\Field(type="object_id")
+     *
      * @MongoDB\Index
      */
     private $series;

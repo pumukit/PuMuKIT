@@ -44,6 +44,7 @@ class Job
      * @var string
      *
      * @MongoDB\Field(type="string")
+     *
      * @MongoDB\Index
      */
     private $mm_id;
@@ -87,6 +88,7 @@ class Job
      * @var int
      *
      * @MongoDB\Field(type="int")
+     *
      * @MongoDB\Index
      */
     private $status = self::STATUS_WAITING;
@@ -193,6 +195,7 @@ class Job
      * @var string
      *
      * @MongoDB\Field(type="string")
+     *
      * @Assert\Email
      */
     private $email;

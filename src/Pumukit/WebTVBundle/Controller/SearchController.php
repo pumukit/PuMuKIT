@@ -72,6 +72,7 @@ class SearchController extends AbstractController implements WebTVControllerInte
 
     /**
      * @Route("/searchseries", name="pumukit_webtv_search_series")
+     *
      * @Template("@PumukitWebTV/Search/template.html.twig")
      */
     public function seriesAction(Request $request)
@@ -112,7 +113,9 @@ class SearchController extends AbstractController implements WebTVControllerInte
 
     /**
      * @Route("/searchmultimediaobjects/{tagCod}/{useTagAsGeneral}", defaults={"tagCod"=null, "useTagAsGeneral"=false}, name="pumukit_webtv_search_multimediaobjects")
+     *
      * @ParamConverter("blockedTag", options={"mapping": {"tagCod": "cod"}})
+     *
      * @Template("@PumukitWebTV/Search/template.html.twig")
      */
     public function multimediaObjectsAction(Request $request, Tag $blockedTag = null, bool $useTagAsGeneral = false)

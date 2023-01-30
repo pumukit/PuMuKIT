@@ -75,7 +75,9 @@ class EmbeddedEvent
 
     /**
      * @MongoDB\Field(type="string")
+     *
      * @Assert\NotBlank()
+     *
      * @Assert\Url(protocols= {"rtmpt", "rtmp", "http", "mms", "rtp", "https"})
      */
     private $url;

@@ -44,6 +44,7 @@ class AnnouncesController extends AbstractController implements WebTVControllerI
 
     /**
      * @Route("/latestuploads", name="pumukit_webtv_announces_latestuploads")
+     *
      * @Template("@PumukitWebTV/Announces/template.html.twig")
      */
     public function latestUploadsAction()

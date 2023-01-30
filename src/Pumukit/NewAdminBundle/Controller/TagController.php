@@ -112,6 +112,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
 
     /**
      * @ParamConverter("tag", options={"id" = "parent"})
+     *
      * @Template("@PumukitNewAdmin/Tag/create.html.twig")
      */
     public function createAction(Request $request, Tag $parent)

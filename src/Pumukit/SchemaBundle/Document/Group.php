@@ -21,13 +21,16 @@ class Group implements GroupInterface
 
     /**
      * @MongoDB\Field(type="string")
+     *
      * @MongoDB\UniqueIndex(order="asc")
+     *
      * @Assert\Regex("/^\w*$/")
      */
     protected $key;
 
     /**
      * @MongoDB\Field(type="string")
+     *
      * @MongoDB\UniqueIndex(order="asc")
      */
     protected $name;

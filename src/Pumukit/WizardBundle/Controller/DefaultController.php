@@ -32,6 +32,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_WIZARD_UPLOAD')")
+ *
  * @Route("/admin/wizard")
  */
 class DefaultController extends AbstractController

@@ -26,6 +26,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_WIZARD_UPLOAD')")
+ *
  * @Route("/admin/simplewizard")
  */
 class SimpleController extends AbstractController

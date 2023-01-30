@@ -35,6 +35,7 @@ class SeriesType
 
     /**
      * @MongoDB\ReferenceMany(targetDocument=Series::class, mappedBy="series_type", storeAs="id", orphanRemoval=false)
+     *
      * @Serializer\Exclude
      */
     private $series;

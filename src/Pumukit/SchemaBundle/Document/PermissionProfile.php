@@ -29,6 +29,7 @@ class PermissionProfile
 
     /**
      * @MongoDB\Field(type="string")
+     *
      * @MongoDB\UniqueIndex(order="asc")
      */
     private $name = '';
@@ -55,6 +56,7 @@ class PermissionProfile
 
     /**
      * @MongoDB\Field(type="int")
+     *
      * @Gedmo\SortablePosition
      */
     private $rank;

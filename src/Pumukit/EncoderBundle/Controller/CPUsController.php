@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/admin/encoder")
+ *
  * @Security("is_granted('ROLE_ACCESS_JOBS')")
  */
 class CPUsController extends AbstractController

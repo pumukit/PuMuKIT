@@ -21,6 +21,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("/user_profile")
+ *
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
 class UserProfileController extends AbstractController
@@ -50,6 +51,7 @@ class UserProfileController extends AbstractController
 
     /**
      * @Route("/", name="pumukitnewadmin_profile_user_index")
+     *
      * @Template("@PumukitNewAdmin/UserProfile/template.html.twig")
      */
     public function profileAction(Request $request): array

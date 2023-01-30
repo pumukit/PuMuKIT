@@ -9,6 +9,7 @@ use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\SeriesRepository")
+ *
  * @MongoDB\Index(name="text_index", keys={"textindex.text"="text", "secondarytextindex.text"="text"}, options={"language_override"="indexlanguage", "default_language"="none", "weights"={"textindex.text"=10, "secondarytextindex.text"=1}})
  */
 class Series
@@ -55,18 +56,21 @@ class Series
 
     /**
      * @MongoDB\Field(type="int")
+     *
      * @MongoDB\UniqueIndex()
      */
     private $numerical_id;
 
     /**
      * @MongoDB\Field(type="string")
+     *
      * @MongoDB\Index
      */
     private $secret;
 
     /**
      * @MongoDB\Field(type="int")
+     *
      * @MongoDB\Index
      */
     private $type;
@@ -88,6 +92,7 @@ class Series
 
     /**
      * @MongoDB\EmbedOne(targetDocument=Playlist::class)
+     *
      * @Serializer\Exclude
      */
     private $playlist;
@@ -103,12 +108,14 @@ class Series
      * and we want to force that the series will be hide.
      *
      * @MongoDB\Field(type="bool")
+     *
      * @MongoDB\Index
      */
     private $hide = false;
 
     /**
      * @MongoDB\Field(type="date")
+     *
      * @MongoDB\Index
      */
     private $public_date;

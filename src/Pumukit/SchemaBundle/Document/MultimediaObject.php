@@ -11,6 +11,7 @@ use Pumukit\SchemaBundle\Document\ObjectValue\Immutable;
 
 /**
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\MultimediaObjectRepository")
+ *
  * @MongoDB\Index(name="text_index", keys={"textindex.text"="text", "secondarytextindex.text"="text"}, options={"language_override"="indexlanguage", "default_language"="none", "weights"={"textindex.text"=10, "secondarytextindex.text"=1}})
  */
 class MultimediaObject
@@ -63,6 +64,7 @@ class MultimediaObject
 
     /**
      * @MongoDB\Field(type="int")
+     *
      * @MongoDB\UniqueIndex()
      */
     private $numerical_id;
@@ -74,19 +76,23 @@ class MultimediaObject
 
     /**
      * @MongoDB\Field(type="int")
+     *
      * @MongoDB\Index
      */
     private $type = self::TYPE_UNKNOWN;
 
     /**
      * @MongoDB\Field(type="string")
+     *
      * @MongoDB\Index
      */
     private $secret;
 
     /**
      * @MongoDB\ReferenceOne(targetDocument=Series::class, storeAs="id", inversedBy="multimedia_object", cascade={"persist"})
+     *
      * @Gedmo\SortableGroup
+     *
      * @MongoDB\Index
      */
     private $series;
@@ -135,6 +141,7 @@ class MultimediaObject
 
     /**
      * @MongoDB\Field(type="int")
+     *
      * @Gedmo\SortablePosition
      */
     private $rank;
@@ -146,12 +153,14 @@ class MultimediaObject
 
     /**
      * @MongoDB\Field(type="date")
+     *
      * @MongoDB\Index
      */
     private $record_date;
 
     /**
      * @MongoDB\Field(type="date")
+     *
      * @MongoDB\Index
      */
     private $public_date;

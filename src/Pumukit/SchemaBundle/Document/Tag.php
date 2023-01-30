@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @MongoDB\Document(repositoryClass="Gedmo\Tree\Document\MongoDB\Repository\MaterializedPathRepository")
+ *
  * @Gedmo\Tree(type="materializedPath", activateLocking=false)
  */
 class Tag implements TagInterface
@@ -49,8 +50,11 @@ class Tag implements TagInterface
 
     /**
      * @MongoDB\Field(type="string")
+     *
      * @MongoDB\UniqueIndex(order="asc")
+     *
      * @Assert\Regex("/^\w*$/")
+     *
      * @Gedmo\TreePathSource
      */
     private $cod = '';
@@ -82,7 +86,9 @@ class Tag implements TagInterface
 
     /**
      * @Gedmo\TreeParent
+     *
      * @MongoDB\ReferenceOne(targetDocument=Tag::class, inversedBy="children", cascade={"persist"})
+     *
      * @MongoDB\Index
      */
     private $parent;
@@ -99,18 +105,21 @@ class Tag implements TagInterface
 
     /**
      * @MongoDB\Field(type="string")
+     *
      * @Gedmo\TreePath(separator="|", appendId=false, startsWithSeparator=false, endsWithSeparator=true)
      */
     private $path;
 
     /**
      * @Gedmo\TreeLevel
+     *
      * @MongoDB\Field(type="int")
      */
     private $level;
 
     /**
      * @Gedmo\TreeLockTime
+     *
      * @MongoDB\Field(type="date")
      */
     private $lockTime;

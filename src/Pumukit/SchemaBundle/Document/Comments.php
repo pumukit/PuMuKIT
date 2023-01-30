@@ -28,6 +28,7 @@ class Comments
 
     /**
      * @MongoDB\Field(type="int")
+     *
      * @MongoDB\EmbedOne(targetDocument=MultimediaObject::class)
      */
     private $multimedia_object_id;
