@@ -192,7 +192,7 @@ class SeriesPicService
             foreach ($this->locales as $locale) {
                 $header = $banner;
                 if (!empty($series->getHeader($locale))) {
-                    $header = $series->getHeader($locale).$banner;
+                    $header = $banner.$series->getHeader($locale);
                 }
                 $series->setHeader($header, $locale);
             }
