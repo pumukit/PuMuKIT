@@ -235,12 +235,6 @@ class PlaylistMultimediaObjectController extends AbstractController
         } else {
             $mmobjs = $this->documentManager->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
         }
-        $adapter = new DoctrineODMMongoDBAdapter($mmobjs);
-        $mmobjs = new Pagerfanta($adapter);
-        $mmobjs
-            ->setMaxPerPage($limit)
-            ->setNormalizeOutOfRangePages(true)
-        ;
 
         $pager = $this->paginationService->createDoctrineODMMongoDBAdapter($mmobjs, $page, $limit);
 
