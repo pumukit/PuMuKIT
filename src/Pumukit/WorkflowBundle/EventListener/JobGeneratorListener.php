@@ -54,7 +54,7 @@ class JobGeneratorListener
         }
 
         $repository = $this->dm->getRepository(Tag::class);
-        $tag = $repository->findOneByCod('PUBCHANNELS');
+        $tag = $repository->findOneBy(['cod' => 'PUBCHANNELS']);
         if (!$tag) {
             return;
         }

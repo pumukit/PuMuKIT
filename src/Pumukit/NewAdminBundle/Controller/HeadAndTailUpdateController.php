@@ -39,6 +39,7 @@ class HeadAndTailUpdateController extends AdminController
 
     /**
      * @Security("is_granted('ROLE_ADD_HEAD_AND_TAIL')")
+     *
      * @Route("/head/update/{multimediaObject}/{isHead}", name="pumukit_newadmin_head_and_tail_set_head", methods={"POST"})
      */
     public function updateVideoHeadStatus(string $multimediaObject, string $isHead): JsonResponse
@@ -64,6 +65,7 @@ class HeadAndTailUpdateController extends AdminController
 
     /**
      * @Security("is_granted('ROLE_ADD_HEAD_AND_TAIL')")
+     *
      * @Route("/tail/update/{multimediaObject}/{isTail}", name="pumukit_newadmin_head_and_tail_set_tail", methods={"POST"})
      */
     public function updateVideoTailStatus(string $multimediaObject, string $isTail): JsonResponse
@@ -89,6 +91,7 @@ class HeadAndTailUpdateController extends AdminController
 
     /**
      * @Security("is_granted('ROLE_ADD_HEAD_AND_TAIL')")
+     *
      * @Route("/headandtail/update/{multimediaObject}/{type}/{element}", name="pumukit_newadmin_head_and_tail_update", methods={"POST"})
      */
     public function updateHeadAndTail(string $type, string $multimediaObject, string $element): JsonResponse
@@ -151,6 +154,7 @@ class HeadAndTailUpdateController extends AdminController
 
     /**
      * @Security("is_granted('ROLE_ADD_HEAD_AND_TAIL')")
+     *
      * @Route("/headandtail/series/update/{series}/{type}/{element}", name="pumukit_newadmin_head_and_tail_series_update", methods={"POST"})
      */
     public function updateSeriesHeadAndTail(string $type, string $series, string $element): JsonResponse

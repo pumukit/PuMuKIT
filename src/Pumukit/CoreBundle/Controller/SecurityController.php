@@ -17,6 +17,7 @@ class SecurityController extends AbstractController
 {
     /**
      * @Route("/security/edit/{id}", name="pumukit_webtv_can_edit_multimediaobject")
+     *
      * @Template("@PumukitCore/Security/editButton.html.twig")
      */
     public function canEditAction(Request $request, DocumentManager $documentManager, string $id)

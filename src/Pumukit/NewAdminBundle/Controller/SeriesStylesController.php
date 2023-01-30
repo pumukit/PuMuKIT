@@ -42,6 +42,7 @@ class SeriesStylesController extends AbstractController
 
     /**
      * @Route("/", name="pumukit_newadmin_series_styles")
+     *
      * @Template("@PumukitNewAdmin/SeriesStyle/crud.html.twig")
      */
     public function menuAction()
@@ -51,6 +52,7 @@ class SeriesStylesController extends AbstractController
 
     /**
      * @Route("/list", name="pumukit_newadmin_series_styles_list")
+     *
      * @Template("@PumukitNewAdmin/SeriesStyle/list.html.twig")
      */
     public function listAction(): array
@@ -135,6 +137,7 @@ class SeriesStylesController extends AbstractController
 
     /**
      * @Route("/show/{id}", name="pumukit_newadmin_series_styles_show")
+     *
      * @Template("@PumukitNewAdmin/SeriesStyle/show.html.twig")
      */
     public function showAction(?string $id = null): array

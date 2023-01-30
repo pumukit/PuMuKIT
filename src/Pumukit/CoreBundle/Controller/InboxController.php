@@ -31,6 +31,7 @@ class InboxController extends AbstractController
 
     /**
      * @Route("/inbox", name="inbox")
+     *
      * @Template("@PumukitCore/Upload/uppy_folder.html.twig")
      */
     public function inbox(): array
@@ -45,6 +46,7 @@ class InboxController extends AbstractController
 
     /**
      * @Route("/upload", name="file_upload")
+     *
      * @Template("@PumukitCore/Upload/uppy_drag_and_drop.html.twig")
      */
     public function folder(Request $request): array

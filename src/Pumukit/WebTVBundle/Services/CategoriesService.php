@@ -47,7 +47,7 @@ class CategoriesService
         $parentCod = $parentCod ?? $this->parentCod;
         $groundsRoot = $this->documentManager
             ->getRepository(Tag::class)
-            ->findOneByCod($parentCod)
+            ->findOneBy(['cod' => $parentCod])
         ;
 
         if (!isset($groundsRoot)) {

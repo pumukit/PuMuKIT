@@ -300,7 +300,7 @@ class FactoryService
     {
         $repo = $this->dm->getRepository(Tag::class);
 
-        return $repo->findOneByCod('ROOT')->getChildren();
+        return $repo->findOneBy(['cod' => 'ROOT'])->getChildren();
     }
 
     /**
@@ -334,7 +334,7 @@ class FactoryService
     {
         $repository = $this->dm->getRepository(Tag::class);
 
-        $tags = $repository->findOneByCod($cod);
+        $tags = $repository->findOneBy(['cod' => $cod]);
 
         if ($tags && $getChildren) {
             return $tags->getChildren();

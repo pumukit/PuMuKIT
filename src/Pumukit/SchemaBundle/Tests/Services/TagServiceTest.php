@@ -89,124 +89,124 @@ class TagServiceTest extends PumukitTestCase
     {
         $mmobj = $this->createMultimediaObject('multimedia object test');
         $tag = $this->createTagWithTree('tag1');
-        $broTag = $this->tagRepo->findOneByCod('brother');
-        $parentTag = $this->tagRepo->findOneByCod('parent');
+        $broTag = $this->tagRepo->findOneBy(['cod' => 'brother']);
+        $parentTag = $this->tagRepo->findOneBy(['cod' => 'parent']);
 
         static::assertCount(0, $this->mmobjRepo->find($mmobj->getId())->getTags());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'tag1'])->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'parent'])->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'brother'])->getNumberMultimediaObjects());
 
         $addedTags = $this->tagService->addTagToMultimediaObject($mmobj, $tag->getId());
         static::assertCount(3, $addedTags);
         static::assertCount(3, $this->mmobjRepo->find($mmobj->getId())->getTags());
-        static::assertEquals(1, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
-        static::assertEquals(1, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
+        static::assertEquals(1, $this->tagRepo->findOneBy(['cod' => 'tag1'])->getNumberMultimediaObjects());
+        static::assertEquals(1, $this->tagRepo->findOneBy(['cod' => 'parent'])->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'brother'])->getNumberMultimediaObjects());
 
         $addedTags = $this->tagService->addTagToMultimediaObject($mmobj, $broTag->getId());
         static::assertCount(1, $addedTags);
         static::assertCount(4, $this->mmobjRepo->find($mmobj->getId())->getTags());
-        static::assertEquals(1, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
-        static::assertEquals(1, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());
-        static::assertEquals(1, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
+        static::assertEquals(1, $this->tagRepo->findOneBy(['cod' => 'tag1'])->getNumberMultimediaObjects());
+        static::assertEquals(1, $this->tagRepo->findOneBy(['cod' => 'parent'])->getNumberMultimediaObjects());
+        static::assertEquals(1, $this->tagRepo->findOneBy(['cod' => 'brother'])->getNumberMultimediaObjects());
 
         $removedTags = $this->tagService->removeTagFromMultimediaObject($mmobj, $tag->getId());
         static::assertCount(1, $removedTags);
         static::assertCount(3, $this->mmobjRepo->find($mmobj->getId())->getTags());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
-        static::assertEquals(1, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());
-        static::assertEquals(1, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'tag1'])->getNumberMultimediaObjects());
+        static::assertEquals(1, $this->tagRepo->findOneBy(['cod' => 'parent'])->getNumberMultimediaObjects());
+        static::assertEquals(1, $this->tagRepo->findOneBy(['cod' => 'brother'])->getNumberMultimediaObjects());
 
         $removedTags = $this->tagService->removeTagFromMultimediaObject($mmobj, $parentTag->getId());
         static::assertCount(0, $removedTags);
         static::assertCount(3, $this->mmobjRepo->find($mmobj->getId())->getTags());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
-        static::assertEquals(1, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());
-        static::assertEquals(1, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'tag1'])->getNumberMultimediaObjects());
+        static::assertEquals(1, $this->tagRepo->findOneBy(['cod' => 'parent'])->getNumberMultimediaObjects());
+        static::assertEquals(1, $this->tagRepo->findOneBy(['cod' => 'brother'])->getNumberMultimediaObjects());
 
         $removedTags = $this->tagService->removeTagFromMultimediaObject($mmobj, $broTag->getId());
         static::assertCount(3, $removedTags);
         static::assertCount(0, $this->mmobjRepo->find($mmobj->getId())->getTags());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'tag1'])->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'parent'])->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'brother'])->getNumberMultimediaObjects());
 
         $addedTags = $this->tagService->addTagToMultimediaObject($mmobj, $parentTag->getId());
         static::assertCount(2, $addedTags);
         static::assertCount(2, $this->mmobjRepo->find($mmobj->getId())->getTags());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
-        static::assertEquals(1, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'tag1'])->getNumberMultimediaObjects());
+        static::assertEquals(1, $this->tagRepo->findOneBy(['cod' => 'parent'])->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'brother'])->getNumberMultimediaObjects());
 
         $removedTags = $this->tagService->removeTagFromMultimediaObject($mmobj, $parentTag->getId());
         static::assertCount(2, $removedTags);
         static::assertCount(0, $this->mmobjRepo->find($mmobj->getId())->getTags());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'tag1'])->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'parent'])->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'brother'])->getNumberMultimediaObjects());
     }
 
     public function testAddAndRemoveTagToPrototype()
     {
         $mmobj = $this->createMultimediaObject('multimedia object test', true);
         $tag = $this->createTagWithTree('tag1');
-        $broTag = $this->tagRepo->findOneByCod('brother');
-        $parentTag = $this->tagRepo->findOneByCod('parent');
+        $broTag = $this->tagRepo->findOneBy(['cod' => 'brother']);
+        $parentTag = $this->tagRepo->findOneBy(['cod' => 'parent']);
 
         static::assertCount(0, $this->mmobjRepo->find($mmobj->getId())->getTags());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'tag1'])->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'parent'])->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'brother'])->getNumberMultimediaObjects());
 
         $addedTags = $this->tagService->addTagToMultimediaObject($mmobj, $tag->getId());
         static::assertCount(3, $addedTags);
         static::assertCount(3, $this->mmobjRepo->find($mmobj->getId())->getTags());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'tag1'])->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'parent'])->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'brother'])->getNumberMultimediaObjects());
 
         $addedTags = $this->tagService->addTagToMultimediaObject($mmobj, $broTag->getId());
         static::assertCount(1, $addedTags);
         static::assertCount(4, $this->mmobjRepo->find($mmobj->getId())->getTags());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'tag1'])->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'parent'])->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'brother'])->getNumberMultimediaObjects());
 
         $removedTags = $this->tagService->removeTagFromMultimediaObject($mmobj, $tag->getId());
         static::assertCount(1, $removedTags);
         static::assertCount(3, $this->mmobjRepo->find($mmobj->getId())->getTags());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'tag1'])->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'parent'])->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'brother'])->getNumberMultimediaObjects());
 
         $removedTags = $this->tagService->removeTagFromMultimediaObject($mmobj, $parentTag->getId());
         static::assertCount(0, $removedTags);
         static::assertCount(3, $this->mmobjRepo->find($mmobj->getId())->getTags());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'tag1'])->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'parent'])->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'brother'])->getNumberMultimediaObjects());
 
         $removedTags = $this->tagService->removeTagFromMultimediaObject($mmobj, $broTag->getId());
         static::assertCount(3, $removedTags);
         static::assertCount(0, $this->mmobjRepo->find($mmobj->getId())->getTags());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'tag1'])->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'parent'])->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'brother'])->getNumberMultimediaObjects());
 
         $addedTags = $this->tagService->addTagToMultimediaObject($mmobj, $parentTag->getId());
         static::assertCount(2, $addedTags);
         static::assertCount(2, $this->mmobjRepo->find($mmobj->getId())->getTags());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'tag1'])->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'parent'])->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'brother'])->getNumberMultimediaObjects());
 
         $removedTags = $this->tagService->removeTagFromMultimediaObject($mmobj, $parentTag->getId());
         static::assertCount(2, $removedTags);
         static::assertCount(0, $this->mmobjRepo->find($mmobj->getId())->getTags());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());
-        static::assertEquals(0, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'tag1'])->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'parent'])->getNumberMultimediaObjects());
+        static::assertEquals(0, $this->tagRepo->findOneBy(['cod' => 'brother'])->getNumberMultimediaObjects());
     }
 
     public function testResetTags()
@@ -491,14 +491,14 @@ class TagServiceTest extends PumukitTestCase
     private function createTagWithTree($cod, $withROOT = true)
     {
         if ($withROOT) {
-            $rootTag = $this->tagRepo->findOneByCod('ROOT');
+            $rootTag = $this->tagRepo->findOneBy(['cod' => 'ROOT']);
             if (null === $rootTag) {
                 $rootTag = new Tag();
                 $rootTag->setCod('ROOT');
                 $this->dm->persist($rootTag);
             }
         } else {
-            $rootTag = $this->tagRepo->findOneByCod('grandparent');
+            $rootTag = $this->tagRepo->findOneBy(['cod' => 'grandparent']);
             if (null === $rootTag) {
                 $rootTag = new Tag();
                 $rootTag->setCod('grandparent');
@@ -508,7 +508,7 @@ class TagServiceTest extends PumukitTestCase
 
         $locale = 'en';
 
-        $parentTag = $this->tagRepo->findOneByCod('parent');
+        $parentTag = $this->tagRepo->findOneBy(['cod' => 'parent']);
         if (null === $parentTag) {
             $parentTag = new Tag();
             $parentTag->setLocale($locale);
@@ -525,7 +525,7 @@ class TagServiceTest extends PumukitTestCase
         $tag->setParent($parentTag);
         $this->dm->persist($tag);
 
-        $broTag = $this->tagRepo->findOneByCod('brother');
+        $broTag = $this->tagRepo->findOneBy(['cod' => 'brother']);
         if (null === $broTag) {
             $broTag = new Tag();
             $broTag->setLocale($locale);

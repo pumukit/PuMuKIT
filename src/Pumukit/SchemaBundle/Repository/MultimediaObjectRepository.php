@@ -946,7 +946,7 @@ class MultimediaObjectRepository extends DocumentRepository
 
         // Includes PUCHWEBTV code
         $tagRepo = $this->dm->getRepository(Tag::class);
-        $unescoTag = $tagRepo->findOneByCod($tagBase);
+        $unescoTag = $tagRepo->findOneBy(['cod' => $tagBase]);
         $codes = [];
         foreach ($multimediaObject->getTags() as $tag) {
             if ($unescoTag) {

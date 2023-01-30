@@ -48,7 +48,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
         $repo = $this->documentManager->getRepository(Tag::class);
 
         $root_name = 'ROOT';
-        $root = $repo->findOneByCod($root_name);
+        $root = $repo->findOneBy(['cod' => $root_name]);
 
         if (null !== $root) {
             $children = $root->getChildren();
@@ -112,6 +112,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
 
     /**
      * @ParamConverter("tag", options={"id" = "parent"})
+     *
      * @Template("@PumukitNewAdmin/Tag/create.html.twig")
      */
     public function createAction(Request $request, Tag $parent)
@@ -146,7 +147,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
         $repo = $this->documentManager->getRepository(Tag::class);
 
         $root_name = 'ROOT';
-        $root = $repo->findOneByCod($root_name);
+        $root = $repo->findOneBy(['cod' => $root_name]);
 
         if (null !== $root) {
             $children = $root->getChildren();

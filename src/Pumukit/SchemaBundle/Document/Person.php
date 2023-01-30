@@ -26,6 +26,7 @@ class Person implements PersonInterface
 
     /**
      * @MongoDB\Field(type="string")
+     *
      * @Assert\Email
      */
     protected $email;

@@ -55,7 +55,7 @@ class TagService
      */
     public function addTagByCodToMultimediaObject(MultimediaObject $mmobj, $tagCod, $executeFlush = true)
     {
-        $tag = $this->repository->findOneByCod($tagCod);
+        $tag = $this->repository->findOneBy(['cod' => $tagCod]);
         if (!$tag) {
             throw new \Exception('Tag'.$tagCod.' not found.');
         }

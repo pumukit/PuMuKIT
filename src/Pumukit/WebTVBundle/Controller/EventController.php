@@ -112,6 +112,7 @@ class EventController extends AbstractController implements WebTVControllerInter
 
     /**
      * @Route("/event/next/session/{id}", name="pumukit_webtv_next_session_event")
+     *
      * @Template("@PumukitWebTV/Live/Advance/nextsessionlist.html.twig")
      *
      * @param mixed $id
@@ -134,6 +135,7 @@ class EventController extends AbstractController implements WebTVControllerInter
 
     /**
      * @Route("/event/twitter/{id}", name="pumukit_webtv_event_twitter")
+     *
      * @Template("@PumukitWebTV/Live/Advance/twitter.html.twig")
      */
     public function twitterAction(string $id)

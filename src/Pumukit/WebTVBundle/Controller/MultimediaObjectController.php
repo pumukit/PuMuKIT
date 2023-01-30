@@ -86,6 +86,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
 
     /**
      * @Route("/video/{id}", name="pumukit_webtv_multimediaobject_index" )
+     *
      * @Template("@PumukitWebTV/MultimediaObject/template.html.twig")
      */
     public function indexAction(Request $request, MultimediaObject $multimediaObject)
@@ -137,6 +138,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
 
     /**
      * @Route("/video/magic/{secret}", name="pumukit_webtv_multimediaobject_magicindex", defaults={"show_hide"=true})
+     *
      * @Template("@PumukitWebTV/MultimediaObject/template.html.twig")
      */
     public function magicIndexAction(Request $request, MultimediaObject $multimediaObject)
@@ -251,6 +253,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
 
     /**
      * @Route("/video/{id}/info", name="pumukit_webtv_multimediaobject_info" )
+     *
      * @Template("@PumukitWebTV/MultimediaObject/template_info.html.twig")
      */
     public function multimediaInfoAction(Request $request, MultimediaObject $multimediaObject)

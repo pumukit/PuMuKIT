@@ -58,7 +58,7 @@ class ChannelService
         $tagCods = $this->tags[$channelNumber] ?? [];
         $tags = [];
         foreach ($tagCods as $tagCod) {
-            $tags[] = $this->repoTags->findOneByCod($tagCod);
+            $tags[] = $this->repoTags->findOneBy(['cod' => $tagCod]);
         }
 
         return $tags;

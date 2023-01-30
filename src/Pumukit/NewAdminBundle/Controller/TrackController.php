@@ -70,6 +70,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
     /**
      * @Security("is_granted('ROLE_ACCESS_ADVANCED_UPLOAD')")
+     *
      * @Template("@PumukitNewAdmin/Track/create.html.twig")
      */
     public function createAction(Request $request, MultimediaObject $multimediaObject)
@@ -90,6 +91,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
     /**
      * @Template("@PumukitNewAdmin/Track/upload.html.twig")
+     *
      * @Security("is_granted('ROLE_ACCESS_ADVANCED_UPLOAD')")
      */
     public function uploadAction(Request $request, MultimediaObject $multimediaObject)
@@ -180,6 +182,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
     /**
      * @ParamConverter("multimediaObject", options={"id" = "mmId"})
+     *
      * @Template("@PumukitNewAdmin/Track/info.html.twig")
      */
     public function infoAction(Request $request, MultimediaObject $multimediaObject)
@@ -204,6 +207,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
     /**
      * @ParamConverter("multimediaObject", options={"id" = "mmId"})
+     *
      * @Template("@PumukitNewAdmin/Track/play.html.twig")
      */
     public function playAction(Request $request, MultimediaObject $multimediaObject)
@@ -294,6 +298,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
      *
      * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      * @ParamConverter("job", options={"id" = "jobId"})
+     *
      * @Template("@PumukitNewAdmin/Track/infoJob.html.twig")
      */
     public function infoJobAction(MultimediaObject $multimediaObject, Job $job)
@@ -344,6 +349,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
     /**
      * @ParamConverter("multimediaObject", options={"id" = "mmId"})
+     *
      * @Template("@PumukitNewAdmin/Pic/list.html.twig")
      */
     public function picAction(Request $request, MultimediaObject $multimediaObject)

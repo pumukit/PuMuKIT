@@ -3,8 +3,5 @@ includes:
     - vendor/phpstan/phpstan-symfony/extension.neon
 
 parameters:
-    excludePaths:
-        - src/Pumukit/CoreBundle/Services/TwigTemplateLoaderService.php
-        - src/Pumukit/SchemaBundle/Repository/TagRepository.php
     doctrine:
         objectManagerLoader: doc/object-manager.php

@@ -59,6 +59,7 @@ class PersonController extends AdminController
 
     /**
      * @Security("is_granted('ROLE_ACCESS_PEOPLE')")
+     *
      * @Template("@PumukitNewAdmin/Person/index.html.twig")
      */
     public function indexAction(Request $request)
@@ -151,6 +152,7 @@ class PersonController extends AdminController
 
     /**
      * @Security("is_granted('ROLE_ACCESS_PEOPLE')")
+     *
      * @Template("@PumukitNewAdmin/Person/show.html.twig")
      */
     public function showAction(Request $request)
@@ -167,6 +169,7 @@ class PersonController extends AdminController
 
     /**
      * @Security("is_granted('ROLE_ACCESS_PEOPLE')")
+     *
      * @Template("@PumukitNewAdmin/Person/list.html.twig")
      */
     public function listAction(Request $request)
@@ -190,6 +193,7 @@ class PersonController extends AdminController
     /**
      * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", options={"id" = "roleId"})
+     *
      * @Template("@PumukitNewAdmin/Person/listautocomplete.html.twig")
      */
     public function listAutocompleteAction(Request $request, MultimediaObject $multimediaObject, Role $role)
@@ -227,6 +231,7 @@ class PersonController extends AdminController
     /**
      * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", options={"id" = "roleId"})
+     *
      * @Template("@PumukitNewAdmin/Person/createrelation.html.twig")
      */
     public function createRelationAction(Request $request, MultimediaObject $multimediaObject, Role $role)
@@ -295,6 +300,7 @@ class PersonController extends AdminController
 
     /**
      * @Template("@PumukitNewAdmin/Person/updaterelation.html.twig")
+     *
      * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", options={"id" = "roleId"})
      */
@@ -549,6 +555,7 @@ class PersonController extends AdminController
 
     /**
      * @Security("is_granted('ROLE_SCOPE_GLOBAL')")
+     *
      * @Template("@PumukitNewAdmin/Person/list.html.twig")
      */
     public function deleteAction(Request $request)

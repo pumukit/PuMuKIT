@@ -60,7 +60,7 @@ class MultimediaObjectServiceTest extends PumukitTestCase
         $webTVCode = 'PUCHWEBTV';
         static::assertFalse($this->mmsService->isPublished($mm, $webTVCode));
 
-        $webTVTag = $this->tagRepo->findOneByCod($webTVCode);
+        $webTVTag = $this->tagRepo->findOneBy(['cod' => $webTVCode]);
         $this->tagService->addTagToMultimediaObject($mm, $webTVTag->getId());
 
         static::assertFalse($this->mmsService->isPublished($mm, $webTVCode));
@@ -89,7 +89,7 @@ class MultimediaObjectServiceTest extends PumukitTestCase
         $webTVCode = 'PUCHWEBTV';
         static::assertFalse($this->mmsService->isHidden($mm, $webTVCode));
 
-        $webTVTag = $this->tagRepo->findOneByCod($webTVCode);
+        $webTVTag = $this->tagRepo->findOneBy(['cod' => $webTVCode]);
         $this->tagService->addTagToMultimediaObject($mm, $webTVTag->getId());
 
         static::assertFalse($this->mmsService->isHidden($mm, $webTVCode));
@@ -154,7 +154,7 @@ class MultimediaObjectServiceTest extends PumukitTestCase
 
         $webTVCode = 'PUCHWEBTV';
 
-        $webTVTag = $this->tagRepo->findOneByCod($webTVCode);
+        $webTVTag = $this->tagRepo->findOneBy(['cod' => $webTVCode]);
         $this->tagService->addTagToMultimediaObject($mm, $webTVTag->getId());
 
         $mm->setStatus(MultimediaObject::STATUS_PUBLISHED);

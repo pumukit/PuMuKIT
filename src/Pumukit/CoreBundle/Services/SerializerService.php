@@ -15,7 +15,7 @@ class SerializerService
         $this->serializer = $serializer;
     }
 
-    public function dataSerialize(array $data, string $format = 'html'): string
+    public function dataSerialize(array $data, string $format = 'json'): string
     {
         return $this->serializer->serialize($data, $format);
     }

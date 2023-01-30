@@ -39,6 +39,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("/unesco")
+ *
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
 class UNESCOController extends AbstractController implements NewAdminControllerInterface
@@ -170,6 +171,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("/", name="pumukitnewadmin_unesco_index")
+     *
      * @Template("@PumukitNewAdmin/UNESCO/index.html.twig")
      */
     public function indexAction(Request $request)
@@ -192,6 +194,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("/tags", name="pumukitnewadmin_unesco_menu_tags")
+     *
      * @Template("@PumukitNewAdmin/UNESCO/menuTags.html.twig")
      */
     public function menuTagsAction()
@@ -249,6 +252,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("/list/{tag}", name="pumukitnewadmin_unesco_list")
+     *
      * @Template("@PumukitNewAdmin/UNESCO/list.html.twig")
      *
      * @param mixed|null $tag
@@ -353,7 +357,9 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("edit/{id}", name="pumukit_new_admin_unesco_edit")
+     *
      * @ParamConverter("multimediaObject", options={"mapping": {"id":"id"}})
+     *
      * @Template("@PumukitNewAdmin/UNESCO/edit.html.twig")
      */
     public function editUNESCOAction(Request $request, MultimediaObject $multimediaObject)
@@ -387,7 +393,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
         // If the 'pudenew' tag is not being used, set the display to 'false'.
         if (!$this->showLatestWithPudeNew) {
-            $this->documentManager->getRepository(Tag::class)->findOneByCod('PUDENEW')->setDisplay(false);
+            $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PUDENEW'])->setDisplay(false);
         }
         $pubChannelsTags = $this->factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $this->factoryService->getTagsByCod('PUBDECISIONS', true);
@@ -426,6 +432,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("/advance/search/show/{id}", name="pumukitnewadmin_unesco_show")
+     *
      * @Template("@PumukitNewAdmin/UNESCO/show.html.twig")
      *
      * @param mixed|null $id
@@ -453,6 +460,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("/advance/search/form", name="pumukitnewadmin_unesco_advance_search_form")
+     *
      * @Template("@PumukitNewAdmin/UNESCO/search_view.html.twig")
      */
     public function advancedSearchFormAction(Request $request)
@@ -461,8 +469,8 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
         $roles = $this->documentManager->getRepository(Role::class)->findAll();
 
-        $pudeRadio = $this->documentManager->getRepository(Tag::class)->findOneByCod('PUDERADIO');
-        $pudeTV = $this->documentManager->getRepository(Tag::class)->findOneByCod('PUDETV');
+        $pudeRadio = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PUDERADIO']);
+        $pudeTV = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PUDETV']);
 
         $statusPub = [
             MultimediaObject::STATUS_PUBLISHED => $this->translator->trans('Published'),
@@ -483,7 +491,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
             MultimediaObject::TYPE_EXTERNAL => $this->translator->trans('External player'),
         ];
 
-        $genreParent = $this->documentManager->getRepository(Tag::class)->findOneByCod('GENRE');
+        $genreParent = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'GENRE']);
         if ($genreParent) {
             $genres = $this->documentManager->getRepository(Tag::class)->findBy(['parent.$id' => new ObjectId($genreParent->getId())]);
             $aGenre = [];
@@ -517,7 +525,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     {
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
 
-        $tag = $this->documentManager->getRepository(Tag::class)->findOneByCod($tagCod);
+        $tag = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => $tagCod]);
         $tagConfigured = $this->getConfiguredTag();
         $removedTags = [];
 
@@ -539,7 +547,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     {
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
 
-        $tag = $this->documentManager->getRepository(Tag::class)->findOneByCod($tagCod);
+        $tag = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => $tagCod]);
         if ($multimediaObject->containsTag($tag)) {
             return new JsonResponse(['error' => JsonResponse::HTTP_BAD_REQUEST]);
         }

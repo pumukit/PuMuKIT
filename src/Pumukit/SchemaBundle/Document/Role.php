@@ -19,13 +19,16 @@ class Role implements RoleInterface
 
     /**
      * @MongoDB\Field(type="string")
+     *
      * @MongoDB\UniqueIndex()
      */
     private $cod = '0';
 
     /**
      * @MongoDB\Field(type="int")
+     *
      * @MongoDB\Index
+     *
      * @Gedmo\SortablePosition
      */
     private $rank;

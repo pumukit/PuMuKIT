@@ -35,6 +35,7 @@ class EmbeddedTag implements TagInterface
 
     /**
      * @MongoDB\Field(type="string")
+     *
      * @MongoDB\Index
      */
     private $cod = '';

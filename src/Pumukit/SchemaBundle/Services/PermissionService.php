@@ -45,7 +45,7 @@ class PermissionService
     public function getPubTagsPermissions()
     {
         $return = [];
-        $tag = $this->repo->findOneByCod('PUBCHANNELS');
+        $tag = $this->repo->findOneBy(['cod' => 'PUBCHANNELS']);
         if (!$tag) {
             return $return;
         }

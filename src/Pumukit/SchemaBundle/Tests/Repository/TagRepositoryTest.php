@@ -86,7 +86,7 @@ class TagRepositoryTest extends PumukitTestCase
     {
         $this->createTestTree();
 
-        $tag = $this->repo->findOneByCod('ROOT');
+        $tag = $this->repo->findOneBy(['cod' => 'ROOT']);
         $tree = $this->repo->getTree($tag);
         static::assertCount(6, $tree);
         $children = $this->repo->getChildren($tag);
@@ -95,7 +95,7 @@ class TagRepositoryTest extends PumukitTestCase
         $directChildren = $this->repo->getChildren($tag, true);
         static::assertCount(2, $directChildren);
 
-        $tag = $this->repo->findOneByCod('B');
+        $tag = $this->repo->findOneBy(['cod' => 'B']);
         $tree = $this->repo->getTree($tag);
         static::assertCount(4, $tree);
         $children = $this->repo->getChildren($tag);
@@ -117,11 +117,11 @@ class TagRepositoryTest extends PumukitTestCase
     {
         $this->createTestTree();
 
-        $root = $this->repo->findOneByCod('ROOT');
-        $tagA = $this->repo->findOneByCod('A');
-        $tagB = $this->repo->findOneByCod('B');
-        $tagB2 = $this->repo->findOneByCod('B2');
-        $tagB2A = $this->repo->findOneByCod('B2A');
+        $root = $this->repo->findOneBy(['cod' => 'ROOT']);
+        $tagA = $this->repo->findOneBy(['cod' => 'A']);
+        $tagB = $this->repo->findOneBy(['cod' => 'B']);
+        $tagB2 = $this->repo->findOneBy(['cod' => 'B2']);
+        $tagB2A = $this->repo->findOneBy(['cod' => 'B2A']);
 
         static::assertTrue($tagB2->isChildOf($tagB));
         static::assertFalse($tagB->isChildOf($tagB2));
@@ -144,7 +144,7 @@ class TagRepositoryTest extends PumukitTestCase
         $this->createTestTree();
         $this->dm->clear();
 
-        $tag = $this->repo->findOneByCod('ROOT');
+        $tag = $this->repo->findOneBy(['cod' => 'ROOT']);
         static::assertCount(2, $tag->getChildren());
     }
 
@@ -154,10 +154,10 @@ class TagRepositoryTest extends PumukitTestCase
 
         static::assertCount(6, $this->repo->findAll());
 
-        $tag = $this->repo->findOneByCod('ROOT');
-        $tagA = $this->repo->findOneByCod('A');
-        $tagB = $this->repo->findOneByCod('B');
-        $tagB2A = $this->repo->findOneByCod('B2A');
+        $tag = $this->repo->findOneBy(['cod' => 'ROOT']);
+        $tagA = $this->repo->findOneBy(['cod' => 'A']);
+        $tagB = $this->repo->findOneBy(['cod' => 'B']);
+        $tagB2A = $this->repo->findOneBy(['cod' => 'B2A']);
 
         // Test rename
         $tag->setCod('ROOT2');

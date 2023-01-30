@@ -16,6 +16,7 @@ class LogController extends AbstractController implements AdminControllerInterfa
 {
     /**
      * @Security("is_granted('ROLE_SUPER_ADMIN')")
+     *
      * @Route("/admin/show/log/{file}")
      */
     public function showLogAction(?string $file, string $kernelEnvironment, string $kernelProjectDir)

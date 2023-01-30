@@ -309,7 +309,7 @@ class MultimediaObjectController extends SortableAdminController
         if (!$this->showLatestWithPudeNew) {
             $this->documentManager
                 ->getRepository(Tag::class)
-                ->findOneByCod('PUDENEW')
+                ->findOneBy(['cod' => 'PUDENEW'])
                 ->setDisplay(false)
             ;
         }
@@ -1041,6 +1041,7 @@ class MultimediaObjectController extends SortableAdminController
 
     /**
      * @ParamConverter("multimediaObject", options={"id" = "id"})
+     *
      * @Template("@PumukitNewAdmin/MultimediaObject/updatebroadcast.html.twig")
      */
     public function updateBroadcastAction(MultimediaObject $multimediaObject, Request $request)
@@ -1122,6 +1123,7 @@ class MultimediaObjectController extends SortableAdminController
 
     /**
      * @Security("is_granted('ROLE_ADD_EXTERNAL_PLAYER')")
+     *
      * @Template("@PumukitNewAdmin/MultimediaObject/listExternalPlayer.html.twig")
      */
     public function listExternalPlayerAction(MultimediaObject $multimediaObject, Request $request)
@@ -1323,6 +1325,7 @@ class MultimediaObjectController extends SortableAdminController
 
     /**
      * @ParamConverter("multimediaObject", options={"id" = "id"})
+     *
      * @Template("@PumukitNewAdmin/MultimediaObject/modalsyncmetadata.html.twig")
      */
     public function modalSyncMedatadaAction(Request $request, MultimediaObject $multimediaObject)

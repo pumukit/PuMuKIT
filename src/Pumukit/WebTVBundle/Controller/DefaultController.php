@@ -70,6 +70,7 @@ class DefaultController extends AbstractController
 
     /**
      * @Route("/live/{id}", name="pumukit_live_id")
+     *
      * @Template("@PumukitWebTV/Live/Basic/template.html.twig")
      */
     public function indexAction(Live $live, Request $request)
@@ -81,6 +82,7 @@ class DefaultController extends AbstractController
 
     /**
      * @Route("/live/iframe/{id}", name="pumukit_live_iframe_id")
+     *
      * @Template("@PumukitWebTV/Live/Basic/template_iframe.html.twig")
      */
     public function iframeAction(Live $live, Request $request)
@@ -90,7 +92,9 @@ class DefaultController extends AbstractController
 
     /**
      * @Route("/live/event/{id}", name="pumukit_live_event_id")
+     *
      * @ParamConverter("multimediaObject", options={"mapping": {"id": "id"}})
+     *
      * @Template("@PumukitWebTV/Live/Advance/template.html.twig")
      */
     public function indexEventAction(MultimediaObject $multimediaObject, Request $request)
@@ -125,7 +129,9 @@ class DefaultController extends AbstractController
 
     /**
      * @Route("/live/event/iframe/{id}", name="pumukit_live_event_iframe_id")
+     *
      * @ParamConverter("multimediaObject", options={"mapping": {"id": "id"}})
+     *
      * @Template("@PumukitWebTV/Live/Advance/iframe.html.twig")
      */
     public function iframeEventAction(MultimediaObject $multimediaObject, Request $request, bool $iframe = true)
@@ -232,6 +238,7 @@ class DefaultController extends AbstractController
 
     /**
      * @Route("/live", name="pumukit_live")
+     *
      * @Template("@PumukitWebTV/Live/Basic/template.html.twig")
      */
     public function defaultAction(Request $request)
@@ -249,6 +256,7 @@ class DefaultController extends AbstractController
 
     /**
      * @Route("/live/playlist/{id}", name="pumukit_live_playlist_id", defaults={"_format": "xml"})
+     *
      * @Template("@PumukitWebTV/Live/Basic/playlist.xml.twig")
      */
     public function playlistAction(Live $live): array
@@ -272,6 +280,7 @@ class DefaultController extends AbstractController
 
     /**
      * @Route("/event/contact/{id}", name="pumukit_webtv_contact_event")
+     *
      * @ParamConverter("multimediaObject", options={"mapping": {"id": "id"}})
      */
     public function contactAction(MultimediaObject $multimediaObject, Request $request): JsonResponse
