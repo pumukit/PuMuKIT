@@ -6,7 +6,7 @@ namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use Symfony\Component\Serializer\Annotation\Ignore;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\SeriesTypeRepository")
@@ -35,7 +35,7 @@ class SeriesType
 
     /**
      * @MongoDB\ReferenceMany(targetDocument=Series::class, mappedBy="series_type", storeAs="id", orphanRemoval=false)
-     * @Ignore()
+     * @Serializer\Exclude
      */
     private $series;
 

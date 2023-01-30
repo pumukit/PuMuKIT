@@ -6,8 +6,8 @@ namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use JMS\Serializer\Annotation as Serializer;
 use MongoDB\BSON\ObjectId;
-use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * @MongoDB\EmbeddedDocument
@@ -16,7 +16,7 @@ class Playlist
 {
     /**
      * @MongoDB\ReferenceMany(targetDocument=MultimediaObject::class, storeAs="id", strategy="setArray")
-     * @Ignore()
+     * @Serializer\Exclude
      */
     private $multimedia_objects;
 
