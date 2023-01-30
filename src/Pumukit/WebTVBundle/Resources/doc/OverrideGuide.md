@@ -21,24 +21,8 @@ Process
 #### 1.1 Generate the bundle.
 
 `
-$ php app/console  generate:bundle --namespace=Pumukit/ExampleOrg/WebTVBundle --dir=src --no-interaction
+$ php app/console generate:bundle --namespace=Pumukit/ExampleOrg/WebTVBundle --dir=src --no-interaction
 `
-
-#### 1.2 Override bundle with service configuration (services.xml):
-
-
-```xml
-<service id="pumukitcore.twig_loader.customwebtv_bundle" class="Pumukit\CoreBundle\Services\TwigTemplateLoaderService">
-    <argument type="service" id="templating.locator" />
-    <argument type="service" id="templating.name_parser" />
-    <argument>%kernel.project_dir%</argument>
-    <argument>WebTVBundle</argument>
-    <argument>{customName}WebTVBundle</argument>
-    <tag name="twig.loader" priority="1"/>
-</service>
-```
-
-For more info see: http://symfony.com/doc/current/cookbook/bundles/inheritance.html
 
 ### 2.- Create your custom CSS rules
 
