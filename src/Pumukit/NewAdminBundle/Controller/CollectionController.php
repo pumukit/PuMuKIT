@@ -19,12 +19,16 @@ class CollectionController extends AbstractController implements NewAdminControl
 {
     /** @var DocumentManager */
     protected $documentManager;
+
     /** @var FactoryService */
     protected $factoryService;
+
     /** @var PaginationService */
     protected $paginationService;
+
     /** @var PersonService */
     protected $personService;
+
     /** @var SessionInterface */
     private $session;
 
@@ -86,7 +90,7 @@ class CollectionController extends AbstractController implements NewAdminControl
         foreach ($ids as $id) {
             $collection = $seriesRepo->find($id);
             if (!$collection || !$this->isUserAllowedToDelete($collection)) {
-                //Once isUserAllowedToDelete is passed to a service, this function can also be passed.
+                // Once isUserAllowedToDelete is passed to a service, this function can also be passed.
                 continue;
             }
 

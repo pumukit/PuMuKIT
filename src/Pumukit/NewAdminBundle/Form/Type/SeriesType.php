@@ -111,7 +111,7 @@ class SeriesType extends AbstractType
                     'label' => $this->translator->trans('Comments', [], null, $this->locale),
                 ]
             )
-            ;
+        ;
 
         if ($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_KEYWORDS)) {
             $builder->add(

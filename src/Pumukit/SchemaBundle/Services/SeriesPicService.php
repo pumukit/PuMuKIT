@@ -114,7 +114,7 @@ class SeriesPicService
         $path = $picFile->move($this->getTargetPath($series), $name);
 
         $pic = new Pic();
-        $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
+        $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path->getPathname()));
 
         if (!is_string($path)) {
             $path = $path->getPathname();
@@ -198,7 +198,7 @@ class SeriesPicService
             foreach ($this->locales as $locale) {
                 $header = $banner;
                 if (!empty($series->getHeader($locale))) {
-                    $header = $series->getHeader($locale).$banner;
+                    $header = $banner.$series->getHeader($locale);
                 }
                 $series->setHeader($header, $locale);
             }

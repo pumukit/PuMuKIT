@@ -17,6 +17,7 @@ use Twig\Environment;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class EmbeddedBroadcastServiceTest extends PumukitTestCase

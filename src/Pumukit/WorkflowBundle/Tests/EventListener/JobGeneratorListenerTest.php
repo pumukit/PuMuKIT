@@ -20,6 +20,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
  * @IgnoreAnnotation("dataProvider")
  *
  * @internal
+ *
  * @coversNothing
  */
 class JobGeneratorListenerTest extends PumukitTestCase
@@ -176,7 +177,7 @@ class JobGeneratorListenerTest extends PumukitTestCase
         // $this->assertEquals(array('audio2'), $jobs); //generate a video2 from an audio has no sense.
 
         $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', [$mmobj, 'TAGP']);
-        static::assertEquals([], $jobs); //generate a video from an audio has no sense.
+        static::assertEquals([], $jobs); // generate a video from an audio has no sense.
 
         // #15818: See commented text in JobGeneratorListener, function generateJobs
         // $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGFP'));
@@ -197,7 +198,7 @@ class JobGeneratorListenerTest extends PumukitTestCase
         $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', [$mmobj, 'TAGC']);
         static::assertEquals([], $jobs);
 
-        //$this->assertEquals(1, 2);
+        // $this->assertEquals(1, 2);
     }
 
     private function invokeMethod(&$object, $methodName, array $parameters = [])

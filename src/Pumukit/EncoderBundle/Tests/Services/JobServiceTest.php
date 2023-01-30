@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class JobServiceTest extends PumukitTestCase
@@ -415,7 +416,7 @@ class JobServiceTest extends PumukitTestCase
                     'host' => '127.0.0.1',
                     'name' => 'Localmaster',
                     'description' => 'Local masters server',
-                    'dir_out' => __DIR__.'/../Resources/dir_out',                                                         ],
+                    'dir_out' => __DIR__.'/../Resources/dir_out', ],
                 'app' => 'cp',
                 'rel_duration_size' => 1,
                 'rel_duration_trans' => 1,

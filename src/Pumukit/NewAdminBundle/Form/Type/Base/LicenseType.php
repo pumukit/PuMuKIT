@@ -19,10 +19,10 @@ class LicenseType extends AbstractType
     public function __construct(array $licenses = [])
     {
         if (array_keys($licenses) !== range(0, count($licenses) - 1)) {
-            //is associative
+            // is associative
             $this->licenses = $licenses;
         } else {
-            //is sequential
+            // is sequential
             foreach ($licenses as $l) {
                 $this->licenses[$l] = $l;
             }

@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\Material;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class MaterialTest extends TestCase
@@ -64,7 +65,7 @@ class MaterialTest extends TestCase
         $material->removeTag('t');
         static::assertFalse($material->containsTag('t'));
 
-        //Repeat Tag
+        // Repeat Tag
         static::assertFalse($material->containsTag('t'));
         $material->addTag('t');
         $material->addTag('t');
@@ -73,7 +74,7 @@ class MaterialTest extends TestCase
         static::assertFalse($material->containsTag('t'));
         static::assertFalse($material->removeTag('t'));
 
-        //containsAllTag and containsAnyTag
+        // containsAllTag and containsAnyTag
         $material->addTag('t1');
         $material->addTag('t2');
         $material->addTag('t3');

@@ -8,7 +8,7 @@ final class SemaphoreUtils
 {
     public static function acquire(int $key, int $max_acquire = 1, int $permissions = 0666, bool $auto_release = true)
     {
-        $semaphore = sem_get($key, $max_acquire, $permissions, -1);
+        $semaphore = sem_get($key, $max_acquire, $permissions, $auto_release);
 
         if (!sem_acquire($semaphore)) {
             throw new \Exception('Semaphore cannot be acquired');

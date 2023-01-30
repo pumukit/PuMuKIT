@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\SeriesType;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class SeriesTypeRepositoryTest extends PumukitTestCase

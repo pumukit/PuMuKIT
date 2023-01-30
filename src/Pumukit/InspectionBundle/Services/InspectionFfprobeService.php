@@ -47,7 +47,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
      */
     public function autocompleteTrack(Track $track): Track
     {
-        $only_audio = true; //initialized true until video track is found.
+        $only_audio = true; // initialized true until video track is found.
         if (!$track->getPath()) {
             throw new \BadMethodCallException('Input track has no path defined');
         }

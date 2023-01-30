@@ -65,14 +65,14 @@ class MultimediaObjectSearchService
         if ('' !== $bAnnounce) {
             if (('' !== $bChannel) && $bAnnounce) {
                 $new_criteria += ['$and' => [['tags.cod' => $sChannelValue], ['tags.cod' => 'PUDENEW']]];
-            } elseif (('' !== $bChannel)) {
+            } elseif ('' !== $bChannel) {
                 $new_criteria += ['$and' => [['tags.cod' => $sChannelValue]]];
             } elseif ($bAnnounce) {
                 $new_criteria += ['$and' => [['tags.cod' => 'PUDENEW']]];
             } else {
                 $new_criteria += ['$and' => [['tags.cod' => ['$nin' => ['PUDENEW']]]]];
             }
-        } elseif (('' !== $bChannel)) {
+        } elseif ('' !== $bChannel) {
             $new_criteria += ['$and' => [['tags.cod' => $sChannelValue]]];
         }
 

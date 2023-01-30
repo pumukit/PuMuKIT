@@ -110,7 +110,7 @@ EOT
                 break;
 
             case 'permissionprofile':
-               $result = $this->executePermissionProfiles();
+                $result = $this->executePermissionProfiles();
 
                 break;
 

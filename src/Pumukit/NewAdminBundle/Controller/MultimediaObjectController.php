@@ -63,18 +63,25 @@ class MultimediaObjectController extends SortableAdminController
 
     /** @var RequestStack */
     private $requestStack;
+
     /** @var MultimediaObjectSyncService */
     private $multimediaObjectSyncService;
+
     /** @var MultimediaObjectSearchService */
     private $multimediaObjectSearchService;
+
     /** @var PersonService */
     private $personService;
+
     /** @var SortedMultimediaObjectsService */
     private $sortedMultimediaObjectService;
+
     /** @var JobService */
     private $jobService;
+
     /** @var ProfileService */
     private $profileService;
+
     /** @var MultimediaObjectService */
     private $multimediaObjectService;
 
@@ -83,6 +90,7 @@ class MultimediaObjectController extends SortableAdminController
 
     /** @var EmbeddedBroadcastService */
     private $embeddedBroadcastService;
+
     /** @var SpecialTranslationService */
     private $specialTranslatorService;
 
@@ -91,6 +99,7 @@ class MultimediaObjectController extends SortableAdminController
 
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
+
     /** @var RouterInterface */
     private $router;
 
@@ -296,7 +305,7 @@ class MultimediaObjectController extends SortableAdminController
 
         $formPub = $this->createForm(MultimediaObjectPubType::class, $resource, $options);
 
-        //If the 'pudenew' tag is not being used, set the display to 'false'.
+        // If the 'pudenew' tag is not being used, set the display to 'false'.
         if (!$this->showLatestWithPudeNew) {
             $this->documentManager
                 ->getRepository(Tag::class)
@@ -327,7 +336,7 @@ class MultimediaObjectController extends SortableAdminController
             'mm' => $resource,
             'form_meta' => $formMeta->createView(),
             'form_pub' => $formPub->createView(),
-            //'series' => $series,
+            // 'series' => $series,
             'roles' => $roles,
             'personal_scope_role' => $personalScopeRole,
             'personal_scope_role_code' => $personalScopeRoleCode,
@@ -496,8 +505,8 @@ class MultimediaObjectController extends SortableAdminController
 
         $formPub->handleRequest($request);
         if ($formPub->isSubmitted() && $formPub->isValid()) {
-            //NOTE: If this field is disabled in the form, it sets it to 'null' on the mmobj.
-            //Ideally, fix the form instead of working around it like this
+            // NOTE: If this field is disabled in the form, it sets it to 'null' on the mmobj.
+            // Ideally, fix the form instead of working around it like this
             if (null === $resource->getStatus()) {
                 $resource->setStatus($previousStatus);
             }
@@ -686,7 +695,7 @@ class MultimediaObjectController extends SortableAdminController
     {
         $resource = $this->findOr404($request);
 
-        //rank zero is the template
+        // rank zero is the template
         $new_rank = 1;
         $resource->setRank($new_rank);
         $this->update($resource);
@@ -837,7 +846,7 @@ class MultimediaObjectController extends SortableAdminController
 
     public function pasteAction(Request $request)
     {
-        if (!($this->session->has('admin/mms/cut'))) {
+        if (!$this->session->has('admin/mms/cut')) {
             throw new \Exception('Not found any multimedia object to paste.');
         }
 
@@ -1043,7 +1052,7 @@ class MultimediaObjectController extends SortableAdminController
         }
         $allGroups = $this->getAllGroups();
         $template = $multimediaObject->isPrototype() ? '_template' : '';
-        if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
+        if ($request->isMethod('PUT') || $request->isMethod('POST')) {
             try {
                 $type = $request->get('type', null);
                 $password = $request->get('password', null);
@@ -1413,7 +1422,7 @@ class MultimediaObjectController extends SortableAdminController
         $this->eventDispatcher->dispatch($event, SchemaEvents::MULTIMEDIAOBJECT_UPDATE);
     }
 
-    //Workaround function to check if the VideoEditorBundle is installed.
+    // Workaround function to check if the VideoEditorBundle is installed.
     protected function checkHasEditor()
     {
         $routes = $this->router->getRouteCollection()->all();

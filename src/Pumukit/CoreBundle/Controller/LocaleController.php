@@ -52,7 +52,7 @@ class LocaleController extends AbstractController implements WebTVControllerInte
             return $this->redirect('/');
         }
 
-        //array_filter ARRAY_FILTER_USE_BOTH only in 5.6
+        // array_filter ARRAY_FILTER_USE_BOTH only in 5.6
         $params = [];
         foreach ($route as $k => $v) {
             if ('_' != $k[0]) {

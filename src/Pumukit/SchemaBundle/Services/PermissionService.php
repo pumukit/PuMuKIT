@@ -197,7 +197,7 @@ class PermissionService
      */
     private function buildAllPermissions()
     {
-        //Empty 'dependencies' to add to a permission without them
+        // Empty 'dependencies' to add to a permission without them
         $defaultDeps = [
             PermissionProfile::SCOPE_GLOBAL => [],
             PermissionProfile::SCOPE_PERSONAL => [],

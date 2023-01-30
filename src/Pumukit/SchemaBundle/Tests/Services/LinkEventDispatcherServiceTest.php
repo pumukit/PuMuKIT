@@ -13,6 +13,7 @@ use Pumukit\SchemaBundle\Services\LinkEventDispatcherService;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class LinkEventDispatcherServiceTest extends PumukitTestCase

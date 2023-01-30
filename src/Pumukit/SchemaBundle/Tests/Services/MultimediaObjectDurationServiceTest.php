@@ -8,6 +8,7 @@ use Pumukit\CoreBundle\Tests\PumukitTestCase;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class MultimediaObjectDurationServiceTest extends PumukitTestCase

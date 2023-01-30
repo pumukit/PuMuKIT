@@ -58,7 +58,7 @@ class ContactType extends AbstractType
         $resolver->setRequired('locale');
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'pumukit_multimedia_object_contact';
     }

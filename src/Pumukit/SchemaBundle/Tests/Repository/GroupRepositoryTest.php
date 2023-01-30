@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Document\Group;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class GroupRepositoryTest extends PumukitTestCase

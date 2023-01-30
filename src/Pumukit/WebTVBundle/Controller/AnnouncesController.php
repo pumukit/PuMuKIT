@@ -66,7 +66,7 @@ class AnnouncesController extends AbstractController implements WebTVControllerI
      */
     public function latestUploadsPagerAction(Request $request)
     {
-        $dateRequest = $request->query->get('date', 0); //Use to queries for month and year to reduce formatting and unformatting.
+        $dateRequest = $request->query->get('date', 0); // Use to queries for month and year to reduce formatting and unformatting.
         $date = \DateTime::createFromFormat('d/m/Y H:i:s', "01/{$dateRequest} 00:00:00");
         if (!$date) {
             throw $this->createNotFoundException();

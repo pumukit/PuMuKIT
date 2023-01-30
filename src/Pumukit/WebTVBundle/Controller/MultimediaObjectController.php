@@ -28,20 +28,28 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
 {
     /** @var ChapterMarkService */
     private $chapterMarksService;
+
     /** @var IntroService */
     private $introService;
+
     /** @var PlayerService */
     private $playerService;
+
     /** @var MultimediaObjectService */
     private $multimediaObjectService;
+
     /** @var DocumentManager */
     private $documentManager;
+
     /** @var RequestStack */
     private $requestStack;
+
     /** @var EmbeddedBroadcastService */
     private $embeddedBroadcastService;
+
     /** @var BreadcrumbsService */
     private $breadcrumbsService;
+
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
     private $limitObjsPlayerSeries;

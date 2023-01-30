@@ -29,18 +29,25 @@ class ModulesController extends AbstractController implements WebTVControllerInt
 
     /** @var TranslatorInterface */
     private $translator;
+
     /** @var StatsService */
     private $statService;
+
     /** @var AnnounceService */
     private $pumukitSchemaAnnounce;
+
     /** @var MenuService */
     private $menuService;
+
     /** @var ListService */
     private $listService;
+
     /** @var DocumentManager */
     private $documentManager;
+
     /** @var RequestStack */
     private $requestStack;
+
     /** @var BreadcrumbsService */
     private $breadcrumbService;
 

@@ -12,6 +12,7 @@ use Pumukit\SchemaBundle\Document\Track;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class RemoveListenerTest extends PumukitTestCase

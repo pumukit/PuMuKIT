@@ -11,6 +11,7 @@ use Pumukit\SchemaBundle\Document\Pic;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class EventTest extends TestCase

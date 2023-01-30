@@ -33,6 +33,7 @@ class GroupController extends AdminController
 
     /** @var MultimediaObjectService */
     private $multimediaObjectService;
+
     /** @var EmbeddedBroadcastService */
     private $embeddedBroadcastService;
 
@@ -220,7 +221,7 @@ class GroupController extends AdminController
             ->setMaxPerPage($session->get($sessionNamespace.'/paginate', 10))
             ->setNormalizeOutOfRangePages(true)
             ->setCurrentPage($session->get($sessionNamespace.'/page', 1))
-            ;
+        ;
 
         return $resources;
     }

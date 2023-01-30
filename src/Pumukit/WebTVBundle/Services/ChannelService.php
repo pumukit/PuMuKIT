@@ -22,13 +22,13 @@ class ChannelService
     ];
 
     private $tags = [
-        1 => ['PUDEUNI'], //"University",
-        2 => ['100'], //"Business",
-        3 => ['101', '108', '109'], //"Natural Sciences",
-        5 => ['102', '104', '106', '107', '114', '115'], //"Humanities",
-        6 => ['103'], //"Health & Medicine",
-        4 => ['116'], //"Law",
-        7 => ['110', '111', '112', '113'], //"Social Matters & Education",
+        1 => ['PUDEUNI'], // "University",
+        2 => ['100'], // "Business",
+        3 => ['101', '108', '109'], // "Natural Sciences",
+        5 => ['102', '104', '106', '107', '114', '115'], // "Humanities",
+        6 => ['103'], // "Health & Medicine",
+        4 => ['116'], // "Law",
+        7 => ['110', '111', '112', '113'], // "Social Matters & Education",
     ];
 
     private $dm;

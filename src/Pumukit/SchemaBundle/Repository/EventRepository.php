@@ -108,9 +108,9 @@ class EventRepository extends DocumentRepository
      * @param \DateTime|null $date
      * @param Live|null      $live  Find only events of a live channel
      *
-     * @throws \Exception
-     *
      * @return mixed
+     *
+     * @throws \Exception
      */
     public function findFutureAndNotFinished($limit = null, $date = null, Live $live = null)
     {

@@ -11,6 +11,7 @@ use Pumukit\SchemaBundle\Document\Track;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class InspectionFfprobeServiceTest extends TestCase
@@ -64,7 +65,7 @@ class InspectionFfprobeServiceTest extends TestCase
     {
         $file1 = $this->resources_dir.'AUDIO.mp3';
         $file2 = $this->resources_dir.'CAMERA.mp4';
-        $is = new InspectionFfprobeService(); //logger missing, it is not initialized here.
+        $is = new InspectionFfprobeService(); // logger missing, it is not initialized here.
         static::assertEquals(2, $is->getDuration($file1));
         static::assertEquals(2, $is->getDuration($file2));
     }

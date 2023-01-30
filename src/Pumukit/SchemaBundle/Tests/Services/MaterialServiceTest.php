@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class MaterialServiceTest extends PumukitTestCase

@@ -27,6 +27,7 @@ use Pumukit\SchemaBundle\Document\User;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class MultimediaObjectRepositoryTest extends PumukitTestCase
@@ -68,7 +69,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
 
     public function testRepository(): void
     {
-        //$rank = 1;
+        // $rank = 1;
         $status = MultimediaObject::STATUS_PUBLISHED;
         $record_date = new \DateTime();
         $public_date = new \DateTime();
@@ -78,7 +79,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $duration = 300;
 
         $mmobj = new MultimediaObject();
-        //$mmobj->setRank($rank);
+        // $mmobj->setRank($rank);
         $mmobj->setNumericalID(1);
         $mmobj->setStatus($status);
         $mmobj->setRecordDate($record_date);
@@ -1190,7 +1191,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $page = 1;
         static::assertCount(1, $this->repo->findWithTag($tag2, $sort, $limit, $page));
 
-        //FIND WITH GENERAL TAG
+        // FIND WITH GENERAL TAG
         static::assertCount(7, $this->repo->findWithGeneralTag($tag1));
         $limit = 3;
         static::assertCount(3, $this->repo->findWithGeneralTag($tag1, $sort, $limit));
@@ -1198,7 +1199,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         static::assertCount(3, $this->repo->findWithGeneralTag($tag1, $sort, $limit, $page));
         static::assertCount(2, $this->repo->findWithGeneralTag($tag2));
         static::assertCount(0, $this->repo->findWithGeneralTag($tag3));
-        //FIND WITH GENERAL TAG (SORT)
+        // FIND WITH GENERAL TAG (SORT)
         $arrayAsc = [$mm23, $mm31, $mm33];
         static::assertEquals($arrayAsc, $this->repo->findWithGeneralTag($tag1, $sortAsc, $limit, $page)->toArray());
         $arrayDesc = [$mm23, $mm22, $mm12];

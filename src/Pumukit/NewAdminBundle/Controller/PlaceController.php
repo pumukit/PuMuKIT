@@ -27,8 +27,10 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
 {
     /** @var TranslatorInterface */
     private $translator;
+
     /** @var DocumentManager */
     private $documentManager;
+
     /** @var TagService */
     private $tagService;
 

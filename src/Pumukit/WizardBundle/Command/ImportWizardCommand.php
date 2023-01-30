@@ -156,7 +156,7 @@ EOT
             }
 
             if (isset($this->status)) {
-                $multimediaObject->setStatus((int) ($this->status));
+                $multimediaObject->setStatus((int) $this->status);
             }
             $this->dm->flush();
         }

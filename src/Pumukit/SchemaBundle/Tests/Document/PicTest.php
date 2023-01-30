@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\Pic;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class PicTest extends TestCase
@@ -55,7 +56,7 @@ class PicTest extends TestCase
         $pic->removeTag('t');
         static::assertFalse($pic->containsTag('t'));
 
-        //Repeat Tag
+        // Repeat Tag
         static::assertFalse($pic->containsTag('t'));
         $pic->addTag('t');
         $pic->addTag('t');
@@ -64,7 +65,7 @@ class PicTest extends TestCase
         static::assertFalse($pic->containsTag('t'));
         static::assertFalse($pic->removeTag('t'));
 
-        //containsAllTag and containsAnyTag
+        // containsAllTag and containsAnyTag
         $pic->addTag('t1');
         $pic->addTag('t2');
         $pic->addTag('t3');

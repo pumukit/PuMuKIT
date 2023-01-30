@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Document\Live;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class EventRepositoryTest extends PumukitTestCase

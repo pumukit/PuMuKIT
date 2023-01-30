@@ -62,7 +62,7 @@ class PicExtractorService
 
         $num_frames = $track->getNumFrames();
 
-        if ((null === $numframe || (0 == $num_frames))) {
+        if (null === $numframe || (0 == $num_frames)) {
             $num = 125 * (is_countable($multimediaObject->getPics()) ? count($multimediaObject->getPics()) : 0) + 1;
         } elseif ('%' === substr($numframe, -1, 1)) {
             $num = (int) $numframe * $num_frames / 100;

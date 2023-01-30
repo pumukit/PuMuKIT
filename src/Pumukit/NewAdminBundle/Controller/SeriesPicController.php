@@ -21,10 +21,13 @@ class SeriesPicController extends AbstractController implements NewAdminControll
 {
     /** @var DocumentManager */
     private $documentManager;
+
     /** @var SeriesPicService */
     private $seriesPicService;
+
     /** @var PaginationService */
     private $paginationService;
+
     /** @var SessionInterface */
     private $session;
 
@@ -181,12 +184,12 @@ class SeriesPicController extends AbstractController implements NewAdminControll
         if ($request->get('page', null)) {
             $this->session->set('admin/seriespic/page', $request->get('page', 1));
         }
-        $page = (int) ($this->session->get('admin/seriespic/page', 1));
+        $page = (int) $this->session->get('admin/seriespic/page', 1);
         $limit = 12;
 
         $urlPics = $this->seriesPicService->getRecommendedPics($series);
 
-        $total = (int) (ceil((is_countable($urlPics) ? count($urlPics) : 0) / $limit));
+        $total = (int) ceil((is_countable($urlPics) ? count($urlPics) : 0) / $limit);
 
         $pics = $this->getPaginatedPics($urlPics, $limit, $page);
 

@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Security\Permission;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class PermissionTest extends TestCase

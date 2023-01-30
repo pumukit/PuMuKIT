@@ -61,9 +61,9 @@ class MultimediaObjectPicService
      *
      * @param MultimediaObject $multimediaObject
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     *
      * @return mixed
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function getRecommendedPics($multimediaObject)
     {
@@ -106,9 +106,9 @@ class MultimediaObjectPicService
      *
      * @param bool $isEventPoster
      *
-     * @throws \Exception
-     *
      * @return MultimediaObject
+     *
+     * @throws \Exception
      */
     public function addPicFile(MultimediaObject $multimediaObject, UploadedFile $picFile, $isEventPoster = false)
     {
@@ -130,7 +130,7 @@ class MultimediaObjectPicService
         $path = $picFile->move($this->getTargetPath($multimediaObject), $name);
 
         $pic = new Pic();
-        $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
+        $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path->getPathname()));
 
         if (!is_string($path)) {
             $path = $path->getPathname();
@@ -178,7 +178,7 @@ class MultimediaObjectPicService
         file_put_contents($path, $pic);
 
         $pic = new Pic();
-        $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
+        $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path->getPathname()));
         $pic->setPath($path);
 
         $multimediaObject->addPic($pic);
@@ -195,9 +195,9 @@ class MultimediaObjectPicService
      *
      * @param \MongoId|string $picId
      *
-     * @throws \Exception
-     *
      * @return MultimediaObject
+     *
+     * @throws \Exception
      */
     public function removePicFromMultimediaObject(MultimediaObject $multimediaObject, $picId)
     {

@@ -169,7 +169,7 @@ class LegacyEventController extends AdminController
         $date_to = null;
 
         foreach ($criteria as $property => $value) {
-            //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
+            // preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
             if (('' !== $value) && ('date' !== $property)) {
                 $new_criteria[$property] = new Regex($value, 'i');
             } elseif (('' !== $value) && ('date' == $property)) {
@@ -289,9 +289,9 @@ class LegacyEventController extends AdminController
     {
         $aux = [];
 
-        $dweek = (int) (date('N', mktime(0, 0, 0, (int) $month, 1, (int) $year))) - 1;
+        $dweek = (int) date('N', mktime(0, 0, 0, (int) $month, 1, (int) $year)) - 1;
         foreach (range(1, self::getDaysInMonth($month, $year)) as $i) {
-            $aux[(int) ($dweek / 7)][($dweek % 7)] = $i;
+            $aux[(int) ($dweek / 7)][$dweek % 7] = $i;
             ++$dweek;
         }
 

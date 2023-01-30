@@ -57,9 +57,9 @@ class GroupService
      *
      * @param bool $executeFlush
      *
-     * @throws \Exception
-     *
      * @return Group
+     *
+     * @throws \Exception
      */
     public function update(Group $group, $executeFlush = true)
     {

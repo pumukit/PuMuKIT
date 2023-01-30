@@ -11,6 +11,7 @@ class RemoteHTTPExecutor
         if (!function_exists('curl_init')) {
             throw new ExecutorException('Curl is required to execute remote commands.');
         }
+
         /**
          * @var bool|resource
          */

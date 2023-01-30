@@ -12,6 +12,7 @@ use Pumukit\SchemaBundle\Services\TrackService;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class TrackServiceTest extends PumukitTestCase

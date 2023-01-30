@@ -29,10 +29,13 @@ class PlaylistController extends CollectionController
 {
     /** @var SessionInterface */
     private $session;
+
     /** @var TranslatorInterface */
     private $translator;
+
     /** @var SeriesEventDispatcherService */
     private $pumukitSchemaSeriesEventDispatcher;
+
     /** @var SeriesSearchService */
     private $seriesSearchService;
 

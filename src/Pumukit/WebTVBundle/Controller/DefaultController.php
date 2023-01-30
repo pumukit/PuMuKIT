@@ -16,7 +16,6 @@ use Pumukit\WebTVBundle\Form\Type\ContactType;
 use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -134,7 +133,7 @@ class DefaultController extends AbstractController
         if (EmbeddedBroadcast::TYPE_PASSWORD === $multimediaObject->getEmbeddedBroadcast()->getType() && $multimediaObject->getEmbeddedBroadcast()->getPassword() !== $request->get('broadcast_password')) {
             return $this->render($iframe ? '@PumukitWebTV/Live/Basic/template_iframe_password.html.twig' : '@PumukitWebTV/Live/Basic/template_password.html.twig', [
                 'live' => $multimediaObject->getEmbeddedEvent(),
-                'invalid_password' => (bool) ($request->get('broadcast_password')),
+                'invalid_password' => (bool) $request->get('broadcast_password'),
             ]);
         }
 
@@ -291,7 +290,7 @@ class DefaultController extends AbstractController
                 $multimediaObject->getEmbeddedEvent()->getName()
             );
 
-            $message = new Swift_Message();
+            $message = new \Swift_Message();
             $message->setSubject($subject)->setSender($mail)->setFrom($mail)->setTo($to)->setBody($bodyMail, 'text/plain');
             $sent = $this->mailer->send($message);
 
@@ -316,7 +315,7 @@ class DefaultController extends AbstractController
         if ($live->getPasswd() && $live->getPasswd() !== $request->get('broadcast_password')) {
             return $this->render($iframe ? '@PumukitWebTV/Live/Basic/template_iframe_password.html.twig' : '@PumukitWebTV/Live/Basic/template_password.html.twig', [
                 'live' => $live,
-                'invalid_password' => (bool) ($request->get('broadcast_password')),
+                'invalid_password' => (bool) $request->get('broadcast_password'),
             ]);
         }
         $userAgent = $request->headers->get('user-agent');

@@ -13,6 +13,7 @@ use Pumukit\SchemaBundle\Services\SeriesService;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class SeriesServiceTest extends PumukitTestCase

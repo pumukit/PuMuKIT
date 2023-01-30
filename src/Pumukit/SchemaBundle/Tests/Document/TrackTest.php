@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\Track;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class TrackTest extends TestCase
@@ -92,7 +93,7 @@ class TrackTest extends TestCase
         $track->removeTag('t');
         static::assertFalse($track->containsTag('t'));
 
-        //Repeat Tag
+        // Repeat Tag
         static::assertFalse($track->containsTag('t'));
         $track->addTag('t');
         $track->addTag('t');
@@ -101,7 +102,7 @@ class TrackTest extends TestCase
         static::assertFalse($track->containsTag('t'));
         static::assertFalse($track->removeTag('t'));
 
-        //containsAllTag and containsAnyTag
+        // containsAllTag and containsAnyTag
         $track->addTag('t1');
         $track->addTag('t2');
         $track->addTag('t3');

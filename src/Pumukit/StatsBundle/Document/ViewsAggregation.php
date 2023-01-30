@@ -48,6 +48,7 @@ class ViewsAggregation
 
     /**
      * @var int
+     *
      * @MongoDB\Field(type="int", strategy="increment" )
      */
     private $numView;

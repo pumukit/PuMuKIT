@@ -11,6 +11,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class SpecialTranslationServiceTest extends PumukitTestCase
