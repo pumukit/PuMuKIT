@@ -24,6 +24,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Replace BotDetectBundle by CrawlerDetect
 - Replace MongoDB objects (MongoId(), MongoDate(), ...) by new generic objects defined by namespaces.
 - Replace deprecated FOSUserBundle by custom login.
+- Changed PUMUKIT_HOST env to PUMUKIT_FRONTEND_HOST
 
 #### Removed
 - Remove Travis workflows.
