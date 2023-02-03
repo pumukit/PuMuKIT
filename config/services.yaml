@@ -14,7 +14,7 @@ parameters:
   debug_redirects:                     false
   use_assetic_controller:              true
   router.request_context.scheme:       "%env(string:PUMUKIT_SCHEME)%"
-  router.request_context.host:         "%env(string:PUMUKIT_HOST)%"
+  router.request_context.host:         "%env(string:PUMUKIT_FRONTEND_HOST)%"
 
   pumukit.info:
     title:               "%env(string:PUMUKIT_TITLE)%"
