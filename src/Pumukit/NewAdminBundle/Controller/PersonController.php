@@ -214,7 +214,7 @@ class PersonController extends AdminController
         try {
             $personalScopeRole = $this->personService->getPersonalScopeRole();
         } catch (\Exception $e) {
-            return new Response($e, Response::HTTP_BAD_REQUEST);
+            return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
 
         return [
@@ -231,10 +231,8 @@ class PersonController extends AdminController
     /**
      * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", options={"id" = "roleId"})
-     *
-     * @Template("@PumukitNewAdmin/Person/createrelation.html.twig")
      */
-    public function createRelationAction(Request $request, MultimediaObject $multimediaObject, Role $role)
+    public function createRelationAction(Request $request, MultimediaObject $multimediaObject, Role $role): Response
     {
         if ($role->getCod() === $this->pumukitSchemaPersonalScopeRoleCode) {
             $this->denyAccessUnlessGranted('ROLE_MODIFY_OWNER');
@@ -242,7 +240,7 @@ class PersonController extends AdminController
         $owner = $request->get('owner', false);
 
         $person = new Person();
-        $person->setName(preg_replace('/\d+ - /', '', $request->get('name')));
+        $person->setName(preg_replace('/\d+ - /', '', $request->get('pumukitnewadmin_person')['name'] ?? ''));
 
         $locale = $request->getLocale();
 
@@ -288,14 +286,14 @@ class PersonController extends AdminController
 
         $template = $multimediaObject->isPrototype() ? '_template' : '';
 
-        return [
+        return $this->render('@PumukitNewAdmin/Person/createrelation.html.twig', [
             'person' => $person,
             'role' => $role,
             'mm' => $multimediaObject,
             'template' => $template,
             'form' => $form->createView(),
             'owner' => $owner,
-        ];
+        ]);
     }
 
     /**
