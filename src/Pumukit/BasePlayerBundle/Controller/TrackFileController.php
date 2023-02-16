@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\BasePlayerBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\ObjectId;
 use Pumukit\BasePlayerBundle\Event\BasePlayerEvents;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -20,12 +21,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TrackFileController extends AbstractController
 {
+    private $documentManager;
+
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(DocumentManager $documentManager, EventDispatcherInterface $eventDispatcher)
     {
         $this->eventDispatcher = $eventDispatcher;
+        $this->documentManager = $documentManager;
     }
 
     /**
@@ -95,6 +99,26 @@ class TrackFileController extends AbstractController
         $this->dispatchViewEvent($mmobj, $track);
 
         return new JsonResponse(['status' => 'success']);
+    }
+
+    /**
+     * @Route("/mediaplayed/{id}", name="pumukit_mediaplayed_index")
+     */
+    public function mediaPlayedAction(string $id): JsonResponse
+    {
+        if (!preg_match('/^[a-f\d]{24}$/i', $id)) {
+            return new JsonResponse(['status' => 'error']);
+        }
+
+        $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($id)]);
+        if (!$multimediaObject instanceof MultimediaObject) {
+            return new JsonResponse(['status' => 'error']);
+        }
+
+        $event = new ViewedEvent($multimediaObject);
+        $this->eventDispatcher->dispatch($event, BasePlayerEvents::MULTIMEDIAOBJECT_VIEW);
+
+        return new JsonResponse(['status' => 'ok']);
     }
 
     protected function getHash(Track $track, $timestamp, string $secret, string $ip)
