@@ -1,2 +1,2 @@
 pumukit_base_player:
-    when_dispatch_view_event: 'on_play'
+    when_dispatch_view_event: 'on_load'
