@@ -51,7 +51,7 @@ class AnnotationsAPIController extends AbstractController
         $annonQB = $annonRepo->createQueryBuilder();
 
         if ($episode) {
-            $annonQB->field('multimediaObject')->equals(new ObjectId($episode));
+            $annonQB->field('multimediaObject')->equals(new ObjectId($this->getMultimediaObject($episode)->getId()));
         }
 
         if ($type) {
@@ -232,5 +232,14 @@ class AnnotationsAPIController extends AbstractController
         $response = $this->serializer->dataSerialize(['status' => 'ok'], 'xml');
 
         return new Response($response);
+    }
+
+    private function getMultimediaObject(string $objectId): MultimediaObject
+    {
+        try {
+            return $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($objectId)]);
+        } catch (\Exception $exception) {
+            return $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['secret' => $objectId]);
+        }
     }
 }
