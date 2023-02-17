@@ -1147,7 +1147,7 @@ class MultimediaObjectController extends SortableAdminController
             $this->pumukitSchemaMultimediaObjectDispatcher->dispatchUpdate($multimediaObject);
             $this->dispatchUpdate($multimediaObject);
 
-            return $this->forward('PumukitNewAdminBundle:Track:list', ['multimediaObject' => $multimediaObject]);
+            return $this->redirectToRoute('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]);
         }
 
         return ['multimediaObject' => $multimediaObject, 'form' => $form->createView()];
