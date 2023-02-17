@@ -240,7 +240,7 @@ class PersonController extends AdminController
         $owner = $request->get('owner', false);
 
         $person = new Person();
-        $person->setName(preg_replace('/\d+ - /', '', $request->get('pumukitnewadmin_person')['name'] ?? ''));
+        $person->setName(preg_replace('/\d+ - /', '', $request->get('pumukitnewadmin_person')['name'] ?? $request->get('name') ?? ''));
 
         $locale = $request->getLocale();
 
