@@ -285,7 +285,7 @@ class MultimediaObjectTest extends TestCase
         $t3 = new Track();
         $t3->setTags(['master', 'mosca']);
         $t4 = new Track();
-        $t4->setTags(['flv', 'itunes', 'hide']);
+        $t4->setTags(['flv', 'unesco', 'hide']);
         $t5 = new Track();
         $t5->setTags(['flv', 'webtv']);
 
@@ -336,7 +336,7 @@ class MultimediaObjectTest extends TestCase
         $p3 = new Pic();
         $p3->setTags(['master', 'mosca']);
         $p4 = new Pic();
-        $p4->setTags(['flv', 'itunes', 'hide']);
+        $p4->setTags(['flv', 'unesco', 'hide']);
         $p5 = new Pic();
         $p5->setTags(['flv', 'webtv']);
 
@@ -378,7 +378,7 @@ class MultimediaObjectTest extends TestCase
         $m3 = new Material();
         $m3->setTags(['master', 'mosca']);
         $m4 = new Material();
-        $m4->setTags(['flv', 'itunes', 'hide']);
+        $m4->setTags(['flv', 'unesco', 'hide']);
         $m5 = new Material();
         $m5->setTags(['flv', 'webtv']);
 
@@ -420,7 +420,7 @@ class MultimediaObjectTest extends TestCase
         $m3 = new Link();
         $m3->setTags(['master', 'mosca']);
         $m4 = new Link();
-        $m4->setTags(['flv', 'itunes', 'hide']);
+        $m4->setTags(['flv', 'unesco', 'hide']);
         $m5 = new Link();
         $m5->setTags(['flv', 'webtv']);
 

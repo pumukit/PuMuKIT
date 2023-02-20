@@ -153,7 +153,7 @@ Below is the full parameter rules and their explanation:
  parameters:
   breadcrumbs_home_title:    'WebTV'                # 'Home' option title for the breadcrumbs service.
   catalogue_thumbnails:      true                   # If set to true, the full catalogue will list thumbnails instead of text.
-  categories_tag_cod:        ITUNESU                # Cod of Root Tag to create the Categories page.
+  categories_tag_cod:        UNESCO                 # Cod of Root Tag to create the Categories page.
   categories.list_general_tags:  true               # If true, adds a 'general tag' to each category.
   columns_objs_announces:    2                      # Number of columns for announces. (Default 1)
   columns_objs_bytag:        2                      # Number of columns for bytag.  (Default 2)
@@ -165,7 +165,7 @@ Below is the full parameter rules and their explanation:
   limit_objs_search:         10                     # Search Pager limit.  (Default 10)
   limit_objs_series:         10                     # Search Pager limit.  (Default 10)
   limit_objs_player_series:  10                     # Limit for mmobjs to appear on the mmobj player (Default 10)
-  search.parent_tag.cod:     ITUNESU                # Search controller option for the main tag search.
+  search.parent_tag.cod:     UNESCO                 # Search controller option for the main tag search.
   search.parent_tag_2.cod:   null                   # Search controller option for the optional tag search.
   menu.announces_title:      'Latest Uploads'       # 'Announces' option title for the menu widget.
   menu.categories_title:     'By subject catalogue' # 'Categories' option title for the menu widget.
