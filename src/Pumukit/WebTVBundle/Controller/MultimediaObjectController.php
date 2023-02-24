@@ -190,7 +190,7 @@ class MultimediaObjectController extends Controller implements WebTVControllerIn
             [MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDDEN] :
             [MultimediaObject::STATUS_PUBLISHED];
 
-        $multimediaObjects = $mmobjRepo->findWithStatus($series, $status, $limit);
+        $multimediaObjects = $mmobjRepo->findBySeriesByTagCodAndStatusWithLimit($series, 'PUCHWEBTV', $status, $limit);
 
         return [
             'series' => $series,
