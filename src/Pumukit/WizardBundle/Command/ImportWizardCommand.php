@@ -121,7 +121,7 @@ EOT
             $filePath = $file->getRealpath();
 
             try {
-                $this->inspectionService->getDuration($filePath);
+                $duration = $this->inspectionService->getDuration($filePath);
             } catch (\Exception $e) {
                 continue;
             }
@@ -140,7 +140,7 @@ EOT
                     $this->language,
                     [],
                     [],
-                    0,
+                    $duration,
                     JobService::ADD_JOB_UNIQUE
                 );
             } catch (\Exception $e) {
