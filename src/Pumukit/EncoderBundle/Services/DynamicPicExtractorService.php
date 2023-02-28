@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\EncoderBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Psr\Log\LoggerInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Track;
@@ -17,21 +18,25 @@ class DynamicPicExtractorService
     public const DEFAULT_WIDTH = 768;
     public const DEFAULT_HEIGHT = 432;
 
-    /** @var DocumentManager */
     private $documentManager;
-
-    /** @var MultimediaObjectPicService */
     private $mmsPicService;
     private $command;
+    private $logger;
     private $predefinedTags = [
         'auto',
         'dynamic',
     ];
 
-    public function __construct(DocumentManager $documentManager, MultimediaObjectPicService $mmsPicService, string $targetPath, string $command)
-    {
+    public function __construct(
+        DocumentManager $documentManager,
+        MultimediaObjectPicService $mmsPicService,
+        LoggerInterface $logger,
+        string $targetPath,
+        string $command
+    ) {
         $this->documentManager = $documentManager;
         $this->mmsPicService = $mmsPicService;
+        $this->logger = $logger;
         if (!realpath($targetPath)) {
             throw new \InvalidArgumentException("The path '".$targetPath."' for storing dynamic pic does not exist.");
         }
@@ -45,7 +50,9 @@ class DynamicPicExtractorService
         }
 
         if (number_format($track->getWidth() / $track->getHeight(), 2) !== number_format(self::DEFAULT_WIDTH / self::DEFAULT_HEIGHT, 2)) {
-            throw new \Exception('Webp needs 16:9 video '.$multimediaObject->getId());
+            $this->logger->warning('Webp needs 16:9 video '.$multimediaObject->getId());
+
+            return false;
         }
 
         $absCurrentDir = $this->createDir($multimediaObject);
