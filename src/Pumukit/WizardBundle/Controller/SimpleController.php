@@ -22,6 +22,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -68,7 +69,6 @@ class SimpleController extends AbstractController
         $this->licenseService = $licenseService;
         $this->translator = $translator;
         $this->inspectionFfprobeService = $inspectionFfprobeService;
-        $this->profileService = $profileService;
         $this->pumukitSchemaSortedMultimediaObjectService = $pumukitSchemaSortedMultimediaObjectService;
         $this->jobService = $jobService;
         $this->profileService = $profileService;
@@ -82,6 +82,9 @@ class SimpleController extends AbstractController
         $this->pumukitCustomLanguages = $pumukitCustomLanguages;
     }
 
+    /**
+     * @Route("/index/{id}", methods={"GET"}, name="pumukitwizard_simple_index")
+     */
     public function indexAction(Request $request, Series $series): Response
     {
         $licenseContent = $this->licenseService->getLicenseContent($request->getLocale());
@@ -109,6 +112,7 @@ class SimpleController extends AbstractController
         $description = [];
         $language = $request->request->get('language', $request->getLocale());
         $file = $request->files->get('resource');
+        $file = reset($file);
 
         try {
             if (!$file) {
@@ -122,7 +126,6 @@ class SimpleController extends AbstractController
             $filePath = $file->getPathname();
 
             try {
-                // exception if is not a mediafile (video or audio)
                 $duration = $this->inspectionFfprobeService->getDuration($filePath);
             } catch (\Exception $e) {
                 throw new \Exception('The file is not a valid video or audio file');
@@ -153,7 +156,13 @@ class SimpleController extends AbstractController
 
         $this->pumukitSchemaSortedMultimediaObjectService->reorder($series);
 
-        return $this->redirectToRoute('pumukitnewadmin_mms_shortener', ['id' => $multimediaObject->getId()]);
+        $response = [
+            'uploaded' => 'success',
+            'message' => 'Track(s) added',
+            'endPage' => $this->generateUrl('pumukitnewadmin_mms_shortener', ['id' => $multimediaObject->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
+        ];
+
+        return new JsonResponse($response);
     }
 
     /**
@@ -306,7 +315,9 @@ class SimpleController extends AbstractController
         $this->pumukitSchemaSortedMultimediaObjectService->reorder($series);
 
         $response = [
-            'url' => $this->generateUrl('pumukitnewadmin_mms_shortener', ['id' => $multimediaObject->getId()]),
+            'uploaded' => 'success',
+            'message' => 'Track(s) added',
+            'endPage' => $this->generateUrl('pumukitnewadmin_mms_shortener', ['id' => $multimediaObject->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
             'mmId' => $multimediaObject->getId(),
         ];
 
