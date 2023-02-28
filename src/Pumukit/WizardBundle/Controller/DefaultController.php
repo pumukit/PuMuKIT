@@ -11,6 +11,7 @@ use Pumukit\SchemaBundle\Security\Permission;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -317,7 +318,7 @@ class DefaultController extends Controller
     public function uploadAction(Request $request)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
-        $formData = $request->get('pumukitwizard_form_data', []);
+        $formData = $request->get('pumukitwizard_form_data', null);
         $sameSeries = $this->getSameSeriesValue($formData, $request->get('same_series', false));
         $showSeries = !$sameSeries;
         $formData['same_series'] = $sameSeries ? 1 : 0;
@@ -375,6 +376,9 @@ class DefaultController extends Controller
                     $filetype = $wizardService->getKeyData('filetype', $trackData);
                     if ('file' === $filetype) {
                         $resourceFile = $request->files->get('resource');
+                        if (is_array($resourceFile)) {
+                            $resourceFile = $resourceFile[0];
+                        }
                         if ($resourceFile) {
                             if (!$resourceFile->isValid()) {
                                 throw new \Exception($request->files->get('resource')->getErrorMessage());
@@ -421,9 +425,13 @@ class DefaultController extends Controller
                     $formDispatcher->dispatchSubmit($this->getUser(), $multimediaObject, $formData);
 
                     if ('file' === $filetype) {
+                        $resourceFile = $request->files->get('resource');
+                        if (is_array($resourceFile)) {
+                            $resourceFile = $resourceFile[0];
+                        }
                         $multimediaObject = $jobService->createTrackFromLocalHardDrive(
                             $multimediaObject,
-                            $request->files->get('resource'),
+                            $resourceFile,
                             $profile,
                             $priority,
                             $language,
@@ -518,15 +526,19 @@ class DefaultController extends Controller
             $mmId = $multimediaObject->getId();
         }
 
-        return [
-            'uploaded' => 'success',
-            'message' => 'Track(s) added',
-            'option' => $option,
-            'seriesId' => $seriesId,
-            'mmId' => $mmId,
-            'show_series' => $showSeries,
-            'same_series' => $sameSeries,
+        $response = [
+            'url' => $this->generateUrl('pumukitwizard_default_end', [
+                'uploaded' => 'success',
+                'message' => 'Track(s) added',
+                'option' => $option,
+                'seriesId' => $seriesId,
+                'mmId' => $mmId,
+                'show_series' => $showSeries,
+                'same_series' => $sameSeries,
+            ]),
         ];
+
+        return new JsonResponse($response);
     }
 
     /**

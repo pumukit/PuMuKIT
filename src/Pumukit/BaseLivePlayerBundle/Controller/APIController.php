@@ -87,7 +87,7 @@ class APIController extends Controller
     {
         /** @var Serializer */
         $serializer = $this->get('jms_serializer');
-        
+
         $limit = $request->get('limit');
         $sort = $request->get('sort') ?: [];
 
