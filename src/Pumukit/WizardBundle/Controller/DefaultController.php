@@ -526,6 +526,7 @@ class DefaultController extends AbstractController
                     }
                 }
             } elseif ('multiple' === $option) {
+                dump($request->get('file'));
                 $this->denyAccessUnlessGranted(Permission::ACCESS_INBOX);
 
                 $series = $this->wizardService->uploadMultipleFiles(

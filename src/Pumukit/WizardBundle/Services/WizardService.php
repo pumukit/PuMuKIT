@@ -194,6 +194,8 @@ class WizardService
 
         $command = $process->getCommandLine();
 
+        dump($command);
+
         shell_exec("nohup {$command} 1> /dev/null 2> /dev/null & echo $!");
     }
 
