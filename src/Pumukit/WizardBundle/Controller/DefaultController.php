@@ -481,6 +481,8 @@ class DefaultController extends AbstractController
                 $this->formEventDispatcherService->dispatchSubmit($this->getUser(), $multimediaObject, $formData);
 
                 if ('file' === $filetype) {
+                    $resourceFile = $request->files->get('resource');
+                    $resourceFile = reset($resourceFile);
                     $multimediaObject = $this->jobService->createTrackFromLocalHardDrive(
                         $multimediaObject,
                         $resourceFile,

@@ -72,39 +72,41 @@ $(function(){
         return false;
     });
 
-    $('#pumukitwizard_track_next_button').on('click', function(event){
-        event.preventDefault();
-        if($('#pumukitwizard_track_next_button').data('multiple') != true) {
-            uppy.upload();
-            uppy.on('upload-success', (file, response) => {
-                location.href = response.body.endPage;
-            });
-        } else {
-            $.ajax({
-                url: $('#pumukitwizard_track_form').attr('action'),
-                type: 'POST',
-                data : $('#pumukitwizard_track_form').serialize(),
-                success: function(response){
-                    location.href = response.endPage;
-                }
-            });
-            return false;
+    $('#pumukitwizard_track_form').on('submit', function(e){
+        e.preventDefault();
+        if ($('#radio_file').prop('checked')) {
+            var file = $('#resource').val();
+        }else{
+            var file = $('#file').val();
         }
+        var valid = test_material_form_file_nmb(file);
+        if (valid){
+            uppy.upload();
+        }
+
+        return false;
     });
 
     $('#pumukitwizard_simple_track_form').on('submit', function(e){
         e.preventDefault();
         var show_license = $('#pumukitwizard_simple_license_show').val();
-        if (show_license == "true") {
+        var submitForm = false;
+        if (show_license === "true") {
             var license_accept = $('#pumukitwizard_simple_license_accept').is(':checked');
             if(license_accept){
-                this.submit();
-            } else {
-                $('#pumukitwizard_simple_error_display').show();
+                submitForm = true;
             }
         } else {
-            this.submit();
+            submitForm = true;
         }
+        if (submitForm) {
+            uppy.upload()
+        } else {
+            file_data_clear();
+            window.alert('{% trans %}ERROR!!{% endtrans %}\n\n{% trans %}There was an error{% endtrans %}');
+            return false;
+        }
+
         return false;
     });
 
@@ -183,7 +185,7 @@ function check_mandatory_title(step) {
         var title = '';
         $("input[id^="+inputId+"]").each(function (i, el) {
             var value = $(el).val();
-            if (value != null && value != '') {
+            if (value != null && value !== '') {
                 filled = true;
                 title = value;
                 return false;
@@ -203,7 +205,7 @@ function check_mandatory_title(step) {
 function autofill(inputId, givenValue) {
     $("input[id^="+inputId+"]").each(function (i, el) {
         var value = $(el).val();
-        if (value == null || value == '') {
+        if (value == null || value === '') {
             $(el).val(givenValue);
         }
     });
