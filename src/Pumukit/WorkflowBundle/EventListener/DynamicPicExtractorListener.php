@@ -50,7 +50,7 @@ class DynamicPicExtractorListener
         if (!$outputMessage) {
             $message = $outputMessage.". MultimediaObject '".$multimediaObject->getId()."' with track '".$track->getId()."'";
 
-            throw new \Exception($message);
+            $this->logger->warning($message);
         }
 
         $message = 'Extracted dynamic pic from track '.$track->getId().' into MultimediaObject "'.$multimediaObject->getId();
