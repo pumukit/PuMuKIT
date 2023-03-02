@@ -103,13 +103,13 @@
                             {% if 'single' == form_data.type.option %}
                                 <div class="radio">
                                     <label for="radio_inbox">
-                                        <input class="priority_checkbox" type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_inbox" value="inbox" onclick="$('#pumukitwizard_track_file').hide();$('#pumukitwizard_track_inbox').show();"/>
+                                        <input class="priority_checkbox" type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_inbox" value="inbox" onclick="$('#pumukit_file_input').hide();$('#pumukitwizard_track_inbox').show();"/>
                                         {% trans %}Inbox on server{% endtrans %}
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label for="radio_file">
-                                        <input class="priority_checkbox" type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_file" value="file" checked="checked" onclick="$('#pumukitwizard_track_inbox').hide();$('#pumukitwizard_track_file').show();"/>
+                                        <input class="priority_checkbox" type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_file" value="file" checked="checked" onclick="$('#pumukitwizard_track_inbox').hide();$('#pumukit_file_input').show();"/>
                                         {% trans %}Local hard drive{% endtrans %}
                                     </label>
                                 </div>
