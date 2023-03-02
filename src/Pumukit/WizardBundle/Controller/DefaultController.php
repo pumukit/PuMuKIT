@@ -529,7 +529,6 @@ class DefaultController extends Controller
             $mmId = $multimediaObject->getId();
         }
 
-        dump('continue2');
         $endPage = $this->generateUrl('pumukitwizard_default_end', [
             'seriesId' => $seriesId,
             'mmId' => $mmId,
