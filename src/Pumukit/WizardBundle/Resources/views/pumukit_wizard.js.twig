@@ -78,6 +78,23 @@ $(function(){
             var file = $('#resource').val();
         }else{
             var file = $('#file').val();
+            $.ajax({
+                type: "POST",
+                url: "{{ path('pumukitwizard_default_upload') }}",
+                data: $('#pumukitwizard_track_form').serialize()
+            }).done(function (response) {
+                if (response.uploaded && response.uploaded === 'success') {
+                    if ('endPage' in response) {
+                        window.location.href = response.endPage;
+                    }
+                } else {
+                    if ('endPage' in response.body) {
+                        window.location.href = response.body.endPage;
+                    }
+                }
+            });
+
+            return true;
         }
         var valid = test_material_form_file_nmb(file);
         if (valid){
