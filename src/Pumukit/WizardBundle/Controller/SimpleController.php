@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_WIZARD_UPLOAD')")
@@ -115,11 +116,15 @@ class SimpleController extends Controller
 
         $this->get('pumukitschema.sorted_multimedia_object')->reorder($series);
 
-        $response = [
-            'url' => $this->generateUrl('pumukitnewadmin_mms_shortener', ['id' => $multimediaObject->getId()]),
-        ];
+        $endPage = $this->generateUrl('pumukitnewadmin_mms_shortener', [
+            'id' => $multimediaObject->getId(),
+        ], UrlGeneratorInterface::ABSOLUTE_URL);
 
-        return new JsonResponse($response);
+        return new JsonResponse([
+            'uploaded' => 'success',
+            'message' => 'Track(s) added',
+            'endPage' => $endPage,
+        ]);
     }
 
     /**
@@ -274,12 +279,15 @@ class SimpleController extends Controller
 
         $this->get('pumukitschema.sorted_multimedia_object')->reorder($series);
 
-        $response = [
-            'url' => $this->generateUrl('pumukitnewadmin_mms_shortener', ['id' => $multimediaObject->getId()]),
-            'mmId' => $multimediaObject->getId(),
-        ];
+        $endPage = $this->generateUrl('pumukitnewadmin_mms_shortener', [
+            'id' => $multimediaObject->getId(),
+        ], UrlGeneratorInterface::ABSOLUTE_URL);
 
-        return new JsonResponse($response);
+        return new JsonResponse([
+            'uploaded' => 'success',
+            'message' => 'Track(s) added',
+            'endPage' => $endPage,
+        ]);
     }
 
     /**
