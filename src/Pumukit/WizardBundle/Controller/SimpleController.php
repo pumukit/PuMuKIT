@@ -279,14 +279,10 @@ class SimpleController extends Controller
 
         $this->get('pumukitschema.sorted_multimedia_object')->reorder($series);
 
-        $endPage = $this->generateUrl('pumukitnewadmin_mms_shortener', [
-            'id' => $multimediaObject->getId(),
-        ], UrlGeneratorInterface::ABSOLUTE_URL);
-
         return new JsonResponse([
             'uploaded' => 'success',
             'message' => 'Track(s) added',
-            'endPage' => $endPage,
+            'mmId' => $multimediaObject->getId(),
         ]);
     }
 
