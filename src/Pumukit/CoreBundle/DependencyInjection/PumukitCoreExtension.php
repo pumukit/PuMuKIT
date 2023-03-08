@@ -35,5 +35,6 @@ class PumukitCoreExtension extends Extension
         $container->setParameter('pumukit.maxFileSize', $config['maxFileSize']);
         $container->setParameter('pumukit.minFileSize', $config['minFileSize']);
         $container->setParameter('pumukit.maxNumberOfFiles', $config['maxNumberOfFiles']);
+        $container->setParameter('pumukit.overridePatchMethod', $config['overridePatchMethod']);
     }
 }

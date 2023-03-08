@@ -13,6 +13,7 @@ class InboxService
     private $maxNumberOfFiles;
     private $inboxPath;
     private $debug;
+    private $overridePatchMethod;
 
     public function __construct(
         string $inboxUploadURL,
@@ -21,7 +22,8 @@ class InboxService
         string $maxFileSize,
         int $maxNumberOfFiles,
         string $inboxPath,
-        bool $debug
+        bool $debug,
+        bool $overridePatchMethod
     ) {
         $this->inboxUploadURL = $inboxUploadURL;
         $this->inboxUploadLIMIT = $inboxUploadLIMIT;
@@ -30,6 +32,7 @@ class InboxService
         $this->maxNumberOfFiles = $maxNumberOfFiles;
         $this->inboxPath = $inboxPath;
         $this->debug = $debug;
+        $this->overridePatchMethod = $overridePatchMethod;
     }
 
     public function inboxUploadURL(): string
@@ -65,5 +68,10 @@ class InboxService
     public function debug(): bool
     {
         return $this->debug;
+    }
+
+    public function overridePatchMethod(): bool
+    {
+        return $this->overridePatchMethod;
     }
 }
