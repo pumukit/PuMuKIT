@@ -31,6 +31,7 @@ class InboxUploadListener
             $this->kernelProjectDir.'/bin/console',
             'pumukit:import:inbox',
             $urlUpload,
+            '--user='.$event->getUser()->getUsername(),
         ];
 
         $process = new Process($command);
