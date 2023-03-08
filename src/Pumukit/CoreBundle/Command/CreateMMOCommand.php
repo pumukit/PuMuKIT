@@ -3,10 +3,10 @@
 namespace Pumukit\CoreBundle\Command;
 
 use Assetic\Exception\Exception;
-use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\User;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -15,12 +15,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CreateMMOCommand extends ContainerAwareCommand
 {
+    private $dm;
     private $seriesRepo;
     private $jobService;
     private $inspectionService;
     private $factoryService;
     private $tagService;
-    private $pmk2AllLocales;
+    private $locales;
 
     private $validStatuses = [
         'published' => MultimediaObject::STATUS_PUBLISHED,
@@ -35,7 +36,8 @@ class CreateMMOCommand extends ContainerAwareCommand
             ->setDescription('This command create a multimedia object from a file')
             ->addArgument('file', InputArgument::REQUIRED, 'multimedia file path')
             ->addArgument('inotify_event', InputArgument::OPTIONAL, 'inotify event, only works with IN_CLOSE_WRITE', 'IN_CLOSE_WRITE')
-            ->addOption('status', null, InputOption::VALUE_OPTIONAL, 'Multimedia object initial status (\'published\', \'blocked\' or \'hidden\')', null)
+            ->addOption('status', null, InputOption::VALUE_OPTIONAL, 'Multimedia object initial status (\'published\', \'blocked\' or \'hidden\')')
+            ->addOption('user', null, InputOption::VALUE_OPTIONAL, 'User was upload video')
             ->setHelp(
                 <<<'EOT'
 This command create a multimedia object from a multimedia file path
@@ -49,6 +51,9 @@ Complete example:
 Complete example with hidden status:
 <info>php app/console import:inbox /var/www/html/pumukit/web/storage/tmp/test.mp4 IN_CLOSE_WRITE --status=hidden</info>
 
+Complete example with user:
+<info>php app/console import:inbox /var/www/html/pumukit/web/storage/tmp/test.mp4 IN_CLOSE_WRITE --user=username</info>
+
 EOT
             )
         ;
@@ -56,14 +61,13 @@ EOT
 
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        /** @var DocumentManager */
-        $dm = $this->getContainer()->get('doctrine_mongodb.odm.document_manager');
-        $this->seriesRepo = $dm->getRepository(Series::class);
+        $this->dm = $this->getContainer()->get('doctrine_mongodb.odm.document_manager');
+        $this->seriesRepo = $this->dm->getRepository(Series::class);
         $this->jobService = $this->getContainer()->get('pumukitencoder.job');
         $this->inspectionService = $this->getContainer()->get('pumukit.inspection');
         $this->factoryService = $this->getContainer()->get('pumukitschema.factory');
         $this->tagService = $this->getContainer()->get('pumukitschema.tag');
-        $this->pmk2AllLocales = array_unique(array_merge($this->getContainer()->getParameter('pumukit.locales'), ['en']));
+        $this->locales = array_unique(array_merge($this->getContainer()->getParameter('pumukit.locales'), ['en']));
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -134,20 +138,23 @@ EOT
         $series = $this->seriesRepo->findOneBy(['title.'.$locale => $seriesTitle]);
         if (!$series) {
             $seriesTitleAllLocales = [$locale => $seriesTitle];
-            foreach ($this->pmk2AllLocales as $l) {
+            foreach ($this->locales as $l) {
                 $seriesTitleAllLocales[$l] = $seriesTitle;
             }
             $series = $this->factoryService->createSeries(null, $seriesTitleAllLocales);
         }
 
-        $multimediaObject = $this->factoryService->createMultimediaObject($series);
-        foreach ($this->pmk2AllLocales as $l) {
+        $user = $this->findUser($input->getOption('user'));
+        $multimediaObject = $this->factoryService->createMultimediaObject($series, true, $user);
+        if (!$user) {
+            $this->tagService->addTagByCodToMultimediaObject($multimediaObject, 'PUCHWEBTV');
+        }
+        foreach ($this->locales as $l) {
             $multimediaObject->setTitle($title, $l);
         }
         if (null !== $status) {
             $multimediaObject->setStatus($status);
         }
-        $this->tagService->addTagByCodToMultimediaObject($multimediaObject, 'PUCHWEBTV');
 
         $this->jobService->createTrackFromInboxOnServer($multimediaObject, $path, $profile, 2, $locale, []);
 
@@ -164,5 +171,14 @@ EOT
         $profileService = $this->getContainer()->get('pumukitencoder.profile');
 
         return $profileService->getDefaultMasterProfile();
+    }
+
+    private function findUser($username)
+    {
+        if (!$username) {
+            return null;
+        }
+
+        return $this->dm->getRepository(User::class)->findOneBy(['username' => $username]);
     }
 }
