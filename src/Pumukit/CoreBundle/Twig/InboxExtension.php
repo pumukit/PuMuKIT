@@ -25,6 +25,7 @@ class InboxExtension extends AbstractExtension
             new TwigFunction('inbox_max_number_of_files', [$this, 'getMaxNumberOfFiles']),
             new TwigFunction('inbox_path', [$this, 'getInboxPath']),
             new TwigFunction('inbox_debug', [$this, 'getInboxDebug']),
+            new TwigFunction('inbox_override_patch_method', [$this, 'getOverridePatchMethod']),
         ];
     }
 
@@ -61,5 +62,10 @@ class InboxExtension extends AbstractExtension
     public function getInboxDebug(): string
     {
         return true == $this->inboxService->debug() ? 'true' : 'false';
+    }
+
+    public function getOverridePatchMethod(): string
+    {
+        return true == $this->inboxService->overridePatchMethod() ? 'true' : 'false';
     }
 }
