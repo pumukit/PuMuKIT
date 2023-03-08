@@ -838,6 +838,26 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
+     * Find by series, tag code and status by defining a limit. Not needed (Using findBySeries and filter).
+     *
+     * @return mixed
+     */
+    public function findBySeriesByTagCodAndStatusWithLimit(Series $series, string $tagCod, array $status = [], int $limit = 0, int $page = 0)
+    {
+        $qb = $this->createStandardQueryBuilder()->field('series')->references($series)->field('tags.cod')->equals($tagCod);
+
+        if (0 !== count($status)) {
+            $qb->field('status')->in($status);
+        }
+
+        $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
+
+        $qb->sort('rank', 'asc');
+
+        return $qb->getQuery()->execute();
+    }
+
+    /**
      * Find by embedded broadcast.
      *
      * @return mixed
