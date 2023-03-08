@@ -27,6 +27,7 @@ const uppyTUS = Uppy.Core({
     })
     .use(Uppy.Tus, {
         endpoint: endpoint,
+        overridePatchMethod: {{ inbox_override_patch_method() }},
         limit: {{ inbox_upload_limit() }}
     })
     .run()

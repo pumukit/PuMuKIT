@@ -7,6 +7,7 @@ services:
       $locale: '%locale%'
       $locales: '%pumukit.locales%'
       $pumukitPublicDir: '%pumukit.public_dir%'
+      $overridePatchMethod: '%pumukit.overridePatchMethod%'
 
   Pumukit\CoreBundle\Controller\:
     resource: '../../src/Pumukit/CoreBundle/Controller'
