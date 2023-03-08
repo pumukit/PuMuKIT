@@ -11,6 +11,7 @@ use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\TagService;
 use Symfony\Component\Console\Command\Command;
@@ -58,19 +59,20 @@ class CreateMMOCommand extends Command
             ->setDescription('This command create a multimedia object from a file')
             ->addArgument('file', InputArgument::REQUIRED, 'multimedia file path')
             ->addArgument('inotify_event', InputArgument::OPTIONAL, 'inotify event, only works with IN_CLOSE_WRITE', 'IN_CLOSE_WRITE')
-            ->addOption('status', null, InputOption::VALUE_OPTIONAL, 'Multimedia object initial status (\'published\', \'blocked\' or \'hidden\')', null)
+            ->addOption('status', null, InputOption::VALUE_OPTIONAL, 'Multimedia object initial status (\'published\', \'blocked\' or \'hidden\')')
+            ->addOption('user', null, InputOption::VALUE_OPTIONAL, 'User was upload video')
             ->setHelp(
                 <<<'EOT'
 This command create a multimedia object from a multimedia file path
 
 Basic example:
-<info>php app/console pumukit:import:inbox {pathToPuMuKITStorageTempFiles}/test.mp4</info>
+<info>php bin/console pumukit:import:inbox {pathToPuMuKITStorageTempFiles}/test.mp4</info>
 
 Complete example:
-<info>php app/console pumukit:import:inbox {pathToPuMuKITStorageTempFiles}/test.mp4 IN_CLOSE_WRITE</info>
+<info>php bin/console pumukit:import:inbox {pathToPuMuKITStorageTempFiles}/test.mp4 IN_CLOSE_WRITE</info>
 
 Complete example with hidden status:
-<info>php app/console pumukit:import:inbox {pathToPuMuKITStorageTempFiles}/test.mp4 IN_CLOSE_WRITE --status=hidden</info>
+<info>php bin/console pumukit:import:inbox {pathToPuMuKITStorageTempFiles}/test.mp4 IN_CLOSE_WRITE --status=hidden</info>
 
 EOT
             )
@@ -149,14 +151,17 @@ EOT
             $series = $this->factoryService->createSeries(null, $seriesTitleAllLocales);
         }
 
-        $multimediaObject = $this->factoryService->createMultimediaObject($series);
+        $user = $this->findUser($input->getOption('user'));
+        $multimediaObject = $this->factoryService->createMultimediaObject($series, true, $user);
+        if (!$user) {
+            $this->tagService->addTagByCodToMultimediaObject($multimediaObject, 'PUCHWEBTV');
+        }
         foreach ($this->locales as $l) {
             $multimediaObject->setTitle($title, $l);
         }
         if (null !== $status) {
             $multimediaObject->setStatus($status);
         }
-        $this->tagService->addTagByCodToMultimediaObject($multimediaObject, 'PUCHWEBTV');
 
         $this->jobService->createTrackFromInboxOnServer($multimediaObject, $path, $profile, 2, $locale, []);
 
@@ -172,5 +177,14 @@ EOT
         }
 
         return $this->profileService->getDefaultMasterProfile();
+    }
+
+    private function findUser($username)
+    {
+        if (!$username) {
+            return null;
+        }
+
+        return $this->documentManager->getRepository(User::class)->findOneBy(['username' => $username]);
     }
 }
