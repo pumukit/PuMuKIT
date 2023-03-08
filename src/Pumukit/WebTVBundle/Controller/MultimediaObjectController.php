@@ -227,8 +227,9 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
         $fullMagicUrl = $this->getMagicUrlConfiguration();
         $status = ($showMagicUrl && $fullMagicUrl) ? [MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDDEN] : [MultimediaObject::STATUS_PUBLISHED];
 
-        $multimediaObjects = $this->documentManager->getRepository(MultimediaObject::class)->findWithStatus(
+        $multimediaObjects = $this->documentManager->getRepository(MultimediaObject::class)findBySeriesByTagCodAndStatusWithLimit(
             $series,
+            'PUCHWEBTV',
             $status,
             $this->limitObjsPlayerSeries
         );
