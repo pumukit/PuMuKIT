@@ -1,3 +1,9 @@
+<style>
+    .uppy-StatusBar-progress {
+        background-color: {{ inbox_progress_bar_color() }} !important;
+    }
+</style>
+
 <div class="form-group" id="pumukit_file_input">
     <label for="url" class="control-label">{{ "Audio/video file"|trans }}:
         <span style="color: red">
@@ -5,7 +11,7 @@
         </span>
     </label>
     <div class="UppyForm">
-        <h5>Uppy was not loaded — slow connection, unsupported browser, weird JS error on a page — but the upload still works, because HTML is cool like that</h5>
+        <h5>{{ "Uppy was not loaded — slow connection, unsupported browser, weird JS error on a page — but the upload still works, because HTML is cool like that"|trans }}</h5>
         <input id="wizard-input-file" type="file" name="resource[]">
     </div>
     <div class="grid">

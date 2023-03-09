@@ -75,6 +75,7 @@
             <argument>%pumukit.inbox%</argument>
             <argument>%pumukit.inboxDebug%</argument>
             <argument>%pumukit.overridePatchMethod%</argument>
+            <argument>%pumukit.inboxProgressBarColor%</argument>
         </service>
 
         <service id="pumukitcore.inbox_extension" class="Pumukit\CoreBundle\Twig\InboxExtension">
