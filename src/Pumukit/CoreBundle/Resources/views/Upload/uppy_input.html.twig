@@ -1,6 +1,11 @@
-<div id="pumukit_file_input" class="form-group">
-    <label for="url" class="control-label">
-        {{ "Audio/video file"|trans }}:
+<style>
+    .uppy-StatusBar-progress {
+        background-color: {{ inbox_progress_bar_color() }} !important;
+    }
+</style>
+
+<div class="form-group" id="pumukit_file_input">
+    <label for="url" class="control-label">{{ "Audio/video file"|trans }}:
         <span style="color: red">
             ({{ "Max."|trans }} {{ php_upload_max_filesize() }})
         </span>

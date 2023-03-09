@@ -36,5 +36,6 @@ class PumukitCoreExtension extends Extension
         $container->setParameter('pumukit.minFileSize', $config['minFileSize']);
         $container->setParameter('pumukit.maxNumberOfFiles', $config['maxNumberOfFiles']);
         $container->setParameter('pumukit.overridePatchMethod', $config['inboxOverridePatchMethod']);
+        $container->setParameter('pumukit.inboxProgressBarColor', $config['inboxProgressBarColor']);
     }
 }

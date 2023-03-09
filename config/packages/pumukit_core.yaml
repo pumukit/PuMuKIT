@@ -8,6 +8,7 @@ services:
       $locales: '%pumukit.locales%'
       $pumukitPublicDir: '%pumukit.public_dir%'
       $overridePatchMethod: '%pumukit.overridePatchMethod%'
+      $progressBarColor: %pumukit.inboxProgressBarColor%
 
   Pumukit\CoreBundle\Controller\:
     resource: '../../src/Pumukit/CoreBundle/Controller'
