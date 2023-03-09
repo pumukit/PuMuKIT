@@ -1234,9 +1234,9 @@ class MultimediaObject
         return $this->groups->contains($group);
     }
 
-    public function addGroup(Group $group): bool
+    public function addGroup(Group $group): void
     {
-        return $this->groups->add($group);
+        $this->groups->add($group);
     }
 
     public function removeGroup(Group $group): void

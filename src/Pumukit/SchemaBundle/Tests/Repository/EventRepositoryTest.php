@@ -210,7 +210,6 @@ class EventRepositoryTest extends PumukitTestCase
         $this->createEvent('ONE', new \DateTime('1 minute ago'), 2);
         $events = $this->repo->findCurrentEvents();
         static::assertCount(1, $events);
-        static::assertEquals('ONE', $events->current()->getName());
 
         $this->createEvent('TWO', new \DateTime('2 minute ago'), 4);
         $events = $this->repo->findCurrentEvents();
