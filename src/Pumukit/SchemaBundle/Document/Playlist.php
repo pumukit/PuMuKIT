@@ -31,9 +31,9 @@ class Playlist
         return $this->multimedia_objects->contains($multimedia_object);
     }
 
-    public function addMultimediaObject(MultimediaObject $multimedia_object): bool
+    public function addMultimediaObject(MultimediaObject $multimedia_object): void
     {
-        return $this->multimedia_objects->add($multimedia_object);
+        $this->multimedia_objects->add($multimedia_object);
     }
 
     public function removeMultimediaObject(MultimediaObject $multimedia_object): void

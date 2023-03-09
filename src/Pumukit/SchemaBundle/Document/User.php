@@ -250,9 +250,9 @@ class User implements UserInterface
         return $this->groups->contains($group);
     }
 
-    public function addGroup(GroupInterface $group): bool
+    public function addGroup(GroupInterface $group): void
     {
-        return $this->groups->add($group);
+        $this->groups->add($group);
     }
 
     public function removeGroup(GroupInterface $group): User

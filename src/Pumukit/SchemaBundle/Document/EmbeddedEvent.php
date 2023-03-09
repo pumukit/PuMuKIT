@@ -262,9 +262,9 @@ class EmbeddedEvent
         $this->embeddedEventSession = $embeddedEventSession;
     }
 
-    public function addEmbeddedEventSession($embeddedEventSession): bool
+    public function addEmbeddedEventSession($embeddedEventSession): void
     {
-        return $this->embeddedEventSession->add($embeddedEventSession);
+        $this->embeddedEventSession->add($embeddedEventSession);
     }
 
     public function removeEmbeddedEventSession(EmbeddedEventSession $embeddedEventSession): bool
