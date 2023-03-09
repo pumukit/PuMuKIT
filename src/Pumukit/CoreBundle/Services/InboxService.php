@@ -14,6 +14,7 @@ class InboxService
     private $inboxPath;
     private $debug;
     private $overridePatchMethod;
+    private $progressBarColor;
 
     public function __construct(
         string $inboxUploadURL,
@@ -23,7 +24,8 @@ class InboxService
         int $maxNumberOfFiles,
         string $inboxPath,
         bool $debug,
-        bool $overridePatchMethod
+        bool $overridePatchMethod,
+        string $progressBarColor
     ) {
         $this->inboxUploadURL = $inboxUploadURL;
         $this->inboxUploadLIMIT = $inboxUploadLIMIT;
@@ -33,6 +35,7 @@ class InboxService
         $this->inboxPath = $inboxPath;
         $this->debug = $debug;
         $this->overridePatchMethod = $overridePatchMethod;
+        $this->progressBarColor = $progressBarColor;
     }
 
     public function inboxUploadURL(): string
@@ -73,5 +76,10 @@ class InboxService
     public function overridePatchMethod(): bool
     {
         return $this->overridePatchMethod;
+    }
+
+    public function progressBarColor(): string
+    {
+        return $this->progressBarColor;
     }
 }
