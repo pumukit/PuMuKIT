@@ -23,5 +23,4 @@ class LiveService
     {
         return sprintf('%s/playlist.m3u8', str_replace(['rtmp://', 'rtmpt://'], '//', $urlEvent));
     }
-
 }
