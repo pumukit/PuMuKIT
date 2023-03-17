@@ -908,7 +908,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
         foreach ($lives as $live) {
             $result[] = [
                 'id' => $live->getId(),
-                'name' => $live->getName(),
+                'text' => $live->getName(),
             ];
         }
 
