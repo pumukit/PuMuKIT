@@ -313,4 +313,9 @@
         $("#live_channel_input_name").val(data.text);
         $("#live_channel_input_id").val(data.id);
     });
+
+    $("#live_channel_select").on('select2:unselect', function (e) {
+        $("#live_channel_input_name").val("");
+        $("#live_channel_input_id").val("");
+    });
 </script>
