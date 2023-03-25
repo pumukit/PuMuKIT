@@ -93,6 +93,10 @@ class JobGeneratorListener
         }
 
         foreach ($this->profiles as $targetProfile => $profile) {
+            if (empty($profile['target'])) {
+                continue;
+            }
+
             $targets = $this->getTargets($profile['target']);
 
             $track = $multimediaObject->getTrackWithTag('profile:'.$targetProfile);
