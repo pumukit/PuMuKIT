@@ -1,9 +1,16 @@
 {% include "@PumukitCore/Upload/common.js.twig" %}
 
+var locales = {
+    "es": Uppy.locales.es_ES,
+    "en": Uppy.locales.en_US,
+    "gl": Uppy.locales.gl_ES
+}
+
 const uppy = new Uppy.Core({
     autoProceed: false,
     allowMultipleUploads: false,
     debug: true,
+    locale: locales["{{ app.request.getLocale() }}"],
     restrictions: {
         maxFileSize: convertSizeToBytes("{{ php_upload_max_filesize() }}"),
         maxNumberOfFiles: 1,
