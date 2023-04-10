@@ -13,6 +13,16 @@
 
     <div id="pumukitinbox_body">
         <div class="container">
+            {% if is_granted('ROLE_SCOPE_GLOBAL') and inbox_show_backoffice_button() is same as(true) %}
+                <div class="row text-right">
+                    <div class="col-md-12">
+                        <a href="{{ url('pumukit_newadmin_index') }}" type="button" class="btn btn-default btn-raised btn-go-backoffice" title="{% trans %}Go to back-office{% endtrans %}">
+                        <span class="glyphicon glyphicon-briefcase"></span>
+                        {% trans %}Go to back-office{% endtrans %}
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
             <div class="row">
                 <div class="col-md-12">
                 <h1 class="text-center">{{ "Upload local file"|trans }}</h1>

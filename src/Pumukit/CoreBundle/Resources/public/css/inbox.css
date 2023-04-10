@@ -51,7 +51,7 @@
     text-align: center;
 }
 
-.btn-next, .btn-previous {
+.btn-next, .btn-previous, .btn-go-backoffice {
     background-color: #c05800;
     color: rgba(255, 255, 255, .84);
     padding: 8px 30px;
@@ -61,7 +61,7 @@
     border-radius: 2px;
 }
 
-.btn-next:hover, .btn-next[disabled], .btn-next:active, .btn-previous:hover, .btn-previous:active {
+.btn-next:hover, .btn-next[disabled], .btn-next:active, .btn-previous:hover, .btn-previous:active, .btn-go-backoffice:hover, .btn-go-backoffice:active {
     background-color: #c05800 !important;
     color: rgba(255, 255, 255, .84);
     box-shadow: 0 6px 10px rgb(0 0 0 / 23%), 0 10px 30px rgb(0 0 0 / 19%);
