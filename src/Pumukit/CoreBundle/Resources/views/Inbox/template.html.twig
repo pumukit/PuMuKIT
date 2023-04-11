@@ -13,12 +13,16 @@
 
     <div id="pumukitinbox_body">
         <div class="container">
-            {% if is_granted('ROLE_SCOPE_GLOBAL') and inbox_show_backoffice_button() is same as(true) %}
+            {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) and inbox_show_backoffice_button() is same as(true) %}
                 <div class="row text-right">
                     <div class="col-md-12">
                         <a href="{{ url('pumukit_newadmin_index') }}" type="button" class="btn btn-default btn-raised btn-go-backoffice" title="{% trans %}Go to back-office{% endtrans %}">
                         <span class="glyphicon glyphicon-briefcase"></span>
-                        {% trans %}Go to back-office{% endtrans %}
+                        {% if is_granted('ROLE_SCOPE_GLOBAL') %}
+                            {% trans %}Go to back-office{% endtrans %}
+                        {% elseif is_granted('ROLE_SCOPE_PERSONAL') %}
+                            {% trans %}Manage my videos{% endtrans %}
+                        {% endif %}
                         </a>
                     </div>
                 </div>
