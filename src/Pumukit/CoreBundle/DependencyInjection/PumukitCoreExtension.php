@@ -37,5 +37,6 @@ class PumukitCoreExtension extends Extension
         $container->setParameter('pumukit.maxNumberOfFiles', $config['maxNumberOfFiles']);
         $container->setParameter('pumukit.overridePatchMethod', $config['inboxOverridePatchMethod']);
         $container->setParameter('pumukit.inboxProgressBarColor', $config['inboxProgressBarColor']);
+        $container->setParameter('pumukit.showBackofficeButtonInInbox', $config['showBackofficeButtonInInbox']);
     }
 }
