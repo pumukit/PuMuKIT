@@ -51,8 +51,8 @@
 
             <div class="form-group row">
                 <div class="col-sm-6">
-                    <label for="live_channel_input">{% trans %}Search Channels{% endtrans %}</label>
-                    <input id="live_channel_input" type="text" name="channelSuggestAutocomplete" class="form-control" />
+                    <label for="live_channel_select">{% trans %}Search Channels{% endtrans %}</label>
+                    <select id="live_channel_select" class="form-control"></select>
                 </div>
                 <div class="col-sm-6">
                     <label for="live_channel_input_name">{% trans %}Selected Channel{% endtrans %}</label>
@@ -291,19 +291,30 @@
         return false;
     });
 
+    $("#live_channel_select").select2({
+        ajax: {
+            url: "{{ path('pumukit_new_admin_live_event_channel_suggest') }}",
+            delay: 250,
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+        },
+        language: "{{ app.request.locale }}",
+        placeholder: "{% trans %}Search Channels{% endtrans %}",
+        allowClear: true
+    });
 
-    $("#live_channel_input").autocomplete({
-        source: "{{ path('pumukit_new_admin_live_event_channel_suggest') }}",
-        delay: 250,
-        minLength: 2,
-        select: function (event, ui) {
-            $("#live_channel_input_name").val(ui.item.name);
-            $("#live_channel_input_id").val(ui.item.id);
-        }
-    }).autocomplete("instance")._renderItem = function (ul, item) {
-        return $("<li>")
-            .append("<a class='channel_select'>" + item.name + "<br><span class='form-control'>" + "</span></a>")
-            .appendTo(ul)
-    };
+    $("#live_channel_select").on('select2:select', function (e) {
+        var data = e.params.data;
 
+        $("#live_channel_input_name").val(data.text);
+        $("#live_channel_input_id").val(data.id);
+    });
+
+    $("#live_channel_select").on('select2:unselect', function (e) {
+        $("#live_channel_input_name").val("");
+        $("#live_channel_input_id").val("");
+    });
 </script>
