@@ -100,6 +100,9 @@ class Configuration implements ConfigurationInterface
             ->defaultValue('20GB')
             ->info('Maximum file size in bytes for each individual file')
             ->end()
+            ->booleanNode('showBackofficeButtonInInbox')
+            ->defaultFalse()
+            ->end()
             ->end()
         ;
 

@@ -15,6 +15,7 @@ class InboxService
     private $debug;
     private $overridePatchMethod;
     private $progressBarColor;
+    private $showBackofficeButtonInInbox;
 
     public function __construct(
         string $inboxUploadURL,
@@ -25,7 +26,8 @@ class InboxService
         string $inboxPath,
         bool $debug,
         bool $overridePatchMethod,
-        string $progressBarColor
+        string $progressBarColor,
+        bool $showBackofficeButtonInInbox
     ) {
         $this->inboxUploadURL = $inboxUploadURL;
         $this->inboxUploadLIMIT = $inboxUploadLIMIT;
@@ -36,6 +38,7 @@ class InboxService
         $this->debug = $debug;
         $this->overridePatchMethod = $overridePatchMethod;
         $this->progressBarColor = $progressBarColor;
+        $this->showBackofficeButtonInInbox = $showBackofficeButtonInInbox;
     }
 
     public function inboxUploadURL(): string
@@ -81,5 +84,10 @@ class InboxService
     public function progressBarColor(): string
     {
         return $this->progressBarColor;
+    }
+
+    public function showBackofficeButtonInInbox(): bool
+    {
+        return $this->showBackofficeButtonInInbox;
     }
 }
