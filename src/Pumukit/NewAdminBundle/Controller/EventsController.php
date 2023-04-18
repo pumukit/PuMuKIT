@@ -508,7 +508,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
                 $event->setIsIframeUrl($iframeURL);
 
                 $liveData = $request->request->get('live_channel_input_id');
-                if (isset($liveData)) {
+                if ($liveData && isset($liveData)) {
                     $live = $this->documentManager->getRepository(Live::class)->findOneBy(
                         ['_id' => new ObjectId($liveData)]
                     );
@@ -907,7 +907,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
         foreach ($lives as $live) {
             $result[] = [
                 'id' => $live->getId(),
-                'name' => $live->getName(),
+                'text' => $live->getName(),
             ];
         }
 
