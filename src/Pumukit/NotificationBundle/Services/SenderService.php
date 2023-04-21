@@ -195,7 +195,7 @@ class SenderService
             }
         }
 
-        return $sent;
+        return (bool) $sent;
     }
 
     public function getMessageToSend(\Swift_Message $message, string $email, string $subject, string $template, array $parameters, bool $error, bool $transConfigSubject)
