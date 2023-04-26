@@ -662,7 +662,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     public function setCustomFields(Request $request)
     {
         $customFields = array_filter($request->request->all(), function ($value) {
-            return -1 != $value;
+            return -1 !== $value;
         });
 
         if (!$customFields) {

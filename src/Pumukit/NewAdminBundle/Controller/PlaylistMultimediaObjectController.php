@@ -363,7 +363,7 @@ class PlaylistMultimediaObjectController extends AbstractController
 
     public function upAction(Series $playlist, Request $request)
     {
-        $initPos = $request->query->get('mm_pos');
+        $initPos = $request->query->getInt('mm_pos');
         $endPos = ($initPos < 1) ? 0 : $initPos - 1;
 
         return $this->moveAction($playlist, $initPos, $endPos);
@@ -371,7 +371,7 @@ class PlaylistMultimediaObjectController extends AbstractController
 
     public function downAction(Series $playlist, Request $request)
     {
-        $initPos = $request->query->get('mm_pos');
+        $initPos = $request->query->getInt('mm_pos');
         $numMmobjs = is_countable($playlist->getPlaylist()->getMultimediaObjects()) ? count($playlist->getPlaylist()->getMultimediaObjects()) : 0;
         $lastPos = $numMmobjs - 1;
         $endPos = ($initPos >= $lastPos) ? $lastPos : $initPos + 1;
