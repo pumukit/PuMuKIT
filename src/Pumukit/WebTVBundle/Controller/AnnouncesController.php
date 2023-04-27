@@ -7,7 +7,6 @@ namespace Pumukit\WebTVBundle\Controller;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\SchemaBundle\Services\AnnounceService;
 use Pumukit\WebTVBundle\Services\BreadcrumbsService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,30 +43,26 @@ class AnnouncesController extends AbstractController implements WebTVControllerI
 
     /**
      * @Route("/latestuploads", name="pumukit_webtv_announces_latestuploads")
-     *
-     * @Template("@PumukitWebTV/Announces/template.html.twig")
      */
-    public function latestUploadsAction()
+    public function latestUploadsAction(): Response
     {
         $templateTitle = $this->translator->trans($this->menuAnnouncesTitle);
         $this->breadcrumbsService->addList($templateTitle, 'pumukit_webtv_announces_latestuploads');
 
-        return [
+        return $this->render('@PumukitWebTV/Announces/template.html.twig', [
             'template_title' => $templateTitle,
             'objectByCol' => $this->columnsObjsAnnounces,
             'show_info' => false,
             'show_more' => false,
-        ];
+        ]);
     }
 
     /**
      * @Route("/latestuploads/pager", name="pumukit_webtv_announces_latestuploads_pager")
-     *
-     * @return Response
      */
-    public function latestUploadsPagerAction(Request $request)
+    public function latestUploadsPagerAction(Request $request): Response
     {
-        $dateRequest = $request->query->get('date', 0); // Use to queries for month and year to reduce formatting and unformatting.
+        $dateRequest = $request->query->get('date', 0);
         $date = \DateTime::createFromFormat('d/m/Y H:i:s', "01/{$dateRequest} 00:00:00");
         if (!$date) {
             throw $this->createNotFoundException();
