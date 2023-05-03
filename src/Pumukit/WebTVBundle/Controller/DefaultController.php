@@ -108,7 +108,7 @@ class DefaultController extends AbstractController
         $nowSessions = $this->embeddedEventSessionService->findCurrentSessions($criteria, 0, true);
         $nextSession = $this->embeddedEventSessionService->findNextSessions($criteria, 0, true);
 
-        if (count($nextSession) > 0 || count($nowSessions) > 0) {
+        if ((is_countable($nextSession) ? count($nextSession) : 0) > 0 || (is_countable($nowSessions) ? count($nowSessions) : 0) > 0) {
             $this->updateBreadcrumbs($this->translator->trans('Live events'), 'pumukit_webtv_events');
 
             return $this->iframeEventAction($multimediaObject, $request, false);
@@ -201,7 +201,7 @@ class DefaultController extends AbstractController
             $secondsToEvent = $firstNextSession - ($now->getTimeStamp() * 1000);
         }
 
-        if ($iframe && 0 === count($nowSessions) && 0 === count($nextSessions)) {
+        if ($iframe && 0 === (is_countable($nowSessions) ? count($nowSessions) : 0) && 0 === (is_countable($nextSessions) ? count($nextSessions) : 0)) {
             $qb = $this->getMultimediaObjects($multimediaObject->getSeries()->getId());
             $qb->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC);
             $multimediaObjectPlaylist = $qb->getQuery()->execute()->getSingleResult();
