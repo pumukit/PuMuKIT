@@ -9,6 +9,7 @@ use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\WebTVBundle\PumukitWebTVBundle;
 
 class HeadAndTailService
 {
@@ -101,7 +102,7 @@ class HeadAndTailService
             return null;
         }
 
-        if ($multimediaObject->isPublished() && $multimediaObject->containsTagWithCod('PUCHWEBTV')) {
+        if ($multimediaObject->isPublished() && $multimediaObject->containsTagWithCod(PumukitWebTVBundle::WEB_TV_TAG)) {
             return $multimediaObject->getDisplayTrack();
         }
 

@@ -13,6 +13,7 @@ use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Services\CaptionService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectDurationService;
 use Pumukit\SchemaBundle\Services\PicService;
+use Pumukit\WebTVBundle\PumukitWebTVBundle;
 use Pumukit\WebTVBundle\Services\LinkService;
 use Symfony\Component\Routing\RequestContext;
 use Twig\Extension\AbstractExtension;
@@ -294,7 +295,7 @@ class PumukitExtension extends AbstractExtension
         $criteria = [
             'series' => new ObjectId($series),
             'status' => MultimediaObject::STATUS_PUBLISHED,
-            'tags.cod' => 'PUCHWEBTV',
+            'tags.cod' => PumukitWebTVBundle::WEB_TV_TAG,
             'type' => ['$ne' => MultimediaObject::TYPE_LIVE],
         ];
 

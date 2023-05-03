@@ -7,7 +7,6 @@ namespace Pumukit\WebTVBundle\Controller;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Pumukit\WebTVBundle\Services\CategoriesService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,11 +14,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CategoriesController extends AbstractController implements WebTVControllerInterface
 {
-    private $categoriesListGeneralTag;
-    private $categoriesService;
-    private $translator;
-    private $breadcrumbService;
-    private $menuCategoriesTitle;
+    protected $categoriesListGeneralTag;
+    protected $categoriesService;
+    protected $translator;
+    protected $breadcrumbService;
+    protected $menuCategoriesTitle;
 
     public function __construct(
         CategoriesService $categoriesService,
@@ -37,8 +36,6 @@ class CategoriesController extends AbstractController implements WebTVController
 
     /**
      * @Route("/categories", name="pumukit_webtv_categories_index")
-     *
-     * @Template("@PumukitWebTV/Categories/template.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -47,10 +44,10 @@ class CategoriesController extends AbstractController implements WebTVController
 
         [$elements, $groundsRootTitle] = $this->categoriesService->getCategoriesElements($request->get('provider'));
 
-        return [
+        return $this->render('@PumukitWebTV/Categories/template.html.twig', [
             'allGrounds' => $elements,
             'title' => $groundsRootTitle,
             'list_general_tags' => $this->categoriesListGeneralTag,
-        ];
+        ]);
     }
 }

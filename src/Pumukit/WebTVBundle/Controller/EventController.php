@@ -11,7 +11,6 @@ use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 use Pumukit\WebTVBundle\Services\BreadcrumbsService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,15 +19,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EventController extends AbstractController implements WebTVControllerInterface
 {
-    private $documentManager;
-    private $breadcrumbsService;
-    private $translator;
-    private $pumukitNewAdminAdvanceLiveEventCreateDefaultPic;
-    private $eventSessionService;
-    private $paginationService;
-    private $columnsObjsEvent;
-    private $pumukitLiveTwitterEnable;
-    private $pumukitNewAdminAdvanceLiveEvent;
+    protected $documentManager;
+    protected $breadcrumbsService;
+    protected $translator;
+    protected $pumukitNewAdminAdvanceLiveEventCreateDefaultPic;
+    protected $eventSessionService;
+    protected $paginationService;
+    protected $columnsObjsEvent;
+    protected $pumukitLiveTwitterEnable;
+    protected $pumukitNewAdminAdvanceLiveEvent;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -63,10 +62,8 @@ class EventController extends AbstractController implements WebTVControllerInter
 
     /**
      * @Route ("/events/", defaults={"filter"=false}, name="pumukit_webtv_events")
-     *
-     * @Template("@PumukitWebTV/Live/template.html.twig")
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         $advanceEvents = $this->checkAdvanceEvents();
         if (!$advanceEvents) {
@@ -86,7 +83,7 @@ class EventController extends AbstractController implements WebTVControllerInter
 
         $pager = $this->paginationService->createArrayAdapter($eventsFuture, $page, $maxPerPage);
 
-        return [
+        return $this->render('@PumukitWebTV/Live/template.html.twig', [
             'eventsToday' => $eventsToday,
             'eventsNow' => $eventsNow,
             'eventsFuture' => $pager,
@@ -94,30 +91,25 @@ class EventController extends AbstractController implements WebTVControllerInter
             'objectByCol' => $this->columnsObjsEvent,
             'show_info' => true,
             'show_description' => false,
-        ];
+        ]);
     }
 
-    /**
-     * @Template("@PumukitWebTV/Live/Advance/livelist.html.twig")
-     */
-    public function liveListAction()
+    public function liveListAction(): Response
     {
         $events = $this->eventSessionService->findEventsNow();
 
-        return [
+        return $this->render('@PumukitWebTV/Live/Advance/livelist.html.twig', [
             'events' => $events,
             'defaultPic' => $this->pumukitNewAdminAdvanceLiveEventCreateDefaultPic,
-        ];
+        ]);
     }
 
     /**
      * @Route("/event/next/session/{id}", name="pumukit_webtv_next_session_event")
      *
-     * @Template("@PumukitWebTV/Live/Advance/nextsessionlist.html.twig")
-     *
      * @param mixed $id
      */
-    public function nextSessionListAction($id)
+    public function nextSessionListAction($id): Response
     {
         $embeddedEventSessionService = $this->eventSessionService;
 
@@ -126,29 +118,27 @@ class EventController extends AbstractController implements WebTVControllerInter
         ];
         $events = $embeddedEventSessionService->findNextSessions($criteria, 0, true);
 
-        return [
+        return $this->render('@PumukitWebTV/Live/Advance/nextsessionlist.html.twig', [
             'events' => $events,
             'sessionlist' => true,
             'defaultPic' => $this->pumukitNewAdminAdvanceLiveEventCreateDefaultPic,
-        ];
+        ]);
     }
 
     /**
      * @Route("/event/twitter/{id}", name="pumukit_webtv_event_twitter")
-     *
-     * @Template("@PumukitWebTV/Live/Advance/twitter.html.twig")
      */
     public function twitterAction(string $id)
     {
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->find($id);
 
-        return [
+        return $this->render('@PumukitWebTV/Live/Advance/twitter.html.twig', [
             'multimediaObject' => $multimediaObject,
             'enable_twitter' => $this->pumukitLiveTwitterEnable,
-        ];
+        ]);
     }
 
-    private function updateBreadcrumbs(string $title, string $routeName, array $routeParameters = [])
+    private function updateBreadcrumbs(string $title, string $routeName, array $routeParameters = []): void
     {
         $this->breadcrumbsService->addList($title, $routeName, $routeParameters);
     }
@@ -173,7 +163,7 @@ class EventController extends AbstractController implements WebTVControllerInter
         return $result;
     }
 
-    private function checkAdvanceEvents()
+    private function checkAdvanceEvents(): bool
     {
         return $this->pumukitNewAdminAdvanceLiveEvent;
     }

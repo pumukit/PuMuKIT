@@ -14,7 +14,6 @@ use Pumukit\StatsBundle\Services\StatsService;
 use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Pumukit\WebTVBundle\Services\ListService;
 use Pumukit\WebTVBundle\Services\MenuService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -25,49 +24,34 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ModulesController extends AbstractController implements WebTVControllerInterface
 {
     public static $menuResponse;
-    private $menuTemplate = '@PumukitWebTV/Modules/widget_menu.html.twig';
+    protected $menuTemplate = '@PumukitWebTV/Modules/widget_menu.html.twig';
 
-    /** @var TranslatorInterface */
-    private $translator;
+    protected $translator;
+    protected $statService;
+    protected $pumukitSchemaAnnounce;
+    protected $menuService;
+    protected $listService;
+    protected $documentManager;
+    protected $requestStack;
+    protected $breadcrumbService;
 
-    /** @var StatsService */
-    private $statService;
-
-    /** @var AnnounceService */
-    private $pumukitSchemaAnnounce;
-
-    /** @var MenuService */
-    private $menuService;
-
-    /** @var ListService */
-    private $listService;
-
-    /** @var DocumentManager */
-    private $documentManager;
-
-    /** @var RequestStack */
-    private $requestStack;
-
-    /** @var BreadcrumbsService */
-    private $breadcrumbService;
-
-    private $byTagBlockObjectsByCol;
-    private $limitObjsMostViewed;
-    private $showMostViewedLastMonth;
-    private $mostViewedObjectsByCol;
-    private $showLatestWithPudeNew;
-    private $limitObjsHightlight;
-    private $hightlightObjectsByCol;
-    private $menuHomeTitle;
-    private $menuAnnouncesTitle;
-    private $menuSearchTitle;
-    private $menuMediatecaTitle;
-    private $menuCategoriesTitle;
-    private $limitObjsLiveBlock;
-    private $liveBlockObjectsByCol;
-    private $locales;
-    private $limitObjsRecentlyAdded;
-    private $recentlyAddedObjectsByCol;
+    protected $byTagBlockObjectsByCol;
+    protected $limitObjsMostViewed;
+    protected $showMostViewedLastMonth;
+    protected $mostViewedObjectsByCol;
+    protected $showLatestWithPudeNew;
+    protected $limitObjsHightlight;
+    protected $hightlightObjectsByCol;
+    protected $menuHomeTitle;
+    protected $menuAnnouncesTitle;
+    protected $menuSearchTitle;
+    protected $menuMediatecaTitle;
+    protected $menuCategoriesTitle;
+    protected $limitObjsLiveBlock;
+    protected $liveBlockObjectsByCol;
+    protected $locales;
+    protected $limitObjsRecentlyAdded;
+    protected $recentlyAddedObjectsByCol;
 
     public function __construct(
         TranslatorInterface $translator,
@@ -123,10 +107,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
         $this->recentlyAddedObjectsByCol = $recentlyAddedObjectsByCol;
     }
 
-    /**
-     * @Template("@PumukitWebTV/Modules/widget_media.html.twig")
-     */
-    public function mostViewedAction(string $design = 'horizontal')
+    public function mostViewedAction(string $design = 'horizontal'): Response
     {
         if ($this->showMostViewedLastMonth) {
             $objects = $this->statService->getMostViewedUsingFilters(30, $this->limitObjsMostViewed);
@@ -141,7 +122,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
             $title = $this->translator->trans('Most viewed');
         }
 
-        return [
+        return $this->render('@PumukitWebTV/Modules/widget_media.html.twig', [
             'design' => $design,
             'objects' => $objects,
             'objectByCol' => $this->mostViewedObjectsByCol,
@@ -150,15 +131,13 @@ class ModulesController extends AbstractController implements WebTVControllerInt
             'show_info' => true,
             'show_more' => false,
             'show_more_path' => false,
-        ];
+        ]);
     }
 
     /**
      * Returns all videos with PUDENEW tag.
-     *
-     * @Template("@PumukitWebTV/Modules/widget_media.html.twig")
      */
-    public function highlightAction()
+    public function highlightAction(): Response
     {
         if (!$this->showLatestWithPudeNew) {
             throw new \Exception('Show latest with pudenew parameters must be true to use this module');
@@ -168,7 +147,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
 
         $last = $this->pumukitSchemaAnnounce->getLast($this->limitObjsHightlight);
 
-        return [
+        return $this->render('@PumukitWebTV/Modules/widget_media.html.twig', [
             'objects' => $last,
             'objectByCol' => $this->hightlightObjectsByCol,
             'class' => 'highlight',
@@ -176,15 +155,13 @@ class ModulesController extends AbstractController implements WebTVControllerInt
             'show_info' => true,
             'show_more' => false,
             'show_more_path' => 'pumukit_webtv_announces_latestuploads',
-        ];
+        ]);
     }
 
     /**
      * Returns all videos without PUDENEW tag.
-     *
-     * @Template("@PumukitWebTV/Modules/widget_media.html.twig")
      */
-    public function recentlyAddedWithoutHighlightAction(string $design = 'horizontal')
+    public function recentlyAddedWithoutHighlightAction(string $design = 'horizontal'): Response
     {
         $last = $this->documentManager->getRepository(MultimediaObject::class)->findStandardBy(
             ['tags.cod' => ['$ne' => 'PUDENEW']],
@@ -195,7 +172,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
             0
         );
 
-        return [
+        return $this->render('@PumukitWebTV/Modules/widget_media.html.twig', [
             'design' => $design,
             'objects' => $last,
             'objectByCol' => $this->recentlyAddedObjectsByCol,
@@ -204,15 +181,13 @@ class ModulesController extends AbstractController implements WebTVControllerInt
             'show_info' => true,
             'show_more' => false,
             'show_more_path' => 'pumukit_webtv_announces_latestuploads',
-        ];
+        ]);
     }
 
     /**
      * Returns all videos without PUDENEW tag.
-     *
-     * @Template("@PumukitWebTV/Modules/widget_media.html.twig")
      */
-    public function recentlyAddedAllAction(string $design = 'horizontal')
+    public function recentlyAddedAllAction(string $design = 'horizontal'): Response
     {
         $last = $this->documentManager->getRepository(MultimediaObject::class)->findStandardBy(
             [],
@@ -223,7 +198,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
             0
         );
 
-        return [
+        return $this->render('@PumukitWebTV/Modules/widget_media.html.twig', [
             'design' => $design,
             'objects' => $last,
             'objectByCol' => $this->recentlyAddedObjectsByCol,
@@ -232,52 +207,38 @@ class ModulesController extends AbstractController implements WebTVControllerInt
             'show_info' => true,
             'show_more' => false,
             'show_more_path' => 'pumukit_webtv_announces_latestuploads',
-        ];
+        ]);
     }
 
-    /**
-     * @Template("@PumukitWebTV/Modules/widget_stats.html.twig")
-     */
-    public function statsAction()
+    public function statsAction(): Response
     {
         $mmRepo = $this->documentManager->getRepository(MultimediaObject::class);
         $seriesRepo = $this->documentManager->getRepository(Series::class);
 
-        $counts = [
+        $counts = $this->render('@PumukitWebTV/Modules/widget_stats.html.twig', [
             'series' => $seriesRepo->countPublic(),
             'mms' => $mmRepo->count(),
             'hours' => $mmRepo->countDuration(),
-        ];
+        ]);
 
         return ['counts' => $counts];
     }
 
-    /**
-     * @Template("@PumukitWebTV/Modules/widget_breadcrumb.html.twig")
-     */
-    public function breadcrumbsAction()
+    public function breadcrumbsAction(): Response
     {
-        return ['breadcrumbs' => $this->breadcrumbService->getBreadcrumbs()];
+        return $this->render('@PumukitWebTV/Modules/widget_breadcrumb.html.twig', ['breadcrumbs' => $this->breadcrumbService->getBreadcrumbs()]);
     }
 
-    /**
-     * @Template("@PumukitWebTV/Modules/widget_language.html.twig")
-     */
-    public function languageAction()
+    public function languageAction(): Response
     {
         if ((is_countable($this->locales) ? count($this->locales) : 0) <= 1) {
             return new Response('');
         }
 
-        return ['languages' => $this->locales];
+        return $this->render('@PumukitWebTV/Modules/widget_language.html.twig', ['languages' => $this->locales]);
     }
 
-    /**
-     * @Template("@PumukitWebTV/Modules/widget_categories.html.twig")
-     *
-     * @param mixed $categories
-     */
-    public function categoriesAction(Request $request, string $title, string $class, $categories, int $cols = 6, bool $sort = true)
+    public function categoriesAction(Request $request, string $title, string $class, $categories, int $cols = 6, bool $sort = true): Response
     {
         if (!$categories) {
             throw new NotFoundHttpException('Categories not found');
@@ -308,13 +269,13 @@ class ModulesController extends AbstractController implements WebTVControllerInt
             }
         }
 
-        return [
+        return $this->render('@PumukitWebTV/Modules/widget_categories.html.twig', [
             'objectByCol' => $cols,
             'objects' => $tags,
             'objectsData' => $categories,
             'title' => $this->translator->trans($title),
             'class' => $class,
-        ];
+        ]);
     }
 
     /**
@@ -322,14 +283,12 @@ class ModulesController extends AbstractController implements WebTVControllerInt
      * Returns:
      * - showPudenew = true => Only videos with PUDENEW tag and announce property true
      * - showPudenew = false => Returns all videos.
-     *
-     * @Template("@PumukitWebTV/Modules/widget_media.html.twig")
      */
     public function legacyRecentlyAdded(string $design = 'vertical')
     {
         $last = $this->pumukitSchemaAnnounce->getLast($this->limitObjsRecentlyAdded, $this->showLatestWithPudeNew);
 
-        return [
+        return $this->render('@PumukitWebTV/Modules/widget_media.html.twig', [
             'design' => $design,
             'objects' => $last,
             'objectByCol' => $this->recentlyAddedObjectsByCol,
@@ -338,25 +297,21 @@ class ModulesController extends AbstractController implements WebTVControllerInt
             'show_info' => true,
             'show_more' => false,
             'show_more_path' => 'pumukit_webtv_announces_latestuploads',
-        ];
+        ]);
     }
 
     /**
      * This module represents old categories block of PuMuKIT. Remember fix responsive design ( depends of height of images ).
-     *
-     * @Template("@PumukitWebTV/Modules/widget_block_categories.html.twig")
      */
-    public function legacyCategoriesAction()
+    public function legacyCategoriesAction(): Response
     {
-        return [];
+        return $this->render('@PumukitWebTV/Modules/widget_block_categories.html.twig', []);
     }
 
     /**
      * This module represents old menu block of PuMuKIT ( vertical menu ). This design is just bootstrap panel example.
-     *
-     * @Template("@PumukitWebTV/Modules/widget_menu.html.twig")
      */
-    public function legacyMenuAction()
+    public function legacyMenuAction(): Response
     {
         if (self::$menuResponse) {
             return self::$menuResponse;
@@ -367,14 +322,11 @@ class ModulesController extends AbstractController implements WebTVControllerInt
         return self::$menuResponse;
     }
 
-    /**
-     * @Template("@PumukitWebTV/Modules/widget_event.html.twig")
-     */
-    public function liveBlockAction()
+    public function liveBlockAction(): Response
     {
         $objects = $this->listService->getLives($this->limitObjsLiveBlock);
 
-        return [
+        return $this->render('@PumukitWebTV/Modules/widget_event.html.twig', [
             'objects' => $objects,
             'objectByCol' => $this->liveBlockObjectsByCol,
             'title' => $this->translator->trans('Live events'),
@@ -382,42 +334,33 @@ class ModulesController extends AbstractController implements WebTVControllerInt
             'show_info' => false,
             'show_more' => false,
             'show_more_path' => 'pumukit_webtv_events',
-        ];
+        ]);
     }
 
-    /**
-     * @Template("@PumukitWebTV/Modules/widget_wall.html.twig")
-     */
-    public function wallBlockAction()
+    public function wallBlockAction(): Response
     {
         $objects = $this->listService->getWallVideos();
 
-        return [
+        return $this->render('@PumukitWebTV/Modules/widget_wall.html.twig', [
             'objects' => $objects,
             'objectByCol' => 1,
             'title' => $this->translator->trans('Wall'),
             'class' => 'wall_block',
             'show_info' => false,
             'show_more' => false,
-        ];
+        ]);
     }
 
-    /**
-     * @Template("@PumukitWebTV/Modules/widget_search.html.twig")
-     */
-    public function searchBlockAction()
+    public function searchBlockAction(): Response
     {
-        return [];
+        return $this->render('@PumukitWebTV/Modules/widget_search.html.twig', []);
     }
 
-    /**
-     * @Template("@PumukitWebTV/Modules/widget_media.html.twig")
-     */
-    public function byTagBlockAction(string $tagCod, string $title)
+    public function byTagBlockAction(string $tagCod, string $title): Response
     {
         $objects = $this->listService->getVideosByTag($tagCod, $this->byTagBlockObjectsByCol);
 
-        return [
+        return $this->render('@PumukitWebTV/Modules/widget_media.html.twig', [
             'objects' => $objects,
             'objectByCol' => $this->byTagBlockObjectsByCol,
             'title' => $this->translator->trans($title),
@@ -425,23 +368,20 @@ class ModulesController extends AbstractController implements WebTVControllerInt
             'show_info' => true,
             'show_more' => false,
             'show_more_path' => false,
-        ];
+        ]);
     }
 
-    /**
-     * @Template("@PumukitWebTV/Modules/widget_player.html.twig")
-     */
-    public function embedVideoBlockAction(string $tagCod)
+    public function embedVideoBlockAction(string $tagCod): Response
     {
         $object = $this->listService->getEmbedVideoBlock($tagCod);
 
-        return [
+        return $this->render('@PumukitWebTV/Modules/widget_player.html.twig', [
             'object' => $object,
             'autostart' => false,
-        ];
+        ]);
     }
 
-    private function getLegacyMenuElements()
+    private function getLegacyMenuElements(): array
     {
         [$events, $channels, $liveEventTypeSession] = $this->menuService->getMenuEventsElement();
 

@@ -18,6 +18,7 @@ use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
+use Pumukit\WebTVBundle\PumukitWebTVBundle;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -154,8 +155,8 @@ class PlaylistMultimediaObjectController extends AbstractController
     {
         return [
             'mm' => $mmobj,
-            'is_published' => $this->multimediaObjectService->isPublished($mmobj, 'PUCHWEBTV'),
-            'is_hidden' => $this->multimediaObjectService->isHidden($mmobj, 'PUCHWEBTV'),
+            'is_published' => $this->multimediaObjectService->isPublished($mmobj, PumukitWebTVBundle::WEB_TV_TAG),
+            'is_hidden' => $this->multimediaObjectService->isHidden($mmobj, PumukitWebTVBundle::WEB_TV_TAG),
             'is_playable' => $this->multimediaObjectService->hasPlayableResource($mmobj),
             'warning_on_unpublished' => $this->warningOnUnpublished,
         ];
@@ -276,7 +277,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         $canUserPlay = null;
         if ($mmobj) {
             $canBePlayed = $broadcastService->canUserPlayMultimediaObject($mmobj, $user);
-            $canUserPlay = $this->multimediaObjectService->canBeDisplayed($mmobj, 'PUCHWEBTV');
+            $canUserPlay = $this->multimediaObjectService->canBeDisplayed($mmobj, PumukitWebTVBundle::WEB_TV_TAG);
         }
         if ($mmobj && (!$canBePlayed || !$canUserPlay)) {
             $mmobj = null;
@@ -569,7 +570,7 @@ class PlaylistMultimediaObjectController extends AbstractController
             ->addOr(
                 $builder->expr()
                     ->field('status')->equals(MultimediaObject::STATUS_PUBLISHED)
-                    ->field('tags.cod')->equals('PUCHWEBTV')
+                    ->field('tags.cod')->equals(PumukitWebTVBundle::WEB_TV_TAG)
                     ->field('tracks')->elemMatch($builder->expr()->field('tags')->equals('display')->field('hide')->equals(false))
             )
         ;

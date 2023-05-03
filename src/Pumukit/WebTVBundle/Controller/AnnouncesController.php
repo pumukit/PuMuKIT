@@ -15,13 +15,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AnnouncesController extends AbstractController implements WebTVControllerInterface
 {
-    private $translator;
-    private $breadcrumbsService;
-    private $columnsObjsAnnounces;
-    private $menuAnnouncesTitle;
-    private $announcesService;
-    private $showLatestWithPudeNew;
-    private $useRecordDateAnnounce;
+    protected $translator;
+    protected $breadcrumbsService;
+    protected $columnsObjsAnnounces;
+    protected $menuAnnouncesTitle;
+    protected $announcesService;
+    protected $showLatestWithPudeNew;
+    protected $useRecordDateAnnounce;
 
     public function __construct(
         TranslatorInterface $translator,

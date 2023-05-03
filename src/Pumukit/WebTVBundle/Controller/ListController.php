@@ -17,7 +17,6 @@ use Pumukit\SchemaBundle\Repository\SeriesRepository;
 use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Pumukit\WebTVBundle\Services\ListService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,29 +25,20 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ListController extends AbstractController implements WebTVControllerInterface
 {
-    /** @var DocumentManager */
-    private $documentManager;
+    protected $documentManager;
+    protected $breadcrumbsService;
+    protected $translator;
+    protected $listService;
+    protected $paginationService;
 
-    /** @var BreadcrumbsService */
-    private $breadcrumbsService;
+    protected $scrollListByUser;
+    protected $columnsObjsByUser;
+    protected $limitObjsByUser;
 
-    /** @var TranslatorInterface */
-    private $translator;
-
-    /** @var ListService */
-    private $listService;
-
-    /** @var PaginationService */
-    private $paginationService;
-
-    private $scrollListByUser;
-    private $columnsObjsByUser;
-    private $limitObjsByUser;
-
-    private $pumukitSchemaPersonalScopeRoleCode;
-    private $scrollListByTag;
-    private $columnsObjsByTag;
-    private $limitObjsByTag;
+    protected $pumukitSchemaPersonalScopeRoleCode;
+    protected $scrollListByTag;
+    protected $columnsObjsByTag;
+    protected $limitObjsByTag;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -82,10 +72,8 @@ class ListController extends AbstractController implements WebTVControllerInterf
      * @Route("/multimediaobjects/tag/{tagCod}", name="pumukit_webtv_bytag_multimediaobjects", defaults={"tagCod"=null})
      *
      * @ParamConverter("tag", options={"mapping": {"tagCod": "cod"}})
-     *
-     * @Template("@PumukitWebTV/List/template.html.twig")
      */
-    public function multimediaObjectsByTagAction(Request $request, Tag $tag)
+    public function multimediaObjectsByTagAction(Request $request, Tag $tag): Response
     {
         [$scrollList, $numberCols, $limit] = $this->getParametersByTag();
 
@@ -108,7 +96,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
             '%title%' => $title,
         ]);
 
-        return [
+        return $this->render('@PumukitWebTV/List/template.html.twig', [
             'title' => $title,
             'objects' => $pager,
             'tag' => $tag,
@@ -120,17 +108,15 @@ class ListController extends AbstractController implements WebTVControllerInterf
             'objectByCol' => $numberCols,
             'show_info' => true,
             'show_description' => true,
-        ];
+        ]);
     }
 
     /**
      * @Route("/series/tag/{tagCod}", name="pumukit_webtv_bytag_series", defaults={"tagCod"=null})
      *
      * @ParamConverter("tag", options={"mapping": {"tagCod": "cod"}})
-     *
-     * @Template("@PumukitWebTV/List/template.html.twig")
      */
-    public function seriesByTagAction(Request $request, Tag $tag)
+    public function seriesByTagAction(Request $request, Tag $tag): Response
     {
         [$scrollList, $numberCols, $limit] = $this->getParametersByTag();
 
@@ -144,7 +130,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
 
         $title = $this->translator->trans('Series with tag: %title%', ['%title%' => $tag->getTitle()]);
 
-        return [
+        return $this->render('@PumukitWebTV/List/template.html.twig', [
             'title' => $title,
             'objects' => $pager,
             'tag' => $tag,
@@ -156,17 +142,15 @@ class ListController extends AbstractController implements WebTVControllerInterf
             'objectByCol' => $numberCols,
             'show_info' => true,
             'show_description' => false,
-        ];
+        ]);
     }
 
     /**
      * @Route("/users/{username}", name="pumukit_webtv_byuser_multimediaobjects", defaults={"username"=null})
      *
      * @ParamConverter("user", options={"mapping": {"username": "username"}})
-     *
-     * @Template("@PumukitWebTV/List/template.html.twig")
      */
-    public function multimediaObjectsByUserAction(Request $request, User $user)
+    public function multimediaObjectsByUserAction(Request $request, User $user): Response
     {
         [$scrollList, $numberCols, $limit, $roleCode] = $this->getParametersByUser();
         $person = $user->getPerson();
@@ -180,7 +164,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
 
         $title = $user->getFullName();
 
-        return [
+        return $this->render('@PumukitWebTV/List/template.html.twig', [
             'title' => $title,
             'objects' => $pager,
             'user' => $user,
@@ -192,17 +176,15 @@ class ListController extends AbstractController implements WebTVControllerInterf
             'objectByCol' => $numberCols,
             'show_info' => true,
             'show_description' => false,
-        ];
+        ]);
     }
 
     /**
      * @Route("/users/{username}/series", name="pumukit_webtv_byuser_series", defaults={"username"=null})
      *
      * @ParamConverter("user", options={"mapping": {"username": "username"}})
-     *
-     * @Template("@PumukitWebTV/List/template.html.twig")
      */
-    public function seriesByUserAction(Request $request, User $user)
+    public function seriesByUserAction(Request $request, User $user): Response
     {
         [$scrollList, $numberCols, $limit, $roleCode] = $this->getParametersByUser();
 
@@ -215,7 +197,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
 
         $title = $user->getFullName();
 
-        return [
+        return $this->render('@PumukitWebTV/List/template.html.twig', [
             'title' => $title,
             'objects' => $pager,
             'user' => $user,
@@ -227,7 +209,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
             'objectByCol' => $numberCols,
             'show_info' => true,
             'show_description' => false,
-        ];
+        ]);
     }
 
     /**
@@ -235,7 +217,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
      *
      * @ParamConverter("user", options={"mapping": {"username": "username"}})
      */
-    public function userObjectsPagerAction(Request $request, User $user)
+    public function userObjectsPagerAction(Request $request, User $user): Response
     {
         [$scroll_list, $numberCols, $limit, $roleCode] = $this->getParametersByUser();
 
@@ -270,7 +252,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
      *
      * @ParamConverter("tag", options={"mapping": {"tagCod": "cod"}})
      */
-    public function byTagObjectsPagerAction(Request $request, Tag $tag)
+    public function byTagObjectsPagerAction(Request $request, Tag $tag): Response
     {
         [$scroll_list, $numberCols, $limit] = $this->getParametersByTag();
 
@@ -329,7 +311,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
         return $this->paginationService->createDoctrineODMMongoDBAdapter($objects, $page, $limit);
     }
 
-    private function generateResponse($qb, $date, $numberCols)
+    private function generateResponse($qb, $date, $numberCols): Response
     {
         [$date, $last] = $this->listService->getNextElementsByQueryBuilder($qb, $date);
 

@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\WebTVBundle\PumukitWebTVBundle;
 
 /**
  * @internal
@@ -51,7 +52,7 @@ class TrackUrlServiceTest extends PumukitTestCase
         $mmobj->setNumericalID(1);
         $mmobj->setStatus(MultimediaObject::STATUS_PUBLISHED);
         $tag = new Tag();
-        $tag->setCod('PUCHWEBTV');
+        $tag->setCod(PumukitWebTVBundle::WEB_TV_TAG);
         $mmobj->addTag($tag);
         $track->setUrl('funnyurl.mp4');
         $mmobj->setSeries($series);

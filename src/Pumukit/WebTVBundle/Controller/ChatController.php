@@ -9,10 +9,10 @@ use Pumukit\SchemaBundle\Document\Live;
 use Pumukit\SchemaBundle\Document\Message;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -20,9 +20,9 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ChatController extends AbstractController
 {
-    private $documentManager;
-    private $pumukitLiveChatEnable;
-    private $pumukitLiveChatUpdateInterval;
+    protected $documentManager;
+    protected $pumukitLiveChatEnable;
+    protected $pumukitLiveChatUpdateInterval;
 
     public function __construct(DocumentManager $documentManager, bool $pumukitLiveChatEnable, int $pumukitLiveChatUpdateInterval)
     {
@@ -35,10 +35,8 @@ class ChatController extends AbstractController
      * @ParamConverter("multimediaObject", options={"id" = "id"})
      *
      * @Route("/show/{id}", name="pumukit_live_chat_show")
-     *
-     * @Template("@PumukitWebTV/Live/Chat/show.html.twig")
      */
-    public function showAction(Request $request, MultimediaObject $multimediaObject): array
+    public function showAction(Request $request, MultimediaObject $multimediaObject): Response
     {
         $username = $this->getUser();
         if (!$username) {
@@ -49,22 +47,20 @@ class ChatController extends AbstractController
             }
         }
 
-        return [
+        return $this->render('@PumukitWebTV/Live/Chat/show.html.twig', [
             'enable_chat' => $this->pumukitLiveChatEnable,
             'chatUpdateInterval' => $this->pumukitLiveChatUpdateInterval,
             'multimediaObject' => $multimediaObject,
             'username' => $username,
-        ];
+        ]);
     }
 
     /**
      * @ParamConverter("live", options={"id" = "id"})
      *
      * @Route("/basic/show/{id}", name="pumukit_live_chat_basic_show")
-     *
-     * @Template("@PumukitWebTV/Live/Chat/basicLiveShow.html.twig")
      */
-    public function showBasicAction(Request $request, Live $live): array
+    public function showBasicAction(Request $request, Live $live): Response
     {
         $username = $this->getUser();
         if (!$username) {
@@ -75,12 +71,12 @@ class ChatController extends AbstractController
             }
         }
 
-        return [
+        return $this->render('@PumukitWebTV/Live/Chat/basicLiveShow.html.twig', [
             'enable_chat' => $this->pumukitLiveChatEnable,
             'chatUpdateInterval' => $this->pumukitLiveChatUpdateInterval,
             'live' => $live,
             'username' => $username,
-        ];
+        ]);
     }
 
     /**
@@ -137,37 +133,33 @@ class ChatController extends AbstractController
      * @ParamConverter("multimediaObject", options={"id" = "id"})
      *
      * @Route("/list/{id}", name="pumukit_live_chat_list")
-     *
-     * @Template("@PumukitWebTV/Live/Chat/list.html.twig")
      */
-    public function listAction(MultimediaObject $multimediaObject): array
+    public function listAction(MultimediaObject $multimediaObject): Response
     {
         $messages = $this->documentManager->getRepository(Message::class)->findBy(
             ['multimediaObject' => $multimediaObject->getId()],
             ['insertDate' => 'asc']
         );
 
-        return [
+        return $this->render('@PumukitWebTV/Live/Chat/list.html.twig', [
             'messages' => $messages,
-        ];
+        ]);
     }
 
     /**
      * @ParamConverter("live", options={"id" = "id"})
      *
      * @Route("/basic/list/{id}", name="pumukit_live_chat_basic_list")
-     *
-     * @Template("@PumukitWebTV/Live/Chat/list.html.twig")
      */
-    public function listBasicAction(Live $live): array
+    public function listBasicAction(Live $live): Response
     {
         $messages = $this->documentManager->getRepository(Message::class)->findBy(
             ['channel' => $live->getId()],
             ['insertDate' => 'asc']
         );
 
-        return [
+        return $this->render('@PumukitWebTV/Live/Chat/list.html.twig', [
             'messages' => $messages,
-        ];
+        ]);
     }
 }

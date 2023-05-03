@@ -17,6 +17,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Services\TrackService;
+use Pumukit\WebTVBundle\PumukitWebTVBundle;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -189,7 +190,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
         $isPlayable = $track->containsTag('display');
-        $isPublished = $multimediaObject->containsTagWithCod('PUCHWEBTV') && MultimediaObject::STATUS_PUBLISHED == $multimediaObject->getStatus();
+        $isPublished = $multimediaObject->containsTagWithCod(PumukitWebTVBundle::WEB_TV_TAG) && MultimediaObject::STATUS_PUBLISHED == $multimediaObject->getStatus();
 
         $job = null;
         if ($track->getPath()) {

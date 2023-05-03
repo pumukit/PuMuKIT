@@ -13,9 +13,9 @@ use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
+use Pumukit\WebTVBundle\PumukitWebTVBundle;
 use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Pumukit\WebTVBundle\Services\ChapterMarkService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,35 +26,18 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class MultimediaObjectController extends AbstractController implements WebTVControllerInterface
 {
-    /** @var ChapterMarkService */
-    private $chapterMarksService;
-
-    /** @var IntroService */
-    private $introService;
-
-    /** @var PlayerService */
-    private $playerService;
-
-    /** @var MultimediaObjectService */
-    private $multimediaObjectService;
-
-    /** @var DocumentManager */
-    private $documentManager;
-
-    /** @var RequestStack */
-    private $requestStack;
-
-    /** @var EmbeddedBroadcastService */
-    private $embeddedBroadcastService;
-
-    /** @var BreadcrumbsService */
-    private $breadcrumbsService;
-
-    /** @var EventDispatcherInterface */
-    private $eventDispatcher;
-    private $limitObjsPlayerSeries;
-    private $pumukitFullMagicUrl;
-    private $cinemaMode;
+    protected $chapterMarksService;
+    protected $introService;
+    protected $playerService;
+    protected $multimediaObjectService;
+    protected $documentManager;
+    protected $requestStack;
+    protected $embeddedBroadcastService;
+    protected $breadcrumbsService;
+    protected $eventDispatcher;
+    protected $limitObjsPlayerSeries;
+    protected $pumukitFullMagicUrl;
+    protected $cinemaMode;
 
     public function __construct(
         ChapterMarkService $chapterMarksService,
@@ -85,9 +68,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
     }
 
     /**
-     * @Route("/video/{id}", name="pumukit_webtv_multimediaobject_index" )
-     *
-     * @Template("@PumukitWebTV/MultimediaObject/template.html.twig")
+     * @Route("/video/{id}", name="pumukit_webtv_multimediaobject_index")
      */
     public function indexAction(Request $request, MultimediaObject $multimediaObject)
     {
@@ -116,20 +97,20 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
         $this->updateBreadcrumbs($multimediaObject);
         $editorChapters = $this->chapterMarksService->getChapterMarks($multimediaObject);
 
-        return [
+        return $this->render('@PumukitWebTV/MultimediaObject/template.html.twig', [
             'autostart' => $request->query->get('autostart', 'true'),
             'intro' => $this->introService->getVideoIntroduction($multimediaObject, $request->query->getBoolean('intro')),
             'multimediaObject' => $multimediaObject,
             'track' => $track,
             'editor_chapters' => $editorChapters,
             'cinema_mode' => $this->cinemaMode,
-        ];
+        ]);
     }
 
     /**
      * @Route("/iframe/{id}", name="pumukit_webtv_multimediaobject_iframe" )
      */
-    public function iframeAction(Request $request, MultimediaObject $multimediaObject)
+    public function iframeAction(Request $request, MultimediaObject $multimediaObject): Response
     {
         $playerController = $this->playerService->getPublicControllerPlayer($multimediaObject);
 
@@ -138,16 +119,14 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
 
     /**
      * @Route("/video/magic/{secret}", name="pumukit_webtv_multimediaobject_magicindex", defaults={"show_hide"=true})
-     *
-     * @Template("@PumukitWebTV/MultimediaObject/template.html.twig")
      */
     public function magicIndexAction(Request $request, MultimediaObject $multimediaObject)
     {
-        if ($this->multimediaObjectService->isPublished($multimediaObject, 'PUCHWEBTV')) {
+        if ($this->multimediaObjectService->isPublished($multimediaObject, PumukitWebTVBundle::WEB_TV_TAG)) {
             if ($this->multimediaObjectService->hasPlayableResource($multimediaObject) && $multimediaObject->isPublicEmbeddedBroadcast()) {
                 return $this->redirectToRoute('pumukit_webtv_multimediaobject_index', ['id' => $multimediaObject->getId()]);
             }
-        } elseif ((MultimediaObject::STATUS_PUBLISHED != $multimediaObject->getStatus() && MultimediaObject::STATUS_HIDDEN != $multimediaObject->getStatus()) || !$multimediaObject->containsTagWithCod('PUCHWEBTV')) {
+        } elseif ((MultimediaObject::STATUS_PUBLISHED != $multimediaObject->getStatus() && MultimediaObject::STATUS_HIDDEN != $multimediaObject->getStatus()) || !$multimediaObject->containsTagWithCod(PumukitWebTVBundle::WEB_TV_TAG)) {
             return $this->render('@PumukitWebTV/Index/404notfound.html.twig');
         }
 
@@ -173,7 +152,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
         $this->updateBreadcrumbs($multimediaObject);
         $editorChapters = $this->chapterMarksService->getChapterMarks($multimediaObject);
 
-        return [
+        return $this->render('@PumukitWebTV/MultimediaObject/template.html.twig', [
             'autostart' => $request->query->get('autostart', 'true'),
             'intro' => $this->introService->getVideoIntroduction($multimediaObject, $request->query->getBoolean('intro')),
             'multimediaObject' => $multimediaObject,
@@ -182,23 +161,20 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
             'editor_chapters' => $editorChapters,
             'cinema_mode' => $this->cinemaMode,
             'fullMagicUrl' => $this->getMagicUrlConfiguration(),
-        ];
+        ]);
     }
 
     /**
      * @Route("/iframe/magic/{secret}", name="pumukit_webtv_multimediaobject_magiciframe", defaults={"show_hide"=true})
      */
-    public function magicIframeAction(Request $request, MultimediaObject $multimediaObject)
+    public function magicIframeAction(Request $request, MultimediaObject $multimediaObject): Response
     {
         $playerController = $this->playerService->getMagicControllerPlayer($multimediaObject);
 
         return $this->forward($playerController, ['request' => $request, 'multimediaObject' => $multimediaObject]);
     }
 
-    /**
-     * @Template("@PumukitWebTV/MultimediaObject/template_series.html.twig")
-     */
-    public function seriesAction(Request $request, MultimediaObject $multimediaObject)
+    public function seriesAction(Request $request, MultimediaObject $multimediaObject): Response
     {
         $series = $multimediaObject->getSeries();
 
@@ -229,35 +205,30 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
 
         $multimediaObjects = $this->documentManager->getRepository(MultimediaObject::class)->findBySeriesByTagCodAndStatusWithLimit(
             $series,
-            'PUCHWEBTV',
+            PumukitWebTVBundle::WEB_TV_TAG,
             $status,
             $this->limitObjsPlayerSeries
         );
 
-        return [
+        return $this->render('@PumukitWebTV/MultimediaObject/template_series.html.twig', [
             'series' => $series,
             'multimediaObjects' => $multimediaObjects,
             'showMagicUrl' => $showMagicUrl,
             'fullMagicUrl' => $fullMagicUrl,
-        ];
+        ]);
     }
 
-    /**
-     * @Template("@PumukitWebTV/MultimediaObject/template_related.html.twig")
-     */
-    public function relatedAction(MultimediaObject $multimediaObject)
+    public function relatedAction(MultimediaObject $multimediaObject): Response
     {
         $relatedMms = $this->documentManager->getRepository(MultimediaObject::class)->findRelatedMultimediaObjects($multimediaObject);
 
-        return ['multimediaObjects' => $relatedMms];
+        return $this->render('@PumukitWebTV/MultimediaObject/template_related.html.twig', ['multimediaObjects' => $relatedMms]);
     }
 
     /**
      * @Route("/video/{id}/info", name="pumukit_webtv_multimediaobject_info" )
-     *
-     * @Template("@PumukitWebTV/MultimediaObject/template_info.html.twig")
      */
-    public function multimediaInfoAction(Request $request, MultimediaObject $multimediaObject)
+    public function multimediaInfoAction(Request $request, MultimediaObject $multimediaObject): Response
     {
         $requestRoute = $this->requestStack->getMasterRequest()->get('_route');
         $isMagicRoute = false;
@@ -274,13 +245,13 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
         $editorChapters = $this->chapterMarksService->getChapterMarks($multimediaObject);
         $fullMagicUrl = $this->getMagicUrlConfiguration();
 
-        return [
+        return $this->render('@PumukitWebTV/MultimediaObject/template_info.html.twig', [
             'multimediaObject' => $multimediaObject,
             'editor_chapters' => $editorChapters,
             'showDownloads' => $showDownloads,
             'isMagicRoute' => $isMagicRoute,
             'fullMagicUrl' => $fullMagicUrl,
-        ];
+        ]);
     }
 
     private function getMagicUrlConfiguration()
@@ -288,7 +259,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
         return $this->pumukitFullMagicUrl;
     }
 
-    private function updateBreadcrumbs(MultimediaObject $multimediaObject)
+    private function updateBreadcrumbs(MultimediaObject $multimediaObject): void
     {
         $this->breadcrumbsService->addMultimediaObject($multimediaObject);
     }

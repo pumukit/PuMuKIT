@@ -11,6 +11,7 @@ use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\PersonInterface;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\PersonService;
+use Pumukit\WebTVBundle\PumukitWebTVBundle;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -94,7 +95,7 @@ class FilterService
     public function setFrontendFilterParameters(BsonFilter $filter, array $routeParams): void
     {
         if (!isset($routeParams['no_channels']) || !$routeParams['no_channels']) {
-            $filter->setParameter('pub_channel_tag', 'PUCHWEBTV');
+            $filter->setParameter('pub_channel_tag', PumukitWebTVBundle::WEB_TV_TAG);
         }
 
         $filter->setParameter('type', ['$ne' => MultimediaObject::TYPE_LIVE]);

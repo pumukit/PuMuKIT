@@ -12,6 +12,7 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\TagInterface;
 use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
+use Pumukit\WebTVBundle\PumukitWebTVBundle;
 
 class SearchService
 {
@@ -69,7 +70,7 @@ class SearchService
             $pipeline = [
                 ['$match' => [
                     'status' => MultimediaObject::STATUS_PUBLISHED,
-                    'tags.cod' => 'PUCHWEBTV',
+                    'tags.cod' => PumukitWebTVBundle::WEB_TV_TAG,
                 ]],
                 ['$group' => ['_id' => ['$year' => '$public_date']]],
                 ['$sort' => ['_id' => 1]],
@@ -79,7 +80,7 @@ class SearchService
             $pipeline = [
                 ['$match' => [
                     'status' => MultimediaObject::STATUS_PUBLISHED,
-                    'tags.cod' => 'PUCHWEBTV',
+                    'tags.cod' => PumukitWebTVBundle::WEB_TV_TAG,
                 ]],
                 ['$group' => ['_id' => '$series']],
                 ['$sort' => ['_id' => 1]],
