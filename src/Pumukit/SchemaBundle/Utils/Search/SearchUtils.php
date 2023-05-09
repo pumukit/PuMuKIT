@@ -79,8 +79,8 @@ class SearchUtils
         return str_ireplace(self::$mapping, self::$specialCharacter, $element);
     }
 
-    private static function completeRegexExpression($regexString): string
+    private static function completeRegexExpression($regexString)
     {
-        return implode($regexString, [self::$glue]);
+        return implode(self::$glue, $regexString);
     }
 }
