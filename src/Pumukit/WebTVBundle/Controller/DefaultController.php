@@ -133,6 +133,8 @@ class DefaultController extends AbstractController
      * @Route("/live/event/iframe/{id}", name="pumukit_live_event_iframe_id")
      *
      * @ParamConverter("multimediaObject", options={"mapping": {"id": "id"}})
+     *
+     * @Template("@PumukitWebTV/Live/Advance/iframe.html.twig")
      */
     public function iframeEventAction(MultimediaObject $multimediaObject, Request $request, bool $iframe = true)
     {
@@ -216,7 +218,7 @@ class DefaultController extends AbstractController
             }
         }
 
-        return $this->render('@PumukitWebTV/Live/Advance/iframe.html.twig', [
+        return [
             'multimediaObject' => $multimediaObject,
             'firstNextSession' => $firstNextSession,
             'secondsToEvent' => $secondsToEvent,
@@ -233,7 +235,7 @@ class DefaultController extends AbstractController
             'isIE' => $isIE,
             'versionIE' => $versionIE,
             'showDownloads' => true,
-        ]);
+        ];
     }
 
     /**
