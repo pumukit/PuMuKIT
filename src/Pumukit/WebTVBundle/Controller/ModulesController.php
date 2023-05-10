@@ -215,13 +215,15 @@ class ModulesController extends AbstractController implements WebTVControllerInt
         $mmRepo = $this->documentManager->getRepository(MultimediaObject::class);
         $seriesRepo = $this->documentManager->getRepository(Series::class);
 
-        $counts = $this->render('@PumukitWebTV/Modules/widget_stats.html.twig', [
+        $counts = [
             'series' => $seriesRepo->countPublic(),
             'mms' => $mmRepo->count(),
             'hours' => $mmRepo->countDuration(),
-        ]);
+        ];
 
-        return ['counts' => $counts];
+        return $this->render('@PumukitWebTV/Modules/widget_stats.html.twig', [
+            'counts' => $counts,
+        ]);
     }
 
     public function breadcrumbsAction(): Response
