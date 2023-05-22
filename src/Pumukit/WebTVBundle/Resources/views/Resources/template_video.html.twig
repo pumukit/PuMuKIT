@@ -8,6 +8,10 @@
 {% set videoTitle = object.title | default('No title'|trans) %}
 {% set seriesTitle = object.getSeriesTitle()|default('') %}
 
+{% if showDownloads is not defined %}
+    {% set showDownloads = false %}
+{% endif %}
+
 <div class="{{ col_calculator(objectByCol|default(1)) }} image_representation">
     <div class="thumbnail">
         <a href="{{ videoPath }}" title="{{ videoTitle }}">
@@ -71,6 +75,21 @@
                         {% endif %}
                     </div>
                 {% endif %}
+                {% for track in object.getTracks() if not track.getHide() and showDownloads %}
+                    <div class="row">
+                        <div class="col-md-12 tracks" style="text-align: left; margin-top: 5px;">
+                            <span class="glyphicon glyphicon-facetime-video"></span>
+                            <a class="video-tracks" download href="{{ track_url(track) }}?forcedl=1">
+                                {% if track.isOnlyAudio() %}
+                                    {% trans %}Download this audio{% endtrans %}
+                                {% else %}
+                                    {% trans %}Download this video{% endtrans %}
+                                {% endif %}
+                                <span class="pull-right">{{ (track.getSize() / 1048576)|number_format(2) }}MB</span>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
         {% endif %}
     </div>
