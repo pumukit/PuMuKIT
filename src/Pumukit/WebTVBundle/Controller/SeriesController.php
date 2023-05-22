@@ -5,27 +5,22 @@ declare(strict_types=1);
 namespace Pumukit\WebTVBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pagerfanta\Pagerfanta;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\WebTVBundle\Services\BreadcrumbsService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class SeriesController extends AbstractController implements WebTVControllerInterface
 {
-    /** @var DocumentManager */
-    private $documentManager;
-
-    /** @var BreadcrumbsService */
-    private $breadcrumbsService;
-
-    /** @var PaginationService */
-    private $paginationService;
-    private $limitObjsSeries;
+    protected $documentManager;
+    protected $breadcrumbsService;
+    protected $paginationService;
+    protected $limitObjsSeries;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -41,8 +36,6 @@ class SeriesController extends AbstractController implements WebTVControllerInte
 
     /**
      * @Route("/series/{id}", name="pumukit_webtv_series_index")
-     *
-     * @Template("@PumukitWebTV/Series/template.html.twig")
      */
     public function indexAction(Request $request, Series $series)
     {
@@ -54,16 +47,14 @@ class SeriesController extends AbstractController implements WebTVControllerInte
 
         $this->updateBreadcrumbs($series);
 
-        return [
+        return $this->render('@PumukitWebTV/Series/template.html.twig', [
             'series' => $series,
             'multimediaObjects' => $pager,
-        ];
+        ]);
     }
 
     /**
      * @Route("/series/magic/{secret}", name="pumukit_webtv_series_magicindex", defaults={"show_hide"=true, "broadcast"=false})
-     *
-     * @Template("@PumukitWebTV/Series/template.html.twig")
      */
     public function magicIndexAction(Request $request, Series $series)
     {
@@ -77,19 +68,19 @@ class SeriesController extends AbstractController implements WebTVControllerInte
 
         $this->updateBreadcrumbs($series);
 
-        return [
+        return $this->render('@PumukitWebTV/Series/template.html.twig', [
             'series' => $series,
             'multimediaObjects' => $pager,
             'magic_url' => true,
-        ];
+        ]);
     }
 
-    private function updateBreadcrumbs(Series $series)
+    private function updateBreadcrumbs(Series $series): void
     {
         $this->breadcrumbsService->addSeries($series);
     }
 
-    private function createPager($objects, $page)
+    private function createPager($objects, $page): Pagerfanta
     {
         return $this->paginationService->createDoctrineODMMongoDBAdapter($objects, $page, $this->limitObjsSeries);
     }

@@ -13,30 +13,32 @@ use Pumukit\SchemaBundle\Document\Live;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 use Pumukit\WebTVBundle\Form\Type\ContactType;
+use Pumukit\WebTVBundle\PumukitWebTVBundle;
 use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DefaultController extends AbstractController
 {
-    private $documentManager;
-    private $breadcrumbService;
-    private $embeddedEventSessionService;
-    private $translator;
-    private $logger;
-    private $mailer;
-    private $captchaPublicKey;
-    private $captchaPrivateKey;
-    private $pumukitLiveEventContactAndShare;
-    private $pumukitIntro;
-    private $pumukitNotificationSenderEmail;
-    private $pumukitInfo;
-    private $mobileDetector;
+    protected $documentManager;
+    protected $breadcrumbService;
+    protected $embeddedEventSessionService;
+    protected $translator;
+    protected $logger;
+    protected $mailer;
+    protected $captchaPublicKey;
+    protected $captchaPrivateKey;
+    protected $pumukitLiveEventContactAndShare;
+    protected $pumukitIntro;
+    protected $pumukitNotificationSenderEmail;
+    protected $pumukitInfo;
+    protected $mobileDetector;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -106,7 +108,7 @@ class DefaultController extends AbstractController
         $nowSessions = $this->embeddedEventSessionService->findCurrentSessions($criteria, 0, true);
         $nextSession = $this->embeddedEventSessionService->findNextSessions($criteria, 0, true);
 
-        if (count($nextSession) > 0 || count($nowSessions) > 0) {
+        if ((is_countable($nextSession) ? count($nextSession) : 0) > 0 || (is_countable($nowSessions) ? count($nowSessions) : 0) > 0) {
             $this->updateBreadcrumbs($this->translator->trans('Live events'), 'pumukit_webtv_events');
 
             return $this->iframeEventAction($multimediaObject, $request, false);
@@ -201,7 +203,7 @@ class DefaultController extends AbstractController
             $secondsToEvent = $firstNextSession - ($now->getTimeStamp() * 1000);
         }
 
-        if ($iframe && 0 === count($nowSessions) && 0 === count($nextSessions)) {
+        if ($iframe && 0 === (is_countable($nowSessions) ? count($nowSessions) : 0) && 0 === (is_countable($nextSessions) ? count($nextSessions) : 0)) {
             $qb = $this->getMultimediaObjects($multimediaObject->getSeries()->getId());
             $qb->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC);
             $multimediaObjectPlaylist = $qb->getQuery()->execute()->getSingleResult();
@@ -256,10 +258,8 @@ class DefaultController extends AbstractController
 
     /**
      * @Route("/live/playlist/{id}", name="pumukit_live_playlist_id", defaults={"_format": "xml"})
-     *
-     * @Template("@PumukitWebTV/Live/Basic/playlist.xml.twig")
      */
-    public function playlistAction(Live $live): array
+    public function playlistAction(Live $live): Response
     {
         $intro = $this->pumukitIntro ?? null;
         $mmobjsPlaylist = $this->documentManager->getRepository(MultimediaObject::class)->findBy([
@@ -275,7 +275,7 @@ class DefaultController extends AbstractController
             $response['items'] = '/bundles/pumukitwebtv/live/video/default.mp4';
         }
 
-        return $response;
+        return $this->render('@PumukitWebTV/Live/Basic/playlist.xml.twig', $response);
     }
 
     /**
@@ -340,7 +340,7 @@ class DefaultController extends AbstractController
         ];
     }
 
-    protected function updateBreadcrumbs(string $title, string $routeName, array $routeParameters = [])
+    protected function updateBreadcrumbs(string $title, string $routeName, array $routeParameters = []): void
     {
         $this->breadcrumbService->addList($title, $routeName, $routeParameters);
     }
@@ -349,7 +349,7 @@ class DefaultController extends AbstractController
     {
         $qb = $this->documentManager->getRepository(MultimediaObject::class)->createStandardQueryBuilder()
             ->field('status')->equals(MultimediaObject::STATUS_PUBLISHED)
-            ->field('tags.cod')->equals('PUCHWEBTV')
+            ->field('tags.cod')->equals(PumukitWebTVBundle::WEB_TV_TAG)
             ->field('series')->equals(new ObjectId($seriesId));
         $qb->field('tracks')->elemMatch($qb->expr()->field('tags')->equals('display')->field('hide')->equals(false));
 

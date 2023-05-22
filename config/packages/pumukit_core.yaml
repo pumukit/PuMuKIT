@@ -9,6 +9,7 @@ services:
       $pumukitPublicDir: '%pumukit.public_dir%'
       $overridePatchMethod: '%pumukit.overridePatchMethod%'
       $progressBarColor: '%pumukit.inboxProgressBarColor%'
+      $showBackofficeButtonInInbox: '%pumukit.showBackofficeButtonInInbox%'
 
   Pumukit\CoreBundle\Controller\:
     resource: '../../src/Pumukit/CoreBundle/Controller'

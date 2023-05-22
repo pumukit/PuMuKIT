@@ -27,6 +27,7 @@ class InboxExtension extends AbstractExtension
             new TwigFunction('inbox_debug', [$this, 'getInboxDebug']),
             new TwigFunction('inbox_override_patch_method', [$this, 'getOverridePatchMethod']),
             new TwigFunction('inbox_progress_bar_color', [$this, 'getProgressBarColor']),
+            new TwigFunction('inbox_show_backoffice_button', [$this, 'getShowBackofficeButtonInInbox']),
         ];
     }
 
@@ -73,5 +74,10 @@ class InboxExtension extends AbstractExtension
     public function getProgressBarColor(): string
     {
         return $this->inboxService->progressBarColor();
+    }
+
+    public function getShowBackofficeButtonInInbox(): bool
+    {
+        return $this->inboxService->showBackofficeButtonInInbox();
     }
 }

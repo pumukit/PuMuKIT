@@ -178,7 +178,7 @@ class MultimediaObjectPicService
         file_put_contents($path, $pic);
 
         $pic = new Pic();
-        $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path->getPathname()));
+        $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
         $pic->setPath($path);
 
         $multimediaObject->addPic($pic);

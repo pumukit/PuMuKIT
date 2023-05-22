@@ -16,6 +16,7 @@ use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Pumukit\SchemaBundle\Services\SpecialTranslationService;
+use Pumukit\WebTVBundle\PumukitWebTVBundle;
 use Symfony\Component\Intl\Languages;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
@@ -202,7 +203,7 @@ class PumukitAdminExtension extends AbstractExtension
 
         switch ($status) {
             case MultimediaObject::STATUS_PUBLISHED:
-                if ($param instanceof MultimediaObject && $param->containsTagWithCod('PUCHWEBTV')) {
+                if ($param instanceof MultimediaObject && $param->containsTagWithCod(PumukitWebTVBundle::WEB_TV_TAG)) {
                     $iconText = $this->translator->trans('Published: is listed in the Series and can be played with published URL');
                 } else {
                     $iconText = $this->translator->trans('Published');

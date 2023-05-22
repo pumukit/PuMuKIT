@@ -8,6 +8,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\TagInterface;
+use Pumukit\WebTVBundle\PumukitWebTVBundle;
 
 /**
  * Class PaginationService.
@@ -181,7 +182,7 @@ class CategoriesService
     {
         $parentCod = $parentCod ?? $this->parentCod;
         $multimediaObjectsColl = $this->documentManager->getDocumentCollection(MultimediaObject::class);
-        $criteria = ['status' => MultimediaObject::STATUS_PUBLISHED, 'tags.cod' => ['$all' => ['PUCHWEBTV', $parentCod]]];
+        $criteria = ['status' => MultimediaObject::STATUS_PUBLISHED, 'tags.cod' => ['$all' => [PumukitWebTVBundle::WEB_TV_TAG, $parentCod]]];
         $criteria['$or'] = [
             ['tracks' => ['$elemMatch' => ['tags' => 'display', 'hide' => false]], 'properties.opencast' => ['$exists' => false]],
             ['properties.opencast' => ['$exists' => true]],

@@ -8,6 +8,7 @@ use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\WebTVBundle\PumukitWebTVBundle;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -104,7 +105,7 @@ class MultimediaObjectVoter extends Voter
         */
 
         // Public play
-        if ($this->mmobjService->isHidden($multimediaObject, 'PUCHWEBTV') || $this->mmobjService->isHidden($multimediaObject, 'PUCHPODCAST')) {
+        if ($this->mmobjService->isHidden($multimediaObject, PumukitWebTVBundle::WEB_TV_TAG) || $this->mmobjService->isHidden($multimediaObject, 'PUCHPODCAST')) {
             return true;
         }
 
@@ -129,7 +130,7 @@ class MultimediaObjectVoter extends Voter
         }
 
         // Public play
-        if ($this->mmobjService->isHidden($multimediaObject, 'PUCHWEBTV') || $this->mmobjService->isHidden($multimediaObject, 'PUCHPODCAST')) {
+        if ($this->mmobjService->isHidden($multimediaObject, PumukitWebTVBundle::WEB_TV_TAG) || $this->mmobjService->isHidden($multimediaObject, 'PUCHPODCAST')) {
             return true;
         }
 

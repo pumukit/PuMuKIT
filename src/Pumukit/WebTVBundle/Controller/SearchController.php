@@ -14,37 +14,26 @@ use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Pumukit\WebTVBundle\Services\SearchService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SearchController extends AbstractController implements WebTVControllerInterface
 {
-    /** @var TranslatorInterface */
-    private $translator;
+    protected $translator;
+    protected $breadcrumbsService;
+    protected $searchService;
+    protected $documentManager;
+    protected $requestStack;
+    protected $paginationService;
 
-    /** @var BreadcrumbsService */
-    private $breadcrumbsService;
-
-    /** @var SearchService */
-    private $searchService;
-
-    /** @var DocumentManager */
-    private $documentManager;
-
-    /** @var RequestStack */
-    private $requestStack;
-
-    /** @var PaginationService */
-    private $paginationService;
-
-    private $menuSearchTitle;
-    private $columnsObjsSearch;
-    private $pumukitNewAdminLicenses;
-    private $limitObjsSearch;
+    protected $menuSearchTitle;
+    protected $columnsObjsSearch;
+    protected $pumukitNewAdminLicenses;
+    protected $limitObjsSearch;
 
     public function __construct(
         TranslatorInterface $translator,
@@ -72,10 +61,8 @@ class SearchController extends AbstractController implements WebTVControllerInte
 
     /**
      * @Route("/searchseries", name="pumukit_webtv_search_series")
-     *
-     * @Template("@PumukitWebTV/Search/template.html.twig")
      */
-    public function seriesAction(Request $request)
+    public function seriesAction(Request $request): Response
     {
         $this->breadcrumbsService->addList($this->translator->trans('Series search'), 'pumukit_webtv_search_series');
 
@@ -99,7 +86,7 @@ class SearchController extends AbstractController implements WebTVControllerInte
 
         [$pager, $totalObjects] = $this->createPager($queryBuilder, $request->query->get('page', 1));
 
-        return [
+        return $this->render('@PumukitWebTV/Search/template.html.twig', [
             'type' => 'series',
             'objects' => $pager,
             'search_years' => $searchYears,
@@ -108,17 +95,15 @@ class SearchController extends AbstractController implements WebTVControllerInte
             'show_info' => true,
             'with_publicdate' => true,
             'class' => 'searchseries',
-        ];
+        ]);
     }
 
     /**
      * @Route("/searchmultimediaobjects/{tagCod}/{useTagAsGeneral}", defaults={"tagCod"=null, "useTagAsGeneral"=false}, name="pumukit_webtv_search_multimediaobjects")
      *
      * @ParamConverter("blockedTag", options={"mapping": {"tagCod": "cod"}})
-     *
-     * @Template("@PumukitWebTV/Search/template.html.twig")
      */
-    public function multimediaObjectsAction(Request $request, Tag $blockedTag = null, bool $useTagAsGeneral = false)
+    public function multimediaObjectsAction(Request $request, Tag $blockedTag = null, bool $useTagAsGeneral = false): Response
     {
         $templateTitle = $this->menuSearchTitle ?? 'Multimedia objects search';
         $this->breadcrumbsService->addList($blockedTag ? $blockedTag->getTitle() : $this->translator->trans($templateTitle), 'pumukit_webtv_search_multimediaobjects');
@@ -161,7 +146,7 @@ class SearchController extends AbstractController implements WebTVControllerInte
 
         [$pager, $totalObjects] = $this->createPager($queryBuilder, $request->query->get('page', 1));
 
-        return [
+        return $this->render('@PumukitWebTV/Search/template.html.twig', [
             'type' => 'multimediaObject',
             'template_title' => $templateTitle,
             'template_list_grouped' => $templateListGrouped,
@@ -178,10 +163,10 @@ class SearchController extends AbstractController implements WebTVControllerInte
             'class' => 'searchmultimediaobjects',
             'show_info' => true,
             'with_publicdate' => true,
-        ];
+        ]);
     }
 
-    protected function createPager($objects, $page)
+    protected function createPager($objects, $page): array
     {
         $pager = $this->paginationService->createDoctrineODMMongoDBAdapter($objects, $page, $this->limitObjsSearch);
 

@@ -15,7 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class LegacyController extends AbstractController implements WebTVControllerInterface
 {
-    /** @var DocumentManager */
     private $documentManager;
 
     public function __construct(DocumentManager $documentManager)

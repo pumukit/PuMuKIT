@@ -39,6 +39,7 @@ use Pumukit\SchemaBundle\Services\SortedMultimediaObjectsService;
 use Pumukit\SchemaBundle\Services\SpecialTranslationService;
 use Pumukit\SchemaBundle\Services\TagService;
 use Pumukit\SchemaBundle\Services\UserService;
+use Pumukit\WebTVBundle\PumukitWebTVBundle;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -361,8 +362,8 @@ class MultimediaObjectController extends SortableAdminController
     {
         return [
             'mm' => $resource,
-            'is_published' => $this->multimediaObjectService->isPublished($resource, 'PUCHWEBTV'),
-            'is_hidden' => $this->multimediaObjectService->isHidden($resource, 'PUCHWEBTV'),
+            'is_published' => $this->multimediaObjectService->isPublished($resource, PumukitWebTVBundle::WEB_TV_TAG),
+            'is_hidden' => $this->multimediaObjectService->isHidden($resource, PumukitWebTVBundle::WEB_TV_TAG),
             'is_playable' => $this->multimediaObjectService->hasPlayableResource($resource),
             'warning_on_unpublished' => $this->warningOnUnpublished,
         ];

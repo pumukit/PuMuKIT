@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\WebTVBundle\PumukitWebTVBundle;
 
 /**
  * @internal
@@ -57,7 +58,7 @@ class MultimediaObjectServiceTest extends PumukitTestCase
         $series = $this->factory->createSeries();
         $mm = $this->factory->createMultimediaObject($series);
 
-        $webTVCode = 'PUCHWEBTV';
+        $webTVCode = PumukitWebTVBundle::WEB_TV_TAG;
         static::assertFalse($this->mmsService->isPublished($mm, $webTVCode));
 
         $webTVTag = $this->tagRepo->findOneBy(['cod' => $webTVCode]);
@@ -86,7 +87,7 @@ class MultimediaObjectServiceTest extends PumukitTestCase
         $series = $this->factory->createSeries();
         $mm = $this->factory->createMultimediaObject($series);
 
-        $webTVCode = 'PUCHWEBTV';
+        $webTVCode = PumukitWebTVBundle::WEB_TV_TAG;
         static::assertFalse($this->mmsService->isHidden($mm, $webTVCode));
 
         $webTVTag = $this->tagRepo->findOneBy(['cod' => $webTVCode]);
@@ -152,7 +153,7 @@ class MultimediaObjectServiceTest extends PumukitTestCase
         $series = $this->factory->createSeries();
         $mm = $this->factory->createMultimediaObject($series);
 
-        $webTVCode = 'PUCHWEBTV';
+        $webTVCode = PumukitWebTVBundle::WEB_TV_TAG;
 
         $webTVTag = $this->tagRepo->findOneBy(['cod' => $webTVCode]);
         $this->tagService->addTagToMultimediaObject($mm, $webTVTag->getId());
@@ -443,7 +444,7 @@ class MultimediaObjectServiceTest extends PumukitTestCase
         $this->dm->flush();
 
         $webTVTag = new Tag();
-        $webTVTag->setCod('PUCHWEBTV');
+        $webTVTag->setCod(PumukitWebTVBundle::WEB_TV_TAG);
         $webTVTag->setTitle('WebTV Publication Channel');
         $webTVTag->setDisplay(true);
         $webTVTag->setMetatag(false);

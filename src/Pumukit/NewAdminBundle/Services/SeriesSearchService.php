@@ -82,6 +82,7 @@ class SeriesSearchService
             $date_from = new \DateTime($value['from']);
         }
         if ('' !== $value['to']) {
+            $value['to'] .= ' 23:59:59';
             $date_to = new \DateTime($value['to']);
         }
 

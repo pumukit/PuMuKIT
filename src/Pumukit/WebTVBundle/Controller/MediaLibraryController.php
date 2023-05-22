@@ -9,30 +9,23 @@ use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Pumukit\WebTVBundle\Services\ListService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class MediaLibraryController extends AbstractController implements WebTVControllerInterface
 {
-    /** @var DocumentManager */
-    private $documentManager;
+    protected $documentManager;
+    protected $breadcrumbsService;
+    protected $translator;
+    protected $listService;
 
-    /** @var BreadcrumbsService */
-    private $breadcrumbsService;
-
-    /** @var TranslatorInterface */
-    private $translator;
-
-    /** @var ListService */
-    private $listService;
-
-    private $menuMediatecaTitle;
-    private $pumukitWebTVMediaLibraryFilterTags;
-    private $catalogueThumbnails;
-    private $columnsObjsCatalogue;
+    protected $menuMediatecaTitle;
+    protected $pumukitWebTVMediaLibraryFilterTags;
+    protected $catalogueThumbnails;
+    protected $columnsObjsCatalogue;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -56,10 +49,8 @@ class MediaLibraryController extends AbstractController implements WebTVControll
 
     /**
      * @Route("/mediateca/{sort}", defaults={"sort" = "date"}, requirements={"sort" = "alphabetically|date|tags"}, name="pumukit_webtv_medialibrary_index")
-     *
-     * @Template("@PumukitWebTV/MediaLibrary/template.html.twig")
      */
-    public function indexAction(Request $request, string $sort)
+    public function indexAction(Request $request, string $sort): Response
     {
         $templateTitle = $this->translator->trans($this->menuMediatecaTitle);
         $this->breadcrumbsService->addList($templateTitle, 'pumukit_webtv_medialibrary_index', ['sort' => $sort]);
@@ -68,7 +59,7 @@ class MediaLibraryController extends AbstractController implements WebTVControll
 
         [$objects, $aggregatedNumMmobjs] = $this->listService->getMediaLibrary([], $sort, $request->getLocale(), $request->query->get('p_tag'));
 
-        return [
+        return $this->render('@PumukitWebTV/MediaLibrary/template.html.twig', [
             'objects' => $objects,
             'sort' => $sort,
             'tags' => $selectionTags,
@@ -77,6 +68,6 @@ class MediaLibraryController extends AbstractController implements WebTVControll
             'show_more' => false,
             'catalogue_thumbnails' => $this->catalogueThumbnails,
             'aggregated_num_mmobjs' => $aggregatedNumMmobjs,
-        ];
+        ]);
     }
 }

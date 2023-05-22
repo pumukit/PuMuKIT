@@ -6,9 +6,6 @@ namespace Pumukit\SchemaBundle\Utils\Search;
 
 use MongoDB\BSON\Regex;
 
-/**
- * Class Search.
- */
 class SearchUtils
 {
     private static $cleanTildes = [
@@ -50,11 +47,6 @@ class SearchUtils
     private static $maxTokens = 0;
     private static $filterSizeStopWords = 2;
 
-    /**
-     * @param string $string
-     *
-     * @return Regex
-     */
     public static function generateRegexExpression($string)
     {
         $elements = str_getcsv(preg_quote($string), self::$delimiter);
@@ -71,11 +63,6 @@ class SearchUtils
         return new Regex($regexString, 'i');
     }
 
-    /**
-     * @param string $element
-     *
-     * @return bool
-     */
     public static function filterStopWords($element)
     {
         if (strlen($element) > self::$filterSizeStopWords) {
@@ -85,11 +72,6 @@ class SearchUtils
         return false;
     }
 
-    /**
-     * @param string $element
-     *
-     * @return string
-     */
     public static function scapeTildes($element)
     {
         $element = str_ireplace(self::$cleanTildes, self::$cleanTildesReplace, $element);
@@ -97,13 +79,8 @@ class SearchUtils
         return str_ireplace(self::$mapping, self::$specialCharacter, $element);
     }
 
-    /**
-     * @param array $regexString
-     *
-     * @return string
-     */
     private static function completeRegexExpression($regexString)
     {
-        return implode($regexString, self::$glue);
+        return implode(self::$glue, $regexString);
     }
 }

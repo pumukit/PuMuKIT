@@ -14,6 +14,7 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\TagService;
+use Pumukit\WebTVBundle\PumukitWebTVBundle;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -154,7 +155,7 @@ EOT
         $user = $this->findUser($input->getOption('user'));
         $multimediaObject = $this->factoryService->createMultimediaObject($series, true, $user);
         if (!$user) {
-            $this->tagService->addTagByCodToMultimediaObject($multimediaObject, 'PUCHWEBTV');
+            $this->tagService->addTagByCodToMultimediaObject($multimediaObject, PumukitWebTVBundle::WEB_TV_TAG);
         }
         foreach ($this->locales as $l) {
             $multimediaObject->setTitle($title, $l);

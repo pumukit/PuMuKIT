@@ -12,6 +12,7 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\WebTVBundle\PumukitWebTVBundle;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -54,7 +55,7 @@ class MultimediaObjectVoterTest extends WebTestCase
         static::assertFalse($can);
 
         $tag = new Tag();
-        $tag->setCod('PUCHWEBTV');
+        $tag->setCod(PumukitWebTVBundle::WEB_TV_TAG);
         $mmobj->addTag($tag);
 
         $can = $this->invokeMethod($this->voter, 'canPlay', [$mmobj, null]);
@@ -99,7 +100,7 @@ class MultimediaObjectVoterTest extends WebTestCase
         static::assertTrue($can);
 
         $tag = new Tag();
-        $tag->setCod('PUCHWEBTV');
+        $tag->setCod(PumukitWebTVBundle::WEB_TV_TAG);
         $mmobj->addTag($tag);
 
         $can = $this->invokeMethod($this->voter, 'canPlay', [$mmobj, $user]);
@@ -146,7 +147,7 @@ class MultimediaObjectVoterTest extends WebTestCase
         static::assertFalse($can);
 
         $tag = new Tag();
-        $tag->setCod('PUCHWEBTV');
+        $tag->setCod(PumukitWebTVBundle::WEB_TV_TAG);
         $mmobj->addTag($tag);
 
         $can = $this->invokeMethod($this->voter, 'canPlay', [$mmobj, $user]);

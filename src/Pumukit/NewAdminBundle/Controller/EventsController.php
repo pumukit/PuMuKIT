@@ -276,25 +276,28 @@ class EventsController extends AbstractController implements NewAdminControllerI
                     $criteria['embeddedEvent.name.'.$request->getLocale()] = new Regex($data['name'], 'i');
                 }
             }
-            if ($data['date']['from'] && $data['date']['to']) {
-                $start = strtotime($data['date']['from']) * 1000;
-                $ends = strtotime($data['date']['to'].'23:59:59') * 1000;
 
-                $criteria['embeddedEvent.embeddedEventSession'] = ['$elemMatch' => [
-                    'start' => [
-                        '$gte' => new UTCDateTime($start),
-                    ],
-                    'ends' => [
-                        '$lte' => new UTCDateTime($ends),
-                    ], ]];
-            } else {
-                if ($data['date']['from']) {
-                    $date = strtotime($data['date']['from']) * 1000;
-                    $criteria['embeddedEvent.embeddedEventSession.start'] = ['$gte' => new UTCDateTime($date)];
-                }
-                if ($data['date']['to']) {
-                    $date = strtotime($data['date']['to']) * 1000;
-                    $criteria['embeddedEvent.embeddedEventSession.ends'] = ['$lte' => new UTCDateTime($date)];
+            if (!empty($data['date'])) {
+                if ($data['date']['from'] && $data['date']['to']) {
+                    $start = strtotime($data['date']['from']) * 1000;
+                    $ends = strtotime($data['date']['to'].'23:59:59') * 1000;
+
+                    $criteria['embeddedEvent.embeddedEventSession'] = ['$elemMatch' => [
+                        'start' => [
+                            '$gte' => new UTCDateTime($start),
+                        ],
+                        'ends' => [
+                            '$lte' => new UTCDateTime($ends),
+                        ], ]];
+                } else {
+                    if ($data['date']['from']) {
+                        $date = strtotime($data['date']['from']) * 1000;
+                        $criteria['embeddedEvent.embeddedEventSession.start'] = ['$gte' => new UTCDateTime($date)];
+                    }
+                    if ($data['date']['to']) {
+                        $date = strtotime($data['date']['to']) * 1000;
+                        $criteria['embeddedEvent.embeddedEventSession.ends'] = ['$lte' => new UTCDateTime($date)];
+                    }
                 }
             }
         } elseif ($session->has('admin/live/event/criteria')) {
@@ -491,6 +494,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
                 foreach ($data['i18n_name'] as $language => $value) {
                     $event->setName($value, $language);
                 }
+
                 foreach ($data['i18n_description'] as $language => $value) {
                     $event->setDescription($value, $language);
                 }
@@ -907,7 +911,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
         foreach ($lives as $live) {
             $result[] = [
                 'id' => $live->getId(),
-                'name' => $live->getName(),
+                'text' => $live->getName(),
             ];
         }
 

@@ -26,5 +26,6 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="https://releases.transloadit.com/uppy/v1.22.0/uppy.min.js"></script>
+    {% include "@PumukitCore/Upload/uppy_languages.html.twig" %}
     <script type="text/javascript" src="{{ path('pumukitwizard_js') }}"></script>
 {% endblock %}

@@ -7,12 +7,10 @@ namespace Pumukit\SchemaBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Tag;
-use Pumukit\SchemaBundle\Repository\TagRepository;
 use Pumukit\SchemaBundle\Security\Permission;
 
 class PermissionService
 {
-    /** @var TagRepository */
     private $repo;
     private $externalPermissions;
     private $allPermissions;
