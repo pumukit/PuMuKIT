@@ -22,4 +22,4 @@ COPY conf/default.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /srv/pumukit
 
-COPY --from=teltek/pumukit:3.3.x /srv/pumukit/web web/
+COPY --from=teltek/pumukit:3.4.x /srv/pumukit/web web/
