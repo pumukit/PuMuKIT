@@ -1,4 +1,4 @@
-FROM teltek/pumukit-base:3.3.x
+FROM teltek/pumukit-base:3.4.x
 
 # default build for production
 ARG APP_ENV=prod
