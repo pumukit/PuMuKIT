@@ -25,10 +25,7 @@ class CaptionService
         });
     }
 
-    /**
-     * @return bool
-     */
-    public function hasCaptions(MultimediaObject $multimediaObject)
+    public function hasCaptions(MultimediaObject $multimediaObject): bool
     {
         if (0 !== count($this->getCaptions($multimediaObject))) {
             return true;
