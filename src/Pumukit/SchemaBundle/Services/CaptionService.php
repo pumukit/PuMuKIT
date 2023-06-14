@@ -24,4 +24,17 @@ class CaptionService
             return in_array($material->getMimeType(), $mimeTypeCaptions);
         });
     }
+
+    /**
+     *
+     * @return bool
+     */
+    public function hasCaptions(MultimediaObject $multimediaObject)
+    {
+        if(0 !== count($this->getCaptions($multimediaObject))) {
+            return true;
+        }
+
+        return false;
+    }
 }
