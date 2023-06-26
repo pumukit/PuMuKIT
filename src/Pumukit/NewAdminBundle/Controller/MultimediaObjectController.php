@@ -1417,7 +1417,7 @@ class MultimediaObjectController extends SortableAdminController
 
         $mmsQueryBuilder = $this->documentManager->getRepository(MultimediaObject::class)->getQueryBuilderOrderedBy($series, $sorting);
 
-        return $this->paginationService->createDoctrineODMMongoDBAdapter($mmsQueryBuilder, $page);
+        return $this->paginationService->createDoctrineODMMongoDBAdapter($mmsQueryBuilder, (int) $page);
     }
 
     protected function dispatchUpdate(MultimediaObject $multimediaObject)

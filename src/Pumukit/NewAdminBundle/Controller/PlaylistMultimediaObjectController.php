@@ -235,7 +235,7 @@ class PlaylistMultimediaObjectController extends AbstractController
             $mmobjs = $this->documentManager->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
         }
 
-        $pager = $this->paginationService->createDoctrineODMMongoDBAdapter($mmobjs, $page, $limit);
+        $pager = $this->paginationService->createDoctrineODMMongoDBAdapter($mmobjs, (int) $page, $limit);
 
         return [
             'my_mmobjs' => $pager,
