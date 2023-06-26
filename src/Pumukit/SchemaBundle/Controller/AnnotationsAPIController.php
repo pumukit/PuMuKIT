@@ -118,7 +118,7 @@ class AnnotationsAPIController extends AbstractController
     /**
      * @Route("/", methods={"PUT"})
      *
-     * @Security("has_role('ROLE_ACCESS_MULTIMEDIA_SERIES')")
+     * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
      */
     public function createNewAction(Request $request)
     {
@@ -172,7 +172,7 @@ class AnnotationsAPIController extends AbstractController
     /**
      * @Route("/{id}", methods={"PUT"})
      *
-     * @Security("has_role('ROLE_ACCESS_MULTIMEDIA_SERIES')")
+     * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
      */
     public function editAction(Request $request, Annotation $annotation)
     {
@@ -205,7 +205,7 @@ class AnnotationsAPIController extends AbstractController
     /**
      * @Route("/{id}", methods={"DELETE"})
      *
-     * @Security("has_role('ROLE_ACCESS_MULTIMEDIA_SERIES')")
+     * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
      */
     public function deleteAction(Annotation $annotation)
     {
@@ -220,7 +220,7 @@ class AnnotationsAPIController extends AbstractController
     /**
      * @Route("/reset/{id}", methods={"DELETE"})
      *
-     * @Security("has_role('ROLE_ACCESS_MULTIMEDIA_SERIES')")
+     * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
      */
     public function deleteAllAction(MultimediaObject $multimediaobject)
     {
