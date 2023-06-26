@@ -168,7 +168,7 @@ class SearchController extends AbstractController implements WebTVControllerInte
 
     protected function createPager($objects, $page): array
     {
-        $pager = $this->paginationService->createDoctrineODMMongoDBAdapter($objects, $page, $this->limitObjsSearch);
+        $pager = $this->paginationService->createDoctrineODMMongoDBAdapter($objects, (int) $page, $this->limitObjsSearch);
 
         $pager->getCurrentPageResults();
         $totalObjects = $pager->getNbResults();
