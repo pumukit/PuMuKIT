@@ -267,7 +267,7 @@ class MaterialService
             $material->setI18nName($formData['i18n_name']);
         }
         if (array_key_exists('hide', $formData)) {
-            $material->setHide($formData['hide']);
+            $material->setHide((bool) $formData['hide']);
         }
         if (array_key_exists('language', $formData)) {
             $material->setLanguage($formData['language']);
