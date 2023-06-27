@@ -435,7 +435,7 @@ class MultimediaObjectController extends SortableAdminController
         $method = $request->getMethod();
         if (in_array($method, ['POST', 'PUT', 'PATCH'])) {
             $formMeta->handleRequest($request);
-            if ($formMeta->isSubmitted() && $formMeta->isValid()) {
+            if ($formMeta->isSubmitted() && $formMeta->isValid() && ($resource->getPublicDate() >= $resource->getRecordDate())) {
                 $this->update($resource);
 
                 $this->dispatchUpdate($resource);
