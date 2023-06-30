@@ -6,9 +6,8 @@
                 <a style="cursor:pointer;color:blue"
                    onMouseOver="this.style.textDecoration='underline'"
                    onMouseOut="this.style.textDecoration='none'"
-                   onClick="paella_video = document.getElementById('paellaiframe').contentWindow.paella.player.videoContainer;
-                           paella_video.seekToTime({{ chapter.real_time }} - paella_video.trimStart())">
-                    {{ date("00:00:00 + " ~ (chapter.time_to_show|round) ~ " seconds") | format_datetime('none', 'medium',locale=app.request.getLocale()) }}
+                   onClick="document.getElementById('paellaiframe').contentWindow.__paella_instances__[0].videoContainer.setCurrentTime({{ chapter.real_time }});">
+                    {{ date("00:00:00 + " ~ (chapter.time_to_show|round) ~ " seconds") | format_datetime('none', 'medium',locale=app.request.getLocale(), pattern="HH:mm:ss") }}
                 </a>
             </li>
         {% endfor %}
