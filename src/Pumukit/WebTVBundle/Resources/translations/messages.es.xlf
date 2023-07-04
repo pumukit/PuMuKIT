@@ -5,6 +5,10 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
+      <trans-unit id="eeU5pwP" resname="Aviso legal">
+        <source>Aviso legal</source>
+        <target state="needs-translation">Legal warning</target>
+      </trans-unit>
       <trans-unit id="e1wLqeS" resname="Health Sciences">
         <source>Health Sciences</source>
         <target state="translated">Ciencias de la Salud</target>
@@ -433,6 +437,10 @@
         <source>International Sign Language</source>
         <target state="translated">lengua de signos internacional</target>
       </trans-unit>
+      <trans-unit id="NOqPcLO" resname="Valencian">
+        <source>Valencian</source>
+        <target state="translated">Valenciano</target>
+      </trans-unit>
       <trans-unit id="W7zF64l" resname="Latest Uploads">
         <source>Latest Uploads</source>
         <target state="translated">Lo último</target>
@@ -523,10 +531,7 @@
       </trans-unit>
       <trans-unit id="Z0fvRV9" resname="Health &amp; Medicine">
         <source>Health &amp; Medicine</source>
-        <target state="translated">Salud &amp; Medicina</target>
-        <alt-trans>
-          <target>Salud &amp; Medicina</target>
-        </alt-trans>
+        <target state="translated"><![CDATA[Salud &amp; Medicina]]></target>
       </trans-unit>
       <trans-unit id="t4wWGP2" resname="Law">
         <source>Law</source>
@@ -534,10 +539,7 @@
       </trans-unit>
       <trans-unit id="HPPfeB0" resname="Social Matters &amp; Education">
         <source>Social Matters &amp; Education</source>
-        <target state="translated">Aspectos Sociales &amp; Educación</target>
-        <alt-trans>
-          <target>Aspectos Sociales &amp; Educación</target>
-        </alt-trans>
+        <target state="translated"><![CDATA[Aspectos Sociales &amp; Educación]]></target>
       </trans-unit>
       <trans-unit id="GnUpqxT" resname="Subjects">
         <source>Subjects</source>
@@ -719,9 +721,29 @@
         <source>Private</source>
         <target state="translated">Privado</target>
       </trans-unit>
-      <trans-unit id="Ewpvcv4" resname="Advanced search">
+      <trans-unit id="iidISKI" resname="Advanced search">
         <source>Advanced search</source>
-        <target state="translated">Búsqueda avanzada</target>
+        <target state="needs-translation">Advanced search</target>
+      </trans-unit>
+      <trans-unit id="FBOV6zV" resname="Cookies">
+        <source>Cookies</source>
+        <target state="needs-translation">Cookies</target>
+      </trans-unit>
+      <trans-unit id="iXE7nJw" resname="Accept">
+        <source>Accept</source>
+        <target state="translated">Aceptar</target>
+      </trans-unit>
+      <trans-unit id="GG_yIeU" resname="This website uses its own and third-party cookies to offer you a better experience and service. You can review our cookie policy at any time. If you agree, check the corresponding box.">
+        <source>This website uses its own and third-party cookies to offer you a better experience and service. You can review our cookie policy at any time. If you agree, check the corresponding box.</source>
+        <target state="translated">Este sitio web utiliza cookies propias y de terceros, para ofrecerle una mejor experiencia y servicio. Puedes revisar nuestra política de cookies en cualquier momento. Si estás de acuerdo marca la casilla correspondiente.</target>
+      </trans-unit>
+      <trans-unit id="7dWy.Z9" resname="Cookie policy">
+        <source>Cookie policy</source>
+        <target state="translated">Política de cookies</target>
+      </trans-unit>
+      <trans-unit id="1c5E_XE" resname="External player">
+        <source>External player</source>
+        <target state="translated">Reproductor externo</target>
       </trans-unit>
     </body>
   </file>
