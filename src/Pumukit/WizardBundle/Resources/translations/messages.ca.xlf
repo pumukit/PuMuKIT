@@ -341,6 +341,22 @@
         <source>Status</source>
         <target state="translated">Estat</target>
       </trans-unit>
+      <trans-unit id="SGGKkey" resname="Uploading file">
+        <source>Uploading file</source>
+        <target state="needs-translation">Uploading file</target>
+      </trans-unit>
+      <trans-unit id="SWUsDc_" resname="There was an error">
+        <source>There was an error</source>
+        <target state="needs-translation">There was an error</target>
+      </trans-unit>
+      <trans-unit id="A9ZCBUt" resname="Max.">
+        <source>Max.</source>
+        <target state="needs-translation">Max.</target>
+      </trans-unit>
+      <trans-unit id="zikl0Vc" resname="File to upload">
+        <source>File to upload</source>
+        <target state="needs-translation">File to upload</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
