@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="zh-TW" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="Jg7KT1k" resname="Select the folder or create a new one where you want to upload the videos. Once this is done, press continue to start uploading the corresponding files">
+        <source>Select the folder or create a new one where you want to upload the videos. Once this is done, press continue to start uploading the corresponding files</source>
+        <target state="needs-translation">Select the folder or create a new one where you want to upload the videos. Once this is done, press continue to start uploading the corresponding files</target>
+      </trans-unit>
+      <trans-unit id="6KJWgkr" resname="The folder name is not valid">
+        <source>The folder name is not valid</source>
+        <target state="needs-translation">The folder name is not valid</target>
+      </trans-unit>
+      <trans-unit id="WGK6Qnl" resname="Upload video to: %folder%">
+        <source>Upload video to: %folder%</source>
+        <target state="needs-translation">Upload video to: %folder%</target>
+      </trans-unit>
+      <trans-unit id="7b1Qa7i" resname="Pumukit Bundle Versions">
+        <source>Pumukit Bundle Versions</source>
+        <target state="needs-translation">Pumukit Bundle Versions</target>
+      </trans-unit>
+      <trans-unit id="uq3fcPt" resname="Type">
+        <source>Type</source>
+        <target state="needs-translation">Type</target>
+      </trans-unit>
+      <trans-unit id="3NHVIj9" resname="Name">
+        <source>Name</source>
+        <target state="needs-translation">Name</target>
+      </trans-unit>
+      <trans-unit id="3RZ5Bd4" resname="Version">
+        <source>Version</source>
+        <target state="needs-translation">Version</target>
+      </trans-unit>
+      <trans-unit id="gqnEb.p" resname="Commit">
+        <source>Commit</source>
+        <target state="needs-translation">Commit</target>
+      </trans-unit>
+      <trans-unit id="EzEnW8U" resname="Tags">
+        <source>Tags</source>
+        <target state="needs-translation">Tags</target>
+      </trans-unit>
+      <trans-unit id="Um4Ah8w" resname="Description">
+        <source>Description</source>
+        <target state="needs-translation">Description</target>
+      </trans-unit>
+      <trans-unit id="fQD8IDp" resname="Other packages">
+        <source>Other packages</source>
+        <target state="needs-translation">Other packages</target>
+      </trans-unit>
+      <trans-unit id="PWlKoNH" resname="Edit multimedia object">
+        <source>Edit multimedia object</source>
+        <target state="needs-translation">Edit multimedia object</target>
+      </trans-unit>
+      <trans-unit id="a1b7xcD" resname="Upload local file">
+        <source>Upload local file</source>
+        <target state="needs-translation">Upload local file</target>
+      </trans-unit>
+      <trans-unit id="H.V6Kdf" resname="Next">
+        <source>Next</source>
+        <target state="needs-translation">Next</target>
+      </trans-unit>
+      <trans-unit id="dpAPG.0" resname="Back">
+        <source>Back</source>
+        <target state="needs-translation">Back</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
