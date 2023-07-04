@@ -367,7 +367,7 @@
       </trans-unit>
       <trans-unit id="_XTjOlq" resname="To use the inbox mode define the inbox path as &lt;code&gt;pumukit.inbox&lt;/code&gt; parameter in your config file.">
         <source>To use the inbox mode define the inbox path as &lt;code&gt;pumukit.inbox&lt;/code&gt; parameter in your config file.</source>
-        <target state="translated">Per utilitzar el mode de safata d’entrada, definiu la ruta de la safata d’entrada amb el paràmetre &lt;code&gt;pumukit.inbox&lt;/code&gt; al fitxer de configuració.</target>
+        <target state="translated"><![CDATA[Per utilitzar el mode de safata d’entrada, definiu la ruta de la safata d’entrada amb el paràmetre &lt;code&gt;pumukit.inbox&lt;/code&gt; al fitxer de configuració.]]></target>
       </trans-unit>
       <trans-unit id="5V8Ndup" resname="not exists">
         <source>not exists</source>
@@ -575,7 +575,7 @@
       </trans-unit>
       <trans-unit id="Hhnvc4L" resname="Owners &amp; Groups">
         <source>Owners &amp; Groups</source>
-        <target state="translated">Propietaris i grups</target>
+        <target state="translated"><![CDATA[Propietaris i grups]]></target>
       </trans-unit>
       <trans-unit id="fbIIlwU" resname="People">
         <source>People</source>
@@ -1299,7 +1299,8 @@
       </trans-unit>
       <trans-unit id="7utrTpP" resname="Please, enter an url with the following format: &lt;b&gt;https://example.domain.org/video/XXXXXXXX&lt;/b&gt;">
         <source>Please, enter an url with the following format: &lt;b&gt;https://example.domain.org/video/XXXXXXXX&lt;/b&gt;</source>
-        <target state="translated">Introduïu un URL amb el format següent: &lt;b&gt;https://exemple.domini.org/video/XXXXXXXX&lt;/b&gt;</target>
+        <target state="translated"><![CDATA[
+        Introduïu un URL amb el format següent: &lt;b&gt;https://exemple.domini.org/video/XXXXXXXX&lt;/b&gt;]]></target>
       </trans-unit>
       <trans-unit id="Bpiop_k" resname="or enter the ID of the Multimedia Object.">
         <source>or enter the ID of the Multimedia Object.</source>
@@ -1623,7 +1624,7 @@
       </trans-unit>
       <trans-unit id="liAqQOK" resname="&lt;span class=&quot;alert alert-dismissable alert-warning&quot;&gt;&lt;i&gt;Warning: This multimedia object is not correctly published on WebTV&lt;/i&gt;&lt;/span&gt;">
         <source>&lt;span class="alert alert-dismissable alert-warning"&gt;&lt;i&gt;Warning: This multimedia object is not correctly published on WebTV&lt;/i&gt;&lt;/span&gt;</source>
-        <target state="translated">&lt;span class="alert alert-dismissable alert-warning"&gt;&lt;i&gt;Advertència: Aquest objecte multimèdia no està publicat correctament al portal WebTV&lt;/i&gt;&lt;/span&gt;</target>
+        <target state="translated"><![CDATA[&lt;span class="alert alert-dismissable alert-warning"&gt;&lt;i&gt;Advertència: Aquest objecte multimèdia no està publicat correctament al portal WebTV&lt;/i&gt;&lt;/span&gt;]]></target>
       </trans-unit>
       <trans-unit id="6h4Em02" resname="Embedded Iframe">
         <source>Embedded Iframe</source>
@@ -1960,6 +1961,10 @@
       <trans-unit id="YUT0gTi" resname="Are you sure you want to delete this thumbnail?">
         <source>Are you sure you want to delete this thumbnail?</source>
         <target state="translated">Confirmeu que voleu eliminar aquesta miniatura?</target>
+      </trans-unit>
+      <trans-unit id="YUG7gTi" resname="If it corresponds to the one associated with the banner, the entire header will also be removed.">
+        <source>If it corresponds to the one associated with the banner, the entire header will also be removed.</source>
+        <target state="needs-translation">If it corresponds to the one associated with the banner, the entire header will also be removed.</target>
       </trans-unit>
       <trans-unit id="Eru2JsX" resname="Thumbnail removed.">
         <source>Thumbnail removed.</source>
@@ -2327,7 +2332,7 @@
       </trans-unit>
       <trans-unit id="9HA4HnV" resname="Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name">
         <source>Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name</source>
-        <target state="translated">Introduïu el nom de la persona que voleu afegir. Si aquesta persona ja existeix a la base de dades, es mostrarà una llista desplegable des de la qual podreu seleccionar-la i &lt;strong&gt;utilitzar-la&lt;/strong&gt;. Si la persona no existeix a la base de dades, &lt;strong&gt;creeu&lt;/strong&gt; una entrada nova amb el nom escrit</target>
+        <target state="translated"><![CDATA[Introduïu el nom de la persona que voleu afegir. Si aquesta persona ja existeix a la base de dades, es mostrarà una llista desplegable des de la qual podreu seleccionar-la i &lt;strong&gt;utilitzar-la&lt;/strong&gt;. Si la persona no existeix a la base de dades, &lt;strong&gt;creeu&lt;/strong&gt; una entrada nova amb el nom escrit]]></target>
       </trans-unit>
       <trans-unit id=".EOJuwR" resname="My Playlists">
         <source>My Playlists</source>
@@ -2349,9 +2354,17 @@
         <source>Copyright</source>
         <target state="translated">Copyright</target>
       </trans-unit>
+      <trans-unit id="jfx56q0C" resname="Copyright &lt;a href=&quot;%urlCopyright%&quot; target=&quot;__blank&quot;&gt;&lt;i class=&quot;fa fa-info-circle&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/a&gt;">
+        <source>Copyright &lt;a href="%urlCopyright%" target="__blank"&gt;&lt;i class="fa fa-info-circle" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;</source>
+        <target state="needs-translation"><![CDATA[Copyright <a href="%urlCopyright%" target="__blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>]]></target>
+      </trans-unit>
       <trans-unit id="wBHWCXv" resname="License">
         <source>License</source>
         <target state="translated">Llicència</target>
+      </trans-unit>
+      <trans-unit id="wBd345fCXv" resname="License &lt;a href=&quot;%urlLicense%&quot; target=&quot;__blank&quot;&gt;&lt;i class=&quot;fa fa-info-circle&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/a&gt;">
+        <source>License &lt;a href="%urlLicense%" target="__blank"&gt;&lt;i class="fa fa-info-circle" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;</source>
+        <target state="needs-translation"><![CDATA[License <a href="%urlLicense%" target="__blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>]]></target>
       </trans-unit>
       <trans-unit id="os.h5dY" resname="Publication Date">
         <source>Publication Date</source>
@@ -3525,15 +3538,15 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="CFp4TPJ" resname="i18n.multiple.Published">
         <source>i18n.multiple.Published</source>
-        <target state="translated">i18n.multiple.Publicat</target>
+        <target state="translated">Publicat</target>
       </trans-unit>
       <trans-unit id="1FBVDqa" resname="i18n.multiple.Hidden">
         <source>i18n.multiple.Hidden</source>
-        <target state="translated">i18n.multiple.Ocult</target>
+        <target state="translated">Ocult</target>
       </trans-unit>
       <trans-unit id="b1Ytm3C" resname="i18n.multiple.Blocked">
         <source>i18n.multiple.Blocked</source>
-        <target state="translated">i18n.multiple.Bloquejat</target>
+        <target state="translated">Bloquejat</target>
       </trans-unit>
       <trans-unit id="jWuw_Y7" resname="Show advanced">
         <source>Show advanced</source>
@@ -3551,9 +3564,9 @@ una acció...</target>
         <source>Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and
         &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database,
         &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name</source>
-        <target state="translated">Introduïu el nom de la persona que voleu afegir. Si aquesta persona ja existeix a la base de dades, es mostrarà una llista desplegable des de la qual podreu seleccionar-la i
+        <target state="translated"><![CDATA[Introduïu el nom de la persona que voleu afegir. Si aquesta persona ja existeix a la base de dades, es mostrarà una llista desplegable des de la qual podreu seleccionar-la i
         &lt;strong&gt;utilitzar-la&lt;/strong&gt;. Si la persona no existeix a la base de dades,
-        &lt;strong&gt;creeu&lt;/strong&gt; una entrada nova amb el nom escrit</target>
+        &lt;strong&gt;creeu&lt;/strong&gt; una entrada nova amb el nom escrit]]></target>
       </trans-unit>
       <trans-unit id="O0G6nHy" resname="No data">
         <source>No data</source>
@@ -3789,7 +3802,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="gOjdGlo" resname="Recording">
         <source>Recording</source>
-        <target state="needs-translation">Recording</target>
+        <target state="translated">Enregistrament</target>
       </trans-unit>
       <trans-unit id="GyjReFW" resname="Viewed">
         <source>Viewed</source>
@@ -3801,11 +3814,11 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="5KIt_PS" resname="Error: Multimedia Object with id %id% not found">
         <source>Error: Multimedia Object with id %id% not found</source>
-        <target state="needs-translation">Error: Multimedia Object with id %id% not found</target>
+        <target state="translated">Error: no es troba l'objecte multimèdia amb l'id %id% </target>
       </trans-unit>
       <trans-unit id="eQLp7Fl" resname="Go back to">
         <source>Go back to</source>
-        <target state="needs-translation">Go back to</target>
+        <target state="translated">Tornar a </target>
       </trans-unit>
       <trans-unit id="YMfjw07" resname="my series">
         <source>my series</source>
@@ -3813,59 +3826,255 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="CZ_p4k1" resname="Show/Hide track">
         <source>Show/Hide track</source>
-        <target state="needs-translation">Show/Hide track</target>
+        <target state="translated">Mostra/Amaga la pista</target>
       </trans-unit>
       <trans-unit id="z6IKnQ2" resname="Personal profile">
         <source>Personal profile</source>
-        <target state="needs-translation">Personal profile</target>
+        <target state="translated">Perfil personal</target>
       </trans-unit>
       <trans-unit id="j_dsskm" resname="My personal profile">
         <source>My personal profile</source>
-        <target state="needs-translation">My personal profile</target>
+        <target state="translated">El meu perfil personal</target>
       </trans-unit>
       <trans-unit id="EPGZEYI" resname="My profile info">
         <source>My profile info</source>
-        <target state="needs-translation">My profile info</target>
+        <target state="translated">Informació del meu perfil</target>
       </trans-unit>
       <trans-unit id="5QtQix1" resname="Time uploaded">
         <source>Time uploaded</source>
-        <target state="needs-translation">Time uploaded</target>
+        <target state="translated">Temps de càrrega</target>
       </trans-unit>
       <trans-unit id="LZRp8Ix" resname="Your video stats">
         <source>Your video stats</source>
-        <target state="needs-translation">Your video stats</target>
+        <target state="translated">Estadístiques dels teus vídeos</target>
       </trans-unit>
       <trans-unit id="BpOx4v1" resname="Assigned videos by role">
         <source>Assigned videos by role</source>
-        <target state="needs-translation">Assigned videos by role</target>
+        <target state="translated">Vídeos assignats per el rol</target>
       </trans-unit>
       <trans-unit id="DTlgLcO" resname="Last login">
         <source>Last login</source>
-        <target state="needs-translation">Last login</target>
+        <target state="translated">Darrer inici de sessió</target>
       </trans-unit>
       <trans-unit id="RyWQrpd" resname="Provider">
         <source>Provider</source>
-        <target state="needs-translation">Provider</target>
+        <target state="translated">Proveïdor </target>
       </trans-unit>
       <trans-unit id="Rj1ftLT" resname="No groups found">
         <source>No groups found</source>
-        <target state="needs-translation">No groups found</target>
+        <target state="translated">No s'ha trobat grups</target>
+      </trans-unit>
+      <trans-unit id="Rj1lgLT" resname="No series found">
+        <source>No series found</source>
+        <target state="translated">No s'ha trobat sèries</target>
       </trans-unit>
       <trans-unit id="ITD9xUa" resname="Email already in use">
         <source>Email already in use</source>
-        <target state="needs-translation">Email already in use</target>
+        <target state="translated">El correu electrònic ja s'està utilitzant</target>
       </trans-unit>
       <trans-unit id="8AEUIqw" resname="User info updated">
         <source>User info updated</source>
-        <target state="needs-translation">User info updated</target>
+        <target state="translated">Informació d'usuari actualitzada</target>
       </trans-unit>
       <trans-unit id="Jxxi_i3" resname="My profile">
         <source>My profile</source>
-        <target state="needs-translation">My profile</target>
+        <target state="translated">El meu perfil</target>
       </trans-unit>
       <trans-unit id="dclYZH3" resname="My stats">
         <source>My stats</source>
-        <target state="needs-translation">My stats</target>
+        <target state="translated">Les meves estadístiques</target>
+      </trans-unit>
+      <trans-unit id="OQIpXE4" resname="You're not allowed to access this link. You're not the holder user.">
+        <source>You're not allowed to access this link. You're not the holder user.</source>
+        <target state="needs-translation">You're not allowed to access this link. You're not the holder user.</target>
+      </trans-unit>
+      <trans-unit id="rkv41In" resname="This link was already used by co-owner.">
+        <source>This link was already used by co-owner.</source>
+        <target state="needs-translation">This link was already used by co-owner.</target>
+      </trans-unit>
+      <trans-unit id="Dezy.jb" resname="You're not allowed to access this link. You're not the owner user of this multimedia object.">
+        <source>You're not allowed to access this link. You're not the owner user of this multimedia object.</source>
+        <target state="needs-translation">You're not allowed to access this link. You're not the owner user of this multimedia object.</target>
+      </trans-unit>
+      <trans-unit id="Oob_u0K" resname="The user '%user%' has added you as co-owner of the video:">
+        <source>The user '%user%' has added you as co-owner of the video:</source>
+        <target state="needs-translation">The user '%user%' has added you as co-owner of the video:</target>
+      </trans-unit>
+      <trans-unit id="oSLy2_6" resname="You can reject being co-owner in the following URL link:">
+        <source>You can reject being co-owner in the following URL link:</source>
+        <target state="needs-translation">You can reject being co-owner in the following URL link:</target>
+      </trans-unit>
+      <trans-unit id="Dyk7WPz" resname="Error on reject of a publication">
+        <source>Error on reject of a publication</source>
+        <target state="needs-translation">Error on reject of a publication</target>
+      </trans-unit>
+      <trans-unit id="jm0oub9" resname="Check the URL is valid.">
+        <source>Check the URL is valid.</source>
+        <target state="needs-translation">Check the URL is valid.</target>
+      </trans-unit>
+      <trans-unit id="G.l7GCV" resname="Back to index">
+        <source>Back to index</source>
+        <target state="needs-translation">Back to index</target>
+      </trans-unit>
+      <trans-unit id="qsBEVQq" resname="Reject/report of publication in my name">
+        <source>Reject/report of publication in my name</source>
+        <target state="needs-translation">Reject/report of publication in my name</target>
+      </trans-unit>
+      <trans-unit id="ge0Gbk8" resname="You've been deleted as owner of the following multimedia object">
+        <source>You've been deleted as owner of the following multimedia object</source>
+        <target state="needs-translation">You've been deleted as owner of the following multimedia object</target>
+      </trans-unit>
+      <trans-unit id="gvpvekT" resname="NOTE: This is an URL of one single use, if you attempt to access it again, an error message will be shown.">
+        <source>NOTE: This is an URL of one single use, if you attempt to access it again, an error message will be shown.</source>
+        <target state="needs-translation">NOTE: This is an URL of one single use, if you attempt to access it again, an error message will be shown.</target>
+      </trans-unit>
+      <trans-unit id="MLMItXS" resname="Video options">
+        <source>Video options</source>
+        <target state="needs-translation">Video options</target>
+      </trans-unit>
+      <trans-unit id="kMMeE3r" resname="Video head">
+        <source>Video head</source>
+        <target state="needs-translation">Video head</target>
+      </trans-unit>
+      <trans-unit id="ICtUyCV" resname="Video tail">
+        <source>Video tail</source>
+        <target state="needs-translation">Video tail</target>
+      </trans-unit>
+      <trans-unit id="0tHgmzW" resname="Multimedia Object Id">
+        <source>Multimedia Object Id</source>
+        <target state="needs-translation">Multimedia Object Id</target>
+      </trans-unit>
+      <trans-unit id="CscPjL9" resname="i18n.one.Series">
+        <source>i18n.one.Series</source>
+        <target state="needs-translation">i18n.one.Series</target>
+      </trans-unit>
+      <trans-unit id="QFUsnzv" resname="Technical info">
+        <source>Technical info</source>
+        <target state="needs-translation">Technical info</target>
+      </trans-unit>
+      <trans-unit id="cS3R70y" resname="Head and tail video">
+        <source>Head and tail video</source>
+        <target state="needs-translation">Head and tail video</target>
+      </trans-unit>
+      <trans-unit id="m7CqzG1" resname="Head">
+        <source>Head</source>
+        <target state="needs-translation">Head</target>
+      </trans-unit>
+      <trans-unit id="rpw70R9" resname="Tail">
+        <source>Tail</source>
+        <target state="needs-translation">Tail</target>
+      </trans-unit>
+      <trans-unit id="F_V94dr" resname="Iframe">
+        <source>Iframe</source>
+        <target state="needs-translation">Iframe</target>
+      </trans-unit>
+      <trans-unit id="GqTLC8y" resname="Image">
+        <source>Image</source>
+        <target state="needs-translation">Image</target>
+      </trans-unit>
+      <trans-unit id="q3dDpK2" resname="Serie">
+        <source>Serie</source>
+        <target state="needs-translation">Serie</target>
+      </trans-unit>
+      <trans-unit id="BR8B8JW" resname="Track">
+        <source>Track</source>
+        <target state="needs-translation">Track</target>
+      </trans-unit>
+      <trans-unit id=".4BZ3Gd" resname="Actions">
+        <source>Actions</source>
+        <target state="needs-translation">Actions</target>
+      </trans-unit>
+      <trans-unit id="bY.FPa8" resname="No videos selected">
+        <source>No videos selected</source>
+        <target state="needs-translation">No videos selected</target>
+      </trans-unit>
+      <trans-unit id="fTYUYZE" resname="Default system header configuration">
+        <source>Default system header configuration</source>
+        <target state="needs-translation">Default system header configuration</target>
+      </trans-unit>
+      <trans-unit id="Ot22Fs0" resname="No video head configured">
+        <source>No video head configured</source>
+        <target state="needs-translation">No video head configured</target>
+      </trans-unit>
+      <trans-unit id="izUTcEy" resname="Default system tail configuration">
+        <source>Default system tail configuration</source>
+        <target state="needs-translation">Default system tail configuration</target>
+      </trans-unit>
+      <trans-unit id="qAxfDBU" resname="No video tail configured">
+        <source>No video tail configured</source>
+        <target state="needs-translation">No video tail configured</target>
+      </trans-unit>
+      <trans-unit id="lYYIDRi" resname="Head and tail manager">
+        <source>Head and tail manager</source>
+        <target state="needs-translation">Head and tail manager</target>
+      </trans-unit>
+      <trans-unit id="1ZPHvob" resname="Video head list">
+        <source>Video head list</source>
+        <target state="needs-translation">Video head list</target>
+      </trans-unit>
+      <trans-unit id="o.hlqWT" resname="Video tail list">
+        <source>Video tail list</source>
+        <target state="needs-translation">Video tail list</target>
+      </trans-unit>
+      <trans-unit id="ZvSATuI" resname="Archive">
+        <source>Archive</source>
+        <target state="needs-translation">Archive</target>
+      </trans-unit>
+      <trans-unit id="8ze7Pzt" resname="Multimedia Object title">
+        <source>Multimedia Object title</source>
+        <target state="needs-translation">Multimedia Object title</target>
+      </trans-unit>
+      <trans-unit id="0HAPAiZ" resname="Archiving a multimedia object implies that the object in question is archived and an editable clone is generated by the user to whom it belongs.">
+        <source>Archiving a multimedia object implies that the object in question is archived and an editable clone is generated by the user to whom it belongs.</source>
+        <target state="needs-translation">Archiving a multimedia object implies that the object in question is archived and an editable clone is generated by the user to whom it belongs.</target>
+      </trans-unit>
+      <trans-unit id="joG1t9V" resname="The characteristics of the archive are:">
+        <source>The characteristics of the archive are:</source>
+        <target state="needs-translation">The characteristics of the archive are:</target>
+      </trans-unit>
+      <trans-unit id="smqMThr" resname="The media object will contain 'ARCHIVED {YEAR}' in the title of the media object">
+        <source>The media object will contain 'ARCHIVED {YEAR}' in the title of the media object</source>
+        <target state="needs-translation">The media object will contain 'ARCHIVED {YEAR}' in the title of the media object</target>
+      </trans-unit>
+      <trans-unit id=".A1duX3" resname="Ownership of the object is given to the administrator or user selected by configuration">
+        <source>Ownership of the object is given to the administrator or user selected by configuration</source>
+        <target state="needs-translation">Ownership of the object is given to the administrator or user selected by configuration</target>
+      </trans-unit>
+      <trans-unit id="biemlah" resname="The multimedia object will store who and when has locked it">
+        <source>The multimedia object will store who and when has locked it</source>
+        <target state="needs-translation">The multimedia object will store who and when has locked it</target>
+      </trans-unit>
+      <trans-unit id="oZ7DRAc" resname="A reference to where the new locked object came from will be saved">
+        <source>A reference to where the new locked object came from will be saved</source>
+        <target state="needs-translation">A reference to where the new locked object came from will be saved</target>
+      </trans-unit>
+      <trans-unit id="4Y8bLUu" resname="Are you sure you want to archive the object ?">
+        <source>Are you sure you want to archive the object ?</source>
+        <target state="needs-translation">Are you sure you want to archive the object ?</target>
+      </trans-unit>
+      <trans-unit id="Nelyylv" resname="Multimedia Object archive ERROR">
+        <source>Multimedia Object archive ERROR</source>
+        <target state="needs-translation">Multimedia Object archive ERROR</target>
+      </trans-unit>
+      <trans-unit id="r9eg0Gp" resname="Multimedia Object archive complete">
+        <source>Multimedia Object archive complete</source>
+        <target state="needs-translation">Multimedia Object archive complete</target>
+      </trans-unit>
+      <trans-unit id="lU0EsYZ" resname="Archive multimedia object">
+        <source>Archive multimedia object</source>
+        <target state="needs-translation">Archive multimedia object</target>
+      </trans-unit>
+      <trans-unit id="1" resname="ARCHIVED">
+        <source>ARCHIVED</source>
+        <target state="needs-translation">ARCHIVED</target>
+      </trans-unit>
+      <trans-unit id="NtsMHOJ" resname="Search Channels">
+        <source>Search Channels</source>
+        <target state="needs-translation">Search Channels</target>
+      </trans-unit>
+      <trans-unit id="uIEWO1i" resname="Selected Channel">
+        <source>Selected Channel</source>
+        <target state="needs-translation">Selected Channel</target>
       </trans-unit>
     </body>
   </file>
