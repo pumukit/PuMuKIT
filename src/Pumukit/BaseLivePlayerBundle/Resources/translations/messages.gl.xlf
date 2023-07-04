@@ -165,6 +165,14 @@
         <source>Live chat</source>
         <target state="translated">Chat en directo</target>
       </trans-unit>
+      <trans-unit id="_O39e6Q" resname="VideoJS does not support your browser version">
+        <source>VideoJS does not support your browser version</source>
+        <target state="needs-translation">VideoJS does not support your browser version</target>
+      </trans-unit>
+      <trans-unit id="tsPwTGf" resname="Please use 11.0 or higher version or use another browser.">
+        <source>Please use 11.0 or higher version or use another browser.</source>
+        <target state="needs-translation">Please use 11.0 or higher version or use another browser.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
