@@ -1964,7 +1964,8 @@
       </trans-unit>
       <trans-unit id="YUG7gTi" resname="If it corresponds to the one associated with the banner, the entire header will also be removed.">
         <source>If it corresponds to the one associated with the banner, the entire header will also be removed.</source>
-        <target state="needs-translation">If it corresponds to the one associated with the banner, the entire header will also be removed.</target>
+        <target state="translated">Se corresponde ao asociado ao banner, tamén se eliminará a cabeceira completa.
+</target>
       </trans-unit>
       <trans-unit id="Eru2JsX" resname="Thumbnail removed.">
         <source>Thumbnail removed.</source>
@@ -2356,7 +2357,7 @@
       </trans-unit>
       <trans-unit id="jfx56q0C" resname="Copyright &lt;a href=&quot;%urlCopyright%&quot; target=&quot;__blank&quot;&gt;&lt;i class=&quot;fa fa-info-circle&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/a&gt;">
         <source>Copyright &lt;a href="%urlCopyright%" target="__blank"&gt;&lt;i class="fa fa-info-circle" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;</source>
-        <target state="needs-translation"><![CDATA[Copyright <a href="%urlCopyright%" target="__blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>]]></target>
+        <target state="translated"><![CDATA[Copyright <a href="%urlCopyright%" target="__blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>]]></target>
       </trans-unit>
       <trans-unit id="wBHWCXv" resname="License">
         <source>License</source>
@@ -2364,7 +2365,7 @@
       </trans-unit>
       <trans-unit id="wBd345fCXv" resname="License &lt;a href=&quot;%urlLicense%&quot; target=&quot;__blank&quot;&gt;&lt;i class=&quot;fa fa-info-circle&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/a&gt;">
         <source>License &lt;a href="%urlLicense%" target="__blank"&gt;&lt;i class="fa fa-info-circle" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;</source>
-        <target state="needs-translation"><![CDATA[License <a href="%urlLicense%" target="__blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>]]></target>
+        <target state="translated"><![CDATA[Licencia <a href="%urlLicense%" target="__blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>]]></target>
       </trans-unit>
       <trans-unit id="os.h5dY" resname="Publication Date">
         <source>Publication Date</source>
@@ -3854,7 +3855,7 @@
       </trans-unit>
       <trans-unit id="Rj1lgLT" resname="No series found">
         <source>No series found</source>
-        <target state="needs-translation">No series found</target>
+        <target state="translated">Non se atopou ningunha serie</target>
       </trans-unit>
       <trans-unit id="ITD9xUa" resname="Email already in use">
         <source>Email already in use</source>
@@ -3954,7 +3955,7 @@
       </trans-unit>
       <trans-unit id="F_V94dr" resname="Iframe">
         <source>Iframe</source>
-        <target state="needs-translation">Iframe</target>
+        <target state="translated">Iframe</target>
       </trans-unit>
       <trans-unit id="GqTLC8y" resname="Image">
         <source>Image</source>
@@ -3962,11 +3963,11 @@
       </trans-unit>
       <trans-unit id="q3dDpK2" resname="Serie">
         <source>Serie</source>
-        <target state="needs-translation">Serie</target>
+        <target state="translated">Serie</target>
       </trans-unit>
       <trans-unit id="BR8B8JW" resname="Track">
         <source>Track</source>
-        <target state="needs-translation">Track</target>
+        <target state="translated">Pista</target>
       </trans-unit>
       <trans-unit id=".4BZ3Gd" resname="Actions">
         <source>Actions</source>
@@ -4006,7 +4007,7 @@
       </trans-unit>
       <trans-unit id="ZvSATuI" resname="Archive">
         <source>Archive</source>
-        <target state="needs-translation">Archive</target>
+        <target state="translated">Arquivar</target>
       </trans-unit>
       <trans-unit id="8ze7Pzt" resname="Multimedia Object title">
         <source>Multimedia Object title</source>
