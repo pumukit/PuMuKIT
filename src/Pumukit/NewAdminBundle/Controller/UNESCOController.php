@@ -294,7 +294,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
             }
         }
 
-        $pager = $this->paginationService->createDoctrineODMMongoDBAdapter($multimediaObjects, $page, $maxPerPage);
+        $pager = $this->paginationService->createDoctrineODMMongoDBAdapter($multimediaObjects, (int) $page, (int) $maxPerPage);
 
         if ($pager->getNbPages() < $page) {
             $page = $pager->getNbPages();

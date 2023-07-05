@@ -115,6 +115,6 @@ class CollectionController extends AbstractController implements NewAdminControl
         $page = $session->get($session_namespace.'/page', 1);
         $limit = $session->get($session_namespace.'/paginate', 10);
 
-        return $this->paginationService->createDoctrineODMMongoDBAdapter($queryBuilder, $page, $limit);
+        return $this->paginationService->createDoctrineODMMongoDBAdapter($queryBuilder, (int) $page, (int) $limit);
     }
 }

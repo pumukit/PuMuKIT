@@ -82,6 +82,6 @@ class SeriesController extends AbstractController implements WebTVControllerInte
 
     private function createPager($objects, $page): Pagerfanta
     {
-        return $this->paginationService->createDoctrineODMMongoDBAdapter($objects, $page, $this->limitObjsSeries);
+        return $this->paginationService->createDoctrineODMMongoDBAdapter($objects, (int) $page, $this->limitObjsSeries);
     }
 }

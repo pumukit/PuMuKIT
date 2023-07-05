@@ -1,6 +1,6 @@
 .PHONY: help debug stop start clean pull build test-all shell ps logs cc composer-validate fixtures composer-install
 
-DOCKER_COMP = docker-compose
+DOCKER_COMP = docker compose
 
 help:
 	@echo ''
