@@ -7,7 +7,7 @@
     <body>
       <trans-unit id="eeU5pwP" resname="Aviso legal">
         <source>Aviso legal</source>
-        <target state="needs-translation">Legal warning</target>
+        <target state="translated">Aviso legal</target>
       </trans-unit>
       <trans-unit id="e1wLqeS" resname="Health Sciences">
         <source>Health Sciences</source>
@@ -723,11 +723,11 @@
       </trans-unit>
       <trans-unit id="iidISKI" resname="Advanced search">
         <source>Advanced search</source>
-        <target state="needs-translation">Advanced search</target>
+        <target state="translated">Búsqueda avanzada</target>
       </trans-unit>
       <trans-unit id="FBOV6zV" resname="Cookies">
         <source>Cookies</source>
-        <target state="needs-translation">Cookies</target>
+        <target state="translated">Cookies</target>
       </trans-unit>
       <trans-unit id="iXE7nJw" resname="Accept">
         <source>Accept</source>
