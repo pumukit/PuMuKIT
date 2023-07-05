@@ -35,7 +35,7 @@
       </trans-unit>
       <trans-unit id="gqnEb.p" resname="Commit">
         <source>Commit</source>
-        <target state="needs-translation">Commit</target>
+        <target state="translated">Commit</target>
       </trans-unit>
       <trans-unit id="EzEnW8U" resname="Tags">
         <source>Tags</source>
