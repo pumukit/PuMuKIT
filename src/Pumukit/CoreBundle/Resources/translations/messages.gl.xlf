@@ -7,15 +7,15 @@
     <body>
       <trans-unit id="Jg7KT1k" resname="Select the folder or create a new one where you want to upload the videos. Once this is done, press continue to start uploading the corresponding files">
         <source>Select the folder or create a new one where you want to upload the videos. Once this is done, press continue to start uploading the corresponding files</source>
-        <target state="needs-translation">Select the folder or create a new one where you want to upload the videos. Once this is done, press continue to start uploading the corresponding files</target>
+        <target state="translated">Selecciona a carpeta ou crea unha nova onde queira subir os videos. Unha vez feito, pulse continuar para comezar a subir os ficheiros correspondentes</target>
       </trans-unit>
       <trans-unit id="6KJWgkr" resname="The folder name is not valid">
         <source>The folder name is not valid</source>
-        <target state="needs-translation">The folder name is not valid</target>
+        <target state="translated">O nome da carpeta non é valido</target>
       </trans-unit>
       <trans-unit id="WGK6Qnl" resname="Upload video to: %folder%">
         <source>Upload video to: %folder%</source>
-        <target state="needs-translation">Upload video to: %folder%</target>
+        <target state="translated">Subir arquivo a: %folder%</target>
       </trans-unit>
       <trans-unit id="7b1Qa7i" resname="Pumukit Bundle Versions">
         <source>Pumukit Bundle Versions</source>
@@ -35,7 +35,7 @@
       </trans-unit>
       <trans-unit id="gqnEb.p" resname="Commit">
         <source>Commit</source>
-        <target state="needs-translation">Commit</target>
+        <target state="translated">Commit</target>
       </trans-unit>
       <trans-unit id="EzEnW8U" resname="Tags">
         <source>Tags</source>
