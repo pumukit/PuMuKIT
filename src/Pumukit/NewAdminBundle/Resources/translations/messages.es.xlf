@@ -3953,7 +3953,7 @@
       </trans-unit>
       <trans-unit id="F_V94dr" resname="Iframe">
         <source>Iframe</source>
-        <target state="needs-translation">Iframe</target>
+        <target state="translated">Iframe</target>
       </trans-unit>
       <trans-unit id="GqTLC8y" resname="Image">
         <source>Image</source>
@@ -3961,11 +3961,11 @@
       </trans-unit>
       <trans-unit id="q3dDpK2" resname="Serie">
         <source>Serie</source>
-        <target state="needs-translation">Serie</target>
+        <target state="translated">Serie</target>
       </trans-unit>
       <trans-unit id="BR8B8JW" resname="Track">
         <source>Track</source>
-        <target state="needs-translation">Track</target>
+        <target state="translated">Pista</target>
       </trans-unit>
       <trans-unit id=".4BZ3Gd" resname="Actions">
         <source>Actions</source>
@@ -4005,7 +4005,7 @@
       </trans-unit>
       <trans-unit id="ZvSATuI" resname="Archive">
         <source>Archive</source>
-        <target state="needs-translation">Archive</target>
+        <target state="translated">Archivar</target>
       </trans-unit>
       <trans-unit id="8ze7Pzt" resname="Multimedia Object title">
         <source>Multimedia Object title</source>
