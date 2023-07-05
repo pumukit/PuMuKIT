@@ -115,7 +115,7 @@
       </trans-unit>
       <trans-unit id="Bbct2hB" resname="reset it">
         <source>reset it</source>
-        <target state="translated">restablézao</target>
+        <target state="translated">Restablecer</target>
       </trans-unit>
       <trans-unit id="g59aAVd" resname="MM">
         <source>MM</source>
