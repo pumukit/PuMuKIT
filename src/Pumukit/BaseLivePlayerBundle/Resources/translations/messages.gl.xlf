@@ -167,11 +167,11 @@
       </trans-unit>
       <trans-unit id="_O39e6Q" resname="VideoJS does not support your browser version">
         <source>VideoJS does not support your browser version</source>
-        <target state="needs-translation">VideoJS does not support your browser version</target>
+        <target state="translated">JWPlayer non é compatible coa versión do seu navegador</target>
       </trans-unit>
       <trans-unit id="tsPwTGf" resname="Please use 11.0 or higher version or use another browser.">
         <source>Please use 11.0 or higher version or use another browser.</source>
-        <target state="needs-translation">Please use 11.0 or higher version or use another browser.</target>
+        <target state="translated">Por favor, empregue a versión 9.0 ou superior ou use outro navegador.</target>
       </trans-unit>
     </body>
   </file>
