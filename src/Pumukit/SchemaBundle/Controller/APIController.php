@@ -180,11 +180,11 @@ class APIController extends AbstractController implements NewAdminControllerInte
                 foreach ($criteria as $key => $val) {
                     if (is_array($val)) {
                         foreach ($val as $sub_key => $sub_val) {
-                            $val[$sub_key] = preg_replace("/[^a-zA-Z áéíóúÁÉÍÓÚñÑ0-9]+/", "", $sub_val);
+                            $val[$sub_key] = preg_replace('/[^a-zA-Z áéíóúÁÉÍÓÚñÑ0-9]+/', '', $sub_val);
                             $criteria[$key] = $val;
                         }
                     } else {
-                        $criteria[$key] = preg_replace("/[^a-zA-Z áéíóúÁÉÍÓÚñÑ0-9]+/", "", $val);
+                        $criteria[$key] = preg_replace('/[^a-zA-Z áéíóúÁÉÍÓÚñÑ0-9]+/', '', $val);
                     }
                 }
                 $qb->addAnd($criteria);
