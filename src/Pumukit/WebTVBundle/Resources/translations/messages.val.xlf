@@ -7,7 +7,7 @@
     <body>
       <trans-unit id="eeU5pwP" resname="Aviso legal">
         <source>Aviso legal</source>
-        <target state="needs-translation">Legal warning</target>
+        <target state="translated">Avís legal</target>
       </trans-unit>
       <trans-unit id="e1wLqeS" resname="Health Sciences">
         <source>Health Sciences</source>
@@ -31,7 +31,7 @@
       </trans-unit>
       <trans-unit id="Rks8nO0" resname="PuMuKIT">
         <source>PuMuKIT</source>
-        <target state="needs-translation">PuMuKIT</target>
+        <target state="translated">PuMuKIT</target>
       </trans-unit>
       <trans-unit id="oByF8Cc" resname="PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.">
         <source>PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.</source>
@@ -211,7 +211,7 @@
       </trans-unit>
       <trans-unit id="uLHYlMa" resname="Categories">
         <source>Categories</source>
-        <target state="needs-translation">Categories</target>
+        <target state="translated">Categories</target>
       </trans-unit>
       <trans-unit id="jh2INdQ" resname="Most viewed">
         <source>Most viewed</source>
@@ -247,7 +247,7 @@
       </trans-unit>
       <trans-unit id=".RChRul" resname="Materials">
         <source>Materials</source>
-        <target state="needs-translation">Materials</target>
+        <target state="translated">Materials</target>
       </trans-unit>
       <trans-unit id="w2V3GZW" resname="There is no materials">
         <source>There is no materials</source>
@@ -259,11 +259,11 @@
       </trans-unit>
       <trans-unit id="c0.XezY" resname="URL:">
         <source>URL:</source>
-        <target state="needs-translation">URL:</target>
+        <target state="translated">URL:</target>
       </trans-unit>
       <trans-unit id="Qw_p6ul" resname="IFRAME:">
         <source>IFRAME:</source>
-        <target state="needs-translation">IFRAME:</target>
+        <target state="translated">IFRAME:</target>
       </trans-unit>
       <trans-unit id="pP5lJk7" resname="Language">
         <source>Language</source>
@@ -563,11 +563,11 @@
       </trans-unit>
       <trans-unit id="56JB3rr" resname="URL">
         <source>URL</source>
-        <target state="needs-translation">URL</target>
+        <target state="translated">URL</target>
       </trans-unit>
       <trans-unit id="F_V94dr" resname="Iframe">
         <source>Iframe</source>
-        <target state="needs-translation">Iframe</target>
+        <target state="translated">Iframe</target>
       </trans-unit>
       <trans-unit id="GoAAU4B" resname="Twitter icon">
         <source>Twitter icon</source>
@@ -723,27 +723,27 @@
       </trans-unit>
       <trans-unit id="iidISKI" resname="Advanced search">
         <source>Advanced search</source>
-        <target state="needs-translation">Advanced search</target>
+        <target state="translated">Cerca avançada</target>
       </trans-unit>
       <trans-unit id="FBOV6zV" resname="Cookies">
         <source>Cookies</source>
-        <target state="needs-translation">Cookies</target>
+        <target state="translated">Cookies</target>
       </trans-unit>
       <trans-unit id="iXE7nJw" resname="Accept">
         <source>Accept</source>
-        <target state="needs-translation">Accept</target>
+        <target state="translated">Acceptar</target>
       </trans-unit>
       <trans-unit id="GG_yIeU" resname="This website uses its own and third-party cookies to offer you a better experience and service. You can review our cookie policy at any time. If you agree, check the corresponding box.">
         <source>This website uses its own and third-party cookies to offer you a better experience and service. You can review our cookie policy at any time. If you agree, check the corresponding box.</source>
-        <target state="needs-translation">This website uses its own and third-party cookies to offer you a better experience and service. You can review our cookie policy at any time. If you agree, check the corresponding box.</target>
+        <target state="translated">Aquest lloc web utilitza cookies pròpies i de tercers per a oferir-li una millor experiència i servei. Pot revisar la nostra política de cookies en qualsevol moment. Si està d'acord, marque la casella corresponent.</target>
       </trans-unit>
       <trans-unit id="7dWy.Z9" resname="Cookie policy">
         <source>Cookie policy</source>
-        <target state="needs-translation">Cookie policy</target>
+        <target state="translated">Política de cookies</target>
       </trans-unit>
       <trans-unit id="1c5E_XE" resname="External player">
         <source>External player</source>
-        <target state="needs-translation">External player</target>
+        <target state="translated">Reproductor extern</target>
       </trans-unit>
     </body>
   </file>
