@@ -7,7 +7,7 @@
     <body>
       <trans-unit id="EhVukhv" resname="Id">
         <source>Id</source>
-        <target state="needs-translation">Id</target>
+        <target state="translated">Id</target>
       </trans-unit>
       <trans-unit id="kg5BPH1" resname="Status">
         <source>Status</source>
