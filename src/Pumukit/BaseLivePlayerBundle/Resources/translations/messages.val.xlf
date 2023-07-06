@@ -119,7 +119,7 @@
       </trans-unit>
       <trans-unit id="F_V94dr" resname="Iframe">
         <source>Iframe</source>
-        <target state="needs-translation">Iframe</target>
+        <target state="translated">iframe</target>
       </trans-unit>
       <trans-unit id="2SnrnwG" resname="Media Thumbnail">
         <source>Media Thumbnail</source>
@@ -167,11 +167,11 @@
       </trans-unit>
       <trans-unit id="_O39e6Q" resname="VideoJS does not support your browser version">
         <source>VideoJS does not support your browser version</source>
-        <target state="needs-translation">VideoJS does not support your browser version</target>
+        <target state="translated">ideoJS no és compatible amb la versió del seu navegador</target>
       </trans-unit>
       <trans-unit id="tsPwTGf" resname="Please use 11.0 or higher version or use another browser.">
         <source>Please use 11.0 or higher version or use another browser.</source>
-        <target state="needs-translation">Please use 11.0 or higher version or use another browser.</target>
+        <target state="translated">Utilitze la versió 11.0 o superior o utilitze un altre navegador.</target>
       </trans-unit>
     </body>
   </file>
