@@ -151,7 +151,7 @@
       </trans-unit>
       <trans-unit id="Vlmffir" resname="Img">
         <source>Img</source>
-        <target state="needs-translation">Img</target>
+        <target state="translated">Img</target>
       </trans-unit>
       <trans-unit id="Th9Jqci" resname="Event">
         <source>Event</source>
@@ -247,7 +247,7 @@
       </trans-unit>
       <trans-unit id="jIzdvYg" resname="min.">
         <source>min.</source>
-        <target state="needs-translation">min.</target>
+        <target state="translated">min.</target>
       </trans-unit>
       <trans-unit id="preRnFs" resname="Select or create any live event.">
         <source>Select or create any live event.</source>
@@ -415,7 +415,7 @@
       </trans-unit>
       <trans-unit id="56JB3rr" resname="URL">
         <source>URL</source>
-        <target state="needs-translation">URL</target>
+        <target state="translated">URL</target>
       </trans-unit>
       <trans-unit id="1AVfr6N" resname="Resolution">
         <source>Resolution</source>
@@ -479,7 +479,7 @@
       </trans-unit>
       <trans-unit id="XiPsajA" resname="Mode">
         <source>Mode</source>
-        <target state="needs-translation">Mode</target>
+        <target state="translated">Mode</target>
       </trans-unit>
       <trans-unit id="UACc4dp" resname="File">
         <source>File</source>
@@ -1380,7 +1380,7 @@
       </trans-unit>
       <trans-unit id="HqRCoTS" resname="No">
         <source>No</source>
-        <target state="needs-translation">No</target>
+        <target state="translated">No</target>
       </trans-unit>
       <trans-unit id="gwCPg2E" resname="change status of multimedia objects inside the series">
         <source>change status of multimedia objects inside the series</source>
@@ -1964,7 +1964,7 @@
       </trans-unit>
       <trans-unit id="YUG7gTi" resname="If it corresponds to the one associated with the banner, the entire header will also be removed.">
         <source>If it corresponds to the one associated with the banner, the entire header will also be removed.</source>
-        <target state="needs-translation">If it corresponds to the one associated with the banner, the entire header will also be removed.</target>
+        <target state="translated">Si correspon a l'associat amb la pancarta, l'encapçalament sencer també serà tret.</target>
       </trans-unit>
       <trans-unit id="Eru2JsX" resname="Thumbnail removed.">
         <source>Thumbnail removed.</source>
@@ -2352,11 +2352,11 @@
       </trans-unit>
       <trans-unit id="jfx3q0C" resname="Copyright">
         <source>Copyright</source>
-        <target state="needs-translation">Copyright</target>
+        <target state="translated">Copyright</target>
       </trans-unit>
       <trans-unit id="jfx56q0C" resname="Copyright &lt;a href=&quot;%urlCopyright%&quot; target=&quot;__blank&quot;&gt;&lt;i class=&quot;fa fa-info-circle&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/a&gt;">
         <source>Copyright &lt;a href="%urlCopyright%" target="__blank"&gt;&lt;i class="fa fa-info-circle" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;</source>
-        <target state="needs-translation"><![CDATA[Copyright <a href="%urlCopyright%" target="__blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>]]></target>
+        <target state="translated"><![CDATA[Copyright <a href="%urlCopyright%" target="__blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>]]></target>
       </trans-unit>
       <trans-unit id="wBHWCXv" resname="License">
         <source>License</source>
@@ -2560,7 +2560,7 @@
       </trans-unit>
       <trans-unit id="SvMvKSS" resname="IFRAME">
         <source>IFRAME</source>
-        <target state="needs-translation">IFRAME</target>
+        <target state="translated">IFRAME</target>
       </trans-unit>
       <trans-unit id="sXY1cJs" resname="Successfully updated groups in User.">
         <source>Successfully updated groups in User.</source>
@@ -2624,7 +2624,7 @@
       </trans-unit>
       <trans-unit id="sLn_JP_" resname="Manual">
         <source>Manual</source>
-        <target state="needs-translation">Manual</target>
+        <target state="translated">Manual</target>
       </trans-unit>
       <trans-unit id="XqGUv5j" resname="Series picture">
         <source>Series picture</source>
@@ -2716,7 +2716,7 @@
       </trans-unit>
       <trans-unit id="k2oWHDk" resname="Editor">
         <source>Editor</source>
-        <target state="needs-translation">Editor</target>
+        <target state="translated">Editor</target>
       </trans-unit>
       <trans-unit id="UUVDL8u" resname="Relations list">
         <source>Relations list</source>
@@ -2776,7 +2776,7 @@
       </trans-unit>
       <trans-unit id="vNGOrV_" resname="Twitter">
         <source>Twitter</source>
-        <target state="needs-translation">Twitter</target>
+        <target state="translated">Twitter</target>
       </trans-unit>
       <trans-unit id="eDKk3wj" resname="New event session">
         <source>New event session</source>
@@ -2854,7 +2854,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="inUlsUk" resname="Notes">
         <source>Notes</source>
-        <target state="needs-translation">Notes</target>
+        <target state="translated">Notes</target>
       </trans-unit>
       <trans-unit id="caC4SG4" resname="Edit session">
         <source>Edit session</source>
