@@ -7,7 +7,7 @@
     <body>
       <trans-unit id="eeU5pwP" resname="Aviso legal">
         <source>Aviso legal</source>
-        <target state="needs-translation">Legal warning</target>
+        <target state="translated">Avís legal</target>
       </trans-unit>
       <trans-unit id="e1wLqeS" resname="Health Sciences">
         <source>Health Sciences</source>
@@ -439,7 +439,7 @@
       </trans-unit>
       <trans-unit id="NOqPcLO" resname="Valencian">
         <source>Valencian</source>
-        <target state="needs-translation">Valencian</target>
+        <target state="translated">Valencià</target>
       </trans-unit>
       <trans-unit id="W7zF64l" resname="Latest Uploads">
         <source>Latest Uploads</source>
@@ -723,27 +723,27 @@
       </trans-unit>
       <trans-unit id="iidISKI" resname="Advanced search">
         <source>Advanced search</source>
-        <target state="needs-translation">Advanced search</target>
+        <target state="translated">Cerca avançada</target>
       </trans-unit>
       <trans-unit id="FBOV6zV" resname="Cookies">
         <source>Cookies</source>
-        <target state="needs-translation">Cookies</target>
+        <target state="translated">Cookies</target>
       </trans-unit>
       <trans-unit id="iXE7nJw" resname="Accept">
         <source>Accept</source>
-        <target state="needs-translation">Accept</target>
+        <target state="translated">Acceptar</target>
       </trans-unit>
       <trans-unit id="GG_yIeU" resname="This website uses its own and third-party cookies to offer you a better experience and service. You can review our cookie policy at any time. If you agree, check the corresponding box.">
         <source>This website uses its own and third-party cookies to offer you a better experience and service. You can review our cookie policy at any time. If you agree, check the corresponding box.</source>
-        <target state="needs-translation">This website uses its own and third-party cookies to offer you a better experience and service. You can review our cookie policy at any time. If you agree, check the corresponding box.</target>
+        <target state="translated">Aquest lloc web utilitza cookies pròpies i de tercers per oferir-te una millor experiència i servei. Pot revisar la nostra política de cookies en qualsevol moment. Si hi esteu d'acord, marqueu la casella corresponent.</target>
       </trans-unit>
       <trans-unit id="7dWy.Z9" resname="Cookie policy">
         <source>Cookie policy</source>
-        <target state="needs-translation">Cookie policy</target>
+        <target state="translated">Política de cookies</target>
       </trans-unit>
       <trans-unit id="1c5E_XE" resname="External player">
         <source>External player</source>
-        <target state="needs-translation">External player</target>
+        <target state="translated">Reproductor extern</target>
       </trans-unit>
     </body>
   </file>
