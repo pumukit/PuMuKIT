@@ -59,11 +59,11 @@
       </trans-unit>
       <trans-unit id="H.V6Kdf" resname="Next">
         <source>Next</source>
-        <target state="needs-translation">Next</target>
+        <target state="translated">Hurrengoa</target>
       </trans-unit>
       <trans-unit id="dpAPG.0" resname="Back">
         <source>Back</source>
-        <target state="needs-translation">Back</target>
+        <target state="translated">Itzuli</target>
       </trans-unit>
     </body>
   </file>
