@@ -583,7 +583,7 @@
       </trans-unit>
       <trans-unit id="M.Z9z4s" resname="Multimedia">
         <source>Multimedia</source>
-        <target state="needs-translation">Multimedia</target>
+        <target state="translated">Multimedia</target>
       </trans-unit>
       <trans-unit id="d9YkHEs" resname="Media Edition">
         <source>Media Edition</source>
@@ -639,7 +639,7 @@
       </trans-unit>
       <trans-unit id="4AWlJxV" resname="Cut multimedia object">
         <source>Cut multimedia object</source>
-        <target state="needs-translation">Cut multimedia object</target>
+        <target state="translated">Moztu multimedia-objektua</target>
       </trans-unit>
       <trans-unit id="EIaPnXC" resname="Paste multimedia objects">
         <source>Paste multimedia objects</source>
@@ -727,7 +727,7 @@
       </trans-unit>
       <trans-unit id="t00dckA" resname="Mm. Obj.">
         <source>Mm. Obj.</source>
-        <target state="needs-translation">Mm. Obj.</target>
+        <target state="translated">Mm. Obj.</target>
       </trans-unit>
       <trans-unit id="J4d1a9v" resname="Multimedia object properties">
         <source>Multimedia object properties</source>
@@ -1035,7 +1035,7 @@
       </trans-unit>
       <trans-unit id="EhVukhv" resname="Id">
         <source>Id</source>
-        <target state="needs-translation">Id</target>
+        <target state="translated">Id</target>
       </trans-unit>
       <trans-unit id="Y9zriAC" resname="Phone">
         <source>Phone</source>
@@ -1043,7 +1043,7 @@
       </trans-unit>
       <trans-unit id="zaFNCy2" resname="INFO">
         <source>INFO</source>
-        <target state="needs-translation">INFO</target>
+        <target state="translated">INFO</target>
       </trans-unit>
       <trans-unit id="KGDhGAr" resname="SERIES">
         <source>SERIES</source>
@@ -1223,7 +1223,7 @@
       </trans-unit>
       <trans-unit id="aNA2dZe" resname="Id:">
         <source>Id:</source>
-        <target state="needs-translation">Id:</target>
+        <target state="translated">Id:</target>
       </trans-unit>
       <trans-unit id="dZVMX02" resname="Preview:">
         <source>Preview:</source>
@@ -1644,7 +1644,7 @@
       </trans-unit>
       <trans-unit id="I0S1ntK" resname="Mm">
         <source>Mm</source>
-        <target state="needs-translation">Mm</target>
+        <target state="translated">Mm</target>
       </trans-unit>
       <trans-unit id="gCuh9lB" resname="Cpu">
         <source>Cpu</source>
@@ -1952,7 +1952,7 @@
       </trans-unit>
       <trans-unit id="evNsUIU" resname="Playlist">
         <source>Playlist</source>
-        <target state="needs-translation">Playlist</target>
+        <target state="translated">Erreprodukzio-zerrenda</target>
       </trans-unit>
       <trans-unit id="CnuGXCW" resname="Are you sure you want to delete the Permission Profile">
         <source>Are you sure you want to delete the Permission Profile</source>
@@ -1964,7 +1964,7 @@
       </trans-unit>
       <trans-unit id="YUG7gTi" resname="If it corresponds to the one associated with the banner, the entire header will also be removed.">
         <source>If it corresponds to the one associated with the banner, the entire header will also be removed.</source>
-        <target state="needs-translation">If it corresponds to the one associated with the banner, the entire header will also be removed.</target>
+        <target state="translated">Bannerarekin lotutakoarekin bat bada, goiburu osoa ere kenduko da.</target>
       </trans-unit>
       <trans-unit id="Eru2JsX" resname="Thumbnail removed.">
         <source>Thumbnail removed.</source>
@@ -2356,7 +2356,7 @@
       </trans-unit>
       <trans-unit id="jfx56q0C" resname="Copyright &lt;a href=&quot;%urlCopyright%&quot; target=&quot;__blank&quot;&gt;&lt;i class=&quot;fa fa-info-circle&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/a&gt;">
         <source>Copyright &lt;a href="%urlCopyright%" target="__blank"&gt;&lt;i class="fa fa-info-circle" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;</source>
-        <target state="needs-translation"><![CDATA[Copyright <a href="%urlCopyright%" target="__blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>]]></target>
+        <target state="translated"><![CDATA[Copyright <a href="%urlCopyright%" target="__blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>]]></target>
       </trans-unit>
       <trans-unit id="wBHWCXv" resname="License">
         <source>License</source>
@@ -2364,7 +2364,7 @@
       </trans-unit>
       <trans-unit id="wBd345fCXv" resname="License &lt;a href=&quot;%urlLicense%&quot; target=&quot;__blank&quot;&gt;&lt;i class=&quot;fa fa-info-circle&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/a&gt;">
         <source>License &lt;a href="%urlLicense%" target="__blank"&gt;&lt;i class="fa fa-info-circle" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;</source>
-        <target state="needs-translation"><![CDATA[License <a href="%urlLicense%" target="__blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>]]></target>
+        <target state="translated"><![CDATA[Lizentzia <a href="%urlLicense%" target="__blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>]]></target>
       </trans-unit>
       <trans-unit id="os.h5dY" resname="Publication Date">
         <source>Publication Date</source>
@@ -2476,7 +2476,7 @@
       </trans-unit>
       <trans-unit id="3y.zuwr" resname="STREAM">
         <source>STREAM</source>
-        <target state="needs-translation">STREAM</target>
+        <target state="translated">ERREKA</target>
       </trans-unit>
       <trans-unit id="MWnOZEK" resname="Technology">
         <source>Technology</source>
@@ -2600,7 +2600,7 @@
       </trans-unit>
       <trans-unit id="Zb_sy63" resname="Multimedia List">
         <source>Multimedia List</source>
-        <target state="needs-translation">Multimedia List</target>
+        <target state="translated">Multimedia Zerrenda</target>
       </trans-unit>
       <trans-unit id="V9Ij7j0" resname="This Series is announced">
         <source>This Series is announced</source>
@@ -2608,7 +2608,7 @@
       </trans-unit>
       <trans-unit id="Mb.aDob" resname="No multimedia object selected">
         <source>No multimedia object selected</source>
-        <target state="needs-translation">No multimedia object selected</target>
+        <target state="translated">Ez da multimedia objekturik hautatu</target>
       </trans-unit>
       <trans-unit id="nSb516S" resname="Search by title, subtitle, description or id">
         <source>Search by title, subtitle, description or id</source>
