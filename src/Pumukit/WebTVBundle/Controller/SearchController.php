@@ -78,7 +78,7 @@ class SearchController extends AbstractController implements WebTVControllerInte
         $queryBuilder = $this->searchService->addValidSeriesQueryBuilder($queryBuilder);
         $queryBuilder = $this->searchService->addSearchQueryBuilder($queryBuilder, $request->getLocale(), $searchFound);
         $queryBuilder = $this->searchService->addDateQueryBuilder($queryBuilder, $startFound, $endFound, $yearFound, 'public_date');
-        if ('' === $searchFound) {
+        if ('' === $searchFound or null === $searchFound) {
             $queryBuilder = $queryBuilder->sort('public_date', 'desc');
         } else {
             $queryBuilder = $queryBuilder->sortMeta('score', 'textScore');
@@ -133,7 +133,7 @@ class SearchController extends AbstractController implements WebTVControllerInte
         $queryBuilder = $this->searchService->addLicenseQueryBuilder($queryBuilder, $license);
 
         $templateListGrouped = false;
-        if ('' === $searchFound) {
+        if ('' === $searchFound or null === $searchFound) {
             $queryBuilder = $queryBuilder->sort('record_date', 'desc');
             $templateListGrouped = true;
         } else {
