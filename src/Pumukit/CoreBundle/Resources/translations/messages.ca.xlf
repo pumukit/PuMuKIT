@@ -1,69 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="es" datatype="plaintext" original="file.ext">
+  <file source-language="en" target-language="ca" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
       <trans-unit id="Jg7KT1k" resname="Select the folder or create a new one where you want to upload the videos. Once this is done, press continue to start uploading the corresponding files">
         <source>Select the folder or create a new one where you want to upload the videos. Once this is done, press continue to start uploading the corresponding files</source>
-        <target state="translated">Seleccione una carpeta o cree una nueva donde quiera subir los vídeos. Una vez hecho esto, pulse continuar para iniciar la subida de los ficheros correspondientes</target>
+        <target state="translated">Seleccioneu la carpeta o creeu-ne una de nova on vulgueu penjar els vídeos. Un cop fet això, premeu Continuar per començar a carregar els fitxers corresponents</target>
       </trans-unit>
       <trans-unit id="6KJWgkr" resname="The folder name is not valid">
         <source>The folder name is not valid</source>
-        <target state="translated">El nombre de la carpeta no es válido</target>
+        <target state="translated">El nom de la carpeta no és vàlid</target>
       </trans-unit>
       <trans-unit id="WGK6Qnl" resname="Upload video to: %folder%">
         <source>Upload video to: %folder%</source>
-        <target state="translated">Subir vídeo a: %folder%</target>
+        <target state="translated">Penja el vídeo a: %folder%</target>
       </trans-unit>
       <trans-unit id="7b1Qa7i" resname="Pumukit Bundle Versions">
         <source>Pumukit Bundle Versions</source>
-        <target state="translated">Versiones bundles PuMuKIT</target>
+        <target state="translated">Versions del paquet Pumukit</target>
       </trans-unit>
       <trans-unit id="uq3fcPt" resname="Type">
         <source>Type</source>
-        <target state="translated">Tipo</target>
+        <target state="translated">Tipus</target>
       </trans-unit>
       <trans-unit id="3NHVIj9" resname="Name">
         <source>Name</source>
-        <target state="translated">Nombre</target>
+        <target state="translated">Nom</target>
       </trans-unit>
       <trans-unit id="3RZ5Bd4" resname="Version">
         <source>Version</source>
-        <target state="translated">Versión</target>
+        <target state="translated">Versió</target>
       </trans-unit>
       <trans-unit id="gqnEb.p" resname="Commit">
         <source>Commit</source>
-        <target state="translated">Commit</target>
+        <target state="translated">
+Commit</target>
       </trans-unit>
       <trans-unit id="EzEnW8U" resname="Tags">
         <source>Tags</source>
-        <target state="translated">Categorías</target>
+        <target state="translated">Etiquetes</target>
       </trans-unit>
       <trans-unit id="Um4Ah8w" resname="Description">
         <source>Description</source>
-        <target state="translated">Descripción</target>
+        <target state="translated">Descripció</target>
       </trans-unit>
       <trans-unit id="fQD8IDp" resname="Other packages">
         <source>Other packages</source>
-        <target state="translated">Otros paquetes</target>
+        <target state="translated">Altres paquets</target>
       </trans-unit>
       <trans-unit id="PWlKoNH" resname="Edit multimedia object">
         <source>Edit multimedia object</source>
-        <target state="translated">Editar objeto multimedia</target>
+        <target state="translated">Edita un objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="a1b7xcD" resname="Upload local file">
         <source>Upload local file</source>
-        <target state="translated">Subir fichero local</target>
+        <target state="translated">Carregueu el fitxer local</target>
       </trans-unit>
       <trans-unit id="H.V6Kdf" resname="Next">
         <source>Next</source>
-        <target state="translated">Siguiente</target>
+        <target state="translated">Següent</target>
       </trans-unit>
       <trans-unit id="dpAPG.0" resname="Back">
         <source>Back</source>
-        <target state="translated">Atrás</target>
+        <target state="translated">Torna</target>
       </trans-unit>
     </body>
   </file>

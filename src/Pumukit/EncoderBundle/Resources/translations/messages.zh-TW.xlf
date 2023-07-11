@@ -7,7 +7,7 @@
     <body>
       <trans-unit id="uX6x6RT" resname="Pending jobs (paused &amp; waiting)">
         <source>Pending jobs (paused &amp; waiting)</source>
-        <target state="needs-translation">Pending jobs (paused &amp; waiting)</target>
+        <target state="needs-translation"><![CDATA[Pending jobs (paused &amp; waiting)]]></target>
       </trans-unit>
       <trans-unit id="IhosPrb" resname="Executing jobs">
         <source>Executing jobs</source>

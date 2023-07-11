@@ -5,6 +5,10 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
+      <trans-unit id="eeU5pwP" resname="Aviso legal">
+        <source>Aviso legal</source>
+        <target state="translated">Avís legal</target>
+      </trans-unit>
       <trans-unit id="e1wLqeS" resname="Health Sciences">
         <source>Health Sciences</source>
         <target state="translated">Ciències de la salut</target>
@@ -433,6 +437,10 @@
         <source>International Sign Language</source>
         <target state="translated">Llengua de signes internacional</target>
       </trans-unit>
+      <trans-unit id="NOqPcLO" resname="Valencian">
+        <source>Valencian</source>
+        <target state="translated">Valencià</target>
+      </trans-unit>
       <trans-unit id="W7zF64l" resname="Latest Uploads">
         <source>Latest Uploads</source>
         <target state="translated">Càrregues més recents</target>
@@ -523,7 +531,7 @@
       </trans-unit>
       <trans-unit id="Z0fvRV9" resname="Health &amp; Medicine">
         <source>Health &amp; Medicine</source>
-        <target state="translated">Salut i medicina</target>
+        <target state="translated"><![CDATA[Salut i medicina]]></target>
       </trans-unit>
       <trans-unit id="t4wWGP2" resname="Law">
         <source>Law</source>
@@ -531,7 +539,7 @@
       </trans-unit>
       <trans-unit id="HPPfeB0" resname="Social Matters &amp; Education">
         <source>Social Matters &amp; Education</source>
-        <target state="translated">Afers socials i educació</target>
+        <target state="translated"><![CDATA[Afers socials i educació]]></target>
       </trans-unit>
       <trans-unit id="GnUpqxT" resname="Subjects">
         <source>Subjects</source>
@@ -713,9 +721,29 @@
         <source>Private</source>
         <target state="translated">Privat</target>
       </trans-unit>
-      <trans-unit id="Ewpvcv4" resname="Advanced search">
+      <trans-unit id="iidISKI" resname="Advanced search">
         <source>Advanced search</source>
         <target state="translated">Cerca avançada</target>
+      </trans-unit>
+      <trans-unit id="FBOV6zV" resname="Cookies">
+        <source>Cookies</source>
+        <target state="translated">Cookies</target>
+      </trans-unit>
+      <trans-unit id="iXE7nJw" resname="Accept">
+        <source>Accept</source>
+        <target state="translated">Acceptar</target>
+      </trans-unit>
+      <trans-unit id="GG_yIeU" resname="This website uses its own and third-party cookies to offer you a better experience and service. You can review our cookie policy at any time. If you agree, check the corresponding box.">
+        <source>This website uses its own and third-party cookies to offer you a better experience and service. You can review our cookie policy at any time. If you agree, check the corresponding box.</source>
+        <target state="translated">Aquest lloc web utilitza cookies pròpies i de tercers per oferir-te una millor experiència i servei. Pot revisar la nostra política de cookies en qualsevol moment. Si hi esteu d'acord, marqueu la casella corresponent.</target>
+      </trans-unit>
+      <trans-unit id="7dWy.Z9" resname="Cookie policy">
+        <source>Cookie policy</source>
+        <target state="translated">Política de cookies</target>
+      </trans-unit>
+      <trans-unit id="1c5E_XE" resname="External player">
+        <source>External player</source>
+        <target state="translated">Reproductor extern</target>
       </trans-unit>
     </body>
   </file>

@@ -343,19 +343,19 @@
       </trans-unit>
       <trans-unit id="SGGKkey" resname="Uploading file">
         <source>Uploading file</source>
-        <target>Subiendo fichero</target>
+        <target state="translated">Subiendo fichero</target>
       </trans-unit>
       <trans-unit id="SWUsDc_" resname="There was an error">
         <source>There was an error</source>
-        <target>Hubo un error</target>
+        <target state="translated">Hubo un error</target>
       </trans-unit>
       <trans-unit id="A9ZCBUt" resname="Max.">
         <source>Max.</source>
-        <target>Máx.</target>
+        <target state="translated">Máx.</target>
       </trans-unit>
       <trans-unit id="zikl0Vc" resname="File to upload">
         <source>File to upload</source>
-        <target>Fichero a subir</target>
+        <target state="translated">Fichero a subir</target>
       </trans-unit>
     </body>
   </file>
