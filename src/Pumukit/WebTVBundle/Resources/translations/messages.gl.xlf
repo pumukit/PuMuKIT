@@ -5,6 +5,10 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
+      <trans-unit id="eeU5pwP" resname="Aviso legal">
+        <source>Aviso legal</source>
+        <target state="translated">Aviso legal</target>
+      </trans-unit>
       <trans-unit id="e1wLqeS" resname="Health Sciences">
         <source>Health Sciences</source>
         <target state="translated">Ciencias da Saude</target>
@@ -40,9 +44,6 @@
       <trans-unit id="6njlRCj" resname="Videos you may also be interested in">
         <source>Videos you may also be interested in</source>
         <target state="translated">Tamén che poden interesar</target>
-        <alt-trans>
-          <target>Tamén che interesan</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="maiyxjk" resname="Videos from same Series">
         <source>Videos from same Series</source>
@@ -87,9 +88,6 @@
       <trans-unit id="wTlux3Y" resname="There are no videos with these specifications">
         <source>There are no videos with these specifications</source>
         <target state="translated">Non existen vídeos destas características</target>
-        <alt-trans>
-          <target>Non existen vídeos de estas características</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="eNInDAJ" resname="Date of holding">
         <source>Date of holding</source>
@@ -439,6 +437,10 @@
         <source>International Sign Language</source>
         <target state="translated">lingua de signos internacional</target>
       </trans-unit>
+      <trans-unit id="NOqPcLO" resname="Valencian">
+        <source>Valencian</source>
+        <target state="translated">Valenciano</target>
+      </trans-unit>
       <trans-unit id="W7zF64l" resname="Latest Uploads">
         <source>Latest Uploads</source>
         <target state="translated">Últimos engadidos</target>
@@ -529,7 +531,7 @@
       </trans-unit>
       <trans-unit id="Z0fvRV9" resname="Health &amp; Medicine">
         <source>Health &amp; Medicine</source>
-        <target state="translated">Salud &amp; Mediciña</target>
+        <target state="translated"><![CDATA[Salud &amp; Mediciña]]></target>
       </trans-unit>
       <trans-unit id="t4wWGP2" resname="Law">
         <source>Law</source>
@@ -537,7 +539,7 @@
       </trans-unit>
       <trans-unit id="HPPfeB0" resname="Social Matters &amp; Education">
         <source>Social Matters &amp; Education</source>
-        <target state="translated">Asuntos sociais &amp; Educación</target>
+        <target state="translated"><![CDATA[Asuntos sociais &amp; Educación]]></target>
       </trans-unit>
       <trans-unit id="GnUpqxT" resname="Subjects">
         <source>Subjects</source>
@@ -719,30 +721,29 @@
         <source>Private</source>
         <target state="translated">Privado</target>
       </trans-unit>
-      <trans-unit id="Ewpvcv4" resname="Advanced search">
+      <trans-unit id="iidISKI" resname="Advanced search">
         <source>Advanced search</source>
         <target state="translated">Búsqueda avanzada</target>
       </trans-unit>
       <trans-unit id="FBOV6zV" resname="Cookies">
         <source>Cookies</source>
-        <target>Cookies</target>
+        <target state="translated">Cookies</target>
       </trans-unit>
       <trans-unit id="iXE7nJw" resname="Accept">
         <source>Accept</source>
-        <target>Aceptar</target>
+        <target state="translated">Aceptar</target>
       </trans-unit>
       <trans-unit id="GG_yIeU" resname="This website uses its own and third-party cookies to offer you a better experience and service. You can review our cookie policy at any time. If you agree, check the corresponding box.">
         <source>This website uses its own and third-party cookies to offer you a better experience and service. You can review our cookie policy at any time. If you agree, check the corresponding box.</source>
-        <target>
-          Este sitio web utiliza cookies propias e de terceiros, para ofrecerlle unha mellor experiencia e servicio. Podes revisar a nosa política de cookies en cualqer momento. Se estás de acordo marca a casilla correspondente.</target>
+        <target state="translated">Este sitio web utiliza cookies propias e de terceiros, para ofrecerlle unha mellor experiencia e servicio. Podes revisar a nosa política de cookies en cualqer momento. Se estás de acordo marca a casilla correspondente.</target>
       </trans-unit>
       <trans-unit id="7dWy.Z9" resname="Cookie policy">
         <source>Cookie policy</source>
-        <target>Política de cookies</target>
+        <target state="translated">Política de cookies</target>
       </trans-unit>
       <trans-unit id="1c5E_XE" resname="External player">
         <source>External player</source>
-        <target>Reproductor externo</target>
+        <target state="translated">Reproductor externo</target>
       </trans-unit>
     </body>
   </file>
