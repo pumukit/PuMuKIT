@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="val" datatype="plaintext" original="file.ext">
+  <file source-language="en" target-language="val-ES" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
@@ -119,7 +119,7 @@
       </trans-unit>
       <trans-unit id="F_V94dr" resname="Iframe">
         <source>Iframe</source>
-        <target state="translated">Iframe</target>
+        <target state="translated">iframe</target>
       </trans-unit>
       <trans-unit id="2SnrnwG" resname="Media Thumbnail">
         <source>Media Thumbnail</source>
@@ -164,6 +164,14 @@
       <trans-unit id="HHzHKHy" resname="Live chat">
         <source>Live chat</source>
         <target state="translated">Xat en directe</target>
+      </trans-unit>
+      <trans-unit id="_O39e6Q" resname="VideoJS does not support your browser version">
+        <source>VideoJS does not support your browser version</source>
+        <target state="translated">ideoJS no és compatible amb la versió del seu navegador</target>
+      </trans-unit>
+      <trans-unit id="tsPwTGf" resname="Please use 11.0 or higher version or use another browser.">
+        <source>Please use 11.0 or higher version or use another browser.</source>
+        <target state="translated">Utilitze la versió 11.0 o superior o utilitze un altre navegador.</target>
       </trans-unit>
     </body>
   </file>
