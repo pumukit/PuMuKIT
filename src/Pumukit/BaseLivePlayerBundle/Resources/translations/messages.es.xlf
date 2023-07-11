@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="es" datatype="plaintext" original="file.ext">
+  <file source-language="en" target-language="es-ES" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
@@ -164,6 +164,14 @@
       <trans-unit id="HHzHKHy" resname="Live chat">
         <source>Live chat</source>
         <target state="translated">Chat en vivo</target>
+      </trans-unit>
+      <trans-unit id="_O39e6Q" resname="VideoJS does not support your browser version">
+        <source>VideoJS does not support your browser version</source>
+        <target state="translated">VideoJS no soporta la versión de su navegador</target>
+      </trans-unit>
+      <trans-unit id="tsPwTGf" resname="Please use 11.0 or higher version or use another browser.">
+        <source>Please use 11.0 or higher version or use another browser.</source>
+        <target state="translated">Por favor, utilice la versión 11.0 o superior o utilice otro navegador.</target>
       </trans-unit>
     </body>
   </file>
