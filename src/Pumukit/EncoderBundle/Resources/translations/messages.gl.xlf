@@ -7,10 +7,7 @@
     <body>
       <trans-unit id="uX6x6RT" resname="Pending jobs (paused &amp; waiting)">
         <source>Pending jobs (paused &amp; waiting)</source>
-        <target state="translated">Tarefas pendentes (pausadas &amp; agardando)</target>
-        <alt-trans>
-          <target>Tarefas pendentes (pausadas &amp; agardando)</target>
-        </alt-trans>
+        <target state="translated"><![CDATA[Tarefas pendentes (pausadas &amp; agardando)]]></target>
       </trans-unit>
       <trans-unit id="IhosPrb" resname="Executing jobs">
         <source>Executing jobs</source>
@@ -118,7 +115,7 @@
       </trans-unit>
       <trans-unit id="Bbct2hB" resname="reset it">
         <source>reset it</source>
-        <target state="translated">restablézao</target>
+        <target state="translated">Restablecer</target>
       </trans-unit>
       <trans-unit id="g59aAVd" resname="MM">
         <source>MM</source>
