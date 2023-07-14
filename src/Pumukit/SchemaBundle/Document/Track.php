@@ -149,7 +149,11 @@ class Track extends Element
 
     public function getNumFrames(): int
     {
-        return $this->getFrameNumber($this->getDuration());
+        if (!$this->isOnlyAudio()) {
+            return $this->getFrameNumber($this->getDuration());
+        }
+
+        return 0;
     }
 
     public function getFrameNumber($seg): int
@@ -276,7 +280,7 @@ class Track extends Element
 
     public function getAspectRatio()
     {
-        return (0 === $this->height) ? 0 : $this->width / $this->height;
+        return (0 === $this->height || null === $this->height || $this->isOnlyAudio()) ? 0 : $this->width / $this->height;
     }
 
     public function getDurationInMinutesAndSeconds(): array
