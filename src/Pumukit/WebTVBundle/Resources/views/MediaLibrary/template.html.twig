@@ -1,9 +1,11 @@
 {% extends '@PumukitWebTV/layout.html.twig' %}
+{% set title = "Full Catalogue"|trans %}
+
+{% block title %}{{ parent() }} - {{ title }}{% endblock %}
 
 {% block body %}
     <div class="col-xs-12">
         <div class="row">
-            {% set title = "Full Catalogue"|trans %}
             {% include "@PumukitWebTV/Misc/page_title.html.twig" %}
         </div>
 

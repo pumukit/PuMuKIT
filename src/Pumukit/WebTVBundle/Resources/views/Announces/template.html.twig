@@ -1,4 +1,7 @@
 {% extends '@PumukitWebTV/layout.html.twig' %}
+{% set title = template_title %}
+
+{% block title %}{{ parent() }} - {{ title }}{% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
@@ -6,7 +9,6 @@
 {% endblock %}
 
 {% block body %}
-    {% set title = template_title %}
     {% include "@PumukitWebTV/Misc/page_title.html.twig" %}
 
     <div class="announces" id="announces"></div>

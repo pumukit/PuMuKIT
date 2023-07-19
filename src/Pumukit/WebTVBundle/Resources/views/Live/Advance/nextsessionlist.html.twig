@@ -1,7 +1,9 @@
 {% if events and events[0]['data'] %}
     <div class="panel panel-default panel-pmk">
         <div class="panel-heading">
-            {% trans %}Next session{% endtrans %}
+            <h2 class="panel-title">
+                {% trans %}Next session{% endtrans %}
+            </h2>
         </div>
         <div class="panel-body">
             {% for event in events[0]['data'] %}

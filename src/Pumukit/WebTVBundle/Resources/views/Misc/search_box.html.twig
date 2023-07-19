@@ -2,14 +2,19 @@
 {% set idButton = "submit-button-" ~ id|default('base') %}
 
 <div class="search-box">
-    <form class="input-group stylish-input-group" method="get" action="{{ path('pumukit_webtv_search_multimediaobjects') }}">
+    <form class="input-group stylish-input-group" role="search" method="get" action="{{ path('pumukit_webtv_search_multimediaobjects') }}">
         <label for="{{ idInput }}" class="sr-only">
             {% trans %}Search{% endtrans %}
         </label>
         <input type="text" class="form-control" placeholder="{% trans %}Search{% endtrans %}..." name="search" id="{{ idInput }}" />
         <span class="input-group-addon">
-            <label for="{{ idButton }}" class="sr-only">{% trans %}Submit{% endtrans %}</label>
-            <button type="submit" id="{{ idButton }}" style="border:0;background:transparent;" title="{% trans %}Submit{% endtrans %}">
+            <span class="sr-only">
+                {% trans %}Submit{% endtrans %}
+            </span>
+            <button type="submit" style="border:0;background:transparent;" ara-label="{% trans %}Submit{% endtrans %}">
+                <span class="sr-only">
+                    {% trans %}Search{% endtrans %}
+                </span>
                 <span class="glyphicon glyphicon-search"></span>
             </button>
         </span>

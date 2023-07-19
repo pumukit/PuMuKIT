@@ -11,33 +11,34 @@
 <div class="{{ col_calculator(objectByCol|default(1)) }} image_representation">
     <div class="thumbnail">
         <a href="{{ videoPath }}" title="{{ videoTitle }}">
-            <div class="embed-responsive embed-responsive-16by9">
-                <div class="embed-responsive-item text-center">
-                    <img alt="{{ videoTitle }}" src="{{ object|first_url_pic() }}" class="img-responsive img_adapter_4_3 dynamic_image"
-                         data-dynamic-pic="{{ object|first_dynamic_pic(true) }}"
-                         data-static-pic="{{ object|first_url_pic() }}"
-                    />
-                    {% if show_video_options is defined and show_video_options is same as (true)%}
-                        <div class="multimedia_object_edit_button" data-multimedia-object="{{ object.id }}" data-multimedia-object-status="{{ object.getStatus() }}" data-multimedia-object-title="{{ object.getTitle() }}">
-                            <i class="fa fa-cog fa-2x"></i>
-                        </div>
-                    {% endif %}
+            <div>
+                <div class="embed-responsive embed-responsive-16by9">
+                    <div class="embed-responsive-item text-center">
+                        <img alt="{{ videoTitle }}" src="{{ object|first_url_pic() }}" class="img-responsive img_adapter_4_3 dynamic_image"
+                            data-dynamic-pic="{{ object|first_dynamic_pic(true) }}"
+                            data-static-pic="{{ object|first_url_pic() }}"
+                        />
+                        {% if show_video_options is defined and show_video_options is same as (true)%}
+                            <div class="multimedia_object_edit_button" data-multimedia-object="{{ object.id }}" data-multimedia-object-status="{{ object.getStatus() }}" data-multimedia-object-title="{{ object.getTitle() }}">
+                                <i class="fa fa-cog fa-2x"></i>
+                            </div>
+                        {% endif %}
 
-                    {% if show_inside_video_duration|default(true) and mmobj_duration(object) %}
-                        <span class="inside-video-duration">{{ mmobj_duration(object) | duration_string }}</span>
-                    {% endif %}
+                        {% if show_inside_video_duration|default(true) and mmobj_duration(object) %}
+                            <span class="inside-video-duration">{{ mmobj_duration(object) | duration_string }}</span>
+                        {% endif %}
+                    </div>
                 </div>
+                {% if show_info is defined and show_info %}
+                    <p class="title_image_representation">
+                        {{ videoTitle }}
+                    </p>
+                {% endif %}
             </div>
         </a>
 
         {% if show_info is defined and show_info %}
             <div class="caption">
-                <p class="title_image_representation">
-                    <a href="{{ videoPath }}" title="{{ videoTitle }}">
-                        {{ videoTitle }}
-                    </a>
-                </p>
-
                 {% if object.line2 is not empty %}
                     <p class="second_line_image_representation">{{ object.line2 }}</p>
                 {% elseif object.subtitle is not empty %}

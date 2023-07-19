@@ -3,12 +3,14 @@
 
 <div class="panel panel-default panel-pmk">
     <div class="panel-heading">
-        {% trans %}Share this video{% endtrans %}
+        <h2 class="panel-title">
+            {% trans %}Share this video{% endtrans %}
+        </h2>
     </div>
     <ul class="list-group">
         <li class="list-group-item share_url">
             <span>{{ text_url }}:</span>
-            <input type="text" value="{{ url('pumukit_live_event_id', {'id': multimediaObject.id}) }}" onclick="this.select()" readonly="readonly" aria-label="{{ text_url }}" title="{{ text_url }}"/>
+            <input type="text" value="{{ url('pumukit_live_event_id', {'id': multimediaObject.id}) }}" onclick="this.select()" readonly="readonly" aria-label="share-url"/>
         </li>
         <li class="list-group-item share_url">
             <span>{{ text_iframe|upper }}:</span>
@@ -24,7 +26,7 @@
                     ></iframe>
                 {% endapply %}
             {% endset %}
-            <input type="text" value="{{ iframe_value }}" onclick="this.select()" aria-label="{% trans %}Iframe{% endtrans %}" title="{% trans %}Iframe{% endtrans %}" readonly/>
+            <input type="text" value="{{ iframe_value }}" onclick="this.select()" aria-label="share-iframe" readonly/>
         </li>
     </ul>
 </div>

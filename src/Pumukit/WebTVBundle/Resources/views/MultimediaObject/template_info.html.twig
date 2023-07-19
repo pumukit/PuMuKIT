@@ -24,7 +24,7 @@
 <div class="row">
     <div class="col-xs-12 video-subtitle">
         {% if multimediaObject.getSubtitle() %}
-            <h3 class="qa-player-subtitle"> {{ multimediaObject.getSubtitle() }} </h3>
+            <h2 class="qa-player-subtitle"> {{ multimediaObject.getSubtitle() }} </h2>
         {% endif %}
 
         <p class="qa-player-description description">
@@ -64,7 +64,9 @@
 
         <div class="panel panel-default panel-pmk">
             <div class="panel-heading">
-                {% trans %} Attachments {% endtrans %}
+                <h2 class="panel-title">
+                    {% trans %} Attachments {% endtrans %}
+                </h2>
             </div>
             <div class="panel-body">
                 {% set none_attach = true %}

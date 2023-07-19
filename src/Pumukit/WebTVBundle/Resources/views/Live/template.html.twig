@@ -1,7 +1,9 @@
 {% extends '@PumukitWebTV/layout.html.twig' %}
+{% set title = "Events"|trans %}
+
+{% block title %}{{ parent() }} - {{ title }}{% endblock %}
 
 {% block body %}
-        {% set title = "Events"|trans %}
         {% include "@PumukitWebTV/Misc/page_title.html.twig" %}
 
         {% if eventsNow is empty and eventsToday is empty and eventsFuture is empty %}
@@ -22,7 +24,7 @@
                         <ul>
                             <li class="categories_list">
                                 <div class="categories_list_block">
-                                    <h3>{% trans %}Now events{% endtrans %}</h3>
+                                    <h2>{% trans %}Now events{% endtrans %}</h2>
                                     {% for eventNow in eventsNow %}
                                         {% include '@PumukitWebTV/Resources/template_event.html.twig' with {'cols': objectByCol, 'event': eventNow['data'], 'defaultPic' : defaultPic, active: true} %}
                                         {% include "@PumukitWebTV/Resources/template_clearfix.html.twig" %}
@@ -41,7 +43,7 @@
                         <ul>
                             <li class="categories_list">
                                 <div class="categories_list_block">
-                                    <h3>{% trans %}Today events{% endtrans %}</h3>
+                                    <h2>{% trans %}Today events{% endtrans %}</h2>
                                     {% for eventToday in eventsToday %}
                                         {% include '@PumukitWebTV/Resources/template_event.html.twig' with {'cols': objectByCol, 'event': eventToday['data'], 'defaultPic' : defaultPic, active: false} %}
                                         {% include "@PumukitWebTV/Resources/template_clearfix.html.twig" %}
@@ -60,7 +62,7 @@
                         <ul>
                             <li class="categories_list">
                                 <div class="categories_list_block">
-                                    <h3>{% trans %}Future events{% endtrans %}</h3>
+                                    <h2>{% trans %}Future events{% endtrans %}</h2>
                                     {% for eventFuture in eventsFuture %}
                                         {% include '@PumukitWebTV/Resources/template_event.html.twig' with {'cols': objectByCol, 'event': eventFuture['data'], 'defaultPic' : defaultPic, active: false} %}
                                         {% include "@PumukitWebTV/Resources/template_clearfix.html.twig" %}

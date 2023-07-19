@@ -23,25 +23,26 @@
 <div class="{{ col_calculator(objectByCol) }} image_representation">
     <div class="thumbnail">
         <a href="{{ videoPath }}" title="{{ videoTitle }}">
-            <div class="embed-responsive embed-responsive-16by9">
-                <div class="embed-responsive-item text-center">
-                    {% if event['pics'] is defined and (event['pics']|length > 0) %}
-                        <img alt="{% trans %}Event pic{% endtrans %}" class="img-responsive img_adapter_4_3" src="{{ event_first_thumbnail(event) }}" />
-                    {% else %}
-                        <img alt="{% trans %}Event pic{% endtrans %}" class="img-responsive img_adapter_4_3" src="{{ event_default_pic() }}" />
-                    {% endif %}
+            <div>
+                <div class="embed-responsive embed-responsive-16by9">
+                    <div class="embed-responsive-item text-center">
+                        {% if event['pics'] is defined and (event['pics']|length > 0) %}
+                            <img alt="{% trans %}Event pic{% endtrans %}" class="img-responsive img_adapter_4_3" src="{{ event_first_thumbnail(event) }}" />
+                        {% else %}
+                            <img alt="{% trans %}Event pic{% endtrans %}" class="img-responsive img_adapter_4_3" src="{{ event_default_pic() }}" />
+                        {% endif %}
+                    </div>
                 </div>
+                {% if show_info|default(true) %}
+                    <p class="title_image_representation">
+                        {{ videoTitle }}
+                    </p>
+                {% endif %}
             </div>
         </a>
 
         {% if show_info|default(true) %}
             <div class="caption">
-                <p class="title_image_representation">
-                    <a href="{{ videoPath }}" title="{{ videoTitle }}">
-                        {{ videoTitle }}
-                    </a>
-                </p>
-
                 {% if show_description|default(false) %}
                     <p class="second_line_image_representation">{{ videoDescription }}</p>
                 {% endif %}
