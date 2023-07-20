@@ -3,7 +3,7 @@
         {% set lastTitle = '--' %}
         {% for key, series in objects %}
             <div class="data_key">
-                <h2>{{ key }}</h2>
+                <h2>{% if sort == 'date' %}{{ 'Date'|trans }}: {% endif %}{{ key }}</h2>
             </div>
             <div class="row">
                 {% for serie in series %}

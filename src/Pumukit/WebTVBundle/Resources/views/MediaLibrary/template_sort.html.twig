@@ -1,19 +1,25 @@
 <div class="row">
-    <div class="list-group list-group-horizontal">
+    <ul class="list-group list-inline order-by list-group-horizontal">
         <span>{% trans %}Sort by{% endtrans %}:</span>
-        <a href="{{ path('pumukit_webtv_medialibrary_index', {'sort': 'date'}) }}" title="{% trans %}Sort by date{% endtrans %}">
-            {% trans %}Date{% endtrans %}
-        </a>
+        <li {% if sort == 'date' %}aria-current="page"{% endif %}>
+            <a href="{{ path('pumukit_webtv_medialibrary_index', {'sort': 'date'}) }}" title="{% trans %}Sort by date{% endtrans %}">
+                {% trans %}Date{% endtrans %}
+            </a>
+        </li>
         ,
-        <a href="{{ path('pumukit_webtv_medialibrary_index', {'sort': 'alphabetically'}) }}" title="{% trans %}Sort alphabetically{% endtrans %}">
-            {% trans %}Alphabetically{% endtrans %}
-        </a>
+        <li {% if sort == 'alphabetically' %}aria-current="page"{% endif %}>
+            <a href="{{ path('pumukit_webtv_medialibrary_index', {'sort': 'alphabetically'}) }}" title="{% trans %}Sort alphabetically{% endtrans %}">
+                {% trans %}Alphabetically{% endtrans %}
+            </a>
+        </li>
         {% for tag in tags %}
             ,
-            <a href="{{ path('pumukit_webtv_medialibrary_index', {'sort': 'tags', 'p_tag': tag.cod }) }}" title="{% trans %}Sort by{% endtrans %} {{ tag.title }}">
-                {{ tag.title }}
-            </a>
+            <li {% if sort == 'tags' %}aria-current="page"{% endif %}>
+                <a href="{{ path('pumukit_webtv_medialibrary_index', {'sort': 'tags', 'p_tag': tag.cod }) }}" title="{% trans %}Sort by{% endtrans %} {{ tag.title }}">
+                    {{ tag.title }}
+                </a>
+            </li>
         {% endfor %}.
-    </div>
+    </ul>
     <div class="clearfix"></div>
 </div>

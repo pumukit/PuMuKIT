@@ -39,46 +39,39 @@
 <body class="{% block body_class %}{% endblock %}">
     {% block body_base %}
 
-        {% include '@PumukitWebTV/Layout/template_header.html.twig' %}
+        <header>
+            {% include '@PumukitWebTV/Layout/template_header.html.twig' %}
 
-        <div class="template-menu-pmk">
-            {% include '@PumukitWebTV/Menu/template.html.twig' %}
-        </div>
+            <div class="template-menu-pmk">
+                {% include '@PumukitWebTV/Menu/template.html.twig' %}
+            </div>
+        </header>
 
-        {% if app.request.get('_route') != 'pumukit_webtv_index_index' %}
-            {{ render(controller('Pumukit\\WebTVBundle\\Controller\\ModulesController::breadcrumbsAction')) }}
-        {% endif %}
+        <main>
+            {% if app.request.get('_route') != 'pumukit_webtv_index_index' %}
+                {{ render(controller('Pumukit\\WebTVBundle\\Controller\\ModulesController::breadcrumbsAction')) }}
+            {% endif %}
 
-        {% block custom_block_before_body %}{% endblock %}
+            {% block custom_block_before_body %}{% endblock %}
 
-        <div class="container-fluid content-pmk">
-            {% block body_without_container %}
-                <div class="container main-content">
-                    <div class="row">
-                        {% block body_without_bar %}
-                            {% block body %}
+            <div class="container-fluid content-pmk">
+                {% block body_without_container %}
+                    <div class="container main-content">
+                        <div class="row">
+                            {% block body_without_bar %}
+                                {% block body %}
+                                {% endblock %}
                             {% endblock %}
-                        {% endblock %}
+                        </div>
                     </div>
-                </div>
-            {% endblock %}
-        </div>
+                {% endblock %}
+            </div>
 
-        {% block custom_block_after_body %}{% endblock %}
+            {% block custom_block_after_body %}{% endblock %}
+        </main>
 
         {% include "@PumukitWebTV/Layout/template_footer.html.twig" %}
-
-        <div class="container-fluid powered_by">
-            <div class="row">
-                {# Removing the original copyright line from footer breaks the AGPL license #}
-                <div class="container text-right">
-                    <img alt="PuMuKIT icon" src="{{ asset('bundles/pumukitwebtv/images/favicon.ico') }}" />
-                    <a href="https://pumukit.org">
-                        {{ "Powered by"|trans }} <span class="version">PuMuKIT {{constant('Pumukit\\PumukitVersion::VERSION')}}</span>
-                    </a>
-                </div>
-            </div>
-        </div>
+        
         {% include "@PumukitWebTV/Cookies/template.html.twig" %}
     {% endblock %}
 </body>

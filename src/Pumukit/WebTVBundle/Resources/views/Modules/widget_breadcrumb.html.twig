@@ -4,14 +4,14 @@
             <div class="col-xs-12">
                 <ol class="breadcrumb breadcrumb-pmk-list">
                     <li>
-                        <a href="{{ breadcrumbs[0]["link"] }}" {% if breadcrumbs|length == 1 %}class="active"{% endif %} title="{{ breadcrumbs[0]["title"] }}">
+                        <a href="{{ breadcrumbs[0]["link"] }}" {% if breadcrumbs|length == 1 %}class="active" aria-current="page"{% endif %} title="{{ breadcrumbs[0]["title"] }}">
                             {{ breadcrumbs[0]["title"] }}
                         </a>
                     </li>
 
                     {% if breadcrumbs|length > 1 %}
                         <li>
-                            <a href="{{ breadcrumbs[1]["link"] }}" {% if breadcrumbs|length == 2 %}class="active"{% endif %} title="{{ breadcrumbs[1]["title"] }}">
+                            <a href="{{ breadcrumbs[1]["link"] }}" {% if breadcrumbs|length == 2 %}class="active" aria-current="page"{% endif %} title="{{ breadcrumbs[1]["title"] }}">
                                 {{ breadcrumbs[1]["title"] }}
                             </a>
                         </li>
@@ -19,7 +19,7 @@
 
                     {% if breadcrumbs|length > 2 %}
                         <li>
-                            <a id="breadcrumbs_series_a" href="{{ breadcrumbs[2]["link"] }}" {% if breadcrumbs|length == 3 %}class="active"{% endif %} title="{{ breadcrumbs[2]["title"] }}">
+                            <a id="breadcrumbs_series_a" href="{{ breadcrumbs[2]["link"] }}" {% if breadcrumbs|length == 3 %}class="active" aria-current="page"{% endif %} title="{{ breadcrumbs[2]["title"] }}">
                                 {{ breadcrumbs[2]["title"] }}
                             </a>
                         </li>
@@ -27,7 +27,7 @@
 
                     {% if breadcrumbs|length > 3 %}
                         <li>
-                            <a id="breadcrumbs_mmobj_a" href="{{ breadcrumbs[3]["link"] }}" {% if breadcrumbs|length == 4 %}class="active"{% endif %} title="{{ breadcrumbs[3]["title"] }}">
+                            <a id="breadcrumbs_mmobj_a" href="{{ breadcrumbs[3]["link"] }}" {% if breadcrumbs|length == 4 %}class="active" aria-current="page"{% endif %} title="{{ breadcrumbs[3]["title"] }}">
                                 {{ breadcrumbs[3]["title"] }}
                             </a>
                         </li>

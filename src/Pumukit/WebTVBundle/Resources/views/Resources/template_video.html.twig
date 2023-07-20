@@ -38,39 +38,39 @@
         </a>
 
         {% if show_info is defined and show_info %}
-            <div class="caption">
+            <ul class="caption list-group">
                 {% if object.line2 is not empty %}
-                    <p class="second_line_image_representation">{{ object.line2 }}</p>
+                    <li class="second_line_image_representation">{{ object.line2 }}</li>
                 {% elseif object.subtitle is not empty %}
-                    <p class="second_line_image_representation">{{ object.subtitle }}</p>
+                    <li class="second_line_image_representation">{{ object.subtitle }}</li>
                 {% elseif seriesTitle %}
-                    <a href="{{ path('pumukit_webtv_series_index', {'id': object.getSeries().getId() }) }}" title="{{ seriesTitle }}">
-                        <p class="second_line_image_representation" title="{{ "i18n.one.Series"|trans ~ " " ~ seriesTitle }}">{{ seriesTitle }}</p>
-                    </a>
+                    <li class="list-group-item list-group-item-custom">
+                        <a href="{{ path('pumukit_webtv_series_index', {'id': object.getSeries().getId() }) }}" title="{{ seriesTitle }}">
+                            <p class="second_line_image_representation" title="{{ "i18n.one.Series"|trans ~ " " ~ seriesTitle }}">{{ seriesTitle }}</p>
+                        </a>
+                    </li>
                 {% endif %}
 
                 {% if show_info|default(false) %}
-                    <div class="date_and_visits">
-                        {% if with_publicdate is defined and with_publicdate %}
-                            <div class="pull-left">
-                                {{ object.publicDate| format_datetime('medium','none',locale=app.request.getLocale()) }}
-                            </div>
-                        {% else %}
-                            {% if app.request.attributes.get('_route') != 'pumukit_webtv_announces_latestuploads_pager' and not object.getProperty('externalplayer') %}
-                                <div class="language pull-left">
-                                    {% trans %}Language{% endtrans %}:
-                                    {{ object.getDisplayTrack().getLanguage()|default(app.request.getLocale()) | language_name }}
-                                </div>
-                            {% endif %}
-                            <div class="pull-right">
-                                {% trans %}Viewed{% endtrans %}:
-                                {{ object.getNumview() }}
-                                {{ "{0}times|{1}time|]1,Inf]times"|trans({'%count%':  object.getNumview()}) }}
-                            </div>
+                    {% if with_publicdate is defined and with_publicdate %}
+                        <li class="list-group-item list-group-item-custom date_and_visits text-left">
+                            {{ object.publicDate| format_datetime('medium','none',locale=app.request.getLocale()) }}
+                        </li>
+                    {% else %}
+                        {% if app.request.attributes.get('_route') != 'pumukit_webtv_announces_latestuploads_pager' and not object.getProperty('externalplayer') %}
+                            <li class="list-group-item list-group-item-custom date_and_visits text-left language">
+                                {% trans %}Language{% endtrans %}:
+                                {{ object.getDisplayTrack().getLanguage()|default(app.request.getLocale()) | language_name }}
+                            </li>
                         {% endif %}
-                    </div>
+                        <li class="list-group-item list-group-item-custom text-right date_and_visits">
+                            {% trans %}Viewed{% endtrans %}:
+                            {{ object.getNumview() }}
+                            {{ "{0}times|{1}time|]1,Inf]times"|trans({'%count%':  object.getNumview()}) }}
+                        </li>
+                    {% endif %}
                 {% endif %}
-            </div>
+            </ul>
         {% endif %}
     </div>
 </div>

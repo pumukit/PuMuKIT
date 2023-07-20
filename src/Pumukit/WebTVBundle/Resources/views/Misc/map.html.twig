@@ -23,18 +23,20 @@
         <div class="col-xs-12 map-sections">
             <ul class="list-group">
                 <li class="list-group-item list-group-item-custom">
-                    <i class="fa fa-angle-right"></i>&nbsp;<a href="{{ path('homepage') }}" title="{{ 'Home'|trans }}">{% trans %}Home{% endtrans %}</a>
+                    <i class="fa fa-angle-right"></i>&nbsp;<a href="{{ path('homepage') }}">{% trans %}Home{% endtrans %}</a>
                 </li>
                 <li class="list-group-item list-group-item-custom">
-                    <i class="fa fa-angle-right"></i>&nbsp;<a href="{{ path('pumukit_webtv_announces_latestuploads') }}" title="{{ 'Latest Uploads'|trans }}">{% trans %}Latest Uploads{% endtrans %}</a>
+                    <i class="fa fa-angle-right"></i>&nbsp;<a href="{{ path('pumukit_webtv_announces_latestuploads') }}">{% trans %}Latest Uploads{% endtrans %}</a>
                 </li>
                 <li class="list-group-item list-group-item-custom">
-                    <i class="fa fa-angle-right"></i>&nbsp;<a href="{{ path('pumukit_webtv_medialibrary_index') }}" title="{{ 'Full Catalogue'|trans }}">{% trans %}Full Catalogue{% endtrans %}</a>
+                    <i class="fa fa-angle-right"></i>&nbsp;<a href="{{ path('pumukit_webtv_medialibrary_index') }}">{% trans %}Full Catalogue{% endtrans %}</a>
                 </li>
                 <li class="list-group-item list-group-item-custom">
-                    <i class="fa fa-angle-right"></i>&nbsp;<a href="{{ path('pumukit_webtv_search_multimediaobjects') }}" title="{{ 'Search'|trans }}">{% trans %}Search{% endtrans %}</a>
+                    <i class="fa fa-angle-right"></i>&nbsp;<a href="{{ path('pumukit_webtv_search_multimediaobjects') }}">{% trans %}Search{% endtrans %}</a>
                 </li>
-                {{ render(controller('Pumukit\\WebTVBundle\\Controller\\EventController::advanceLiveEventMenuAction')) }}
+                <li class="list-group-item list-group-item-custom">
+                    <i class="fa fa-angle-right"></i>&nbsp;<a href="{{ path('pumukit_webtv_events') }}"">{% trans %}Live events{% endtrans %}</a>
+                </li>
             </ul>
         </div>
     </div>
