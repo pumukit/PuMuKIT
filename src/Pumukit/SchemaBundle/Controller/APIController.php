@@ -151,39 +151,27 @@ class APIController extends Controller implements NewAdminControllerInterface
             }
 
             if (isset($criteria['duration'])) {
-                if (is_array($criteria['duration'])) {
-                    foreach ($criteria['duration'] as $key => $val) {
-                        $duration = (int) $val;
-                        $criteria['duration'][$key] = $duration;
-                    }
-                } else {
-                    $duration = (int) ($criteria['duration']);
-                    $criteria['duration'] = $duration;
-                }
+                $criteria['duration'] = $this->convertStringCriteriaToInt($criteria['duration']);
             }
 
             if (isset($criteria['numview'])) {
-                if (is_array($criteria['numview'])) {
-                    foreach ($criteria['numview'] as $key => $val) {
-                        $numview = (int) $val;
-                        $criteria['numview'][$key] = $numview;
-                    }
-                } else {
-                    $numview = (int) ($criteria['numview']);
-                    $criteria['numview'] = $numview;
-                }
+                $criteria['numview'] = $this->convertStringCriteriaToInt($criteria['numview']);
             }
 
             if (isset($criteria['numerical_id'])) {
-                if (is_array($criteria['numerical_id'])) {
-                    foreach ($criteria['numerical_id'] as $key => $val) {
-                        $numerical_id = (int) $val;
-                        $criteria['numerical_id'][$key] = $numerical_id;
-                    }
-                } else {
-                    $numerical_id = (int) ($criteria['numerical_id']);
-                    $criteria['numerical_id'] = $numerical_id;
-                }
+                $criteria['numerical_id'] = $this->convertStringCriteriaToInt($criteria['numerical_id']);
+            }
+
+            if (isset($criteria['tracks.size'])) {
+                $criteria['tracks.size'] = $this->convertStringCriteriaToInt($criteria['tracks.size']);
+            }
+
+            if (isset($criteria['tracks.bitrate'])) {
+                $criteria['tracks.bitrate'] = $this->convertStringCriteriaToInt($criteria['tracks.bitrate']);
+            }
+
+            if (isset($criteria['tracks.duration'])) {
+                $criteria['tracks.size'] = $this->convertStringCriteriaToInt($criteria['tracks.duration']);
             }
 
             if ($criteria) {
@@ -387,6 +375,21 @@ class APIController extends Controller implements NewAdminControllerInterface
         $data = $serializer->serialize($locales, $request->getRequestFormat());
 
         return new Response($data);
+    }
+
+    private function convertStringCriteriaToInt($criteria)
+    {
+        if (is_array($criteria)) {
+            foreach ($criteria as $key => $val) {
+                $stringToInt = (int) $val;
+                $criteria[$key] = $stringToInt;
+            }
+        } else {
+            $stringToInt = (int) ($criteria);
+            $criteria = $stringToInt;
+        }
+
+        return $criteria;
     }
 
     /**
