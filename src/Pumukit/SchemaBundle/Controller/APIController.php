@@ -149,6 +149,43 @@ class APIController extends Controller implements NewAdminControllerInterface
                 $tempCriteria['record_date_finish'] = $criteria['record_date_finish'];
                 unset($criteria['record_date_finish']);
             }
+
+            if (isset($criteria['duration'])) {
+                if (is_array($criteria['duration'])) {
+                    foreach ($criteria['duration'] as $key => $val) {
+                        $duration = (int) $val;
+                        $criteria['duration'][$key] = $duration;
+                    }
+                } else {
+                    $duration = (int) ($criteria['duration']);
+                    $criteria['duration'] = $duration;
+                }
+            }
+
+            if (isset($criteria['numview'])) {
+                if (is_array($criteria['numview'])) {
+                    foreach ($criteria['numview'] as $key => $val) {
+                        $numview = (int) $val;
+                        $criteria['numview'][$key] = $numview;
+                    }
+                } else {
+                    $numview = (int) ($criteria['numview']);
+                    $criteria['numview'] = $numview;
+                }
+            }
+
+            if (isset($criteria['numerical_id'])) {
+                if (is_array($criteria['numerical_id'])) {
+                    foreach ($criteria['numerical_id'] as $key => $val) {
+                        $numerical_id = (int) $val;
+                        $criteria['numerical_id'][$key] = $numerical_id;
+                    }
+                } else {
+                    $numerical_id = (int) ($criteria['numerical_id']);
+                    $criteria['numerical_id'] = $numerical_id;
+                }
+            }
+
             if ($criteria) {
                 $qb->addAnd($criteria);
             }
