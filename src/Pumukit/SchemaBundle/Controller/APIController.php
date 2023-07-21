@@ -17,6 +17,15 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class APIController extends Controller implements NewAdminControllerInterface
 {
+    private const DATA_TO_INT = [
+        'numerical_id',
+        'duration',
+        'numview',
+        'tracks.size',
+        'tracks.duration',
+        'tracks.bitrate',
+    ];
+
     /**
      * @Route("/stats.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
      */
@@ -149,6 +158,13 @@ class APIController extends Controller implements NewAdminControllerInterface
                 $tempCriteria['record_date_finish'] = $criteria['record_date_finish'];
                 unset($criteria['record_date_finish']);
             }
+
+            foreach ($criteria as $key => $value) {
+                if (in_array($key, self::DATA_TO_INT) && isset($criteria[$key])) {
+                    $criteria[$key] = $this->convertStringCriteriaToInt($criteria[$key]);
+                }
+            }
+
             if ($criteria) {
                 $qb->addAnd($criteria);
             }
@@ -382,6 +398,21 @@ class APIController extends Controller implements NewAdminControllerInterface
                     $criteria['status'] = (int) $criteria['status'];
                 }
             }
+        }
+
+        return $criteria;
+    }
+
+    private function convertStringCriteriaToInt($criteria)
+    {
+        if (is_array($criteria)) {
+            foreach ($criteria as $key => $val) {
+                $stringToInt = (int) $val;
+                $criteria[$key] = $stringToInt;
+            }
+        } else {
+            $stringToInt = (int) ($criteria);
+            $criteria = $stringToInt;
         }
 
         return $criteria;
