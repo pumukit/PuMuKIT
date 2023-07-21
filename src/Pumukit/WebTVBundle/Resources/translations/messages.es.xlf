@@ -457,6 +457,10 @@
         <source>Logo</source>
         <target state="translated">Imagen</target>
       </trans-unit>
+      <trans-unit id="1w45Lxk" resname="Logo. Go to homepage">
+        <source>Logo. Go to homepage</source>
+        <target state="translated">Logo. Ir al inicio</target>
+      </trans-unit>
       <trans-unit id="9vRoj.I" resname="Send">
         <source>Send</source>
         <target state="translated">Enviar</target>
@@ -744,6 +748,10 @@
       <trans-unit id="1c5E_XE" resname="External player">
         <source>External player</source>
         <target state="translated">Reproductor externo</target>
+      </trans-unit>
+      <trans-unit id="1fsdgE" resname="Sitemap">
+        <source>Sitemap</source>
+        <target state="translated">Mapa web</target>
       </trans-unit>
     </body>
   </file>

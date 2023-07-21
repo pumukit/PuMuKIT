@@ -457,6 +457,10 @@
         <source>Logo</source>
         <target state="needs-translation">Logo</target>
       </trans-unit>
+      <trans-unit id="1w45Lxk" resname="Logo. Go to homepage">
+        <source>Logo. Go to homepage</source>
+        <target state="translated">Logotipoa. Joan hasierako orrialdera</target>
+      </trans-unit>
       <trans-unit id="9vRoj.I" resname="Send">
         <source>Send</source>
         <target state="needs-translation">Send</target>
@@ -744,6 +748,10 @@
       <trans-unit id="1c5E_XE" resname="External player">
         <source>External player</source>
         <target state="needs-translation">External player</target>
+      </trans-unit>
+      <trans-unit id="1fsdgE" resname="Sitemap">
+        <source>Sitemap</source>
+        <target state="translated">Gunearen mapac</target>
       </trans-unit>
     </body>
   </file>
