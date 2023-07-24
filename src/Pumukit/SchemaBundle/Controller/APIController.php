@@ -26,6 +26,15 @@ class APIController extends AbstractController implements NewAdminControllerInte
 {
     public const API_SKIP = 0;
 
+    private const DATA_TO_INT = [
+        'numerical_id',
+        'duration',
+        'numview',
+        'tracks.size',
+        'tracks.duration',
+        'tracks.bitrate',
+    ];
+
     protected $documentManager;
     protected $serializer;
     protected $seriesService;
@@ -177,6 +186,11 @@ class APIController extends AbstractController implements NewAdminControllerInte
                 unset($criteria['record_date_finish']);
             }
             if ($criteria) {
+                foreach ($criteria as $key => $value) {
+                    if (in_array($key, self::DATA_TO_INT) && isset($criteria[$key])) {
+                        $criteria[$key] = $this->convertStringCriteriaToInt($criteria[$key]);
+                    }
+                }
                 foreach ($criteria as $key => $val) {
                     if (is_array($val)) {
                         foreach ($val as $sub_key => $sub_val) {
@@ -414,6 +428,21 @@ class APIController extends AbstractController implements NewAdminControllerInte
                     $criteria['status'] = (int) $criteria['status'];
                 }
             }
+        }
+
+        return $criteria;
+    }
+
+    private function convertStringCriteriaToInt($criteria)
+    {
+        if (is_array($criteria)) {
+            foreach ($criteria as $key => $val) {
+                $stringToInt = (int) $val;
+                $criteria[$key] = $stringToInt;
+            }
+        } else {
+            $stringToInt = (int) ($criteria);
+            $criteria = $stringToInt;
         }
 
         return $criteria;
