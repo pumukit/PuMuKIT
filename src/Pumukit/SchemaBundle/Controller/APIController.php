@@ -200,7 +200,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
                             }
                         }
                     } else {
-                        if (!is_int($sub_val)) {
+                        if (!is_int($val)) {
                             $criteria[$key] = preg_replace('/[^a-zA-Z áéíóúÁÉÍÓÚñÑ0-9]+/', '', $val);
                         }
                     }
