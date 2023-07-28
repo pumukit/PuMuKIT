@@ -441,7 +441,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
                 $criteria[$key] = $stringToInt;
             }
         } else {
-            $stringToInt = (int) ($criteria);
+            $stringToInt = (int) $criteria;
             $criteria = $stringToInt;
         }
 
