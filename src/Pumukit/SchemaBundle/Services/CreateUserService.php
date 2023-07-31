@@ -34,24 +34,24 @@ class CreateUserService extends CommonUserService
 
     public function createUser(string $username, string $password, string $email, string $fullName, PermissionProfile $permissionProfile): UserInterface
     {
-        if ($this->userExists($username)) {
-            throw new \Exception('Username already on database');
-        }
-
         return $this->create($username, $password, $email, $fullName, $permissionProfile);
     }
 
     public function createSuperAdmin(string $username, string $password, string $email): UserInterface
     {
-        if ($this->userExists($username)) {
-            throw new \Exception('Username already on database');
-        }
-
         return $this->create($username, $password, $email, null, null);
     }
 
     private function create(string $username, string $password, string $email, ?string $fullName, ?PermissionProfile $permissionProfile): UserInterface
     {
+        if ($this->userExists(['username' => strtolower($username)])) {
+            throw new \Exception('Username already on database');
+        }
+
+        if ($this->userExists(['email' => $email])) {
+            throw new \Exception('Email already on database');
+        }
+
         $user = new User();
         $user->setUsername($username);
         $user->setFullName($fullName ?? $username);
