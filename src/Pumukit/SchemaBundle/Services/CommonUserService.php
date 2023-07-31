@@ -23,9 +23,9 @@ class CommonUserService
         $this->permissionProfileService = $permissionProfileService;
     }
 
-    protected function userExists(string $username)
+    protected function userExists(array $criteria)
     {
-        return $this->userRepository->userExists($username);
+        return $this->userRepository->userExists($criteria);
     }
 
     protected function isValidOrigin(UserInterface $user, bool $checkOrigin = true): bool

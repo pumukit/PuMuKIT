@@ -12,11 +12,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserRepository extends DocumentRepository
 {
-    public function userExists(string $username)
+    public function userExists(array $criteria)
     {
-        return $this->dm->getRepository(User::class)->findOneBy([
-            'username' => strtolower($username),
-        ]);
+        return $this->dm->getRepository(User::class)->findOneBy($criteria);
     }
 
     public function findUsersInAnyGroups(array $groups)
