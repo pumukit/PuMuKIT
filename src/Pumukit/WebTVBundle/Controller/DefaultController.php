@@ -324,7 +324,7 @@ class DefaultController extends AbstractController
      */
     public function webMapAction(): Response
     {
-        $this->updateBreadcrumbs($this->translator->trans('Mapa web'), 'pumukit_webtv_map');
+        $this->updateBreadcrumbs($this->translator->trans('Sitemap'), 'pumukit_webtv_map');
 
         return $this->render('@PumukitWebTV/Misc/map.html.twig');
     }

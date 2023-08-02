@@ -753,6 +753,10 @@
         <source>Sitemap</source>
         <target state="translated">Sitemap</target>
       </trans-unit>
+      <trans-unit id="1fss45fE" resname="Sections">
+        <source>Sections</source>
+        <target state="translated">Sections</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
