@@ -319,6 +319,16 @@ class DefaultController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/map", name="pumukit_webtv_map")
+     */
+    public function webMapAction(): Response
+    {
+        $this->updateBreadcrumbs($this->translator->trans('Mapa web'), 'pumukit_webtv_map');
+
+        return $this->render('@PumukitWebTV/Misc/map.html.twig');
+    }
+
     protected function doLive(Live $live, Request $request, bool $iframe = true)
     {
         if ($live->getPasswd() && $live->getPasswd() !== $request->get('broadcast_password')) {
@@ -385,15 +395,4 @@ class DefaultController extends AbstractController
 
         return curl_exec($verify);
     }
-
-    /**
-     * @Route("/map", name="pumukit_webtv_map")
-     */
-    public function webMapAction(): Response
-    {
-        $this->updateBreadcrumbs($this->translator->trans('Mapa web'), 'pumukit_webtv_map');
-
-        return $this->render('@PumukitWebTV/Misc/map.html.twig');
-    }
-
 }
