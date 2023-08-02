@@ -2296,19 +2296,19 @@ $(document).on('submit', '#pumukitnewadmin_user_form_create', function(event){
             method: 'POST',
             data: $(this).serialize(),
             success: function(response, textStatus, jqXHR){
-                        if (jqXHR.responseText.indexOf('modal-header') != -1){
-                            var message = '{% trans %}There was an error in creating the User.{% endtrans %}';
-                            no_success(message);
-                        }else{
-                            $('#list_users').html(response);
-                            var message = '{% trans %}User successfully created.{% endtrans %}';
-                            success(message);
-                        }
+                if (jqXHR.responseText.indexOf('modal-header') != -1){
+                    var message = '{% trans %}There was an error in creating the User.{% endtrans %}';
+                    no_success(message);
+                }else{
+                    $('#list_users').html(response);
+                    var message = '{% trans %}User successfully created.{% endtrans %}';
+                    success(message);
+                }
             },
             error: function(jqXHR, textStatus, errorThrown){
-                        var responseText = jqXHR.responseText.split("<title>").pop().split("</title>").shift();
-                        var message = responseText.replace(/(\r\n|\n|\r)/gm,"");
-                        no_success(errorThrown+': '+textStatus+', '+message);
+                var responseText = jqXHR.responseText.split("<title>").pop().split("</title>").shift();
+                var message = responseText.replace(/(\r\n|\n|\r)/gm,"");
+                no_success(message);
             }
     });
     return false;

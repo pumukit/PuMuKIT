@@ -26,6 +26,15 @@ class APIController extends AbstractController implements NewAdminControllerInte
 {
     public const API_SKIP = 0;
 
+    private const DATA_TO_INT = [
+        'numerical_id',
+        'duration',
+        'numview',
+        'tracks.size',
+        'tracks.duration',
+        'tracks.bitrate',
+    ];
+
     protected $documentManager;
     protected $serializer;
     protected $seriesService;
@@ -177,14 +186,23 @@ class APIController extends AbstractController implements NewAdminControllerInte
                 unset($criteria['record_date_finish']);
             }
             if ($criteria) {
+                foreach ($criteria as $key => $value) {
+                    if (in_array($key, self::DATA_TO_INT) && isset($criteria[$key])) {
+                        $criteria[$key] = $this->convertStringCriteriaToInt($criteria[$key]);
+                    }
+                }
                 foreach ($criteria as $key => $val) {
                     if (is_array($val)) {
                         foreach ($val as $sub_key => $sub_val) {
-                            $val[$sub_key] = preg_replace('/[^a-zA-Z áéíóúÁÉÍÓÚñÑ0-9]+/', '', $sub_val);
-                            $criteria[$key] = $val;
+                            if (!is_int($sub_val)) {
+                                $val[$sub_key] = preg_replace('/[^a-zA-Z áéíóúÁÉÍÓÚñÑ0-9]+/', '', $sub_val);
+                                $criteria[$key] = $val;
+                            }
                         }
                     } else {
-                        $criteria[$key] = preg_replace('/[^a-zA-Z áéíóúÁÉÍÓÚñÑ0-9]+/', '', $val);
+                        if (!is_int($val)) {
+                            $criteria[$key] = preg_replace('/[^a-zA-Z áéíóúÁÉÍÓÚñÑ0-9]+/', '', $val);
+                        }
                     }
                 }
                 $qb->addAnd($criteria);
@@ -414,6 +432,21 @@ class APIController extends AbstractController implements NewAdminControllerInte
                     $criteria['status'] = (int) $criteria['status'];
                 }
             }
+        }
+
+        return $criteria;
+    }
+
+    private function convertStringCriteriaToInt($criteria)
+    {
+        if (is_array($criteria)) {
+            foreach ($criteria as $key => $val) {
+                $stringToInt = (int) $val;
+                $criteria[$key] = $stringToInt;
+            }
+        } else {
+            $stringToInt = (int) $criteria;
+            $criteria = $stringToInt;
         }
 
         return $criteria;
