@@ -1,20 +1,22 @@
 {% set roles = sort_roles(object, true) %}
 {% if roles %}
-    <ul class="qa-player-roles persons">
-        {% for role in roles %}
-            {% for person in role.people %}
-                <li class="list-group-item list-group-item-custom">
-                    <div class="qa-player-role-{{ role.getCod() }} person">
-                        {{ role.getText() }}:
-                        {% if person.getWeb() is not empty %}
-                            <a href="{{ person.getWeb() }}">{{ person.getHName() }}</a>
-                        {% else %}
-                            {{ person.getHName() }}
-                        {% endif %}
-                    </div>
-                    {{ person.getInfo() }}
-                </li>
+    <li class="list-group-item list-group-item-custom">
+        <ul class="qa-player-roles persons">
+            {% for role in roles %}
+                {% for person in role.people %}
+                    <li class="list-group-item list-group-item-custom">
+                        <div class="qa-player-role-{{ role.getCod() }} person">
+                            {{ role.getText() }}:
+                            {% if person.getWeb() is not empty %}
+                                <a href="{{ person.getWeb() }}">{{ person.getHName() }}</a>
+                            {% else %}
+                                {{ person.getHName() }}
+                            {% endif %}
+                        </div>
+                        {{ person.getInfo() }}
+                    </li>
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
-    </ul>
+        </ul>
+    </li>
 {% endif %}
