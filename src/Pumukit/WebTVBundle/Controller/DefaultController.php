@@ -320,11 +320,11 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/map", name="pumukit_webtv_map")
+     * @Route("/sitemap", name="pumukit_sitemap")
      */
-    public function webMapAction(): Response
+    public function siteMapAction(): Response
     {
-        $this->updateBreadcrumbs($this->translator->trans('Sitemap'), 'pumukit_webtv_map');
+        $this->updateBreadcrumbs($this->translator->trans('Sitemap'), 'pumukit_sitemap');
 
         return $this->render('@PumukitWebTV/Misc/map.html.twig');
     }

@@ -1,6 +1,8 @@
 {% set roles = sort_roles(object, true) %}
 {% if roles %}
+    {% if app.request.attributes.get('_controller') != 'Pumukit\\WebTVBundle\\Controller\\MultimediaObjectController::multimediaInfoAction' %}
     <li class="list-group-item list-group-item-custom">
+    {% endif %}
         <ul class="qa-player-roles persons">
             {% for role in roles %}
                 {% for person in role.people %}
@@ -18,5 +20,7 @@
                 {% endfor %}
             {% endfor %}
         </ul>
+    {% if app.request.attributes.get('_route') == 'pumukit_webtv_multimediaobject_index' %}
     </li>
+    {% endif %}
 {% endif %}
