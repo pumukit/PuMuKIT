@@ -70,7 +70,21 @@
             {% block custom_block_after_body %}{% endblock %}
         </main>
 
-        {% include "@PumukitWebTV/Layout/template_footer.html.twig" %}
+        <footer role="contentinfo" class="footer-pmk">
+            {% include "@PumukitWebTV/Layout/template_footer.html.twig" %}
+
+            <div class="container-fluid powered_by">
+                <div class="row">
+                    {# Removing the original copyright line from footer breaks the AGPL license #}
+                    <div class="container text-right">
+                        <img alt="PuMuKIT icon" src="{{ asset('bundles/pumukitwebtv/images/favicon.ico') }}" />
+                        <a href="https://pumukit.org">
+                            {{ "Powered by"|trans }} <span class="version">PuMuKIT {{constant('Pumukit\\PumukitVersion::VERSION')}}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </footer>
         
         {% include "@PumukitWebTV/Cookies/template.html.twig" %}
     {% endblock %}
