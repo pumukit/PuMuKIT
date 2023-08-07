@@ -1,0 +1,44 @@
+{% extends '@PumukitWebTV/layout.html.twig' %}
+
+{% block title %}
+    {{ "Sitemap"|trans }}
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>
+                {% trans %}Sitemap{% endtrans %}
+            </h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>
+                {% trans %}Sections{% endtrans %}
+            </h2>
+        </div>
+        <div class="col-xs-12 map-sections">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-custom">
+                    <i class="fa fa-angle-right"></i>&nbsp;<a href="{{ path('homepage') }}">{% trans %}Home{% endtrans %}</a>
+                </li>
+                <li class="list-group-item list-group-item-custom">
+                    <i class="fa fa-angle-right"></i>&nbsp;<a href="{{ path('pumukit_webtv_announces_latestuploads') }}">{% trans %}Latest Uploads{% endtrans %}</a>
+                </li>
+                <li class="list-group-item list-group-item-custom">
+                    <i class="fa fa-angle-right"></i>&nbsp;<a href="{{ path('pumukit_webtv_medialibrary_index') }}">{% trans %}Full Catalogue{% endtrans %}</a>
+                </li>
+                <li class="list-group-item list-group-item-custom">
+                    <i class="fa fa-angle-right"></i>&nbsp;<a href="{{ path('pumukit_webtv_search_multimediaobjects') }}">{% trans %}Search{% endtrans %}</a>
+                </li>
+                <li class="list-group-item list-group-item-custom">
+                    <i class="fa fa-angle-right"></i>&nbsp;<a href="{{ path('pumukit_webtv_events') }}"">{% trans %}Live events{% endtrans %}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}

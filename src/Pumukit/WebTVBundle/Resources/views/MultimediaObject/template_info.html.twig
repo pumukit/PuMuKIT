@@ -24,7 +24,7 @@
 <div class="row">
     <div class="col-xs-12 video-subtitle">
         {% if multimediaObject.getSubtitle() %}
-            <h3 class="qa-player-subtitle"> {{ multimediaObject.getSubtitle() }} </h3>
+            <h2 class="qa-player-subtitle"> {{ multimediaObject.getSubtitle() }} </h2>
         {% endif %}
 
         <p class="qa-player-description description">
@@ -61,48 +61,51 @@
 <br>
 <div class="row">
     <div class="col-sm-6">
-
         <div class="panel panel-default panel-pmk">
             <div class="panel-heading">
-                {% trans %} Attachments {% endtrans %}
+                <h2 class="panel-title">
+                    {% trans %} Attachments {% endtrans %}
+                </h2>
             </div>
             <div class="panel-body">
                 {% set none_attach = true %}
 
-                {% for track in multimediaObject.getTracks() | filter(track => track.allowDownload() and not track.getHide() and showDownloads) %}
-                    {% set none_attach = false %}
-                    <div class="qa-player-tracks tracks">
-                        <span class="glyphicon glyphicon-facetime-video"></span>
-                        <a class="video-tracks" download href="{{ track_url(track) }}?forcedl=1">
-                            {% if track.isOnlyAudio() %}
-                                {% trans %}Download this audio{% endtrans %}
-                            {% else %}
-                                {% trans %}Download this video{% endtrans %}
-                            {% endif %}
-                            <span class="pull-right">{{ (track.getSize() / 1048576)|number_format(2) }}MB</span>
-                        </a>
-                    </div>
-                {% endfor %}
+                <ul class="list-group">
+                    {% for track in multimediaObject.getTracks() | filter(track => track.allowDownload() and not track.getHide() and showDownloads) %}
+                        {% set none_attach = false %}
+                        <li class="qa-player-tracks tracks">
+                            <span class="glyphicon glyphicon-facetime-video"></span>
+                            <a class="video-tracks" download href="{{ track_url(track) }}?forcedl=1">
+                                {% if track.isOnlyAudio() %}
+                                    {% trans %}Download this audio{% endtrans %}
+                                {% else %}
+                                    {% trans %}Download this video{% endtrans %}
+                                {% endif %}
+                                <span class="pull-right">{{ (track.getSize() / 1048576)|number_format(2) }}MB</span>
+                            </a>
+                        </li>
+                    {% endfor %}
 
-                {% for material in multimediaObject.getMaterials() | filter(material => not material.getHide() and showDownloads)  %}
-                    {% set none_attach = false %}
-                    <div class="qa-player-material material">
-                        <span class="glyphicon glyphicon-paperclip"></span>
-                        <a href="{{ material.getUrl() }}">{{ material.getName() }}</a>
-                    </div>
-                {% endfor %}
+                    {% for material in multimediaObject.getMaterials() | filter(material => not material.getHide() and showDownloads)  %}
+                        {% set none_attach = false %}
+                        <li class="qa-player-material material">
+                            <span class="glyphicon glyphicon-paperclip"></span>
+                            <a href="{{ material.getUrl() }}">{{ material.getName() }}</a>
+                        </li>
+                    {% endfor %}
 
-                {% for link in multimediaObject.getLinks()  %}
-                    {% if showDownloads %}
-                    {% set none_attach = false %}
-                    <div class="qa-player-link link">
-                        <a target="_blank" href="{{ link.getUrl() }}">
-                            <span class="glyphicon glyphicon-globe"></span>
-                            {{ link.getName() }}
-                        </a>
-                    </div>
-                    {% endif %}
-                {% endfor %}
+                    {% for link in multimediaObject.getLinks()  %}
+                        {% if showDownloads %}
+                        {% set none_attach = false %}
+                        <li class="qa-player-link link">
+                            <a target="_blank" href="{{ link.getUrl() }}">
+                                <span class="glyphicon glyphicon-globe"></span>
+                                {{ link.getName() }}
+                            </a>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
                 {% if none_attach %}
                     <strong>{% trans %} There are no attachments {% endtrans %}</strong>
                 {% endif %}

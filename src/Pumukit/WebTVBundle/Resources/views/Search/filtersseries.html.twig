@@ -5,7 +5,8 @@
         <div class="input-group">
             <input type="text" class="form-control" id="search" name="search" value="{{ app.request.query.get('search') }}" placeholder="{% trans %}Search{% endtrans %}">
             <div class="input-group-btn">
-                <button type="submit" class="btn btn-default" title="search">
+                <button type="submit" class="btn btn-default" aria-label="search">
+                    <span class="sr-only">{% trans %}Search{% endtrans %}</span>
                     <span class="glyphicon glyphicon-search"></span>
                 </button>
             </div>

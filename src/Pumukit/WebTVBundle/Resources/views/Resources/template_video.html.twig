@@ -11,65 +11,66 @@
 <div class="{{ col_calculator(objectByCol|default(1)) }} image_representation">
     <div class="thumbnail">
         <a href="{{ videoPath }}" title="{{ videoTitle }}">
-            <div class="embed-responsive embed-responsive-16by9">
-                <div class="embed-responsive-item text-center">
-                    <img alt="{{ videoTitle }}" src="{{ object|first_url_pic() }}" class="img-responsive img_adapter_4_3 dynamic_image"
-                         data-dynamic-pic="{{ object|first_dynamic_pic(true) }}"
-                         data-static-pic="{{ object|first_url_pic() }}"
-                    />
-                    {% if show_video_options is defined and show_video_options is same as (true)%}
-                        <div class="multimedia_object_edit_button" data-multimedia-object="{{ object.id }}" data-multimedia-object-status="{{ object.getStatus() }}" data-multimedia-object-title="{{ object.getTitle() }}">
-                            <i class="fa fa-cog fa-2x"></i>
-                        </div>
-                    {% endif %}
+            <div>
+                <div class="embed-responsive embed-responsive-16by9">
+                    <div class="embed-responsive-item text-center">
+                        <img alt="{{ videoTitle }}" src="{{ object|first_url_pic() }}" class="img-responsive img_adapter_4_3 dynamic_image"
+                            data-dynamic-pic="{{ object|first_dynamic_pic(true) }}"
+                            data-static-pic="{{ object|first_url_pic() }}"
+                        />
+                        {% if show_video_options is defined and show_video_options is same as (true)%}
+                            <div class="multimedia_object_edit_button" data-multimedia-object="{{ object.id }}" data-multimedia-object-status="{{ object.getStatus() }}" data-multimedia-object-title="{{ object.getTitle() }}">
+                                <i class="fa fa-cog fa-2x"></i>
+                            </div>
+                        {% endif %}
 
-                    {% if show_inside_video_duration|default(true) and mmobj_duration(object) %}
-                        <span class="inside-video-duration">{{ mmobj_duration(object) | duration_string }}</span>
-                    {% endif %}
+                        {% if show_inside_video_duration|default(true) and mmobj_duration(object) %}
+                            <span class="inside-video-duration">{{ mmobj_duration(object) | duration_string }}</span>
+                        {% endif %}
+                    </div>
                 </div>
+                {% if show_info is defined and show_info %}
+                    <p class="title_image_representation">
+                        {{ videoTitle }}
+                    </p>
+                {% endif %}
             </div>
         </a>
 
         {% if show_info is defined and show_info %}
-            <div class="caption">
-                <p class="title_image_representation">
-                    <a href="{{ videoPath }}" title="{{ videoTitle }}">
-                        {{ videoTitle }}
-                    </a>
-                </p>
-
+            <ul class="caption list-group">
                 {% if object.line2 is not empty %}
-                    <p class="second_line_image_representation">{{ object.line2 }}</p>
+                    <li class="second_line_image_representation">{{ object.line2 }}</li>
                 {% elseif object.subtitle is not empty %}
-                    <p class="second_line_image_representation">{{ object.subtitle }}</p>
+                    <li class="second_line_image_representation">{{ object.subtitle }}</li>
                 {% elseif seriesTitle %}
-                    <a href="{{ path('pumukit_webtv_series_index', {'id': object.getSeries().getId() }) }}" title="{{ seriesTitle }}">
-                        <p class="second_line_image_representation" title="{{ "i18n.one.Series"|trans ~ " " ~ seriesTitle }}">{{ seriesTitle }}</p>
-                    </a>
+                    <li class="list-group-item list-group-item-custom">
+                        <a href="{{ path('pumukit_webtv_series_index', {'id': object.getSeries().getId() }) }}" title="{{ seriesTitle }}">
+                            <p class="second_line_image_representation" title="{{ "i18n.one.Series"|trans ~ " " ~ seriesTitle }}">{{ seriesTitle }}</p>
+                        </a>
+                    </li>
                 {% endif %}
 
                 {% if show_info|default(false) %}
-                    <div class="date_and_visits">
-                        {% if with_publicdate is defined and with_publicdate %}
-                            <div class="pull-left">
-                                {{ object.publicDate| format_datetime('medium','none',locale=app.request.getLocale()) }}
-                            </div>
-                        {% else %}
-                            {% if app.request.attributes.get('_route') != 'pumukit_webtv_announces_latestuploads_pager' and not object.getProperty('externalplayer') %}
-                                <div class="language pull-left">
-                                    {% trans %}Language{% endtrans %}:
-                                    {{ object.getDisplayTrack().getLanguage()|default(app.request.getLocale()) | language_name }}
-                                </div>
-                            {% endif %}
-                            <div class="pull-right">
-                                {% trans %}Viewed{% endtrans %}:
-                                {{ object.getNumview() }}
-                                {{ "{0}times|{1}time|]1,Inf]times"|trans({'%count%':  object.getNumview()}) }}
-                            </div>
+                    {% if with_publicdate is defined and with_publicdate %}
+                        <li class="list-group-item list-group-item-custom date_and_visits text-left">
+                            {{ object.publicDate| format_datetime('medium','none',locale=app.request.getLocale()) }}
+                        </li>
+                    {% else %}
+                        {% if app.request.attributes.get('_route') != 'pumukit_webtv_announces_latestuploads_pager' and not object.getProperty('externalplayer') %}
+                            <li class="list-group-item list-group-item-custom date_and_visits text-left language">
+                                {% trans %}Language{% endtrans %}:
+                                {{ object.getDisplayTrack().getLanguage()|default(app.request.getLocale()) | language_name }}
+                            </li>
                         {% endif %}
-                    </div>
+                        <li class="list-group-item list-group-item-custom text-right date_and_visits">
+                            {% trans %}Viewed{% endtrans %}:
+                            {{ object.getNumview() }}
+                            {{ "{0}times|{1}time|]1,Inf]times"|trans({'%count%':  object.getNumview()}) }}
+                        </li>
+                    {% endif %}
                 {% endif %}
-            </div>
+            </ul>
         {% endif %}
     </div>
 </div>

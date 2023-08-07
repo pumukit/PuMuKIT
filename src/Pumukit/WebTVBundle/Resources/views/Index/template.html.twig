@@ -1,5 +1,7 @@
 {% extends '@PumukitWebTV/Layout/template.html.twig' %}
 
+{% block title %}{{ pumukit_info.title|default('PuMuKIT') }} - {% trans %}Home{% endtrans %}{% endblock %}
+
 {% block body %}
 
     {{ render(controller('Pumukit\\WebTVBundle\\Controller\\ModulesController::highlightAction')) }}

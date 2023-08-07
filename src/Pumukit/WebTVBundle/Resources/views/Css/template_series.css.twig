@@ -2,6 +2,18 @@
     position:relative;
 }
 
+.series_image_group .embed-responsive-item:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    background: rgba(0, 0, 0, .1);
+    z-index: 1;
+}
+
 .hover_series {
     position: absolute;
     width: 50%;
@@ -10,7 +22,8 @@
     background-color: black;
     height: 100%;
     top: 0;
-    opacity: 0.7;
+    opacity: 1;
+    z-index: 2;
 }
 
 .hover_series .text-center {

@@ -34,7 +34,9 @@
     <div class="col-sm-6">
         <div class="panel panel-default panel-pmk">
             <div class="panel-heading">
-                {% trans %} Attachments {% endtrans %}
+                <h2 class="panel-title">
+                    {% trans %} Attachments {% endtrans %}
+                </h2>
             </div>
             <div class="panel-body">
                 {% include "@PumukitWebTV/Misc/materials.html.twig" with {'object': multimediaObject } %}

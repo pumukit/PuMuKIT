@@ -1,8 +1,7 @@
 <div class="row">
-
     {% if show_video_broadcast is defined and show_video_broadcast %}
         <div class="col-xs-10">
-            <h4 class="video-title">{{ object.getTitle()| default('No title'|trans) }}</h4>
+            <h3 class="video-title">{{ object.getTitle()| default('No title'|trans) }}</h3>
         </div>
 
         {% set broadcastType = object.getEmbeddedBroadcast().getType() %}
@@ -17,53 +16,49 @@
         </div>
     {% else %}
         <div class="col-xs-12">
-            <h4 class="video-title">{{ object.getTitle()| default('No title'|trans) }}</h4>
+            <h3 class="video-title">{{ object.getTitle()| default('No title'|trans) }}</h3>
         </div>
     {% endif %}
-
-    {% if show_video_date is defined and show_video_date %}
-        <div class="col-xs-12 video-date">
-            {{ object.getRecordDate()| format_datetime('medium','none',locale=app.request.getLocale()) }}
-        </div>
-    {% endif %}
-
     {% if show_video_subtitle is defined and show_video_subtitle %}
         <div class="col-xs-12">
-            <h5 class="video-subtitle">
+            <h4 class="video-subtitle">
                 <small>{{ object.getSubtitle()|default ('') }}</small>
-            </h5>
+            </h4>
         </div>
     {% endif %}
 
-    {% if show_video_description is defined and show_video_description %}
-        <div class="col-xs-12 video-description">
-            {{ object.getDescription()|default('') }}
-        </div>
-    {% endif %}
+    <ul class="col-xs-12 list-group video-info-elements">
+        {% if show_video_date is defined and show_video_date %}
+            <li class="list-group-item list-group-item-custom video-date">
+                {{ object.getRecordDate()| format_datetime('medium','none',locale=app.request.getLocale()) }}
+            </li>
+        {% endif %}
 
-    {% if show_video_duration is defined and show_video_duration and mmobj_duration(object) %}
-        <div class="col-xs-12 video-duration">
-            {% trans %}Duration{% endtrans %}:
-            {{ mmobj_duration(object) | duration_string }}
-        </div>
-    {% endif %}
+        {% if show_video_description is defined and show_video_description %}
+            <li class="list-group-item list-group-item-custom video-description">
+                {{ object.getDescription()|default('') }}
+            </li>
+        {% endif %}
 
-    {% if show_video_views is defined and show_video_views %}
-        <div class="col-xs-12 video-views">
-            {% trans %}Viewed{% endtrans %}: <span class="numView">{{ object.getNumview() }}</span>
-            {{ "{0}times|{1}time|]1,Inf]times"|trans({'%count%':  object.getNumview()}) }}
-        </div>
-    {% endif %}
+        {% if show_video_duration is defined and show_video_duration and mmobj_duration(object) %}
+            <li class="list-group-item list-group-item-custom duration">
+                {% trans %}Duration{% endtrans %}:
+                {{ mmobj_duration(object) | duration_string }}
+            </li>
+        {% endif %}
 
-    {% if show_video_elements is defined and show_video_elements %}
-        <div class="col-xs-12 video-elements">
-            <ul class="list-group">
-                {% include "@PumukitWebTV/Misc/tracks.html.twig" %}
-                {% include "@PumukitWebTV/Misc/materials.html.twig" %}
-                {% include "@PumukitWebTV/Misc/links.html.twig" %}
-            </ul>
+        {% if show_video_views is defined and show_video_views %}
+            <li class="list-group-item list-group-item-custom video-views">
+                {% trans %}Viewed{% endtrans %}: <span class="numView">{{ object.getNumview() }}</span>
+                {{ "{0}times|{1}time|]1,Inf]times"|trans({'%count%':  object.getNumview()}) }}
+            </li>
+        {% endif %}
 
+        {% if show_video_elements is defined and show_video_elements %}
+            {% include "@PumukitWebTV/Misc/tracks.html.twig" %}
+            {% include "@PumukitWebTV/Misc/materials.html.twig" %}
+            {% include "@PumukitWebTV/Misc/links.html.twig" %}
             {% include "@PumukitWebTV/Misc/people.html.twig" %}
-        </div>
-    {% endif %}
+        {% endif %}
+    </ul>
 </div>

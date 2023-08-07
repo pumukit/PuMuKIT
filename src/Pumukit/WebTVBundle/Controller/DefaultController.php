@@ -319,6 +319,16 @@ class DefaultController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/sitemap", name="pumukit_sitemap")
+     */
+    public function siteMapAction(): Response
+    {
+        $this->updateBreadcrumbs($this->translator->trans('Sitemap'), 'pumukit_sitemap');
+
+        return $this->render('@PumukitWebTV/Misc/map.html.twig');
+    }
+
     protected function doLive(Live $live, Request $request, bool $iframe = true)
     {
         if ($live->getPasswd() && $live->getPasswd() !== $request->get('broadcast_password')) {

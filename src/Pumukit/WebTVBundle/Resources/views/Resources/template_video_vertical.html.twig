@@ -7,55 +7,53 @@
 {% set seriesTitle = object.getSeriesTitle()|default('') %}
 <div class="{{ col_calculator(objectByCol|default(1)) }} image_representation">
     <div class="row {% if current.getId()|default('') == multimediaObject.getId() %}current{% endif %}">
-        <div class="col-sm-6 col-md-5">
-            <a href="{{ videoPath }}" title="{{ videoTitle }}">
+        <a href="{{ videoPath }}" title="{{ videoTitle }}">
+            <div class="col-sm-6 col-md-5">
                 <div class="embed-responsive embed-responsive-16by9">
                     <div class="embed-responsive-item text-center">
                         <img alt="{{ videoTitle }}" src="{{ object|first_url_pic() }}" class="img-responsive img_adapter_4_3" />
                     </div>
                 </div>
-            </a>
-        </div>
-        <div class="col-sm-6 col-md-7">
-            {% if show_info|default(true) %}
-                <div class="caption">
-                    <p class="title_image_representation">
-                        <a href="{{ videoPath }}" title="{{ videoTitle }}">
+            </div>
+            <div class="col-sm-6 col-md-7">
+                {% if show_info|default(true) %}
+                    <div class="caption">
+                        <p class="title_image_representation">
                             {{ videoTitle }}
-                        </a>
-                    </p>
+                        </p>
 
-                    {% if show_second_line is defined and show_second_line %}
-                        {% if object.line2 is not empty %}
-                            <p class="second_line_image_representation">{{ object.line2 }}</p>
-                        {% elseif object.subtitle is not empty %}
-                            <p class="second_line_image_representation">{{ object.subtitle }}</p>
-                        {% elseif seriesTitle %}
-                            <a href="{{ path('pumukit_webtv_series_index', {'id': object.getSeries().getId() }) }}" title="{{ seriesTitle }}">
-                                <p class="second_line_image_representation">{{ seriesTitle }}</p>
-                            </a>
-                        {% endif %}
-                    {% endif %}
-
-                    {% if show_info|default(false) %}
-                        <div class="date_and_visits pull-right">
-                            {% if with_publicdate is defined and with_publicdate %}
-                                {{ object.publicDate| format_datetime('medium','none',locale=app.request.getLocale()) }}
-                            {% else %}
-                                {% if app.request.attributes.get('_route') != 'pumukit_webtv_announces_latestuploads_pager' and show_language  and not object.getProperty('externalplayer')%}
-                                    <div class="language pull-left">
-                                        {% trans %}Language{% endtrans %}:
-                                        {{ object.getDisplayTrack().getLanguage()|default(app.request.getLocale()) | language_name }}
-                                    </div>
-                                {% endif %}
-                                {% trans %}Viewed{% endtrans %}:
-                                {{ object.getNumview() }}
-                                {{ "{0}times|{1}time|]1,Inf]times"|trans({'%count%': object.getNumview()}) }}
+                        {% if show_second_line is defined and show_second_line %}
+                            {% if object.line2 is not empty %}
+                                <p class="second_line_image_representation">{{ object.line2 }}</p>
+                            {% elseif object.subtitle is not empty %}
+                                <p class="second_line_image_representation">{{ object.subtitle }}</p>
+                            {% elseif seriesTitle %}
+                                <a href="{{ path('pumukit_webtv_series_index', {'id': object.getSeries().getId() }) }}" title="{{ seriesTitle }}">
+                                    <p class="second_line_image_representation">{{ seriesTitle }}</p>
+                                </a>
                             {% endif %}
-                        </div>
-                    {% endif %}
-                </div>
-            {% endif %}
-        </div>
+                        {% endif %}
+
+                        {% if show_info|default(false) %}
+                            <div class="date_and_visits pull-right">
+                                {% if with_publicdate is defined and with_publicdate %}
+                                    {{ object.publicDate| format_datetime('medium','none',locale=app.request.getLocale()) }}
+                                {% else %}
+                                    {% if app.request.attributes.get('_route') != 'pumukit_webtv_announces_latestuploads_pager' and show_language  and not object.getProperty('externalplayer')%}
+                                        <div class="language pull-left">
+                                            {% trans %}Language{% endtrans %}:
+                                            {{ object.getDisplayTrack().getLanguage()|default(app.request.getLocale()) | language_name }}
+                                        </div>
+                                    {% endif %}
+                                    {% trans %}Viewed{% endtrans %}:
+                                    {{ object.getNumview() }}
+                                    {{ "{0}times|{1}time|]1,Inf]times"|trans({'%count%': object.getNumview()}) }}
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </a>
     </div>
 </div>

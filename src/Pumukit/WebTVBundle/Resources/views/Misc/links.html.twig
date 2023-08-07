@@ -1,8 +1,8 @@
 {% for link in object.getLinks() %}
-    <div class="link">
+    <li class="list-group-item list-group-item-custom link">
         <a target="_blank" href="{{ link.getUrl() }}" title="{{ link.getName() }}">
             <span class="glyphicon glyphicon-globe"></span>
             {{ link.getName() }}
         </a>
-    </div>
+    </li>
 {% endfor %}

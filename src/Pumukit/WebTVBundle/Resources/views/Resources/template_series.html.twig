@@ -11,33 +11,39 @@
                     <div class="embed-responsive-item text-center">
                         <img src="{{ object|first_url_pic() }}" alt="{{ objectTitle }}" class="img-responsive img_adapter_4_3" />
                     </div>
-                </div>
-                <div class="hover_series">
-                    <div class="text-center">
-                        <span class="series_count_mmobj">
-                            {{ num_mmobjs }}
-                        </span>
-                        <span class="series_count_text">
-                            {{ (num_mmobjs > 1 ? 'videos' : 'video')|trans }}
-                        </span>
+                    <div class="hover_series">
+                        <div class="text-center">
+                            <span class="series_count_mmobj">
+                                {{ num_mmobjs }}
+                            </span>
+                            <span class="series_count_text">
+                                {{ (num_mmobjs > 1 ? 'videos' : 'video')|trans }}
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            {% if show_info|default(true) %}
-                <div class="caption">
+                {% if show_info|default(true) %}
                     <p class="title_image_representation">
                         {{ objectTitle }}
                     </p>
+                {% endif %}
+            </div>
 
-                    <p class="second_line_image_representation">{{ object.subtitle }}</p>
-
-                    {% if show_info|default(false) %}
-                    <div class="date_and_visits pull-right">
-                        {{ object.publicDate|  format_datetime("medium", "none",locale=app.request.getLocale()) }}
-                    </div>
+            {% if show_info|default(true) %}
+                <ul class="caption list-group">
+                    {% if object.subtitle is not empty %}
+                        <li class="list-group-item list-group-item-custom">
+                            <p class="second_line_image_representation">{{ object.subtitle }}</p>
+                        </li>
                     {% endif %}
-                </div>
+
+                    {% if show_info|default(true) %}
+                        <li class="list-group-item list-group-item-custom date_and_visits pull-right">
+                            {{ object.publicDate|  format_datetime("medium", "none",locale=app.request.getLocale()) }}
+                        </li>
+                    {% endif %}
+                </ul>
             {% endif %}
         </div>
     </a>

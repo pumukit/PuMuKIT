@@ -1,5 +1,7 @@
 {% extends '@PumukitWebTV/layout.html.twig' %}
 
+{% block title %}{{ parent() }} - {{ title }}{% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
     {% if scroll_list %}

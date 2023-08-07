@@ -1,5 +1,22 @@
 {% extends '@PumukitWebTV/layout.html.twig' %}
 
+{% block title %}
+    {{ parent() }} -
+    {% if blocked_tag is defined and blocked_tag is not null %}
+        {{ blocked_tag.title }}
+    {% else %}
+        {% if template_title is defined %}
+            {{ template_title }}
+        {% else %}
+            {% if type == "series" %}
+                {% trans %}Series search{% endtrans %}
+            {% else %}
+                {% trans %}Multimedia objects search{% endtrans %}
+            {% endif %}
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
 {% block stylesheets %}
     {{ parent() }}
     <link href="{{ asset('bundles/pumukitwebtv/css/bootstrap-datetimepicker.min.css') }}" type="text/css" rel="stylesheet" media="screen"/>
