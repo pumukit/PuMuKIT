@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="val" datatype="plaintext" original="file.ext">
+  <file source-language="en" target-language="val-ES" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
@@ -459,7 +459,7 @@
       </trans-unit>
       <trans-unit id="1w45Lxk" resname="Logo. Go to homepage">
         <source>Logo. Go to homepage</source>
-        <target state="translated">Logotip. Vés a la pàgina d'inici</target>
+        <target state="needs-translation">Logo. Go to homepage</target>
       </trans-unit>
       <trans-unit id="9vRoj.I" resname="Send">
         <source>Send</source>
@@ -751,11 +751,11 @@
       </trans-unit>
       <trans-unit id="1fsdgE" resname="Sitemap">
         <source>Sitemap</source>
-        <target state="translated">Mapa del lloc</target>
+        <target state="needs-translation">Sitemap</target>
       </trans-unit>
       <trans-unit id="1fss45fE" resname="Sections">
         <source>Sections</source>
-        <target state="translated">Seccions</target>
+        <target state="needs-translation">Sections</target>
       </trans-unit>
     </body>
   </file>
