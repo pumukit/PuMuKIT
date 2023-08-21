@@ -279,7 +279,14 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
             $sortType = $session->get('admin/unesco/type');
 
             if ('score' == $sortType) {
-                $multimediaObjects->sortMeta('score', 'textScore');
+                $text = $session->get('admin/unesco/text', false);
+
+                if (!empty($text) && !preg_match('/^[0-9a-z]{24}$/', $session->get('UNESCO/criteria')['$text'])) {
+                    $multimediaObjects->sortMeta('score', 'textScore');
+                } else {
+                    $session->set('admin/unesco/type', 'desc');
+                    $session->set('admin/unesco/element_sort', 'public_date');
+                }
             } else {
                 $multimediaObjects->sort($element_sort, $sortType);
             }
