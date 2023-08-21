@@ -236,8 +236,10 @@ class EventsController extends AbstractController implements NewAdminControllerI
                 $now = new \DateTime('now');
                 $dateStart = new \DateTime(date('Y-m-d 00:00:00'));
                 $dateEnds = new \DateTime(date('Y-m-d 23:59:59'));
-                $dateStart = new UTCDateTime($dateStart->getTimestamp());
-                $dateEnds = new UTCDateTime($dateEnds->getTimestamp());
+
+                $dateStart = new UTCDateTime($dateStart->getTimestamp() * 1000);
+                $dateEnds = new UTCDateTime($dateEnds->getTimestamp() * 1000);
+
                 $criteria['$or'] = [
                     [
                         'embeddedEvent.embeddedEventSession' => [
