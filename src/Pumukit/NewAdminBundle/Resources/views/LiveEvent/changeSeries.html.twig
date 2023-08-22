@@ -62,14 +62,19 @@
                 url: path,
                 method: 'POST',
                 data: $('#seriesSuggestValidate'),
-                success: function () {
-                    $('#myModal').modal('hide');
-                    var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
-                    $('#list_events').load(mm);
+                success: function (response) {
+                    if (response.error){
+                        $('#myModal').modal('hide');
+                        no_success(response.error);
+                    }else{
+                        $('#myModal').modal('hide');
+                        var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
+                        $('#list_events').load(mm);
 
-                    $('#seriesSuggestValidate').val("");
-                    var message = '{% trans %}Event successfully updated.{% endtrans %}';
-                    success(message);
+                        $('#seriesSuggestValidate').val("");
+                        var message = '{% trans %}Event successfully updated.{% endtrans %}';
+                        success(message);
+                    }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     no_success(errorThrown + ': ' + textStatus);

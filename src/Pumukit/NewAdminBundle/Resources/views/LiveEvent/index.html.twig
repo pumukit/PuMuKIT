@@ -94,9 +94,13 @@
                 url: "{{ path('pumukit_new_admin_live_event_create') }}",
                 method: 'POST',
                 success: function(response){
-                    $('#list_events').html(response);
-                    var message = '{% trans %}Live event successfully created.{% endtrans %}';
-                    success(message);
+                    if (response.error){
+                        no_success(response.error);
+                    }else{
+                        $('#list_events').load("{{ path('pumukit_new_admin_live_event_list')}}");
+                        var message = '{% trans %}Live event successfully created.{% endtrans %}';
+                        success(message);
+                    }
                 },
                 error: function(jqXHR, textStatus, errorThrown){
                     no_success(errorThrown+': '+textStatus);
