@@ -233,45 +233,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
                     'ends' => ['$gte' => $date],
                 ]];
             } elseif ('today' === $type) {
-                $now = new \DateTime('now');
-                $dateStart = new \DateTime(date('Y-m-d 00:00:00'));
-                $dateEnds = new \DateTime(date('Y-m-d 23:59:59'));
-
-                $dateStart = new UTCDateTime($dateStart->getTimestamp() * 1000);
-                $dateEnds = new UTCDateTime($dateEnds->getTimestamp() * 1000);
-
-                $criteria['$or'] = [
-                    [
-                        'embeddedEvent.embeddedEventSession' => [
-                            '$elemMatch' => [
-                                'start' => ['$gte' => $dateStart],
-                                'ends' => ['$lte' => $dateEnds],
-                            ],
-                        ],
-                    ],
-                    [
-                        'embeddedEvent.embeddedEventSession' => [
-                            '$elemMatch' => [
-                                'start' => ['$lte' => new UTCDateTime($now->getTimestamp())],
-                                'ends' => ['$gte' => new UTCDateTime($now->getTimestamp())],
-                            ],
-                        ],
-                    ],
-                    [
-                        'embeddedEvent.embeddedEventSession' => [
-                            '$elemMatch' => [
-                                'start' => ['$gte' => $dateStart, '$lte' => $dateEnds],
-                            ],
-                        ],
-                    ],
-                    [
-                        'embeddedEvent.embeddedEventSession' => [
-                            '$elemMatch' => [
-                                'ends' => ['$gte' => $dateStart, '$lte' => $dateEnds],
-                            ],
-                        ],
-                    ],
-                ];
+                $criteria['$or'] = $this->addTodayEventsCriteria();
             } else {
                 $criteria['embeddedEvent.embeddedEventSession.start'] = ['$gt' => $date];
             }
@@ -1051,5 +1013,56 @@ class EventsController extends AbstractController implements NewAdminControllerI
         });
 
         return $multimediaObjects;
+    }
+
+    private function addTodayEventsCriteria(): array
+    {
+        $now = new \DateTime('now');
+        $dateStart = new \DateTime(date('Y-m-d 00:00:00'));
+        $dateEnds = new \DateTime(date('Y-m-d 23:59:59'));
+
+        $dateStart = new UTCDateTime($dateStart->getTimestamp() * 1000);
+        $dateEnds = new UTCDateTime($dateEnds->getTimestamp() * 1000);
+
+        return [
+            [
+                'embeddedEvent.embeddedEventSession' => [
+                    '$elemMatch' => [
+                        'start' => ['$gte' => $dateStart],
+                        'ends' => ['$lte' => $dateEnds],
+                    ],
+                ],
+            ],
+            [
+                'embeddedEvent.embeddedEventSession' => [
+                    '$elemMatch' => [
+                        'start' => ['$lte' => new UTCDateTime($now->getTimestamp())],
+                        'ends' => ['$gte' => new UTCDateTime($now->getTimestamp())],
+                    ],
+                ],
+            ],
+            [
+                'embeddedEvent.embeddedEventSession' => [
+                    '$elemMatch' => [
+                        'start' => ['$gte' => $dateStart, '$lte' => $dateEnds],
+                    ],
+                ],
+            ],
+            [
+                'embeddedEvent.embeddedEventSession' => [
+                    '$elemMatch' => [
+                        'ends' => ['$gte' => $dateStart, '$lte' => $dateEnds],
+                    ],
+                ],
+            ],
+            [
+                'embeddedEvent.embeddedEventSession' => [
+                    '$elemMatch' => [
+                        'start' => ['$lte' => $dateStart],
+                        'ends' => ['$gte' => $dateEnds],
+                    ],
+                ],
+            ],
+        ];
     }
 }
