@@ -97,7 +97,7 @@
                     if (response.error){
                         no_success(response.error);
                     }else{
-                        $('#list_events').load("{{ path('pumukit_new_admin_live_event_list')}}");
+                        $('#list_events').html(response);
                         var message = '{% trans %}Live event successfully created.{% endtrans %}';
                         success(message);
                     }

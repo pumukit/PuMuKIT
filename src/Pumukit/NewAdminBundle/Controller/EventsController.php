@@ -28,6 +28,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -157,14 +158,8 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("create/", name="pumukit_new_admin_live_event_create")
      */
-    public function createEventAction(Request $request): JsonResponse
+    public function createEventAction(Request $request): RedirectResponse
     {
-        $channels = $this->documentManager->getRepository(Live::class)->findAll();
-
-        if (empty($channels)) {
-            return new JsonResponse(['error' => $this->translator->trans('Failed to create event, you need to create a channel first.')]);
-        }
-
         $series = $request->request->get('seriesSuggest') ?: false;
 
         $createSeries = false;
@@ -195,7 +190,6 @@ class EventsController extends AbstractController implements NewAdminControllerI
         // Create default event
         $event = new EmbeddedEvent();
         $event->setDate(new \DateTime());
-        $event->setLive($channels[0]);
 
         foreach ($this->locales as $language) {
             $event->setName($this->translator->trans('New', [], 'messages', $language), $language);
@@ -213,7 +207,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
         $session->set('admin/live/event/id', $multimediaObject->getId());
         $this->session->set('admin/live/event/page', 1);
 
-        return new JsonResponse(['success']);
+        return $this->redirectToRoute('pumukit_new_admin_live_event_list');
     }
 
     /**
@@ -527,8 +521,12 @@ class EventsController extends AbstractController implements NewAdminControllerI
                 $event->setIsIframeUrl($iframeURL);
 
                 $liveData = $request->request->get('live_channel_input_id');
-                if (isset($liveData)) {
-                    $live = $this->documentManager->getRepository(Live::class)->findAll()[0];
+                if (isset($liveData) && !$externalURL) {
+                    $channels = $this->documentManager->getRepository(Live::class)->findAll();
+                    if (empty($channels)) {
+                        return new JsonResponse(['error' => $this->translator->trans('Failed to update event, you need to create a channel first.')]);
+                    }
+                    $live = $channels[0];
                     if (!empty($liveData)) {
                         $live = $this->documentManager->getRepository(Live::class)->findOneBy(
                             ['_id' => new ObjectId($liveData)]
@@ -536,6 +534,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
                     }
                     $event->setLive($live);
                 }
+
                 if ($enableContactForm && isset($data['contact'])) {
                     if ($multimediaObject->getEmbeddedSocial()) {
                         $multimediaObject->getEmbeddedSocial()->setEmail($data['contact']);
