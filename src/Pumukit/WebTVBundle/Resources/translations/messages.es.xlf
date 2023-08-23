@@ -459,7 +459,7 @@
       </trans-unit>
       <trans-unit id="1w45Lxk" resname="Logo. Go to homepage">
         <source>Logo. Go to homepage</source>
-        <target state="translated">Logo. Ir al inicio</target>
+        <target state="translated">Logo. Ir a la página de inicio</target>
       </trans-unit>
       <trans-unit id="9vRoj.I" resname="Send">
         <source>Send</source>
@@ -751,7 +751,7 @@
       </trans-unit>
       <trans-unit id="1fsdgE" resname="Sitemap">
         <source>Sitemap</source>
-        <target state="translated">Mapa web</target>
+        <target state="translated">Mapa del sitio</target>
       </trans-unit>
       <trans-unit id="1fss45fE" resname="Sections">
         <source>Sections</source>
