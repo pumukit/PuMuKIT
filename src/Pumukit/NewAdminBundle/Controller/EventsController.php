@@ -483,12 +483,20 @@ class EventsController extends AbstractController implements NewAdminControllerI
                 $event->setIsIframeUrl($iframeURL);
 
                 $liveData = $request->request->get('live_channel_input_id');
-                if (isset($liveData)) {
-                    $live = $this->documentManager->getRepository(Live::class)->findOneBy(
-                        ['_id' => new ObjectId($liveData)]
-                    );
+                if (isset($liveData) && !$externalURL) {
+                    $channels = $this->documentManager->getRepository(Live::class)->findAll();
+                    if (empty($channels)) {
+                        return new JsonResponse(['error' => $this->translator->trans('Failed to update event, you need to create a channel first.')]);
+                    }
+                    $live = $channels[0];
+                    if (!empty($liveData)) {
+                        $live = $this->documentManager->getRepository(Live::class)->findOneBy(
+                            ['_id' => new ObjectId($liveData)]
+                        );
+                    }
                     $event->setLive($live);
                 }
+
                 if ($enableContactForm && isset($data['contact'])) {
                     if ($multimediaObject->getEmbeddedSocial()) {
                         $multimediaObject->getEmbeddedSocial()->setEmail($data['contact']);
