@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "12f93e8b78bcc10c93689443012bd690",
+    "content-hash": "499cf026ccf0737619cb4b44bcfe400f",
     "packages": [
         {
             "name": "ankitpokhrel/tus-php",
@@ -8894,7 +8894,7 @@
         },
         {
             "name": "teltek/pumukit-paella-player-bundle",
-            "version": "3.0.30",
+            "version": "3.0.31",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teltek/PumukitPaellaPlayerBundle.git",
@@ -8939,7 +8939,7 @@
             ],
             "support": {
                 "issues": "https://github.com/teltek/PumukitPaellaPlayerBundle/issues",
-                "source": "https://github.com/teltek/PumukitPaellaPlayerBundle/tree/3.0.30"
+                "source": "https://github.com/teltek/PumukitPaellaPlayerBundle/tree/3.0.31"
             },
             "time": "2023-08-23T07:48:43+00:00"
         },
