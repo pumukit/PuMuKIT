@@ -69,8 +69,9 @@ class ListService
     }
 
     /**
-     * @param string $sort
-     * @param string $locale
+     * @param string     $sort
+     * @param string     $locale
+     * @param mixed|null $parentTag
      *
      * @return array
      *
