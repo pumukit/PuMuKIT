@@ -2122,6 +2122,10 @@
         <source>Live event successfully created.</source>
         <target state="needs-translation">Live event successfully created.</target>
       </trans-unit>
+      <trans-unit id="i1Nasa2JEAu" resname="Failed to update event, you need to create a channel first.">
+        <source>Failed to update event, you need to create a channel first.</source>
+        <target>Failed to update event, you need to create a channel first.</target>
+      </trans-unit>
       <trans-unit id="5Z0ROY3" resname="There was an error in creating the Live channel.">
         <source>There was an error in creating the Live channel.</source>
         <target state="needs-translation">There was an error in creating the Live channel.</target>

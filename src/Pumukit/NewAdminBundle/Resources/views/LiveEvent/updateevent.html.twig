@@ -223,14 +223,18 @@
             url: '{{ path('pumukit_new_admin_live_event_eventtab', {'id': multimediaObject.getId() }) }}',
             method: 'POST',
             data: $('#form_event').serialize(),
-            success: function () {
-                var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
-                $('#list_events').load(mm);
+            success: function (response) {
+                if (response.error){
+                    no_success(response.error);
+                }else{
+                    var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
+                    $('#list_events').load(mm);
 
-                $('#inputMMTitle').val($('#pumukitnewadmin_live_event_i18n_name_{{ app.request.getLocale() }}').val());
+                    $('#inputMMTitle').val($('#pumukitnewadmin_live_event_i18n_name_{{ app.request.getLocale() }}').val());
 
-                var message = '{% trans %}Event successfully updated.{% endtrans %}';
-                success(message);
+                    var message = '{% trans %}Event successfully updated.{% endtrans %}';
+                    success(message);
+                }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 if (textStatus != 'error') {
