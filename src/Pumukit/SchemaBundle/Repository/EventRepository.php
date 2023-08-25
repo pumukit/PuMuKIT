@@ -28,7 +28,8 @@ class EventRepository extends DocumentRepository
             ->field('display')->equals(true)
             ->field('date')->gte($now)
             ->sort('date', 1)
-            ->getQuery()->execute();
+            ->getQuery()->execute()
+        ;
     }
 
     /**
@@ -42,7 +43,8 @@ class EventRepository extends DocumentRepository
             ->field('display')->equals(true)
             ->field('date')->gte($now)
             ->sort('date', 1)
-            ->getQuery()->getSingleResult();
+            ->getQuery()->getSingleResult()
+        ;
     }
 
     /**
@@ -61,7 +63,8 @@ class EventRepository extends DocumentRepository
             ->field('date')->gte($start)
             ->field('date')->lt($end)
             ->sort('date', 1)
-            ->getQuery()->execute();
+            ->getQuery()->execute()
+        ;
     }
 
     /**
@@ -100,7 +103,8 @@ class EventRepository extends DocumentRepository
 
         return $this->createQueryBuilder()
             ->field('_id')->in($ids)
-            ->getQuery()->execute();
+            ->getQuery()->execute()
+        ;
     }
 
     /**
@@ -200,7 +204,8 @@ class EventRepository extends DocumentRepository
             ->field('date')->gte($startDay)
             ->field('date')->lte($finishDay)
             ->sort('date', 1)
-            ->getQuery()->execute();
+            ->getQuery()->execute()
+        ;
 
         foreach ($currentDayEvents as $event) {
             $eventDate = new \DateTime($event->getDate()->format('Y-m-d H:i:s'));

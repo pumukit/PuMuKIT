@@ -93,7 +93,8 @@ class SeriesPlaylistService
     public function getMmobjFromIdAndPlaylist($mmobjId, Series $series, $criteria = [])
     {
         $qb = $this->createSortedQuerySeriesMmobjs($series, $criteria)
-            ->field('id')->equals(new ObjectId($mmobjId));
+            ->field('id')->equals(new ObjectId($mmobjId))
+        ;
         $mmobj = $qb->getQuery()->getSingleResult();
 
         if (!$mmobj) {

@@ -15,9 +15,6 @@ use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategy;
  */
 class PumukitSchemaExtension extends Extension
 {
-    /**
-     * {@inheritdoc}
-     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();

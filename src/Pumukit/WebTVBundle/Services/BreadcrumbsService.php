@@ -29,7 +29,6 @@ class BreadcrumbsService
      * @param string $allTitle
      * @param string $allRoute
      * @param string $homeTitle
-     * @param null   $parentWeb
      */
     public function __construct(
         RouterInterface $router,

@@ -550,7 +550,8 @@ class PlaylistMultimediaObjectController extends AbstractController
                 $builder->expr()
                     ->field('people._id')->equals(new ObjectId($this->getUser()->getPerson()->getId()))
                     ->field('cod')->equals('owner')
-            );
+            )
+        ;
         $builder->getQuery()->execute();
 
         return $builder;

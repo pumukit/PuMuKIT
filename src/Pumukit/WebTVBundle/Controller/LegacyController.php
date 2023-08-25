@@ -41,7 +41,8 @@ class LegacyController extends AbstractController implements WebTVControllerInte
 
         $series = $seriesRepo->createQueryBuilder()
             ->field('properties.pumukit1id')->equals($pumukit1id)
-            ->getQuery()->getSingleResult();
+            ->getQuery()->getSingleResult()
+        ;
 
         if (!$series instanceof Series) {
             throw $this->createNotFoundException();
@@ -74,7 +75,8 @@ class LegacyController extends AbstractController implements WebTVControllerInte
         $multimediaObject = $mmobjRepo->createQueryBuilder()
             ->field('properties.pumukit1id')->equals($pumukit1id)
             ->field('status')->gte(MultimediaObject::STATUS_PUBLISHED)
-            ->getQuery()->getSingleResult();
+            ->getQuery()->getSingleResult()
+        ;
 
         if (!$multimediaObject instanceof MultimediaObject) {
             throw $this->createNotFoundException();
@@ -105,7 +107,8 @@ class LegacyController extends AbstractController implements WebTVControllerInte
 
         $multimediaObject = $mmobjRepo->createQueryBuilder()
             ->field('properties.pumukit1id')->equals($pumukit1id)
-            ->getQuery()->getSingleResult();
+            ->getQuery()->getSingleResult()
+        ;
 
         if (!$multimediaObject instanceof MultimediaObject) {
             throw $this->createNotFoundException();
@@ -129,7 +132,8 @@ class LegacyController extends AbstractController implements WebTVControllerInte
 
         $multimediaObject = $mmobjRepo->createQueryBuilder()
             ->field('tracks.tags')->equals(new Regex('pumukit1id:'.$pumukit1id, 'i'))
-            ->getQuery()->getSingleResult();
+            ->getQuery()->getSingleResult()
+        ;
 
         if (!$multimediaObject instanceof MultimediaObject) {
             throw $this->createNotFoundException();
@@ -149,7 +153,8 @@ class LegacyController extends AbstractController implements WebTVControllerInte
 
         $series = $seriesRepo->createQueryBuilder()
             ->field('properties.pumukit1magic')->equals($hash)
-            ->getQuery()->getSingleResult();
+            ->getQuery()->getSingleResult()
+        ;
 
         if (!$series instanceof Series) {
             throw $this->createNotFoundException();

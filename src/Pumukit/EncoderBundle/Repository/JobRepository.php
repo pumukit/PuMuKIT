@@ -18,7 +18,8 @@ class JobRepository extends DocumentRepository
     public function createQueryWithStatus(array $status, ?array $sort = [])
     {
         $qb = $this->createQueryBuilder()
-            ->field('status')->in($status);
+            ->field('status')->in($status)
+        ;
 
         if (null !== $sort) {
             $qb->sort($sort);
@@ -72,7 +73,8 @@ class JobRepository extends DocumentRepository
 
         $qb = $this->createQueryBuilder()
             ->field('status')->in($status)
-            ->field('email')->equals($owner->getEmail());
+            ->field('email')->equals($owner->getEmail())
+        ;
 
         if (null !== $sort) {
             $qb->sort($sort);

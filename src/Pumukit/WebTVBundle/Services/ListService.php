@@ -71,7 +71,6 @@ class ListService
     /**
      * @param string $sort
      * @param string $locale
-     * @param null   $parentTag
      *
      * @return array
      *

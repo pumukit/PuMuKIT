@@ -70,10 +70,12 @@ class ChannelService
 
         foreach ($channelTags as $tag) {
             $series = $this->repoSeries->createBuilderWithTag($tag, ['record_date' => -1])
-                ->getQuery()->execute();
+                ->getQuery()->execute()
+            ;
 
             $numMmobjs = $this->repoMmobjs->createBuilderWithTag($tag, ['record_date' => -1])
-                ->count()->getQuery()->execute();
+                ->count()->getQuery()->execute()
+            ;
 
             $results[] = [
                 'tag' => $tag,

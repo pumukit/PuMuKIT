@@ -165,7 +165,8 @@ class Configuration implements ConfigurationInterface
         ;
 
         $aux->integerNode('width')->defaultValue(768)
-            ->info('Width resolution of thumbnail')->end();
+            ->info('Width resolution of thumbnail')->end()
+        ;
 
         $aux->integerNode('height')->defaultValue(432)
             ->info('Height resolution of thumbnail')->end()

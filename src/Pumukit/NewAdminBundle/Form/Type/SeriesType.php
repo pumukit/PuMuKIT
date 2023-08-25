@@ -248,8 +248,7 @@ class SeriesType extends AbstractType
                 'required' => true,
                 'label' => $this->translator->trans('Sorting', [], null, $this->locale),
             ]
-        )
-        ;
+        );
 
         if ($this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_META_TEMPLATE)) {
             $builder->addEventListener(

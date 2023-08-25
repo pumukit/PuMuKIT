@@ -15,9 +15,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  */
 class PumukitNewAdminExtension extends Extension
 {
-    /**
-     * {@inheritdoc}
-     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
