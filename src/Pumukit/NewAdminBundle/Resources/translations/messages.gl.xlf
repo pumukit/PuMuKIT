@@ -2125,7 +2125,7 @@
       </trans-unit>
       <trans-unit id="i1Nasa2JEAu" resname="Failed to update event, you need to create a channel first.">
         <source>Failed to update event, you need to create a channel first.</source>
-        <target>Produciuse un erro ao modificar o evento, primeiro debes crear unha canle.</target>
+        <target state="translated">Produciuse un erro ao modificar o evento, primeiro debes crear unha canle.</target>
       </trans-unit>
       <trans-unit id="5Z0ROY3" resname="There was an error in creating the Live channel.">
         <source>There was an error in creating the Live channel.</source>
