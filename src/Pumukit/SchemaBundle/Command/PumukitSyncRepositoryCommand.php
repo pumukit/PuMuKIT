@@ -127,7 +127,8 @@ EOT
         ;
 
         $qb = $mmObjRepo->createStandardQueryBuilder()
-            ->field('properties.'.$type.'_jobs')->exists(true);
+            ->field('properties.'.$type.'_jobs')->exists(true)
+        ;
 
         if ($pendingJobsId) {
             $qb->field('properties.'.$type.'_jobs')->notIn(array_keys($pendingJobsId));

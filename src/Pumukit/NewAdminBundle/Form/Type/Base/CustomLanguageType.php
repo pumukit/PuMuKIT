@@ -28,9 +28,6 @@ class CustomLanguageType extends AbstractType
         $this->customLanguages = $customLanguages;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
@@ -58,17 +55,11 @@ class CustomLanguageType extends AbstractType
         return $choices;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         return ChoiceType::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix(): string
     {
         return 'customlanguage';

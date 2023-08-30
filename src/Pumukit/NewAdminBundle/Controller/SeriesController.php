@@ -569,7 +569,8 @@ class SeriesController extends AdminController
                 $multimediaObjects = $mmRepo
                     ->createStandardQueryBuilder()
                     ->field('_id')->in($ids)
-                    ->getQuery()->execute();
+                    ->getQuery()->execute()
+                ;
             }
 
             try {

@@ -31,7 +31,7 @@ class TagService
      *
      * @return array[Tag] addded tags
      *
-     *@throws \Exception
+     * @throws \Exception
      */
     public function addTagToMultimediaObject(MultimediaObject $mmobj, $tagId, $executeFlush = true)
     {

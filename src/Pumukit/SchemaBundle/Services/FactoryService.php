@@ -162,7 +162,6 @@ class FactoryService
      * Internla method to create a new Multimedia Object from Template. Not emit events.
      *
      * @param bool $flush
-     * @param User $loggedInUser
      *
      * @return MultimediaObject
      *
@@ -220,7 +219,7 @@ class FactoryService
         $this->dm->persist($mm);
         $this->dm->persist($series);
         if ($flush) {
-//            $this->dm->flush();
+            //            $this->dm->flush();
             $this->generateNumericalIDMultimediaObject($mm);
         }
 
@@ -231,7 +230,6 @@ class FactoryService
      * Create a new Multimedia Object from Template.
      *
      * @param bool $flush
-     * @param User $loggedInUser
      *
      * @return MultimediaObject
      *
@@ -305,8 +303,6 @@ class FactoryService
 
     /**
      * Get multimedia object template.
-     *
-     * @param Series $series
      *
      * @return object|null
      *
@@ -606,8 +602,6 @@ class FactoryService
 
     /**
      * Create a new Multimedia Object Template.
-     *
-     * @param User $loggedInUser
      *
      * @return MultimediaObject
      *

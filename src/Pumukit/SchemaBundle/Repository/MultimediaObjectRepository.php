@@ -910,7 +910,8 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         return $this->createQueryBuilder()
             ->field('status')->notIn([MultimediaObject::STATUS_PROTOTYPE, MultimediaObject::STATUS_NEW])
-            ->field('type')->notEqual(MultimediaObject::TYPE_LIVE);
+            ->field('type')->notEqual(MultimediaObject::TYPE_LIVE)
+        ;
     }
 
     public function createAggregationStandardQueryBuilder()
@@ -918,7 +919,8 @@ class MultimediaObjectRepository extends DocumentRepository
         return $this->createAggregationBuilder()
             ->match()
             ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
-            ->field('type')->notEqual(MultimediaObject::TYPE_LIVE);
+            ->field('type')->notEqual(MultimediaObject::TYPE_LIVE)
+        ;
     }
 
     /**

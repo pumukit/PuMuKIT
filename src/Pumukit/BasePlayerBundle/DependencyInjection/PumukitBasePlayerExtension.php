@@ -14,9 +14,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  */
 class PumukitBasePlayerExtension extends Extension
 {
-    /**
-     * {@inheritdoc}
-     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();

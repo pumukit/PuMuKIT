@@ -283,7 +283,8 @@ class GroupService
     public function findUsersInGroup(Group $group, $sort = [], $limit = 0)
     {
         $qb = $this->userRepo->createQueryBuilder()
-            ->field('groups')->equals($group->getId());
+            ->field('groups')->equals($group->getId())
+        ;
         if (0 !== count($sort)) {
             $qb->sort($sort);
         }

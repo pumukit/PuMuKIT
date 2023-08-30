@@ -108,15 +108,18 @@ class StatsService
                 $mongoProjectDate[] = 'H';
                 $mongoProjectDate[] = ['$substr' => [$dateField, 0, 2]];
                 $mongoProjectDate[] = 'T';
+
                 // no break
             case 'day':
                 $mongoProjectDate[] = ['$substr' => [$dateField, 8, 2]];
                 $mongoProjectDate[] = '-';
-            // no break
+
+                // no break
             default: // If it doesn't exists, it's 'month'
             case 'month':
                 $mongoProjectDate[] = ['$substr' => [$dateField, 5, 2]];
                 $mongoProjectDate[] = '-';
+
                 // no break
             case 'year':
                 $mongoProjectDate[] = ['$substr' => [$dateField, 0, 4]];
@@ -182,6 +185,7 @@ class StatsService
         return $repo->createQueryBuilder()
             ->field('status')->notIn([MultimediaObject::STATUS_PROTOTYPE, MultimediaObject::STATUS_NEW])
             ->field('type')->notEqual(MultimediaObject::TYPE_LIVE)
-            ->addAnd($criteria)->distinct('_id')->getQuery()->execute()->toArray();
+            ->addAnd($criteria)->distinct('_id')->getQuery()->execute()->toArray()
+        ;
     }
 }

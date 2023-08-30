@@ -178,7 +178,8 @@ class PersonService
         }
 
         $qb = $this->repoPerson->createQueryBuilder()
-            ->field('name')->equals(new Regex($name, 'i'));
+            ->field('name')->equals(new Regex($name, 'i'))
+        ;
 
         if ($exclude) {
             $qb->field('_id')->notIn($exclude);

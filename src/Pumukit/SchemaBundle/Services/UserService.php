@@ -454,7 +454,8 @@ class UserService
                     // NOTE: Check all MultimediaObjects from the Series, even the prototype
                     $mmObjRepo = $this->dm->getRepository(MultimediaObject::class);
                     $multimediaObjects = $mmObjRepo->createQueryBuilder()
-                        ->field('series')->equals($object);
+                        ->field('series')->equals($object)
+                    ;
                     $deleteOwnerInSeries = true;
                     foreach ($multimediaObjects as $multimediaObject) {
                         if (null !== $owners = $multimediaObject->getProperty('owners')) {
