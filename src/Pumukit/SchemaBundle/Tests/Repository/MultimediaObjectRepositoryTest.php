@@ -2070,7 +2070,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $addedTags = $this->tagService->addTagToMultimediaObject($multimediaObject, $tag->getId());
         $multimediaObjects = $this->repo->findByTagCod($tag, $sort);
         static::assertCount(1, $multimediaObjects);
-//        $this->assertTrue(in_array($multimediaObject, $multimediaObjects));
+        //        $this->assertTrue(in_array($multimediaObject, $multimediaObjects));
     }
 
     public function testFindAllByTag(): void

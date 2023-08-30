@@ -360,7 +360,8 @@ class DefaultController extends AbstractController
         $qb = $this->documentManager->getRepository(MultimediaObject::class)->createStandardQueryBuilder()
             ->field('status')->equals(MultimediaObject::STATUS_PUBLISHED)
             ->field('tags.cod')->equals(PumukitWebTVBundle::WEB_TV_TAG)
-            ->field('series')->equals(new ObjectId($seriesId));
+            ->field('series')->equals(new ObjectId($seriesId))
+        ;
         $qb->field('tracks')->elemMatch($qb->expr()->field('tags')->equals('display')->field('hide')->equals(false));
 
         return $qb;

@@ -59,7 +59,8 @@ class APIService
     public function getLiveEventsByCriteria(array $criteria, array $sort, int $limit): array
     {
         $qb = $this->documentManager->getRepository(MultimediaObject::class)->createQueryBuilder()
-            ->field('type')->equals(MultimediaObject::TYPE_LIVE);
+            ->field('type')->equals(MultimediaObject::TYPE_LIVE)
+        ;
 
         if ($criteria) {
             $qb = $qb->addAnd($criteria);

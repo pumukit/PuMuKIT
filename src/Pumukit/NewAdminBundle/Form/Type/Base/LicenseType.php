@@ -29,9 +29,6 @@ class LicenseType extends AbstractType
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
@@ -42,9 +39,6 @@ class LicenseType extends AbstractType
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         if (0 == count($this->licenses)) {

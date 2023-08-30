@@ -220,7 +220,7 @@ class FactoryService
         $this->dm->persist($mm);
         $this->dm->persist($series);
         if ($flush) {
-//            $this->dm->flush();
+            //            $this->dm->flush();
             $this->generateNumericalIDMultimediaObject($mm);
         }
 

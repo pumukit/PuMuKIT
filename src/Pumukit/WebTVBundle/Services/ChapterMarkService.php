@@ -25,14 +25,16 @@ class ChapterMarkService
             ->createQueryBuilder()
             ->field('type')->equals('paella/marks')
             ->field('multimediaObject')->equals(new ObjectId($multimediaObject->getId()))
-            ->getQuery()->getSingleResult();
+            ->getQuery()->getSingleResult()
+        ;
 
         $trimming = $this->documentManager
             ->getRepository(Annotation::class)
             ->createQueryBuilder()
             ->field('type')->equals('paella/trimming')
             ->field('multimediaObject')->equals(new ObjectId($multimediaObject->getId()))
-            ->getQuery()->getSingleResult();
+            ->getQuery()->getSingleResult()
+        ;
 
         $editorChapters = [];
 
