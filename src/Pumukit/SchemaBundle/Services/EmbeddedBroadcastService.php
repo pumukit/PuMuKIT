@@ -238,7 +238,6 @@ class EmbeddedBroadcastService
     /**
      * Can User play multimediaObject.
      *
-     * @param User   $user
      * @param string $password
      *
      * @return bool|Response
@@ -267,8 +266,6 @@ class EmbeddedBroadcastService
 
     /**
      * Is user related to multimedia object.
-     *
-     * @param User $user
      *
      * @return bool
      */
