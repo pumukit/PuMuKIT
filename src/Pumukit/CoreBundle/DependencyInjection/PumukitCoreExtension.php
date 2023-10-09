@@ -16,7 +16,6 @@ class PumukitCoreExtension extends Extension
 
         $container->setParameter('pumukit.info', $config['info']);
         $container->setParameter('pumukit.locales', $config['locales']);
-        $container->setParameter('pumukit.locale', $config['locale']);
         $container->setParameter('pumukit.public_dir', $config['public_dir']);
         $container->setParameter('pumukit.storage_dir', $config['storage_dir']);
         $container->setParameter('pumukit.uploads_dir', $config['uploads_dir']);
