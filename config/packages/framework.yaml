@@ -1,12 +1,12 @@
 framework:
   #esi:             ~
-  translator:      { fallback: "%locale%" }
-  secret:          "%secret%"
+  translator:      { fallback: "%env(string:PUMUKIT_LOCALE)%" }
+  secret:          "%env(string:PUMUKIT_SECRET)%"
   form:            ~
   csrf_protection: ~
   validation:      { enable_annotations: true }
-    #assets_version: SomeVersionScheme
-  default_locale:  "%locale%"
+  #assets_version: SomeVersionScheme
+  default_locale:  "%env(string:PUMUKIT_LOCALE)%"
   trusted_hosts:   ~
   session:
     # handler_id set to null will use default session handler from php.ini
