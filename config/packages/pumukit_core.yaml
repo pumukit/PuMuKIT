@@ -4,7 +4,6 @@ services:
     autoconfigure: true
     public:        true
     bind:
-      $locale: '%locale%'
       $locales: '%pumukit.locales%'
       $pumukitPublicDir: '%pumukit.public_dir%'
       $overridePatchMethod: '%pumukit.overridePatchMethod%'
