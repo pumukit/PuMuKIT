@@ -6,6 +6,4 @@ namespace Pumukit\EncoderBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class PumukitEncoderBundle extends Bundle
-{
-}
+class PumukitEncoderBundle extends Bundle {}

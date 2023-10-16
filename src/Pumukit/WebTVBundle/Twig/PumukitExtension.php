@@ -229,12 +229,12 @@ class PumukitExtension extends AbstractExtension
         }
 
         if ($isDownloadable) {
-            $url = $url.'&videomode=progressive';
+            $url .= '&videomode=progressive';
         }
 
         $invert = $multimediaObject->getProperty('opencastinvert');
         if ($invert && $isHTML5) {
-            $url = $url.'&display=invert';
+            $url .= '&display=invert';
         }
 
         return $url;

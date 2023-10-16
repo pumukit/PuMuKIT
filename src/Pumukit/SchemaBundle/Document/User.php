@@ -422,9 +422,7 @@ class User implements UserInterface
         return $this->id;
     }
 
-    public function eraseCredentials(): void
-    {
-    }
+    public function eraseCredentials(): void {}
 
     public function setRoles(array $roles): self
     {

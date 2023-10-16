@@ -9,6 +9,4 @@ use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 /**
  * CpuStatusRepository.
  */
-class CpuStatusRepository extends DocumentRepository
-{
-}
+class CpuStatusRepository extends DocumentRepository {}

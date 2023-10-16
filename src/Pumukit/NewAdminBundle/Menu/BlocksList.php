@@ -11,9 +11,7 @@ class BlocksList
      */
     private $items = [];
 
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function add(BlockInterface $item): void
     {

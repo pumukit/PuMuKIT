@@ -8,9 +8,7 @@ class ItemsList
 {
     private $items = [];
 
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function add(ItemInterface $item): void
     {

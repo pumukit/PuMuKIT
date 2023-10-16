@@ -58,9 +58,7 @@ class Element
      */
     private $locale = 'en';
 
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function __clone()
     {

@@ -124,9 +124,7 @@ class Tag implements TagInterface
      */
     private $lockTime;
 
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function __toString(): string
     {

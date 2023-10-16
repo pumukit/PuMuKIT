@@ -11,6 +11,4 @@ namespace Pumukit\NewAdminBundle\Controller;
  * We use the implementation of before/after filters with an EventListener as in the Symfony cookbooks.
  * Symfony docs: http://symfony.com/doc/current/cookbook/event_dispatcher/before_after_filters.html#tag-controllers-to-be-checked
  */
-interface NewAdminControllerInterface
-{
-}
+interface NewAdminControllerInterface {}
