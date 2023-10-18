@@ -27,4 +27,5 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
+          target: base
           tags: teltek/pumukit-base:latest
