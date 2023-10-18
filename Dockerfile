@@ -105,9 +105,9 @@ RUN \
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-COPY php.ini /usr/local/etc/php/php.ini
-COPY php-cli.ini /usr/local/etc/php/php-cli.ini
-COPY ./www.conf /usr/local/etc/php-fpm.d/www.conf
+COPY docker/pumukit/php.ini /usr/local/etc/php/php.ini
+COPY docker/pumukit/php-cli.ini /usr/local/etc/php/php-cli.ini
+COPY docker/pumukit/www.conf /usr/local/etc/php-fpm.d/www.conf
 
 RUN chown -R www-data:www-data /var/www
 RUN mkdir -p /srv/pumukit && chown -R www-data:www-data /srv/pumukit
