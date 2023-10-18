@@ -17,9 +17,11 @@ jobs:
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - 
+        name: Test env
+        env:
+          TAG: ${{ github.ref_name == 'master' && 'latest' || github.ref_name }}
         run: |
-          echo "REF=${{ github.ref_name == 'master' && 'latest' || github.ref_name }}" >> $GITHUB_ENV
-          echo "${{ REF }} slug"
+          echo "${{ env.TAG }}"
         shell: bash
       -
         name: Login to Docker Hub
