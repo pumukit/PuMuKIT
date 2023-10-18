@@ -18,7 +18,8 @@ jobs:
         uses: docker/setup-buildx-action@v3
       - 
         run: |
-          echo "${{ github.ref_name }} will serve the behavior of the GitHub Slug action"
+          echo "REF=${{ github.red_name == 'master' ? 'latest' : github.ref_name }}" >> $GITHUB_ENV
+          echo "${{ REF }} slug"
         shell: bash
       -
         name: Login to Docker Hub
