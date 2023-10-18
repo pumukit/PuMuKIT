@@ -23,7 +23,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push
+        name: Build and push base
         env:
           TAG: ${{ github.ref_name == 'master' && 'latest' || github.ref_name }}
         uses: docker/build-push-action@v5
@@ -31,3 +31,21 @@ jobs:
           push: true
           target: base
           tags: teltek/pumukit-base:${{ env.TAG }}
+      -
+        name: Build and push PuMuKIT
+        env:
+          TAG: ${{ github.ref_name == 'master' && 'latest' || github.ref_name }}
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          target: production
+          tags: teltek/pumukit:${{ env.TAG }}
+      -
+        name: Build and push PuMuKIT Proxy
+        env:
+          TAG: ${{ github.ref_name == 'master' && 'latest' || github.ref_name }}
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          target: proxy
+          tags: teltek/nginx:${{ env.TAG }}
