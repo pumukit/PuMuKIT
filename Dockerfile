@@ -1,5 +1,6 @@
 ARG PHP_VERSION=8.2
 ARG SO_VERSION=bookworm
+ARG NGINX_VERSION=1.25
 
 FROM php:${PHP_VERSION}-fpm-${SO_VERSION} as base
 LABEL org.opencontainers.image.authors="Pablo Nieto, pnieto@teltek.es"
@@ -126,16 +127,40 @@ ARG PHP_MEMORY_LIMIT=512M
 COPY --chown=www-data:www-data . ./
 
 # load environment variables
-RUN source .env
+# RUN source .env
 
 RUN set -eux \
     && mkdir -p var/cache var/log var/sessions \
     && composer update --prefer-dist --no-scripts --no-progress --classmap-authoritative --no-interaction \
-    && php bin/console a:i
+    && bin/console a:i
 
-COPY doc/docker/pumukit/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+COPY docker/pumukit/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+
+USER root
 RUN chmod +x /usr/local/bin/docker-entrypoint
 
 ## Add the wait script to the image
 ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.4.0/wait /wait
 RUN chmod +x /wait
+USER www-data
+
+FROM base as ssl
+
+# Use this self-generated certificate only in dev, IT IS NOT SECURE!
+RUN openssl genrsa -des3 -passout pass:NotSecure -out cert.pass.key 2048
+RUN openssl rsa -passin pass:NotSecure -in cert.pass.key -out cert.key
+RUN rm cert.pass.key
+RUN openssl req -new -passout pass:NotSecure -key cert.key -out cert.csr \
+    -subj '/C=ES/ST=PO/L=Vigo/O=PuMuKIT Dev/CN=localhost'
+RUN openssl x509 -req -sha256 -days 365 -in cert.csr -signkey cert.key -out cert.crt
+
+FROM nginx:$NGINX_VERSION-alpine as proxy
+
+RUN mkdir -p /etc/nginx/ssl/
+COPY --from=ssl /srv/pumukit/cert.key /etc/nginx/ssl/
+COPY --from=ssl /srv/pumukit/cert.crt /etc/nginx/ssl/
+COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
+
+COPY --from=production /srv/pumukit/public public/
+
+WORKDIR /srv/pumukit
