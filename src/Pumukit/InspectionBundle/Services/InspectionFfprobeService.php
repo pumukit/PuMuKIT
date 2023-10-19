@@ -30,8 +30,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
 
         $json = json_decode($this->getMediaInfo($file), false, 512, JSON_THROW_ON_ERROR);
         if (!$this->jsonHasMediaContent($json)) {
-            throw new \InvalidArgumentException('This file has no accessible video '.
-                "nor audio tracks\n".$file);
+            throw new \InvalidArgumentException('This file has no accessible video '."nor audio tracks\n".$file);
         }
 
         $duration = 0;
@@ -111,7 +110,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
 
     private function jsonHasMediaContent($json): bool
     {
-        if (null !== $json->streams) {
+        if (isset($json->streams)) {
             foreach ($json->streams as $stream) {
                 if (isset($stream->codec_type, $stream->codec_name) && ('audio' === $stream->codec_type || 'video' === $stream->codec_type) && ('ansi' !== $stream->codec_name)) {
                     return true;
@@ -125,6 +124,8 @@ class InspectionFfprobeService implements InspectionServiceInterface
     private function getMediaInfo(string $file): string
     {
         $command = str_replace('{{file}}', $file, $this->command);
+        $command = str_replace('"', "'", $command);
+
         $process = Process::fromShellCommandline($command);
         $process->setTimeout(60);
         $process->run();
@@ -135,8 +136,6 @@ class InspectionFfprobeService implements InspectionServiceInterface
             if ($this->logger) {
                 $this->logger->error($message);
             }
-
-            throw new \RuntimeException($message);
         }
 
         return $process->getOutput();
