@@ -10,8 +10,7 @@ fi
 
 if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
     mkdir -p var/cache var/log var/sessions
-    setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var/cache var/log var/sessions public/storage public/uploads
-    setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var/cache var/log var/sessions public/storage public/uploads
+    chown -R www-data:www-data var/cache var/log var/sessions public/storage public/uploads
 
     if [ "$APP_ENV" != 'prod' ]; then
         composer install --prefer-dist --no-progress --classmap-authoritative --no-interaction
