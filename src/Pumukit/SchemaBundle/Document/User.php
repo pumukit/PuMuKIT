@@ -129,6 +129,30 @@ class User implements UserInterface
         return $this->getUsername();
     }
 
+    public function __serialize()
+    {
+        return [
+            $this->password,
+            $this->salt,
+            $this->username,
+            $this->enabled,
+            $this->id,
+            $this->email,
+        ];
+    }
+
+    public function __unserialize($data)
+    {
+        [
+            $this->password,
+            $this->salt,
+            $this->username,
+            $this->enabled,
+            $this->id,
+            $this->email,
+        ] = $data;
+    }
+
     public function getUsername(): string
     {
         return (string) $this->username;
