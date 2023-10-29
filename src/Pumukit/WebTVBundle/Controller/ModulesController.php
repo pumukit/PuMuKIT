@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Services\AnnounceService;
+use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 use Pumukit\StatsBundle\Services\StatsService;
 use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Pumukit\WebTVBundle\Services\ListService;
@@ -34,6 +35,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
     protected $documentManager;
     protected $requestStack;
     protected $breadcrumbService;
+    protected $eventSessionService;
 
     protected $byTagBlockObjectsByCol;
     protected $limitObjsMostViewed;
@@ -52,6 +54,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
     protected $locales;
     protected $limitObjsRecentlyAdded;
     protected $recentlyAddedObjectsByCol;
+    protected $imagePosterSlider;
 
     public function __construct(
         TranslatorInterface $translator,
@@ -62,6 +65,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
         DocumentManager $documentManager,
         RequestStack $requestStack,
         BreadcrumbsService $breadcrumbService,
+        EmbeddedEventSessionService $eventSessionService,
         $byTagBlockObjectsByCol,
         $limitObjsMostViewed,
         $showMostViewedLastMonth,
@@ -78,7 +82,8 @@ class ModulesController extends AbstractController implements WebTVControllerInt
         $liveBlockObjectsByCol,
         $locales,
         $limitObjsRecentlyAdded,
-        $recentlyAddedObjectsByCol
+        $recentlyAddedObjectsByCol,
+        $imagePosterSlider,
     ) {
         $this->translator = $translator;
         $this->statService = $statService;
@@ -88,6 +93,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
         $this->documentManager = $documentManager;
         $this->requestStack = $requestStack;
         $this->breadcrumbService = $breadcrumbService;
+        $this->eventSessionService = $eventSessionService;
         $this->byTagBlockObjectsByCol = $byTagBlockObjectsByCol;
         $this->limitObjsMostViewed = $limitObjsMostViewed;
         $this->showMostViewedLastMonth = $showMostViewedLastMonth;
@@ -105,6 +111,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
         $this->locales = $locales;
         $this->limitObjsRecentlyAdded = $limitObjsRecentlyAdded;
         $this->recentlyAddedObjectsByCol = $recentlyAddedObjectsByCol;
+        $this->imagePosterSlider = $imagePosterSlider;
     }
 
     public function mostViewedAction(string $design = 'horizontal'): Response
@@ -398,5 +405,35 @@ class ModulesController extends AbstractController implements WebTVControllerInt
             'catalogue_title' => $this->menuMediatecaTitle,
             'categories_title' => $this->menuCategoriesTitle,
         ];
+    }
+
+    public function eventBlockAction()
+    {
+        $events = $this->eventSessionService->findWidgetEvents(null, 3);
+
+        $limitEvents = 3;
+
+        return $this->render('@PumukitWebTV/Modules/widget_events.html.twig', [
+            'events' => $events,
+            'limitEvents' => $limitEvents,
+        ]);
+    }
+
+    public function sliderAction()
+    {
+        $multimediaObjects = $this->documentManager->getRepository(MultimediaObject::class)
+            ->createStandardQueryBuilder()
+            ->field('tags.cod')
+            ->equals('PUDEEVENTWALL')
+            ->getQuery()
+            ->execute()
+        ;
+
+        $images = $this->imagePosterSlider;
+
+        return $this->render('@PumukitWebTV/Modules/widget_slider.html.twig', [
+            'posterEvent' => $images,
+            'multimediaObjects' => $multimediaObjects,
+        ]);
     }
 }

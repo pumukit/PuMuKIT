@@ -54,7 +54,7 @@ services:
       $pumukitNewAdminLicenses: '%pumukit_new_admin.licenses%'
       $limitObjsSearch: '%limit_objs_search%'
       $limitObjsSeries: '%limit_objs_series%'
-
+      $imagePosterSlider: '%pumukit_web_tv.default_pic%'
 
   Pumukit\WebTVBundle\Controller\:
     resource: '../../src/Pumukit/WebTVBundle/Controller/'
