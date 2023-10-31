@@ -468,7 +468,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
                 $event->setIsIframeUrl($iframeURL);
 
                 $liveData = $request->request->get('live_channel_input_id');
-                if ($liveData && isset($liveData)) {
+                if ($liveData) {
                     $live = $dm->getRepository(Live::class)->findOneBy(
                         ['_id' => new \MongoId($liveData)]
                     );

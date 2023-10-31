@@ -158,12 +158,6 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
     /**
      * @Route("/list/{tag}", name="pumukitnewadmin_unesco_list")
      * @Template("PumukitNewAdminBundle:UNESCO:list.html.twig")
-     *
-     * @param null $tag
-     *
-     * @throws \Exception
-     *
-     * @return array
      */
     public function listAction($tag = null)
     {
@@ -767,13 +761,13 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
                 new \MongoDate(strtotime($public_date_init)),
                 new \MongoDate(strtotime($public_date_finish))
             );
-        } elseif (isset($public_date_init) && !empty($public_date_init)) {
+        } elseif (!empty($public_date_init)) {
             $date = date($public_date_init.'T23:59:59');
             $query->field('public_date')->range(
                 new \MongoDate(strtotime($public_date_init)),
                 new \MongoDate(strtotime($date))
             );
-        } elseif (isset($public_date_finish) && !empty($public_date_finish)) {
+        } elseif (!empty($public_date_finish)) {
             $date = date($public_date_finish.'T23:59:59');
             $query->field('public_date')->range(
                 new \MongoDate(strtotime($public_date_finish)),

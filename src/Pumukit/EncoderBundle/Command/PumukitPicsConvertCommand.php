@@ -193,11 +193,6 @@ EOT
         return $isValidInput;
     }
 
-    /**
-     * @param array $data
-     *
-     * @return bool
-     */
     private function showData($data)
     {
         if (empty($data['pics'])) {

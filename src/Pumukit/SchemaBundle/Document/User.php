@@ -193,6 +193,8 @@ class User extends BaseUser
     public function removeGroup(GroupInterface $group)
     {
         $this->groups->removeElement($group);
+
+        return $this;
     }
 
     /**

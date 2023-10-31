@@ -19,6 +19,8 @@ class AdminFilter extends BsonFilter
         if (Series::class === $targetDocument->reflClass->name) {
             return $this->getSeriesCriteria();
         }
+
+        return [];
     }
 
     private function getMultimediaObjectCriteria()

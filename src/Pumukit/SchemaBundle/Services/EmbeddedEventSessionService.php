@@ -309,7 +309,7 @@ class EmbeddedEventSessionService
 
         $pipeline = $this->initPipeline($all);
 
-        if ($criteria && !empty($criteria)) {
+        if (!empty($criteria)) {
             $pipeline[] = [
                 '$match' => $criteria,
             ];
@@ -378,7 +378,7 @@ class EmbeddedEventSessionService
 
         $pipeline = $this->initPipeline($all);
 
-        if ($criteria && !empty($criteria)) {
+        if (!empty($criteria)) {
             $pipeline[] = [
                 '$match' => $criteria,
             ];
@@ -457,7 +457,7 @@ class EmbeddedEventSessionService
             ],
         ];
 
-        if ($criteria && !empty($criteria)) {
+        if (!empty($criteria)) {
             $pipeline[] = [
                 '$match' => $criteria,
             ];
