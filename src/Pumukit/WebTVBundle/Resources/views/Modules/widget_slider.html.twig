@@ -11,7 +11,7 @@
             {% endfor %}
         </ol>
 
-        <div class="carousel-inner" style="max-height: 400px;">
+        <div class="carousel-inner" style="max-height: 450px;">
             {% for multimediaObject in multimediaObjects %}
                 <div class="item {% if loop.index == 1 %}active{% endif %}" style="max-height: 400px;">
                     <a href="{{ path('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.getId()}) }}">
