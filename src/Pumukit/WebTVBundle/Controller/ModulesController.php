@@ -390,23 +390,6 @@ class ModulesController extends AbstractController implements WebTVControllerInt
         ]);
     }
 
-    private function getLegacyMenuElements(): array
-    {
-        [$events, $channels, $liveEventTypeSession] = $this->menuService->getMenuEventsElement();
-
-        return [
-            'events' => $events,
-            'channels' => $channels,
-            'type' => $liveEventTypeSession,
-            'menu_selected' => $this->requestStack->getMasterRequest()->get('_route'),
-            'home_title' => $this->menuHomeTitle,
-            'announces_title' => $this->menuAnnouncesTitle,
-            'search_title' => $this->menuSearchTitle,
-            'catalogue_title' => $this->menuMediatecaTitle,
-            'categories_title' => $this->menuCategoriesTitle,
-        ];
-    }
-
     public function eventBlockAction()
     {
         $events = $this->eventSessionService->findWidgetEvents(null, 3);
@@ -435,5 +418,22 @@ class ModulesController extends AbstractController implements WebTVControllerInt
             'posterEvent' => $images,
             'multimediaObjects' => $multimediaObjects,
         ]);
+    }
+
+    private function getLegacyMenuElements(): array
+    {
+        [$events, $channels, $liveEventTypeSession] = $this->menuService->getMenuEventsElement();
+
+        return [
+            'events' => $events,
+            'channels' => $channels,
+            'type' => $liveEventTypeSession,
+            'menu_selected' => $this->requestStack->getMasterRequest()->get('_route'),
+            'home_title' => $this->menuHomeTitle,
+            'announces_title' => $this->menuAnnouncesTitle,
+            'search_title' => $this->menuSearchTitle,
+            'catalogue_title' => $this->menuMediatecaTitle,
+            'categories_title' => $this->menuCategoriesTitle,
+        ];
     }
 }
