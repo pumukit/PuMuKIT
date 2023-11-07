@@ -407,7 +407,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
         $multimediaObjects = $this->documentManager->getRepository(MultimediaObject::class)
             ->createStandardQueryBuilder()
             ->field('tags.cod')
-            ->equals('PUDEEVENTWALL')
+            ->equals('PUDEWALL')
             ->getQuery()
             ->execute()
         ;
