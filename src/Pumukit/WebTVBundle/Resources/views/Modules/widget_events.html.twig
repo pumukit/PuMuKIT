@@ -6,41 +6,41 @@
         {{ 'Events'|trans }}
     </h1>
     <div class="row wall-container">
-        <div class="col-xs-12 col-md-12">
-            {% if events %}
-                <div class="next_events_box">
-                    {% set hasLiveBroadcastingTitle = false %}
-                    {% set hasNextBroadcastingTitle = false %}
-                    {% for next in events %}
-                        {% if loop.index <= limitEvents %}
-                            {% set start = (next['data']['session']['start']|convertMongoDate|date('Y/m/d H:i:s')) %}
-                            {% set ends = (next['data']['session']['ends']|convertMongoDate|date('Y/m/d H:i:s')) %}
-                            {% set now = ("now"|date('Y/m/d H:i:s')) %}
-                            {% if not hasLiveBroadcastingTitle and start<= now and ends > now %}
+        {% if events %}
+            <div class="next_events_box">
+                {% set hasLiveBroadcastingTitle = false %}
+                {% set hasNextBroadcastingTitle = false %}
+                {% for next in events %}
+                    {% if loop.index <= limitEvents %}
+                        {% set start = (next['data']['session']['start']|convertMongoDate|date('Y/m/d H:i:s')) %}
+                        {% set ends = (next['data']['session']['ends']|convertMongoDate|date('Y/m/d H:i:s')) %}
+                        {% set now = ("now"|date('Y/m/d H:i:s')) %}
+                        {% if not hasLiveBroadcastingTitle and start<= now and ends > now %}
+                            {% set hasLiveBroadcastingTitle = true %}
+                            {% set hasNextBroadcastingTitle = false %}
+                            <h2 class="next_events_box_title">{{ "Live broadcasting"|trans }}</h2>
+                        {% elseif not (start<= now and ends > now ) %}
+                            {% if not hasNextBroadcastingTitle %}
+                                <div class="clearfix"></div>
+                                <h2 class="next_events_box_title">{{ text|trans }}</h2>
                                 {% set hasLiveBroadcastingTitle = true %}
-                                {% set hasNextBroadcastingTitle = false %}
-                                <h2 class="next_events_box_title">{{ "Live broadcasting"|trans }}</h2>
-                            {% elseif not (start<= now and ends > now ) %}
-                                {% if not hasNextBroadcastingTitle %}
-                                    <div class="clearfix"></div>
-                                    <h2 class="next_events_box_title">{{ text|trans }}</h2>
-                                    {% set hasLiveBroadcastingTitle = true %}
-                                    {% set hasNextBroadcastingTitle = true %}
-                                {% endif %}
+                                {% set hasNextBroadcastingTitle = true %}
                             {% endif %}
-
-                            {% include '@PumukitWebTV/Misc/event.html.twig' %}
                         {% endif %}
-                    {% endfor %}
-                </div>
-            {% else %}
-                <div class="no_events">
-                    <p class="next_events_box_title">{{ text_no|trans }}.</p>
-                </div>
-            {% endif %}
-        </div>
-        <div class="col-xs-12 col-sm-12 text-right show-more-event-links-div show_more_link">
-            <a href="{{ path('pumukit_webtv_events') }}" title="{{ "Show more"|trans }}">{{ "Show more"|trans }}...</a>
-        </div>
+
+                        {% include '@PumukitWebTV/Misc/event.html.twig' %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="no_events text-center">
+                <a href="{{ path('pumukit_webtv_events') }}" title="{{ "Show all events"|trans }}">{{ "Show all events"|trans }}</a>
+            </div>
+        {% endif %}
+        {% if events %}
+            <div class="col-xs-12 col-sm-12 text-right show-more-event-links-div show_more_link">
+                <a href="{{ path('pumukit_webtv_events') }}" title="{{ "Show more"|trans }}">{{ "Show more"|trans }}...</a>
+            </div>
+        {% endif %}
     </div>
 </div>
