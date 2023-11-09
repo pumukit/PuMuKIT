@@ -757,6 +757,10 @@
         <source>Sections</source>
         <target state="translated">Secciones</target>
       </trans-unit>
+      <trans-unit id="fgtr654" resname="News">
+        <source>News</source>
+        <target state="translated">Novedades</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

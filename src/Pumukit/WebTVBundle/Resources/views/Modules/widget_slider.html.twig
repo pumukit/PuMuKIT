@@ -1,7 +1,5 @@
 <div class="block-media-pmk wall_block">
-    <h1>
-        {{ "Novedades"|trans }}
-    </h1>
+    {% include "@PumukitWebTV/Resources/template_widget_title.html.twig" %}
     <div id="carousel-wall" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             {% for multimediaObject in multimediaObjects %}

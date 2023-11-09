@@ -397,6 +397,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
         $limitEvents = 3;
 
         return $this->render('@PumukitWebTV/Modules/widget_events.html.twig', [
+            'title' => $this->translator->trans('Events'),
             'events' => $events,
             'limitEvents' => $limitEvents,
         ]);
@@ -415,6 +416,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
         $images = $this->imagePosterSlider;
 
         return $this->render('@PumukitWebTV/Modules/widget_slider.html.twig', [
+            'title' => $this->translator->trans('News'),
             'posterEvent' => $images,
             'multimediaObjects' => $multimediaObjects,
         ]);

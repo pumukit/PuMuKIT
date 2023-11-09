@@ -2,9 +2,7 @@
 {% set text = "Próximos eventos" %}
 
 <div class="block-media-pmk wall_block">
-    <h1>
-        {{ 'Events'|trans }}
-    </h1>
+    {% include "@PumukitWebTV/Resources/template_widget_title.html.twig" %}
     <div class="row wall-container">
         {% if events %}
             <div class="next_events_box">
