@@ -1,7 +1,5 @@
 <div class="block-media-pmk wall_block">
-    <h1>
-        {{ "Novedades"|trans }}
-    </h1>
+    {% include "@PumukitWebTV/Resources/template_widget_title.html.twig" %}
     <div id="carousel-wall" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             {% for multimediaObject in multimediaObjects %}
@@ -13,7 +11,7 @@
 
         <div class="carousel-inner" style="max-height: 450px;">
             {% for multimediaObject in multimediaObjects %}
-                <div class="item {% if loop.index == 1 %}active{% endif %}" style="max-height: 400px;">
+                <div class="item {% if loop.index == 1 %}active{% endif %}">
                     <a href="{{ path('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.getId()}) }}">
                         <img src="{{ asset(multimediaObject|first_url_pic(true)) }}" alt="{{ multimediaObject.getTitle() }}" style="min-width:100%;">
 
