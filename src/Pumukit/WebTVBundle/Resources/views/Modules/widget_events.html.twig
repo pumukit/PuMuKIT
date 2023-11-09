@@ -34,12 +34,13 @@
             </div>
         {% else %}
             <div class="no_events text-center">
-                <a href="{{ path('pumukit_webtv_events') }}" title="{{ "Show all events"|trans }}">{{ "Show all events"|trans }}</a>
+                <p>{{ text_no|trans }}.</a>
             </div>
         {% endif %}
         {% if events %}
             <div class="col-xs-12 col-sm-12 text-right show-more-event-links-div show_more_link">
-                <a href="{{ path('pumukit_webtv_events') }}" title="{{ "Show more"|trans }}">{{ "Show more"|trans }}...</a>
+                <a href="{{ path('pumukit_webtv_events') }}" title="{{ "Show more"|trans }}">{{ "Show more"|trans }} <i class="fa fa-angle-right" aria-hidden="true"></i>
+</a>
             </div>
         {% endif %}
     </div>
