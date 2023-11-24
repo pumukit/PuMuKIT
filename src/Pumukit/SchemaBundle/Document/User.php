@@ -4,13 +4,20 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Document;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use MongoDB\BSON\ObjectId;
 use Symfony\Component\Security\Core\User\UserInterface;
+use ApiPlatform\Core\Annotation\ApiResource;
+
 
 /**
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\UserRepository")
+ * @ApiResource(
+ *     collectionOperations={"get"={"method"="GET", "access_control"="is_granted('ROLE_ACCESS_API')"}},
+ *     itemOperations={"get"={"method"="GET", "access_control"="is_granted('ROLE_ACCESS_API')"}}
+ * )
  */
 class User implements UserInterface
 {
