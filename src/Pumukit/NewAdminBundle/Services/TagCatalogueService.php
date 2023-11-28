@@ -187,8 +187,7 @@ class TagCatalogueService
         if (count($tag) > 0) {
             if ('all' === $tag[0]) {
                 array_shift($tag);
-            }
-            if (!empty($tag)) {
+            } else {
                 $newCriteria['tags.cod'] = ['$all' => $tag];
             }
         }
