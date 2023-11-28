@@ -10,6 +10,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use MongoDB\BSON\ObjectId;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 
 /**
@@ -72,11 +73,13 @@ class User implements UserInterface
     /**
      * @MongoDB\Field(type="string")
      */
+    #[Ignore]
     protected $salt;
 
     /**
      * @MongoDB\Field(type="string")
      */
+    #[Ignore]
     protected $password;
 
     /**
@@ -87,6 +90,7 @@ class User implements UserInterface
     /**
      * @MongoDB\Field(type="string")
      */
+    #[Ignore]
     protected $plainPassword;
 
     /**
@@ -97,11 +101,13 @@ class User implements UserInterface
     /**
      * @MongoDB\Field(type="string")
      */
+    #[Ignore]
     protected $confirmationToken;
 
     /**
      * @MongoDB\Field(type="date")
      */
+    #[Ignore]
     protected $passwordRequestedAt;
 
     /**
