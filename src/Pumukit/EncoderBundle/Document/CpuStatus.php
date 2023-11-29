@@ -4,12 +4,18 @@ declare(strict_types=1);
 
 namespace Pumukit\EncoderBundle\Document;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
  * Pumukit\EncoderBundle\Document\CpuStatus.
  *
  * @MongoDB\Document(repositoryClass="Pumukit\EncoderBundle\Repository\CpuStatusRepository")
+ *
+ * @ApiResource(
+ *           collectionOperations={"get"={"method"="GET", "access_control"="is_granted('ROLE_ACCESS_API')"}},
+ *           itemOperations={"get"={"method"="GET", "access_control"="is_granted('ROLE_ACCESS_API')"}}
+ *       )
  */
 class CpuStatus
 {

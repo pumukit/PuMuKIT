@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\EncoderBundle\Document;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -11,6 +12,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Pumukit\EncoderBundle\Document\Job.
  *
  * @MongoDB\Document(repositoryClass="Pumukit\EncoderBundle\Repository\JobRepository")
+ *
+ * @ApiResource(
+ *          collectionOperations={"get"={"method"="GET", "access_control"="is_granted('ROLE_ACCESS_API')"}},
+ *          itemOperations={"get"={"method"="GET", "access_control"="is_granted('ROLE_ACCESS_API')"}}
+ *      )
  */
 class Job
 {

@@ -1,0 +1,73 @@
+api_platform:
+    title: 'PuMuKIT API'
+    description: 'Powerful API'
+    version: '0.0.0'
+    show_webby: false
+    mapping:
+      paths: [
+        '%kernel.project_dir%/src/Pumukit/SchemaBundle/Document',
+        '%kernel.project_dir%/src/Pumukit/EncoderBundle/Document'
+      ]
+    patch_formats:
+        json: ['application/merge-patch+json']
+    swagger:
+        versions: [3]
+    doctrine:
+      enabled: false
+    doctrine_mongodb_odm:
+      enabled: true
+  # Enable ReDoc.
+    enable_re_doc: true
+
+  # Enable the entrypoint.
+    enable_entrypoint: true
+
+  # Enable the docs.
+    enable_docs: true
+
+  # Enable the data collector and the WebProfilerBundle integration.
+    enable_profiler: true
+    collection:
+      # The name of the query parameter to filter nullable results (with the ExistsFilter).
+      exists_parameter_name: 'exists'
+
+      # The default order of results.
+      order: 'ASC'
+
+      # The name of the query parameter to order results (with the OrderFilter).
+      order_parameter_name: 'order'
+
+      pagination:
+        # To enable or disable pagination for all resource collections by default.
+        enabled: true
+
+        # To allow partial pagination for all resource collections.
+        # This improves performances by skipping the `COUNT` query.
+        partial: false
+
+        # To allow the client to enable or disable the pagination.
+        client_enabled: false
+
+        # To allow the client to set the number of items per page.
+        client_items_per_page: false
+
+        # To allow the client to enable or disable the partial pagination.
+        client_partial: false
+
+        # The default number of items per page.
+        items_per_page: 25
+
+        # The maximum number of items per page.
+        maximum_items_per_page: 50
+
+        # The default name of the parameter handling the page number.
+        page_parameter_name: 'page'
+
+        # The name of the query parameter to enable or disable pagination.
+        enabled_parameter_name: 'pagination'
+
+        # The name of the query parameter to set the number of items per page.
+        items_per_page_parameter_name: 'itemsPerPage'
+
+        # The name of the query parameter to enable or disable the partial pagination.
+        partial_parameter_name: 'partial'

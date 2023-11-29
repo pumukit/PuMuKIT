@@ -5,7 +5,7 @@
     "type": "project",
     "description": "Media Portal",
     "require": {
-        "php": "^7.4 || ^8.2",
+        "php": "^8.2",
         "ext-curl": "*",
         "ext-fileinfo": "*",
         "ext-gd": "*",
@@ -13,6 +13,7 @@
         "ext-mongodb": "*",
         "ext-sysvsem": "*",
         "ankitpokhrel/tus-php": "^2.0",
+        "api-platform/core": "^2.7",
         "babdev/pagerfanta-bundle": "^2.11",
         "doctrine/mongodb-odm-bundle": "^4.5",
         "gedmo/doctrine-extensions": "^3.10",
