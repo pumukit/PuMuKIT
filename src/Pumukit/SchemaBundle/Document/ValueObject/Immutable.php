@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Pumukit\SchemaBundle\Document\ObjectValue;
+namespace Pumukit\SchemaBundle\Document\ValueObject;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use MongoDB\BSON\ObjectId;
