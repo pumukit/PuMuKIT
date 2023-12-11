@@ -4,21 +4,24 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Document\MediaType;
 
+use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
+use Pumukit\SchemaBundle\Document\ValueObject\Tags;
+
 interface Media
 {
+    public function id();
+
+    public function type(): int;
+
     public function __toString(): string;
 
-    public function originalName(): void;
+    public function originalName(): string;
 
-    public function description($locale = null): ?string;
-
-    public function i18nDescription(): ?array;
+    public function description(): i18nText;
 
     public function isHide(): bool;
 
-    public function tags(): array;
-
-    public function locale(): string;
+    public function tags(): Tags;
 
     public function isDownloadable(): bool;
 
