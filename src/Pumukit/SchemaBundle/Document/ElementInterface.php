@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Pumukit\SchemaBundle\Document;
+namespace Pumukit\SchemaBundle\Document;
 
 interface ElementInterface
 {

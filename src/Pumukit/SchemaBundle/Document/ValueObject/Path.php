@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Document\ValueObject;
 
-use App\Pumukit\SchemaBundle\Document\Exception\PathException;
+use Pumukit\SchemaBundle\Document\Exception\PathException;
 
 final class Path
 {
