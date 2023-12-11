@@ -9,6 +9,17 @@ use Pumukit\SchemaBundle\Document\ValueObject\Tags;
 
 interface Media
 {
+    public static function create(
+        string        $originalName,
+        i18nText      $description,
+        Tags          $tags,
+        bool          $hide,
+        bool          $isDownloadable,
+        int           $views,
+        Storage       $storage,
+        MediaMetadata $mediaMetadata
+    ): Media;
+
     public function id();
 
     public function type(): int;
