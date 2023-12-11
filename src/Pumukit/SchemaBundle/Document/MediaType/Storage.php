@@ -11,13 +11,9 @@ final class Storage
 {
     public const LOCAL_STORAGE = 1;
     public const S3_STORAGE = 2;
-
     public const EXTERNAL_STORAGE = 9;
-
     private $url;
-
     private $path;
-
     private $storageSystem;
 
     private function __construct(Url $url, Path $path = null)

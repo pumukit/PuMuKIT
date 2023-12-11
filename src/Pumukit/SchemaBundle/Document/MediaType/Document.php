@@ -12,11 +12,9 @@ use Pumukit\SchemaBundle\Document\ValueObject\Tags;
 final class Document implements Media
 {
     private const TYPE = 3;
-
     private $id;
     private $originalName;
     private $type;
-
     private $description;
     private $hide;
     private $tags;
