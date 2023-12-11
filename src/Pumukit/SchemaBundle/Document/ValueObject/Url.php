@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Document\ValueObject;
 
-use App\Pumukit\SchemaBundle\Document\Exception\UrlException;
+use Pumukit\SchemaBundle\Document\Exception\UrlException;
 
 final class Url
 {

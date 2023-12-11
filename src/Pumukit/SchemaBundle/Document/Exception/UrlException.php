@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Pumukit\SchemaBundle\Document\Exception;
+namespace Pumukit\SchemaBundle\Document\Exception;
 
 final class UrlException extends \Exception
 {
