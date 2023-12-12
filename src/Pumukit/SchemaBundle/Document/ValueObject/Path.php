@@ -24,13 +24,13 @@ final class Path
     private function validate($path): void
     {
         if (empty($path)) {
-            throw new PathException("Path cannot be empty");
+            throw new PathException('Path cannot be empty');
         }
 
         $realPath = realpath($path);
 
-        if ($realPath === false || !file_exists($realPath)) {
-            throw new PathException("Invalid path");
+        if (false === $realPath || !file_exists($realPath)) {
+            throw new PathException('Invalid path');
         }
     }
 }

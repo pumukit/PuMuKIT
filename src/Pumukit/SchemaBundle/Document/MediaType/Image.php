@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Document\MediaType;
 
- use Pumukit\SchemaBundle\Document\MediaType\Metadata\MediaMetadata;
 use MongoDB\BSON\ObjectId;
+use Pumukit\SchemaBundle\Document\MediaType\Metadata\MediaMetadata;
 use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
 use Pumukit\SchemaBundle\Document\ValueObject\Tags;
 
@@ -24,13 +24,13 @@ final class Image implements Media
     private $metadata;
 
     private function __construct(
-        string        $originalName,
-        i18nText      $description,
-        Tags          $tags,
-        bool          $hide,
-        bool          $isDownloadable,
-        int           $views,
-        Storage       $storage,
+        string $originalName,
+        i18nText $description,
+        Tags $tags,
+        bool $hide,
+        bool $isDownloadable,
+        int $views,
+        Storage $storage,
         MediaMetadata $mediaMetadata
     ) {
         $this->id = new ObjectId();
@@ -45,23 +45,22 @@ final class Image implements Media
         $this->metadata = $mediaMetadata;
     }
 
-    public static function create(
-        string        $originalName,
-        i18nText      $description,
-        Tags          $tags,
-        bool          $hide,
-        bool          $isDownloadable,
-        int           $views,
-        Storage       $storage,
-        MediaMetadata $mediaMetadata
-    ): Media
-    {
-        return new self($originalName, $description, $tags, $hide, $isDownloadable, $views, $storage, $mediaMetadata);
-    }
-
     public function __toString(): string
     {
         return (string) $this->id;
+    }
+
+    public static function create(
+        string $originalName,
+        i18nText $description,
+        Tags $tags,
+        bool $hide,
+        bool $isDownloadable,
+        int $views,
+        Storage $storage,
+        MediaMetadata $mediaMetadata
+    ): Media {
+        return new self($originalName, $description, $tags, $hide, $isDownloadable, $views, $storage, $mediaMetadata);
     }
 
     public function id(): ObjectId
@@ -98,7 +97,6 @@ final class Image implements Media
     {
         return $this->download;
     }
-
 
     public function views(): int
     {
