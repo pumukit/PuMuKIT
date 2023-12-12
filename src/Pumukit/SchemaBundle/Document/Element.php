@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Document;
 
-use Pumukit\SchemaBundle\Document\ElementInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
