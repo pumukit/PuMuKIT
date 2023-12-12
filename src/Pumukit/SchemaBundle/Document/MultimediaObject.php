@@ -9,8 +9,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\DocumentNotFoundException;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Pumukit\SchemaBundle\Document\ValueObject\Immutable;
 use Pumukit\SchemaBundle\Document\MediaType\Media;
+use Pumukit\SchemaBundle\Document\ValueObject\Immutable;
 
 /**
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\MultimediaObjectRepository")
@@ -141,7 +141,6 @@ class MultimediaObject
      * @MongoDB\EmbedMany(targetDocument=Track::class)
      */
     private $tracks;
-
 
     /**
      * @MongoDB\EmbedMany(targetDocument=Media::class)

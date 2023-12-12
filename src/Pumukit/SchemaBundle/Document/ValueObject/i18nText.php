@@ -20,7 +20,7 @@ final class i18nText
 
     public function textFromLocale(string $locale = 'en'): string
     {
-        if(isset($this->text[$locale])) {
+        if (isset($this->text[$locale])) {
             return $this->text[$locale];
         }
 

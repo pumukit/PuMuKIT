@@ -27,7 +27,6 @@ final class Storage
         return $this->url;
     }
 
-
     public function path(): Path
     {
         return $this->path;
@@ -40,15 +39,17 @@ final class Storage
 
     public function isS3StorageSystem(): bool
     {
-        return $this->storageSystem === self::S3_STORAGE;
+        return self::S3_STORAGE === $this->storageSystem;
     }
+
     public function isLocalStorageSystem(): bool
     {
-        return $this->storageSystem === self::LOCAL_STORAGE;
+        return self::LOCAL_STORAGE === $this->storageSystem;
     }
+
     public function isExternalStorageSystem(): bool
     {
-        return $this->storageSystem === self::EXTERNAL_STORAGE;
+        return self::EXTERNAL_STORAGE === $this->storageSystem;
     }
 
     public static function local(Url $url, Path $path): Storage
@@ -58,6 +59,7 @@ final class Storage
 
         return $storage;
     }
+
     public static function external(Url $url): Storage
     {
         $storage = new self($url);
