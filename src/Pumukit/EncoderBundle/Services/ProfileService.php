@@ -106,11 +106,6 @@ class ProfileService
         return null;
     }
 
-    /**
-     * Get given profile.
-     *
-     * @param string $profile the profile name (case sensitive)
-     */
     public function getProfile($profile)
     {
         if (isset($this->profiles[$profile])) {

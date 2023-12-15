@@ -10,10 +10,15 @@ final class Path
 {
     private string $path;
 
-    public function __construct(string $path)
+    private function __construct(string $path)
     {
         $this->validate($path);
         $this->path = $path;
+    }
+
+    public static function create(string $path): Path
+    {
+        return new self($path);
     }
 
     public function path(): string
