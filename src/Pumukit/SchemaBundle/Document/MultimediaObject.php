@@ -9,7 +9,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\DocumentNotFoundException;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Pumukit\SchemaBundle\Document\MediaType\Media;
+use Pumukit\SchemaBundle\Document\MediaType\Document;
+use Pumukit\SchemaBundle\Document\MediaType\Image;
+use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\ValueObject\Immutable;
 
 /**
@@ -145,9 +147,14 @@ class MultimediaObject
     private $tracks;
 
     /**
-     * @MongoDB\EmbedMany(targetDocument=Media::class)
+     * @MongoDB\EmbedMany(targetDocument=Document::class)
      */
-    private $media;
+    private $documents;
+
+    /**
+     * @MongoDB\EmbedMany(targetDocument=Image::class)
+     */
+    private $images;
 
     /**
      * @MongoDB\ReferenceMany(targetDocument=Group::class, storeAs="id", sort={"key":1}, strategy="setArray", cascade={"persist","remove"})
@@ -264,6 +271,8 @@ class MultimediaObject
     {
         $this->secret = base_convert(sha1(uniqid((string) random_int(0, mt_getrandmax()), true)), 16, 36);
         $this->tracks = new ArrayCollection();
+        $this->documents = new ArrayCollection();
+        $this->images = new ArrayCollection();
         $this->tags = new ArrayCollection();
         $this->people = new ArrayCollection();
         $this->groups = new ArrayCollection();
@@ -820,11 +829,30 @@ class MultimediaObject
         }
     }
 
+    public function addDocument(Document $document): void
+    {
+        $this->documents->add($document);
+    }
+
+    public function addImage(Image $image): void
+    {
+        $this->images->add($image);
+    }
+
     public function removeTrack(Track $track): void
     {
         $this->tracks->removeElement($track);
 
         $this->updateDuration();
+    }
+
+    public function removeDocument(Document $document): void
+    {
+        $this->documents->removeElement($document);
+    }
+    public function removeImage(Image $image): void
+    {
+        $this->documents->removeElement($image);
     }
 
     public function removeTrackById($trackId): void
@@ -851,9 +879,27 @@ class MultimediaObject
         return $this->tracks->contains($track);
     }
 
-    public function getTracks()
+    /**
+     * @Deprecated Use method tracks instead getTracks
+     */
+    public function getTracks(): ?ArrayCollection
+    {
+        return $this->tracks();
+    }
+
+    public function tracks(): ?ArrayCollection
     {
         return $this->tracks;
+    }
+
+    public function documents(): ?ArrayCollection
+    {
+        return $this->documents;
+    }
+
+    public function images(): ?ArrayCollection
+    {
+        return $this->documents;
     }
 
     public function getTrackById($trackId)
