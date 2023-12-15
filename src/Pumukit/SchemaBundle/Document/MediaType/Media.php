@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\MediaType\Metadata\MediaMetadata;
 use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
 use Pumukit\SchemaBundle\Document\ValueObject\Tags;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+Use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 
 /**
  * @MongoDB\MappedSuperclass

@@ -10,10 +10,15 @@ final class Url
 {
     private string $url;
 
-    public function __construct(string $url)
+    private function __construct(string $url)
     {
         $this->validate($url);
         $this->url = $url;
+    }
+
+    public static function create(string $url): Url
+    {
+        return new self($url);
     }
 
     public function url(): string
