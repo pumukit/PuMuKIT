@@ -4,15 +4,63 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Document\MediaType;
 
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MediaType\Metadata\MediaMetadata;
 use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
 use Pumukit\SchemaBundle\Document\ValueObject\Tags;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
-interface Media
+/**
+ * @MongoDB\MappedSuperclass
+ */
+abstract class Media implements MediaInterface
 {
-    public function __toString(): string;
+    /**
+     * @MongoDB\Id
+     */
+    private $id;
 
-    public static function create(
+    /**
+     * @MongoDB\Field(type="string")
+     */
+    private $originalName;
+
+    /**
+     * @MongoDB\Field(type="raw")
+     */
+    private $description;
+
+    /**
+     * @MongoDB\Field(type="bool")
+     */
+    private $hide;
+
+    /**
+     * @MongoDB\Field(type="collection")
+     */
+    private $tags;
+
+    /**
+     * @MongoDB\Field(type="bool")
+     */
+    private $download;
+
+    /**
+     * @MongoDB\Field(type="int", strategy="increment")
+     */
+    private $views;
+
+    /**
+     * @MongoDB\Field(type="collection")
+     */
+    private $storage;
+
+    /**
+     * @MongoDB\Field(type="collection")
+     */
+    private $metadata;
+
+    protected function __construct(
         string $originalName,
         i18nText $description,
         Tags $tags,
@@ -21,25 +69,76 @@ interface Media
         int $views,
         Storage $storage,
         MediaMetadata $mediaMetadata
-    ): Media;
+    ) {
+        $this->id = new ObjectId();
+        $this->originalName = $originalName;
+        $this->description = $description;
+        $this->tags = $tags;
+        $this->hide = $hide;
+        $this->download = $isDownloadable;
+        $this->views = $views;
+        $this->storage = $storage;
+        $this->metadata = $mediaMetadata;
+    }
 
-    public function id();
+    abstract protected static function create(
+        string $originalName,
+        i18nText $description,
+        Tags $tags,
+        bool $hide,
+        bool $isDownloadable,
+        int $views,
+        Storage $storage,
+        MediaMetadata $mediaMetadata
+    ): MediaInterface;
 
-    public function type(): int;
+    public function __toString(): string
+    {
+        return (string) $this->id;
+    }
 
-    public function originalName(): string;
+    public function id(): ObjectId
+    {
+        return $this->id;
+    }
 
-    public function description(): i18nText;
+    public function originalName(): string
+    {
+        return $this->originalName;
+    }
 
-    public function isHide(): bool;
+    public function description(): i18nText
+    {
+        return $this->description;
+    }
 
-    public function tags(): Tags;
+    public function tags(): Tags
+    {
+        return $this->tags;
+    }
 
-    public function isDownloadable(): bool;
+    public function isHide(): bool
+    {
+        return $this->hide;
+    }
 
-    public function views(): int;
+    public function isDownloadable(): bool
+    {
+        return $this->download;
+    }
 
-    public function storage(): Storage;
+    public function views(): int
+    {
+        return $this->views;
+    }
 
-    public function metadata(): MediaMetadata;
+    public function storage(): Storage
+    {
+        return $this->storage;
+    }
+
+    public function metadata(): MediaMetadata
+    {
+        return $this->metadata;
+    }
 }
