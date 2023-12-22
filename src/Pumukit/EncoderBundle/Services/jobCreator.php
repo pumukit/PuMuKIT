@@ -7,7 +7,6 @@ namespace Pumukit\EncoderBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
 use Pumukit\EncoderBundle\Document\Job;
-use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\EncoderBundle\Services\DTO\JobOptions;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
@@ -42,22 +41,22 @@ final class jobCreator
         $this->tmpPath = $tmpPath;
     }
 
-    public function jobFromLocalStorage(MultimediaObject $multimediaObject, UploadedFile $file, JobOptions $jobOptions): MultimediaObject
+    public function fromUploadedFile(MultimediaObject $multimediaObject, UploadedFile $file, JobOptions $jobOptions): MultimediaObject
     {
         $this->validateFile($file);
         $fileName = $this->cleanFileName($file);
 
-        $pathFile = $file->move(
+        $newFile = $file->move(
             $this->tmpPath.'/'.$multimediaObject->getId(),
             $fileName.'.'.pathinfo($file->getClientOriginalName())['extension']
         );
 
-        $this->create($file->getPathname(), $multimediaObject, $jobOptions);
+        $this->create($newFile->getPathname(), $multimediaObject, $jobOptions);
 
         return $multimediaObject;
     }
 
-    public function jobFromPath(MultimediaObject $multimediaObject, string $filePath, JobOptions $jobOptions): MultimediaObject
+    public function fromPath(MultimediaObject $multimediaObject, string $filePath, JobOptions $jobOptions): MultimediaObject
     {
         $this->validateFile($filePath);
         $this->create($filePath, $multimediaObject, $jobOptions);
@@ -80,8 +79,7 @@ final class jobCreator
         $job = $this->createByMimeType($multimediaObject, $jobOptions, $pathFile);
         $this->propService->addJob($multimediaObject, $job);
 
-        $this->jobService->executeNextJob();
-
+        $this->jobExecutor->executeNextJob();
     }
 
 
