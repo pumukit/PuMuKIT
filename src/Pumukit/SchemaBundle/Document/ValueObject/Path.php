@@ -29,7 +29,7 @@ final class Path
     private function validate($path): void
     {
         if (empty($path)) {
-            throw new PathException('Path cannot be empty');
+            return;
         }
 
         $realPath = realpath($path);

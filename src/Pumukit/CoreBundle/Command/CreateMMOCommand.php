@@ -6,12 +6,15 @@ namespace Pumukit\CoreBundle\Command;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\CoreBundle\Utils\SemaphoreUtils;
+use Pumukit\EncoderBundle\Services\DTO\JobOptions;
+use Pumukit\EncoderBundle\Services\JobCreator;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\TagService;
 use Pumukit\WebTVBundle\PumukitWebTVBundle;
@@ -24,7 +27,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CreateMMOCommand extends Command
 {
     private $documentManager;
-    private $jobService;
+    private $jobCreator;
     private $inspectionService;
     private $factoryService;
     private $tagService;
@@ -39,11 +42,20 @@ class CreateMMOCommand extends Command
         'hidden' => MultimediaObject::STATUS_HIDDEN,
     ];
 
-    public function __construct(DocumentManager $documentManager, JobService $jobService, InspectionFfprobeService $inspectionService, FactoryService $factoryService, TagService $tagService, ProfileService $profileService, array $locales, string $locale = 'en', ?string $wizardSimpleDefaultMasterProfile = null)
-    {
+    public function __construct(
+        DocumentManager $documentManager,
+        JobCreator $jobCreator,
+        InspectionFfprobeService $inspectionService,
+        FactoryService $factoryService,
+        TagService $tagService,
+        ProfileService $profileService,
+        array $locales,
+        string $locale = 'en',
+        ?string $wizardSimpleDefaultMasterProfile = null
+    ) {
         $this->wizardSimpleDefaultMasterProfile = $wizardSimpleDefaultMasterProfile;
         $this->documentManager = $documentManager;
-        $this->jobService = $jobService;
+        $this->jobCreator = $jobCreator;
         $this->inspectionService = $inspectionService;
         $this->factoryService = $factoryService;
         $this->tagService = $tagService;
@@ -164,7 +176,9 @@ EOT
             $multimediaObject->setStatus($status);
         }
 
-        $this->jobService->createTrackFromInboxOnServer($multimediaObject, $path, $profile, 2, $locale, []);
+        $jobOptions = new JobOptions($profile, 2, $locale, "", []);
+        $path = Path::create($path);
+        $this->jobCreator->fromPath($multimediaObject, $path, $jobOptions);
 
         SemaphoreUtils::release($semaphore);
 

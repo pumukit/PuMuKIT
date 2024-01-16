@@ -8,9 +8,11 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\DocumentNotFoundException;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Doctrine\ODM\MongoDB\PersistentCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Pumukit\SchemaBundle\Document\MediaType\Document;
 use Pumukit\SchemaBundle\Document\MediaType\Image;
+use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
 use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\ValueObject\Immutable;
 
@@ -815,7 +817,7 @@ class MultimediaObject
     {
         $this->tracks->add($track);
 
-        if ($track->getDuration() > $this->getDuration()) {
+        if ($track->metadata() instanceof VideoAudio && $track->metadata()->duration() > $this->getDuration()) {
             $this->setDuration($track->getDuration());
         }
     }
@@ -871,26 +873,26 @@ class MultimediaObject
     }
 
     /**
-     * @Deprecated Use method tracks instead getTracks
+     * Deprecated Use method tracks instead getTracks
      */
-    public function getTracks(): ?ArrayCollection
+    public function getTracks()
     {
         return $this->tracks();
     }
 
-    public function tracks(): ?ArrayCollection
+    public function tracks()
     {
         return $this->tracks;
     }
 
-    public function documents(): ?ArrayCollection
+    public function documents()
     {
         return $this->documents;
     }
 
-    public function images(): ?ArrayCollection
+    public function images()
     {
-        return $this->documents;
+        return $this->images;
     }
 
     public function getTrackById($trackId)
@@ -1020,19 +1022,19 @@ class MultimediaObject
         $r = [];
 
         foreach ($this->tracks as $track) {
-            if ($all && $track->getHide()) {
+            if ($all && $track->isHide()) {
                 continue;
             }
-            if ($any_tags && !$track->containsAnyTag($any_tags)) {
+            if ($any_tags && !$track->tags()->containsAnyTag($any_tags)) {
                 continue;
             }
-            if ($all_tags && !$track->containsAllTags($all_tags)) {
+            if ($all_tags && !$track->tags()->containsAllTags($all_tags)) {
                 continue;
             }
-            if ($not_any_tags && $track->containsAnyTag($not_any_tags)) {
+            if ($not_any_tags && $track->tags()->containsAnyTag($not_any_tags)) {
                 continue;
             }
-            if ($not_all_tags && $track->containsAllTags($not_all_tags)) {
+            if ($not_all_tags && $track->tags()->containsAllTags($not_all_tags)) {
                 continue;
             }
 
@@ -1045,19 +1047,19 @@ class MultimediaObject
     public function getFilteredTrackWithTags(array $any_tags = [], array $all_tags = [], array $not_any_tags = [], array $not_all_tags = [], $all = true)
     {
         foreach ($this->tracks as $track) {
-            if ($all && $track->getHide()) {
+            if ($all && $track->isHide()) {
                 continue;
             }
-            if ($any_tags && !$track->containsAnyTag($any_tags)) {
+            if ($any_tags && !$track->tags()->containsAnyTag($any_tags)) {
                 continue;
             }
-            if ($all_tags && !$track->containsAllTags($all_tags)) {
+            if ($all_tags && !$track->tags()->containsAllTags($all_tags)) {
                 continue;
             }
-            if ($not_any_tags && $track->containsAnyTag($not_any_tags)) {
+            if ($not_any_tags && $track->tags()->containsAnyTag($not_any_tags)) {
                 continue;
             }
-            if ($not_all_tags && $track->containsAllTags($not_all_tags)) {
+            if ($not_all_tags && $track->tags()->containsAllTags($not_all_tags)) {
                 continue;
             }
 

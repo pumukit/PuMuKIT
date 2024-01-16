@@ -16,7 +16,7 @@ final class Storage
     private $path;
     private $storageSystem;
 
-    private function __construct(Url $url, Path $path = null)
+    private function __construct(Url $url = null, Path $path = null)
     {
         $this->url = $url;
         $this->path = $path;
@@ -50,6 +50,23 @@ final class Storage
     public function isExternalStorageSystem(): bool
     {
         return self::EXTERNAL_STORAGE === $this->storageSystem;
+    }
+
+    public static function create(?Url $url, ?Path $path): Storage
+    {
+        if(!$url && !$path) {
+            throw new \Exception('Url and path cannot be null both');
+        }
+
+        if(!$path instanceof Path) {
+            return self::external($url);
+        }
+
+        if(str_contains($url->url(), 's3')) {
+            return self::s3($url, $path);
+        }
+
+        return self::local($url, $path);
     }
 
     public static function local(Url $url, Path $path): Storage

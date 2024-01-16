@@ -35,6 +35,20 @@ services:
     tags:
       - { name: "monolog.logger", channel: "encoder" }
 
+  Pumukit\EncoderBundle\Services\JobExecutor:
+    class: Pumukit\EncoderBundle\Services\JobExecutor
+    arguments:
+      $binPath: '%kernel.project_dir%/bin/'
+      $environment:      '%kernel.environment%'
+      $maxExecutionJobSeconds: '%pumukitencode.max_execution_job_seconds%'
+    tags:
+      - { name: "monolog.logger", channel: "encoder" }
+
+  Pumukit\EncoderBundle\Services\JobCreator:
+    class: Pumukit\EncoderBundle\Services\JobCreator
+    arguments:
+      $tmpPath:          '%pumukit.tmp%'
+
   Pumukit\EncoderBundle\Services\MultimediaObjectPropertyJobService:
     class: Pumukit\EncoderBundle\Services\MultimediaObjectPropertyJobService
 

@@ -17,11 +17,19 @@ use Pumukit\EncoderBundle\Executor\LocalExecutor;
 use Pumukit\EncoderBundle\Executor\RemoteHTTPExecutor;
 use Pumukit\EncoderBundle\Services\DTO\JobOptions;
 use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
+use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
+use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
+use Pumukit\SchemaBundle\Document\MediaType\Storage;
+use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
+use Pumukit\SchemaBundle\Document\ValueObject\Path;
+use Pumukit\SchemaBundle\Document\ValueObject\Tags;
+use Pumukit\SchemaBundle\Document\ValueObject\Url;
 use Pumukit\SchemaBundle\Services\TrackService;
 use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
+use Rector\Symfony\ValueObject\Tag;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
@@ -136,7 +144,7 @@ class JobService
     }
 
     /**
-     * @Deprecated Use createJobFromLocalStorage from JobCreator service
+     * @Deprecated Use fromUploadedFile from JobCreator service
      */
     public function createTrackFromLocalHardDrive(
         MultimediaObject $multimediaObject,
@@ -155,7 +163,7 @@ class JobService
     }
 
     /**
-     * @Deprecated Use createJobFromPath from JobCreator service
+     * @Deprecated Use fromPath from JobCreator service
      */
     public function createTrackFromInboxOnServer(
         MultimediaObject $multimediaObject,
@@ -562,7 +570,7 @@ class JobService
         MultimediaObject $multimediaObject,
         $language = null,
         $description = []
-    ): Track
+    ): MediaInterface
     {
         $this->logger->info('Create new track with file '.$pathFile.' and profileName '.$profileName);
 
@@ -589,55 +597,52 @@ class JobService
         $language = null,
         $description = [],
         $pathFile = null
-    ): Track
+    ): MediaInterface
     {
         $profile = $this->profileService->getProfile($profileName);
+        $originalName = ($pathFile && $profile['master']) ? pathinfo($pathFile, PATHINFO_BASENAME) : '';
+        $i18nDescription = !empty($description) ? i18nText::create($description) : i18nText::create([]);
 
-        $track = new Track();
-        if ($pathFile && $profile['master']) {
-            $pathInfo = pathinfo($pathFile, PATHINFO_BASENAME);
-            $track->setOriginalName($pathInfo);
-        }
+        $tags = [];
+        $tags[] = 'profile:'.$profileName;
 
-        $track->addTag('profile:'.$profileName);
         if ($profile['master']) {
-            $track->addTag('master');
-        }
-        if ($profile['downloadable']) {
-            $track->setAllowDownload(true);
+            $tags[] = 'master';
         }
         if ($profile['display']) {
-            $track->addTag('display');
+            $tags[] = 'display';
         }
         foreach (array_filter(preg_split('/[,\s]+/', $profile['tags'])) as $tag) {
-            $track->addTag(trim($tag));
+            $tags[] = trim($tag);
         }
 
-        if (!empty($description)) {
-            $track->setI18nDescription($description);
-        }
-        if ($language) {
-            $track->setLanguage($language);
-        }
+        $trackTags = Tags::create($tags);
+        $isDownloadable = $profile['downloadable'] ?? false;
 
-        $track->setPath($pathEnd);
-        if (isset($profile['streamserver']['url_out'])) {
-            $track->setUrl(
-                str_replace(
+        $url = isset($profile['streamserver']['url_out']) ? str_replace(
                     realpath($profile['streamserver']['dir_out']),
                     $profile['streamserver']['url_out'],
                     $pathEnd
-                )
-            );
-        }
+                ) : '';
 
-        $this->inspectionService->autocompleteTrack($track);
+        $url = Url::create($url);
+        $path = Path::create($pathEnd);
+        $storage = Storage::create($url, $path);
 
-        $track->setOnlyAudio(0 == $track->getWidth());
-        $track->setHide(!$profile['display']);
+        $mediaMetadata = VideoAudio::create($this->inspectionService->getFileMetadataAsString($path));
 
-        $multimediaObject->setDuration($track->getDuration());
+        $track = Track::create(
+            $originalName,
+            $i18nDescription,
+            $trackTags,
+            !$trackTags->contains('display'),
+            $isDownloadable,
+            0,
+            $storage,
+            $mediaMetadata
+        );
 
+        $multimediaObject->setDuration($this->inspectionService->getDuration($path->path()));
         $this->trackService->addTrackToMultimediaObject($multimediaObject, $track);
 
         return $track;
