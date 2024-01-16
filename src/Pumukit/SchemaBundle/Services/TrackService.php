@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\MediaType\Document;
+use Pumukit\SchemaBundle\Document\MediaType\Image;
+use Pumukit\SchemaBundle\Document\MediaType\Media;
+use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Symfony\Component\Finder\Finder;
@@ -31,16 +35,26 @@ class TrackService
         $this->forceDeleteOnDisk = $forceDeleteOnDisk;
     }
 
-    public function addTrackToMultimediaObject(MultimediaObject $multimediaObject, Track $track, bool $executeFlush = true): MultimediaObject
+    public function addTrackToMultimediaObject(MultimediaObject $multimediaObject, MediaInterface $media, bool $executeFlush = true): MultimediaObject
     {
-        $multimediaObject->addTrack($track);
+        if($media instanceof Track) {
+            $multimediaObject->addTrack($media);
+        }
+
+        if($media instanceof Image) {
+            $multimediaObject->addImage($media);
+        }
+
+        if($media instanceof Document) {
+            $multimediaObject->addDocument($media);
+        }
 
         if ($executeFlush) {
             $this->dm->persist($multimediaObject);
             $this->dm->flush();
         }
 
-        $this->dispatcher->dispatchCreate($multimediaObject, $track);
+        //$this->dispatcher->dispatchCreate($multimediaObject, $media);
 
         return $multimediaObject;
     }

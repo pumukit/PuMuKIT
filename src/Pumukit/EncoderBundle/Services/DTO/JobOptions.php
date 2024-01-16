@@ -16,7 +16,7 @@ final class JobOptions
 
     private $unique;
 
-    public function __construct(string $profile, int $priority, $language = 'en', $description = [], $initVars = [], $duration = 0, $flags = 0, bool $unique = false)
+    public function __construct(string $profile, int $priority = 0, $language = 'en', $description = [], $initVars = [], $duration = 0, $flags = 0, bool $unique = false)
     {
         $this->profile = $profile;
         $this->priority = $priority;

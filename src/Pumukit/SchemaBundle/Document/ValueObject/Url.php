@@ -28,7 +28,7 @@ final class Url
 
     private function validate($url): void
     {
-        if (!filter_var($url, FILTER_VALIDATE_URL)) {
+        if (!empty($url) && !filter_var($url, FILTER_VALIDATE_URL)) {
             throw new UrlException('Invalid URL');
         }
     }
