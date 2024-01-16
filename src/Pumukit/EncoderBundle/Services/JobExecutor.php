@@ -10,18 +10,19 @@ use Pumukit\CoreBundle\Utils\SemaphoreUtils;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Event\EncoderEvents;
 use Pumukit\EncoderBundle\Event\JobEvent;
+use Pumukit\EncoderBundle\Executor\ExecutorException;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Process\Process;
 
-final class jobExecutor
+final class JobExecutor
 {
     protected const EXECUTE_COMMAND = 'pumukit:encoder:job';
     private DocumentManager $documentManager;
     private CpuService $cpuService;
     private MultimediaObjectPropertyJobService $multimediaObjectPropertyJobService;
-    private EventDispatcherInterface $eventDispatcher;
+    private JobDispatcher $jobDispatcher;
     private LoggerInterface $logger;
     private string $binPath;
     private string $environment;
@@ -31,7 +32,7 @@ final class jobExecutor
         DocumentManager $documentManager,
         CpuService $cpuService,
         MultimediaObjectPropertyJobService $multimediaObjectPropertyJobService,
-        EventDispatcherInterface $eventDispatcher,
+        JobDispatcher $jobDispatcher,
         LoggerInterface $logger,
         string $binPath,
         string $environment,
@@ -40,7 +41,7 @@ final class jobExecutor
         $this->documentManager = $documentManager;
         $this->cpuService = $cpuService;
         $this->multimediaObjectPropertyJobService = $multimediaObjectPropertyJobService;
-        $this->eventDispatcher = $eventDispatcher;
+        $this->jobDispatcher = $jobDispatcher;
         $this->logger = $logger;
         $this->binPath = $binPath;
         $this->environment = $environment;
@@ -84,6 +85,78 @@ final class jobExecutor
     private function getNextJob()
     {
         return $this->documentManager->getRepository(Job::class)->findHigherPriorityWithStatus([Job::STATUS_WAITING]);
+    }
+
+
+    public function execute(Job $job): void
+    {
+        set_time_limit(0);
+
+        $this->checkService();
+
+        $profile = $this->getProfile($job);
+        $cpu = $this->cpuService->getCpuByName($job->getCpu());
+        $commandLine = $this->renderBat($job);
+
+        $executor = $this->getExecutor($cpu);
+
+        try {
+            $this->mkdir(dirname($job->getPathEnd()));
+
+            // Throws exception when the multimedia object is not found.
+            $multimediaObject = $this->getMultimediaObject($job);
+            $this->propService->setJobAsExecuting($multimediaObject, $job);
+            // Executes the job. It can throw exceptions if the executor has issues.
+            $out = $executor->execute($commandLine, $cpu);
+            $job->setOutput($out);
+            // Throws exception if the video does not exist or does not have video/audio tracks.
+            $duration = $this->inspectionService->getDuration($job->getPathEnd());
+            $job->setNewDuration($duration);
+
+            $this->logger->info('[execute] cpu: '.serialize($cpu));
+            $this->logger->info('[execute] CommandLine: '.$commandLine);
+            $this->logger->info('[execute] profile.app: "'.$profile['app'].'"');
+            $this->logger->info('[execute] out: "'.$out.'"');
+            $this->logger->info('[execute] job duration: '.$job->getDuration());
+            $this->logger->info('[execute] duration: '.$duration);
+
+            // Check for different durations. Throws exception if they don't match.
+            $this->searchError($profile, $job->getDuration(), $duration);
+
+            $job->setTimeend(new \DateTime('now'));
+            $job->setStatus(Job::STATUS_FINISHED);
+
+            $multimediaObject = $this->getMultimediaObject($job); // Necessary to refresh the document
+            $this->documentManager->refresh($multimediaObject);
+
+            $track = $this->createTrackWithJob($job);
+            $this->jobDispatcher->dispatch(true, $job, $track);
+            //$this->dispatch(true, $job, $track);
+
+            $this->propService->finishJob($multimediaObject, $job);
+
+            $this->deleteTempFiles($job);
+        } catch (\Exception $e) {
+            $job->setTimeend(new \DateTime('now'));
+            $job->setStatus(Job::STATUS_ERROR);
+
+            $job->appendOutput($e->getMessage());
+            $this->logger->error('[execute] error job output: '.$e->getMessage());
+            $this->jobDispatcher->dispatch(false, $job);
+//            $this->dispatch(false, $job);
+
+            $multimediaObject = $this->getMultimediaObject($job);  // Necessary to refresh the document
+            $this->propService->errorJob($multimediaObject, $job);
+            // If the transco is disconnected or there is an authentication issue, we don't want to send more petitions to this transco.
+            if ($e instanceof ExecutorException && 'prod' == $this->environment) {
+                $cpuName = $job->getCpu();
+                $this->cpuService->activateMaintenance($cpuName);
+            }
+        }
+
+        $this->dm->flush();
+
+        $this->executeNextJob();
     }
 
     private function executeInBackground(Job $job): void
@@ -141,7 +214,8 @@ final class jobExecutor
                 $this->logger->error($message.' for JOB ID '.$job->getId());
 
                 $existsJobsToUpdate = true;
-                $this->dispatch(false, $job);
+                $this->jobDispatcher->dispatch(false, $job);
+//                $this->dispatch(false, $job);
             }
         }
 

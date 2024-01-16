@@ -7,6 +7,8 @@ namespace Pumukit\NewAdminBundle\Controller;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
 use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\EncoderBundle\Services\DTO\JobOptions;
+use Pumukit\EncoderBundle\Services\JobCreator;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\PicExtractorService;
 use Pumukit\EncoderBundle\Services\ProfileService;
@@ -15,6 +17,7 @@ use Pumukit\NewAdminBundle\Form\Type\TrackType;
 use Pumukit\NewAdminBundle\Form\Type\TrackUpdateType;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Services\TrackService;
 use Pumukit\WebTVBundle\PumukitWebTVBundle;
@@ -45,12 +48,14 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     private $picExtractorService;
     private $kernelEnvironment;
     private $kernelBundles;
+    private JobCreator $jobCreator;
 
     public function __construct(
         LoggerInterface $logger,
         DocumentManager $documentManager,
         TranslatorInterface $translator,
         JobService $jobService,
+        JobCreator $jobCreator,
         TrackService $trackService,
         ProfileService $profileService,
         InspectionFfprobeService $inspectionService,
@@ -68,6 +73,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         $this->picExtractorService = $picExtractorService;
         $this->kernelEnvironment = $kernelEnvironment;
         $this->kernelBundles = $kernelBundles;
+        $this->jobCreator = $jobCreator;
     }
 
     /**
@@ -97,7 +103,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     public function uploadAction(Request $request, MultimediaObject $multimediaObject)
     {
         $profile = $request->get('profile');
-        $priority = $request->get('priority', 2);
+        $priority = (int) $request->get('priority', 2);
         $formData = $request->get('pumukitnewadmin_track', []);
         [$language, $description] = $this->getArrayData($formData);
 
@@ -106,10 +112,17 @@ class TrackController extends AbstractController implements NewAdminControllerIn
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
             }
             if ($request->files->has('resource') && ('file' === $request->get('file_type'))) {
-                $file = $request->files->get('resource');
-                $multimediaObject = $this->jobService->createTrackFromLocalHardDrive($multimediaObject, reset($file), $profile, $priority, $language, $description);
+                $files = $request->files->get('resource');
+                $file = reset($files);
+                $jobOptions = new JobOptions($profile, $priority, $language, $description);
+                $multimediaObject = $this->jobCreator->fromUploadedFile($multimediaObject, $file, $jobOptions);
+                //$multimediaObject = $this->jobService->createTrackFromLocalHardDrive($multimediaObject, reset($file), $profile, $priority, $language, $description);
             } elseif ($request->get('file') && ('inbox' === $request->get('file_type'))) {
-                $multimediaObject = $this->jobService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description);
+
+                $jobOptions = new JobOptions($profile, $priority, $language, $description);
+                $path = Path::create($request->get('file'));
+                $this->jobCreator->fromPath($multimediaObject, $path, $jobOptions);
+                //$multimediaObject = $this->jobService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description);
             }
         } catch (\Exception $e) {
             $this->logger->warning($e->getMessage());
