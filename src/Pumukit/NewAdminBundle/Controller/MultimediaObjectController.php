@@ -1170,7 +1170,7 @@ class MultimediaObjectController extends SortableAdminController
     /**
      * @Template("@PumukitNewAdmin/MultimediaObject/modalPreview.html.twig")
      */
-    public function modalPreviewAction(Multimediaobject $multimediaObject)
+    public function modalPreviewAction(MultimediaObject $multimediaObject)
     {
         return [
             'multimediaObject' => $multimediaObject,

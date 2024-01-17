@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\EncoderBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\MongoDBException;
 use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
@@ -45,7 +46,7 @@ class PicService
      *
      * @return \Doctrine\MongoDB\Iterator|mixed|null
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws MongoDBException
      */
     public function findPicsByOptions($id = null, $size = null, $path = null, $extension = null, $tags = null, $exists = null, $type = null)
     {

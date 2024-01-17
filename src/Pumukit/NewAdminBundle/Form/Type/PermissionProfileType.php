@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\NewAdminBundle\Form\Type;
 
+use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -35,7 +36,7 @@ class PermissionProfileType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => \Pumukit\SchemaBundle\Document\PermissionProfile::class,
+                'data_class' => PermissionProfile::class,
             ]
         );
 

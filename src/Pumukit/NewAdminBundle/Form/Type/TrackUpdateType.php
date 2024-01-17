@@ -8,6 +8,7 @@ use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
 use Pumukit\NewAdminBundle\Form\Type\Other\TrackdurationType;
 use Pumukit\NewAdminBundle\Form\Type\Other\TrackresolutionType;
+use Pumukit\SchemaBundle\Document\Track;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -160,7 +161,7 @@ class TrackUpdateType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => \Pumukit\SchemaBundle\Document\Track::class,
+                'data_class' => Track::class,
                 'is_super_admin' => false,
             ]
         );

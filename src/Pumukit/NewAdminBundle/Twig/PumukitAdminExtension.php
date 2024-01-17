@@ -19,6 +19,7 @@ use Pumukit\SchemaBundle\Services\SpecialTranslationService;
 use Pumukit\WebTVBundle\PumukitWebTVBundle;
 use Symfony\Component\Intl\Languages;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -38,7 +39,7 @@ class PumukitAdminExtension extends AbstractExtension
     private $eventService;
     private $enablePlaylist;
 
-    public function __construct(ProfileService $profileService, DocumentManager $documentManager, \Symfony\Contracts\Translation\TranslatorInterface $translator, RouterInterface $router, MultimediaObjectService $mmobjService, SpecialTranslationService $specialTranslationService, EmbeddedEventSessionService $eventService, $enablePlaylist)
+    public function __construct(ProfileService $profileService, DocumentManager $documentManager, TranslatorInterface $translator, RouterInterface $router, MultimediaObjectService $mmobjService, SpecialTranslationService $specialTranslationService, EmbeddedEventSessionService $eventService, $enablePlaylist)
     {
         $this->dm = $documentManager;
         $this->languages = Languages::getNames();
@@ -439,7 +440,7 @@ class PumukitAdminExtension extends AbstractExtension
         return $id->getTimestamp();
     }
 
-    public function getNextEventSession(Multimediaobject $multimediaObject)
+    public function getNextEventSession(MultimediaObject $multimediaObject)
     {
         $now = new \DateTime();
         $now = $now->getTimestamp();
@@ -468,7 +469,7 @@ class PumukitAdminExtension extends AbstractExtension
         return $this->eventService->getDefaultPoster();
     }
 
-    public function getSortRoles(Multimediaobject $multimediaObject, bool $display = true): array
+    public function getSortRoles(MultimediaObject $multimediaObject, bool $display = true): array
     {
         static $rolesCached = [];
 

@@ -13,6 +13,7 @@ use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Security\Permission;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PersonalSeriesService
 {
@@ -31,7 +32,7 @@ class PersonalSeriesService
         FactoryService $factoryService,
         AuthorizationCheckerInterface $authorizationChecker,
         TokenStorageInterface $tokenStorage,
-        \Symfony\Contracts\Translation\TranslatorInterface $translator,
+        TranslatorInterface $translator,
         array $locales,
         string $personalScopeRoleCode
     ) {

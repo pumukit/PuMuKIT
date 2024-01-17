@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\MongoDBException;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\UTCDateTime;
 use Pumukit\SchemaBundle\Document\EmbeddedEvent;
@@ -166,7 +167,7 @@ class EmbeddedEventSessionService
      * @param string $defaultPoster
      * @param string $defaultThumbnail
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws MongoDBException
      */
     public function __construct(DocumentManager $documentManager, $defaultPoster, $defaultThumbnail)
     {
@@ -986,7 +987,7 @@ class EmbeddedEventSessionService
      *
      * @return bool
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws MongoDBException
      */
     public function isLiveBroadcasting()
     {

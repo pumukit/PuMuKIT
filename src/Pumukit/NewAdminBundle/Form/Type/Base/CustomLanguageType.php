@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Intl\Languages;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CustomLanguageType extends AbstractType
 {
@@ -22,7 +23,7 @@ class CustomLanguageType extends AbstractType
     private $translator;
     private $customLanguages;
 
-    public function __construct(\Symfony\Contracts\Translation\TranslatorInterface $translator, array $customLanguages = [])
+    public function __construct(TranslatorInterface $translator, array $customLanguages = [])
     {
         $this->translator = $translator;
         $this->customLanguages = $customLanguages;

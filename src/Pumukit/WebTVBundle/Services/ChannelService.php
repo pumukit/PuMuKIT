@@ -8,6 +8,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ChannelService
 {
@@ -37,7 +38,7 @@ class ChannelService
     private $repoSeries;
     private $repoMmobjs;
 
-    public function __construct(DocumentManager $dm, \Symfony\Contracts\Translation\TranslatorInterface $translatorService)
+    public function __construct(DocumentManager $dm, TranslatorInterface $translatorService)
     {
         $this->dm = $dm;
         $this->translatorService = $translatorService;

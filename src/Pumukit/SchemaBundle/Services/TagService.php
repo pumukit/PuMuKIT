@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\LockException;
+use Doctrine\ODM\MongoDB\Mapping\MappingException;
 use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
@@ -256,7 +258,7 @@ class TagService
     public function deleteTag(TagInterface $tag)
     {
         if ($this->canDeleteTag($tag)) {
-            $this->dm->clear(\Pumukit\SchemaBundle\Document\MultimediaObject::class);
+            $this->dm->clear(MultimediaObject::class);
             $qb = $this->dm->createQueryBuilder(MultimediaObject::class);
 
             $query = $qb
@@ -378,8 +380,8 @@ class TagService
     /**
      * Resets only the 'Categories' tags. Those are all except for the 'PUBCHANNEL' and 'PUBDECISION' tags.
      *
-     * @throws \Doctrine\ODM\MongoDB\LockException
-     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
+     * @throws LockException
+     * @throws MappingException
      */
     public function resetCategoriesForCollections(array $mmobjs, array $newTags)
     {
@@ -399,8 +401,8 @@ class TagService
      *
      * @param bool $executeFlush
      *
-     * @throws \Doctrine\ODM\MongoDB\LockException
-     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
+     * @throws LockException
+     * @throws MappingException
      */
     public function resetCategories(MultimediaObject $mmobj, array $newTags, $executeFlush = true)
     {

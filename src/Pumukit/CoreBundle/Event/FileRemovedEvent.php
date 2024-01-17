@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Pumukit\CoreBundle\Event;
 
-class FileRemovedEvent extends \Symfony\Contracts\EventDispatcher\Event
+use Symfony\Contracts\EventDispatcher\Event;
+
+class FileRemovedEvent extends Event
 {
     protected $filePath;
 

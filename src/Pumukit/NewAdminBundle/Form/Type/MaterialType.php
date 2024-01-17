@@ -6,6 +6,7 @@ namespace Pumukit\NewAdminBundle\Form\Type;
 
 use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
+use Pumukit\SchemaBundle\Document\Material;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -84,7 +85,7 @@ class MaterialType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => \Pumukit\SchemaBundle\Document\Material::class,
+                'data_class' => Material::class,
             ]
         );
 

@@ -12,6 +12,7 @@ use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\PersonInterface;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\PersonService;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class FilterListener
@@ -29,7 +30,7 @@ class FilterListener
         $this->addUserAsPerson = $addUserAsPerson;
     }
 
-    public function onKernelController(\Symfony\Component\HttpKernel\Event\ControllerEvent $event)
+    public function onKernelController(ControllerEvent $event)
     {
         $req = $event->getRequest();
         $routeParams = $req->attributes->get('_route_params');

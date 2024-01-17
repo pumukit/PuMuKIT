@@ -12,6 +12,7 @@ use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -50,7 +51,7 @@ class JobServiceTest extends PumukitTestCase
 
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
         $cpuService = new CpuService($this->getDemoCpus(), $this->dm);
-        $dispatcher = $this->getMockBuilder(\Symfony\Component\EventDispatcher\EventDispatcherInterface::class)
+        $dispatcher = $this->getMockBuilder(EventDispatcherInterface::class)
             ->getMock()
         ;
 

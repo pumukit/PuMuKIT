@@ -7,6 +7,7 @@ namespace Pumukit\WorkflowBundle\Tests\EventListener;
 use Doctrine\Common\Annotations\Annotation\IgnoreAnnotation;
 use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
+use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
@@ -52,7 +53,7 @@ class JobGeneratorListenerTest extends PumukitTestCase
             'audio2' => ['target' => 'TAGB*, TAGC', 'resolution_hor' => 0, 'resolution_ver' => 0, 'audio' => true, 'streamserver' => $streamserver], ];
         $profileService = new ProfileService($testProfiles, $this->dm);
 
-        $jobService = $this->getMockBuilder(\Pumukit\EncoderBundle\Services\JobService::class)
+        $jobService = $this->getMockBuilder(JobService::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;

@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\StatsBundle\Document\ViewsLog;
 use Pumukit\StatsBundle\EventListener\Log;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * @internal
@@ -65,7 +66,7 @@ class LogTest extends PumukitTestCase
     private function createMockRequestStack()
     {
         $request = Request::create('/');
-        $requestStack = $this->getMockBuilder(\Symfony\Component\HttpFoundation\RequestStack::class)->getMock();
+        $requestStack = $this->getMockBuilder(RequestStack::class)->getMock();
         $requestStack->expects(static::once())->method('getMasterRequest')->willReturn($request);
 
         return $requestStack;

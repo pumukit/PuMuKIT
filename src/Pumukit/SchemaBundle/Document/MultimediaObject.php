@@ -6,6 +6,7 @@ namespace Pumukit\SchemaBundle\Document;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ODM\MongoDB\DocumentNotFoundException;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Pumukit\SchemaBundle\Document\ObjectValue\Immutable;
@@ -608,7 +609,7 @@ class MultimediaObject
         // WORKAROUND: get the object series is it's hidden and the MongoDB filter is enabled.
         try {
             $this->series->isHide();
-        } catch (\Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
+        } catch (DocumentNotFoundException $e) {
         }
 
         return $this->series;

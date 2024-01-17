@@ -7,6 +7,7 @@ namespace Pumukit\NewAdminBundle\Form\Type;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nAdvanceType;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
+use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -55,7 +56,7 @@ class PlaylistType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => \Pumukit\SchemaBundle\Document\Series::class,
+                'data_class' => Series::class,
             ]
         );
 
