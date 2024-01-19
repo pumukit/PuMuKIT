@@ -1,5 +1,13 @@
-<iframe src="{{ path('pumukit_live_channel_videoplayer', {'id': live.id }) }}"
-        id="live-{{ live.id }}"
+{% if multimediaObject.getEmbeddedEvent() is defined %}
+    {% set path = path('pumukit_livevideoplayer_index', {'id': multimediaObject.id }) %}
+{% else %}
+    {% set path = path('pumukit_live_channel_videoplayer', {'id': live.id }) %}
+{% endif %}
+
+{% set id = random() %}
+
+<iframe src="{{ path }}"
+        id="live-{{ id }}"
         width="100%"
         class="embed-responsive-item"
         style="border: none"
