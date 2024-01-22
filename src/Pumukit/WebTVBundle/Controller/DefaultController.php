@@ -206,7 +206,7 @@ class DefaultController extends AbstractController
         if ($iframe && 0 === (is_countable($nowSessions) ? count($nowSessions) : 0) && 0 === (is_countable($nextSessions) ? count($nextSessions) : 0)) {
             $qb = $this->getMultimediaObjects($multimediaObject->getSeries()->getId());
             $qb->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC);
-            $multimediaObjectPlaylist = $qb->getQuery()->execute()->getSingleResult();
+            $multimediaObjectPlaylist = $qb->getQuery()->getSingleResult();
 
             if ($multimediaObjectPlaylist) {
                 $autostart = $request->query->get('autostart', 'true');
