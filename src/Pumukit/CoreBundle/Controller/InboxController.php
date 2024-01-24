@@ -37,7 +37,7 @@ class InboxController extends AbstractController
     public function inbox(): array
     {
         $inboxPath = $this->inboxService->inboxPath();
-        $folders = FinderUtils::getDirectoriesFromPath($inboxPath);
+        $folders = FinderUtils::directoriesFromPath($inboxPath);
 
         return [
             'folders' => $folders,

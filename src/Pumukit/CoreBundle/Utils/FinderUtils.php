@@ -8,24 +8,41 @@ use Symfony\Component\Finder\Finder;
 
 final class FinderUtils
 {
-    public static function getDirectoriesFromPath(string $path): Finder
+    public static function directoriesFromPath(string $path): Finder
     {
-        self::isValidPath($path);
+        (new FinderUtils())->isValidPath($path);
 
-        $finder = self::getFinder();
+        $finder = (new FinderUtils())->finder();
 
         return $finder->depth('0')->directories()->in($path);
     }
 
-    public static function getFinder(): Finder
+    public static function findFilePathname(string $path, string $fileName): ?string
+    {
+        $finder = (new FinderUtils())->finder();
+
+        $finder->files()->in($path)->name($fileName.'.*');
+
+        if (!$finder->hasResults()) {
+            return null;
+        }
+
+        foreach ($finder->files() as $file) {
+            return $file->getPathname();
+        }
+
+        return null;
+    }
+
+    private function finder(): Finder
     {
         return new Finder();
     }
 
-    public static function isValidPath(string $path): bool
+    private function isValidPath(string $path): void
     {
         if (realpath($path)) {
-            return true;
+            return;
         }
 
         throw new \Exception('Path not valid.');
