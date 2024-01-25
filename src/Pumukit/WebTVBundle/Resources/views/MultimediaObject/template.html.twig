@@ -33,7 +33,11 @@
 
             {% include '@PumukitWebTV/MultimediaObject/template_player.html.twig' %}
 
-            {{ render(controller('Pumukit\\WebTVBundle\\Controller\\MultimediaObjectController::multimediaInfoAction', {'multimediaObject': multimediaObject})) }}
+            {% if url is defined and urlIframe is defined %}
+                {{ render(controller('Pumukit\\WebTVBundle\\Controller\\MultimediaObjectController::multimediaInfoAction', {'multimediaObject': multimediaObject, 'url' : url, 'urlIframe' : urlIframe})) }}
+            {% else %}
+                {{ render(controller('Pumukit\\WebTVBundle\\Controller\\MultimediaObjectController::multimediaInfoAction', {'multimediaObject': multimediaObject })) }}
+            {% endif %}
         </div>
 
         <div class="col-xs-12 col-md-5 col-lg-4">
