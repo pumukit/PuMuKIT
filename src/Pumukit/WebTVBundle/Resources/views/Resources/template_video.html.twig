@@ -8,7 +8,7 @@
 {% set videoTitle = object.title | default('No title'|trans) %}
 {% set seriesTitle = object.getSeriesTitle()|default('') %}
 
-<div class="{{ col_calculator(objectByCol|default(1)) }} image_representation">
+<div class="{% if is_naked() %}col-xs-6{% else %}{{ col_calculator(objectByCol|default(1)) }}{% endif %} image_representation">
     <div class="thumbnail">
         <a href="{{ videoPath }}" title="{{ videoTitle }}">
             <div>
