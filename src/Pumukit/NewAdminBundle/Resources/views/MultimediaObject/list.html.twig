@@ -25,6 +25,11 @@
                             {{ mm.containsTagWithCod('PUDENEW')?'<i class="mdi-action-spellcheck">':'&nbsp;' }}
                         </td>
                     {% endif %}
+                    {% if is_naked() and mm.containsAnyTagWithCodes(['PUCHOPENEDX', 'PUCHMOODLE', 'PUCHLMS'])%}
+                    <td headers="th-icons">
+                        <a class="moodlepr-add" href="#" title="{% trans %}Publish to LMS{% endtrans %}" onclick="parent.window.postMessage({'mmId': '{{ mm.id }}'}, '*'); return false;"><i class="mdi-editor-insert-photo"></i></a>
+                    </td>
+                    {% endif %}
                     <td headers="th-icons">
                         {% include '@PumukitNewAdmin/MultimediaObject/updatemenu.html.twig' with {'mm': mm} %}
                     </td>

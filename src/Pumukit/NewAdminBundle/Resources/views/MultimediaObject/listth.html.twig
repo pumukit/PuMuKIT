@@ -1,4 +1,8 @@
-{% set colspan = 5 - (series.sorting == constant('SORT_MANUAL', series) ? 0 : 2) - (is_naked() ? 1 : 0) %}
+{% if is_naked() %}
+    {% set colspan = 6 - (series.sorting == constant('SORT_MANUAL', series) ? 0 : 2) - (is_naked() ? 1 : 0) %}
+{% else %}
+    {% set colspan = 5 - (series.sorting == constant('SORT_MANUAL', series) ? 0 : 2) - (is_naked() ? 1 : 0) %}
+{% endif %}
 
 <tr>
     <th width="1%" id="th-checkbox">
