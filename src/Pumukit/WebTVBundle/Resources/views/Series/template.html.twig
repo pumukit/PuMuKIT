@@ -13,6 +13,12 @@
 {% endblock %}
 
 {% block body %}
+    {% if series.getSeriesStyle is defined and series.getSeriesStyle is not null and series.getSeriesStyle is not empty %}
+        <style>
+            {{ series.getSeriesStyle().getText() }}
+        </style>
+    {% endif %}
+
     {% set last_date = '' %}
     {% set last_subseriestitle = '' %}
     {% set template = series.getProperty('template')|default('date') %}
