@@ -151,6 +151,24 @@ class MultimediaObjectPicService
         return $multimediaObject;
     }
 
+    public function addPicFromPath(MultimediaObject $multimediaObject, string $filePath): MultimediaObject
+    {
+        if (!is_file($filePath)) {
+            throw new FileNotFoundException($filePath);
+        }
+
+        $pic = new Pic();
+        $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $filePath));
+        $pic->setPath($filePath);
+
+        $this->dm->persist($pic);
+        $multimediaObject->addPic($pic);
+
+        $this->dm->flush();
+
+        return $multimediaObject;
+    }
+
     /**
      * Set a pic from a memory string.
      *
