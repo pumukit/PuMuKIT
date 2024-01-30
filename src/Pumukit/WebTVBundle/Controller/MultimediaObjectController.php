@@ -253,8 +253,8 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
                 'showDownloads' => $showDownloads,
                 'isMagicRoute' => $isMagicRoute,
                 'fullMagicUrl' => $fullMagicUrl,
-                'url' => ($request->attributes->get('url')) ? $request->attributes->get('url') : null,
-                'urlIframe' => ($request->attributes->get('urlIframe')) ? $request->attributes->get('urlIframe') : null,
+                'url' => $request->attributes->get('url') ?: null,
+                'urlIframe' => $request->attributes->get('urlIframe') ?: null,
             ]
         );
     }
