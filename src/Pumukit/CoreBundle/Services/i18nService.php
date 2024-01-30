@@ -29,7 +29,7 @@ final class i18nService
     {
         $i18nText = [];
         foreach ($this->locales as $locale) {
-            $text[$locale] = $text;
+            $i18nText[$locale] = $text;
         }
 
         return $i18nText;
