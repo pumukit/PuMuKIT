@@ -1,5 +1,5 @@
 {% set trackid = (track.id is defined)?track.id:null %}
-{% if url is not defined and urlIframe is not defined %}
+{% if (url is not defined or url is null) or (urlIframe is not defined or urlIframe is null) %}
     {% if multimediaObject.isPublished %}
         {% set url = url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.id, 'track_id': trackid}) %}
         {% set urlIframe = url('pumukit_webtv_multimediaobject_iframe', {'id':multimediaObject.id, 'track_id': trackid}) %}

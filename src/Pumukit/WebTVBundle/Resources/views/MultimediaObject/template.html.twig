@@ -33,7 +33,7 @@
 
             {% include '@PumukitWebTV/MultimediaObject/template_player.html.twig' %}
 
-            {% if url is defined and urlIframe is defined %}
+            {% if (url is defined and url is not null) and (urlIframe is defined and urlIframe is not null) %}
                 {{ render(controller('Pumukit\\WebTVBundle\\Controller\\MultimediaObjectController::multimediaInfoAction', {'multimediaObject': multimediaObject, 'url' : url, 'urlIframe' : urlIframe})) }}
             {% else %}
                 {{ render(controller('Pumukit\\WebTVBundle\\Controller\\MultimediaObjectController::multimediaInfoAction', {'multimediaObject': multimediaObject })) }}

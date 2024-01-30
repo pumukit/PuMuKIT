@@ -113,11 +113,7 @@
         </div>
     </div>
     <div class="col-sm-6">
-        {% if url is defined and urlIframe is defined %}
-            {% include '@PumukitWebTV/MultimediaObject/template_share.html.twig' with {'url' : url , 'urlIframe' : urlIframe } %}
-        {% else %}
-            {% include '@PumukitWebTV/MultimediaObject/template_share.html.twig' %}
-        {% endif %}
+        {% include '@PumukitWebTV/MultimediaObject/template_share.html.twig' %}
     </div>
 </div>
 <br>
