@@ -27,11 +27,11 @@ final class i18nService
 
     public function generateI18nText(string $text): array
     {
-        $text = [];
+        $i18nText = [];
         foreach ($this->locales as $locale) {
             $text[$locale] = $text;
         }
 
-        return $text;
+        return $i18nText;
     }
 }
