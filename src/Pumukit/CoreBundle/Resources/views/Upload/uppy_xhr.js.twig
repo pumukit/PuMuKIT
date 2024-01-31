@@ -85,8 +85,15 @@ uppy.on('upload-success', (file, response) => {
             window.location.href = response.body.endPage;
         }
         if ('window' in parent && 'mmId' in response.body) {
+            parent.$('#myModal').modal('hide');
             parent.window.postMessage({'mmId': response.body.mmId}, '*');
+            parent.success('{% trans %}New Track added.{% endtrans %}');
+            parent.window.location.reload();
         }
+    } else if(response.body.uploaded && response.body.uploaded === 'failed') {
+        parent.$('#myModal').modal('hide');
+        parent.no_success(response.body.message);
+        parent.window.location.reload();
     } else {
         file_data_clear();
         return false;

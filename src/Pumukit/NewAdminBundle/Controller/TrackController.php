@@ -91,8 +91,6 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     }
 
     /**
-     * @Template("@PumukitNewAdmin/Track/upload.html.twig")
-     *
      * @Security("is_granted('ROLE_ACCESS_ADVANCED_UPLOAD')")
      */
     public function uploadAction(Request $request, MultimediaObject $multimediaObject)
@@ -117,18 +115,20 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
             $message = ('dev' === $this->kernelEnvironment) ? $e->getMessage() : 'The file is not a valid video or audio file';
 
-            return [
+            return new JsonResponse([
                 'mm' => $multimediaObject,
+                'mmId' => $multimediaObject->getId(),
                 'uploaded' => 'failed',
                 'message' => $message,
-            ];
+            ]);
         }
 
-        return [
+        return new JsonResponse([
             'mm' => $multimediaObject,
+            'mmId' => $multimediaObject->getId(),
             'uploaded' => 'success',
             'message' => 'New Track added.',
-        ];
+        ]);
     }
 
     /**
