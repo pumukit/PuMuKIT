@@ -65,6 +65,12 @@ services:
   Pumukit\CoreBundle\Services\UploadDispatcherService:
     class: Pumukit\CoreBundle\Services\UploadDispatcherService
 
+  Pumukit\CoreBundle\Services\i18nService:
+    class: Pumukit\CoreBundle\Services\i18nService
+    arguments:
+      $locales: '%pumukit.locales%'
+      $defaultLocale: '%kernel.default_locale%'
+
   Pumukit\CoreBundle\Services\InboxService:
     class: Pumukit\CoreBundle\Services\InboxService
     arguments:

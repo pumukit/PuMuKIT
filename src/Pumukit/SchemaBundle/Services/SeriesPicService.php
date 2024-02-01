@@ -88,6 +88,24 @@ class SeriesPicService
         return $series;
     }
 
+    public function addPicFromPath(Series $series, string $filePath): Series
+    {
+        if (!is_file($filePath)) {
+            throw new FileNotFoundException($filePath);
+        }
+
+        $pic = new Pic();
+        $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $filePath));
+        $pic->setPath($filePath);
+
+        $this->dm->persist($pic);
+        $series->addPic($pic);
+
+        $this->dm->flush();
+
+        return $series;
+    }
+
     /**
      * Set a pic from an url into the series.
      *
