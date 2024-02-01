@@ -245,13 +245,18 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
         $editorChapters = $this->chapterMarksService->getChapterMarks($multimediaObject);
         $fullMagicUrl = $this->getMagicUrlConfiguration();
 
-        return $this->render('@PumukitWebTV/MultimediaObject/template_info.html.twig', [
-            'multimediaObject' => $multimediaObject,
-            'editor_chapters' => $editorChapters,
-            'showDownloads' => $showDownloads,
-            'isMagicRoute' => $isMagicRoute,
-            'fullMagicUrl' => $fullMagicUrl,
-        ]);
+        return $this->render(
+            '@PumukitWebTV/MultimediaObject/template_info.html.twig',
+            [
+                'multimediaObject' => $multimediaObject,
+                'editor_chapters' => $editorChapters,
+                'showDownloads' => $showDownloads,
+                'isMagicRoute' => $isMagicRoute,
+                'fullMagicUrl' => $fullMagicUrl,
+                'url' => $request->attributes->get('url') ?: null,
+                'urlIframe' => $request->attributes->get('urlIframe') ?: null,
+            ]
+        );
     }
 
     private function getMagicUrlConfiguration()
