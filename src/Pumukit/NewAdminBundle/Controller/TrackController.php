@@ -27,6 +27,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -91,8 +92,6 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     }
 
     /**
-     * @Template("@PumukitNewAdmin/Track/upload.html.twig")
-     *
      * @Security("is_granted('ROLE_ACCESS_ADVANCED_UPLOAD')")
      */
     public function uploadAction(Request $request, MultimediaObject $multimediaObject)
@@ -117,18 +116,19 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
             $message = ('dev' === $this->kernelEnvironment) ? $e->getMessage() : 'The file is not a valid video or audio file';
 
-            return [
+            return new JsonResponse([
                 'mm' => $multimediaObject,
                 'uploaded' => 'failed',
                 'message' => $message,
-            ];
+            ]);
         }
 
-        return [
+        return new JsonResponse([
             'mm' => $multimediaObject,
             'uploaded' => 'success',
             'message' => 'New Track added.',
-        ];
+            'endPage' => $this->generateUrl('pumukitnewadmin_mms_shortener', ['id' => $multimediaObject->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
+        ]);
     }
 
     /**
