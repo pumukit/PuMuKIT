@@ -13,7 +13,7 @@ use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-final class JobDispatcher
+class JobDispatcher
 {
     private DocumentManager $documentManager;
     private EventDispatcherInterface $eventDispatcher;
