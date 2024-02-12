@@ -49,6 +49,10 @@ services:
     arguments:
       $tmpPath:          '%pumukit.tmp%'
 
+
+  Pumukit\EncoderBundle\Services\JobDispatcher:
+    class: Pumukit\EncoderBundle\Services\JobDispatcher
+
   Pumukit\EncoderBundle\Services\MultimediaObjectPropertyJobService:
     class: Pumukit\EncoderBundle\Services\MultimediaObjectPropertyJobService
 
