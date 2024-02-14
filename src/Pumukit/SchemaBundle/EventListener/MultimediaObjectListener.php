@@ -10,8 +10,8 @@ use Pumukit\SchemaBundle\Services\TextIndexService;
 
 class MultimediaObjectListener
 {
-    private $dm;
-    private $textIndexService;
+    private DocumentManager $dm;
+    private TextIndexService $textIndexService;
 
     public function __construct(DocumentManager $dm, TextIndexService $textIndexService)
     {
@@ -27,7 +27,7 @@ class MultimediaObjectListener
         $this->dm->flush();
     }
 
-    public function updateType(MultimediaObject $multimediaObject)
+    public function updateType(MultimediaObject $multimediaObject): void
     {
         if ($multimediaObject->isLive()) {
             return;
@@ -48,19 +48,19 @@ class MultimediaObjectListener
         }
     }
 
-    public function updateTextIndex(MultimediaObject $multimediaObject)
+    public function updateTextIndex(MultimediaObject $multimediaObject): void
     {
         $this->textIndexService->updateMultimediaObjectTextIndex($multimediaObject);
     }
 
-    private function getTracksType($tracks)
+    private function getTracksType($tracks): int
     {
         if (0 === (is_countable($tracks) ? count($tracks) : 0)) {
             return MultimediaObject::TYPE_UNKNOWN;
         }
 
         foreach ($tracks as $track) {
-            if (!$track->isOnlyAudio()) {
+            if (!$track->metadata()->isOnlyAudio()) {
                 return MultimediaObject::TYPE_VIDEO;
             }
         }

@@ -35,6 +35,11 @@ abstract class Media implements MediaInterface
     private $description;
 
     /**
+     * @MongoDB\Field(type="string")
+     */
+    private $language;
+
+    /**
      * @MongoDB\Field(type="bool")
      */
     private $hide;
@@ -67,6 +72,7 @@ abstract class Media implements MediaInterface
     protected function __construct(
         string $originalName,
         i18nText $description,
+        string $language,
         Tags $tags,
         bool $hide,
         bool $isDownloadable,
@@ -77,6 +83,7 @@ abstract class Media implements MediaInterface
         $this->id = new ObjectId();
         $this->originalName = $originalName;
         $this->description = $description->toArray();
+        $this->language = $language;
         $this->tags = $tags->toArray();
         $this->hide = $hide;
         $this->download = $isDownloadable;
@@ -103,6 +110,11 @@ abstract class Media implements MediaInterface
     public function description(): i18nText
     {
         return i18nText::create($this->description);
+    }
+
+    public function language(): ?string
+    {
+        return $this->language;
     }
 
     public function tags(): Tags
@@ -143,9 +155,21 @@ abstract class Media implements MediaInterface
         return $this->tags()->contains('master');
     }
 
+    public function profileName(): ?string
+    {
+        foreach ($this->tags()->toArray() as $tag) {
+            if (str_starts_with($tag, 'profile:')) {
+                return substr($tag, 8);
+            }
+        }
+
+        return null;
+    }
+
     abstract protected static function create(
         string $originalName,
         i18nText $description,
+        string $language,
         Tags $tags,
         bool $hide,
         bool $isDownloadable,

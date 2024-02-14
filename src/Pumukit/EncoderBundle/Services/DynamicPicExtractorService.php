@@ -18,10 +18,10 @@ class DynamicPicExtractorService
     public const DEFAULT_WIDTH = 768;
     public const DEFAULT_HEIGHT = 432;
 
-    private $documentManager;
-    private $mmsPicService;
-    private $command;
-    private $logger;
+    private DocumentManager $documentManager;
+    private MultimediaObjectPicService $mmsPicService;
+    private LoggerInterface $logger;
+    private string $command;
     private $predefinedTags = [
         'auto',
         'dynamic',
@@ -121,7 +121,7 @@ class DynamicPicExtractorService
         return null;
     }
 
-    private function completeFileMetadata(MultimediaObject $multimediaObject, Pic $file, string $filePath = ''): MultimediaObject
+    private function completeFileMetadata(MultimediaObject $multimediaObject, Pic $file, string $filePath = ''): void
     {
         $file->setPath($filePath);
         foreach ($this->predefinedTags as $tag) {
@@ -130,7 +130,5 @@ class DynamicPicExtractorService
 
         $this->documentManager->persist($multimediaObject);
         $this->documentManager->flush();
-
-        return $multimediaObject;
     }
 }
