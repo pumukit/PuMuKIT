@@ -10,6 +10,7 @@ use Pumukit\CoreBundle\Utils\SemaphoreUtils;
 use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\EncoderBundle\Services\PicExtractorService;
 use Pumukit\EncoderBundle\Services\ProfileService;
+use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
@@ -50,12 +51,12 @@ class PicExtractorListener
 
         $semaphore = SemaphoreUtils::acquire(1000004);
 
-        $this->generatePic($event->getMultimediaObject(), $event->getTrack());
+        $this->generatePic($event->getMultimediaObject(), $event->getMedia());
 
         SemaphoreUtils::release($semaphore);
     }
 
-    private function generatePic(MultimediaObject $multimediaObject, Track $track): void
+    private function generatePic(MultimediaObject $multimediaObject, MediaInterface $media): void
     {
         $this->dm->refresh($multimediaObject);
 
@@ -64,33 +65,33 @@ class PicExtractorListener
         }
 
         try {
-            if ($multimediaObject->isOnlyAudio() || $track->metadata()->isOnlyAudio()) {
+            if ($multimediaObject->isOnlyAudio() || $media->metadata()->isOnlyAudio()) {
                 return;
             }
 
-            $this->extractPic($multimediaObject, $track);
+            $this->extractPic($multimediaObject, $media);
         } catch (\Exception $e) {
             $this->logger->error(
                 self::class.'['.__FUNCTION__.'] '
                 .'There was an error in extracting a pic for MultimediaObject "'
-                .$multimediaObject->getId().'" from Track "'.$track->id()
+                .$multimediaObject->getId().'" from Track "'.$media->id()
                 .'". Error message: '.$e->getMessage()
             );
         }
     }
 
-    private function extractPic(MultimediaObject $multimediaObject, Track $track): void
+    private function extractPic(MultimediaObject $multimediaObject, MediaInterface $media): void
     {
-        $wasExtracted = $this->picExtractorService->extractPic($multimediaObject, $track, $this->autoExtractPicPercentage);
+        $wasExtracted = $this->picExtractorService->extractPic($multimediaObject, $media, $this->autoExtractPicPercentage);
         if (!$wasExtracted) {
             throw new \Exception(
-                "ERROR: Cannot extract PIC from MultimediaObject '".$multimediaObject->getId()."' with track '".$track->id()."'"
+                "ERROR: Cannot extract PIC from MultimediaObject '".$multimediaObject->getId()."' with track '".$media->id()."'"
             );
         }
         $this->logger->info(
             self::class.'['.__FUNCTION__.'] '
             .'Extracted pic from track '.
-            $track->id().' into MultimediaObject "'
+            $media->id().' into MultimediaObject "'
             .$multimediaObject->getId().'"'
         );
     }

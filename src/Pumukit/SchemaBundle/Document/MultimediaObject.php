@@ -11,6 +11,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Pumukit\SchemaBundle\Document\MediaType\Document;
 use Pumukit\SchemaBundle\Document\MediaType\Image;
+use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
 use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\ValueObject\Immutable;
@@ -993,18 +994,17 @@ class MultimediaObject
         return $this->getDuration();
     }
 
-    public function getMaster($any = true)
+    public function getMaster($any = true): ?MediaInterface
     {
         $master = $this->getTrackWithTag('master');
-
-        if ($master || !$any) {
+        if ($master) {
             return $master;
         }
 
         $isAudio = $this->isOnlyAudio();
 
         foreach ($this->tracks as $track) {
-            if (($isAudio && $track->isOnlyAudio()) || (!$isAudio && !$track->isOnlyAudio())) {
+            if (($isAudio && $track->metadata()->isOnlyAudio()) || (!$isAudio && !$track->metadata()->isOnlyAudio())) {
                 return $track;
             }
         }

@@ -17,6 +17,7 @@ final class Image extends Media
     public static function create(
         string $originalName,
         i18nText $description,
+        string $language,
         Tags $tags,
         bool $hide,
         bool $isDownloadable,
@@ -24,6 +25,6 @@ final class Image extends Media
         Storage $storage,
         MediaMetadata $mediaMetadata
     ): MediaInterface {
-        return new self($originalName, $description, $tags, $hide, $isDownloadable, $views, $storage, $mediaMetadata);
+        return new self($originalName, $description, $language, $tags, $hide, $isDownloadable, $views, $storage, $mediaMetadata);
     }
 }

@@ -4,41 +4,29 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Event;
 
+use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Track;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class TrackEvent extends Event
 {
-    /**
-     * @var MultimediaObject
-     */
     protected $multimediaObject;
 
-    /**
-     * @var Track
-     */
-    protected $track;
+    protected $media;
 
-    public function __construct(MultimediaObject $multimediaObject, Track $track)
+    public function __construct(MultimediaObject $multimediaObject, MediaInterface $media)
     {
         $this->multimediaObject = $multimediaObject;
-        $this->track = $track;
+        $this->media = $media;
     }
 
-    /**
-     * @return MultimediaObject
-     */
-    public function getMultimediaObject()
+    public function getMultimediaObject(): MultimediaObject
     {
         return $this->multimediaObject;
     }
 
-    /**
-     * @return Track
-     */
-    public function getTrack()
+    public function getMedia(): MediaInterface
     {
-        return $this->track;
+        return $this->media;
     }
 }
