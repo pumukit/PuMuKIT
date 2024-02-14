@@ -13,10 +13,10 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class DynamicPicExtractorListener
 {
-    private $logger;
-    private $dynamicPicExtractorService;
-    private $enableDynamicPicExtract;
-    private $trackTagAllowed;
+    private DynamicPicExtractorService $dynamicPicExtractorService;
+    private LoggerInterface $logger;
+    private bool $enableDynamicPicExtract;
+    private string $trackTagAllowed;
 
     public function __construct(
         DynamicPicExtractorService $dynamicPicExtractorService,
@@ -33,7 +33,7 @@ class DynamicPicExtractorListener
     public function onJobSuccess(JobEvent $event): void
     {
         if ($this->enableDynamicPicExtract) {
-            $this->generateDynamicPic($event->getMultimediaObject(), $event->getTrack());
+            $this->generateDynamicPic($event->getMultimediaObject(), $event->getMedia());
         }
     }
 

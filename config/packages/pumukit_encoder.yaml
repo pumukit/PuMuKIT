@@ -67,8 +67,6 @@ services:
     arguments:
       $width:      '%pumukitencode.thumbnail.width%'
       $height:     '%pumukitencode.thumbnail.height%'
-      $targetPath: '%pumukit.uploads_pic_dir%'
-      $targetUrl:  '%pumukit.uploads_pic_url%'
       $command:    '%pumukit.picextractor.command%'
 
   Pumukit\EncoderBundle\Services\PicService:

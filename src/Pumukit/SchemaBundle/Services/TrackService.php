@@ -11,18 +11,16 @@ use Pumukit\SchemaBundle\Document\MediaType\Image;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-//use Pumukit\SchemaBundle\Document\Track;
 use Symfony\Component\Finder\Finder;
+
 
 class TrackService
 {
-    /** @var DocumentManager */
-    private $dm;
+    private DocumentManager $dm;
 
-    /** @var TrackEventDispatcherService */
-    private $dispatcher;
-    private $tmpPath;
-    private $forceDeleteOnDisk;
+    private TrackEventDispatcherService $dispatcher;
+    private ?string $tmpPath;
+    private bool $forceDeleteOnDisk;
     private LoggerInterface $logger;
 
     public function __construct(
@@ -42,17 +40,14 @@ class TrackService
     public function addTrackToMultimediaObject(MultimediaObject $multimediaObject, MediaInterface $media, bool $executeFlush = true): MultimediaObject
     {
         if ($media instanceof Track) {
-            $this->logger->critical('**** Is a MediaType Track');
             $multimediaObject->addTrack($media);
         }
 
         if ($media instanceof Image) {
-            $this->logger->critical('**** Is a MediaType Image');
             $multimediaObject->addImage($media);
         }
 
         if ($media instanceof Document) {
-            $this->logger->critical('**** Is a MediaType Document');
             $multimediaObject->addDocument($media);
         }
 
@@ -61,7 +56,7 @@ class TrackService
             $this->dm->flush();
         }
 
-        // $this->dispatcher->dispatchCreate($multimediaObject, $media);
+        $this->dispatcher->dispatchCreate($multimediaObject, $media);
 
         return $multimediaObject;
     }

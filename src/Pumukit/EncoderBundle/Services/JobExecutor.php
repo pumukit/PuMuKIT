@@ -138,12 +138,12 @@ final class JobExecutor
             $duration = $this->inspectionService->getDuration($job->getPathEnd());
             $job->setNewDuration($duration);
 
-            $this->logger->warning('[execute] cpu: '.serialize($cpu));
-            $this->logger->warning('[execute] CommandLine: '.$commandLine);
-            $this->logger->warning('[execute] profile.app: "'.$profile['app'].'"');
-            $this->logger->warning('[execute] out: "'.$out.'"');
-            $this->logger->warning('[execute] job duration: '.$job->getDuration());
-            $this->logger->warning('[execute] duration: '.$duration);
+            $this->logger->info('[execute] cpu: '.serialize($cpu));
+            $this->logger->info('[execute] CommandLine: '.$commandLine);
+            $this->logger->info('[execute] profile.app: "'.$profile['app'].'"');
+            $this->logger->info('[execute] out: "'.$out.'"');
+            $this->logger->info('[execute] job duration: '.$job->getDuration());
+            $this->logger->info('[execute] duration: '.$duration);
 
             // Check for different durations. Throws exception if they don't match.
             $this->searchError($profile, $job->getDuration(), $duration);
@@ -156,9 +156,7 @@ final class JobExecutor
 
             $track = $this->createTrackWithJob($job);
 
-            $this->logger->critical(json_encode($track));
             $this->jobDispatcher->dispatch(EncoderEvents::JOB_SUCCESS, $job, $track);
-            // $this->dispatch(true, $job, $track);
 
             $this->multimediaObjectPropertyJobService->finishJob($multimediaObject, $job);
 
@@ -251,12 +249,12 @@ final class JobExecutor
         $vars['tracks_audio'] = [];
         $vars['tracks_video'] = [];
         foreach ($mmobj->getTracks() as $track) {
-            foreach ($track->getTags() as $tag) {
-                $vars['tracks'][$tag] = $track->getPath();
-                if ($track->isOnlyAudio()) {
-                    $vars['tracks_audio'][$tag] = $track->getPath();
+            foreach ($track->tags()->toArray() as $tag) {
+                $vars['tracks'][$tag] = $track->storage()->path()->path();
+                if ($track->metadata()->isOnlyAudio()) {
+                    $vars['tracks_audio'][$tag] = $track->storage()->path()->path();
                 } else {
-                    $vars['tracks_video'][$tag] = $track->getPath();
+                    $vars['tracks_video'][$tag] = $track->storage()->path()->path();
                 }
             }
         }
@@ -291,7 +289,7 @@ final class JobExecutor
         $duration_conf = 25;
         if (($durationIn < $durationEnd - $duration_conf) || ($durationIn > $durationEnd + $duration_conf)) {
             throw new \Exception(
-                sprintf('Final duration (%s) and initial duration (%s) are differents', $durationEnd, $durationIn)
+                sprintf('Final duration (%s) and initial duration (%s) are different', $durationEnd, $durationIn)
             );
         }
 
@@ -401,6 +399,7 @@ final class JobExecutor
         $track = Track::create(
             $originalName,
             $i18nDescription,
+            $language,
             $trackTags,
             !$trackTags->contains('display'),
             $isDownloadable,

@@ -7,6 +7,7 @@ namespace Pumukit\EncoderBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\CoreBundle\Utils\FileSystemUtils;
 use Pumukit\CoreBundle\Utils\FinderUtils;
+use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
@@ -15,32 +16,23 @@ use Symfony\Component\Process\Process;
 
 class PicExtractorService
 {
-    private $dm;
-    private $width;
-    private $height;
-    private $targetPath;
-    private $targetUrl;
-    private $command;
-    private $mmsPicService;
+    private DocumentManager $dm;
+    private MultimediaObjectPicService $mmsPicService;
+    private int $width;
+    private int $height;
+    private string $command;
 
     public function __construct(
         DocumentManager $documentManager,
         MultimediaObjectPicService $mmsPicService,
-        $width,
-        $height,
-        $targetPath,
-        $targetUrl,
-        $command = null
+        int $width,
+        int $height,
+        string $command = null
     ) {
         $this->dm = $documentManager;
         $this->mmsPicService = $mmsPicService;
         $this->width = $width;
         $this->height = $height;
-        $this->targetPath = realpath($targetPath);
-        if (!$this->targetPath) {
-            throw new \InvalidArgumentException("The path '".$targetPath."' for storing Pic does not exist.");
-        }
-        $this->targetUrl = $targetUrl;
         $this->command = $command ?: 'avprobe -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"';
     }
 
@@ -62,22 +54,22 @@ class PicExtractorService
         return true;
     }
 
-    public function extractPic(MultimediaObject $multimediaObject, Track $track, string $numFrame = null): bool
+    public function extractPic(MultimediaObject $multimediaObject, MediaInterface $media, string $numFrame = null): bool
     {
-        if (!FinderUtils::isValidFile($track->storage()->path()->path())) {
+        if (!FinderUtils::isValidFile($media->storage()->path()->path())) {
             return false;
         }
 
-        $num = $this->getNumFrames($track, $multimediaObject, $numFrame);
+        $num = $this->getNumFrames($media, $multimediaObject, $numFrame);
 
-        $this->createPic($multimediaObject, $track, (int) $num);
+        $this->createPic($multimediaObject, $media, (int) $num);
 
         return true;
     }
 
-    public function getNumFrames(Track $track, MultimediaObject $multimediaObject, string $numFrame): float|int
+    public function getNumFrames(MediaInterface $media, MultimediaObject $multimediaObject, string $numFrame): float|int
     {
-        $num_frames = $track->metadata()->numFrames();
+        $num_frames = $media->metadata()->numFrames();
 
         if (!$numFrame || (0 == $num_frames)) {
             return 125 * (is_countable($multimediaObject->getPics()) ? count($multimediaObject->getPics()) : 0) + 1;
@@ -90,7 +82,7 @@ class PicExtractorService
         return (int) $numFrame;
     }
 
-    private function createPic(MultimediaObject $multimediaObject, Track $track, int $frame = 25): void
+    private function createPic(MultimediaObject $multimediaObject, MediaInterface $media, int $frame = 25): void
     {
         $absCurrentDir = $this->mmsPicService->getTargetPath($multimediaObject);
 
@@ -101,7 +93,7 @@ class PicExtractorService
             $picFileName = date('ymdGis').random_int(0, mt_getrandmax()).'.jpg';
         }
 
-        $aspectTrack = $this->getAspect($track);
+        $aspectTrack = $this->getAspect($media);
         if (0 !== $aspectTrack) {
             $newHeight = (int) (1.0 * $this->width / $aspectTrack);
             if ($newHeight <= $this->height) {
@@ -116,9 +108,9 @@ class PicExtractorService
         }
 
         $vars = [
-            '{{ss}}' => $track->metadata()->timeOfaFrame($frame),
+            '{{ss}}' => $media->metadata()->timeOfaFrame($frame),
             '{{size}}' => $newWidth.'x'.$newHeight,
-            '{{input}}' => $track->storage()->path()->path(),
+            '{{input}}' => $media->storage()->path()->path(),
             '{{output}}' => $absCurrentDir.'/'.$picFileName,
         ];
 
@@ -140,32 +132,27 @@ class PicExtractorService
         if (file_exists($picPath)) {
             $multimediaObject = $this->mmsPicService->addPicUrl($multimediaObject, $picUrl);
             $pic = $this->getPicByUrl($multimediaObject, $picUrl);
-            $tags = ['auto', 'frame_'.$frame, 'time_'.$track->metadata()->timeOfAFrame($frame)];
+            $tags = ['auto', 'frame_'.$frame, 'time_'.$media->metadata()->timeOfAFrame($frame)];
             $this->completePicMetadata($multimediaObject, $pic, $picPath, $newWidth, $newHeight, $tags);
         }
     }
 
     /**
-     * Get aspect
      * Return aspect ratio. Check is not zero.
-     *
-     * @return float|int aspect ratio
      */
-    private function getAspect(Track $track)
+    private function getAspect(MediaInterface $media): float|int
     {
-        if (0 == $track->metadata()->height()) {
+        if (0 == $media->metadata()->height()) {
             return 0;
         }
 
-        return 1.0 * $track->metadata()->width() / $track->metadata()->height();
+        return 1.0 * $media->metadata()->width() / $media->metadata()->height();
     }
 
     /**
-     * Complete pic metadata.
-     *
      * Pic service addPicUrl doesn't add the path
      */
-    private function completePicMetadata(MultimediaObject $multimediaObject, Pic $pic, string $picPath = '', int $width = 0, int $height = 0, array $tags = []): MultimediaObject
+    private function completePicMetadata(MultimediaObject $multimediaObject, Pic $pic, string $picPath = '', int $width = 0, int $height = 0, array $tags = []): void
     {
         $pic->setPath($picPath);
         $pic->setWidth($width);
@@ -176,19 +163,12 @@ class PicExtractorService
 
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
-
-        return $multimediaObject;
     }
 
     /**
-     * Private method needed because MmsPicService::addPicUrl doesn't return
-     * the Pic instance (#9065).
-     *
-     * @param string $picUrl
-     *
-     * @return Pic|null
+     * Private method needed because MmsPicService::addPicUrl doesn't return the Pic instance (#9065).
      */
-    private function getPicByUrl(MultimediaObject $multimediaObject, $picUrl)
+    private function getPicByUrl(MultimediaObject $multimediaObject, string $picUrl)
     {
         foreach ($multimediaObject->getPics() as $pic) {
             if ($picUrl == $pic->getUrl()) {

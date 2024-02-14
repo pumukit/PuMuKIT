@@ -7,43 +7,50 @@ namespace Pumukit\WorkflowBundle\EventListener;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
 use Pumukit\EncoderBundle\Event\JobEvent;
-use Pumukit\EncoderBundle\Services\JobService;
+use Pumukit\EncoderBundle\Services\DTO\JobOptions;
+use Pumukit\EncoderBundle\Services\JobCreator;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
 
 class JobGeneratorListener
 {
-    private $dm;
-    private $logger;
-    private $jobService;
-    private $profiles;
-    private $profileService;
+    private DocumentManager $dm;
+    private JobCreator $jobCreator;
+    private ProfileService $profileService;
+    private LoggerInterface $logger;
+    private array $profiles;
 
-    public function __construct(DocumentManager $documentManager, JobService $jobService, ProfileService $profileService, LoggerInterface $logger)
+    public function __construct(
+        DocumentManager $documentManager,
+        JobCreator $jobCreator,
+        ProfileService $profileService,
+        LoggerInterface $logger
+    )
     {
         $this->dm = $documentManager;
-        $this->jobService = $jobService;
+        $this->jobCreator = $jobCreator;
         $this->logger = $logger;
-        $this->profiles = $profileService->getProfiles();
         $this->profileService = $profileService;
+        $this->profiles = $profileService->getProfiles();
     }
 
-    public function onJobSuccess(JobEvent $event)
+    public function onJobSuccess(JobEvent $event): void
     {
         $this->checkMultimediaObject($event->getMultimediaObject());
     }
 
-    public function onMultimediaobjectUpdate(MultimediaObjectEvent $event)
+    public function onMultimediaObjectUpdate(MultimediaObjectEvent $event): void
     {
         $this->checkMultimediaObject($event->getMultimediaObject());
     }
 
-    private function checkMultimediaObject(MultimediaObject $multimediaObject)
+    private function checkMultimediaObject(MultimediaObject $multimediaObject): void
     {
         // Only for objects with master
-        $master = $multimediaObject->getMaster(false);
+        $master = $multimediaObject->getMaster();
         if (!$master) {
             return;
         }
@@ -53,43 +60,41 @@ class JobGeneratorListener
             return;
         }
 
-        $repository = $this->dm->getRepository(Tag::class);
-        $tag = $repository->findOneBy(['cod' => 'PUBCHANNELS']);
+        $tag = $this->dm->getRepository(Tag::class)->findOneBy(['cod' => 'PUBCHANNELS']);
         if (!$tag) {
             return;
         }
 
-        $profileName = $master->getProfileName();
+        $profileName = $master->profileName();
         if (!$profileName || !isset($this->profiles[$profileName])) {
             return;
         }
         $profile = $this->profiles[$profileName];
 
         // NOTE: See TTK-7482
-        foreach ($tag->getChildren() as $pubchannel) {
-            if ($multimediaObject->containsTag($pubchannel)) {
-                if (!$master->containsTag('ENCODED_'.$pubchannel->getCod()) && false === strpos($profile['target'], (string) $pubchannel->getCod())) {
-                    $master->addTag('ENCODED_'.$pubchannel->getCod());
-                    $this->generateJobs($multimediaObject, $pubchannel->getCod());
+        foreach ($tag->getChildren() as $pubChannel) {
+            if ($multimediaObject->containsTag($pubChannel)) {
+                if (!$master->tags()->containsTag('ENCODED_'.$pubChannel->getCod()) && !str_contains($profile['target'], (string)$pubChannel->getCod())) {
+                    $master->tags()->add('ENCODED_'.$pubChannel->getCod());
+                    $this->generateJobs($multimediaObject, $pubChannel->getCod());
                 }
             }
         }
     }
 
-    private function generateJobs(MultimediaObject $multimediaObject, $pubChannelCod)
+    private function generateJobs(MultimediaObject $multimediaObject, string $pubChannelCod): void
     {
-        $jobs = [];
         $default_profiles = $this->profileService->getDefaultProfiles();
 
         if ($this->containsTrackWithProfileWithTargetTag($multimediaObject, $pubChannelCod)) {
-            $this->logger->info(sprintf(
+            $this->logger->warning(sprintf(
                 "JobGeneratorListener can't create a new job for multimedia object %s,".
                                         'because it already contains a track with a profile with this target (%s)',
                 $multimediaObject->getId(),
                 $pubChannelCod
             ));
 
-            return $jobs;
+            return;
         }
 
         foreach ($this->profiles as $targetProfile => $profile) {
@@ -101,7 +106,7 @@ class JobGeneratorListener
 
             $track = $multimediaObject->getTrackWithTag('profile:'.$targetProfile);
             if ($track) {
-                $this->logger->info(sprintf(
+                $this->logger->warning(sprintf(
                     "JobGeneratorListener doesn't create a new job (%s) for multimedia object %s ".
                                             'because it already contains a track created with this profile',
                     $targetProfile,
@@ -115,10 +120,10 @@ class JobGeneratorListener
                 if (!isset($default_profiles[$pubChannelCod])) {
                     continue;
                 }
-                if (!$multimediaObject->isOnlyAudio() && false === strpos($default_profiles[$pubChannelCod]['video'], (string) $targetProfile)) {
+                if (!$multimediaObject->isOnlyAudio() && !str_contains($default_profiles[$pubChannelCod]['video'], (string)$targetProfile)) {
                     continue;
                 }
-                if ($multimediaObject->isOnlyAudio() && false === strpos($default_profiles[$pubChannelCod]['audio'], (string) $targetProfile)) {
+                if ($multimediaObject->isOnlyAudio() && !str_contains($default_profiles[$pubChannelCod]['audio'], (string)$targetProfile)) {
                     continue;
                 }
             }
@@ -129,9 +134,9 @@ class JobGeneratorListener
                     $profileAspectRatio = $profile['resolution_hor'] / $profile['resolution_ver'];
                     $multimediaObjectAspectRatio = $multimediaObject->getTrackWithTag('master')->getAspectRatio();
                     if ((1.5 > $profileAspectRatio) !== (1.5 > $multimediaObjectAspectRatio)) {
-                        $this->logger->info(sprintf(
+                        $this->logger->warning(sprintf(
                             "JobGeneratorListener can't create a new job (%s) for multimedia object %s using standard target, ".
-                                                    'because a video profile aspect ratio(%f) is diferent to video aspect ratio (%f)',
+                                                    'because a video profile aspect ratio(%f) is different to video aspect ratio (%f)',
                             $targetProfile,
                             $multimediaObject->getId(),
                             $profileAspectRatio,
@@ -143,34 +148,33 @@ class JobGeneratorListener
                 }
 
                 $master = $multimediaObject->getTrackWithTag('master');
-                $this->logger->info(sprintf('JobGeneratorListener creates new job (%s) for multimedia object %s using standard target', $targetProfile, $multimediaObject->getId()));
-                $jobs[] = $this->jobService->addJob($master->getPath(), $targetProfile, 2, $multimediaObject, $master->getLanguage(), 0, JobService::ADD_JOB_UNIQUE);
+                $this->logger->warning(sprintf('JobGeneratorListener creates new job (%s) for multimedia object %s using standard target', $targetProfile, $multimediaObject->getId()));
+                $jobOptions = new JobOptions($targetProfile, 2, $master->language(), []);
+                $path = Path::create($master->storage()->path()->path());
+                $this->jobCreator->fromPath($multimediaObject, $path, $jobOptions);
             }
 
             if (in_array($pubChannelCod, $targets['force'])) {
                 $master = $multimediaObject->getTrackWithTag('master');
-                $this->logger->info(sprintf('JobGeneratorListener creates new job (%s) for multimedia object %s using forced target', $targetProfile, $multimediaObject->getId()));
-                $jobs[] = $this->jobService->addJob($master->getPath(), $targetProfile, 2, $multimediaObject, $master->getLanguage(), 0, JobService::ADD_JOB_UNIQUE);
+                $this->logger->warning(sprintf('JobGeneratorListener creates new job (%s) for multimedia object %s using forced target', $targetProfile, $multimediaObject->getId()));
+                $jobOptions = new JobOptions($targetProfile, 2, $master->language(), []);
+                $path = Path::create($master->storage()->path()->path());
+                $this->jobCreator->fromPath($multimediaObject, $path, $jobOptions);
             }
         }
 
-        return $jobs;
     }
 
     /**
      * Process the target string (See test)
      * "TAGA* TAGB, TAGC*, TAGD" => array('standard' => array('TAGB', 'TAGD'), 'force' => array('TAGA', 'TAGC')).
-     *
-     * @param mixed $targets
-     *
-     * @return array
      */
-    private function getTargets($targets)
+    private function getTargets($targets): array
     {
         $return = ['standard' => [], 'force' => []];
 
         foreach (array_filter(preg_split('/[,\s]+/', $targets)) as $target) {
-            if ('*' == substr($target, -1)) {
+            if (str_ends_with($target, '*')) {
                 $return['force'][] = substr($target, 0, -1);
             } else {
                 $return['standard'][] = $target;
@@ -180,10 +184,10 @@ class JobGeneratorListener
         return $return;
     }
 
-    private function containsTrackWithProfileWithTargetTag(MultimediaObject $multimediaObject, $pubChannelCod)
+    private function containsTrackWithProfileWithTargetTag(MultimediaObject $multimediaObject, $pubChannelCod): bool
     {
         foreach ($multimediaObject->getTracks() as $track) {
-            $profileName = $track->getProfileName();
+            $profileName = $track->profileName();
             if ($profileName && isset($this->profiles[$profileName])) {
                 $targets = $this->getTargets($this->profiles[$profileName]['target']);
                 if (in_array($pubChannelCod, $targets['standard'])) {

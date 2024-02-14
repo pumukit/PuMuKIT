@@ -7,6 +7,4 @@ namespace Pumukit\SchemaBundle\Document\MediaType\Metadata;
 interface MediaMetadata {
     public function toArray(): array;
     public function metadata(): ?string;
-
-
 }
