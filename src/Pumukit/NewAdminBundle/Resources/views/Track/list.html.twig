@@ -47,7 +47,7 @@
                 {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_TRACKS_OPTIONS')) %}
                     <td>
                         <a href="" onclick="toggleHide('{{track.id}}'); return false;" title="{% trans %}Show/Hide track{% endtrans %} {{ track.id }}">
-                            {% if track.hide %}
+                            {% if track.isHide() %}
                                 <i class="glyphicon glyphicon-eye-close"></i>
                             {% else %}
                                 <i class="glyphicon glyphicon-eye-open"></i>
@@ -70,7 +70,7 @@
                             </a>
                         </td>
                         <td>
-                            {% if (mm.getProperty('opencast') and track.containsTag('opencast')) or (track.isMaster() and app.user and not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADVANCED_UPLOAD'))) %}
+                            {% if (mm.getProperty('opencast') and track.tags().containsTag('opencast')) or (track.isMaster() and app.user and not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADVANCED_UPLOAD'))) %}
                                 <i class="mdi-content-block" style="color:#009587"></i>
                             {% else %}
                                 <a title="{% trans %}Delete track{% endtrans %} {{ track.id }}" href="#"
@@ -119,7 +119,7 @@
                                 <i class="mdi-navigation-refresh" id="list_profiles_{{ track.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                                 <ul class="dropdown-menu" role="menu" aria-labelledby="list_profiles_{{ track.id }}">
                                     <li>&nbsp;&nbsp;<strong>{% trans %}Transcode to profile{% endtrans %}:</strong></li>
-                                    {% for key in not_master_profiles|filter_profiles(track.isOnlyAudio())|keys %}
+                                    {% for key in not_master_profiles|filter_profiles(track.metadata().isOnlyAudio())|keys %}
                                         <li>
                                             <a href="#" onclick="$('#tracks_mms_{{ mm.id }}').load('{{ path('pumukitnewadmin_track_retranscode', {'id': track.id, 'mmId': mm.id, 'profile': key}) }}'); return false;">
                                                 <i class="mdi-image-camera-roll"></i> {{ key }}
@@ -154,16 +154,16 @@
                 {% endif %}
 
                 <td>
-                    &nbsp;{% if not is_naked() %}{{ track.id }} - {% endif %}<strong>{{ track.getTags()|profile }}</strong>
-                    {{ track.getDescription() }}
-                    ({% if not is_naked() %}{{ track.getPath()|basename }}/{% endif %}{{ track.getLanguage()|default('')|language_name }})
-                    - {{ track.getDuration()|duration_string }}
-                    - {{ (track.getSize() / 1048576)|number_format(2) }} MB
-                    {% if track.getWidth() and track.getHeight() %}- {{ track.getWidth() }}x{{ track.getHeight() }}{% endif %}
-                    {% for tag in track.getTags() | filter(tag => tag[0:8] != "profile:" and tag[0:11] != "pumukit1id:" and tag[0:8] != "ENCODED_") %}
+                    &nbsp;{% if not is_naked() %}{{ track.id }} - {% endif %}<strong>{{ track.tags()|profile }}</strong>
+                    {{ track.description().textFromLocale(app.request.getLocale()) }}
+                    ({% if not is_naked() %}{{ track.storage().path().path()|basename }}/{% endif %}{{ track.language()|default('')|language_name }})
+                    - {{ track.metadata.duration()|duration_string }}
+                    - {{ (track.metadata().size() / 1048576)|number_format(2) }} MB
+                    {% if track.metadata().width() and track.metadata().height() %}- {{ track.metadata().width() }}x{{ track.metadata().height() }}{% endif %}
+                    {% for tag in track.tags().toArray() | filter(tag => tag[0:8] != "profile:" and tag[0:11] != "pumukit1id:" and tag[0:8] != "ENCODED_") %}
                         <span class="label label-primary">{{ tag }}</span>
                     {% endfor %}
-                    {% if not track.getAllowDownload() %}
+                    {% if not track.isDownloadable() %}
                         <span class="label label-default">{% trans %}No downloadable{% endtrans %}</span>
                     {% endif %}
                 </td>

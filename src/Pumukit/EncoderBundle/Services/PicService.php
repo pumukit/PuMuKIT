@@ -7,11 +7,11 @@ namespace Pumukit\EncoderBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;
 use MongoDB\BSON\ObjectId;
+use Pumukit\CoreBundle\Utils\FileSystemUtils;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
-use Symfony\Component\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 class PicService
@@ -31,7 +31,6 @@ class PicService
         $this->dm = $documentManager;
         $this->mmsPicService = $mmsPicService;
 
-        $this->fileSystem = new Filesystem\Filesystem();
         $this->finder = new Finder();
     }
 
@@ -139,11 +138,11 @@ class PicService
 
         foreach ($data['pics'] as $pic) {
             if ('true' === $exists || '1' === $exists) {
-                if ($this->fileSystem->exists($pic['path'])) {
+                if (FileSystemUtils::exists($pic['path'])) {
                     $filterResult[] = $pic;
                 }
             } else {
-                if (!$this->fileSystem->exists($pic['path'])) {
+                if (!FileSystemUtils::exists($pic['path'])) {
                     $filterResult[] = $pic;
                 }
             }
@@ -166,7 +165,7 @@ class PicService
 
         foreach ($data['pics'] as $pic) {
             $this->finder = new Finder();
-            if (!$this->fileSystem->exists($pic['path'])) {
+            if (!FileSystemUtils::exists($pic['path'])) {
                 $filterResult[] = 'File not found '.$pic['path'];
             } else {
                 $files = $this->finder->files()->name(basename($pic['path']))->size('> '.$size.'K')->in(dirname($pic['path']));
@@ -315,7 +314,7 @@ class PicService
      */
     private function checkPath($path)
     {
-        return $this->fileSystem->exists($path);
+        return FileSystemUtils::exists($path);
     }
 
     /**

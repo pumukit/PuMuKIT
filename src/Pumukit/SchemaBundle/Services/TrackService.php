@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Psr\Log\LoggerInterface;
 use Pumukit\SchemaBundle\Document\MediaType\Document;
 use Pumukit\SchemaBundle\Document\MediaType\Image;
-use Pumukit\SchemaBundle\Document\MediaType\Media;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
+use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Track;
+//use Pumukit\SchemaBundle\Document\Track;
 use Symfony\Component\Finder\Finder;
 
 class TrackService
@@ -22,10 +23,12 @@ class TrackService
     private $dispatcher;
     private $tmpPath;
     private $forceDeleteOnDisk;
+    private LoggerInterface $logger;
 
     public function __construct(
         DocumentManager $documentManager,
         TrackEventDispatcherService $dispatcher,
+        LoggerInterface $logger,
         ?string $tmpPath = null,
         bool $forceDeleteOnDisk = true
     ) {
@@ -33,19 +36,23 @@ class TrackService
         $this->dispatcher = $dispatcher;
         $this->tmpPath = $tmpPath ? realpath($tmpPath) : sys_get_temp_dir();
         $this->forceDeleteOnDisk = $forceDeleteOnDisk;
+        $this->logger = $logger;
     }
 
     public function addTrackToMultimediaObject(MultimediaObject $multimediaObject, MediaInterface $media, bool $executeFlush = true): MultimediaObject
     {
-        if($media instanceof Track) {
+        if ($media instanceof Track) {
+            $this->logger->critical('**** Is a MediaType Track');
             $multimediaObject->addTrack($media);
         }
 
-        if($media instanceof Image) {
+        if ($media instanceof Image) {
+            $this->logger->critical('**** Is a MediaType Image');
             $multimediaObject->addImage($media);
         }
 
-        if($media instanceof Document) {
+        if ($media instanceof Document) {
+            $this->logger->critical('**** Is a MediaType Document');
             $multimediaObject->addDocument($media);
         }
 
@@ -54,7 +61,7 @@ class TrackService
             $this->dm->flush();
         }
 
-        //$this->dispatcher->dispatchCreate($multimediaObject, $media);
+        // $this->dispatcher->dispatchCreate($multimediaObject, $media);
 
         return $multimediaObject;
     }

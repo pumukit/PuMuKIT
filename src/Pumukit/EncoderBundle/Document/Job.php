@@ -7,6 +7,7 @@ namespace Pumukit\EncoderBundle\Document;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Pumukit\EncoderBundle\Services\DTO\JobOptions;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -40,6 +41,7 @@ class Job
 
     /**
      * @MongoDB\Field(type="string")
+     *
      * @MongoDB\Index
      */
     private $mm_id;
@@ -66,6 +68,7 @@ class Job
 
     /**
      * @MongoDB\Field(type="int")
+     *
      * @MongoDB\Index
      */
     private $status = self::STATUS_WAITING;

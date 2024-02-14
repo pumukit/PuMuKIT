@@ -8,7 +8,6 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\CoreBundle\Utils\SemaphoreUtils;
 use Pumukit\EncoderBundle\Services\DTO\JobOptions;
 use Pumukit\EncoderBundle\Services\JobCreator;
-use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -176,7 +175,7 @@ EOT
             $multimediaObject->setStatus($status);
         }
 
-        $jobOptions = new JobOptions($profile, 2, $locale, "", []);
+        $jobOptions = new JobOptions($profile, 2, $locale, '', []);
         $path = Path::create($path);
         $this->jobCreator->fromPath($multimediaObject, $path, $jobOptions);
 

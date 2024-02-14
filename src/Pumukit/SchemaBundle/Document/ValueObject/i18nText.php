@@ -13,6 +13,11 @@ final class i18nText
         $this->text = $text;
     }
 
+    public function toArray(): array
+    {
+        return $this->all();
+    }
+
     public static function create(array $text): i18nText
     {
         return new self($text);
@@ -24,7 +29,7 @@ final class i18nText
             return $this->text[$locale];
         }
 
-        throw new \Exception('Locale not found on text object');
+        return '';
     }
 
     public function all(): array

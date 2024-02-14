@@ -13,10 +13,12 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\ValueObject\Tags;
 use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Pumukit\SchemaBundle\Services\SpecialTranslationService;
 use Pumukit\WebTVBundle\PumukitWebTVBundle;
+use Rector\Symfony\ValueObject\Tag;
 use Symfony\Component\Intl\Languages;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -106,12 +108,12 @@ class PumukitAdminExtension extends AbstractExtension
         return basename($path);
     }
 
-    public function getProfile(array $tags)
+    public function getProfile(Tags $tags): string
     {
         $profile = '';
 
-        foreach ($tags as $tag) {
-            if (false !== strpos($tag, 'profile:')) {
+        foreach ($tags->toArray() as $tag) {
+            if (str_contains($tag, 'profile:')) {
                 return substr($tag, strlen('profile:'), strlen($tag) - 1);
             }
         }
