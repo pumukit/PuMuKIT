@@ -6,16 +6,13 @@ namespace Pumukit\EncoderBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
+use Pumukit\CoreBundle\Utils\FileSystemUtils;
 use Pumukit\EncoderBundle\Document\Job;
-use Pumukit\EncoderBundle\Exception\FileNotValid;
 use Pumukit\EncoderBundle\Services\DTO\JobOptions;
-use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Mime\MimeTypes;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -24,9 +21,9 @@ final class JobCreator
 {
     private DocumentManager $documentManager;
     private JobExecutor $jobExecutor;
+    private JobValidator $jobValidator;
+    private ProfileValidator $profileValidator;
     private MultimediaObjectPropertyJobService $propService;
-    private ProfileService $profileService;
-    private InspectionFfprobeService $inspectionService;
     private TokenStorageInterface $tokenStorage;
     private LoggerInterface $logger;
     private ?string $tmpPath;
@@ -34,19 +31,18 @@ final class JobCreator
     public function __construct(
         DocumentManager $documentManager,
         JobExecutor $jobExecutor,
+        JobValidator $jobValidator,
+        ProfileValidator $profileValidator,
         MultimediaObjectPropertyJobService $propService,
-        ProfileService $profileService,
-        InspectionFfprobeService $inspectionService,
         TokenStorageInterface $tokenStorage,
         LoggerInterface $logger,
         string $tmpPath = null
-    )
-    {
+    ) {
         $this->documentManager = $documentManager;
         $this->jobExecutor = $jobExecutor;
+        $this->jobValidator = $jobValidator;
+        $this->profileValidator = $profileValidator;
         $this->propService = $propService;
-        $this->profileService = $profileService;
-        $this->inspectionService = $inspectionService;
         $this->tokenStorage = $tokenStorage;
         $this->logger = $logger;
         $this->tmpPath = $tmpPath;
@@ -54,8 +50,7 @@ final class JobCreator
 
     public function fromUploadedFile(MultimediaObject $multimediaObject, UploadedFile $file, JobOptions $jobOptions): MultimediaObject
     {
-        $this->logger->warning('fromUploadedFile');
-        $this->validateFile($file->getPathname());
+        $this->jobValidator->validateFile($file->getPathname());
         $fileName = $this->cleanFileName($file);
 
         $newFile = $file->move(
@@ -70,8 +65,7 @@ final class JobCreator
 
     public function fromPath(MultimediaObject $multimediaObject, Path $filePath, JobOptions $jobOptions): MultimediaObject
     {
-        $this->logger->warning('fromPath');
-        $this->validateFile($filePath->path());
+        $this->jobValidator->validateFile($filePath->path());
         $this->create($filePath->path(), $multimediaObject, $jobOptions);
 
         return $multimediaObject;
@@ -79,41 +73,13 @@ final class JobCreator
 
     private function create(string $pathFile, MultimediaObject $multimediaObject, JobOptions $jobOptions): void
     {
-        $this->logger->warning('JobOptions: '.$jobOptions->unique() . ' and '. $jobOptions->flags());
-        if($jobOptions->unique() && !empty($jobOptions->flags())) {
-            $job = $this->documentManager->getRepository(Job::class)->findOneBy([
-                'profile' => $jobOptions->profile(),
-                'mm_id' => $multimediaObject->getId()]
-            );
-
-            if ($job) {
-                return;
-            }
+        if (!$this->jobValidator->isUniqueJob($multimediaObject, $jobOptions)) {
+            return;
         }
-        $this->logger->warning('Create by MimeType');
+
         $job = $this->createByMimeType($multimediaObject, $jobOptions, $pathFile);
         $this->propService->addJob($multimediaObject, $job);
-        $this->logger->warning('Finish create by MimeType');
-
         $this->jobExecutor->executeNextJob();
-    }
-
-
-    private function validateFile($file): void
-    {
-        if($file instanceof UploadedFile) {
-            if (!$file->isValid()) {
-                throw new FileNotValid($file->getErrorMessage());
-            }
-
-            if (!is_file($file->getPathname())) {
-                throw new FileNotFoundException($file->getPathname());
-            }
-        }
-
-        if (!is_file($file)) {
-            throw new FileNotFoundException($file);
-        }
     }
 
     private function cleanFileName(UploadedFile $file): string
@@ -123,49 +89,20 @@ final class JobCreator
         return preg_replace('([^A-Za-z0-9])', '', $trackName);
     }
 
-    private function validateProfileName(string $profileName): array
-    {
-        if (null === $profile = $this->profileService->getProfile($profileName)) {
-            $this->logger->error('[addJob] Can not find given profile with name "' . $profileName);
-
-            throw new \Exception("Can't find given profile with name " . $profileName);
-        }
-
-        return $profile;
-    }
-
-    private function getProfile(Job $job)
-    {
-        $profile = $this->profileService->getProfile($job->getProfile());
-
-        if (!$profile) {
-            $errorMsg = sprintf(
-                '[createTrackWithJob] Profile %s not found when the job %s creates the track',
-                $job->getProfile(),
-                $job->getId()
-            );
-            $this->logger->error($errorMsg);
-
-            throw new \Exception($errorMsg);
-        }
-
-        return $profile;
-    }
-
-
     private function createByMimeType(MultimediaObject $multimediaObject, JobOptions $jobOptions, string $pathFile): Job
     {
         $mimeTypes = new MimeTypes();
         $mimeType = $mimeTypes->guessMimeType($pathFile);
 
-        $profile = $this->validateProfileName($jobOptions->profile());
+        $profile = $this->profileValidator->ensureProfileExists($jobOptions->profile());
 
-        if(str_contains($mimeType, 'image/')) {
+        if (str_contains($mimeType, 'image/')) {
             return $this->generateJob($multimediaObject, $jobOptions, $pathFile, 0);
         }
 
-        if(str_contains($mimeType, 'video/')) {
-            $duration = $this->validateTrack($profile, $jobOptions, $pathFile);
+        if (str_contains($mimeType, 'video/')) {
+            $duration = $this->jobValidator->validateTrack($profile, $jobOptions, $pathFile);
+
             return $this->generateJob($multimediaObject, $jobOptions, $pathFile, $duration);
         }
 
@@ -192,9 +129,10 @@ final class JobCreator
         }
         $job->setTimeini(new \DateTime('now'));
         $this->documentManager->persist($job);
-        $this->documentManager->flush();
 
         $this->setPathEndAndExtensions($job);
+
+        $this->documentManager->flush();
 
         return $job;
     }
@@ -222,7 +160,7 @@ final class JobCreator
 
     private function setPathEndAndExtensions(Job $job): void
     {
-        if (!file_exists($job->getPathIni())) {
+        if (!FileSystemUtils::exists($job->getPathIni())) {
             $this->logger->error('[setPathEndAndExtensions] Error input file does not exist when setting the path_end');
 
             throw new \Exception('Error input file does not exist when setting the path_end');
@@ -240,85 +178,24 @@ final class JobCreator
             throw new \Exception('Error with profile name to set path_end.');
         }
 
-        $profile = $this->getProfile($job);
-        $mmobj = $this->getMultimediaObject($job);
+        $profile = $this->profileValidator->ensureProfileExists($job->getProfile());
+        $multimediaObject = $this->jobValidator->ensureMultimediaObjectExists($job);
 
         $extension = pathinfo($job->getPathIni(), PATHINFO_EXTENSION);
-        $pathEnd = $this->getPathEnd($profile, $mmobj->getSeries()->getId(), $job->getId(), $extension);
+        $pathEnd = $this->getPathEnd($profile, $multimediaObject->getSeries()->getId(), $job->getId(), $extension);
 
         $job->setPathEnd($pathEnd);
         $job->setExtIni($extension);
         $job->setExtEnd(pathinfo($pathEnd, PATHINFO_EXTENSION));
-
-        $this->documentManager->flush();
     }
 
-    private function getMultimediaObject(Job $job): MultimediaObject
-    {
-        $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->find($job->getMmId());
-
-        if (!$multimediaObject) {
-            $errorMsg = sprintf(
-                '[createTrackWithJob] Multimedia object %s not found when the job %s creates the track',
-                $job->getMmId(),
-                $job->getId()
-            );
-            $this->logger->error($errorMsg);
-
-            throw new \Exception($errorMsg);
-        }
-
-        return $multimediaObject;
-    }
-
-    private function getPathEnd(array $profile, $dir, $file, $extension): string
+    private function getPathEnd(array $profile, string $dir, string $file, string $extension): string
     {
         $finalExtension = $profile['extension'] ?? $extension;
 
         $tempDir = $profile['streamserver']['dir_out'].'/'.$dir;
-
-        $this->logger->error($tempDir);
-        $this->mkdir($tempDir);
+        FileSystemUtils::createFolder($tempDir);
 
         return realpath($tempDir).'/'.$file.'.'.$finalExtension;
-    }
-
-    private function mkdir(string $path): void
-    {
-        $fs = new Filesystem();
-        $fs->mkdir($path);
-    }
-
-    private function validateTrack(array $profile, JobOptions $jobOptions, string $pathFile): int
-    {
-        $checkduration = !(isset($profile['nocheckduration']) && $profile['nocheckduration']);
-
-        if ($checkduration && !($jobOptions->unique() && $jobOptions->flags())) {
-            if (!is_file($pathFile)) {
-                $this->logger->error('[addJob] FileNotFoundException: Could not find file "' . $pathFile);
-
-                throw new FileNotFoundException($pathFile);
-            }
-            $this->logger->info('Not doing duration checks on job with profile' . $jobOptions->profile());
-
-            try {
-                $duration = $this->inspectionService->getDuration($pathFile);
-            } catch (\Exception $e) {
-                $this->logger->error('[addJob] InspectionService getDuration error message: ' . $e->getMessage());
-
-                throw new \Exception($e->getMessage());
-            }
-
-            if (0 == $duration) {
-                $this->logger->error('[addJob] File duration is zero');
-
-                throw new \Exception('File duration is zero');
-            }
-        }
-
-        if ($checkduration && 0 == $duration) {
-            throw new \Exception('The media file duration is zero');
-        }
-        return $duration;
     }
 }

@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Pumukit\EncoderBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\CoreBundle\Utils\FileSystemUtils;
+use Pumukit\CoreBundle\Utils\FinderUtils;
+use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
-use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
 
 class PicExtractorService
@@ -22,8 +23,15 @@ class PicExtractorService
     private $command;
     private $mmsPicService;
 
-    public function __construct(DocumentManager $documentManager, MultimediaObjectPicService $mmsPicService, $width, $height, $targetPath, $targetUrl, $command = null)
-    {
+    public function __construct(
+        DocumentManager $documentManager,
+        MultimediaObjectPicService $mmsPicService,
+        $width,
+        $height,
+        $targetPath,
+        $targetUrl,
+        $command = null
+    ) {
         $this->dm = $documentManager;
         $this->mmsPicService = $mmsPicService;
         $this->width = $width;
@@ -54,33 +62,39 @@ class PicExtractorService
         return true;
     }
 
-    public function extractPic(MultimediaObject $multimediaObject, Track $track, $numframe = null): string
+    public function extractPic(MultimediaObject $multimediaObject, Track $track, string $numFrame = null): bool
     {
-        if (!file_exists($track->getPath())) {
-            return 'Error in data autocomplete of multimedia object.';
+        if (!FinderUtils::isValidFile($track->storage()->path()->path())) {
+            return false;
         }
 
-        $num_frames = $track->getNumFrames();
-
-        if (null === $numframe || (0 == $num_frames)) {
-            $num = 125 * (is_countable($multimediaObject->getPics()) ? count($multimediaObject->getPics()) : 0) + 1;
-        } elseif ('%' === substr($numframe, -1, 1)) {
-            $num = (int) $numframe * $num_frames / 100;
-        } else {
-            $num = (int) $numframe;
-        }
+        $num = $this->getNumFrames($track, $multimediaObject, $numFrame);
 
         $this->createPic($multimediaObject, $track, (int) $num);
 
-        return 'Captured the FRAME '.$num.' as image.';
+        return true;
     }
 
-    private function createPic(MultimediaObject $multimediaObject, Track $track, int $frame = 25): bool
+    public function getNumFrames(Track $track, MultimediaObject $multimediaObject, string $numFrame): float|int
+    {
+        $num_frames = $track->metadata()->numFrames();
+
+        if (!$numFrame || (0 == $num_frames)) {
+            return 125 * (is_countable($multimediaObject->getPics()) ? count($multimediaObject->getPics()) : 0) + 1;
+        }
+
+        if (str_ends_with($numFrame, '%')) {
+            return (int) $numFrame * $num_frames / 100;
+        }
+
+        return (int) $numFrame;
+    }
+
+    private function createPic(MultimediaObject $multimediaObject, Track $track, int $frame = 25): void
     {
         $absCurrentDir = $this->mmsPicService->getTargetPath($multimediaObject);
 
-        $fs = new Filesystem();
-        $fs->mkdir($absCurrentDir);
+        FileSystemUtils::createFolder($absCurrentDir);
 
         $picFileName = date('ymdGis').'.jpg';
         while (file_exists($absCurrentDir.'/'.$picFileName)) {
@@ -102,9 +116,9 @@ class PicExtractorService
         }
 
         $vars = [
-            '{{ss}}' => $track->getTimeOfAFrame($frame),
+            '{{ss}}' => $track->metadata()->timeOfaFrame($frame),
             '{{size}}' => $newWidth.'x'.$newHeight,
-            '{{input}}' => $track->getPath(),
+            '{{input}}' => $track->storage()->path()->path(),
             '{{output}}' => $absCurrentDir.'/'.$picFileName,
         ];
 
@@ -126,11 +140,9 @@ class PicExtractorService
         if (file_exists($picPath)) {
             $multimediaObject = $this->mmsPicService->addPicUrl($multimediaObject, $picUrl);
             $pic = $this->getPicByUrl($multimediaObject, $picUrl);
-            $tags = ['auto', 'frame_'.$frame, 'time_'.$track->getTimeOfAFrame($frame)];
-            $multimediaObject = $this->completePicMetadata($multimediaObject, $pic, $picPath, $newWidth, $newHeight, $tags);
+            $tags = ['auto', 'frame_'.$frame, 'time_'.$track->metadata()->timeOfAFrame($frame)];
+            $this->completePicMetadata($multimediaObject, $pic, $picPath, $newWidth, $newHeight, $tags);
         }
-
-        return true;
     }
 
     /**
@@ -141,11 +153,11 @@ class PicExtractorService
      */
     private function getAspect(Track $track)
     {
-        if (0 == $track->getHeight()) {
+        if (0 == $track->metadata()->height()) {
             return 0;
         }
 
-        return 1.0 * $track->getWidth() / $track->getHeight();
+        return 1.0 * $track->metadata()->width() / $track->metadata()->height();
     }
 
     /**

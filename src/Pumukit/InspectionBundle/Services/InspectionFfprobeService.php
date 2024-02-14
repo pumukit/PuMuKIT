@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Pumukit\InspectionBundle\Services;
 
 use Psr\Log\LoggerInterface;
-use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Symfony\Component\Process\Process;
@@ -123,7 +122,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
             JSON_THROW_ON_ERROR
         );
         if (!$this->jsonHasMediaContent($json)) {
-            throw new \InvalidArgumentException('This file has no accesible video '. "nor audio tracks\n". $path->path());
+            throw new \InvalidArgumentException('This file has no accesible video '."nor audio tracks\n".$path->path());
         }
 
         return $json;
@@ -166,5 +165,4 @@ class InspectionFfprobeService implements InspectionServiceInterface
 
         return $process->getOutput();
     }
-
 }

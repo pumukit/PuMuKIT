@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Pumukit\EncoderBundle\Tests\Services;
 
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
+use Pumukit\CoreBundle\Utils\FileSystemUtils;
 use Pumukit\EncoderBundle\Services\PicExtractorService;
 use Pumukit\InspectionBundle\Utils\TestCommand;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
-use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * @internal
@@ -118,7 +118,6 @@ class PicExtractorServiceTest extends PumukitTestCase
             }
         }
 
-        $fs = new Filesystem();
-        $fs->remove([$dirMmId, $dirVideo, $dirSeriesId, $dirSeries]);
+        FileSystemUtils::remove([$dirMmId, $dirVideo, $dirSeriesId, $dirSeries]);
     }
 }

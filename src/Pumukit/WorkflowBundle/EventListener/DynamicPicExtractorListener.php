@@ -7,21 +7,23 @@ namespace Pumukit\WorkflowBundle\EventListener;
 use Psr\Log\LoggerInterface;
 use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\EncoderBundle\Services\DynamicPicExtractorService;
+use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
+use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Track;
 
 class DynamicPicExtractorListener
 {
-    /** @var LoggerInterface */
     private $logger;
-
-    /** @var DynamicPicExtractorService */
     private $dynamicPicExtractorService;
     private $enableDynamicPicExtract;
     private $trackTagAllowed;
 
-    public function __construct(DynamicPicExtractorService $dynamicPicExtractorService, LoggerInterface $logger, bool $enableDynamicPicExtract = true, string $trackTagAllowed = 'master')
-    {
+    public function __construct(
+        DynamicPicExtractorService $dynamicPicExtractorService,
+        LoggerInterface $logger,
+        bool $enableDynamicPicExtract = true,
+        string $trackTagAllowed = 'master'
+    ) {
         $this->dynamicPicExtractorService = $dynamicPicExtractorService;
         $this->logger = $logger;
         $this->enableDynamicPicExtract = $enableDynamicPicExtract;
@@ -35,25 +37,33 @@ class DynamicPicExtractorListener
         }
     }
 
-    public function generateDynamicPic(MultimediaObject $multimediaObject, Track $track): bool
+    public function generateDynamicPic(MultimediaObject $multimediaObject, MediaInterface $media): bool
     {
-        if (!$track->containsTag($this->trackTagAllowed) || $track->isOnlyAudio()) {
+        if (!$media instanceof Track) {
             return false;
         }
 
-        return $this->generateDynamicPicFromTrack($multimediaObject, $track);
+        if (!$media->tags()->contains($this->trackTagAllowed) || $media->metadata()->isOnlyAudio()) {
+            return false;
+        }
+
+        return $this->generateDynamicPicFromTrack($multimediaObject, $media);
     }
 
-    private function generateDynamicPicFromTrack(MultimediaObject $multimediaObject, Track $track): bool
+    private function generateDynamicPicFromTrack(MultimediaObject $multimediaObject, MediaInterface $media): bool
     {
-        $outputMessage = $this->dynamicPicExtractorService->extract($multimediaObject, $track);
+        if (!$media instanceof Track) {
+            return false;
+        }
+
+        $outputMessage = $this->dynamicPicExtractorService->extract($multimediaObject, $media);
         if (!$outputMessage) {
-            $message = $outputMessage.". MultimediaObject '".$multimediaObject->getId()."' with track '".$track->getId()."'";
+            $message = $outputMessage.". MultimediaObject '".$multimediaObject->getId()."' with track '".$media->id()."'";
 
             $this->logger->warning($message);
         }
 
-        $message = 'Extracted dynamic pic from track '.$track->getId().' into MultimediaObject "'.$multimediaObject->getId();
+        $message = 'Extracted dynamic pic from track '.$media->id().' into MultimediaObject "'.$multimediaObject->getId();
         $this->logger->info(self::class.'['.__FUNCTION__.'] '.$message.'"');
 
         return true;

@@ -23,6 +23,9 @@ services:
       $profiles:         '%pumukitencode.profilelist%'
       $default_profiles: '%pumukitencode.target_default_profiles%'
 
+  Pumukit\EncoderBundle\Services\ProfileValidator:
+    class: Pumukit\EncoderBundle\Services\ProfileValidator
+
   Pumukit\EncoderBundle\Services\JobService:
     class: Pumukit\EncoderBundle\Services\JobService
     arguments:
@@ -41,6 +44,7 @@ services:
       $binPath: '%kernel.project_dir%/bin/'
       $environment:      '%kernel.environment%'
       $maxExecutionJobSeconds: '%pumukitencode.max_execution_job_seconds%'
+      $tmpPath:          '%pumukit.tmp%'
     tags:
       - { name: "monolog.logger", channel: "encoder" }
 
@@ -49,6 +53,8 @@ services:
     arguments:
       $tmpPath:          '%pumukit.tmp%'
 
+  Pumukit\EncoderBundle\Services\JobValidator:
+    class: Pumukit\EncoderBundle\Services\JobValidator
 
   Pumukit\EncoderBundle\Services\JobDispatcher:
     class: Pumukit\EncoderBundle\Services\JobDispatcher
