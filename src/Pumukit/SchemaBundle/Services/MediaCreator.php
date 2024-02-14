@@ -10,9 +10,9 @@ use Pumukit\SchemaBundle\Document\MediaType\Storage;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Pumukit\SchemaBundle\Document\ValueObject\Url;
-use Pumukit\SchemaBundle\Services\CreateMediaInterface;
+use Pumukit\SchemaBundle\Services\MediaCreatorInterface;
 
-abstract class CreateMedia implements CreateMediaInterface
+abstract class MediaCreator implements MediaCreatorInterface
 {
     private $documentManager;
     private $profileService;
@@ -64,7 +64,9 @@ abstract class CreateMedia implements CreateMediaInterface
         }
 
         return str_replace(
-            realpath($profile['streamserver']['dir_out']),$profile['streamserver']['url_out'], $job->getPathEnd()
+            realpath($profile['streamserver']['dir_out']),
+            $profile['streamserver']['url_out'],
+            $job->getPathEnd()
         );
     }
 

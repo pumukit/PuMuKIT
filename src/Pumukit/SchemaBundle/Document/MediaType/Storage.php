@@ -7,19 +7,29 @@ namespace Pumukit\SchemaBundle\Document\MediaType;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Pumukit\SchemaBundle\Document\ValueObject\Url;
 
+
 final class Storage
 {
     public const LOCAL_STORAGE = 1;
     public const S3_STORAGE = 2;
     public const EXTERNAL_STORAGE = 9;
-    private $url;
-    private $path;
-    private $storageSystem;
+    private ?Url $url;
+    private ?Path $path;
+    private int $storageSystem;
 
     private function __construct(Url $url = null, Path $path = null)
     {
         $this->url = $url;
         $this->path = $path;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'url' => $this->url?->url(),
+            'path' => $this->path?->path(),
+            'storageSystem' => $this->storageSystem,
+        ];
     }
 
     public function url(): Url
@@ -54,15 +64,15 @@ final class Storage
 
     public static function create(?Url $url, ?Path $path): Storage
     {
-        if(!$url && !$path) {
+        if (!$url && !$path) {
             throw new \Exception('Url and path cannot be null both');
         }
 
-        if(!$path instanceof Path) {
+        if (!$path instanceof Path) {
             return self::external($url);
         }
 
-        if(str_contains($url->url(), 's3')) {
+        if (str_contains($url->url(), 's3')) {
             return self::s3($url, $path);
         }
 

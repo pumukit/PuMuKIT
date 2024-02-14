@@ -32,26 +32,32 @@ final class JobOptions
     {
         return $this->profile;
     }
+
     public function priority(): int
     {
         return $this->priority;
     }
+
     public function language(): string
     {
         return $this->language;
     }
+
     public function description(): array
     {
         return $this->description;
     }
+
     public function initVars(): array
     {
         return $this->initVars;
     }
+
     public function duration(): int
     {
         return $this->duration;
     }
+
     public function flags(): int
     {
         return $this->flags;

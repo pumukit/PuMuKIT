@@ -8,7 +8,6 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\DocumentNotFoundException;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use Doctrine\ODM\MongoDB\PersistentCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Pumukit\SchemaBundle\Document\MediaType\Document;
 use Pumukit\SchemaBundle\Document\MediaType\Image;
@@ -827,7 +826,7 @@ class MultimediaObject
         $this->tracks->add($track);
 
         if ($track->metadata() instanceof VideoAudio && $track->metadata()->duration() > $this->getDuration()) {
-            $this->setDuration($track->getDuration());
+            $this->setDuration($track->metadata()->duration());
         }
     }
 
@@ -852,6 +851,7 @@ class MultimediaObject
     {
         $this->documents->removeElement($document);
     }
+
     public function removeImage(Image $image): void
     {
         $this->documents->removeElement($image);
@@ -882,7 +882,7 @@ class MultimediaObject
     }
 
     /**
-     * Deprecated Use method tracks instead getTracks
+     * Deprecated Use method tracks instead getTracks.
      */
     public function getTracks()
     {
@@ -907,7 +907,7 @@ class MultimediaObject
     public function getTrackById($trackId)
     {
         foreach ($this->tracks as $track) {
-            if ($track->getId() === $trackId) {
+            if ($track->id() === $trackId) {
                 return $track;
             }
         }
@@ -920,7 +920,7 @@ class MultimediaObject
         $r = [];
 
         foreach ($this->tracks as $track) {
-            if ($track->containsTag($tag)) {
+            if ($track->tags()->contains($tag)) {
                 $r[] = $track;
             }
         }
@@ -931,7 +931,7 @@ class MultimediaObject
     public function getTrackWithTag($tag)
     {
         foreach ($this->tracks as $track) {
-            if ($track->containsTag($tag)) {
+            if ($track->tags()->contains($tag)) {
                 return $track;
             }
         }
@@ -944,7 +944,7 @@ class MultimediaObject
         $r = [];
 
         foreach ($this->tracks as $track) {
-            if ($track->containsAllTags($tags)) {
+            if ($track->tags()->containsAllTags($tags)) {
                 $r[] = $track;
             }
         }
@@ -955,7 +955,7 @@ class MultimediaObject
     public function getTrackWithAllTags(array $tags)
     {
         foreach ($this->tracks as $track) {
-            if ($track->containsAllTags($tags)) {
+            if ($track->tags()->containsAllTags($tags)) {
                 return $track;
             }
         }
@@ -968,7 +968,7 @@ class MultimediaObject
         $r = [];
 
         foreach ($this->tracks as $track) {
-            if ($track->containsAnyTag($tags)) {
+            if ($track->tags()->containsAnyTag($tags)) {
                 $r[] = $track;
             }
         }
@@ -979,7 +979,7 @@ class MultimediaObject
     public function getTrackWithAnyTag(array $tags)
     {
         foreach ($this->tracks as $track) {
-            if ($track->containsAnyTag($tags)) {
+            if ($track->tags()->containsAnyTag($tags)) {
                 return $track;
             }
         }
@@ -995,8 +995,8 @@ class MultimediaObject
             return 0;
         }
 
-        if ($this->getDuration() < $master->getDuration()) {
-            return $master->getDuration();
+        if ($this->getDuration() < $master->metadata()->duration()) {
+            return $master->metadata()->duration();
         }
 
         return $this->getDuration();
@@ -1440,10 +1440,10 @@ class MultimediaObject
             return;
         }
 
-        $trackMinDuration = $this->tracks->first()->getDuration();
+        $trackMinDuration = $this->tracks->first()->metadata()->duration();
         foreach ($this->tracks as $mmTrack) {
-            if ($mmTrack->getDuration() < $trackMinDuration) {
-                $trackMinDuration = $mmTrack->getDuration();
+            if ($mmTrack->metadata()->duration() < $trackMinDuration) {
+                $trackMinDuration = $mmTrack->metadata()->duration();
             }
         }
 

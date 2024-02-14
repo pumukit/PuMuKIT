@@ -7,10 +7,10 @@ namespace Pumukit\SchemaBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;
 use MongoDB\BSON\ObjectId;
+use Pumukit\CoreBundle\Utils\FileSystemUtils;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -181,8 +181,7 @@ class MultimediaObjectPicService
     {
         $absCurrentDir = $this->getTargetPath($multimediaObject);
 
-        $fs = new Filesystem();
-        $fs->mkdir($absCurrentDir);
+        FileSystemUtils::createFolder($absCurrentDir);
 
         $mongoId = new ObjectId();
 
