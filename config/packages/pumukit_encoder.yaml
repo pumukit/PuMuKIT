@@ -65,10 +65,8 @@ services:
     tags:
       - { name: "monolog.logger", channel: "encoder" }
 
-
   Pumukit\EncoderBundle\Services\JobUpdater:
     class: Pumukit\EncoderBundle\Services\JobUpdater
-
 
   Pumukit\EncoderBundle\Services\JobCreator:
     class: Pumukit\EncoderBundle\Services\JobCreator

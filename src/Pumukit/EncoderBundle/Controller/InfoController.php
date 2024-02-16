@@ -31,11 +31,13 @@ class InfoController extends AbstractController
 {
     private JobRender $jobRender;
     private JobRepository $jobRepository;
+    private JobUpdater $jobUpdater;
 
-    public function __construct(JobRender $jobRender, JobRepository $jobRepository)
+    public function __construct(JobRender $jobRender, JobRepository $jobRepository, JobUpdater $jobUpdater)
     {
         $this->jobRender = $jobRender;
         $this->jobRepository = $jobRepository;
+        $this->jobUpdater = $jobUpdater;
     }
 
     /**
@@ -145,16 +147,28 @@ class InfoController extends AbstractController
     /**
      * @Route("/job", methods={"POST"}, name="pumukit_encoder_update_job")
      */
-    public function updateJobPriorityAction(Request $request, JobUpdater $jobUpdater): JsonResponse
+    public function updateJobPriorityAction(Request $request): JsonResponse
     {
-        $priority = $request->get('priority');
+        $priority = (int) $request->get('priority');
         $jobId = $request->get('jobId');
-        $jobUpdater->updateJobPriority($jobId, $priority);
+        $job = $this->jobRepository->searchJob($jobId);
+        $this->jobUpdater->updateJobPriority($job, $priority);
 
         return new JsonResponse([
             'jobId' => $jobId,
             'priority' => $priority,
         ]);
+    }
+
+    /**
+     * @Route("/error/job", methods={"POST"}, name="pumukit_encoder_error_job")
+     */
+    public function setAsFailedAction(Request $request): JsonResponse
+    {
+        $job = $this->jobRepository->searchJob($request->get('jobId'));
+        $this->jobUpdater->errorJob($job);
+
+        return new JsonResponse(['jobId' => $job->getId()]);
     }
 
     /**
@@ -171,9 +185,9 @@ class InfoController extends AbstractController
     /**
      * @Route("/job/retry/{id}", methods={"POST"}, name="pumukit_encoder_retry_job")
      */
-    public function retryJobAction(Job $job, Request $request, JobUpdater $jobUpdater)
+    public function retryJobAction(Job $job): JsonResponse
     {
-        $flashMessage = $jobUpdater->retryJob($job);
+        $flashMessage = $this->jobUpdater->retryJob($job);
 
         return new JsonResponse([
             'jobId' => $job->getId(),
