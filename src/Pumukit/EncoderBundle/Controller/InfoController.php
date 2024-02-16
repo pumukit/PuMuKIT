@@ -8,6 +8,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\CpuService;
+use Pumukit\EncoderBundle\Services\JobExecutor;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
@@ -26,6 +27,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class InfoController extends AbstractController
 {
+    private JobExecutor $jobExecutor;
+
+    public function __construct(JobExecutor $jobExecutor)
+    {
+        $this->jobExecutor = $jobExecutor;
+    }
+
     /**
      * @Route("/", name="pumukit_encoder_info")
      *
@@ -112,12 +120,12 @@ class InfoController extends AbstractController
      *
      * @Template("@PumukitEncoder/Info/infoJob.html.twig")
      */
-    public function infoJobAction(Job $job, Request $request, JobService $jobService): array
+    public function infoJobAction(Request $request, Job $job): array
     {
         $deletedMultimediaObject = false;
 
         try {
-            $command = $jobService->renderBat($job);
+            $command = $this->jobExecutor->renderBat($job);
         } catch (\Exception $e) {
             $command = $e->getMessage();
             $deletedMultimediaObject = true;

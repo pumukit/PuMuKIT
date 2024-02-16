@@ -6,27 +6,17 @@ namespace Pumukit\EncoderBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
-use Pumukit\CoreBundle\Event\FileEvents;
-use Pumukit\CoreBundle\Event\FileRemovedEvent;
 use Pumukit\CoreBundle\Utils\FileSystemUtils;
 use Pumukit\CoreBundle\Utils\SemaphoreUtils;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Event\EncoderEvents;
-use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\EncoderBundle\Executor\ExecutorException;
+use Pumukit\EncoderBundle\Executor\ExecutorInterface;
 use Pumukit\EncoderBundle\Executor\LocalExecutor;
 use Pumukit\EncoderBundle\Executor\RemoteHTTPExecutor;
 use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
-use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
-use Pumukit\SchemaBundle\Document\MediaType\Storage;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\MediaType\Track;
-use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
-use Pumukit\SchemaBundle\Document\ValueObject\Path;
-use Pumukit\SchemaBundle\Document\ValueObject\Tags;
-use Pumukit\SchemaBundle\Document\ValueObject\Url;
-use Pumukit\SchemaBundle\Services\TrackService;
+use Pumukit\SchemaBundle\Services\MediaCreator;
 use Symfony\Component\Process\Process;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
@@ -46,14 +36,16 @@ final class JobExecutor
     private string $tmpPath;
     private JobValidator $jobValidator;
     private ProfileValidator $profileValidator;
-    private TrackService $trackService;
+    private MediaCreator $mediaCreator;
+    private JobRemover $jobRemover;
 
     public function __construct(
         DocumentManager $documentManager,
         CpuService $cpuService,
         JobValidator $jobValidator,
         ProfileValidator $profileValidator,
-        TrackService $trackService,
+        MediaCreator $mediaCreator,
+        JobRemover $jobRemover,
         MultimediaObjectPropertyJobService $multimediaObjectPropertyJobService,
         InspectionFfprobeService $inspectionService,
         JobDispatcher $jobDispatcher,
@@ -75,7 +67,8 @@ final class JobExecutor
         $this->tmpPath = $tmpPath;
         $this->jobValidator = $jobValidator;
         $this->profileValidator = $profileValidator;
-        $this->trackService = $trackService;
+        $this->mediaCreator = $mediaCreator;
+        $this->jobRemover = $jobRemover;
     }
 
     public function executeNextJob()
@@ -160,15 +153,15 @@ final class JobExecutor
 
             $this->multimediaObjectPropertyJobService->finishJob($multimediaObject, $job);
 
-            $this->deleteTempFiles($job);
+            $this->jobRemover->deleteTempFilesFromJob($job);
         } catch (\Exception $e) {
+            $this->logger->error('[execute] error job output: '.$e->getMessage());
+
             $job->setTimeend(new \DateTime('now'));
             $job->setStatus(Job::STATUS_ERROR);
-
             $job->appendOutput($e->getMessage());
-            $this->logger->error('[execute] error job output: '.$e->getMessage());
+
             $this->jobDispatcher->dispatch(EncoderEvents::JOB_ERROR, $job);
-            //            $this->dispatch(false, $job);
 
             $multimediaObject = $this->jobValidator->ensureMultimediaObjectExists($job);  // Necessary to refresh the document
             $this->multimediaObjectPropertyJobService->errorJob($multimediaObject, $job);
@@ -226,7 +219,6 @@ final class JobExecutor
 
                 $existsJobsToUpdate = true;
                 $this->jobDispatcher->dispatch(EncoderEvents::JOB_ERROR, $job);
-                //                $this->dispatch(false, $job);
             }
         }
 
@@ -238,17 +230,14 @@ final class JobExecutor
     public function renderBat(Job $job): string
     {
         $profile = $this->profileValidator->ensureProfileExists($job->getProfile());
-        $mmobj = $this->jobValidator->ensureMultimediaObjectExists($job);
+        $multimediaObject = $this->jobValidator->ensureMultimediaObjectExists($job);
 
         $vars = $job->getInitVars();
-        if (!is_array($vars)) {
-            $vars = [];
-        }
 
         $vars['tracks'] = [];
         $vars['tracks_audio'] = [];
         $vars['tracks_video'] = [];
-        foreach ($mmobj->getTracks() as $track) {
+        foreach ($multimediaObject->getTracks() as $track) {
             foreach ($track->tags()->toArray() as $tag) {
                 $vars['tracks'][$tag] = $track->storage()->path()->path();
                 if ($track->metadata()->isOnlyAudio()) {
@@ -259,7 +248,7 @@ final class JobExecutor
             }
         }
 
-        $vars['properties'] = $mmobj->getProperties();
+        $vars['properties'] = $multimediaObject->getProperties();
 
         $vars['input'] = $job->getPathIni();
         $vars['output'] = $job->getPathEnd();
@@ -274,16 +263,13 @@ final class JobExecutor
         $commandLine = $twig->render('bat', $vars);
         $this->logger->info('[renderBat] CommandLine: '.$commandLine);
 
-        $cpu = $this->cpuService->getCpuByName($job->getCpu());
-
         return $commandLine;
     }
 
-    public function searchError($profile, $durationIn, $durationEnd)
+    public function searchError($profile, $durationIn, $durationEnd): void
     {
-        // This allows to configure a profile for videos without timestamps to be reindex.
         if (isset($profile['nocheckduration']) && $profile['nocheckduration']) {
-            return true;
+            return;
         }
 
         $duration_conf = 25;
@@ -292,125 +278,17 @@ final class JobExecutor
                 sprintf('Final duration (%s) and initial duration (%s) are different', $durationEnd, $durationIn)
             );
         }
-
-        return true;
     }
 
-    private function deleteTempFiles(Job $job)
+    private function getExecutor(?array $cpu): ExecutorInterface
     {
-        if (false !== strpos($job->getPathIni(), (string) $this->tmpPath)) {
-            unlink($job->getPathIni());
-        } elseif ($this->deleteInboxFiles && false !== strpos($job->getPathIni(), (string) $this->inboxPath)) {
-            unlink($job->getPathIni());
-
-            $event = new FileRemovedEvent($job->getPathIni());
-            $this->eventDispatcher->dispatch($event, FileEvents::FILE_REMOVED);
-        }
-    }
-
-    private function getExecutor($cpu)
-    {
-        $localhost = ['localhost', '127.0.0.1'];
-
-        return (in_array($cpu['host'], $localhost)) ? new LocalExecutor() : new RemoteHTTPExecutor();
+        return (in_array($cpu['host'], ['localhost', '127.0.0.1'])) ? new LocalExecutor() : new RemoteHTTPExecutor();
     }
 
     public function createTrackWithJob(Job $job): MediaInterface
     {
-        $this->logger->info('Create new track with job '.$job->getId().' and profileName '.$job->getProfile());
-
         $multimediaObject = $this->jobValidator->ensureMultimediaObjectExists($job);
 
-        return $this->createTrack(
-            $multimediaObject,
-            $job->getPathEnd(),
-            $job->getProfile(),
-            $job->getLanguageId(),
-            $job->getI18nDescription(),
-            $job->getPathIni()
-        );
-    }
-
-    public function createTrackWithFile(
-        $pathFile,
-        $profileName,
-        MultimediaObject $multimediaObject,
-        $language = null,
-        $description = []
-    ): MediaInterface {
-
-        $this->logger->info('Create new track with file '.$pathFile.' and profileName '.$profileName);
-        $profile = $this->profileValidator->ensureProfileExists($profileName);
-
-        $pathEnd = $this->getPathEnd(
-            $profile,
-            $multimediaObject->getSeries()->getId(),
-            pathinfo($pathFile, PATHINFO_FILENAME),
-            pathinfo($pathFile, PATHINFO_EXTENSION)
-        );
-
-        if (!copy($pathFile, $pathEnd)) {
-            throw new \Exception('Error to copy file');
-        }
-
-        return $this->createTrack($multimediaObject, $pathEnd, $profileName, $language, $description, $pathFile);
-    }
-
-    public function createTrack(
-        MultimediaObject $multimediaObject,
-                         $pathEnd,
-                         $profileName,
-                         $language = null,
-                         $description = [],
-                         $pathFile = null
-    ): MediaInterface {
-        $profile = $this->profileValidator->ensureProfileExists($profileName);
-        $originalName = ($pathFile && $profile['master']) ? pathinfo($pathFile, PATHINFO_BASENAME) : '';
-        $i18nDescription = !empty($description) ? i18nText::create($description) : i18nText::create([]);
-
-        $tags = [];
-        $tags[] = 'profile:'.$profileName;
-
-        if ($profile['master']) {
-            $tags[] = 'master';
-        }
-        if ($profile['display']) {
-            $tags[] = 'display';
-        }
-        foreach (array_filter(preg_split('/[,\s]+/', $profile['tags'])) as $tag) {
-            $tags[] = trim($tag);
-        }
-
-        $trackTags = Tags::create($tags);
-        $isDownloadable = $profile['downloadable'] ?? false;
-
-        $url = isset($profile['streamserver']['url_out']) ? str_replace(
-            realpath($profile['streamserver']['dir_out']),
-            $profile['streamserver']['url_out'],
-            $pathEnd
-        ) : '';
-
-        $url = Url::create($url);
-        $path = Path::create($pathEnd);
-        $storage = Storage::create($url, $path);
-
-        $mediaMetadata = VideoAudio::create($this->inspectionService->getFileMetadataAsString($path));
-
-        $track = Track::create(
-            $originalName,
-            $i18nDescription,
-            $language,
-            $trackTags,
-            !$trackTags->contains('display'),
-            $isDownloadable,
-            0,
-            $storage,
-            $mediaMetadata
-        );
-
-        $multimediaObject->setDuration($mediaMetadata->duration());
-        $this->trackService->addTrackToMultimediaObject($multimediaObject, $track);
-
-        return $track;
+        return $this->mediaCreator->createTrack($multimediaObject, $job);
     }
 }

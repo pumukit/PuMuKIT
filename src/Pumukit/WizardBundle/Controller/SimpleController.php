@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Pumukit\WizardBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\EncoderBundle\Services\JobService;
+use Psr\Log\LoggerInterface;
+use Pumukit\EncoderBundle\Services\DTO\JobOptions;
+use Pumukit\EncoderBundle\Services\JobCreator;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
 use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
@@ -37,7 +39,7 @@ class SimpleController extends AbstractController
     private $translator;
     private $inspectionFfprobeService;
     private $pumukitSchemaSortedMultimediaObjectService;
-    private $jobService;
+    private $jobCreator;
     private $profileService;
     private $factoryService;
     private $formEventDispatcherService;
@@ -47,6 +49,7 @@ class SimpleController extends AbstractController
     private $pumukitWizardShowSimpleMmTitle;
     private $pumukitWizardShowSimpleSeriesTitle;
     private $pumukitCustomLanguages;
+    private LoggerInterface $logger;
 
     public function __construct(
         DocumentManager $objectManager,
@@ -54,11 +57,12 @@ class SimpleController extends AbstractController
         TranslatorInterface $translator,
         InspectionFfprobeService $inspectionFfprobeService,
         SortedMultimediaObjectsService $pumukitSchemaSortedMultimediaObjectService,
-        JobService $jobService,
+        JobCreator $jobCreator,
         ProfileService $profileService,
         FactoryService $factoryService,
         FormEventDispatcherService $formEventDispatcherService,
         SeriesService $seriesService,
+        LoggerInterface $logger,
         array $locales,
         bool $pumukitWizardShowSimpleMmTitle,
         bool $pumukitWizardShowSimpleSeriesTitle,
@@ -70,7 +74,7 @@ class SimpleController extends AbstractController
         $this->translator = $translator;
         $this->inspectionFfprobeService = $inspectionFfprobeService;
         $this->pumukitSchemaSortedMultimediaObjectService = $pumukitSchemaSortedMultimediaObjectService;
-        $this->jobService = $jobService;
+        $this->jobCreator = $jobCreator;
         $this->profileService = $profileService;
         $this->factoryService = $factoryService;
         $this->formEventDispatcherService = $formEventDispatcherService;
@@ -80,6 +84,7 @@ class SimpleController extends AbstractController
         $this->pumukitWizardShowSimpleMmTitle = $pumukitWizardShowSimpleMmTitle;
         $this->pumukitWizardShowSimpleSeriesTitle = $pumukitWizardShowSimpleSeriesTitle;
         $this->pumukitCustomLanguages = $pumukitCustomLanguages;
+        $this->logger = $logger;
     }
 
     /**
@@ -139,17 +144,8 @@ class SimpleController extends AbstractController
             $multimediaObject = $this->createMultimediaObject($title, $series);
             $multimediaObject->setDuration($duration);
 
-            $this->jobService->createTrackFromLocalHardDrive(
-                $multimediaObject,
-                $file,
-                $profile,
-                $priority,
-                $language,
-                $description,
-                [],
-                $duration,
-                JobService::ADD_JOB_NOT_CHECKS
-            );
+            $jobOptions = new JobOptions($profile, $priority, $language, $description);
+            $multimediaObject = $this->jobCreator->fromUploadedFile($multimediaObject, $file, $jobOptions);
         } catch (\Exception $e) {
             throw $e;
         }
@@ -291,17 +287,8 @@ class SimpleController extends AbstractController
 
             $multimediaObject = $this->setExternalProperties($multimediaObject, $externalData);
 
-            $this->jobService->createTrackFromLocalHardDrive(
-                $multimediaObject,
-                $file,
-                $profile,
-                $priority,
-                $language,
-                $description,
-                [],
-                $duration,
-                JobService::ADD_JOB_NOT_CHECKS
-            );
+            $jobOptions = new JobOptions($profile, $priority, $language, $description);
+            $multimediaObject = $this->jobCreator->fromUploadedFile($multimediaObject, $file, $jobOptions);
 
             $this->formEventDispatcherService->dispatchSubmit(
                 $this->getUser(),

@@ -75,8 +75,13 @@ class JobGeneratorListener
         foreach ($tag->getChildren() as $pubChannel) {
             if ($multimediaObject->containsTag($pubChannel)) {
                 if (!$master->tags()->containsTag('ENCODED_'.$pubChannel->getCod()) && !str_contains($profile['target'], (string)$pubChannel->getCod())) {
+                    $this->logger->warning(serialize($master->tags()->toArray()));
+                    $tags = $master->tags()->toArray();
+                    $tags[] = 'ENCODED_'.$pubChannel->getCod();
                     $master->tags()->add('ENCODED_'.$pubChannel->getCod());
-                    $this->generateJobs($multimediaObject, $pubChannel->getCod());
+                    $this->logger->warning(serialize($master->tags()->toArray()));die;
+                    // TODO UPDATE MASTER TRACK TAGS
+                    //$this->generateJobs($multimediaObject, $pubChannel->getCod());
                 }
             }
         }
@@ -162,7 +167,6 @@ class JobGeneratorListener
                 $this->jobCreator->fromPath($multimediaObject, $path, $jobOptions);
             }
         }
-
     }
 
     /**

@@ -26,6 +26,9 @@ services:
   Pumukit\EncoderBundle\Services\ProfileValidator:
     class: Pumukit\EncoderBundle\Services\ProfileValidator
 
+  Pumukit\EncoderBundle\Services\Repository\JobRepository:
+    class: Pumukit\EncoderBundle\Services\Repository\JobRepository
+
   Pumukit\EncoderBundle\Services\JobService:
     class: Pumukit\EncoderBundle\Services\JobService
     arguments:
@@ -47,6 +50,20 @@ services:
       $tmpPath:          '%pumukit.tmp%'
     tags:
       - { name: "monolog.logger", channel: "encoder" }
+
+  Pumukit\EncoderBundle\Services\JobRemover:
+    class: Pumukit\EncoderBundle\Services\JobRemover
+    arguments:
+      $tmpPath: '%pumukit.tmp%'
+      $inboxPath: '%pumukit.inbox%'
+      $deleteInboxFiles: '%pumukitencode.delete_inbox_files%'
+    tags:
+      - { name: "monolog.logger", channel: "encoder" }
+
+
+  Pumukit\EncoderBundle\Services\JobUpdater:
+    class: Pumukit\EncoderBundle\Services\JobUpdater
+
 
   Pumukit\EncoderBundle\Services\JobCreator:
     class: Pumukit\EncoderBundle\Services\JobCreator

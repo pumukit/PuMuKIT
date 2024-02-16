@@ -16,6 +16,11 @@ final class Path
         $this->path = $path;
     }
 
+    public function __toString(): string
+    {
+        return $this->path;
+    }
+
     public static function create(string $path): Path
     {
         return new self($path);

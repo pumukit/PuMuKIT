@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\EncoderBundle\Executor;
 
-class RemoteHTTPExecutor
+class RemoteHTTPExecutor implements ExecutorInterface
 {
     public function execute($command, array $cpu)
     {
