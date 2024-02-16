@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Document\MediaType\Metadata;
 
-final class Generic implements MediaMetadata {
+final class Generic implements MediaMetadata
+{
     public function toArray(): array
     {
         // TODO: Implement toArray() method.

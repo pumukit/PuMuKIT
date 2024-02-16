@@ -27,8 +27,7 @@ final class JobRemover
         string $tmpPath,
         string $inboxPath,
         bool $deleteInboxFiles
-    )
-    {
+    ) {
         $this->documentManager = $documentManager;
         $this->logger = $logger;
         $this->eventDispatcher = $eventDispatcher;

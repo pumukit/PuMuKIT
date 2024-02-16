@@ -41,6 +41,9 @@ services:
     tags:
       - { name: "monolog.logger", channel: "encoder" }
 
+  Pumukit\EncoderBundle\Services\JobRender:
+    class: Pumukit\EncoderBundle\Services\JobRender
+
   Pumukit\EncoderBundle\Services\JobExecutor:
     class: Pumukit\EncoderBundle\Services\JobExecutor
     arguments:

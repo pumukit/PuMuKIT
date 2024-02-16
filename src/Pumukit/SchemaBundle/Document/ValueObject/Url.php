@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Document\ValueObject;
 
-use Psr\Log\LoggerInterface;
 use Pumukit\SchemaBundle\Document\Exception\UrlException;
 
 final class Url
@@ -38,7 +37,7 @@ final class Url
             return;
         }
 
-        if(!filter_var($url, FILTER_VALIDATE_URL)) {
+        if (!filter_var($url, FILTER_VALIDATE_URL)) {
             throw new UrlException('Invalid URL');
         }
     }
