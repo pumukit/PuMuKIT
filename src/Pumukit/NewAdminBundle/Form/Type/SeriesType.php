@@ -216,7 +216,6 @@ class SeriesType extends AbstractType
                     'choices' => array_flip(
                         [
                             'date' => $this->translator->trans('date'),
-                            'date_all' => $this->translator->trans('date_all'),
                             'date_subserial' => $this->translator->trans('date_subserial'),
                             'place_subserial' => $this->translator->trans('place_subserial'),
                             'subserial' => $this->translator->trans('subserial'),
