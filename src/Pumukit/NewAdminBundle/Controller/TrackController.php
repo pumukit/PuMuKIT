@@ -9,9 +9,12 @@ use Psr\Log\LoggerInterface;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\DTO\JobOptions;
 use Pumukit\EncoderBundle\Services\JobCreator;
+use Pumukit\EncoderBundle\Services\JobRender;
 use Pumukit\EncoderBundle\Services\JobService;
+use Pumukit\EncoderBundle\Services\JobUpdater;
 use Pumukit\EncoderBundle\Services\PicExtractorService;
 use Pumukit\EncoderBundle\Services\ProfileService;
+use Pumukit\EncoderBundle\Services\Repository\JobRepository;
 use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
 use Pumukit\NewAdminBundle\Form\Type\TrackType;
 use Pumukit\NewAdminBundle\Form\Type\TrackUpdateType;
@@ -49,6 +52,9 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     private $kernelEnvironment;
     private $kernelBundles;
     private JobCreator $jobCreator;
+    private JobRender $jobRender;
+    private JobRepository $jobRepository;
+    private JobUpdater $jobUpdater;
 
     public function __construct(
         LoggerInterface $logger,
@@ -56,6 +62,9 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         TranslatorInterface $translator,
         JobService $jobService,
         JobCreator $jobCreator,
+        JobUpdater $jobUpdater,
+        JobRender $jobRender,
+        JobRepository $jobRepository,
         TrackService $trackService,
         ProfileService $profileService,
         InspectionFfprobeService $inspectionService,
@@ -74,6 +83,9 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         $this->kernelEnvironment = $kernelEnvironment;
         $this->kernelBundles = $kernelBundles;
         $this->jobCreator = $jobCreator;
+        $this->jobRender = $jobRender;
+        $this->jobRepository = $jobRepository;
+        $this->jobUpdater = $jobUpdater;
     }
 
     /**
@@ -274,7 +286,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
      */
     public function listAction(Request $request, MultimediaObject $multimediaObject)
     {
-        $jobs = $this->jobService->getNotFinishedJobsByMultimediaObjectId($multimediaObject->getId());
+        $jobs = $this->jobRepository->getNotFinishedJobsByMultimediaObjectId($multimediaObject->getId());
 
         $notMasterProfiles = $this->profileService->getProfiles(null, true, false);
         $opencastExists = array_key_exists('PumukitOpencastBundle', $this->kernelBundles);
@@ -298,15 +310,13 @@ class TrackController extends AbstractController implements NewAdminControllerIn
      */
     public function retryJobAction(MultimediaObject $multimediaObject, Job $job)
     {
-        $flashMessage = $this->jobService->retryJob($job);
+        $flashMessage = $this->jobUpdater->retryJob($job);
         $this->addFlash('success', $flashMessage);
 
         return $this->redirectToRoute('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]);
     }
 
     /**
-     * See: Pumukit\EncoderBundle\Controller\InfoController::infoJobAction.
-     *
      * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      * @ParamConverter("job", options={"id" = "jobId"})
      *
@@ -314,7 +324,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
      */
     public function infoJobAction(MultimediaObject $multimediaObject, Job $job)
     {
-        $command = $this->jobService->renderBat($job);
+        $command = $this->jobRender->renderBat($job);
 
         return ['multimediaObject' => $multimediaObject, 'job' => $job, 'command' => $command];
     }
@@ -340,7 +350,8 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     {
         $priority = $request->get('priority');
         $jobId = $request->get('jobId');
-        $this->jobService->updateJobPriority($jobId, $priority);
+        $job = $this->documentManager->getRepository(Job::class)->findOneBy(['_id' => $jobId]);
+        $this->jobUpdater->updateJobPriority($job, $priority);
 
         return new JsonResponse(['jobId' => $jobId, 'priority' => $priority]);
     }
@@ -406,7 +417,9 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         $profile = $request->get('profile');
         $priority = 2;
 
-        $this->jobService->addJob($track->getPath(), $profile, $priority, $multimediaObject, $track->getLanguage(), $track->getI18nDescription());
+        $jobOptions = new JobOptions($profile, $priority, $track->language(), $track->description(), []);
+        $path = Path::create($track->getPath());
+        $this->jobCreator->fromPath($multimediaObject, $path, $jobOptions);
 
         return $this->redirectToRoute('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]);
     }

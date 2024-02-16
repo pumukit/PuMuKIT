@@ -7,7 +7,6 @@ namespace Pumukit\EncoderBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
 use Pumukit\EncoderBundle\Document\Job;
-use Pumukit\EncoderBundle\Event\EncoderEvents;
 use Pumukit\EncoderBundle\Exception\FileNotValid;
 use Pumukit\EncoderBundle\Services\DTO\JobOptions;
 use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
@@ -52,7 +51,7 @@ final class JobValidator
         if ($jobOptions->unique() && !empty($jobOptions->flags())) {
             $job = $this->documentManager->getRepository(Job::class)->findOneBy([
                 'profile' => $jobOptions->profile(),
-                'mm_id' => $multimediaObject->getId()
+                'mm_id' => $multimediaObject->getId(),
             ]);
 
             if ($job) {
@@ -115,4 +114,17 @@ final class JobValidator
         return $duration;
     }
 
+    public function searchError(array $profile, int $durationIn, int $durationEnd): void
+    {
+        if (isset($profile['nocheckduration']) && $profile['nocheckduration']) {
+            return;
+        }
+
+        $duration_conf = 25;
+        if (($durationIn < $durationEnd - $duration_conf) || ($durationIn > $durationEnd + $duration_conf)) {
+            throw new \Exception(
+                sprintf('Final duration (%s) and initial duration (%s) are different', $durationEnd, $durationIn)
+            );
+        }
+    }
 }

@@ -6,10 +6,12 @@ namespace Pumukit\CoreBundle\Command;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
-use Pumukit\EncoderBundle\Services\JobService;
+use Pumukit\EncoderBundle\Services\DTO\JobOptions;
+use Pumukit\EncoderBundle\Services\JobCreator;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,16 +20,21 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ImportFileToMMOCommand extends Command
 {
-    private $documentManager;
-    private $jobService;
-    private $profileService;
-    private $inspectionService;
-    private $defaultLanguage;
+    private DocumentManager $documentManager;
+    private JobCreator $jobCreator;
+    private ProfileService $profileService;
+    private InspectionFfprobeService $inspectionService;
+    private string $defaultLanguage;
 
-    public function __construct(DocumentManager $documentManager, JobService $jobService, ProfileService $profileService, InspectionFfprobeService $inspectionService, string $locale)
-    {
+    public function __construct(
+        DocumentManager $documentManager,
+        JobCreator $jobCreator,
+        ProfileService $profileService,
+        InspectionFfprobeService $inspectionService,
+        string $locale
+    ) {
         $this->documentManager = $documentManager;
-        $this->jobService = $jobService;
+        $this->jobCreator = $jobCreator;
         $this->profileService = $profileService;
         $this->inspectionService = $inspectionService;
         $this->defaultLanguage = $locale;
@@ -49,10 +56,10 @@ class ImportFileToMMOCommand extends Command
 This command import file like a track on a multimedia object
 
 Example complete:
-<info>php app/console pumukit:import:multimedia:file %idmultimediaobject% %pathfile% --profile=%profile% --language=%language% %description%</info>
+<info>php bin/console pumukit:import:multimedia:file %idmultimediaobject% %pathfile% --profile=%profile% --language=%language% %description%</info>
 
 Basic example:
-<info>php app/console pumukit:import:multimedia:file 58a31ce08381165d008b456a {pathToPuMuKITStorageTempDir}/test.mp4</info>
+<info>php bin/console pumukit:import:multimedia:file 58a31ce08381165d008b456a {pathToPuMuKITStorageTempDir}/test.mp4</info>
 
 EOT
             )
@@ -94,8 +101,11 @@ EOT
         $language = ($input->hasOption('language')) ? $input->getOption('language') : null;
         $description = ($input->hasArgument('description')) ? [$this->defaultLanguage => $input->getArgument('description')] : '';
 
-        $track = $this->jobService->createTrack($multimediaObject, $filePath, $profile, $language, $description);
-        $output->writeln('<info> Track '.$track->getId().' was imported succesfully on '.$multimediaObject->getId().'</info>');
+        $jobOptions = new JobOptions($profile, 2, $language, $description, []);
+        $path = Path::create($filePath);
+        $this->jobCreator->fromPath($multimediaObject, $path, $jobOptions);
+
+        $output->writeln('<info> Added media '.$filePath.' to Multimedia Object '.$multimediaObject->getId().'</info>');
 
         return 0;
     }
