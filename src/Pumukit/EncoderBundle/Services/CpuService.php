@@ -56,12 +56,7 @@ class CpuService
         return $this->getOptimalCpuName($freeCpus);
     }
 
-    /**
-     * Get Cpu by name.
-     *
-     * @param string $name the cpu name (case sensitive)
-     */
-    public function getCpuByName($name)
+    public function getCpuByName(string $name): ?array
     {
         if (isset($this->cpus[$name])) {
             return $this->cpus[$name];

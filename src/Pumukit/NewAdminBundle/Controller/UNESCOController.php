@@ -8,8 +8,8 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\UTCDateTime;
 use Pumukit\CoreBundle\Services\PaginationService;
-use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\ProfileService;
+use Pumukit\EncoderBundle\Services\Repository\JobRepository;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectPubType;
 use Pumukit\NewAdminBundle\Services\MultimediaObjectSearchService;
@@ -93,9 +93,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     /** @var FactoryService */
     private $factoryService;
 
-    /** @var JobService */
-    private $jobService;
-
     /** @var ProfileService */
     private $profileService;
 
@@ -128,13 +125,14 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     private $showLatestWithPudeNew;
     private $pumukitNewAdminBaseCatalogueTag;
     private $kernelBundles;
+    private JobRepository $jobRepository;
 
     public function __construct(
         PaginationService $paginationService,
         TagCatalogueService $tagCatalogueService,
         PersonService $personService,
         FactoryService $factoryService,
-        JobService $jobService,
+        JobRepository $jobRepository,
         ProfileService $profileService,
         TagService $tagService,
         DocumentManager $documentManager,
@@ -153,7 +151,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $this->tagCatalogueService = $tagCatalogueService;
         $this->personService = $personService;
         $this->factoryService = $factoryService;
-        $this->jobService = $jobService;
         $this->profileService = $profileService;
         $this->tagService = $tagService;
         $this->documentManager = $documentManager;
@@ -167,6 +164,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $this->pumukitNewAdminBaseCatalogueTag = $pumukitNewAdminBaseCatalogueTag;
         $this->kernelBundles = $kernelBundles;
         $this->multimediaObjectSearchService = $multimediaObjectSearchService;
+        $this->jobRepository = $jobRepository;
     }
 
     /**
@@ -405,7 +403,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $pubChannelsTags = $this->factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $this->factoryService->getTagsByCod('PUBDECISIONS', true);
 
-        $jobs = $this->jobService->getNotFinishedJobsByMultimediaObjectId($multimediaObject->getId());
+        $jobs = $this->jobRepository->getNotFinishedJobsByMultimediaObjectId($multimediaObject->getId());
 
         $notMasterProfiles = $this->profileService->getProfiles(null, true, false);
 

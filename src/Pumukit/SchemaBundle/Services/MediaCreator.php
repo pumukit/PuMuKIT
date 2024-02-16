@@ -2,76 +2,126 @@
 
 declare(strict_types=1);
 
-namespace Pumukit\EncoderBundle\Services;
+namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Psr\Log\LoggerInterface;
 use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\EncoderBundle\Services\ProfileService;
+use Pumukit\EncoderBundle\Services\ProfileValidator;
+use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
+use Pumukit\SchemaBundle\Document\MediaType\Document;
+use Pumukit\SchemaBundle\Document\MediaType\Image;
+use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
+use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
 use Pumukit\SchemaBundle\Document\MediaType\Storage;
+use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
+use Pumukit\SchemaBundle\Document\ValueObject\Tags;
 use Pumukit\SchemaBundle\Document\ValueObject\Url;
 use Pumukit\SchemaBundle\Services\MediaCreatorInterface;
+use Pumukit\SchemaBundle\Services\TrackEventDispatcherService;
 
-abstract class MediaCreator implements MediaCreatorInterface
+final class MediaCreator implements MediaCreatorInterface
 {
-    private $documentManager;
-    private $profileService;
+    private ProfileService $profileService;
+    private LoggerInterface $logger;
+    private ProfileValidator $profileValidator;
+    private InspectionFfprobeService $inspectionService;
+    private DocumentManager $documentManager;
+    private TrackEventDispatcherService $dispatcher;
 
-    public function __construct(DocumentManager $documentManager, ProfileService $profileService)
-    {
-        $this->documentManager = $documentManager;
+    public function __construct(
+        DocumentManager $documentManager,
+        LoggerInterface $logger,
+        ProfileService $profileService,
+        TrackEventDispatcherService $dispatcher,
+        ProfileValidator $profileValidator,
+        InspectionFfprobeService $inspectionService
+    ) {
         $this->profileService = $profileService;
+        $this->logger = $logger;
+        $this->profileValidator = $profileValidator;
+        $this->inspectionService = $inspectionService;
+        $this->documentManager = $documentManager;
+        $this->dispatcher = $dispatcher;
     }
 
-    abstract public static function create(MultimediaObject $multimediaObject, Job $job);
-
-    protected function createLocalStorage(Job $job): Storage
+    public function createTrack(
+        MultimediaObject $multimediaObject,
+        Job $job
+    ): MediaInterface
     {
-        return Storage::local($this->generateStorageUrl($job), $this->generateStoragePath($job));
-    }
+        $profile = $this->profileValidator->ensureProfileExists($job->getProfile());
+        $originalName = ($job->getPathIni() && $profile['master']) ? pathinfo($job->getPathIni(), PATHINFO_BASENAME) : '';
+        $i18nDescription = !empty($job->getI18nDescription()) ? i18nText::create($job->getI18nDescription()) : i18nText::create([]);
 
-    protected function createS3Storage(Job $job): Storage
-    {
-        return Storage::s3($this->generateStorageUrl($job), $this->generateStoragePath($job));
-    }
+        $tags[] = $this->profileService->generateProfileTag($job->getProfile());
 
-    protected function createExternalStorage(Job $job): Storage
-    {
-        return Storage::external($this->generateStorageUrl($job));
-    }
-
-    protected function generateStorageUrl(Job $job): Url
-    {
-        return Url::create($this->generateUrlFromProfile($job));
-    }
-
-    protected function generateStoragePath(Job $job): Path
-    {
-        return Path::create($job->getPathEnd());
-    }
-
-    protected function profileFromJob(Job $job): ?array
-    {
-        return $this->profileService->getProfile($job->getProfile());
-    }
-
-    protected function generateUrlFromProfile(Job $job): ?string
-    {
-        $profile = $this->profileFromJob($job);
-
-        if (!isset($profile['streamserver']['url_out'])) {
-            return null;
+        if ($profile['master']) {
+            $tags[] = 'master';
+        }
+        if ($profile['display']) {
+            $tags[] = 'display';
+        }
+        foreach (array_filter(preg_split('/[,\s]+/', $profile['tags'])) as $tag) {
+            $tags[] = trim($tag);
         }
 
-        return str_replace(
+        $trackTags = Tags::create($tags);
+        $isDownloadable = $profile['downloadable'] ?? false;
+
+        $url = isset($profile['streamserver']['url_out']) ? str_replace(
             realpath($profile['streamserver']['dir_out']),
             $profile['streamserver']['url_out'],
             $job->getPathEnd()
+        ) : '';
+
+        $url = Url::create($url);
+        $path = Path::create($job->getPathEnd());
+        $storage = Storage::create($url, $path);
+
+        $mediaMetadata = VideoAudio::create($this->inspectionService->getFileMetadataAsString($path));
+
+        $track = Track::create(
+            $originalName,
+            $i18nDescription,
+            $job->getLanguageId(),
+            $trackTags,
+            !$trackTags->contains('display'),
+            $isDownloadable,
+            0,
+            $storage,
+            $mediaMetadata
         );
+
+        $multimediaObject->setDuration($track->metadata()->duration());
+        $this->addMediaToMultimediaObject($multimediaObject, $track);
+
+        return $track;
     }
 
-    protected function originalName(string $path): string
+    private function addMediaToMultimediaObject(MultimediaObject $multimediaObject, MediaInterface $media, bool $executeFlush = true): void
     {
-        return pathinfo($path, PATHINFO_BASENAME);
+        if ($media instanceof Track) {
+            $multimediaObject->addTrack($media);
+        }
+
+        if ($media instanceof Image) {
+            $multimediaObject->addImage($media);
+        }
+
+        if ($media instanceof Document) {
+            $multimediaObject->addDocument($media);
+        }
+
+        if ($executeFlush) {
+            $this->documentManager->flush();
+        }
+
+        $this->dispatcher->dispatchCreate($multimediaObject, $media);
     }
+
 }

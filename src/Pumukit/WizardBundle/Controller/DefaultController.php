@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace Pumukit\WizardBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\EncoderBundle\Services\JobService;
+use Pumukit\EncoderBundle\Services\DTO\JobOptions;
+use Pumukit\EncoderBundle\Services\JobCreator;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
 use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\SortedMultimediaObjectsService;
@@ -55,12 +57,12 @@ class DefaultController extends AbstractController
     private $tagService;
     private $wizardService;
     private $pumukitSchemaSortedMultimediaObjectService;
-    private $jobService;
     private $inspectionFfprobeService;
     private $formEventDispatcherService;
     private $authorizationChecker;
     private $locales;
     private $pumukitCustomLanguages;
+    private JobCreator $jobCreator;
 
     public function __construct(
         DocumentManager $objectManager,
@@ -71,10 +73,10 @@ class DefaultController extends AbstractController
         TagService $tagService,
         WizardService $wizardService,
         SortedMultimediaObjectsService $pumukitSchemaSortedMultimediaObjectService,
-        JobService $jobService,
         InspectionFfprobeService $inspectionFfprobeService,
         FormEventDispatcherService $formEventDispatcherService,
         AuthorizationCheckerInterface $authorizationChecker,
+        JobCreator $jobCreator,
         bool $pumukitWizardShowTags,
         bool $pumukitWizardShowObjectLicense,
         string $pumukitWizardMandatoryTitle,
@@ -102,12 +104,12 @@ class DefaultController extends AbstractController
         $this->tagService = $tagService;
         $this->wizardService = $wizardService;
         $this->pumukitSchemaSortedMultimediaObjectService = $pumukitSchemaSortedMultimediaObjectService;
-        $this->jobService = $jobService;
         $this->authorizationChecker = $authorizationChecker;
         $this->inspectionFfprobeService = $inspectionFfprobeService;
         $this->formEventDispatcherService = $formEventDispatcherService;
         $this->locales = $locales;
         $this->pumukitCustomLanguages = $pumukitCustomLanguages;
+        $this->jobCreator = $jobCreator;
     }
 
     /**
@@ -415,7 +417,7 @@ class DefaultController extends AbstractController
             throw new \Exception('Not exists master profile');
         }
 
-        $priority = $this->getKeyData('priority', $trackData, 2);
+        $priority = (int) $this->getKeyData('priority', $trackData, 2);
         $language = $this->getKeyData('language', $trackData);
         $description = $this->getKeyData('description', $trackData);
 
@@ -483,30 +485,13 @@ class DefaultController extends AbstractController
                 if ('file' === $filetype) {
                     $resourceFile = $request->files->get('resource');
                     $resourceFile = reset($resourceFile);
-                    $multimediaObject = $this->jobService->createTrackFromLocalHardDrive(
-                        $multimediaObject,
-                        $resourceFile,
-                        $profile,
-                        $priority,
-                        $language,
-                        $description,
-                        [],
-                        $duration,
-                        JobService::ADD_JOB_NOT_CHECKS
-                    );
+                    $jobOptions = new JobOptions($profile, $priority, $language, $description);
+                    $multimediaObject = $this->jobCreator->fromUploadedFile($multimediaObject, $resourceFile, $jobOptions);
                 } elseif ('inbox' === $filetype) {
                     $this->denyAccessUnlessGranted(Permission::ACCESS_INBOX);
-                    $multimediaObject = $this->jobService->createTrackFromInboxOnServer(
-                        $multimediaObject,
-                        $request->get('file'),
-                        $profile,
-                        $priority,
-                        $language,
-                        $description,
-                        [],
-                        $duration,
-                        JobService::ADD_JOB_NOT_CHECKS
-                    );
+                    $jobOptions = new JobOptions($profile, $priority, $language, $description);
+                    $path = Path::create($request->get('file'));
+                    $multimediaObject = $this->jobCreator->fromPath($multimediaObject, $path, $jobOptions);
                 }
 
                 if ($multimediaObject && $pubchannel) {

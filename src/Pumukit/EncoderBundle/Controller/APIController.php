@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Pumukit\EncoderBundle\Controller;
 
 use Pumukit\EncoderBundle\Services\CpuService;
-use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\ProfileService;
+use Pumukit\EncoderBundle\Services\Repository\JobRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,12 +16,23 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class APIController extends AbstractController
 {
+    private ProfileService $profileService;
+    private CpuService $cpuService;
+    private JobRepository $jobRepository;
+
+    public function __construct(ProfileService $profileService, CpuService $cpuService, JobRepository $jobRepository)
+    {
+        $this->profileService = $profileService;
+        $this->cpuService = $cpuService;
+        $this->jobRepository = $jobRepository;
+    }
+
     /**
      * @Route("/profiles.{_format}", defaults={"_format"="json"}, requirements={"_format"="json"})
      */
-    public function profilesAction(ProfileService $profileService): JsonResponse
+    public function profilesAction(): JsonResponse
     {
-        $profiles = $profileService->getProfiles();
+        $profiles = $this->profileService->getProfiles();
 
         return new JsonResponse($profiles);
     }
@@ -29,9 +40,9 @@ class APIController extends AbstractController
     /**
      * @Route("/cpus.{_format}", defaults={"_format"="json"}, requirements={"_format"="json"})
      */
-    public function cpusAction(CpuService $cpuService): JsonResponse
+    public function cpusAction(): JsonResponse
     {
-        $cpus = $cpuService->getCpus();
+        $cpus = $this->cpuService->getCpus();
 
         return new JsonResponse($cpus);
     }
@@ -39,9 +50,9 @@ class APIController extends AbstractController
     /**
      * @Route("/jobs.{_format}", defaults={"_format"="json"}, requirements={"_format"="json"})
      */
-    public function jobsAction(JobService $jobService): JsonResponse
+    public function jobsAction(): JsonResponse
     {
-        $stats = $jobService->getAllJobsStatus();
+        $stats = $this->jobRepository->getAllJobsStatus();
 
         return new JsonResponse($stats);
     }
