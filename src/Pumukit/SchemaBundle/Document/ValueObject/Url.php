@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Document\ValueObject;
 
+use Psr\Log\LoggerInterface;
 use Pumukit\SchemaBundle\Document\Exception\UrlException;
 
 final class Url
@@ -14,6 +15,11 @@ final class Url
     {
         $this->validate($url);
         $this->url = $url;
+    }
+
+    public function __toString(): string
+    {
+        return $this->url ?? '';
     }
 
     public static function create(string $url): Url
@@ -28,7 +34,11 @@ final class Url
 
     private function validate($url): void
     {
-        if (!empty($url) && !filter_var($url, FILTER_VALIDATE_URL)) {
+        if (empty($url)) {
+            return;
+        }
+
+        if(!filter_var($url, FILTER_VALIDATE_URL)) {
             throw new UrlException('Invalid URL');
         }
     }

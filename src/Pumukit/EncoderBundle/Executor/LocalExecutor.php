@@ -7,7 +7,7 @@ namespace Pumukit\EncoderBundle\Executor;
 use Pumukit\CoreBundle\Utils\FileSystemUtils;
 use Symfony\Component\Process\Process;
 
-class LocalExecutor
+class LocalExecutor implements ExecutorInterface
 {
     public function execute($command, array $cpu = null): string
     {

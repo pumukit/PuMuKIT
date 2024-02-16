@@ -116,12 +116,10 @@ class TrackController extends AbstractController implements NewAdminControllerIn
                 $file = reset($files);
                 $jobOptions = new JobOptions($profile, $priority, $language, $description);
                 $multimediaObject = $this->jobCreator->fromUploadedFile($multimediaObject, $file, $jobOptions);
-            // $multimediaObject = $this->jobService->createTrackFromLocalHardDrive($multimediaObject, reset($file), $profile, $priority, $language, $description);
             } elseif ($request->get('file') && ('inbox' === $request->get('file_type'))) {
                 $jobOptions = new JobOptions($profile, $priority, $language, $description);
                 $path = Path::create($request->get('file'));
                 $this->jobCreator->fromPath($multimediaObject, $path, $jobOptions);
-                // $multimediaObject = $this->jobService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description);
             }
         } catch (\Exception $e) {
             $this->logger->warning($e->getMessage());

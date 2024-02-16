@@ -166,4 +166,9 @@ class ProfileService
 
         return $this->default_profiles;
     }
+
+    public function generateProfileTag(string $profileName): string
+    {
+        return 'profile:'.$profileName;
+    }
 }
