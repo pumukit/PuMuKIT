@@ -28,8 +28,7 @@ class JobGeneratorListener
         JobCreator $jobCreator,
         ProfileService $profileService,
         LoggerInterface $logger
-    )
-    {
+    ) {
         $this->dm = $documentManager;
         $this->jobCreator = $jobCreator;
         $this->logger = $logger;
@@ -74,14 +73,16 @@ class JobGeneratorListener
         // NOTE: See TTK-7482
         foreach ($tag->getChildren() as $pubChannel) {
             if ($multimediaObject->containsTag($pubChannel)) {
-                if (!$master->tags()->containsTag('ENCODED_'.$pubChannel->getCod()) && !str_contains($profile['target'], (string)$pubChannel->getCod())) {
+                if (!$master->tags()->containsTag('ENCODED_'.$pubChannel->getCod()) && !str_contains($profile['target'], (string) $pubChannel->getCod())) {
                     $this->logger->warning(serialize($master->tags()->toArray()));
                     $tags = $master->tags()->toArray();
                     $tags[] = 'ENCODED_'.$pubChannel->getCod();
                     $master->tags()->add('ENCODED_'.$pubChannel->getCod());
-                    $this->logger->warning(serialize($master->tags()->toArray()));die;
+                    $this->logger->warning(serialize($master->tags()->toArray()));
+
+                    exit;
                     // TODO UPDATE MASTER TRACK TAGS
-                    //$this->generateJobs($multimediaObject, $pubChannel->getCod());
+                    // $this->generateJobs($multimediaObject, $pubChannel->getCod());
                 }
             }
         }
@@ -125,10 +126,10 @@ class JobGeneratorListener
                 if (!isset($default_profiles[$pubChannelCod])) {
                     continue;
                 }
-                if (!$multimediaObject->isOnlyAudio() && !str_contains($default_profiles[$pubChannelCod]['video'], (string)$targetProfile)) {
+                if (!$multimediaObject->isOnlyAudio() && !str_contains($default_profiles[$pubChannelCod]['video'], (string) $targetProfile)) {
                     continue;
                 }
-                if ($multimediaObject->isOnlyAudio() && !str_contains($default_profiles[$pubChannelCod]['audio'], (string)$targetProfile)) {
+                if ($multimediaObject->isOnlyAudio() && !str_contains($default_profiles[$pubChannelCod]['audio'], (string) $targetProfile)) {
                     continue;
                 }
             }
@@ -172,6 +173,8 @@ class JobGeneratorListener
     /**
      * Process the target string (See test)
      * "TAGA* TAGB, TAGC*, TAGD" => array('standard' => array('TAGB', 'TAGD'), 'force' => array('TAGA', 'TAGC')).
+     *
+     * @param mixed $targets
      */
     private function getTargets($targets): array
     {

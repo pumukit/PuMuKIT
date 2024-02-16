@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Pumukit\WizardBundle\Command;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\EncoderBundle\Services\JobService;
+use Pumukit\EncoderBundle\Services\DTO\JobOptions;
+use Pumukit\EncoderBundle\Services\JobCreator;
 use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\WizardBundle\Services\WizardService;
 use Symfony\Component\Console\Command\Command;
@@ -19,10 +21,10 @@ use Symfony\Component\Finder\Finder;
 
 class ImportWizardCommand extends Command
 {
-    private $dm;
-    private $jobService;
-    private $inspectionService;
-    private $wizardService;
+    private DocumentManager $dm;
+    private InspectionFfprobeService $inspectionService;
+    private WizardService $wizardService;
+
     private $user;
     private $path;
     private $inboxDepth;
@@ -32,16 +34,22 @@ class ImportWizardCommand extends Command
     private $profile;
     private $priority;
     private $language;
-    private $factoryService;
+    private FactoryService $factoryService;
+    private JobCreator $jobCreator;
 
-    public function __construct(DocumentManager $documentManager, WizardService $wizardService, JobService $jobService, InspectionFfprobeService $inspectionFfprobeService, FactoryService $factoryService)
-    {
+    public function __construct(
+        DocumentManager $documentManager,
+        WizardService $wizardService,
+        JobCreator $jobCreator,
+        InspectionFfprobeService $inspectionFfprobeService,
+        FactoryService $factoryService
+    ) {
         $this->dm = $documentManager;
         $this->wizardService = $wizardService;
-        $this->jobService = $jobService;
         $this->inspectionService = $inspectionFfprobeService;
         $this->factoryService = $factoryService;
         parent::__construct();
+        $this->jobCreator = $jobCreator;
     }
 
     protected function configure(): void
@@ -64,7 +72,7 @@ This command import generate job to import files from wizard
 
 Example:
 <info>
-php app/console pumukit:wizard:import %user% %path% %inbox-depth% %series% %status %channels% %profile% %priority% %language%
+php bin/console pumukit:wizard:import %user% %path% %inbox-depth% %series% %status %channels% %profile% %priority% %language%
 </info>
 
 EOT
@@ -84,7 +92,7 @@ EOT
         $this->status = $input->getArgument('status');
         $this->channels = $input->getArgument('channels');
         $this->profile = $input->getArgument('profile');
-        $this->priority = $input->getArgument('priority');
+        $this->priority = (int) $input->getArgument('priority');
         $this->language = $input->getArgument('language');
     }
 
@@ -121,7 +129,7 @@ EOT
             $filePath = $file->getRealpath();
 
             try {
-                $duration = $this->inspectionService->getDuration($filePath);
+                $this->inspectionService->getDuration($filePath);
             } catch (\Exception $e) {
                 continue;
             }
@@ -132,17 +140,9 @@ EOT
             $output->writeln('Video '.$multimediaObject->getId().' importing file '.$filePath);
 
             try {
-                $multimediaObject = $this->jobService->createTrackFromInboxOnServer(
-                    $multimediaObject,
-                    $filePath,
-                    $this->profile,
-                    $this->priority,
-                    $this->language,
-                    [],
-                    [],
-                    $duration,
-                    JobService::ADD_JOB_UNIQUE
-                );
+                $jobOptions = new JobOptions($this->profile, $this->priority, $this->language, '', []);
+                $path = Path::create($filePath);
+                $this->jobCreator->fromPath($multimediaObject, $path, $jobOptions);
             } catch (\Exception $e) {
                 if (!strpos($e->getMessage(), 'Unknown error')) {
                     $this->factoryService->deleteMultimediaObject($multimediaObject);

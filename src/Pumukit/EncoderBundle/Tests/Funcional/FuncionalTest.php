@@ -7,7 +7,6 @@ namespace Pumukit\EncoderBundle\Tests\Funcional;
 use Monolog\Handler\StreamHandler;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Document\Job;
-use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Bridge\Monolog\Logger;

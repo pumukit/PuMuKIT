@@ -18,8 +18,6 @@ use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Services\MediaCreator;
 use Symfony\Component\Process\Process;
-use Twig\Environment;
-use Twig\Loader\ArrayLoader;
 
 final class JobExecutor
 {
@@ -38,6 +36,7 @@ final class JobExecutor
     private ProfileValidator $profileValidator;
     private MediaCreator $mediaCreator;
     private JobRemover $jobRemover;
+    private JobRender $jobRender;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -46,6 +45,7 @@ final class JobExecutor
         ProfileValidator $profileValidator,
         MediaCreator $mediaCreator,
         JobRemover $jobRemover,
+        JobRender $jobRender,
         MultimediaObjectPropertyJobService $multimediaObjectPropertyJobService,
         InspectionFfprobeService $inspectionService,
         JobDispatcher $jobDispatcher,
@@ -69,6 +69,7 @@ final class JobExecutor
         $this->profileValidator = $profileValidator;
         $this->mediaCreator = $mediaCreator;
         $this->jobRemover = $jobRemover;
+        $this->jobRender = $jobRender;
     }
 
     public function executeNextJob()
@@ -113,13 +114,13 @@ final class JobExecutor
 
         $profile = $this->profileValidator->ensureProfileExists($job->getProfile());
         $cpu = $this->cpuService->getCpuByName($job->getCpu());
-        $commandLine = $this->renderBat($job);
+        $commandLine = $this->jobRender->renderBat($job);
 
         $executor = $this->getExecutor($cpu);
 
         try {
             FileSystemUtils::createFolder(dirname($job->getPathEnd()));
-            //$this->mkdir(dirname($job->getPathEnd()));
+            // $this->mkdir(dirname($job->getPathEnd()));
 
             // Throws exception when the multimedia object is not found.
             $multimediaObject = $this->jobValidator->ensureMultimediaObjectExists($job);
@@ -139,7 +140,7 @@ final class JobExecutor
             $this->logger->info('[execute] duration: '.$duration);
 
             // Check for different durations. Throws exception if they don't match.
-            $this->searchError($profile, $job->getDuration(), $duration);
+            $this->jobValidator->searchError($profile, $job->getDuration(), $duration);
 
             $job->setTimeend(new \DateTime('now'));
             $job->setStatus(Job::STATUS_FINISHED);
@@ -174,6 +175,13 @@ final class JobExecutor
         $this->documentManager->flush();
 
         $this->executeNextJob();
+    }
+
+    public function createTrackWithJob(Job $job): MediaInterface
+    {
+        $multimediaObject = $this->jobValidator->ensureMultimediaObjectExists($job);
+
+        return $this->mediaCreator->createTrack($multimediaObject, $job);
     }
 
     private function getNextJob()
@@ -227,68 +235,8 @@ final class JobExecutor
         }
     }
 
-    public function renderBat(Job $job): string
-    {
-        $profile = $this->profileValidator->ensureProfileExists($job->getProfile());
-        $multimediaObject = $this->jobValidator->ensureMultimediaObjectExists($job);
-
-        $vars = $job->getInitVars();
-
-        $vars['tracks'] = [];
-        $vars['tracks_audio'] = [];
-        $vars['tracks_video'] = [];
-        foreach ($multimediaObject->getTracks() as $track) {
-            foreach ($track->tags()->toArray() as $tag) {
-                $vars['tracks'][$tag] = $track->storage()->path()->path();
-                if ($track->metadata()->isOnlyAudio()) {
-                    $vars['tracks_audio'][$tag] = $track->storage()->path()->path();
-                } else {
-                    $vars['tracks_video'][$tag] = $track->storage()->path()->path();
-                }
-            }
-        }
-
-        $vars['properties'] = $multimediaObject->getProperties();
-
-        $vars['input'] = $job->getPathIni();
-        $vars['output'] = $job->getPathEnd();
-
-        foreach (range(1, 9) as $identifier) {
-            $vars['tmpfile'.$identifier] = $this->tmpPath.'/'.random_int(0, mt_getrandmax());
-        }
-
-        $loader = new ArrayLoader(['bat' => $profile['bat']]);
-        $twig = new Environment($loader);
-
-        $commandLine = $twig->render('bat', $vars);
-        $this->logger->info('[renderBat] CommandLine: '.$commandLine);
-
-        return $commandLine;
-    }
-
-    public function searchError($profile, $durationIn, $durationEnd): void
-    {
-        if (isset($profile['nocheckduration']) && $profile['nocheckduration']) {
-            return;
-        }
-
-        $duration_conf = 25;
-        if (($durationIn < $durationEnd - $duration_conf) || ($durationIn > $durationEnd + $duration_conf)) {
-            throw new \Exception(
-                sprintf('Final duration (%s) and initial duration (%s) are different', $durationEnd, $durationIn)
-            );
-        }
-    }
-
     private function getExecutor(?array $cpu): ExecutorInterface
     {
         return (in_array($cpu['host'], ['localhost', '127.0.0.1'])) ? new LocalExecutor() : new RemoteHTTPExecutor();
-    }
-
-    public function createTrackWithJob(Job $job): MediaInterface
-    {
-        $multimediaObject = $this->jobValidator->ensureMultimediaObjectExists($job);
-
-        return $this->mediaCreator->createTrack($multimediaObject, $job);
     }
 }

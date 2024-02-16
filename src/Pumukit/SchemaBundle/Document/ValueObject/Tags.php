@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Document\ValueObject;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-
 final class Tags
 {
     private array $tags;

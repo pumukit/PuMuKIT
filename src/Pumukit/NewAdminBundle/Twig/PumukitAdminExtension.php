@@ -18,7 +18,6 @@ use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Pumukit\SchemaBundle\Services\SpecialTranslationService;
 use Pumukit\WebTVBundle\PumukitWebTVBundle;
-use Rector\Symfony\ValueObject\Tag;
 use Symfony\Component\Intl\Languages;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;

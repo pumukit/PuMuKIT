@@ -16,11 +16,6 @@ final class JobRepository
         $this->documentManager = $documentManager;
     }
 
-    private function jobRepository()
-    {
-        return $this->documentManager->getRepository(Job::class);
-    }
-
     public function getAllJobsStatus(): array
     {
         return [
@@ -51,5 +46,10 @@ final class JobRepository
     public function getNotFinishedJobsByMultimediaObjectId($mmId)
     {
         return $this->jobRepository()->findNotFinishedByMultimediaObjectId($mmId);
+    }
+
+    private function jobRepository()
+    {
+        return $this->documentManager->getRepository(Job::class);
     }
 }

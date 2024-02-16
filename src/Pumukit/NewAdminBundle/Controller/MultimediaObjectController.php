@@ -10,6 +10,7 @@ use MongoDB\BSON\Regex;
 use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\ProfileService;
+use Pumukit\EncoderBundle\Services\Repository\JobRepository;
 use Pumukit\NewAdminBundle\Event\BackofficeEvents;
 use Pumukit\NewAdminBundle\Event\PublicationSubmitEvent;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType;
@@ -109,6 +110,7 @@ class MultimediaObjectController extends SortableAdminController
     private $warningOnUnpublished;
     private $kernelBundles;
     private $pumukitNewAdminMultimediaObjectLabel;
+    private JobRepository $jobRepository;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -123,6 +125,7 @@ class MultimediaObjectController extends SortableAdminController
         PersonService $personService,
         SortedMultimediaObjectsService $sortedMultimediaObjectService,
         JobService $jobService,
+        JobRepository $jobRepository,
         ProfileService $profileService,
         SessionInterface $session,
         MultimediaObjectService $multimediaObjectService,
@@ -158,6 +161,7 @@ class MultimediaObjectController extends SortableAdminController
         $this->warningOnUnpublished = $warningOnUnpublished;
         $this->kernelBundles = $kernelBundles;
         $this->pumukitNewAdminMultimediaObjectLabel = $pumukitNewAdminMultimediaObjectLabel;
+        $this->jobRepository = $jobRepository;
     }
 
     /**
@@ -318,7 +322,7 @@ class MultimediaObjectController extends SortableAdminController
         $pubChannelsTags = $this->factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $this->factoryService->getTagsByCod('PUBDECISIONS', true);
 
-        $jobs = $this->jobService->getNotFinishedJobsByMultimediaObjectId($resource->getId());
+        $jobs = $this->jobRepository->getNotFinishedJobsByMultimediaObjectId($resource->getId());
 
         $notMasterProfiles = $this->profileService->getProfiles(null, true, false);
 

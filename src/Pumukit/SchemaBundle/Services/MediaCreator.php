@@ -21,8 +21,6 @@ use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Pumukit\SchemaBundle\Document\ValueObject\Tags;
 use Pumukit\SchemaBundle\Document\ValueObject\Url;
-use Pumukit\SchemaBundle\Services\MediaCreatorInterface;
-use Pumukit\SchemaBundle\Services\TrackEventDispatcherService;
 
 final class MediaCreator implements MediaCreatorInterface
 {
@@ -52,8 +50,7 @@ final class MediaCreator implements MediaCreatorInterface
     public function createTrack(
         MultimediaObject $multimediaObject,
         Job $job
-    ): MediaInterface
-    {
+    ): MediaInterface {
         $profile = $this->profileValidator->ensureProfileExists($job->getProfile());
         $originalName = ($job->getPathIni() && $profile['master']) ? pathinfo($job->getPathIni(), PATHINFO_BASENAME) : '';
         $i18nDescription = !empty($job->getI18nDescription()) ? i18nText::create($job->getI18nDescription()) : i18nText::create([]);
@@ -123,5 +120,4 @@ final class MediaCreator implements MediaCreatorInterface
 
         $this->dispatcher->dispatchCreate($multimediaObject, $media);
     }
-
 }

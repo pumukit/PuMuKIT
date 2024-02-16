@@ -7,7 +7,6 @@ namespace Pumukit\SchemaBundle\Document\MediaType;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Pumukit\SchemaBundle\Document\ValueObject\Url;
 
-
 final class Storage
 {
     public const LOCAL_STORAGE = 1;

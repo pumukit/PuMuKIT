@@ -8,8 +8,10 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\CpuService;
-use Pumukit\EncoderBundle\Services\JobExecutor;
+use Pumukit\EncoderBundle\Services\JobRender;
 use Pumukit\EncoderBundle\Services\JobService;
+use Pumukit\EncoderBundle\Services\JobUpdater;
+use Pumukit\EncoderBundle\Services\Repository\JobRepository;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -27,11 +29,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class InfoController extends AbstractController
 {
-    private JobExecutor $jobExecutor;
+    private JobRender $jobRender;
+    private JobRepository $jobRepository;
 
-    public function __construct(JobExecutor $jobExecutor)
+    public function __construct(JobRender $jobRender, JobRepository $jobRepository)
     {
-        $this->jobExecutor = $jobExecutor;
+        $this->jobRender = $jobRender;
+        $this->jobRepository = $jobRepository;
     }
 
     /**
@@ -87,9 +91,9 @@ class InfoController extends AbstractController
         }
 
         if (!$user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
-            $stats = $jobService->getAllJobsStatus();
+            $stats = $this->jobRepository->getAllJobsStatus();
         } else {
-            $stats = $jobService->getAllJobsStatusWithOwner($user);
+            $stats = $this->jobRepository->getAllJobsStatusWithOwner($user);
         }
 
         $deactivatedCpus = $cpuService->getCpuNamesInMaintenanceMode();
@@ -125,7 +129,7 @@ class InfoController extends AbstractController
         $deletedMultimediaObject = false;
 
         try {
-            $command = $this->jobExecutor->renderBat($job);
+            $command = $this->jobRender->renderBat($job);
         } catch (\Exception $e) {
             $command = $e->getMessage();
             $deletedMultimediaObject = true;
@@ -141,11 +145,11 @@ class InfoController extends AbstractController
     /**
      * @Route("/job", methods={"POST"}, name="pumukit_encoder_update_job")
      */
-    public function updateJobPriorityAction(Request $request, JobService $jobService): JsonResponse
+    public function updateJobPriorityAction(Request $request, JobUpdater $jobUpdater): JsonResponse
     {
         $priority = $request->get('priority');
         $jobId = $request->get('jobId');
-        $jobService->updateJobPriority($jobId, $priority);
+        $jobUpdater->updateJobPriority($jobId, $priority);
 
         return new JsonResponse([
             'jobId' => $jobId,
@@ -167,9 +171,9 @@ class InfoController extends AbstractController
     /**
      * @Route("/job/retry/{id}", methods={"POST"}, name="pumukit_encoder_retry_job")
      */
-    public function retryJobAction(Job $job, Request $request, JobService $jobService)
+    public function retryJobAction(Job $job, Request $request, JobUpdater $jobUpdater)
     {
-        $flashMessage = $jobService->retryJob($job);
+        $flashMessage = $jobUpdater->retryJob($job);
 
         return new JsonResponse([
             'jobId' => $job->getId(),
