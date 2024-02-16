@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\EncoderBundle\Services\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\ObjectId;
 use Pumukit\EncoderBundle\Document\Job;
 
 final class JobRepository
@@ -14,6 +15,11 @@ final class JobRepository
     public function __construct(DocumentManager $documentManager)
     {
         $this->documentManager = $documentManager;
+    }
+
+    public function searchJob(string $id)
+    {
+        return $this->jobRepository()->findOneBy(['id' => new ObjectId($id)]);
     }
 
     public function getAllJobsStatus(): array
