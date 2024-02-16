@@ -43,6 +43,8 @@ services:
 
   Pumukit\EncoderBundle\Services\JobRender:
     class: Pumukit\EncoderBundle\Services\JobRender
+    arguments:
+      $tmpPath: '%pumukit.tmp%'
 
   Pumukit\EncoderBundle\Services\JobExecutor:
     class: Pumukit\EncoderBundle\Services\JobExecutor
