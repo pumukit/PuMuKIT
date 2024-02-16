@@ -44,6 +44,11 @@ final class JobUpdater
         $this->changeStatus($job, Job::STATUS_PAUSED, Job::STATUS_WAITING);
     }
 
+    public function errorJob(Job $job): void
+    {
+        $this->changeStatus($job, $job->getStatus(), Job::STATUS_ERROR);
+    }
+
     public function updateJobPriority(Job $job, int $priority): void
     {
         $job->setPriority($priority);
@@ -86,6 +91,7 @@ final class JobUpdater
 
         return true;
     }
+
 
     private function changeStatus(Job $job, int $actualStatus, int $newStatus): void
     {

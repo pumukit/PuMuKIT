@@ -348,7 +348,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
      */
     public function updateJobPriorityAction(Request $request)
     {
-        $priority = $request->get('priority');
+        $priority = (int) $request->get('priority');
         $jobId = $request->get('jobId');
         $job = $this->documentManager->getRepository(Job::class)->findOneBy(['_id' => $jobId]);
         $this->jobUpdater->updateJobPriority($job, $priority);
