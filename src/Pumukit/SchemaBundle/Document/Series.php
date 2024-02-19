@@ -512,7 +512,7 @@ class Series
         if (null === $locale) {
             $locale = $this->locale;
         }
-        $this->title[$locale] = $title;
+        $this->title[$locale] = trim($title);
     }
 
     /**
@@ -539,7 +539,7 @@ class Series
      */
     public function setI18nTitle(array $title)
     {
-        $this->title = $title;
+        $this->title = array_map('trim', $title);
     }
 
     /**
