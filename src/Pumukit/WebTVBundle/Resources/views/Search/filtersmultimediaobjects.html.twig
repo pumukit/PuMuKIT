@@ -88,7 +88,7 @@
             </option>
             {% for language in languages | filter(language => language != "") %}
                 <option value="{{ language }}" {% if app.request.query.get('language') == language %} selected="selected" {% endif %}>
-                    {{ language |language_name }}
+                    {{ language |language_name|capitalize }}
                 </option>
             {% endfor %}
         </select>

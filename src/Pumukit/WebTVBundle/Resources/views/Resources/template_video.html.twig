@@ -60,7 +60,7 @@
                         {% if app.request.attributes.get('_route') != 'pumukit_webtv_announces_latestuploads_pager' and not object.getProperty('externalplayer') %}
                             <li class="list-group-item list-group-item-custom date_and_visits text-left language">
                                 {% trans %}Language{% endtrans %}:
-                                {{ object.getDisplayTrack().getLanguage()|default(app.request.getLocale()) | language_name }}
+                                {{ object.getDisplayTrack().getLanguage()|default(app.request.getLocale()) | language_name | capitalize }}
                             </li>
                         {% endif %}
                         <li class="list-group-item list-group-item-custom text-right date_and_visits">

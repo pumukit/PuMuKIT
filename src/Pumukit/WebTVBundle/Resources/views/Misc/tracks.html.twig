@@ -8,7 +8,7 @@
         </a>
         &nbsp;|&nbsp;&nbsp;
         <span class="language">
-            {{ (object.getProperty('opencastlanguage')?(object.getProperty('opencastlanguage')|lower):(object.isMultistream()?object.getFilteredTrackWithTags(['display'], [], [], []).getLanguage():'en'))|language_name }}
+            {{ (object.getProperty('opencastlanguage')?(object.getProperty('opencastlanguage')|lower):(object.isMultistream()?object.getFilteredTrackWithTags(['display'], [], [], []).getLanguage():'en'))|language_name|capitalize }}
         </span>
         &nbsp;|&nbsp; {{ mmobj_duration(object) | duration_string }}
     </li>
@@ -38,7 +38,7 @@
                     {% endif %}
                 {% endapply %}
 
-                <span class="language"> ({{ track.getLanguage()|language_name }})</span>
+                <span class="language"> ({{ track.getLanguage()|language_name|capitalize }})</span>
             </a>
         </li>
     {% endfor %}

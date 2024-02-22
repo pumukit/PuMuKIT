@@ -42,7 +42,7 @@
                                     {% if app.request.attributes.get('_route') != 'pumukit_webtv_announces_latestuploads_pager' and show_language  and not object.getProperty('externalplayer')%}
                                         <div class="language pull-left">
                                             {% trans %}Language{% endtrans %}:
-                                            {{ object.getDisplayTrack().getLanguage()|default(app.request.getLocale()) | language_name }}
+                                            {{ object.getDisplayTrack().getLanguage()|default(app.request.getLocale()) | language_name | capitalize }}
                                         </div>
                                     {% endif %}
                                     {% trans %}Viewed{% endtrans %}:
