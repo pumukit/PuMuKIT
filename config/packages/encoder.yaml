@@ -47,6 +47,7 @@ pumukit_encoder:
         host: 127.0.0.1
         description: Local master server
         dir_out: "%pumukit.masters%"
+        url_out: "%pumukit.downloads_url%"
       app: ffmpeg
       rel_duration_size: 1
       rel_duration_trans: 1
@@ -72,10 +73,12 @@ pumukit_encoder:
         host: 127.0.0.1
         description: Local download server
         dir_out: "%pumukit.downloads%"
+        url_out: "%pumukit.downloads_url%"
       app: ffmpeg
       rel_duration_size: 1
       rel_duration_trans: 1
     video_h264:
+      generate_pic: false
       display: true
       wizard: true
       master: false
@@ -98,6 +101,7 @@ pumukit_encoder:
         host: 127.0.0.1
         description: Local download server
         dir_out: "%pumukit.downloads%"
+        url_out: "%pumukit.downloads_url%"
       app: ffmpeg
       rel_duration_size: 1
       rel_duration_trans: 1
@@ -124,6 +128,7 @@ pumukit_encoder:
         host: 127.0.0.1
         description: Local download server
         dir_out: "%pumukit.downloads%"
+        url_out: "%pumukit.downloads_url%"
       app: ffmpeg
       rel_duration_size: 1
       rel_duration_trans: 1

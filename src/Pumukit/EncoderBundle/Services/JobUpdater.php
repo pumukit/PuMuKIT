@@ -92,7 +92,6 @@ final class JobUpdater
         return true;
     }
 
-
     private function changeStatus(Job $job, int $actualStatus, int $newStatus): void
     {
         if ($actualStatus === $job->getStatus()) {

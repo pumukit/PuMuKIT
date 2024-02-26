@@ -7,8 +7,8 @@ namespace Pumukit\BasePlayerBundle\Controller;
 use Pumukit\BasePlayerBundle\Event\BasePlayerEvents;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 use Pumukit\BasePlayerBundle\Services\IntroService;
+use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
@@ -68,7 +68,7 @@ abstract class BasePlayerController extends AbstractController
     public function checkMultimediaObjectTracks(Request $request, MultimediaObject $multimediaObject)
     {
         $track = $request->query->has('track_id') ? $multimediaObject->getTrackById($request->query->get('track_id')) : $multimediaObject->getDisplayTrack();
-        if ($track && $track->containsTag('download')) {
+        if ($track && $track->tags()->containsTag('download')) {
             return $this->redirect($track->getUrl());
         }
         if (!$track && null !== $url = $multimediaObject->getProperty('externalplayer')) {

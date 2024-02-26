@@ -126,6 +126,11 @@ abstract class Media implements MediaInterface
         return $this->hide;
     }
 
+    public function isVisible(): bool
+    {
+        return !$this->isHide();
+    }
+
     public function isDownloadable(): bool
     {
         return $this->download;
@@ -163,6 +168,16 @@ abstract class Media implements MediaInterface
         }
 
         return null;
+    }
+
+    public function updateTags(Tags $tags): void
+    {
+        $this->tags = $tags->toArray();
+    }
+
+    public function mimeType(): string
+    {
+        return mime_content_type($this->storage()->path()->path());
     }
 
     abstract protected static function create(

@@ -53,6 +53,16 @@ final class VideoAudio implements MediaMetadata
         return false;
     }
 
+    public function codecName(): ?string
+    {
+        $stream = $this->videoStreamInfo();
+        if (!$stream) {
+            return null;
+        }
+
+        return $stream->codec_name;
+    }
+
     public function numFrames(): int
     {
         if (!$this->isOnlyAudio()) {

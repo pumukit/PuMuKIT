@@ -38,6 +38,7 @@ parameters:
   pumukit.tmp:                         "%env(string:PUMUKIT_TMP)%"
   pumukit.masters:                     "%env(string:PUMUKIT_MASTERS)%"
   pumukit.downloads:                   "%env(string:PUMUKIT_DOWNLOADS)%"
+  pumukit.downloads_url:               "%env(string:PUMUKIT_SCHEME)%://%env(string:VOD_HOSTNAME)%"
   pumukit.delete_on_disk:              "%env(bool:PUMUKIT_DELETE_ON_DISK)%"
   pumukit.copyright_info_url:          "%env(PUMUKIT_COPYRIGHT_INFO_URL)%"
   pumukit.license_info_url:            "%env(PUMUKIT_LICENSE_INFO_URL)%"
