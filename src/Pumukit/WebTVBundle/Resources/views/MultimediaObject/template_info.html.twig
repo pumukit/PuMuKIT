@@ -71,7 +71,7 @@
                 {% set none_attach = true %}
 
                 <ul class="list-group">
-                    {% for track in multimediaObject.getTracks() | filter(track => track.allowDownload() and not track.getHide() and showDownloads) %}
+                    {% for track in multimediaObject.getTracks() | filter(track => track.isDownloadable() and not track.isHide() and showDownloads) %}
                         {% set none_attach = false %}
                         <li class="qa-player-tracks tracks">
                             <span class="glyphicon glyphicon-facetime-video"></span>

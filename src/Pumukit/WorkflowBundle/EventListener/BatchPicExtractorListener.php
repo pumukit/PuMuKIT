@@ -25,7 +25,7 @@ class BatchPicExtractorListener
 
     public function onJobSuccess(JobEvent $event)
     {
-        $this->generatePic($event->getMultimediaObject(), $event->getTrack());
+        // $this->generatePic($event->getMultimediaObject(), $event->getTrack());
     }
 
     private function generatePic(MultimediaObject $multimediaObject, Track $track)
