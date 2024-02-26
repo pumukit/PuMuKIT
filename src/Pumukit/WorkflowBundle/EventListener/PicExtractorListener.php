@@ -15,7 +15,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class PicExtractorListener
 {
-    private DocumentManager $dm;
+    private DocumentManager $documentManager;
     private LoggerInterface $logger;
     private PicExtractorService $picExtractorService;
     private bool $autoExtractPic;
@@ -30,7 +30,7 @@ class PicExtractorListener
         bool $autoExtractPic = true,
         string $autoExtractPicPercentage = '50%'
     ) {
-        $this->dm = $documentManager;
+        $this->documentManager = $documentManager;
         $this->picExtractorService = $picExtractorService;
         $this->logger = $logger;
         $this->autoExtractPic = $autoExtractPic;
@@ -57,9 +57,13 @@ class PicExtractorListener
 
     private function generatePic(MultimediaObject $multimediaObject, MediaInterface $media): void
     {
-        $this->dm->refresh($multimediaObject);
+        $this->documentManager->refresh($multimediaObject);
 
-        if (!$this->autoExtractPic && !$multimediaObject->getPics()->isEmpty()) {
+        if (!$this->autoExtractPic) {
+            return;
+        }
+
+        if ($multimediaObject->hasPics()) {
             return;
         }
 

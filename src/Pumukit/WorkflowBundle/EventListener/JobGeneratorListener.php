@@ -13,11 +13,12 @@ use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
+use Pumukit\SchemaBundle\Document\ValueObject\Tags;
 use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
 
 class JobGeneratorListener
 {
-    private DocumentManager $dm;
+    private DocumentManager $documentManager;
     private JobCreator $jobCreator;
     private ProfileService $profileService;
     private LoggerInterface $logger;
@@ -29,7 +30,7 @@ class JobGeneratorListener
         ProfileService $profileService,
         LoggerInterface $logger
     ) {
-        $this->dm = $documentManager;
+        $this->documentManager = $documentManager;
         $this->jobCreator = $jobCreator;
         $this->logger = $logger;
         $this->profileService = $profileService;
@@ -59,7 +60,7 @@ class JobGeneratorListener
             return;
         }
 
-        $tag = $this->dm->getRepository(Tag::class)->findOneBy(['cod' => 'PUBCHANNELS']);
+        $tag = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PUBCHANNELS']);
         if (!$tag) {
             return;
         }
@@ -74,15 +75,12 @@ class JobGeneratorListener
         foreach ($tag->getChildren() as $pubChannel) {
             if ($multimediaObject->containsTag($pubChannel)) {
                 if (!$master->tags()->containsTag('ENCODED_'.$pubChannel->getCod()) && !str_contains($profile['target'], (string) $pubChannel->getCod())) {
-                    $this->logger->warning(serialize($master->tags()->toArray()));
-                    $tags = $master->tags()->toArray();
-                    $tags[] = 'ENCODED_'.$pubChannel->getCod();
-                    $master->tags()->add('ENCODED_'.$pubChannel->getCod());
-                    $this->logger->warning(serialize($master->tags()->toArray()));
+                    $tags = Tags::create($master->tags()->toArray());
+                    $tags->add('ENCODED_'.$pubChannel->getCod());
+                    $master->updateTags($tags);
+                    $this->documentManager->flush();
 
-                    exit;
-                    // TODO UPDATE MASTER TRACK TAGS
-                    // $this->generateJobs($multimediaObject, $pubChannel->getCod());
+                    $this->generateJobs($multimediaObject, $pubChannel->getCod());
                 }
             }
         }

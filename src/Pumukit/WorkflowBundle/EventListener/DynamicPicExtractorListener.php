@@ -56,6 +56,10 @@ class DynamicPicExtractorListener
             return false;
         }
 
+        if ($multimediaObject->hasDynamicPic()) {
+            return false;
+        }
+
         $outputMessage = $this->dynamicPicExtractorService->extract($multimediaObject, $media);
         if (!$outputMessage) {
             $message = $outputMessage.". MultimediaObject '".$multimediaObject->getId()."' with track '".$media->id()."'";
