@@ -1,9 +1,9 @@
 <ul class="list-inline languages">
     {% for lang in languages %}
-        {% set text = ("Language"|trans ~ " - " ~ lang | language_name) %}
+        {% set text = ("Language"|trans ~ " - " ~ (is_addon_language(lang) ? lang | language_name_custom : lang | language_name | capitalize)) %}
         <li>
             <a href="{{ path('pumukit_locale', {'locale': lang } ) }}" class="language_option {% if app.request.getLocale() == lang %}language-active{% endif %}" title="{{ text }}">
-                {{ lang | language_name | capitalize }}
+                {{ is_addon_language(lang) ? lang | language_name_custom : lang | language_name | capitalize }}
             </a>
         </li>
     {% endfor %}

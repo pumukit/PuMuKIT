@@ -35,7 +35,7 @@
     {% endif %}
       </td>
       <td>
-        &nbsp; {% if not is_naked() %}{{ material.id }} - {% endif %}{{ material.getName() }} ({{ material.getPath()|basename }}/{{ material.getLanguage()|language_name|capitalize }})
+        &nbsp; {% if not is_naked() %}{{ material.id }} - {% endif %}{{ material.getName() }} ({{ material.getPath()|basename }}/{{ is_addon_language(material.getLanguage()) ? material.getLanguage() | language_name_custom : material.getLanguage() | language_name | capitalize }})
         {% if material.getHide() %}<span class="label label-default">{% trans %}hidden{% endtrans %}</span></i>{% endif %}
         {% for tag in material.getTags() %}
           <span class="label label-primary">{{ tag }}</span>

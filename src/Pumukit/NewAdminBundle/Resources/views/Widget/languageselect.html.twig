@@ -1,6 +1,6 @@
 <li class="divider"></li>
 {% for lang in languages %}
     <li class="language_{{ lang }} {{ app.request.locale == lang ? 'active' }}">
-      <a href="{{ path('pumukit_locale', {'locale': lang } ) }}"> {{ lang | language_name | capitalize }} </a>
+      <a href="{{ path('pumukit_locale', {'locale': lang } ) }}"> {{ is_addon_language(lang) ? lang | language_name_custom : lang | language_name | capitalize }} </a>
     </li>
 {% endfor %}

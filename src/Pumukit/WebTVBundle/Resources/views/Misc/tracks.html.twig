@@ -8,7 +8,8 @@
         </a>
         &nbsp;|&nbsp;&nbsp;
         <span class="language">
-            {{ (object.getProperty('opencastlanguage')?(object.getProperty('opencastlanguage')|lower):(object.isMultistream()?object.getFilteredTrackWithTags(['display'], [], [], []).getLanguage():'en'))|language_name|capitalize }}
+            {% set lang = (object.getProperty('opencastlanguage')?(object.getProperty('opencastlanguage')|lower):(object.isMultistream()?object.getFilteredTrackWithTags(['display'], [], [], []).getLanguage():'en')) %}
+            {{ is_addon_language(lang) ? lang | language_name_custom : lang | language_name | capitalize }}
         </span>
         &nbsp;|&nbsp; {{ mmobj_duration(object) | duration_string }}
     </li>
