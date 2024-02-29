@@ -15,7 +15,7 @@ const uppy = new Uppy.Core({
         minFileSize: convertSizeToBytes("{{ inbox_min_file_size() }}"),
         maxFileSize: convertSizeToBytes("{{ inbox_max_file_size() }}"),
         maxNumberOfFiles: 1,
-        allowedFileTypes: ['audio/*','video/*']
+        allowedFileTypes: ['audio/*','video/*', 'image/*']
     },
     onBeforeFileAdded:  (currentFile) => {
         if (currentFile) {

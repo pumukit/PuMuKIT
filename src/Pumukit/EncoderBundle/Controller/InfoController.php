@@ -8,6 +8,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\CpuService;
+use Pumukit\EncoderBundle\Services\JobRemover;
 use Pumukit\EncoderBundle\Services\JobRender;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\JobUpdater;
@@ -32,12 +33,14 @@ class InfoController extends AbstractController
     private JobRender $jobRender;
     private JobRepository $jobRepository;
     private JobUpdater $jobUpdater;
+    private JobRemover $jobRemover;
 
-    public function __construct(JobRender $jobRender, JobRepository $jobRepository, JobUpdater $jobUpdater)
+    public function __construct(JobRender $jobRender, JobRepository $jobRepository, JobUpdater $jobUpdater, JobRemover $jobRemover)
     {
         $this->jobRender = $jobRender;
         $this->jobRepository = $jobRepository;
         $this->jobUpdater = $jobUpdater;
+        $this->jobRemover = $jobRemover;
     }
 
     /**
@@ -45,7 +48,7 @@ class InfoController extends AbstractController
      *
      * @Template("@PumukitEncoder/Info/index.html.twig")
      */
-    public function indexAction(Request $request, DocumentManager $documentManager, CpuService $cpuService, JobService $jobService, PaginationService $paginationService): array
+    public function indexAction(Request $request, DocumentManager $documentManager, CpuService $cpuService, PaginationService $paginationService): array
     {
         $user = $this->getUser();
         $cpus = $cpuService->getCpus();
@@ -174,12 +177,12 @@ class InfoController extends AbstractController
     /**
      * @Route("/job", methods={"DELETE"}, name="pumukit_encoder_delete_job")
      */
-    public function deleteJobAction(Request $request, JobService $jobService)
+    public function deleteJobAction(Request $request): JsonResponse
     {
-        $jobId = $request->get('jobId');
-        $jobService->deleteJob($jobId);
+        $job = $this->jobRepository->searchJob($request->get('jobId'));
+        $this->jobRemover->delete($job);
 
-        return new JsonResponse(['jobId' => $jobId]);
+        return new JsonResponse(['jobId' => $job->getId()]);
     }
 
     /**

@@ -37,7 +37,7 @@
                         {% include '@PumukitNewAdmin/MultimediaObject/sortingactions.html.twig' %}
                     {% endif %}
                     <td headers="th-video" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" ondblclick="dblclick_preview_mm('{{ mm.id }}')">
-                        <span>{{ mm.isOnlyAudio() ? 'Audio':'Video' }}</span>
+                        <span>{{ mm.getStringType(mm.getType()) }}</span>
                     </td>
                     <td headers="th-img" class="list-video-image" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" ondblclick="dblclick_preview_mm('{{ mm.id }}')" style="min-width: 4em;">
                         {% include "@PumukitNewAdmin/Misc/img_list.html.twig"  with {'object' : mm, 'type': 'mm' } %}
@@ -46,7 +46,7 @@
                         {{ mm.getTitle() }}
                     </td>
                     <td class="text-nowrap" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" ondblclick="dblclick_preview_mm('{{ mm.id }}')">
-                        {{ mm.getRealDuration()| duration_string }}
+                        {{ mm.getRealDuration()| duration_string|default('N/D') }}
                         {% if mm.getProperty('soft-editing-duration') %}
                             <i class="mdi-content-content-cut" data-toggle="tooltip" data-placement="left" title="{{ mmobj_duration(mm) | duration_string }}"></i>
                         {% endif %}

@@ -13,7 +13,6 @@ final class JobOptions
     private $initVars;
     private $duration;
     private $flags;
-
     private $unique;
 
     public function __construct(string $profile, int $priority = 0, $language = 'en', $description = [], $initVars = [], $duration = 0, $flags = 0, bool $unique = false)

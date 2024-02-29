@@ -31,7 +31,6 @@ final class JobExecutor
     private string $environment;
     private int $maxExecutionJobSeconds;
     private InspectionFfprobeService $inspectionService;
-    private string $tmpPath;
     private JobValidator $jobValidator;
     private ProfileValidator $profileValidator;
     private MediaCreator $mediaCreator;
@@ -52,7 +51,6 @@ final class JobExecutor
         LoggerInterface $logger,
         string $binPath,
         string $environment,
-        string $tmpPath,
         int $maxExecutionJobSeconds = 43200
     ) {
         $this->documentManager = $documentManager;
@@ -64,7 +62,6 @@ final class JobExecutor
         $this->environment = $environment;
         $this->maxExecutionJobSeconds = $maxExecutionJobSeconds;
         $this->inspectionService = $inspectionService;
-        $this->tmpPath = $tmpPath;
         $this->jobValidator = $jobValidator;
         $this->profileValidator = $profileValidator;
         $this->mediaCreator = $mediaCreator;
@@ -129,7 +126,11 @@ final class JobExecutor
             $out = $executor->execute($commandLine, $cpu);
             $job->setOutput($out);
             // Throws exception if the video does not exist or does not have video/audio tracks.
-            $duration = $this->inspectionService->getDuration($job->getPathEnd());
+
+
+            // TODO DIGIREPO: Duration only for video/audio types
+//            $duration = $this->inspectionService->getDuration($job->getPathEnd());
+            $duration = 25;
             $job->setNewDuration($duration);
 
             $this->logger->info('[execute] cpu: '.serialize($cpu));
@@ -148,15 +149,13 @@ final class JobExecutor
             $multimediaObject = $this->jobValidator->ensureMultimediaObjectExists($job); // Necessary to refresh the document
             $this->documentManager->refresh($multimediaObject);
 
-            $track = $this->createTrackWithJob($job);
-
+            $track = $this->createMediaWithJob($job);
             $this->jobDispatcher->dispatch(EncoderEvents::JOB_SUCCESS, $job, $track);
-
             $this->multimediaObjectPropertyJobService->finishJob($multimediaObject, $job);
-
             $this->jobRemover->deleteTempFilesFromJob($job);
         } catch (\Exception $e) {
-            $this->logger->error('[execute] error job output: '.$e->getMessage());
+
+            $this->logger->error('[execute] error job output: '.$e->getTraceAsString());
 
             $job->setTimeend(new \DateTime('now'));
             $job->setStatus(Job::STATUS_ERROR);
@@ -177,11 +176,11 @@ final class JobExecutor
         $this->executeNextJob();
     }
 
-    public function createTrackWithJob(Job $job): MediaInterface
+    public function createMediaWithJob(Job $job): MediaInterface
     {
         $multimediaObject = $this->jobValidator->ensureMultimediaObjectExists($job);
 
-        return $this->mediaCreator->createTrack($multimediaObject, $job);
+        return $this->mediaCreator->createMedia($multimediaObject, $job);
     }
 
     private function getNextJob()

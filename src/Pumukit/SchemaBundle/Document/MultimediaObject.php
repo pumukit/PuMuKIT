@@ -54,6 +54,8 @@ class MultimediaObject
     public const TYPE_AUDIO = 2;
     public const TYPE_EXTERNAL = 3;
     public const TYPE_LIVE = 4;
+    public const TYPE_IMAGE = 5;
+    public const TYPE_DOCUMENT = 6;
 
     public static $statusTexts = [
         self::STATUS_PUBLISHED => 'Published',
@@ -69,6 +71,8 @@ class MultimediaObject
         self::TYPE_AUDIO => 'Audio',
         self::TYPE_EXTERNAL => 'External',
         self::TYPE_LIVE => 'Live',
+        self::TYPE_IMAGE => 'Image',
+        self::TYPE_DOCUMENT => 'Document',
     ];
 
     /**
@@ -142,6 +146,11 @@ class MultimediaObject
      * @MongoDB\EmbedMany(targetDocument=EmbeddedTag::class)
      */
     private $tags;
+
+    /**
+     * @MongoDB\EmbedMany(targetDocument=MediaInterface::class)
+     */
+    private $medias;
 
     /**
      * @MongoDB\EmbedMany(targetDocument=Track::class)
@@ -230,7 +239,7 @@ class MultimediaObject
     private $duration = 0;
 
     /**
-     * @MongoDB\Field(type="int", strategy="increment" )
+     * @MongoDB\Field(type="int", strategy="increment")
      */
     private $numview = 0;
 
@@ -371,6 +380,36 @@ class MultimediaObject
     public function getType(): int
     {
         return $this->type;
+    }
+
+    public function setVideoType(): void
+    {
+        $this->type = self::TYPE_VIDEO;
+    }
+
+    public function setAudioType(): void
+    {
+        $this->type = self::TYPE_AUDIO;
+    }
+
+    public function setLiveType(): void
+    {
+        $this->type = self::TYPE_LIVE;
+    }
+
+    public function setImageType(): void
+    {
+        $this->type = self::TYPE_IMAGE;
+    }
+
+    public function setDocumentType(): void
+    {
+        $this->type = self::TYPE_DOCUMENT;
+    }
+
+    public function setExternalType(): void
+    {
+        $this->type = self::TYPE_EXTERNAL;
     }
 
     public function getStringType($type): string

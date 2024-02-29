@@ -14,7 +14,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
     private $logger;
     private $command;
 
-    public function __construct($command = null, LoggerInterface $logger = null)
+    public function __construct(string $command = null, LoggerInterface $logger = null)
     {
         $this->command = $command ?: 'ffprobe -v quiet -print_format json -show_format -show_streams "{{file}}"';
         $this->logger = $logger;
