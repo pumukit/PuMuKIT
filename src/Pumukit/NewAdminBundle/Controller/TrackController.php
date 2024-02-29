@@ -205,27 +205,25 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
     /**
      * @ParamConverter("multimediaObject", options={"id" = "mmId"})
-     *
-     * @Template("@PumukitNewAdmin/Track/info.html.twig")
      */
     public function infoAction(Request $request, MultimediaObject $multimediaObject)
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
-        $isPlayable = $track->containsTag('display');
+        $isPlayable = $track->tags()->containsTag('display');
         $isPublished = $multimediaObject->containsTagWithCod(PumukitWebTVBundle::WEB_TV_TAG) && MultimediaObject::STATUS_PUBLISHED == $multimediaObject->getStatus();
 
         $job = null;
-        if ($track->getPath()) {
-            $job = $this->documentManager->getRepository(Job::class)->findOneBy(['path_end' => $track->getPath()]);
+        if ($track->storage()->path()->path()) {
+            $job = $this->documentManager->getRepository(Job::class)->findOneBy(['path_end' => $track->storage()->path()->path()]);
         }
 
-        return [
+        return $this->render("@PumukitNewAdmin/Track/info.html.twig", [
             'track' => $track,
             'job' => $job,
             'mm' => $multimediaObject,
             'is_playable' => $isPlayable,
             'is_published' => $isPublished,
-        ];
+        ]);
     }
 
     /**
@@ -418,7 +416,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         $priority = 2;
 
         $jobOptions = new JobOptions($profile, $priority, $track->language(), $track->description(), []);
-        $path = Path::create($track->getPath());
+        $path = Path::create($track->storage()->path()->path());
         $this->jobCreator->fromPath($multimediaObject, $path, $jobOptions);
 
         return $this->redirectToRoute('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]);

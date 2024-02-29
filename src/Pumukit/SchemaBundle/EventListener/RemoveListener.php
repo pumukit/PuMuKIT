@@ -8,6 +8,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use MongoDB\BSON\ObjectId;
 use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\EncoderBundle\Services\JobRemover;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -33,6 +34,7 @@ class RemoveListener
     private $embeddedBroadcastService;
     private $userService;
     private $translator;
+    private JobRemover $jobRemover;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -41,6 +43,7 @@ class RemoveListener
         MultimediaObjectPicService $multimediaObjectPicService,
         SeriesPicService $seriesPicService,
         JobService $jobService,
+        JobRemover $jobRemover,
         TagService $tagService,
         EmbeddedBroadcastService $embeddedBroadcastService,
         UserService $userService,
@@ -56,6 +59,7 @@ class RemoveListener
         $this->embeddedBroadcastService = $embeddedBroadcastService;
         $this->userService = $userService;
         $this->translator = $translator;
+        $this->jobRemover = $jobRemover;
     }
 
     public function preRemove(LifecycleEventArgs $args)
@@ -95,7 +99,7 @@ class RemoveListener
 
             $allJobs = $jobRepo->findByMultimediaObjectId($document->getId());
             foreach ($allJobs as $job) {
-                $this->jobService->deleteJob($job->getId());
+                $this->jobRemover->delete($job);
             }
 
             foreach ($document->getTracks() as $track) {

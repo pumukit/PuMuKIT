@@ -75,14 +75,15 @@
                         {% trans %}RETRY{% endtrans %}
                     </button>
                 {% endif %}
+                {% if job.isWaiting() or job.isExecuting() %}
+                    <button type="submit" class="btn btn-warning btn-raised"
+                            onclick="$.post('{{ path('pumukit_encoder_error_job') }}', {'jobId': '{{ job.id }}', '_method': 'POST', 'success': function(){window.location.reload()}}); return false;"
+                            data-dismiss="modal">
+                        {% trans %}STOP{% endtrans %}
+                    </button>
+                {% endif %}
                 {% if job.isFailed() or job.isWaiting() %}
-                    {% if job.isWaiting()  %}
-                        <button type="submit" class="btn btn-warning btn-raised"
-                                onclick="$.post('{{ path('pumukit_encoder_error_job') }}', {'jobId': '{{ job.id }}', '_method': 'POST', 'success': function(){window.location.reload()}}); return false;"
-                                data-dismiss="modal">
-                            {% trans %}STOP{% endtrans %}
-                        </button>
-                    {% endif %}
+                    {
                     <button type="submit" class="btn btn-danger btn-raised"
                             onclick="$.post('{{ path('pumukit_encoder_delete_job') }}', {'jobId': '{{ job.id }}', '_method': 'DELETE', 'success': function(){window.location.reload()}}); return false;"
                             data-dismiss="modal">
