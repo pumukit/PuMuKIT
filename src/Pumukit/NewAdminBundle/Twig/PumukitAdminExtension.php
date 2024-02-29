@@ -59,7 +59,7 @@ class PumukitAdminExtension extends AbstractExtension
             new TwigFilter('profile', [$this, 'getProfile']),
             new TwigFilter('display', [$this, 'getDisplay']),
             new TwigFilter('duration_string', [$this, 'getDurationString']),
-            new TwigFilter('language_name', [$this, 'getLanguageName']),
+            new TwigFilter('language_name_custom', [$this, 'getLanguageName']),
             new TwigFilter('status_icon', [$this, 'getStatusIcon']),
             new TwigFilter('status_text', [$this, 'getStatusText']),
             new TwigFilter('series_icon', [$this, 'getSeriesIcon']),
@@ -94,6 +94,7 @@ class PumukitAdminExtension extends AbstractExtension
             new TwigFunction('status_string_text_by_value', [$this, 'getStatusTextByValue']),
             new TwigFunction('role_string_text_by_value', [$this, 'getRoleTextByValue']),
             new TwigFunction('is_immutable', [$this, 'isImmutable']),
+            new TwigFunction('is_addon_language', [$this, 'isAddonLanguage']),
         ];
     }
 
@@ -170,6 +171,17 @@ class PumukitAdminExtension extends AbstractExtension
         }
 
         return $code;
+    }
+
+    public function isAddonLanguage(string $code): bool
+    {
+        $addonLanguages = CustomLanguageType::$addonLanguages;
+
+        if (isset($addonLanguages[$code])) {
+            return true;
+        }
+
+        return false;
     }
 
     public function getStatusIcon(int $status): string
