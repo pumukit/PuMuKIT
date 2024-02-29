@@ -76,6 +76,7 @@ RUN apt-get update \
 		opcache \
 		mongodb \
 		redis \
+		vim \
 		&& pecl clear-cache
 
 COPY --from=linuxserver/ffmpeg:version-6.0-cli /usr/local /usr/local
@@ -100,6 +101,8 @@ RUN \
     libxext6 \
     libxfixes3 \
     libxml2 \
+	libimage-exiftool-perl \
+	imagemagick \
     ocl-icd-libopencl1 && \
   echo "**** clean up ****" && \
 	apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
