@@ -12,7 +12,7 @@ ARG PHP_REDIS_VERSION=5.3.4
 ARG DEBIAN_FRONTEND=noninteractive
 
 ENV PHP_FPM_PM="dynamic" \
-	PHP_FPM_MAX_CHILDREN="5" \
+	PHP_FPM_MAX_CHILDREN="5" \ 
 	PHP_FPM_START_SERVERS="2" \
 	PHP_FPM_MIN_SPARE_SERVERS="1" \
 	PHP_FPM_MAX_SPARE_SERVERS="2" \
@@ -27,13 +27,13 @@ ENV PHP_FPM_PM="dynamic" \
 USER root
 
 RUN apt-get update \
-		&& apt-get install -y --no-install-recommends \
+		&& apt-get install -y --no-install-recommends \ 
 		python3-pip \
 		gettext \
 		git \
 		&& apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* \
 		&& pip install google-api-python-client --break-system-packages
-
+		
 RUN apt-get update \
 		&& apt-get install -y --no-install-recommends \
 		libpng-dev \
@@ -76,33 +76,35 @@ RUN apt-get update \
 		opcache \
 		mongodb \
 		redis \
+		vim \
 		&& pecl clear-cache
 
 COPY --from=linuxserver/ffmpeg:version-6.0-cli /usr/local /usr/local
 
 RUN \
-	echo "**** install runtime ****" && \
-	apt-get update && \
-	apt-get install -y \
-	libexpat1 \
-	libglib2.0-0 \
-	libgomp1 \
-	libharfbuzz0b \
-	libpciaccess0 \
-	libv4l-0 \
-	libwayland-client0 \
-	libx11-6 \
-	libx11-xcb1 \
-	libxcb-dri3-0 \
-	libxcb-shape0 \
-	libxcb-xfixes0 \
-	libxcb1 \
-	libxext6 \
-	libxfixes3 \
-	libxml2 \
-	darktable \
-	ocl-icd-libopencl1 && \
-	echo "**** clean up ****" && \
+  echo "**** install runtime ****" && \
+    apt-get update && \
+    apt-get install -y \
+    libexpat1 \
+    libglib2.0-0 \
+    libgomp1 \
+    libharfbuzz0b \
+    libpciaccess0 \
+    libv4l-0 \
+    libwayland-client0 \
+    libx11-6 \
+    libx11-xcb1 \
+    libxcb-dri3-0 \
+    libxcb-shape0 \
+    libxcb-xfixes0 \
+    libxcb1 \
+    libxext6 \
+    libxfixes3 \
+    libxml2 \
+	libimage-exiftool-perl \
+	imagemagick \
+    ocl-icd-libopencl1 && \
+  echo "**** clean up ****" && \
 	apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
