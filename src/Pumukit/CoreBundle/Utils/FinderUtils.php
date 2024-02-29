@@ -12,7 +12,7 @@ final class FinderUtils
     {
         (new FinderUtils())->isValidPath($path);
 
-        $finder = (new FinderUtils())->finder();
+        $finder = self::getFinder();
 
         return $finder->depth('0')->directories()->in($path);
     }

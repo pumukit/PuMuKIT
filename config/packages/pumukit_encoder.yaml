@@ -52,7 +52,6 @@ services:
       $binPath: '%kernel.project_dir%/bin/'
       $environment:      '%kernel.environment%'
       $maxExecutionJobSeconds: '%pumukitencode.max_execution_job_seconds%'
-      $tmpPath:          '%pumukit.tmp%'
     tags:
       - { name: "monolog.logger", channel: "encoder" }
 

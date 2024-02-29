@@ -11,3 +11,6 @@ services:
     class: Pumukit\InspectionBundle\Services\InspectionFfprobeService
     arguments:
       $command: '%pumukit.inspection.command%'
+
+  Pumukit\InspectionBundle\Services\InspectionImageService:
+    class: Pumukit\InspectionBundle\Services\InspectionImageService

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Pumukit\CoreBundle\Command;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Psr\Log\LoggerInterface;
+use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\CoreBundle\Utils\SemaphoreUtils;
 use Pumukit\EncoderBundle\Services\DTO\JobOptions;
 use Pumukit\EncoderBundle\Services\JobCreator;
@@ -40,6 +42,8 @@ class CreateMMOCommand extends Command
         'blocked' => MultimediaObject::STATUS_BLOCKED,
         'hidden' => MultimediaObject::STATUS_HIDDEN,
     ];
+    private LoggerInterface $logger;
+    private i18nService $i18nService;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -48,6 +52,8 @@ class CreateMMOCommand extends Command
         FactoryService $factoryService,
         TagService $tagService,
         ProfileService $profileService,
+        i18nService $i18nService,
+        LoggerInterface $logger,
         array $locales,
         string $locale = 'en',
         ?string $wizardSimpleDefaultMasterProfile = null
@@ -62,6 +68,8 @@ class CreateMMOCommand extends Command
         $this->locale = $locale;
         $this->locales = array_unique(array_merge($locales, ['en']));
         parent::__construct();
+        $this->logger = $logger;
+        $this->i18nService = $i18nService;
     }
 
     protected function configure(): void
@@ -123,11 +131,12 @@ EOT
             sleep(2);
         }
 
-        if (false !== strpos($path, 'INBOX_MASTER_BROADCASTABLE')) {
+        // TODO CHECK PERFILES NEW FEATURES
+        if (str_contains($path, 'INBOX_MASTER_BROADCASTABLE')) {
             $profile = 'broadcastable_master';
-        } elseif (false !== strpos($path, 'INBOX_MASTER_COPY')) {
+        } elseif (str_contains($path, 'INBOX_MASTER_COPY')) {
             $profile = 'master_copy';
-        } elseif (false !== strpos($path, 'INBOX_MASTER_H264')) {
+        } elseif (str_contains($path, 'INBOX_MASTER_H264')) {
             $profile = 'master_video_h264';
         } else {
             $profile = $this->getDefaultMasterProfile();
@@ -141,16 +150,16 @@ EOT
 
         $title = substr(basename($path), 0, -4);
 
-        try {
-            // exception if is not a mediafile (video or audio)
-            $duration = $this->inspectionService->getDuration($path);
-        } catch (\Exception $e) {
-            throw new \Exception('The file  ('.$path.') is not a valid video or audio file');
-        }
-
-        if (0 == $duration) {
-            throw new \Exception('The file ('.$path.') is not a valid video or audio file (duration is zero)');
-        }
+//        try {
+//            // exception if is not a mediafile (video or audio)
+//            $duration = $this->inspectionService->getDuration($path);
+//        } catch (\Exception $e) {
+//            throw new \Exception('The file  ('.$path.') is not a valid video or audio file');
+//        }
+//
+//        if (0 == $duration) {
+//            throw new \Exception('The file ('.$path.') is not a valid video or audio file (duration is zero)');
+//        }
 
         $semaphore = SemaphoreUtils::acquire(1000001);
 
@@ -168,14 +177,16 @@ EOT
         if (!$user) {
             $this->tagService->addTagByCodToMultimediaObject($multimediaObject, PumukitWebTVBundle::WEB_TV_TAG);
         }
-        foreach ($this->locales as $l) {
-            $multimediaObject->setTitle($title, $l);
-        }
-        if (null !== $status) {
-            $multimediaObject->setStatus($status);
-        }
 
-        $jobOptions = new JobOptions($profile, 2, $locale, '', []);
+        $i18nTitle = $this->i18nService->generateI18nText($title);
+        $multimediaObject->setI18nTitle($i18nTitle);
+//        foreach ($this->locales as $l) {
+//            $multimediaObject->setTitle($title, $l);
+//        }
+        (null !== $status) ? $multimediaObject->setStatus($status) : $multimediaObject->setStatus(MultimediaObject::STATUS_BLOCKED);
+
+        $profile = 'master_copy';
+        $jobOptions = new JobOptions($profile, 2, $locale, [], []);
         $path = Path::create($path);
         $this->jobCreator->fromPath($multimediaObject, $path, $jobOptions);
 

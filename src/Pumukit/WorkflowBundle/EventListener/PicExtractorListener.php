@@ -11,6 +11,7 @@ use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\EncoderBundle\Services\PicExtractorService;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
+use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class PicExtractorListener
@@ -57,6 +58,10 @@ class PicExtractorListener
 
     private function generatePic(MultimediaObject $multimediaObject, MediaInterface $media): void
     {
+        if($multimediaObject->getType() !== MultimediaObject::TYPE_VIDEO) {
+            return;
+        }
+
         $this->documentManager->refresh($multimediaObject);
 
         if (!$this->autoExtractPic) {

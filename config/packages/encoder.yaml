@@ -26,7 +26,7 @@ pumukit_encoder:
       app: cp
       rel_duration_size: 1
       rel_duration_trans: 1
-    master_video_h264:
+    video_master_h264:
       display: false
       wizard: true
       master: true
@@ -51,7 +51,7 @@ pumukit_encoder:
       app: ffmpeg
       rel_duration_size: 1
       rel_duration_trans: 1
-    broadcastable_master:
+    video_master_broadcastable:
       display: true
       wizard: true
       master: true
@@ -77,7 +77,7 @@ pumukit_encoder:
       app: ffmpeg
       rel_duration_size: 1
       rel_duration_trans: 1
-    video_h264:
+    video_broadcastable:
       generate_pic: false
       display: true
       wizard: true
@@ -105,7 +105,7 @@ pumukit_encoder:
       app: ffmpeg
       rel_duration_size: 1
       rel_duration_trans: 1
-    audio_aac:
+    audio_broadcastable:
       display: true
       wizard: true
       master: false
@@ -135,8 +135,8 @@ pumukit_encoder:
 
   target_default_profiles:
     PUCHWEBTV:
-      audio: "audio_aac"
-      video: "video_h264"
+      audio: "audio_broadcastable"
+      video: "video_broadcastable"
     PUCHPODCAST:
-      audio: "audio_aac"
-      video: "video_h264 audio_aac"
+      audio: "audio_broadcastable"
+      video: "video_broadcastable audio_broadcastable"
