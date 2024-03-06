@@ -10,7 +10,10 @@ use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\GroupService;
 use Pumukit\SchemaBundle\Services\UserService;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -73,7 +76,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
      * Overwrite to return list and not index
      * and show toast message.
      *
-     * @return JsonResponse|Response|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return JsonResponse|Response|RedirectResponse
      */
     public function createAction(Request $request)
     {
@@ -112,7 +115,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
      * Overwrite to return list and not index
      * and show toast message.
      *
-     * @return JsonResponse|Response|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return JsonResponse|Response|RedirectResponse
      */
     public function updateAction(Request $request)
     {
@@ -307,7 +310,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
      * @param string|null $resource
      * @param string      $locale
      *
-     * @return \Symfony\Component\Form\Form|\Symfony\Component\Form\FormInterface
+     * @return Form|FormInterface
      */
     public function getForm($resource = null, $locale = 'en')
     {
