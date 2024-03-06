@@ -7,7 +7,6 @@ namespace Pumukit\EncoderBundle\EventListener;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\JobRemover;
-use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Event\TrackEvent;

@@ -30,7 +30,9 @@ class Permission
     public const SHOW_WIZARD_MENU = 'ROLE_SHOW_WIZARD_MENU';
     public const ACCESS_API = 'ROLE_ACCESS_API';
     public const ACCESS_INBOX = 'ROLE_ACCESS_INBOX';
-    public const UPLOAD_INBOX = 'ROLE_UPLOAD_INBOX';
+
+    // TODO: DIGIREPO REMOVE
+    //    public const UPLOAD_INBOX = 'ROLE_UPLOAD_INBOX';
     public const MODIFY_OWNER = 'ROLE_MODIFY_OWNER';
     public const ADD_OWNER = 'ROLE_ADD_OWNER';
     public const INIT_STATUS_PUBLISHED = 'ROLE_INIT_STATUS_PUBLISHED';
@@ -233,13 +235,14 @@ class Permission
                 PermissionProfile::SCOPE_PERSONAL => [],
             ],
         ],
-        self::UPLOAD_INBOX => [
-            'description' => 'Upload Inbox',
-            'dependencies' => [
-                PermissionProfile::SCOPE_GLOBAL => [],
-                PermissionProfile::SCOPE_PERSONAL => [],
-            ],
-        ],
+        // TODO: DIGIREPO REMOVE
+//        self::UPLOAD_INBOX => [
+//            'description' => 'Upload Inbox',
+//            'dependencies' => [
+//                PermissionProfile::SCOPE_GLOBAL => [],
+//                PermissionProfile::SCOPE_PERSONAL => [],
+//            ],
+//        ],
         self::MODIFY_OWNER => [
             'description' => 'Modify Owners & Groups',
             'dependencies' => [

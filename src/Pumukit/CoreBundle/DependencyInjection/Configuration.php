@@ -93,7 +93,7 @@ class Configuration implements ConfigurationInterface
             ->info('Color on all progress bars using uppy')
             ->end()
             ->scalarNode('inboxUploadURL')
-            ->defaultValue('tus')
+            ->defaultValue('https://localhost/tus')
             ->info('URL to process uploaded files. Ex: https://localhost/tus')
             ->end()
             ->scalarNode('inboxUploadLIMIT')

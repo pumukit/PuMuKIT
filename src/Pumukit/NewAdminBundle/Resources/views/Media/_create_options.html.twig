@@ -1,0 +1,30 @@
+{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADVANCED_UPLOAD')) %}
+
+    {% if not mm.isExternalType() %}
+        <tr>
+            <td><ul><li></li></ul></td>
+            <td colspan="11">
+                <a class="button_new_master" data-toggle="modal" data-backdrop="static" data-target="#myModal" href="{{ path('pumukitnewadmin_track_create', {'id': mm.id}) }}">{% trans %}New master{% endtrans %}...</a>
+            </td>
+        </tr>
+    {% endif %}
+    {% if mm.isExternalType() and not mm.external() %}
+        <tr>
+            <td><ul><li></li></ul></td>
+            <td colspan="11">
+                <a class="button_new_master" data-toggle="modal" data-backdrop="static" data-target="#myModal" href="">{% trans %}New external video{% endtrans %}...</a>
+            </td>
+        </tr>
+    {% endif %}
+{% else %}
+    {% if 0 == jobs|length and 0 == tracks|length and (not mm.getProperty('opencast') or not opencast_exists) and not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADVANCED_UPLOAD')) %}
+        <tr>
+            <td>
+                <ul>
+                    <li></li>
+                </ul>
+            </td>
+            <td colspan="11">{% trans %}Object without video files.{% endtrans %}</td>
+        </tr>
+    {% endif %}
+{% endif %}

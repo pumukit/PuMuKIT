@@ -9,6 +9,7 @@ use Psr\Log\LoggerInterface;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\DTO\JobOptions;
 use Pumukit\EncoderBundle\Services\JobCreator;
+use Pumukit\EncoderBundle\Services\JobRemover;
 use Pumukit\EncoderBundle\Services\JobRender;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\JobUpdater;
@@ -44,7 +45,6 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     private $logger;
     private $documentManager;
     private $translator;
-    private $jobService;
     private $trackService;
     private $profileService;
     private $inspectionService;
@@ -55,14 +55,15 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     private JobRender $jobRender;
     private JobRepository $jobRepository;
     private JobUpdater $jobUpdater;
+    private JobRemover $jobRemover;
 
     public function __construct(
         LoggerInterface $logger,
         DocumentManager $documentManager,
         TranslatorInterface $translator,
-        JobService $jobService,
         JobCreator $jobCreator,
         JobUpdater $jobUpdater,
+        JobRemover $jobRemover,
         JobRender $jobRender,
         JobRepository $jobRepository,
         TrackService $trackService,
@@ -75,7 +76,6 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         $this->logger = $logger;
         $this->documentManager = $documentManager;
         $this->translator = $translator;
-        $this->jobService = $jobService;
         $this->trackService = $trackService;
         $this->profileService = $profileService;
         $this->inspectionService = $inspectionService;
@@ -86,6 +86,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         $this->jobRender = $jobRender;
         $this->jobRepository = $jobRepository;
         $this->jobUpdater = $jobUpdater;
+        $this->jobRemover = $jobRemover;
     }
 
     /**
@@ -291,7 +292,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
         return [
             'mm' => $multimediaObject,
-            'tracks' => $multimediaObject->getTracks(),
+            'tracks' => $multimediaObject->getMedias(),
             'jobs' => $jobs,
             'not_master_profiles' => $notMasterProfiles,
             'oc' => '',
@@ -334,7 +335,8 @@ class TrackController extends AbstractController implements NewAdminControllerIn
      */
     public function deleteJobAction(Request $request, MultimediaObject $multimediaObject)
     {
-        $this->jobService->deleteJob($request->get('jobId'));
+        $job = $this->jobRepository->searchJob($request->get('jobId'));
+        $this->jobRemover->delete($job);
 
         $this->addFlash('success', 'delete job');
 
@@ -347,11 +349,10 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     public function updateJobPriorityAction(Request $request)
     {
         $priority = (int) $request->get('priority');
-        $jobId = $request->get('jobId');
-        $job = $this->documentManager->getRepository(Job::class)->findOneBy(['_id' => $jobId]);
+        $job = $this->jobRepository->searchJob($request->get('jobId'));
         $this->jobUpdater->updateJobPriority($job, $priority);
 
-        return new JsonResponse(['jobId' => $jobId, 'priority' => $priority]);
+        return new JsonResponse(['jobId' => $job->getId(), 'priority' => $priority]);
     }
 
     /**

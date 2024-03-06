@@ -31,6 +31,11 @@ final class Storage
         ];
     }
 
+    public function fileName(): string
+    {
+        return empty($this->toArray()['path']) ? $this->toArray()['url'] : basename($this->toArray()['path']);
+    }
+
     public function url(): Url
     {
         return $this->url;

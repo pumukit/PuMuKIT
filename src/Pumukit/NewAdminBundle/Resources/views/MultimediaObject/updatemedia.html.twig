@@ -15,10 +15,10 @@
             {% include '@PumukitNewAdmin/MultimediaObject/HeadAndTail/_form.html.twig' with {'resource': mm, 'resource_name': 'mms'} %}
 
             <div class="form-row">
-                <dt>{% trans %}Video Files{% endtrans %}:</dt>
+                <dt>{% trans %}Media Files{% endtrans %}:</dt>
                 <dd>
                     <div id="tracks_mms_{{ mm.id }}" style="overflow:visible;">
-                        {% include '@PumukitNewAdmin/Track/list.html.twig' with {'mm': mm, 'tracks': mm.getTracks(), 'oc': ''} %}
+                        {% include '@PumukitNewAdmin/Media/list.html.twig' %}
                     </div>
                 </dd>
             </div>

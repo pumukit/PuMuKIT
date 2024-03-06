@@ -77,11 +77,12 @@ class Builder implements ContainerAwareInterface
             $series->addChild('Multimedia', ['route' => 'pumukitnewadmin_mms_index', 'attributes' => ['class' => 'menu_series_mms']]);
             $series->setDisplayChildren(false);
 
-            $activeMmsListAll = $this->container->getParameter('pumukit.show_mms_list_all_menu');
-            if ($activeMmsListAll) {
-                $options = ['route' => 'pumukitnewadmin_mms_indexall', 'attributes' => ['class' => 'menu_multimedia_object_all']];
-                $mediaManager->addChild($this->container->getParameter('pumukit_new_admin.multimedia_object_label'), $options);
-            }
+            // TODO: DIGIREPO REMOVE
+//            $activeMmsListAll = $this->container->getParameter('pumukit.show_mms_list_all_menu');
+//            if ($activeMmsListAll) {
+//                $options = ['route' => 'pumukitnewadmin_mms_indexall', 'attributes' => ['class' => 'menu_multimedia_object_all']];
+//                $mediaManager->addChild($this->container->getParameter('pumukit_new_admin.multimedia_object_label'), $options);
+//            }
 
             $options = ['route' => 'pumukitnewadmin_unesco_index', 'attributes' => ['class' => 'menu_tag_catalogue']];
             $unesco = $mediaManager->addChild('UNESCO catalogue', $options);

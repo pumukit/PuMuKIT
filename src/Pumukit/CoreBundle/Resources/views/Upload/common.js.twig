@@ -16,9 +16,10 @@ function sendInboxXHRImportRequest(file)
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "{{ path('inbox_auto_import') }}", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    var xhrSend = "fileName="+file.name;
-    {% if folder is defined and folder %}
-        xhrSend = "fileName="+file.name+"&folder={{ folder }}";
-    {% endif %}
+    {# TODO: REMOVE DIGIREPO #}
+    {#var xhrSend = "fileName="+file.name;#}
+    {#{% if folder is defined and folder %}#}
+    var xhrSend = "fileName=" + file.name + "&series={{ series.id }}";
+{#    {% endif %}#}
     xhr.send(xhrSend);
 }

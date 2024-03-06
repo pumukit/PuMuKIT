@@ -97,22 +97,22 @@ final class JobCreator
         $profile = $this->profileValidator->ensureProfileExists($jobOptions->profile());
 
         if (str_contains($mimeType, 'image/')) {
-            $this->logger->warning('Imagen');
             $multimediaObject->setImageType();
+            $this->documentManager->flush();
 
             return $this->generateJob($multimediaObject, $jobOptions, $pathFile, 0);
         }
 
-        if (str_contains($mimeType, 'application/')) {
-            $this->logger->warning('APPLICATION');
+        if (str_contains($mimeType, 'application/')) {;
             $multimediaObject->setDocumentType();
+            $this->documentManager->flush();
 
             return $this->generateJob($multimediaObject, $jobOptions, $pathFile, 0);
         }
 
         if (str_contains($mimeType, 'video/')) {
-            $this->logger->warning('Video');
             $multimediaObject->setVideoType();
+            $this->documentManager->flush();
 
             $duration = $this->jobValidator->validateTrack($profile, $jobOptions, $pathFile);
 

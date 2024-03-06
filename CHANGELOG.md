@@ -5,6 +5,33 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 To get the diff for a specific change, go to https://github.com/pumukit/PuMuKIT/commit/XXX where XXX is the change hash.
 To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/compare/3.0.0...3.1.x.
 
+## [4.1.0](https://github.com/pumukit/PuMuKIT/compare/4.0.0...4.1.0) - (2024-03-xx)
+
+#### Added
+
+- Add support for multiple types of media (docs, images, audio, video, external, etc.).
+- Wizard and inbox are now unified in a single upload page.
+
+#### Changed
+
+- Refactor schema for multimedia objects to support multiple types of media.
+- Rename of "Wizard" to "Upload" inside series.
+
+#### Removed
+
+- Remove list all multimedia objects menu on backoffice ( legacy feature ).
+- Remove support BC for PHP 7.4 or lower.
+- Remove "New" option inside series.
+- Remove simple wizard
+
+#### Fixed
+
+
+
+#### Security
+
+
+
 ## [4.0.0](https://github.com/pumukit/PuMuKIT/compare/3.9.0...4.0.0) - (2023-07-04)
 
 #### Added
