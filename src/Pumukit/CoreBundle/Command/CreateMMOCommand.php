@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\CoreBundle\Command;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\ObjectId;
 use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\CoreBundle\Utils\SemaphoreUtils;
@@ -81,6 +82,7 @@ class CreateMMOCommand extends Command
             ->addArgument('inotify_event', InputArgument::OPTIONAL, 'inotify event, only works with IN_CLOSE_WRITE', 'IN_CLOSE_WRITE')
             ->addOption('status', null, InputOption::VALUE_OPTIONAL, 'Multimedia object initial status (\'published\', \'blocked\' or \'hidden\')')
             ->addOption('user', null, InputOption::VALUE_OPTIONAL, 'User was upload video')
+            ->addOption('series', null, InputOption::VALUE_REQUIRED, 'Series to create multimedia object')
             ->setHelp(
                 <<<'EOT'
 This command create a multimedia object from a multimedia file path
@@ -163,13 +165,17 @@ EOT
 
         $semaphore = SemaphoreUtils::acquire(1000001);
 
-        $series = $this->documentManager->getRepository(Series::class)->findOneBy(['title.'.$locale => $seriesTitle]);
-        if (!$series) {
-            $seriesTitleAllLocales = [$locale => $seriesTitle];
-            foreach ($this->locales as $l) {
-                $seriesTitleAllLocales[$l] = $seriesTitle;
-            }
-            $series = $this->factoryService->createSeries(null, $seriesTitleAllLocales);
+//        $series = $this->documentManager->getRepository(Series::class)->findOneBy(['title.'.$locale => $seriesTitle]);
+        $seriesId = $input->getOption('series');
+        $series = $this->documentManager->getRepository(Series::class)->findOneBy(['_id' => new ObjectId($seriesId)]);
+        if (!$series instanceof Series) {
+            throw new \Exception('The series ('.$seriesId.') is not a valid');
+            // TODO: DIGIREPO REMOVE
+//            $seriesTitleAllLocales = [$locale => $seriesTitle];
+//            foreach ($this->locales as $l) {
+//                $seriesTitleAllLocales[$l] = $seriesTitle;
+//            }
+//            $series = $this->factoryService->createSeries(null, $seriesTitleAllLocales);
         }
 
         $user = $this->findUser($input->getOption('user'));

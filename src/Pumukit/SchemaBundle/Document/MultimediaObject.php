@@ -10,6 +10,7 @@ use Doctrine\ODM\MongoDB\DocumentNotFoundException;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Pumukit\SchemaBundle\Document\MediaType\Document;
+use Pumukit\SchemaBundle\Document\MediaType\External;
 use Pumukit\SchemaBundle\Document\MediaType\Image;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
@@ -146,11 +147,6 @@ class MultimediaObject
     private $tags;
 
     /**
-     * @MongoDB\EmbedMany(targetDocument=MediaInterface::class)
-     */
-    private $medias;
-
-    /**
      * @MongoDB\EmbedMany(targetDocument=Track::class)
      */
     private $tracks;
@@ -159,6 +155,11 @@ class MultimediaObject
      * @MongoDB\EmbedMany(targetDocument=Document::class)
      */
     private $documents;
+
+    /**
+     * @MongoDB\EmbedMany(targetDocument=External::class)
+     */
+    private $external;
 
     /**
      * @MongoDB\EmbedMany(targetDocument=Image::class)
@@ -277,6 +278,7 @@ class MultimediaObject
         $this->tracks = new ArrayCollection();
         $this->documents = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->external = new ArrayCollection();
         $this->tags = new ArrayCollection();
         $this->people = new ArrayCollection();
         $this->groups = new ArrayCollection();
@@ -378,6 +380,11 @@ class MultimediaObject
         $this->type = self::TYPE_VIDEO;
     }
 
+    public function isVideoAudioType(): bool
+    {
+        return self::TYPE_VIDEO === $this->getType() || self::TYPE_AUDIO === $this->getType();
+    }
+
     public function setAudioType(): void
     {
         $this->type = self::TYPE_AUDIO;
@@ -388,9 +395,19 @@ class MultimediaObject
         $this->type = self::TYPE_LIVE;
     }
 
+    public function isLiveType(): bool
+    {
+        return self::TYPE_LIVE === $this->getType();
+    }
+
     public function setImageType(): void
     {
         $this->type = self::TYPE_IMAGE;
+    }
+
+    public function isImageType(): bool
+    {
+        return self::TYPE_IMAGE === $this->getType();
     }
 
     public function setDocumentType(): void
@@ -398,9 +415,19 @@ class MultimediaObject
         $this->type = self::TYPE_DOCUMENT;
     }
 
+    public function isDocumentType(): bool
+    {
+        return self::TYPE_DOCUMENT === $this->getType();
+    }
+
     public function setExternalType(): void
     {
         $this->type = self::TYPE_EXTERNAL;
+    }
+
+    public function isExternalType(): bool
+    {
+        return self::TYPE_EXTERNAL === $this->getType();
     }
 
     public function getStringType($type): string
@@ -866,6 +893,11 @@ class MultimediaObject
         $this->documents->add($document);
     }
 
+    public function addExternal(External $external): void
+    {
+        $this->external->add($external);
+    }
+
     public function addImage(Image $image): void
     {
         $this->images->add($image);
@@ -912,6 +944,16 @@ class MultimediaObject
         return $this->tracks->contains($track);
     }
 
+    public function getMedias(): array
+    {
+        return array_merge($this->tracks->toArray(), $this->documents->toArray(), $this->external->toArray(), $this->images->toArray());
+    }
+
+    public function getMediasWithoutExternal(): array
+    {
+        return array_merge($this->tracks->toArray(), $this->documents->toArray(), $this->images->toArray());
+    }
+
     /**
      * Deprecated Use method tracks instead getTracks.
      */
@@ -930,6 +972,11 @@ class MultimediaObject
         return $this->documents;
     }
 
+    public function external()
+    {
+        return $this->external;
+    }
+
     public function images()
     {
         return $this->images;
@@ -937,7 +984,7 @@ class MultimediaObject
 
     public function getTrackById($trackId)
     {
-        foreach ($this->tracks as $track) {
+        foreach ($this->getMedias() as $track) {
             if ($track->id() === $trackId) {
                 return $track;
             }
@@ -950,7 +997,7 @@ class MultimediaObject
     {
         $r = [];
 
-        foreach ($this->tracks as $track) {
+        foreach ($this->getMedias() as $track) {
             if ($track->tags()->contains($tag)) {
                 $r[] = $track;
             }
@@ -961,7 +1008,7 @@ class MultimediaObject
 
     public function getTrackWithTag($tag)
     {
-        foreach ($this->tracks as $track) {
+        foreach ($this->getMedias() as $track) {
             if ($track->tags()->contains($tag)) {
                 return $track;
             }
@@ -974,7 +1021,7 @@ class MultimediaObject
     {
         $r = [];
 
-        foreach ($this->tracks as $track) {
+        foreach ($this->getMedias() as $track) {
             if ($track->tags()->containsAllTags($tags)) {
                 $r[] = $track;
             }
@@ -985,7 +1032,7 @@ class MultimediaObject
 
     public function getTrackWithAllTags(array $tags)
     {
-        foreach ($this->tracks as $track) {
+        foreach ($this->getMedias() as $track) {
             if ($track->tags()->containsAllTags($tags)) {
                 return $track;
             }
@@ -998,7 +1045,7 @@ class MultimediaObject
     {
         $r = [];
 
-        foreach ($this->tracks as $track) {
+        foreach ($this->getMedias() as $track) {
             if ($track->tags()->containsAnyTag($tags)) {
                 $r[] = $track;
             }
@@ -1009,7 +1056,7 @@ class MultimediaObject
 
     public function getTrackWithAnyTag(array $tags)
     {
-        foreach ($this->tracks as $track) {
+        foreach ($this->getMedias() as $track) {
             if ($track->tags()->containsAnyTag($tags)) {
                 return $track;
             }
@@ -1022,7 +1069,7 @@ class MultimediaObject
     {
         $master = $this->getMaster();
 
-        if (!$master) {
+        if (!$master instanceof Track) {
             return 0;
         }
 
@@ -1042,7 +1089,7 @@ class MultimediaObject
 
         $isAudio = $this->isOnlyAudio();
 
-        foreach ($this->tracks as $track) {
+        foreach ($this->getMedias() as $track) {
             if (($isAudio && $track->metadata()->isOnlyAudio()) || (!$isAudio && !$track->metadata()->isOnlyAudio())) {
                 return $track;
             }

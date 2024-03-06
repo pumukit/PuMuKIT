@@ -246,7 +246,7 @@ pumukitnewadmin_mms_listproperties:
         _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectController::listPropertiesAction
 
 pumukitnewadmin_mms_listexternalproperties:
-    path: /{id}/listexternalplayer
+    path: /listexternalplayer
     methods: [GET, POST]
     defaults:
         _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectController::listExternalPlayerAction
@@ -263,19 +263,20 @@ pumukitnewadmin_mms_modal_preview:
     defaults:
         _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectController::modalPreviewAction
 
-pumukitnewadmin_mms_indexall:
-    path: /mmslist
-    methods: [GET]
-    defaults:
-        _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectController::indexAllAction
-        _sylius:
-            filterable: true
-
-pumukitnewadmin_mms_listall:
-    path: /listAll
-    methods: [GET, POST]
-    defaults:
-        _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectController::listAllAction
+# TODO: DIGIREPO REMOVE
+#pumukitnewadmin_mms_indexall:
+#    path: /mmslist
+#    methods: [GET]
+#    defaults:
+#        _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectController::indexAllAction
+#        _sylius:
+#            filterable: true
+#
+#pumukitnewadmin_mms_listall:
+#    path: /listAll
+#    methods: [GET, POST]
+#    defaults:
+#        _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectController::listAllAction
 
 pumukitnewadmin_mms_updateProperty:
     path: /{id}/updateProperty

@@ -12,7 +12,7 @@ ARG PHP_REDIS_VERSION=5.3.4
 ARG DEBIAN_FRONTEND=noninteractive
 
 ENV PHP_FPM_PM="dynamic" \
-	PHP_FPM_MAX_CHILDREN="5" \ 
+	PHP_FPM_MAX_CHILDREN="5" \
 	PHP_FPM_START_SERVERS="2" \
 	PHP_FPM_MIN_SPARE_SERVERS="1" \
 	PHP_FPM_MAX_SPARE_SERVERS="2" \
@@ -27,13 +27,13 @@ ENV PHP_FPM_PM="dynamic" \
 USER root
 
 RUN apt-get update \
-		&& apt-get install -y --no-install-recommends \ 
+		&& apt-get install -y --no-install-recommends \
 		python3-pip \
 		gettext \
 		git \
 		&& apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* \
 		&& pip install google-api-python-client --break-system-packages
-		
+
 RUN apt-get update \
 		&& apt-get install -y --no-install-recommends \
 		libpng-dev \
@@ -76,7 +76,6 @@ RUN apt-get update \
 		opcache \
 		mongodb \
 		redis \
-		vim \
 		&& pecl clear-cache
 
 COPY --from=linuxserver/ffmpeg:version-6.0-cli /usr/local /usr/local

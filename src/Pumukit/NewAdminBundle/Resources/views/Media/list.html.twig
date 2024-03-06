@@ -1,0 +1,75 @@
+{% set need_reload_status = false %}
+<table>
+    <tbody>
+    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+
+        {% include '@PumukitNewAdmin/Media/_jobs.html.twig' %}
+
+        {% for track in mm.getMedias() %}
+            {% if mm.isVideoAudioType() %}
+                {% include '@PumukitNewAdmin/Media/Type/_video.html.twig' %}
+            {% endif %}
+            {% if mm.isImageType() %}
+                {% include '@PumukitNewAdmin/Media/Type/_image.html.twig' %}
+            {% endif %}
+            {% if mm.isDocumentType() %}
+                {% include '@PumukitNewAdmin/Media/Type/_document.html.twig' %}
+            {% endif %}
+            {% if mm.isExternalType() %}
+                {% include '@PumukitNewAdmin/Media/Type/_external.html.twig' %}
+            {% endif %}
+        {% endfor %}
+
+        {% include '@PumukitNewAdmin/Media/_create_options.html.twig' %}
+
+    {% else %}
+        {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+    {% endif %}
+    </tbody>
+</table>
+
+{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+
+    {% if reload_links is defined and reload_links %}
+        <script type="text/javascript">
+            $('#links_mm_{{mm.id}}').load('{{ path('pumukitnewadmin_mms_links', {'id': mm.id}) }}');
+        </script>
+    {% endif %}
+
+    {% if need_reload_status %}
+        <script type="text/javascript">
+            {% if 'XMLHttpRequest' == app.request.headers.get('X-Requested-With')  %}
+            $('#table_mms_status_wrapper_{{ mm.id }}').html('<i class="mdi-navigation-refresh pmk-job-animate table_mms_job_animate" data-toggle="tooltip" data-placement="right" title="{% apply spaceless %}
+            {{ "{0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs."|trans({'%count%':  mm.getProperty('pending_jobs')|length}) }}
+            {{ "{0} |{1} 1 executing job. |]1,Inf[ %count% executing jobs."|trans({'%count%':  mm.getProperty('executing_jobs')|length}) }}
+            {% endapply %}"></i>');
+            {% endif %}
+            setTimeout(function(){
+                $('#tracks_mms_{{ mm.id }}').load('{{ url('pumukitnewadmin_track_list', {'id': mm.id})}}');
+                $('#list_mms').load('{{ path('pumukitnewadmin_mms_list', {'seriesId': mm.getSeries().getId()})|raw }}');
+                $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id })|raw }}');
+            }, 8000);
+        </script>
+    {% endif %}
+{% endif %}
+<script>
+    function toggleHide(trackId){
+        var url = '{{ path('pumukitnewadmin_track_toggle_hide', {'id': '__ID__', 'mmId': mm.id}) }}';
+        url = url.replace('__ID__', trackId);
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: $(this).serialize(),
+            error: function(jqXHR, textStatus, errorThrown){
+                var textError = jqXHR.responseText;
+                var message = errorThrown+': '+textError;
+                no_success(message);
+            },
+            success: function(response){
+                $('#tracks_mms_{{ mm.id }}').html(response);
+                var message = '{% trans %}Track successfully updated.{% endtrans %}';
+                success(message);
+            }
+        });
+    }
+</script>

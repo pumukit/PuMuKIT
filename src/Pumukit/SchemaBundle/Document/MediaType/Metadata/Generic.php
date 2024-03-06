@@ -6,13 +6,37 @@ namespace Pumukit\SchemaBundle\Document\MediaType\Metadata;
 
 final class Generic implements MediaMetadata
 {
+    private string $metadata;
+
+    private function __construct(?string $metadata)
+    {
+        $this->metadata = $metadata;
+    }
+
     public function toArray(): array
     {
-        // TODO: Implement toArray() method.
+        return [
+            'metadata' => $this->metadata,
+        ];
+    }
+
+    public function toString(): string
+    {
+        return $this->metadata() ?? '';
     }
 
     public function metadata(): ?string
     {
-        // TODO: Implement metadata() method.
+        return $this->metadata;
+    }
+
+    public static function create(?string $metadata): Generic
+    {
+        return new self($metadata);
+    }
+
+    public function isEmpty(): bool
+    {
+        return empty($this->metadata);
     }
 }
