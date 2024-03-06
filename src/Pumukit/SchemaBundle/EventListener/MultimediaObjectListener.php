@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Psr\Log\LoggerInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\TextIndexService;
 
@@ -12,11 +13,13 @@ class MultimediaObjectListener
 {
     private DocumentManager $dm;
     private TextIndexService $textIndexService;
+    private LoggerInterface $logger;
 
-    public function __construct(DocumentManager $dm, TextIndexService $textIndexService)
+    public function __construct(DocumentManager $dm, TextIndexService $textIndexService, LoggerInterface $logger)
     {
         $this->dm = $dm;
         $this->textIndexService = $textIndexService;
+        $this->logger = $logger;
     }
 
     public function postUpdate($event): void
@@ -29,29 +32,29 @@ class MultimediaObjectListener
 
     public function updateType(MultimediaObject $multimediaObject): void
     {
-        if ($multimediaObject->isLive()) {
-            return;
-        }
-
-        if ($multimediaObject->isMultistream()) {
-            $multimediaObject->setType(MultimediaObject::TYPE_VIDEO);
-            return;
-        }
-
-        if($multimediaObject->getTracks()) {
-            $multimediaObject->setType($this->getTracksType($multimediaObject->getTracks()));
-            return;
-        }
-
-        if($multimediaObject->documents()) {
-            $multimediaObject->setType(MultimediaObject::TYPE_DOCUMENT);
-            return;
-        }
-
-        if($multimediaObject->images()) {
-            $multimediaObject->setType(MultimediaObject::TYPE_IMAGE);
-            return;
-        }
+//        if ($multimediaObject->isLive()) {
+//            return;
+//        }
+//
+//        if ($multimediaObject->isMultistream()) {
+//            $multimediaObject->setType(MultimediaObject::TYPE_VIDEO);
+//            return;
+//        }
+//
+//        if($multimediaObject->getTracks()) {
+//            $multimediaObject->setType($this->getTracksType($multimediaObject->getTracks()));
+//            return;
+//        }
+//
+//        if($multimediaObject->documents()) {
+//            $multimediaObject->setType(MultimediaObject::TYPE_DOCUMENT);
+//            return;
+//        }
+//
+//        if($multimediaObject->images()) {
+//            $multimediaObject->setType(MultimediaObject::TYPE_IMAGE);
+//            return;
+//        }
 
         if ($multimediaObject->getProperty('externalplayer')) {
             $multimediaObject->setType(MultimediaObject::TYPE_EXTERNAL);
@@ -69,7 +72,7 @@ class MultimediaObjectListener
 //            $multimediaObject->setType($this->getTracksType($otherTracks));
 //        }
 
-        $multimediaObject->setType(MultimediaObject::TYPE_UNKNOWN);
+//        $multimediaObject->setType(MultimediaObject::TYPE_UNKNOWN);
     }
 
     public function updateTextIndex(MultimediaObject $multimediaObject): void

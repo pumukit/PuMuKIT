@@ -46,7 +46,7 @@
                         {{ mm.getTitle() }}
                     </td>
                     <td class="text-nowrap" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" ondblclick="dblclick_preview_mm('{{ mm.id }}')">
-                        {{ mm.getRealDuration()| duration_string|default('N/D') }}
+                        {% if mm.isVideoAudioType() %}{{ mm.getRealDuration()| duration_string }}{% else %}0{% endif %}
                         {% if mm.getProperty('soft-editing-duration') %}
                             <i class="mdi-content-content-cut" data-toggle="tooltip" data-placement="left" title="{{ mmobj_duration(mm) | duration_string }}"></i>
                         {% endif %}

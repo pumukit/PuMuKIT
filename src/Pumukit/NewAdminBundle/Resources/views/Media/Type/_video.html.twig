@@ -1,0 +1,132 @@
+<tr>
+    <td><ul><li></li></ul></td>
+    {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_TRACKS_OPTIONS')) %}
+        <td>
+            <a href="" onclick="toggleHide('{{track.id}}'); return false;" title="{% trans %}Show/Hide track{% endtrans %} {{ track.id }}">
+                {% if track.isHide() %}
+                    <i class="glyphicon glyphicon-eye-close"></i>
+                {% else %}
+                    <i class="glyphicon glyphicon-eye-open"></i>
+                {% endif %}
+            </a>
+        </td>
+        <td>
+            <a title="{% trans %}Edit file of multimedia object{% endtrans %} {{ track.id }}"
+               data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
+               href="{{ path('pumukitnewadmin_track_update', {'id': track.id, 'mmId': mm.id}) }}">
+                <i class="mdi-editor-mode-edit"></i>
+            </a>
+        </td>
+        {% if not is_naked() %}
+            <td>
+                <a title="{% trans %}File info of multimedia object{% endtrans %} {{ track.id }}"
+                   data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
+                   href="{{ path('pumukitnewadmin_track_info', {'id': track.id, 'mmId': mm.id}) }}">
+                    <i class="mdi-action-info"></i>
+                </a>
+            </td>
+            <td>
+                {% if (mm.getProperty('opencast') and track.tags().containsTag('opencast')) or (track.isMaster() and app.user and not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADVANCED_UPLOAD'))) %}
+                    <i class="mdi-content-block" style="color:#009587"></i>
+                {% else %}
+                    <a title="{% trans %}Delete track{% endtrans %} {{ track.id }}" href="#"
+                       onclick="window.submit_delete_track('{{ track.id }}', '{{ mm.id }}', '{{ mm.getSeries().getId() }}'); return false;">
+                        <i class="mdi-content-clear"></i>
+                    </a>
+                {% endif %}
+            </td>
+        {% endif %}
+    {% endif %}
+    <td>
+        <div class="dropdown">
+            <i class="mdi-image-camera-alt" id="list_capture_frame_{{ track.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="list_capture_frame_{{ track.id }}">
+                <li>&nbsp;&nbsp;<strong>{% trans %}Capture frame from{% endtrans %}:</strong></li>
+                {% set percentages = ['Auto', '10%', '25%', '50%', '75%', '90%'] %}
+                {% for percentage in percentages %}
+                    <li>
+                        <a href="#" onclick="extract_pic('{{ track.id }}', '{{ mm.id }}', '{{ (percentage == 'Auto')?0:percentage }}'); return false;">
+                            <i class="mdi-image-camera"></i> {{ percentage }}
+                        </a>
+                    </li>
+                {% endfor %}
+                <li class="cancel"><a href="#" onclick="return false;"><strong>{% trans %}Cancel{% endtrans %}...</strong></a></li>
+            </ul>
+        </div>
+    </td>
+
+    <td>
+        <a title="{% trans %}Download{% endtrans %} {{ track.id }}"
+           href="{{ path('pumukitnewadmin_track_download', {'id': track.id, 'mmId': mm.id}) }}" download>
+            <i class="mdi-file-file-download"></i>
+        </a>
+    </td>
+
+    {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_TRACKS_OPTIONS')) %}
+        {% if track.isMaster() %}
+            <td>
+                <div class="dropdown dropup">
+                    <i class="mdi-navigation-refresh" id="list_profiles_{{ track.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="list_profiles_{{ track.id }}">
+                        <li>&nbsp;&nbsp;<strong>{% trans %}Transcode to profile{% endtrans %}:</strong></li>
+                        {% for key in not_master_profiles|filter_profiles(track.metadata().isOnlyAudio())|keys %}
+                            <li>
+                                <a href="#" onclick="$('#tracks_mms_{{ mm.id }}').load('{{ path('pumukitnewadmin_track_retranscode', {'id': track.id, 'mmId': mm.id, 'profile': key}) }}'); return false;">
+                                    <i class="mdi-image-camera-roll"></i> {{ key }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                        <li class="cancel"><a href="#" onclick="return false;"><strong>{% trans %}Cancel{% endtrans %}...</strong></a></li>
+                    </ul>
+                </div>
+            </td>
+        {% else %}
+            <td>
+                <a data-toggle="modal" data-backdrop="static" data-target="#myModal" href="{{ path('pumukitnewadmin_track_play', {'id': track.id, 'mmId': mm.id}) }}" title="{% trans %}Play track{% endtrans %}">
+                    <i class="mdi-av-play-arrow"></i>
+                </a>
+            </td>
+        {% endif %}
+        <td>
+            {% if loop.first %}
+                &nbsp;
+            {% else %}
+                <a href="#" onclick="$('#tracks_mms_{{ mm.id }}').load('{{ path('pumukitnewadmin_track_up', {'id': track.id, 'mmId': mm.id, 'preview': 1}) }}', {'_method': 'POST'}, function() {$('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id })|raw }}');}); return false;">&#8593;</a>
+            {% endif %}
+        </td>
+        <td>
+            {% if loop.last %}
+                &nbsp;
+            {% else %}
+                <a href="#" onclick="$('#tracks_mms_{{ mm.id }}').load('{{ path('pumukitnewadmin_track_down', {'id': track.id, 'mmId': mm.id, 'preview': 1}) }}', {'_method': 'POST'}, function() {$('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id })|raw }}');}); return false;">&#8595;</a>
+            {% endif %}
+        </td>
+    {% endif %}
+
+    <td>
+        &nbsp;{% if not is_naked() %}{{ track.id }} - {% endif %}
+        <strong>{{ track.tags()|profile }}</strong>
+
+        {{ track.description().textFromLocale(app.request.getLocale()) }}
+
+        ({% if not is_naked() %}
+            {{ track.storage().fileName()}}
+        {% endif %}
+        {{ track.language()|default('')|language_name }})
+
+        {% if not track.metadata().isEmpty() %}
+            - {{ track.metadata().duration()|duration_string }}
+            - {{ (track.metadata().size())|number_format(2) }} MB
+            {% if track.metadata().width() and track.metadata().height() %}
+                - {{ track.metadata().width() }}x{{ track.metadata().height() }}
+            {% endif %}
+        {% endif %}
+
+        {% for tag in track.tags().toArray() | filter(tag => tag[0:8] != "profile:" and tag[0:11] != "pumukit1id:" and tag[0:8] != "ENCODED_") %}
+            <span class="label label-primary">{{ tag }}</span>
+        {% endfor %}
+        {% if not track.isDownloadable() %}
+            <span class="label label-default">{% trans %}No downloadable{% endtrans %}</span>
+        {% endif %}
+    </td>
+</tr>

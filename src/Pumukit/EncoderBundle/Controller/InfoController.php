@@ -10,7 +10,6 @@ use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\CpuService;
 use Pumukit\EncoderBundle\Services\JobRemover;
 use Pumukit\EncoderBundle\Services\JobRender;
-use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\JobUpdater;
 use Pumukit\EncoderBundle\Services\Repository\JobRepository;
 use Pumukit\SchemaBundle\Document\MultimediaObject;

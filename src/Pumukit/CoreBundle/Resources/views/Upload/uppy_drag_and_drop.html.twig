@@ -1,7 +1,11 @@
-{% extends '@PumukitCore/Inbox/template.html.twig' %}
+{# TODO: DIGIREPO REMOVE #}
+{#{% extends '@PumukitCore/Inbox/template.html.twig' %}#}
 
-{% block inbox_body %}
-    <h2><i class="fa fa-folder-open"></i> {{ "Upload video to: %folder%"|trans({"%folder%": folder|default("Inbox")}) }}</h2>
-    <div id="uploader_drag_and_drop"></div>
-    <a href="{{ path('inbox') }}" class="btn btn-default btn-raised btn-previous">&laquo; {% trans %}Back{% endtrans %}</a>
-{% endblock inbox_body %}
+{#{% block inbox_body %}#}
+
+{#    <h3 class="text-center"><i class="fa fa-folder-open"></i> {{ "Upload videos to: %series%"|trans({"%series%": series.title}) }}</h3>#}
+<div class="row">
+    <div class="col-xs-12"><strong>Resource:</strong></div>
+    <div id="uploader_drag_and_drop" class="col-xs-12"></div>
+</div>
+{#{% endblock inbox_body %}#}

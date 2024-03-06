@@ -13,7 +13,7 @@
 
     <div id="pumukitinbox_body">
         <div class="container">
-            {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::UPLOAD_INBOX')) and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) and inbox_show_backoffice_button() is same as(true) %}
+{#            {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::UPLOAD_INBOX')) and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) and inbox_show_backoffice_button() is same as(true) %}#}
                 <div class="row text-right">
                     <div class="col-md-12">
                         <a href="{{ url('pumukit_newadmin_index') }}" type="button" class="btn btn-default btn-raised btn-go-backoffice" title="{% trans %}Go to back-office{% endtrans %}">
@@ -26,7 +26,7 @@
                         </a>
                     </div>
                 </div>
-            {% endif %}
+{#            {% endif %}#}
             <div class="row">
                 <div class="col-md-12">
                 <h1 class="text-center">{{ "Upload local file"|trans }}</h1>

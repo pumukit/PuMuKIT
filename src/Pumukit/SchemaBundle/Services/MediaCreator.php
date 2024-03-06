@@ -11,9 +11,11 @@ use Pumukit\EncoderBundle\Services\ProfileValidator;
 use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
 use Pumukit\InspectionBundle\Services\InspectionImageService;
 use Pumukit\SchemaBundle\Document\MediaType\Document;
+use Pumukit\SchemaBundle\Document\MediaType\External;
 use Pumukit\SchemaBundle\Document\MediaType\Image;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MediaType\Metadata\Exif;
+use Pumukit\SchemaBundle\Document\MediaType\Metadata\Generic;
 use Pumukit\SchemaBundle\Document\MediaType\Metadata\MediaMetadata;
 use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
 use Pumukit\SchemaBundle\Document\MediaType\Storage;
@@ -62,27 +64,54 @@ final class MediaCreator implements MediaCreatorInterface
         $path = Path::create($job->getPathEnd());
         $storage = Storage::create($url, $path);
 
-        $media = $this->generateMedia($multimediaObject, $path, $originalName, $i18nDescription, $job, $mediaTags, $isDownloadable, $storage);
+        $media = $this->generateMedia($multimediaObject, $path, $originalName, $i18nDescription, $job->getLanguageId(), $mediaTags, $isDownloadable, $storage);
 
         $this->addMediaToMultimediaObject($multimediaObject, $media);
 
         return $media;
     }
 
+    public function createMediaFromExternalURL(MultimediaObject $multimediaObject, string $externalUrl): MediaInterface
+    {
+        $multimediaObject->setExternalType();
+        $this->documentManager->flush();
+
+        dump($multimediaObject);
+        $originalName = '';
+        $i18nDescription = i18nText::create([]);
+        $mediaTags = Tags::create([]);
+
+        $url = Url::create($externalUrl);
+        $path = Path::create('');
+        $storage = Storage::create($url, $path);
+        $language = '';
+
+        $media = $this->generateMedia($multimediaObject, $path, $originalName, $i18nDescription, $language, $mediaTags, false, $storage);
+
+        $this->addMediaToMultimediaObject($multimediaObject, $media);
+
+        return $media;
+    }
+
+
     private function createImageMediaMetadata(Path $path): MediaMetadata
     {
-        return VideoAudio::create($this->inspectionService->getFileMetadataAsString($path));
-        //return Exif::create($this->inspectionService->getFileMetadataAsString($path));
+        return Exif::create('');
     }
 
     private function createDocumentMediaMetadata(Path $path): MediaMetadata
     {
-        return VideoAudio::create($this->inspectionService->getFileMetadataAsString($path));
+        return Generic::create('');
     }
 
     private function createTrackMediaMetadata(Path $path): MediaMetadata
     {
         return VideoAudio::create($this->inspectionService->getFileMetadataAsString($path));
+    }
+
+    private function createExternalMediaMetadata(): MediaMetadata
+    {
+        return Generic::create('');
     }
 
     private function addMediaToMultimediaObject(MultimediaObject $multimediaObject, MediaInterface $media, bool $executeFlush = true): void
@@ -97,6 +126,10 @@ final class MediaCreator implements MediaCreatorInterface
 
         if ($media instanceof Document) {
             $multimediaObject->addDocument($media);
+        }
+
+        if ($media instanceof External) {
+            $multimediaObject->addExternal($media);
         }
 
         if ($executeFlush) {
@@ -131,18 +164,17 @@ final class MediaCreator implements MediaCreatorInterface
             $tags[] = trim($tag);
         }
 
-        $mediaTags = Tags::create($tags);
-        return $mediaTags;
+        return Tags::create($tags);
     }
 
-    public function generateMedia(
+    private function generateMedia(
         MultimediaObject $multimediaObject,
         Path $path,
         string $originalName,
         i18nText $i18nDescription,
-        Job $job,
+        string $language,
         Tags $mediaTags,
-        mixed $isDownloadable,
+        bool $isDownloadable,
         Storage $storage
     ): MediaInterface
     {
@@ -151,7 +183,7 @@ final class MediaCreator implements MediaCreatorInterface
             $media = Track::create(
                 $originalName,
                 $i18nDescription,
-                $job->getLanguageId(),
+                $language,
                 $mediaTags,
                 !$mediaTags->contains('display'),
                 $isDownloadable,
@@ -167,7 +199,7 @@ final class MediaCreator implements MediaCreatorInterface
             $media = Image::create(
                 $originalName,
                 $i18nDescription,
-                $job->getLanguageId(),
+                $language,
                 $mediaTags,
                 !$mediaTags->contains('display'),
                 $isDownloadable,
@@ -182,7 +214,7 @@ final class MediaCreator implements MediaCreatorInterface
             $media = Document::create(
                 $originalName,
                 $i18nDescription,
-                $job->getLanguageId(),
+                $language,
                 $mediaTags,
                 !$mediaTags->contains('display'),
                 $isDownloadable,
@@ -192,10 +224,27 @@ final class MediaCreator implements MediaCreatorInterface
             );
         }
 
+        if ($multimediaObject->getType() === MultimediaObject::TYPE_EXTERNAL) {
+            $mediaMetadata = $this->createExternalMediaMetadata();
+            $media = External::create(
+                $originalName,
+                $i18nDescription,
+                $language,
+                $mediaTags,
+                !$mediaTags->contains('display'),
+                $isDownloadable,
+                0,
+                $storage,
+                $mediaMetadata
+            );
+
+        }
+
         if(!isset($media)) {
             throw new \Exception('Media type not supported');
         }
 
         return $media;
     }
+
 }

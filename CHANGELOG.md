@@ -13,10 +13,24 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 #### Fixed
 - Reported issues
 
-## [4.1.0](https://github.com/pumukit/PuMuKIT/compare/4.0.0...4.1.0) - (2024-08-21)
+## [4.1.0](https://github.com/pumukit/PuMuKIT/compare/4.0.0...4.1.0) - (2024-03-xx)
 
-#### Fixed
-- Reported issues
+#### Added
+
+- Add support for multiple types of media (docs, images, audio, video, external, etc.).
+- Wizard and inbox are now unified in a single upload page.
+
+#### Changed
+
+- Refactor schema for multimedia objects to support multiple types of media.
+- Rename of "Wizard" to "Upload" inside series.
+
+#### Removed
+
+- Remove list all multimedia objects menu on backoffice ( legacy feature ).
+- Remove support BC for PHP 7.4 or lower.
+- Remove "New" option inside series.
+- Remove simple wizard
 
 ## [4.0.0](https://github.com/pumukit/PuMuKIT/compare/3.9.0...4.0.0) - (2023-07-04)
 

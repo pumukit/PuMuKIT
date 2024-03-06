@@ -13,13 +13,13 @@ class InboxUploadEvent extends Event
 
     protected $fileName;
 
-    protected $folder;
+    protected $series;
 
-    public function __construct(UserInterface $user, string $fileName, string $folder = null)
+    public function __construct(UserInterface $user, string $fileName, string $series)
     {
         $this->user = $user;
         $this->fileName = $fileName;
-        $this->folder = $folder;
+        $this->series = $series;
     }
 
     public function getUser(): UserInterface
@@ -32,8 +32,8 @@ class InboxUploadEvent extends Event
         return $this->fileName;
     }
 
-    public function getFolder(): ?string
+    public function getSeries(): string
     {
-        return $this->folder;
+        return $this->series;
     }
 }

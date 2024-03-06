@@ -34,4 +34,9 @@ final class Exif implements MediaMetadata
     {
         return new self($metadata);
     }
+
+    public function isEmpty(): bool
+    {
+        return empty($this->metadata);
+    }
 }

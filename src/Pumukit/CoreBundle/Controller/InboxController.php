@@ -15,9 +15,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Security("is_granted('ROLE_UPLOAD_INBOX')")
- */
 class InboxController extends AbstractController
 {
     private $inboxService;
@@ -51,7 +48,9 @@ class InboxController extends AbstractController
      */
     public function folder(Request $request): array
     {
+        // TODO: DIGIREPO REMOVE
         $formData = $request->get('inbox_form_data', []);
+//        $folder = $request->get('folder');
         $inboxUploadURL = $this->inboxService->inboxUploadURL();
         $inboxUploadLIMIT = $this->inboxService->inboxUploadLIMIT();
         $minFileSize = $this->inboxService->minFileSize();
@@ -62,7 +61,10 @@ class InboxController extends AbstractController
         $folder = trim($formData['folder']);
         $urlUpload = $inboxPath.'/'.$formData['folder'];
 
+        $urlUpload = $inboxPath.'/'. $folder;
+
         if (!$formData || empty($folder) || !$this->checkFolderAndCreateIfNotExist($folder)) {
+//        if (empty($folder) || !$this->checkFolderAndCreateIfNotExist($folder)) {
             $folder = '';
             $urlUpload = '';
         }
@@ -78,6 +80,7 @@ class InboxController extends AbstractController
         ];
     }
 
+    // TODO: DIGIREPO REMOVE
     public function checkFolderAndCreateIfNotExist(string $folder): bool
     {
         $inboxPath = $this->inboxService->inboxPath();
@@ -93,6 +96,7 @@ class InboxController extends AbstractController
         }
     }
 
+    // TODO: DIGIREPO REMOVE
     /**
      * @Route("/check_folder", name="check_folder_before_creating")
      */
@@ -116,7 +120,7 @@ class InboxController extends AbstractController
             $this->uploadDispatcherService->dispatchUploadFromInbox(
                 $this->getUser(),
                 $request->get('fileName'),
-                $request->get('folder')
+                $request->get('series')
             );
         } catch (\Exception $exception) {
             return new JsonResponse(['success' => false]);

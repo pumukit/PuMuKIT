@@ -105,6 +105,9 @@ services:
   Pumukit\SchemaBundle\Services\SeriesService:
     class: Pumukit\SchemaBundle\Services\SeriesService
 
+  Pumukit\SchemaBundle\Services\Repository\SeriesRepository:
+    class: Pumukit\SchemaBundle\Services\Repository\SeriesRepository
+
   Pumukit\SchemaBundle\Services\AnnounceService:
     class: Pumukit\SchemaBundle\Services\AnnounceService
 
