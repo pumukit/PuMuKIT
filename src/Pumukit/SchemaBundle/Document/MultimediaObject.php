@@ -385,6 +385,16 @@ class MultimediaObject
         return self::TYPE_VIDEO === $this->getType() || self::TYPE_AUDIO === $this->getType();
     }
 
+    public function isVideoType(): bool
+    {
+        return self::TYPE_VIDEO === $this->getType();
+    }
+
+    public function isAudioType(): bool
+    {
+        return self::TYPE_AUDIO === $this->getType();
+    }
+
     public function setAudioType(): void
     {
         $this->type = self::TYPE_AUDIO;

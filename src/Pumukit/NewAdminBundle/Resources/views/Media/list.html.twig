@@ -6,8 +6,11 @@
         {% include '@PumukitNewAdmin/Media/_jobs.html.twig' %}
 
         {% for track in mm.getMedias() %}
-            {% if mm.isVideoAudioType() %}
+            {% if mm.isVideoType() %}
                 {% include '@PumukitNewAdmin/Media/Type/_video.html.twig' %}
+            {% endif %}
+            {% if mm.isAudioType() %}
+                {% include '@PumukitNewAdmin/Media/Type/_audio.html.twig' %}
             {% endif %}
             {% if mm.isImageType() %}
                 {% include '@PumukitNewAdmin/Media/Type/_image.html.twig' %}

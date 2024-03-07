@@ -9,7 +9,7 @@ use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use MongoDB\BSON\ObjectId;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\JobRemover;
-use Pumukit\EncoderBundle\Services\JobService;
+//use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
@@ -29,7 +29,7 @@ class RemoveListener
     private $materialService;
     private $multimediaObjectPicService;
     private $seriesPicService;
-    private $jobService;
+//    private $jobService;
     private $tagService;
     private $embeddedBroadcastService;
     private $userService;
@@ -42,7 +42,7 @@ class RemoveListener
         MaterialService $materialService,
         MultimediaObjectPicService $multimediaObjectPicService,
         SeriesPicService $seriesPicService,
-        JobService $jobService,
+//        JobService $jobService,
         JobRemover $jobRemover,
         TagService $tagService,
         EmbeddedBroadcastService $embeddedBroadcastService,
@@ -54,7 +54,7 @@ class RemoveListener
         $this->materialService = $materialService;
         $this->multimediaObjectPicService = $multimediaObjectPicService;
         $this->seriesPicService = $seriesPicService;
-        $this->jobService = $jobService;
+//        $this->jobService = $jobService;
         $this->tagService = $tagService;
         $this->embeddedBroadcastService = $embeddedBroadcastService;
         $this->userService = $userService;
@@ -103,7 +103,8 @@ class RemoveListener
             }
 
             foreach ($document->getTracks() as $track) {
-                $this->jobService->removeTrack($document, $track->getId());
+                // TODO: DIGIREPO REMOVE
+//                $this->jobService->removeTrack($document, $track->getId());
             }
 
             foreach ($document->getPics() as $pic) {
