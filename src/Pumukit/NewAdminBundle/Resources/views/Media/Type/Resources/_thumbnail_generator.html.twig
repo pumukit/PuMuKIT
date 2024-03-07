@@ -1,0 +1,17 @@
+<td>
+    <div class="dropdown">
+        <i class="mdi-image-camera-alt" id="list_capture_frame_{{ track.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="list_capture_frame_{{ track.id }}">
+            <li>&nbsp;&nbsp;<strong>{% trans %}Capture frame from{% endtrans %}:</strong></li>
+            {% set percentages = ['Auto', '10%', '25%', '50%', '75%', '90%'] %}
+            {% for percentage in percentages %}
+                <li>
+                    <a href="#" onclick="extract_pic('{{ track.id }}', '{{ mm.id }}', '{{ (percentage == 'Auto')?0:percentage }}'); return false;">
+                        <i class="mdi-image-camera"></i> {{ percentage }}
+                    </a>
+                </li>
+            {% endfor %}
+            <li class="cancel"><a href="#" onclick="return false;"><strong>{% trans %}Cancel{% endtrans %}...</strong></a></li>
+        </ul>
+    </div>
+</td>

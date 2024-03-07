@@ -1,0 +1,7 @@
+{% if not track.metadata().isEmpty() %}
+    - {{ track.metadata().duration()|duration_string }}
+    - {{ (track.metadata().size())|number_format(2) }} MB
+    {% if track.metadata().width() and track.metadata().height() %}
+        - {{ track.metadata().width() }}x{{ track.metadata().height() }}
+    {% endif %}
+{% endif %}

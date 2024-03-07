@@ -110,6 +110,15 @@ final class JobCreator
             return $this->generateJob($multimediaObject, $jobOptions, $pathFile, 0);
         }
 
+        if (str_contains($mimeType, 'audio/')) {
+            $multimediaObject->setAudioType();
+            $this->documentManager->flush();
+
+            $duration = $this->jobValidator->validateTrack($profile, $jobOptions, $pathFile);
+
+            return $this->generateJob($multimediaObject, $jobOptions, $pathFile, $duration);
+        }
+
         if (str_contains($mimeType, 'video/')) {
             $multimediaObject->setVideoType();
             $this->documentManager->flush();
