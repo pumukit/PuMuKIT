@@ -26,8 +26,9 @@ class Permission
     public const ACCESS_PUBLICATION_TAB = 'ROLE_ACCESS_PUBLICATION_TAB';
     public const ACCESS_ADVANCED_UPLOAD = 'ROLE_ACCESS_ADVANCED_UPLOAD';
     public const ACCESS_EDIT_PLAYLIST = 'ROLE_ACCESS_EDIT_PLAYLIST';
-    public const ACCESS_WIZARD_UPLOAD = 'ROLE_ACCESS_WIZARD_UPLOAD';
-    public const SHOW_WIZARD_MENU = 'ROLE_SHOW_WIZARD_MENU';
+    // TODO: DIGIREPO REMOVE
+//    public const ACCESS_WIZARD_UPLOAD = 'ROLE_ACCESS_WIZARD_UPLOAD';
+//    public const SHOW_WIZARD_MENU = 'ROLE_SHOW_WIZARD_MENU';
     public const ACCESS_API = 'ROLE_ACCESS_API';
     public const ACCESS_INBOX = 'ROLE_ACCESS_INBOX';
 
@@ -41,8 +42,10 @@ class Permission
     public const ROLE_SEND_NOTIFICATION_COMPLETE = 'ROLE_SEND_NOTIFICATION_COMPLETE';
     public const ROLE_SEND_NOTIFICATION_ERRORS = 'ROLE_SEND_NOTIFICATION_ERRORS';
     public const ACCESS_SERIES_STYLE = 'ROLE_ACCESS_SERIES_STYLE';
-    public const DISABLED_TRACK_PROFILES = 'ROLE_DISABLED_WIZARD_TRACK_PROFILES';
-    public const DISABLED_TRACK_PRIORITY = 'ROLE_DISABLED_WIZARD_TRACK_PRIORITY';
+
+    // TODO: DIGIREPO REMOVE
+//    public const DISABLED_TRACK_PROFILES = 'ROLE_DISABLED_WIZARD_TRACK_PROFILES';
+//    public const DISABLED_TRACK_PRIORITY = 'ROLE_DISABLED_WIZARD_TRACK_PRIORITY';
     public const ADD_EXTERNAL_PLAYER = 'ROLE_ADD_EXTERNAL_PLAYER';
     public const AUTO_CREATE_PERSONAL_SERIES = 'ROLE_AUTO_CREATE_PERSONAL_SERIES';
     public const ACCESS_HEAD_AND_TAIL_MANAGER = 'ROLE_ACCESS_HEAD_AND_TAIL_MANAGER';
@@ -74,7 +77,8 @@ class Permission
     public const ACCESS_MULTIMEDIA_OWNER_TAB = 'ROLE_ACCESS_MULTIMEDIA_OWNER_TAB';
     public const ACCESS_MULTIMEDIA_SYNC_TAB = 'ROLE_ACCESS_MULTIMEDIA_SYNC_TAB';
     public const ACCESS_MULTIMEDIA_MAGIC_URL = 'ROLE_ACCESS_MULTIMEDIA_MAGIC_URL';
-    public const ACCESS_MULTIMEDIA_SHOW_WIZARD_BUTTON = 'ROLE_ACCESS_MULTIMEDIA_SHOW_WIZARD_BUTTON';
+    // TODO: DIGIREPO REMOVE
+    //public const ACCESS_MULTIMEDIA_SHOW_WIZARD_BUTTON = 'ROLE_ACCESS_MULTIMEDIA_SHOW_WIZARD_BUTTON';
     public const ACCESS_MULTIMEDIA_SHOW_MULTIMEDIA_OBJECT_INFO_URL = 'ROLE_ACCESS_MULTIMEDIA_SHOW_MULTIMEDIA_OBJECT_INFO_URL';
 
     public const PREFIX_ROLE_TAG_DEFAULT = 'ROLE_TAG_DEFAULT_';
@@ -207,20 +211,20 @@ class Permission
                 PermissionProfile::SCOPE_PERSONAL => [],
             ],
         ],
-        self::ACCESS_WIZARD_UPLOAD => [
-            'description' => 'Access Wizard Upload',
-            'dependencies' => [
-                PermissionProfile::SCOPE_GLOBAL => [],
-                PermissionProfile::SCOPE_PERSONAL => [],
-            ],
-        ],
-        self::SHOW_WIZARD_MENU => [
-            'description' => 'Show Wizard Menu Item',
-            'dependencies' => [
-                PermissionProfile::SCOPE_GLOBAL => [],
-                PermissionProfile::SCOPE_PERSONAL => [],
-            ],
-        ],
+//        self::ACCESS_WIZARD_UPLOAD => [
+//            'description' => 'Access Wizard Upload',
+//            'dependencies' => [
+//                PermissionProfile::SCOPE_GLOBAL => [],
+//                PermissionProfile::SCOPE_PERSONAL => [],
+//            ],
+//        ],
+//        self::SHOW_WIZARD_MENU => [
+//            'description' => 'Show Wizard Menu Item',
+//            'dependencies' => [
+//                PermissionProfile::SCOPE_GLOBAL => [],
+//                PermissionProfile::SCOPE_PERSONAL => [],
+//            ],
+//        ],
         self::ACCESS_API => [
             'description' => 'Access API',
             'dependencies' => [
@@ -299,20 +303,20 @@ class Permission
                 PermissionProfile::SCOPE_PERSONAL => [],
             ],
         ],
-        self::DISABLED_TRACK_PRIORITY => [
-            'description' => 'Disabled track priority on wizard',
-            'dependencies' => [
-                PermissionProfile::SCOPE_GLOBAL => [],
-                PermissionProfile::SCOPE_PERSONAL => [],
-            ],
-        ],
-        self::DISABLED_TRACK_PROFILES => [
-            'description' => 'Disabled track profiles on wizard',
-            'dependencies' => [
-                PermissionProfile::SCOPE_GLOBAL => [],
-                PermissionProfile::SCOPE_PERSONAL => [],
-            ],
-        ],
+//        self::DISABLED_TRACK_PRIORITY => [
+//            'description' => 'Disabled track priority on wizard',
+//            'dependencies' => [
+//                PermissionProfile::SCOPE_GLOBAL => [],
+//                PermissionProfile::SCOPE_PERSONAL => [],
+//            ],
+//        ],
+//        self::DISABLED_TRACK_PROFILES => [
+//            'description' => 'Disabled track profiles on wizard',
+//            'dependencies' => [
+//                PermissionProfile::SCOPE_GLOBAL => [],
+//                PermissionProfile::SCOPE_PERSONAL => [],
+//            ],
+//        ],
         self::ADD_EXTERNAL_PLAYER => [
             'description' => 'Add an external player (iframe) into a multimedia object',
             'dependencies' => [
@@ -502,13 +506,13 @@ class Permission
                 PermissionProfile::SCOPE_PERSONAL => [],
             ],
         ],
-        self::ACCESS_MULTIMEDIA_SHOW_WIZARD_BUTTON => [
-            'description' => 'Show wizard button on multimedia object',
-            'dependencies' => [
-                PermissionProfile::SCOPE_GLOBAL => [],
-                PermissionProfile::SCOPE_PERSONAL => [],
-            ],
-        ],
+//        self::ACCESS_MULTIMEDIA_SHOW_WIZARD_BUTTON => [
+//            'description' => 'Show wizard button on multimedia object',
+//            'dependencies' => [
+//                PermissionProfile::SCOPE_GLOBAL => [],
+//                PermissionProfile::SCOPE_PERSONAL => [],
+//            ],
+//        ],
         self::ACCESS_MULTIMEDIA_SHOW_MULTIMEDIA_OBJECT_INFO_URL => [
             'description' => 'Show info urls on multimedia object',
             'dependencies' => [

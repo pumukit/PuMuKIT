@@ -13,7 +13,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
- * @Security("is_granted('ROLE_ACCESS_WIZARD_UPLOAD')")
  * @Route("/admin/wizard")
  */
 final class WizardController extends AbstractController

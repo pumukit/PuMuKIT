@@ -13,6 +13,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Added select files from server on wizard.
 - Added create external video on series.
 - Added email filter on user lists.
+- Added STOP job option.
 
 #### Changed
 

@@ -35,7 +35,6 @@ class CreateMMOCommand extends Command
     private $tagService;
     private $profileService;
     private $locales;
-    private $wizardSimpleDefaultMasterProfile;
     private $locale;
 
     private $validStatuses = [
@@ -56,10 +55,8 @@ class CreateMMOCommand extends Command
         i18nService $i18nService,
         LoggerInterface $logger,
         array $locales,
-        string $locale = 'en',
-        ?string $wizardSimpleDefaultMasterProfile = null
+        string $locale = 'en'
     ) {
-        $this->wizardSimpleDefaultMasterProfile = $wizardSimpleDefaultMasterProfile;
         $this->documentManager = $documentManager;
         $this->jobCreator = $jobCreator;
         $this->inspectionService = $inspectionService;
@@ -203,9 +200,10 @@ EOT
 
     private function getDefaultMasterProfile()
     {
-        if ($this->wizardSimpleDefaultMasterProfile) {
-            return $this->wizardSimpleDefaultMasterProfile;
-        }
+        // TODO: DIGIREPO REMOVE
+//        if ($this->wizardSimpleDefaultMasterProfile) {
+//            return $this->wizardSimpleDefaultMasterProfile;
+//        }
 
         return $this->profileService->getDefaultMasterProfile();
     }
