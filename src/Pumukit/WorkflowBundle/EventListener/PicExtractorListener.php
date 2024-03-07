@@ -57,7 +57,7 @@ class PicExtractorListener
 
     private function generatePic(MultimediaObject $multimediaObject, MediaInterface $media): void
     {
-        if($multimediaObject->getType() !== MultimediaObject::TYPE_VIDEO) {
+        if (MultimediaObject::TYPE_VIDEO !== $multimediaObject->getType()) {
             return;
         }
 

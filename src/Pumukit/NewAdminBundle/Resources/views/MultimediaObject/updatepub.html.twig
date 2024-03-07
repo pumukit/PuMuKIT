@@ -73,7 +73,7 @@
 
                 {{ form_rest(form_pub) }}
 
-                {% if app.user and is_granted('ROLE_ACCESS_HEAD_AND_TAIL_MANAGER') and not mm.isMultistream() and not mm.isPrototype() %}
+                {% if app.user and is_granted('ROLE_ACCESS_HEAD_AND_TAIL_MANAGER') and mm.isVideoType() and not mm.isMultistream() and not mm.isPrototype() %}
                     <label style="margin-top:1rem;">{{ "Video options"|trans }}</label>
                     <div class="checkbox" style="margin-bottom:4px;">
                         <label>

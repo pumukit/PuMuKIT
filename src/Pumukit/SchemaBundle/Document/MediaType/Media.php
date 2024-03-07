@@ -175,6 +175,11 @@ abstract class Media implements MediaInterface
         $this->tags = $tags->toArray();
     }
 
+    public function changeHide(): void
+    {
+        $this->hide = !$this->hide;
+    }
+
     public function mimeType(): string
     {
         return mime_content_type($this->storage()->path()->path());

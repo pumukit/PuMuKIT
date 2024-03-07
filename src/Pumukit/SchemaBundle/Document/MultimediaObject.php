@@ -382,7 +382,7 @@ class MultimediaObject
 
     public function isVideoAudioType(): bool
     {
-        return self::TYPE_VIDEO === $this->getType() || self::TYPE_AUDIO === $this->getType();
+        return $this->isVideoType() || $this->isAudioType();
     }
 
     public function isVideoType(): bool
@@ -933,7 +933,7 @@ class MultimediaObject
     public function removeTrackById($trackId): void
     {
         $this->tracks = $this->tracks->filter(function (Track $track) use ($trackId) {
-            return $track->getId() !== $trackId;
+            return $track->id() !== $trackId;
         });
 
         $this->updateDuration();

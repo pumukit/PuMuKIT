@@ -1,19 +1,9 @@
 {% for externalMedia in mm.external() %}
     <tr>
         <td><ul><li></li></ul></td>
-{#        <td>#}
-{#            <a href="{{ path('pumukitnewadmin_mms_listexternalproperties', {'id': mm.id}) }}" title="{% trans %}Edit{% endtrans %}" data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal">#}
-{#                <i class="mdi-editor-mode-edit"></i>#}
-{#            </a>#}
-{#        </td>#}
-        <td>
-            <a href="#" title="{% trans %}Delete{% endtrans %}" onclick="window.submit_delete_external_video('{{ mm.id }}'); return false;">
-                <i class="mdi-content-clear"></i>
-            </a>
-        </td>
         <td>&nbsp;</td>
         <td colspan="8">
-            <strong>{% trans %}External video{% endtrans %}: </strong> {{ externalMedia.storage().url().url() }}
+            <strong>{{ "External video"|trans }}: </strong> {{ externalMedia.storage().url().url() }}
         </td>
     </tr>
 {% endfor %}
