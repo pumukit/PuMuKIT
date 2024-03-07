@@ -50,6 +50,10 @@ class JobGeneratorListener
     private function checkMultimediaObject(MultimediaObject $multimediaObject): void
     {
         // Only for objects with master
+        if (!$multimediaObject->isVideoAudioType()) {
+            return;
+        }
+
         $master = $multimediaObject->getMaster();
         if (!$master) {
             return;

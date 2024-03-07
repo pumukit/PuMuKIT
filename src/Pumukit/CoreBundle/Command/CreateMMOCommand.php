@@ -149,30 +149,30 @@ EOT
 
         $title = substr(basename($path), 0, -4);
 
-//        try {
-//            // exception if is not a mediafile (video or audio)
-//            $duration = $this->inspectionService->getDuration($path);
-//        } catch (\Exception $e) {
-//            throw new \Exception('The file  ('.$path.') is not a valid video or audio file');
-//        }
-//
-//        if (0 == $duration) {
-//            throw new \Exception('The file ('.$path.') is not a valid video or audio file (duration is zero)');
-//        }
+        //        try {
+        //            // exception if is not a mediafile (video or audio)
+        //            $duration = $this->inspectionService->getDuration($path);
+        //        } catch (\Exception $e) {
+        //            throw new \Exception('The file  ('.$path.') is not a valid video or audio file');
+        //        }
+        //
+        //        if (0 == $duration) {
+        //            throw new \Exception('The file ('.$path.') is not a valid video or audio file (duration is zero)');
+        //        }
 
         $semaphore = SemaphoreUtils::acquire(1000001);
 
-//        $series = $this->documentManager->getRepository(Series::class)->findOneBy(['title.'.$locale => $seriesTitle]);
+        //        $series = $this->documentManager->getRepository(Series::class)->findOneBy(['title.'.$locale => $seriesTitle]);
         $seriesId = $input->getOption('series');
         $series = $this->documentManager->getRepository(Series::class)->findOneBy(['_id' => new ObjectId($seriesId)]);
         if (!$series instanceof Series) {
             throw new \Exception('The series ('.$seriesId.') is not a valid');
             // TODO: DIGIREPO REMOVE
-//            $seriesTitleAllLocales = [$locale => $seriesTitle];
-//            foreach ($this->locales as $l) {
-//                $seriesTitleAllLocales[$l] = $seriesTitle;
-//            }
-//            $series = $this->factoryService->createSeries(null, $seriesTitleAllLocales);
+            //            $seriesTitleAllLocales = [$locale => $seriesTitle];
+            //            foreach ($this->locales as $l) {
+            //                $seriesTitleAllLocales[$l] = $seriesTitle;
+            //            }
+            //            $series = $this->factoryService->createSeries(null, $seriesTitleAllLocales);
         }
 
         $user = $this->findUser($input->getOption('user'));
@@ -183,9 +183,9 @@ EOT
 
         $i18nTitle = $this->i18nService->generateI18nText($title);
         $multimediaObject->setI18nTitle($i18nTitle);
-//        foreach ($this->locales as $l) {
-//            $multimediaObject->setTitle($title, $l);
-//        }
+        //        foreach ($this->locales as $l) {
+        //            $multimediaObject->setTitle($title, $l);
+        //        }
         (null !== $status) ? $multimediaObject->setStatus($status) : $multimediaObject->setStatus(MultimediaObject::STATUS_BLOCKED);
 
         $profile = 'master_copy';
@@ -201,9 +201,9 @@ EOT
     private function getDefaultMasterProfile()
     {
         // TODO: DIGIREPO REMOVE
-//        if ($this->wizardSimpleDefaultMasterProfile) {
-//            return $this->wizardSimpleDefaultMasterProfile;
-//        }
+        //        if ($this->wizardSimpleDefaultMasterProfile) {
+        //            return $this->wizardSimpleDefaultMasterProfile;
+        //        }
 
         return $this->profileService->getDefaultMasterProfile();
     }

@@ -1,13 +1,12 @@
 <tr>
     <td><ul><li></li></ul></td>
     {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_TRACKS_OPTIONS')) %}
-        {% include '@PumukitNewAdmin/Media/Type/Resources/_visibility.html.twig' %}
-        {% include '@PumukitNewAdmin/Media/Type/Resources/_edit.html.twig' %}
-
         {% if not is_naked() %}
-            {% include '@PumukitNewAdmin/Media/Type/Resources/_info.html.twig' %}
             {% include '@PumukitNewAdmin/Media/Type/Resources/_delete.html.twig' %}
         {% endif %}
+
+        {% include '@PumukitNewAdmin/Media/Type/Resources/_visibility.html.twig' %}
+        {% include '@PumukitNewAdmin/Media/Type/Resources/_edit.html.twig' %}
     {% endif %}
 
     {% include '@PumukitNewAdmin/Media/Type/Resources/_download.html.twig' %}

@@ -93,6 +93,22 @@ final class MediaCreator implements MediaCreatorInterface
         return $media;
     }
 
+    public function generateProfileTags(Job $job, array $profile): Tags
+    {
+        $tags[] = $this->profileService->generateProfileTag($job->getProfile());
+
+        if ($profile['master']) {
+            $tags[] = 'master';
+        }
+        if ($profile['display']) {
+            $tags[] = 'display';
+        }
+        foreach (array_filter(preg_split('/[,\s]+/', $profile['tags'])) as $tag) {
+            $tags[] = trim($tag);
+        }
+
+        return Tags::create($tags);
+    }
 
     private function createImageMediaMetadata(Path $path): MediaMetadata
     {
@@ -150,23 +166,6 @@ final class MediaCreator implements MediaCreatorInterface
         return Url::create($url);
     }
 
-    public function generateProfileTags(Job $job, array $profile): Tags
-    {
-        $tags[] = $this->profileService->generateProfileTag($job->getProfile());
-
-        if ($profile['master']) {
-            $tags[] = 'master';
-        }
-        if ($profile['display']) {
-            $tags[] = 'display';
-        }
-        foreach (array_filter(preg_split('/[,\s]+/', $profile['tags'])) as $tag) {
-            $tags[] = trim($tag);
-        }
-
-        return Tags::create($tags);
-    }
-
     private function generateMedia(
         MultimediaObject $multimediaObject,
         Path $path,
@@ -176,9 +175,8 @@ final class MediaCreator implements MediaCreatorInterface
         Tags $mediaTags,
         bool $isDownloadable,
         Storage $storage
-    ): MediaInterface
-    {
-        if ($multimediaObject->getType() === MultimediaObject::TYPE_VIDEO || $multimediaObject->getType() === MultimediaObject::TYPE_AUDIO) {
+    ): MediaInterface {
+        if (MultimediaObject::TYPE_VIDEO === $multimediaObject->getType() || MultimediaObject::TYPE_AUDIO === $multimediaObject->getType()) {
             $mediaMetadata = $this->createTrackMediaMetadata($path);
             $media = Track::create(
                 $originalName,
@@ -191,10 +189,9 @@ final class MediaCreator implements MediaCreatorInterface
                 $storage,
                 $mediaMetadata
             );
-
         }
 
-        if ($multimediaObject->getType() === MultimediaObject::TYPE_IMAGE) {
+        if (MultimediaObject::TYPE_IMAGE === $multimediaObject->getType()) {
             $mediaMetadata = $this->createImageMediaMetadata($path);
             $media = Image::create(
                 $originalName,
@@ -209,7 +206,7 @@ final class MediaCreator implements MediaCreatorInterface
             );
         }
 
-        if ($multimediaObject->getType() === MultimediaObject::TYPE_DOCUMENT) {
+        if (MultimediaObject::TYPE_DOCUMENT === $multimediaObject->getType()) {
             $mediaMetadata = $this->createDocumentMediaMetadata($path);
             $media = Document::create(
                 $originalName,
@@ -224,7 +221,7 @@ final class MediaCreator implements MediaCreatorInterface
             );
         }
 
-        if ($multimediaObject->getType() === MultimediaObject::TYPE_EXTERNAL) {
+        if (MultimediaObject::TYPE_EXTERNAL === $multimediaObject->getType()) {
             $mediaMetadata = $this->createExternalMediaMetadata();
             $media = External::create(
                 $originalName,
@@ -237,14 +234,12 @@ final class MediaCreator implements MediaCreatorInterface
                 $storage,
                 $mediaMetadata
             );
-
         }
 
-        if(!isset($media)) {
+        if (!isset($media)) {
             throw new \Exception('Media type not supported');
         }
 
         return $media;
     }
-
 }

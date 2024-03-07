@@ -3,7 +3,7 @@
     <tbody>
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 
-        {% include '@PumukitNewAdmin/Media/_jobs.html.twig' %}
+        {% include '@PumukitNewAdmin/Media/List/_jobs.html.twig' %}
 
         {% for track in mm.getMedias() %}
             {% if mm.isVideoType() %}
@@ -18,12 +18,15 @@
             {% if mm.isDocumentType() %}
                 {% include '@PumukitNewAdmin/Media/Type/_document.html.twig' %}
             {% endif %}
+
+            {% include '@PumukitNewAdmin/Media/List/_opencast.html.twig' %}
+
             {% if mm.isExternalType() %}
                 {% include '@PumukitNewAdmin/Media/Type/_external.html.twig' %}
             {% endif %}
         {% endfor %}
 
-        {% include '@PumukitNewAdmin/Media/_create_options.html.twig' %}
+        {% include '@PumukitNewAdmin/Media/List/_create_options.html.twig' %}
 
     {% else %}
         {% trans %}You don't have enough permissions to access this content.{% endtrans %}

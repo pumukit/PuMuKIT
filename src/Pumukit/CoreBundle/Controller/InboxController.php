@@ -8,7 +8,6 @@ use Pumukit\CoreBundle\Services\InboxService;
 use Pumukit\CoreBundle\Services\UploadDispatcherService;
 use Pumukit\CoreBundle\Utils\FileSystemUtils;
 use Pumukit\CoreBundle\Utils\FinderUtils;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -50,7 +49,7 @@ class InboxController extends AbstractController
     {
         // TODO: DIGIREPO REMOVE
         $formData = $request->get('inbox_form_data', []);
-//        $folder = $request->get('folder');
+        //        $folder = $request->get('folder');
         $inboxUploadURL = $this->inboxService->inboxUploadURL();
         $inboxUploadLIMIT = $this->inboxService->inboxUploadLIMIT();
         $minFileSize = $this->inboxService->minFileSize();
@@ -61,10 +60,10 @@ class InboxController extends AbstractController
         $folder = trim($formData['folder']);
         $urlUpload = $inboxPath.'/'.$formData['folder'];
 
-        $urlUpload = $inboxPath.'/'. $folder;
+        $urlUpload = $inboxPath.'/'.$folder;
 
         if (!$formData || empty($folder) || !$this->checkFolderAndCreateIfNotExist($folder)) {
-//        if (empty($folder) || !$this->checkFolderAndCreateIfNotExist($folder)) {
+            //        if (empty($folder) || !$this->checkFolderAndCreateIfNotExist($folder)) {
             $folder = '';
             $urlUpload = '';
         }

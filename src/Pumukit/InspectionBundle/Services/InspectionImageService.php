@@ -18,10 +18,7 @@ final class InspectionImageService implements InspectionServiceInterface
         $this->logger = $logger;
     }
 
-    public function getFileMetadata(?Path $path)
-    {
-
-    }
+    public function getFileMetadata(?Path $path) {}
 
     public function getFileMetadataAsString(?Path $path): string
     {

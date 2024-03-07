@@ -103,7 +103,7 @@ final class JobCreator
             return $this->generateJob($multimediaObject, $jobOptions, $pathFile, 0);
         }
 
-        if (str_contains($mimeType, 'application/')) {;
+        if (str_contains($mimeType, 'application/')) {
             $multimediaObject->setDocumentType();
             $this->documentManager->flush();
 

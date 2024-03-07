@@ -1,13 +1,12 @@
 <tr>
     <td><ul><li></li></ul></td>
     {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_TRACKS_OPTIONS')) %}
-        {% include '@PumukitNewAdmin/Media/Type/Resources/_visibility.html.twig' %}
-        {% include '@PumukitNewAdmin/Media/Type/Resources/_edit.html.twig' %}
-
         {% if not is_naked() %}
-            {% include '@PumukitNewAdmin/Media/Type/Resources/_info.html.twig' %}
             {% include '@PumukitNewAdmin/Media/Type/Resources/_delete.html.twig' %}
         {% endif %}
+
+        {% include '@PumukitNewAdmin/Media/Type/Resources/_visibility.html.twig' %}
+        {% include '@PumukitNewAdmin/Media/Type/Resources/_edit.html.twig' %}
     {% endif %}
 
     {% include '@PumukitNewAdmin/Media/Type/Resources/_thumbnail_generator.html.twig' %}
@@ -19,21 +18,6 @@
         {% else %}
             {% include '@PumukitNewAdmin/Media/Type/Resources/_play.html.twig' %}
         {% endif %}
-        {# TODO: DIGIREPO REMOVE #}
-{#        <td>#}
-{#            {% if loop.first %}#}
-{#                &nbsp;#}
-{#            {% else %}#}
-{#                <a href="#" onclick="$('#tracks_mms_{{ mm.id }}').load('{{ path('pumukitnewadmin_track_up', {'id': track.id, 'mmId': mm.id, 'preview': 1}) }}', {'_method': 'POST'}, function() {$('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id })|raw }}');}); return false;">&#8593;</a>#}
-{#            {% endif %}#}
-{#        </td>#}
-{#        <td>#}
-{#            {% if loop.last %}#}
-{#                &nbsp;#}
-{#            {% else %}#}
-{#                <a href="#" onclick="$('#tracks_mms_{{ mm.id }}').load('{{ path('pumukitnewadmin_track_down', {'id': track.id, 'mmId': mm.id, 'preview': 1}) }}', {'_method': 'POST'}, function() {$('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id })|raw }}');}); return false;">&#8595;</a>#}
-{#            {% endif %}#}
-{#        </td>#}
     {% endif %}
 
     <td>
