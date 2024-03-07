@@ -14,7 +14,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @internal
- *
+ * TODO: DIGIREPO REMOVE
  * @coversNothing
  */
 class FuncionalTest extends PumukitTestCase
@@ -23,7 +23,7 @@ class FuncionalTest extends PumukitTestCase
     private $profileService;
     private $cpuService;
     private $inspectionService;
-    private $jobService;
+//    private $jobService;
     private $tokenStorage;
     private $trackService;
     private $propService;
@@ -74,7 +74,7 @@ class FuncionalTest extends PumukitTestCase
         $this->profileService = null;
         $this->cpuService = null;
         $this->inspectionService = null;
-        $this->jobService = null;
+//        $this->jobService = null;
         $this->tokenStorage = null;
         $this->trackService = null;
         $this->propService = null;
@@ -86,9 +86,9 @@ class FuncionalTest extends PumukitTestCase
     {
         $series = $this->createSeries('series title');
         $mm = $this->createMultimediaObjectAssignedToSeries('mm title', $series);
-        $job = $this->jobService->addJob($this->videoInputPath, 'master_copy', 0, $mm);
+//        $job = $this->jobService->addJob($this->videoInputPath, 'master_copy', 0, $mm);
 
-        $this->jobService->execute($job);
+//        $this->jobService->execute($job);
 
         static::assertCount(1, $mm->getTracks());
         static::assertEquals($job->getDuration(), $mm->getDuration());

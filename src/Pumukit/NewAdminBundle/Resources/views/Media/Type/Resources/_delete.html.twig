@@ -1,0 +1,10 @@
+<td>
+    {% if (mm.getProperty('opencast') and track.tags().containsTag('opencast')) or (track.isMaster() and app.user and not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADVANCED_UPLOAD'))) %}
+        <i class="mdi-content-block" style="color:#009587"></i>
+    {% else %}
+        <a title="{% trans %}Delete track{% endtrans %} {{ track.id }}" href="#"
+           onclick="window.submit_delete_track('{{ track.id }}', '{{ mm.id }}', '{{ mm.getSeries().getId() }}'); return false;">
+            <i class="mdi-content-clear"></i>
+        </a>
+    {% endif %}
+</td>
