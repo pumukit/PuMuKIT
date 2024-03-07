@@ -11,7 +11,7 @@ use Pumukit\EncoderBundle\Services\DTO\JobOptions;
 use Pumukit\EncoderBundle\Services\JobCreator;
 use Pumukit\EncoderBundle\Services\JobRemover;
 use Pumukit\EncoderBundle\Services\JobRender;
-//use Pumukit\EncoderBundle\Services\JobService;
+// use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\JobUpdater;
 use Pumukit\EncoderBundle\Services\PicExtractorService;
 use Pumukit\EncoderBundle\Services\ProfileService;
@@ -157,17 +157,18 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     /**
      * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      */
-    public function toggleHideAction(Request $request, MultimediaObject $multimediaObject)
+    public function toggleHideAction(Request $request, MultimediaObject $multimediaObject): Response
     {
-        $track = $multimediaObject->getTrackById($request->get('id'));
-        $track->setHide(!$track->getHide());
-
         try {
-            $multimediaObject = $this->trackService->updateTrackInMultimediaObject($multimediaObject, $track);
+            // $multimediaObject = $this->trackService->updateTrackInMultimediaObject($multimediaObject, $track);
+            $track = $multimediaObject->getTrackById($request->get('id'));
+            $track->changeHide();
+            $this->documentManager->flush();
         } catch (\Exception $e) {
-            return new Response($e->getMessage(), 400);
+            return new Response('Cannot change visibility on this track.', 400);
         }
 
+        // return new Response('Visibility changed.', 200);
         return $this->redirectToRoute('pumukitnewadmin_track_list', ['reload_links' => true, 'id' => $multimediaObject->getId()]);
     }
 
@@ -178,13 +179,24 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     {
         $locale = $request->getLocale();
         $track = $multimediaObject->getTrackById($request->get('id'));
-        $form = $this->createForm(TrackUpdateType::class, $track, ['translator' => $this->translator, 'locale' => $locale, 'is_super_admin' => $this->isGranted('ROLE_SUPER_ADMIN')]);
+        $isPlayable = $track->tags()->containsTag('display');
+        $isPublished = $multimediaObject->containsTagWithCod(PumukitWebTVBundle::WEB_TV_TAG) && MultimediaObject::STATUS_PUBLISHED == $multimediaObject->getStatus();
+        $job = null;
+        if ($track->storage()->path()->path()) {
+            $job = $this->documentManager->getRepository(Job::class)->findOneBy(['path_end' => $track->storage()->path()->path()]);
+        }
+        $form = $this->createForm(TrackUpdateType::class, $track, [
+            'translator' => $this->translator,
+            'locale' => $locale,
+            'is_super_admin' => $this->isGranted('ROLE_SUPER_ADMIN'),
+        ]);
 
         $profiles = $this->profileService->getProfiles();
 
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid() && ($request->isMethod('PUT') || $request->isMethod('POST'))) {
+        if ($form->isSubmitted() && $form->isValid() && $request->isMethod('POST')) {
             try {
+                // TODO: Update Hide, download, language, tags, description
                 $multimediaObject = $this->trackService->updateTrackInMultimediaObject($multimediaObject, $track);
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), 400);
@@ -194,38 +206,42 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         }
 
         return $this->render(
-            '@PumukitNewAdmin/Track/update.html.twig',
+            '@PumukitNewAdmin/Media/update.html.twig',
             [
                 'track' => $track,
                 'form' => $form->createView(),
-                'mmId' => $multimediaObject->getId(),
+                'mm' => $multimediaObject,
                 'profiles' => $profiles,
+                'is_playable' => $isPlayable,
+                'is_published' => $isPublished,
+                'job' => $job,
             ]
         );
     }
 
-    /**
-     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
-     */
-    public function infoAction(Request $request, MultimediaObject $multimediaObject)
-    {
-        $track = $multimediaObject->getTrackById($request->get('id'));
-        $isPlayable = $track->tags()->containsTag('display');
-        $isPublished = $multimediaObject->containsTagWithCod(PumukitWebTVBundle::WEB_TV_TAG) && MultimediaObject::STATUS_PUBLISHED == $multimediaObject->getStatus();
-
-        $job = null;
-        if ($track->storage()->path()->path()) {
-            $job = $this->documentManager->getRepository(Job::class)->findOneBy(['path_end' => $track->storage()->path()->path()]);
-        }
-
-        return $this->render("@PumukitNewAdmin/Track/info.html.twig", [
-            'track' => $track,
-            'job' => $job,
-            'mm' => $multimediaObject,
-            'is_playable' => $isPlayable,
-            'is_published' => $isPublished,
-        ]);
-    }
+    // TODO: DIGEPO REMOVE
+    //    /**
+    //     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
+    //     */
+    //    public function infoAction(Request $request, MultimediaObject $multimediaObject)
+    //    {
+    //        $track = $multimediaObject->getTrackById($request->get('id'));
+    //        $isPlayable = $track->tags()->containsTag('display');
+    //        $isPublished = $multimediaObject->containsTagWithCod(PumukitWebTVBundle::WEB_TV_TAG) && MultimediaObject::STATUS_PUBLISHED == $multimediaObject->getStatus();
+    //
+    //        $job = null;
+    //        if ($track->storage()->path()->path()) {
+    //            $job = $this->documentManager->getRepository(Job::class)->findOneBy(['path_end' => $track->storage()->path()->path()]);
+    //        }
+    //
+    //        return $this->render("@PumukitNewAdmin/Track/info.html.twig", [
+    //            'track' => $track,
+    //            'job' => $job,
+    //            'mm' => $multimediaObject,
+    //            'is_playable' => $isPlayable,
+    //            'is_published' => $isPublished,
+    //        ]);
+    //    }
 
     /**
      * @ParamConverter("multimediaObject", options={"id" = "mmId"})
@@ -280,17 +296,14 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         return $this->redirectToRoute('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]);
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Track/list.html.twig")
-     */
-    public function listAction(Request $request, MultimediaObject $multimediaObject)
+    public function listAction(Request $request, MultimediaObject $multimediaObject): Response
     {
         $jobs = $this->jobRepository->getNotFinishedJobsByMultimediaObjectId($multimediaObject->getId());
 
         $notMasterProfiles = $this->profileService->getProfiles(null, true, false);
         $opencastExists = array_key_exists('PumukitOpencastBundle', $this->kernelBundles);
 
-        return [
+        return $this->render('@PumukitNewAdmin/Media/list.html.twig', [
             'mm' => $multimediaObject,
             'tracks' => $multimediaObject->getMedias(),
             'jobs' => $jobs,
@@ -298,7 +311,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
             'oc' => '',
             'opencast_exists' => $opencastExists,
             'reload_links' => $request->query->get('reload_links', false),
-        ];
+        ]);
     }
 
     /**
@@ -392,16 +405,17 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     /**
      * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      */
-    public function downloadAction(Request $request, MultimediaObject $multimediaObject)
+    public function downloadAction(Request $request, MultimediaObject $multimediaObject): BinaryFileResponse
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
+        $path = $track->storage()->path()->path();
 
-        $response = new BinaryFileResponse($track->getPath());
+        $response = new BinaryFileResponse($path);
         $response::trustXSendfileTypeHeader();
         $response->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            basename($track->getPath()),
-            iconv('UTF-8', 'ASCII//TRANSLIT', basename($track->getPath()))
+            basename($path),
+            iconv('UTF-8', 'ASCII//TRANSLIT', basename($path))
         );
 
         return $response;
@@ -416,7 +430,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         $profile = $request->get('profile');
         $priority = 2;
 
-        $jobOptions = new JobOptions($profile, $priority, $track->language(), $track->description(), []);
+        $jobOptions = new JobOptions($profile, $priority, $track->language(), $track->description()->toArray(), []);
         $path = Path::create($track->storage()->path()->path());
         $this->jobCreator->fromPath($multimediaObject, $path, $jobOptions);
 

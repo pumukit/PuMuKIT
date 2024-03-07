@@ -32,47 +32,48 @@ class MultimediaObjectListener
 
     public function updateType(MultimediaObject $multimediaObject): void
     {
-//        if ($multimediaObject->isLive()) {
-//            return;
-//        }
-//
-//        if ($multimediaObject->isMultistream()) {
-//            $multimediaObject->setType(MultimediaObject::TYPE_VIDEO);
-//            return;
-//        }
-//
-//        if($multimediaObject->getTracks()) {
-//            $multimediaObject->setType($this->getTracksType($multimediaObject->getTracks()));
-//            return;
-//        }
-//
-//        if($multimediaObject->documents()) {
-//            $multimediaObject->setType(MultimediaObject::TYPE_DOCUMENT);
-//            return;
-//        }
-//
-//        if($multimediaObject->images()) {
-//            $multimediaObject->setType(MultimediaObject::TYPE_IMAGE);
-//            return;
-//        }
+        //        if ($multimediaObject->isLive()) {
+        //            return;
+        //        }
+        //
+        //        if ($multimediaObject->isMultistream()) {
+        //            $multimediaObject->setType(MultimediaObject::TYPE_VIDEO);
+        //            return;
+        //        }
+        //
+        //        if($multimediaObject->getTracks()) {
+        //            $multimediaObject->setType($this->getTracksType($multimediaObject->getTracks()));
+        //            return;
+        //        }
+        //
+        //        if($multimediaObject->documents()) {
+        //            $multimediaObject->setType(MultimediaObject::TYPE_DOCUMENT);
+        //            return;
+        //        }
+        //
+        //        if($multimediaObject->images()) {
+        //            $multimediaObject->setType(MultimediaObject::TYPE_IMAGE);
+        //            return;
+        //        }
 
         if ($multimediaObject->getProperty('externalplayer')) {
             $multimediaObject->setType(MultimediaObject::TYPE_EXTERNAL);
+
             return;
         }
 
-//        if ($displayTracks = $multimediaObject->getTracksWithTag('display')) {
-//            $multimediaObject->setType($this->getTracksType($displayTracks));
-//        }
-//
-//        if ($masterTracks = $multimediaObject->getTracksWithTag('master')) {
-//            $multimediaObject->setType($this->getTracksType($masterTracks));
-//        }
-//        if ($otherTracks = $multimediaObject->getTracks()) {
-//            $multimediaObject->setType($this->getTracksType($otherTracks));
-//        }
+        //        if ($displayTracks = $multimediaObject->getTracksWithTag('display')) {
+        //            $multimediaObject->setType($this->getTracksType($displayTracks));
+        //        }
+        //
+        //        if ($masterTracks = $multimediaObject->getTracksWithTag('master')) {
+        //            $multimediaObject->setType($this->getTracksType($masterTracks));
+        //        }
+        //        if ($otherTracks = $multimediaObject->getTracks()) {
+        //            $multimediaObject->setType($this->getTracksType($otherTracks));
+        //        }
 
-//        $multimediaObject->setType(MultimediaObject::TYPE_UNKNOWN);
+        //        $multimediaObject->setType(MultimediaObject::TYPE_UNKNOWN);
     }
 
     public function updateTextIndex(MultimediaObject $multimediaObject): void

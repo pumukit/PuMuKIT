@@ -10,7 +10,6 @@ use Pumukit\SchemaBundle\Services\Repository\SeriesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * @Route("/admin/wizard")
@@ -44,6 +43,4 @@ final class WizardController extends AbstractController
             'maxNumberOfFiles' => $this->inboxService->maxNumberOfFiles(),
         ]);
     }
-
-
 }

@@ -14,5 +14,4 @@ class PumukitWizardExtension extends Extension
         $configuration = new Configuration();
         $this->processConfiguration($configuration, $configs);
     }
-
 }

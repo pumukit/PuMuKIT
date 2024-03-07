@@ -7,7 +7,7 @@ namespace Pumukit\WorkflowBundle\Tests\EventListener;
 use Doctrine\Common\Annotations\Annotation\IgnoreAnnotation;
 use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
-//use Pumukit\EncoderBundle\Services\JobService;
+// use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
@@ -54,17 +54,17 @@ class JobGeneratorListenerTest extends PumukitTestCase
         $profileService = new ProfileService($testProfiles, $this->dm);
 
         // TODO: DIGIREPO REMOVE
-//        $jobService = $this->getMockBuilder(JobService::class)
-//            ->disableOriginalConstructor()
-//            ->getMock()
-//        ;
-//
-//        $jobService->expects(static::any())
-//            ->method('addJob')
-//            ->will(static::returnArgument(1))
-//        ;
-//
-//        $this->jobGeneratorListener = new JobGeneratorListener($this->dm, $jobService, $profileService, $this->logger);
+        //        $jobService = $this->getMockBuilder(JobService::class)
+        //            ->disableOriginalConstructor()
+        //            ->getMock()
+        //        ;
+        //
+        //        $jobService->expects(static::any())
+        //            ->method('addJob')
+        //            ->will(static::returnArgument(1))
+        //        ;
+        //
+        //        $this->jobGeneratorListener = new JobGeneratorListener($this->dm, $jobService, $profileService, $this->logger);
 
         $dispatcher = new EventDispatcher();
         $this->listener = new MultimediaObjectListener($this->dm, new TextIndexService());

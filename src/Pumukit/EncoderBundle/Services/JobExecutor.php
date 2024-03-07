@@ -127,9 +127,8 @@ final class JobExecutor
             $job->setOutput($out);
             // Throws exception if the video does not exist or does not have video/audio tracks.
 
-
             // TODO DIGIREPO: Duration only for video/audio types
-//            $duration = $this->inspectionService->getDuration($job->getPathEnd());
+            //            $duration = $this->inspectionService->getDuration($job->getPathEnd());
             $duration = 25;
             $job->setNewDuration($duration);
 
@@ -154,7 +153,6 @@ final class JobExecutor
             $this->multimediaObjectPropertyJobService->finishJob($multimediaObject, $job);
             $this->jobRemover->deleteTempFilesFromJob($job);
         } catch (\Exception $e) {
-
             $this->logger->error('[execute] error job output: '.$e->getTraceAsString());
 
             $job->setTimeend(new \DateTime('now'));

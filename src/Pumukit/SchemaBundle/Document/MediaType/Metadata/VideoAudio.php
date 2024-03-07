@@ -114,6 +114,11 @@ final class VideoAudio implements MediaMetadata
         return (float) ($frame / $this->frameRate());
     }
 
+    public function isEmpty(): bool
+    {
+        return empty($this->metadata);
+    }
+
     private function frameNumber(int $duration): int
     {
         $frameRate = $this->frameRate();
@@ -162,10 +167,5 @@ final class VideoAudio implements MediaMetadata
     private function decodeMetadataInfo()
     {
         return json_decode($this->metadata(), false, 512, JSON_THROW_ON_ERROR);
-    }
-
-    public function isEmpty(): bool
-    {
-        return empty($this->metadata);
     }
 }

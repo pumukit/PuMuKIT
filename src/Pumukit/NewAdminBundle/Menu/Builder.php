@@ -23,8 +23,8 @@ class Builder implements ContainerAwareInterface
         $this->authorizationChecker = $this->container->get('security.authorization_checker');
 
         $this->addDashboardMenu($menu);
-//        TODO: DIGIREPO REMOVE
-//        $this->addWizardMenu($menu);
+        //        TODO: DIGIREPO REMOVE
+        //        $this->addWizardMenu($menu);
         $this->addMediaManagerMenu($menu);
         $this->addStatsMenu($menu);
         $this->addLiveMenu($menu);
@@ -49,18 +49,18 @@ class Builder implements ContainerAwareInterface
     }
 
     // TODO: DIGIREPO REMOVE
-//    protected function addWizardMenu(KnpItemInterface $menu): void
-//    {
-//        if (!$this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
-//            if ($this->authorizationChecker->isGranted(Permission::ACCESS_WIZARD_UPLOAD) && $this->authorizationChecker->isGranted(Permission::SHOW_WIZARD_MENU)) {
-//                $masterRequest = $this->container->get('request_stack')->getMasterRequest();
-//                $class = ($masterRequest && (0 === strpos($masterRequest->attributes->get('_route'), 'pumukitwizard_default_'))) ? 'active' : '';
-//                $class .= ' menu_wizard_upload_new_videos';
-//                $options = ['route' => 'pumukitwizard_default_series', 'attributes' => ['class' => $class]];
-//                $menu->addChild('Upload new videos', $options);
-//            }
-//        }
-//    }
+    //    protected function addWizardMenu(KnpItemInterface $menu): void
+    //    {
+    //        if (!$this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
+    //            if ($this->authorizationChecker->isGranted(Permission::ACCESS_WIZARD_UPLOAD) && $this->authorizationChecker->isGranted(Permission::SHOW_WIZARD_MENU)) {
+    //                $masterRequest = $this->container->get('request_stack')->getMasterRequest();
+    //                $class = ($masterRequest && (0 === strpos($masterRequest->attributes->get('_route'), 'pumukitwizard_default_'))) ? 'active' : '';
+    //                $class .= ' menu_wizard_upload_new_videos';
+    //                $options = ['route' => 'pumukitwizard_default_series', 'attributes' => ['class' => $class]];
+    //                $menu->addChild('Upload new videos', $options);
+    //            }
+    //        }
+    //    }
 
     protected function addMediaManagerMenu(KnpItemInterface $menu): void
     {
@@ -80,11 +80,11 @@ class Builder implements ContainerAwareInterface
             $series->setDisplayChildren(false);
 
             // TODO: DIGIREPO REMOVE
-//            $activeMmsListAll = $this->container->getParameter('pumukit.show_mms_list_all_menu');
-//            if ($activeMmsListAll) {
-//                $options = ['route' => 'pumukitnewadmin_mms_indexall', 'attributes' => ['class' => 'menu_multimedia_object_all']];
-//                $mediaManager->addChild($this->container->getParameter('pumukit_new_admin.multimedia_object_label'), $options);
-//            }
+            //            $activeMmsListAll = $this->container->getParameter('pumukit.show_mms_list_all_menu');
+            //            if ($activeMmsListAll) {
+            //                $options = ['route' => 'pumukitnewadmin_mms_indexall', 'attributes' => ['class' => 'menu_multimedia_object_all']];
+            //                $mediaManager->addChild($this->container->getParameter('pumukit_new_admin.multimedia_object_label'), $options);
+            //            }
 
             $options = ['route' => 'pumukitnewadmin_unesco_index', 'attributes' => ['class' => 'menu_tag_catalogue']];
             $unesco = $mediaManager->addChild('UNESCO catalogue', $options);
