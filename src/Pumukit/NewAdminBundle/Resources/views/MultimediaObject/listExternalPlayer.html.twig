@@ -63,6 +63,7 @@
         $('#externalplayer').attr('src',$('#form_url').val());
     });
 
+    // TODO: DIGIREPO REMOVE
     // $('#form_delete').on('click', function(event) {
     //     event.preventDefault();
     //     $('#form_url').val('');
@@ -72,16 +73,15 @@
 
     $('#externalplayerform').on('submit', function(event) {
         event.preventDefault();
+        // TODO: DIGIREPO REMOVE
         {#url: "{{ path('pumukitnewadmin_mms_listexternalproperties', {'id' : multimediaObject.id}) }}",#}
-        console.log('entra');
         $('#myModal').modal('hide');
         $.ajax({
             url: "{{ path('pumukitnewadmin_mms_listexternalproperties', {'series' : series} ) }}",
             type: 'POST',
             data: $(this).serialize(),
             success: function(response){
-                {#$('#tracks_mms_{{ multimediaObject.id }}').html(response);#}
-                $('#edit_mms').load();
+                location.reload();
             }
         });
         return false;

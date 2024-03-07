@@ -234,7 +234,7 @@ class Builder implements ContainerAwareInterface
     {
         if ($this->authorizationChecker->isGranted(Permission::ACCESS_ADMIN_USERS)) {
             $options = ['route' => 'pumukitnewadmin_user_index', 'attributes' => ['class' => 'menu_users']];
-            $management->addChild('Admin users', $options);
+            $management->addChild('Users', $options);
         }
     }
 
