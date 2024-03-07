@@ -18,11 +18,14 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 #### Added
 
 - Add support for multiple types of media (docs, images, audio, video, external, etc.).
-- Wizard and inbox are now unified in a single upload page.
+- Added select files from server on wizard.
+- Added create external video on series.
+- Added email filter on user lists.
 
 #### Changed
 
 - Refactor schema for multimedia objects to support multiple types of media.
+- Unify wizard and inbox are now unified in a single upload page.
 - Rename of "Wizard" to "Upload" inside series.
 
 #### Removed

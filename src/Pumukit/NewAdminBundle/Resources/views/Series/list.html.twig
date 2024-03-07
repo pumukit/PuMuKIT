@@ -1,4 +1,4 @@
-<div class="table-responsive well" style="overflow:visible;">
+<div class="table-responsive" style="overflow:visible;">
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
         <input type="hidden" name="pumukitnewadmin_series_sort_change_type" id="pumukitnewadmin_series_sort_change_type" value="{{ app.session.get('admin/series/type')=='asc'?'desc':'asc' }}"/>
         <table class="table table-striped table-hover">

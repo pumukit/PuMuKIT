@@ -1156,7 +1156,6 @@ class MultimediaObjectController extends SortableAdminController
 
         if ($form->isSubmitted() && $form->isValid() && $request->isMethod('POST')) {
             $data = $form->getData();
-            // TODO: Create multimedia object on series.
             $series = $this->seriesRepository->search($seriesId);
             $multimediaObject = $this->factoryService->createMultimediaObject($series);
 
