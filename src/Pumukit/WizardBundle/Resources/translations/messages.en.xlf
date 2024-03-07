@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+        <header>
+            <tool tool-id="symfony" tool-name="Symfony"/>
+        </header>
+        <body>
+            <trans-unit id="30a6.Um" resname="Upload wizard">
+                <source>Upload wizard</source>
+                <target>Upload wizard</target>
+            </trans-unit>
+            <trans-unit id="vj5WB3c" resname="Where do you want to upload the files from?">
+                <source>Where do you want to upload the files from?</source>
+                <target>Where do you want to upload the files from?</target>
+            </trans-unit>
+            <trans-unit id="jDHm5yI" resname="Local">
+                <source>Local</source>
+                <target>Local</target>
+            </trans-unit>
+            <trans-unit id="rvfeKNU" resname="Server">
+                <source>Server</source>
+                <target>Server</target>
+            </trans-unit>
+            <trans-unit id="5IfCwZZ" resname="You dont have enough permissions to upload files from the server">
+                <source>You dont have enough permissions to upload files from the server</source>
+                <target>You dont have enough permissions to upload files from the server</target>
+            </trans-unit>
+            <trans-unit id="rDikWi_" resname="What do you want to do with the uploaded file?">
+                <source>What do you want to do with the uploaded file?</source>
+                <target>What do you want to do with the uploaded file?</target>
+            </trans-unit>
+            <trans-unit id="YDuFb.1" resname="Identical copy">
+                <source>Identical copy</source>
+                <target>Identical copy</target>
+            </trans-unit>
+            <trans-unit id="tHcCuTz" resname="Encrypted copy">
+                <source>Encrypted copy</source>
+                <target>Encrypted copy</target>
+            </trans-unit>
+            <trans-unit id="4JZSO3t" resname="Without copy">
+                <source>Without copy</source>
+                <target>Without copy</target>
+            </trans-unit>
+            <trans-unit id="dpAPG.0" resname="Back">
+                <source>Back</source>
+                <target>Back</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
