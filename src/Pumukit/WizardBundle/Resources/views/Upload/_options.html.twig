@@ -20,7 +20,8 @@
                 {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\InboxController::FormAction', {'onlyDir': true})) }}
             </div>
         {% else %}
-            {{ "You dont have enough permissions to upload files from the server"|trans }}
+            <br/>
+            <div class="text-center">{{ "You dont have enough permissions to upload files from the server"|trans }}</div>
         {% endif %}
     </div>
 </div>
