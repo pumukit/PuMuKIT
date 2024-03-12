@@ -245,14 +245,14 @@ class SeriesRepository extends DocumentRepository
 
     public function countPublic()
     {
-        return $this->getDocumentManager()
-            ->getRepository(MultimediaObject::class)
+        $validSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)
             ->createStandardQueryBuilder()
             ->distinct('series')
-            ->count()
             ->getQuery()
             ->execute()
         ;
+
+        return count($validSeries);
     }
 
     public function findWithTagAndSeriesType(TagInterface $tag, SeriesType $seriesType, array $sort = [], int $limit = 0, int $page = 0)
