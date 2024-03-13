@@ -82,9 +82,10 @@ final class JobValidator
 
     public function validateTrack(array $profile, JobOptions $jobOptions, string $pathFile): int
     {
-        $checkduration = !(isset($profile['nocheckduration']) && $profile['nocheckduration']);
+        $duration = 0;
+        $checkDuration = !(isset($profile['nocheckduration']) && $profile['nocheckduration']);
 
-        if ($checkduration && !($jobOptions->unique() && $jobOptions->flags())) {
+        if ($checkDuration && !($jobOptions->unique() && $jobOptions->flags())) {
             if (!is_file($pathFile)) {
                 $this->logger->error('[addJob] FileNotFoundException: Could not find file "'.$pathFile);
 
@@ -107,7 +108,7 @@ final class JobValidator
             }
         }
 
-        if ($checkduration && 0 === $duration) {
+        if ($checkDuration && 0 === $duration) {
             throw new \Exception('The media file duration is zero');
         }
 

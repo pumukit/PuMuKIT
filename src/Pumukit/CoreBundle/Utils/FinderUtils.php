@@ -19,7 +19,7 @@ final class FinderUtils
 
     public static function findFilePathname(string $path, string $fileName): ?string
     {
-        $finder = (new FinderUtils())->finder();
+        $finder = self::getFinder();
 
         $finder->files()->in($path)->name($fileName.'.*');
 

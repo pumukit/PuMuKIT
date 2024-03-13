@@ -8,6 +8,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MediaType\Metadata\MediaMetadata;
 use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
+use Pumukit\SchemaBundle\Document\Traits\Properties;
 use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Pumukit\SchemaBundle\Document\ValueObject\Tags;
@@ -18,6 +19,8 @@ use Pumukit\SchemaBundle\Document\ValueObject\Url;
  */
 abstract class Media implements MediaInterface
 {
+    use Properties;
+
     /**
      * @MongoDB\Id
      */
@@ -173,6 +176,11 @@ abstract class Media implements MediaInterface
     public function updateTags(Tags $tags): void
     {
         $this->tags = $tags->toArray();
+    }
+
+    public function updateStorage(Storage $storage): void
+    {
+        $this->storage = $storage->toArray();
     }
 
     public function changeHide(): void

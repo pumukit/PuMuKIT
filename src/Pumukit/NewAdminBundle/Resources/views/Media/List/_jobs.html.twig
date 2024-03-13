@@ -1,7 +1,8 @@
 {% for job in jobs %}
     <tr>
         <td><ul><li></li></ul></td>
-        <td colspan="{% if is_naked() %}7{% else %}10{% endif %}" {% if constant('STATUS_ERROR', job) == job.getStatus() %} style="color:red" {% endif %}>
+        <td colspan="5">&nbsp;</td>
+        <td {% if constant('STATUS_ERROR', job) == job.getStatus() %} style="color:red" {% endif %}>
             <a title="{% trans %}Encoder Job info{% endtrans %}"
                style="color:inherit"
                data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
@@ -21,7 +22,7 @@
             {% if not job.isExecuted() %}
                 {% set need_reload_status = true %}
             {% endif %}
-            <small>{{ job.getStatusText() }}</small>
+{#            <small>{{ job.getStatusText() }}</small>#}
         </td>
         <td>
             &nbsp;{% if not is_naked() %}{{ job.getId() }} - {% endif %}<strong>{{ job.getProfile() }}</strong> - {{ job.getPathIni()|basename }} - {{ job.getDuration()|duration_string }}
