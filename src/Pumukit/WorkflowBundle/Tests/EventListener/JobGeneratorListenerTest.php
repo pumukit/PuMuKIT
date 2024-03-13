@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\WorkflowBundle\Tests\EventListener;
 
 use Doctrine\Common\Annotations\Annotation\IgnoreAnnotation;
+use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 // use Pumukit\EncoderBundle\Services\JobService;
@@ -67,7 +68,8 @@ class JobGeneratorListenerTest extends PumukitTestCase
         //        $this->jobGeneratorListener = new JobGeneratorListener($this->dm, $jobService, $profileService, $this->logger);
 
         $dispatcher = new EventDispatcher();
-        $this->listener = new MultimediaObjectListener($this->dm, new TextIndexService());
+        $logger = new Logger('test');
+        $this->listener = new MultimediaObjectListener($this->dm, new TextIndexService(), $logger);
         $dispatcher->addListener('multimediaobject.update', [$this->listener, 'postUpdate']);
         $this->trackDispatcher = static::$kernel->getContainer()->get('pumukitschema.track_dispatcher');
         $profileService = new ProfileService($testProfiles, $this->dm);
