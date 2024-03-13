@@ -5,15 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 To get the diff for a specific change, go to https://github.com/pumukit/PuMuKIT/commit/XXX where XXX is the change hash.
 To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/compare/3.0.0...3.1.x.
 
-## [4.2.0](https://github.com/pumukit/PuMuKIT/compare/4.1.0...4.2.0) - (2024-10-10)
-
-#### Added
-- Added property updatedAt on MultimediaObject document
-
-#### Fixed
-- Reported issues
-
-## [4.1.0](https://github.com/pumukit/PuMuKIT/compare/4.0.0...4.1.0) - (2024-03-xx)
+## [5.0.0](https://github.com/pumukit/PuMuKIT/compare/4.0.0...4.1.0) - (2024-03-xx)
 
 #### Added
 
@@ -37,6 +29,14 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Remove "New" option inside series.
 - Remove simple wizard
 - Remove download logs from backoffice.
+
+## [4.2.0](https://github.com/pumukit/PuMuKIT/compare/4.1.0...4.2.0) - (2024-10-10)
+
+#### Added
+- Added property updatedAt on MultimediaObject document
+
+#### Fixed
+- Reported issues
 
 ## [4.0.0](https://github.com/pumukit/PuMuKIT/compare/3.9.0...4.0.0) - (2023-07-04)
 

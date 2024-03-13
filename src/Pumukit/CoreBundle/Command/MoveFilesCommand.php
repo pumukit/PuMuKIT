@@ -7,7 +7,10 @@ namespace Pumukit\CoreBundle\Command;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Utils\FileSystemUtils;
+use Pumukit\SchemaBundle\Document\MediaType\Storage;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\ValueObject\Path;
+use Pumukit\SchemaBundle\Document\ValueObject\Url;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
@@ -108,7 +111,8 @@ EOT
             }
 
             $track = $multimediaObject->getMaster();
-            if (false === strpos($track->getPath(), (string) $this->origin)) {
+            $path = $track->storage()->path()->path();
+            if (!str_contains($path, (string) $this->origin)) {
                 $this->logger->error('the root directory does not match on multimedia object '.$multimediaObject->getId());
 
                 continue;
@@ -116,7 +120,7 @@ EOT
 
             $progress->advance();
 
-            if (!$this->fileSystem->exists($track->getPath())) {
+            if (!FileSystemUtils::exists($path)) {
                 $this->logger->error('File not exists '.$multimediaObject->getId());
 
                 continue;
@@ -124,14 +128,17 @@ EOT
 
             $this->logger->info('Move file of multimedia object '.$multimediaObject->getId());
 
-            $finalPath = str_replace($this->origin, $this->destiny, $track->getPath());
+            $finalPath = str_replace($this->origin, $this->destiny, $path);
 
             $directory = pathinfo($finalPath);
             FileSystemUtils::createFolder($directory['dirname'].'/');
-            FileSystemUtils::copy($track->getPath(), $finalPath, true);
-            FileSystemUtils::remove($track->getPath());
+            FileSystemUtils::copy($path, $finalPath, true);
+            FileSystemUtils::remove($path);
 
-            $track->setPath($finalPath);
+            $url = Url::create('');
+            $path = Path::create($finalPath);
+            $storage = Storage::create($url, $path);
+            $track->updateStorage($storage);
             $track->setProperty('moved', true);
 
             ++$i;

@@ -46,7 +46,7 @@ class PicExtractorServiceTest extends PumukitTestCase
         $width = 304;
         $height = 242;
         $command = 'ffmpeg -ss {{ss}} -y -i {{input}} -r 1 -vframes 1 -s {{size}} -f image2 {{output}}';
-        $this->picExtractor = new PicExtractorService($this->dm, $mmsPicService, $width, $height, $this->targetPath, $this->targetUrl, $command);
+        $this->picExtractor = new PicExtractorService($this->dm, $mmsPicService, $width, $height, $command);
     }
 
     public function tearDown(): void

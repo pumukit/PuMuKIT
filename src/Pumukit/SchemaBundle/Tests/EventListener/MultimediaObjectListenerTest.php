@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\EventListener;
 
+use Monolog\Logger;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
@@ -30,7 +31,8 @@ class MultimediaObjectListenerTest extends PumukitTestCase
         parent::setUp();
 
         $dispatcher = new EventDispatcher();
-        $this->listener = new MultimediaObjectListener($this->dm, new TextIndexService());
+        $logger = new Logger('test');
+        $this->listener = new MultimediaObjectListener($this->dm, new TextIndexService(), $logger);
         $dispatcher->addListener('multimediaobject.update', [$this->listener, 'postUpdate']);
         $this->trackDispatcher = static::$kernel->getContainer()->get('pumukitschema.track_dispatcher');
 
