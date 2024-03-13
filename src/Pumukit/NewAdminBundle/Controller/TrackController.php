@@ -262,7 +262,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
         if ($track) {
-            if (($track->containsTag('opencast') && $multimediaObject->isMultistream())
+            if (($track->tags()->contains('opencast') && $multimediaObject->isMultistream())
                 || ($track->isMaster() && !$this->isGranted(Permission::ACCESS_ADVANCED_UPLOAD))) {
                 return new Response('You don\'t have enough permissions to delete this track. Contact your administrator.', Response::HTTP_FORBIDDEN);
             }
