@@ -19,6 +19,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 - Refactor schema for multimedia objects to support multiple types of media.
 - Unify wizard and inbox are now unified in a single upload page.
+- Unify edit and info option on advance edit multimedia object files.
 - Rename of "Wizard" to "Upload" inside series.
 
 #### Removed
@@ -27,6 +28,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Remove support BC for PHP 7.4 or lower.
 - Remove "New" option inside series.
 - Remove simple wizard
+- Remove download logs from backoffice.
 
 #### Fixed
 
