@@ -73,9 +73,9 @@ class TrackService
     public function removeTrackFromMultimediaObject(MultimediaObject $multimediaObject, string $trackId): MultimediaObject
     {
         $track = $multimediaObject->getTrackById($trackId);
-        $trackPath = $track->getPath();
+        $trackPath = $track->storage()->path()->path();
 
-        $isNotOpencast = !$track->containsTag('opencast');
+        $isNotOpencast = !$track->tags()->contains('opencast');
 
         $multimediaObject->removeTrackById($trackId);
         $this->dm->persist($multimediaObject);
