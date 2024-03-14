@@ -84,6 +84,7 @@ class PumukitAdminExtension extends AbstractExtension
             new TwigFunction('php_upload_max_filesize', [$this, 'getPhpUploadMaxFileSize']),
             new TwigFunction('path_exists', [$this, 'existsRoute']),
             new TwigFunction('is_playable_on_playlist', [$this, 'isPlayableOnPlaylist']),
+            new TwigFunction('predefined_languages', [$this, 'getCustomLanguages']),
             new TwigFunction('is_mmobj_owner', [$this, 'isUserOwner']),
             new TwigFunction('broadcast_description', [$this, 'getBroadcastDescription']),
             new TwigFunction('is_naked', [$this, 'isNaked'], ['needs_environment' => true]),
@@ -171,6 +172,11 @@ class PumukitAdminExtension extends AbstractExtension
         }
 
         return $code;
+    }
+
+    public function getCustomLanguages(): array
+    {
+        return $this->languages;
     }
 
     public function getStatusIcon(int $status): string
