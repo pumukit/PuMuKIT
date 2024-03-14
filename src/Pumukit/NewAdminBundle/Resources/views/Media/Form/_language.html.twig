@@ -1,0 +1,8 @@
+<div class="form-group" id="pumukitnewadmin_media_i18n_language">
+    <label for="language" class="control-label">{% trans %}Language{% endtrans %}</label>
+    <select id="language" name="language" class="form-control">
+        {% for  key, lang in predefined_languages() %}
+            <option value="{{ key }}">{{ lang|trans }}</option>
+        {% endfor %}
+    </select>
+</div>

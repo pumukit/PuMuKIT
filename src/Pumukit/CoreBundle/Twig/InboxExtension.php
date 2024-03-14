@@ -3,6 +3,7 @@
 namespace Pumukit\CoreBundle\Twig;
 
 use Pumukit\CoreBundle\Services\InboxService;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -28,6 +29,7 @@ class InboxExtension extends AbstractExtension
             new TwigFunction('inbox_override_patch_method', [$this, 'getOverridePatchMethod']),
             new TwigFunction('inbox_progress_bar_color', [$this, 'getProgressBarColor']),
             new TwigFunction('inbox_show_backoffice_button', [$this, 'getShowBackofficeButtonInInbox']),
+            new TwigFunction('filter_valid_types_of_files', [$this, 'getFilteredTypesOfFiles']),
         ];
     }
 
@@ -79,5 +81,26 @@ class InboxExtension extends AbstractExtension
     public function getShowBackofficeButtonInInbox(): bool
     {
         return $this->inboxService->showBackofficeButtonInInbox();
+    }
+
+    public function getFilteredTypesOfFiles(MultimediaObject $multimediaObject): string
+    {
+        if($multimediaObject->isAudioType()) {
+            return json_encode(['audio/*']);
+        }
+
+        if($multimediaObject->isVideoType()) {
+            return json_encode(['video/*', "*.mxf"]);
+        }
+
+        if($multimediaObject->isImageType()) {
+            return json_encode(['image/*']);
+        }
+
+        if($multimediaObject->isDocumentType()) {
+            return json_encode(['application/pdf']);
+        }
+
+        throw new \Exception('Invalid type of multimedia object');
     }
 }

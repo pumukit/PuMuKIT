@@ -92,20 +92,21 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     /**
      * @Security("is_granted('ROLE_ACCESS_ADVANCED_UPLOAD')")
      *
-     * @Template("@PumukitNewAdmin/Track/create.html.twig")
+     * @Template("@PumukitNewAdmin/Media/create.html.twig")
      */
     public function createAction(Request $request, MultimediaObject $multimediaObject)
     {
-        $locale = $request->getLocale();
-        $track = new Track();
-        $form = $this->createForm(TrackType::class, $track, ['translator' => $this->translator, 'locale' => $locale]);
+//        $locale = $request->getLocale();
+//        $track = new Track();
+//        $form = $this->createForm(TrackType::class, $track, ['translator' => $this->translator, 'locale' => $locale]);
 
         $masterProfiles = $this->profileService->getMasterProfiles(true);
 
         return [
-            'track' => $track,
-            'form' => $form->createView(),
+//            'track' => $track,
+//            'form' => $form->createView(),
             'mm' => $multimediaObject,
+            'series' => $multimediaObject->getSeries(),
             'master_profiles' => $masterProfiles,
         ];
     }

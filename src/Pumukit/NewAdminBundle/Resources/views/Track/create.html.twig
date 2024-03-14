@@ -3,8 +3,8 @@
     <h4 class="modal-title" id="myModalLabel">{% trans %}create new track{% endtrans %}</h4>
 </div>
 <div class="modal-body">
-    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
-        {% form_theme form '@PumukitNewAdmin/Themes/fields.html.twig' %}
+{#    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}#}
+{#        {% form_theme form '@PumukitNewAdmin/Themes/fields.html.twig' %}#}
 
         {% set pathToUpload = path('pumukitnewadmin_track_upload', {'id': mm.id}) %}
 
@@ -12,32 +12,40 @@
             <iframe id="iframeUpload" name="iframeUpload" style="display:none" src=""></iframe>
 
             <fieldset>
+                {% include '@PumukitNewAdmin/Media/Form/_description.html.twig' %}
 
-                {{ form_row(form["i18n_description"]) }}
+{#                <div class="form-group" id="pumukitnewadmin_track_i18n_description">#}
+{#                    <label for="i18n_description" class="control-label">{% trans %}Description{% endtrans %}</label>#}
+{#                    <input type="text" id="i18n_description" name="i18n_description" class="form-control"/>#}
+{#                </div>#}
+{#                {{ form_row(form["i18n_description"]) }}#}
 
-                <div class="form-group" id="pumukitnewadmin_track_profile">
-                    <label for="profile" class="control-label">{% trans %}Profile{% endtrans %}</label>
-                    {% for key in master_profiles|keys %}
-                        <div class="radio">
-                            <label><input type="radio" name="profile" id="profile_{{ key }}" value="{{ key }}" {{ (loop.first)?'checked':'' }}>{{ key }}</label>
-                        </div>
-                    {% endfor %}
-                </div>
+                {% include '@PumukitNewAdmin/Media/Form/_profile.html.twig' %}
+{#                <div class="form-group" id="pumukitnewadmin_track_profile">#}
+{#                    <label for="profile" class="control-label">{% trans %}Profile{% endtrans %}</label>#}
+{#                    {% for key in master_profiles|keys %}#}
+{#                        <div class="radio">#}
+{#                            <label><input type="radio" name="profile" id="profile_{{ key }}" value="{{ key }}" {{ (loop.first)?'checked':'' }}>{{ key }}</label>#}
+{#                        </div>#}
+{#                    {% endfor %}#}
+{#                </div>#}
 
-                <div class="form-group" id="pumukitnewadmin_track_priority">
-                    <label for="priority" class="control-label">{% trans %}Priority{% endtrans %}</label>
-                    <div class="radio">
-                        <label><input type="radio" id="low_priority" name="priority" value="1"/>{% trans %}Low-Priority{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                    </div>
-                    <div class="radio">
-                        <label><input type="radio" id="normal_priority" name="priority" value="2" checked="checked"/>{% trans %}Normal-Priority{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                    </div>
-                    <div class="radio">
-                        <label><input type="radio" id="high_priority" name="priority" value="3"/>{% trans %}High-Priority{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                    </div>
-                </div>
+{#                TODO: DIGIREPO REMOVE#}
+{#                <div class="form-group" id="pumukitnewadmin_track_priority">#}
+{#                    <label for="priority" class="control-label">{% trans %}Priority{% endtrans %}</label>#}
+{#                    <div class="radio">#}
+{#                        <label><input type="radio" id="low_priority" name="priority" value="1"/>{% trans %}Low-Priority{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;</label>#}
+{#                    </div>#}
+{#                    <div class="radio">#}
+{#                        <label><input type="radio" id="normal_priority" name="priority" value="2" checked="checked"/>{% trans %}Normal-Priority{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;</label>#}
+{#                    </div>#}
+{#                    <div class="radio">#}
+{#                        <label><input type="radio" id="high_priority" name="priority" value="3"/>{% trans %}High-Priority{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;</label>#}
+{#                    </div>#}
+{#                </div>#}
 
-                {{ form_row(form["language"]) }}
+                {% include '@PumukitNewAdmin/Media/Form/_language.html.twig' %}
+{#                {{ form_row(form["language"]) }}#}
 
                 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
                     <div class="form-group">
@@ -67,9 +75,9 @@
                 <button type="submit" class="btn btn-pumukit btn-raised" id="pumukitnewadmin_track_ok_button" disabled>{% trans %}OK{% endtrans %}</button>
             </div>
         </form>
-    {% else %}
-        {% trans %}You don't have enough permissions to access this content.{% endtrans %}
-    {% endif %}
+{#    {% else %}#}
+{#        {% trans %}You don't have enough permissions to access this content.{% endtrans %}#}
+{#    {% endif %}#}
 </div>
 
 <script>
