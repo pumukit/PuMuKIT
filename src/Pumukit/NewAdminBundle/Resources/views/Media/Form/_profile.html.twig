@@ -1,0 +1,8 @@
+<div class="form-group" id="pumukitnewadmin_media_profile">
+    <label for="profile" class="control-label">{% trans %}Profile{% endtrans %}</label>
+    {% for key in master_profiles|keys %}
+        <div class="radio">
+            <label><input type="radio" name="profile" id="profile_{{ key }}" value="{{ key }}" {{ (loop.first)?'checked':'' }}>{{ key }}</label>
+        </div>
+    {% endfor %}
+</div>
