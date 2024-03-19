@@ -252,7 +252,7 @@ class SeriesRepository extends DocumentRepository
             ->execute()
         ;
 
-        return count($validSeries);
+        return is_countable($validSeries) ? count($validSeries) : 0;
     }
 
     public function findWithTagAndSeriesType(TagInterface $tag, SeriesType $seriesType, array $sort = [], int $limit = 0, int $page = 0)
