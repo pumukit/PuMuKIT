@@ -279,7 +279,7 @@ class PersonService
         return $user;
     }
 
-    public function getPersonFromLoggedInUser(User $loggedInUser = null): ?Person
+    public function getPersonFromLoggedInUser(?User $loggedInUser = null): ?Person
     {
         if (null !== $loggedInUser) {
             if (null === $person = $loggedInUser->getPerson()) {

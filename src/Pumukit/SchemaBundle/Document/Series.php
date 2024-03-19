@@ -260,7 +260,7 @@ class Series
         return $this->series_type;
     }
 
-    public function setSeriesStyle(SeriesStyle $series_style = null): void
+    public function setSeriesStyle(?SeriesStyle $series_style = null): void
     {
         $this->series_style = $series_style;
     }

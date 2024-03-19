@@ -131,7 +131,7 @@ class EmbeddedPerson implements PersonInterface
         return $this->phone;
     }
 
-    public function setHonorific(?string $honorific, string $locale = null): void
+    public function setHonorific(?string $honorific, ?string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -139,7 +139,7 @@ class EmbeddedPerson implements PersonInterface
         $this->honorific[$locale] = $honorific;
     }
 
-    public function getHonorific(string $locale = null): ?string
+    public function getHonorific(?string $locale = null): ?string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -158,7 +158,7 @@ class EmbeddedPerson implements PersonInterface
         return $this->honorific;
     }
 
-    public function setFirm(?string $firm, string $locale = null): void
+    public function setFirm(?string $firm, ?string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -166,7 +166,7 @@ class EmbeddedPerson implements PersonInterface
         $this->firm[$locale] = $firm;
     }
 
-    public function getFirm(string $locale = null): ?string
+    public function getFirm(?string $locale = null): ?string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -185,7 +185,7 @@ class EmbeddedPerson implements PersonInterface
         return $this->firm;
     }
 
-    public function setPost(?string $post, string $locale = null): void
+    public function setPost(?string $post, ?string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -193,7 +193,7 @@ class EmbeddedPerson implements PersonInterface
         $this->post[$locale] = $post;
     }
 
-    public function getPost(string $locale = null): ?string
+    public function getPost(?string $locale = null): ?string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -212,7 +212,7 @@ class EmbeddedPerson implements PersonInterface
         return $this->post;
     }
 
-    public function setBio(?string $bio, string $locale = null): void
+    public function setBio(?string $bio, ?string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -220,7 +220,7 @@ class EmbeddedPerson implements PersonInterface
         $this->bio[$locale] = $bio;
     }
 
-    public function getBio(string $locale = null): ?string
+    public function getBio(?string $locale = null): ?string
     {
         if (null === $locale) {
             $locale = $this->locale;

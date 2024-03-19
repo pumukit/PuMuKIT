@@ -50,7 +50,7 @@ class ResourceController extends AbstractController
         return $this->documentManager->getRepository(static::$repoName);
     }
 
-    public function getSorting(Request $request = null, $session_namespace = null): array
+    public function getSorting(?Request $request = null, $session_namespace = null): array
     {
         return [];
     }

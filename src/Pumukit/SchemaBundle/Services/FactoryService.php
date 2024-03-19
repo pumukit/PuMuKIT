@@ -57,7 +57,7 @@ class FactoryService
         array $locales = [],
         $defaultCopyright = '',
         $defaultLicense = '',
-        TextIndexService $textIndexService = null
+        ?TextIndexService $textIndexService = null
     ) {
         $this->dm = $documentManager;
         $this->tagService = $tagService;
@@ -89,7 +89,7 @@ class FactoryService
      *
      * @throws \Exception
      */
-    public function createSeries(User $loggedInUser = null, array $title = null): Series
+    public function createSeries(?User $loggedInUser = null, ?array $title = null): Series
     {
         return $this->createCollection(Series::TYPE_SERIES, $loggedInUser, $title);
     }
@@ -101,7 +101,7 @@ class FactoryService
      *
      * @throws \Exception
      */
-    public function createPlaylist(User $loggedInUser = null, array $title = null)
+    public function createPlaylist(?User $loggedInUser = null, ?array $title = null)
     {
         return $this->createCollection(Series::TYPE_PLAYLIST, $loggedInUser, $title);
     }
@@ -115,7 +115,7 @@ class FactoryService
      *
      * @throws \Exception
      */
-    public function doCreateCollection($collectionType, User $loggedInUser = null, array $title = null)
+    public function doCreateCollection($collectionType, ?User $loggedInUser = null, ?array $title = null)
     {
         $series = new Series();
         $series->setLocale($this->locales[0]);
@@ -152,7 +152,7 @@ class FactoryService
      *
      * @throws \Exception
      */
-    public function createCollection($collectionType, User $loggedInUser = null, array $title = null)
+    public function createCollection($collectionType, ?User $loggedInUser = null, ?array $title = null)
     {
         $series = $this->doCreateCollection($collectionType, $loggedInUser, $title);
 
@@ -170,7 +170,7 @@ class FactoryService
      *
      * @throws \Exception
      */
-    public function doCreateMultimediaObject(Series $series, $flush = true, User $loggedInUser = null)
+    public function doCreateMultimediaObject(Series $series, $flush = true, ?User $loggedInUser = null)
     {
         $dispatch = false; // doCreateMultimediaObject does not dispatch events by definition
         $prototype = $this->getMultimediaObjectPrototype($series);
@@ -238,7 +238,7 @@ class FactoryService
      *
      * @throws \Exception
      */
-    public function createMultimediaObject(Series $series, $flush = true, User $loggedInUser = null)
+    public function createMultimediaObject(Series $series, $flush = true, ?User $loggedInUser = null)
     {
         $mm = $this->doCreateMultimediaObject($series, $flush, $loggedInUser);
 
@@ -311,7 +311,7 @@ class FactoryService
      *
      * @throws MongoDBException
      */
-    public function getMultimediaObjectPrototype(Series $series = null)
+    public function getMultimediaObjectPrototype(?Series $series = null)
     {
         return $this->dm
             ->getRepository(MultimediaObject::class)
@@ -466,7 +466,7 @@ class FactoryService
      *
      * @throws \Exception
      */
-    public function cloneMultimediaObject(MultimediaObject $src, Series $series = null, $addClonedToTitle = true)
+    public function cloneMultimediaObject(MultimediaObject $src, ?Series $series = null, $addClonedToTitle = true)
     {
         $new = new MultimediaObject();
         $new->setLocale($this->locales[0]);
@@ -610,7 +610,7 @@ class FactoryService
      *
      * @throws \Exception
      */
-    private function createMultimediaObjectPrototype(Series $series, User $loggedInUser = null)
+    private function createMultimediaObjectPrototype(Series $series, ?User $loggedInUser = null)
     {
         $mm = new MultimediaObject();
         $mm->setLocale($this->locales[0]);
@@ -688,7 +688,7 @@ class FactoryService
      *
      * @throws \Exception
      */
-    private function addLoggedInUserAsPerson(MultimediaObject $multimediaObject, User $loggedInUser = null, $flush = true, $dispatch = true)
+    private function addLoggedInUserAsPerson(MultimediaObject $multimediaObject, ?User $loggedInUser = null, $flush = true, $dispatch = true)
     {
         if ($this->addUserAsPerson && (null !== $person = $this->personService->getPersonFromLoggedInUser($loggedInUser))) {
             if (null !== $role = $this->personService->getPersonalScopeRole()) {

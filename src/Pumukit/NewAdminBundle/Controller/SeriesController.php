@@ -446,7 +446,7 @@ class SeriesController extends AdminController
         return $this->seriesSearchService->processCriteria($criteria, false, $request->getLocale());
     }
 
-    public function getSorting(Request $request = null, $session_namespace = null): array
+    public function getSorting(?Request $request = null, $session_namespace = null): array
     {
         $session = $this->session;
 

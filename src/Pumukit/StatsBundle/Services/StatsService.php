@@ -293,7 +293,7 @@ class StatsService
      * @param mixed $matchExtra
      * @param mixed $pipeline
      */
-    private function aggrPipeAddMatch(\DateTime $fromDate = null, \DateTime $toDate = null, $matchExtra = [], $pipeline = [])
+    private function aggrPipeAddMatch(?\DateTime $fromDate = null, ?\DateTime $toDate = null, $matchExtra = [], $pipeline = [])
     {
         $date = [];
         if ($fromDate) {

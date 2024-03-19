@@ -110,7 +110,7 @@ class EmbeddedRole implements RoleInterface
         $this->name[$locale] = $name;
     }
 
-    public function getName(string $locale = null): string
+    public function getName(?string $locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;

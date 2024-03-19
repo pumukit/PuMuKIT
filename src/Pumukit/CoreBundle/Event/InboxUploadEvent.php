@@ -15,7 +15,7 @@ class InboxUploadEvent extends Event
 
     protected $folder;
 
-    public function __construct(UserInterface $user, string $fileName, string $folder = null)
+    public function __construct(UserInterface $user, string $fileName, ?string $folder = null)
     {
         $this->user = $user;
         $this->fileName = $fileName;

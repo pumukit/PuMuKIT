@@ -116,7 +116,7 @@ class EventRepository extends DocumentRepository
      *
      * @throws \Exception
      */
-    public function findFutureAndNotFinished($limit = null, $date = null, Live $live = null)
+    public function findFutureAndNotFinished($limit = null, $date = null, ?Live $live = null)
     {
         // First: look if there is a current live event broadcasting
         // for setting datetime minus duration

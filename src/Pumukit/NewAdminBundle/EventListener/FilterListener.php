@@ -92,7 +92,7 @@ class FilterListener
      *
      * @return array $people
      */
-    private function getPeopleMongoQuery(PersonInterface $person = null)
+    private function getPeopleMongoQuery(?PersonInterface $person = null)
     {
         $people = [];
         if ((null !== $person) && (null !== ($roleCode = $this->personService->getPersonalScopeRoleCode()))) {

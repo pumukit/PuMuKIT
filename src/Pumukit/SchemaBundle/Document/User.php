@@ -181,7 +181,7 @@ class User implements UserInterface
         return $this->permissionProfile;
     }
 
-    public function setPerson(PersonInterface $person = null): void
+    public function setPerson(?PersonInterface $person = null): void
     {
         $this->person = $person;
     }

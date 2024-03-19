@@ -30,7 +30,7 @@ class WizardService
         TagService $tagService,
         string $basePath,
         array $locales,
-        bool $inboxDepth = null
+        ?bool $inboxDepth = null
     ) {
         $this->dm = $documentManager;
         $this->factoryService = $factoryService;

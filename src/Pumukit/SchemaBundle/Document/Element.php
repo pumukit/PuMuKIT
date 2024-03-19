@@ -175,7 +175,7 @@ class Element
         return $this->hide;
     }
 
-    public function setDescription(?string $description, string $locale = null): void
+    public function setDescription(?string $description, ?string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;

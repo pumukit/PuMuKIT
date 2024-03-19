@@ -936,7 +936,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return array
      */
-    public function findStandardBy(array $criteria, array $sort = null, $limit = null, $skip = null)
+    public function findStandardBy(array $criteria, ?array $sort = null, $limit = null, $skip = null)
     {
         $criteria['status'] = MultimediaObject::STATUS_PUBLISHED;
 

@@ -10,17 +10,17 @@ interface TagInterface
 
     public function getId();
 
-    public function getTitle(string $locale = null): string;
+    public function getTitle(?string $locale = null): string;
 
-    public function setTitle(string $title, string $locale = null): void;
+    public function setTitle(string $title, ?string $locale = null): void;
 
     public function getI18nTitle(): ?array;
 
     public function setI18nTitle(array $title): void;
 
-    public function getDescription(string $locale = null): ?string;
+    public function getDescription(?string $locale = null): ?string;
 
-    public function setDescription(string $description, string $locale = null): void;
+    public function setDescription(string $description, ?string $locale = null): void;
 
     public function setI18nDescription(array $description): void;
 

@@ -92,7 +92,7 @@ abstract class BasePlayerController extends AbstractController
         return $tracks;
     }
 
-    protected function dispatchViewEvent(MultimediaObject $multimediaObject, Track $track = null): void
+    protected function dispatchViewEvent(MultimediaObject $multimediaObject, ?Track $track = null): void
     {
         $event = new ViewedEvent($multimediaObject, $track);
         $this->eventDispatcher->dispatch($event, BasePlayerEvents::MULTIMEDIAOBJECT_VIEW);

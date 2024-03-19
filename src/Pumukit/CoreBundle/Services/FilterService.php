@@ -101,7 +101,7 @@ class FilterService
         $filter->setParameter('type', ['$ne' => MultimediaObject::TYPE_LIVE]);
     }
 
-    public function setAdminParameters(BsonFilter $filter, User $user = null): void
+    public function setAdminParameters(BsonFilter $filter, ?User $user = null): void
     {
         // NOTE: Returns empty results, since the user is anonymous or does not have SCOPE_PERSONAL
         if (!$user || !$user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
@@ -164,7 +164,7 @@ class FilterService
         return $loggedInUser;
     }
 
-    public function getPeopleMongoQuery(PersonInterface $person = null): array
+    public function getPeopleMongoQuery(?PersonInterface $person = null): array
     {
         $people = [];
         if ((null !== $person) && (null !== ($roleCode = $this->personService->getPersonalScopeRoleCode()))) {

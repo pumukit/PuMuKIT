@@ -122,7 +122,7 @@ class EmbeddedEvent
         return $this->id;
     }
 
-    public function setName(string $name, string $locale = null): void
+    public function setName(string $name, ?string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -130,7 +130,7 @@ class EmbeddedEvent
         $this->name[$locale] = $name;
     }
 
-    public function getName(string $locale = null): string
+    public function getName(?string $locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -149,7 +149,7 @@ class EmbeddedEvent
         return $this->name;
     }
 
-    public function getDescription(string $locale = null): string
+    public function getDescription(?string $locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -158,7 +158,7 @@ class EmbeddedEvent
         return $this->description[$locale] ?? '';
     }
 
-    public function setDescription(string $description, string $locale = null): void
+    public function setDescription(string $description, ?string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -339,7 +339,7 @@ class EmbeddedEvent
         $this->alreadyHeldMessage[$locale] = $message;
     }
 
-    public function getAlreadyHeldMessage(string $locale = null): string
+    public function getAlreadyHeldMessage(?string $locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -358,7 +358,7 @@ class EmbeddedEvent
         return $this->alreadyHeldMessage;
     }
 
-    public function setNotYetHeldMessage(string $message, string $locale = null): void
+    public function setNotYetHeldMessage(string $message, ?string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -366,7 +366,7 @@ class EmbeddedEvent
         $this->notYetHeldMessage[$locale] = $message;
     }
 
-    public function getNotYetHeldMessage(string $locale = null): string
+    public function getNotYetHeldMessage(?string $locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;

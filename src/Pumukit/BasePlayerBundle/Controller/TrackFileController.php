@@ -157,7 +157,7 @@ class TrackFileController extends AbstractController
         return false;
     }
 
-    protected function dispatchViewEvent(MultimediaObject $multimediaObject, Track $track = null): void
+    protected function dispatchViewEvent(MultimediaObject $multimediaObject, ?Track $track = null): void
     {
         $event = new ViewedEvent($multimediaObject, $track);
 

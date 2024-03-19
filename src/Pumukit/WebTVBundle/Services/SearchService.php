@@ -221,7 +221,7 @@ class SearchService
         return $queryBuilder;
     }
 
-    public function addTagsQueryBuilder(Builder $queryBuilder, array $tagsFound = null, TagInterface $blockedTag = null, bool $useTagAsGeneral = false): Builder
+    public function addTagsQueryBuilder(Builder $queryBuilder, ?array $tagsFound = null, ?TagInterface $blockedTag = null, bool $useTagAsGeneral = false): Builder
     {
         if (null !== $blockedTag) {
             $tagsFound[] = $blockedTag->getCod();

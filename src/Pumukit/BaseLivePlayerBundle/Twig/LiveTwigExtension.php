@@ -66,7 +66,7 @@ class LiveTwigExtension extends AbstractExtension
     /**
      * @throws \Exception
      */
-    public function getFutureAndNotFinishedEvent(int $limit = null, ?Live $live = null)
+    public function getFutureAndNotFinishedEvent(?int $limit = null, ?Live $live = null)
     {
         $eventRepo = $this->dm->getRepository(Event::class);
 

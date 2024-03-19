@@ -853,7 +853,7 @@ class JobService
         return $multimediaObject;
     }
 
-    private function dispatch($success, Job $job, Track $track = null)
+    private function dispatch($success, Job $job, ?Track $track = null)
     {
         $multimediaObject = $this->getMultimediaObject($job);
 
@@ -861,7 +861,7 @@ class JobService
         $this->eventDispatcher->dispatch($event, $success ? EncoderEvents::JOB_SUCCESS : EncoderEvents::JOB_ERROR);
     }
 
-    private function getUserEmail(Job $job = null)
+    private function getUserEmail(?Job $job = null)
     {
         if (null !== $token = $this->tokenStorage->getToken()) {
             if (($user = $token->getUser()) instanceof User) {

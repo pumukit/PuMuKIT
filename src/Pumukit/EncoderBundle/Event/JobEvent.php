@@ -26,7 +26,7 @@ class JobEvent extends Event
      */
     protected $multimediaObject;
 
-    public function __construct(Job $job, Track $track = null, MultimediaObject $multimediaObject = null)
+    public function __construct(Job $job, ?Track $track = null, ?MultimediaObject $multimediaObject = null)
     {
         $this->job = $job;
         $this->track = $track;
