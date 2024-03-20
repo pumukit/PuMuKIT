@@ -15,8 +15,9 @@
         "ankitpokhrel/tus-php": "^2.0",
         "api-platform/core": "^2.7.18",
         "babdev/pagerfanta-bundle": "^2.11",
-        "doctrine/mongodb-odm-bundle": "^4.5",
-        "gedmo/doctrine-extensions": "^3.10",
+        "doctrine/mongodb-odm-bundle": "4.6.2",
+        "doctrine/mongodb-odm": "2.6.0",
+        "gedmo/doctrine-extensions": "3.13.0",
         "jaybizzle/crawler-detect": "^1.2",
         "jms/serializer-bundle": "^5.2",
         "knplabs/knp-menu-bundle": "^3.2",
@@ -47,7 +48,7 @@
         "twig/intl-extra": "^3.5"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.35.1",
+        "friendsofphp/php-cs-fixer": "3.49.0",
         "phpstan/phpstan": "^1.9.0",
         "phpstan/phpstan-doctrine": "^1.3.0",
         "phpstan/phpstan-symfony": "^1.2.0",
