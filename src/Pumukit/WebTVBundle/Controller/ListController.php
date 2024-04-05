@@ -90,7 +90,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
         }
         $this->updateBreadcrumbs($title, 'pumukit_webtv_bytag_multimediaobjects', $breadCrumbOptions);
 
-        $pager = $this->createPager($objects, $request->query->get('page', 1), $limit);
+        $pager = $this->createPager($objects, (int) $request->query->get('page', 1), $limit);
 
         $title = $this->translator->trans('Multimedia objects with tag: %title%', [
             '%title%' => $title,
@@ -122,7 +122,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
 
         $series = $this->documentManager->getRepository(Series::class)->createBuilderWithTag($tag, ['public_date' => -1]);
 
-        $pager = $this->createPager($series, $request->query->get('page', 1), $limit);
+        $pager = $this->createPager($series, (int) $request->query->get('page', 1), $limit);
 
         $this->updateBreadcrumbs($tag->getTitle(), 'pumukit_webtv_bytag_series', [
             'tagCod' => $tag->getCod(),
@@ -160,7 +160,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
         $objects = $multimediaObjectRepository->createBuilderByPersonIdWithRoleCod($person->getId(), $roleCode, ['public_date' => -1]);
         $this->updateBreadcrumbs($user->getFullName(), 'pumukit_webtv_byuser_multimediaobjects', ['username' => $user->getUsername()]);
 
-        $pager = $this->createPager($objects, $request->query->get('page', 1), $limit);
+        $pager = $this->createPager($objects, (int) $request->query->get('page', 1), $limit);
 
         $title = $user->getFullName();
 
@@ -192,7 +192,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
         $person = $user->getPerson();
         $series = $seriesRepository->createBuilderByPersonIdAndRoleCod($person->getId(), $roleCode, ['public_date' => -1]);
 
-        $pager = $this->createPager($series, $request->query->get('page', 1), $limit);
+        $pager = $this->createPager($series, (int) $request->query->get('page', 1), $limit);
         $this->updateBreadcrumbs($user->getFullName(), 'pumukit_webtv_byuser_series', ['username' => $user->getUsername()]);
 
         $title = $user->getFullName();
@@ -306,9 +306,9 @@ class ListController extends AbstractController implements WebTVControllerInterf
         $this->breadcrumbsService->add($title, $routeName, $routeParameters);
     }
 
-    private function createPager($objects, $page, int $limit = 10): Pagerfanta
+    private function createPager($objects, int $page, int $limit = 10): Pagerfanta
     {
-        return $this->paginationService->createDoctrineODMMongoDBAdapter($objects, (int) $page, $limit);
+        return $this->paginationService->createDoctrineODMMongoDBAdapter($objects, $page, $limit);
     }
 
     private function generateResponse($qb, $date, $numberCols): Response
