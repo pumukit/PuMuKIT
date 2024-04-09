@@ -14,3 +14,6 @@ services:
 
   Pumukit\InspectionBundle\Services\InspectionImageService:
     class: Pumukit\InspectionBundle\Services\InspectionImageService
+
+  Pumukit\InspectionBundle\Services\InspectionDocumentService:
+    class: Pumukit\InspectionBundle\Services\InspectionDocumentService

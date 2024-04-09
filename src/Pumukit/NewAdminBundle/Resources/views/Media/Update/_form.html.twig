@@ -1,42 +1,22 @@
 <div>
-    {% form_theme form '@PumukitNewAdmin/Themes/fields.html.twig' %}
-    <form onsubmit="$('#myModal').modal('hide');
-        $.ajax({
-        url: '{{ path('pumukitnewadmin_track_update', {'id': track.id, 'mmId': mm.getId()}) }}',
-        type: 'POST',
-        data: $(this).serialize(),
-        error: function(jqXHR, textStatus, errorThrown){
-        var textError = jqXHR.responseText;
-        var message = errorThrown+': '+textError;
-        no_success(message);
-        },
-        success: function(response){
-        $('#tracks_mms_{{ mm.getId() }}').html(response);
-        var message = '{% trans %}Track successfully updated.{% endtrans %}';
-        success(message);
-        }
-        });
-        return false;"
-          action="{{ path('pumukitnewadmin_track_update', {'id': track.id, 'mmId': mm.getId()}) }}" method="POST">
+    <form id="update_media" action="#" method="POST">
         <input type="hidden" name="track" id="track" value="{{ track.id }}" />
         <input type="hidden" name="mmId" id="mmId" value="{{ mm.getId() }}" />
         <input type="hidden" name="preview" id="preview" value="true" />
         <fieldset>
 
-            {{ form_row(form['description']) }}
+            {% include '@PumukitNewAdmin/Media/Form/_description.html.twig' %}
 
-            <div class="form-group" id="pumukitnewadmin_track_update_profile">
+            <div class="form-group" id="pumukitnewadmin_media_update_profile">
                 <label for="profile" class="control-label">{% trans %}Profile{% endtrans %}</label>
                 <select name="profile" id="profile" class="form-control" disabled>
-                    {% for key in profiles|keys %}
-                        <option value="{{ key }}" {{ track.profileName == key ?'selected="selected"' :'' }}>{{ key }}</option>
-                    {% endfor %}
+                    <option value="" selected>{{ track.profileName }}</option>
                 </select>
             </div>
-            {% for child in form | filter(child => child.vars.id not in ['pumukitnewadmin_track_update_description']) %}
-                {{ form_row(child) }}
-            {% endfor %}
-            {{ form_rest(form) }}
+
+            {% include '@PumukitNewAdmin/Media/Form/_language.html.twig' %}
+            {% include '@PumukitNewAdmin/Media/Form/_tags.html.twig' %}
+
         </fieldset>
         <div class="modal-footer">
             <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
@@ -44,3 +24,26 @@
         </div>
     </form>
 </div>
+
+<script>
+$('#update_media').on('submit', function(event){
+    event.preventDefault();
+    $('#myModal').modal('hide');
+    $.ajax({
+        url: '{{ path('pumukitnewadmin_track_update', {'id': track.id, 'mmId': mm.getId()}) }}',
+        type: 'POST',
+        data: $(this).serialize(),
+        error: function(jqXHR, textStatus, errorThrown){
+            $('#myModal').modal('hide');
+            let textError = jqXHR.responseText;
+            let message = errorThrown+': '+textError;
+            no_success(message);
+        },
+        success: function(response){
+            $('#tracks_mms_{{ mm.getId() }}').html(response);
+            let message = '{% trans %}Track successfully updated.{% endtrans %}';
+            success(message);
+        }
+    });
+});
+</script>

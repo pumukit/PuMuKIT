@@ -23,6 +23,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Pumukit\SchemaBundle\Security\Permission;
+use Pumukit\SchemaBundle\Services\MediaRemover;
 use Pumukit\SchemaBundle\Services\TrackService;
 use Pumukit\WebTVBundle\PumukitWebTVBundle;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -56,6 +57,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     private JobRepository $jobRepository;
     private JobUpdater $jobUpdater;
     private JobRemover $jobRemover;
+    private MediaRemover $mediaRemover;
 
     public function __construct(
         LoggerInterface $logger,
@@ -66,6 +68,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         JobRemover $jobRemover,
         JobRender $jobRender,
         JobRepository $jobRepository,
+        MediaRemover $mediaRemover,
         TrackService $trackService,
         ProfileService $profileService,
         InspectionFfprobeService $inspectionService,
@@ -87,6 +90,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         $this->jobRepository = $jobRepository;
         $this->jobUpdater = $jobUpdater;
         $this->jobRemover = $jobRemover;
+        $this->mediaRemover = $mediaRemover;
     }
 
     /**
@@ -261,13 +265,16 @@ class TrackController extends AbstractController implements NewAdminControllerIn
      */
     public function deleteAction(Request $request, MultimediaObject $multimediaObject)
     {
-        $track = $multimediaObject->getTrackById($request->get('id'));
-        if ($track) {
-            if (($track->tags()->contains('opencast') && $multimediaObject->isMultistream())
-                || ($track->isMaster() && !$this->isGranted(Permission::ACCESS_ADVANCED_UPLOAD))) {
+        $media = $multimediaObject->getMediaById($request->get('id'));
+        if ($media) {
+            if ($media->tags()->contains('opencast') && $multimediaObject->isMultistream()) {
+                return new Response('You can\'t delete this track. It is an Opencast track and the multimedia object is multistream.', Response::HTTP_FORBIDDEN);
+            }
+            if($media->isMaster() && !$this->isGranted(Permission::ACCESS_ADVANCED_UPLOAD)) {
                 return new Response('You don\'t have enough permissions to delete this track. Contact your administrator.', Response::HTTP_FORBIDDEN);
             }
-            $multimediaObject = $this->trackService->removeTrackFromMultimediaObject($multimediaObject, $request->get('id'));
+
+            $this->mediaRemover->remove($multimediaObject, $media);
         }
 
         return $this->redirectToRoute('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]);
