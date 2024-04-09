@@ -1,7 +1,7 @@
 {% for job in jobs %}
     <tr>
         <td><ul><li></li></ul></td>
-        <td colspan="5">&nbsp;</td>
+        <td {% if mm.isVideoType() %}colspan="6"{% else %}colspan="5"{% endif %}>&nbsp;</td>
         <td {% if constant('STATUS_ERROR', job) == job.getStatus() %} style="color:red" {% endif %}>
             <a title="{% trans %}Encoder Job info{% endtrans %}"
                style="color:inherit"

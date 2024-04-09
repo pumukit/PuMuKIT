@@ -19,11 +19,7 @@
 {% else %}
     {% if 0 == jobs|length and 0 == tracks|length and (not mm.getProperty('opencast') or not opencast_exists) and not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADVANCED_UPLOAD')) %}
         <tr>
-            <td>
-                <ul>
-                    <li></li>
-                </ul>
-            </td>
+            <td><ul><li></li></ul></td>
             <td colspan="11">{% trans %}Object without video files.{% endtrans %}</td>
         </tr>
     {% endif %}

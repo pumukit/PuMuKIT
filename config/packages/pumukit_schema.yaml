@@ -266,3 +266,12 @@ services:
 
   Pumukit\SchemaBundle\Services\MediaCreator:
     class: Pumukit\SchemaBundle\Services\MediaCreator
+
+  Pumukit\SchemaBundle\Services\MediaUpdater:
+    class: Pumukit\SchemaBundle\Services\MediaUpdater
+
+  Pumukit\SchemaBundle\Services\MediaRemover:
+    class: Pumukit\SchemaBundle\Services\MediaRemover
+
+  Pumukit\SchemaBundle\Services\MediaDispatcher:
+    class: Pumukit\SchemaBundle\Services\MediaDispatcher

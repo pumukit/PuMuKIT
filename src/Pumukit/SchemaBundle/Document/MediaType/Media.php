@@ -183,6 +183,16 @@ abstract class Media implements MediaInterface
         $this->storage = $storage->toArray();
     }
 
+    public function updateDescription(i18nText $description): void
+    {
+        $this->description = $description;
+    }
+
+    public function updateLanguage(string $language): void
+    {
+        $this->language = $language;
+    }
+
     public function changeHide(): void
     {
         $this->hide = !$this->hide;

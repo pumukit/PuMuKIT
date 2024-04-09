@@ -8,6 +8,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\EncoderBundle\Services\ProfileValidator;
+use Pumukit\InspectionBundle\Services\InspectionDocumentService;
 use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
 use Pumukit\InspectionBundle\Services\InspectionImageService;
 use Pumukit\SchemaBundle\Document\MediaType\Document;
@@ -34,6 +35,7 @@ final class MediaCreator implements MediaCreatorInterface
     private DocumentManager $documentManager;
     private TrackEventDispatcherService $dispatcher;
     private InspectionImageService $inspectionImageService;
+    private InspectionDocumentService $inspectionDocumentService;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -41,7 +43,8 @@ final class MediaCreator implements MediaCreatorInterface
         TrackEventDispatcherService $dispatcher,
         ProfileValidator $profileValidator,
         InspectionFfprobeService $inspectionService,
-        InspectionImageService $inspectionImageService
+        InspectionImageService $inspectionImageService,
+        InspectionDocumentService $inspectionDocumentService,
     ) {
         $this->profileService = $profileService;
         $this->profileValidator = $profileValidator;
@@ -49,6 +52,7 @@ final class MediaCreator implements MediaCreatorInterface
         $this->documentManager = $documentManager;
         $this->dispatcher = $dispatcher;
         $this->inspectionImageService = $inspectionImageService;
+        $this->inspectionDocumentService = $inspectionDocumentService;
     }
 
     public function createMedia(MultimediaObject $multimediaObject, Job $job): MediaInterface
@@ -76,7 +80,6 @@ final class MediaCreator implements MediaCreatorInterface
         $multimediaObject->setExternalType();
         $this->documentManager->flush();
 
-        dump($multimediaObject);
         $originalName = '';
         $i18nDescription = i18nText::create([]);
         $mediaTags = Tags::create([]);
@@ -112,12 +115,12 @@ final class MediaCreator implements MediaCreatorInterface
 
     private function createImageMediaMetadata(Path $path): MediaMetadata
     {
-        return Exif::create('');
+        return Exif::create($this->inspectionImageService->getFileMetadataAsString($path));
     }
 
     private function createDocumentMediaMetadata(Path $path): MediaMetadata
     {
-        return Generic::create('');
+        return Exif::create($this->inspectionDocumentService->getFileMetadataAsString($path));
     }
 
     private function createTrackMediaMetadata(Path $path): MediaMetadata
