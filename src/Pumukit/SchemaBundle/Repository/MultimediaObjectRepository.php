@@ -1010,6 +1010,11 @@ class MultimediaObjectRepository extends DocumentRepository
         return $this->createStandardQueryBuilder()->field('series')->references($series)->count()->getQuery()->execute();
     }
 
+    public function countEventsInSeries($series): int
+    {
+        return $this->createStandardQueryBuilder()->field('type')->equals(MultimediaObject::TYPE_LIVE)->field('series')->references($series)->count()->getQuery()->execute();
+    }
+
     public function findByTagCodQueryBuilder(TagInterface $tag): Builder
     {
         return $this->createStandardQueryBuilder()->field('tags.cod')->equals($tag->getCod());

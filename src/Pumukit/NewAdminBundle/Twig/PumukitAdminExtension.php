@@ -73,6 +73,7 @@ class PumukitAdminExtension extends AbstractExtension
             new TwigFilter('mms_announce_text', [$this, 'getMmsAnnounceText']),
             new TwigFilter('filter_profiles', [$this, 'filterProfiles']),
             new TwigFilter('count_multimedia_objects', [$this, 'countMultimediaObjects']),
+            new TwigFilter('count_events', [$this, 'countEvents']),
             new TwigFilter('next_session_event', [$this, 'getNextEventSession']),
             new TwigFilter('unescape', [$this, 'unescapeLabel']),
         ];
@@ -84,7 +85,7 @@ class PumukitAdminExtension extends AbstractExtension
             new TwigFunction('php_upload_max_filesize', [$this, 'getPhpUploadMaxFileSize']),
             new TwigFunction('path_exists', [$this, 'existsRoute']),
             new TwigFunction('is_playable_on_playlist', [$this, 'isPlayableOnPlaylist']),
-            new TwigFunction('predefined_languages', [$this, 'getCustomLanguages']),
+            new TwigFunction('predefined_languages', [$this, 'getPredefinedLanguages']),
             new TwigFunction('is_mmobj_owner', [$this, 'isUserOwner']),
             new TwigFunction('broadcast_description', [$this, 'getBroadcastDescription']),
             new TwigFunction('is_naked', [$this, 'isNaked'], ['needs_environment' => true]),
@@ -174,9 +175,9 @@ class PumukitAdminExtension extends AbstractExtension
         return $code;
     }
 
-    public function getCustomLanguages(): array
+    public function getPredefinedLanguages(): array
     {
-        return $this->languages;
+        return array_merge($this->languages, CustomLanguageType::$addonLanguages);
     }
 
     public function getStatusIcon(int $status): string
@@ -380,6 +381,11 @@ class PumukitAdminExtension extends AbstractExtension
     public function countMultimediaObjects(Series $series): int
     {
         return $this->dm->getRepository(MultimediaObject::class)->countInSeries($series);
+    }
+
+    public function countEvents(Series $series): int
+    {
+        return $this->dm->getRepository(MultimediaObject::class)->countEventsInSeries($series);
     }
 
     public function getBroadcastDescription($broadcastType, $template, bool $isLive = false): string

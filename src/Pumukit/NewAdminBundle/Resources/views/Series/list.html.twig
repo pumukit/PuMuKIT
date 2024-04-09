@@ -63,6 +63,9 @@
                     <td headers="th-mm" onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
                         {{ numV }}
                     </td>
+                    <td headers="th-lives">
+                        {{ oneseries|count_events }}
+                    </td>
                 </tr>
             {% else %}
                 <tr>
@@ -84,6 +87,7 @@
                         <td headers="th-title">&nbsp;</td>
                         <td headers="th-date">&nbsp;</td>
                         <td headers="th-mm">&nbsp;</td>
+                        <td headers="th-lives">&nbsp;</td>
                     </tr>
                 {% endfor %}
             {% endif %}
