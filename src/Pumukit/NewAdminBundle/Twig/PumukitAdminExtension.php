@@ -73,7 +73,7 @@ class PumukitAdminExtension extends AbstractExtension
             new TwigFilter('mms_announce_text', [$this, 'getMmsAnnounceText']),
             new TwigFilter('filter_profiles', [$this, 'filterProfiles']),
             new TwigFilter('count_multimedia_objects', [$this, 'countMultimediaObjects']),
-            new TwigFilter('count_lives', [$this, 'countLives']),
+            new TwigFilter('count_events', [$this, 'countEvents']),
             new TwigFilter('next_session_event', [$this, 'getNextEventSession']),
             new TwigFilter('unescape', [$this, 'unescapeLabel']),
         ];
