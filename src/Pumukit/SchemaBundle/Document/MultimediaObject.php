@@ -992,11 +992,19 @@ class MultimediaObject
         return $this->images;
     }
 
-    public function getTrackById($trackId)
+    /**
+     * Deprecated use getMediaById instead
+     */
+    public function getTrackById($mediaId)
     {
-        foreach ($this->getMedias() as $track) {
-            if ($track->id() === $trackId) {
-                return $track;
+        return $this->getMediaById($mediaId);
+    }
+
+    public function getMediaById(string $mediaId)
+    {
+        foreach ($this->getMedias() as $media) {
+            if ($media->id() === $mediaId) {
+                return $media;
             }
         }
 
