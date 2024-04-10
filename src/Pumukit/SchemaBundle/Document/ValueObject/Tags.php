@@ -17,7 +17,7 @@ final class Tags
     {
         $tags = [];
         foreach ($this->tags as $tag) {
-            $tags[] = $tag;
+            $tags[] = trim($tag);
         }
 
         return $tags;

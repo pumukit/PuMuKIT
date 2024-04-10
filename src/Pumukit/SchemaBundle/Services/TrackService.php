@@ -62,7 +62,6 @@ class TrackService
 
     public function updateTrackInMultimediaObject(MultimediaObject $multimediaObject, Track $track): MultimediaObject
     {
-        $this->dm->persist($multimediaObject);
         $this->dm->flush();
 
         $this->dispatcher->dispatchUpdate($multimediaObject, $track);

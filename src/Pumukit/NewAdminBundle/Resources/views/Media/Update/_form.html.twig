@@ -6,6 +6,8 @@
         <fieldset>
 
             {% include '@PumukitNewAdmin/Media/Form/_description.html.twig' %}
+            {% include '@PumukitNewAdmin/Media/Form/_download.html.twig' %}
+            {% include '@PumukitNewAdmin/Media/Form/_hide.html.twig' %}
 
             <div class="form-group" id="pumukitnewadmin_media_update_profile">
                 <label for="profile" class="control-label">{% trans %}Profile{% endtrans %}</label>
@@ -40,7 +42,7 @@ $('#update_media').on('submit', function(event){
             no_success(message);
         },
         success: function(response){
-            $('#tracks_mms_{{ mm.getId() }}').html(response);
+            $('#tracks_mms_{{ mm.getId() }}').load("{{ path('pumukitnewadmin_track_list', {'id': mm.getId()}) }}");
             let message = '{% trans %}Track successfully updated.{% endtrans %}';
             success(message);
         }

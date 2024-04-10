@@ -43,11 +43,10 @@ final class InspectionDocumentService implements InspectionServiceInterface
         $process->run();
 
         if (!$process->isSuccessful()) {
-            $message = 'Exception executing "'.$command.'": '.$process->getExitCode().' '. $process->getExitCodeText().'. '.$process->getErrorOutput();
+            $message = 'Exception executing "'.$command.'": '.$process->getExitCode().' '.$process->getExitCodeText().'. '.$process->getErrorOutput();
             $this->logger->error($message);
         }
 
         return $process->getOutput();
     }
-
 }
