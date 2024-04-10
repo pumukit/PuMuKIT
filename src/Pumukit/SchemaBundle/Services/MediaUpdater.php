@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\SchemaBundle\Document\MediaType\Media;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
@@ -35,6 +34,18 @@ final class MediaUpdater
     public function updateLanguage(MultimediaObject $multimediaObject, MediaInterface $media, string $language): void
     {
         $media->updateLanguage($language);
+        $this->documentManager->flush();
+    }
+
+    public function updateHide(MultimediaObject $multimediaObject, MediaInterface $media, bool $hide): void
+    {
+        $media->updateHide($hide);
+        $this->documentManager->flush();
+    }
+
+    public function updateDownload(MultimediaObject $multimediaObject, MediaInterface $media, bool $download): void
+    {
+        $media->updateDownload($download);
         $this->documentManager->flush();
     }
 }

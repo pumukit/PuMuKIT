@@ -85,19 +85,19 @@ class InboxExtension extends AbstractExtension
 
     public function getFilteredTypesOfFiles(MultimediaObject $multimediaObject): string
     {
-        if($multimediaObject->isAudioType()) {
+        if ($multimediaObject->isAudioType()) {
             return json_encode(['audio/*']);
         }
 
-        if($multimediaObject->isVideoType()) {
-            return json_encode(['video/*', "*.mxf"]);
+        if ($multimediaObject->isVideoType()) {
+            return json_encode(['video/*', '*.mxf']);
         }
 
-        if($multimediaObject->isImageType()) {
+        if ($multimediaObject->isImageType()) {
             return json_encode(['image/*']);
         }
 
-        if($multimediaObject->isDocumentType()) {
+        if ($multimediaObject->isDocumentType()) {
             return json_encode(['application/pdf']);
         }
 
