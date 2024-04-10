@@ -543,7 +543,6 @@ class FactoryService
         }
         foreach ($src->getTracks() as $track) {
             $clonedTrack = clone $track;
-            $clonedTrack->setNumview(0);
             $this->dm->persist($clonedTrack);
             $new->addTrack($clonedTrack);
         }
