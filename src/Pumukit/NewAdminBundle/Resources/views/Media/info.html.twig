@@ -1,0 +1,91 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">{% trans %}Job info{% endtrans %}</h4>
+</div>
+<div class="modal-body">
+    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+        <div class="box-body">
+            <dl class="dl-horizontal">
+                <dt>{% trans %}Id{% endtrans %}</dt>
+                <dd>{{ job.id }}</dd>
+                <dt>{% trans %}Status{% endtrans %}</dt>
+                <dd class="job-status-{{ job.status }}">{{ job.statusText }} <small>[{{ job.status }}]</small></dd>
+                <dt>{% trans %}Mm{% endtrans %}</dt>
+                <dd>{{ job.getMmId() }}</dd>
+                <dt>{% trans %}Profile{% endtrans %}</dt>
+                <dd>{{ job.getProfile() }}</dd>
+                <dt>{% trans %}Cpu{% endtrans %}</dt>
+                <dd>{{ job.getCpu() }}</dd>
+                <dt>{% trans %}Duration{% endtrans %}</dt>
+                <dd>
+                    {% trans %}Before{% endtrans %}: {{ job.duration|duration_string }}, {% trans %}after{% endtrans %}
+                    : {{ job.getNewDuration()|duration_string }}
+                </dd>
+                <dt>{% trans %}Times{% endtrans %}</dt>
+                <dd>
+                    {% trans %}Created{% endtrans %}
+                    : {{ job.getTimeini('Y-m-d H:i:s')| format_datetime('medium','medium',locale=app.request.getLocale()) }}
+                    , {% trans %}started{% endtrans %}
+                    : {{ job.getTimestart()| format_datetime('medium','medium',app.request.getLocale()) }}
+                    , {% trans %}finished{% endtrans %}
+                    : {{ job.getTimeend()| format_datetime('medium','medium',app.request.getLocale()) }}
+                </dd>
+                <dt>{% trans %}Priority{% endtrans %}</dt>
+                <dd>
+                    {% if job.isPending() %}
+                        <span id="job_info_priority_show" class="job_info_priority">
+                            <span id="job_info_priority_show_val">{{ job.getPriority() }}</span>
+                            <a href="#" onclick="$('.job_info_priority').toggle(); return false;" title="{% trans %}Edit priority{% endtrans %}">
+                                <i class="mdi-editor-mode-edit"></i>
+                            </a>
+                        </span>
+                        <span id="job_info_priority_edit" class="job_info_priority" style="display:none">
+                            <input type="number" max="3" min="1" value="{{ job.getPriority() }}" id="job_info_priority_edit_input"/>
+                            <a href="#"
+                                onclick="$.post('{{ path('pumukitnewadmin_track_update_job', {'mmId': multimediaObject.Id}) }}', {'jobId': '{{ job.id }}', 'priority': $('#job_info_priority_edit_input').val()}).success(function(v){$('#job_info_priority_show_val').html(v.priority); $('.job_info_priority').toggle();}); return false;"
+                                title="{% trans %}Edit priority{% endtrans %}">
+                                <i class="mdi-content-save"></i>
+                            </a>
+                        </span>
+                    {% else %}
+                        {{ job.getPriority() }}
+                    {% endif %}
+                </dd>
+            </dl>
+
+            <div class="shell-wrap">
+                <p class="shell-top-bar">{% trans %}Output Command{% endtrans %}</p>
+                <ul class="shell-body">
+                    <li class="command">{{ command|replace({' ':'&nbsp;', '\n': '</li><li class="command">'})|raw }}</li>
+                    <li>&nbsp;</li>
+                    <li>{{ job.getOutput()|replace({' ':'&nbsp;', '\n': '</li><li>'})|raw }}</li>
+                    {% if constant('STATUS_EXECUTING', job) == job.getStatus() %}
+                        <li>executing...</li>
+                    {% endif %}
+                    {% if constant('STATUS_WAITING', job) == job.getStatus() %}
+                        <li>waiting...</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        <form enctype="multipart/form-data" action="#" method="POST">
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-raised"
+                        data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+                {% if constant('STATUS_ERROR', job) == job.getStatus() %}
+                    <button type="submit" class="btn btn-pumukit btn-raised"
+                            onclick="$('#tracks_mms_{{ multimediaObject.Id }}').load('{{ path('pumukitnewadmin_track_retry_job', {'mmId': multimediaObject.Id, 'jobId': job.id, 'preview': 1}) }}'); return false;"
+                            data-dismiss="modal">{% trans %}RETRY{% endtrans %}</button>
+                {% endif %}
+                {% if constant('STATUS_ERROR', job) == job.getStatus() or constant('STATUS_WAITING', job) == job.getStatus() %}
+                    <button type="submit" class="btn btn-danger btn-raised"
+                            onclick="$('#tracks_mms_{{ multimediaObject.Id }}').load('{{ path('pumukitnewadmin_track_delete_job', {'mmId': multimediaObject.Id, 'jobId': job.id, 'preview': 1}) }}', {'_method': 'DELETE'}); return false;"
+                            data-dismiss="modal">{% trans %}DELETE{% endtrans %}</button>
+                {% endif %}
+            </div>
+        </form>
+    {% else %}
+        {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+    {% endif %}
+</div>
