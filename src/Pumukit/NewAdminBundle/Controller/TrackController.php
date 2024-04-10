@@ -6,6 +6,7 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
+use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\DTO\JobOptions;
 use Pumukit\EncoderBundle\Services\JobCreator;
@@ -18,12 +19,14 @@ use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\EncoderBundle\Services\Repository\JobRepository;
 use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
 use Pumukit\NewAdminBundle\Form\Type\TrackType;
-use Pumukit\NewAdminBundle\Form\Type\TrackUpdateType;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
+use Pumukit\SchemaBundle\Document\ValueObject\Tags;
 use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Services\MediaRemover;
+use Pumukit\SchemaBundle\Services\MediaUpdater;
 use Pumukit\SchemaBundle\Services\TrackService;
 use Pumukit\WebTVBundle\PumukitWebTVBundle;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -58,6 +61,8 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     private JobUpdater $jobUpdater;
     private JobRemover $jobRemover;
     private MediaRemover $mediaRemover;
+    private MediaUpdater $mediaUpdater;
+    private i18nService $i18nService;
 
     public function __construct(
         LoggerInterface $logger,
@@ -68,7 +73,9 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         JobRemover $jobRemover,
         JobRender $jobRender,
         JobRepository $jobRepository,
+        MediaUpdater $mediaUpdater,
         MediaRemover $mediaRemover,
+        i18nService $i18nService,
         TrackService $trackService,
         ProfileService $profileService,
         InspectionFfprobeService $inspectionService,
@@ -91,6 +98,8 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         $this->jobUpdater = $jobUpdater;
         $this->jobRemover = $jobRemover;
         $this->mediaRemover = $mediaRemover;
+        $this->mediaUpdater = $mediaUpdater;
+        $this->i18nService = $i18nService;
     }
 
     /**
@@ -100,15 +109,15 @@ class TrackController extends AbstractController implements NewAdminControllerIn
      */
     public function createAction(Request $request, MultimediaObject $multimediaObject)
     {
-//        $locale = $request->getLocale();
-//        $track = new Track();
-//        $form = $this->createForm(TrackType::class, $track, ['translator' => $this->translator, 'locale' => $locale]);
+        //        $locale = $request->getLocale();
+        //        $track = new Track();
+        //        $form = $this->createForm(TrackType::class, $track, ['translator' => $this->translator, 'locale' => $locale]);
 
         $masterProfiles = $this->profileService->getMasterProfiles(true);
 
         return [
-//            'track' => $track,
-//            'form' => $form->createView(),
+            //            'track' => $track,
+            //            'form' => $form->createView(),
             'mm' => $multimediaObject,
             'series' => $multimediaObject->getSeries(),
             'master_profiles' => $masterProfiles,
@@ -182,7 +191,6 @@ class TrackController extends AbstractController implements NewAdminControllerIn
      */
     public function updateAction(Request $request, MultimediaObject $multimediaObject)
     {
-        $locale = $request->getLocale();
         $track = $multimediaObject->getTrackById($request->get('id'));
         $isPlayable = $track->tags()->containsTag('display');
         $isPublished = $multimediaObject->containsTagWithCod(PumukitWebTVBundle::WEB_TV_TAG) && MultimediaObject::STATUS_PUBLISHED == $multimediaObject->getStatus();
@@ -190,18 +198,28 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         if ($track->storage()->path()->path()) {
             $job = $this->documentManager->getRepository(Job::class)->findOneBy(['path_end' => $track->storage()->path()->path()]);
         }
-        $form = $this->createForm(TrackUpdateType::class, $track, [
-            'translator' => $this->translator,
-            'locale' => $locale,
-            'is_super_admin' => $this->isGranted('ROLE_SUPER_ADMIN'),
-        ]);
 
         $profiles = $this->profileService->getProfiles();
 
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid() && $request->isMethod('POST')) {
+        if ($request->isMethod('POST')) {
             try {
-                // TODO: Update Hide, download, language, tags, description
+                dump($request->request->all());
+                if ($request->get('hide')) {
+                    $this->mediaUpdater->updateHide($multimediaObject, $track, true);
+                }
+
+                if ($request->get('download')) {
+                    $this->mediaUpdater->updateDownload($multimediaObject, $track, true);
+                }
+
+                $this->mediaUpdater->updateLanguage($multimediaObject, $track, $request->get('language'));
+                $tags = Tags::create(explode(',', $request->get('tags')));
+                $this->mediaUpdater->updateTags($multimediaObject, $track, $tags);
+
+                $i18nDescription = i18nText::create($this->i18nService->generateI18nText($request->get('i18n_description')));
+                dump($i18nDescription);
+                $this->mediaUpdater->updateDescription($multimediaObject, $track, $i18nDescription);
+
                 $multimediaObject = $this->trackService->updateTrackInMultimediaObject($multimediaObject, $track);
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), 400);
@@ -214,7 +232,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
             '@PumukitNewAdmin/Media/update.html.twig',
             [
                 'track' => $track,
-                'form' => $form->createView(),
+                //                'form' => $form->createView(),
                 'mm' => $multimediaObject,
                 'profiles' => $profiles,
                 'is_playable' => $isPlayable,
@@ -270,7 +288,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
             if ($media->tags()->contains('opencast') && $multimediaObject->isMultistream()) {
                 return new Response('You can\'t delete this track. It is an Opencast track and the multimedia object is multistream.', Response::HTTP_FORBIDDEN);
             }
-            if($media->isMaster() && !$this->isGranted(Permission::ACCESS_ADVANCED_UPLOAD)) {
+            if ($media->isMaster() && !$this->isGranted(Permission::ACCESS_ADVANCED_UPLOAD)) {
                 return new Response('You don\'t have enough permissions to delete this track. Contact your administrator.', Response::HTTP_FORBIDDEN);
             }
 

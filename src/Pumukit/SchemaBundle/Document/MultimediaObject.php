@@ -1002,7 +1002,9 @@ class MultimediaObject
     }
 
     /**
-     * Deprecated use getMediaById instead
+     * Deprecated use getMediaById instead.
+     *
+     * @param mixed $mediaId
      */
     public function getTrackById($mediaId)
     {

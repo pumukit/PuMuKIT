@@ -185,7 +185,7 @@ abstract class Media implements MediaInterface
 
     public function updateDescription(i18nText $description): void
     {
-        $this->description = $description;
+        $this->description = $description->toArray();
     }
 
     public function updateLanguage(string $language): void
@@ -196,6 +196,16 @@ abstract class Media implements MediaInterface
     public function changeHide(): void
     {
         $this->hide = !$this->hide;
+    }
+
+    public function updateHide(bool $hide): void
+    {
+        $this->hide = $hide;
+    }
+
+    public function updateDownload(bool $download): void
+    {
+        $this->download = $download;
     }
 
     public function mimeType(): string
