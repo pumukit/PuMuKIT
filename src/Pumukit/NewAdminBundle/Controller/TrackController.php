@@ -203,7 +203,6 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
         if ($request->isMethod('POST')) {
             try {
-                dump($request->request->all());
                 if ($request->get('hide')) {
                     $this->mediaUpdater->updateHide($multimediaObject, $track, true);
                 }
@@ -217,10 +216,8 @@ class TrackController extends AbstractController implements NewAdminControllerIn
                 $this->mediaUpdater->updateTags($multimediaObject, $track, $tags);
 
                 $i18nDescription = i18nText::create($this->i18nService->generateI18nText($request->get('i18n_description')));
-                dump($i18nDescription);
                 $this->mediaUpdater->updateDescription($multimediaObject, $track, $i18nDescription);
 
-                $multimediaObject = $this->trackService->updateTrackInMultimediaObject($multimediaObject, $track);
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), 400);
             }
