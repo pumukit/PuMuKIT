@@ -2,11 +2,6 @@
 
 var endpoint = "{{ inboxUploadURL }}" + "?series={{ series.id }}";
 
-{# TODO: DIGIREPO REMOVE #}
-{#{% if form_data is same as("") %}#}
-{#    endpoint = "{{ inboxUploadURL }}";#}
-{#{% endif %}#}
-
 const uppyTUS = Uppy.Core({
     debug: {{ inbox_debug() }},
     autoProceed: true,
@@ -14,13 +9,15 @@ const uppyTUS = Uppy.Core({
         minFileSize: convertSizeToBytes("{{ inbox_min_file_size() }}"),
         maxFileSize: convertSizeToBytes("{{ inbox_max_file_size() }}"),
         maxNumberOfFiles: {{ inbox_max_number_of_files() }},
-        allowedFileTypes: ["audio/*", "video/*", "*.mxf", "image/*", "application/pdf"]
+        allowedFileTypes: {{ allowed_type_files()|raw }}
+        {#allowedFileTypes: ["audio/*", "video/*", "*.mxf", "image/*", "application/pdf"]#}
     },
     onBeforeFileAdded:  (currentFile) => {
             var fileName = currentFile.name;
             var extension = fileName.split('.').pop();
             fileName = fileName.replace(/[\W_]+/g,"_");
             currentFile.name = `${Date.now()}_${fileName}`+'.'+extension;
+            console.log(currentFile.name);
         }
     })
     .use(Uppy.Dashboard, {
