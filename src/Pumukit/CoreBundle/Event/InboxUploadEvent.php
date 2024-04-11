@@ -9,17 +9,17 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class InboxUploadEvent extends Event
 {
-    protected $user;
+    protected UserInterface $user;
+    protected string $fileName;
+    protected string $series;
+    protected string $profile;
 
-    protected $fileName;
-
-    protected $series;
-
-    public function __construct(UserInterface $user, string $fileName, string $series)
+    public function __construct(UserInterface $user, string $fileName, string $series, string $profile)
     {
         $this->user = $user;
         $this->fileName = $fileName;
         $this->series = $series;
+        $this->profile = $profile;
     }
 
     public function getUser(): UserInterface
@@ -35,5 +35,10 @@ class InboxUploadEvent extends Event
     public function getSeries(): string
     {
         return $this->series;
+    }
+
+    public function getProfile(): string
+    {
+        return $this->profile;
     }
 }
