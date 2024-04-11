@@ -30,6 +30,7 @@ class InboxExtension extends AbstractExtension
             new TwigFunction('inbox_progress_bar_color', [$this, 'getProgressBarColor']),
             new TwigFunction('inbox_show_backoffice_button', [$this, 'getShowBackofficeButtonInInbox']),
             new TwigFunction('filter_valid_types_of_files', [$this, 'getFilteredTypesOfFiles']),
+            new TwigFunction('allowed_type_files', [$this, 'getAllowedTypeFiles']),
         ];
     }
 
@@ -102,5 +103,18 @@ class InboxExtension extends AbstractExtension
         }
 
         throw new \Exception('Invalid type of multimedia object');
+    }
+
+    public function getAllowedTypeFiles(): string
+    {
+        $audio = ["audio/*"];
+        $video = ["video/*"];
+        $image = ["image/*"];
+        $document = ["application/pdf"];
+        $others = ["*.mxf"];
+
+        $allowedTypes = array_merge($audio, $video, $image, $document, $others);
+
+        return json_encode($allowedTypes);
     }
 }

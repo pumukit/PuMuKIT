@@ -1,13 +1,19 @@
-<div class="nav" role="tablist">
-    <h4>{{ "Where do you want to upload the files from?"|trans }}</h4>
-    <div role="presentation" class="text-center">
-        <a class="btn btn-primary"  href="#local" aria-controls="home" role="tab" data-toggle="tab">
-            {{ "Local"|trans }}
-        </a>
-        <a class="btn btn-primary"  href="#server" aria-controls="home" role="tab" data-toggle="tab">
-            {{ "Server"|trans }}
-        </a>
-    </div>
+<h4>{{ "Where do you want to upload the files from?"|trans }}</h4>
+
+<div role="tabpanel">
+    <ul class="nav nav-tabs" role="tablist" style="background:transparent; border: 0;">
+        <li>
+            <a class="btn" href="#local" aria-controls="home" role="tab" data-toggle="tab" style="color: black !important;">
+                {{ "Local"|trans }}
+            </a>
+        </li>
+        <li>
+            <a class="btn" href="#server" aria-controls="home" role="tab" data-toggle="tab" style="color: black !important;">
+                {{ "Server"|trans }}
+            </a>
+        </li>
+    </ul>
+    <br />
 </div>
 
 <div class="tab-content">
@@ -17,8 +23,11 @@
     <div role="tabpanel" class="tab-pane" id="server">
         {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
             <div class="form-group" id="pumukitwizard_track_directory">
-                {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\InboxController::FormAction', {'onlyDir': true})) }}
+                {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\InboxController::FormAction', {'onlyDir': true, 'series' : series})) }}
             </div>
+            <a href="{{ path('pumukitnewadmin_mms_index', {'series': series.id}) }}" class="btn btn-default btn-pumukit pull-right">
+                &laquo; {{ "Submit"|trans }}
+            </a>
         {% else %}
             <br/>
             <div class="text-center">{{ "You dont have enough permissions to upload files from the server"|trans }}</div>
