@@ -1,20 +1,4 @@
-<h4>{{ "Where do you want to upload the files from?"|trans }}</h4>
-
-<div role="tabpanel">
-    <ul class="nav nav-tabs" role="tablist" style="background:transparent; border: 0;">
-        <li>
-            <a class="btn" href="#local" aria-controls="home" role="tab" data-toggle="tab" style="color: black !important;">
-                {{ "Local"|trans }}
-            </a>
-        </li>
-        <li>
-            <a class="btn" href="#server" aria-controls="home" role="tab" data-toggle="tab" style="color: black !important;">
-                {{ "Server"|trans }}
-            </a>
-        </li>
-    </ul>
-    <br />
-</div>
+{% include '@PumukitWizard/Upload/_tabs.html.twig' %}
 
 <div class="tab-content">
     <div role="tabpanel" class="tab-pane" id="local">
