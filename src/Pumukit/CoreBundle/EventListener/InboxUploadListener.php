@@ -25,11 +25,6 @@ class InboxUploadListener
     {
         $filePath = $this->inboxPath.'/'.$event->getFileName();
 
-        // TODO: DIGIREPO REMOVE
-        //        if (null !== $event->getFolder()) {
-        //            $urlUpload = $this->inboxPath.'/'.$event->getFolder().'/'.$event->getFileName();
-        //        }
-
         $command = [
             'php',
             $this->kernelProjectDir.'/bin/console',
@@ -37,6 +32,7 @@ class InboxUploadListener
             $filePath,
             '--user='.$event->getUser()->getUsername(),
             '--series='.$event->getSeries(),
+            '--profile='.$event->getProfile(),
         ];
 
         $process = new Process($command);
