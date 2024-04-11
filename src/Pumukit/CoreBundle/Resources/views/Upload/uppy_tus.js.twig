@@ -10,14 +10,12 @@ const uppyTUS = Uppy.Core({
         maxFileSize: convertSizeToBytes("{{ inbox_max_file_size() }}"),
         maxNumberOfFiles: {{ inbox_max_number_of_files() }},
         allowedFileTypes: {{ allowed_type_files()|raw }}
-        {#allowedFileTypes: ["audio/*", "video/*", "*.mxf", "image/*", "application/pdf"]#}
     },
     onBeforeFileAdded:  (currentFile) => {
             var fileName = currentFile.name;
             var extension = fileName.split('.').pop();
             fileName = fileName.replace(/[\W_]+/g,"_");
             currentFile.name = `${Date.now()}_${fileName}`+'.'+extension;
-            console.log(currentFile.name);
         }
     })
     .use(Uppy.Dashboard, {
