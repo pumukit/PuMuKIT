@@ -119,7 +119,8 @@ class InboxController extends AbstractController
             $this->uploadDispatcherService->dispatchUploadFromInbox(
                 $this->getUser(),
                 $request->get('fileName'),
-                $request->get('series')
+                $request->get('series'),
+                $request->get('profile')
             );
         } catch (\Exception $exception) {
             return new JsonResponse(['success' => false]);

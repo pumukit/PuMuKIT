@@ -80,6 +80,7 @@ class CreateMMOCommand extends Command
             ->addOption('status', null, InputOption::VALUE_OPTIONAL, 'Multimedia object initial status (\'published\', \'blocked\' or \'hidden\')')
             ->addOption('user', null, InputOption::VALUE_OPTIONAL, 'User was upload video')
             ->addOption('series', null, InputOption::VALUE_REQUIRED, 'Series to create multimedia object')
+            ->addOption('profile', null, InputOption::VALUE_REQUIRED, 'Profile for file encoding')
             ->setHelp(
                 <<<'EOT'
 This command create a multimedia object from a multimedia file path
@@ -130,49 +131,27 @@ EOT
             sleep(2);
         }
 
-        // TODO CHECK PERFILES NEW FEATURES
-        if (str_contains($path, 'INBOX_MASTER_BROADCASTABLE')) {
+        // TODO: Input Option will be standard naming profile. We need find the profile for each type of file.
+        if($input->getOption('profile')) {
+            $profile = $input->getOption('profile');
+        } elseif (str_contains($path, 'INBOX_MASTER_BROADCASTABLE')) {
             $profile = 'broadcastable_master';
         } elseif (str_contains($path, 'INBOX_MASTER_COPY')) {
             $profile = 'master_copy';
         } elseif (str_contains($path, 'INBOX_MASTER_H264')) {
             $profile = 'master_video_h264';
         } else {
-            $profile = $this->getDefaultMasterProfile();
-        }
-
-        $seriesTitle = basename(dirname($path));
-
-        if (in_array($seriesTitle, ['INBOX_MASTER_COPY', 'INBOX_MASTER_H264'])) {
-            $seriesTitle = 'AUTOIMPORT';
+            $profile = $this->profileService->getDefaultMasterProfile();
         }
 
         $title = substr(basename($path), 0, -4);
 
-        //        try {
-        //            // exception if is not a mediafile (video or audio)
-        //            $duration = $this->inspectionService->getDuration($path);
-        //        } catch (\Exception $e) {
-        //            throw new \Exception('The file  ('.$path.') is not a valid video or audio file');
-        //        }
-        //
-        //        if (0 == $duration) {
-        //            throw new \Exception('The file ('.$path.') is not a valid video or audio file (duration is zero)');
-        //        }
-
         $semaphore = SemaphoreUtils::acquire(1000001);
 
-        //        $series = $this->documentManager->getRepository(Series::class)->findOneBy(['title.'.$locale => $seriesTitle]);
         $seriesId = $input->getOption('series');
         $series = $this->documentManager->getRepository(Series::class)->findOneBy(['_id' => new ObjectId($seriesId)]);
         if (!$series instanceof Series) {
             throw new \Exception('The series ('.$seriesId.') is not a valid');
-            // TODO: DIGIREPO REMOVE
-            //            $seriesTitleAllLocales = [$locale => $seriesTitle];
-            //            foreach ($this->locales as $l) {
-            //                $seriesTitleAllLocales[$l] = $seriesTitle;
-            //            }
-            //            $series = $this->factoryService->createSeries(null, $seriesTitleAllLocales);
         }
 
         $user = $this->findUser($input->getOption('user'));
@@ -183,12 +162,8 @@ EOT
 
         $i18nTitle = $this->i18nService->generateI18nText($title);
         $multimediaObject->setI18nTitle($i18nTitle);
-        //        foreach ($this->locales as $l) {
-        //            $multimediaObject->setTitle($title, $l);
-        //        }
         (null !== $status) ? $multimediaObject->setStatus($status) : $multimediaObject->setStatus(MultimediaObject::STATUS_BLOCKED);
 
-        $profile = 'master_copy';
         $jobOptions = new JobOptions($profile, 2, $locale, [], []);
         $path = Path::create($path);
         $this->jobCreator->fromPath($multimediaObject, $path, $jobOptions);
@@ -196,16 +171,6 @@ EOT
         SemaphoreUtils::release($semaphore);
 
         return 0;
-    }
-
-    private function getDefaultMasterProfile()
-    {
-        // TODO: DIGIREPO REMOVE
-        //        if ($this->wizardSimpleDefaultMasterProfile) {
-        //            return $this->wizardSimpleDefaultMasterProfile;
-        //        }
-
-        return $this->profileService->getDefaultMasterProfile();
     }
 
     private function findUser($username)

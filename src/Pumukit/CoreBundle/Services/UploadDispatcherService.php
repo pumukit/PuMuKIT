@@ -21,9 +21,9 @@ class UploadDispatcherService
         $this->logger = $logger;
     }
 
-    public function dispatchUploadFromInbox(UserInterface $user, string $fileName, string $seriesId): void
+    public function dispatchUploadFromInbox(UserInterface $user, string $fileName, string $seriesId, string $profile): void
     {
-        $event = new InboxUploadEvent($user, $fileName, $seriesId);
+        $event = new InboxUploadEvent($user, $fileName, $seriesId, $profile);
         $this->dispatcher->dispatch($event, UploadEvents::UPLOAD_FROM_INBOX);
     }
 }
