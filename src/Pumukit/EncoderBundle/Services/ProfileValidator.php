@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\EncoderBundle\Services;
 
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Mime\MimeTypes;
 
 final class ProfileValidator
 {
@@ -27,5 +28,37 @@ final class ProfileValidator
         }
 
         return $matchedProfile;
+    }
+
+    public function searchBestProfileForFile(string $genericProfile, string $pathFile): string
+    {
+        $mimeTypes = new MimeTypes();
+        $mimeType = $mimeTypes->guessMimeType($pathFile);
+
+        if (str_contains($mimeType, 'image/')) {
+            return 'master_copy';
+        }
+
+        if (str_contains($mimeType, 'application/')) {
+            return 'master_copy';
+        }
+
+        if (str_contains($mimeType, 'audio/')) {
+            return 'master_copy';
+        }
+
+        if (str_contains($mimeType, 'video/')) {
+            if ('master_copy' === $genericProfile) {
+                return 'master_copy';
+            }
+            if ('master_encoded' === $genericProfile) {
+                return 'video_master_encoded';
+            }
+            if ('broadcastable' === $genericProfile) {
+                return 'video_master_broadcastable';
+            }
+        }
+
+        throw new \InvalidArgumentException('Cannot find a profile for the given file.');
     }
 }
