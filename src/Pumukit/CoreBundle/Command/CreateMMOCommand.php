@@ -12,6 +12,7 @@ use Pumukit\CoreBundle\Utils\SemaphoreUtils;
 use Pumukit\EncoderBundle\Services\DTO\JobOptions;
 use Pumukit\EncoderBundle\Services\JobCreator;
 use Pumukit\EncoderBundle\Services\ProfileService;
+use Pumukit\EncoderBundle\Services\ProfileValidator;
 use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
@@ -44,6 +45,7 @@ class CreateMMOCommand extends Command
     ];
     private LoggerInterface $logger;
     private i18nService $i18nService;
+    private ProfileValidator $profileValidator;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -53,6 +55,7 @@ class CreateMMOCommand extends Command
         TagService $tagService,
         ProfileService $profileService,
         i18nService $i18nService,
+        ProfileValidator $profileValidator,
         LoggerInterface $logger,
         array $locales,
         string $locale = 'en'
@@ -68,6 +71,7 @@ class CreateMMOCommand extends Command
         parent::__construct();
         $this->logger = $logger;
         $this->i18nService = $i18nService;
+        $this->profileValidator = $profileValidator;
     }
 
     protected function configure(): void
@@ -131,9 +135,8 @@ EOT
             sleep(2);
         }
 
-        // TODO: Input Option will be standard naming profile. We need find the profile for each type of file.
-        if($input->getOption('profile')) {
-            $profile = $input->getOption('profile');
+        if ($input->getOption('profile')) {
+            $profile = $this->profileValidator->searchBestProfileForFile($input->getOption('profile'), $path);
         } elseif (str_contains($path, 'INBOX_MASTER_BROADCASTABLE')) {
             $profile = 'broadcastable_master';
         } elseif (str_contains($path, 'INBOX_MASTER_COPY')) {
