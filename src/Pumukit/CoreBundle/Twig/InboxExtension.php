@@ -107,11 +107,11 @@ class InboxExtension extends AbstractExtension
 
     public function getAllowedTypeFiles(): string
     {
-        $audio = ["audio/*"];
-        $video = ["video/*"];
-        $image = ["image/*"];
-        $document = ["application/pdf"];
-        $others = ["*.mxf"];
+        $audio = ['audio/*'];
+        $video = ['video/*'];
+        $image = ['image/*'];
+        $document = ['application/pdf'];
+        $others = ['*.mxf'];
 
         $allowedTypes = array_merge($audio, $video, $image, $document, $others);
 
