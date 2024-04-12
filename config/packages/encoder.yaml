@@ -26,7 +26,7 @@ pumukit_encoder:
       app: cp
       rel_duration_size: 1
       rel_duration_trans: 1
-    video_master_h264:
+    video_master_encoded:
       display: false
       wizard: true
       master: true
@@ -132,11 +132,67 @@ pumukit_encoder:
       app: ffmpeg
       rel_duration_size: 1
       rel_duration_trans: 1
+    image_broadcastable:
+      display: true
+      wizard: true
+      master: false
+      tags: html5 image
+      target: PUCHWEBTV
+      format: mp4
+      codec: aac
+      mime_type: 'audio/x-mp4'
+      extension: m4a
+      resolution_hor: 0
+      resolution_ver: 0
+      bitrate: 1 Mbps
+      framerate: 0
+      channels: 1
+      audio: true
+      bat: cp "{{input}}" "{{output}}"
+      streamserver:
+        name: Localhost
+        type: download
+        host: 127.0.0.1
+        description: Local download server
+        dir_out: "%pumukit.downloads%"
+        url_out: "%pumukit.downloads_url%"
+      app: ffmpeg
+      rel_duration_size: 1
+      rel_duration_trans: 1
+    document_broadcastable:
+      display: true
+      wizard: true
+      master: false
+      tags: html5 document
+      target: PUCHWEBTV
+      format: mp4
+      codec: aac
+      mime_type: 'audio/x-mp4'
+      extension: m4a
+      resolution_hor: 0
+      resolution_ver: 0
+      bitrate: 1 Mbps
+      framerate: 0
+      channels: 1
+      audio: true
+      bat: cp "{{input}}" "{{output}}"
+      streamserver:
+        name: Localhost
+        type: download
+        host: 127.0.0.1
+        description: Local download server
+        dir_out: "%pumukit.downloads%"
+        url_out: "%pumukit.downloads_url%"
+      app: ffmpeg
+      rel_duration_size: 1
+      rel_duration_trans: 1
 
   target_default_profiles:
     PUCHWEBTV:
       audio: "audio_broadcastable"
       video: "video_broadcastable"
+      image: "image_broadcastable"
+      document: "document_broadcastable"
     PUCHPODCAST:
       audio: "audio_broadcastable"
       video: "video_broadcastable audio_broadcastable"
