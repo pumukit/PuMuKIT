@@ -374,7 +374,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         try {
             $personalScopeRole = $this->personService->getPersonalScopeRole();
         } catch (\Exception $e) {
-            return new Response($e, Response::HTTP_BAD_REQUEST);
+            return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
 
         $roles = $this->personService->getRoles();
