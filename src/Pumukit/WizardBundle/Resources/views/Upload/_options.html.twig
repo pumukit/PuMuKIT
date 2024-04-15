@@ -9,7 +9,7 @@
             <div class="form-group" id="pumukitwizard_track_directory">
                 {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\InboxController::FormAction', {'onlyDir': true, 'series' : series})) }}
             </div>
-            <a href="{{ path('pumukitnewadmin_mms_index', {'series': series.id}) }}" class="btn btn-default btn-pumukit pull-right">
+            <a id="submit_upload_files_from_server" href="#" class="btn btn-default btn-pumukit pull-right">
                 &laquo; {{ "Submit"|trans }}
             </a>
         {% else %}
@@ -18,3 +18,31 @@
         {% endif %}
     </div>
 </div>
+
+<script>
+    $('#submit_upload_files_from_server').on('click', function(event) {
+        event.preventDefault();
+
+        let server_selected_path = $('#server_selected_path').val()
+        if (server_selected_path === '') {
+            no_success('Select path to upload files from server.');
+            return;
+        }
+
+        $.ajax({
+            url: '{{ path('wizard_upload_from_server', {'series': series.id}) }}',
+            method: 'POST',
+            data: {
+                'filePath': server_selected_path,
+                'profile': document.querySelector('input[name="profile_option"]:checked').value
+            },
+            success: function(response, textStatus, jqXHR){
+                location.href = '{{ path('pumukitnewadmin_mms_index', {'id': series.id}) }}';
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                no_success('{{ "Cannot upload directory on series"|trans }}');
+            }
+        });
+        return false;
+    })
+</script>

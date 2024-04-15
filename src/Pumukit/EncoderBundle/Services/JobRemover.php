@@ -38,7 +38,7 @@ final class JobRemover
 
     public function deleteTempFilesFromJob(Job $job): void
     {
-        if(str_starts_with($job->getPathIni(), $this->tmpPath)) {
+        if (str_starts_with($job->getPathIni(), $this->tmpPath)) {
             unlink($job->getPathIni());
         } elseif ($this->deleteInboxFiles && str_starts_with($job->getPathIni(), $this->inboxPath)) {
             unlink($job->getPathIni());
