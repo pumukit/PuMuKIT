@@ -6,8 +6,11 @@ namespace Pumukit\WizardBundle\Controller;
 
 use Pumukit\CoreBundle\Services\InboxService;
 use Pumukit\CoreBundle\Services\UploadDispatcherService;
+use Pumukit\CoreBundle\Utils\FinderUtils;
 use Pumukit\SchemaBundle\Services\Repository\SeriesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -42,5 +45,30 @@ final class WizardController extends AbstractController
             'maxFileSize' => $this->inboxService->maxFileSize(),
             'maxNumberOfFiles' => $this->inboxService->maxNumberOfFiles(),
         ]);
+    }
+
+    /**
+     * @Route("/{series}/server/upload", name="wizard_upload_from_server")
+     */
+    public function uploadFromServer(Request $request, string $series): JsonResponse
+    {
+        $path = $request->get('filePath');
+        $profile = $request->get('profile');
+
+        try {
+            $finder = FinderUtils::filesFromPath($path);
+            foreach ($finder->files() as $file) {
+                $this->uploadDispatcherService->dispatchUploadFromServer(
+                    $this->getUser(),
+                    $file->getPathname(),
+                    $series,
+                    $profile
+                );
+            }
+        } catch (\Exception $exception) {
+            return new JsonResponse($exception->getMessage(), 500);
+        }
+
+        return new JsonResponse('OK', 200);
     }
 }
