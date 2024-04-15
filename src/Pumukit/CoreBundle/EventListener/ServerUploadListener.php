@@ -8,28 +8,24 @@ use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Event\UploadFileEvent;
 use Symfony\Component\Process\Process;
 
-class InboxUploadListener
+class ServerUploadListener
 {
-    private $inboxPath;
-    private $kernelProjectDir;
+    private string $kernelProjectDir;
     private LoggerInterface $logger;
 
-    public function __construct(LoggerInterface $logger, string $inboxPath, string $kernelProjectDir)
+    public function __construct(LoggerInterface $logger, string $kernelProjectDir)
     {
-        $this->inboxPath = $inboxPath;
         $this->kernelProjectDir = $kernelProjectDir;
         $this->logger = $logger;
     }
 
     public function autoImport(UploadFileEvent $event): void
     {
-        $filePath = $this->inboxPath.'/'.$event->getFileName();
-
         $command = [
             'php',
             $this->kernelProjectDir.'/bin/console',
             'pumukit:import:inbox',
-            $filePath,
+            $event->getFileName(),
             '--user='.$event->getUser()->getUsername(),
             '--series='.$event->getSeries(),
             '--profile='.$event->getProfile(),

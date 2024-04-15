@@ -93,6 +93,13 @@ services:
     tags:
       - { name: "kernel.event_listener", event: "upload.inbox", method: "autoImport" }
 
+  Pumukit\CoreBundle\EventListener\ServerUploadListener:
+    class: Pumukit\CoreBundle\EventListener\ServerUploadListener
+    arguments:
+      $kernelProjectDir: '%kernel.project_dir%'
+    tags:
+      - { name: "kernel.event_listener", event: "upload.server", method: "autoImport" }
+
   Pumukit\CoreBundle\EventListener\RedisListener:
     class: Pumukit\CoreBundle\EventListener\RedisListener
     tags:

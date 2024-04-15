@@ -7,7 +7,7 @@ namespace Pumukit\CoreBundle\Event;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 
-class InboxUploadEvent extends Event
+class UploadFileEvent extends Event
 {
     protected UserInterface $user;
     protected string $fileName;

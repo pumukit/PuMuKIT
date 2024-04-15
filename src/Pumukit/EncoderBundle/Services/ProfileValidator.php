@@ -59,6 +59,6 @@ final class ProfileValidator
             }
         }
 
-        throw new \InvalidArgumentException('Cannot find a profile for the given file.');
+        return 'master_copy';
     }
 }
