@@ -130,7 +130,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
 
     public function getFileMetadataAsString(?Path $path): string
     {
-        return json_encode($this->getFileMetadata($path));
+        return json_encode($this->getFileMetadata($path), JSON_THROW_ON_ERROR);
     }
 
     private function jsonHasMediaContent($json): bool
