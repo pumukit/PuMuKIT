@@ -10,6 +10,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 #### Added
 
 - Add support for multiple types of media (docs, images, audio, video, external, etc.).
+- Add players for each type of media.
 - Added select files from server on wizard.
 - Added create external video on series.
 - Added email filter on user lists.
@@ -22,6 +23,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Unify wizard and inbox are now unified in a single upload page.
 - Unify edit and info option on advance edit multimedia object files.
 - Rename of "Wizard" to "Upload" inside series.
+- Rename base encoder profiles.
 
 #### Removed
 
@@ -30,6 +32,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Remove "New" option inside series.
 - Remove simple wizard
 - Remove download logs from backoffice.
+- Remove unused encoder profile elements.
 
 ## [4.2.0](https://github.com/pumukit/PuMuKIT/compare/4.1.0...4.2.0) - (2024-10-10)
 
