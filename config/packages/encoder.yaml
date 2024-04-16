@@ -138,15 +138,6 @@ pumukit_encoder:
       master: false
       tags: html5 image
       target: PUCHWEBTV
-      format: mp4
-      codec: aac
-      mime_type: 'audio/x-mp4'
-      extension: m4a
-      resolution_hor: 0
-      resolution_ver: 0
-      bitrate: 1 Mbps
-      framerate: 0
-      channels: 1
       audio: false
       bat: cp "{{input}}" "{{output}}"
       streamserver:
@@ -156,24 +147,12 @@ pumukit_encoder:
         description: Local download server
         dir_out: "%pumukit.downloads%"
         url_out: "%pumukit.downloads_url%"
-      app: ffmpeg
-      rel_duration_size: 1
-      rel_duration_trans: 1
     document_broadcastable:
       display: true
       wizard: true
       master: false
       tags: html5 document
       target: PUCHWEBTV
-      format: mp4
-      codec: aac
-      mime_type: 'audio/x-mp4'
-      extension: m4a
-      resolution_hor: 0
-      resolution_ver: 0
-      bitrate: 1 Mbps
-      framerate: 0
-      channels: 1
       audio: false
       bat: cp "{{input}}" "{{output}}"
       streamserver:
@@ -183,9 +162,6 @@ pumukit_encoder:
         description: Local download server
         dir_out: "%pumukit.downloads%"
         url_out: "%pumukit.downloads_url%"
-      app: ffmpeg
-      rel_duration_size: 1
-      rel_duration_trans: 1
 
   target_default_profiles:
     PUCHWEBTV:

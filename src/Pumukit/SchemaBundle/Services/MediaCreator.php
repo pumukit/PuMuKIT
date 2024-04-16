@@ -82,7 +82,7 @@ final class MediaCreator implements MediaCreatorInterface
 
         $originalName = '';
         $i18nDescription = i18nText::create([]);
-        $mediaTags = Tags::create([]);
+        $mediaTags = Tags::create(['display']);
 
         $url = Url::create($externalUrl);
         $path = Path::create('');

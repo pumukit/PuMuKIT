@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\BasePlayerBundle\Twig;
 
 use Pumukit\BasePlayerBundle\Services\TrackUrlService;
+use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,8 +41,10 @@ class BasePlayerExtension extends AbstractExtension
         ];
     }
 
-    public function generateTrackFileUrl(Track $track, int $reference_type = UrlGeneratorInterface::ABSOLUTE_PATH): ?string
+    public function generateTrackFileUrl(MediaInterface $track, int $reference_type = UrlGeneratorInterface::ABSOLUTE_URL): ?string
     {
+        dump($this->trackService->generateTrackFileUrl($track, $reference_type));
+
         return $this->trackService->generateTrackFileUrl($track, $reference_type);
     }
 
