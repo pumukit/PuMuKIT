@@ -104,7 +104,7 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('url_out')->info('URL of resulting track')->end()
             ->end()
             ->info('Type of streamserver for transcodification and data')->end()
-            ->scalarNode('app')->isRequired()->cannotBeEmpty()
+            ->scalarNode('app')
             ->info('Application to execute')->end()
             ->integerNode('rel_duration_size')->defaultValue(1)
             ->info('Relation between duration and size of track')->end()

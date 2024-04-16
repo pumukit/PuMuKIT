@@ -1002,7 +1002,7 @@ class MultimediaObject
         return $this->getMediaById($mediaId);
     }
 
-    public function getMediaById(string $mediaId)
+    public function getMediaById(?string $mediaId)
     {
         foreach ($this->getMedias() as $media) {
             if ($media->id() === $mediaId) {
@@ -1152,7 +1152,7 @@ class MultimediaObject
 
     public function getFilteredTrackWithTags(array $any_tags = [], array $all_tags = [], array $not_any_tags = [], array $not_all_tags = [], $all = true)
     {
-        foreach ($this->tracks as $track) {
+        foreach ($this->getMedias() as $track) {
             if ($all && $track->isHide()) {
                 continue;
             }

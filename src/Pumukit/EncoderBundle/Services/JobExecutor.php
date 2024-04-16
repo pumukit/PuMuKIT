@@ -127,20 +127,16 @@ final class JobExecutor
             $job->setOutput($out);
             // Throws exception if the video does not exist or does not have video/audio tracks.
 
-            // TODO DIGIREPO: Duration only for video/audio types
-            //            $duration = $this->inspectionService->getDuration($job->getPathEnd());
-            $duration = 25;
-            $job->setNewDuration($duration);
+            if ($multimediaObject->isVideoAudioType()) {
+                $duration = $this->inspectionService->getDuration($job->getPathEnd());
+                $job->setNewDuration($duration);
+                // Check for different durations. Throws exception if they don't match.
+                $this->jobValidator->searchError($profile, $job->getDuration(), $duration);
+            }
 
             $this->logger->info('[execute] cpu: '.serialize($cpu));
             $this->logger->info('[execute] CommandLine: '.$commandLine);
-            $this->logger->info('[execute] profile.app: "'.$profile['app'].'"');
             $this->logger->info('[execute] out: "'.$out.'"');
-            $this->logger->info('[execute] job duration: '.$job->getDuration());
-            $this->logger->info('[execute] duration: '.$duration);
-
-            // Check for different durations. Throws exception if they don't match.
-            $this->jobValidator->searchError($profile, $job->getDuration(), $duration);
 
             $job->setTimeend(new \DateTime('now'));
             $job->setStatus(Job::STATUS_FINISHED);
