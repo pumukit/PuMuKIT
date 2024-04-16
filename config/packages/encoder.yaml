@@ -147,7 +147,7 @@ pumukit_encoder:
       bitrate: 1 Mbps
       framerate: 0
       channels: 1
-      audio: true
+      audio: false
       bat: cp "{{input}}" "{{output}}"
       streamserver:
         name: Localhost
@@ -174,7 +174,7 @@ pumukit_encoder:
       bitrate: 1 Mbps
       framerate: 0
       channels: 1
-      audio: true
+      audio: false
       bat: cp "{{input}}" "{{output}}"
       streamserver:
         name: Localhost
