@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Pumukit\EncoderBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Tag;
 
 class ProfileService
 {
@@ -157,7 +159,7 @@ class ProfileService
     /**
      * Get target default profiles.
      */
-    public function getDefaultProfiles()
+    public function getDefaultProfiles(): array
     {
         if (null === $this->default_profiles) {
             throw new \InvalidArgumentException('No target default profiles.');
@@ -166,8 +168,32 @@ class ProfileService
         return $this->default_profiles;
     }
 
+    public function defaultProfilesByMultimediaObjectAndPubChannel(MultimediaObject $multimediaObject, Tag $tag)
+    {
+        if (null === $this->default_profiles) {
+            throw new \InvalidArgumentException('No target default profiles.');
+        }
+
+        return match ($multimediaObject->getType()) {
+            MultimediaObject::TYPE_VIDEO => $this->default_profiles[$tag->getCod()]['video'],
+            MultimediaObject::TYPE_AUDIO => $this->default_profiles[$tag->getCod()]['audio'],
+            MultimediaObject::TYPE_IMAGE => $this->default_profiles[$tag->getCod()]['image'],
+            MultimediaObject::TYPE_DOCUMENT => $this->default_profiles[$tag->getCod()]['document'],
+            default => throw new \InvalidArgumentException('No target default profiles.'),
+        };
+    }
+
     public function generateProfileTag(string $profileName): string
     {
         return 'profile:'.$profileName;
+    }
+
+    public function filterProfilesByPubChannel(Tag $tag): array
+    {
+        $pubChannelCod = $tag->getCod();
+
+        return array_filter($this->profiles, function ($profile) use ($pubChannelCod) {
+            return isset($profile['target']) && str_contains($profile['target'], $pubChannelCod);
+        });
     }
 }
