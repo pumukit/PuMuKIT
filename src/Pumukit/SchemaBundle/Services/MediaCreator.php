@@ -98,6 +98,7 @@ final class MediaCreator implements MediaCreatorInterface
 
     public function generateProfileTags(Job $job, array $profile): Tags
     {
+        $tags = [];
         $tags[] = $this->profileService->generateProfileTag($job->getProfile());
 
         if ($profile['master']) {

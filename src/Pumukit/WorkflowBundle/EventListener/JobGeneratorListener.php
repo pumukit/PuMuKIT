@@ -206,7 +206,7 @@ class JobGeneratorListener
             }
 
             $this->logger->warning(sprintf(
-                __CLASS__.
+                self::class.
                 " can't create new job for object %s because it already contains media with a profile with %s target",
                 $multimediaObject->getId(),
                 $pubChannel->getCod()
