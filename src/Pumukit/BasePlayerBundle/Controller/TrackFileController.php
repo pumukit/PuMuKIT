@@ -6,10 +6,11 @@ namespace Pumukit\BasePlayerBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
+use Psr\Log\LoggerInterface;
 use Pumukit\BasePlayerBundle\Event\BasePlayerEvents;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
+use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Track;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -21,15 +22,19 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TrackFileController extends AbstractController
 {
-    private $documentManager;
+    private DocumentManager $documentManager;
 
-    /** @var EventDispatcherInterface */
-    private $eventDispatcher;
+    private EventDispatcherInterface $eventDispatcher;
+    private LoggerInterface $logger;
 
-    public function __construct(DocumentManager $documentManager, EventDispatcherInterface $eventDispatcher)
-    {
+    public function __construct(
+        DocumentManager $documentManager,
+        EventDispatcherInterface $eventDispatcher,
+        LoggerInterface $logger
+    ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->documentManager = $documentManager;
+        $this->logger = $logger;
     }
 
     /**
@@ -51,7 +56,7 @@ class TrackFileController extends AbstractController
             $this->dispatchViewEvent($mmobj, $track);
         }
 
-        if (!$track->getUrl()) {
+        if (!$track->storage()->url()->url()) {
             if ($request->query->getBoolean('forcedl')) {
                 $response = new BinaryFileResponse($track->getPath());
                 $response::trustXSendfileTypeHeader();
@@ -67,14 +72,14 @@ class TrackFileController extends AbstractController
             $timestamp = time() + $secureDuration;
             $hash = $this->getHash($track, $timestamp, $secret, $request->getClientIp());
 
-            return $this->redirect($track->getUrl()."?md5={$hash}&expires={$timestamp}&".http_build_query($request->query->all(), '', '&'));
+            return $this->redirect($track->storage()->url()->url()."?md5={$hash}&expires={$timestamp}&".http_build_query($request->query->all(), '', '&'));
         }
 
         if ($request->query->all()) {
-            return $this->redirect($track->getUrl().'?'.http_build_query($request->query->all()));
+            return $this->redirect($track->storage()->url()->url().'?'.http_build_query($request->query->all()));
         }
 
-        return $this->redirect($track->getUrl());
+        return $this->redirect($track->storage()->url()->url());
     }
 
     /**
@@ -121,15 +126,15 @@ class TrackFileController extends AbstractController
         return new JsonResponse(['status' => 'ok']);
     }
 
-    protected function getHash(Track $track, $timestamp, string $secret, string $ip)
+    protected function getHash(MediaInterface $track, $timestamp, string $secret, string $ip)
     {
-        $url = $track->getUrl();
+        $url = $track->storage()->url()->url();
         $path = parse_url($url, PHP_URL_PATH);
 
         return str_replace('=', '', strtr(base64_encode(md5("{$timestamp}{$path}{$ip} {$secret}", true)), '+/', '-_'));
     }
 
-    protected function shouldIncreaseViews(Request $request, MultimediaObject $multimediaObject, Track $track, string $pumukitPlayerWhenDispatchViewEvent)
+    protected function shouldIncreaseViews(Request $request, MultimediaObject $multimediaObject, MediaInterface $media, string $pumukitPlayerWhenDispatchViewEvent)
     {
         if ('on_load' !== $pumukitPlayerWhenDispatchViewEvent) {
             return false;
@@ -137,7 +142,7 @@ class TrackFileController extends AbstractController
 
         $isMultiStream = $multimediaObject->isMultistream();
         $haveOnlyDelivery = (count($multimediaObject->getTracksWithTag('display')) <= 2) && $multimediaObject->getTracksWithTag('sbs');
-        $isDelivery = $track->containsTag('presentation/delivery');
+        $isDelivery = $media->containsTag('presentation/delivery');
         if ($isMultiStream && $isDelivery && !$haveOnlyDelivery) {
             return false;
         }
@@ -157,7 +162,7 @@ class TrackFileController extends AbstractController
         return false;
     }
 
-    protected function dispatchViewEvent(MultimediaObject $multimediaObject, Track $track = null): void
+    protected function dispatchViewEvent(MultimediaObject $multimediaObject, ?MediaInterface $track = null): void
     {
         $event = new ViewedEvent($multimediaObject, $track);
 
@@ -175,8 +180,7 @@ class TrackFileController extends AbstractController
 
         $track = $mmobj->getTrackById($id);
         if ($track->isHide()) {
-            $logger = $this->container->get('logger');
-            $logger->warning('Trying to reproduce an hide track');
+            $this->logger->warning('Trying to reproduce an hide track');
         }
 
         if (!$this->isGranted('play', $mmobj)) {

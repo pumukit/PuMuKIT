@@ -1,3 +1,22 @@
-{% if multimediaObject %}
-        {% include '@PumukitWebTV/MultimediaObject/player.html.twig' with {'responsive': true} %}
+<script>
+    function resizeFrame(elem) {
+        var width = $(elem).width();
+        var height = width / 16 * 9;
+        $(elem).height(height);
+    }
+
+    $(window).resize(function () {
+        resizeFrame($('#paellaiframe'));
+    });
+
+    $(window).on("load", function() {
+        $("#paellaiframe").focus();
+    });
+</script>
+
+{% if multimediaObject.isVideoAudioType() %}
+    {% include '@PumukitWebTV/MultimediaObject/player.html.twig' with {'responsive': true} %}
+{% else %}
+    {% include '@PumukitWebTV/MultimediaObject/generic.html.twig' %}
 {% endif %}
+

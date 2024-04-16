@@ -120,6 +120,7 @@ class JobGeneratorListener
                 continue;
             }
 
+            // TODO: Refactor logic
             if ($multimediaObject->isVideoAudioType() && 0 !== (is_countable($default_profiles) ? count($default_profiles) : 0)) {
                 if (!isset($default_profiles[$pubChannelCod])) {
                     continue;
@@ -167,6 +168,10 @@ class JobGeneratorListener
 
     private function shouldGenerateJobs(MultimediaObject $multimediaObject): bool
     {
+        if ($multimediaObject->isExternalType()) {
+            return false;
+        }
+
         return $multimediaObject->getMaster() && !$multimediaObject->isMultistream();
     }
 

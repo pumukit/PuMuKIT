@@ -32,7 +32,7 @@ class DynamicPicExtractorListener
 
     public function onJobSuccess(JobEvent $event): void
     {
-        if ($this->enableDynamicPicExtract) {
+        if ($this->enableDynamicPicExtract && MultimediaObject::TYPE_VIDEO === $event->getMultimediaObject()->getType()) {
             $this->generateDynamicPic($event->getMultimediaObject(), $event->getMedia());
         }
     }

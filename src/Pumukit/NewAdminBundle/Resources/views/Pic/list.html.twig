@@ -58,7 +58,7 @@
   </div>
 
   <div style="text-align : center">
-    {% if resource_name == 'mms' and resource.getDisplayTrack() and not resource.getDisplayTrack().metadata().isOnlyAudio() %}
+    {% if resource_name == 'mms' and resource.isVideoAudioType() and resource.getDisplayTrack() and not resource.getDisplayTrack().metadata().isOnlyAudio() %}
       <a href="{{ path('pumukitnewadmin_mmspic_generate', {'id': resource.id}) }}" class="button_generate_thumbnail" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}Generate thumbnail{% endtrans %}...</a>
     {% elseif event_poster %}
       <a href="{{ path('pumukitnewadmin_'~resource_name~'pic_create', {'id': resource.id, 'is_event_poster': event_poster}) }}" class="button_new_poster" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New poster{% endtrans %}...</a>

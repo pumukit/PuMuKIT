@@ -1,0 +1,7 @@
+{% if object.isImageType() %}
+    <img src="{{ media.storage().url().url() }}" alt="{{ object.getTitle() }}" />
+{% elseif object.isExternalType() %}
+    <embed id="externalplayer" height="100%" width="100%" src="{{ media.storage().url().url() }}"></embed>
+{% elseif object.isDocumentType() %}
+    <embed src="{{ track_url(media) }}" type="application/pdf" width="100%" height="600px" />
+{% endif %}

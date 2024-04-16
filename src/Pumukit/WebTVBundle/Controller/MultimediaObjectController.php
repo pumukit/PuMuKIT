@@ -81,7 +81,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
                 throw $this->createNotFoundException();
             }
 
-            if ($track->containsTag('download')) {
+            if ($track->tags()->containsTag('download')) {
                 $url = $track->getUrl();
                 $url .= (parse_url($url, PHP_URL_QUERY) ? '&' : '?').'forcedl=1';
 
@@ -89,6 +89,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
             }
         }
 
+        // TODO: DIGIREPO External player is a media interface now
         if (!$track && $multimediaObject->getProperty('externalplayer')) {
             $event = new ViewedEvent($multimediaObject);
             $this->eventDispatcher->dispatch($event, BasePlayerEvents::MULTIMEDIAOBJECT_VIEW);

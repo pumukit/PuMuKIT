@@ -50,17 +50,15 @@ class PicExtractorListener
 
         $semaphore = SemaphoreUtils::acquire(1000004);
 
-        $this->generatePic($event->getMultimediaObject(), $event->getMedia());
+        if (MultimediaObject::TYPE_VIDEO === $event->getMultimediaObject()->getType()) {
+            $this->generatePic($event->getMultimediaObject(), $event->getMedia());
+        }
 
         SemaphoreUtils::release($semaphore);
     }
 
     private function generatePic(MultimediaObject $multimediaObject, MediaInterface $media): void
     {
-        if (MultimediaObject::TYPE_VIDEO !== $multimediaObject->getType()) {
-            return;
-        }
-
         $this->documentManager->refresh($multimediaObject);
 
         if (!$this->autoExtractPic) {
