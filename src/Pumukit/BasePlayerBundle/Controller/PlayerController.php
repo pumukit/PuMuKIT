@@ -33,7 +33,7 @@ final class PlayerController extends BasePlayerController
      *
      * @Template("@PumukitBasePlayer/player.html.twig")
      */
-    public function indexAction(Request $request, MultimediaObject $multimediaObject): array
+    public function indexAction(Request $request, MultimediaObject $multimediaObject)
     {
         return $this->doRender($request, $multimediaObject);
     }
