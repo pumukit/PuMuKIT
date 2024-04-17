@@ -9,7 +9,7 @@ use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use MongoDB\BSON\ObjectId;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\JobRemover;
-// use Pumukit\EncoderBundle\Services\JobService;
+use Pumukit\EncoderBundle\Services\JobRender;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
@@ -29,7 +29,6 @@ class RemoveListener
     private $materialService;
     private $multimediaObjectPicService;
     private $seriesPicService;
-    //    private $jobService;
     private $tagService;
     private $embeddedBroadcastService;
     private $userService;
@@ -37,24 +36,22 @@ class RemoveListener
     private JobRemover $jobRemover;
 
     public function __construct(
-        DocumentManager $documentManager,
-        MultimediaObjectService $multimediaObjectService,
-        MaterialService $materialService,
+        DocumentManager            $documentManager,
+        MultimediaObjectService    $multimediaObjectService,
+        MaterialService            $materialService,
         MultimediaObjectPicService $multimediaObjectPicService,
-        SeriesPicService $seriesPicService,
-        //        JobService $jobService,
-        JobRemover $jobRemover,
-        TagService $tagService,
-        EmbeddedBroadcastService $embeddedBroadcastService,
-        UserService $userService,
-        TranslatorInterface $translator
+        SeriesPicService           $seriesPicService,
+        JobRemover                 $jobRemover,
+        TagService                 $tagService,
+        EmbeddedBroadcastService   $embeddedBroadcastService,
+        UserService                $userService,
+        TranslatorInterface        $translator,
     ) {
         $this->documentManager = $documentManager;
         $this->multimediaObjectService = $multimediaObjectService;
         $this->materialService = $materialService;
         $this->multimediaObjectPicService = $multimediaObjectPicService;
         $this->seriesPicService = $seriesPicService;
-        //        $this->jobService = $jobService;
         $this->tagService = $tagService;
         $this->embeddedBroadcastService = $embeddedBroadcastService;
         $this->userService = $userService;
@@ -62,7 +59,7 @@ class RemoveListener
         $this->jobRemover = $jobRemover;
     }
 
-    public function preRemove(LifecycleEventArgs $args)
+    public function preRemove(LifecycleEventArgs $args): void
     {
         $document = $args->getDocument();
 
@@ -103,8 +100,7 @@ class RemoveListener
             }
 
             foreach ($document->getTracks() as $track) {
-                // TODO: DIGIREPO REMOVE
-                //                $this->jobService->removeTrack($document, $track->getId());
+                $this->jobRemover->removeMedia($document, $track->getId());
             }
 
             foreach ($document->getPics() as $pic) {
