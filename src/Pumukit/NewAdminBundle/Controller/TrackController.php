@@ -12,7 +12,6 @@ use Pumukit\EncoderBundle\Services\DTO\JobOptions;
 use Pumukit\EncoderBundle\Services\JobCreator;
 use Pumukit\EncoderBundle\Services\JobRemover;
 use Pumukit\EncoderBundle\Services\JobRender;
-// use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\JobUpdater;
 use Pumukit\EncoderBundle\Services\PicExtractorService;
 use Pumukit\EncoderBundle\Services\ProfileService;

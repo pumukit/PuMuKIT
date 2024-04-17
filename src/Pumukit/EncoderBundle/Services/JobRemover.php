@@ -9,6 +9,8 @@ use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Event\FileEvents;
 use Pumukit\CoreBundle\Event\FileRemovedEvent;
 use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Services\TrackService;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class JobRemover
@@ -16,6 +18,7 @@ final class JobRemover
     private DocumentManager $documentManager;
     private LoggerInterface $logger;
     private EventDispatcherInterface $eventDispatcher;
+    private TrackService $trackService;
     private string $tmpPath;
     private string $inboxPath;
     private bool $deleteInboxFiles;
@@ -24,6 +27,7 @@ final class JobRemover
         DocumentManager $documentManager,
         LoggerInterface $logger,
         EventDispatcherInterface $eventDispatcher,
+        TrackService $trackService,
         string $tmpPath,
         string $inboxPath,
         bool $deleteInboxFiles
@@ -31,6 +35,7 @@ final class JobRemover
         $this->documentManager = $documentManager;
         $this->logger = $logger;
         $this->eventDispatcher = $eventDispatcher;
+        $this->trackService = $trackService;
         $this->tmpPath = $tmpPath;
         $this->inboxPath = $inboxPath;
         $this->deleteInboxFiles = $deleteInboxFiles;
@@ -63,5 +68,10 @@ final class JobRemover
 
         $this->documentManager->remove($job);
         $this->documentManager->flush();
+    }
+
+    public function removeMedia(MultimediaObject $multimediaObject, string $trackId): MultimediaObject
+    {
+        return $this->trackService->removeTrackFromMultimediaObject($multimediaObject, $trackId);
     }
 }
