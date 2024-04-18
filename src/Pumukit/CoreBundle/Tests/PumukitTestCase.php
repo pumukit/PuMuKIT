@@ -32,8 +32,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class PumukitTestCase extends WebTestCase
 {
-    /** @var DocumentManager */
-    protected $dm;
+    protected DocumentManager $dm;
 
     public function setUp(): void
     {
