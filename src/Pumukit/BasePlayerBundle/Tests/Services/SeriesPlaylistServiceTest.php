@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\BasePlayerBundle\Tests\Services;
 
+use Pumukit\BasePlayerBundle\Services\SeriesPlaylistService;
 use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
@@ -16,6 +17,7 @@ use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Pumukit\SchemaBundle\Document\ValueObject\Tags;
 use Pumukit\SchemaBundle\Document\ValueObject\Url;
+use Pumukit\SchemaBundle\Services\FactoryService;
 
 /**
  * @internal
@@ -39,8 +41,8 @@ class SeriesPlaylistServiceTest extends PumukitTestCase
 
         $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
         $this->seriesRepo = $this->dm->getRepository(Series::class);
-        $this->seriesPlaylistService = self::$kernel->getContainer()->get('pumukit_baseplayer.seriesplaylist');
-        $this->factoryService = self::$kernel->getContainer()->get('pumukitschema.factory');
+        $this->seriesPlaylistService = self::$kernel->getContainer()->get(SeriesPlaylistService::class);
+        $this->factoryService = self::$kernel->getContainer()->get(FactoryService::class);
         $this->i18nService = new i18nService(['en','es'], 'en');
 
         $series = $this->factoryService->createSeries();
