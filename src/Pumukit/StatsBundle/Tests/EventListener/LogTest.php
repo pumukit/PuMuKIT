@@ -5,8 +5,16 @@ declare(strict_types=1);
 namespace Pumukit\StatsBundle\Tests\EventListener;
 
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
+use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
-use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
+use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
+use Pumukit\SchemaBundle\Document\MediaType\Storage;
+use Pumukit\SchemaBundle\Document\MediaType\Track;
+use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
+use Pumukit\SchemaBundle\Document\ValueObject\Path;
+use Pumukit\SchemaBundle\Document\ValueObject\Tags;
+use Pumukit\SchemaBundle\Document\ValueObject\Url;
 use Pumukit\StatsBundle\Document\ViewsLog;
 use Pumukit\StatsBundle\EventListener\Log;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,6 +30,7 @@ class LogTest extends PumukitTestCase
     private $repo;
     private $factoryService;
     private $tokenStorage;
+    private $i18nService;
 
     public function setUp(): void
     {
@@ -31,6 +40,7 @@ class LogTest extends PumukitTestCase
         $this->repo = $this->dm->getRepository(ViewsLog::class);
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
+        $this->i18nService = new i18nService(['en','es'], 'en');
     }
 
     public function tearDown(): void
@@ -78,7 +88,7 @@ class LogTest extends PumukitTestCase
         $multimediaObject = $this->factoryService->createMultimediaObject($series);
 
         if ($withTrack) {
-            $track = new Track();
+            $track = $this->generateTrackMedia();
             $multimediaObject->addTrack($track);
             $this->dm->persist($multimediaObject);
             $this->dm->flush();
@@ -87,5 +97,30 @@ class LogTest extends PumukitTestCase
         }
 
         return new ViewedEvent($multimediaObject, $track);
+    }
+
+    private function generateTrackMedia(): MediaInterface
+    {
+        $originalName = 'originalName'.rand();
+        $description = i18nText::create($this->i18nService->generateI18nText('18nDescription'));
+        $language = 'en';
+        $tags = Tags::create(['display']);
+        $views = 0;
+        $url = Url::create('');
+        $path = Path::create('public/storage');
+        $storage = Storage::create($url, $path);
+        $mediaMetadata = VideoAudio::create("{\"format\":{\"duration\":\"10.000000\"}}");
+
+        return Track::create(
+            $originalName,
+            $description,
+            $language,
+            $tags,
+            false,
+            true,
+            $views,
+            $storage,
+            $mediaMetadata
+        );
     }
 }
