@@ -43,8 +43,6 @@ class BasePlayerExtension extends AbstractExtension
 
     public function generateTrackFileUrl(MediaInterface $track, int $reference_type = UrlGeneratorInterface::ABSOLUTE_URL): ?string
     {
-        dump($this->trackService->generateTrackFileUrl($track, $reference_type));
-
         return $this->trackService->generateTrackFileUrl($track, $reference_type);
     }
 
