@@ -88,7 +88,7 @@ class InboxController extends AbstractController
     {
         $folderName = $request->get('folder');
 
-        if (1 === preg_match('/[\'#]/', $folderName)) {
+        if (0 === preg_match('/^[[:alnum:]\s_]+$/', $folderName)) {
             return new JsonResponse(false);
         }
 
