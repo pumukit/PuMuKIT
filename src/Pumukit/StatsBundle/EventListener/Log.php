@@ -54,7 +54,7 @@ class Log
             $request->headers->get('referer'),
             $event->getMultimediaObject()->getId(),
             $event->getMultimediaObject()->getSeries()->getId(),
-            $event->getTrack() ? $event->getTrack()->getId() : null,
+            $event->getTrack() ? $event->getTrack()->id() : null,
             $this->getUser()
         );
 
