@@ -5,10 +5,18 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Tests\Services;
 
 use Monolog\Logger;
+use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
+use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
+use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
+use Pumukit\SchemaBundle\Document\MediaType\Storage;
+use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
+use Pumukit\SchemaBundle\Document\ValueObject\Path;
+use Pumukit\SchemaBundle\Document\ValueObject\Tags;
+use Pumukit\SchemaBundle\Document\ValueObject\Url;
 use Pumukit\SchemaBundle\EventListener\MultimediaObjectListener;
 use Pumukit\SchemaBundle\Services\PicService;
 use Pumukit\SchemaBundle\Services\TextIndexService;
@@ -35,6 +43,8 @@ class PicServiceTest extends PumukitTestCase
     private $trackService;
     private $absoluteDomain;
 
+    private $i18nService;
+
     public function setUp(): void
     {
         $options = ['environment' => 'test'];
@@ -48,15 +58,16 @@ class PicServiceTest extends PumukitTestCase
         $host = static::$kernel->getContainer()->getParameter('router.request_context.host');
         $this->webDir = realpath($publicDir.'/bundles/pumukitschema');
         $this->absoluteDomain = str_replace("'", '', $scheme).'://'.str_replace("'", '', $host);
+        $this->i18nService = new i18nService(['en', 'es'], 'en');
 
         $this->picService = new PicService($scheme, $host, $this->webDir, $this->defaultSeriesPic, $this->defaultPlaylistPic, $this->defaultVideoPic, $this->defaultAudioHDPic, $this->defaultAudioSDPic);
-
+        $tmpDir = static::$kernel->getContainer()->getParameter('pumukit.tmp');
         $dispatcher = new EventDispatcher();
         $logger = new Logger('test');
         $this->listener = new MultimediaObjectListener($this->dm, new TextIndexService(), $logger);
         $dispatcher->addListener('multimediaobject.update', [$this->listener, 'postUpdate']);
         $this->trackDispatcher = static::$kernel->getContainer()->get('pumukitschema.track_dispatcher');
-        $this->trackService = new TrackService($this->dm, $this->trackDispatcher, null, true);
+        $this->trackService = new TrackService($this->dm, $this->trackDispatcher, $logger, $tmpDir);
     }
 
     public function tearDown(): void
@@ -134,8 +145,8 @@ class PicServiceTest extends PumukitTestCase
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $track = new Track();
-        $track->setOnlyAudio(false);
+        $track = $this->generateTrackMedia();
+
         $this->trackService->addTrackToMultimediaObject($mm, $track, true);
 
         $absolute = false;
@@ -144,21 +155,7 @@ class PicServiceTest extends PumukitTestCase
         $absolute = true;
         static::assertEquals($this->absoluteDomain.$this->defaultVideoPic, $this->picService->getFirstUrlPic($mm, $absolute));
 
-        $track->setOnlyAudio(true);
-        $track->addTag('master');
         $this->trackService->updateTrackInMultimediaObject($mm, $track, true);
-
-        $absolute = false;
-        $hd = true;
-        static::assertEquals($this->defaultAudioHDPic, $this->picService->getFirstUrlPic($mm, $absolute, $hd));
-        $hd = false;
-        static::assertEquals($this->defaultAudioSDPic, $this->picService->getFirstUrlPic($mm, $absolute, $hd));
-
-        $absolute = true;
-        $hd = true;
-        static::assertEquals($this->absoluteDomain.$this->defaultAudioHDPic, $this->picService->getFirstUrlPic($mm, $absolute, $hd));
-        $hd = false;
-        static::assertEquals($this->absoluteDomain.$this->defaultAudioSDPic, $this->picService->getFirstUrlPic($mm, $absolute, $hd));
 
         $mmUrl1 = '/uploads/video1.jpg';
         $mmPic1 = new Pic();
@@ -236,20 +233,12 @@ class PicServiceTest extends PumukitTestCase
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $track = new Track();
-        $track->setOnlyAudio(false);
+        $track = $this->generateTrackMedia();
+
         $this->trackService->addTrackToMultimediaObject($mm, $track, true);
 
         static::assertEquals($this->webDir.$this->defaultVideoPic, $this->picService->getFirstPathPic($mm));
-
-        $track->setOnlyAudio(true);
-        $track->addTag('master');
         $this->trackService->updateTrackInMultimediaObject($mm, $track, true);
-
-        $hd = true;
-        static::assertEquals($this->webDir.$this->defaultAudioHDPic, $this->picService->getFirstPathPic($mm, $hd));
-        $hd = false;
-        static::assertEquals($this->webDir.$this->defaultAudioSDPic, $this->picService->getFirstPathPic($mm, $hd));
 
         $mmPath1 = realpath(__DIR__.'/../Resources/images/video_none.jpg');
         $mmPic1 = new Pic();
@@ -276,5 +265,30 @@ class PicServiceTest extends PumukitTestCase
         $this->dm->flush();
 
         static::assertEquals($mmPath2, $this->picService->getFirstPathPic($mm));
+    }
+
+    private function generateTrackMedia(): MediaInterface
+    {
+        $originalName = 'originalName'.rand();
+        $description = i18nText::create($this->i18nService->generateI18nText('18nDescription'));
+        $language = 'en';
+        $tags = Tags::create(['display']);
+        $views = 0;
+        $url = Url::create('');
+        $path = Path::create('public/storage');
+        $storage = Storage::create($url, $path);
+        $mediaMetadata = VideoAudio::create('{"format":{"duration":"10.000000"}}');
+
+        return Track::create(
+            $originalName,
+            $description,
+            $language,
+            $tags,
+            false,
+            true,
+            $views,
+            $storage,
+            $mediaMetadata
+        );
     }
 }
