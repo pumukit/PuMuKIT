@@ -43,6 +43,16 @@ final class JobRemover
 
     public function deleteTempFilesFromJob(Job $job): void
     {
+        if (Job::STATUS_FINISHED !== $job->getStatus()) {
+            $message = sprintf(
+                __FUNCTION__.' Trying to delete tempFiles from not finished jobs. Job id: %s',
+                $job->getId()
+            );
+            $this->logger->error($message);
+
+            throw new \Exception('Cannot delete temp files from not finished jobs.');
+        }
+
         if (str_starts_with($job->getPathIni(), $this->tmpPath)) {
             unlink($job->getPathIni());
         } elseif ($this->deleteInboxFiles && str_starts_with($job->getPathIni(), $this->inboxPath)) {
