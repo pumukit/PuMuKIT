@@ -142,7 +142,7 @@ class TrackFileController extends AbstractController
 
         $isMultiStream = $multimediaObject->isMultistream();
         $haveOnlyDelivery = (count($multimediaObject->getTracksWithTag('display')) <= 2) && $multimediaObject->getTracksWithTag('sbs');
-        $isDelivery = $media->containsTag('presentation/delivery');
+        $isDelivery = $media->tags()->containsTag('presentation/delivery');
         if ($isMultiStream && $isDelivery && !$haveOnlyDelivery) {
             return false;
         }
