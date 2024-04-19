@@ -138,7 +138,7 @@ class TrackUrlServiceTest extends PumukitTestCase
         $language = 'en';
         $tags = Tags::create(['display']);
         $views = 0;
-        $url = Url::create('https://localhost/pumukit.mp4');
+        $url = Url::create($url);
         $path = Path::create('public/storage');
         $storage = Storage::create($url, $path);
         $mediaMetadata = VideoAudio::create('{"format":{"duration":"10.000000"}}');
