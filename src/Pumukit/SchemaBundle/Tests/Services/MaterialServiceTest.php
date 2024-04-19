@@ -24,6 +24,8 @@ class MaterialServiceTest extends PumukitTestCase
     private $uploadsPath;
     private $materialDispatcher;
 
+    private $projectDir;
+
     public function setUp(): void
     {
         $options = ['environment' => 'test'];
@@ -33,8 +35,9 @@ class MaterialServiceTest extends PumukitTestCase
         $this->materialService = static::$kernel->getContainer()->get('pumukitschema.material');
         $this->materialDispatcher = static::$kernel->getContainer()->get('pumukitschema.material_dispatcher');
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
+        $this->projectDir = self::$kernel->getContainer()->getParameter('kernel.project_dir');
 
-        $this->originalFilePath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'file.pdf';
+        $this->originalFilePath = $this->projectDir.'/tests/files/pumukit.pdf';
         $this->uploadsPath = static::$kernel->getContainer()->getParameter('pumukit.uploads_material_dir');
     }
 
@@ -114,7 +117,7 @@ class MaterialServiceTest extends PumukitTestCase
 
         static::assertCount(0, $mm->getMaterials());
 
-        $filePath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'fileCopy.pdf';
+        $filePath = $this->projectDir.'/tests/files/pumukit.pdf';
 
         if (copy($this->originalFilePath, $filePath)) {
             $file = new UploadedFile($filePath, 'file.pdf', 'application/pdf', null, true);
