@@ -170,7 +170,7 @@ final class JobExecutor
         $this->executeNextJob();
     }
 
-    public function createMediaWithJob(Job $job): MediaInterface
+    private function createMediaWithJob(Job $job): MediaInterface
     {
         $multimediaObject = $this->jobValidator->ensureMultimediaObjectExists($job);
 
