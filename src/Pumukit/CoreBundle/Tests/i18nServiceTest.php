@@ -7,6 +7,11 @@ namespace Pumukit\CoreBundle\Tests;
 use PHPUnit\Framework\TestCase;
 use Pumukit\CoreBundle\Services\i18nService;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 final class i18nServiceTest extends TestCase
 {
     private array $locales;
