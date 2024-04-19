@@ -4,22 +4,42 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Document;
 
-use PHPUnit\Framework\TestCase;
+use Pumukit\CoreBundle\Services\i18nService;
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Link;
 use Pumukit\SchemaBundle\Document\Material;
+use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
+use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
+use Pumukit\SchemaBundle\Document\MediaType\Storage;
+use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
-use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
+use Pumukit\SchemaBundle\Document\ValueObject\Path;
+use Pumukit\SchemaBundle\Document\ValueObject\Tags;
+use Pumukit\SchemaBundle\Document\ValueObject\Url;
+use Pumukit\SchemaBundle\Services\MediaUpdater;
 
 /**
  * @internal
  *
  * @coversNothing
  */
-class MultimediaObjectTest extends TestCase
+class MultimediaObjectTest extends PumukitTestCase
 {
+    private $i18nService;
+    private $mediaUpdater;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->i18nService = new i18nService(['en', 'es'], 'en');
+        $this->mediaUpdater = self::$kernel->getContainer()->get(MediaUpdater::class);
+    }
+
     public function testGetterAndSetter()
     {
         $series = new Series();
@@ -142,9 +162,9 @@ class MultimediaObjectTest extends TestCase
     public function testTracksInMultimediaObject()
     {
         $mm = new MultimediaObject();
-        $track1 = new Track();
-        $track2 = new Track();
-        $track3 = new Track();
+        $track1 = $this->createNewTrack();
+        $track2 = $this->createNewTrack();
+        $track3 = $this->createNewTrack();
 
         static::assertCount(0, $mm->getTracks());
 
@@ -258,12 +278,9 @@ class MultimediaObjectTest extends TestCase
     {
         $mm = new MultimediaObject();
 
-        $t1 = new Track();
-        $t1->setDuration(2);
-        $t2 = new Track();
-        $t2->setDuration(3);
-        $t3 = new Track();
-        $t3->setDuration(1);
+        $t1 = $this->createNewTrack(2);
+        $t2 = $this->createNewTrack(3);
+        $t3 = $this->createNewTrack(1);
 
         static::assertEquals(0, $mm->getDuration());
         $mm->addTrack($t1);
@@ -278,16 +295,21 @@ class MultimediaObjectTest extends TestCase
     {
         $mm = new MultimediaObject();
 
-        $t1 = new Track();
-        $t1->setTags(['master']);
-        $t2 = new Track();
-        $t2->setTags(['mosca', 'master', 'old']);
-        $t3 = new Track();
-        $t3->setTags(['master', 'mosca']);
-        $t4 = new Track();
-        $t4->setTags(['flv', 'unesco', 'hide']);
-        $t5 = new Track();
-        $t5->setTags(['flv', 'webtv']);
+        $t1 = $this->createNewTrack();
+        $tags = Tags::create(['master']);
+        $this->mediaUpdater->updateTags($mm, $t1, $tags);
+        $t2 = $this->createNewTrack();
+        $tags = Tags::create(['mosca', 'master', 'old']);
+        $this->mediaUpdater->updateTags($mm, $t2, $tags);
+        $t3 = $this->createNewTrack();
+        $tags = Tags::create(['master', 'mosca']);
+        $this->mediaUpdater->updateTags($mm, $t3, $tags);
+        $t4 = $this->createNewTrack();
+        $tags = Tags::create(['flv', 'unesco', 'hide']);
+        $this->mediaUpdater->updateTags($mm, $t4, $tags);
+        $t5 = $this->createNewTrack();
+        $tags = Tags::create(['flv', 'webtv']);
+        $this->mediaUpdater->updateTags($mm, $t5, $tags);
 
         $mm->addTrack($t3);
         $mm->addTrack($t2);
@@ -667,5 +689,30 @@ class MultimediaObjectTest extends TestCase
 
         $mm->setDurationInMinutesAndSeconds($duration_in_minutes_and_seconds2);
         static::assertEquals($duration_in_minutes_and_seconds2, $mm->getDurationInMinutesAndSeconds());
+    }
+
+    private function createNewTrack(?int $duration = 10): MediaInterface
+    {
+        $originalName = 'originalName';
+        $description = i18nText::create($this->i18nService->generateI18nText('18nDescription'));
+        $language = 'en';
+        $tags = Tags::create(['display']);
+        $views = 0;
+        $url = Url::create('');
+        $path = Path::create('public/storage');
+        $storage = Storage::create($url, $path);
+        $mediaMetadata = VideoAudio::create('{"format":{"duration":"'.$duration.'"}}');
+
+        return Track::create(
+            $originalName,
+            $description,
+            $language,
+            $tags,
+            false,
+            true,
+            $views,
+            $storage,
+            $mediaMetadata
+        );
     }
 }
