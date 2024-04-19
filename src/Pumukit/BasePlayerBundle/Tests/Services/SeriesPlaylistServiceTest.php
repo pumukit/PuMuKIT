@@ -43,7 +43,7 @@ class SeriesPlaylistServiceTest extends PumukitTestCase
         $this->seriesRepo = $this->dm->getRepository(Series::class);
         $this->seriesPlaylistService = self::$kernel->getContainer()->get(SeriesPlaylistService::class);
         $this->factoryService = self::$kernel->getContainer()->get(FactoryService::class);
-        $this->i18nService = new i18nService(['en','es'], 'en');
+        $this->i18nService = new i18nService(['en', 'es'], 'en');
 
         $series = $this->factoryService->createSeries();
 
@@ -137,7 +137,7 @@ class SeriesPlaylistServiceTest extends PumukitTestCase
         $url = Url::create('');
         $path = Path::create('public/storage');
         $storage = Storage::create($url, $path);
-        $mediaMetadata = VideoAudio::create("{\"format\":{\"duration\":\"10.000000\"}}");
+        $mediaMetadata = VideoAudio::create('{"format":{"duration":"10.000000"}}');
 
         return Track::create(
             $originalName,

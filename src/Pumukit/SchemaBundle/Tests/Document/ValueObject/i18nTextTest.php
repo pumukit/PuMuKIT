@@ -7,6 +7,11 @@ namespace Pumukit\SchemaBundle\Tests\Document\ValueObject;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 final class i18nTextTest extends TestCase
 {
     public function testCreate(): void

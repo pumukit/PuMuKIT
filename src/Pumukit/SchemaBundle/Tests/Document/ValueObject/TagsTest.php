@@ -7,6 +7,11 @@ namespace Pumukit\SchemaBundle\Tests\Document\ValueObject;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\ValueObject\Tags;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 final class TagsTest extends TestCase
 {
     public function testCreate(): void

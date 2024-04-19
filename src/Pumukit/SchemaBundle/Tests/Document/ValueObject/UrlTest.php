@@ -8,6 +8,11 @@ use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\Exception\UrlException;
 use Pumukit\SchemaBundle\Document\ValueObject\Url;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 final class UrlTest extends TestCase
 {
     public function testCreate(): void
@@ -22,7 +27,7 @@ final class UrlTest extends TestCase
     {
         $url = Url::create('https://www.example.com');
 
-        $this->assertEquals('https://www.example.com', (string)$url);
+        $this->assertEquals('https://www.example.com', (string) $url);
     }
 
     public function testException(): void

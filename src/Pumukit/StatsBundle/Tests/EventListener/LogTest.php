@@ -40,7 +40,7 @@ class LogTest extends PumukitTestCase
         $this->repo = $this->dm->getRepository(ViewsLog::class);
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
-        $this->i18nService = new i18nService(['en','es'], 'en');
+        $this->i18nService = new i18nService(['en', 'es'], 'en');
     }
 
     public function tearDown(): void
@@ -109,7 +109,7 @@ class LogTest extends PumukitTestCase
         $url = Url::create('');
         $path = Path::create('public/storage');
         $storage = Storage::create($url, $path);
-        $mediaMetadata = VideoAudio::create("{\"format\":{\"duration\":\"10.000000\"}}");
+        $mediaMetadata = VideoAudio::create('{"format":{"duration":"10.000000"}}');
 
         return Track::create(
             $originalName,
