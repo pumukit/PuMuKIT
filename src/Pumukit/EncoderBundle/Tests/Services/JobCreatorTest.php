@@ -19,6 +19,11 @@ use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 final class JobCreatorTest extends PumukitTestCase
 {
     private $jobExecutor;
@@ -58,7 +63,6 @@ final class JobCreatorTest extends PumukitTestCase
             $this->logger,
             $this->tmpPath
         );
-
     }
 
     public function testFromUploadedFile(): void
@@ -74,7 +78,7 @@ final class JobCreatorTest extends PumukitTestCase
         $this->assertEquals(MultimediaObject::TYPE_VIDEO, $result->getType());
         $jobs = $this->dm->getRepository(Job::class)->findBy([
             'mm_id' => $result->getId(),
-            'status' => Job::STATUS_WAITING
+            'status' => Job::STATUS_WAITING,
         ]);
         $this->assertCount(1, $jobs);
 
@@ -86,7 +90,7 @@ final class JobCreatorTest extends PumukitTestCase
         $this->assertEquals(MultimediaObject::TYPE_AUDIO, $result->getType());
         $jobs = $this->dm->getRepository(Job::class)->findBy([
             'mm_id' => $result->getId(),
-            'status' => Job::STATUS_WAITING
+            'status' => Job::STATUS_WAITING,
         ]);
         $this->assertCount(1, $jobs);
 
@@ -98,7 +102,7 @@ final class JobCreatorTest extends PumukitTestCase
         $this->assertEquals(MultimediaObject::TYPE_DOCUMENT, $result->getType());
         $jobs = $this->dm->getRepository(Job::class)->findBy([
             'mm_id' => $result->getId(),
-            'status' => Job::STATUS_WAITING
+            'status' => Job::STATUS_WAITING,
         ]);
         $this->assertCount(1, $jobs);
 
@@ -111,7 +115,7 @@ final class JobCreatorTest extends PumukitTestCase
         $this->assertEquals(MultimediaObject::TYPE_IMAGE, $result->getType());
         $jobs = $this->dm->getRepository(Job::class)->findBy([
             'mm_id' => $result->getId(),
-            'status' => Job::STATUS_WAITING
+            'status' => Job::STATUS_WAITING,
         ]);
         $this->assertCount(1, $jobs);
     }
@@ -129,7 +133,7 @@ final class JobCreatorTest extends PumukitTestCase
         $this->assertEquals(MultimediaObject::TYPE_VIDEO, $result->getType());
         $jobs = $this->dm->getRepository(Job::class)->findBy([
             'mm_id' => $result->getId(),
-            'status' => Job::STATUS_WAITING
+            'status' => Job::STATUS_WAITING,
         ]);
         $this->assertCount(1, $jobs);
 
@@ -140,7 +144,7 @@ final class JobCreatorTest extends PumukitTestCase
         $this->assertEquals(MultimediaObject::TYPE_AUDIO, $result->getType());
         $jobs = $this->dm->getRepository(Job::class)->findBy([
             'mm_id' => $result->getId(),
-            'status' => Job::STATUS_WAITING
+            'status' => Job::STATUS_WAITING,
         ]);
         $this->assertCount(1, $jobs);
 
@@ -152,7 +156,7 @@ final class JobCreatorTest extends PumukitTestCase
         $this->assertEquals(MultimediaObject::TYPE_DOCUMENT, $result->getType());
         $jobs = $this->dm->getRepository(Job::class)->findBy([
             'mm_id' => $result->getId(),
-            'status' => Job::STATUS_WAITING
+            'status' => Job::STATUS_WAITING,
         ]);
         $this->assertCount(1, $jobs);
 
@@ -164,7 +168,7 @@ final class JobCreatorTest extends PumukitTestCase
         $this->assertEquals(MultimediaObject::TYPE_IMAGE, $result->getType());
         $jobs = $this->dm->getRepository(Job::class)->findBy([
             'mm_id' => $result->getId(),
-            'status' => Job::STATUS_WAITING
+            'status' => Job::STATUS_WAITING,
         ]);
         $this->assertCount(1, $jobs);
     }

@@ -9,7 +9,6 @@ use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use MongoDB\BSON\ObjectId;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\JobRemover;
-use Pumukit\EncoderBundle\Services\JobRender;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
@@ -36,16 +35,16 @@ class RemoveListener
     private JobRemover $jobRemover;
 
     public function __construct(
-        DocumentManager            $documentManager,
-        MultimediaObjectService    $multimediaObjectService,
-        MaterialService            $materialService,
+        DocumentManager $documentManager,
+        MultimediaObjectService $multimediaObjectService,
+        MaterialService $materialService,
         MultimediaObjectPicService $multimediaObjectPicService,
-        SeriesPicService           $seriesPicService,
-        JobRemover                 $jobRemover,
-        TagService                 $tagService,
-        EmbeddedBroadcastService   $embeddedBroadcastService,
-        UserService                $userService,
-        TranslatorInterface        $translator,
+        SeriesPicService $seriesPicService,
+        JobRemover $jobRemover,
+        TagService $tagService,
+        EmbeddedBroadcastService $embeddedBroadcastService,
+        UserService $userService,
+        TranslatorInterface $translator,
     ) {
         $this->documentManager = $documentManager;
         $this->multimediaObjectService = $multimediaObjectService;
