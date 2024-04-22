@@ -218,7 +218,7 @@ class MultimediaObjectVoterTest extends WebTestCase
 
     private function generateTrackMedia(): MediaInterface
     {
-        $originalName = 'originalName'.rand();
+        $originalName = 'originalName'.random_int(0, mt_getrandmax());
         $description = i18nText::create($this->i18nService->generateI18nText('18nDescription'));
         $language = 'en';
         $tags = Tags::create(['display']);
