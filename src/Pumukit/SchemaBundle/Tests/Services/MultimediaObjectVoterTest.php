@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
 use Pumukit\SchemaBundle\Document\MediaType\Storage;
+use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Series;
@@ -227,7 +228,7 @@ class MultimediaObjectVoterTest extends WebTestCase
         $storage = Storage::create($url, $path);
         $mediaMetadata = VideoAudio::create('{"format":{"duration":"10.000000"}}');
 
-        return \Pumukit\SchemaBundle\Document\MediaType\Track::create(
+        return Track::create(
             $originalName,
             $description,
             $language,
