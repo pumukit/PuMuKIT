@@ -76,7 +76,7 @@ final class VideoAudio implements MediaMetadata
     {
         $metadata = $this->decodeMetadataInfo();
 
-        return $metadata->size ?? 0;
+        return (int) $metadata->format->size ?? 0;
     }
 
     public function width(): ?int
