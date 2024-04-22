@@ -181,7 +181,7 @@ class JobGeneratorListenerTest extends PumukitTestCase
 
     private function generateVideoMedia(): MediaInterface
     {
-        $originalName = 'originalName'.rand();
+        $originalName = 'originalName'.random_int(0, mt_getrandmax());
         $description = i18nText::create($this->i18nService->generateI18nText('18nDescription'));
         $language = 'en';
         $tags = Tags::create(['master', 'profile:master_copy', 'display']);
@@ -207,7 +207,7 @@ class JobGeneratorListenerTest extends PumukitTestCase
 
     private function generateAudioMedia(): MediaInterface
     {
-        $originalName = 'originalName'.rand();
+        $originalName = 'originalName'.random_int(0, mt_getrandmax());
         $description = i18nText::create($this->i18nService->generateI18nText('18nDescription'));
         $language = 'en';
         $tags = Tags::create(['master', 'profile:master_copy', 'display']);
@@ -233,7 +233,7 @@ class JobGeneratorListenerTest extends PumukitTestCase
 
     private function generateImageMedia(): MediaInterface
     {
-        $originalName = 'originalName'.rand();
+        $originalName = 'originalName'.random_int(0, mt_getrandmax());
         $description = i18nText::create($this->i18nService->generateI18nText('18nDescription'));
         $language = 'en';
         $tags = Tags::create(['master', 'profile:master_copy', 'display']);
@@ -259,7 +259,7 @@ class JobGeneratorListenerTest extends PumukitTestCase
 
     private function generateDocumentMedia(): MediaInterface
     {
-        $originalName = 'originalName'.rand();
+        $originalName = 'originalName'.random_int(0, mt_getrandmax());
         $description = i18nText::create($this->i18nService->generateI18nText('18nDescription'));
         $language = 'en';
         $tags = Tags::create(['master', 'profile:master_copy', 'display']);
