@@ -1501,7 +1501,7 @@ class MultimediaObject
 
         $out = [];
         foreach ($snapshot as $key => $track) {
-            if ($track->getId() === $trackId) {
+            if ($track->id() === $trackId) {
                 $out[($key * 10) + ($up ? -11 : 11)] = $track;
             } else {
                 $out[$key * 10] = $track;
