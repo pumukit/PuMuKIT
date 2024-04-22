@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
 use MongoDB\BSON\ObjectId;
+use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\EmbeddedPerson;
@@ -13,6 +14,10 @@ use Pumukit\SchemaBundle\Document\EmbeddedTag;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\Link;
 use Pumukit\SchemaBundle\Document\Material;
+use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
+use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
+use Pumukit\SchemaBundle\Document\MediaType\Storage;
+use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\PersonInterface;
@@ -22,8 +27,14 @@ use Pumukit\SchemaBundle\Document\RoleInterface;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\Tag;
-use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
+use Pumukit\SchemaBundle\Document\ValueObject\Path;
+use Pumukit\SchemaBundle\Document\ValueObject\Tags;
+use Pumukit\SchemaBundle\Document\ValueObject\Url;
+use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
+use Pumukit\SchemaBundle\Services\TagService;
 
 /**
  * @internal
@@ -38,16 +49,19 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
     private $tagService;
     private $groupRepo;
 
+    private $i18nService;
+
     public function setUp(): void
     {
         $options = ['environment' => 'test'];
         static::bootKernel($options);
         parent::setUp();
         $this->repo = $this->dm->getRepository(MultimediaObject::class);
-        $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
-        $this->mmsPicService = static::$kernel->getContainer()->get('pumukitschema.mmspic');
-        $this->tagService = static::$kernel->getContainer()->get('pumukitschema.tag');
+        $this->factoryService = static::$kernel->getContainer()->get(FactoryService::class);
+        $this->mmsPicService = static::$kernel->getContainer()->get(MultimediaObjectPicService::class);
+        $this->tagService = static::$kernel->getContainer()->get(TagService::class);
         $this->groupRepo = $this->dm->getRepository(Group::class);
+        $this->i18nService = new i18nService(['en', 'es'], 'en');
     }
 
     public function tearDown(): void
@@ -94,19 +108,12 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
 
         static::assertCount(1, $this->repo->findAll());
 
-        $t1 = new Track();
-        $t1->setTags(['master']);
-        $t2 = new Track();
-        $t2->setTags(['mosca', 'master', 'old']);
-        $t3 = new Track();
-        $t3->setTags(['master', 'mosca']);
-        $t4 = new Track();
-        $t4->setTags(['flv', 'itunes', 'hide']);
-        $t5 = new Track();
-        $t5->setTags(['flv', 'webtv']);
-        $t6 = new Track();
-        $t6->setTags(['track6']);
-        $t6->setHide(true);
+        $t1 = $this->generateTrackMedia(['master']);
+        $t2 = $this->generateTrackMedia(['mosca', 'master', 'old']);
+        $t3 = $this->generateTrackMedia(['master', 'mosca']);
+        $t4 = $this->generateTrackMedia(['flv', 'itunes', 'hide']);
+        $t5 = $this->generateTrackMedia(['flv', 'webtv']);
+        $t6 = $this->generateTrackMedia(['track6'], true);
 
         $this->dm->persist($t1);
         $this->dm->persist($t2);
@@ -1030,9 +1037,9 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
 
     public function testEmbedTracksInMultimediaObject(): void
     {
-        $track1 = new Track();
-        $track2 = new Track();
-        $track3 = new Track();
+        $track1 = $this->generateTrackMedia([]);
+        $track2 = $this->generateTrackMedia([]);
+        $track3 = $this->generateTrackMedia([]);
 
         $this->dm->persist($track1);
         $this->dm->persist($track2);
@@ -1048,12 +1055,12 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
 
         $this->dm->flush();
 
-        static::assertEquals($track1, $this->repo->find($mm->getId())->getTrackById($track1->getId()));
-        static::assertEquals($track2, $this->repo->find($mm->getId())->getTrackById($track2->getId()));
-        static::assertEquals($track3, $this->repo->find($mm->getId())->getTrackById($track3->getId()));
+        static::assertEquals($track1, $this->repo->find($mm->getId())->getTrackById($track1->id()));
+        static::assertEquals($track2, $this->repo->find($mm->getId())->getTrackById($track2->id()));
+        static::assertEquals($track3, $this->repo->find($mm->getId())->getTrackById($track3->id()));
         static::assertNull($this->repo->find($mm->getId())->getTrackById(null));
 
-        $mm->removeTrackById($track2->getId());
+        $mm->removeTrackById($track2->id());
         $this->dm->persist($mm);
         $this->dm->flush();
 
@@ -1061,14 +1068,14 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         static::assertCount(count($tracksArray), $this->repo->find($mm->getId())->getTracks());
         static::assertEquals($tracksArray, $this->repo->find($mm->getId())->getTracks()->toArray());
 
-        $mm->upTrackById($track3->getId());
+        $mm->upTrackById($track3->id());
         $this->dm->persist($mm);
         $this->dm->flush();
 
         $tracksArray = [$track3, $track1];
         static::assertEquals($tracksArray, $this->repo->find($mm->getId())->getTracks()->toArray());
 
-        $mm->downTrackById($track3->getId());
+        $mm->downTrackById($track3->id());
         $this->dm->persist($mm);
         $this->dm->flush();
 
@@ -3282,5 +3289,30 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         $this->dm->flush();
 
         return $group;
+    }
+
+    private function generateTrackMedia(array $tags, bool $hide = false): MediaInterface
+    {
+        $originalName = 'originalName'.rand();
+        $description = i18nText::create($this->i18nService->generateI18nText('18nDescription'));
+        $language = 'en';
+        $tags = Tags::create($tags);
+        $views = 0;
+        $url = Url::create('');
+        $path = Path::create('public/storage');
+        $storage = Storage::create($url, $path);
+        $mediaMetadata = VideoAudio::create('{"format":{"duration":"10.000000"}}');
+
+        return Track::create(
+            $originalName,
+            $description,
+            $language,
+            $tags,
+            $hide,
+            true,
+            $views,
+            $storage,
+            $mediaMetadata
+        );
     }
 }
