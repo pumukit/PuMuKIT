@@ -55,7 +55,7 @@ class MultimediaObjectService
 
     public function hasPlayableResource(MultimediaObject $multimediaObject): bool
     {
-        return $multimediaObject->getDisplayTrack() || $multimediaObject->isMultistream() || !empty($multimediaObject->external());
+        return $multimediaObject->getDisplayTrack() || $multimediaObject->isMultistream();
     }
 
     /**
