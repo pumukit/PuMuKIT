@@ -55,7 +55,7 @@ class MultimediaObjectMaxDurationTest extends PumukitTestCase
         $series = $this->factoryService->createSeries();
         $mm = $this->factoryService->createMultimediaObject($series);
 
-        $trackGenerated = $this->generateTrackMedia([]);
+        $trackGenerated = $this->generateTrackMedia();
         $this->dm->persist($trackGenerated);
         $mm->addTrack($trackGenerated);
 
