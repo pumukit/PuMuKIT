@@ -89,8 +89,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
             }
         }
 
-        // TODO: DIGIREPO External player is a media interface now
-        if (!$track && $multimediaObject->getProperty('externalplayer')) {
+        if (!$track && !$multimediaObject->isExternalType()) {
             $event = new ViewedEvent($multimediaObject);
             $this->eventDispatcher->dispatch($event, BasePlayerEvents::MULTIMEDIAOBJECT_VIEW);
         }

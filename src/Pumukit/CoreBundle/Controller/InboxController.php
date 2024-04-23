@@ -47,7 +47,6 @@ class InboxController extends AbstractController
      */
     public function folder(Request $request): array
     {
-        // TODO: DIGIREPO REMOVE
         $formData = $request->get('inbox_form_data', []);
         //        $folder = $request->get('folder');
         $inboxUploadURL = $this->inboxService->inboxUploadURL();
@@ -79,7 +78,6 @@ class InboxController extends AbstractController
         ];
     }
 
-    // TODO: DIGIREPO REMOVE
     public function checkFolderAndCreateIfNotExist(string $folder): bool
     {
         $inboxPath = $this->inboxService->inboxPath();
@@ -95,7 +93,6 @@ class InboxController extends AbstractController
         }
     }
 
-    // TODO: DIGIREPO REMOVE
     /**
      * @Route("/check_folder", name="check_folder_before_creating")
      */
