@@ -196,4 +196,46 @@ class ProfileService
             return isset($profile['target']) && str_contains($profile['target'], $pubChannelCod);
         });
     }
+
+    public function filterProfilesByType(MultimediaObject $multimediaObject): array
+    {
+        $type = '';
+        if (MultimediaObject::TYPE_DOCUMENT === $multimediaObject->getType()) {
+            $type = 'document';
+        } elseif (MultimediaObject::TYPE_IMAGE === $multimediaObject->getType()) {
+            $type = 'image';
+        } elseif (MultimediaObject::TYPE_AUDIO === $multimediaObject->getType()) {
+            $type = 'audio';
+        }
+
+        return match ($multimediaObject->getType()) {
+            MultimediaObject::TYPE_VIDEO => $this->videoProfiles(),
+            MultimediaObject::TYPE_AUDIO => $this->audioProfiles(),
+            MultimediaObject::TYPE_IMAGE => $this->imageProfiles(),
+            MultimediaObject::TYPE_DOCUMENT => $this->documentProfiles(),
+            default => throw new \InvalidArgumentException('No target default profiles.'),
+        };
+    }
+
+    public function imageProfiles(): array
+    {
+        return array_filter($this->profiles, function ($profile) { return isset($profile['image']) && true === $profile['image'] && false === $profile['master']; });
+    }
+
+    public function documentProfiles(): array
+    {
+        return array_filter($this->profiles, function ($profile) { return isset($profile['document']) && true === $profile['document'] && false === $profile['master']; });
+    }
+
+    public function audioProfiles(): array
+    {
+        return array_filter($this->profiles, function ($profile) { return isset($profile['audio']) && true === $profile['audio'] && false === $profile['master']; });
+    }
+
+    public function videoProfiles(): array
+    {
+        return array_filter($this->profiles, function ($profile) {
+            return (!isset($profile['document']) || false === $profile['document']) && (!isset($profile['image']) || false === $profile['image']) && false === $profile['master'];
+        });
+    }
 }

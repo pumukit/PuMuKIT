@@ -377,11 +377,9 @@ class PumukitAdminExtension extends AbstractExtension
         return ini_get('upload_max_filesize').'B';
     }
 
-    public function filterProfiles($profiles, $onlyAudio): array
+    public function filterProfiles(MultimediaObject $multimediaObject): array
     {
-        return array_filter($profiles, static function ($elem) use ($onlyAudio) {
-            return !$onlyAudio || $elem['audio'];
-        });
+        return $this->profileService->filterProfilesByType($multimediaObject);
     }
 
     public function countMultimediaObjects(Series $series): int
