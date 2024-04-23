@@ -29,18 +29,6 @@ services:
   Pumukit\EncoderBundle\Services\Repository\JobRepository:
     class: Pumukit\EncoderBundle\Services\Repository\JobRepository
 
-#  Pumukit\EncoderBundle\Services\JobService:
-#    class: Pumukit\EncoderBundle\Services\JobService
-#    arguments:
-#      $binPath:          '%kernel.project_dir%/bin/'
-#      $environment:      '%kernel.environment%'
-#      $tmpPath:          '%pumukit.tmp%'
-#      $inboxPath:        '%pumukit.inbox%'
-#      $deleteInboxFiles: '%pumukitencode.delete_inbox_files%'
-#      $maxExecutionJobSeconds: '%pumukitencode.max_execution_job_seconds%'
-#    tags:
-#      - { name: "monolog.logger", channel: "encoder" }
-
   Pumukit\EncoderBundle\Services\JobRender:
     class: Pumukit\EncoderBundle\Services\JobRender
     arguments:
