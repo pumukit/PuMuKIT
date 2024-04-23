@@ -120,7 +120,6 @@ class JobGeneratorListener
                 continue;
             }
 
-            // TODO: Refactor logic
             if ($multimediaObject->isVideoAudioType() && 0 !== (is_countable($default_profiles) ? count($default_profiles) : 0)) {
                 if (!isset($default_profiles[$pubChannelCod])) {
                     continue;
