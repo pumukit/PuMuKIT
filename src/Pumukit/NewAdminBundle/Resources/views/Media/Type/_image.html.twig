@@ -11,6 +11,12 @@
 
     {% include '@PumukitNewAdmin/Media/Type/Resources/_download.html.twig' %}
 
+    {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_TRACKS_OPTIONS')) and track.isMaster() %}
+        {% include '@PumukitNewAdmin/Media/Type/Resources/_retranscode.html.twig' %}
+    {% else %}
+        <td></td>
+    {% endif %}
+
     <td>
         &nbsp;{% if not is_naked() %}{{ track.id }} - {% endif %}
         <strong>{{ track.tags()|profile }}</strong>

@@ -3,7 +3,7 @@
         <i class="mdi-navigation-refresh" id="list_profiles_{{ track.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
         <ul class="dropdown-menu" role="menu" aria-labelledby="list_profiles_{{ track.id }}">
             <li>&nbsp;&nbsp;<strong>{% trans %}Transcode to profile{% endtrans %}:</strong></li>
-            {% for key in not_master_profiles|filter_profiles(track.metadata().isOnlyAudio())|keys %}
+            {% for key in mm|filter_profiles()|keys %}
                 <li>
                     <a href="#" onclick="$('#tracks_mms_{{ mm.id }}').load('{{ path('pumukitnewadmin_track_retranscode', {'id': track.id, 'mmId': mm.id, 'profile': key}) }}'); return false;">
                         <i class="mdi-image-camera-roll"></i> {{ key }}

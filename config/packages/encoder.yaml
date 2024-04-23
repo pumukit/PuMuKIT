@@ -133,6 +133,7 @@ pumukit_encoder:
       rel_duration_size: 1
       rel_duration_trans: 1
     image_broadcastable:
+      image: true
       display: true
       wizard: true
       master: false
@@ -148,6 +149,7 @@ pumukit_encoder:
         dir_out: "%pumukit.downloads%"
         url_out: "%pumukit.downloads_url%"
     document_broadcastable:
+      document: true
       display: true
       wizard: true
       master: false
