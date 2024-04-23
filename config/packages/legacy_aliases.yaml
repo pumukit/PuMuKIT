@@ -19,7 +19,6 @@ services:
   pumukit_core.pagination_service: '@Pumukit\CoreBundle\Services\PaginationService'
   pumukitencoder.cpu: '@Pumukit\EncoderBundle\Services\CpuService'
   pumukitencoder.profile: '@Pumukit\EncoderBundle\Services\ProfileService'
-#  pumukitencoder.job: '@Pumukit\EncoderBundle\Services\JobService'
   pumukitencoder.mmpropertyjob: '@Pumukit\EncoderBundle\Services\MultimediaObjectPropertyJobService'
   pumukitencoder.picextractor: '@Pumukit\EncoderBundle\Services\PicExtractorService'
   pumukitencoder.pic: '@Pumukit\EncoderBundle\Services\PicService'
