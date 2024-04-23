@@ -812,30 +812,6 @@ window.change_select = function(element, selector, pluralName, seriesId)
             });
         }
         break;
-/* TODO
-    case 'serial_master':
-    Modalbox.show('/editar.php/transcoders/masterserial', {title:'Master Multimedia', width:800});
-        selector.selectedIndex = 0;
-        break;
-      //separar honores sel
-    case 'inv_working_sel':
-        new Ajax.Updater('list_'+element+'s', '/editar.php/'+element+'s/working', {
-        asynchronous: true,
-        evalScripts: true,
-            onSuccess:  selector.selectedIndex = 0,
-        parameters: 'ids='+$$('.'+element+'_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
-            );
-        break;
-      //separar honores sel
-    case 'inv_working_all':
-        new Ajax.Updater('list_'+element+'s', '/editar.php/'+element+'s/working', {
-        asynchronous: true,
-        evalScripts: true,
-            onSuccess:  selector.selectedIndex = 0,
-        parameters: 'all=1'}
-            );
-        break;
-*/
     case 'order_manual':
         var route = '{{ path('pumukitnewadmin_mms_reorder', {'seriesId': '__seriesId__', 'sorting': 0, 'fieldName': 'rank', 'order': 'asc'})|raw }}';
         $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId), {'_method': 'POST'}, function(){sort_optiont_change('order_manual');});
@@ -927,41 +903,6 @@ window.change_select = function(element, selector, pluralName, seriesId)
             }
         });
         break;
-/* TODO
-      //status mm
-    case 'set_status_0_sel':
-        new Ajax.Updater('list_'+element+'s', '/editar.php/'+element+'s/change/status/0', {
-        asynchronous: true,
-        evalScripts: true,
-            onSuccess:  selector.selectedIndex = 0,
-        parameters: 'ids='+$$('.'+element+'_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
-            );
-        break;
-    case 'set_status_1_sel':
-        new Ajax.Updater('list_'+element+'s', '/editar.php/'+element+'s/change/status/1', {
-        asynchronous: true,
-        evalScripts: true,
-            onSuccess:  selector.selectedIndex = 0,
-        parameters: 'ids='+$$('.'+element+'_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
-            );
-        break;
-    case 'set_status_2_sel':
-        new Ajax.Updater('list_'+element+'s', '/editar.php/'+element+'s/change/status/2', {
-        asynchronous: true,
-        evalScripts: true,
-            onSuccess:  selector.selectedIndex = 0,
-        parameters: 'ids='+$$('.'+element+'_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
-            );
-        break;
-    case 'set_status_3_sel':
-        new Ajax.Updater('list_'+element+'s', '/editar.php/'+element+'s/change/status/3', {
-        asynchronous: true,
-        evalScripts: true,
-            onSuccess:  selector.selectedIndex = 0,
-        parameters: 'ids='+$$('.'+element+'_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
-            );
-        break;
-*/
     case 'invert_announce_selected':
         var ids = [];
         $('.' + element + '_checkbox:checked').each(function(){
@@ -997,16 +938,6 @@ window.change_select = function(element, selector, pluralName, seriesId)
             }
         }
         break;
-/* TODO
-    case 'inv_announce_virtualserial_sel':
-        new Ajax.Updater('list_mms', '/editar.php/virtualserial/inv/field/announce', {
-            asynchronous: true,
-            evalScripts: true,
-            onSuccess:  selector.selectedIndex = 0,
-            parameters: 'ids='+$$('.'+element+'_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
-                        );
-        break;
-*/
     case 'promote_to':
         var ids = $('.' + element + '_checkbox:checked.nosuperadmin').map(function(i, e){return e.id}).get();
 
