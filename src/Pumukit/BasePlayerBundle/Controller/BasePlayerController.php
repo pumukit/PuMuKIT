@@ -8,7 +8,6 @@ use Pumukit\BasePlayerBundle\Event\BasePlayerEvents;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 use Pumukit\BasePlayerBundle\Services\IntroService;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
-use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
@@ -70,11 +69,6 @@ abstract class BasePlayerController extends AbstractController
         if ($media && $media->tags()->containsTag('download')) {
             return $this->redirect($media->getUrl());
         }
-
-        // TODO: DIGIREPO REMOVE GET DISPLAY TRACK RETURN EXTERNAL MEDIA INTERFACE
-        //        if (!$track && null !== $url = $multimediaObject->getProperty('externalplayer')) {
-        //            return $this->redirect($url);
-        //        }
 
         return $media;
     }

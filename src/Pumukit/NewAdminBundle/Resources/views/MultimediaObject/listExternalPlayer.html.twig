@@ -5,12 +5,7 @@
 <div class="modal-body">
     <fieldset>
         <div class="form-group">
-            {# TODO: DIGIREPO REMOVE #}
-{#            {% if multimediaObject.getProperties()['externalplayer'] is defined %}#}
-{#                {% set urlexternal = multimediaObject.getProperties()['externalplayer'] %}#}
-{#            {% else %}#}
-                {% set urlexternal = '' %}
-{#            {% endif %}#}
+            {% set urlexternal = '' %}
             <iframe id="externalplayer" height="100%" width="100%" onload="resizeFrame(this)" src="{{ urlexternal }}"></iframe>
         </div>
     </fieldset>
@@ -37,7 +32,6 @@
         {% if is_granted('ROLE_ADD_EXTERNAL_PLAYER') %}
         <div class="col-md-2 pull-right">
             <button type="submit" class="btn btn-primary btn-raised">{% trans %}Submit{% endtrans %}</button>
-{#            {{ form_row(form.save) }}#}
         </div>
         {% endif %}
         <div class="col-md-2 pull-right">
@@ -63,18 +57,8 @@
         $('#externalplayer').attr('src',$('#form_url').val());
     });
 
-    // TODO: DIGIREPO REMOVE
-    // $('#form_delete').on('click', function(event) {
-    //     event.preventDefault();
-    //     $('#form_url').val('');
-    //     $('#externalplayerform').submit();
-    // });
-
-
     $('#externalplayerform').on('submit', function(event) {
         event.preventDefault();
-        // TODO: DIGIREPO REMOVE
-        {#url: "{{ path('pumukitnewadmin_mms_listexternalproperties', {'id' : multimediaObject.id}) }}",#}
         $('#myModal').modal('hide');
         $.ajax({
             url: "{{ path('pumukitnewadmin_mms_listexternalproperties', {'series' : series} ) }}",

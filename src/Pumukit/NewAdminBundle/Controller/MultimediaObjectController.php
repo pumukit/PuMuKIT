@@ -542,8 +542,6 @@ class MultimediaObjectController extends SortableAdminController
 
             $mms = $this->getListMultimediaObjects($series);
 
-            // TODO: DIGIREPO REMOVE
-            //            if (false === strpos($request->server->get('HTTP_REFERER'), 'mmslist')) {
             return $this->render(
                 '@PumukitNewAdmin/MultimediaObject/list.html.twig',
                 [
@@ -551,9 +549,6 @@ class MultimediaObjectController extends SortableAdminController
                     'mms' => $mms,
                 ]
             );
-            //            }
-
-            //            return $this->redirectToRoute('pumukitnewadmin_mms_listall', [], 301);
         }
 
         $personalScopeRoleCode = $this->personService->getPersonalScopeRoleCode();
@@ -1143,10 +1138,8 @@ class MultimediaObjectController extends SortableAdminController
     {
         $seriesId = $request->get('series');
 
-        // TODO: DIGIREPO REMOVE
         $form = $this->createFormBuilder()
             ->setAction($this->generateUrl('pumukitnewadmin_mms_listexternalproperties', ['series' => $seriesId]))
-//            ->setAction($this->generateUrl('pumukitnewadmin_mms_listexternalproperties', ['id' => $multimediaObject->getId()]))
             ->add('title', TextType::class, ['required' => true, 'attr' => ['class' => 'form-control']])
             ->add('url', UrlType::class, ['required' => true, 'attr' => ['class' => 'form-control']])
             ->getForm()
@@ -1164,13 +1157,9 @@ class MultimediaObjectController extends SortableAdminController
             $this->mediaCreator->createMediaFromExternalURL($multimediaObject, $data['url']);
             $this->documentManager->flush();
 
-            //            $this->pumukitSchemaMultimediaObjectDispatcher->dispatchUpdate($multimediaObject);
-            //            $this->dispatchUpdate($multimediaObject);
-
             return $this->redirectToRoute('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]);
         }
 
-        //        return ['multimediaObject' => $multimediaObject, 'form' => $form->createView()];
         return ['series' => $seriesId, 'form' => $form->createView()];
     }
 
@@ -1205,61 +1194,6 @@ class MultimediaObjectController extends SortableAdminController
     {
         return ['mm' => $mm];
     }
-
-    // TODO: DIGIREPO remove
-    //    /**
-    //     * @Template("@PumukitNewAdmin/MultimediaObject/indexAll.html.twig")
-    //     */
-    //    public function indexAllAction(Request $request)
-    //    {
-    //        $criteria = $this->getCriteria($request->get('criteria', []));
-    //        $resources = $this->getResources($request, $criteria);
-    //
-    //        $update_session = true;
-    //        foreach ($resources as $mm) {
-    //            if ($mm->getId() == $this->session->get('admin/mmslist/id')) {
-    //                $update_session = false;
-    //            }
-    //        }
-    //
-    //        if ($update_session) {
-    //            $this->session->remove('admin/mmslist/id');
-    //        }
-    //
-    //        $aRoles = $this->documentManager->getRepository(Role::class)->findAll();
-    //        $aPubChannel = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PUBCHANNELS']);
-    //        $aChannels = $this->documentManager->getRepository(Tag::class)->findBy(['parent.$id' => new ObjectId($aPubChannel->getId())]);
-    //
-    //        $multimediaObjectLabel = $this->translator->trans($this->pumukitNewAdminMultimediaObjectLabel);
-    //        $statusPub = [
-    //            MultimediaObject::STATUS_PUBLISHED => 'Published',
-    //            MultimediaObject::STATUS_BLOCKED => 'Blocked',
-    //            MultimediaObject::STATUS_HIDDEN => 'Hidden',
-    //        ];
-    //
-    //        return [
-    //            'mms' => $resources,
-    //            'roles' => $aRoles,
-    //            'statusPub' => $statusPub,
-    //            'pubChannels' => $aChannels,
-    //            'disable_pudenew' => !$this->showLatestWithPudeNew,
-    //            'multimedia_object_label' => $multimediaObjectLabel,
-    //        ];
-    //    }
-    //
-    //    public function listAllAction(Request $request)
-    //    {
-    //        $criteria = $this->getCriteria($request->get('criteria', []));
-    //        $resources = $this->getResources($request, $criteria);
-    //
-    //        return $this->render(
-    //            '@PumukitNewAdmin/MultimediaObject/listAll.html.twig',
-    //            [
-    //                'mms' => $resources,
-    //                'disable_pudenew' => !$this->showLatestWithPudeNew,
-    //            ]
-    //        );
-    //    }
 
     public function getCriteria($criteria)
     {
@@ -1633,8 +1567,6 @@ class MultimediaObjectController extends SortableAdminController
 
     private function renderList(MultimediaObject $resource, $referer)
     {
-        // TODO: DIGIREPO REMOVE
-        //        if (false === strpos($referer, 'mmslist')) {
         $mms = $this->getListMultimediaObjects($resource->getSeries());
 
         return $this->render(
@@ -1644,9 +1576,6 @@ class MultimediaObjectController extends SortableAdminController
                 'series' => $resource->getSeries(),
             ]
         );
-        //        }
-
-        //        return $this->redirectToRoute('pumukitnewadmin_mms_listall', [], 301);
     }
 
     private function updateSession(MultimediaObject $mm)

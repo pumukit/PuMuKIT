@@ -109,9 +109,6 @@ class PermissionProfileTest extends TestCase
 
         static::assertTrue($permissionProfile->removePermission(Permission::ACCESS_DASHBOARD));
         static::assertFalse($permissionProfile->containsPermission(Permission::ACCESS_DASHBOARD));
-
-        // TODO: DIGIREPO REMOVE
-        // static::assertFalse($permissionProfile->removePermission(Permission::ACCESS_WIZARD_UPLOAD));
     }
 
     public function testIsScope()

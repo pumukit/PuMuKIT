@@ -10,7 +10,7 @@ class MultimediaObjectDurationService
 {
     public function getMmobjDuration(MultimediaObject $multimediaObject): ?int
     {
-        if (0 === $multimediaObject->getDuration() && $multimediaObject->getProperty('externalplayer')) {
+        if (0 === $multimediaObject->getDuration() && $multimediaObject->isExternalType()) {
             return null;
         }
 
