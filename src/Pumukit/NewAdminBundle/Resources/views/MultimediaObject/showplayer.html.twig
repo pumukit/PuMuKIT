@@ -1,20 +1,7 @@
-{% set html5_track = mm.getDisplayTrack() %}
-{% if html5_track and not active_editor %}
-    <iframe src="{{ url('pumukit_videoplayer_index', {'id': mm.id }) }}"
-            id="video_iframe_{{ mm.id }}"
-            width="100%"
-            class="embed-responsive-item"
-            allowfullscreen
-            style="border:none;"
-    >
-    </iframe>
-{% else %}
-    <div class="well" style="padding: 3px;">
-        <div class="embed-responsive embed-responsive-16by9">
-            <div class="embed-responsive-item text-center" style="background-color: #000;">
-                <img src="{{ mm|first_url_pic(false, false) }}" class="pic-{{ mm.id }} preview" style="max-height: 100%" alt="{% trans %}Thumbnail{% endtrans %}">
-            </div>
+<div class="well" style="padding: 3px;">
+    <div class="embed-responsive embed-responsive-16by9">
+        <div class="embed-responsive-item text-center" style="background-color: #000;">
+            <img src="{{ mm|first_url_pic(false, false) }}" class="pic-{{ mm.id }} preview" style="max-height: 100%" alt="{% trans %}Thumbnail{% endtrans %}">
         </div>
     </div>
-{% endif %}
-
+</div>
