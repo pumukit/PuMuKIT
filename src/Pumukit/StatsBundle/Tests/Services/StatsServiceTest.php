@@ -7,7 +7,7 @@ namespace Pumukit\StatsBundle\Tests\Services;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
-use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\StatsBundle\Document\ViewsLog;
 use Pumukit\StatsBundle\Services\StatsService;
 
@@ -26,8 +26,8 @@ class StatsServiceTest extends PumukitTestCase
         $options = ['environment' => 'test'];
         static::bootKernel($options);
         parent::setUp();
-        $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
-        $this->viewsService = static::$kernel->getContainer()->get('pumukit_stats.stats');
+        $this->factoryService = static::$kernel->getContainer()->get(FactoryService::class);
+        $this->viewsService = static::$kernel->getContainer()->get(StatsService::class);
     }
 
     public function tearDown(): void
@@ -214,7 +214,7 @@ class StatsServiceTest extends PumukitTestCase
         static::assertEquals(1, $mostViewed[0]['num_viewed']);
     }
 
-    private function logView($when, MultimediaObject $multimediaObject, Track $track = null)
+    private function logView($when, MultimediaObject $multimediaObject)
     {
         $log = new ViewsLog('/', '8.8.8.8', 'test', '', $multimediaObject->getId(), $multimediaObject->getSeries()->getId(), null);
         $log->setDate($when);
