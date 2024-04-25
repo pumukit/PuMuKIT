@@ -343,19 +343,6 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     /**
      * @ParamConverter("multimediaObject", options={"id" = "mmId"})
      */
-    public function autocompleteAction(Request $request, MultimediaObject $multimediaObject): Response
-    {
-        $track = $multimediaObject->getTrackById($request->get('id'));
-
-        $this->inspectionService->autocompleteTrack($track);
-        $this->trackService->updateTrackInMultimediaObject($multimediaObject, $track);
-
-        return $this->redirectToRoute('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]);
-    }
-
-    /**
-     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
-     */
     public function picAction(Request $request, MultimediaObject $multimediaObject): Response
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
