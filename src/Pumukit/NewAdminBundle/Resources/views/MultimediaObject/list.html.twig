@@ -15,22 +15,22 @@
                             </label>
                         </div>
                     </td>
-                    <td headers="th-icons">
+                    <td headers="th-icons" style="width: 1em;">
                         <span id="table_mms_status_wrapper_{{ mm.id }}" data-id="{{ mm.id }}"> {# See Track/list for AJAX update #}
                             {% include '@PumukitNewAdmin/MultimediaObject/status.html.twig' with {'mm': mm} %}
                         </span>
                     </td>
                     {% if not is_naked() %}
-                        <td headers="th-icons">
+                        <td headers="th-icons" style="width: 1em;">
                             {{ mm.containsTagWithCod('PUDENEW')?'<i class="mdi-action-spellcheck">':'&nbsp;' }}
                         </td>
                     {% endif %}
                     {% if is_naked() and mm.containsAnyTagWithCodes(['PUCHOPENEDX', 'PUCHMOODLE', 'PUCHLMS'])%}
-                    <td headers="th-icons">
+                    <td headers="th-icons" style="width: 1em;">
                         <a class="moodlepr-add" href="#" title="{% trans %}Publish to LMS{% endtrans %}" onclick="parent.window.postMessage({'mmId': '{{ mm.id }}'}, '*'); return false;"><i class="mdi-editor-insert-photo"></i></a>
                     </td>
                     {% endif %}
-                    <td headers="th-icons">
+                    <td headers="th-icons" style="width: 1em;">
                         {% include '@PumukitNewAdmin/MultimediaObject/updatemenu.html.twig' with {'mm': mm} %}
                     </td>
                     {% if series.sorting == constant('SORT_MANUAL', series) %}
