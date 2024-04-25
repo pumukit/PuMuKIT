@@ -7,8 +7,8 @@ namespace Pumukit\EncoderBundle\EventListener;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\JobRemover;
+use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Event\TrackEvent;
 
 class RemoveListener
@@ -56,7 +56,7 @@ class RemoveListener
     {
         $masterTrack = $multimediaObject->getMaster();
         if ($masterTrack instanceof Track) {
-            $masterTrack->removeTag('ENCODED_PUCHWEBTV');
+            $masterTrack->tags()->remove('ENCODED_PUCHWEBTV');
         }
     }
 }
