@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Pumukit\InspectionBundle\Services;
 
 use Psr\Log\LoggerInterface;
-use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Symfony\Component\Process\Process;
 
@@ -40,73 +39,6 @@ class InspectionFfprobeService implements InspectionServiceInterface
         }
 
         return $duration;
-    }
-
-    /**
-     * Completes track information from a given path using mediainfo.
-     */
-    public function autocompleteTrack(Track $track): Track
-    {
-        $only_audio = true; // initialized true until video track is found.
-        if (!$track->getPath()) {
-            throw new \BadMethodCallException('Input track has no path defined');
-        }
-
-        $json = json_decode($this->getMediaInfo($track->getPath()), false, 512, JSON_THROW_ON_ERROR);
-        if (!$this->jsonHasMediaContent($json)) {
-            throw new \InvalidArgumentException('This file has no accesible video '.
-                "nor audio tracks\n".$track->getPath());
-        }
-
-        $mime_type = mime_content_type($track->getPath());
-
-        if (!$mime_type) {
-            $mime_type = '';
-        }
-
-        $track->setMimetype($mime_type);
-        $bitrate = isset($json->format->bit_rate) ? (int) $json->format->bit_rate : 0;
-        $track->setBitrate($bitrate);
-        $duration = (int) ceil((float) $json->format->duration);
-        $track->setDuration($duration);
-        $size = isset($json->format->size) ? (int) $json->format->size : 0;
-        $track->setSize($size);
-
-        foreach ($json->streams as $stream) {
-            if (isset($stream->codec_type)) {
-                switch ((string) $stream->codec_type) {
-                    case 'video':
-                        if (isset($stream->codec_name)) {
-                            $track->setVcodec((string) $stream->codec_name);
-                        }
-                        if (isset($stream->avg_frame_rate)) {
-                            $track->setFramerate((string) $stream->avg_frame_rate);
-                        }
-                        if (isset($stream->width)) {
-                            $track->setWidth((int) $stream->width);
-                        }
-                        if (isset($stream->height)) {
-                            $track->setHeight((int) $stream->height);
-                        }
-                        $only_audio = false;
-
-                        break;
-
-                    case 'audio':
-                        if (isset($stream->codec_name)) {
-                            $track->setAcodec((string) $stream->codec_name);
-                        }
-                        if (isset($stream->channels)) {
-                            $track->setChannels((int) $stream->channels);
-                        }
-
-                        break;
-                }
-            }
-            $track->setOnlyAudio($only_audio);
-        }
-
-        return $track;
     }
 
     public function getFileMetadata(?Path $path)
