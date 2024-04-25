@@ -179,10 +179,10 @@ window.submit_clone_series = function(id)
     }
 }
 
-window.submit_delete_series = function(id, seriesTitle, countMm)
+window.submit_delete_series = function(id, seriesTitle, countMm, countLives)
 {
     var url = "{{ path('pumukitnewadmin_series_delete', {'id': '__id__'})|raw }}";
-    if (window.confirm('{% trans %}Are you sure you want to delete the series{% endtrans %} "'+seriesTitle+'"? {% trans %}This series has{% endtrans %} '+countMm+' {% trans %}multimedia object(s){% endtrans %}.')){
+    if (window.confirm('{% trans %}Are you sure you want to delete the series{% endtrans %} "'+seriesTitle+'"? {% trans %}This series has{% endtrans %} '+countMm+' {% trans %}multimedia object(s){% endtrans %} {% trans %}and{% endtrans %} '+countLives+' {% trans %}live event(s){% endtrans %}.')){
         var message = '{% trans %}Series{% endtrans %} "'+seriesTitle+'" {% trans %}successfully deleted{% endtrans %}.';
         var sessionId = $($('tr.success').find('input.series_checkbox')[0]).attr('id');
         $('#list_series').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){

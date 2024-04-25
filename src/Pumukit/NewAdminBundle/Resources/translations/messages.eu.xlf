@@ -1938,6 +1938,14 @@
         <source>multimedia object(s)</source>
         <target state="translated">multimedia objetua(k)</target>
       </trans-unit>
+      <trans-unit id="68_0ssswqL" resname="live event(s)">
+        <source>live event(s)</source>
+        <target state="translated">zuzeneko ekitaldiak</target>
+      </trans-unit>
+      <trans-unit id="68_02fwqL" resname="and">
+        <source>and</source>
+        <target state="translated">eta</target>
+      </trans-unit>
       <trans-unit id=".RXtNr9" resname="successfully deleted">
         <source>successfully deleted</source>
         <target state="translated">ondo ezabatuak</target>

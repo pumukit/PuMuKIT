@@ -20,6 +20,7 @@
             <tbody>
             {% for oneseries in series %}
                 {% set numV = oneseries|count_multimedia_objects %}
+                {% set numL = oneseries|count_lives %}
                 <tr style="cursor: pointer" {% if(app.session.get('admin/series/id') == oneseries.id ) %} class="success" {% endif %}>
                     <td headers="th-checkbox">
                         <div class="checkbox">

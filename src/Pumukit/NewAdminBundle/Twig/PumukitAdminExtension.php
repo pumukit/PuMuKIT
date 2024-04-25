@@ -72,6 +72,7 @@ class PumukitAdminExtension extends AbstractExtension
             new TwigFilter('mms_announce_text', [$this, 'getMmsAnnounceText']),
             new TwigFilter('filter_profiles', [$this, 'filterProfiles']),
             new TwigFilter('count_multimedia_objects', [$this, 'countMultimediaObjects']),
+            new TwigFilter('count_lives', [$this, 'countLives']),
             new TwigFilter('next_session_event', [$this, 'getNextEventSession']),
             new TwigFilter('unescape', [$this, 'unescapeLabel']),
         ];
@@ -385,6 +386,11 @@ class PumukitAdminExtension extends AbstractExtension
     public function countMultimediaObjects(Series $series): int
     {
         return $this->dm->getRepository(MultimediaObject::class)->countInSeries($series);
+    }
+
+    public function countLives(Series $series): int
+    {
+        return $this->dm->getRepository(MultimediaObject::class)->countLiveInSeries($series);
     }
 
     public function getBroadcastDescription($broadcastType, $template, bool $isLive = false): string
