@@ -1191,8 +1191,7 @@ class MultimediaObjectController extends SortableAdminController
 
             $multimediaObject->setTitle($data['title']);
             $storage = Storage::create(Url::create($data['url']), Path::create(''));
-            $multimediaObject->external()[0]->updateStorage($storage);
-            $this->documentManager->flush();
+            $this->mediaUpdater->updateStorage($multimediaObject, $multimediaObject->external()->first(), $storage);
         }
 
         return ['mm' => $multimediaObject, 'form' => $form->createView()];

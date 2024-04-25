@@ -6,6 +6,7 @@ namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
+use Pumukit\SchemaBundle\Document\MediaType\Storage;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
 use Pumukit\SchemaBundle\Document\ValueObject\Tags;
@@ -46,6 +47,12 @@ final class MediaUpdater
     public function updateDownload(MultimediaObject $multimediaObject, MediaInterface $media, bool $download): void
     {
         $media->updateDownload($download);
+        $this->documentManager->flush();
+    }
+
+    public function updateStorage(MultimediaObject $multimediaObject, MediaInterface $media, Storage $storage)
+    {
+        $media->updateStorage($storage);
         $this->documentManager->flush();
     }
 }
