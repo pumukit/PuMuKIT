@@ -47,7 +47,7 @@
                     <li>
                         <a href="#mediaMm" aria-controls="mediaMm" role="tab" data-toggle="tab" class="task_media_attachments">{% trans %}Multimedia{% endtrans %}</a>
                     </li>
-                    {% if active_editor and ( mm.properties['externalplayer'] is not defined or mm.properties['externalplayer'] == '') %}
+                    {% if active_editor and mm.isExternalType() %}
                         <li>
                             <a href="#editorMm" aria-controls="editorMm" role="tab" data-toggle="tab" class="task_media_editor">{% trans %}Media Edition{% endtrans %}</a>
                         </li>

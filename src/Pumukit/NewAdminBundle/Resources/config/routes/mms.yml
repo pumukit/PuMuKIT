@@ -245,11 +245,10 @@ pumukitnewadmin_mms_listexternalproperties:
     defaults:
         _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectController::listExternalPlayerAction
 
-pumukitnewadmin_mms_delete_listexternalproperties:
-    path: /{id}/deleteexternalvideo
-    methods: [DELETE]
+pumukitnewadmin_external_player_update:
+    path: /{id}/external/update
     defaults:
-        _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectController::deleteExternalPropertyAction
+        _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectController::updateExternalAction
 
 pumukitnewadmin_mms_modal_preview:
     path: /{id}/modalpreview
