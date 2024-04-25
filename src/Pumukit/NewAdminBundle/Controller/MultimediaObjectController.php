@@ -21,12 +21,15 @@ use Pumukit\NewAdminBundle\Services\MultimediaObjectSyncService;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\EmbeddedSocial;
 use Pumukit\SchemaBundle\Document\Group;
+use Pumukit\SchemaBundle\Document\MediaType\Storage;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\TagInterface;
+use Pumukit\SchemaBundle\Document\ValueObject\Path;
+use Pumukit\SchemaBundle\Document\ValueObject\Url;
 use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Security\Permission;
@@ -34,6 +37,7 @@ use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\GroupService;
 use Pumukit\SchemaBundle\Services\MediaCreator;
+use Pumukit\SchemaBundle\Services\MediaUpdater;
 use Pumukit\SchemaBundle\Services\MultimediaObjectEventDispatcherService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Pumukit\SchemaBundle\Services\PersonService;
@@ -113,6 +117,7 @@ class MultimediaObjectController extends SortableAdminController
     private MediaCreator $mediaCreator;
     private SeriesRepository $seriesRepository;
     private i18nService $i18nService;
+    private MediaUpdater $mediaUpdater;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -143,7 +148,8 @@ class MultimediaObjectController extends SortableAdminController
         $pumukitNewAdminShowNakedPubTab,
         $warningOnUnpublished,
         $kernelBundles,
-        $pumukitNewAdminMultimediaObjectLabel
+        $pumukitNewAdminMultimediaObjectLabel,
+        MediaUpdater $mediaUpdater
     ) {
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
         $this->requestStack = $requestStack;
@@ -168,6 +174,7 @@ class MultimediaObjectController extends SortableAdminController
         $this->mediaCreator = $mediaCreator;
         $this->seriesRepository = $seriesRepository;
         $this->i18nService = $i18nService;
+        $this->mediaUpdater = $mediaUpdater;
     }
 
     /**
@@ -1165,15 +1172,30 @@ class MultimediaObjectController extends SortableAdminController
 
     /**
      * @Security("is_granted('ROLE_ADD_EXTERNAL_PLAYER')")
+     *
+     * @Template("@PumukitNewAdmin/MultimediaObject/updateExternalPlayer.html.twig")
      */
-    public function deleteExternalPropertyAction(MultimediaObject $multimediaObject)
+    public function updateExternalAction(Request $request, MultimediaObject $multimediaObject)
     {
-        $multimediaObject->removeProperty('externalplayer');
-        $this->documentManager->flush();
+        $form = $this->createFormBuilder()
+            ->setAction($this->generateUrl('pumukitnewadmin_external_player_update', ['id' => $multimediaObject->getId()]))
+            ->add('title', TextType::class, ['required' => true, 'attr' => ['class' => 'form-control']])
+            ->add('url', UrlType::class, ['required' => true, 'attr' => ['class' => 'form-control']])
+            ->getForm()
+        ;
 
-        $this->pumukitSchemaMultimediaObjectDispatcher->dispatchUpdate($multimediaObject);
+        $form->handleRequest($request);
 
-        return $this->redirectToRoute('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]);
+        if ($form->isSubmitted() && $form->isValid() && $request->isMethod('POST')) {
+            $data = $form->getData();
+
+            $multimediaObject->setTitle($data['title']);
+            $storage = Storage::create(Url::create($data['url']), Path::create(''));
+            $multimediaObject->external()[0]->updateStorage($storage);
+            $this->documentManager->flush();
+        }
+
+        return ['mm' => $multimediaObject, 'form' => $form->createView()];
     }
 
     /**

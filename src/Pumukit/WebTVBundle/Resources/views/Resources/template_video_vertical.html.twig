@@ -39,7 +39,7 @@
                                 {% if with_publicdate is defined and with_publicdate %}
                                     {{ object.publicDate| format_datetime('medium','none',locale=app.request.getLocale()) }}
                                 {% else %}
-                                    {% if app.request.attributes.get('_route') != 'pumukit_webtv_announces_latestuploads_pager' and show_language  and not object.getProperty('externalplayer')%}
+                                    {% if app.request.attributes.get('_route') != 'pumukit_webtv_announces_latestuploads_pager' and show_language  and not object.isExternalType() %}
                                         <div class="language pull-left">
                                             {% trans %}Language{% endtrans %}:
                                             {{ object.getDisplayTrack().getLanguage()|default(app.request.getLocale()) | language_name }}

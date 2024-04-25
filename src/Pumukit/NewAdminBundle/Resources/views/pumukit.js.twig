@@ -449,17 +449,6 @@ window.submit_delete_material = function(id, mmId)
     }
 }
 
-window.submit_delete_external_video = function(id)
-{
-    if (window.confirm('{% trans %}Are you sure you want to delete this external video?{% endtrans %}')){
-        var url = "{{ path('pumukitnewadmin_mms_delete_listexternalproperties', {'id': '__id__'})|raw }}";
-        url = url.replace('__id__', id);
-        var div_id = '#tracks_mms___mmId__';
-        div_id = div_id.replace('__mmId__', id);
-        $(div_id).load(url, {'_method': 'DELETE'}, function(){success('{% trans %}External video successfully deleted.{% endtrans %}')});
-    }
-}
-
 window.submit_delete_track = function(id, mmId, seriesId)
 {
     if (window.confirm('{% trans %}Are you sure you want to delete this track?{% endtrans %}')){
