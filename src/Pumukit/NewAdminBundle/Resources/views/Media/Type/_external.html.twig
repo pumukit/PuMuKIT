@@ -2,7 +2,13 @@
     <tr>
         <td><ul><li></li></ul></td>
         <td>&nbsp;</td>
-        <td colspan="8">
+        <td>
+            <a title="{% trans %}Edit file of multimedia object{% endtrans %} {{ track.id }}"
+               data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal" href="{{ path('pumukitnewadmin_external_player_update', {'id': mm.id}) }}">
+                <i class="mdi-editor-mode-edit"></i>
+            </a>
+        </td>
+        <td colspan="7">
             <strong>{{ "External video"|trans }}: </strong> {{ externalMedia.storage().url().url() }}
         </td>
     </tr>
