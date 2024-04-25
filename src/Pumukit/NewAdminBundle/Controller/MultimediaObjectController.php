@@ -412,11 +412,8 @@ class MultimediaObjectController extends SortableAdminController
 
     public function updatemetaAction(Request $request)
     {
-        $personalScopeRoleCode = $this->personService->getPersonalScopeRoleCode();
-        $allGroups = $this->getAllGroups();
-
         try {
-            $personalScopeRole = $this->personService->getPersonalScopeRole();
+            $this->personService->getPersonalScopeRole();
         } catch (\Exception $e) {
             return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
@@ -425,8 +422,6 @@ class MultimediaObjectController extends SortableAdminController
         if (null === $roles) {
             throw new \Exception('Not found any role.');
         }
-
-        $parentTags = $this->factoryService->getParentTags();
 
         $resource = $this->findOr404($request);
         $this->session->set('admin/mms/id', $resource->getId());
@@ -437,17 +432,8 @@ class MultimediaObjectController extends SortableAdminController
         } else {
             $formMeta = $this->createForm(MultimediaObjectMetaType::class, $resource, ['translator' => $this->translator, 'locale' => $locale]);
         }
-        $options = [
-            'not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS),
-            'translator' => $this->translator,
-            'locale' => $locale,
-        ];
-        $formPub = $this->createForm(MultimediaObjectPubType::class, $resource, $options);
 
-        $pubChannelsTags = $this->factoryService->getTagsByCod('PUBCHANNELS', true);
-        $pubDecisionsTags = $this->factoryService->getTagsByCod('PUBDECISIONS', true);
-
-        $changePubChannel = $this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
+        $this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
 
         $method = $request->getMethod();
         if (in_array($method, ['POST', 'PUT', 'PATCH'])) {
@@ -464,25 +450,10 @@ class MultimediaObjectController extends SortableAdminController
             }
         }
 
-        return $this->render(
-            '@PumukitNewAdmin/MultimediaObject/edit.html.twig',
-            [
-                'mm' => $resource,
-                'form_meta' => $formMeta->createView(),
-                'form_pub' => $formPub->createView(),
-                'roles' => $roles,
-                'personal_scope_role' => $personalScopeRole,
-                'personal_scope_role_code' => $personalScopeRoleCode,
-                'pub_channels' => $pubChannelsTags,
-                'pub_decisions' => $pubDecisionsTags,
-                'parent_tags' => $parentTags,
-                'not_change_pub_channel' => !$changePubChannel,
-                'groups' => $allGroups,
-            ]
-        );
+        return $this->redirectToRoute('pumukitnewadmin_mms_edit', ['id' => $resource->getId()]);
     }
 
-    public function updatepubAction(Request $request)
+    public function updatepubAction(Request $request): Response
     {
         $resource = $this->findOr404($request);
 
