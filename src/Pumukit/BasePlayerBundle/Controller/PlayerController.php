@@ -30,6 +30,7 @@ final class PlayerController extends BasePlayerController
 
     /**
      * @Route("/player/{id}", name="pumukit_player_index")
+     * @Route("/iframe/player/{id}", name="pumukit_player_index_iframe")
      *
      * @Template("@PumukitBasePlayer/player.html.twig")
      */
@@ -40,6 +41,7 @@ final class PlayerController extends BasePlayerController
 
     /**
      * @Route("/player/magic/{id}", name="pumukit_player_magic_index")
+     * @Route("/iframe/player/magic/{id}", name="pumukit_player_magic_index_iframe")
      *
      * @Template("@PumukitBasePlayer/player.html.twig")
      */
