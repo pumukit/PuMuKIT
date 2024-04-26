@@ -187,18 +187,18 @@ class PumukitAdminExtension extends AbstractExtension
         switch ($status) {
             case MultimediaObject::STATUS_PUBLISHED:
                 $iconClass = 'fa fa-check-circle';
-//                $iconClass = 'mdi-device-signal-wifi-4-bar';
+                //                $iconClass = 'mdi-device-signal-wifi-4-bar';
 
                 break;
 
             case MultimediaObject::STATUS_HIDDEN:
                 $iconClass = 'fa fa-eye-slash';
-//                $iconClass = 'mdi-device-signal-wifi-0-bar';
+                //                $iconClass = 'mdi-device-signal-wifi-0-bar';
 
                 break;
 
             case MultimediaObject::STATUS_BLOCKED:
-//                $iconClass = 'mdi-device-wifi-lock';
+                //                $iconClass = 'mdi-device-wifi-lock';
                 $iconClass = 'fa fa-ban';
 
                 break;
