@@ -96,7 +96,7 @@
                                 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ADD_EXTERNAL_PLAYER')) %}
                                 <a class="extra_button btn btn-primary btn-raised wizard_button" href="{{ path('pumukitnewadmin_mms_listexternalproperties', {'series': series.id}) }}" title="{% trans %}Edit{% endtrans %}" data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal">
                                     <i class="fas fa-link"></i>
-                                    {% trans %}Embed video{% endtrans %}
+                                    {% trans %}External media{% endtrans %}
                                 </a>
                                 {% endif %}
                         </div>
