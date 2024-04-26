@@ -35,10 +35,10 @@
                     </td>
                     {% endif %}
                     {% include '@PumukitNewAdmin/MultimediaObject/sortingactions.html.twig' %}
-                    <td headers="th-title" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" ondblclick="dblclick_preview_mm('{{ mm.id }}')">
+                    <td headers="th-title" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
                         {{ mm.getTitle() }}
                     </td>
-                    <td headers="th-type" class="text-center" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" ondblclick="dblclick_preview_mm('{{ mm.id }}')">
+                    <td headers="th-type" class="text-center" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
                         {% if mm.isVideoType() %}
                             <i class="fa fa-file-video" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>
                         {% elseif mm.isAudioType() %}
@@ -60,13 +60,13 @@
                     <td headers="th-link" class="text-center" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')">
                         {{ mm.links|length }}
                     </td>
-                    <td headers="th-rec-date" class="text-nowrap" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" ondblclick="dblclick_preview_mm('{{ mm.id }}')">
+                    <td headers="th-rec-date" class="text-nowrap" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
                         {{ mm.getRecordDate()| format_datetime('medium','none',locale=app.request.getLocale()) }}
                     </td>
-                    <td headers="th-pub-date" class="text-nowrap" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" ondblclick="dblclick_preview_mm('{{ mm.id }}')">
+                    <td headers="th-pub-date" class="text-nowrap" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
                         {{ mm.getPublicDate()| format_datetime('medium','none',locale=app.request.getLocale()) }}
                     </td>
-                    <td headers="th-channel" class="text-center" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" ondblclick="dblclick_preview_mm('{{ mm.id }}')">
+                    <td headers="th-channel" class="text-center" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
                         {% if mm.containsTagWithCod('PUCHWEBTV') %}
                             <i class="fa fa-check text-success"></i>
                         {% else %}
