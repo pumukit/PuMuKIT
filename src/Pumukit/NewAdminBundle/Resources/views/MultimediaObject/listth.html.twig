@@ -1,7 +1,7 @@
 {% if is_naked() %}
-    {% set colspan = 6 - (series.sorting == constant('SORT_MANUAL', series) ? 0 : 2) - (is_naked() ? 1 : 0) %}
-{% else %}
     {% set colspan = 5 - (series.sorting == constant('SORT_MANUAL', series) ? 0 : 2) - (is_naked() ? 1 : 0) %}
+{% else %}
+    {% set colspan = 4 - (series.sorting == constant('SORT_MANUAL', series) ? 0 : 2) - (is_naked() ? 1 : 0) %}
 {% endif %}
 
 <tr>
@@ -21,6 +21,7 @@
     <th id="th-link" style="width: 1%">{{ "Link"|trans }}</th>
     <th id="th-rec-date" style="width: 2%">{{ "Recording"|trans }}</th>
     <th id="th-pub-date" style="width: 2%">{{ "Publication"|trans }}</th>
+    <th id="th-status" style="width: 1%">{{ "Status"|trans }}</th>
     <th id="th-channel" style="width: 1%">{{ "WebTV"|trans }}</th>
     <th id="th-broadcast" style="width: 1%">{{ "Broadcast"|trans }}</th>
     <th id="th-views" style="width: 1%">{{ "Views"|trans }}</th>

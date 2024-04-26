@@ -18,12 +18,6 @@
                     <td headers="th-icons" style="width: 1em;">
                         {% include '@PumukitNewAdmin/MultimediaObject/updatemenu.html.twig' with {'mm': mm} %}
                     </td>
-
-                    <td headers="th-icons" style="width: 1em;">
-                        <span id="table_mms_status_wrapper_{{ mm.id }}" data-id="{{ mm.id }}"> {# See Track/list for AJAX update #}
-                            {% include '@PumukitNewAdmin/MultimediaObject/status.html.twig' with {'mm': mm} %}
-                        </span>
-                    </td>
                     {% if not is_naked() %}
                         <td headers="th-icons" style="width: 1em;">
                             {{ mm.containsTagWithCod('PUDENEW')?'<i class="mdi-action-spellcheck">':'&nbsp;' }}
@@ -65,6 +59,11 @@
                     </td>
                     <td headers="th-pub-date" class="text-nowrap" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
                         {{ mm.getPublicDate()| format_datetime('medium','none',locale=app.request.getLocale()) }}
+                    </td>
+                    <td headers="th-status" style="width: 1em;">
+                        <span id="table_mms_status_wrapper_{{ mm.id }}" data-id="{{ mm.id }}">
+                            {% include '@PumukitNewAdmin/MultimediaObject/status.html.twig' with {'mm': mm} %}
+                        </span>
                     </td>
                     <td headers="th-channel" class="text-center" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
                         {% if mm.containsTagWithCod('PUCHWEBTV') %}
@@ -122,7 +121,7 @@
                         <td headers="th-icons">&nbsp;</td>
                         <td headers="th-icons">&nbsp;</td>
                     {% endif %}
-                    <td headers="th-icons">&nbsp;</td>
+{#                    <td headers="th-icons">&nbsp;</td>#}
                     <td headers="th-title">&nbsp;</td>
                     <td headers="th-type">&nbsp;</td>
                     <td headers="th-media">&nbsp;</td>
@@ -130,6 +129,7 @@
                     <td headers="th-link">&nbsp;</td>
                     <td headers="th-rec-date">&nbsp;</td>
                     <td headers="th-pub-date">&nbsp;</td>
+                    <td headers="th-status">&nbsp;</td>
                     <td headers="th-channel">&nbsp;</td>
                     <td headers="th-broadcast">&nbsp;</td>
                     <td headers="th-views">&nbsp;</td>
