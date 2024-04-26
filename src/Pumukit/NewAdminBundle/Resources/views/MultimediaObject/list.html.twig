@@ -115,6 +115,9 @@
                     {% if not is_naked() %}
                         <td headers="th-icons">&nbsp;</td>
                     {% endif %}
+                    {% if is_naked() %}
+                        <td headers="th-icons">&nbsp;</td>
+                    {% endif %}
                     {% if series.sorting == constant('SORT_MANUAL', series) %}
                         <td headers="th-icons">&nbsp;</td>
                         <td headers="th-icons">&nbsp;</td>
