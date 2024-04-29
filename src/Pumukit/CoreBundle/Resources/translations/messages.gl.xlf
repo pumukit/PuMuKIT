@@ -9,9 +9,9 @@
         <source>Select the folder or create a new one where you want to upload the videos. Once this is done, press continue to start uploading the corresponding files</source>
         <target state="translated">Selecciona un cartafol ou crea un novo onde queiras cargar os vídeos. Unha vez feito isto, prema continuar para comezar a cargar os ficheiros correspondentes</target>
       </trans-unit>
-      <trans-unit id="Qc5fioP" resname="The folder name is not valid">
-        <source>The folder name is not valid</source>
-        <target state="translated">O nome do cartafol non é válido</target>
+      <trans-unit id="Qc5fioP" resname="The folder name is not valid. The allowed characters are: upper and lower case, numbers, space and _">
+        <source>The folder name is not valid. The allowed characters are: upper and lower case, numbers, space and _</source>
+        <target state="translated">O nome do cartafol non é válido. Os caracteres permitidos son: maiúsculas e minúsculas, números, espazo e _</target>
       </trans-unit>
       <trans-unit id="Fsmkf5f" resname="Upload video to: %folder%">
         <source>Upload video to: %folder%</source>

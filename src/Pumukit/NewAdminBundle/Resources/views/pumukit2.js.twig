@@ -181,6 +181,8 @@ window.submit_clone_series = function(id)
 
 window.submit_delete_series = function(id, seriesTitle, countMm)
 {
+    {# Change encoded text to plain text #}
+    var seriesTitle = $('<textarea />').html(seriesTitle).text();
     var url = "{{ path('pumukitnewadmin_series_delete', {'id': '__id__'})|raw }}";
     if (window.confirm('{% trans %}Are you sure you want to delete the series{% endtrans %} "'+seriesTitle+'"? {% trans %}This series has{% endtrans %} '+countMm+' {% trans %}multimedia object(s){% endtrans %}.')){
         var message = '{% trans %}Series{% endtrans %} "'+seriesTitle+'" {% trans %}successfully deleted{% endtrans %}.';
