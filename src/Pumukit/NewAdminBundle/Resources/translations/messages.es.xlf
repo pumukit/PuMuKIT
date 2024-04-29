@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="es" datatype="plaintext" original="file.ext">
+  <file source-language="en" target-language="es-ES" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
@@ -1937,6 +1937,14 @@
       <trans-unit id="68_0wqL" resname="multimedia object(s)">
         <source>multimedia object(s)</source>
         <target state="translated">objeto(s) multimedia</target>
+      </trans-unit>
+      <trans-unit id="68_0ssswqL" resname="live event(s)">
+        <source>live event(s)</source>
+        <target state="needs-translation">live event(s)</target>
+      </trans-unit>
+      <trans-unit id="68_02fwqL" resname="and">
+        <source>and</source>
+        <target state="needs-translation">and</target>
       </trans-unit>
       <trans-unit id=".RXtNr9" resname="successfully deleted">
         <source>successfully deleted</source>
