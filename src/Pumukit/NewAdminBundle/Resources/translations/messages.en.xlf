@@ -1938,6 +1938,14 @@
         <source>multimedia object(s)</source>
         <target>multimedia object(s)</target>
       </trans-unit>
+      <trans-unit id="68_0ssswqL" resname="live event(s)">
+        <source>live event(s)</source>
+        <target>live event(s)</target>
+      </trans-unit>
+      <trans-unit id="68_02fwqL" resname="and">
+        <source>and</source>
+        <target>and</target>
+      </trans-unit>
       <trans-unit id=".RXtNr9" resname="successfully deleted">
         <source>successfully deleted</source>
         <target>successfully deleted</target>
