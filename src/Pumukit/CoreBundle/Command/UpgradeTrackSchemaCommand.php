@@ -7,9 +7,13 @@ namespace Pumukit\CoreBundle\Command;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
+use Pumukit\SchemaBundle\Document\MediaType\Storage;
 use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
+use Pumukit\SchemaBundle\Document\ValueObject\Path;
+use Pumukit\SchemaBundle\Document\ValueObject\StorageUrl;
+use Pumukit\SchemaBundle\Document\ValueObject\Tags;
 use Pumukit\SchemaBundle\Services\MediaUpdater;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -70,7 +74,7 @@ EOT
         return Command::SUCCESS;
     }
 
-    private function multimediaObjectsTypeVideoAudio(): array
+    private function multimediaObjectsTypeVideoAudio()
     {
         $criteriaType = [MultimediaObject::TYPE_VIDEO, MultimediaObject::TYPE_AUDIO];
         $criteriaStatus = [MultimediaObject::STATUS_PROTOTYPE];
@@ -78,7 +82,7 @@ EOT
         return $this->createQuery($criteriaType, $criteriaStatus);
     }
 
-    private function multimediaObjectsUnknown(): array
+    private function multimediaObjectsUnknown()
     {
         $criteriaType = [MultimediaObject::TYPE_UNKNOWN];
         $criteriaStatus = [MultimediaObject::STATUS_PROTOTYPE];
@@ -86,28 +90,32 @@ EOT
         return $this->createQuery($criteriaType, $criteriaStatus);
     }
 
-    private function createQuery(array $criteriaType, array $criteriaStatus): array
+    private function createQuery(array $criteriaType, array $criteriaStatus)
     {
         $qb = $this->documentManager->createQueryBuilder(MultimediaObject::class);
         $qb->field('type')->in($criteriaType);
         $qb->field('status')->notIn($criteriaStatus);
         $qb->field('properties.migrate_v5')->exists(false);
+        $qb->hydrate(false);
 
         return $qb->getQuery()->execute();
     }
 
-    private function convertMultimediaObjectsTypeVideoAudio(array $multimediaObjects): void
+    private function convertMultimediaObjectsTypeVideoAudio($multimediaObjects): void
     {
-        $progressBar = new ProgressBar($this->output, count($multimediaObjects));
+        $progressBar = new ProgressBar($this->output, is_countable($multimediaObjects) ? count($multimediaObjects) : 0);
         $progressBar->start();
 
         $count = 0;
+        $newMedias = [];
         foreach ($multimediaObjects as $multimediaObject) {
             $progressBar->advance();
-            $tracks = $multimediaObject->getTracks();
+            $this->oldDataTracks = [];
+            $object = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => $multimediaObject['_id']]);
+            $tracks = $multimediaObject['tracks'] ?? null;
             if (!$tracks) {
-                $multimediaObject->setType(MultimediaObject::TYPE_VIDEO);
-                $this->saveDataOnProperty($multimediaObject, 'No tracks');
+                $object->setType(MultimediaObject::TYPE_VIDEO);
+                $this->saveDataOnProperty($object, 'No tracks');
                 if (0 === ++$count % 50) {
                     $this->documentManager->flush();
                 }
@@ -117,14 +125,16 @@ EOT
 
             foreach ($tracks as $track) {
                 $this->oldDataTracks[] = serialize($track);
-                $this->saveDataOnProperty($multimediaObject, serialize($track));
-                $media = $this->createMediaFromTrack($track);
-                $trackID = (string) $track['id'];
-                $multimediaObject->removeTrackById($trackID);
-
-                $this->mediaUpdater->updateId($multimediaObject, $media, $trackID);
-                $multimediaObject->addTrack($media);
+                $newMedias[(string) $track['_id']] = $this->createMediaFromTrack($track);
             }
+
+            $object->removeAllMedias();
+            foreach ($newMedias as $id => $media) {
+                $this->mediaUpdater->updateId($object, $media, $id);
+                $object->addTrack($media);
+            }
+
+            $this->saveDataOnProperty($object, serialize($this->oldDataTracks));
 
             if (0 === ++$count % 50) {
                 $this->documentManager->flush();
@@ -137,28 +147,27 @@ EOT
         $progressBar->finish();
     }
 
-    private function convertMultimediaObjectsUnknownToVideo(array $multimediaObjects): void
+    private function convertMultimediaObjectsUnknownToVideo($multimediaObjects): void
     {
-        $progressBar = new ProgressBar($this->output, count($multimediaObjects));
+        $progressBar = new ProgressBar($this->output, is_countable($multimediaObjects) ? count($multimediaObjects) : 0);
         $progressBar->start();
         $count = 0;
 
         foreach ($multimediaObjects as $multimediaObject) {
+            $object = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => $multimediaObject['_id']]);
             $progressBar->advance();
-            $multimediaObject->setType(MultimediaObject::TYPE_VIDEO);
+            $object->setType(MultimediaObject::TYPE_VIDEO);
             if (0 === ++$count % 50) {
                 $this->documentManager->flush();
             }
         }
 
-        if (0 === ++$count % 50) {
-            $this->documentManager->flush();
-        }
+        $this->documentManager->flush();
 
         $table = new Table($this->output);
         $table
             ->setHeaders(['***** Multimedia Objects Type Unknown converted to video  ***** '])
-            ->addRow([count($multimediaObjects)])
+            ->addRow([is_countable($multimediaObjects) ? count($multimediaObjects) : 0])
         ;
 
         $table->render();
@@ -173,16 +182,23 @@ EOT
 
     private function createMediaFromTrack(array $track): MediaInterface
     {
-        $originalName = $track['originalName'];
+        $originalName = $track['originalName'] ?? '';
         $description = i18nText::create($track['description']);
         $language = $track['language'];
-        $tags = $track['tags'];
+        $tags = Tags::create($track['tags']);
         $hide = $track['hide'];
         $isDownloadable = $track['allowDownload'];
-        $views = $track['numview'];
+        $views = $track['numview'] ?? 0;
 
-        $storage = $track['storage'];
-        $mediaMetadata = VideoAudio::create('');
+        if (isset($track['url'])) {
+            var_dump($track['url']);
+        }
+        $url = StorageUrl::create($track['url'] ?? '');
+        $path = Path::create($track['path'] ?? '');
+        $storage = Storage::create($url, $path);
+
+        $mediaMetadata = VideoAudio::create('{"format":{"duration":"0"}}');
+
         $media = Track::create($originalName, $description, $language, $tags, $hide, $isDownloadable, $views, $storage, $mediaMetadata);
 
         $this->documentManager->persist($media);

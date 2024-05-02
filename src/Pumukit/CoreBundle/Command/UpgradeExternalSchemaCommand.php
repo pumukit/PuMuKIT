@@ -12,8 +12,8 @@ use Pumukit\SchemaBundle\Document\MediaType\Metadata\Generic;
 use Pumukit\SchemaBundle\Document\MediaType\Storage;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
+use Pumukit\SchemaBundle\Document\ValueObject\StorageUrl;
 use Pumukit\SchemaBundle\Document\ValueObject\Tags;
-use Pumukit\SchemaBundle\Document\ValueObject\Url;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
@@ -78,7 +78,7 @@ EOT
     {
         return $this->documentManager->getRepository(MultimediaObject::class)->findBy(
             [
-                'properties.externalplayer' => ['$exists' => true]
+                'properties.externalplayer' => ['$exists' => true],
             ]
         );
     }
@@ -89,7 +89,7 @@ EOT
         $description = i18nText::create($this->i18nService->generateI18nText(''));
         $language = '';
         $tags = Tags::create(['display']);
-        $url = Url::create($externalLink);
+        $url = StorageUrl::create($externalLink);
         $storage = Storage::external($url);
         $metadata = Generic::create('');
         $external = External::create($originalName, $description, $language, $tags, false, false, 0, $storage, $metadata);
