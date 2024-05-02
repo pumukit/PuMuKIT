@@ -1940,7 +1940,7 @@
       </trans-unit>
       <trans-unit id="68_0ssswqL" resname="live event(s)">
         <source>live event(s)</source>
-        <target state="needs-translation">live event(s)</target>
+        <target state="translated">événement(s) en direct</target>
       </trans-unit>
       <trans-unit id="68_02fwqL" resname="and">
         <source>and</source>
