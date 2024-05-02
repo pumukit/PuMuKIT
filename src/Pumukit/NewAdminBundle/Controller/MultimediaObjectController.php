@@ -28,7 +28,6 @@ use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\TagInterface;
-use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Pumukit\SchemaBundle\Document\ValueObject\Url;
 use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
@@ -1161,7 +1160,7 @@ class MultimediaObjectController extends SortableAdminController
             $data = $form->getData();
 
             $multimediaObject->setTitle($data['title']);
-            $storage = Storage::create(Url::create($data['url']), Path::create(''));
+            $storage = Storage::external(Url::create($data['url']));
             $this->mediaUpdater->updateStorage($multimediaObject, $multimediaObject->external()->first(), $storage);
         }
 
