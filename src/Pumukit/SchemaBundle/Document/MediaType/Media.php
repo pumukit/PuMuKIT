@@ -146,6 +146,10 @@ abstract class Media implements MediaInterface
 
     public function storage(): Storage
     {
+        if (null === $this->storage['path']) {
+            return Storage::external(Url::create($this->storage['url']));
+        }
+
         return Storage::create(
             Url::create($this->storage['url']) ?? null,
             Path::create($this->storage['path']) ?? null,
