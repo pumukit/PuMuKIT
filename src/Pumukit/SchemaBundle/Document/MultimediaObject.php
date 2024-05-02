@@ -939,6 +939,14 @@ class MultimediaObject
         $this->updateDuration();
     }
 
+    public function removeAllMedias(): void
+    {
+        $this->tracks = new ArrayCollection();
+        $this->documents = new ArrayCollection();
+        $this->external = new ArrayCollection();
+        $this->images = new ArrayCollection();
+    }
+
     public function upTrackById($trackId): void
     {
         $this->reorderTrackById($trackId);

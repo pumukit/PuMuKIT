@@ -12,8 +12,8 @@ use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
+use Pumukit\SchemaBundle\Document\ValueObject\StorageUrl;
 use Pumukit\SchemaBundle\Document\ValueObject\Tags;
-use Pumukit\SchemaBundle\Document\ValueObject\Url;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Event\TrackEvent;
 use Pumukit\SchemaBundle\Services\TrackEventDispatcherService;
@@ -160,7 +160,7 @@ class TrackEventDispatcherServiceTest extends WebTestCase
         $language = 'en';
         $tags = Tags::create(['display']);
         $views = 0;
-        $url = Url::create('http://testtrack.com');
+        $url = StorageUrl::create('http://testtrack.com');
         $path = Path::create('public/storage');
         $storage = Storage::create($url, $path);
         $mediaMetadata = VideoAudio::create('{"format":{"duration":"10.000000"}}');

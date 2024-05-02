@@ -15,8 +15,8 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
+use Pumukit\SchemaBundle\Document\ValueObject\StorageUrl;
 use Pumukit\SchemaBundle\Document\ValueObject\Tags;
-use Pumukit\SchemaBundle\Document\ValueObject\Url;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\TrackService;
 
@@ -86,7 +86,7 @@ class RemoveListenerTest extends PumukitTestCase
         $language = 'en';
         $tags = Tags::create(['display', 'opencast']);
         $views = 0;
-        $url = Url::create('');
+        $url = StorageUrl::create('');
         $path = Path::create('public/storage');
         $storage = Storage::create($url, $path);
         $mediaMetadata = VideoAudio::create('{"format":{"duration":"10.000000"}}');

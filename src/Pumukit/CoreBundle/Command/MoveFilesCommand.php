@@ -10,7 +10,7 @@ use Pumukit\CoreBundle\Utils\FileSystemUtils;
 use Pumukit\SchemaBundle\Document\MediaType\Storage;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
-use Pumukit\SchemaBundle\Document\ValueObject\Url;
+use Pumukit\SchemaBundle\Document\ValueObject\StorageUrl;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
@@ -135,7 +135,7 @@ EOT
             FileSystemUtils::copy($path, $finalPath, true);
             FileSystemUtils::remove($path);
 
-            $url = Url::create('');
+            $url = StorageUrl::create('');
             $path = Path::create($finalPath);
             $storage = Storage::create($url, $path);
             $track->updateStorage($storage);
