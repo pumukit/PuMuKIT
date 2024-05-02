@@ -13,8 +13,8 @@ use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
+use Pumukit\SchemaBundle\Document\ValueObject\StorageUrl;
 use Pumukit\SchemaBundle\Document\ValueObject\Tags;
-use Pumukit\SchemaBundle\Document\ValueObject\Url;
 use Pumukit\SchemaBundle\Services\FactoryService;
 
 /**
@@ -77,7 +77,7 @@ class MultimediaObjectMaxDurationTest extends PumukitTestCase
         $language = 'en';
         $tags = Tags::create(['display']);
         $views = 0;
-        $url = Url::create('');
+        $url = StorageUrl::create('');
 
         $path = Path::create($this->projectDir.'/tests/files/pumukit.mp4');
         $storage = Storage::create($url, $path);

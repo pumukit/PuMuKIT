@@ -24,6 +24,7 @@ use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
+use Pumukit\SchemaBundle\Document\ValueObject\StorageUrl;
 use Pumukit\SchemaBundle\Document\ValueObject\Tags;
 use Pumukit\SchemaBundle\Document\ValueObject\Url;
 
@@ -84,7 +85,7 @@ final class MediaCreator implements MediaCreatorInterface
         $i18nDescription = i18nText::create([]);
         $mediaTags = Tags::create(['display']);
 
-        $url = Url::create($externalUrl);
+        $url = StorageUrl::create($externalUrl);
         $path = Path::create('');
         $storage = Storage::external($url);
         $language = '';
@@ -167,7 +168,7 @@ final class MediaCreator implements MediaCreatorInterface
             $job->getPathEnd()
         ) : '';
 
-        return Url::create($url);
+        return StorageUrl::create($url);
     }
 
     private function generateMedia(

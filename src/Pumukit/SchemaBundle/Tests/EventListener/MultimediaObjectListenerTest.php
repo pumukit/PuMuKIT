@@ -13,8 +13,8 @@ use Pumukit\SchemaBundle\Document\MediaType\Storage;
 use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
+use Pumukit\SchemaBundle\Document\ValueObject\StorageUrl;
 use Pumukit\SchemaBundle\Document\ValueObject\Tags;
-use Pumukit\SchemaBundle\Document\ValueObject\Url;
 use Pumukit\SchemaBundle\EventListener\MultimediaObjectListener;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\TextIndexService;
@@ -102,7 +102,7 @@ class MultimediaObjectListenerTest extends PumukitTestCase
         $language = 'en';
         $tags = Tags::create($tags);
         $views = 0;
-        $url = Url::create('');
+        $url = StorageUrl::create('');
         $path = Path::create($this->projectDir.'/tests/files/pumukit.mp3');
         $storage = Storage::create($url, $path);
         $mediaMetadata = VideoAudio::create('{"streams":[{"index":0,"codec_name":"mp3","codec_long_name":"MP3 (MPEG audio layer 3)","codec_type":"audio","codec_tag_string":"[0][0][0][0]","codec_tag":"0x0000","sample_fmt":"fltp","sample_rate":"44100","channels":2,"channel_layout":"stereo","bits_per_sample":0,"initial_padding":0,"r_frame_rate":"0\\/0","avg_frame_rate":"0\\/0","time_base":"1\\/14112000","start_pts":0,"start_time":"0.000000","duration_ts":14376960,"duration":"1.018776","bit_rate":"128000","disposition":{"default":0,"dub":0,"original":0,"comment":0,"lyrics":0,"karaoke":0,"forced":0,"hearing_impaired":0,"visual_impaired":0,"clean_effects":0,"attached_pic":0,"timed_thumbnails":0,"captions":0,"descriptions":0,"metadata":0,"dependent":0,"still_image":0}}],"format":{"filename":"\\/srv\\/pumukit\\/public\\/storage\\/masters\\/662608a27328d054160eaf83\\/662609cb9c32cd029b05e814.mp3","nb_streams":1,"nb_programs":0,"format_name":"mp3","format_long_name":"MP2\\/3 (MPEG audio layer 2\\/3)","start_time":"0.000000","duration":"1.018776","size":"16437","bit_rate":"129072","probe_score":51,"tags":{"encoder":"Lavf53.21.0"}}}');
