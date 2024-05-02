@@ -19,7 +19,7 @@ final class StorageUrl extends Url
         return new self($url);
     }
 
-    private function validate($url): void
+    protected function validate($url): void
     {
         if (empty($url)) {
             return;

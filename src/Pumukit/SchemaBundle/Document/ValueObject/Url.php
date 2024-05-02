@@ -31,7 +31,7 @@ class Url
         return $this->url;
     }
 
-    private function validate($url): void
+    protected function validate($url): void
     {
         if (empty($url)) {
             return;

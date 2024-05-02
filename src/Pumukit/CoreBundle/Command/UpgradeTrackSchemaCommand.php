@@ -107,8 +107,8 @@ EOT
         $progressBar->start();
 
         $count = 0;
-        $newMedias = [];
         foreach ($multimediaObjects as $multimediaObject) {
+            $newMedias = [];
             $progressBar->advance();
             $this->oldDataTracks = [];
             $object = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => $multimediaObject['_id']]);
@@ -124,14 +124,17 @@ EOT
             }
 
             foreach ($tracks as $track) {
+                if(isset($track['metadata'])) {
+                    continue;
+                }
                 $this->oldDataTracks[] = serialize($track);
                 $newMedias[(string) $track['_id']] = $this->createMediaFromTrack($track);
             }
 
             $object->removeAllMedias();
             foreach ($newMedias as $id => $media) {
-                $this->mediaUpdater->updateId($object, $media, $id);
                 $object->addTrack($media);
+                $this->mediaUpdater->updateId($object, $media, $id);
             }
 
             $this->saveDataOnProperty($object, serialize($this->oldDataTracks));
@@ -190,9 +193,6 @@ EOT
         $isDownloadable = $track['allowDownload'];
         $views = $track['numview'] ?? 0;
 
-        if (isset($track['url'])) {
-            var_dump($track['url']);
-        }
         $url = StorageUrl::create($track['url'] ?? '');
         $path = Path::create($track['path'] ?? '');
         $storage = Storage::create($url, $path);
