@@ -6,29 +6,17 @@ namespace Pumukit\SchemaBundle\Document\ValueObject;
 
 use Pumukit\SchemaBundle\Document\Exception\UrlException;
 
-class Url
+final class StorageUrl extends Url
 {
-    private string $url;
-
     protected function __construct(string $url)
     {
         $this->validate($url);
-        $this->url = $url;
+        parent::__construct($url);
     }
 
-    public function __toString(): string
-    {
-        return $this->url ?? '';
-    }
-
-    public static function create(string $url): Url
+    public static function create(string $url): StorageUrl
     {
         return new self($url);
-    }
-
-    public function url(): string
-    {
-        return $this->url;
     }
 
     private function validate($url): void
@@ -37,8 +25,8 @@ class Url
             return;
         }
 
-        if (!filter_var($url, FILTER_VALIDATE_URL)) {
-            throw new UrlException('Invalid URL');
+        if (!filter_var($url, FILTER_VALIDATE_URL) && !realpath($url)) {
+            throw new UrlException('Invalid storage URL');
         }
     }
 }

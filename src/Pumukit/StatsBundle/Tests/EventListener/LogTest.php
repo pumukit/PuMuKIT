@@ -13,8 +13,8 @@ use Pumukit\SchemaBundle\Document\MediaType\Storage;
 use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
+use Pumukit\SchemaBundle\Document\ValueObject\StorageUrl;
 use Pumukit\SchemaBundle\Document\ValueObject\Tags;
-use Pumukit\SchemaBundle\Document\ValueObject\Url;
 use Pumukit\StatsBundle\Document\ViewsLog;
 use Pumukit\StatsBundle\EventListener\Log;
 use Symfony\Component\HttpFoundation\Request;
@@ -106,7 +106,7 @@ class LogTest extends PumukitTestCase
         $language = 'en';
         $tags = Tags::create(['display']);
         $views = 0;
-        $url = Url::create('');
+        $url = StorageUrl::create('');
         $path = Path::create('public/storage');
         $storage = Storage::create($url, $path);
         $mediaMetadata = VideoAudio::create('{"format":{"duration":"10.000000"}}');

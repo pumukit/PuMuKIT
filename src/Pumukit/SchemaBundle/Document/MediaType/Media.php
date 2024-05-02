@@ -11,8 +11,8 @@ use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
 use Pumukit\SchemaBundle\Document\Traits\Properties;
 use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
+use Pumukit\SchemaBundle\Document\ValueObject\StorageUrl;
 use Pumukit\SchemaBundle\Document\ValueObject\Tags;
-use Pumukit\SchemaBundle\Document\ValueObject\Url;
 
 /**
  * @MongoDB\MappedSuperclass
@@ -151,7 +151,7 @@ abstract class Media implements MediaInterface
         }
 
         return Storage::create(
-            Url::create($this->storage['url']) ?? null,
+            StorageUrl::create($this->storage['url']) ?? null,
             Path::create($this->storage['path']) ?? null,
         );
     }

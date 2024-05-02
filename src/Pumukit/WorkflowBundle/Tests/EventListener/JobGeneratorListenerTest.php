@@ -22,8 +22,8 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
+use Pumukit\SchemaBundle\Document\ValueObject\StorageUrl;
 use Pumukit\SchemaBundle\Document\ValueObject\Tags;
-use Pumukit\SchemaBundle\Document\ValueObject\Url;
 use Pumukit\SchemaBundle\EventListener\MultimediaObjectListener;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\TextIndexService;
@@ -186,7 +186,7 @@ class JobGeneratorListenerTest extends PumukitTestCase
         $language = 'en';
         $tags = Tags::create(['master', 'profile:master_copy', 'display']);
         $views = 0;
-        $url = Url::create('');
+        $url = StorageUrl::create('');
 
         $path = Path::create($this->projectDir.'/tests/files/pumukit.mp4');
         $storage = Storage::create($url, $path);
@@ -212,7 +212,7 @@ class JobGeneratorListenerTest extends PumukitTestCase
         $language = 'en';
         $tags = Tags::create(['master', 'profile:master_copy', 'display']);
         $views = 0;
-        $url = Url::create('');
+        $url = StorageUrl::create('');
 
         $path = Path::create($this->projectDir.'/tests/files/pumukit.mp3');
         $storage = Storage::create($url, $path);
@@ -238,7 +238,7 @@ class JobGeneratorListenerTest extends PumukitTestCase
         $language = 'en';
         $tags = Tags::create(['master', 'profile:master_copy', 'display']);
         $views = 0;
-        $url = Url::create('');
+        $url = StorageUrl::create('');
 
         $path = Path::create($this->projectDir.'/tests/files/pumukit.png');
         $storage = Storage::create($url, $path);
@@ -264,7 +264,7 @@ class JobGeneratorListenerTest extends PumukitTestCase
         $language = 'en';
         $tags = Tags::create(['master', 'profile:master_copy', 'display']);
         $views = 0;
-        $url = Url::create('');
+        $url = StorageUrl::create('');
 
         $path = Path::create($this->projectDir.'/tests/files/pumukit.pdf');
         $storage = Storage::create($url, $path);
