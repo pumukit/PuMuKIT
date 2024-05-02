@@ -43,7 +43,7 @@ final class UpgradeExternalSchemaCommand extends Command
             $progressBar->advance();
             $externalLink = $multimediaObject->getProperty('externalplayer');
             $externalMedia = $this->createExternalMedia($externalLink);
-            $multimediaObject->addExternalMedia($externalMedia);
+            $multimediaObject->addExternal($externalMedia);
             $multimediaObject->removeProperty('externalplayer');
 
             if (0 === ++$count % 50) {
@@ -78,7 +78,8 @@ EOT
     {
         return $this->documentManager->getRepository(MultimediaObject::class)->findBy(
             [
-                'properties.external' => ['$exists' => true]]
+                'properties.externalplayer' => ['$exists' => true]
+            ]
         );
     }
 
