@@ -173,6 +173,11 @@ abstract class Media implements MediaInterface
         return null;
     }
 
+    public function updateId(string $id): void
+    {
+        $this->id = new ObjectId($id);
+    }
+
     public function updateTags(Tags $tags): void
     {
         $this->tags = $tags->toArray();
@@ -211,6 +216,11 @@ abstract class Media implements MediaInterface
     public function mimeType(): string
     {
         return mime_content_type($this->storage()->path()->path());
+    }
+
+    public function updateMetadata(MediaMetadata $metadata): void
+    {
+        $this->metadata = $metadata->toString();
     }
 
     abstract protected static function create(

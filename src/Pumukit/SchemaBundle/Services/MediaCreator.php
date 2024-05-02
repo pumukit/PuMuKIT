@@ -86,7 +86,7 @@ final class MediaCreator implements MediaCreatorInterface
 
         $url = Url::create($externalUrl);
         $path = Path::create('');
-        $storage = Storage::create($url, $path);
+        $storage = Storage::external($url);
         $language = '';
 
         $media = $this->generateMedia($multimediaObject, $path, $originalName, $i18nDescription, $language, $mediaTags, false, $storage);
