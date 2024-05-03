@@ -11,6 +11,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\MediaUpdater;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -22,11 +23,14 @@ final class UpgradeTrackMetadataCommand extends Command
 
     protected MediaUpdater $mediaUpdater;
 
+    protected array $errors;
+
     public function __construct(DocumentManager $documentManager, InspectionFfprobeService $inspectionFfprobeService, MediaUpdater $mediaUpdater)
     {
         $this->documentManager = $documentManager;
         $this->inspectionFfprobeService = $inspectionFfprobeService;
         $this->mediaUpdater = $mediaUpdater;
+        $this->errors = [];
         parent::__construct();
     }
 
@@ -50,7 +54,7 @@ EOT
     {
         $multimediaObjects = $this->multimediaObjectsTypeVideoAudio();
 
-        $progressBar = new ProgressBar($output, count($multimediaObjects));
+        $progressBar = new ProgressBar($output, is_countable($multimediaObjects) ? count($multimediaObjects) : 0);
         $progressBar->start();
 
         $count = 0;
@@ -58,6 +62,7 @@ EOT
             $progressBar->advance();
 
             $this->upgradeMetadata($multimediaObject);
+            $multimediaObject->setProperty('migrate_v5_metadata_extract', true);
 
             if (0 === ++$count % 50) {
                 $this->documentManager->flush();
@@ -68,10 +73,21 @@ EOT
         $this->documentManager->flush();
         $this->documentManager->clear();
 
+        $output->writeln('');
+        $table = new Table($output);
+        $table->setHeaders(['MultimediaObject', 'Track', 'Path']);
+        foreach ($this->errors as $multimediaObjectId => $tracks) {
+            foreach ($tracks as $track) {
+                $table->addRow([$multimediaObjectId, $track->getId(), $track->storage()->path()]);
+            }
+        }
+
+        $table->render();
+
         return Command::SUCCESS;
     }
 
-    private function multimediaObjectsTypeVideoAudio(): array
+    private function multimediaObjectsTypeVideoAudio()
     {
         $criteriaType = [MultimediaObject::TYPE_VIDEO, MultimediaObject::TYPE_AUDIO];
         $criteriaStatus = [MultimediaObject::STATUS_PROTOTYPE];
@@ -79,11 +95,13 @@ EOT
         return $this->createQuery($criteriaType, $criteriaStatus);
     }
 
-    private function createQuery(array $criteriaType, array $criteriaStatus): array
+    private function createQuery(array $criteriaType, array $criteriaStatus)
     {
         $qb = $this->documentManager->createQueryBuilder(MultimediaObject::class);
+        $qb->field('type')->in($criteriaType);
+        $qb->field('status')->notIn($criteriaStatus);
         $qb->field('properties.migrate_v5')->exists(true);
-        $qb->field('properties.migrate_v5_metadata_extract')->equals(false);
+        $qb->field('properties.migrate_v5_metadata_extract')->exists(false);
 
         return $qb->getQuery()->execute();
     }
@@ -91,9 +109,13 @@ EOT
     private function upgradeMetadata(MultimediaObject $multimediaObject): void
     {
         foreach ($multimediaObject->getTracks() as $track) {
-            $data = $this->inspectionFfprobeService->getFileMetadataAsString($track->storage()->path());
-            $mediaMetadata = VideoAudio::create($data);
-            $this->mediaUpdater->updateMetadata($multimediaObject, $track, $mediaMetadata);
+            try {
+                $data = $this->inspectionFfprobeService->getFileMetadataAsString($track->storage()->path());
+                $mediaMetadata = VideoAudio::create($data);
+                $this->mediaUpdater->updateMetadata($multimediaObject, $track, $mediaMetadata);
+            } catch (\Exception $e) {
+                $this->errors[$multimediaObject->getId()][] = $track;
+            }
         }
     }
 }

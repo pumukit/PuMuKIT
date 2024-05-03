@@ -79,6 +79,15 @@ final class VideoAudio implements MediaMetadata
         return isset($metadata->format->size) ? (int) $metadata->format->size : 0;
     }
 
+    public function sizeInMB(): float
+    {
+        if (0 === $this->size()) {
+            return 0;
+        }
+
+        return $this->size() / 1024 / 1024;
+    }
+
     public function width(): ?int
     {
         $stream = $this->videoStreamInfo();
