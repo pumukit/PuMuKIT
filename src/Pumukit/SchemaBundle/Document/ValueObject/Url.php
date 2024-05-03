@@ -6,11 +6,11 @@ namespace Pumukit\SchemaBundle\Document\ValueObject;
 
 use Pumukit\SchemaBundle\Document\Exception\UrlException;
 
-class Url
+final class Url implements UrlInterface
 {
     private string $url;
 
-    protected function __construct(string $url)
+    private function __construct(string $url)
     {
         $this->validate($url);
         $this->url = $url;
@@ -31,7 +31,7 @@ class Url
         return $this->url;
     }
 
-    protected function validate($url): void
+    private function validate($url): void
     {
         if (empty($url)) {
             return;

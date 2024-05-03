@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Document\ValueObject;
 
-use Pumukit\SchemaBundle\Document\Exception\UrlException;
-
-final class StorageUrl extends Url
+final class StorageUrl implements UrlInterface
 {
-    protected function __construct(string $url)
+    private string $url;
+
+    private function __construct(string $url)
     {
-        $this->validate($url);
-        parent::__construct($url);
+        $this->url = $url;
+    }
+
+    public function __toString(): string
+    {
+        return $this->url ?? '';
     }
 
     public static function create(string $url): StorageUrl
@@ -19,14 +23,8 @@ final class StorageUrl extends Url
         return new self($url);
     }
 
-    protected function validate($url): void
+    public function url(): string
     {
-        if (empty($url)) {
-            return;
-        }
-
-        if (!filter_var($url, FILTER_VALIDATE_URL) && !realpath($url)) {
-            throw new UrlException('Invalid storage URL');
-        }
+        return $this->url;
     }
 }

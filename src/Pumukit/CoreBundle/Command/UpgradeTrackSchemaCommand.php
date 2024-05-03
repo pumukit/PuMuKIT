@@ -15,6 +15,7 @@ use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Pumukit\SchemaBundle\Document\ValueObject\StorageUrl;
 use Pumukit\SchemaBundle\Document\ValueObject\Tags;
 use Pumukit\SchemaBundle\Services\MediaUpdater;
+use Pumukit\SchemaBundle\Services\TrackService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
@@ -33,8 +34,9 @@ final class UpgradeTrackSchemaCommand extends Command
     private array $oldDataTracks;
     private MediaUpdater $mediaUpdater;
     private $output;
+    private TrackService $trackService;
 
-    public function __construct(DocumentManager $documentManager, MediaUpdater $mediaUpdater)
+    public function __construct(DocumentManager $documentManager, MediaUpdater $mediaUpdater, TrackService $trackService)
     {
         parent::__construct();
         $this->documentManager = $documentManager;
@@ -43,6 +45,7 @@ final class UpgradeTrackSchemaCommand extends Command
         $this->countUnknown = 0;
         $this->oldDataTracks = [];
         $this->mediaUpdater = $mediaUpdater;
+        $this->trackService = $trackService;
     }
 
     protected function configure(): void
@@ -124,7 +127,7 @@ EOT
             }
 
             foreach ($tracks as $track) {
-                if(isset($track['metadata'])) {
+                if (isset($track['metadata'])) {
                     continue;
                 }
                 $this->oldDataTracks[] = serialize($track);
@@ -134,18 +137,26 @@ EOT
             $object->removeAllMedias();
             foreach ($newMedias as $id => $media) {
                 $object->addTrack($media);
-                $this->mediaUpdater->updateId($object, $media, $id);
             }
 
             $this->saveDataOnProperty($object, serialize($this->oldDataTracks));
 
-            if (0 === ++$count % 50) {
-                $this->documentManager->flush();
+            $this->documentManager->flush();
+
+            foreach ($newMedias as $id => $media) {
+                $this->mediaUpdater->updateId($object, $media, $id);
             }
         }
 
-        $this->documentManager->flush();
         $this->documentManager->clear();
+
+        $table = new Table($this->output);
+        $table
+            ->setHeaders(['***** Multimedia Objects Tracks converted ***** '])
+            ->addRow([is_countable($multimediaObjects) ? count($multimediaObjects) : 0])
+        ;
+
+        $table->render();
 
         $progressBar->finish();
     }
