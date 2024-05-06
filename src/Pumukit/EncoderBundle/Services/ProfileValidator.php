@@ -44,6 +44,10 @@ final class ProfileValidator
         }
 
         if (str_contains($mimeType, 'audio/')) {
+            if ('broadcastable' === $genericProfile) {
+                return 'audio_broadcastable';
+            }
+
             return 'master_copy';
         }
 
