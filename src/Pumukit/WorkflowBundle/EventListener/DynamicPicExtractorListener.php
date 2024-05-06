@@ -37,7 +37,7 @@ class DynamicPicExtractorListener
         }
     }
 
-    public function generateDynamicPic(MultimediaObject $multimediaObject, MediaInterface $media): bool
+    public function generateDynamicPic(MultimediaObject $multimediaObject, ?MediaInterface $media): bool
     {
         if (!$media instanceof Track) {
             return false;
