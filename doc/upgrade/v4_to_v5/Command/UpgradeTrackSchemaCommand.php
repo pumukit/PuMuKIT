@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Pumukit\CoreBundle\Command;
+namespace Upgrade\Command;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
@@ -15,7 +15,6 @@ use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Pumukit\SchemaBundle\Document\ValueObject\StorageUrl;
 use Pumukit\SchemaBundle\Document\ValueObject\Tags;
 use Pumukit\SchemaBundle\Services\MediaUpdater;
-use Pumukit\SchemaBundle\Services\TrackService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
@@ -34,9 +33,8 @@ final class UpgradeTrackSchemaCommand extends Command
     private array $oldDataTracks;
     private MediaUpdater $mediaUpdater;
     private $output;
-    private TrackService $trackService;
 
-    public function __construct(DocumentManager $documentManager, MediaUpdater $mediaUpdater, TrackService $trackService)
+    public function __construct(DocumentManager $documentManager, MediaUpdater $mediaUpdater)
     {
         parent::__construct();
         $this->documentManager = $documentManager;
@@ -45,7 +43,6 @@ final class UpgradeTrackSchemaCommand extends Command
         $this->countUnknown = 0;
         $this->oldDataTracks = [];
         $this->mediaUpdater = $mediaUpdater;
-        $this->trackService = $trackService;
     }
 
     protected function configure(): void
@@ -69,9 +66,18 @@ EOT
         $this->output = $output;
 
         $multimediaObjects = $this->multimediaObjectsTypeVideoAudio();
-        $this->convertMultimediaObjectsTypeVideoAudio($multimediaObjects);
+        if ((is_countable($multimediaObjects) ? count($multimediaObjects) : 0) === 0) {
+            $output->writeln('No multimedia objects type video or audio to migrate.');
+        } else {
+            $this->convertMultimediaObjectsTypeVideoAudio($multimediaObjects);
+        }
 
         $multimediaObjects = $this->multimediaObjectsUnknown();
+        if ((is_countable($multimediaObjects) ? count($multimediaObjects) : 0) === 0) {
+            $output->writeln('No multimedia objects type unknown to migrate.');
+
+            return Command::SUCCESS;
+        }
         $this->convertMultimediaObjectsUnknownToVideo($multimediaObjects);
 
         return Command::SUCCESS;

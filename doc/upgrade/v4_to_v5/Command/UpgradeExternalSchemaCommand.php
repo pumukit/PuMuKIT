@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Pumukit\CoreBundle\Command;
+namespace Upgrade\Command;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\CoreBundle\Services\i18nService;
@@ -35,8 +35,13 @@ final class UpgradeExternalSchemaCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $multimediaObjects = $this->allExternalMultimediaObjects();
+        if ((is_countable($multimediaObjects) ? count($multimediaObjects) : 0) === 0) {
+            $output->writeln('No multimedia objects found.');
 
-        $progressBar = new ProgressBar($output, count($multimediaObjects));
+            return Command::SUCCESS;
+        }
+
+        $progressBar = new ProgressBar($output, is_countable($multimediaObjects) ? count($multimediaObjects) : 0);
         $progressBar->start();
         $count = 0;
         foreach ($multimediaObjects as $multimediaObject) {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Pumukit\CoreBundle\Command;
+namespace Upgrade\Command;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
@@ -53,6 +53,12 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $multimediaObjects = $this->multimediaObjectsTypeVideoAudio();
+
+        if ((is_countable($multimediaObjects) ? count($multimediaObjects) : 0) === 0) {
+            $output->writeln('No multimedia objects found.');
+
+            return Command::SUCCESS;
+        }
 
         $progressBar = new ProgressBar($output, is_countable($multimediaObjects) ? count($multimediaObjects) : 0);
         $progressBar->start();
