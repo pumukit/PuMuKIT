@@ -168,7 +168,7 @@ pumukit_encoder:
   target_default_profiles:
     PUCHWEBTV:
       audio: "audio_broadcastable"
-      video: "video_broadcastable"
+      video: "video_broadcastable video_master_broadcastable"
       image: "image_broadcastable"
       document: "document_broadcastable"
     PUCHPODCAST:
