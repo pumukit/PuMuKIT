@@ -5,7 +5,7 @@ parameters:
   scroll_list_bytag:         false
   limit_objs_bytag:          12                           # ByTag Pager limit.   (Default 10)
   limit_objs_search:         12                           # Search Pager limit.  (Default 10)
-  limit_objs_series:         12                           # Search Pager limit.  (Default 10)
+  limit_objs_series:         100                           # Search Pager limit.  (Default 10)
   limit_objs_byuser:         12                           # ByUser Pager limit.   (Default 10)
   limit_objs_player_series:  12                           # Limit for mmobjs to appear on the mmobj player (Default 10)
   categories_tag_cod:        UNESCO
