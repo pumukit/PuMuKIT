@@ -451,8 +451,8 @@ class SeriesController extends AdminController
         $session = $this->session;
 
         if (!$session->get('admin/series/sort') && $session->get('admin/series/criteria')) {
-            $session->set('admin/series/type', 'score');
-            $session->set('admin/series/sort', 'textScore');
+            $session->set('admin/series/type', 'desc');
+            $session->set('admin/series/sort', 'title');
         }
 
         if ($sorting = $request->get('sorting')) {
