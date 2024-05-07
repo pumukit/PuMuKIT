@@ -26,6 +26,7 @@ use Pumukit\SchemaBundle\Document\ValueObject\StorageUrl;
 use Pumukit\SchemaBundle\Document\ValueObject\Tags;
 use Pumukit\SchemaBundle\EventListener\MultimediaObjectListener;
 use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\SchemaBundle\Services\MediaUpdater;
 use Pumukit\SchemaBundle\Services\TextIndexService;
 use Pumukit\WebTVBundle\PumukitWebTVBundle;
 use Pumukit\WorkflowBundle\EventListener\JobGeneratorListener;
@@ -59,9 +60,10 @@ class JobGeneratorListenerTest extends PumukitTestCase
         $this->i18nService = new i18nService(['en', 'es'], 'en');
         $this->projectDir = static::$kernel->getContainer()->getParameter('kernel.project_dir');
         $profileService = static::$kernel->getContainer()->get(ProfileService::class);
+        $mediaUpdater = static::$kernel->getContainer()->get(MediaUpdater::class);
 
         $jobCreator = static::$kernel->getContainer()->get(JobCreator::class);
-        $this->jobGeneratorListener = new JobGeneratorListener($this->dm, $jobCreator, $profileService, $this->logger);
+        $this->jobGeneratorListener = new JobGeneratorListener($this->dm, $jobCreator, $profileService, $mediaUpdater, $this->logger);
         $dispatcher = new EventDispatcher();
         $this->listener = new MultimediaObjectListener($this->dm, new TextIndexService(), $this->logger);
         $dispatcher->addListener('multimediaobject.update', [$this->listener, 'postUpdate']);
