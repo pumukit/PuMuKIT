@@ -33,7 +33,7 @@ final class UrlTest extends TestCase
     public function testException(): void
     {
         $this->expectException(UrlException::class);
-        $this->expectExceptionMessage('Invalid storage URL');
-        StorageUrl::create('invalid_url');
+        $this->expectExceptionMessage('Invalid URL');
+        Url::create('invalid_url');
     }
 }
