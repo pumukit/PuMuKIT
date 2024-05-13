@@ -684,6 +684,40 @@ window.change_select = function(element, selector, pluralName, seriesId)
         }
         break;
 */
+    case 'delete_selected_series':
+            var ids = [];
+            $('.' + element + '_checkbox:checked').each(function(){
+                var $this = $(this);
+                ids.push($this.attr("id"));
+            });
+
+            if (ids.length == 0) break;
+
+            var route = '{{ path('pumukitnewadmin_info_series', {'ids': '__ids__'})|raw }}';
+            $.ajax({
+                    url: route.replace('__ids__', JSON.stringify(ids)),
+                    type: 'GET',
+                    success: function(response) {                        
+                        if (confirm('{% trans %}Are you sure you want to delete this/these series{% endtrans %}? {% trans %}This/these series has/have{% endtrans %} '+response.mms+' {% trans %}multimedia object(s){% endtrans %} {% trans %}and{% endtrans %} '+response.events+' {% trans %}live event(s){% endtrans %}.')) {
+                            var route = get_batch_delete_route(element, ids);        
+                            $.ajax({
+                                url: route,
+                                type: 'POST',
+                                data: {'_method': 'DELETE'},
+                                error: function(jqXHR, textStatus, errorThrown){
+                                    no_success(errorThrown + ': ' + jqXHR.responseText);
+                                },
+                                success: function(response){
+                                    var message = '{% trans %}Series{% endtrans %}&nbsp;{% trans %}successfully deleted{% endtrans %}.';
+                                    $('#list_'+pluralName).html(response);
+                                    success(message);
+                                }
+                            });
+                        }
+                    }
+            });
+
+        break;
 
     case 'delete_selected':
         var ids = [];
@@ -724,21 +758,21 @@ window.change_select = function(element, selector, pluralName, seriesId)
                         }
                     },
                     success: function(response){
-                                        if (pluralName.indexOf('mms') != -1){
-                                            var sessionId = $($('tr.success').find('input.mm_checkbox')[0]).attr('id');
-                                            if (ids.indexOf(sessionId) != -1) {
-                                                $('#preview_mm').html('{% trans %}Select any multimedia object.{% endtrans %}');
-                                                $('#edit_mm').html('');
-                                            }
-                                        } else if (pluralName.indexOf('series') != -1){
-                                            var sessionId = $($('tr.success').find('input.series_checkbox')[0]).attr('id');
-                                            if (ids.indexOf(sessionId) != -1) {
-                                                $('#preview_series').html('{% trans %}Select any series.{% endtrans %}');
-                                                $('#edit_series').html('');
-                                            }
-                                        }
-                                        $('#list_'+pluralName).html(response);
-                                        success(message);
+                        if (pluralName.indexOf('mms') != -1){
+                            var sessionId = $($('tr.success').find('input.mm_checkbox')[0]).attr('id');
+                            if (ids.indexOf(sessionId) != -1) {
+                                $('#preview_mm').html('{% trans %}Select any multimedia object.{% endtrans %}');
+                                $('#edit_mm').html('');
+                            }
+                        } else if (pluralName.indexOf('series') != -1){
+                            var sessionId = $($('tr.success').find('input.series_checkbox')[0]).attr('id');
+                            if (ids.indexOf(sessionId) != -1) {
+                                $('#preview_series').html('{% trans %}Select any series.{% endtrans %}');
+                                $('#edit_series').html('');
+                            }
+                        }
+                        $('#list_'+pluralName).html(response);
+                        success(message);
                     }
             });
         }
