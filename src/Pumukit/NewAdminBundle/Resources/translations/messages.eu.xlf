@@ -2034,6 +2034,14 @@
         <source>Are you sure?</source>
         <target state="translated">Zihur zaude?</target>
       </trans-unit>
+      <trans-unit id="8HdfsdYsTzv" resname="Are you sure you want to delete this/these series">
+        <source>Are you sure you want to delete this/these series</source>
+        <target state="needs-translation">Are you sure you want to delete this/these series</target>
+      </trans-unit>
+      <trans-unit id="8Hdfs44zv" resname="This/these series has/have">
+        <source>This/these series has/have</source>
+        <target state="needs-translation">This/these series has/have</target>
+      </trans-unit>
       <trans-unit id="uw0Ge.Y" resname="Multimedia Object(s) successfully deleted.">
         <source>Multimedia Object(s) successfully deleted.</source>
         <target state="translated">Multimedia Objetua(k) ondo ezabatuak.</target>
