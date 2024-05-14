@@ -33,6 +33,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -625,6 +626,34 @@ class SeriesController extends AdminController
     public function listPropertiesAction(Series $series)
     {
         return ['series' => $series];
+    }
+
+    /**
+     * @Route("/info_series", name="pumukitnewadmin_info_series")
+     */
+    public function getMmsAndEventsBySeries(Request $request)
+    {
+        $ids = $request->get('ids');
+        if ('string' === gettype($ids)) {
+            $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
+        }
+
+        $mmRepo = $this->documentManager->getRepository(MultimediaObject::class);
+        $numberMultimediaObjectsInSeries = 0;
+        $numberLiveEventsInSeries = 0;
+
+        foreach ($ids as $id) {
+            $series = $this->documentManager->getRepository(Series::class)->findOneBy(['_id' => new ObjectId($id)]);
+            $numberMultimediaObjectsInSeries += $mmRepo->countInSeries($series);
+            $numberLiveEventsInSeries += $mmRepo->countLiveInSeries($series);
+        }
+
+        $count = [
+            'mms' => $numberMultimediaObjectsInSeries,
+            'events' => $numberLiveEventsInSeries,
+        ];
+
+        return new JsonResponse($count);
     }
 
     protected function isUserAllowedToDelete(Series $series)

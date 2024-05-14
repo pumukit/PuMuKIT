@@ -27,7 +27,7 @@
                             <select id="options_series" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('series', $(this), 'series');">
                                 <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
                                 <option disabled="">---</option>
-                                <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
+                                <option value="delete_selected_series">{% trans %}Delete selected{% endtrans %}</option>
 
                                 {% if not is_naked() %}
                                     <option {% if disable_pudenew %}disabled=""{% endif %} value="invert_announce_selected">{% trans %}Announce/Not announce selected{% endtrans %}</option>
