@@ -161,6 +161,10 @@ class Track extends Element
         if (false !== strpos($this->getFramerate(), '/')) {
             $aux = explode('/', $this->getFramerate());
 
+            if (0 === (int) $aux[1]) {
+                return 0;
+            }
+
             return (int) ($seg * (int) $aux[0] / (int) $aux[1]);
         }
 
