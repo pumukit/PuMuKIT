@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="pt" datatype="plaintext" original="file.ext">
+  <file source-language="en" target-language="pt-PT" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
@@ -343,19 +343,19 @@
       </trans-unit>
       <trans-unit id="SGGKkey" resname="Uploading file">
         <source>Uploading file</source>
-        <target>Uploading file</target>
+        <target state="needs-translation">Uploading file</target>
       </trans-unit>
       <trans-unit id="SWUsDc_" resname="There was an error">
         <source>There was an error</source>
-        <target>There was an error</target>
+        <target state="needs-translation">There was an error</target>
       </trans-unit>
       <trans-unit id="A9ZCBUt" resname="Max.">
         <source>Max.</source>
-        <target>Max.</target>
+        <target state="needs-translation">Max.</target>
       </trans-unit>
       <trans-unit id="zikl0Vc" resname="File to upload">
         <source>File to upload</source>
-        <target>File to upload</target>
+        <target state="needs-translation">File to upload</target>
       </trans-unit>
     </body>
   </file>
