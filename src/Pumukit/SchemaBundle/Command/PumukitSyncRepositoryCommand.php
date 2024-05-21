@@ -174,6 +174,9 @@ EOT
 
         $tagParents = [];
         foreach ($tagParentsAggResult as $i) {
+            if (null === $i['_id']) {
+                continue;
+            }
             $key = (string) $i['_id']['$id'];
             $tagParents[$key] = $i['count'];
         }
