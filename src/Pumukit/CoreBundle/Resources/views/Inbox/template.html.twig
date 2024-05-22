@@ -2,7 +2,6 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link href="{{ asset('bundles/pumukitcore/css/uppy.min.css') }}" type="text/css" rel="stylesheet" media="screen"/>
     <link href="{{ asset('bundles/pumukitcore/css/inbox.css') }}" type="text/css" rel="stylesheet" media="screen"/>
 {% endblock %}
 
@@ -40,7 +39,6 @@
     </div>
 
     {% if (app.request.get('_route') == "file_upload") %}
-        <script src="{{ asset('bundles/pumukitcore/js/uppy.min.js') }}"></script>
         <script>{% include "@PumukitCore/Upload/uppy_tus.js.twig" %}</script>
     {% endif %}
 
