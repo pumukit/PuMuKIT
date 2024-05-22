@@ -34,6 +34,8 @@ final class UpgradeTrackSchemaCommand extends Command
     private MediaUpdater $mediaUpdater;
     private $output;
 
+    private $errors;
+
     public function __construct(DocumentManager $documentManager, MediaUpdater $mediaUpdater)
     {
         parent::__construct();
@@ -112,6 +114,8 @@ EOT
 
     private function convertMultimediaObjectsTypeVideoAudio($multimediaObjects): void
     {
+        $this->output->writeln('');
+
         $progressBar = new ProgressBar($this->output, is_countable($multimediaObjects) ? count($multimediaObjects) : 0);
         $progressBar->start();
 
@@ -132,25 +136,29 @@ EOT
                 continue;
             }
 
-            foreach ($tracks as $track) {
-                if (isset($track['metadata'])) {
-                    continue;
+            try {
+                foreach ($tracks as $track) {
+                    if (isset($track['metadata'])) {
+                        continue;
+                    }
+                    $this->oldDataTracks[] = serialize($track);
+                    $newMedias[(string) $track['_id']] = $this->createMediaFromTrack($track);
                 }
-                $this->oldDataTracks[] = serialize($track);
-                $newMedias[(string) $track['_id']] = $this->createMediaFromTrack($track);
-            }
 
-            $object->removeAllMedias();
-            foreach ($newMedias as $id => $media) {
-                $object->addTrack($media);
-            }
+                $object->removeAllMedias();
+                foreach ($newMedias as $id => $media) {
+                    $object->addTrack($media);
+                }
 
-            $this->saveDataOnProperty($object, serialize($this->oldDataTracks));
+                $this->saveDataOnProperty($object, serialize($this->oldDataTracks));
 
-            $this->documentManager->flush();
+                $this->documentManager->flush();
 
-            foreach ($newMedias as $id => $media) {
-                $this->mediaUpdater->updateId($object, $media, $id);
+                foreach ($newMedias as $id => $media) {
+                    $this->mediaUpdater->updateId($object, $media, $id);
+                }
+            } catch (\Exception $exception) {
+                $this->errors[] = 'Multimedia object ('.$object->getId().') file not found';
             }
         }
 
@@ -165,10 +173,16 @@ EOT
         $table->render();
 
         $progressBar->finish();
+
+        foreach ($this->errors as $error) {
+            $this->output->writeln('<error>'.$error.'</error>');
+        }
     }
 
     private function convertMultimediaObjectsUnknownToVideo($multimediaObjects): void
     {
+        $this->output->writeln('');
+
         $progressBar = new ProgressBar($this->output, is_countable($multimediaObjects) ? count($multimediaObjects) : 0);
         $progressBar->start();
         $count = 0;
