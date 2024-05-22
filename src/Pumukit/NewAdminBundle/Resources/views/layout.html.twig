@@ -29,7 +29,7 @@
     <!-- Pumukit CSS modifications -->
     <link href="{{ path('pumukitnewadmin_css') }}" rel="stylesheet">
 
-    <link href="https://releases.transloadit.com/uppy/v1.22.0/uppy.min.css" rel="stylesheet">
+    <link href="{{ asset('bundles/pumukitcore/css/uppy.min.css') }}" type="text/css" rel="stylesheet" media="screen"/>
     <link href="{{ asset('/bundles/pumukitcore/css/uppy_custom.css') }}" rel="stylesheet">
 {% endblock %}
 
@@ -46,7 +46,7 @@
     <script src="{{ asset('/bundles/pumukitnewadmin/js/typeahead.bundle.min.js') }}"></script>
     <script src="{{ asset('/bundles/pumukitnewadmin/js/materialize-tags.min.js') }}"></script>
 
-    <script src="https://releases.transloadit.com/uppy/v1.22.0/uppy.min.js"></script>
+    <script src="{{ asset('bundles/pumukitcore/js/uppy.min.js') }}"></script>
 {% endblock %}
 
 {% block body_base %}
