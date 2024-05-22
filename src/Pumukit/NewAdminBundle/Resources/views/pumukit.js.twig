@@ -2444,7 +2444,8 @@ function test_material_form_file_nmb(file){
     return true;
 }
 
-$(document).on('click', '#pumukitnewadmin_track_ok_button', function(){
+$(document).on('click', '#pumukitnewadmin_media_ok_button', function(event){
+    event.preventDefault();
     uppy.upload();
 });
 

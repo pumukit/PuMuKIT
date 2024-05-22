@@ -113,7 +113,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
      */
     public function uploadAction(Request $request, MultimediaObject $multimediaObject): JsonResponse
     {
-        $profile = $request->get('profile');
+        $profile = $request->get('profile_option');
         $priority = (int) $request->get('priority', 2);
         $formData = $request->get('pumukitnewadmin_track', []);
         [$language, $description] = $this->getArrayData($formData);
@@ -122,15 +122,20 @@ class TrackController extends AbstractController implements NewAdminControllerIn
             if (0 === $request->files->count() && 0 === $request->request->count()) {
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
             }
-            if ($request->files->has('resource') && ('file' === $request->get('file_type'))) {
+
+            if ($request->files->has('resource')) {
+                // Uppy XHR Upload
                 $files = $request->files->get('resource');
                 $file = reset($files);
                 $jobOptions = new JobOptions($profile, $priority, $language, $description);
-                $multimediaObject = $this->jobCreator->fromUploadedFile($multimediaObject, $file, $jobOptions);
-            } elseif ($request->get('file') && ('inbox' === $request->get('file_type'))) {
+                $this->jobCreator->fromUploadedFile($multimediaObject, $file, $jobOptions);
+            } elseif ($request->get('file')) {
+                // Inbox server Upload
                 $jobOptions = new JobOptions($profile, $priority, $language, $description);
                 $path = Path::create($request->get('file'));
                 $this->jobCreator->fromPath($multimediaObject, $path, $jobOptions);
+            } else {
+                throw new \Exception('Not received file or file type is not valid.');
             }
         } catch (\Exception $e) {
             $this->logger->warning($e->getMessage());
@@ -396,7 +401,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
     private function getArrayData($formData): array
     {
-        $language = null;
+        $language = 'en';
         $description = [];
 
         if (array_key_exists('language', $formData)) {
