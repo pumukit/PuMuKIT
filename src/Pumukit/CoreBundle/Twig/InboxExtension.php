@@ -88,19 +88,19 @@ class InboxExtension extends AbstractExtension
     public function getFilteredTypesOfFiles(MultimediaObject $multimediaObject): string
     {
         if ($multimediaObject->isAudioType()) {
-            return json_encode(MediaMimeTypeUtils::allowedAudioMimeTypes());
+            return json_encode(MediaMimeTypeUtils::allowedAudioMimeTypes(), JSON_THROW_ON_ERROR);
         }
 
         if ($multimediaObject->isVideoType()) {
-            return json_encode(MediaMimeTypeUtils::allowedVideoMimeTypes());
+            return json_encode(MediaMimeTypeUtils::allowedVideoMimeTypes(), JSON_THROW_ON_ERROR);
         }
 
         if ($multimediaObject->isImageType()) {
-            return json_encode(MediaMimeTypeUtils::allowedImageMimeTypes());
+            return json_encode(MediaMimeTypeUtils::allowedImageMimeTypes(), JSON_THROW_ON_ERROR);
         }
 
         if ($multimediaObject->isDocumentType()) {
-            return json_encode(MediaMimeTypeUtils::allowedDocumentMimeTypes());
+            return json_encode(MediaMimeTypeUtils::allowedDocumentMimeTypes(), JSON_THROW_ON_ERROR);
         }
 
         throw new \Exception('Invalid type of multimedia object');
@@ -110,6 +110,6 @@ class InboxExtension extends AbstractExtension
     {
         $allowedTypes = MediaMimeTypeUtils::allowedMimeTypes();
 
-        return json_encode($allowedTypes);
+        return json_encode($allowedTypes, JSON_THROW_ON_ERROR);
     }
 }
