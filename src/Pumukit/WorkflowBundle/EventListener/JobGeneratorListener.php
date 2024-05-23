@@ -103,7 +103,8 @@ class JobGeneratorListener
             return;
         }
 
-        $filteredProfiles = $this->profileService->filterProfilesByPubChannel($pubChannel);
+        //        $filteredProfiles = $this->profileService->filterProfilesByPubChannel($pubChannel);
+        $filteredProfiles = $this->profileService->filterProfilesByPubChannelAndType($pubChannel, $multimediaObject);
 
         $validateDefaultProfiles = explode(' ', $default_profiles);
         $validateDefaultProfiles = array_map(

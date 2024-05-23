@@ -3,6 +3,7 @@
 namespace Pumukit\CoreBundle\Twig;
 
 use Pumukit\CoreBundle\Services\InboxService;
+use Pumukit\CoreBundle\Utils\MediaMimeTypeUtils;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -87,19 +88,19 @@ class InboxExtension extends AbstractExtension
     public function getFilteredTypesOfFiles(MultimediaObject $multimediaObject): string
     {
         if ($multimediaObject->isAudioType()) {
-            return json_encode(['audio/*']);
+            return json_encode(MediaMimeTypeUtils::allowedAudioMimeTypes());
         }
 
         if ($multimediaObject->isVideoType()) {
-            return json_encode(['video/*', '*.mxf']);
+            return json_encode(MediaMimeTypeUtils::allowedVideoMimeTypes());
         }
 
         if ($multimediaObject->isImageType()) {
-            return json_encode(['image/*']);
+            return json_encode(MediaMimeTypeUtils::allowedImageMimeTypes());
         }
 
         if ($multimediaObject->isDocumentType()) {
-            return json_encode(['application/pdf']);
+            return json_encode(MediaMimeTypeUtils::allowedDocumentMimeTypes());
         }
 
         throw new \Exception('Invalid type of multimedia object');
@@ -107,13 +108,7 @@ class InboxExtension extends AbstractExtension
 
     public function getAllowedTypeFiles(): string
     {
-        $audio = ['audio/*'];
-        $video = ['video/*'];
-        $image = ['image/*'];
-        $document = ['application/pdf'];
-        $others = ['*.mxf'];
-
-        $allowedTypes = array_merge($audio, $video, $image, $document, $others);
+        $allowedTypes = MediaMimeTypeUtils::allowedMimeTypes();
 
         return json_encode($allowedTypes);
     }

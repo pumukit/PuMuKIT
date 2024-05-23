@@ -7,6 +7,7 @@ namespace Pumukit\EncoderBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Utils\FileSystemUtils;
+use Pumukit\CoreBundle\Utils\ImageRawUtils;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\DTO\JobOptions;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -96,7 +97,7 @@ final class JobCreator
 
         $profile = $this->profileValidator->ensureProfileExists($jobOptions->profile());
 
-        if (str_contains($mimeType, 'image/')) {
+        if (str_contains($mimeType, 'image/') || ImageRawUtils::isRawImageFromString($pathFile)) {
             $multimediaObject->setImageType();
             $this->documentManager->flush();
 

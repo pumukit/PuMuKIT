@@ -140,7 +140,8 @@ pumukit_encoder:
       tags: html5 image
       target: PUCHWEBTV
       audio: false
-      bat: magick "{{input}}" -compress JPEG -quality 90 "{{output}}"
+      bat: convert "{{input}}" -compress JPEG -quality 90 "{{output}}"
+      extension: jpg
       streamserver:
         name: Localhost
         type: download
@@ -153,10 +154,11 @@ pumukit_encoder:
       display: true
       wizard: true
       master: false
-      tags: html5 image
+      tags: html5 image raw
       target: PUCHWEBTV
       audio: false
       bat: darktable-cli "{{input}}" "{{output}}" --core --conf plugins/imageio/format/jpeg/quality=90
+      extension: jpg
       streamserver:
         name: Localhost
         type: download
@@ -185,7 +187,7 @@ pumukit_encoder:
     PUCHWEBTV:
       audio: "audio_broadcastable"
       video: "video_broadcastable"
-      image: "image_broadcastable"
+      image: "image_broadcastable image_raw_broadcastable"
       document: "document_broadcastable"
     PUCHPODCAST:
       audio: "audio_broadcastable"

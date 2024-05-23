@@ -33,7 +33,7 @@ class PicExtractorService
         $this->mmsPicService = $mmsPicService;
         $this->width = $width;
         $this->height = $height;
-        $this->command = $command ?: 'avprobe -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"';
+        $this->command = $command ?: 'ffmpeg -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"';
     }
 
     public function extractPicOnBatch(MultimediaObject $multimediaObject, Track $track, array $marks = null): bool
