@@ -922,12 +922,12 @@ class MultimediaObject
 
     public function removeDocument(Document $document): void
     {
-        $this->documents->removeElement($document);
+        $this->removeMediaById($document->id());
     }
 
     public function removeImage(Image $image): void
     {
-        $this->documents->removeElement($image);
+        $this->removeMediaById($image->id());
     }
 
     public function removeTrackById($trackId): void
@@ -937,6 +937,21 @@ class MultimediaObject
         });
 
         $this->updateDuration();
+    }
+
+    public function removeMediaById(string $id)
+    {
+        $this->tracks = $this->tracks->filter(function (Track $media) use ($id) {
+            return $media->id() !== $id;
+        });
+
+        $this->images = $this->images->filter(function (Image $media) use ($id) {
+            return $media->id() !== $id;
+        });
+
+        $this->documents = $this->documents->filter(function (Document $media) use ($id) {
+            return $media->id() !== $id;
+        });
     }
 
     public function removeAllMedias(): void
