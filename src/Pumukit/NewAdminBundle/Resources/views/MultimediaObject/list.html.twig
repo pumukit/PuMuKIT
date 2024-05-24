@@ -48,11 +48,11 @@
                     <td headers="th-media" class="text-center" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')">
                         {{ mm.medias|length }}
                     </td>
-                    <td headers="th-material" class="text-center" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')">
-                        {{ mm.materials|length }}
-                    </td>
-                    <td headers="th-link" class="text-center" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')">
-                        {{ mm.links|length }}
+                    <td headers="th-duration" class="text-center" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')">
+                        {% if mm.isVideoAudioType() %}{{ mm.getRealDuration()| duration_string }}{% else %}0{% endif %}
+                        {% if mm.getProperty('soft-editing-duration') %}
+                            <i class="mdi-content-content-cut" data-toggle="tooltip" data-placement="left" title="{{ mmobj_duration(mm) | duration_string }}"></i>
+                        {% endif %}
                     </td>
                     <td headers="th-rec-date" class="text-nowrap" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
                         {{ mm.getRecordDate()| format_datetime('medium','none',locale=app.request.getLocale()) }}
@@ -60,7 +60,7 @@
                     <td headers="th-pub-date" class="text-nowrap" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
                         {{ mm.getPublicDate()| format_datetime('medium','none',locale=app.request.getLocale()) }}
                     </td>
-                    <td headers="th-status" style="width: 1em;">
+                    <td headers="th-status" class="text-center">
                         <span id="table_mms_status_wrapper_{{ mm.id }}" data-id="{{ mm.id }}">
                             {% include '@PumukitNewAdmin/MultimediaObject/status.html.twig' with {'mm': mm} %}
                         </span>
@@ -125,8 +125,7 @@
                     <td headers="th-title">&nbsp;</td>
                     <td headers="th-type">&nbsp;</td>
                     <td headers="th-media">&nbsp;</td>
-                    <td headers="th-material">&nbsp;</td>
-                    <td headers="th-link">&nbsp;</td>
+                    <td headers="th-duration">&nbsp;</td>
                     <td headers="th-rec-date">&nbsp;</td>
                     <td headers="th-pub-date">&nbsp;</td>
                     <td headers="th-status">&nbsp;</td>

@@ -8,7 +8,7 @@
         <hr />
         <div class="col-xs-12">
             <form id="choose_fields" method="POST">
-                {% for i in 1..7 %}
+                {% for i in 1..9 %}
                     <div class="col-md-2" style="width:14.28% !important;">
                         <div class="form-group">
                             <label for="custom_field_{{ i }}">{{ "Custom field"|trans }} {{ i }}:</label>
@@ -22,9 +22,11 @@
                         </div>
                     </div>
                 {% endfor %}
-                <button class="btn btn-pumukit btn-raised choose_fields_send pull-right">
-                    {% trans %}Change{% endtrans %}
-                </button>
+                <div class="col-md-12">
+                    <button class="btn btn-pumukit btn-raised choose_fields_send pull-right">
+                        {% trans %}Change{% endtrans %}
+                    </button>
+                </div>
             </form>
         </div>
     </div>
@@ -45,6 +47,8 @@
                 'custom_field_5' : $('#custom_field_5').val(),
                 'custom_field_6' : $('#custom_field_6').val(),
                 'custom_field_7' : $('#custom_field_7').val(),
+                'custom_field_8' : $('#custom_field_8').val(),
+                'custom_field_9' : $('#custom_field_9').val(),
             },
             success: function(response){
                 //location.reload();
