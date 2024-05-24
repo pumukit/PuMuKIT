@@ -6,6 +6,7 @@ namespace Pumukit\SchemaBundle\Document\MediaType;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use MongoDB\BSON\ObjectId;
+use Pumukit\SchemaBundle\Document\MediaType\Metadata\Exif;
 use Pumukit\SchemaBundle\Document\MediaType\Metadata\MediaMetadata;
 use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
 use Pumukit\SchemaBundle\Document\Traits\Properties;
@@ -160,6 +161,21 @@ abstract class Media implements MediaInterface
     public function metadata(): MediaMetadata
     {
         return VideoAudio::create($this->metadata);
+    }
+
+    public function videoMetadata(): MediaMetadata
+    {
+        return VideoAudio::create($this->metadata);
+    }
+
+    public function imageMetadata(): MediaMetadata
+    {
+        return Exif::create($this->metadata);
+    }
+
+    public function documentMetadata(): MediaMetadata
+    {
+        return Exif::create($this->metadata);
     }
 
     public function isMaster(): bool
