@@ -29,6 +29,9 @@
                     </td>
                     {% endif %}
                     {% include '@PumukitNewAdmin/MultimediaObject/sortingactions.html.twig' %}
+                    <td headers="th-img" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')">
+                        {% include "@PumukitNewAdmin/Misc/img_list.html.twig"  with {'object' : mm, 'type': 'mm' } %}
+                    </td>
                     <td headers="th-title" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
                         {{ mm.getTitle() }}
                     </td>
@@ -122,6 +125,7 @@
                         <td headers="th-icons">&nbsp;</td>
                     {% endif %}
 {#                    <td headers="th-icons">&nbsp;</td>#}
+                    <td headers="th-img">&nbsp;</td>
                     <td headers="th-title">&nbsp;</td>
                     <td headers="th-type">&nbsp;</td>
                     <td headers="th-media">&nbsp;</td>

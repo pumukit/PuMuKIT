@@ -8,7 +8,7 @@
         <hr />
         <div class="col-xs-12">
             <form id="choose_fields" method="POST">
-                {% for i in 1..9 %}
+                {% for i in 1..10 %}
                     <div class="col-md-2" style="width:14.28% !important;">
                         <div class="form-group">
                             <label for="custom_field_{{ i }}">{{ "Custom field"|trans }} {{ i }}:</label>
@@ -49,6 +49,7 @@
                 'custom_field_7' : $('#custom_field_7').val(),
                 'custom_field_8' : $('#custom_field_8').val(),
                 'custom_field_9' : $('#custom_field_9').val(),
+                'custom_field_10' : $('#custom_field_10').val(),
             },
             success: function(response){
                 //location.reload();
