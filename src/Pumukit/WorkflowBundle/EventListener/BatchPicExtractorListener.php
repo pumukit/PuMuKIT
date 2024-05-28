@@ -31,7 +31,7 @@ class BatchPicExtractorListener
     private function generatePic(MultimediaObject $multimediaObject, MediaInterface $track): void
     {
         if ($this->enable) {
-            if (!$multimediaObject->isOnlyAudio() && !$track->metadatA()->isOnlyAudio()) {
+            if (!$multimediaObject->isOnlyAudio() && !$track->metadata()->isOnlyAudio()) {
                 $this->generatePicFromVideo($multimediaObject, $track);
             }
         }

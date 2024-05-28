@@ -12,7 +12,6 @@
           {% trans with {'%title%': multimediaObject.title} %}The multimedia object '%title%' is not playable{% endtrans %}.
         </span>
       {% elseif multimediaObject.isExternalType() %}
-          {% dump(multimediaObject.getDisplayTrack().storage().url().url()) %}
           <iframe src="{{ multimediaObject.getDisplayTrack().storage().url().url() }}" width="100%" class="embed-responsive-item" allowfullscreen></iframe>
       {% else%}
           <iframe src="{{ url('pumukit_videoplayer_index', {'id': multimediaObject.id }) }}"

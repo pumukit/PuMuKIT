@@ -83,7 +83,6 @@
                     </button>
                 {% endif %}
                 {% if job.isFailed() or job.isWaiting() %}
-                    {
                     <button type="submit" class="btn btn-danger btn-raised"
                             onclick="$.post('{{ path('pumukit_encoder_delete_job') }}', {'jobId': '{{ job.id }}', '_method': 'DELETE', 'success': function(){window.location.reload()}}); return false;"
                             data-dismiss="modal">

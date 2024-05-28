@@ -6,14 +6,12 @@ namespace Pumukit\CoreBundle\Command;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
-use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\CoreBundle\Utils\SemaphoreUtils;
 use Pumukit\EncoderBundle\Services\DTO\JobOptions;
 use Pumukit\EncoderBundle\Services\JobCreator;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\EncoderBundle\Services\ProfileValidator;
-use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;
@@ -31,45 +29,35 @@ class CreateMMOCommand extends Command
 {
     private $documentManager;
     private $jobCreator;
-    private $inspectionService;
     private $factoryService;
     private $tagService;
     private $profileService;
-    private $locales;
     private $locale;
-
     private $validStatuses = [
         'published' => MultimediaObject::STATUS_PUBLISHED,
         'blocked' => MultimediaObject::STATUS_BLOCKED,
         'hidden' => MultimediaObject::STATUS_HIDDEN,
     ];
-    private LoggerInterface $logger;
     private i18nService $i18nService;
     private ProfileValidator $profileValidator;
 
     public function __construct(
         DocumentManager $documentManager,
         JobCreator $jobCreator,
-        InspectionFfprobeService $inspectionService,
         FactoryService $factoryService,
         TagService $tagService,
         ProfileService $profileService,
         i18nService $i18nService,
         ProfileValidator $profileValidator,
-        LoggerInterface $logger,
-        array $locales,
         string $locale = 'en'
     ) {
         $this->documentManager = $documentManager;
         $this->jobCreator = $jobCreator;
-        $this->inspectionService = $inspectionService;
         $this->factoryService = $factoryService;
         $this->tagService = $tagService;
         $this->profileService = $profileService;
         $this->locale = $locale;
-        $this->locales = array_unique(array_merge($locales, ['en']));
         parent::__construct();
-        $this->logger = $logger;
         $this->i18nService = $i18nService;
         $this->profileValidator = $profileValidator;
     }
@@ -152,9 +140,17 @@ EOT
         $semaphore = SemaphoreUtils::acquire(1000001);
 
         $seriesId = $input->getOption('series');
-        $series = $this->documentManager->getRepository(Series::class)->findOneBy(['_id' => new ObjectId($seriesId)]);
+
+        try {
+            $objectId = new ObjectId($seriesId);
+            $series = $this->documentManager->getRepository(Series::class)->findOneBy(['_id' => $objectId]);
+        } catch (\Exception $e) {
+            $seriesTitle = $this->i18nService->generateI18nText($seriesId);
+            $series = $this->factoryService->createSeries(null, $seriesTitle);
+        }
+
         if (!$series instanceof Series) {
-            throw new \Exception('The series ('.$seriesId.') is not a valid');
+            throw new \Exception('Series not found');
         }
 
         $user = $this->findUser($input->getOption('user'));
