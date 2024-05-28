@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Document\MediaType;
 
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
-use Pumukit\SchemaBundle\Document\ValueObject\Url;
+use Pumukit\SchemaBundle\Document\ValueObject\UrlInterface;
 
 final class Storage
 {
     public const LOCAL_STORAGE = 1;
     public const S3_STORAGE = 2;
     public const EXTERNAL_STORAGE = 9;
-    private ?Url $url;
+    private ?UrlInterface $url;
     private ?Path $path;
     private int $storageSystem;
 
-    private function __construct(Url $url = null, Path $path = null)
+    private function __construct(UrlInterface $url = null, Path $path = null)
     {
         $this->url = $url;
         $this->path = $path;
@@ -36,7 +36,7 @@ final class Storage
         return empty($this->toArray()['path']) ? $this->toArray()['url'] : basename($this->toArray()['path']);
     }
 
-    public function url(): Url
+    public function url(): UrlInterface
     {
         return $this->url;
     }
@@ -66,7 +66,7 @@ final class Storage
         return self::EXTERNAL_STORAGE === $this->storageSystem;
     }
 
-    public static function create(?Url $url, ?Path $path): Storage
+    public static function create(?UrlInterface $url, ?Path $path): Storage
     {
         if (!$url && !$path) {
             throw new \Exception('Url and path cannot be null both');
@@ -83,7 +83,7 @@ final class Storage
         return self::local($url, $path);
     }
 
-    public static function local(Url $url, Path $path): Storage
+    public static function local(UrlInterface $url, Path $path): Storage
     {
         $storage = new self($url, $path);
         $storage->storageSystem = self::LOCAL_STORAGE;
@@ -91,7 +91,7 @@ final class Storage
         return $storage;
     }
 
-    public static function external(Url $url): Storage
+    public static function external(UrlInterface $url): Storage
     {
         $storage = new self($url);
         $storage->storageSystem = self::EXTERNAL_STORAGE;
@@ -99,7 +99,7 @@ final class Storage
         return $storage;
     }
 
-    public static function s3(Url $url, Path $path): Storage
+    public static function s3(UrlInterface $url, Path $path): Storage
     {
         $storage = new self($url, $path);
         $storage->storageSystem = self::S3_STORAGE;

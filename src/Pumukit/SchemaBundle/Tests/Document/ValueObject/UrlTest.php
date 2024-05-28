@@ -6,7 +6,6 @@ namespace Pumukit\SchemaBundle\Tests\Document\ValueObject;
 
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\Exception\UrlException;
-use Pumukit\SchemaBundle\Document\ValueObject\StorageUrl;
 use Pumukit\SchemaBundle\Document\ValueObject\Url;
 
 /**
@@ -18,7 +17,7 @@ final class UrlTest extends TestCase
 {
     public function testCreate(): void
     {
-        $url = StorageUrl::create('https://www.example.com');
+        $url = Url::create('https://www.example.com');
 
         $this->assertInstanceOf(Url::class, $url);
         $this->assertEquals('https://www.example.com', $url->url());
@@ -26,7 +25,7 @@ final class UrlTest extends TestCase
 
     public function testToString(): void
     {
-        $url = StorageUrl::create('https://www.example.com');
+        $url = Url::create('https://www.example.com');
 
         $this->assertEquals('https://www.example.com', (string) $url);
     }
@@ -34,7 +33,7 @@ final class UrlTest extends TestCase
     public function testException(): void
     {
         $this->expectException(UrlException::class);
-        $this->expectExceptionMessage('Invalid storage URL');
-        StorageUrl::create('invalid_url');
+        $this->expectExceptionMessage('Invalid URL');
+        Url::create('invalid_url');
     }
 }

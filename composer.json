@@ -133,6 +133,7 @@
     "autoload": {
         "psr-4": {
             "App\\": "src/",
+            "Upgrade\\": "doc/upgrade/v4_to_v5/",
             "Pumukit\\": "src/Pumukit/"
         }
     },
