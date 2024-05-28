@@ -26,7 +26,6 @@ use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Pumukit\SchemaBundle\Document\ValueObject\StorageUrl;
 use Pumukit\SchemaBundle\Document\ValueObject\Tags;
-use Pumukit\SchemaBundle\Document\ValueObject\Url;
 
 final class MediaCreator implements MediaCreatorInterface
 {
@@ -160,7 +159,7 @@ final class MediaCreator implements MediaCreatorInterface
         $this->dispatcher->dispatchCreate($multimediaObject, $media);
     }
 
-    private function generateMediaUrl(Job $job, array $profile): Url
+    private function generateMediaUrl(Job $job, array $profile): StorageUrl
     {
         $url = isset($profile['streamserver']['url_out']) ? str_replace(
             realpath($profile['streamserver']['dir_out']),

@@ -76,7 +76,16 @@ final class VideoAudio implements MediaMetadata
     {
         $metadata = $this->decodeMetadataInfo();
 
-        return (int) $metadata->format->size ?? 0;
+        return isset($metadata->format->size) ? (int) $metadata->format->size : 0;
+    }
+
+    public function sizeInMB(): float
+    {
+        if (0 === $this->size()) {
+            return 0;
+        }
+
+        return $this->size() / 1024 / 1024;
     }
 
     public function width(): ?int
@@ -144,6 +153,10 @@ final class VideoAudio implements MediaMetadata
 
     private function videoStreamInfo()
     {
+        if (!isset($this->decodeMetadataInfo()->streams)) {
+            return null;
+        }
+
         foreach ($this->decodeMetadataInfo()->streams as $stream) {
             if (isset($stream->codec_type) && 'video' === (string) $stream->codec_type) {
                 return $stream;
@@ -155,6 +168,10 @@ final class VideoAudio implements MediaMetadata
 
     private function audioStreamInfo()
     {
+        if (!isset($this->decodeMetadataInfo()->streams)) {
+            return null;
+        }
+
         foreach ($this->decodeMetadataInfo()->streams as $stream) {
             if (isset($stream->codec_type) && 'audio' === (string) $stream->codec_type) {
                 return $stream;
