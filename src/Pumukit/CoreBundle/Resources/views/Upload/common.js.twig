@@ -17,7 +17,11 @@ function sendInboxXHRImportRequest(file)
     xhr.open("POST", "{{ path('inbox_auto_import') }}", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     var profile = document.querySelector('input[name="profile_option"]:checked').value;
-    var xhrSend = "fileName=" + file.name + "&series={{ series.id }}&profile="+profile;
+    {% if folder is defined %}
+        var xhrSend = "fileName=" + file.name + "&series={{ folder }}&profile="+profile;
+    {% else %}
+        var xhrSend = "fileName=" + file.name + "&series={{ series.id }}&profile="+profile;
+    {% endif %}
     xhr.send(xhrSend);
 }
 

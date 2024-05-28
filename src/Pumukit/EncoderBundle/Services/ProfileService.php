@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\EncoderBundle\Services;
 
-use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\CoreBundle\Utils\ImageRawUtils;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
 
@@ -15,31 +15,16 @@ class ProfileService
     public const STREAMSERVER_WMV = 'wmv';
     public const STREAMSERVER_FMS = 'fms';
     public const STREAMSERVER_RED5 = 'red5';
-    private $dm;
     private $profiles;
     private $default_profiles;
 
-    /**
-     * Constructor.
-     */
-    public function __construct(array $profiles, DocumentManager $documentManager, array $default_profiles = [])
+    public function __construct(array $profiles, array $default_profiles = [])
     {
-        $this->dm = $documentManager;
         $this->profiles = $profiles;
         $this->default_profiles = $default_profiles;
     }
 
-    /**
-     * Get available profiles
-     * See #7482.
-     *
-     * @param bool|null $display if not null used to filter
-     * @param bool|null $wizard  if not null used to filter
-     * @param bool|null $master  if not null used to filter
-     *
-     * @return array filtered profiles
-     */
-    public function getProfiles($display = null, $wizard = null, $master = null)
+    public function getProfiles($display = null, $wizard = null, $master = null): array
     {
         if (null === $display && null === $wizard && null === $master) {
             return $this->profiles;
@@ -52,15 +37,7 @@ class ProfileService
         });
     }
 
-    /**
-     * Get available profiles
-     * See #7482.
-     *
-     * @param array|string $tags Tags used to filter profiles
-     *
-     * @return array filtered profiles
-     */
-    public function getProfilesByTags($tags)
+    public function getProfilesByTags($tags): array
     {
         $tags = is_array($tags) ? $tags : [$tags];
 
@@ -69,22 +46,11 @@ class ProfileService
         });
     }
 
-    /**
-     * Get master profiles.
-     *
-     * @param bool $master
-     *
-     * @return array $profiles only master if true, only not master if false
-     */
-    public function getMasterProfiles($master)
+    public function getMasterProfiles($master): array
     {
         return $this->getProfiles(null, null, $master);
     }
 
-    /**
-     * Get the default master profile.
-     * See #7482.
-     */
     public function getDefaultMasterProfile()
     {
         $masterProfiles = $this->getMasterProfiles(true);
@@ -117,10 +83,7 @@ class ProfileService
         return null;
     }
 
-    /**
-     * Get dir out info from streamserver of profiles.
-     */
-    public function getDirOutInfo()
+    public function getDirOutInfo(): array
     {
         $f = function ($e) {
             return $e['streamserver']['dir_out'];
@@ -134,19 +97,7 @@ class ProfileService
         }, $shares);
     }
 
-    /**
-     * Validate Profiles directories out.
-     * Note BC. @deprecated in next version.
-     */
-    public function validateProfilesDirOut()
-    {
-        static::validateProfilesDir($this->profiles);
-    }
-
-    /**
-     * Validate Profiles directories out.
-     */
-    public static function validateProfilesDir(array $profiles)
+    public static function validateProfilesDir(array $profiles): void
     {
         foreach ($profiles as $profile) {
             $dirOut = realpath($profile['streamserver']['dir_out']);
@@ -156,9 +107,6 @@ class ProfileService
         }
     }
 
-    /**
-     * Get target default profiles.
-     */
     public function getDefaultProfiles(): array
     {
         if (null === $this->default_profiles) {
@@ -197,29 +145,43 @@ class ProfileService
         });
     }
 
+    public function filterProfilesByPubChannelAndType(Tag $tag, MultimediaObject $multimediaObject): array
+    {
+        $profilesFilteredByTag = $this->filterProfilesByPubChannel($tag);
+        $profilesFilteredByType = $this->filterProfilesByType($multimediaObject);
+
+        $filteredProfiles = array_intersect_key($profilesFilteredByTag, $profilesFilteredByType);
+        $pubChannelCod = $tag->getCod();
+
+        return array_filter($filteredProfiles, function ($profile) use ($pubChannelCod) {
+            return isset($profile['target']) && str_contains($profile['target'], $pubChannelCod);
+        });
+    }
+
     public function filterProfilesByType(MultimediaObject $multimediaObject): array
     {
-        $type = '';
-        if (MultimediaObject::TYPE_DOCUMENT === $multimediaObject->getType()) {
-            $type = 'document';
-        } elseif (MultimediaObject::TYPE_IMAGE === $multimediaObject->getType()) {
-            $type = 'image';
-        } elseif (MultimediaObject::TYPE_AUDIO === $multimediaObject->getType()) {
-            $type = 'audio';
-        }
-
         return match ($multimediaObject->getType()) {
             MultimediaObject::TYPE_VIDEO => $this->videoProfiles(),
             MultimediaObject::TYPE_AUDIO => $this->audioProfiles(),
-            MultimediaObject::TYPE_IMAGE => $this->imageProfiles(),
+            MultimediaObject::TYPE_IMAGE => $this->imageProfiles($multimediaObject),
             MultimediaObject::TYPE_DOCUMENT => $this->documentProfiles(),
             default => throw new \InvalidArgumentException('No target default profiles.'),
         };
     }
 
-    public function imageProfiles(): array
+    public function imageProfiles(MultimediaObject $multimediaObject): array
     {
-        return array_filter($this->profiles, function ($profile) { return isset($profile['image']) && true === $profile['image'] && false === $profile['master']; });
+        $master = $multimediaObject->getMaster();
+        if (!$master) {
+            throw new \InvalidArgumentException('The multimedia object has no master.');
+        }
+
+        $path = $master->storage()->path();
+        if (ImageRawUtils::isRawImage($path)) {
+            return $this->imageRawProfiles();
+        }
+
+        return $this->imageGenericProfiles();
     }
 
     public function documentProfiles(): array
@@ -237,5 +199,15 @@ class ProfileService
         return array_filter($this->profiles, function ($profile) {
             return (!isset($profile['document']) || false === $profile['document']) && (!isset($profile['image']) || false === $profile['image']) && false === $profile['master'];
         });
+    }
+
+    private function imageRawProfiles(): array
+    {
+        return array_filter($this->profiles, function ($profile) { return isset($profile['image']) && true === $profile['image'] && false === $profile['master'] && str_contains($profile['tags'], 'raw'); });
+    }
+
+    private function imageGenericProfiles(): array
+    {
+        return array_filter($this->profiles, function ($profile) { return isset($profile['image']) && true === $profile['image'] && false === $profile['master'] && !str_contains($profile['tags'], 'raw'); });
     }
 }

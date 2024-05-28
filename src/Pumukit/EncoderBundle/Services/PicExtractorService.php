@@ -33,7 +33,7 @@ class PicExtractorService
         $this->mmsPicService = $mmsPicService;
         $this->width = $width;
         $this->height = $height;
-        $this->command = $command ?: 'avprobe -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"';
+        $this->command = $command ?: 'ffmpeg -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"';
     }
 
     public function extractPicOnBatch(MultimediaObject $multimediaObject, Track $track, array $marks = null): bool
@@ -60,7 +60,11 @@ class PicExtractorService
             return false;
         }
 
-        $num = $this->getNumFrames($media, $multimediaObject, $numFrame);
+        if ($multimediaObject->isVideoType()) {
+            $num = $this->getNumFrames($media, $multimediaObject, $numFrame);
+        } else {
+            $num = 0;
+        }
 
         $this->createPic($multimediaObject, $media, (int) $num);
 
@@ -93,7 +97,7 @@ class PicExtractorService
             $picFileName = date('ymdGis').random_int(0, mt_getrandmax()).'.jpg';
         }
 
-        $aspectTrack = $this->getAspect($media);
+        $aspectTrack = $this->getAspect($multimediaObject, $media);
         if (0 !== $aspectTrack) {
             $newHeight = (int) (1.0 * $this->width / $aspectTrack);
             if ($newHeight <= $this->height) {
@@ -107,14 +111,26 @@ class PicExtractorService
             $newWidth = $this->width;
         }
 
-        $vars = [
-            '{{ss}}' => $media->metadata()->timeOfaFrame($frame),
-            '{{size}}' => $newWidth.'x'.$newHeight,
-            '{{input}}' => $media->storage()->path()->path(),
-            '{{output}}' => $absCurrentDir.'/'.$picFileName,
-        ];
+        if ($multimediaObject->isImageType()) {
+            $vars = [
+                '{{size}}' => $newWidth.'x'.$newHeight,
+                '{{input}}' => $media->storage()->path()->path(),
+                '{{output}}' => $absCurrentDir.'/'.$picFileName,
+            ];
 
-        $commandLine = str_replace(array_keys($vars), array_values($vars), $this->command);
+            $imageCommand = 'convert "{{input}}" -thumbnail "{{size}}" "{{output}}"';
+            $commandLine = str_replace(array_keys($vars), array_values($vars), $imageCommand);
+        } else {
+            $vars = [
+                '{{ss}}' => $media->metadata()->timeOfaFrame($frame),
+                '{{size}}' => $newWidth.'x'.$newHeight,
+                '{{input}}' => $media->storage()->path()->path(),
+                '{{output}}' => $absCurrentDir.'/'.$picFileName,
+            ];
+
+            $commandLine = str_replace(array_keys($vars), array_values($vars), $this->command);
+        }
+
         if (is_string($commandLine)) {
             $process = Process::fromShellCommandline($commandLine);
         } else {
@@ -132,7 +148,10 @@ class PicExtractorService
         if (file_exists($picPath)) {
             $multimediaObject = $this->mmsPicService->addPicUrl($multimediaObject, $picUrl);
             $pic = $this->getPicByUrl($multimediaObject, $picUrl);
-            $tags = ['auto', 'frame_'.$frame, 'time_'.$media->metadata()->timeOfAFrame($frame)];
+            $tags = ['auto', 'frame_'.$frame];
+            if ($multimediaObject->isVideoType()) {
+                $tags[] = 'time_'.$media->metadata()->timeOfAFrame($frame);
+            }
             $this->completePicMetadata($multimediaObject, $pic, $picPath, $newWidth, $newHeight, $tags);
         }
     }
@@ -140,13 +159,21 @@ class PicExtractorService
     /**
      * Return aspect ratio. Check is not zero.
      */
-    private function getAspect(MediaInterface $media): float|int
+    private function getAspect(MultimediaObject $multimediaObject, MediaInterface $media): float|int
     {
-        if (0 == $media->metadata()->height()) {
-            return 0;
+        if ($multimediaObject->isVideoType()) {
+            if (0 == $media->metadata()->height()) {
+                return 0;
+            }
+
+            return 1.0 * $media->metadata()->width() / $media->metadata()->height();
         }
 
-        return 1.0 * $media->metadata()->width() / $media->metadata()->height();
+        if ($multimediaObject->isImageType()) {
+            return 1.0 * $media->imageMetadata()->width() / $media->imageMetadata()->height();
+        }
+
+        return 0;
     }
 
     /**

@@ -48,7 +48,7 @@ final class JobValidator
 
     public function isUniqueJob(MultimediaObject $multimediaObject, JobOptions $jobOptions): bool
     {
-        if ($jobOptions->unique() && !empty($jobOptions->flags())) {
+        if ($jobOptions->unique()) {
             $job = $this->documentManager->getRepository(Job::class)->findOneBy([
                 'profile' => $jobOptions->profile(),
                 'mm_id' => $multimediaObject->getId(),

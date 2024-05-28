@@ -54,6 +54,10 @@ class PicExtractorListener
             $this->generatePic($event->getMultimediaObject(), $event->getMedia());
         }
 
+        if (MultimediaObject::TYPE_IMAGE === $event->getMultimediaObject()->getType() && $event->getMedia() instanceof MediaInterface) {
+            $this->generatePic($event->getMultimediaObject(), $event->getMedia());
+        }
+
         SemaphoreUtils::release($semaphore);
     }
 
@@ -70,9 +74,9 @@ class PicExtractorListener
         }
 
         try {
-            if ($multimediaObject->isOnlyAudio() || $media->metadata()->isOnlyAudio()) {
-                return;
-            }
+            //            if ($multimediaObject->isOnlyAudio() || $media->metadata()->isOnlyAudio()) {
+            //                return;
+            //            }
 
             $this->extractPic($multimediaObject, $media);
         } catch (\Exception $e) {
