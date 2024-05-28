@@ -13,7 +13,6 @@ use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Pumukit\SchemaBundle\Document\ValueObject\StorageUrl;
 use Pumukit\SchemaBundle\Document\ValueObject\Tags;
-use Pumukit\SchemaBundle\Document\ValueObject\Url;
 
 /**
  * @MongoDB\MappedSuperclass
@@ -148,7 +147,7 @@ abstract class Media implements MediaInterface
     public function storage(): Storage
     {
         if (null === $this->storage['path']) {
-            return Storage::external(Url::create($this->storage['url']));
+            return Storage::external(StorageUrl::create($this->storage['url']));
         }
 
         return Storage::create(

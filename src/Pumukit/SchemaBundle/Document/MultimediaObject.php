@@ -1110,6 +1110,12 @@ class MultimediaObject
             return 0;
         }
 
+        try {
+            $trackDuration = $master->metadata()->duration();
+        } catch (\Exception $exception) {
+            return 0;
+        }
+
         if ($this->getDuration() < $master->metadata()->duration()) {
             return $master->metadata()->duration();
         }
