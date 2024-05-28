@@ -103,7 +103,8 @@ class JobGeneratorListener
             return;
         }
 
-        $filteredProfiles = $this->profileService->filterProfilesByPubChannel($pubChannel);
+        //        $filteredProfiles = $this->profileService->filterProfilesByPubChannel($pubChannel);
+        $filteredProfiles = $this->profileService->filterProfilesByPubChannelAndType($pubChannel, $multimediaObject);
 
         $validateDefaultProfiles = explode(' ', $default_profiles);
         $validateDefaultProfiles = array_map(
@@ -138,7 +139,7 @@ class JobGeneratorListener
             if (in_array($pubChannelCod, $targets['standard'])) {
                 $master = $multimediaObject->getTrackWithTag('master');
                 $this->logger->warning(sprintf('JobGeneratorListener creates new job (%s) for multimedia object %s using standard target', $targetProfile, $multimediaObject->getId()));
-                $jobOptions = new JobOptions($targetProfile, 2, $master->language(), []);
+                $jobOptions = new JobOptions($targetProfile, 2, $master->language(), [], [], 0, 0, true);
                 $path = Path::create($master->storage()->path()->path());
                 $this->jobCreator->fromPath($multimediaObject, $path, $jobOptions);
             }
@@ -146,7 +147,7 @@ class JobGeneratorListener
             if (in_array($pubChannelCod, $targets['force'])) {
                 $master = $multimediaObject->getTrackWithTag('master');
                 $this->logger->warning(sprintf('JobGeneratorListener creates new job (%s) for multimedia object %s using forced target', $targetProfile, $multimediaObject->getId()));
-                $jobOptions = new JobOptions($targetProfile, 2, $master->language(), []);
+                $jobOptions = new JobOptions($targetProfile, 2, $master->language(), [], [], 0, 0, true);
                 $path = Path::create($master->storage()->path()->path());
                 $this->jobCreator->fromPath($multimediaObject, $path, $jobOptions);
             }

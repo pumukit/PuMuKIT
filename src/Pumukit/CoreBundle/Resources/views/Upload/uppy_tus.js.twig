@@ -1,6 +1,10 @@
 {% include "@PumukitCore/Upload/common.js.twig" %}
 
-var endpoint = "{{ inboxUploadURL }}" + "?series={{ series.id }}";
+{% if folder is defined %}
+    var endpoint = "{{ inboxUploadURL }}" + "?series={{ folder }}";
+{% else %}
+    var endpoint = "{{ inboxUploadURL }}" + "?series={{ series.id }}";
+{% endif %}
 
 const uppyTUS = Uppy.Core({
     debug: {{ inbox_debug() }},

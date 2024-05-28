@@ -28,6 +28,7 @@ class Permission
     public const ACCESS_EDIT_PLAYLIST = 'ROLE_ACCESS_EDIT_PLAYLIST';
     public const ACCESS_API = 'ROLE_ACCESS_API';
     public const ACCESS_INBOX = 'ROLE_ACCESS_INBOX';
+    public const UPLOAD_INBOX = 'ROLE_UPLOAD_INBOX';
     public const MODIFY_OWNER = 'ROLE_MODIFY_OWNER';
     public const ADD_OWNER = 'ROLE_ADD_OWNER';
     public const INIT_STATUS_PUBLISHED = 'ROLE_INIT_STATUS_PUBLISHED';
@@ -208,6 +209,13 @@ class Permission
         ],
         self::ACCESS_INBOX => [
             'description' => 'Access Inbox',
+            'dependencies' => [
+                PermissionProfile::SCOPE_GLOBAL => [],
+                PermissionProfile::SCOPE_PERSONAL => [],
+            ],
+        ],
+        self::UPLOAD_INBOX => [
+            'description' => 'Upload Inbox',
             'dependencies' => [
                 PermissionProfile::SCOPE_GLOBAL => [],
                 PermissionProfile::SCOPE_PERSONAL => [],
