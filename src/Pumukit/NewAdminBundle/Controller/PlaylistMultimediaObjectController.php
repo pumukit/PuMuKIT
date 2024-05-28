@@ -8,7 +8,6 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Query\Builder;
 use MongoDB\BSON\ObjectId;
 use Pumukit\CoreBundle\Services\PaginationService;
-use Pumukit\NewAdminBundle\Services\MultimediaObjectSearchService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Series;
@@ -29,34 +28,14 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class PlaylistMultimediaObjectController extends AbstractController
 {
-    /** @var SessionInterface */
     private $session;
-
-    /** @var FactoryService */
     private $factoryService;
-
-    /** @var PersonService */
     private $personService;
-
-    /** @var MultimediaObjectService */
     private $multimediaObjectService;
-
-    /** @var DocumentManager */
     private $documentManager;
-
-    /** @var PaginationService */
     private $paginationService;
-
-    /** @var MultimediaObjectSearchService */
-    private $multimediaObjectSearchService;
-
-    /** @var EmbeddedBroadcastService */
     private $embeddedBroadcastService;
-
-    /** @var RouterInterface */
     private $router;
-
-    /** @var TokenStorageInterface */
     private $securityTokenStorage;
     private $warningOnUnpublished;
     private $locales;
@@ -68,7 +47,6 @@ class PlaylistMultimediaObjectController extends AbstractController
         MultimediaObjectService $multimediaObjectService,
         DocumentManager $documentManager,
         PaginationService $paginationService,
-        MultimediaObjectSearchService $multimediaObjectSearchService,
         EmbeddedBroadcastService $embeddedBroadcastService,
         RouterInterface $router,
         TokenStorageInterface $securityTokenStorage,
@@ -82,7 +60,6 @@ class PlaylistMultimediaObjectController extends AbstractController
         $this->documentManager = $documentManager;
         $this->paginationService = $paginationService;
         $this->warningOnUnpublished = $warningOnUnpublished;
-        $this->multimediaObjectSearchService = $multimediaObjectSearchService;
         $this->embeddedBroadcastService = $embeddedBroadcastService;
         $this->router = $router;
         $this->securityTokenStorage = $securityTokenStorage;
@@ -233,6 +210,7 @@ class PlaylistMultimediaObjectController extends AbstractController
             $mmobjs = $this->getPersonalVideos();
         } else {
             $mmobjs = $this->documentManager->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
+            $mmobjs->field('type')->in([MultimediaObject::TYPE_VIDEO, MultimediaObject::TYPE_AUDIO]);
         }
 
         $pager = $this->paginationService->createDoctrineODMMongoDBAdapter($mmobjs, (int) $page, (int) $limit);
@@ -524,6 +502,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         $filter->setParameter('people', $people);
         $filter->setParameter('groups', $groups);
         $filter->setParameter('status', MultimediaObject::STATUS_PUBLISHED);
+        $filter->setParameter('type', ['$in' => [MultimediaObject::TYPE_VIDEO, MultimediaObject::TYPE_AUDIO]]);
         $filter->setParameter('display_track_tag', 'display');
     }
 
@@ -551,6 +530,7 @@ class PlaylistMultimediaObjectController extends AbstractController
                     ->field('people._id')->equals(new ObjectId($this->getUser()->getPerson()->getId()))
                     ->field('cod')->equals('owner')
             )
+            ->field('type')->in([MultimediaObject::TYPE_VIDEO, MultimediaObject::TYPE_AUDIO])
         ;
         $builder->getQuery()->execute();
 
@@ -560,6 +540,7 @@ class PlaylistMultimediaObjectController extends AbstractController
     private function searchVideos(Builder $builder, string $text = '', string $locale = 'en'): Builder
     {
         $builder
+            ->field('type')->in([MultimediaObject::TYPE_VIDEO, MultimediaObject::TYPE_AUDIO])
             ->addOr(
                 $builder->expr()
                     ->field('people')->elemMatch(
