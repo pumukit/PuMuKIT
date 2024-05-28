@@ -43,12 +43,11 @@ class InboxController extends AbstractController
     /**
      * @Route("/upload", name="file_upload")
      *
-     * @Template("@PumukitCore/Upload/uppy_drag_and_drop.html.twig")
+     * @Template("@PumukitCore/Upload/upload_drag_and_drop.html.twig")
      */
     public function folder(Request $request): array
     {
         $formData = $request->get('inbox_form_data', []);
-        //        $folder = $request->get('folder');
         $inboxUploadURL = $this->inboxService->inboxUploadURL();
         $inboxUploadLIMIT = $this->inboxService->inboxUploadLIMIT();
         $minFileSize = $this->inboxService->minFileSize();
@@ -59,10 +58,7 @@ class InboxController extends AbstractController
         $folder = trim($formData['folder']);
         $urlUpload = $inboxPath.'/'.$formData['folder'];
 
-        $urlUpload = $inboxPath.'/'.$folder;
-
         if (!$formData || empty($folder) || !$this->checkFolderAndCreateIfNotExist($folder)) {
-            //        if (empty($folder) || !$this->checkFolderAndCreateIfNotExist($folder)) {
             $folder = '';
             $urlUpload = '';
         }
@@ -117,7 +113,7 @@ class InboxController extends AbstractController
                 $this->getUser(),
                 $request->get('fileName'),
                 $request->get('series'),
-                $request->get('profile')
+                $request->get('profile', 'master_copy')
             );
         } catch (\Exception $exception) {
             return new JsonResponse(['success' => false]);
