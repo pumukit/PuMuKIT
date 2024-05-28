@@ -34,7 +34,7 @@ class ServerUploadListener
         $process = new Process($command);
         $command = $process->getCommandLine();
 
-        $this->logger->warning($process->getCommandLine());
+        $this->logger->info($process->getCommandLine());
 
         shell_exec("nohup {$command} 1> /dev/null 2> /dev/null & echo $!");
     }
