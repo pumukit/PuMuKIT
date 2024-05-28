@@ -306,9 +306,9 @@ class ListController extends AbstractController implements WebTVControllerInterf
         $this->breadcrumbsService->add($title, $routeName, $routeParameters);
     }
 
-    private function createPager($objects, int $page, int $limit = 10): Pagerfanta
+    private function createPager($objects, $page, int $limit = 10): Pagerfanta
     {
-        return $this->paginationService->createDoctrineODMMongoDBAdapter($objects, $page, $limit);
+        return $this->paginationService->createDoctrineODMMongoDBAdapter($objects, (int) $page, $limit);
     }
 
     private function generateResponse($qb, $date, $numberCols): Response

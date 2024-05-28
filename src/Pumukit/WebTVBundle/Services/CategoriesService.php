@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Pumukit\WebTVBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\MongoDBException;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\TagInterface;
 use Pumukit\WebTVBundle\PumukitWebTVBundle;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class PaginationService.
@@ -26,14 +28,14 @@ class CategoriesService
     private $linkService;
 
     /**
-     * @var \Symfony\Contracts\Translation\TranslatorInterface
+     * @var TranslatorInterface
      */
     private $translator;
     private $parentCod;
     private $listGeneralParam;
     private $excludeEmptyTags;
 
-    public function __construct(DocumentManager $documentManager, LinkService $linkService, \Symfony\Contracts\Translation\TranslatorInterface $translator, $parentCod, $listGeneralParam, $excludeEmptyTags)
+    public function __construct(DocumentManager $documentManager, LinkService $linkService, TranslatorInterface $translator, $parentCod, $listGeneralParam, $excludeEmptyTags)
     {
         $this->documentManager = $documentManager;
         $this->parentCod = $parentCod;
@@ -176,7 +178,7 @@ class CategoriesService
      *
      * @return array
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws MongoDBException
      */
     private function countMmobjInTags($provider = null, $parentCod = null)
     {

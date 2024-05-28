@@ -754,6 +754,9 @@ class JobService
         $nowDateTime = new \DateTimeImmutable();
 
         foreach ($jobs as $job) {
+            if (!$job->getTimestart()) {
+                continue;
+            }
             $maxExecutionJobTime = clone $job->getTimestart();
             $maxExecutionJobTime->add(new \DateInterval('PT'.$this->maxExecutionJobSeconds.'S'));
             if ($nowDateTime > $maxExecutionJobTime) {

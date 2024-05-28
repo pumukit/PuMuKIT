@@ -1,4 +1,8 @@
-{% set colspan = 5 - (series.sorting == constant('SORT_MANUAL', series) ? 0 : 2) - (is_naked() ? 1 : 0) %}
+{% if is_naked() %}
+    {% set colspan = 6 - (series.sorting == constant('SORT_MANUAL', series) ? 0 : 2) - (is_naked() ? 1 : 0) %}
+{% else %}
+    {% set colspan = 5 - (series.sorting == constant('SORT_MANUAL', series) ? 0 : 2) - (is_naked() ? 1 : 0) %}
+{% endif %}
 
 <tr>
     <th width="1%" id="th-checkbox">
@@ -9,11 +13,12 @@
         </div>
     </th>
 
-    <th id="th-icons" colspan="{{ colspan }}" width="5%"></th>
-    <th id="th-video" width="1%">{% trans %}Format{% endtrans %}</th>
-    <th id="th-img" width="5%"></th>
+    <th id="th-icons" colspan="{{ colspan }}"></th>
+    <th id="th-video">{% trans %}Format{% endtrans %}</th>
+    <th id="th-img"></th>
     <th id="th-title">{% trans %}Title{% endtrans %}</th>
-    <th id="th-duration" width="1%">{% trans %}Duration{% endtrans %}</th>
-    <th id="th-rec-date" width="1%">{% trans %}Recording{% endtrans %}</th>
-    <th id="th-pub-date" width="1%">{% trans %}Publication{% endtrans %}</th>
+    <th id="th-duration">{% trans %}Duration{% endtrans %}</th>
+    <th id="th-rec-date">{% trans %}Recording{% endtrans %}</th>
+    <th id="th-pub-date">{% trans %}Publication{% endtrans %}</th>
 </tr>
+

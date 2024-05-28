@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\LockException;
+use Doctrine\ODM\MongoDB\Mapping\MappingException;
+use Doctrine\ODM\MongoDB\MongoDBException;
 use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\Annotation;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
@@ -252,8 +255,8 @@ class FactoryService
      *
      * @return object|null Series
      *
-     * @throws \Doctrine\ODM\MongoDB\LockException
-     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
+     * @throws LockException
+     * @throws MappingException
      */
     public function findSeriesById($id, $sessionId = null)
     {
@@ -277,8 +280,8 @@ class FactoryService
      *
      * @return object
      *
-     * @throws \Doctrine\ODM\MongoDB\LockException
-     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
+     * @throws LockException
+     * @throws MappingException
      */
     public function findMultimediaObjectById($id)
     {
@@ -292,7 +295,7 @@ class FactoryService
      *
      * @return object
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws MongoDBException
      */
     public function getParentTags()
     {
@@ -306,7 +309,7 @@ class FactoryService
      *
      * @return object|null
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws MongoDBException
      */
     public function getMultimediaObjectPrototype(Series $series = null)
     {
@@ -324,7 +327,7 @@ class FactoryService
      *
      * @return mixed $tags
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws MongoDBException
      */
     public function getTagsByCod($cod, $getChildren)
     {
@@ -342,7 +345,7 @@ class FactoryService
     /**
      * Delete Series.
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws MongoDBException
      */
     public function deleteSeries(Series $series)
     {

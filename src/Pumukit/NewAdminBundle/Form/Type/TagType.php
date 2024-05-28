@@ -6,6 +6,7 @@ namespace Pumukit\NewAdminBundle\Form\Type;
 
 use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
+use Pumukit\SchemaBundle\Document\Tag;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -134,7 +135,7 @@ class TagType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => \Pumukit\SchemaBundle\Document\Tag::class,
+                'data_class' => Tag::class,
             ]
         );
 

@@ -82,11 +82,15 @@ uppy.on('upload-success', (file, response) => {
         }
     } else if(response.body.uploaded && response.body.uploaded === 'success') {
         if ('endPage' in response.body) {
+            success(response.body.message);
             window.location.href = response.body.endPage;
         }
         if ('window' in parent && 'mmId' in response.body) {
             parent.window.postMessage({'mmId': response.body.mmId}, '*');
         }
+    } else if(response.body.uploaded && response.body.uploaded === 'failed') {
+        $('#myModal').modal('hide');
+        no_success(response.body.message);
     } else {
         file_data_clear();
         return false;

@@ -156,7 +156,8 @@
                 <td>
                     &nbsp;{% if not is_naked() %}{{ track.id }} - {% endif %}<strong>{{ track.getTags()|profile }}</strong>
                     {{ track.getDescription() }}
-                    ({% if not is_naked() %}{{ track.getPath()|basename }}/{% endif %}{{ track.getLanguage()|default('')|language_name }})
+                    {% set lang = track.getLanguage()|default('') %}
+                    ({% if not is_naked() %}{{ track.getPath()|basename }}/{% endif %}{{ is_addon_language(lang) ? lang | language_name_custom : lang | language_name | capitalize }})
                     - {{ track.getDuration()|duration_string }}
                     - {{ (track.getSize() / 1048576)|number_format(2) }} MB
                     {% if track.getWidth() and track.getHeight() %}- {{ track.getWidth() }}x{{ track.getHeight() }}{% endif %}

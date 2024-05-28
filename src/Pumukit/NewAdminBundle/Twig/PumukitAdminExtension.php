@@ -19,6 +19,7 @@ use Pumukit\SchemaBundle\Services\SpecialTranslationService;
 use Pumukit\WebTVBundle\PumukitWebTVBundle;
 use Symfony\Component\Intl\Languages;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -38,7 +39,7 @@ class PumukitAdminExtension extends AbstractExtension
     private $eventService;
     private $enablePlaylist;
 
-    public function __construct(ProfileService $profileService, DocumentManager $documentManager, \Symfony\Contracts\Translation\TranslatorInterface $translator, RouterInterface $router, MultimediaObjectService $mmobjService, SpecialTranslationService $specialTranslationService, EmbeddedEventSessionService $eventService, $enablePlaylist)
+    public function __construct(ProfileService $profileService, DocumentManager $documentManager, TranslatorInterface $translator, RouterInterface $router, MultimediaObjectService $mmobjService, SpecialTranslationService $specialTranslationService, EmbeddedEventSessionService $eventService, $enablePlaylist)
     {
         $this->dm = $documentManager;
         $this->languages = Languages::getNames();
@@ -58,7 +59,7 @@ class PumukitAdminExtension extends AbstractExtension
             new TwigFilter('profile', [$this, 'getProfile']),
             new TwigFilter('display', [$this, 'getDisplay']),
             new TwigFilter('duration_string', [$this, 'getDurationString']),
-            new TwigFilter('language_name', [$this, 'getLanguageName']),
+            new TwigFilter('language_name_custom', [$this, 'getLanguageName']),
             new TwigFilter('status_icon', [$this, 'getStatusIcon']),
             new TwigFilter('status_text', [$this, 'getStatusText']),
             new TwigFilter('series_icon', [$this, 'getSeriesIcon']),
@@ -71,6 +72,7 @@ class PumukitAdminExtension extends AbstractExtension
             new TwigFilter('mms_announce_text', [$this, 'getMmsAnnounceText']),
             new TwigFilter('filter_profiles', [$this, 'filterProfiles']),
             new TwigFilter('count_multimedia_objects', [$this, 'countMultimediaObjects']),
+            new TwigFilter('count_lives', [$this, 'countLives']),
             new TwigFilter('next_session_event', [$this, 'getNextEventSession']),
             new TwigFilter('unescape', [$this, 'unescapeLabel']),
         ];
@@ -93,6 +95,7 @@ class PumukitAdminExtension extends AbstractExtension
             new TwigFunction('status_string_text_by_value', [$this, 'getStatusTextByValue']),
             new TwigFunction('role_string_text_by_value', [$this, 'getRoleTextByValue']),
             new TwigFunction('is_immutable', [$this, 'isImmutable']),
+            new TwigFunction('is_addon_language', [$this, 'isAddonLanguage']),
         ];
     }
 
@@ -169,6 +172,17 @@ class PumukitAdminExtension extends AbstractExtension
         }
 
         return $code;
+    }
+
+    public function isAddonLanguage(string $code): bool
+    {
+        $addonLanguages = CustomLanguageType::$addonLanguages;
+
+        if (isset($addonLanguages[$code])) {
+            return true;
+        }
+
+        return false;
     }
 
     public function getStatusIcon(int $status): string
@@ -374,6 +388,11 @@ class PumukitAdminExtension extends AbstractExtension
         return $this->dm->getRepository(MultimediaObject::class)->countInSeries($series);
     }
 
+    public function countLives(Series $series): int
+    {
+        return $this->dm->getRepository(MultimediaObject::class)->countLiveInSeries($series);
+    }
+
     public function getBroadcastDescription($broadcastType, $template, bool $isLive = false): string
     {
         $description = '';
@@ -439,7 +458,7 @@ class PumukitAdminExtension extends AbstractExtension
         return $id->getTimestamp();
     }
 
-    public function getNextEventSession(Multimediaobject $multimediaObject)
+    public function getNextEventSession(MultimediaObject $multimediaObject)
     {
         $now = new \DateTime();
         $now = $now->getTimestamp();
@@ -468,7 +487,7 @@ class PumukitAdminExtension extends AbstractExtension
         return $this->eventService->getDefaultPoster();
     }
 
-    public function getSortRoles(Multimediaobject $multimediaObject, bool $display = true): array
+    public function getSortRoles(MultimediaObject $multimediaObject, bool $display = true): array
     {
         static $rolesCached = [];
 

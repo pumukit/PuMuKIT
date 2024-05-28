@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Repository;
 
+use Doctrine\ODM\MongoDB\MongoDBException;
 use Doctrine\ODM\MongoDB\Query\Builder;
+use Doctrine\ODM\MongoDB\Query\Query;
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Regex;
@@ -243,14 +245,14 @@ class SeriesRepository extends DocumentRepository
 
     public function countPublic()
     {
-        return $this->getDocumentManager()
-            ->getRepository(MultimediaObject::class)
+        $validSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)
             ->createStandardQueryBuilder()
             ->distinct('series')
-            ->count()
             ->getQuery()
             ->execute()
         ;
+
+        return is_countable($validSeries) ? count($validSeries) : 0;
     }
 
     public function findWithTagAndSeriesType(TagInterface $tag, SeriesType $seriesType, array $sort = [], int $limit = 0, int $page = 0)
@@ -348,7 +350,7 @@ class SeriesRepository extends DocumentRepository
         return $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
     }
 
-    public function findByTitleWithLocaleQuery(string $title = '', string $locale = 'en', array $sort = [], int $limit = 0, int $page = 0): \Doctrine\ODM\MongoDB\Query\Query
+    public function findByTitleWithLocaleQuery(string $title = '', string $locale = 'en', array $sort = [], int $limit = 0, int $page = 0): Query
     {
         $qb = $this->findByTitleWithLocaleQueryBuilder($title, $locale, $sort, $limit, $page);
 
@@ -368,7 +370,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return array
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws MongoDBException
      */
     public function findUserSeries($user, $onlyAdminSeries = false)
     {

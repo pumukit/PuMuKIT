@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\WebTVBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\MongoDBException;
 use Doctrine\ODM\MongoDB\Query\Builder;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
@@ -75,7 +76,7 @@ class ListService
      *
      * @return array
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws MongoDBException
      */
     public function getMediaLibrary(array $criteria = [], $sort = 'date', $locale = 'en', $parentTag = null)
     {
@@ -185,7 +186,7 @@ class ListService
     /**
      * @return array
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws MongoDBException
      */
     public function getNextElementsByQueryBuilder(Builder $qb, \DateTime $date)
     {
@@ -253,7 +254,7 @@ class ListService
     /**
      * @return mixed
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws MongoDBException
      */
     private function getNextElementsByDates(Builder $qb, \DateTime $dateStart, \DateTime $dateEnd)
     {

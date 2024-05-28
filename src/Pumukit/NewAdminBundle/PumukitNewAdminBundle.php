@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\NewAdminBundle;
 
 use Pumukit\NewAdminBundle\DependencyInjection\Compiler\MenuPass;
+use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -12,6 +13,6 @@ class PumukitNewAdminBundle extends Bundle
 {
     public function build(ContainerBuilder $container)
     {
-        $container->addCompilerPass(new MenuPass(), \Symfony\Component\DependencyInjection\Compiler\PassConfig::TYPE_BEFORE_OPTIMIZATION, 0);
+        $container->addCompilerPass(new MenuPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 0);
     }
 }

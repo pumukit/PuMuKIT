@@ -146,7 +146,9 @@ class SearchController extends AbstractController implements WebTVControllerInte
 
         [$pager, $totalObjects] = $this->createPager($queryBuilder, $request->query->get('page', 1));
 
-        return $this->render('@PumukitWebTV/Search/template.html.twig', [
+        $template = $this->renderedTemplate();
+
+        return $this->render($template, [
             'type' => 'multimediaObject',
             'template_title' => $templateTitle,
             'template_list_grouped' => $templateListGrouped,
@@ -164,6 +166,11 @@ class SearchController extends AbstractController implements WebTVControllerInte
             'show_info' => true,
             'with_publicdate' => true,
         ]);
+    }
+
+    protected function renderedTemplate(): string
+    {
+        return '@PumukitWebTV/Search/template.html.twig';
     }
 
     protected function createPager($objects, $page): array

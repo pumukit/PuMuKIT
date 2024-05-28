@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\NewAdminBundle\Form\Type;
 
 use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
+use Pumukit\SchemaBundle\Document\Link;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -50,7 +51,7 @@ class LinkType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => \Pumukit\SchemaBundle\Document\Link::class,
+                'data_class' => Link::class,
             ]
         );
 

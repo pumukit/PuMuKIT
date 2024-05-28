@@ -8,6 +8,7 @@ use Pumukit\NewAdminBundle\Form\Type\Base\LicenseType;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nAdvanceType;
 use Pumukit\NewAdminBundle\Form\Type\Other\Html5dateType;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -101,7 +102,7 @@ class MultimediaObjectTemplateMetaType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => \Pumukit\SchemaBundle\Document\MultimediaObject::class,
+                'data_class' => MultimediaObject::class,
             ]
         );
 

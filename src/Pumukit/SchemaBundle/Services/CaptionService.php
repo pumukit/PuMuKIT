@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Services;
 
+use Doctrine\Common\Collections\Collection;
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
@@ -14,7 +15,7 @@ class CaptionService
     /**
      * Get VTT captions.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getCaptions(MultimediaObject $multimediaObject)
     {

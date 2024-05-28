@@ -16,6 +16,7 @@ use Pumukit\SchemaBundle\Utils\Search\SearchUtils;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class TagCatalogueService.
@@ -28,7 +29,7 @@ class TagCatalogueService
     private $dm;
 
     /**
-     * @var \Symfony\Contracts\Translation\TranslatorInterface
+     * @var TranslatorInterface
      */
     private $translator;
 
@@ -50,7 +51,7 @@ class TagCatalogueService
      * @param string $configuredTag
      * @param array  $locales
      */
-    public function __construct(DocumentManager $documentManager, \Symfony\Contracts\Translation\TranslatorInterface $translator, RouterInterface $router, $configuredTag, $locales)
+    public function __construct(DocumentManager $documentManager, TranslatorInterface $translator, RouterInterface $router, $configuredTag, $locales)
     {
         $this->dm = $documentManager;
         $this->translator = $translator;
@@ -187,8 +188,7 @@ class TagCatalogueService
         if (count($tag) > 0) {
             if ('all' === $tag[0]) {
                 array_shift($tag);
-            }
-            if (!empty($tag)) {
+            } else {
                 $newCriteria['tags.cod'] = ['$all' => $tag];
             }
         }

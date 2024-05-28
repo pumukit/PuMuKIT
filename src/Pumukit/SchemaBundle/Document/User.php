@@ -4,13 +4,21 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Document;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Doctrine\ODM\MongoDB\PersistentCollection;
 use MongoDB\BSON\ObjectId;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\UserRepository")
+ *
+ * @ApiResource(
+ *     collectionOperations={"get"={"method"="GET", "access_control"="is_granted('ROLE_ACCESS_API')"}},
+ *     itemOperations={"get"={"method"="GET", "access_control"="is_granted('ROLE_ACCESS_API')"}}
+ * )
  */
 class User implements UserInterface
 {
@@ -65,11 +73,13 @@ class User implements UserInterface
     /**
      * @MongoDB\Field(type="string")
      */
+    #[Ignore]
     protected $salt;
 
     /**
      * @MongoDB\Field(type="string")
      */
+    #[Ignore]
     protected $password;
 
     /**
@@ -80,6 +90,7 @@ class User implements UserInterface
     /**
      * @MongoDB\Field(type="string")
      */
+    #[Ignore]
     protected $plainPassword;
 
     /**
@@ -90,11 +101,13 @@ class User implements UserInterface
     /**
      * @MongoDB\Field(type="string")
      */
+    #[Ignore]
     protected $confirmationToken;
 
     /**
      * @MongoDB\Field(type="date")
      */
+    #[Ignore]
     protected $passwordRequestedAt;
 
     /**
@@ -294,7 +307,7 @@ class User implements UserInterface
     public function getGroupsIds(): array
     {
         // Performance boost (Don't repeat it, only if it's exceptionally necessary)
-        if ($this->groups instanceof \Doctrine\ODM\MongoDB\PersistentCollection && !$this->groups->isDirty()) {
+        if ($this->groups instanceof PersistentCollection && !$this->groups->isDirty()) {
             // See PersistentCollection class (coll + mongoData)
             return array_merge(
                 array_map(

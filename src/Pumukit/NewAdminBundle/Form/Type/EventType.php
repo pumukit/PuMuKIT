@@ -6,6 +6,7 @@ namespace Pumukit\NewAdminBundle\Form\Type;
 
 use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
 use Pumukit\NewAdminBundle\Form\Type\Other\EventscheduleType;
+use Pumukit\SchemaBundle\Document\Event;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -94,7 +95,7 @@ class EventType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => \Pumukit\SchemaBundle\Document\Event::class,
+                'data_class' => Event::class,
             ]
         );
 

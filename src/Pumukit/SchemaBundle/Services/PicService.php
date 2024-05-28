@@ -300,10 +300,10 @@ class PicService
         return $picUrl;
     }
 
-    protected function getAbsoluteUrlPic(?string $picUrl): string
+    protected function getAbsoluteUrlPic(?string $picUrl)
     {
         if (!$picUrl || '/' !== $picUrl[0]) {
-            return '';
+            return $picUrl;
         }
 
         return $this->scheme.'://'.$this->host.$picUrl;

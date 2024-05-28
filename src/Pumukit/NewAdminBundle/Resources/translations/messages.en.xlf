@@ -1938,6 +1938,14 @@
         <source>multimedia object(s)</source>
         <target>multimedia object(s)</target>
       </trans-unit>
+      <trans-unit id="68_0ssswqL" resname="live event(s)">
+        <source>live event(s)</source>
+        <target>live event(s)</target>
+      </trans-unit>
+      <trans-unit id="68_02fwqL" resname="and">
+        <source>and</source>
+        <target>and</target>
+      </trans-unit>
       <trans-unit id=".RXtNr9" resname="successfully deleted">
         <source>successfully deleted</source>
         <target>successfully deleted</target>
@@ -2025,6 +2033,14 @@
       <trans-unit id="8HYsTzv" resname="Are you sure?">
         <source>Are you sure?</source>
         <target>Are you sure?</target>
+      </trans-unit>
+      <trans-unit id="8HdfsdYsTzv" resname="Are you sure you want to delete this/these series">
+        <source>Are you sure you want to delete this/these series</source>
+        <target>Are you sure you want to delete this/these series</target>
+      </trans-unit>
+      <trans-unit id="8Hdfs44zv" resname="This/these series has/have">
+        <source>This/these series has/have</source>
+        <target>This/these series has/have</target>
       </trans-unit>
       <trans-unit id="uw0Ge.Y" resname="Multimedia Object(s) successfully deleted.">
         <source>Multimedia Object(s) successfully deleted.</source>

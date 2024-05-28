@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\MongoDBException;
 use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
@@ -63,7 +64,7 @@ class MultimediaObjectPicService
      *
      * @return mixed
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws MongoDBException
      */
     public function getRecommendedPics($multimediaObject)
     {
@@ -146,6 +147,24 @@ class MultimediaObjectPicService
         $this->dm->flush();
 
         $this->dispatcher->dispatchCreate($multimediaObject, $pic);
+
+        return $multimediaObject;
+    }
+
+    public function addPicFromPath(MultimediaObject $multimediaObject, string $filePath): MultimediaObject
+    {
+        if (!is_file($filePath)) {
+            throw new FileNotFoundException($filePath);
+        }
+
+        $pic = new Pic();
+        $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $filePath));
+        $pic->setPath($filePath);
+
+        $this->dm->persist($pic);
+        $multimediaObject->addPic($pic);
+
+        $this->dm->flush();
 
         return $multimediaObject;
     }

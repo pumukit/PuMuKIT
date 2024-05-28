@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Repository;
 
+use Doctrine\ODM\MongoDB\LockException;
+use Doctrine\ODM\MongoDB\MongoDBException;
 use Doctrine\ODM\MongoDB\Query\Builder;
+use Doctrine\ODM\MongoDB\Query\Query;
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Regex;
@@ -199,7 +202,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * @return mixed
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws MongoDBException
      */
     public function findByPersonIdWithRoleCod(string $personId, string $roleCod, array $sort = [], int $limit = 0, int $page = 0)
     {
@@ -233,7 +236,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return array
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws MongoDBException
      */
     public function findPeopleWithRoleCode($roleCode)
     {
@@ -429,7 +432,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param string $roleCod
      * @param array  $groups
      *
-     * @return \Doctrine\ODM\MongoDB\Query\Builder
+     * @return Builder
      */
     public function findByPersonIdAndRoleCodOrGroupsQueryBuilder($personId, $roleCod, $groups)
     {
@@ -458,7 +461,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return mixed
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws MongoDBException
      */
     public function findByPersonIdAndRoleCodOrGroups($personId, $roleCod, $groups)
     {
@@ -781,7 +784,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return mixed
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws MongoDBException
      */
     public function findBySeries(Series $series)
     {
@@ -861,7 +864,7 @@ class MultimediaObjectRepository extends DocumentRepository
         return $this->createQueryBuilder()->field('embeddedBroadcast.type')->equals($type);
     }
 
-    public function findByEmbeddedBroadcastTypeQuery(string $type): \Doctrine\ODM\MongoDB\Query\Query
+    public function findByEmbeddedBroadcastTypeQuery(string $type): Query
     {
         return $this->findByEmbeddedBroadcastTypeQueryBuilder($type)->getQuery();
     }
@@ -945,7 +948,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return object|null
      *
-     * @throws \Doctrine\ODM\MongoDB\LockException
+     * @throws LockException
      */
     public function findStandardOneBy(array $criteria)
     {
@@ -1005,6 +1008,11 @@ class MultimediaObjectRepository extends DocumentRepository
     public function countInSeries($series): int
     {
         return $this->createStandardQueryBuilder()->field('series')->references($series)->count()->getQuery()->execute();
+    }
+
+    public function countLiveInSeries($series): int
+    {
+        return $this->createStandardQueryBuilder()->field('series')->references($series)->field('type')->equals(MultimediaObject::TYPE_LIVE)->count()->getQuery()->execute();
     }
 
     public function findByTagCodQueryBuilder(TagInterface $tag): Builder
@@ -1083,7 +1091,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return mixed
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws MongoDBException
      */
     public function findAllAsIterable($filter_prototype = true)
     {
@@ -1351,7 +1359,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return array
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws MongoDBException
      */
     public function findNextEventSessions($multimediaObjectId)
     {
@@ -1434,7 +1442,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return array
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws MongoDBException
      */
     public function findNowEventSessions($multimediaObjectId = null, $limit = 0)
     {
@@ -1535,7 +1543,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @return array() A key/value hash where the key is the series id (string) and the value is the count
      * @return array
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws MongoDBException
      */
     public function countMmobjsBySeries($seriesList = [])
     {
@@ -1576,7 +1584,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @return array() A key/value hash where the key is the tag cod (string) and the value is the count
      * @return array
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws MongoDBException
      */
     public function countMmobjsByTagCods($tagCodsList = [])
     {

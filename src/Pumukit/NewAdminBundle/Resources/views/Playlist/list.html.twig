@@ -11,8 +11,8 @@
                         </label>
                     </div>
                 </th>
-                <th width="1%" id="th-icons"></th>
-                <th width="5%" id="th-img"></th>
+                <th {% if is_naked() %}colspan="2"{% endif %} id="th-icons"></th>
+                <th id="th-img"></th>
                 {% include '@PumukitNewAdmin/Playlist/listth.html.twig' %}
             </tr>
             </thead>
@@ -27,6 +27,11 @@
                             </label>
                         </div>
                     </td>
+                    {% if is_naked() %}
+                        <td headers="th-icons">
+                            <a class="moodlepr-add" href="#" title="{% trans %}Publish to LMS{% endtrans %}" onclick="parent.window.postMessage({'playlist': '{{ oneseries.id }}'}, '*'); return false;"><i class="mdi-editor-insert-photo"></i></a>
+                        </td>
+                    {% endif %}
                     <td headers="th-icons">
                         {% include '@PumukitNewAdmin/Playlist/updatemenu.html.twig' with {'oneseries': oneseries, 'numV': (oneseries|count_multimedia_objects)} %}
                     </td>
@@ -55,6 +60,9 @@
                     <tr>
                         <td headers="th-checkbox">&nbsp;</td>
                         <td headers="th-icons">&nbsp;</td>
+                        {% if is_naked() %}
+                            <td headers="th-icons">&nbsp;</td>
+                        {% endif %}
                         <td headers="th-img">&nbsp;</td>
                         <td headers="th-title">&nbsp;</td>
                         <td headers="th-mm">&nbsp;</td>

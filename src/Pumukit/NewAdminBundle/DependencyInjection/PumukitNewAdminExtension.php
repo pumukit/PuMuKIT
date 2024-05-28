@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\NewAdminBundle\DependencyInjection;
 
+use Pumukit\NewAdminBundle\EventListener\NakedBackofficeListener;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -43,7 +44,7 @@ class PumukitNewAdminExtension extends Extension
                 $arguments[] = '%pumukit.naked_custom_css_url%';
             }
 
-            $definition = new Definition(\Pumukit\NewAdminBundle\EventListener\NakedBackofficeListener::class, $arguments);
+            $definition = new Definition(NakedBackofficeListener::class, $arguments);
             $definition->addTag('kernel.event_listener', ['event' => 'kernel.controller', 'method' => 'onKernelController']);
             $container->setDefinition('pumukitnewadmin.nakedbackoffice', $definition);
         }

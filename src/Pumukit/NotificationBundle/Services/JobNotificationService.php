@@ -13,6 +13,7 @@ use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Security\Permission;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class JobNotificationService
 {
@@ -30,7 +31,7 @@ class JobNotificationService
     protected $subjectSuccessTrans;
     protected $subjectFailsTrans;
 
-    public function __construct(DocumentManager $documentManager, SenderService $senderService, JobService $jobService, \Symfony\Contracts\Translation\TranslatorInterface $translator, RouterInterface $router, $enable, $environment, $template, $subjectSuccess, $subjectFails, $subjectSuccessTrans, $subjectFailsTrans)
+    public function __construct(DocumentManager $documentManager, SenderService $senderService, JobService $jobService, TranslatorInterface $translator, RouterInterface $router, $enable, $environment, $template, $subjectSuccess, $subjectFails, $subjectSuccessTrans, $subjectFailsTrans)
     {
         $this->dm = $documentManager;
         $this->senderService = $senderService;

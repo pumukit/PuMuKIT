@@ -6,6 +6,7 @@ namespace Pumukit\NewAdminBundle\Form\Type;
 
 use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
+use Pumukit\SchemaBundle\Document\SeriesType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -56,7 +57,7 @@ class SeriestypeType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => \Pumukit\SchemaBundle\Document\SeriesType::class,
+                'data_class' => SeriesType::class,
             ]
         );
 

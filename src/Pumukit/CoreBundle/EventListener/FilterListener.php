@@ -9,6 +9,7 @@ use Pumukit\CoreBundle\Controller\AdminControllerInterface;
 use Pumukit\CoreBundle\Controller\PersonalControllerInterface;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\CoreBundle\Services\FilterService;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
 /**
  * Class FilterListener.
@@ -34,7 +35,7 @@ class FilterListener
     /**
      * @throws \MongoException
      */
-    public function onKernelController(\Symfony\Component\HttpKernel\Event\ControllerEvent $event): void
+    public function onKernelController(ControllerEvent $event): void
     {
         $canBeActivated = $this->filterService->checkFilterActivation($event);
         if (!$canBeActivated) {

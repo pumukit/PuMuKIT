@@ -8,6 +8,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class BreadcrumbsService.
@@ -34,7 +35,7 @@ class BreadcrumbsService
     public function __construct(
         RouterInterface $router,
         SessionInterface $session,
-        \Symfony\Contracts\Translation\TranslatorInterface $translator,
+        TranslatorInterface $translator,
         $allTitle = 'All',
         $allRoute = 'pumukit_webtv_medialibrary_index',
         $homeTitle = 'home',

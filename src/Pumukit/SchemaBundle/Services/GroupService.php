@@ -8,6 +8,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class GroupService
 {
@@ -21,7 +22,7 @@ class GroupService
     /**
      * Constructor.
      */
-    public function __construct(DocumentManager $documentManager, GroupEventDispatcherService $dispatcher, \Symfony\Contracts\Translation\TranslatorInterface $translator)
+    public function __construct(DocumentManager $documentManager, GroupEventDispatcherService $dispatcher, TranslatorInterface $translator)
     {
         $this->dm = $documentManager;
         $this->dispatcher = $dispatcher;
