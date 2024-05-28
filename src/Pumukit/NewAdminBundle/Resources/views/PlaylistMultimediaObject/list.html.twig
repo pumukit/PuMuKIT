@@ -10,12 +10,17 @@
                 </div>
             </th>
             <th colspan="{{ is_naked() ? 4 : 6 }}" width="5%"></th>
-            <th width="1%">{% trans %}Format{% endtrans %}</th>
-            <th width="5%"></th>
-            <th>{% trans %}Title{% endtrans %}</th>
-            <th width="1%">{% trans %}Duration{% endtrans %}</th>
-            <th width="1%">{% trans %}Recording{% endtrans %}</th>
-            <th width="1%">{% trans %}Publication{% endtrans %}</th>
+            <th id="th-img">{{ "Images"|trans }}</th>
+            <th id="th-title">{{ "Title"|trans }}</th>
+            <th id="th-type" class="text-center">{{ "Type"|trans }}</th>
+            <th id="th-media" class="text-center">{{ "Media"|trans }}</th>
+            <th id="th-duration" class="text-center">{{ "Duration"|trans }}</th>
+            <th id="th-rec-date">{{ "Recording"|trans }}</th>
+            <th id="th-pub-date">{{ "Publication"|trans }}</th>
+            <th id="th-channel" class="text-center">{{ "WebTV"|trans }}</th>
+            <th id="th-broadcast" class="text-center">{{ "Broadcast"|trans }}</th>
+            <th id="th-views" class="text-center">{{ "Views"|trans }}</th>
+            <th id="th-play">&nbsp;</th>
         </tr>
         </thead>
 
@@ -65,15 +70,28 @@
                     {% endif %}
                 </td>
                 <td>
-                    <span>{{ mm.isOnlyAudio() ? 'Audio':'Video' }}</span>
-                </td>
-                <td>
                     <img class="mini" src="{{ mm|first_url_pic(false, false) }}" alt="{% trans %}No_pic{% endtrans %}" height="23" width="30">
                 </td>
                 <td>
                     {{ mm.getTitle() }}
                 </td>
-                <td>
+                <td class="text-center">
+                    {% if mm.isVideoType() %}
+                        <i class="fa fa-file-video" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>
+                    {% elseif mm.isAudioType() %}
+                        <i class="fa fa-file-audio" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>
+                    {% elseif mm.isImageType() %}
+                        <i class="fa fa-file-image" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>
+                    {% elseif mm.isDocumentType() %}
+                        <i class="fa fa-file-alt" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>
+                    {% elseif mm.isExternalType() %}
+                        <i class="fa fa-link" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>
+                    {% endif %}
+                </td>
+                <td class="text-center">
+                    {{ mm.medias|length }}
+                </td>
+                <td class="text-center">
                     {{ mm.getRealDuration()| duration_string }}
                     {% if mm.getProperty('soft-editing-duration') %}
                         <i class="mdi-content-content-cut" data-toggle="tooltip" data-placement="left" title="{{ mmobj_duration(mm) | duration_string }}"></i>
@@ -84,6 +102,30 @@
                 </td>
                 <td class="text-nowrap">
                     {{ mm.getPublicDate()| format_datetime('medium','none',locale=app.request.getLocale()) }}
+                </td>
+                <td class="text-center">
+                    {% if mm.containsTagWithCod('PUCHWEBTV') %}
+                        <i class="fa fa-check text-success"></i>
+                    {% else %}
+                        <i class="fa fa-times text-danger"></i>
+                    {% endif %}
+                </td>
+                <td class="text-center">
+                    {% if mm.getEmbeddedBroadcast().getType() == 'public' %}
+                        <i class="fa fa-globe" title="{{ mm.getEmbeddedBroadcast().getStringType() }}"></i>
+                    {% elseif mm.getEmbeddedBroadcast().getType() == 'password' %}
+                        <i class="fa fa-unlock" title="{{ mm.getEmbeddedBroadcast().getStringType() }}"></i>
+                    {% elseif mm.getEmbeddedBroadcast().getType() == 'login' %}
+                        <i class="fa fa-user" title="{{ mm.getEmbeddedBroadcast().getStringType() }}"></i>
+                    {% elseif mm.getEmbeddedBroadcast().getType() == 'groups' %}
+                        <i class="fa fa-users" title="{{ mm.getEmbeddedBroadcast().getStringType() }}"></i>
+                    {% endif %}
+                </td>
+                <td class="text-center">
+                    <span>{{ mm.getNumview() }}</span>
+                </td>
+                <td onclick="dblclick_preview_mm('{{ mm.id }}')">
+                    <small><i class="fa fa-play" style="color: grey"></i></small>
                 </td>
             </tr>
         {% else %}
@@ -119,12 +161,17 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
             </tr>
         {% endfor %}
         </tbody>
         <tfoot>
         <tr>
-            <th colspan="13" class="foot-td">
+            <th colspan="18" class="foot-td">
                 <div class="row">
                     <div class="col-md-6">
                         {{ mms.getNbResults }} {% trans %}Mm. Obj.{% endtrans %}
