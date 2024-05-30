@@ -39,6 +39,8 @@
             <td {% if all_custom_fields[field]['render_params']['break-word'] == true %}style="word-break: break-word;"{% endif %} headers="th-{{ loop.index }}" title="{{ text|striptags }}" onclick="{{ click_edit }}">
                 {% if field in ['record_date','public_date'] %}
                     {{ text| format_datetime('medium','none',locale=app.request.getLocale()) }}
+                {% elseif field is same as('title') %}
+                    <span class="shorten-title">{{ text|raw }}</span>
                 {% elseif field is same as('type') %}
                     {% if mm.isVideoType() %}
                         <i class="fa fa-file-video" data-toggle="tooltip" data-placement="right" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>

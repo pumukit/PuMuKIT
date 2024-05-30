@@ -73,7 +73,7 @@
                     <img class="mini" src="{{ mm|first_url_pic(false, false) }}" alt="{% trans %}No_pic{% endtrans %}" height="23" width="30">
                 </td>
                 <td>
-                    {{ mm.getTitle() }}
+                    <span class="shorten-title">{{ mm.getTitle() }}</span>
                 </td>
                 <td class="text-center">
                     {% if mm.isVideoType() %}
