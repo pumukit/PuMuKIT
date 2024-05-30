@@ -70,7 +70,7 @@ class Builder implements ContainerAwareInterface
 
         if ($this->authorizationChecker->isGranted(Permission::ACCESS_EDIT_PLAYLIST) && $this->container->getParameter('pumukit_new_admin.enable_playlist')) {
             $options = ['route' => 'pumukitnewadmin_playlist_index', 'attributes' => ['class' => 'menu_playlists_index']];
-            $mediaManager->addChild('Moodle Playlists', $options);
+            $mediaManager->addChild('Playlists', $options);
         }
     }
 

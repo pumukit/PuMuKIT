@@ -1,3 +1,4 @@
+{% if series.sorting == constant('SORT_MANUAL', series) %}
 <td headers="th-icons" style="width: 1em;">
     {% if mms.getCurrentPage() != 1 or not loop.first %}
         {% apply spaceless %}
@@ -18,3 +19,4 @@
         {% endapply %}
     {% endif %}
 </td>
+{% endif %}
