@@ -266,7 +266,7 @@ class SeriesController extends AdminController
 
         $seriesId = $series->getId();
 
-        $seriesSessionId = $this->session->get('admin/mms/id');
+        $seriesSessionId = $this->session->get('admin/series/id');
         if ($seriesId === $seriesSessionId) {
             $this->session->remove('admin/series/id');
         }

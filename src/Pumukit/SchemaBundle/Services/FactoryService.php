@@ -349,18 +349,34 @@ class FactoryService
      */
     public function deleteSeries(Series $series)
     {
-        $repoMmobjs = $this->dm->getRepository(MultimediaObject::class);
-
-        $multimediaObjects = $repoMmobjs->findBySeries($series);
+        $multimediaObjects = $this->dm->getRepository(MultimediaObject::class)->findBySeries($series);
         foreach ($multimediaObjects as $mm) {
             $this->dm->remove($mm);
             $this->mmsDispatcher->dispatchDelete($mm);
         }
 
-        $this->dm->remove($series);
         $this->dm->flush();
 
-        $this->seriesDispatcher->dispatchDelete($series);
+        if ($this->dm->getFilterCollection()->isEnabled('backoffice')) {
+            $this->dm->getFilterCollection()->disable('backoffice');
+
+            $seriesHaveMoreObjects = $this->dm->getRepository(MultimediaObject::class)->findBy([
+                'series' => $series,
+                'status' => ['$ne' => MultimediaObject::STATUS_PROTOTYPE],
+            ]);
+
+            if (!$seriesHaveMoreObjects) {
+                $this->dm->remove($series);
+                $this->dm->flush();
+                $this->seriesDispatcher->dispatchDelete($series);
+            }
+
+            $this->dm->getFilterCollection()->enable('backoffice');
+        } else {
+            $this->dm->remove($series);
+            $this->dm->flush();
+            $this->seriesDispatcher->dispatchDelete($series);
+        }
     }
 
     /**
