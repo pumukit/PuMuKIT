@@ -25,7 +25,7 @@
     <div class="row">
         {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
             <div id="tv_admin_content" class="col-md-10">
-                <div class="{% if not is_naked() %}well{% endif %}">
+                <div class="well">
                     <div id="list_mms">
                         {% include '@PumukitNewAdmin/MultimediaObject/list.html.twig' %}
                     </div>
