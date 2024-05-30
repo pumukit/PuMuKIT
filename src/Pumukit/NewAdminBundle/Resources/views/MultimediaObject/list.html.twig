@@ -38,7 +38,7 @@
                         {% include "@PumukitNewAdmin/Misc/img_list.html.twig"  with {'object' : mm, 'type': 'mm' } %}
                     </td>
                     <td headers="th-title" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
-                        {{ mm.getTitle() }}
+                        <span class="shorten-title">{{ mm.getTitle() }}</span>
                     </td>
                     <td headers="th-type" class="text-center" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
                         {% if mm.isVideoType() %}
