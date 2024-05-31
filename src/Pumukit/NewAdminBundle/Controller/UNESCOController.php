@@ -493,6 +493,8 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $type = [
             MultimediaObject::TYPE_VIDEO => $this->translator->trans('Video'),
             MultimediaObject::TYPE_AUDIO => $this->translator->trans('Audio'),
+            MultimediaObject::TYPE_IMAGE => $this->translator->trans('Image'),
+            MultimediaObject::TYPE_DOCUMENT => $this->translator->trans('Document'),
             MultimediaObject::TYPE_EXTERNAL => $this->translator->trans('External player'),
         ];
 
