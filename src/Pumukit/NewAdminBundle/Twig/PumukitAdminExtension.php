@@ -85,6 +85,7 @@ class PumukitAdminExtension extends AbstractExtension
             new TwigFunction('php_upload_max_filesize', [$this, 'getPhpUploadMaxFileSize']),
             new TwigFunction('path_exists', [$this, 'existsRoute']),
             new TwigFunction('is_playable_on_playlist', [$this, 'isPlayableOnPlaylist']),
+            new TwigFunction('predefined_languages', [$this, 'getPredefinedLanguages']),
             new TwigFunction('is_mmobj_owner', [$this, 'isUserOwner']),
             new TwigFunction('broadcast_description', [$this, 'getBroadcastDescription']),
             new TwigFunction('is_naked', [$this, 'isNaked'], ['needs_environment' => true]),
@@ -184,6 +185,11 @@ class PumukitAdminExtension extends AbstractExtension
         }
 
         return false;
+    }
+
+    public function getPredefinedLanguages(): array
+    {
+        return array_merge($this->languages, CustomLanguageType::$addonLanguages);
     }
 
     public function getStatusIcon(int $status): string
@@ -390,9 +396,9 @@ class PumukitAdminExtension extends AbstractExtension
         return $this->dm->getRepository(MultimediaObject::class)->countInSeries($series);
     }
 
-    public function countLives(Series $series): int
+    public function countEvents(Series $series): int
     {
-        return $this->dm->getRepository(MultimediaObject::class)->countLiveInSeries($series);
+        return $this->dm->getRepository(MultimediaObject::class)->countEventsInSeries($series);
     }
 
     public function getBroadcastDescription($broadcastType, $template, bool $isLive = false): string
