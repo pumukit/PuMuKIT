@@ -78,6 +78,7 @@ RUN apt-get update \
 		redis \
 		&& pecl clear-cache
 
+
 COPY --from=linuxserver/ffmpeg:version-6.0-cli /usr/local /usr/local
 
 RUN \
@@ -100,11 +101,13 @@ RUN \
     libxext6 \
     libxfixes3 \
     libxml2 \
-	libimage-exiftool-perl \
-	imagemagick \
+    libimage-exiftool-perl \
+    imagemagick \
+    darktable \
     ocl-icd-libopencl1 && \
-  echo "**** clean up ****" && \
-	apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
+    echo "**** clean up ****" && \
+    apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
+
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
