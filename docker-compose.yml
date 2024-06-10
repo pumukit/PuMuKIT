@@ -14,10 +14,10 @@ services:
     depends_on:
       - db
     volumes:
-      # Comment out the next lines in production
+      # Uncomment the next lines in production
       # - ./public/storage:/srv/pumukit/public/storage:rw,cached
       # - ./public/uploads:/srv/pumukit/public/uploads:rw,cached
-      # Comment out the next line for dev
+      # Uncomment the next line for dev
       - ./:/srv/pumukit
 
   proxy:
@@ -33,10 +33,10 @@ services:
     depends_on:
       - php
     volumes:
-      # Comment out the next lines in production
+      # Uncomment the next lines in production
       # - ./public/storage:/srv/pumukit/public/storage:rw,cached
       # - ./public/uploads:/srv/pumukit/public/uploads:rw,cached
-      # Comment out the next line for dev
+      # Uncomment the next line for dev
       - ./:/srv/pumukit
     ports:
       - "80:80"
