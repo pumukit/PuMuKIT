@@ -78,6 +78,8 @@ RUN apt-get update \
 		redis \
 		&& pecl clear-cache
 
+COPY --from=linuxserver/ffmpeg:version-6.0-cli /usr/local /usr/local
+
 RUN \
 	echo "**** install runtime ****" && \
 	apt-get update && \
@@ -103,7 +105,6 @@ RUN \
 	echo "**** clean up ****" && \
 	apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
-COPY --from=linuxserver/ffmpeg:version-6.0-cli /usr/local /usr/local
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 COPY docker/pumukit/php.ini /usr/local/etc/php/php.ini
