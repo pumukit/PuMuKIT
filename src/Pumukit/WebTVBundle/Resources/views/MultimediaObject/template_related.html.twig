@@ -2,14 +2,14 @@
     <div class="panel panel-default panel-pmk panel-related">
         <div class="panel-heading">
             <h2 class="panel-title">
-                {% trans %}Videos you may also be interested in{% endtrans %}
+                {% trans %}Content you may also be interested in{% endtrans %}
             </h2>
         </div>
         <div class="panel-body">
             {% for multimediaObject in multimediaObjects %}
                 {% include '@PumukitWebTV/Resources/template_video_vertical.html.twig' with {'object': multimediaObject} %}
             {% else %}
-                {% trans %}There are no videos with these specifications{% endtrans %}
+                {% trans %}There are no content with these specifications{% endtrans %}
             {% endfor %}
         </div>
     </div>

@@ -20,7 +20,18 @@
 <div class="panel panel-default panel-pmk">
     <div class="panel-heading" data-toggle="collapse" data-target="#shareBars" aria-expanded="false" aria-controls="shareBars" role="button">
         <h2 class="panel-title">
-            {% trans %}Share this video{% endtrans %}
+            {% trans %}Share this{% endtrans %}
+            {% if multimediaObject.isVideoType() %}
+                {{ multimediaObject.getStringType(multimediaObject.getType())|trans|lower }}
+            {% elseif multimediaObject.isAudioType() %}
+                {{ multimediaObject.getStringType(multimediaObject.getType())|trans|lower }}
+            {% elseif multimediaObject.isImageType() %}
+                {{ multimediaObject.getStringType(multimediaObject.getType())|trans|lower }}
+            {% elseif multimediaObject.isDocumentType() %}
+                {{ multimediaObject.getStringType(multimediaObject.getType())|trans|lower }}
+            {% elseif multimediaObject.isExternalType() %}
+                {{ multimediaObject.getStringType(multimediaObject.getType())|trans|lower ~" multimedia object"|trans|lower }}
+            {% endif %}
         </h2>
     </div>
     <div class="panel-body">

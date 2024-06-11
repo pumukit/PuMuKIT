@@ -45,9 +45,17 @@
         <source>Videos you may also be interested in</source>
         <target>Videos you may also be interested in</target>
       </trans-unit>
+      <trans-unit id="6njl45RCj" resname="Content you may also be interested in">
+        <source>Content you may also be interested in</source>
+        <target>Content you may also be interested in</target>
+      </trans-unit>
       <trans-unit id="maiyxjk" resname="Videos from same Series">
         <source>Videos from same Series</source>
         <target>Videos from same Series</target>
+      </trans-unit>
+      <trans-unit id="maiydfgxjk" resname="Content from same Series">
+        <source>Content from same Series</source>
+        <target>Content from same Series</target>
       </trans-unit>
       <trans-unit id="V6sZ0yf" resname="Record Date">
         <source>Record Date</source>
@@ -88,6 +96,10 @@
       <trans-unit id="wTlux3Y" resname="There are no videos with these specifications">
         <source>There are no videos with these specifications</source>
         <target>There are no videos with these specifications</target>
+      </trans-unit>
+      <trans-unit id="wT565x3Y" resname="There are no content with these specifications">
+        <source>There are no content with these specifications</source>
+        <target>There are no content with these specifications</target>
       </trans-unit>
       <trans-unit id="eNInDAJ" resname="Date of holding">
         <source>Date of holding</source>
@@ -152,6 +164,18 @@
       <trans-unit id="1aCgwUQ" resname="Video/Audio">
         <source>Video/Audio</source>
         <target>Video/Audio</target>
+      </trans-unit>
+      <trans-unit id="1aCg45wUQ" resname="Image">
+        <source>Image</source>
+        <target>Image</target>
+      </trans-unit>
+      <trans-unit id="1aCgwU14Q" resname="Document">
+        <source>Document</source>
+        <target>Document</target>
+      </trans-unit>
+      <trans-unit id="1aC554gwUQ" resname="External multimedia object">
+        <source>External multimedia object</source>
+        <target>External multimedia object</target>
       </trans-unit>
       <trans-unit id="gWlpMQG" resname="Start date">
         <source>Start date</source>
@@ -257,6 +281,10 @@
         <source>Share this video</source>
         <target>Share this video</target>
       </trans-unit>
+      <trans-unit id="fl18765mLs" resname="Share this">
+        <source>Share this</source>
+        <target>Share this</target>
+      </trans-unit>
       <trans-unit id="c0.XezY" resname="URL:">
         <source>URL:</source>
         <target>URL:</target>
@@ -272,6 +300,10 @@
       <trans-unit id="8NXUTbx" resname="Private video">
         <source>Private video</source>
         <target>Private video</target>
+      </trans-unit>
+      <trans-unit id="8NXU546Tbx" resname="Private content">
+        <source>Private content</source>
+        <target>Private content</target>
       </trans-unit>
       <trans-unit id="zduNAuo" resname="{0}0 Videos|{1}%count% Video|]1,Inf[%count% Videos">
         <source>{0}0 Videos|{1}%count% Video|]1,Inf[%count% Videos</source>
@@ -292,6 +324,10 @@
       <trans-unit id="BcxKeUd" resname="This video is private with restricted access">
         <source>This video is private with restricted access</source>
         <target>This video is private with restricted access</target>
+      </trans-unit>
+      <trans-unit id="BcdfdxKeUd" resname="This content is private with restricted access">
+        <source>This content is private with restricted access</source>
+        <target>This content is private with restricted access</target>
       </trans-unit>
       <trans-unit id="Qr4xNv4" resname="Log in is required to watch it">
         <source>Log in is required to watch it</source>
