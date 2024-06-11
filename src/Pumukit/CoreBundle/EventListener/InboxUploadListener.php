@@ -25,6 +25,10 @@ class InboxUploadListener
     {
         $filePath = $this->inboxPath.'/'.$event->getFileName();
 
+        if (null !== $event->getSeries()) {
+            $filePath = $this->inboxPath.'/'.$event->getSeries().'/'.$event->getFileName();
+        }
+
         $command = [
             'php',
             $this->kernelProjectDir.'/bin/console',

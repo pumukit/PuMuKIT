@@ -145,8 +145,11 @@ EOT
             $objectId = new ObjectId($seriesId);
             $series = $this->documentManager->getRepository(Series::class)->findOneBy(['_id' => $objectId]);
         } catch (\Exception $e) {
-            $seriesTitle = $this->i18nService->generateI18nText($seriesId);
-            $series = $this->factoryService->createSeries(null, $seriesTitle);
+            $series = $this->documentManager->getRepository(Series::class)->findByTitleWithLocaleQuery($seriesId, $locale)->getSingleResult();
+            if (!$series) {
+                $seriesTitle = $this->i18nService->generateI18nText($seriesId);
+                $series = $this->factoryService->createSeries(null, $seriesTitle);
+            }
         }
 
         if (!$series instanceof Series) {
