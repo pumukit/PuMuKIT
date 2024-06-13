@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\CoreBundle\EventListener;
 
+use MongoDB\BSON\ObjectId;
 use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Event\UploadFileEvent;
 use Symfony\Component\Process\Process;
@@ -25,7 +26,9 @@ class InboxUploadListener
     {
         $filePath = $this->inboxPath.'/'.$event->getFileName();
 
-        if (null !== $event->getSeries()) {
+        try {
+            $objectId = new ObjectId($event->getSeries());
+        } catch (\Exception $e) {
             $filePath = $this->inboxPath.'/'.$event->getSeries().'/'.$event->getFileName();
         }
 
