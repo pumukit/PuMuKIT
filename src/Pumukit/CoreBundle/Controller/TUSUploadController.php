@@ -2,6 +2,7 @@
 
 namespace Pumukit\CoreBundle\Controller;
 
+use MongoDB\BSON\ObjectId;
 use Pumukit\CoreBundle\Services\InboxService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,9 +25,13 @@ class TUSUploadController extends AbstractController
      */
     public function server(Request $request, Server $server)
     {
-        if ('tus_post' === $request->attributes->get('_route') && !empty($request->get('series'))) {
-            $path = $this->inboxService->inboxPath().'/'.$request->get('series');
-            $server->setUploadDir($path);
+        try {
+            $objectId = new ObjectId($request->get('series'));
+        } catch (\Exception $e) {
+            if ('tus_post' === $request->attributes->get('_route') && !empty($request->get('series'))) {
+                $path = $this->inboxService->inboxPath().'/'.$request->get('series');
+                $server->setUploadDir($path);
+            }
         }
 
         return $server->serve();
