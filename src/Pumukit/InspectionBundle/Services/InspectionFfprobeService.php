@@ -80,7 +80,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
 
     private function getMediaInfo(string $file): string
     {
-        $command = str_replace('{{file}}', $file, $this->command);
+        $command = str_replace('{{file}}', escapeshellarg($file), $this->command);
         $command = str_replace('"', "'", $command);
 
         $process = Process::fromShellCommandline($command);
