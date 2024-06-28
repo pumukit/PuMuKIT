@@ -40,8 +40,8 @@ final class PlayerController extends BasePlayerController
     }
 
     /**
-     * @Route("/player/magic/{id}", name="pumukit_player_magic_index")
-     * @Route("/iframe/player/magic/{id}", name="pumukit_player_magic_index_iframe")
+     * @Route("/player/magic/{secret}", name="pumukit_player_magic_index")
+     * @Route("/iframe/player/magic/{secret}", name="pumukit_player_magic_index_iframe")
      *
      * @Template("@PumukitBasePlayer/player.html.twig")
      */
