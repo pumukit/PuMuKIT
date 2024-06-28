@@ -349,13 +349,11 @@ class FactoryService
      */
     public function deleteSeries(Series $series)
     {
-        $multimediaObjects = $this->dm->getRepository(MultimediaObject::class)->findBySeries($series);
+        $multimediaObjects = $this->dm->getRepository(MultimediaObject::class)->findStandardBySeries($series);
         foreach ($multimediaObjects as $mm) {
             $this->dm->remove($mm);
             $this->mmsDispatcher->dispatchDelete($mm);
         }
-
-        $this->dm->flush();
 
         if ($this->dm->getFilterCollection()->isEnabled('backoffice')) {
             $this->dm->getFilterCollection()->disable('backoffice');
