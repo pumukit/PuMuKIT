@@ -141,7 +141,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
                 throw $this->createNotFoundException();
             }
 
-            if ($track->containsTag('download')) {
+            if ($track->tags()->containsTag('download')) {
                 $url = $track->getUrl();
                 $url .= (parse_url($url, PHP_URL_QUERY) ? '&' : '?').'forcedl=1';
 
