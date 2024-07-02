@@ -56,6 +56,10 @@ final class PlayerController extends BasePlayerController
             return $response;
         }
 
+        if (false !== strpos($request->headers->get('referer'), 'admin')) {
+            $this->dispatchViewEvent($multimediaObject);
+        }
+
         return [
             'object' => $multimediaObject,
             'media' => $this->checkMultimediaObjectTracks($request, $multimediaObject),
