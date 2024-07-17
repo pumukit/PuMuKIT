@@ -9,6 +9,7 @@ use Doctrine\ODM\MongoDB\LockException;
 use Doctrine\ODM\MongoDB\Mapping\MappingException;
 use Doctrine\ODM\MongoDB\MongoDBException;
 use MongoDB\BSON\ObjectId;
+use Psr\Log\LoggerInterface;
 use Pumukit\SchemaBundle\Document\Annotation;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -41,6 +42,7 @@ class FactoryService
     private $defaultLicense;
     private $addUserAsPerson;
     private $textIndexService;
+    private LoggerInterface $logger;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -53,6 +55,7 @@ class FactoryService
         SeriesEventDispatcherService $seriesDispatcher,
         TranslatorInterface $translator,
         AutoNumericValueService $autoNumericValueService,
+        LoggerInterface $logger,
         $addUserAsPerson = true,
         array $locales = [],
         $defaultCopyright = '',
@@ -74,6 +77,7 @@ class FactoryService
         $this->defaultLicense = $defaultLicense;
         $this->addUserAsPerson = $addUserAsPerson;
         $this->textIndexService = $textIndexService;
+        $this->logger = $logger;
     }
 
     /**
@@ -355,7 +359,7 @@ class FactoryService
             $this->mmsDispatcher->dispatchDelete($mm);
         }
 
-        $this->dm->flush();
+        $this->logger->warning('Deleting series '.$series->getId());
 
         if ($this->dm->getFilterCollection()->isEnabled('backoffice')) {
             $this->dm->getFilterCollection()->disable('backoffice');
