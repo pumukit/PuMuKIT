@@ -306,7 +306,7 @@ class SeriesController extends AdminController
 
         $deleteSeriesCount = 0;
         foreach ($ids as $id) {
-            $series = $this->find($id);
+            $series = $this->documentManager->getRepository(Series::class)->findOneBy(['_id' => new ObjectId($id)]);
             if (!$series || !$this->isUserAllowedToDelete($series)) {
                 continue;
             }
