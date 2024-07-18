@@ -88,7 +88,7 @@ class StatsService
     /**
      * Returns an array of mmobj viewed on the given range and its number of views on that range.
      */
-    public function getMmobjsMostViewedByRange(array $criteria = [], array $options = []): array
+    public function getMmobjsMostViewedByRange(array $criteria = [], array $options = [], string $locale = 'en'): array
     {
         $ids = [];
         $idsWithVis = [];
@@ -96,7 +96,7 @@ class StatsService
         $viewsLogColl = $this->dm->getDocumentCollection($this->collectionName);
 
         $matchExtra = [];
-        $mmobjIds = $this->getMmobjIdsWithCriteria($criteria);
+        $mmobjIds = $this->getMmobjIdsWithCriteria($criteria, $locale);
         $matchExtra['multimediaObject'] = ['$in' => $mmobjIds];
 
         $options = $this->parseOptions($options);
@@ -129,7 +129,7 @@ class StatsService
     /**
      * Returns an array of series viewed on the given range and its number of views on that range.
      */
-    public function getSeriesMostViewedByRange(array $criteria = [], array $options = []): array
+    public function getSeriesMostViewedByRange(array $criteria = [], array $options = [], string $locale = 'en'): array
     {
         $ids = [];
         $idsWithVis = [];
@@ -137,7 +137,7 @@ class StatsService
 
         $matchExtra = [];
 
-        $seriesIds = $this->getSeriesIdsWithCriteria($criteria);
+        $seriesIds = $this->getSeriesIdsWithCriteria($criteria, $locale);
         $matchExtra['series'] = ['$in' => $seriesIds];
 
         $options = $this->parseOptions($options);
@@ -172,9 +172,9 @@ class StatsService
      * If $options['criteria_mmobj'] exists, a query will be executed to filter using the resulting mmobj ids.
      * If $options['criteria_series'] exists, a query will be executed to filter using the resulting series ids.
      */
-    public function getTotalViewedGrouped(array $options = []): array
+    public function getTotalViewedGrouped(array $options = [], string $locale = 'en'): array
     {
-        return $this->getGroupedByAggrPipeline($options);
+        return $this->getGroupedByAggrPipeline($options, [], $locale);
     }
 
     /**
@@ -199,18 +199,18 @@ class StatsService
      * @param mixed $options
      * @param mixed $matchExtra
      */
-    public function getGroupedByAggrPipeline($options = [], $matchExtra = [])
+    public function getGroupedByAggrPipeline($options = [], $matchExtra = [], string $locale = 'en')
     {
         $viewsLogColl = $this->dm->getDocumentCollection($this->collectionName);
         $options = $this->parseOptions($options);
 
         if (!$matchExtra) {
             if ($options['criteria_series']) {
-                $seriesIds = $this->getSeriesIdsWithCriteria($options['criteria_series']);
+                $seriesIds = $this->getSeriesIdsWithCriteria($options['criteria_series'], $locale);
                 $matchExtra['series'] = ['$in' => $seriesIds];
             }
             if ($options['criteria_mmobj']) {
-                $mmobjIds = $this->getMmobjIdsWithCriteria($options['criteria_mmobj']);
+                $mmobjIds = $this->getMmobjIdsWithCriteria($options['criteria_mmobj'], $locale);
                 $matchExtra['multimediaObject'] = ['$in' => $mmobjIds];
             }
         }
@@ -369,20 +369,38 @@ class StatsService
      *
      * @param mixed $criteria
      */
-    private function getMmobjIdsWithCriteria($criteria)
+    private function getMmobjIdsWithCriteria($criteria, string $locale = 'en')
     {
         $qb = $this->repo->createStandardQueryBuilder();
-        if ($criteria) {
+        if (isset($criteria['$text'])) {
+            $qb->field('$text')->equals([
+                '$search' => $criteria['$text']['$search'],
+                '$language' => $locale,
+            ]);
+
+            unset($criteria['$text']);
+        }
+
+        if (!empty($criteria)) {
             $qb->addAnd($criteria);
         }
 
         return $qb->distinct('_id')->getQuery()->execute();
     }
 
-    private function getSeriesIdsWithCriteria($criteria)
+    private function getSeriesIdsWithCriteria($criteria, string $locale = 'en')
     {
         $qb = $this->repoSeries->createQueryBuilder();
-        if ($criteria) {
+        if (isset($criteria['$text'])) {
+            $qb->field('$text')->equals([
+                '$search' => $criteria['$text']['$search'],
+                '$language' => $locale,
+            ]);
+
+            unset($criteria['$text']);
+        }
+
+        if (!empty($criteria)) {
             $qb->addAnd($criteria);
         }
 

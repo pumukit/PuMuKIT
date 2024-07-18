@@ -44,7 +44,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
         $options['page'] = $page;
         $options['sort'] = $sort;
 
-        [$mmobjs, $total] = $this->statsService->getMmobjsMostViewedByRange($criteria, $options);
+        [$mmobjs, $total] = $this->statsService->getMmobjsMostViewedByRange($criteria, $options, $request->getLocale());
 
         $views = [
             'limit' => $limit,
@@ -76,7 +76,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
         $options['page'] = $page;
         $options['sort'] = $sort;
 
-        [$series, $total] = $this->statsService->getSeriesMostViewedByRange($criteria, $options);
+        [$series, $total] = $this->statsService->getSeriesMostViewedByRange($criteria, $options, $request->getLocale());
 
         $views = [
             'limit' => $limit,
@@ -116,7 +116,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
         $options['criteria_mmobj'] = $criteria_mmobj;
         $options['criteria_series'] = $criteria_series;
 
-        [$views, $total] = $this->statsService->getTotalViewedGrouped($options);
+        [$views, $total] = $this->statsService->getTotalViewedGrouped($options, $request->getLocale());
 
         $views = [
             'limit' => $limit,
