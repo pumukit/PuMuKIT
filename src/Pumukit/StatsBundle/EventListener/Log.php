@@ -37,7 +37,7 @@ class Log
             return;
         }
 
-        $userAgent = utf8_encode($request->headers->get('user-agent'));
+        $userAgent = mb_convert_encoding($request->headers->get('user-agent'), 'UTF-8', 'ISO-8859-1');
 
         if (false !== strpos($userAgent, 'TTK Zabbix Agent')) {
             return;
