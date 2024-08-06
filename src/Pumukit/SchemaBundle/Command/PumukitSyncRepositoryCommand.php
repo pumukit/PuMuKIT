@@ -131,7 +131,7 @@ EOT
         ;
 
         if ($pendingJobsId) {
-            $qb->field('properties.'.$type.'_jobs')->notIn(array_keys($pendingJobsId));
+            $qb->field('properties.'.$type.'_jobs')->notIn(array_keys($pendingJobsId->toArray()));
         }
 
         $mms = $qb->getQuery()
@@ -174,8 +174,10 @@ EOT
 
         $tagParents = [];
         foreach ($tagParentsAggResult as $i) {
-            $key = (string) $i['_id']['$id'];
-            $tagParents[$key] = $i['count'];
+            if (isset($i['_id']['$id'], $i['count'])) {
+                $key = (string) $i['_id']['$id'];
+                $tagParents[$key] = $i['count'];
+            }
         }
 
         $tags = $tagRepo->findAll();
