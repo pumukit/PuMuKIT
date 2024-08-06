@@ -92,7 +92,7 @@ class TrackFileController extends AbstractController
             return new JsonResponse(['status' => 'error']);
         }
 
-        if (0 !== strpos($request->headers->get('referer'), $request->getSchemeAndHttpHost())) {
+        if (!str_starts_with($request->headers->get('referer') ?? '', $request->getSchemeAndHttpHost())) {
             return new JsonResponse(['status' => 'error']);
         }
 
