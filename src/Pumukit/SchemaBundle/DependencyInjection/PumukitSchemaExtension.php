@@ -27,6 +27,7 @@ class PumukitSchemaExtension extends Extension
         $container->setParameter('pumukitschema.default_video_pic', $config['default_video_pic']);
         $container->setParameter('pumukitschema.default_audio_hd_pic', $config['default_audio_hd_pic']);
         $container->setParameter('pumukitschema.default_audio_sd_pic', $config['default_audio_sd_pic']);
+        $container->setParameter('pumukitschema.event_default_poster_text_color', $config['event_default_poster_text_color']);
         $container->setParameter('pumukitschema.personal_scope_role_code', $config['personal_scope_role_code']);
         $container->setParameter('pumukitschema.enable_add_user_as_person', $config['enable_add_user_as_person']);
         $container->setParameter('pumukitschema.personal_scope_delete_owners', $config['personal_scope_delete_owners']);
