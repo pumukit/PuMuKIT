@@ -437,7 +437,7 @@ class SeriesController extends AdminController
         if (array_key_exists('reset', $criteria)) {
             $this->session->remove('admin/series/criteria');
             $this->session->remove('admin/series/empty_series');
-            $this->session->remove('admin/series/sort');
+            $this->session->set('admin/series/sort', 'title');
         } elseif ($criteria) {
             $this->session->set('admin/series/criteria', $criteria);
         }
