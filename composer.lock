@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "342cc8bea2124b00700818803ee8b3ff",
+    "content-hash": "1c17986e72cbcf7ce7e269f7165f8814",
     "packages": [
         {
             "name": "ankitpokhrel/tus-php",
@@ -9409,20 +9409,20 @@
         },
         {
             "name": "teltek/pumukit-stats-ui-bundle",
-            "version": "3.0.7",
+            "version": "3.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teltek/PumukitStatsUIBundle.git",
-                "reference": "4339ff9cd724714170d1b976ea16af4872c706a9"
+                "reference": "a2d29a5f8cb2a7763a836b1ead083dfe37cb51e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teltek/PumukitStatsUIBundle/zipball/4339ff9cd724714170d1b976ea16af4872c706a9",
-                "reference": "4339ff9cd724714170d1b976ea16af4872c706a9",
+                "url": "https://api.github.com/repos/teltek/PumukitStatsUIBundle/zipball/a2d29a5f8cb2a7763a836b1ead083dfe37cb51e3",
+                "reference": "a2d29a5f8cb2a7763a836b1ead083dfe37cb51e3",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2",
+                "php": "^8.2",
                 "pumukit/pumukit": "^4.0"
             },
             "type": "symfony-bundle",
@@ -9453,9 +9453,9 @@
             ],
             "support": {
                 "issues": "https://github.com/teltek/PumukitStatsUIBundle/issues",
-                "source": "https://github.com/teltek/PumukitStatsUIBundle/tree/3.0.7"
+                "source": "https://github.com/teltek/PumukitStatsUIBundle/tree/3.0.8"
             },
-            "time": "2024-06-18T08:02:46+00:00"
+            "time": "2024-08-21T10:33:04+00:00"
         },
         {
             "name": "twig/extra-bundle",
