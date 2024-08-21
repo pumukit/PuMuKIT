@@ -81,7 +81,7 @@ class EventController extends AbstractController implements WebTVControllerInter
 
         $maxPerPage = $this->columnsObjsEvent * 3;
 
-        $pager = $this->paginationService->createArrayAdapter($eventsFuture, $page, $maxPerPage);
+        $pager = $this->paginationService->createArrayAdapter($eventsFuture, (int) $page, $maxPerPage);
 
         return $this->render('@PumukitWebTV/Live/template.html.twig', [
             'eventsToday' => $eventsToday,
