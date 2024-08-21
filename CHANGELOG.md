@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 To get the diff for a specific change, go to https://github.com/pumukit/PuMuKIT/commit/XXX where XXX is the change hash.
 To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/compare/3.0.0...3.1.x.
 
+## [4.1.0](https://github.com/pumukit/PuMuKIT/compare/4.0.0...4.1.0) - (2023-07-04)
+
+#### Fixed
+- Reported issues
+
 ## [4.0.0](https://github.com/pumukit/PuMuKIT/compare/3.9.0...4.0.0) - (2023-07-04)
 
 #### Added
