@@ -9,9 +9,9 @@ use Pumukit\SchemaBundle\Document\SeriesType;
 class SeriesTypeController extends AdminController
 {
     public static $resourceName = 'seriestype';
-    public static $repoName = 'PumukitSchemaBundle:SeriesType';
+    public static $repoName = SeriesType::class;
 
-    public function createNew()
+    public function createNew(): SeriesType
     {
         return new SeriesType();
     }

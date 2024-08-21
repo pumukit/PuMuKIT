@@ -130,7 +130,7 @@ class StatsServiceTest extends PumukitTestCase
         }, $list);
         // Sorts by least viewed
         usort($listMapped, function ($a, $b) {
-            return $a['num_viewed'] > $b['num_viewed'];
+            return ($b['num_viewed'] < $a['num_viewed']) ? 1 : -1;
         });
 
         [$mostViewed, $total] = $service->getMmobjsMostViewedByRange([], ['sort' => 1]);
@@ -139,7 +139,7 @@ class StatsServiceTest extends PumukitTestCase
 
         // Sorts by most viewed
         usort($listMapped, function ($a, $b) {
-            return $a['num_viewed'] < $b['num_viewed'];
+            return ($a['num_viewed'] < $b['num_viewed']) ? 1 : -1;
         });
 
         [$mostViewed, $total] = $service->getMmobjsMostViewedByRange();

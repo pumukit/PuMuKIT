@@ -13,11 +13,11 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class EmbeddedEventSessionService
 {
-    public const DEFAULT_COLOR = '#ffffff';
     private $dm;
     private $collection;
     private $defaultPoster;
     private $defaultThumbnail;
+    private $defaultPosterTextColor;
     private $validColors = [
         'aliceblue',
         'antiquewhite',
@@ -166,15 +166,17 @@ class EmbeddedEventSessionService
      *
      * @param string $defaultPoster
      * @param string $defaultThumbnail
+     * @param string $defaultPosterTextColor
      *
      * @throws MongoDBException
      */
-    public function __construct(DocumentManager $documentManager, $defaultPoster, $defaultThumbnail)
+    public function __construct(DocumentManager $documentManager, $defaultPoster, $defaultThumbnail, $defaultPosterTextColor)
     {
         $this->dm = $documentManager;
         $this->collection = $this->dm->getDocumentCollection(MultimediaObject::class);
         $this->defaultPoster = $defaultPoster;
         $this->defaultThumbnail = $defaultThumbnail;
+        $this->defaultPosterTextColor = $defaultPosterTextColor;
     }
 
     /**
@@ -195,6 +197,16 @@ class EmbeddedEventSessionService
     public function getDefaultThumbnail()
     {
         return $this->defaultThumbnail;
+    }
+
+    /**
+     * Get default poster text color.
+     *
+     * @return string
+     */
+    public function getDefaultPosterTextColor()
+    {
+        return $this->defaultPosterTextColor;
     }
 
     /**
@@ -630,7 +642,7 @@ class EmbeddedEventSessionService
     {
         $posterTextColor = $multimediaObject->getProperty('postertextcolor');
         if (!$posterTextColor) {
-            return self::DEFAULT_COLOR;
+            return $this->defaultPosterTextColor;
         }
 
         return $posterTextColor;
@@ -650,7 +662,7 @@ class EmbeddedEventSessionService
             return $properties['postertextcolor'];
         }
 
-        return self::DEFAULT_COLOR;
+        return $this->defaultPosterTextColor;
     }
 
     /**

@@ -161,8 +161,6 @@ class MaterialService
         $material = $this->saveFormData($material, $formData);
 
         $path = $materialFile->move($this->targetPath.'/'.$multimediaObject->getId(), $materialFile->getClientOriginalName());
-
-        $material->setSize($materialFile->getSize());
         $material->setName($materialFile->getClientOriginalName());
 
         $material->setPath($path->getPathname());

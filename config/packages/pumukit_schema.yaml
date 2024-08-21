@@ -207,6 +207,7 @@ services:
     class: Pumukit\SchemaBundle\Services\EmbeddedEventSessionService
     arguments:
       $defaultPoster:    '%pumukitschema.event_default_poster%'
+      $defaultPosterTextColor:    '%pumukitschema.event_default_poster_text_color%'
       $defaultThumbnail: '%pumukit_new_admin.advance_live_event_create_default_pic%'
 
   Pumukit\SchemaBundle\Security\RoleHierarchy:

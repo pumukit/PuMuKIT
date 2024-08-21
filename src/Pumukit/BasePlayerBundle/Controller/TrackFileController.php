@@ -6,6 +6,7 @@ namespace Pumukit\BasePlayerBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
+use Psr\Log\LoggerInterface;
 use Pumukit\BasePlayerBundle\Event\BasePlayerEvents;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -22,14 +23,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class TrackFileController extends AbstractController
 {
     private $documentManager;
-
-    /** @var EventDispatcherInterface */
     private $eventDispatcher;
+    private $logger;
 
-    public function __construct(DocumentManager $documentManager, EventDispatcherInterface $eventDispatcher)
+    public function __construct(DocumentManager $documentManager, EventDispatcherInterface $eventDispatcher, LoggerInterface $logger)
     {
         $this->eventDispatcher = $eventDispatcher;
         $this->documentManager = $documentManager;
+        $this->logger = $logger;
     }
 
     /**
@@ -92,7 +93,7 @@ class TrackFileController extends AbstractController
             return new JsonResponse(['status' => 'error']);
         }
 
-        if (0 !== strpos($request->headers->get('referer'), $request->getSchemeAndHttpHost())) {
+        if (!str_starts_with($request->headers->get('referer') ?? '', $request->getSchemeAndHttpHost())) {
             return new JsonResponse(['status' => 'error']);
         }
 
@@ -175,8 +176,7 @@ class TrackFileController extends AbstractController
 
         $track = $mmobj->getTrackById($id);
         if ($track->isHide()) {
-            $logger = $this->container->get('logger');
-            $logger->warning('Trying to reproduce an hide track');
+            $this->logger->warning('Trying to reproduce an hide track');
         }
 
         if (!$this->isGranted('play', $mmobj)) {
