@@ -16,6 +16,8 @@ use Pumukit\SchemaBundle\Document\ObjectValue\Immutable;
  *
  * @MongoDB\Index(name="text_index", keys={"textindex.text"="text", "secondarytextindex.text"="text"}, options={"language_override"="indexlanguage", "default_language"="none", "weights"={"textindex.text"=10, "secondarytextindex.text"=1}})
  *
+ * @MongoDB\HasLifecycleCallbacks
+ *
  * @ApiResource(
  *       collectionOperations={"get"={"method"="GET", "access_control"="is_granted('ROLE_ACCESS_API')"}},
  *       itemOperations={"get"={"method"="GET", "access_control"="is_granted('ROLE_ACCESS_API')"}}
@@ -243,6 +245,11 @@ class MultimediaObject
     private $secondarytextindex = [];
 
     /**
+     * @MongoDB\Field(type="date")
+     */
+    private $updatedAt;
+
+    /**
      * Used locale to override Translation listener`s locale this is not a mapped field of entity metadata, just a simple property.
      */
     private $locale = 'en';
@@ -263,6 +270,8 @@ class MultimediaObject
         $this->setPublicDate($now);
         $this->setRecordDate($now);
         $this->setPropertyAsDateTime('created', $now);
+
+        $this->setUpdateAt();
     }
 
     public function __toString(): string
@@ -1326,6 +1335,21 @@ class MultimediaObject
     public function isTail(): bool
     {
         return $this->tail;
+    }
+
+    /**
+     * @MongoDB\PreUpdate
+     *
+     * @MongoDB\PrePersist
+     */
+    public function setUpdateAt(): void
+    {
+        $this->updatedAt = new \DateTime();
+    }
+
+    public function isUpdatedAt(): \DateTime
+    {
+        return $this->updatedAt;
     }
 
     /**
