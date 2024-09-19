@@ -318,20 +318,25 @@
             reader.readAsDataURL(file);
         }, false);
 
-        url_img.addEventListener("change", function (e) {
+        url_img.addEventListener("input", function (e) {
             e.preventDefault();
             var new_img = new Image();
             new_img.classList.add("new_img");
             new_img.classList.add("btn");
             new_img.style.padding = "0px";
             new_img.src = e.target.value;
-            new_img.width = 120;
+            /* Check if img url exists */
+            new_img.addEventListener("load", function () {
+                if (this.width > 0) {
+                    new_img.width = 120;
 
-            new_img.addEventListener("click", function () {
-                img.src = this.src;
+                    new_img.addEventListener("click", function () {
+                        img.src = this.src;
+                    });
+
+                    frames.appendChild(new_img);
+                }
             });
-
-            frames.appendChild(new_img);
         }, false);
     })
 
