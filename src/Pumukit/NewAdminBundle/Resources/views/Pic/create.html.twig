@@ -22,8 +22,13 @@
                 </div>
                 <iframe id="iframeUpload" name="iframeUpload" style="display:none" src=""></iframe>
             </fieldset>
+            <div id="pumukitnewadmin_pic_external_url" class="form-group">
+                <label for="url" class="control-label">{% trans %}URL{% endtrans %}</label>
+                <input type="text" name="url" id="url" value="" class="form-control">
+                <span id="error_url" style="display:none;color:red;" class="error">{% trans %}URL format not valid{% endtrans %}</span>
+            </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-pumukit btn-raised" onclick="if($('#file').val()==''){window.alert('{% trans %}Select a file on first place. Thank you.{% endtrans %}');return false;}">{% trans %}Add{% endtrans %}</button>
+                <button type="submit" class="btn btn-pumukit btn-raised" onclick="if($('#file').val()==''&&$('#url').val()==''){window.alert('{% trans %}Select a file or add a image url. Thank you.{% endtrans %}');return false;}">{% trans %}Add{% endtrans %}</button>
             </div>
         </form>
     </div>

@@ -96,6 +96,11 @@
         </div>
 
     </div>
+
+    <div class="col-xs-12">
+        <label for="url">{% trans %}URL{% endtrans %}</label>
+        <input type="text" id="url-file-button" name="url" class="form-control"/>
+    </div>
     <div style="clear:both"></div>
     <div class="modal-footer">
         <div class="row">
@@ -139,6 +144,7 @@
         var submit = document.querySelector("#gen_pic_submit");
         var init_img = img.src;
         var upload_img = document.querySelector("#file-upload-button");
+        var url_img = document.querySelector("#url-file-button");
         var pic_size = document.querySelector("#pic-size");
         var pic_format = document.querySelector("#pic-format");
         var pic_quality = document.querySelector("#pic-quality");
@@ -312,7 +318,26 @@
             reader.readAsDataURL(file);
         }, false);
 
+        url_img.addEventListener("input", function (e) {
+            e.preventDefault();
+            var new_img = new Image();
+            new_img.classList.add("new_img");
+            new_img.classList.add("btn");
+            new_img.style.padding = "0px";
+            new_img.src = e.target.value;
+            /* Check if img url exists */
+            new_img.addEventListener("load", function () {
+                if (this.width > 0) {
+                    new_img.width = 120;
 
+                    new_img.addEventListener("click", function () {
+                        img.src = this.src;
+                    });
+
+                    frames.appendChild(new_img);
+                }
+            });
+        }, false);
     })
 
 </script>
