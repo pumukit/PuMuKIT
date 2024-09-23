@@ -121,7 +121,10 @@ class ModulesController extends AbstractController implements WebTVControllerInt
             $title = $this->translator->trans('Most viewed on the last month');
         } else {
             $objects = $this->documentManager->getRepository(MultimediaObject::class)->findStandardBy(
-                [],
+                [
+                    'head' => ['$ne' => true],
+                    'tail' => ['$ne' => true],
+                ],
                 ['numview' => -1],
                 $this->limitObjsMostViewed,
                 0
@@ -171,7 +174,11 @@ class ModulesController extends AbstractController implements WebTVControllerInt
     public function recentlyAddedWithoutHighlightAction(string $design = 'horizontal'): Response
     {
         $last = $this->documentManager->getRepository(MultimediaObject::class)->findStandardBy(
-            ['tags.cod' => ['$ne' => 'PUDENEW']],
+            [
+                'tags.cod' => ['$ne' => 'PUDENEW'],
+                'head' => ['$ne' => true],
+                'tail' => ['$ne' => true],
+            ],
             [
                 'public_date' => -1,
             ],
@@ -197,7 +204,10 @@ class ModulesController extends AbstractController implements WebTVControllerInt
     public function recentlyAddedAllAction(string $design = 'horizontal'): Response
     {
         $last = $this->documentManager->getRepository(MultimediaObject::class)->findStandardBy(
-            [],
+            [
+                'head' => ['$ne' => true],
+                'tail' => ['$ne' => true],
+            ],
             [
                 'public_date' => -1,
             ],
