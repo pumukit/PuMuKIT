@@ -7,6 +7,7 @@ namespace Pumukit\WorkflowBundle\EventListener;
 use Psr\Log\LoggerInterface;
 use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\EncoderBundle\Services\DynamicPicExtractorService;
+use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 
@@ -19,18 +20,24 @@ class DynamicPicExtractorListener
     private $dynamicPicExtractorService;
     private $enableDynamicPicExtract;
     private $trackTagAllowed;
+    private $profileService;
 
-    public function __construct(DynamicPicExtractorService $dynamicPicExtractorService, LoggerInterface $logger, bool $enableDynamicPicExtract = true, string $trackTagAllowed = 'master')
+    public function __construct(DynamicPicExtractorService $dynamicPicExtractorService, LoggerInterface $logger, ProfileService $profileService, bool $enableDynamicPicExtract = true, string $trackTagAllowed = 'master')
     {
         $this->dynamicPicExtractorService = $dynamicPicExtractorService;
         $this->logger = $logger;
         $this->enableDynamicPicExtract = $enableDynamicPicExtract;
         $this->trackTagAllowed = $trackTagAllowed;
+        $this->profileService = $profileService;
     }
 
     public function onJobSuccess(JobEvent $event): void
     {
-        if ($this->enableDynamicPicExtract) {
+        $profileName = $event->getJob()->getProfile();
+        $profile = $this->profileService->getProfile($profileName);
+        $generatePic = $profile['generate_pic'];
+
+        if ($this->enableDynamicPicExtract && $generatePic) {
             $this->generateDynamicPic($event->getMultimediaObject(), $event->getTrack());
         }
     }
