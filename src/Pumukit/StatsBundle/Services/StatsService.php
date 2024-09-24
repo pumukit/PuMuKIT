@@ -36,13 +36,7 @@ class StatsService
         $viewsLogColl = $this->dm->getDocumentCollection($this->collectionName);
 
         $pipeline = [
-            [
-                '$match' => [
-                    'date' => ['$gte' => $fromMongoDate],
-                    'head' => ['$ne' => true],
-                    'tail' => ['$ne' => true],
-                ],
-            ],
+            ['$match' => ['date' => ['$gte' => $fromMongoDate]]],
             ['$group' => ['_id' => '$multimediaObject', 'numView' => ['$sum' => $this->sumValue]]],
             ['$sort' => ['numView' => -1]],
             ['$limit' => $limit * 2], // Get more elements due to tags post-filter.
@@ -55,6 +49,8 @@ class StatsService
         foreach ($aggregation as $element) {
             $ids[] = $element['_id'];
             $criteria['_id'] = $element['_id'];
+            $criteria['head'] = ['$ne' => true];
+            $criteria['tail'] = ['$ne' => true];
             $multimediaObject = $this->repo->findBy($criteria, null, 1);
 
             if ($multimediaObject) {
@@ -67,8 +63,6 @@ class StatsService
 
         if (0 !== $limit) {
             $criteria['_id'] = ['$nin' => $ids];
-            $criteria['head'] = ['$ne' => true];
-            $criteria['tail'] = ['$ne' => true];
 
             return array_merge($mostViewed, $this->repo->findStandardBy($criteria, null, $limit));
         }
