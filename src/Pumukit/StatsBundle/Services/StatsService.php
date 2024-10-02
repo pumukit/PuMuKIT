@@ -49,6 +49,8 @@ class StatsService
         foreach ($aggregation as $element) {
             $ids[] = $element['_id'];
             $criteria['_id'] = $element['_id'];
+            $criteria['head'] = ['$ne' => true];
+            $criteria['tail'] = ['$ne' => true];
             $multimediaObject = $this->repo->findBy($criteria, null, 1);
 
             if ($multimediaObject) {
