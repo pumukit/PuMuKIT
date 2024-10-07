@@ -30,12 +30,26 @@ uppy.use(Uppy.Form, {
 uppy.use(Uppy.FileInput, {
     target: '.UppyForm',
     replaceTargetContent: true
+    {% if app.request.getLocale() == 'es' %}
+        ,locale: {
+            strings: {
+                chooseFiles: 'Seleccionar archivo',
+            },
+        },
+    {% endif %}
 })
 
 uppy.use(Uppy.StatusBar, {
     target: '.UppyInput-Progress',
     hideUploadButton: true,
     hideAfterFinish: false
+    {% if app.request.getLocale() == 'es' %}
+        ,locale: {
+            strings: {
+                complete: 'Completado. El objeto multimedia no estará disponible hasta que se procese.',
+            },
+        },
+    {% endif %}
 })
 
 uppy.use(Uppy.XHRUpload, {
