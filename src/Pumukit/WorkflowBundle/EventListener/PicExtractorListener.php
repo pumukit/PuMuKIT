@@ -53,7 +53,7 @@ class PicExtractorListener
     {
         $this->dm->refresh($multimediaObject);
 
-        if ($this->autoExtractPic && ($multimediaObject->getPics()->isEmpty() || $multimediaObject->getProperty('personalrecorder'))) {
+        if ($this->autoExtractPic && $multimediaObject->getPics()->isEmpty()) {
             try {
                 if ($multimediaObject->isOnlyAudio() || $track->isOnlyAudio()) {
                     return false;
