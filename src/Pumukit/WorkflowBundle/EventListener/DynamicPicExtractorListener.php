@@ -48,10 +48,8 @@ class DynamicPicExtractorListener
             return false;
         }
 
-        foreach ($multimediaObject->getPics() as $pic) {
-            if ($pic->containsTag('dynamic')) {
-                return false;
-            }
+        if ($multimediaObject->isMultistream() && $track->containsTag('presentation/delivery')) {
+            return false;
         }
 
         return $this->generateDynamicPicFromTrack($multimediaObject, $track);

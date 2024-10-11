@@ -55,7 +55,7 @@ class PicExtractorListener
 
         if ($this->autoExtractPic && $multimediaObject->getPics()->isEmpty()) {
             try {
-                if ($multimediaObject->isOnlyAudio() || $track->isOnlyAudio()) {
+                if ($multimediaObject->isOnlyAudio() || $track->isOnlyAudio() || $track->containsTag('presentation/delivery')) {
                     return false;
                 }
 
