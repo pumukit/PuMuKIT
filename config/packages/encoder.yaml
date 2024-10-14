@@ -82,6 +82,34 @@ pumukit_encoder:
       display: true
       wizard: true
       master: false
+      tags: html5 podcast
+      target: PUCHWEBTV PUCHPODCAST
+      format: mp4
+      codec: h264
+      mime_type: 'video/x-mp4'
+      extension: mp4
+      resolution_hor: 0
+      resolution_ver: 0
+      bitrate: 1 Mbps
+      framerate: 25
+      channels: 1
+      audio: false
+      bat: ffmpeg -y -i "{{input}}" -acodec aac -vcodec libx264 -preset slow -crf 22 -movflags faststart -threads 0 "{{output}}"
+      streamserver:
+        name: Localhost
+        type: download
+        host: 127.0.0.1
+        description: Local download server
+        dir_out: "%pumukit.downloads%"
+        url_out: "%pumukit.downloads_url%"
+      app: ffmpeg
+      rel_duration_size: 1
+      rel_duration_trans: 1
+    video_dynamic_quality:
+      generate_pic: false
+      display: true
+      wizard: true
+      master: false
       nocheckduration: false
       tags: html5 podcast
       target: PUCHWEBTV PUCHPODCAST
@@ -187,9 +215,9 @@ pumukit_encoder:
   target_default_profiles:
     PUCHWEBTV:
       audio: "audio_broadcastable"
-      video: "video_broadcastable"
+      video: "video_broadcastable video_dynamic_quality"
       image: "image_broadcastable image_raw_broadcastable"
       document: "document_broadcastable"
     PUCHPODCAST:
       audio: "audio_broadcastable"
-      video: "video_broadcastable audio_broadcastable"
+      video: "video_broadcastable audio_broadcastable video_dynamic_quality"
