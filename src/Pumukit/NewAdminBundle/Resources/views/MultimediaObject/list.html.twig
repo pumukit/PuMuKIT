@@ -28,6 +28,7 @@
                     {% if is_naked() and mm.containsAnyTagWithCodes(['PUCHOPENEDX', 'PUCHMOODLE', 'PUCHLMS'])%}
                     <td headers="th-icons">
                         <a class="moodlepr-add" href="#" title="{% trans %}Publish to LMS{% endtrans %}" onclick="parent.window.postMessage({'mmId': '{{ mm.id }}'}, '*'); return false;"><i class="mdi-editor-insert-photo"></i></a>
+                        <a class="h5p-copy" href="#" title="{% trans %}Copy trackfile{% endtrans %}" onclick="copyToClipboard(this, 'data-url')" data-url="{{ mm.getDisplayTrack().getUrl() | default('Without display track') }}"><i class="fa fa-clipboard" aria-hidden="true"></i></a>
                     </td>
                     {% endif %}
                     <td headers="th-icons">
@@ -133,3 +134,25 @@
         </table>
     {% endif %}
 </div>
+
+<script>
+    function copyToClipboard(element, dataValue) {
+        const url = element.getAttribute(dataValue);
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(url)
+                .then(() => {
+                })
+                .catch(err => {
+                    console.error("Error al copiar al portapapeles: ", err);
+                });
+        } else {
+            // Fallback para navegadores antiguos
+            const tempInput = document.createElement("textarea");
+            tempInput.value = url;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+        }
+    }
+</script>
