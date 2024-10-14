@@ -48,7 +48,8 @@ class DynamicPicExtractorListener
             return false;
         }
 
-        if ($multimediaObject->isMultistream() && $track->containsTag('presentation/delivery')) {
+        $n_jobs = count(array_merge($multimediaObject->getProperty('executing_jobs'), $multimediaObject->getProperty('pending_jobs')));
+        if ($n_jobs > 2 && $track->containsTag('presentation/delivery')) {
             return false;
         }
 

@@ -55,7 +55,12 @@ class PicExtractorListener
 
         if ($this->autoExtractPic && $multimediaObject->getPics()->isEmpty()) {
             try {
-                if ($multimediaObject->isOnlyAudio() || $track->isOnlyAudio() || $track->containsTag('presentation/delivery')) {
+                if ($multimediaObject->isOnlyAudio() || $track->isOnlyAudio()) {
+                    return false;
+                }
+
+                $n_jobs = count(array_merge($multimediaObject->getProperty('executing_jobs'), $multimediaObject->getProperty('pending_jobs')));
+                if ($n_jobs > 2 && $track->containsTag('presentation/delivery')) {
                     return false;
                 }
 
