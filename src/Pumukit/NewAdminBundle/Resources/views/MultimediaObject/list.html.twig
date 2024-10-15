@@ -141,6 +141,7 @@
         if (navigator.clipboard) {
             navigator.clipboard.writeText(url)
                 .then(() => {
+                    success('{% trans %}Copied!{% endtrans %}');
                 })
                 .catch(err => {
                     console.error("Error al copiar al portapapeles: ", err);
@@ -153,6 +154,7 @@
             tempInput.select();
             document.execCommand("copy");
             document.body.removeChild(tempInput);
+            success('{% trans %}Copied!{% endtrans %}');
         }
     }
 </script>
