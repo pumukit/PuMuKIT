@@ -59,11 +59,6 @@ class PicExtractorListener
                     return false;
                 }
 
-                $n_jobs = count(array_merge($multimediaObject->getProperty('executing_jobs'), $multimediaObject->getProperty('pending_jobs')));
-                if ($n_jobs > 2 && $track->containsTag('presentation/delivery')) {
-                    return false;
-                }
-
                 return $this->generatePicFromVideo($multimediaObject, $track);
             } catch (\Exception $e) {
                 $this->logger->error(self::class.'['.__FUNCTION__.'] '
