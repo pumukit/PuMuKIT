@@ -28,7 +28,9 @@
                     {% if is_naked() and mm.containsAnyTagWithCodes(['PUCHOPENEDX', 'PUCHMOODLE', 'PUCHLMS'])%}
                     <td headers="th-icons">
                         <a class="moodlepr-add" href="#" title="{% trans %}Publish to LMS{% endtrans %}" onclick="parent.window.postMessage({'mmId': '{{ mm.id }}'}, '*'); return false;"><i class="mdi-editor-insert-photo"></i></a>
-                        <a class="h5p-copy" href="#" title="{% trans %}Copy trackfile{% endtrans %}" onclick="copyToClipboard(this, 'data-url')" data-url="{{ mm.getDisplayTrack().getUrl() | default('Without display track') }}"><i class="fa fa-clipboard" aria-hidden="true"></i></a>
+                        {% if mm.getDisplayTrack() %}
+                            <a class="h5p-copy" href="#" title="{% trans %}Copy trackfile{% endtrans %}" onclick="copyToClipboard(this, 'data-url')" data-url="{{ mm.getDisplayTrack().getUrl() | default('Without display track') }}"><i class="fa fa-clipboard" aria-hidden="true"></i></a>
+                        {% endif %}
                     </td>
                     {% endif %}
                     <td headers="th-icons">
