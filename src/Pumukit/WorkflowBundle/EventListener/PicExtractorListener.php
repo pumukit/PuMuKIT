@@ -59,6 +59,17 @@ class PicExtractorListener
                     return false;
                 }
 
+                $jobs = [$multimediaObject->getProperty('executing_jobs'), $multimediaObject->getProperty('pending_jobs')];
+                $jobsToMerge = array_filter($jobs, function ($arr) {
+                    return isset($arr) && !empty($arr);
+                });
+
+                $allJobs = array_merge(...$jobsToMerge);
+
+                if (count($allJobs) > 2 && $track->containsTag('presentation/delivery')) {
+                    return false;
+                }
+
                 return $this->generatePicFromVideo($multimediaObject, $track);
             } catch (\Exception $e) {
                 $this->logger->error(self::class.'['.__FUNCTION__.'] '

@@ -103,8 +103,10 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
             if (0 === $request->files->count() && 0 === $request->request->count()) {
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
             }
-            if ($request->files->has('file')) {
+            if ($request->files->has('file') && (!$request->get('url', null))) {
                 $this->multimediaObjectPicService->addPicFile($multimediaObject, $request->files->get('file'), $isEventPoster);
+            } elseif ($request->get('url', null)) {
+                $this->multimediaObjectPicService->addPicUrl($multimediaObject, $request->get('url'), true, $isEventPoster);
             }
         } catch (\Exception $e) {
             return [
@@ -232,12 +234,17 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
             }
 
             $base_64 = $request->request->get('img');
+
             $decodedData = substr($base_64, 22, strlen($base_64));
             $format = substr($base_64, strpos($base_64, '/') + 1, strpos($base_64, ';') - 1 - strpos($base_64, '/'));
 
-            $data = base64_decode($decodedData);
-
-            $this->multimediaObjectPicService->addPicMem($multimediaObject, $data, $format);
+            if ('jpeg' === $format || 'png' === $format) {
+                $data = base64_decode($decodedData);
+                $this->multimediaObjectPicService->addPicMem($multimediaObject, $data, $format);
+            } else {
+                $isEventPoster = $request->get('is_event_poster', false);
+                $this->multimediaObjectPicService->addPicUrl($multimediaObject, $request->get('img'), true, $isEventPoster);
+            }
 
             return new JsonResponse('done');
         }
