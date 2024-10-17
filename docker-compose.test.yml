@@ -33,7 +33,7 @@ services:
       - "443:443"
 
   db:
-    image: mongo:4.0
+    image: mongo:5.0
     volumes:
       - db-data:/data/db:rw
 
