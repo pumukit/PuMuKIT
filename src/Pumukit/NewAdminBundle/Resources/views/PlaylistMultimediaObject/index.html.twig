@@ -8,9 +8,9 @@
             <li>
                 <a href="{{ path('pumukitnewadmin_playlist_index') }}">
                     {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') and is_naked() %}
-                        {% trans %}My Moodle Playlists{% endtrans %}
+                        {% trans %}My Playlists{% endtrans %}
                     {% else %}
-                        {% trans %}Moodle Playlists{% endtrans %}
+                        {% trans %}Playlists{% endtrans %}
                     {% endif %}
                 </a>
             </li>

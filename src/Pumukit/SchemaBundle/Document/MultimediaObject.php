@@ -9,7 +9,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\DocumentNotFoundException;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Pumukit\SchemaBundle\Document\ObjectValue\Immutable;
+use Pumukit\SchemaBundle\Document\MediaType\Document;
+use Pumukit\SchemaBundle\Document\MediaType\External;
+use Pumukit\SchemaBundle\Document\MediaType\Image;
+use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
+use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
+use Pumukit\SchemaBundle\Document\MediaType\Track;
+use Pumukit\SchemaBundle\Document\ValueObject\Immutable;
 
 /**
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\MultimediaObjectRepository")
@@ -49,6 +55,8 @@ class MultimediaObject
     public const TYPE_AUDIO = 2;
     public const TYPE_EXTERNAL = 3;
     public const TYPE_LIVE = 4;
+    public const TYPE_IMAGE = 5;
+    public const TYPE_DOCUMENT = 6;
 
     public static $statusTexts = [
         self::STATUS_PUBLISHED => 'Published',
@@ -64,6 +72,8 @@ class MultimediaObject
         self::TYPE_AUDIO => 'Audio',
         self::TYPE_EXTERNAL => 'External',
         self::TYPE_LIVE => 'Live',
+        self::TYPE_IMAGE => 'Image',
+        self::TYPE_DOCUMENT => 'Document',
     ];
 
     /**
@@ -79,7 +89,7 @@ class MultimediaObject
     private $numerical_id;
 
     /**
-     * @MongoDB\EmbedOne(name="immutable", targetDocument="Pumukit\SchemaBundle\Document\ObjectValue\Immutable")
+     * @MongoDB\EmbedOne(name="immutable", targetDocument="Pumukit\SchemaBundle\Document\ValueObject\Immutable")
      */
     private $immutable;
 
@@ -142,6 +152,21 @@ class MultimediaObject
      * @MongoDB\EmbedMany(targetDocument=Track::class)
      */
     private $tracks;
+
+    /**
+     * @MongoDB\EmbedMany(targetDocument=Document::class)
+     */
+    private $documents;
+
+    /**
+     * @MongoDB\EmbedMany(targetDocument=External::class)
+     */
+    private $external;
+
+    /**
+     * @MongoDB\EmbedMany(targetDocument=Image::class)
+     */
+    private $images;
 
     /**
      * @MongoDB\ReferenceMany(targetDocument=Group::class, storeAs="id", sort={"key":1}, strategy="setArray", cascade={"persist","remove"})
@@ -215,7 +240,7 @@ class MultimediaObject
     private $duration = 0;
 
     /**
-     * @MongoDB\Field(type="int", strategy="increment" )
+     * @MongoDB\Field(type="int", strategy="increment")
      */
     private $numview = 0;
 
@@ -258,6 +283,9 @@ class MultimediaObject
     {
         $this->secret = base_convert(sha1(uniqid((string) random_int(0, mt_getrandmax()), true)), 16, 36);
         $this->tracks = new ArrayCollection();
+        $this->documents = new ArrayCollection();
+        $this->images = new ArrayCollection();
+        $this->external = new ArrayCollection();
         $this->tags = new ArrayCollection();
         $this->people = new ArrayCollection();
         $this->groups = new ArrayCollection();
@@ -354,6 +382,71 @@ class MultimediaObject
     public function getType(): int
     {
         return $this->type;
+    }
+
+    public function setVideoType(): void
+    {
+        $this->type = self::TYPE_VIDEO;
+    }
+
+    public function isVideoAudioType(): bool
+    {
+        return $this->isVideoType() || $this->isAudioType();
+    }
+
+    public function isVideoType(): bool
+    {
+        return self::TYPE_VIDEO === $this->getType();
+    }
+
+    public function isAudioType(): bool
+    {
+        return self::TYPE_AUDIO === $this->getType();
+    }
+
+    public function setAudioType(): void
+    {
+        $this->type = self::TYPE_AUDIO;
+    }
+
+    public function setLiveType(): void
+    {
+        $this->type = self::TYPE_LIVE;
+    }
+
+    public function isLiveType(): bool
+    {
+        return self::TYPE_LIVE === $this->getType();
+    }
+
+    public function setImageType(): void
+    {
+        $this->type = self::TYPE_IMAGE;
+    }
+
+    public function isImageType(): bool
+    {
+        return self::TYPE_IMAGE === $this->getType();
+    }
+
+    public function setDocumentType(): void
+    {
+        $this->type = self::TYPE_DOCUMENT;
+    }
+
+    public function isDocumentType(): bool
+    {
+        return self::TYPE_DOCUMENT === $this->getType();
+    }
+
+    public function setExternalType(): void
+    {
+        $this->type = self::TYPE_EXTERNAL;
+    }
+
+    public function isExternalType(): bool
+    {
+        return self::TYPE_EXTERNAL === $this->getType();
     }
 
     public function getStringType($type): string
@@ -809,9 +902,24 @@ class MultimediaObject
     {
         $this->tracks->add($track);
 
-        if ($track->getDuration() > $this->getDuration()) {
-            $this->setDuration($track->getDuration());
+        if ($track->metadata() instanceof VideoAudio && $track->metadata()->duration() > $this->getDuration()) {
+            $this->setDuration($track->metadata()->duration());
         }
+    }
+
+    public function addDocument(Document $document): void
+    {
+        $this->documents->add($document);
+    }
+
+    public function addExternal(External $external): void
+    {
+        $this->external->add($external);
+    }
+
+    public function addImage(Image $image): void
+    {
+        $this->images->add($image);
     }
 
     public function removeTrack(Track $track): void
@@ -821,13 +929,46 @@ class MultimediaObject
         $this->updateDuration();
     }
 
+    public function removeDocument(Document $document): void
+    {
+        $this->removeMediaById($document->id());
+    }
+
+    public function removeImage(Image $image): void
+    {
+        $this->removeMediaById($image->id());
+    }
+
     public function removeTrackById($trackId): void
     {
         $this->tracks = $this->tracks->filter(function (Track $track) use ($trackId) {
-            return $track->getId() !== $trackId;
+            return $track->id() !== $trackId;
         });
 
         $this->updateDuration();
+    }
+
+    public function removeMediaById(string $id)
+    {
+        $this->tracks = $this->tracks->filter(function (Track $media) use ($id) {
+            return $media->id() !== $id;
+        });
+
+        $this->images = $this->images->filter(function (Image $media) use ($id) {
+            return $media->id() !== $id;
+        });
+
+        $this->documents = $this->documents->filter(function (Document $media) use ($id) {
+            return $media->id() !== $id;
+        });
+    }
+
+    public function removeAllMedias(): void
+    {
+        $this->tracks = new ArrayCollection();
+        $this->documents = new ArrayCollection();
+        $this->external = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function upTrackById($trackId): void
@@ -845,16 +986,59 @@ class MultimediaObject
         return $this->tracks->contains($track);
     }
 
+    public function getMedias(): array
+    {
+        return array_merge($this->tracks->toArray(), $this->documents->toArray(), $this->external->toArray(), $this->images->toArray());
+    }
+
+    public function getMediasWithoutExternal(): array
+    {
+        return array_merge($this->tracks->toArray(), $this->documents->toArray(), $this->images->toArray());
+    }
+
+    /**
+     * Deprecated Use method tracks instead getTracks.
+     */
     public function getTracks()
+    {
+        return $this->tracks();
+    }
+
+    public function tracks()
     {
         return $this->tracks;
     }
 
-    public function getTrackById($trackId)
+    public function documents()
     {
-        foreach ($this->tracks as $track) {
-            if ($track->getId() === $trackId) {
-                return $track;
+        return $this->documents;
+    }
+
+    public function external()
+    {
+        return $this->external;
+    }
+
+    public function images()
+    {
+        return $this->images;
+    }
+
+    /**
+     * Deprecated use getMediaById instead.
+     *
+     * @param mixed $mediaId
+     */
+    public function getTrackById($mediaId)
+    {
+        return $this->getMediaById($mediaId);
+    }
+
+    public function getMediaById(?string $mediaId)
+    {
+        foreach ($this->getMedias() as $media) {
+            if ($media->id() === $mediaId) {
+                return $media;
             }
         }
 
@@ -865,8 +1049,8 @@ class MultimediaObject
     {
         $r = [];
 
-        foreach ($this->tracks as $track) {
-            if ($track->containsTag($tag)) {
+        foreach ($this->getMedias() as $track) {
+            if ($track->tags()->contains($tag)) {
                 $r[] = $track;
             }
         }
@@ -876,8 +1060,8 @@ class MultimediaObject
 
     public function getTrackWithTag($tag)
     {
-        foreach ($this->tracks as $track) {
-            if ($track->containsTag($tag)) {
+        foreach ($this->getMedias() as $track) {
+            if ($track->tags()->contains($tag)) {
                 return $track;
             }
         }
@@ -889,8 +1073,8 @@ class MultimediaObject
     {
         $r = [];
 
-        foreach ($this->tracks as $track) {
-            if ($track->containsAllTags($tags)) {
+        foreach ($this->getMedias() as $track) {
+            if ($track->tags()->containsAllTags($tags)) {
                 $r[] = $track;
             }
         }
@@ -900,8 +1084,8 @@ class MultimediaObject
 
     public function getTrackWithAllTags(array $tags)
     {
-        foreach ($this->tracks as $track) {
-            if ($track->containsAllTags($tags)) {
+        foreach ($this->getMedias() as $track) {
+            if ($track->tags()->containsAllTags($tags)) {
                 return $track;
             }
         }
@@ -913,8 +1097,8 @@ class MultimediaObject
     {
         $r = [];
 
-        foreach ($this->tracks as $track) {
-            if ($track->containsAnyTag($tags)) {
+        foreach ($this->getMedias() as $track) {
+            if ($track->tags()->containsAnyTag($tags)) {
                 $r[] = $track;
             }
         }
@@ -924,8 +1108,8 @@ class MultimediaObject
 
     public function getTrackWithAnyTag(array $tags)
     {
-        foreach ($this->tracks as $track) {
-            if ($track->containsAnyTag($tags)) {
+        foreach ($this->getMedias() as $track) {
+            if ($track->tags()->containsAnyTag($tags)) {
                 return $track;
             }
         }
@@ -937,29 +1121,34 @@ class MultimediaObject
     {
         $master = $this->getMaster();
 
-        if (!$master) {
+        if (!$master instanceof Track) {
             return 0;
         }
 
-        if ($this->getDuration() < $master->getDuration()) {
-            return $master->getDuration();
+        try {
+            $trackDuration = $master->metadata()->duration();
+        } catch (\Exception $exception) {
+            return 0;
+        }
+
+        if ($this->getDuration() < $master->metadata()->duration()) {
+            return $master->metadata()->duration();
         }
 
         return $this->getDuration();
     }
 
-    public function getMaster($any = true)
+    public function getMaster($any = true): ?MediaInterface
     {
         $master = $this->getTrackWithTag('master');
-
-        if ($master || !$any) {
+        if ($master) {
             return $master;
         }
 
         $isAudio = $this->isOnlyAudio();
 
-        foreach ($this->tracks as $track) {
-            if (($isAudio && $track->isOnlyAudio()) || (!$isAudio && !$track->isOnlyAudio())) {
+        foreach ($this->getMedias() as $track) {
+            if (($isAudio && $track->metadata()->isOnlyAudio()) || (!$isAudio && !$track->metadata()->isOnlyAudio())) {
                 return $track;
             }
         }
@@ -977,19 +1166,19 @@ class MultimediaObject
         $r = [];
 
         foreach ($this->tracks as $track) {
-            if ($all && $track->getHide()) {
+            if ($all && $track->isHide()) {
                 continue;
             }
-            if ($any_tags && !$track->containsAnyTag($any_tags)) {
+            if ($any_tags && !$track->tags()->containsAnyTag($any_tags)) {
                 continue;
             }
-            if ($all_tags && !$track->containsAllTags($all_tags)) {
+            if ($all_tags && !$track->tags()->containsAllTags($all_tags)) {
                 continue;
             }
-            if ($not_any_tags && $track->containsAnyTag($not_any_tags)) {
+            if ($not_any_tags && $track->tags()->containsAnyTag($not_any_tags)) {
                 continue;
             }
-            if ($not_all_tags && $track->containsAllTags($not_all_tags)) {
+            if ($not_all_tags && $track->tags()->containsAllTags($not_all_tags)) {
                 continue;
             }
 
@@ -1001,20 +1190,20 @@ class MultimediaObject
 
     public function getFilteredTrackWithTags(array $any_tags = [], array $all_tags = [], array $not_any_tags = [], array $not_all_tags = [], $all = true)
     {
-        foreach ($this->tracks as $track) {
-            if ($all && $track->getHide()) {
+        foreach ($this->getMedias() as $track) {
+            if ($all && $track->isHide()) {
                 continue;
             }
-            if ($any_tags && !$track->containsAnyTag($any_tags)) {
+            if ($any_tags && !$track->tags()->containsAnyTag($any_tags)) {
                 continue;
             }
-            if ($all_tags && !$track->containsAllTags($all_tags)) {
+            if ($all_tags && !$track->tags()->containsAllTags($all_tags)) {
                 continue;
             }
-            if ($not_any_tags && $track->containsAnyTag($not_any_tags)) {
+            if ($not_any_tags && $track->tags()->containsAnyTag($not_any_tags)) {
                 continue;
             }
-            if ($not_all_tags && $track->containsAllTags($not_all_tags)) {
+            if ($not_all_tags && $track->tags()->containsAllTags($not_all_tags)) {
                 continue;
             }
 
@@ -1365,7 +1554,7 @@ class MultimediaObject
 
         $out = [];
         foreach ($snapshot as $key => $track) {
-            if ($track->getId() === $trackId) {
+            if ($track->id() === $trackId) {
                 $out[($key * 10) + ($up ? -11 : 11)] = $track;
             } else {
                 $out[$key * 10] = $track;
@@ -1386,10 +1575,10 @@ class MultimediaObject
             return;
         }
 
-        $trackMinDuration = $this->tracks->first()->getDuration();
+        $trackMinDuration = $this->tracks->first()->metadata()->duration();
         foreach ($this->tracks as $mmTrack) {
-            if ($mmTrack->getDuration() < $trackMinDuration) {
-                $trackMinDuration = $mmTrack->getDuration();
+            if ($mmTrack->metadata()->duration() < $trackMinDuration) {
+                $trackMinDuration = $mmTrack->metadata()->duration();
             }
         }
 

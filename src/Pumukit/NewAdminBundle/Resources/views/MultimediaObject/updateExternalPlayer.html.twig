@@ -1,0 +1,73 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h3 class="modal-title pumukitnewadmin-modal-title-margin" id="myModalLabel">{% trans %}External media{% endtrans %}</h3>
+</div>
+<div class="modal-body">
+    <fieldset>
+        <div class="form-group">
+            {% set urlexternal = mm.external().0.storage().url().url() %}
+            <iframe id="externalplayer" height="100%" width="100%" onload="resizeFrame(this)" src="{{ urlexternal }}"></iframe>
+        </div>
+    </fieldset>
+    {{ form_start(form, {'attr': {'id': 'externalplayerformupdate'}}) }}
+    {% if is_granted('ROLE_ADD_EXTERNAL_PLAYER') %}
+        <div class="row form-update-external">
+
+            <div class="col-xs-12 col-sm-9 col-md-9">
+                {% set placeholder = 'No external media set' %}
+                {% if urlexternal != '' %}
+                    {{ form_row(form.url, {'value': urlexternal}) }}
+                {% else %}
+                    {{ form_row(form.url, {'attr' : {'placeholder': placeholder|trans }}) }}
+                {% endif %}
+            </div>
+            <div class="col-xs-12 col-sm-3 col-md-3"><a href="#" id="previewIframe" class="btn btn-block btn-primary" title="{% trans %}Preview{% endtrans %}">{% trans %}Preview{% endtrans %}</a></div>
+            <div class="col-xs-12" style="margin-top:15px">
+                {{ form_row(form.title, {'value': mm.title()}) }}
+            </div>
+        </div>
+    {% endif %}
+    <div class="modal-footer" style="margin-top:50px">
+        <hr/>
+        {% if is_granted('ROLE_ADD_EXTERNAL_PLAYER') %}
+        <div class="col-md-2 pull-right">
+            <button type="submit" class="btn btn-primary btn-raised">{% trans %}Submit{% endtrans %}</button>
+        </div>
+        {% endif %}
+        <div class="col-md-2 pull-right">
+            <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+        </div>
+
+    </div>
+    {{ form_end(form) }}
+</div>
+<script>
+    function resizeFrame(elem){
+        var width = $(elem).width();
+        var height = width/16*9;
+        $(elem).height(height);
+    }
+
+    $(window).resize(function(){
+        resizeFrame($('#externalplayer'));
+    });
+
+    $('#previewIframe').on('click', function(event) {
+        event.preventDefault();
+        $('#externalplayer').attr('src',$('#form_url').val());
+    });
+
+    $('#externalplayerformupdate').on('submit', function(event) {
+        event.preventDefault();
+        $('#myModal').modal('hide');
+        $.ajax({
+            url: "{{ path('pumukitnewadmin_external_player_update', {'id' : mm.getId()} ) }}",
+            type: 'POST',
+            data: $(this).serialize(),
+            success: function(response){
+                location.reload();
+            }
+        });
+        return false;
+    })
+</script>

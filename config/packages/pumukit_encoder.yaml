@@ -23,17 +23,48 @@ services:
       $profiles:         '%pumukitencode.profilelist%'
       $default_profiles: '%pumukitencode.target_default_profiles%'
 
-  Pumukit\EncoderBundle\Services\JobService:
-    class: Pumukit\EncoderBundle\Services\JobService
+  Pumukit\EncoderBundle\Services\ProfileValidator:
+    class: Pumukit\EncoderBundle\Services\ProfileValidator
+
+  Pumukit\EncoderBundle\Services\Repository\JobRepository:
+    class: Pumukit\EncoderBundle\Services\Repository\JobRepository
+
+  Pumukit\EncoderBundle\Services\JobRender:
+    class: Pumukit\EncoderBundle\Services\JobRender
     arguments:
-      $binPath:          '%kernel.project_dir%/bin/'
+      $tmpPath: '%pumukit.tmp%'
+
+  Pumukit\EncoderBundle\Services\JobExecutor:
+    class: Pumukit\EncoderBundle\Services\JobExecutor
+    arguments:
+      $binPath: '%kernel.project_dir%/bin/'
       $environment:      '%kernel.environment%'
-      $tmpPath:          '%pumukit.tmp%'
-      $inboxPath:        '%pumukit.inbox%'
-      $deleteInboxFiles: '%pumukitencode.delete_inbox_files%'
       $maxExecutionJobSeconds: '%pumukitencode.max_execution_job_seconds%'
     tags:
       - { name: "monolog.logger", channel: "encoder" }
+
+  Pumukit\EncoderBundle\Services\JobRemover:
+    class: Pumukit\EncoderBundle\Services\JobRemover
+    arguments:
+      $tmpPath: '%pumukit.tmp%'
+      $inboxPath: '%pumukit.inbox%'
+      $deleteInboxFiles: '%pumukitencode.delete_inbox_files%'
+    tags:
+      - { name: "monolog.logger", channel: "encoder" }
+
+  Pumukit\EncoderBundle\Services\JobUpdater:
+    class: Pumukit\EncoderBundle\Services\JobUpdater
+
+  Pumukit\EncoderBundle\Services\JobCreator:
+    class: Pumukit\EncoderBundle\Services\JobCreator
+    arguments:
+      $tmpPath:          '%pumukit.tmp%'
+
+  Pumukit\EncoderBundle\Services\JobValidator:
+    class: Pumukit\EncoderBundle\Services\JobValidator
+
+  Pumukit\EncoderBundle\Services\JobDispatcher:
+    class: Pumukit\EncoderBundle\Services\JobDispatcher
 
   Pumukit\EncoderBundle\Services\MultimediaObjectPropertyJobService:
     class: Pumukit\EncoderBundle\Services\MultimediaObjectPropertyJobService
@@ -43,8 +74,6 @@ services:
     arguments:
       $width:      '%pumukitencode.thumbnail.width%'
       $height:     '%pumukitencode.thumbnail.height%'
-      $targetPath: '%pumukit.uploads_pic_dir%'
-      $targetUrl:  '%pumukit.uploads_pic_url%'
       $command:    '%pumukit.picextractor.command%'
 
   Pumukit\EncoderBundle\Services\PicService:

@@ -6,11 +6,11 @@ namespace Pumukit\EncoderBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
+use Pumukit\CoreBundle\Utils\FileSystemUtils;
+use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
-use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
 
 class DynamicPicExtractorService
@@ -18,10 +18,10 @@ class DynamicPicExtractorService
     public const DEFAULT_WIDTH = 768;
     public const DEFAULT_HEIGHT = 432;
 
-    private $documentManager;
-    private $mmsPicService;
-    private $command;
-    private $logger;
+    private DocumentManager $documentManager;
+    private MultimediaObjectPicService $mmsPicService;
+    private LoggerInterface $logger;
+    private string $command;
     private $predefinedTags = [
         'auto',
         'dynamic',
@@ -45,11 +45,11 @@ class DynamicPicExtractorService
 
     public function extract(MultimediaObject $multimediaObject, Track $track): bool
     {
-        if (!file_exists($track->getPath())) {
+        if (!file_exists($track->storage()->path()->path())) {
             throw new \Exception("Path doesn't exists for multimedia object ".$multimediaObject->getId());
         }
 
-        if (number_format($track->getWidth() / $track->getHeight(), 2) !== number_format(self::DEFAULT_WIDTH / self::DEFAULT_HEIGHT, 2)) {
+        if (number_format($track->metadata()->width() / $track->metadata()->height(), 2) !== number_format(self::DEFAULT_WIDTH / self::DEFAULT_HEIGHT, 2)) {
             $this->logger->warning('Webp needs 16:9 video '.$multimediaObject->getId());
 
             return false;
@@ -58,7 +58,7 @@ class DynamicPicExtractorService
         $absCurrentDir = $this->createDir($multimediaObject);
         $fileName = $this->generateFileName($absCurrentDir);
         $vars = [
-            '{{input}}' => $track->getPath(),
+            '{{input}}' => $track->storage()->path()->path(),
             '{{output}}' => $absCurrentDir.'/'.$fileName,
             '{{width}}' => self::DEFAULT_WIDTH,
             '{{height}}' => self::DEFAULT_HEIGHT,
@@ -80,9 +80,7 @@ class DynamicPicExtractorService
     private function createDir(MultimediaObject $multimediaObject): string
     {
         $absCurrentDir = $this->mmsPicService->getTargetPath($multimediaObject);
-
-        $fs = new Filesystem();
-        $fs->mkdir($absCurrentDir);
+        FileSystemUtils::createFolder($absCurrentDir);
 
         return $absCurrentDir;
     }
@@ -123,7 +121,7 @@ class DynamicPicExtractorService
         return null;
     }
 
-    private function completeFileMetadata(MultimediaObject $multimediaObject, Pic $file, string $filePath = ''): MultimediaObject
+    private function completeFileMetadata(MultimediaObject $multimediaObject, Pic $file, string $filePath = ''): void
     {
         $file->setPath($filePath);
         foreach ($this->predefinedTags as $tag) {
@@ -132,7 +130,5 @@ class DynamicPicExtractorService
 
         $this->documentManager->persist($multimediaObject);
         $this->documentManager->flush();
-
-        return $multimediaObject;
     }
 }

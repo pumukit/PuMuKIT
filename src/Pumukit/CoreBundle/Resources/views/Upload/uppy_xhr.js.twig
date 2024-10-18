@@ -15,12 +15,12 @@ const uppy = new Uppy.Core({
         minFileSize: convertSizeToBytes("{{ inbox_min_file_size() }}"),
         maxFileSize: convertSizeToBytes("{{ inbox_max_file_size() }}"),
         maxNumberOfFiles: 1,
-        allowedFileTypes: ['audio/*','video/*']
+        allowedFileTypes: {{ filter_valid_types_of_files(mm)|raw }}
     },
     onBeforeFileAdded:  (currentFile) => {
         if (currentFile) {
-            $('#pumukitnewadmin_track_ok_button').prop('disabled', false);
-            $('#pumukitwizard_track_next_button').prop('disabled', false);
+            $('#pumukitnewadmin_media_ok_button').prop('disabled', false);
+            $('#pumukitwizard_media_next_button').prop('disabled', false);
         }
     }
 })
@@ -100,8 +100,8 @@ uppy.on('upload-success', (file, response) => {
 $('#uppy-remove-file').on('click', function(event) {
     event.preventDefault();
 
-    $('#pumukitnewadmin_track_ok_button').prop('disabled', true);
-    $('#pumukitwizard_track_next_button').prop('disabled', true);
+    $('#pumukitnewadmin_media_ok_button').prop('disabled', true);
+    $('#pumukitwizard_media_next_button').prop('disabled', true);
 
     uppy.removeFile($(this).data('file-id'));
     uppy.cancelAll();

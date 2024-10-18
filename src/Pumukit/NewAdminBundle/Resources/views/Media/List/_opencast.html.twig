@@ -1,0 +1,3 @@
+{% if mm.getProperty('opencast') and opencast_exists %}
+    {{ render(controller('Pumukit\\OpencastBundle\\Controller\\MultimediaObjectController::indexAction', {'id': mm.id })) }}
+{% endif %}

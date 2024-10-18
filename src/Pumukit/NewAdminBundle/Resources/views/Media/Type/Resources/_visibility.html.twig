@@ -1,0 +1,9 @@
+<td>
+    <a href="" onclick="toggleHide('{{track.id}}'); return false;" title="{% trans %}Show/Hide track{% endtrans %} {{ track.id }}">
+        {% if track.isHide() %}
+            <i class="glyphicon glyphicon-eye-close"></i>
+        {% else %}
+            <i class="glyphicon glyphicon-eye-open"></i>
+        {% endif %}
+    </a>
+</td>

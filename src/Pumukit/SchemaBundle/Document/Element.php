@@ -9,7 +9,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 /**
  * @MongoDB\MappedSuperclass
  */
-class Element
+class Element implements ElementInterface
 {
     use Traits\Properties;
 

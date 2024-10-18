@@ -12,7 +12,7 @@
             {% include "@PumukitNewAdmin/UNESCO/listbody.html.twig" %}
         {% else %}
             <tr>
-                <td colspan="13" headers="th-checkbox th-icons th-icons th-icons th-video th-img th-series th-title th-duration th-rec-date th-pub-date">
+                <td colspan="15" headers="th-checkbox th-icons th-icons th-icons th-video th-img th-series th-title th-duration th-rec-date th-pub-date">
                     {% trans %}There are no multimedia objects with those values.{% endtrans %}
                 </td>
             </tr>
@@ -28,7 +28,7 @@
 
         {% for i in range %}
             <tr>
-                <td colspan="10">&nbsp;</td>
+                <td colspan="14">&nbsp;</td>
                 {% if not is_naked() %}
                     <td>&nbsp;</td>
                 {% endif %}
@@ -37,7 +37,7 @@
         </tbody>
         <tfoot>
         <tr>
-            <td colspan="13" class="foot-td">
+            <td colspan="15" class="foot-td">
                 <div class="row">
                     <div class="col-md-6">
                         <span class="nbResults">{{ mms.getNbResults }}</span> {% trans %}Mm. Obj.{% endtrans %}

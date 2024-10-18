@@ -1,4 +1,5 @@
-{% if app.user and is_granted('ROLE_ADD_HEAD_AND_TAIL') %}
+{% if app.user and is_granted('ROLE_ADD_HEAD_AND_TAIL') and mm.isVideoAudioType() %}
+
     <div class="form-row block-multimedia-object-playlist" style="margin-bottom:5rem;">
         <dt>{% trans %}Head and tail video{% endtrans %}:</dt>
         <dd>

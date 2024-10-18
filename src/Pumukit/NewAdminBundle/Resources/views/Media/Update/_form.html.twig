@@ -1,0 +1,51 @@
+<div>
+    <form id="update_media" action="#" method="POST">
+        <input type="hidden" name="track" id="track" value="{{ track.id }}" />
+        <input type="hidden" name="mmId" id="mmId" value="{{ mm.getId() }}" />
+        <input type="hidden" name="preview" id="preview" value="true" />
+        <fieldset>
+
+            {% include '@PumukitNewAdmin/Media/Form/_description.html.twig' %}
+            {% include '@PumukitNewAdmin/Media/Form/_download.html.twig' %}
+            {% include '@PumukitNewAdmin/Media/Form/_hide.html.twig' %}
+
+            <div class="form-group" id="pumukitnewadmin_media_update_profile">
+                <label for="profile" class="control-label">{% trans %}Profile{% endtrans %}</label>
+                <select name="profile" id="profile" class="form-control" disabled>
+                    <option value="" selected>{{ track.profileName }}</option>
+                </select>
+            </div>
+
+            {% include '@PumukitNewAdmin/Media/Form/_language.html.twig' %}
+            {% include '@PumukitNewAdmin/Media/Form/_tags.html.twig' %}
+
+        </fieldset>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+            <button type="submit" class="btn btn-pumukit btn-raised">{% trans %}OK{% endtrans %}</button>
+        </div>
+    </form>
+</div>
+
+<script>
+$('#update_media').on('submit', function(event){
+    event.preventDefault();
+    $('#myModal').modal('hide');
+    $.ajax({
+        url: '{{ path('pumukitnewadmin_track_update', {'id': track.id, 'mmId': mm.getId()}) }}',
+        type: 'POST',
+        data: $(this).serialize(),
+        error: function(jqXHR, textStatus, errorThrown){
+            $('#myModal').modal('hide');
+            let textError = jqXHR.responseText;
+            let message = errorThrown+': '+textError;
+            no_success(message);
+        },
+        success: function(response){
+            $('#tracks_mms_{{ mm.getId() }}').load("{{ path('pumukitnewadmin_track_list', {'id': mm.getId()}) }}");
+            let message = '{% trans %}Track successfully updated.{% endtrans %}';
+            success(message);
+        }
+    });
+});
+</script>

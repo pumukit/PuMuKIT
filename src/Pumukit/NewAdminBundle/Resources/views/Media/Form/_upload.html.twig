@@ -1,0 +1,19 @@
+{% set access_inbox = app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
+
+{% include '@PumukitWizard/Upload/_tabs.html.twig' %}
+
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane" id="local">
+        {% include "@PumukitCore/Upload/uppy_input.html.twig" %}
+    </div>
+    <div role="tabpanel" class="tab-pane" id="server">
+        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
+            <div class="form-group" id="pumukitnewadmin_media_inbox">
+                {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\InboxController::FormAction', {'series' : series})) }}
+            </div>
+        {% else %}
+            <br/>
+            <div class="text-center">{{ "You dont have enough permissions to upload files from the server"|trans }}</div>
+        {% endif %}
+    </div>
+</div>

@@ -81,7 +81,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
                 throw $this->createNotFoundException();
             }
 
-            if ($track->containsTag('download')) {
+            if ($track->tags()->containsTag('download')) {
                 $url = $track->getUrl();
                 $url .= (parse_url($url, PHP_URL_QUERY) ? '&' : '?').'forcedl=1';
 
@@ -89,7 +89,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
             }
         }
 
-        if (!$track && $multimediaObject->getProperty('externalplayer')) {
+        if (!$track && !$multimediaObject->isExternalType()) {
             $event = new ViewedEvent($multimediaObject);
             $this->eventDispatcher->dispatch($event, BasePlayerEvents::MULTIMEDIAOBJECT_VIEW);
         }
@@ -141,7 +141,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
                 throw $this->createNotFoundException();
             }
 
-            if ($track->containsTag('download')) {
+            if ($track->tags()->containsTag('download')) {
                 $url = $track->getUrl();
                 $url .= (parse_url($url, PHP_URL_QUERY) ? '&' : '?').'forcedl=1';
 

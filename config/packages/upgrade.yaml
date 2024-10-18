@@ -1,0 +1,9 @@
+services:
+  _defaults:
+    autowire:      true
+    autoconfigure: true
+    public:        true
+
+  Upgrade\Command\:
+    resource: '../../doc/upgrade/v4_to_v5/Command'
+    tags: ['console.command']

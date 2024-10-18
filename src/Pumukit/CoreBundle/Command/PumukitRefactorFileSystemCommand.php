@@ -7,12 +7,12 @@ namespace Pumukit\CoreBundle\Command;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Regex;
+use Pumukit\CoreBundle\Utils\FileSystemUtils;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
@@ -403,8 +403,7 @@ EOT
 
     private function checkFileExists(string $path): bool
     {
-        $fileSystem = new Filesystem();
-        if ($fileSystem->exists($path)) {
+        if (FileSystemUtils::exists($path)) {
             return true;
         }
 

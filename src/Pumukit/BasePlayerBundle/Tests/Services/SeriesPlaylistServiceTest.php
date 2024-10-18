@@ -4,10 +4,20 @@ declare(strict_types=1);
 
 namespace Pumukit\BasePlayerBundle\Tests\Services;
 
+use Pumukit\BasePlayerBundle\Services\SeriesPlaylistService;
+use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
+use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
+use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
+use Pumukit\SchemaBundle\Document\MediaType\Storage;
+use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
+use Pumukit\SchemaBundle\Document\ValueObject\Path;
+use Pumukit\SchemaBundle\Document\ValueObject\StorageUrl;
+use Pumukit\SchemaBundle\Document\ValueObject\Tags;
+use Pumukit\SchemaBundle\Services\FactoryService;
 
 /**
  * @internal
@@ -22,6 +32,8 @@ class SeriesPlaylistServiceTest extends PumukitTestCase
     private $testMmobjs;
     private $testPlaylistMmobjs;
     private $testSeries;
+    private $factoryService;
+    private $i18nService;
 
     public function setUp(): void
     {
@@ -29,58 +41,48 @@ class SeriesPlaylistServiceTest extends PumukitTestCase
 
         $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
         $this->seriesRepo = $this->dm->getRepository(Series::class);
-        $this->seriesPlaylistService = self::$kernel->getContainer()->get('pumukit_baseplayer.seriesplaylist');
+        $this->seriesPlaylistService = self::$kernel->getContainer()->get(SeriesPlaylistService::class);
+        $this->factoryService = self::$kernel->getContainer()->get(FactoryService::class);
+        $this->i18nService = new i18nService(['en', 'es'], 'en');
 
-        $track = new Track();
-        $series = new Series();
-        $series->setNumericalID(1);
-        $series2 = new Series();
-        $series2->setNumericalID(2);
-        $mmobjs = [
-            'published' => new MultimediaObject(),
-            'hidden' => new MultimediaObject(),
-            'blocked' => new MultimediaObject(),
-            'prototype' => new MultimediaObject(),
+        $series = $this->factoryService->createSeries();
+
+        $multimediaObjects = [
+            'published' => $this->factoryService->createMultimediaObject($series),
+            'hidden' => $this->factoryService->createMultimediaObject($series),
+            'blocked' => $this->factoryService->createMultimediaObject($series),
+            'prototype' => $this->factoryService->createMultimediaObject($series),
         ];
-        $mmobjs['published']->setStatus(MultimediaObject::STATUS_PUBLISHED);
-        $mmobjs['published']->setNumericalID(1);
-        $mmobjs['blocked']->setStatus(MultimediaObject::STATUS_BLOCKED);
-        $mmobjs['blocked']->setNumericalID(2);
-        $mmobjs['hidden']->setStatus(MultimediaObject::STATUS_HIDDEN);
-        $mmobjs['hidden']->setNumericalID(3);
-        $mmobjs['prototype']->setStatus(MultimediaObject::STATUS_PROTOTYPE);
-        $mmobjs['prototype']->setNumericalID(4);
 
-        $playlistMmobjs = [
-            'published' => new MultimediaObject(),
+        $multimediaObjects['published']->setStatus(MultimediaObject::STATUS_PUBLISHED);
+        $multimediaObjects['blocked']->setStatus(MultimediaObject::STATUS_BLOCKED);
+        $multimediaObjects['hidden']->setStatus(MultimediaObject::STATUS_HIDDEN);
+        $multimediaObjects['prototype']->setStatus(MultimediaObject::STATUS_PROTOTYPE);
+
+        $series2 = $this->factoryService->createSeries();
+        $playlistMultimediaObjects = [
+            'published' => $this->factoryService->createMultimediaObject($series2),
         ];
-        $track->setUrl('funnyurl.mp4');
-        $playlistMmobjs['published']->setStatus(MultimediaObject::STATUS_PUBLISHED);
-        $playlistMmobjs['published']->setNumericalID(5);
+        $playlistMultimediaObjects['published']->setStatus(MultimediaObject::STATUS_PUBLISHED);
 
-        foreach ($mmobjs as $mmobj) {
-            $mmobj->setSeries($series);
-            $mmobj->addTrack($track);
-            $this->dm->persist($mmobj);
+        $track = $this->generateTrackMedia();
+        foreach ($multimediaObjects as $multimediaObject) {
+            $multimediaObject->addTrack($track);
         }
-        $this->dm->persist($series);
-        $this->dm->persist($series2);
-        $this->dm->flush();
-        foreach ($playlistMmobjs as $mmobj) {
-            $mmobj->addTrack($track);
-            $mmobj->setSeries($series2);
-            $this->dm->persist($mmobj);
-            $series->getPlaylist()->addMultimediaObject($mmobj);
+
+        foreach ($playlistMultimediaObjects as $multimediaObject) {
+            $multimediaObject->addTrack($track);
+            $series->getPlaylist()->addMultimediaObject($multimediaObject);
         }
-        $this->dm->persist($series);
+
         $this->dm->flush();
         $this->dm->clear();
 
-        foreach ($mmobjs as $key => $mmobj) {
-            $mmobjs[$key] = $this->mmobjRepo->find($mmobj->getId());
+        foreach ($multimediaObjects as $key => $multimediaObject) {
+            $mmobjs[$key] = $this->mmobjRepo->find($multimediaObject->getId());
         }
-        foreach ($playlistMmobjs as $key => $mmobj) {
-            $playlistMmobjs[$key] = $this->mmobjRepo->find($mmobj->getId());
+        foreach ($playlistMultimediaObjects as $key => $multimediaObject) {
+            $playlistMmobjs[$key] = $this->mmobjRepo->find($multimediaObject->getId());
         }
         $series = $this->seriesRepo->find($series->getId());
 
@@ -123,5 +125,30 @@ class SeriesPlaylistServiceTest extends PumukitTestCase
     {
         $playlistMmobj = $this->seriesPlaylistService->getMmobjFromIdAndPlaylist($this->testMmobjs['published']->getId(), $this->testSeries);
         static::assertEquals($this->testMmobjs['published'], $playlistMmobj);
+    }
+
+    private function generateTrackMedia(): MediaInterface
+    {
+        $originalName = 'originalName'.random_int(0, mt_getrandmax());
+        $description = i18nText::create($this->i18nService->generateI18nText('18nDescription'));
+        $language = 'en';
+        $tags = Tags::create(['display']);
+        $views = 0;
+        $url = StorageUrl::create('');
+        $path = Path::create('public/storage');
+        $storage = Storage::create($url, $path);
+        $mediaMetadata = VideoAudio::create('{"format":{"duration":"10.000000"}}');
+
+        return Track::create(
+            $originalName,
+            $description,
+            $language,
+            $tags,
+            false,
+            true,
+            $views,
+            $storage,
+            $mediaMetadata
+        );
     }
 }

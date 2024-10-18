@@ -1,0 +1,8 @@
+<div class="form-group" id="pumukitnewadmin_media_language">
+    <label for="language" class="control-label">{{ "Language"|trans }}</label>
+    <select id="language" name="language" class="form-control">
+        {% for  key, lang in predefined_languages() %}
+            <option value="{{ key }}" {% if key == track.language() %}selected{% endif %}>{{ lang|trans|capitalize }}</option>
+        {% endfor %}
+    </select>
+</div>

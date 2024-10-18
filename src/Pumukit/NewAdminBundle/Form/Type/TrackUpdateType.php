@@ -8,7 +8,7 @@ use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
 use Pumukit\NewAdminBundle\Form\Type\Other\TrackdurationType;
 use Pumukit\NewAdminBundle\Form\Type\Other\TrackresolutionType;
-use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\SchemaBundle\Document\MediaType\Media;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -32,7 +32,7 @@ class TrackUpdateType extends AbstractType
 
         $builder
             ->add(
-                'i18n_description',
+                'description',
                 TextI18nType::class,
                 [
                     'required' => false,
@@ -50,7 +50,7 @@ class TrackUpdateType extends AbstractType
                 ]
             )
             ->add(
-                'allowDownload',
+                'isDownloadable',
                 CheckboxType::class,
                 [
                     'required' => false,
@@ -67,56 +67,56 @@ class TrackUpdateType extends AbstractType
                     'label' => $this->translator->trans('Video/Audio language', [], null, $this->locale),
                 ]
             )
-            ->add(
-                'durationinminutesandseconds',
-                TrackdurationType::class,
-                [
-                    'required' => true,
-                    'disabled' => true,
-                    'attr' => ['aria-label' => $this->translator->trans('Duration', [], null, $this->locale)],
-                    'label' => $this->translator->trans('Duration', [], null, $this->locale),
-                ]
-            )
-            ->add(
-                'resolution',
-                TrackresolutionType::class,
-                [
-                    'required' => true,
-                    'disabled' => true,
-                    'attr' => ['aria-label' => $this->translator->trans('Resolution', [], null, $this->locale)],
-                    'label' => $this->translator->trans('Resolution', [], null, $this->locale),
-                ]
-            )
-            ->add(
-                'size',
-                IntegerType::class,
-                [
-                    'required' => true,
-                    'disabled' => true,
-                    'attr' => ['aria-label' => $this->translator->trans('Size', [], null, $this->locale)],
-                    'label' => $this->translator->trans('Size', [], null, $this->locale),
-                ]
-            )
-            ->add(
-                'path',
-                TextType::class,
-                [
-                    'required' => true,
-                    'disabled' => true,
-                    'attr' => ['aria-label' => $this->translator->trans('File', [], null, $this->locale)],
-                    'label' => $this->translator->trans('File', [], null, $this->locale),
-                ]
-            )
-            ->add(
-                'url',
-                TextType::class,
-                [
-                    'required' => true,
-                    'disabled' => true,
-                    'attr' => ['aria-label' => $this->translator->trans('URL', [], null, $this->locale)],
-                    'label' => $this->translator->trans('URL', [], null, $this->locale),
-                ]
-            )
+//            ->add(
+//                'durationinminutesandseconds',
+//                TrackdurationType::class,
+//                [
+//                    'required' => true,
+//                    'disabled' => true,
+//                    'attr' => ['aria-label' => $this->translator->trans('Duration', [], null, $this->locale)],
+//                    'label' => $this->translator->trans('Duration', [], null, $this->locale),
+//                ]
+//            )
+//            ->add(
+//                'resolution',
+//                TrackresolutionType::class,
+//                [
+//                    'required' => true,
+//                    'disabled' => true,
+//                    'attr' => ['aria-label' => $this->translator->trans('Resolution', [], null, $this->locale)],
+//                    'label' => $this->translator->trans('Resolution', [], null, $this->locale),
+//                ]
+//            )
+//            ->add(
+//                'size',
+//                IntegerType::class,
+//                [
+//                    'required' => true,
+//                    'disabled' => true,
+//                    'attr' => ['aria-label' => $this->translator->trans('Size', [], null, $this->locale)],
+//                    'label' => $this->translator->trans('Size', [], null, $this->locale),
+//                ]
+//            )
+//            ->add(
+//                'path',
+//                TextType::class,
+//                [
+//                    'required' => true,
+//                    'disabled' => true,
+//                    'attr' => ['aria-label' => $this->translator->trans('File', [], null, $this->locale)],
+//                    'label' => $this->translator->trans('File', [], null, $this->locale),
+//                ]
+//            )
+//            ->add(
+//                'url',
+//                TextType::class,
+//                [
+//                    'required' => true,
+//                    'disabled' => true,
+//                    'attr' => ['aria-label' => $this->translator->trans('URL', [], null, $this->locale)],
+//                    'label' => $this->translator->trans('URL', [], null, $this->locale),
+//                ]
+//            )
         ;
 
         $builder->addEventListener(
@@ -136,7 +136,7 @@ class TrackUpdateType extends AbstractType
                             $this->locale
                         ),
                     ],
-                    'data' => implode(', ', $track->getTags()),
+                    'data' => implode(', ', $track->tags()->toArray()),
                 ];
 
                 $event->getForm()->add('tags', TextType::class, $formOptions);
@@ -161,7 +161,7 @@ class TrackUpdateType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => Track::class,
+                'data_class' => Media::class,
                 'is_super_admin' => false,
             ]
         );

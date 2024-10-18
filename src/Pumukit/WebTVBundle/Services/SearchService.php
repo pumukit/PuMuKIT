@@ -131,6 +131,16 @@ class SearchService
 
                 break;
 
+            case 'image':
+                $type = MultimediaObject::TYPE_IMAGE;
+
+                break;
+
+            case 'document':
+                $type = MultimediaObject::TYPE_DOCUMENT;
+
+                break;
+
             case 'external':
                 $type = MultimediaObject::TYPE_EXTERNAL;
 

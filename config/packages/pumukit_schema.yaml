@@ -105,6 +105,9 @@ services:
   Pumukit\SchemaBundle\Services\SeriesService:
     class: Pumukit\SchemaBundle\Services\SeriesService
 
+  Pumukit\SchemaBundle\Services\Repository\SeriesRepository:
+    class: Pumukit\SchemaBundle\Services\Repository\SeriesRepository
+
   Pumukit\SchemaBundle\Services\AnnounceService:
     class: Pumukit\SchemaBundle\Services\AnnounceService
 
@@ -260,3 +263,15 @@ services:
 
   Pumukit\SchemaBundle\Services\AutoNumericValueService:
     class: Pumukit\SchemaBundle\Services\AutoNumericValueService
+
+  Pumukit\SchemaBundle\Services\MediaCreator:
+    class: Pumukit\SchemaBundle\Services\MediaCreator
+
+  Pumukit\SchemaBundle\Services\MediaUpdater:
+    class: Pumukit\SchemaBundle\Services\MediaUpdater
+
+  Pumukit\SchemaBundle\Services\MediaRemover:
+    class: Pumukit\SchemaBundle\Services\MediaRemover
+
+  Pumukit\SchemaBundle\Services\MediaDispatcher:
+    class: Pumukit\SchemaBundle\Services\MediaDispatcher

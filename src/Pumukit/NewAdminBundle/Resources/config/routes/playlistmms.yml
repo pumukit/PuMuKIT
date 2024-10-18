@@ -7,14 +7,6 @@ pumukitnewadmin_playlistmms_index:
         _sylius:
             filterable: true
 
-pumukitnewadmin_playlistmms_create:
-    path: /{id}/create
-    methods: [GET, POST]
-    defaults:
-        _controller: Pumukit\NewAdminBundle\Controller\PlaylistMultimediaObjectController::createAction
-        _sylius:
-            redirect: pumukitnewadmin_playlistmms_index
-
 pumukitnewadmin_playlistmms_show:
     path: /{id}/show
     methods: [GET, POST]
@@ -71,24 +63,6 @@ pumukitnewadmin_playlistmms_list:
     defaults:
         _controller: Pumukit\NewAdminBundle\Controller\PlaylistMultimediaObjectController::listAction
         filter: false
-
-pumukitnewadmin_playlistmms_cut:
-    path: /cut
-    methods: [GET]
-    defaults:
-        _controller: Pumukit\NewAdminBundle\Controller\PlaylistMultimediaObjectController::cutAction
-
-pumukitnewadmin_playlistmms_paste:
-    path: /paste
-    methods: [POST]
-    defaults:
-        _controller: Pumukit\NewAdminBundle\Controller\PlaylistMultimediaObjectController::pasteAction
-
-pumukitnewadmin_playlistmms_reorder:
-    path: /reorder
-    methods: [POST]
-    defaults:
-        _controller: Pumukit\NewAdminBundle\Controller\PlaylistMultimediaObjectController::reorderAction
 
 pumukitnewadmin_playlistmms_modal:
     path: /{id}/modal

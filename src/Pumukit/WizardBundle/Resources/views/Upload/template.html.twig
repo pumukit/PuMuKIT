@@ -1,0 +1,31 @@
+{% extends '@PumukitNewAdmin/layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/pumukitcore/css/uppy.min.css') }}" type="text/css" rel="stylesheet" media="screen"/>
+    <link href="{{ asset('bundles/pumukitcore/css/inbox.css') }}" type="text/css" rel="stylesheet" media="screen"/>
+{% endblock %}
+
+{% block body %}
+    <div id="pumukitinbox_body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="well">
+                        {% include '@PumukitWizard/Upload/_title.html.twig' %}
+                        {% include '@PumukitWizard/Upload/_profiles.html.twig' %}
+                        {% include '@PumukitWizard/Upload/_options.html.twig' %}
+                        {% include '@PumukitWizard/Upload/_buttons.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ asset('bundles/pumukitcore/js/uppy.min.js') }}"></script>
+    <script>{% include "@PumukitCore/Upload/uppy_tus.js.twig" %}</script>
+
+{% endblock %}
+
+
+

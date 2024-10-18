@@ -32,7 +32,7 @@ class CatalogueExtension extends AbstractExtension
         return $this->tagCatalogueService->getAllCustomListFields();
     }
 
-    public function renderObjectField(MultimediaObject $object, SessionInterface $session, string $field): ?string
+    public function renderObjectField(MultimediaObject $object, SessionInterface $session, string $field)
     {
         return $this->tagCatalogueService->renderField($object, $session, $field);
     }

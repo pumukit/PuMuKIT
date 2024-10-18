@@ -160,20 +160,15 @@ class MultimediaObjectRepository extends DocumentRepository
         ;
     }
 
-    /**
-     * Find multimedia objects by track id.
-     *
-     * @param string $trackId
-     *
-     * @return array|object|null
-     */
-    public function findOneByTrackId($trackId)
+    public function findOneByTrackId(string $trackId)
     {
-        return $this->createStandardQueryBuilder()
-            ->field('tracks._id')->equals(new ObjectId($trackId))
-            ->getQuery()
-            ->getSingleResult()
-        ;
+        $qb = $this->createStandardQueryBuilder();
+        $qb->addOr($qb->expr()->field('tracks._id')->equals(new ObjectId($trackId)));
+        $qb->addOr($qb->expr()->field('documents._id')->equals(new ObjectId($trackId)));
+        $qb->addOr($qb->expr()->field('images._id')->equals(new ObjectId($trackId)));
+        $qb->addOr($qb->expr()->field('external._id')->equals(new ObjectId($trackId)));
+
+        return $qb->getQuery()->getSingleResult();
     }
 
     /**
@@ -936,7 +931,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return array
      */
-    public function findStandardBy(array $criteria, array $sort = null, $limit = null, $skip = null)
+    public function findStandardBy(array $criteria, ?array $sort = null, $limit = null, $skip = null)
     {
         $criteria['status'] = MultimediaObject::STATUS_PUBLISHED;
 
@@ -1010,9 +1005,9 @@ class MultimediaObjectRepository extends DocumentRepository
         return $this->createStandardQueryBuilder()->field('series')->references($series)->count()->getQuery()->execute();
     }
 
-    public function countLiveInSeries($series): int
+    public function countEventsInSeries($series): int
     {
-        return $this->createStandardQueryBuilder()->field('series')->references($series)->field('type')->equals(MultimediaObject::TYPE_LIVE)->count()->getQuery()->execute();
+        return $this->createStandardQueryBuilder()->field('type')->equals(MultimediaObject::TYPE_LIVE)->field('series')->references($series)->count()->getQuery()->execute();
     }
 
     public function findByTagCodQueryBuilder(TagInterface $tag): Builder

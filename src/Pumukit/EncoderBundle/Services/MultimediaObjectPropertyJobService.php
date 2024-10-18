@@ -13,7 +13,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
  */
 class MultimediaObjectPropertyJobService
 {
-    private $dm;
+    private DocumentManager $dm;
 
     public function __construct(DocumentManager $documentManager)
     {

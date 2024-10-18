@@ -1,33 +1,35 @@
 <form class="modal_form"
       style="height:92%;"
-      >
-  <fieldset style="height:100%;overflow:auto" id="form_my_mmobjs_list">
-    <br>
-    <div id="my_mmobjs_nommobjs_message" style="display:none">{% trans %}This user does not own any multimedia objects {% endtrans %}.</div>
-  </fieldset>
-  <img id="my_mmobjs_ajax_loader" src="{{asset('bundles/pumukitnewadmin/images/admin/load/spinner.gif')}}" alt="Loading more resources"/>
+>
+    <fieldset style="height:100%;overflow:auto" id="form_my_mmobjs_list">
+        <br>
+        <div id="my_mmobjs_nommobjs_message"
+             style="display:none">{% trans %}This user does not own any multimedia objects {% endtrans %}.
+        </div>
+    </fieldset>
+    <img id="my_mmobjs_ajax_loader" src="{{ asset('bundles/pumukitnewadmin/images/admin/load/spinner.gif') }}" alt="Loading more resources"/>
 </form>
 <script type="text/javascript">
- var calledAjax = false;
- var maxPage = {{ ((mmobjs_total|length)/mmobjs_limit) |round(0, 'ceil')}};
- var ajaxurl = "{{url("pumukitnewadmin_playlistmms_modal_mymmobjs", {'id':playlist.id, 'modal_page':'__page__', 'modal_limit': mmobjs_limit})}}";
- var currentPage = 0;
- $("#form_my_mmobjs_list").on("scroll", function(){
-     if(!calledAjax && (currentPage < maxPage) && this.offsetHeight + this.scrollTop >= this.scrollHeight) {
-         calledAjax = true;
-         currentPage += 1;
-         $('#my_mmobjs_ajax_loader').show();
-         var url = ajaxurl.replace('__page__',currentPage);
-         $.get(url).done(function(data){
-             $('#form_my_mmobjs_list').append(data);
-             $('#my_mmobjs_ajax_loader').hide();
-             calledAjax = false;
-         });
-     }
-     if(maxPage < 1) {
-         $('#my_mmobjs_ajax_loader').hide();
-         $('#my_mmobjs_nommobjs_message').show();
-     }
- });
- $("#form_my_mmobjs_list").scroll()
+    var calledAjax = false;
+    var maxPage = {{ ((mmobjs_total|length)/mmobjs_limit) |round(0, 'ceil') }};
+    var ajaxurl = "{{ url("pumukitnewadmin_playlistmms_modal_mymmobjs", {'id':playlist.id, 'modal_page':'__page__', 'modal_limit': mmobjs_limit}) }}";
+    var currentPage = 0;
+    $("#form_my_mmobjs_list").on("scroll", function () {
+        if (!calledAjax && (currentPage < maxPage) && this.offsetHeight + this.scrollTop >= this.scrollHeight) {
+            calledAjax = true;
+            currentPage += 1;
+            $('#my_mmobjs_ajax_loader').show();
+            var url = ajaxurl.replace('__page__', currentPage);
+            $.get(url).done(function (data) {
+                $('#form_my_mmobjs_list').append(data);
+                $('#my_mmobjs_ajax_loader').hide();
+                calledAjax = false;
+            });
+        }
+        if (maxPage < 1) {
+            $('#my_mmobjs_ajax_loader').hide();
+            $('#my_mmobjs_nommobjs_message').show();
+        }
+    });
+    $("#form_my_mmobjs_list").scroll()
 </script>

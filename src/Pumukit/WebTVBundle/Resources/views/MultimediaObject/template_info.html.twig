@@ -71,17 +71,17 @@
                 {% set none_attach = true %}
 
                 <ul class="list-group">
-                    {% for track in multimediaObject.getTracks() | filter(track => track.allowDownload() and not track.getHide() and showDownloads) %}
+                    {% for track in multimediaObject.getTracks() | filter(track => track.isDownloadable() and not track.isHide() and showDownloads) %}
                         {% set none_attach = false %}
                         <li class="qa-player-tracks tracks">
                             <span class="glyphicon glyphicon-facetime-video"></span>
                             <a class="video-tracks" download href="{{ track_url(track) }}?forcedl=1">
-                                {% if track.isOnlyAudio() %}
+                                {% if track.metadata().isOnlyAudio() %}
                                     {% trans %}Download this audio{% endtrans %}
                                 {% else %}
                                     {% trans %}Download this video{% endtrans %}
                                 {% endif %}
-                                <span class="pull-right">{{ (track.getSize() / 1048576)|number_format(2) }}MB</span>
+                                <span class="pull-right">{{ (track.metadata().size / 1048576)|number_format(2) }}MB</span>
                             </a>
                         </li>
                     {% endfor %}

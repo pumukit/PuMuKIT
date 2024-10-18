@@ -11,22 +11,30 @@
         <span class="alert alert-dismissable alert-warning">
           {% trans with {'%title%': multimediaObject.title} %}The multimedia object '%title%' is not playable{% endtrans %}.
         </span>
-      {% elseif multimediaObject.getProperty('externalplayer') %}
-          <iframe src="{{ multimediaObject.getProperty('externalplayer') }}" width="100%" class="embed-responsive-item" allowfullscreen></iframe>
-      {% else%}
-          <iframe src="{{ url('pumukit_videoplayer_index', {'id': multimediaObject.id }) }}"
-                  id="video_iframe_{{ multimediaObject.id }}"
-                  border="0"
-                  width="100%"
-                  class="embed-responsive-item"
-                  allowfullscreen>
-          </iframe>
-          <script type="text/javascript">
-              $('#myModal').one('hide.bs.modal', function (e) {
-                  var videoIframe = document.getElementById('video_iframe_{{ multimediaObject.id }}');
-                  if (videoIframe) videoIframe.parentNode.removeChild(videoIframe);
-              })
-          </script>
+      {% elseif multimediaObject.isExternalType() %}
+          <iframe src="{{ multimediaObject.getDisplayTrack().storage().url().url() }}" width="100%" class="embed-responsive-item" allowfullscreen></iframe>
+      {% elseif multimediaObject.isVideoAudioType() %}
+            <iframe src="{{ url('pumukit_videoplayer_index', {'id': multimediaObject.id }) }}"
+                    id="video_iframe_{{ multimediaObject.id }}"
+                    border="0"
+                    width="100%"
+                    class="embed-responsive-item"
+                    allowfullscreen>
+            </iframe>
+            <script type="text/javascript">
+                $('#myModal').one('hide.bs.modal', function (e) {
+                    var videoIframe = document.getElementById('video_iframe_{{ multimediaObject.id }}');
+                    if (videoIframe) videoIframe.parentNode.removeChild(videoIframe);
+                })
+            </script>
+      {% else %}
+            <iframe src="{{ url('pumukit_player_index', {'id': multimediaObject.id }) }}"
+                    id="video_iframe_{{ multimediaObject.id }}"
+                    border="0"
+                    width="100%"
+                    class="embed-responsive-item"
+                    allowfullscreen>
+            </iframe>
       {% endif %}
     </div>
   </fieldset>

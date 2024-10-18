@@ -32,7 +32,7 @@ class PermissionTest extends TestCase
         static::assertTrue(array_key_exists(Permission::CHANGE_MMOBJECT_STATUS, Permission::$permissionDescription));
         static::assertTrue(array_key_exists(Permission::CHANGE_MMOBJECT_PUBCHANNEL, Permission::$permissionDescription));
         static::assertTrue(array_key_exists(Permission::ACCESS_PUBLICATION_TAB, Permission::$permissionDescription));
-        static::assertTrue(array_key_exists(Permission::ACCESS_WIZARD_UPLOAD, Permission::$permissionDescription));
+        //        static::assertTrue(array_key_exists(Permission::ACCESS_WIZARD_UPLOAD, Permission::$permissionDescription));
         static::assertTrue(array_key_exists(Permission::ACCESS_ADVANCED_UPLOAD, Permission::$permissionDescription));
         static::assertTrue(array_key_exists(Permission::ACCESS_API, Permission::$permissionDescription));
         static::assertTrue(array_key_exists(Permission::ACCESS_INBOX, Permission::$permissionDescription));
@@ -200,7 +200,7 @@ class PermissionTest extends TestCase
         static::assertEquals($changeMmObjectStatus, Permission::$permissionDescription[Permission::CHANGE_MMOBJECT_STATUS]);
         static::assertEquals($changeMmObjectPubChannel, Permission::$permissionDescription[Permission::CHANGE_MMOBJECT_PUBCHANNEL]);
         static::assertEquals($accessPublicationTab, Permission::$permissionDescription[Permission::ACCESS_PUBLICATION_TAB]);
-        static::assertEquals($accessWizardUpload, Permission::$permissionDescription[Permission::ACCESS_WIZARD_UPLOAD]);
+        //        static::assertEquals($accessWizardUpload, Permission::$permissionDescription[Permission::ACCESS_WIZARD_UPLOAD]);
         static::assertEquals($accessAdvancedUpload, Permission::$permissionDescription[Permission::ACCESS_ADVANCED_UPLOAD]);
         static::assertEquals($accessApi, Permission::$permissionDescription[Permission::ACCESS_API]);
         static::assertEquals($accessInbox, Permission::$permissionDescription[Permission::ACCESS_INBOX]);

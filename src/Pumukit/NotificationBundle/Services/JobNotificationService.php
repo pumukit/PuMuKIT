@@ -7,7 +7,7 @@ namespace Pumukit\NotificationBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Event\JobEvent;
-use Pumukit\EncoderBundle\Services\JobService;
+use Pumukit\EncoderBundle\Services\JobRender;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Security\Permission;
@@ -20,7 +20,6 @@ class JobNotificationService
     public const PERSONAL_SCOPE_ROLE_CODE = 'owner';
     protected $dm;
     protected $senderService;
-    protected $jobService;
     protected $translator;
     protected $router;
     protected $enable;
@@ -30,12 +29,24 @@ class JobNotificationService
     protected $subjectFails;
     protected $subjectSuccessTrans;
     protected $subjectFailsTrans;
+    private JobRender $jobRender;
 
-    public function __construct(DocumentManager $documentManager, SenderService $senderService, JobService $jobService, TranslatorInterface $translator, RouterInterface $router, $enable, $environment, $template, $subjectSuccess, $subjectFails, $subjectSuccessTrans, $subjectFailsTrans)
-    {
+    public function __construct(
+        DocumentManager $documentManager,
+        SenderService $senderService,
+        TranslatorInterface $translator,
+        RouterInterface $router,
+        JobRender $jobRender,
+        $enable,
+        $environment,
+        $template,
+        $subjectSuccess,
+        $subjectFails,
+        $subjectSuccessTrans,
+        $subjectFailsTrans
+    ) {
         $this->dm = $documentManager;
         $this->senderService = $senderService;
-        $this->jobService = $jobService;
         $this->translator = $translator;
         $this->router = $router;
         $this->enable = $enable;
@@ -45,6 +56,7 @@ class JobNotificationService
         $this->subjectFails = $subjectFails;
         $this->subjectSuccessTrans = $subjectSuccessTrans;
         $this->subjectFailsTrans = $subjectFailsTrans;
+        $this->jobRender = $jobRender;
     }
 
     /**
@@ -186,7 +198,7 @@ class JobNotificationService
             'subject' => $subject,
             'job_status' => Job::$statusTexts[$job->getStatus()],
             'job' => $job,
-            'commandLine' => $this->jobService->renderBat($job),
+            'commandLine' => $this->jobRender->renderBat($job),
             'sender_name' => $this->senderService->getSenderName(),
             'platform_name' => $this->senderService->getPlatformName(),
             'multimedia_object_admin_link' => $multimediaObjectAdminLink,

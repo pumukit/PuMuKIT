@@ -8,7 +8,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use MongoDB\BSON\ObjectId;
 use Pumukit\EncoderBundle\Document\Job;
-use Pumukit\EncoderBundle\Services\JobService;
+use Pumukit\EncoderBundle\Services\JobRemover;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
@@ -28,11 +28,11 @@ class RemoveListener
     private $materialService;
     private $multimediaObjectPicService;
     private $seriesPicService;
-    private $jobService;
     private $tagService;
     private $embeddedBroadcastService;
     private $userService;
     private $translator;
+    private JobRemover $jobRemover;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -40,25 +40,25 @@ class RemoveListener
         MaterialService $materialService,
         MultimediaObjectPicService $multimediaObjectPicService,
         SeriesPicService $seriesPicService,
-        JobService $jobService,
+        JobRemover $jobRemover,
         TagService $tagService,
         EmbeddedBroadcastService $embeddedBroadcastService,
         UserService $userService,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
     ) {
         $this->documentManager = $documentManager;
         $this->multimediaObjectService = $multimediaObjectService;
         $this->materialService = $materialService;
         $this->multimediaObjectPicService = $multimediaObjectPicService;
         $this->seriesPicService = $seriesPicService;
-        $this->jobService = $jobService;
         $this->tagService = $tagService;
         $this->embeddedBroadcastService = $embeddedBroadcastService;
         $this->userService = $userService;
         $this->translator = $translator;
+        $this->jobRemover = $jobRemover;
     }
 
-    public function preRemove(LifecycleEventArgs $args)
+    public function preRemove(LifecycleEventArgs $args): void
     {
         $document = $args->getDocument();
 
@@ -95,11 +95,11 @@ class RemoveListener
 
             $allJobs = $jobRepo->findByMultimediaObjectId($document->getId());
             foreach ($allJobs as $job) {
-                $this->jobService->deleteJob($job->getId());
+                $this->jobRemover->delete($job);
             }
 
             foreach ($document->getTracks() as $track) {
-                $this->jobService->removeTrack($document, $track->getId());
+                $this->jobRemover->removeMedia($document, $track->getId());
             }
 
             foreach ($document->getPics() as $pic) {

@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace Pumukit\BasePlayerBundle\Services;
 
+use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Services\HeadAndTailService;
 
 class IntroService
 {
-    private $headAndTailService;
+    private HeadAndTailService $headAndTailService;
 
     public function __construct(HeadAndTailService $headAndTailService)
     {
         $this->headAndTailService = $headAndTailService;
     }
 
-    public function getVideoIntroduction(MultimediaObject $multimediaObject, $activateIntroFromRequest = true): ?Track
+    public function getVideoIntroduction(MultimediaObject $multimediaObject, $activateIntroFromRequest = true): ?MediaInterface
     {
         $activateIntroFromRequest = false === filter_var($activateIntroFromRequest, FILTER_VALIDATE_BOOLEAN);
 
@@ -31,14 +31,14 @@ class IntroService
         }
         $videoTrack = $this->headAndTailService->getDisplayTrackFromMultimediaObjectId($videoIntro);
 
-        if ($videoTrack instanceof Track) {
+        if ($videoTrack instanceof MediaInterface) {
             return $videoTrack;
         }
 
         return null;
     }
 
-    public function getVideoTail(MultimediaObject $multimediaObject): ?Track
+    public function getVideoTail(MultimediaObject $multimediaObject): ?MediaInterface
     {
         $videoTail = $this->headAndTailService->getTailToPlay($multimediaObject);
         if (!$videoTail) {
@@ -46,7 +46,7 @@ class IntroService
         }
         $videoTrack = $this->headAndTailService->getDisplayTrackFromMultimediaObjectId($videoTail);
 
-        if ($videoTrack instanceof Track) {
+        if ($videoTrack instanceof MediaInterface) {
             return $videoTrack;
         }
 

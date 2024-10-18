@@ -1,4 +1,4 @@
-<div class="table-responsive well" style="overflow:visible;">
+<div class="table-responsive" style="overflow:visible;">
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
         <input type="hidden" name="pumukitnewadmin_playlist_sort_change_type" id="pumukitnewadmin_playlist_sort_change_type" value="{{ app.session.get('admin/playlist/type')=='asc'?'desc':'asc' }}"/>
         <table class="table table-striped table-hover">
@@ -11,7 +11,7 @@
                         </label>
                     </div>
                 </th>
-                <th {% if is_naked() %}colspan="2"{% endif %} id="th-icons"></th>
+                <th {% if is_naked() %}colspan="2"{% endif%} id="th-icons" style="width:5%;"></th>
                 <th id="th-img"></th>
                 {% include '@PumukitNewAdmin/Playlist/listth.html.twig' %}
             </tr>
@@ -27,14 +27,14 @@
                             </label>
                         </div>
                     </td>
+                    <td headers="th-icons">
+                        {% include '@PumukitNewAdmin/Playlist/updatemenu.html.twig' with {'oneseries': oneseries, 'numV': (oneseries|count_multimedia_objects)} %}
+                    </td>
                     {% if is_naked() %}
                         <td headers="th-icons">
                             <a class="moodlepr-add" href="#" title="{% trans %}Publish to LMS{% endtrans %}" onclick="parent.window.postMessage({'playlist': '{{ oneseries.id }}'}, '*'); return false;"><i class="mdi-editor-insert-photo"></i></a>
                         </td>
                     {% endif %}
-                    <td headers="th-icons">
-                        {% include '@PumukitNewAdmin/Playlist/updatemenu.html.twig' with {'oneseries': oneseries, 'numV': (oneseries|count_multimedia_objects)} %}
-                    </td>
                     <td headers="th-img" onclick="click_fila_edit_urls('playlist', this, '{{ path('pumukitnewadmin_playlist_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_playlist_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}')">
                         {% include "@PumukitNewAdmin/Misc/img_list.html.twig"  with {'object' : oneseries, 'type': 'playlist' } %}
                     </td>
@@ -46,6 +46,11 @@
                     </td>
                     <td headers="th-mm" onclick="click_fila_edit_urls('playlist', this, '{{ path('pumukitnewadmin_playlist_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_playlist_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}')">
                         {{ oneseries.getPlaylist().getMultimediaObjects()|length }}
+                    </td>
+                    <td headers="th-play">
+                        <a href="{{ path('pumukit_playlistplayer_index', {'id': oneseries.id}) }}" target="_blank">
+                            <i class="fa fa-play"></i>
+                        </a>
                     </td>
                 </tr>
             {% else %}
@@ -66,6 +71,7 @@
                         <td headers="th-img">&nbsp;</td>
                         <td headers="th-title">&nbsp;</td>
                         <td headers="th-mm">&nbsp;</td>
+                        <td headers="th-play">&nbsp;</td>
                     </tr>
                 {% endfor %}
             {% endif %}

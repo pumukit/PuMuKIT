@@ -21,8 +21,6 @@ services:
 
   Pumukit\CoreBundle\Command\CreateMMOCommand\:
     resource: '../../src/Pumukit/CoreBundle/Command/CreateMMOCommand.php'
-    arguments:
-      $wizardSimpleDefaultMasterProfile: '?%pumukit_wizard.simple_default_master_profile%'
     tags:
      - { name: 'console.command' }
 
@@ -94,6 +92,13 @@ services:
       $kernelProjectDir: '%kernel.project_dir%'
     tags:
       - { name: "kernel.event_listener", event: "upload.inbox", method: "autoImport" }
+
+  Pumukit\CoreBundle\EventListener\ServerUploadListener:
+    class: Pumukit\CoreBundle\EventListener\ServerUploadListener
+    arguments:
+      $kernelProjectDir: '%kernel.project_dir%'
+    tags:
+      - { name: "kernel.event_listener", event: "upload.server", method: "autoImport" }
 
   Pumukit\CoreBundle\EventListener\RedisListener:
     class: Pumukit\CoreBundle\EventListener\RedisListener

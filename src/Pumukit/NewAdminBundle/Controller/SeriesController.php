@@ -645,7 +645,7 @@ class SeriesController extends AdminController
         foreach ($ids as $id) {
             $series = $this->documentManager->getRepository(Series::class)->findOneBy(['_id' => new ObjectId($id)]);
             $numberMultimediaObjectsInSeries += $mmRepo->countInSeries($series);
-            $numberLiveEventsInSeries += $mmRepo->countLiveInSeries($series);
+            $numberLiveEventsInSeries += $mmRepo->countEventsInSeries($series);
         }
 
         $count = [

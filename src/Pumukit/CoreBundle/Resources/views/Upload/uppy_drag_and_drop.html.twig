@@ -1,7 +1,8 @@
-{% extends '@PumukitCore/Inbox/template.html.twig' %}
+<div class="row">
+    <div class="col-xs-12"><strong>{{ "Local resource"|trans }}:</strong></div>
+    <div id="uploader_drag_and_drop" class="col-xs-12"></div>
+</div>
 
-{% block inbox_body %}
-    <h2><i class="fa fa-folder-open"></i> {{ "Upload video to: %folder%"|trans({"%folder%": folder|default("Inbox")}) }}</h2>
-    <div id="uploader_drag_and_drop"></div>
-    <a href="{{ path('inbox') }}" class="btn btn-default btn-raised btn-previous">&laquo; {% trans %}Back{% endtrans %}</a>
-{% endblock inbox_body %}
+<a href="{{ path('pumukitnewadmin_mms_index', {'series': series.id}) }}" class="btn btn-default btn-pumukit pull-right">
+    {{ "Go to series"|trans }} &raquo;
+</a>

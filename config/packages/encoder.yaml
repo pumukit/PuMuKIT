@@ -26,7 +26,7 @@ pumukit_encoder:
       app: cp
       rel_duration_size: 1
       rel_duration_trans: 1
-    master_video_h264:
+    video_master_encoded:
       display: false
       wizard: true
       master: true
@@ -47,10 +47,11 @@ pumukit_encoder:
         host: 127.0.0.1
         description: Local master server
         dir_out: "%pumukit.masters%"
+        url_out: "%pumukit.downloads_url%"
       app: ffmpeg
       rel_duration_size: 1
       rel_duration_trans: 1
-    broadcastable_master:
+    video_master_broadcastable:
       display: true
       wizard: true
       master: true
@@ -72,11 +73,12 @@ pumukit_encoder:
         host: 127.0.0.1
         description: Local download server
         dir_out: "%pumukit.downloads%"
-        url_out: "/storage/downloads"
+        url_out: "%pumukit.downloads_url%"
       app: ffmpeg
       rel_duration_size: 1
       rel_duration_trans: 1
-    video_h264:
+    video_broadcastable:
+      generate_pic: false
       display: true
       wizard: true
       master: false
@@ -99,11 +101,11 @@ pumukit_encoder:
         host: 127.0.0.1
         description: Local download server
         dir_out: "%pumukit.downloads%"
-        url_out: "/storage/downloads"
+        url_out: "%pumukit.downloads_url%"
       app: ffmpeg
       rel_duration_size: 1
       rel_duration_trans: 1
-    audio_aac:
+    audio_broadcastable:
       display: true
       wizard: true
       master: false
@@ -126,15 +128,67 @@ pumukit_encoder:
         host: 127.0.0.1
         description: Local download server
         dir_out: "%pumukit.downloads%"
-        url_out: "/storage/downloads"
+        url_out: "%pumukit.downloads_url%"
       app: ffmpeg
       rel_duration_size: 1
       rel_duration_trans: 1
+    image_broadcastable:
+      image: true
+      display: true
+      wizard: true
+      master: false
+      tags: html5 image
+      target: PUCHWEBTV
+      audio: false
+      bat: convert "{{input}}" -compress JPEG -quality 90 "{{output}}"
+      extension: jpg
+      streamserver:
+        name: Localhost
+        type: download
+        host: 127.0.0.1
+        description: Local download server
+        dir_out: "%pumukit.downloads%"
+        url_out: "%pumukit.downloads_url%"
+    image_raw_broadcastable:
+      image: true
+      display: true
+      wizard: true
+      master: false
+      tags: html5 image raw
+      target: PUCHWEBTV
+      audio: false
+      bat: darktable-cli "{{input}}" "{{output}}" --core --conf plugins/imageio/format/jpeg/quality=90
+      extension: jpg
+      streamserver:
+        name: Localhost
+        type: download
+        host: 127.0.0.1
+        description: Local download server
+        dir_out: "%pumukit.downloads%"
+        url_out: "%pumukit.downloads_url%"
+    document_broadcastable:
+      document: true
+      display: true
+      wizard: true
+      master: false
+      tags: html5 document
+      target: PUCHWEBTV
+      audio: false
+      bat: cp "{{input}}" "{{output}}"
+      streamserver:
+        name: Localhost
+        type: download
+        host: 127.0.0.1
+        description: Local download server
+        dir_out: "%pumukit.downloads%"
+        url_out: "%pumukit.downloads_url%"
 
   target_default_profiles:
     PUCHWEBTV:
-      audio: "audio_aac"
-      video: "video_h264"
+      audio: "audio_broadcastable"
+      video: "video_broadcastable"
+      image: "image_broadcastable image_raw_broadcastable"
+      document: "document_broadcastable"
     PUCHPODCAST:
-      audio: "audio_aac"
-      video: "video_h264 audio_aac"
+      audio: "audio_broadcastable"
+      video: "video_broadcastable audio_broadcastable"

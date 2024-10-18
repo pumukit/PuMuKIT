@@ -1,4 +1,0 @@
-LICENSE TEST FILE
-
-1. Used for test only
-2. Do not use in production environment

@@ -75,6 +75,12 @@
             <option value="audio" {% if app.request.query.get('type') == "audio" %} selected="selected" {% endif %}>
                 {% trans %}Audio{% endtrans %}
             </option>
+            <option value="document" {% if app.request.query.get('type') == "document" %} selected="selected" {% endif %}>
+                {% trans %}Document{% endtrans %}
+            </option>
+            <option value="image" {% if app.request.query.get('type') == "image" %} selected="selected" {% endif %}>
+                {% trans %}Image{% endtrans %}
+            </option>
             <option value="external" {% if app.request.query.get('type') == "external" %} selected="selected" {% endif %}>
                 {% trans %}External player{% endtrans %}
             </option>

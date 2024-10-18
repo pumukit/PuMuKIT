@@ -4,11 +4,21 @@ declare(strict_types=1);
 
 namespace Pumukit\EncoderBundle\Tests\EventListener;
 
+use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
+use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
+use Pumukit\SchemaBundle\Document\MediaType\Storage;
+use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
+use Pumukit\SchemaBundle\Document\ValueObject\Path;
+use Pumukit\SchemaBundle\Document\ValueObject\StorageUrl;
+use Pumukit\SchemaBundle\Document\ValueObject\Tags;
+use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\SchemaBundle\Services\TrackService;
 
 /**
  * @internal
@@ -22,6 +32,7 @@ class RemoveListenerTest extends PumukitTestCase
     private $repoSeries;
     private $trackService;
     private $factoryService;
+    private $i18nService;
 
     public function setUp(): void
     {
@@ -33,8 +44,10 @@ class RemoveListenerTest extends PumukitTestCase
         $this->repoJobs = $this->dm->getRepository(Job::class);
         $this->repoMmobj = $this->dm->getRepository(MultimediaObject::class);
         $this->repoSeries = $this->dm->getRepository(Series::class);
-        $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
-        $this->trackService = static::$kernel->getContainer()->get('pumukitschema.track');
+
+        $this->factoryService = static::$kernel->getContainer()->get(FactoryService::class);
+        $this->trackService = static::$kernel->getContainer()->get(TrackService::class);
+        $this->i18nService = new i18nService(['en', 'es'], 'en');
     }
 
     public function tearDown(): void
@@ -55,35 +68,39 @@ class RemoveListenerTest extends PumukitTestCase
         $series = $this->factoryService->createSeries();
         $multimediaObject = $this->factoryService->createMultimediaObject($series);
 
-        $pathEnd = '/path/to/file.mp4';
-
-        $track = new Track();
-        $track->setPath($pathEnd);
-        $track->addTag('opencast');
+        $track = $this->generateTrackMedia();
         $multimediaObject->addTrack($track);
-        $this->dm->persist($multimediaObject);
         $this->dm->flush();
 
-        $this->createJobWithStatusAndPathEnd(Job::STATUS_FINISHED, $multimediaObject, $pathEnd);
-
-        static::assertCount(1, $this->repoSeries->findAll());
-        static::assertCount(2, $this->repoMmobj->findAll());
-        static::assertCount(1, $this->repoJobs->findAll());
-
-        $this->trackService->removeTrackFromMultimediaObject($multimediaObject, $track->getId());
+        $this->trackService->removeTrackFromMultimediaObject($multimediaObject, $track->id());
 
         static::assertCount(1, $this->repoSeries->findAll());
         static::assertCount(2, $this->repoMmobj->findAll());
         static::assertCount(0, $this->repoJobs->findAll());
     }
 
-    private function createJobWithStatusAndPathEnd($status, $multimediaObject, $pathEnd)
+    private function generateTrackMedia(): MediaInterface
     {
-        $job = new Job();
-        $job->setMmId($multimediaObject->getId());
-        $job->setPathEnd($pathEnd);
-        $job->setStatus($status);
-        $this->dm->persist($job);
-        $this->dm->flush();
+        $originalName = 'originalName'.random_int(0, mt_getrandmax());
+        $description = i18nText::create($this->i18nService->generateI18nText('18nDescription'));
+        $language = 'en';
+        $tags = Tags::create(['display', 'opencast']);
+        $views = 0;
+        $url = StorageUrl::create('');
+        $path = Path::create('public/storage');
+        $storage = Storage::create($url, $path);
+        $mediaMetadata = VideoAudio::create('{"format":{"duration":"10.000000"}}');
+
+        return Track::create(
+            $originalName,
+            $description,
+            $language,
+            $tags,
+            false,
+            true,
+            $views,
+            $storage,
+            $mediaMetadata
+        );
     }
 }

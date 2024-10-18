@@ -13,6 +13,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\ValueObject\Tags;
 use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Pumukit\SchemaBundle\Services\SpecialTranslationService;
@@ -72,7 +73,7 @@ class PumukitAdminExtension extends AbstractExtension
             new TwigFilter('mms_announce_text', [$this, 'getMmsAnnounceText']),
             new TwigFilter('filter_profiles', [$this, 'filterProfiles']),
             new TwigFilter('count_multimedia_objects', [$this, 'countMultimediaObjects']),
-            new TwigFilter('count_lives', [$this, 'countLives']),
+            new TwigFilter('count_events', [$this, 'countEvents']),
             new TwigFilter('next_session_event', [$this, 'getNextEventSession']),
             new TwigFilter('unescape', [$this, 'unescapeLabel']),
         ];
@@ -84,6 +85,7 @@ class PumukitAdminExtension extends AbstractExtension
             new TwigFunction('php_upload_max_filesize', [$this, 'getPhpUploadMaxFileSize']),
             new TwigFunction('path_exists', [$this, 'existsRoute']),
             new TwigFunction('is_playable_on_playlist', [$this, 'isPlayableOnPlaylist']),
+            new TwigFunction('predefined_languages', [$this, 'getPredefinedLanguages']),
             new TwigFunction('is_mmobj_owner', [$this, 'isUserOwner']),
             new TwigFunction('broadcast_description', [$this, 'getBroadcastDescription']),
             new TwigFunction('is_naked', [$this, 'isNaked'], ['needs_environment' => true]),
@@ -108,12 +110,12 @@ class PumukitAdminExtension extends AbstractExtension
         return basename($path);
     }
 
-    public function getProfile(array $tags)
+    public function getProfile(Tags $tags): string
     {
         $profile = '';
 
-        foreach ($tags as $tag) {
-            if (false !== strpos($tag, 'profile:')) {
+        foreach ($tags->toArray() as $tag) {
+            if (str_contains($tag, 'profile:')) {
                 return substr($tag, strlen('profile:'), strlen($tag) - 1);
             }
         }
@@ -185,23 +187,31 @@ class PumukitAdminExtension extends AbstractExtension
         return false;
     }
 
+    public function getPredefinedLanguages(): array
+    {
+        return array_merge($this->languages, CustomLanguageType::$addonLanguages);
+    }
+
     public function getStatusIcon(int $status): string
     {
         $iconClass = 'mdi-alert-warning';
 
         switch ($status) {
             case MultimediaObject::STATUS_PUBLISHED:
-                $iconClass = 'mdi-device-signal-wifi-4-bar';
+                $iconClass = 'fa fa-check-circle';
+                //                $iconClass = 'mdi-device-signal-wifi-4-bar';
 
                 break;
 
             case MultimediaObject::STATUS_HIDDEN:
-                $iconClass = 'mdi-device-signal-wifi-0-bar';
+                $iconClass = 'fa fa-eye-slash';
+                //                $iconClass = 'mdi-device-signal-wifi-0-bar';
 
                 break;
 
             case MultimediaObject::STATUS_BLOCKED:
-                $iconClass = 'mdi-device-wifi-lock';
+                //                $iconClass = 'mdi-device-wifi-lock';
+                $iconClass = 'fa fa-ban';
 
                 break;
         }
@@ -376,11 +386,9 @@ class PumukitAdminExtension extends AbstractExtension
         return ini_get('upload_max_filesize').'B';
     }
 
-    public function filterProfiles($profiles, $onlyAudio): array
+    public function filterProfiles(MultimediaObject $multimediaObject): array
     {
-        return array_filter($profiles, static function ($elem) use ($onlyAudio) {
-            return !$onlyAudio || $elem['audio'];
-        });
+        return $this->profileService->filterProfilesByType($multimediaObject);
     }
 
     public function countMultimediaObjects(Series $series): int
@@ -388,9 +396,9 @@ class PumukitAdminExtension extends AbstractExtension
         return $this->dm->getRepository(MultimediaObject::class)->countInSeries($series);
     }
 
-    public function countLives(Series $series): int
+    public function countEvents(Series $series): int
     {
-        return $this->dm->getRepository(MultimediaObject::class)->countLiveInSeries($series);
+        return $this->dm->getRepository(MultimediaObject::class)->countEventsInSeries($series);
     }
 
     public function getBroadcastDescription($broadcastType, $template, bool $isLive = false): string

@@ -25,6 +25,14 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="filters_email" class="control-label">{% trans %}Email{% endtrans %}:</label>
+                                {% set criteria = app.session.get('admin/user/criteria') %}
+                                <div>
+                                    <input type="text" class="reset form-control" name="criteria[email]" id="filters_email" value="{{ criteria['email']|default("") }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="filters_profile" class="control-label">{% trans %}Permission Profile{% endtrans %}:</label>
                                 <div>
                                     <select class="form-control" name="criteria[permissionProfile]" id="filters_profile">

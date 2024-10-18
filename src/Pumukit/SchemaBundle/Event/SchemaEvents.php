@@ -122,6 +122,10 @@ final class SchemaEvents
      */
     public const MATERIAL_DELETE = 'material.delete';
 
+    public const MEDIA_CREATE = 'media.create';
+    public const MEDIA_UPDATE = 'media.update';
+    public const MEDIA_REMOVE = 'media.remove';
+
     /**
      * The track.create event is thrown each time a
      * track is created.

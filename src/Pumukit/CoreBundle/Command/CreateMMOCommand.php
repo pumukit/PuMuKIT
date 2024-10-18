@@ -5,13 +5,17 @@ declare(strict_types=1);
 namespace Pumukit\CoreBundle\Command;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\ObjectId;
+use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\CoreBundle\Utils\SemaphoreUtils;
-use Pumukit\EncoderBundle\Services\JobService;
+use Pumukit\EncoderBundle\Services\DTO\JobOptions;
+use Pumukit\EncoderBundle\Services\JobCreator;
 use Pumukit\EncoderBundle\Services\ProfileService;
-use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
+use Pumukit\EncoderBundle\Services\ProfileValidator;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\TagService;
 use Pumukit\WebTVBundle\PumukitWebTVBundle;
@@ -24,33 +28,38 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CreateMMOCommand extends Command
 {
     private $documentManager;
-    private $jobService;
-    private $inspectionService;
+    private $jobCreator;
     private $factoryService;
     private $tagService;
     private $profileService;
-    private $locales;
-    private $wizardSimpleDefaultMasterProfile;
     private $locale;
-
     private $validStatuses = [
         'published' => MultimediaObject::STATUS_PUBLISHED,
         'blocked' => MultimediaObject::STATUS_BLOCKED,
         'hidden' => MultimediaObject::STATUS_HIDDEN,
     ];
+    private i18nService $i18nService;
+    private ProfileValidator $profileValidator;
 
-    public function __construct(DocumentManager $documentManager, JobService $jobService, InspectionFfprobeService $inspectionService, FactoryService $factoryService, TagService $tagService, ProfileService $profileService, array $locales, string $locale = 'en', ?string $wizardSimpleDefaultMasterProfile = null)
-    {
-        $this->wizardSimpleDefaultMasterProfile = $wizardSimpleDefaultMasterProfile;
+    public function __construct(
+        DocumentManager $documentManager,
+        JobCreator $jobCreator,
+        FactoryService $factoryService,
+        TagService $tagService,
+        ProfileService $profileService,
+        i18nService $i18nService,
+        ProfileValidator $profileValidator,
+        string $locale = 'en'
+    ) {
         $this->documentManager = $documentManager;
-        $this->jobService = $jobService;
-        $this->inspectionService = $inspectionService;
+        $this->jobCreator = $jobCreator;
         $this->factoryService = $factoryService;
         $this->tagService = $tagService;
         $this->profileService = $profileService;
         $this->locale = $locale;
-        $this->locales = array_unique(array_merge($locales, ['en']));
         parent::__construct();
+        $this->i18nService = $i18nService;
+        $this->profileValidator = $profileValidator;
     }
 
     protected function configure(): void
@@ -62,6 +71,8 @@ class CreateMMOCommand extends Command
             ->addArgument('inotify_event', InputArgument::OPTIONAL, 'inotify event, only works with IN_CLOSE_WRITE', 'IN_CLOSE_WRITE')
             ->addOption('status', null, InputOption::VALUE_OPTIONAL, 'Multimedia object initial status (\'published\', \'blocked\' or \'hidden\')')
             ->addOption('user', null, InputOption::VALUE_OPTIONAL, 'User was upload video')
+            ->addOption('series', null, InputOption::VALUE_REQUIRED, 'Series to create multimedia object')
+            ->addOption('profile', null, InputOption::VALUE_REQUIRED, 'Profile for file encoding')
             ->setHelp(
                 <<<'EOT'
 This command create a multimedia object from a multimedia file path
@@ -112,44 +123,37 @@ EOT
             sleep(2);
         }
 
-        if (false !== strpos($path, 'INBOX_MASTER_BROADCASTABLE')) {
+        if ($input->getOption('profile')) {
+            $profile = $this->profileValidator->searchBestProfileForFile($input->getOption('profile'), $path);
+        } elseif (str_contains($path, 'INBOX_MASTER_BROADCASTABLE')) {
             $profile = 'broadcastable_master';
-        } elseif (false !== strpos($path, 'INBOX_MASTER_COPY')) {
+        } elseif (str_contains($path, 'INBOX_MASTER_COPY')) {
             $profile = 'master_copy';
-        } elseif (false !== strpos($path, 'INBOX_MASTER_H264')) {
+        } elseif (str_contains($path, 'INBOX_MASTER_H264')) {
             $profile = 'master_video_h264';
         } else {
-            $profile = $this->getDefaultMasterProfile();
-        }
-
-        $seriesTitle = basename(dirname($path));
-
-        if (in_array($seriesTitle, ['INBOX_MASTER_COPY', 'INBOX_MASTER_H264'])) {
-            $seriesTitle = 'AUTOIMPORT';
+            $profile = $this->profileService->getDefaultMasterProfile();
         }
 
         $title = substr(basename($path), 0, -4);
 
-        try {
-            // exception if is not a mediafile (video or audio)
-            $duration = $this->inspectionService->getDuration($path);
-        } catch (\Exception $e) {
-            throw new \Exception('The file  ('.$path.') is not a valid video or audio file');
-        }
-
-        if (0 == $duration) {
-            throw new \Exception('The file ('.$path.') is not a valid video or audio file (duration is zero)');
-        }
-
         $semaphore = SemaphoreUtils::acquire(1000001);
 
-        $series = $this->documentManager->getRepository(Series::class)->findOneBy(['title.'.$locale => $seriesTitle]);
-        if (!$series) {
-            $seriesTitleAllLocales = [$locale => $seriesTitle];
-            foreach ($this->locales as $l) {
-                $seriesTitleAllLocales[$l] = $seriesTitle;
+        $seriesId = $input->getOption('series');
+
+        try {
+            $objectId = new ObjectId($seriesId);
+            $series = $this->documentManager->getRepository(Series::class)->findOneBy(['_id' => $objectId]);
+        } catch (\Exception $e) {
+            $series = $this->documentManager->getRepository(Series::class)->findByTitleWithLocaleQuery($seriesId, $locale)->getSingleResult();
+            if (!$series) {
+                $seriesTitle = $this->i18nService->generateI18nText($seriesId);
+                $series = $this->factoryService->createSeries(null, $seriesTitle);
             }
-            $series = $this->factoryService->createSeries(null, $seriesTitleAllLocales);
+        }
+
+        if (!$series instanceof Series) {
+            throw new \Exception('Series not found');
         }
 
         $user = $this->findUser($input->getOption('user'));
@@ -157,27 +161,18 @@ EOT
         if (!$user) {
             $this->tagService->addTagByCodToMultimediaObject($multimediaObject, PumukitWebTVBundle::WEB_TV_TAG);
         }
-        foreach ($this->locales as $l) {
-            $multimediaObject->setTitle($title, $l);
-        }
-        if (null !== $status) {
-            $multimediaObject->setStatus($status);
-        }
 
-        $this->jobService->createTrackFromInboxOnServer($multimediaObject, $path, $profile, 2, $locale, []);
+        $i18nTitle = $this->i18nService->generateI18nText($title);
+        $multimediaObject->setI18nTitle($i18nTitle);
+        (null !== $status) ? $multimediaObject->setStatus($status) : $multimediaObject->setStatus(MultimediaObject::STATUS_BLOCKED);
+
+        $jobOptions = new JobOptions($profile, 2, $locale, [], []);
+        $path = Path::create($path);
+        $this->jobCreator->fromPath($multimediaObject, $path, $jobOptions);
 
         SemaphoreUtils::release($semaphore);
 
         return 0;
-    }
-
-    private function getDefaultMasterProfile()
-    {
-        if ($this->wizardSimpleDefaultMasterProfile) {
-            return $this->wizardSimpleDefaultMasterProfile;
-        }
-
-        return $this->profileService->getDefaultMasterProfile();
     }
 
     private function findUser($username)

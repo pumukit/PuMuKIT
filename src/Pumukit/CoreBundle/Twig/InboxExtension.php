@@ -3,6 +3,8 @@
 namespace Pumukit\CoreBundle\Twig;
 
 use Pumukit\CoreBundle\Services\InboxService;
+use Pumukit\CoreBundle\Utils\MediaMimeTypeUtils;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -28,6 +30,8 @@ class InboxExtension extends AbstractExtension
             new TwigFunction('inbox_override_patch_method', [$this, 'getOverridePatchMethod']),
             new TwigFunction('inbox_progress_bar_color', [$this, 'getProgressBarColor']),
             new TwigFunction('inbox_show_backoffice_button', [$this, 'getShowBackofficeButtonInInbox']),
+            new TwigFunction('filter_valid_types_of_files', [$this, 'getFilteredTypesOfFiles']),
+            new TwigFunction('allowed_type_files', [$this, 'getAllowedTypeFiles']),
         ];
     }
 
@@ -79,5 +83,33 @@ class InboxExtension extends AbstractExtension
     public function getShowBackofficeButtonInInbox(): bool
     {
         return $this->inboxService->showBackofficeButtonInInbox();
+    }
+
+    public function getFilteredTypesOfFiles(MultimediaObject $multimediaObject): string
+    {
+        if ($multimediaObject->isAudioType()) {
+            return json_encode(MediaMimeTypeUtils::allowedAudioMimeTypes(), JSON_THROW_ON_ERROR);
+        }
+
+        if ($multimediaObject->isVideoType()) {
+            return json_encode(MediaMimeTypeUtils::allowedVideoMimeTypes(), JSON_THROW_ON_ERROR);
+        }
+
+        if ($multimediaObject->isImageType()) {
+            return json_encode(MediaMimeTypeUtils::allowedImageMimeTypes(), JSON_THROW_ON_ERROR);
+        }
+
+        if ($multimediaObject->isDocumentType()) {
+            return json_encode(MediaMimeTypeUtils::allowedDocumentMimeTypes(), JSON_THROW_ON_ERROR);
+        }
+
+        throw new \Exception('Invalid type of multimedia object');
+    }
+
+    public function getAllowedTypeFiles(): string
+    {
+        $allowedTypes = MediaMimeTypeUtils::allowedMimeTypes();
+
+        return json_encode($allowedTypes, JSON_THROW_ON_ERROR);
     }
 }

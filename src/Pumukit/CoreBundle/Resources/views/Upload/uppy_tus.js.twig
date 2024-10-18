@@ -1,9 +1,9 @@
 {% include "@PumukitCore/Upload/common.js.twig" %}
 
-var endpoint = "{{ inboxUploadURL }}" + "?folder_path={{ form_data }}";
-
-{% if form_data is same as("") %}
-    endpoint = "{{ inboxUploadURL }}";
+{% if folder is defined %}
+    var endpoint = "{{ inboxUploadURL }}" + "?series={{ folder }}";
+{% else %}
+    var endpoint = "{{ inboxUploadURL }}" + "?series={{ series.id }}";
 {% endif %}
 
 const uppyTUS = Uppy.Core({
@@ -13,15 +13,17 @@ const uppyTUS = Uppy.Core({
         minFileSize: convertSizeToBytes("{{ inbox_min_file_size() }}"),
         maxFileSize: convertSizeToBytes("{{ inbox_max_file_size() }}"),
         maxNumberOfFiles: {{ inbox_max_number_of_files() }},
-        allowedFileTypes: ["audio/*", "video/*", "*.mxf"]
+        allowedFileTypes: {{ allowed_type_files()|raw }}
     },
     onBeforeFileAdded:  (currentFile) => {
             var fileName = currentFile.name;
+            var extension = fileName.split('.').pop();
             fileName = fileName.replace(/[\W_]+/g,"_");
-            currentFile.name = `${Date.now()}_${fileName}`;
+            currentFile.name = `${Date.now()}_${fileName}`+'.'+extension;
         }
     })
     .use(Uppy.Dashboard, {
+        proudlyDisplayPoweredByUppy: false,
         target: '#uploader_drag_and_drop',
         inline: true
     })

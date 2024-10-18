@@ -23,7 +23,6 @@ class Builder implements ContainerAwareInterface
         $this->authorizationChecker = $this->container->get('security.authorization_checker');
 
         $this->addDashboardMenu($menu);
-        $this->addWizardMenu($menu);
         $this->addMediaManagerMenu($menu);
         $this->addStatsMenu($menu);
         $this->addLiveMenu($menu);
@@ -47,19 +46,6 @@ class Builder implements ContainerAwareInterface
         }
     }
 
-    protected function addWizardMenu(KnpItemInterface $menu): void
-    {
-        if (!$this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
-            if ($this->authorizationChecker->isGranted(Permission::ACCESS_WIZARD_UPLOAD) && $this->authorizationChecker->isGranted(Permission::SHOW_WIZARD_MENU)) {
-                $masterRequest = $this->container->get('request_stack')->getMasterRequest();
-                $class = ($masterRequest && (0 === strpos($masterRequest->attributes->get('_route'), 'pumukitwizard_default_'))) ? 'active' : '';
-                $class .= ' menu_wizard_upload_new_videos';
-                $options = ['route' => 'pumukitwizard_default_series', 'attributes' => ['class' => $class]];
-                $menu->addChild('Upload new videos', $options);
-            }
-        }
-    }
-
     protected function addMediaManagerMenu(KnpItemInterface $menu): void
     {
         if ($this->authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_SERIES) || $this->authorizationChecker->isGranted(Permission::ACCESS_EDIT_PLAYLIST)) {
@@ -77,12 +63,6 @@ class Builder implements ContainerAwareInterface
             $series->addChild('Multimedia', ['route' => 'pumukitnewadmin_mms_index', 'attributes' => ['class' => 'menu_series_mms']]);
             $series->setDisplayChildren(false);
 
-            $activeMmsListAll = $this->container->getParameter('pumukit.show_mms_list_all_menu');
-            if ($activeMmsListAll) {
-                $options = ['route' => 'pumukitnewadmin_mms_indexall', 'attributes' => ['class' => 'menu_multimedia_object_all']];
-                $mediaManager->addChild($this->container->getParameter('pumukit_new_admin.multimedia_object_label'), $options);
-            }
-
             $options = ['route' => 'pumukitnewadmin_unesco_index', 'attributes' => ['class' => 'menu_tag_catalogue']];
             $unesco = $mediaManager->addChild('UNESCO catalogue', $options);
             $unesco->setDisplayChildren(false);
@@ -90,7 +70,7 @@ class Builder implements ContainerAwareInterface
 
         if ($this->authorizationChecker->isGranted(Permission::ACCESS_EDIT_PLAYLIST) && $this->container->getParameter('pumukit_new_admin.enable_playlist')) {
             $options = ['route' => 'pumukitnewadmin_playlist_index', 'attributes' => ['class' => 'menu_playlists_index']];
-            $mediaManager->addChild('Moodle Playlists', $options);
+            $mediaManager->addChild('Playlists', $options);
         }
     }
 
@@ -233,7 +213,7 @@ class Builder implements ContainerAwareInterface
     {
         if ($this->authorizationChecker->isGranted(Permission::ACCESS_ADMIN_USERS)) {
             $options = ['route' => 'pumukitnewadmin_user_index', 'attributes' => ['class' => 'menu_users']];
-            $management->addChild('Admin users', $options);
+            $management->addChild('Users', $options);
         }
     }
 

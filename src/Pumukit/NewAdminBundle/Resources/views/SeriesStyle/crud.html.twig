@@ -9,16 +9,14 @@
     </h3>
 
     <div class="well">
-        <div class="well">
-            <div class="row">
-                <div id="style_list" class="col-md-3">
-                    {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\SeriesStylesController::listAction')) }}
-                </div>
-                <div id="style_show" class="col-md-9">
-                    {% if app.session.get('seriesstyle/id') is defined and app.session.get('seriesstyle/id') is not empty %}
-                        {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\SeriesStylesController::showAction', {'id' : app.session.get('seriesstyle/id') } )) }}
-                    {% endif %}
-                </div>
+        <div class="row">
+            <div id="style_list" class="col-md-3">
+                {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\SeriesStylesController::listAction')) }}
+            </div>
+            <div id="style_show" class="col-md-9">
+                {% if app.session.get('seriesstyle/id') is defined and app.session.get('seriesstyle/id') is not empty %}
+                    {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\SeriesStylesController::showAction', {'id' : app.session.get('seriesstyle/id') } )) }}
+                {% endif %}
             </div>
         </div>
     </div>

@@ -130,6 +130,26 @@ trait Pic
         return null;
     }
 
+    public function hasDynamicPic(): bool
+    {
+        if (!$this->getPics()) {
+            return false;
+        }
+
+        foreach ($this->getPics() as $pic) {
+            if (str_contains(pathinfo($pic->getPath(), PATHINFO_EXTENSION), 'webp')) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function hasPics(): bool
+    {
+        return count($this->getPics()) > 0 && !$this->hasDynamicPic();
+    }
+
     public function getPicsWithAllTags(array $tags): array
     {
         $r = [];
