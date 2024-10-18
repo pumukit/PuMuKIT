@@ -9291,12 +9291,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/teltek/PumukitPaellaPlayerBundle.git",
-                "reference": "852524bed34bbbe4a1d2f9b71f09d292a1920163"
+                "reference": "9cb3d714e3fa007273204ac4bb2810f33b44e0f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teltek/PumukitPaellaPlayerBundle/zipball/852524bed34bbbe4a1d2f9b71f09d292a1920163",
-                "reference": "852524bed34bbbe4a1d2f9b71f09d292a1920163",
+                "url": "https://api.github.com/repos/teltek/PumukitPaellaPlayerBundle/zipball/9cb3d714e3fa007273204ac4bb2810f33b44e0f1",
+                "reference": "9cb3d714e3fa007273204ac4bb2810f33b44e0f1",
                 "shasum": ""
             },
             "require": {
@@ -9334,7 +9334,7 @@
                 "issues": "https://github.com/teltek/PumukitPaellaPlayerBundle/issues",
                 "source": "https://github.com/teltek/PumukitPaellaPlayerBundle/tree/feature_add_new_mime_types"
             },
-            "time": "2024-10-18T09:07:28+00:00"
+            "time": "2024-10-18T09:17:21+00:00"
         },
         {
             "name": "teltek/pumukit-stats-ui-bundle",
