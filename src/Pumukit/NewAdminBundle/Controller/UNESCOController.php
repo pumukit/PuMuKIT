@@ -262,6 +262,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $session = $this->session;
         $page = $session->get('admin/unesco/page', 1);
         $maxPerPage = $session->get('admin/unesco/paginate', 10);
+        $showDownloadButton = false;
 
         if (isset($tag) || $session->has('admin/unesco/tag')) {
             $tag = ($tag ?? $session->get('admin/unesco/tag'));
@@ -301,6 +302,8 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
             }
         }
 
+        $results = $multimediaObjects->getQuery()->execute()->toArray();
+
         $pager = $this->paginationService->createDoctrineODMMongoDBAdapter($multimediaObjects, (int) $page, (int) $maxPerPage);
 
         if ($pager->getNbPages() < $page) {
@@ -310,6 +313,11 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
         if ($pager->getNbResults() > 0) {
             $resetCache = true;
+
+            if ($session->has('UNESCO/criteria') || $tag) {
+                $showDownloadButton = true;
+            }
+            $this->session->set('paginated_results', $results);
             foreach ($pager->getCurrentPageResults() as $result) {
                 if ($session->get('admin/unesco/id') == $result->getId()) {
                     $resetCache = false;
@@ -331,6 +339,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         return [
             'mms' => $pager,
             'disable_pudenew' => !$this->showLatestWithPudeNew,
+            'showDownloadButton' => $showDownloadButton,
         ];
     }
 
