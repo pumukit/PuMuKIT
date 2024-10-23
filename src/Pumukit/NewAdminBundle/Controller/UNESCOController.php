@@ -302,8 +302,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
             }
         }
 
-        $results = $multimediaObjects->getQuery()->execute()->toArray();
-
         $pager = $this->paginationService->createDoctrineODMMongoDBAdapter($multimediaObjects, (int) $page, (int) $maxPerPage);
 
         if ($pager->getNbPages() < $page) {
@@ -317,7 +315,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
             if ($session->has('UNESCO/criteria') || $tag) {
                 $showDownloadButton = true;
             }
-            $this->session->set('paginated_results', $results);
+
             foreach ($pager->getCurrentPageResults() as $result) {
                 if ($session->get('admin/unesco/id') == $result->getId()) {
                     $resetCache = false;
