@@ -105,7 +105,7 @@ pumukit_encoder:
       app: ffmpeg
       rel_duration_size: 1
       rel_duration_trans: 1
-    video_dynamic_quality:
+    video_broadcastable_dynamic_quality:
       generate_pic: false
       display: true
       wizard: true
@@ -215,9 +215,11 @@ pumukit_encoder:
   target_default_profiles:
     PUCHWEBTV:
       audio: "audio_broadcastable"
-      video: "video_broadcastable video_dynamic_quality"
+      video: "video_broadcastable_dynamic_quality"
       image: "image_broadcastable image_raw_broadcastable"
       document: "document_broadcastable"
     PUCHPODCAST:
       audio: "audio_broadcastable"
-      video: "video_broadcastable audio_broadcastable video_dynamic_quality"
+      video: "video_broadcastable audio_broadcastable"
+    PUCHLMS:
+      video: "video_broadcastable"
