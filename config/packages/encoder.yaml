@@ -221,5 +221,3 @@ pumukit_encoder:
     PUCHPODCAST:
       audio: "audio_broadcastable"
       video: "video_broadcastable audio_broadcastable"
-    PUCHLMS:
-      video: "video_broadcastable"
