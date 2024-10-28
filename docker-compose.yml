@@ -39,7 +39,6 @@ services:
       # Uncomment the next line for dev
       - ./:/srv/pumukit
     ports:
-      - "80:80"
       - "443:443"
 
   db:
