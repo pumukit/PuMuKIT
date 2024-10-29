@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\Query\Builder;
 use Pumukit\NewAdminBundle\Services\TagCatalogueService;
 use Pumukit\NewAdminBundle\Services\UNESCOService;
 use Pumukit\SchemaBundle\Document\EmbeddedPerson;
@@ -105,19 +106,12 @@ class UNESCOSearchExporterController extends AbstractController implements NewAd
             $qb = $this->UNESCOService->addCriteria($qb, $criteria, $request->getLocale());
         }
 
-        $results = $qb->getQuery()->execute()->toArray();
-        $totalViews = 0;
-
         if (!$this->session->has('admin/unesco/selected_fields')) {
             $defaultSelectedFields = $this->tagCatalogueService->getDefaultListFields();
             $this->session->set('admin/unesco/selected_fields', $defaultSelectedFields);
         }
 
-        $totalViews = array_sum(array_map(function ($result) {
-            return $result->getNumview();
-        }, $results));
-
-        $response = new StreamedResponse(function () use ($results, $totalViews) {
+        $response = new StreamedResponse(function () use ($qb) {
             $handle = fopen('php://output', 'w+');
 
             $fields = $this->tagCatalogueService->getAllCustomListFields();
@@ -129,92 +123,109 @@ class UNESCOSearchExporterController extends AbstractController implements NewAd
 
             fputcsv($handle, $columns, ';');
 
-            foreach ($results as $result) {
-                $data = [];
-                foreach ($fields as $key => $field) {
-                    $render = $fields[$key]['render'];
+            $page = 1;
+            $limit = 100;
+            $totalViews = 0;
 
-                    switch ($key) {
-                        case 'series.id':
-                            $data[] = trim($result->getSeries()->getId());
+            while (true) {
+                $results = $this->getPaginatedResults($qb, $page, $limit);
 
-                            break;
+                if (0 === count($results)) {
+                    break;
+                }
 
-                        case 'seriesTitle':
-                            $data[] = trim($result->getSeriesTitle());
+                foreach ($results as $result) {
+                    $data = [];
+                    $numViews = $result->getNumview();
+                    $totalViews += $numViews;
 
-                            break;
+                    foreach ($fields as $key => $field) {
+                        $render = $fields[$key]['render'];
 
-                        case 'tracks.name':
-                            $tracks = $result->getTracks()->toArray();
-                            if (empty($tracks)) {
-                                $tracks = $result->getTracks()->getMongoData();
-                            }
-                            $trackName = '';
-                            foreach ($tracks as $track) {
-                                if ($track instanceof Track) {
-                                    if ($track->getOriginalName()) {
-                                        $trackName = $track->getOriginalName();
-                                    }
-                                } else {
-                                    if (isset($track['originalName'])) {
-                                        $trackName = $track['originalName'];
-                                    }
+                        switch ($key) {
+                            case 'series.id':
+                                $data[] = trim($result->getSeries()->getId());
+
+                                break;
+
+                            case 'seriesTitle':
+                                $data[] = trim($result->getSeriesTitle());
+
+                                break;
+
+                            case 'tracks.name':
+                                $tracks = $result->getTracks()->toArray();
+                                if (empty($tracks)) {
+                                    $tracks = $result->getTracks()->getMongoData();
                                 }
-                            }
-                            $data[] = $trackName;
-
-                            break;
-
-                        case 'groups':
-                            $groups = $result->getGroups()->toArray();
-                            if (empty($groups)) {
-                                $groups = $result->getGroups()->getMongoData();
-                            }
-                            $groupName = implode(',', $groups);
-
-                            $data[] = $groupName;
-
-                            break;
-
-                        default:
-                            if ('role' == $render) {
-                                $roles = $result->getRoles()->toArray();
-                                if (empty($roles)) {
-                                    $roles = $result->getRoles()->getMongoData();
-                                }
-                                $text = '';
-                                foreach ($roles as $role) {
-                                    $roleOM = explode('.', $key);
-                                    $roleCod = $roleOM[1] ?? $key;
-                                    $code = '';
-                                    if ($role instanceof EmbeddedRole) {
-                                        $code = $role->getCod();
-                                    } else {
-                                        $code = $role['cod'];
-                                    }
-                                    if ($code === $roleCod) {
-                                        if ($role instanceof EmbeddedRole) {
-                                            $people = $role->getPeople();
-                                        } else {
-                                            $people = $role['people'];
+                                $trackName = '';
+                                foreach ($tracks as $track) {
+                                    if ($track instanceof Track) {
+                                        if ($track->getOriginalName()) {
+                                            $trackName = $track->getOriginalName();
                                         }
-                                        foreach ($people as $embeddedPerson) {
-                                            if ($embeddedPerson instanceof EmbeddedPerson) {
-                                                $text .= $embeddedPerson->getName()."\n";
+                                    } else {
+                                        if (isset($track['originalName'])) {
+                                            $trackName = $track['originalName'];
+                                        }
+                                    }
+                                }
+                                $data[] = $trackName;
+
+                                break;
+
+                            case 'groups':
+                                $groups = $result->getGroups()->toArray();
+                                if (empty($groups)) {
+                                    $groups = $result->getGroups()->getMongoData();
+                                }
+                                $groupName = implode(',', $groups);
+
+                                $data[] = $groupName;
+
+                                break;
+
+                            default:
+                                if ('role' == $render) {
+                                    $roles = $result->getRoles()->toArray();
+                                    if (empty($roles)) {
+                                        $roles = $result->getRoles()->getMongoData();
+                                    }
+                                    $text = '';
+                                    foreach ($roles as $role) {
+                                        $roleOM = explode('.', $key);
+                                        $roleCod = $roleOM[1] ?? $key;
+                                        $code = '';
+                                        if ($role instanceof EmbeddedRole) {
+                                            $code = $role->getCod();
+                                        } else {
+                                            $code = $role['cod'];
+                                        }
+                                        if ($code === $roleCod) {
+                                            if ($role instanceof EmbeddedRole) {
+                                                $people = $role->getPeople();
                                             } else {
-                                                $text .= $embeddedPerson['name']."\n";
+                                                $people = $role['people'];
+                                            }
+                                            foreach ($people as $embeddedPerson) {
+                                                if ($embeddedPerson instanceof EmbeddedPerson) {
+                                                    $text .= $embeddedPerson->getName()."\n";
+                                                } else {
+                                                    $text .= $embeddedPerson['name']."\n";
+                                                }
                                             }
                                         }
                                     }
+                                    $data[] = trim($text);
+                                } else {
+                                    $data[] = $this->tagCatalogueService->renderField($result, $this->session, $key);
                                 }
-                                $data[] = trim($text);
-                            } else {
-                                $data[] = $this->tagCatalogueService->renderField($result, $this->session, $key);
-                            }
+                        }
                     }
+                    fputcsv($handle, $data, ';');
                 }
-                fputcsv($handle, $data, ';');
+
+                ++$page;
             }
 
             fputcsv($handle, ['', 'Total Views:', $totalViews]);
@@ -226,5 +237,16 @@ class UNESCOSearchExporterController extends AbstractController implements NewAd
         $response->headers->set('Content-Disposition', 'attachment; filename="resultados.csv"');
 
         return $response;
+    }
+
+    public function getPaginatedResults(Builder $qb, int $page, int $limit)
+    {
+        return $qb
+            ->skip(($page - 1) * $limit)
+            ->limit($limit)
+            ->getQuery()
+            ->execute()
+            ->toArray()
+        ;
     }
 }
