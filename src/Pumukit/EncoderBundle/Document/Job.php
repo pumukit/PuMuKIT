@@ -9,8 +9,6 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Pumukit\EncoderBundle\Document\Job.
- *
  * @MongoDB\Document(repositoryClass="Pumukit\EncoderBundle\Repository\JobRepository")
  *
  * @ApiResource(
@@ -26,11 +24,6 @@ class Job
     public const STATUS_EXECUTING = 2;
     public const STATUS_FINISHED = 3;
 
-    /**
-     * Status codes translation table.
-     *
-     * @var array
-     */
     public static $statusTexts = [
         self::STATUS_ERROR => 'Error',
         self::STATUS_PAUSED => 'Paused',
@@ -40,15 +33,11 @@ class Job
     ];
 
     /**
-     * @var string
-     *
      * @MongoDB\Id
      */
     private $id;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      *
      * @MongoDB\Index
@@ -56,43 +45,26 @@ class Job
     private $mm_id;
 
     /**
-     * //@var int $language_id
-     * // language code instead of integer
-     * //@MongoDB\Field(type="int").
-     */
-    // private $language_id;
-
-    /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $language_id;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $profile;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $cpu;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $url;
 
     /**
-     * @var int
-     *
      * @MongoDB\Field(type="int")
      *
      * @MongoDB\Index
@@ -100,106 +72,76 @@ class Job
     private $status = self::STATUS_WAITING;
 
     /**
-     * @var int
-     *
      * @MongoDB\Field(type="int")
      */
     private $priority;
 
     /**
-     * @var string[]
-     *
      * @MongoDB\Field(type="raw")
      */
     private $name = ['en' => ''];
 
     /**
-     * @var string[]
-     *
      * @MongoDB\Field(type="raw")
      */
     private $description = ['en' => ''];
 
     /**
-     * @var \DateTime
-     *
      * @MongoDB\Field(type="date")
      */
     private $timeini;
 
     /**
-     * @var \DateTime
-     *
      * @MongoDB\Field(type="date")
      */
     private $timestart;
 
     /**
-     * @var \DateTime
-     *
      * @MongoDB\Field(type="date")
      */
     private $timeend;
 
     /**
-     * @var int
-     *
      * @MongoDB\Field(type="int")
      */
     private $pid;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $path_ini;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $path_end;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $ext_ini;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $ext_end;
 
     /**
-     * @var int
-     *
      * @MongoDB\Field(type="int")
      */
     private $duration = 0;
 
     /**
-     * @var int
-     *
      * @MongoDB\Field(type="int")
      */
     private $new_duration = 0;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $size = '0';
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      *
      * @Assert\Email
@@ -207,180 +149,93 @@ class Job
     private $email;
 
     /**
-     * @var string
-     *
      * @MongoDB\Field(type="string")
      */
     private $output = '';
 
     /**
-     * @var array
-     *
      * @MongoDB\Field(type="raw")
      */
     private $initVars = [];
 
-    /**
-     * @var string
-     */
     private $locale = 'en';
 
-    /**
-     * Get id.
-     *
-     * @return string
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set mm_id.
-     *
-     * @param string $mm_id
-     */
-    public function setMmId($mm_id)
+    public function setMmId($mm_id): void
     {
         $this->mm_id = $mm_id;
     }
 
-    /**
-     * Get mm_id.
-     *
-     * @return string
-     */
     public function getMmId()
     {
         return $this->mm_id;
     }
 
-    /**
-     * Set language_id.
-     *
-     * @param string $language_id
-     */
-    public function setLanguageId($language_id)
+    public function setLanguageId($language_id): void
     {
         $this->language_id = $language_id;
     }
 
-    /**
-     * Get language_id.
-     *
-     * @return string
-     */
     public function getLanguageId()
     {
         return $this->language_id;
     }
 
-    /**
-     * Set profile.
-     *
-     * @param string $profile
-     */
-    public function setProfile($profile)
+    public function setProfile($profile): void
     {
         $this->profile = $profile;
     }
 
-    /**
-     * Get profile.
-     *
-     * @return string
-     */
     public function getProfile()
     {
         return $this->profile;
     }
 
-    /**
-     * Set cpu.
-     *
-     * @param string $cpu
-     */
-    public function setCpu($cpu)
+    public function setCpu($cpu): void
     {
         $this->cpu = $cpu;
     }
 
-    /**
-     * Get cpu.
-     *
-     * @return string
-     */
     public function getCpu()
     {
         return $this->cpu;
     }
 
-    /**
-     * Set url.
-     *
-     * @param string $url
-     */
-    public function setUrl($url)
+    public function setUrl($url): void
     {
         $this->url = $url;
     }
 
-    /**
-     * Get url.
-     *
-     * @return string
-     */
     public function getUrl()
     {
         return $this->url;
     }
 
-    /**
-     * Set status.
-     *
-     * @param int $status
-     */
-    public function setStatus($status)
+    public function setStatus($status): void
     {
         $this->status = $status;
     }
 
-    /**
-     * Get status.
-     *
-     * @return int
-     */
-    public function getStatus()
+    public function getStatus(): int
     {
         return $this->status;
     }
 
-    /**
-     * Set priority.
-     *
-     * @param int $priority
-     */
-    public function setPriority($priority)
+    public function setPriority($priority): void
     {
         $this->priority = $priority;
     }
 
-    /**
-     * Get priority.
-     *
-     * @return int
-     */
     public function getPriority()
     {
         return $this->priority;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string|null $locale
-     */
-    public function setName(string $name, $locale = null)
+    public function setName(string $name, $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -388,14 +243,7 @@ class Job
         $this->name[$locale] = $name;
     }
 
-    /**
-     * Get name.
-     *
-     * @param string|null $locale
-     *
-     * @return string
-     */
-    public function getName($locale = null)
+    public function getName($locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -407,31 +255,17 @@ class Job
         return $this->name[$locale];
     }
 
-    /**
-     * Set I18n name.
-     */
-    public function setI18nName(array $name)
+    public function setI18nName(array $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * Get I18n name.
-     *
-     * @return array
-     */
-    public function getI18nName()
+    public function getI18nName(): array
     {
         return $this->name;
     }
 
-    /**
-     * Set description.
-     *
-     * @param string      $description
-     * @param string|null $locale
-     */
-    public function setDescription($description, $locale = null)
+    public function setDescription($description, $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -439,14 +273,7 @@ class Job
         $this->description[$locale] = $description;
     }
 
-    /**
-     * Get description.
-     *
-     * @param string|null $locale
-     *
-     * @return string
-     */
-    public function getDescription($locale = null)
+    public function getDescription($locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -458,41 +285,21 @@ class Job
         return $this->description[$locale];
     }
 
-    /**
-     * Set I18n description.
-     */
-    public function setI18nDescription(array $description)
+    public function setI18nDescription(array $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * Get I18n description.
-     *
-     * @return array
-     */
-    public function getI18nDescription()
+    public function getI18nDescription(): array
     {
         return $this->description;
     }
 
-    /**
-     * Set timeini.
-     *
-     * @param \DateTime $timeini
-     */
-    public function setTimeini($timeini)
+    public function setTimeini($timeini): void
     {
         $this->timeini = $timeini;
     }
 
-    /**
-     * Get timeini.
-     *
-     * @param string|null $format
-     *
-     * @return \DateTime|string
-     */
     public function getTimeini($format = null)
     {
         if ((null === $this->timeini) || (null === $format)) {
@@ -502,23 +309,11 @@ class Job
         return $this->timeini->format($format);
     }
 
-    /**
-     * Set timestart.
-     *
-     * @param \DateTime $timestart
-     */
-    public function setTimestart($timestart)
+    public function setTimestart($timestart): void
     {
         $this->timestart = $timestart;
     }
 
-    /**
-     * Get timestart.
-     *
-     * @param mixed|null $format
-     *
-     * @return \DateTime|string
-     */
     public function getTimestart($format = null)
     {
         if ((null === $this->timestart) || (null === $format)) {
@@ -528,23 +323,11 @@ class Job
         return $this->timestart->format($format);
     }
 
-    /**
-     * Set timeend.
-     *
-     * @param \DateTime $timeend
-     */
-    public function setTimeend($timeend)
+    public function setTimeend($timeend): void
     {
         $this->timeend = $timeend;
     }
 
-    /**
-     * Get timeend.
-     *
-     * @param mixed|null $format
-     *
-     * @return \DateTime|string
-     */
     public function getTimeend($format = null)
     {
         if ((null === $this->timeend) || (null === $format)) {
@@ -554,318 +337,167 @@ class Job
         return $this->timeend->format($format);
     }
 
-    /**
-     * Set pid.
-     *
-     * @param int $pid
-     */
-    public function setPid($pid)
+    public function setPid($pid): void
     {
         $this->pid = $pid;
     }
 
-    /**
-     * Get pid.
-     *
-     * @return int
-     */
     public function getPid()
     {
         return $this->pid;
     }
 
-    /**
-     * Set path_ini.
-     *
-     * @param string $path_ini
-     */
-    public function setPathIni($path_ini)
+    public function setPathIni($path_ini): void
     {
         $this->path_ini = $path_ini;
     }
 
-    /**
-     * Get path_ini.
-     *
-     * @return string
-     */
     public function getPathIni()
     {
         return $this->path_ini;
     }
 
-    /**
-     * Set path_end.
-     *
-     * @param string $path_end
-     */
-    public function setPathEnd($path_end)
+    public function setPathEnd($path_end): void
     {
         $this->path_end = $path_end;
     }
 
-    /**
-     * Get path_end.
-     *
-     * @return string
-     */
     public function getPathEnd()
     {
         return $this->path_end;
     }
 
-    /**
-     * Set ext_ini.
-     *
-     * @param string $ext_ini
-     */
-    public function setExtIni($ext_ini)
+    public function setExtIni($ext_ini): void
     {
         $this->ext_ini = $ext_ini;
     }
 
-    /**
-     * Get ext_ini.
-     *
-     * @return string
-     */
     public function getExtIni()
     {
         return $this->ext_ini;
     }
 
-    /**
-     * Set ext_end.
-     *
-     * @param string $ext_end
-     */
-    public function setExtEnd($ext_end)
+    public function setExtEnd($ext_end): void
     {
         $this->ext_end = $ext_end;
     }
 
-    /**
-     * Get ext_end.
-     *
-     * @return string
-     */
     public function getExtEnd()
     {
         return $this->ext_end;
     }
 
-    /**
-     * Set duration.
-     *
-     * @param int $duration
-     */
-    public function setDuration($duration)
+    public function setDuration($duration): void
     {
         $this->duration = $duration;
     }
 
-    /**
-     * Get duration.
-     *
-     * @return int
-     */
-    public function getDuration()
+    public function getDuration(): int
     {
         return $this->duration;
     }
 
-    /**
-     * Set new_duration.
-     *
-     * @param int $new_duration
-     */
-    public function setNewDuration($new_duration)
+    public function setNewDuration($new_duration): void
     {
         $this->new_duration = $new_duration;
     }
 
-    /**
-     * Get new_duration.
-     *
-     * @return int
-     */
-    public function getNewDuration()
+    public function getNewDuration(): int
     {
         return $this->new_duration;
     }
 
-    /**
-     * Set size.
-     *
-     * @param string $size
-     */
-    public function setSize($size)
+    public function setSize($size): void
     {
         $this->size = $size;
     }
 
-    /**
-     * Get size.
-     *
-     * @return string
-     */
-    public function getSize()
+    public function getSize(): string
     {
         return $this->size;
     }
 
-    /**
-     * Set email.
-     *
-     * @param string $email
-     */
-    public function setEmail($email)
+    public function setEmail($email): void
     {
         $this->email = $email;
     }
 
-    /**
-     * Get email.
-     *
-     * @return string
-     */
     public function getEmail()
     {
         return $this->email;
     }
 
-    /**
-     * Set output.
-     *
-     * @param string $output
-     */
-    public function setOutput($output)
+    public function setOutput($output): void
     {
         $this->output = $output;
     }
 
-    /**
-     * Append output.
-     *
-     * @param string $output
-     */
-    public function appendOutput($output)
+    public function appendOutput($output): void
     {
         $this->output .= $output;
     }
 
-    /**
-     * Get output.
-     *
-     * @return string
-     */
-    public function getOutput()
+    public function getOutput(): string
     {
         return $this->output;
     }
 
-    /**
-     * Set initVars.
-     *
-     * @param array $initVars
-     */
-    public function setInitVars($initVars)
+    public function setInitVars($initVars): void
     {
         $this->initVars = $initVars;
     }
 
-    /**
-     * Get initVars.
-     *
-     * @return array
-     */
-    public function getInitVars()
+    public function getInitVars(): array
     {
         return $this->initVars;
     }
 
-    /**
-     * Set locale.
-     *
-     * @param string $locale
-     */
-    public function setLocale($locale)
+    public function setLocale($locale): void
     {
         $this->locale = $locale;
     }
 
-    /**
-     * Get locale.
-     *
-     * @return string
-     */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
 
-    /**
-     * Get status text.
-     *
-     * @return string
-     */
-    public function getStatusText()
+    public function getStatusText(): string
     {
         return self::$statusTexts[$this->getStatus()];
     }
 
-    /**
-     * @return bool
-     */
-    public function isPending()
+    public function isPending(): bool
     {
         return self::STATUS_WAITING == $this->status || self::STATUS_PAUSED == $this->status;
     }
 
-    /**
-     * @return bool
-     */
-    public function isWaiting()
+    public function isWaiting(): bool
     {
         return self::STATUS_WAITING == $this->status;
     }
 
-    /**
-     * @return bool
-     */
-    public function isPaused()
+    public function isPaused(): bool
     {
         return self::STATUS_PAUSED == $this->status;
     }
 
-    /**
-     * @return bool
-     */
-    public function isExecuting()
+    public function isExecuting(): bool
     {
         return self::STATUS_EXECUTING == $this->status;
     }
 
-    /**
-     * @return bool
-     */
-    public function isFailed()
+    public function isFailed(): bool
     {
         return self::STATUS_ERROR == $this->status;
     }
 
-    /**
-     * @return bool
-     */
-    public function isFinished()
+    public function isFinished(): bool
     {
         return self::STATUS_FINISHED == $this->status;
     }
 
-    /**
-     * @return bool
-     */
-    public function isExecuted()
+    public function isExecuted(): bool
     {
         return self::STATUS_ERROR == $this->status || self::STATUS_FINISHED == $this->status;
     }

@@ -51,9 +51,35 @@ class WebTVFilter extends BsonFilter
                     ],
                 ],
                 [
-                    'properties.externalplayer' => [
-                        '$exists' => true,
-                        '$ne' => '',
+                    'external' => [
+                        '$elemMatch' => [
+                            'tags' => $this->getParameter('display_track_tag'),
+                            'hide' => false,
+                        ],
+                    ],
+                ],
+                [
+                    'documents' => [
+                        '$elemMatch' => [
+                            'tags' => $this->getParameter('display_track_tag'),
+                            'hide' => false,
+                        ],
+                    ],
+                ],
+                [
+                    'images' => [
+                        '$elemMatch' => [
+                            'tags' => $this->getParameter('display_track_tag'),
+                            'hide' => false,
+                        ],
+                    ],
+                ],
+                [
+                    'external' => [
+                        '$elemMatch' => [
+                            'tags' => $this->getParameter('display_track_tag'),
+                            'hide' => false,
+                        ],
                     ],
                 ],
             ];

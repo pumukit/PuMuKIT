@@ -57,7 +57,7 @@
                             {{ object.publicDate| format_datetime('medium','none',locale=app.request.getLocale()) }}
                         </li>
                     {% else %}
-                        {% if app.request.attributes.get('_route') != 'pumukit_webtv_announces_latestuploads_pager' and not object.getProperty('externalplayer') %}
+                        {% if app.request.attributes.get('_route') != 'pumukit_webtv_announces_latestuploads_pager' and not object.isExternalType() %}
                             <li class="list-group-item list-group-item-custom date_and_visits text-left language">
                                 {% trans %}Language{% endtrans %}:
                                 {% set lang = object.getDisplayTrack().getLanguage()|default(app.request.getLocale()) %}

@@ -1,0 +1,22 @@
+{% set iframe_route = 'pumukit_player_index' %}
+{% set iframe_parameters = {'id':multimediaObject.id} %}
+
+{% if magic_url is defined and magic_url %}
+    {% set iframe_route = 'pumukit_player_magic_index' %}
+    {% set iframe_parameters = {'secret':multimediaObject.secret} %}
+{% elseif track is defined and track %}
+    {% set iframe_parameters = iframe_parameters | merge({'track_id':track.id}) %}
+{% endif %}
+
+{% set url_iframe = path(iframe_route, iframe_parameters)|raw %}
+
+<iframe src="{{ url_iframe }}"
+        id="paellaiframe"
+        width="100%"
+        onload="resizeFrame(this)"
+        height="500px"
+        title="player"
+        allowfullscreen
+        style="border:0"
+>
+</iframe>

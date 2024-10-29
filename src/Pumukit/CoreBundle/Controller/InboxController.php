@@ -8,16 +8,12 @@ use Pumukit\CoreBundle\Services\InboxService;
 use Pumukit\CoreBundle\Services\UploadDispatcherService;
 use Pumukit\CoreBundle\Utils\FileSystemUtils;
 use Pumukit\CoreBundle\Utils\FinderUtils;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Security("is_granted('ROLE_UPLOAD_INBOX')")
- */
 class InboxController extends AbstractController
 {
     private $inboxService;
@@ -47,7 +43,7 @@ class InboxController extends AbstractController
     /**
      * @Route("/upload", name="file_upload")
      *
-     * @Template("@PumukitCore/Upload/uppy_drag_and_drop.html.twig")
+     * @Template("@PumukitCore/Upload/upload_drag_and_drop.html.twig")
      */
     public function folder(Request $request): array
     {
@@ -100,7 +96,7 @@ class InboxController extends AbstractController
     {
         $folderName = $request->get('folder');
 
-        if (false !== strpos($folderName, '#')) {
+        if ((0 === preg_match('/^[[:alnum:]\s_]+$/', $folderName)) || empty(trim($folderName))) {
             return new JsonResponse(false);
         }
 
@@ -116,7 +112,8 @@ class InboxController extends AbstractController
             $this->uploadDispatcherService->dispatchUploadFromInbox(
                 $this->getUser(),
                 $request->get('fileName'),
-                $request->get('folder')
+                $request->get('series'),
+                $request->get('profile', 'master_copy')
             );
         } catch (\Exception $exception) {
             return new JsonResponse(['success' => false]);

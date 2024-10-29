@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Pumukit\CoreBundle\Command;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\CoreBundle\Utils\FinderUtils;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Finder\Finder;
 
 class DeleteOrphanFilesCommand extends Command
 {
@@ -79,8 +79,7 @@ EOT
 
     private function findFilesOfPath(OutputInterface $output, string $path)
     {
-        $finder = new Finder();
-        $files = $finder->files()->in($path);
+        $files = FinderUtils::filesFromPath($path);
 
         $output->writeln('<comment>***** Files to check: '.count($files).' *****</comment>');
         foreach ($files as $file) {

@@ -6,7 +6,7 @@ namespace Pumukit\NewAdminBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\ObjectValue\Immutable;
+use Pumukit\SchemaBundle\Document\ValueObject\Immutable;
 use Pumukit\SchemaBundle\Security\Permission;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;

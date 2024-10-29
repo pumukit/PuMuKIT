@@ -9,7 +9,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\Annotation;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\ObjectValue\Immutable;
+use Pumukit\SchemaBundle\Document\ValueObject\Immutable;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CloneService

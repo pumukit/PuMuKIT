@@ -53,16 +53,9 @@ class MultimediaObjectService
         return $hasStatus && $hasPubChannel;
     }
 
-    /**
-     * Returns true if the $mm has a playable resource. ( Keep updated with SchemaFilter->getCriteria() ).
-     *
-     * @return bool
-     */
-    public function hasPlayableResource(MultimediaObject $mm)
+    public function hasPlayableResource(MultimediaObject $multimediaObject): bool
     {
-        $externalplayer = $mm->getProperty('externalplayer');
-
-        return $mm->getDisplayTrack() || $mm->isMultistream() || !empty($externalplayer);
+        return $multimediaObject->getDisplayTrack() || $multimediaObject->isMultistream();
     }
 
     /**

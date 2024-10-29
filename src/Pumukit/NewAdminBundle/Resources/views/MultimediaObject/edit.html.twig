@@ -47,7 +47,7 @@
                     <li>
                         <a href="#mediaMm" aria-controls="mediaMm" role="tab" data-toggle="tab" class="task_media_attachments">{% trans %}Multimedia{% endtrans %}</a>
                     </li>
-                    {% if active_editor and ( mm.properties['externalplayer'] is not defined or mm.properties['externalplayer'] == '') %}
+                    {% if active_editor and not mm.isExternalType() %}
                         <li>
                             <a href="#editorMm" aria-controls="editorMm" role="tab" data-toggle="tab" class="task_media_editor">{% trans %}Media Edition{% endtrans %}</a>
                         </li>
@@ -103,7 +103,7 @@
                     {% include '@PumukitNewAdmin/MultimediaObject/updatemedia.html.twig' with {'mm': mm, 'jobs': jobs} %}
                 </div>
 
-                {% if active_editor %}
+                {% if active_editor and not mm.isExternalType() %}
                     <div id="editorMm" role="tabpanel" class="tab-pane">
                         {% include '@PumukitNewAdmin/MultimediaObject/editor.html.twig' with {'mm': mm, 'jobs': jobs} %}
                     </div>

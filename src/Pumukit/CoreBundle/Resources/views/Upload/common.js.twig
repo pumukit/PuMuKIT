@@ -16,9 +16,12 @@ function sendInboxXHRImportRequest(file)
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "{{ path('inbox_auto_import') }}", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    var xhrSend = "fileName="+file.name;
-    {% if folder is defined and folder %}
-        xhrSend = "fileName="+file.name+"&folder={{ folder }}";
+    var profile = document.querySelector('input[name="profile_option"]:checked').value;
+    {% if folder is defined %}
+        var xhrSend = "fileName=" + file.name + "&series={{ folder }}&profile="+profile;
+    {% else %}
+        var xhrSend = "fileName=" + file.name + "&series={{ series.id }}&profile="+profile;
     {% endif %}
     xhr.send(xhrSend);
 }
+

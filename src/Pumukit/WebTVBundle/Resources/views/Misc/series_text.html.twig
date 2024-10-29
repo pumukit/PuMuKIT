@@ -12,7 +12,6 @@
                 {% if num_mmobjs is not defined %}
                     {% set num_mmobjs = count_published_mmobjs(object.id) %}
                 {% endif %}
-                {# NOTE: These 'videos' field is not internationalized. TODO #}
                 [{{ num_mmobjs }} {{ num_mmobjs > 1 ? 'videos' : 'video' }}]
             </span>
         </a>

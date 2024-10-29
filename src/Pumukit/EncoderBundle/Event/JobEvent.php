@@ -5,54 +5,34 @@ declare(strict_types=1);
 namespace Pumukit\EncoderBundle\Event;
 
 use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Track;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class JobEvent extends Event
 {
-    /**
-     * @var Job
-     */
     protected $job;
-
-    /**
-     * @var Track
-     */
-    protected $track;
-
-    /**
-     * @var MultimediaObject
-     */
+    protected $media;
     protected $multimediaObject;
 
-    public function __construct(Job $job, Track $track = null, MultimediaObject $multimediaObject = null)
+    public function __construct(Job $job, MediaInterface $media = null, MultimediaObject $multimediaObject = null)
     {
         $this->job = $job;
-        $this->track = $track;
+        $this->media = $media;
         $this->multimediaObject = $multimediaObject;
     }
 
-    /**
-     * @return Job
-     */
-    public function getJob()
+    public function getJob(): Job
     {
         return $this->job;
     }
 
-    /**
-     * @return Track
-     */
-    public function getTrack()
+    public function getMedia(): ?MediaInterface
     {
-        return $this->track;
+        return $this->media;
     }
 
-    /**
-     * @return MultimediaObject
-     */
-    public function getMultimediaObject()
+    public function getMultimediaObject(): ?MultimediaObject
     {
         return $this->multimediaObject;
     }
