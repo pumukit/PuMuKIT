@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 To get the diff for a specific change, go to https://github.com/pumukit/PuMuKIT/commit/XXX where XXX is the change hash.
 To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/compare/3.0.0...3.1.x.
 
+## [4.3.0](https://github.com/pumukit/PuMuKIT/compare/4.2.0...4.3.0) - (2024-10-xx)
+
+#### Added
+- Added export button on UNESCO search to CSV.
+
 ## [4.2.0](https://github.com/pumukit/PuMuKIT/compare/4.1.0...4.2.0) - (2024-10-10)
 
 #### Added
