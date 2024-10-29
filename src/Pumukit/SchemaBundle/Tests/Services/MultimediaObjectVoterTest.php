@@ -4,14 +4,22 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
+use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
+use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
+use Pumukit\SchemaBundle\Document\MediaType\Storage;
+use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
-use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
+use Pumukit\SchemaBundle\Document\ValueObject\Path;
+use Pumukit\SchemaBundle\Document\ValueObject\StorageUrl;
+use Pumukit\SchemaBundle\Document\ValueObject\Tags;
 use Pumukit\WebTVBundle\PumukitWebTVBundle;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -25,6 +33,8 @@ class MultimediaObjectVoterTest extends WebTestCase
     private $voter;
     private $userService;
 
+    private $i18nService;
+
     public function setUp(): void
     {
         $options = ['environment' => 'test'];
@@ -32,6 +42,7 @@ class MultimediaObjectVoterTest extends WebTestCase
 
         $this->voter = static::$kernel->getContainer()->get('pumukitschema.multimedia_object_voter');
         $this->userService = static::$kernel->getContainer()->get('pumukitschema.user');
+        $this->i18nService = new i18nService(['en', 'es'], 'en');
     }
 
     public function tearDown(): void
@@ -46,7 +57,7 @@ class MultimediaObjectVoterTest extends WebTestCase
     {
         $mmobj = new MultimediaObject();
         $mmobj->setStatus(MultimediaObject::STATUS_PUBLISHED);
-        $track = new Track();
+        $track = $this->generateTrackMedia();
         $mmobj->addTrack($track);
 
         $mmobj->setStatus(MultimediaObject::STATUS_PUBLISHED);
@@ -91,7 +102,7 @@ class MultimediaObjectVoterTest extends WebTestCase
 
         $mmobj = new MultimediaObject();
         $mmobj->setStatus(MultimediaObject::STATUS_PUBLISHED);
-        $track = new Track();
+        $track = $this->generateTrackMedia();
         $mmobj->addTrack($track);
 
         $mmobj->setStatus(MultimediaObject::STATUS_PUBLISHED);
@@ -136,7 +147,7 @@ class MultimediaObjectVoterTest extends WebTestCase
 
         $mmobj = new MultimediaObject();
         $mmobj->setStatus(MultimediaObject::STATUS_PUBLISHED);
-        $track = new Track();
+        $track = $this->generateTrackMedia();
         $mmobj->addTrack($track);
         $series = new Series();
         $mmobj->setSeries($series);
@@ -203,5 +214,30 @@ class MultimediaObjectVoterTest extends WebTestCase
         $method->setAccessible(true);
 
         return $method->invokeArgs($object, $parameters);
+    }
+
+    private function generateTrackMedia(): MediaInterface
+    {
+        $originalName = 'originalName'.random_int(0, mt_getrandmax());
+        $description = i18nText::create($this->i18nService->generateI18nText('18nDescription'));
+        $language = 'en';
+        $tags = Tags::create(['display']);
+        $views = 0;
+        $url = StorageUrl::create('');
+        $path = Path::create('public/storage');
+        $storage = Storage::create($url, $path);
+        $mediaMetadata = VideoAudio::create('{"format":{"duration":"10.000000"}}');
+
+        return Track::create(
+            $originalName,
+            $description,
+            $language,
+            $tags,
+            false,
+            true,
+            $views,
+            $storage,
+            $mediaMetadata
+        );
     }
 }

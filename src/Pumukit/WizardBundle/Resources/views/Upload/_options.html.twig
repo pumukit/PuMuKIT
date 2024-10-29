@@ -1,0 +1,48 @@
+{% include '@PumukitWizard/Upload/_tabs.html.twig' %}
+
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane" id="local">
+        {% include '@PumukitCore/Upload/uppy_drag_and_drop.html.twig' %}
+    </div>
+    <div role="tabpanel" class="tab-pane" id="server">
+        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
+            <div class="form-group" id="pumukitwizard_track_directory">
+                {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\InboxController::FormAction', {'onlyDir': true, 'series' : series})) }}
+            </div>
+            <a id="submit_upload_files_from_server" href="#" class="btn btn-default btn-pumukit pull-right">
+                &laquo; {{ "Submit"|trans }}
+            </a>
+        {% else %}
+            <br/>
+            <div class="text-center">{{ "You dont have enough permissions to upload files from the server"|trans }}</div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    $('#submit_upload_files_from_server').on('click', function(event) {
+        event.preventDefault();
+
+        let server_selected_path = $('#server_selected_path').val()
+        if (server_selected_path === '') {
+            no_success('Select path to upload files from server.');
+            return;
+        }
+
+        $.ajax({
+            url: '{{ path('wizard_upload_from_server', {'series': series.id}) }}',
+            method: 'POST',
+            data: {
+                'filePath': server_selected_path,
+                'profile': document.querySelector('input[name="profile_option"]:checked').value
+            },
+            success: function(response, textStatus, jqXHR){
+                location.href = '{{ path('pumukitnewadmin_mms_index', {'id': series.id}) }}';
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                no_success('{{ "Cannot upload directory on series"|trans }}');
+            }
+        });
+        return false;
+    })
+</script>

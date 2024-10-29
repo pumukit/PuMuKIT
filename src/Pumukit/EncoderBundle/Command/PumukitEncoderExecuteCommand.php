@@ -6,7 +6,7 @@ namespace Pumukit\EncoderBundle\Command;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\EncoderBundle\Document\Job;
-use Pumukit\EncoderBundle\Services\JobService;
+use Pumukit\EncoderBundle\Services\JobExecutor;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -16,12 +16,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 class PumukitEncoderExecuteCommand extends Command
 {
     private $dm;
-    private $jobService;
+    private $jobExecutor;
 
-    public function __construct(DocumentManager $documentManager, JobService $jobService)
+    public function __construct(DocumentManager $documentManager, JobExecutor $jobExecutor)
     {
         $this->dm = $documentManager;
-        $this->jobService = $jobService;
+        $this->jobExecutor = $jobExecutor;
         parent::__construct();
     }
 
@@ -58,6 +58,6 @@ EOT
 
     private function executeJob(Job $job): void
     {
-        $this->jobService->execute($job);
+        $this->jobExecutor->execute($job);
     }
 }

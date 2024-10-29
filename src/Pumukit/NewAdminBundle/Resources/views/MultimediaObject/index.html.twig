@@ -25,7 +25,7 @@
     <div class="row">
         {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
             <div id="tv_admin_content" class="col-md-10">
-                <div class="{% if not is_naked() %}well{% endif %}">
+                <div class="well">
                     <div id="list_mms">
                         {% include '@PumukitNewAdmin/MultimediaObject/list.html.twig' %}
                     </div>
@@ -89,19 +89,16 @@
                                     </a>
                                 {% endif %}
                             {% endfor %}
-                            {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_WIZARD_UPLOAD')) and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SHOW_WIZARD_BUTTON')) %}
-                                <a class="extra_button btn btn-primary btn-raised wizard_button" href="{{ url(is_naked() ? 'pumukitwizard_simple_index' : 'pumukitwizard_default_type', {'id': series.id, 'from':'mms', 'same_series': true}) }}">
-                                    <i class="fas fa-rocket"></i>
-                                    {% trans %}Wizard{% endtrans %}
+                                <a class="extra_button btn btn-primary btn-pumukit btn-raised wizard_button" href="{{ path('wizard_upload', {'series': series.id}) }}">
+                                    <i class="fas fa-upload"></i>
+                                    {% trans %}Upload{% endtrans %}
                                 </a>
-                            {% endif %}
-
-                            {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADVANCED_UPLOAD')) %}
-                                <a title="{% trans %}Create new multimedia object{% endtrans %}" id="pumukitnewadmin_mms_new_button" class="extra_button btn btn-pumukit btn-raised" href="#">
-                                    <i class="fas fa-plus"></i>
-                                    {% trans %}New{% endtrans %}
+                                {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ADD_EXTERNAL_PLAYER')) %}
+                                <a class="extra_button btn btn-primary btn-raised wizard_button" href="{{ path('pumukitnewadmin_mms_listexternalproperties', {'series': series.id}) }}" title="{% trans %}Edit{% endtrans %}" data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal">
+                                    <i class="fas fa-link"></i>
+                                    {% trans %}Link{% endtrans %}
                                 </a>
-                            {% endif %}
+                                {% endif %}
                         </div>
                     </div>
                 </div>
@@ -139,21 +136,6 @@
 
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
         <script type="text/javascript">
-            /* TODO
-            var update_file;
-            window.onload = function(){
-              Shadowbox.init({
-                skipSetup:  true,
-                onOpen:     function(element) {
-                              if (typeof update_file == 'object') update_file.stop();
-                            },
-                onClose:    function(element) {
-                              if (typeof update_file == 'object') update_file.start();
-                            }
-              });
-            };
-            */
-
             window.setInterval(window.update_mms_status_wrapper, 15000);
 
             window.update_preview_mms = function (id) {

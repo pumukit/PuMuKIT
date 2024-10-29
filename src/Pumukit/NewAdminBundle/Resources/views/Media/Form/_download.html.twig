@@ -1,0 +1,4 @@
+<div class="form-group" id="pumukitnewadmin_media_download">
+    <input type="checkbox" id="download_option" name="download" {% if track.isDownloadable() %}checked{% endif %}/>
+    <label for="download_option">{{ "Download"|trans }}</label>
+</div>

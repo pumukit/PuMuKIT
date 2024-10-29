@@ -191,12 +191,6 @@ pumukitnewadmin_mms_sync_tags:
     defaults:
         _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectController::syncTagsAction
 
-pumukitnewadmin_mms_editgroups:
-    path: /editgroups
-    methods: [GET]
-    defaults:
-        _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectController::editGroupsAction
-
 pumukitnewadmin_mms_updategroups:
     path: /updategroups
     methods: [POST]
@@ -246,36 +240,21 @@ pumukitnewadmin_mms_listproperties:
         _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectController::listPropertiesAction
 
 pumukitnewadmin_mms_listexternalproperties:
-    path: /{id}/listexternalplayer
+    path: /listexternalplayer
     methods: [GET, POST]
     defaults:
         _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectController::listExternalPlayerAction
 
-pumukitnewadmin_mms_delete_listexternalproperties:
-    path: /{id}/deleteexternalvideo
-    methods: [DELETE]
+pumukitnewadmin_external_player_update:
+    path: /{id}/external/update
     defaults:
-        _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectController::deleteExternalPropertyAction
+        _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectController::updateExternalAction
 
 pumukitnewadmin_mms_modal_preview:
     path: /{id}/modalpreview
     methods: [GET]
     defaults:
         _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectController::modalPreviewAction
-
-pumukitnewadmin_mms_indexall:
-    path: /mmslist
-    methods: [GET]
-    defaults:
-        _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectController::indexAllAction
-        _sylius:
-            filterable: true
-
-pumukitnewadmin_mms_listall:
-    path: /listAll
-    methods: [GET, POST]
-    defaults:
-        _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectController::listAllAction
 
 pumukitnewadmin_mms_updateProperty:
     path: /{id}/updateProperty
