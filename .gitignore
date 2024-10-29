@@ -18,6 +18,7 @@ TAGS
 .php_cs.cache
 /var/cache/*
 /var/log/*
+src/Pumukit/EncoderBundle/Tests/Resources/
 
 ###> friendsofphp/php-cs-fixer ###
 /.php_cs

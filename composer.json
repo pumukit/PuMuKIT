@@ -42,7 +42,7 @@
         "symfony/twig-bundle": "^5.0",
         "symfony/validator": "^5.0",
         "symfony/yaml": "^5.0",
-        "teltek/pumukit-paella-player-bundle": "dev-feature_add_new_mime_types as 3.0",
+        "teltek/pumukit-paella-player-bundle": "4.0.x-dev",
         "teltek/pumukit-stats-ui-bundle": "^3.0",
         "twig/twig": "3.8",
         "twig/extra-bundle": "3.8",
