@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "72929dcdcfd89377a6ca25ea0e7e6d3b",
+    "content-hash": "589bae6e6f1e156062ef50849da17c19",
     "packages": [
         {
             "name": "ankitpokhrel/tus-php",
@@ -9339,21 +9339,21 @@
         },
         {
             "name": "teltek/pumukit-stats-ui-bundle",
-            "version": "3.0.1",
+            "version": "4.0.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teltek/PumukitStatsUIBundle.git",
-                "reference": "1413a211d17349521ea8c7903e80a5e874b889fc"
+                "reference": "2fd4dea37773d714662002a674a73af78578ba1d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teltek/PumukitStatsUIBundle/zipball/1413a211d17349521ea8c7903e80a5e874b889fc",
-                "reference": "1413a211d17349521ea8c7903e80a5e874b889fc",
+                "url": "https://api.github.com/repos/teltek/PumukitStatsUIBundle/zipball/2fd4dea37773d714662002a674a73af78578ba1d",
+                "reference": "2fd4dea37773d714662002a674a73af78578ba1d",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2",
-                "pumukit/pumukit": ">=4.0"
+                "php": "^8.2",
+                "pumukit/pumukit": "^5.0"
             },
             "type": "symfony-bundle",
             "autoload": {
@@ -9383,9 +9383,9 @@
             ],
             "support": {
                 "issues": "https://github.com/teltek/PumukitStatsUIBundle/issues",
-                "source": "https://github.com/teltek/PumukitStatsUIBundle/tree/3.0.1"
+                "source": "https://github.com/teltek/PumukitStatsUIBundle/tree/master"
             },
-            "time": "2021-12-17T07:23:58+00:00"
+            "time": "2024-10-30T08:52:41+00:00"
         },
         {
             "name": "twig/extra-bundle",
@@ -12570,7 +12570,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "teltek/pumukit-paella-player-bundle": 20
+        "teltek/pumukit-paella-player-bundle": 20,
+        "teltek/pumukit-stats-ui-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
