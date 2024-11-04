@@ -85,7 +85,7 @@ class PumukitExportUnescoCsvCommand extends Command
         while (true) {
             $results = $this->getPaginatedResults($qb, $page, $limit);
 
-            if (0 === count($results)) {
+            if (0 === (is_countable($results) ? count($results) : 0)) {
                 break;
             }
 
