@@ -82,12 +82,8 @@ class PumukitExportUnescoCsvCommand extends Command
         $limit = 100;
         $totalViews = 0;
 
-        while (true) {
+        do {
             $results = $this->getPaginatedResults($qb, $page, $limit);
-
-            if (0 === (is_countable($results) ? count($results) : 0)) {
-                break;
-            }
 
             foreach ($results as $result) {
                 $data = [];
@@ -181,7 +177,7 @@ class PumukitExportUnescoCsvCommand extends Command
             }
 
             ++$page;
-        }
+        } while (count($results) > 0);
 
         fputcsv($handle, ['', 'Total Views:', $totalViews]);
 
