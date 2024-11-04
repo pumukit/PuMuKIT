@@ -6,9 +6,9 @@ namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
+use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\WebTVBundle\PumukitWebTVBundle;
 
 class HeadAndTailService
@@ -85,7 +85,7 @@ class HeadAndTailService
         return $this->getSystemDefaultHeader();
     }
 
-    public function getDisplayTrackFromMultimediaObjectId(string $multimediaObjectId): ?Track
+    public function getDisplayTrackFromMultimediaObjectId(string $multimediaObjectId): ?MediaInterface
     {
         if ($this->documentManager->getFilterCollection()->isEnabled('frontend')) {
             $this->documentManager->getFilterCollection()->disable('frontend');

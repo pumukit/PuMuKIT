@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Pumukit\SchemaBundle\Document\Series;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -29,7 +30,7 @@ class InboxController extends AbstractController implements NewAdminControllerIn
     /**
      * @Route("/inbox", defaults={"_format"="json"})
      */
-    public function dirAction(Request $request)
+    public function dirAction(Request $request): JsonResponse
     {
         $dir = $request->query->get('dir', '');
         $type = $request->query->get('type', 'file');
@@ -70,10 +71,7 @@ class InboxController extends AbstractController implements NewAdminControllerIn
         return new JsonResponse($res);
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Inbox/form.html.twig")
-     */
-    public function formAction(bool $onlyDir = false)
+    public function formAction(Series $series, bool $onlyDir = false): Response
     {
         if (!$this->pumukitInbox) {
             return $this->render('@PumukitNewAdmin/Inbox/form_noconf.html.twig');
@@ -82,13 +80,13 @@ class InboxController extends AbstractController implements NewAdminControllerIn
         $dir = realpath($this->pumukitInbox);
 
         if (!file_exists($dir)) {
-            return $this->render('@PumukitNewAdmin/Inbox/form_nofile.html.twig', ['dir' => $dir]);
+            return $this->render('@PumukitNewAdmin/Inbox/form_nofile.html.twig', ['dir' => $dir, 'series' => $series]);
         }
 
         if (!is_readable($dir)) {
-            return $this->render('@PumukitNewAdmin/Inbox/form_noperm.html.twig', ['dir' => $dir]);
+            return $this->render('@PumukitNewAdmin/Inbox/form_noperm.html.twig', ['dir' => $dir, 'series' => $series]);
         }
 
-        return $this->render('@PumukitNewAdmin/Inbox/form.html.twig', ['dir' => $dir, 'onlyDir' => $onlyDir]);
+        return $this->render('@PumukitNewAdmin/Inbox/form.html.twig', ['dir' => $dir, 'onlyDir' => $onlyDir, 'series' => $series]);
     }
 }

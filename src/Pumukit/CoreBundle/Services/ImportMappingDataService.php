@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\CoreBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\CoreBundle\Utils\FileSystemUtils;
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Person;
@@ -13,7 +14,6 @@ use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Services\TagService;
-use Symfony\Component\Filesystem\Filesystem;
 
 class ImportMappingDataService
 {
@@ -72,9 +72,7 @@ class ImportMappingDataService
 
     public function validatePath(string $file): bool
     {
-        $fileSystem = new Filesystem();
-
-        return $fileSystem->exists($file);
+        return FileSystemUtils::exists($file);
     }
 
     /**

@@ -224,7 +224,7 @@ class FactoryService
         }
 
         $this->dm->persist($mm);
-        $this->dm->persist($series);
+        //        $this->dm->persist($series);
         if ($flush) {
             //            $this->dm->flush();
             $this->generateNumericalIDMultimediaObject($mm);
@@ -543,7 +543,6 @@ class FactoryService
         }
         foreach ($src->getTracks() as $track) {
             $clonedTrack = clone $track;
-            $clonedTrack->setNumview(0);
             $this->dm->persist($clonedTrack);
             $new->addTrack($clonedTrack);
         }

@@ -19,11 +19,10 @@ class MultimediaObjectViews
 
     public function onMultimediaObjectViewed(ViewedEvent $event): void
     {
-        $track = $event->getTrack();
+        $track = $event->getMedia();
         $multimediaObject = $event->getMultimediaObject();
 
         $multimediaObject->incNumview();
-        $track && $track->incNumview();
         $this->documentManager->flush();
     }
 }

@@ -4,40 +4,33 @@ declare(strict_types=1);
 
 namespace Pumukit\BasePlayerBundle\Event;
 
+use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Track;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class ViewedEvent extends Event
 {
-    /**
-     * @var Track
-     */
-    protected $track;
+    protected ?MediaInterface $media;
+    protected MultimediaObject $multimediaObject;
 
-    /**
-     * @var MultimediaObject
-     */
-    protected $multimediaObject;
-
-    public function __construct(MultimediaObject $multimediaObject, Track $track = null)
+    public function __construct(MultimediaObject $multimediaObject, ?MediaInterface $media = null)
     {
         $this->multimediaObject = $multimediaObject;
-        $this->track = $track;
+        $this->media = $media;
     }
 
-    /**
-     * @return Track|null
-     */
-    public function getTrack()
+    public function getMedia(): ?MediaInterface
     {
-        return $this->track;
+        return $this->media;
     }
 
-    /**
-     * @return MultimediaObject
-     */
-    public function getMultimediaObject()
+    /** Deprecated. Use getMedia instead. */
+    public function getTrack(): ?MediaInterface
+    {
+        return $this->getMedia();
+    }
+
+    public function getMultimediaObject(): MultimediaObject
     {
         return $this->multimediaObject;
     }

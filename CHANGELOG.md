@@ -5,7 +5,39 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 To get the diff for a specific change, go to https://github.com/pumukit/PuMuKIT/commit/XXX where XXX is the change hash.
 To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/compare/3.0.0...3.1.x.
 
-## [4.1.0](https://github.com/pumukit/PuMuKIT/compare/4.0.0...4.1.0) - (2024-08-21)
+## [5.0.0](https://github.com/pumukit/PuMuKIT/compare/4.0.0...4.1.0) - (2024-03-xx)
+
+#### Added
+
+- Add support for multiple types of media (docs, images, audio, video, external, etc.).
+- Add players for each type of media.
+- Added select files from server on wizard.
+- Added create external video on series.
+- Added email filter on user lists.
+- Added STOP job option.
+- Added events count on series list.
+
+#### Changed
+
+- Refactor schema for multimedia objects to support multiple types of media.
+- Unify wizard and inbox are now unified in a single upload page.
+- Unify edit and info option on advance edit multimedia object files.
+- Rename of "Wizard" to "Upload" inside series.
+- Rename base encoder profiles.
+
+#### Removed
+
+- Remove list all multimedia objects menu on backoffice ( legacy feature ).
+- Remove support BC for PHP 7.4 or lower.
+- Remove "New" option inside series.
+- Remove simple wizard
+- Remove download logs from backoffice.
+- Remove unused encoder profile elements.
+
+## [4.2.0](https://github.com/pumukit/PuMuKIT/compare/4.1.0...4.2.0) - (2024-10-10)
+
+#### Added
+- Added property updatedAt on MultimediaObject document
 
 #### Fixed
 - Reported issues

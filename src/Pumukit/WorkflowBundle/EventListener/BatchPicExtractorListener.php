@@ -7,8 +7,8 @@ namespace Pumukit\WorkflowBundle\EventListener;
 use Psr\Log\LoggerInterface;
 use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\EncoderBundle\Services\PicExtractorService;
+use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Track;
 
 class BatchPicExtractorListener
 {
@@ -23,32 +23,33 @@ class BatchPicExtractorListener
         $this->enable = $enable;
     }
 
-    public function onJobSuccess(JobEvent $event)
+    public function onJobSuccess(JobEvent $event): void
     {
-        $this->generatePic($event->getMultimediaObject(), $event->getTrack());
+        $this->generatePic($event->getMultimediaObject(), $event->getMedia());
     }
 
-    private function generatePic(MultimediaObject $multimediaObject, Track $track)
+    private function generatePic(MultimediaObject $multimediaObject, MediaInterface $track): void
     {
         if ($this->enable) {
-            if (!$multimediaObject->isOnlyAudio() && !$track->isOnlyAudio()) {
-                return $this->generatePicFromVideo($multimediaObject, $track);
+            if (!$multimediaObject->isOnlyAudio() && !$track->metadata()->isOnlyAudio()) {
+                $this->generatePicFromVideo($multimediaObject, $track);
             }
         }
-
-        return false;
     }
 
-    private function generatePicFromVideo(MultimediaObject $multimediaObject, Track $track)
+    private function generatePicFromVideo(MultimediaObject $multimediaObject, MediaInterface $track)
     {
-        $outputMessage = $this->picExtractorService->extractPicOnBatch($multimediaObject, $track);
-        if (false !== strpos($outputMessage, 'Error')) {
-            throw new \Exception($outputMessage.". MultimediaObject '".$multimediaObject->getId()."' with track '".$track->getId()."'");
+        $extracted = $this->picExtractorService->extractPicOnBatch($multimediaObject, $track);
+        if (!$extracted) {
+            throw new \Exception("Cannot extract pic on multimediaObject '".$multimediaObject->getId()."' with track '".$track->id()."'");
         }
-        $this->logger->info(self::class.'['.__FUNCTION__.'] '
-                          .'Extracted pic from track '.
-                          $track->getId().' into MultimediaObject "'
-                          .$multimediaObject->getId().'"');
+
+        $this->logger->info(
+            self::class.'['.__FUNCTION__.'] '
+            .'Extracted pic from track '.
+            $track->id().' into MultimediaObject "'
+            .$multimediaObject->getId().'"'
+        );
 
         return true;
     }

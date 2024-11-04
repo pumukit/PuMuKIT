@@ -2,7 +2,7 @@ ARG PHP_VERSION=8.2
 ARG SO_VERSION=bookworm
 ARG NGINX_VERSION=1.25
 
-FROM php:${PHP_VERSION}-fpm-${SO_VERSION} as base
+FROM php:${PHP_VERSION}-fpm-${SO_VERSION} AS base
 LABEL org.opencontainers.image.authors="Pablo Nieto, pnieto@teltek.es"
 
 ARG APCU_VERSION=5.1.22
@@ -78,32 +78,36 @@ RUN apt-get update \
 		redis \
 		&& pecl clear-cache
 
+
 COPY --from=linuxserver/ffmpeg:version-6.0-cli /usr/local /usr/local
 
 RUN \
-	echo "**** install runtime ****" && \
-	apt-get update && \
-	apt-get install -y \
-	libexpat1 \
-	libglib2.0-0 \
-	libgomp1 \
-	libharfbuzz0b \
-	libpciaccess0 \
-	libv4l-0 \
-	libwayland-client0 \
-	libx11-6 \
-	libx11-xcb1 \
-	libxcb-dri3-0 \
-	libxcb-shape0 \
-	libxcb-xfixes0 \
-	libxcb1 \
-	libxext6 \
-	libxfixes3 \
-	libxml2 \
-	darktable \
-	ocl-icd-libopencl1 && \
-	echo "**** clean up ****" && \
-	apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
+  echo "**** install runtime ****" && \
+    apt-get update && \
+    apt-get install -y \
+    libexpat1 \
+    libglib2.0-0 \
+    libgomp1 \
+    libharfbuzz0b \
+    libpciaccess0 \
+    libv4l-0 \
+    libwayland-client0 \
+    libx11-6 \
+    libx11-xcb1 \
+    libxcb-dri3-0 \
+    libxcb-shape0 \
+    libxcb-xfixes0 \
+    libxcb1 \
+    libxext6 \
+    libxfixes3 \
+    libxml2 \
+    libimage-exiftool-perl \
+    imagemagick \
+    darktable \
+    ocl-icd-libopencl1 && \
+    echo "**** clean up ****" && \
+    apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
+
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
@@ -118,7 +122,7 @@ USER www-data
 
 WORKDIR /srv/pumukit
 
-FROM base as production
+FROM base AS production
 
 # default build for production
 ARG APP_ENV=prod
@@ -147,7 +151,7 @@ RUN chmod +x /wait
 ENTRYPOINT ["docker-entrypoint"]
 CMD ["php-fpm"]
 
-FROM base as ssl
+FROM base AS ssl
 
 # Use this self-generated certificate only in dev, IT IS NOT SECURE!
 RUN openssl genrsa -des3 -passout pass:NotSecure -out cert.pass.key 2048
@@ -157,7 +161,7 @@ RUN openssl req -new -passout pass:NotSecure -key cert.key -out cert.csr \
     -subj '/C=ES/ST=PO/L=Vigo/O=PuMuKIT Dev/CN=localhost'
 RUN openssl x509 -req -sha256 -days 365 -in cert.csr -signkey cert.key -out cert.crt
 
-FROM nginx:$NGINX_VERSION-alpine as proxy
+FROM nginx:$NGINX_VERSION-alpine AS proxy
 
 RUN mkdir -p /etc/nginx/ssl/
 COPY --from=ssl /srv/pumukit/cert.key /etc/nginx/ssl/

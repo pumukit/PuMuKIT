@@ -1,0 +1,31 @@
+{% for job in jobs %}
+    <tr>
+        <td><ul><li></li></ul></td>
+        <td {% if mm.isVideoType() %}colspan="6"{% else %}colspan="5"{% endif %}>&nbsp;</td>
+        <td {% if constant('STATUS_ERROR', job) == job.getStatus() %} style="color:red" {% endif %}>
+            <a title="{% trans %}Encoder Job info{% endtrans %}"
+               style="color:inherit"
+               data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
+               href="{{ path('pumukitnewadmin_track_info_job', {'mmId': mm.id, 'jobId': job.id, 'preview': 1}) }}">
+                <i class="{% if constant('STATUS_ERROR', job) == job.getStatus() %}mdi-action-info{% else %}mdi-navigation-refresh pmk-job-animate pmk-job-animate-hover{% endif %}"></i>
+            </a>
+
+            {% if constant('STATUS_EXECUTING', job) != job.getStatus() %}
+                <a title="{% trans %}Delete Encoder Job{% endtrans %}"
+                   style="color:inherit;"
+                   href="#"
+                   onclick="$('#tracks_mms_{{ mm.Id }}').load('{{ path('pumukitnewadmin_track_delete_job', {'mmId': mm.Id, 'jobId': job.id, 'preview': 1}) }}', {'_method': 'DELETE'}); return false;">
+                    <i class="mdi-content-clear"></i>
+                </a>
+            {% endif %}
+
+            {% if not job.isExecuted() %}
+                {% set need_reload_status = true %}
+            {% endif %}
+{#            <small>{{ job.getStatusText() }}</small>#}
+        </td>
+        <td>
+            &nbsp;{% if not is_naked() %}{{ job.getId() }} - {% endif %}<strong>{{ job.getProfile() }}</strong> - {{ job.getPathIni()|basename }} - {{ job.getDuration()|duration_string }}
+        </td>
+    </tr>
+{% endfor %}

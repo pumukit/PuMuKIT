@@ -214,13 +214,16 @@ class TagCatalogueService
     public function getDefaultListFields()
     {
         return [
-            'custom_field_1' => 'type',
-            'custom_field_2' => 'pics',
-            'custom_field_3' => 'seriesTitle',
-            'custom_field_4' => 'title',
+            'custom_field_1' => 'pics',
+            'custom_field_2' => 'title',
+            'custom_field_3' => 'type',
+            'custom_field_4' => 'medias',
             'custom_field_5' => 'duration',
             'custom_field_6' => 'record_date',
             'custom_field_7' => 'public_date',
+            'custom_field_8' => 'webtv',
+            'custom_field_9' => 'embeddedBroadcast',
+            'custom_field_10' => 'numview',
         ];
     }
 
@@ -459,6 +462,22 @@ class TagCatalogueService
                     'break-word' => false,
                 ],
             ],
+            'medias' => [
+                'label' => $this->translator->trans('Media'),
+                'render' => 'text',
+                'render_params' => [
+                    'sort' => false,
+                    'break-word' => false,
+                ],
+            ],
+            'webtv' => [
+                'label' => $this->translator->trans('WebTV'),
+                'render' => 'bool',
+                'render_params' => [
+                    'sort' => false,
+                    'break-word' => false,
+                ],
+            ],
         ];
 
         $roles = $this->dm->getRepository(Role::class)->findAll();
@@ -468,6 +487,7 @@ class TagCatalogueService
                 'render' => 'role',
                 'render_params' => [
                     'sort' => false,
+                    'break-word' => false,
                 ],
             ];
         }
@@ -628,6 +648,16 @@ class TagCatalogueService
 
                 break;
 
+            case 'medias':
+                $text = count($object->getMedias());
+
+                break;
+
+            case 'webtv':
+                $text = $object->containsTagWithCod('PUDETV');
+
+                break;
+
             default:
                 $text = 'No data';
         }
@@ -727,9 +757,12 @@ class TagCatalogueService
     private function getTracksName(MultimediaObject $object)
     {
         $tracks = $object->getTracks();
-        foreach ($tracks as $track) {
-            if ($track->getOriginalName()) {
-                return $track->getOriginalName();
+
+        if ($tracks) {
+            foreach ($tracks as $track) {
+                if ($track->originalName()) {
+                    return $track->originalName();
+                }
             }
         }
 

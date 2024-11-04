@@ -4,20 +4,19 @@ declare(strict_types=1);
 
 namespace Pumukit\EncoderBundle\Executor;
 
-use Symfony\Component\Filesystem\Filesystem;
+use Pumukit\CoreBundle\Utils\FileSystemUtils;
 use Symfony\Component\Process\Process;
 
-class LocalExecutor
+class LocalExecutor implements ExecutorInterface
 {
     public function execute($command, array $cpu = null): string
     {
-        $fs = new Filesystem();
-
         $tempFile = tempnam(sys_get_temp_dir(), '');
-        if (file_exists($tempFile)) {
-            unlink($tempFile);
+        if (FileSystemUtils::exists($tempFile)) {
+            FileSystemUtils::remove($tempFile);
         }
-        $fs->mkdir($tempFile);
+
+        FileSystemUtils::createFolder($tempFile);
 
         if (is_string($command)) {
             $process = Process::fromShellCommandline($command);
@@ -28,7 +27,7 @@ class LocalExecutor
         $process->setIdleTimeout(null);
         $process->run();
 
-        $fs->remove($tempFile);
+        FileSystemUtils::remove($tempFile);
 
         if (!$process->isSuccessful()) {
             throw new ExecutorException($process->getErrorOutput());

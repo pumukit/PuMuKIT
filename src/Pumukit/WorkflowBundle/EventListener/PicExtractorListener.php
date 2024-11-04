@@ -10,21 +10,27 @@ use Pumukit\CoreBundle\Utils\SemaphoreUtils;
 use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\EncoderBundle\Services\PicExtractorService;
 use Pumukit\EncoderBundle\Services\ProfileService;
+use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Track;
 
 class PicExtractorListener
 {
-    private $dm;
-    private $logger;
-    private $picExtractorService;
-    private $autoExtractPic;
-    private $profileService;
-    private $autoExtractPicPercentage;
+    private DocumentManager $documentManager;
+    private LoggerInterface $logger;
+    private PicExtractorService $picExtractorService;
+    private bool $autoExtractPic;
+    private ProfileService $profileService;
+    private string $autoExtractPicPercentage;
 
-    public function __construct(DocumentManager $documentManager, PicExtractorService $picExtractorService, LoggerInterface $logger, ProfileService $profileService, bool $autoExtractPic = true, string $autoExtractPicPercentage = '50%')
-    {
-        $this->dm = $documentManager;
+    public function __construct(
+        DocumentManager $documentManager,
+        PicExtractorService $picExtractorService,
+        LoggerInterface $logger,
+        ProfileService $profileService,
+        bool $autoExtractPic = true,
+        string $autoExtractPicPercentage = '50%'
+    ) {
+        $this->documentManager = $documentManager;
         $this->picExtractorService = $picExtractorService;
         $this->logger = $logger;
         $this->autoExtractPic = $autoExtractPic;
@@ -44,46 +50,58 @@ class PicExtractorListener
 
         $semaphore = SemaphoreUtils::acquire(1000004);
 
-        $this->generatePic($event->getMultimediaObject(), $event->getTrack());
+        if (MultimediaObject::TYPE_VIDEO === $event->getMultimediaObject()->getType() && $event->getMedia() instanceof MediaInterface) {
+            $this->generatePic($event->getMultimediaObject(), $event->getMedia());
+        }
+
+        if (MultimediaObject::TYPE_IMAGE === $event->getMultimediaObject()->getType() && $event->getMedia() instanceof MediaInterface) {
+            $this->generatePic($event->getMultimediaObject(), $event->getMedia());
+        }
 
         SemaphoreUtils::release($semaphore);
     }
 
-    private function generatePic(MultimediaObject $multimediaObject, Track $track): bool
+    private function generatePic(MultimediaObject $multimediaObject, MediaInterface $media): void
     {
-        $this->dm->refresh($multimediaObject);
+        $this->documentManager->refresh($multimediaObject);
 
-        if ($this->autoExtractPic && $multimediaObject->getPics()->isEmpty()) {
-            try {
-                if ($multimediaObject->isOnlyAudio() || $track->isOnlyAudio()) {
-                    return false;
-                }
-
-                return $this->generatePicFromVideo($multimediaObject, $track);
-            } catch (\Exception $e) {
-                $this->logger->error(self::class.'['.__FUNCTION__.'] '
-                                    .'There was an error in extracting a pic for MultimediaObject "'
-                                    .$multimediaObject->getId().'" from Track "'.$track->getId()
-                                    .'". Error message: '.$e->getMessage());
-
-                return false;
-            }
+        if (!$this->autoExtractPic) {
+            return;
         }
 
-        return false;
+        if ($multimediaObject->hasPics()) {
+            return;
+        }
+
+        try {
+            //            if ($multimediaObject->isOnlyAudio() || $media->metadata()->isOnlyAudio()) {
+            //                return;
+            //            }
+
+            $this->extractPic($multimediaObject, $media);
+        } catch (\Exception $e) {
+            $this->logger->error(
+                self::class.'['.__FUNCTION__.'] '
+                .'There was an error in extracting a pic for MultimediaObject "'
+                .$multimediaObject->getId().'" from Track "'.$media->id()
+                .'". Error message: '.$e->getMessage()
+            );
+        }
     }
 
-    private function generatePicFromVideo(MultimediaObject $multimediaObject, Track $track): bool
+    private function extractPic(MultimediaObject $multimediaObject, MediaInterface $media): void
     {
-        $outputMessage = $this->picExtractorService->extractPic($multimediaObject, $track, $this->autoExtractPicPercentage);
-        if (false !== strpos($outputMessage, 'Error')) {
-            throw new \Exception($outputMessage.". MultimediaObject '".$multimediaObject->getId()."' with track '".$track->getId()."'");
+        $wasExtracted = $this->picExtractorService->extractPic($multimediaObject, $media, $this->autoExtractPicPercentage);
+        if (!$wasExtracted) {
+            throw new \Exception(
+                "ERROR: Cannot extract PIC from MultimediaObject '".$multimediaObject->getId()."' with track '".$media->id()."'"
+            );
         }
-        $this->logger->info(self::class.'['.__FUNCTION__.'] '
-                            .'Extracted pic from track '.
-                            $track->getId().' into MultimediaObject "'
-                            .$multimediaObject->getId().'"');
-
-        return true;
+        $this->logger->info(
+            self::class.'['.__FUNCTION__.'] '
+            .'Extracted pic from track '.
+            $media->id().' into MultimediaObject "'
+            .$multimediaObject->getId().'"'
+        );
     }
 }

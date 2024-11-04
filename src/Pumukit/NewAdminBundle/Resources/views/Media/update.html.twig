@@ -1,0 +1,12 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="myModalLabel">{% trans %}Track Update{% endtrans %}</h4>
+</div>
+<div class="modal-body">
+    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+        {% include '@PumukitNewAdmin/Media/Update/_info.html.twig' %}
+        {% include '@PumukitNewAdmin/Media/Update/_form.html.twig' %}
+    {% else %}
+        {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+    {% endif %}
+</div>

@@ -6,32 +6,32 @@ namespace Pumukit\EncoderBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\EncoderBundle\Document\Job;
-use Pumukit\EncoderBundle\Services\JobService;
+use Pumukit\EncoderBundle\Services\JobRemover;
+use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Event\TrackEvent;
 
 class RemoveListener
 {
-    private $documentManager;
-    private $jobService;
+    private DocumentManager $documentManager;
+    private JobRemover $jobRemover;
 
-    public function __construct(DocumentManager $documentManager, JobService $jobService)
+    public function __construct(DocumentManager $documentManager, JobRemover $jobRemover)
     {
         $this->documentManager = $documentManager;
-        $this->jobService = $jobService;
+        $this->jobRemover = $jobRemover;
     }
 
-    public function postTrackRemove(TrackEvent $event)
+    public function postTrackRemove(TrackEvent $event): void
     {
-        $track = $event->getTrack();
-        $trackPath = $track->getPath();
+        $media = $event->getMedia();
+        $trackPath = $media->storage()->path()->path();
         $multimediaObject = $event->getMultimediaObject();
 
         $jobRepo = $this->documentManager->getRepository(Job::class);
         $relatedJob = $jobRepo->findOneBy(['path_end' => $trackPath, 'mm_id' => $multimediaObject->getId()]);
         if ($relatedJob) {
-            $this->jobService->deleteJob($relatedJob->getId());
+            $this->jobRemover->delete($relatedJob);
         }
 
         if ($this->checkIfMultimediaObjectHaveJustMasterTrack($multimediaObject)) {
@@ -56,7 +56,7 @@ class RemoveListener
     {
         $masterTrack = $multimediaObject->getMaster();
         if ($masterTrack instanceof Track) {
-            $masterTrack->removeTag('ENCODED_PUCHWEBTV');
+            $masterTrack->tags()->remove('ENCODED_PUCHWEBTV');
         }
     }
 }

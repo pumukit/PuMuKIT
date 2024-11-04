@@ -12,14 +12,14 @@ final class FinderUtils
     {
         (new FinderUtils())->isValidPath($path);
 
-        $finder = (new FinderUtils())->finder();
+        $finder = self::getFinder();
 
         return $finder->depth('0')->directories()->in($path);
     }
 
     public static function findFilePathname(string $path, string $fileName): ?string
     {
-        $finder = (new FinderUtils())->finder();
+        $finder = self::getFinder();
 
         $finder->files()->in($path)->name($fileName.'.*');
 
@@ -34,7 +34,17 @@ final class FinderUtils
         return null;
     }
 
-    private function finder(): Finder
+    public static function filesFromPath(string $path): Finder
+    {
+        return self::getFinder()->files()->in($path);
+    }
+
+    public static function isValidFile(string $path): bool
+    {
+        return file_exists($path);
+    }
+
+    private static function getFinder(): Finder
     {
         return new Finder();
     }

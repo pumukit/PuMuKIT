@@ -135,4 +135,15 @@ class EmbeddedBroadcast
 
         return $isPublic || $isPrivate;
     }
+
+    public function getStringType(): string
+    {
+        return match ($this->type) {
+            self::TYPE_PUBLIC => self::NAME_PUBLIC,
+            self::TYPE_PASSWORD => self::NAME_PASSWORD,
+            self::TYPE_LOGIN => self::NAME_LOGIN,
+            self::TYPE_GROUPS => self::NAME_GROUPS,
+            default => throw new \Exception('Unknown broadcast type')
+        };
+    }
 }

@@ -4,11 +4,19 @@ declare(strict_types=1);
 
 namespace Pumukit\NotificationBundle\Tests\Services;
 
+use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Event\JobEvent;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
+use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
+use Pumukit\SchemaBundle\Document\MediaType\Storage;
+use Pumukit\SchemaBundle\Document\MediaType\Track;
+use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
+use Pumukit\SchemaBundle\Document\ValueObject\Path;
+use Pumukit\SchemaBundle\Document\ValueObject\StorageUrl;
+use Pumukit\SchemaBundle\Document\ValueObject\Tags;
+use Pumukit\SchemaBundle\Services\FactoryService;
 
 /**
  * @internal
@@ -20,6 +28,8 @@ class JobNotificationServiceTest extends PumukitTestCase
     private $repo;
     private $containerHelper;
     private $jobNotificationService;
+    private $factoryService;
+    private $i18nService;
 
     public function setUp(): void
     {
@@ -33,6 +43,9 @@ class JobNotificationServiceTest extends PumukitTestCase
             static::markTestSkipped('NotificationBundle is not installed');
         }
 
+        $this->i18nService = new i18nService(['en', 'es'], 'en');
+
+        $this->factoryService = self::$kernel->getContainer()->get(FactoryService::class);
         $this->repo = $this->dm->getRepository(Job::class);
 
         $this->jobNotificationService = $this->containerHelper->get('pumukit_notification.listener');
@@ -50,8 +63,10 @@ class JobNotificationServiceTest extends PumukitTestCase
 
     public function testOnJobSuccess()
     {
-        $multimediaObject = $this->createNewMultimediaObjectWithTrack();
-        $track = $multimediaObject->getTracks()[0];
+        $multimediaObject = $this->factoryService->createMultimediaObject($this->factoryService->createSeries());
+        $track = $this->generateTrackMedia();
+        $multimediaObject->addTrack($track);
+        $this->dm->flush();
 
         $job = $this->createNewJob(Job::STATUS_WAITING, $multimediaObject);
 
@@ -68,8 +83,10 @@ class JobNotificationServiceTest extends PumukitTestCase
 
     public function testOnJobError()
     {
-        $multimediaObject = $this->createNewMultimediaObjectWithTrack();
-        $track = $multimediaObject->getTracks()[0];
+        $multimediaObject = $this->factoryService->createMultimediaObject($this->factoryService->createSeries());
+        $track = $this->generateTrackMedia();
+        $multimediaObject->addTrack($track);
+        $this->dm->flush();
 
         $job = $this->createNewJob(Job::STATUS_WAITING, $multimediaObject);
 
@@ -107,19 +124,28 @@ class JobNotificationServiceTest extends PumukitTestCase
         return $job;
     }
 
-    private function createNewMultimediaObjectWithTrack()
+    private function generateTrackMedia(): MediaInterface
     {
-        $track = new Track();
-        $track->addTag('profile:master');
-        $track->setPath('path/to/track.mp4');
+        $originalName = 'originalName'.random_int(0, mt_getrandmax());
+        $description = i18nText::create($this->i18nService->generateI18nText('18nDescription'));
+        $language = 'en';
+        $tags = Tags::create(['display']);
+        $views = 0;
+        $url = StorageUrl::create('');
+        $path = Path::create('public/storage');
+        $storage = Storage::create($url, $path);
+        $mediaMetadata = VideoAudio::create('{"format":{"duration":"10.000000"}}');
 
-        $multimediaObject = new MultimediaObject();
-        $multimediaObject->setTitle('MultimediaObject test');
-        $multimediaObject->addTrack($track);
-
-        $this->dm->persist($multimediaObject);
-        $this->dm->flush();
-
-        return $multimediaObject;
+        return Track::create(
+            $originalName,
+            $description,
+            $language,
+            $tags,
+            false,
+            true,
+            $views,
+            $storage,
+            $mediaMetadata
+        );
     }
 }

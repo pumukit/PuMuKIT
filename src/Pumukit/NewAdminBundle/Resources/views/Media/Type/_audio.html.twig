@@ -1,0 +1,34 @@
+<tr>
+    <td><ul><li></li></ul></td>
+    {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_TRACKS_OPTIONS')) %}
+        {% if not is_naked() %}
+            {% include '@PumukitNewAdmin/Media/Type/Resources/_delete.html.twig' %}
+        {% endif %}
+
+        {% include '@PumukitNewAdmin/Media/Type/Resources/_visibility.html.twig' %}
+        {% include '@PumukitNewAdmin/Media/Type/Resources/_edit.html.twig' %}
+    {% endif %}
+
+    {% include '@PumukitNewAdmin/Media/Type/Resources/_download.html.twig' %}
+
+    {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_TRACKS_OPTIONS')) %}
+        {% if track.isMaster() %}
+            {% include '@PumukitNewAdmin/Media/Type/Resources/_retranscode.html.twig' %}
+        {% else %}
+            {% include '@PumukitNewAdmin/Media/Type/Resources/_play.html.twig' %}
+        {% endif %}
+    {% endif %}
+
+    <td>
+        &nbsp;{% if not is_naked() %}{{ track.id }} - {% endif %}
+        <strong>{{ track.tags()|profile }}</strong>
+
+        {{ track.description().textFromLocale(app.request.getLocale()) }}
+        <span>(
+        {{ track.storage().fileName()}}
+            <span class="label label-default">{{ track.language()|default('')|language_name }}</span>
+        )</span>
+
+        {% include '@PumukitNewAdmin/Media/Type/Resources/_tags.html.twig' %}
+    </td>
+</tr>

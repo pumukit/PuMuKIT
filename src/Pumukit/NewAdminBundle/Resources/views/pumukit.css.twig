@@ -9,6 +9,13 @@ width: 50px;
 }
 /* end objects list headers css*/
 
+.shorten-title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+}
+
 {% if app.request.attributes.get('nakedbackoffice_color') %}
 /*Naked css rules*/
 .hidden-naked {
@@ -577,7 +584,7 @@ label.pmk_disabled_checkbox {
 }
 
 .shell-wrap {
-    width: 500px;
+    width: 100%;
     margin: 10px auto 0 auto;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
 

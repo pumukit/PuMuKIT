@@ -7,93 +7,113 @@ namespace Pumukit\WorkflowBundle\EventListener;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
 use Pumukit\EncoderBundle\Event\JobEvent;
-use Pumukit\EncoderBundle\Services\JobService;
+use Pumukit\EncoderBundle\Services\DTO\JobOptions;
+use Pumukit\EncoderBundle\Services\JobCreator;
 use Pumukit\EncoderBundle\Services\ProfileService;
+use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\ValueObject\Path;
+use Pumukit\SchemaBundle\Document\ValueObject\Tags;
 use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
+use Pumukit\SchemaBundle\Services\MediaUpdater;
 
 class JobGeneratorListener
 {
-    private $dm;
-    private $logger;
-    private $jobService;
-    private $profiles;
-    private $profileService;
+    private DocumentManager $documentManager;
+    private JobCreator $jobCreator;
+    private ProfileService $profileService;
+    private MediaUpdater $mediaUpdater;
+    private LoggerInterface $logger;
+    private array $profiles;
 
-    public function __construct(DocumentManager $documentManager, JobService $jobService, ProfileService $profileService, LoggerInterface $logger)
-    {
-        $this->dm = $documentManager;
-        $this->jobService = $jobService;
+    public function __construct(
+        DocumentManager $documentManager,
+        JobCreator $jobCreator,
+        ProfileService $profileService,
+        MediaUpdater $mediaUpdater,
+        LoggerInterface $logger
+    ) {
+        $this->documentManager = $documentManager;
+        $this->jobCreator = $jobCreator;
+        $this->profileService = $profileService;
+        $this->mediaUpdater = $mediaUpdater;
         $this->logger = $logger;
         $this->profiles = $profileService->getProfiles();
-        $this->profileService = $profileService;
     }
 
-    public function onJobSuccess(JobEvent $event)
+    public function onJobSuccess(JobEvent $event): void
     {
         $this->checkMultimediaObject($event->getMultimediaObject());
     }
 
-    public function onMultimediaobjectUpdate(MultimediaObjectEvent $event)
+    public function onMultimediaObjectUpdate(MultimediaObjectEvent $event): void
     {
         $this->checkMultimediaObject($event->getMultimediaObject());
     }
 
-    private function checkMultimediaObject(MultimediaObject $multimediaObject)
+    private function createEncodedTagForMedia(MultimediaObject $multimediaObject, MediaInterface $master, Tag $pubChannel): void
     {
-        // Only for objects with master
-        $master = $multimediaObject->getMaster(false);
-        if (!$master) {
+        $tags = Tags::create($master->tags()->toArray());
+        $tags->add('ENCODED_'.$pubChannel->getCod());
+        $this->mediaUpdater->updateTags($multimediaObject, $master, $tags);
+    }
+
+    private function checkMultimediaObject(MultimediaObject $multimediaObject): void
+    {
+        if (!$this->shouldGenerateJobs($multimediaObject)) {
             return;
         }
 
-        // Only for non multi-stream objects
-        if ($multimediaObject->isMultistream()) {
+        $tag = $this->ensurePubChannelsTagExists();
+        if (!$tag instanceof Tag) {
             return;
         }
 
-        $repository = $this->dm->getRepository(Tag::class);
-        $tag = $repository->findOneBy(['cod' => 'PUBCHANNELS']);
-        if (!$tag) {
+        if (!$profile = $this->ensureProfileExists($multimediaObject)) {
             return;
         }
 
-        $profileName = $master->getProfileName();
-        if (!$profileName || !isset($this->profiles[$profileName])) {
-            return;
-        }
-        $profile = $this->profiles[$profileName];
-
-        // NOTE: See TTK-7482
-        foreach ($tag->getChildren() as $pubchannel) {
-            if ($multimediaObject->containsTag($pubchannel)) {
-                if (!$master->containsTag('ENCODED_'.$pubchannel->getCod()) && false === strpos($profile['target'], (string) $pubchannel->getCod())) {
-                    $master->addTag('ENCODED_'.$pubchannel->getCod());
-                    $this->generateJobs($multimediaObject, $pubchannel->getCod());
-                }
+        foreach ($tag->getChildren() as $pubChannelTag) {
+            if (!$multimediaObject->containsTag($pubChannelTag)) {
+                continue;
             }
+
+            if ($this->hasEncodedJobForProfile($multimediaObject->getMaster(), $pubChannelTag, $profile)) {
+                continue;
+            }
+
+            $this->createEncodedTagForMedia($multimediaObject, $multimediaObject->getMaster(), $pubChannelTag);
+
+            $this->generateJobs($multimediaObject, $pubChannelTag);
         }
     }
 
-    private function generateJobs(MultimediaObject $multimediaObject, $pubChannelCod)
+    private function generateJobs(MultimediaObject $multimediaObject, Tag $pubChannel): void
     {
-        $jobs = [];
-        $default_profiles = $this->profileService->getDefaultProfiles();
+        $default_profiles = $this->profileService->defaultProfilesByMultimediaObjectAndPubChannel(
+            $multimediaObject,
+            $pubChannel
+        );
 
-        if ($this->containsTrackWithProfileWithTargetTag($multimediaObject, $pubChannelCod)) {
-            $this->logger->info(sprintf(
-                "JobGeneratorListener can't create a new job for multimedia object %s,".
-                                        'because it already contains a track with a profile with this target (%s)',
-                $multimediaObject->getId(),
-                $pubChannelCod
-            ));
+        $pubChannelCod = $pubChannel->getCod();
 
-            return $jobs;
+        $hasMedia = $this->hasMediaWithProfileTarget($multimediaObject, $pubChannel);
+        if ($hasMedia) {
+            return;
         }
 
-        foreach ($this->profiles as $targetProfile => $profile) {
-            if (empty($profile['target'])) {
+        //        $filteredProfiles = $this->profileService->filterProfilesByPubChannel($pubChannel);
+        $filteredProfiles = $this->profileService->filterProfilesByPubChannelAndType($pubChannel, $multimediaObject);
+
+        $validateDefaultProfiles = explode(' ', $default_profiles);
+        $validateDefaultProfiles = array_map(
+            static function ($element) { return trim($element); },
+            $validateDefaultProfiles
+        );
+
+        foreach ($filteredProfiles as $targetProfile => $profile) {
+            if (!in_array($targetProfile, $validateDefaultProfiles)) {
                 continue;
             }
 
@@ -101,76 +121,45 @@ class JobGeneratorListener
 
             $track = $multimediaObject->getTrackWithTag('profile:'.$targetProfile);
             if ($track) {
-                $this->logger->info(sprintf(
-                    "JobGeneratorListener doesn't create a new job (%s) for multimedia object %s ".
-                                            'because it already contains a track created with this profile',
-                    $targetProfile,
-                    $multimediaObject->getId()
-                ));
-
                 continue;
             }
 
-            if (0 !== (is_countable($default_profiles) ? count($default_profiles) : 0)) {
+            if ($multimediaObject->isVideoAudioType() && 0 !== (is_countable($default_profiles) ? count($default_profiles) : 0)) {
                 if (!isset($default_profiles[$pubChannelCod])) {
                     continue;
                 }
-                if (!$multimediaObject->isOnlyAudio() && false === strpos($default_profiles[$pubChannelCod]['video'], (string) $targetProfile)) {
+                if (!$multimediaObject->isOnlyAudio() && !str_contains($default_profiles[$pubChannelCod]['video'], (string) $targetProfile)) {
                     continue;
                 }
-                if ($multimediaObject->isOnlyAudio() && false === strpos($default_profiles[$pubChannelCod]['audio'], (string) $targetProfile)) {
+                if ($multimediaObject->isOnlyAudio() && !str_contains($default_profiles[$pubChannelCod]['audio'], (string) $targetProfile)) {
                     continue;
                 }
             }
 
-            if (in_array($pubChannelCod, $targets['standard'])
-               && ($multimediaObject->isOnlyAudio() == $profile['audio'])) {
-                if (!$multimediaObject->isOnlyAudio() && 0 != $profile['resolution_ver']) {
-                    $profileAspectRatio = $profile['resolution_hor'] / $profile['resolution_ver'];
-                    $multimediaObjectAspectRatio = $multimediaObject->getTrackWithTag('master')->getAspectRatio();
-                    if ((1.5 > $profileAspectRatio) !== (1.5 > $multimediaObjectAspectRatio)) {
-                        $this->logger->info(sprintf(
-                            "JobGeneratorListener can't create a new job (%s) for multimedia object %s using standard target, ".
-                                                    'because a video profile aspect ratio(%f) is diferent to video aspect ratio (%f)',
-                            $targetProfile,
-                            $multimediaObject->getId(),
-                            $profileAspectRatio,
-                            $multimediaObjectAspectRatio
-                        ));
-
-                        continue;
-                    }
-                }
-
+            if (in_array($pubChannelCod, $targets['standard'])) {
                 $master = $multimediaObject->getTrackWithTag('master');
-                $this->logger->info(sprintf('JobGeneratorListener creates new job (%s) for multimedia object %s using standard target', $targetProfile, $multimediaObject->getId()));
-                $jobs[] = $this->jobService->addJob($master->getPath(), $targetProfile, 2, $multimediaObject, $master->getLanguage(), 0, JobService::ADD_JOB_UNIQUE);
+                $this->logger->warning(sprintf('JobGeneratorListener creates new job (%s) for multimedia object %s using standard target', $targetProfile, $multimediaObject->getId()));
+                $jobOptions = new JobOptions($targetProfile, 2, $master->language(), [], [], 0, 0, true);
+                $path = Path::create($master->storage()->path()->path());
+                $this->jobCreator->fromPath($multimediaObject, $path, $jobOptions);
             }
 
             if (in_array($pubChannelCod, $targets['force'])) {
                 $master = $multimediaObject->getTrackWithTag('master');
-                $this->logger->info(sprintf('JobGeneratorListener creates new job (%s) for multimedia object %s using forced target', $targetProfile, $multimediaObject->getId()));
-                $jobs[] = $this->jobService->addJob($master->getPath(), $targetProfile, 2, $multimediaObject, $master->getLanguage(), 0, JobService::ADD_JOB_UNIQUE);
+                $this->logger->warning(sprintf('JobGeneratorListener creates new job (%s) for multimedia object %s using forced target', $targetProfile, $multimediaObject->getId()));
+                $jobOptions = new JobOptions($targetProfile, 2, $master->language(), [], [], 0, 0, true);
+                $path = Path::create($master->storage()->path()->path());
+                $this->jobCreator->fromPath($multimediaObject, $path, $jobOptions);
             }
         }
-
-        return $jobs;
     }
 
-    /**
-     * Process the target string (See test)
-     * "TAGA* TAGB, TAGC*, TAGD" => array('standard' => array('TAGB', 'TAGD'), 'force' => array('TAGA', 'TAGC')).
-     *
-     * @param mixed $targets
-     *
-     * @return array
-     */
-    private function getTargets($targets)
+    private function getTargets(string $targets): array
     {
         $return = ['standard' => [], 'force' => []];
 
         foreach (array_filter(preg_split('/[,\s]+/', $targets)) as $target) {
-            if ('*' == substr($target, -1)) {
+            if (str_ends_with($target, '*')) {
                 $return['force'][] = substr($target, 0, -1);
             } else {
                 $return['standard'][] = $target;
@@ -180,18 +169,55 @@ class JobGeneratorListener
         return $return;
     }
 
-    private function containsTrackWithProfileWithTargetTag(MultimediaObject $multimediaObject, $pubChannelCod)
+    private function shouldGenerateJobs(MultimediaObject $multimediaObject): bool
     {
-        foreach ($multimediaObject->getTracks() as $track) {
-            $profileName = $track->getProfileName();
-            if ($profileName && isset($this->profiles[$profileName])) {
-                $targets = $this->getTargets($this->profiles[$profileName]['target']);
-                if (in_array($pubChannelCod, $targets['standard'])) {
-                    return true;
-                }
-            }
+        if ($multimediaObject->isExternalType()) {
+            return false;
         }
 
-        return false;
+        return $multimediaObject->getMaster() && !$multimediaObject->isMultistream();
+    }
+
+    private function ensurePubChannelsTagExists(): ?Tag
+    {
+        return $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PUBCHANNELS']);
+    }
+
+    private function ensureProfileExists(MultimediaObject $multimediaObject): ?array
+    {
+        $profileName = $multimediaObject->getMaster()->profileName();
+
+        return $this->profileService->getProfile($profileName);
+    }
+
+    private function hasEncodedJobForProfile(MediaInterface $master, Tag $pubChannel, array $profile): bool
+    {
+        return $master->tags()->containsTag('ENCODED_'.$pubChannel->getCod()) && str_contains($profile['target'], $pubChannel->getCod());
+    }
+
+    private function hasMediaWithProfileTarget(MultimediaObject $multimediaObject, Tag $pubChannel): bool
+    {
+        $hasMedia = false;
+        foreach ($multimediaObject->getTracks() as $track) {
+            $profileName = $track->profileName();
+            if (!$profileName || !isset($this->profiles[$profileName])) {
+                continue;
+            }
+
+            $targets = $this->getTargets($this->profiles[$profileName]['target']);
+            if (!in_array($pubChannel->getCod(), $targets['standard'])) {
+                continue;
+            }
+
+            $hasMedia = true;
+            $this->logger->warning(sprintf(
+                self::class.
+                " can't create new job for object %s because it already contains media with a profile with %s target",
+                $multimediaObject->getId(),
+                $pubChannel->getCod()
+            ));
+        }
+
+        return $hasMedia;
     }
 }

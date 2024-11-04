@@ -5,23 +5,27 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Psr\Log\LoggerInterface;
+use Pumukit\SchemaBundle\Document\MediaType\Document;
+use Pumukit\SchemaBundle\Document\MediaType\Image;
+use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
+use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Track;
 use Symfony\Component\Finder\Finder;
 
 class TrackService
 {
-    /** @var DocumentManager */
-    private $dm;
+    private DocumentManager $dm;
 
-    /** @var TrackEventDispatcherService */
-    private $dispatcher;
-    private $tmpPath;
-    private $forceDeleteOnDisk;
+    private TrackEventDispatcherService $dispatcher;
+    private ?string $tmpPath;
+    private bool $forceDeleteOnDisk;
+    private LoggerInterface $logger;
 
     public function __construct(
         DocumentManager $documentManager,
         TrackEventDispatcherService $dispatcher,
+        LoggerInterface $logger,
         ?string $tmpPath = null,
         bool $forceDeleteOnDisk = true
     ) {
@@ -29,25 +33,35 @@ class TrackService
         $this->dispatcher = $dispatcher;
         $this->tmpPath = $tmpPath ? realpath($tmpPath) : sys_get_temp_dir();
         $this->forceDeleteOnDisk = $forceDeleteOnDisk;
+        $this->logger = $logger;
     }
 
-    public function addTrackToMultimediaObject(MultimediaObject $multimediaObject, Track $track, bool $executeFlush = true): MultimediaObject
+    public function addTrackToMultimediaObject(MultimediaObject $multimediaObject, MediaInterface $media, bool $executeFlush = true): MultimediaObject
     {
-        $multimediaObject->addTrack($track);
+        if ($media instanceof Track) {
+            $multimediaObject->addTrack($media);
+        }
+
+        if ($media instanceof Image) {
+            $multimediaObject->addImage($media);
+        }
+
+        if ($media instanceof Document) {
+            $multimediaObject->addDocument($media);
+        }
 
         if ($executeFlush) {
             $this->dm->persist($multimediaObject);
             $this->dm->flush();
         }
 
-        $this->dispatcher->dispatchCreate($multimediaObject, $track);
+        $this->dispatcher->dispatchCreate($multimediaObject, $media);
 
         return $multimediaObject;
     }
 
     public function updateTrackInMultimediaObject(MultimediaObject $multimediaObject, Track $track): MultimediaObject
     {
-        $this->dm->persist($multimediaObject);
         $this->dm->flush();
 
         $this->dispatcher->dispatchUpdate($multimediaObject, $track);
@@ -58,9 +72,9 @@ class TrackService
     public function removeTrackFromMultimediaObject(MultimediaObject $multimediaObject, string $trackId): MultimediaObject
     {
         $track = $multimediaObject->getTrackById($trackId);
-        $trackPath = $track->getPath();
+        $trackPath = $track->storage()->path()->path();
 
-        $isNotOpencast = !$track->containsTag('opencast');
+        $isNotOpencast = !$track->tags()->contains('opencast');
 
         $multimediaObject->removeTrackById($trackId);
         $this->dm->persist($multimediaObject);

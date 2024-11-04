@@ -37,7 +37,7 @@ class Log
             return;
         }
 
-        $userAgent = mb_convert_encoding($request->headers->get('user-agent'), 'UTF-8', 'ISO-8859-1');
+        $userAgent = mb_convert_encoding($request->headers->get('user-agent'), 'UTF-8', mb_list_encodings());
 
         if (false !== strpos($userAgent, 'TTK Zabbix Agent')) {
             return;
@@ -54,7 +54,7 @@ class Log
             $request->headers->get('referer'),
             $event->getMultimediaObject()->getId(),
             $event->getMultimediaObject()->getSeries()->getId(),
-            $event->getTrack() ? $event->getTrack()->getId() : null,
+            $event->getTrack() ? $event->getTrack()->id() : null,
             $this->getUser()
         );
 
