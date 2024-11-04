@@ -40,6 +40,9 @@ services:
   Pumukit\NewAdminBundle\Services\:
     resource: '../../src/Pumukit/NewAdminBundle/Services/'
 
+  Pumukit\NewAdminBundle\Command\:
+    resource: '../../src/Pumukit/NewAdminBundle/Command/'
+
   Pumukit\NewAdminBundle\Form\Type\SeriesType:
     class: Pumukit\NewAdminBundle\Form\Type\SeriesType
     tags:

@@ -1,3 +1,33 @@
 {% if showDownloadButton is defined and showDownloadButton %}
-    <a href="{{ path('export_unesco_search') }}" class="btn btn-primary">{{ 'Download search'|trans }}</a>
+    <a id="exportButton" class="btn btn-primary">{{ 'Download search'|trans }}</a>
+
+    <script>
+        $('#exportButton').on('click', function () {
+            $("#div_messages_span_info").attr("data-content", "Starting export...");
+            $("#div_messages_span_info").snackbar("show");
+
+            $.ajax({
+                url: '{{ path('trigger_export_unesco_search') }}',
+                type: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                success: function (data) {
+                    if (data.status === 'success') {
+                        $("#div_messages_span_info").attr("data-content", data.message);
+                        $("#div_messages_span_info").snackbar("show");
+                    } else {
+                        $("#div_messages_span_error").attr("data-content", "Failed to start the export.");
+                        $("#div_messages_span_error").snackbar("show");
+                    }
+                },
+                error: function () {
+                    $("#div_messages_span_error").attr("data-content", "An error occurred.");
+                    $("#div_messages_span_error").snackbar("show");
+                    console.error('Error occurred while starting the export.');
+                }
+            });
+        });
+    </script>
 {% endif %}

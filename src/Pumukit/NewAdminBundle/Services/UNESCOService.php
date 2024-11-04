@@ -5,19 +5,29 @@ declare(strict_types=1);
 namespace Pumukit\NewAdminBundle\Services;
 
 use MongoDB\BSON\UTCDateTime;
+use Pumukit\NotificationBundle\Services\SenderService;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class UNESCOService.
  */
 class UNESCOService
 {
+    protected $senderService;
+
     /** @var MultimediaObjectSearchService */
     private $multimediaObjectSearchService;
+    private $security;
 
     public function __construct(
-        MultimediaObjectSearchService $multimediaObjectSearchService
+        MultimediaObjectSearchService $multimediaObjectSearchService,
+        SenderService $senderService,
+        Security $security
     ) {
         $this->multimediaObjectSearchService = $multimediaObjectSearchService;
+        $this->senderService = $senderService;
+        $this->security = $security;
     }
 
     public function addCriteria($query, $criteria, $locale)
@@ -99,6 +109,13 @@ class UNESCOService
         return $query;
     }
 
+    public function sendEmailWithFileLink(string $fileUrl)
+    {
+        $user = $this->security->getUser();
+
+        return $this->sendNotificationEmail($fileUrl, $user);
+    }
+
     private function findDuration($query, $key, $field)
     {
         if ('tracks.duration' === $key) {
@@ -125,5 +142,30 @@ class UNESCOService
         }
 
         return $query;
+    }
+
+    private function sendNotificationEmail(string $fileUrl, UserInterface $user)
+    {
+        $subject = 'Your UNESCO CSV Export is Ready';
+
+        $template = '@PumukitNewAdmin/UNESCO/download_link.html.twig';
+        $parameters = $this->generateParametersForEmail($fileUrl, $subject);
+        $emailTo = $user->getEmail();
+
+        if (!$emailTo) {
+            return false;
+        }
+
+        return $this->senderService->sendNotification($emailTo, $subject, $template, $parameters, false);
+    }
+
+    private function generateParametersForEmail(string $fileUrl, string $subject): array
+    {
+        return [
+            'platform_name' => $this->senderService->getPlatformName(),
+            'subject' => $subject,
+            'fileURL' => $fileUrl,
+            'sender_name' => $this->senderService->getSenderName(),
+        ];
     }
 }
