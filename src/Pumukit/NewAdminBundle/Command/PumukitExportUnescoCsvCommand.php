@@ -177,7 +177,7 @@ class PumukitExportUnescoCsvCommand extends Command
             }
 
             ++$page;
-        } while (count($results) > 0);
+        } while ((is_countable($results) ? count($results) : 0) > 0);
 
         fputcsv($handle, ['', 'Total Views:', $totalViews]);
 
