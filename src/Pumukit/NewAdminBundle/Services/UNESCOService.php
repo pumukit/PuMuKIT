@@ -141,7 +141,7 @@ class UNESCOService
     {
         $subject = 'Your UNESCO CSV Export is Ready';
 
-        $template = '@PumukitNewAdmin/UNESCO/download_link.html.twig';
+        $template = '@PumukitNewAdmin/UNESCO/Email/download_link.html.twig';
         $parameters = $this->generateParametersForEmail($fileUrl, $subject);
         $emailTo = $userEmail;
 
