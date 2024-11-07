@@ -74,7 +74,7 @@ class PumukitExportUnescoCsvCommand extends Command
         }
 
         $encodedSessionData = $input->getOption('sessionData');
-        $session = json_decode(base64_decode($encodedSessionData));
+        $session = json_decode(base64_decode($encodedSessionData), null, 512, JSON_THROW_ON_ERROR);
 
         if (!$session) {
             $output->writeln('Decoded session data is empty or invalid.');

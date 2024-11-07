@@ -50,7 +50,7 @@ class UNESCOSearchExporterController extends AbstractController
             'locale' => $this->requestStack->getMainRequest()->getLocale(),
         ];
 
-        $encodedSessionData = base64_encode(json_encode($sessionAttributes));
+        $encodedSessionData = base64_encode(json_encode($sessionAttributes, JSON_THROW_ON_ERROR));
 
         $command = [
             'php',
