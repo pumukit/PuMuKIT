@@ -32,6 +32,8 @@ services:
       $enablePlaylist: '%pumukit_new_admin.enable_playlist%'
       $copyrightInfoUrl: '%pumukit.copyright_info_url%'
       $licenseInfoUrl: '%pumukit.license_info_url%'
+      $pumukitTmp: '%pumukit.tmp%'
+      $binPath: '%kernel.project_dir%/bin/'
 
   Pumukit\NewAdminBundle\Controller\:
     resource: '../../src/Pumukit/NewAdminBundle/Controller/'

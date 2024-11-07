@@ -18,7 +18,7 @@
                         $("#div_messages_span_info").attr("data-content", data.message);
                         $("#div_messages_span_info").snackbar("show");
                     } else {
-                        $("#div_messages_span_error").attr("data-content", "Failed to start the export.");
+                        $("#div_messages_span_error").attr("data-content", data.message);
                         $("#div_messages_span_error").snackbar("show");
                     }
                 },

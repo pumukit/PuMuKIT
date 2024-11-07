@@ -13,9 +13,10 @@ use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Track;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -27,45 +28,66 @@ class PumukitExportUnescoCsvCommand extends Command
 {
     private $documentManager;
     private $urlGenerator;
-
-    /** @var SessionInterface */
-    private $session;
+    private $pumukitTmp;
 
     /** @var TagCatalogueService */
     private $tagCatalogueService;
 
-    /** @var RequestStack */
-    private $requestStack;
-
     /** @var UNESCOService */
     private $UNESCOService;
+
+    /** @var SessionInterface */
+    private $session;
 
     public function __construct(
         DocumentManager $documentManager,
         UrlGeneratorInterface $urlGenerator,
-        SessionInterface $session,
         TagCatalogueService $tagCatalogueService,
-        RequestStack $requestStack,
-        UNESCOService $UNESCOService
+        UNESCOService $UNESCOService,
+        SessionInterface $session,
+        $pumukitTmp
     ) {
         parent::__construct();
         $this->documentManager = $documentManager;
         $this->urlGenerator = $urlGenerator;
-        $this->session = $session;
         $this->tagCatalogueService = $tagCatalogueService;
-        $this->requestStack = $requestStack;
         $this->UNESCOService = $UNESCOService;
+        $this->session = $session;
+        $this->pumukitTmp = $pumukitTmp;
+    }
+
+    protected function configure(): void
+    {
+        $this->addArgument('userEmail', InputArgument::REQUIRED, 'The user email to send an email with the exported data');
+        $this->addOption('sessionData', null, InputOption::VALUE_REQUIRED, 'Serialized session data');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $filename = 'export_unesco_search_result_'.uniqid().'.csv';
+        $filePath = $this->pumukitTmp.'/'.$filename;
 
-        if (!$handle = fopen($filename, 'w+')) {
+        if (!$handle = fopen($filePath, 'w+')) {
             $output->writeln('<error>Unable to create temporary file</error>');
 
             return Command::FAILURE;
         }
+
+        $encodedSessionData = $input->getOption('sessionData');
+        $session = json_decode(base64_decode($encodedSessionData));
+
+        if (!$session) {
+            $output->writeln('Decoded session data is empty or invalid.');
+
+            return Command::FAILURE;
+        }
+
+        $this->session->set('admin/unesco/tag', $session->unesco_tag);
+        $this->session->set('admin/unesco/element_sort', $session->unesco_sort);
+        $this->session->set('admin/unesco/type', $session->unesco_type);
+        $this->session->set('admin/unesco/text', $session->unesco_text);
+        $this->session->set('UNESCO/criteria', $session->unesco_criteria);
+        $this->session->set('request_locale', $session->locale);
 
         $qb = $this->createUNESCOSearchtoExportCSV();
 
@@ -183,8 +205,9 @@ class PumukitExportUnescoCsvCommand extends Command
 
         fclose($handle);
 
+        $userEmail = $input->getArgument('userEmail');
         $fileUrl = $this->urlGenerator->generate('download_unesco_search', ['filename' => $filename], UrlGeneratorInterface::ABSOLUTE_URL);
-        $this->UNESCOService->sendEmailWithFileLink($fileUrl);
+        $this->UNESCOService->sendEmailWithFileLink($fileUrl, $userEmail);
 
         return Command::SUCCESS;
     }
@@ -233,13 +256,7 @@ class PumukitExportUnescoCsvCommand extends Command
 
         $criteria = $session->get('UNESCO/criteria');
         if (isset($criteria) && !empty($criteria)) {
-            $request = $this->requestStack->getMainRequest();
-            $qb = $this->UNESCOService->addCriteria($qb, $criteria, $request->getLocale());
-        }
-
-        if (!$this->session->has('admin/unesco/selected_fields')) {
-            $defaultSelectedFields = $this->tagCatalogueService->getDefaultListFields();
-            $this->session->set('admin/unesco/selected_fields', $defaultSelectedFields);
+            $qb = $this->UNESCOService->addCriteria($qb, $criteria, $session->get('request_locale'));
         }
 
         return $qb;

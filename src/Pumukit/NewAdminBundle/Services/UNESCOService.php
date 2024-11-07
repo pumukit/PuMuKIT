@@ -6,8 +6,6 @@ namespace Pumukit\NewAdminBundle\Services;
 
 use MongoDB\BSON\UTCDateTime;
 use Pumukit\NotificationBundle\Services\SenderService;
-use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class UNESCOService.
@@ -18,16 +16,13 @@ class UNESCOService
 
     /** @var MultimediaObjectSearchService */
     private $multimediaObjectSearchService;
-    private $security;
 
     public function __construct(
         MultimediaObjectSearchService $multimediaObjectSearchService,
-        SenderService $senderService,
-        Security $security
+        SenderService $senderService
     ) {
         $this->multimediaObjectSearchService = $multimediaObjectSearchService;
         $this->senderService = $senderService;
-        $this->security = $security;
     }
 
     public function addCriteria($query, $criteria, $locale)
@@ -109,11 +104,9 @@ class UNESCOService
         return $query;
     }
 
-    public function sendEmailWithFileLink(string $fileUrl)
+    public function sendEmailWithFileLink(string $fileUrl, string $userEmail)
     {
-        $user = $this->security->getUser();
-
-        return $this->sendNotificationEmail($fileUrl, $user);
+        return $this->sendNotificationEmail($fileUrl, $userEmail);
     }
 
     private function findDuration($query, $key, $field)
@@ -144,13 +137,13 @@ class UNESCOService
         return $query;
     }
 
-    private function sendNotificationEmail(string $fileUrl, UserInterface $user)
+    private function sendNotificationEmail(string $fileUrl, string $userEmail)
     {
         $subject = 'Your UNESCO CSV Export is Ready';
 
         $template = '@PumukitNewAdmin/UNESCO/download_link.html.twig';
         $parameters = $this->generateParametersForEmail($fileUrl, $subject);
-        $emailTo = $user->getEmail();
+        $emailTo = $userEmail;
 
         if (!$emailTo) {
             return false;
