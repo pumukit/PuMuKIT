@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -69,11 +68,11 @@ class UNESCOSearchExporterController extends AbstractController
         $this->logger->info('[executeInBackground] CommandLine '.$command);
         $output = shell_exec("nohup {$command} 1> /dev/null 2> /dev/null & echo $!");
 
-        if ($output === null) {
-            return new JsonResponse(['status' => 'success', 'message' => 'Export started. You will receive an email when it is ready.']);
-        } else {
-            return new JsonResponse(['status' => 'error', 'message' => 'Failed to start the export.'.$exception->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        if (null === $output) {
+            return new JsonResponse(['status' => 'error', 'message' => 'Failed to start the export.'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+
+        return new JsonResponse(['status' => 'success', 'message' => 'Export started. You will receive an email when it is ready.']);
     }
 
     /**
