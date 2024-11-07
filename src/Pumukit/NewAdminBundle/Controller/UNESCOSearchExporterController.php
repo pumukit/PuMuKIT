@@ -66,23 +66,6 @@ class UNESCOSearchExporterController extends AbstractController
         try {
             $process->start();
 
-            $process->wait();
-
-            // Check if the process was successful
-            if ($process->isSuccessful()) {
-                return new JsonResponse([
-                    'status' => 'success',
-                    'message' => 'Export started. You will receive an email when it is ready.',
-                ]);
-            }
-
-            return new JsonResponse([
-                'status' => 'error',
-                'message' => 'Failed to start the export.',
-                'errorOutput' => $process->getErrorOutput(),
-                'output' => $process->getOutput(),
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
-
             return new JsonResponse(['status' => 'success', 'message' => 'Export started. You will receive an email when it is ready.']);
         } catch (ProcessFailedException $exception) {
             return new JsonResponse(['status' => 'error', 'message' => 'Failed to start the export.'.$exception->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
