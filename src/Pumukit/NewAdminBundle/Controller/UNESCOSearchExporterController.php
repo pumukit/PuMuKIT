@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,6 +20,7 @@ class UNESCOSearchExporterController extends AbstractController
 {
     private $pumukitTmp;
     private $binPath;
+    private $logger;
 
     /** @var SessionInterface */
     private $session;
@@ -26,12 +28,13 @@ class UNESCOSearchExporterController extends AbstractController
     /** @var RequestStack */
     private $requestStack;
 
-    public function __construct(SessionInterface $session, $pumukitTmp, $binPath, RequestStack $requestStack)
+    public function __construct(SessionInterface $session, $pumukitTmp, $binPath, RequestStack $requestStack, LoggerInterface $logger)
     {
         $this->session = $session;
         $this->pumukitTmp = $pumukitTmp;
         $this->binPath = $binPath;
         $this->requestStack = $requestStack;
+        $this->logger = $logger;
     }
 
     /**
@@ -61,13 +64,14 @@ class UNESCOSearchExporterController extends AbstractController
         ];
 
         $process = new Process($command);
-        $process->setTimeout(3600);
 
-        try {
-            $process->start();
+        $command = $process->getCommandLine();
+        $this->logger->info('[executeInBackground] CommandLine '.$command);
+        $output = shell_exec("nohup {$command} 1> /dev/null 2> /dev/null & echo $!");
 
+        if ($output === null) {
             return new JsonResponse(['status' => 'success', 'message' => 'Export started. You will receive an email when it is ready.']);
-        } catch (ProcessFailedException $exception) {
+        } else {
             return new JsonResponse(['status' => 'error', 'message' => 'Failed to start the export.'.$exception->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
