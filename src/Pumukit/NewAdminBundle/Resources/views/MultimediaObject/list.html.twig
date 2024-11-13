@@ -28,11 +28,7 @@
                             {{ mm.containsTagWithCod('PUDENEW')?'<i class="mdi-action-spellcheck">':'&nbsp;' }}
                         </td>
                     {% endif %}
-                    {% if is_naked() and mm.containsAnyTagWithCodes(['PUCHOPENEDX', 'PUCHMOODLE', 'PUCHLMS'])%}
-                    <td headers="th-icons" style="width: 1em;">
-                        <a class="moodlepr-add" href="#" title="{% trans %}Publish to LMS{% endtrans %}" onclick="parent.window.postMessage({'mmId': '{{ mm.id }}'}, '*'); return false;"><i class="mdi-editor-insert-photo"></i></a>
-                    </td>
-                    {% endif %}
+                    {% include '@PumukitNewAdmin/MultimediaObject/lms_options.html.twig' %}
                     {% include '@PumukitNewAdmin/MultimediaObject/sortingactions.html.twig' %}
                     <td headers="th-img" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')">
                         {% include "@PumukitNewAdmin/Misc/img_list.html.twig"  with {'object' : mm, 'type': 'mm' } %}
