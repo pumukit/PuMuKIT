@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="es" datatype="plaintext" original="file.ext">
+  <file source-language="en" target-language="es-ES" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
@@ -9,9 +9,9 @@
         <source>Select the folder or create a new one where you want to upload the videos. Once this is done, press continue to start uploading the corresponding files</source>
         <target state="translated">Seleccione una carpeta o cree una nueva donde quiera subir los vídeos. Una vez hecho esto, pulse continuar para iniciar la subida de los ficheros correspondientes</target>
       </trans-unit>
-      <trans-unit id="6KJWgkr" resname="The folder name is not valid">
-        <source>The folder name is not valid</source>
-        <target state="translated">El nombre de la carpeta no es válido</target>
+      <trans-unit id="6KJWgkr" resname="The folder name is not valid. The allowed characters are: upper and lower case, numbers, space and _">
+        <source>The folder name is not valid. The allowed characters are: upper and lower case, numbers, space and _</source>
+        <target state="needs-translation">The folder name is not valid. The allowed characters are: upper and lower case, numbers, space and _</target>
       </trans-unit>
       <trans-unit id="WGK6Qnl" resname="Upload video to: %folder%">
         <source>Upload video to: %folder%</source>
