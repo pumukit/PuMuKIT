@@ -33,12 +33,22 @@ class InspectionFfprobeService implements InspectionServiceInterface
             throw new \InvalidArgumentException('This file has no accessible video '."nor audio tracks\n".$file);
         }
 
-        $duration = 0;
         if (isset($json->format->duration)) {
-            $duration = (int) ceil((float) $json->format->duration);
+            return (int) ceil((float) $json->format->duration);
         }
 
-        return $duration;
+        $timestamps = [];
+        foreach ($json->frames as $frame) {
+            if (isset($frame->pts_time)) {
+                $timestamps[] = (float) $frame->pts_time;
+            }
+        }
+
+        if (empty($timestamps)) {
+            throw new \RuntimeException('Cannot calculate duration: no frame timestamps available.');
+        }
+
+        return (int) round(max($timestamps) - min($timestamps));
     }
 
     public function getFileMetadata(?Path $path)
