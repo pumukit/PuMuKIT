@@ -28,8 +28,9 @@ class TrackUrlService
      */
     public function generateTrackFileUrl(Track $track, $reference_type = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
-        $ext = pathinfo(parse_url($track->getUrl(), PHP_URL_PATH), PATHINFO_EXTENSION);
-        if (!$ext) {
+        if ($track->getUrl()) {
+            $ext = pathinfo(parse_url($track->getUrl(), PHP_URL_PATH), PATHINFO_EXTENSION);
+        } else {
             $ext = pathinfo($track->getPath(), PATHINFO_EXTENSION);
         }
 
