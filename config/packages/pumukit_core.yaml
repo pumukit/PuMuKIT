@@ -19,12 +19,11 @@ services:
     resource: '../../src/Pumukit/CoreBundle/Command'
     tags: ['console.command']
 
-  Pumukit\CoreBundle\Command\CreateMMOCommand\:
-    resource: '../../src/Pumukit/CoreBundle/Command/CreateMMOCommand.php'
+  Pumukit\CoreBundle\Command\CreateMMOCommand:
     arguments:
       $wizardSimpleDefaultMasterProfile: '?%pumukit_wizard.simple_default_master_profile%'
     tags:
-     - { name: 'console.command' }
+      - { name: 'console.command' }
 
   Pumukit\CoreBundle\EventListener\AjaxSessionCloseListener:
     class: Pumukit\CoreBundle\EventListener\AjaxSessionCloseListener
