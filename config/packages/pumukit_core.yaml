@@ -21,7 +21,7 @@ services:
 
   Pumukit\CoreBundle\Command\CreateMMOCommand:
     arguments:
-      $wizardSimpleDefaultMasterProfile: '?%pumukit_wizard.simple_default_master_profile%'
+      $wizardSimpleDefaultMasterProfile: '%pumukit_wizard.simple_default_master_profile%'
     tags:
       - { name: 'console.command' }
 
