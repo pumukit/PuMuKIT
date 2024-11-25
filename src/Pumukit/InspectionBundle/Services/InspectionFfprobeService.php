@@ -37,18 +37,21 @@ class InspectionFfprobeService implements InspectionServiceInterface
             return (int) ceil((float) $json->format->duration);
         }
 
-        $timestamps = [];
-        foreach ($json->frames as $frame) {
-            if (isset($frame->pts_time)) {
-                $timestamps[] = (float) $frame->pts_time;
-            }
+        if (empty($json->frames)) {
+            throw new \RuntimeException('Cannot calculate duration: no frames available.');
         }
 
-        if (empty($timestamps)) {
-            throw new \RuntimeException('Cannot calculate duration: no frame timestamps available.');
+        $firstFrame = reset($json->frames);
+        if (!isset($firstFrame->pts_time)) {
+            throw new \RuntimeException('Cannot calculate duration: first frame timestamp not available.');
         }
 
-        return (int) round(max($timestamps) - min($timestamps));
+        $lastFrame = end($json->frames);
+        if (!isset($lastFrame->pts_time)) {
+            throw new \RuntimeException('Cannot calculate duration: last frame timestamp not available.');
+        }
+
+        return (int) round((float) $lastFrame->pts_time - (float) $firstFrame->pts_time);
     }
 
     public function getFileMetadata(?Path $path)
