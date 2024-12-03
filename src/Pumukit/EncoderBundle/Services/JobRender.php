@@ -49,6 +49,8 @@ final class JobRender
 
         $vars['input'] = $job->getPathIni();
         $vars['output'] = $job->getPathEnd();
+        $vars['output_dirname'] = dirname($vars['output']);
+        $vars['output_basename'] = basename($vars['output']);
 
         foreach (range(1, 9) as $identifier) {
             $vars['tmpfile'.$identifier] = $this->tmpPath.'/'.random_int(0, mt_getrandmax());
