@@ -49,7 +49,7 @@ pumukit_encoder:
         host: 127.0.0.1
         description: Local master server
         dir_out: "%pumukit.masters%"
-        url_out: "/storage/downloads"
+        url_out: "%pumukit.downloads_url%"
       app: ffmpeg
       rel_duration_size: 1
       rel_duration_trans: 1
@@ -75,7 +75,7 @@ pumukit_encoder:
         host: 127.0.0.1
         description: Local download server
         dir_out: "%pumukit.downloads%"
-        url_out: "/storage/downloads"
+        url_out: "%pumukit.downloads_url%"
       app: ffmpeg
       rel_duration_size: 1
       rel_duration_trans: 1
@@ -104,7 +104,7 @@ pumukit_encoder:
         host: 127.0.0.1
         description: Local download server
         dir_out: "%pumukit.downloads%"
-        url_out: "/storage/downloads"
+        url_out: "%pumukit.downloads_url%"
       app: ffmpeg
       rel_duration_size: 1
       rel_duration_trans: 1
@@ -132,7 +132,7 @@ pumukit_encoder:
         host: 127.0.0.1
         description: Local download server
         dir_out: "%pumukit.downloads%"
-        url_out: "/storage/downloads"
+        url_out: "%pumukit.downloads_url%"
       app: ffmpeg
       rel_duration_size: 1
       rel_duration_trans: 1
@@ -159,7 +159,7 @@ pumukit_encoder:
         host: 127.0.0.1
         description: Local download server
         dir_out: "%pumukit.downloads%"
-        url_out: "/storage/downloads"
+        url_out: "%pumukit.downloads_url%"
       app: ffmpeg
       rel_duration_size: 1
       rel_duration_trans: 1
@@ -179,7 +179,7 @@ pumukit_encoder:
         host: 127.0.0.1
         description: Local download server
         dir_out: "%pumukit.downloads%"
-        url_out: "/storage/downloads"
+        url_out: "%pumukit.downloads_url%"
     image_raw_broadcastable:
       image: true
       display: true
@@ -196,7 +196,7 @@ pumukit_encoder:
         host: 127.0.0.1
         description: Local download server
         dir_out: "%pumukit.downloads%"
-        url_out: "/storage/downloads"
+        url_out: "%pumukit.downloads_url%"
     document_broadcastable:
       document: true
       display: true
@@ -212,7 +212,7 @@ pumukit_encoder:
         host: 127.0.0.1
         description: Local download server
         dir_out: "%pumukit.downloads%"
-        url_out: "/storage/downloads"
+        url_out: "%pumukit.downloads_url%"
 
   target_default_profiles:
     PUCHWEBTV:
