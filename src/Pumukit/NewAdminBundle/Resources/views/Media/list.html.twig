@@ -18,14 +18,12 @@
             {% if mm.isDocumentType() %}
                 {% include '@PumukitNewAdmin/Media/Type/_document.html.twig' %}
             {% endif %}
-
-            {% include '@PumukitNewAdmin/Media/List/_opencast.html.twig' %}
-
             {% if mm.isExternalType() %}
                 {% include '@PumukitNewAdmin/Media/Type/_external.html.twig' %}
             {% endif %}
         {% endfor %}
 
+        {% include '@PumukitNewAdmin/Media/List/_opencast.html.twig' %}
         {% include '@PumukitNewAdmin/Media/List/_create_options.html.twig' %}
 
     {% else %}
