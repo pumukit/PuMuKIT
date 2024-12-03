@@ -6,9 +6,16 @@
     var endpoint = "{{ inboxUploadURL }}" + "?series={{ series.id }}";
 {% endif %}
 
+var locales = {
+    "es": Uppy.locales.es_ES,
+    "en": Uppy.locales.en_US,
+    "gl": Uppy.locales.gl_ES
+}
+
 const uppyTUS = Uppy.Core({
     debug: {{ inbox_debug() }},
     autoProceed: true,
+    locale: locales["{{ app.request.getLocale() }}"],
     restrictions: {
         minFileSize: convertSizeToBytes("{{ inbox_min_file_size() }}"),
         maxFileSize: convertSizeToBytes("{{ inbox_max_file_size() }}"),
