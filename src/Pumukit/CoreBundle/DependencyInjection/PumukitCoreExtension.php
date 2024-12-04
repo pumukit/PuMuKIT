@@ -24,8 +24,8 @@ class PumukitCoreExtension extends Extension
         $container->setParameter('pumukit.uploads_pic_dir', $config['uploads_pic_dir']);
         $container->setParameter('pumukit.inbox', $config['inbox']);
         $container->setParameter('pumukit.tmp', $config['tmp']);
-        $container->setParameter('pumukit.downloads', $config['downloads']);
-        $container->setParameter('pumukit.masters', $config['masters']);
+        $container->setParameter('pumukit.downloads_dir', $config['downloads']);
+        $container->setParameter('pumukit.masters_dir', $config['masters']);
         $container->setParameter('pumukit.delete_on_disk', $config['delete_on_disk']);
         $container->setParameter('pumukit.use_series_channels', $config['use_series_channels']);
         $container->setParameter('pumukit.full_magic_url', $config['full_magic_url']);
