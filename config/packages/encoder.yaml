@@ -1,5 +1,3 @@
-
-
 pumukit_encoder:
   thumbnail:
     width: 768
@@ -24,7 +22,7 @@ pumukit_encoder:
         type: store
         host: 127.0.0.1
         description: Local master server
-        dir_out: "%pumukit.masters%"
+        dir_out: "%pumukit.masters_dir%"
       app: cp
       rel_duration_size: 1
       rel_duration_trans: 1
@@ -48,7 +46,7 @@ pumukit_encoder:
         type: store
         host: 127.0.0.1
         description: Local master server
-        dir_out: "%pumukit.masters%"
+        dir_out: "%pumukit.masters_dir%"
         url_out: "%pumukit.downloads_url%"
       app: ffmpeg
       rel_duration_size: 1
@@ -74,7 +72,7 @@ pumukit_encoder:
         type: download
         host: 127.0.0.1
         description: Local download server
-        dir_out: "%pumukit.downloads%"
+        dir_out: "%pumukit.downloads_dir%"
         url_out: "%pumukit.downloads_url%"
       app: ffmpeg
       rel_duration_size: 1
@@ -103,7 +101,7 @@ pumukit_encoder:
         type: download
         host: 127.0.0.1
         description: Local download server
-        dir_out: "%pumukit.downloads%"
+        dir_out: "%pumukit.downloads_dir%"
         url_out: "%pumukit.downloads_url%"
       app: ffmpeg
       rel_duration_size: 1
@@ -131,7 +129,7 @@ pumukit_encoder:
         type: download
         host: 127.0.0.1
         description: Local download server
-        dir_out: "%pumukit.downloads%"
+        dir_out: "%pumukit.downloads_dir%"
         url_out: "%pumukit.downloads_url%"
       app: ffmpeg
       rel_duration_size: 1
@@ -158,7 +156,7 @@ pumukit_encoder:
         type: download
         host: 127.0.0.1
         description: Local download server
-        dir_out: "%pumukit.downloads%"
+        dir_out: "%pumukit.downloads_dir%"
         url_out: "%pumukit.downloads_url%"
       app: ffmpeg
       rel_duration_size: 1
@@ -178,7 +176,7 @@ pumukit_encoder:
         type: download
         host: 127.0.0.1
         description: Local download server
-        dir_out: "%pumukit.downloads%"
+        dir_out: "%pumukit.downloads_dir%"
         url_out: "%pumukit.downloads_url%"
     image_raw_broadcastable:
       image: true
@@ -195,7 +193,7 @@ pumukit_encoder:
         type: download
         host: 127.0.0.1
         description: Local download server
-        dir_out: "%pumukit.downloads%"
+        dir_out: "%pumukit.downloads_dir%"
         url_out: "%pumukit.downloads_url%"
     document_broadcastable:
       document: true
@@ -211,7 +209,7 @@ pumukit_encoder:
         type: download
         host: 127.0.0.1
         description: Local download server
-        dir_out: "%pumukit.downloads%"
+        dir_out: "%pumukit.downloads_dir%"
         url_out: "%pumukit.downloads_url%"
 
   target_default_profiles:
@@ -223,6 +221,3 @@ pumukit_encoder:
     PUCHPODCAST:
       audio: "audio_broadcastable"
       video: "video_broadcastable audio_broadcastable"
-    PUCHLMS:
-      audio: "audio_broadcastable"
-      video: "video_broadcastable"
