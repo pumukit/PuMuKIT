@@ -50,6 +50,7 @@ final class JobRender
         $vars['input'] = $job->getPathIni();
         $vars['output'] = $job->getPathEnd();
         $vars['output_dirname'] = dirname($vars['output']);
+        $vars['output_filename'] = pathinfo($vars['output'], PATHINFO_FILENAME);
         $vars['output_basename'] = basename($vars['output']);
 
         foreach (range(1, 9) as $identifier) {
