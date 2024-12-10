@@ -1,15 +1,15 @@
-<div>
+<div style="display: {{ show_profiles ? 'block' : 'none' }}">
     <h4>{{ "What do you want to do with the uploaded file?"|trans }}</h4>
     <br/>
     <ul class="list-inline text-center">
         <li>
-            <input type="radio" name="profile_option" value="master_copy" checked> &nbsp;{{ "Identical copy"|trans }} <strong>(Master copy)</strong>
+            <input type="radio" name="profile_option" value="master_copy" {% if profile is null or profile == 'master_copy' %}checked{% endif %}> &nbsp;{{ "Identical copy"|trans }} <strong>(Master copy)</strong>
         </li>
         <li>
-            <input type="radio" name="profile_option" value="master_encoded"> &nbsp;{{ "Encoded high quality copy"|trans }} <strong>(Master H264)</strong>
+            <input type="radio" name="profile_option" value="master_encoded" {% if profile == 'master_encoded' %}checked{% endif %}> &nbsp;{{ "Encoded high quality copy"|trans }} <strong>(Master H264)</strong>
         </li>
         <li>
-            <input type="radio" name="profile_option" value="broadcastable"> &nbsp;{{ "Encoded low quality copy"|trans }} <strong>(Brodcastable master)</strong>
+            <input type="radio" name="profile_option" value="broadcastable" {% if profile == 'broadcastable' %}checked{% endif %}> &nbsp;{{ "Encoded low quality copy"|trans }} <strong>(Brodcastable master)</strong>
         </li>
     </ul>
     <br/>
