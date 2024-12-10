@@ -44,8 +44,8 @@ final class WizardController extends AbstractController
             'minFileSize' => $this->inboxService->minFileSize(),
             'maxFileSize' => $this->inboxService->maxFileSize(),
             'maxNumberOfFiles' => $this->inboxService->maxNumberOfFiles(),
-            'show_profiles' => $request->query->get('show_profiles') !== null ? filter_var($request->query->get('show_profiles'), FILTER_VALIDATE_BOOLEAN) : true,
-            'profile' => $request->query->get('profile', null)
+            'show_profiles' => null !== $request->query->get('show_profiles') ? filter_var($request->query->get('show_profiles'), FILTER_VALIDATE_BOOLEAN) : true,
+            'profile' => $request->query->get('profile', null),
         ]);
     }
 
