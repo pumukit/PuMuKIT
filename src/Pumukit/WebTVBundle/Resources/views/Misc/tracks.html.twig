@@ -15,7 +15,7 @@
     </li>
 {% else %}
     {% set tracks = object.getFilteredTracksWithTags(['display'], [], [], []) %}
-    {% set dynamic_quality_tracks = tracks | filter(track => track.tags().containsTag('profile:video_broadcastable_dynamic_quality_trimming') or track.tags().containsTag('profile:video_broadcastable_dynamic_quality')) %}
+    {% set dynamic_quality_tracks = tracks | filter(track => track.tags().containsTag('dynamic')) %}
     {% set filtered_tracks = (dynamic_quality_tracks | length > 0) ? dynamic_quality_tracks : tracks %}
 
     {% for track in filtered_tracks | filter(track => not track.isHide()) %}

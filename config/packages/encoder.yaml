@@ -83,7 +83,7 @@ pumukit_encoder:
       wizard: true
       master: false
       nocheckduration: false
-      tags: html5 podcast
+      tags: html5 podcast dynamic
       target: PUCHPODCAST
       format: m3u8
       codec: h264
