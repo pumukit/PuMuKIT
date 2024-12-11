@@ -15,7 +15,10 @@
     </li>
 {% else %}
     {% set tracks = object.getFilteredTracksWithTags(['display'], [], [], []) %}
-    {% for track in tracks | filter(track => not track.isHide()) %}
+    {% set dynamic_quality_tracks = tracks | filter(track => track.tags().containsTag('dynamic')) %}
+    {% set filtered_tracks = (dynamic_quality_tracks | length > 0) ? dynamic_quality_tracks : tracks %}
+
+    {% for track in filtered_tracks | filter(track => not track.isHide()) %}
         {% if magic_url is defined %}
             {% set url_track = url('pumukit_webtv_multimediaobject_magicindex', {secret: object.secret, 'track_id': track.id}) %}
         {% else %}
@@ -39,7 +42,8 @@
                     {% endif %}
                 {% endapply %}
 
-                <span class="language"> ({{ track.language()|language_name|capitalize }})</span>            </a>
+                <span class="language"> ({{ track.language()|language_name|capitalize }})</span>
+            </a>
         </li>
     {% endfor %}
 {% endif %}
