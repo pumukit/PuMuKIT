@@ -1,20 +1,22 @@
 {% set trackid = (track.id is defined)?track.id:null %}
-{% if multimediaObject.isVideoAudioType() and ((url is not defined or url is null) or (urlIframe is not defined or urlIframe is null)) %}
-    {% if multimediaObject.isPublished %}
-        {% set url = url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.id, 'track_id': trackid}) %}
-        {% set urlIframe = url('pumukit_webtv_multimediaobject_iframe', {'id':multimediaObject.id, 'track_id': trackid}) %}
+{% if (url is not defined or url is null) or (urlIframe is not defined or urlIframe is null) %}
+    {% if multimediaObject.isVideoAudioType() %}
+        {% if multimediaObject.isPublished %}
+            {% set url = url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.id, 'track_id': trackid}) %}
+            {% set urlIframe = url('pumukit_webtv_multimediaobject_iframe', {'id':multimediaObject.id, 'track_id': trackid}) %}
+        {% else %}
+            {% set url = url('pumukit_webtv_multimediaobject_magicindex', {'secret': multimediaObject.secret, 'track_id': trackid }) %}
+            {% set urlIframe = url('pumukit_webtv_multimediaobject_magiciframe', {'secret': multimediaObject.secret, 'track_id': trackid }) %}
+        {% endif %}
     {% else %}
-        {% set url = url('pumukit_webtv_multimediaobject_magicindex', {'secret': multimediaObject.secret, 'track_id': trackid }) %}
-        {% set urlIframe = url('pumukit_webtv_multimediaobject_magiciframe', {'secret': multimediaObject.secret, 'track_id': trackid }) %}
+        {% if multimediaObject.isPublished %}
+            {% set url = url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.id, 'track_id': trackid}) %}
+            {% set urlIframe = url('pumukit_player_index_iframe', {'id':multimediaObject.id, 'track_id': trackid}) %}
+        {% else %}
+            {% set url = url('pumukit_webtv_multimediaobject_magicindex', {'secret': multimediaObject.secret, 'track_id': trackid }) %}
+            {% set urlIframe = url('pumukit_player_magic_index_iframe', {'secret': multimediaObject.secret, 'track_id': trackid }) %}
+        {% endif %}
     {% endif %}
-{% else %}
-     {% if multimediaObject.isPublished %}
-         {% set url = url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.id, 'track_id': trackid}) %}
-         {% set urlIframe = url('pumukit_player_index_iframe', {'id':multimediaObject.id, 'track_id': trackid}) %}
-     {% else %}
-         {% set url = url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.id, 'track_id': trackid}) %}
-         {% set urlIframe = url('pumukit_player_magic_index_iframe', {'secret': multimediaObject.secret, 'track_id': trackid }) %}
-     {% endif %}
 {% endif %}
 
 <div class="panel panel-default panel-pmk">
