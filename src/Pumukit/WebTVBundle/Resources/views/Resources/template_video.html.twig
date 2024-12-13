@@ -10,7 +10,7 @@
 
 <div class="{% if is_naked() %}col-xs-6{% else %}{{ col_calculator(objectByCol|default(1)) }}{% endif %} image_representation">
     <div class="thumbnail">
-        <a class="multimediaobject" href="{{ videoPath }}" title="{{ videoTitle }}">
+        <a class="multimediaobject {{ object.getStringType(object.getType())|lower }}" href="{{ videoPath }}" title="{{ videoTitle }}">
             <div>
                 <div class="embed-responsive embed-responsive-16by9">
                     <div class="embed-responsive-item text-center">
