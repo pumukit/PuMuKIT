@@ -7,6 +7,7 @@ use Pumukit\CoreBundle\Services\InboxService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use TusPhp\Middleware\Cors;
 use TusPhp\Tus\Server;
 
 class TUSUploadController extends AbstractController
@@ -33,6 +34,7 @@ class TUSUploadController extends AbstractController
                 $server->setUploadDir($path);
             }
         }
+        $server->middleware()->skip(Cors::class);
 
         return $server->serve();
     }
