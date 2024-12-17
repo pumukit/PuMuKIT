@@ -1,5 +1,5 @@
 parameters:
-  pumukit.inspection.command:          ffprobe -v quiet -print_format json -show_format -show_streams -show_frames {{file}}
+  pumukit.inspection.command:          ffprobe -v quiet -print_format json -show_format -show_streams {{file}}
   pumukit.picextractor.command:        ffmpeg -ss {{ss}} -y -i {{input}} -r 1 -vframes 1 -s {{size}} -f image2 {{output}}
   pumukit.dynamicpicextractor.command: ffmpeg -i {{input}} -ss 00:00:05 -t 3 -quality 80 -r 10 -s {{width}}x{{height}} {{output}}
   pumukit.warning_on_unpublished:      false
@@ -42,6 +42,9 @@ parameters:
   pumukit.delete_on_disk:              "%env(bool:PUMUKIT_DELETE_ON_DISK)%"
   pumukit.copyright_info_url:          "%env(PUMUKIT_COPYRIGHT_INFO_URL)%"
   pumukit.license_info_url:            "%env(PUMUKIT_LICENSE_INFO_URL)%"
+
+pumukit_core:
+  inboxUploadURL: "%env(string:PUMUKIT_SCHEME)%://%env(string:PUMUKIT_FRONTEND_HOST)%/tus"
 
 services:
   _defaults:
