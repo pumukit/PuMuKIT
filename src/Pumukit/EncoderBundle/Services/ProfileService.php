@@ -208,6 +208,6 @@ class ProfileService
 
     private function imageGenericProfiles(): array
     {
-        return array_filter($this->profiles, function ($profile) { return isset($profile['image']) && true === $profile['image'] && false === $profile['master'] && !str_contains($profile['tags'], 'raw'); });
+        return array_filter($this->profiles, function ($profile) { return isset($profile['image']) && true === $profile['image'] && false === $profile['master']; });
     }
 }
