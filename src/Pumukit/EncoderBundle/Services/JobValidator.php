@@ -93,23 +93,7 @@ final class JobValidator
             }
             $this->logger->info('Not doing duration checks on job with profile'.$jobOptions->profile());
 
-            try {
-                $duration = $this->inspectionService->getDuration($pathFile);
-            } catch (\Exception $e) {
-                $this->logger->error('[addJob] InspectionService getDuration error message: '.$e->getMessage());
-
-                throw new \Exception($e->getMessage());
-            }
-
-            if (0 === $duration) {
-                $this->logger->error('[addJob] File duration is zero');
-
-                throw new \Exception('File duration is zero');
-            }
-        }
-
-        if ($checkDuration && 0 === $duration) {
-            throw new \Exception('The media file duration is zero');
+            $duration = $this->inspectionService->getDuration($pathFile);
         }
 
         return $duration;
@@ -118,6 +102,10 @@ final class JobValidator
     public function searchError(array $profile, int $durationIn, int $durationEnd): void
     {
         if (isset($profile['nocheckduration']) && $profile['nocheckduration']) {
+            return;
+        }
+
+        if (0 === $durationIn && $durationEnd > 0) {
             return;
         }
 
