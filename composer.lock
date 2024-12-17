@@ -2295,16 +2295,16 @@
         },
         {
             "name": "jms/serializer",
-            "version": "3.31.1",
+            "version": "3.32.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/serializer.git",
-                "reference": "362503da26673f210221c25b99c795da718ad9aa"
+                "reference": "b4285f4197a5b961d365e2c756b144d7af24a7fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/362503da26673f210221c25b99c795da718ad9aa",
-                "reference": "362503da26673f210221c25b99c795da718ad9aa",
+                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/b4285f4197a5b961d365e2c756b144d7af24a7fd",
+                "reference": "b4285f4197a5b961d365e2c756b144d7af24a7fd",
                 "shasum": ""
             },
             "require": {
@@ -2312,7 +2312,7 @@
                 "doctrine/lexer": "^2.0 || ^3.0",
                 "jms/metadata": "^2.6",
                 "php": "^7.4 || ^8.0",
-                "phpstan/phpdoc-parser": "^1.20"
+                "phpstan/phpdoc-parser": "^1.20 || ^2.0"
             },
             "require-dev": {
                 "doctrine/annotations": "^1.14 || ^2.0",
@@ -2324,10 +2324,11 @@
                 "jackalope/jackalope-doctrine-dbal": "^1.3",
                 "ocramius/proxy-manager": "^1.0 || ^2.0",
                 "phpbench/phpbench": "^1.0",
-                "phpstan/phpstan": "^1.10.57",
+                "phpstan/phpstan": "^2.0",
                 "phpunit/phpunit": "^9.0 || ^10.0 || ^11.0",
                 "psr/container": "^1.0 || ^2.0",
-                "rector/rector": "^1.0.0",
+                "rector/rector": "^1.0.0 || ^2.0@dev",
+                "slevomat/coding-standard": "dev-master#f2cc4c553eae68772624ffd7dd99022343b69c31 as 8.11.9999",
                 "symfony/dependency-injection": "^5.4 || ^6.0 || ^7.0",
                 "symfony/expression-language": "^5.4 || ^6.0 || ^7.0",
                 "symfony/filesystem": "^5.4 || ^6.0 || ^7.0",
@@ -2380,7 +2381,7 @@
             ],
             "support": {
                 "issues": "https://github.com/schmittjoh/serializer/issues",
-                "source": "https://github.com/schmittjoh/serializer/tree/3.31.1"
+                "source": "https://github.com/schmittjoh/serializer/tree/3.32.1"
             },
             "funding": [
                 {
@@ -2388,7 +2389,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-10-31T18:35:14+00:00"
+            "time": "2024-12-03T22:30:06+00:00"
         },
         {
             "name": "jms/serializer-bundle",
@@ -3355,30 +3356,30 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.33.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "82a311fd3690fb2bf7b64d5c98f912b3dd746140"
+                "reference": "c00d78fb6b29658347f9d37ebe104bffadf36299"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/82a311fd3690fb2bf7b64d5c98f912b3dd746140",
-                "reference": "82a311fd3690fb2bf7b64d5c98f912b3dd746140",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/c00d78fb6b29658347f9d37ebe104bffadf36299",
+                "reference": "c00d78fb6b29658347f9d37ebe104bffadf36299",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2 || ^8.0"
+                "php": "^7.4 || ^8.0"
             },
             "require-dev": {
                 "doctrine/annotations": "^2.0",
-                "nikic/php-parser": "^4.15",
+                "nikic/php-parser": "^5.3.0",
                 "php-parallel-lint/php-parallel-lint": "^1.2",
                 "phpstan/extension-installer": "^1.0",
-                "phpstan/phpstan": "^1.5",
-                "phpstan/phpstan-phpunit": "^1.1",
-                "phpstan/phpstan-strict-rules": "^1.0",
-                "phpunit/phpunit": "^9.5",
+                "phpstan/phpstan": "^2.0",
+                "phpstan/phpstan-phpunit": "^2.0",
+                "phpstan/phpstan-strict-rules": "^2.0",
+                "phpunit/phpunit": "^9.6",
                 "symfony/process": "^5.2"
             },
             "type": "library",
@@ -3396,9 +3397,9 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.33.0"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/2.0.0"
             },
-            "time": "2024-10-13T11:25:22+00:00"
+            "time": "2024-10-13T11:29:49+00:00"
         },
         {
             "name": "predis/predis",
@@ -9290,12 +9291,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/teltek/PumukitPaellaPlayerBundle.git",
-                "reference": "9ab814c4a3b8a5e81768d4bc026b8946e839071a"
+                "reference": "13e1b171befaba3d2c71d58d0f4d29f3a55f707d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teltek/PumukitPaellaPlayerBundle/zipball/9ab814c4a3b8a5e81768d4bc026b8946e839071a",
-                "reference": "9ab814c4a3b8a5e81768d4bc026b8946e839071a",
+                "url": "https://api.github.com/repos/teltek/PumukitPaellaPlayerBundle/zipball/13e1b171befaba3d2c71d58d0f4d29f3a55f707d",
+                "reference": "13e1b171befaba3d2c71d58d0f4d29f3a55f707d",
                 "shasum": ""
             },
             "require": {
@@ -9333,7 +9334,7 @@
                 "issues": "https://github.com/teltek/PumukitPaellaPlayerBundle/issues",
                 "source": "https://github.com/teltek/PumukitPaellaPlayerBundle/tree/4.0.x"
             },
-            "time": "2024-12-16T09:57:09+00:00"
+            "time": "2024-12-17T18:28:54+00:00"
         },
         {
             "name": "teltek/pumukit-stats-ui-bundle",
@@ -9341,12 +9342,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/teltek/PumukitStatsUIBundle.git",
-                "reference": "2fd4dea37773d714662002a674a73af78578ba1d"
+                "reference": "e4a83a7358fca11aa35af1f4d945c699e8185f8b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teltek/PumukitStatsUIBundle/zipball/2fd4dea37773d714662002a674a73af78578ba1d",
-                "reference": "2fd4dea37773d714662002a674a73af78578ba1d",
+                "url": "https://api.github.com/repos/teltek/PumukitStatsUIBundle/zipball/e4a83a7358fca11aa35af1f4d945c699e8185f8b",
+                "reference": "e4a83a7358fca11aa35af1f4d945c699e8185f8b",
                 "shasum": ""
             },
             "require": {
@@ -9381,9 +9382,9 @@
             ],
             "support": {
                 "issues": "https://github.com/teltek/PumukitStatsUIBundle/issues",
-                "source": "https://github.com/teltek/PumukitStatsUIBundle/tree/master"
+                "source": "https://github.com/teltek/PumukitStatsUIBundle/tree/4.0.x"
             },
-            "time": "2024-10-30T08:52:41+00:00"
+            "time": "2024-12-17T18:14:06+00:00"
         },
         {
             "name": "twig/extra-bundle",
