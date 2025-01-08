@@ -97,7 +97,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     /**
      * @Security("is_granted('ROLE_ACCESS_ADVANCED_UPLOAD')")
      */
-    public function createAction(MultimediaObject $multimediaObject): Response
+    public function createAction(Request $request, MultimediaObject $multimediaObject): Response
     {
         $masterProfiles = $this->profileService->getMasterProfiles(true);
 
@@ -105,6 +105,8 @@ class TrackController extends AbstractController implements NewAdminControllerIn
             'mm' => $multimediaObject,
             'series' => $multimediaObject->getSeries(),
             'master_profiles' => $masterProfiles,
+            'show_profiles' => null !== $request->query->get('show_profiles') ? filter_var($request->query->get('show_profiles'), FILTER_VALIDATE_BOOLEAN) : true,
+            'profile' => $request->query->get('profile', null),
         ]);
     }
 
