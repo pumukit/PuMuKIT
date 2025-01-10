@@ -105,8 +105,8 @@ class TrackController extends AbstractController implements NewAdminControllerIn
             'mm' => $multimediaObject,
             'series' => $multimediaObject->getSeries(),
             'master_profiles' => $masterProfiles,
-            'show_profiles' => null !== $request->query->get('show_profiles') ? filter_var($request->query->get('show_profiles'), FILTER_VALIDATE_BOOLEAN) : true,
-            'profile' => $request->query->get('profile', null),
+            'show_profiles' => null,
+            'profile' => null,
         ]);
     }
 
