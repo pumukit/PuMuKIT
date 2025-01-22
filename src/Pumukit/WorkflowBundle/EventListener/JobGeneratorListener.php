@@ -175,6 +175,10 @@ class JobGeneratorListener
             return false;
         }
 
+        if ($multimediaObject->getTracksWithAnyTag(['presenter/delivery', 'presentation/delivery', 'display'])) {
+            return false;
+        }
+
         return $multimediaObject->getMaster() && !$multimediaObject->isMultistream();
     }
 
