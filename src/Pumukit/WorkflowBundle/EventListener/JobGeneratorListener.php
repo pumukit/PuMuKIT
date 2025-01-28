@@ -6,6 +6,7 @@ namespace Pumukit\WorkflowBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
+use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\EncoderBundle\Services\DTO\JobOptions;
 use Pumukit\EncoderBundle\Services\JobCreator;
@@ -175,7 +176,7 @@ class JobGeneratorListener
             return false;
         }
 
-        if ($multimediaObject->getTracksWithAnyTag(['presenter/delivery', 'presentation/delivery', 'display'])) {
+        if ($multimediaObject->getTracksWithAnyTag(['display'])) {
             return false;
         }
 
@@ -202,7 +203,8 @@ class JobGeneratorListener
 
     private function hasMediaWithProfileTarget(MultimediaObject $multimediaObject, Tag $pubChannel): bool
     {
-        $hasMedia = false;
+        $hasMediaOrJob = false;
+
         foreach ($multimediaObject->getTracks() as $track) {
             $profileName = $track->profileName();
             if (!$profileName || !isset($this->profiles[$profileName])) {
@@ -218,15 +220,32 @@ class JobGeneratorListener
                 continue;
             }
 
-            $hasMedia = true;
+            $hasMediaOrJob = true;
             $this->logger->warning(sprintf(
                 self::class.
                 " can't create new job for object %s because it already contains media with a profile with %s target",
                 $multimediaObject->getId(),
                 $pubChannel->getCod()
             ));
+
+            break;
         }
 
-        return $hasMedia;
+        if (!$hasMediaOrJob) {
+            $pending_jobs = $this->documentManager->getRepository(Job::class)->findNotFinishedByMultimediaObjectId(
+                $multimediaObject->getId()
+            );
+
+            foreach ($pending_jobs as $job) {
+                $targetJob = $this->profiles[$job->getProfile()]['target'];
+                if (str_contains($targetJob, $pubChannel->getCod())) {
+                    $hasMediaOrJob = true;
+
+                    break;
+                }
+            }
+        }
+
+        return $hasMediaOrJob;
     }
 }

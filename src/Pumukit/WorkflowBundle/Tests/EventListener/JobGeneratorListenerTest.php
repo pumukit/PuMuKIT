@@ -186,7 +186,7 @@ class JobGeneratorListenerTest extends PumukitTestCase
         $originalName = 'originalName'.random_int(0, mt_getrandmax());
         $description = i18nText::create($this->i18nService->generateI18nText('18nDescription'));
         $language = 'en';
-        $tags = Tags::create(['master', 'profile:master_copy', 'display']);
+        $tags = Tags::create(['master', 'profile:master_copy']);
         $views = 0;
         $url = StorageUrl::create('');
 
@@ -212,7 +212,7 @@ class JobGeneratorListenerTest extends PumukitTestCase
         $originalName = 'originalName'.random_int(0, mt_getrandmax());
         $description = i18nText::create($this->i18nService->generateI18nText('18nDescription'));
         $language = 'en';
-        $tags = Tags::create(['master', 'profile:master_copy', 'display']);
+        $tags = Tags::create(['master', 'profile:master_copy']);
         $views = 0;
         $url = StorageUrl::create('');
 
@@ -238,7 +238,7 @@ class JobGeneratorListenerTest extends PumukitTestCase
         $originalName = 'originalName'.random_int(0, mt_getrandmax());
         $description = i18nText::create($this->i18nService->generateI18nText('18nDescription'));
         $language = 'en';
-        $tags = Tags::create(['master', 'profile:master_copy', 'display']);
+        $tags = Tags::create(['master', 'profile:master_copy']);
         $views = 0;
         $url = StorageUrl::create('');
 
@@ -264,7 +264,7 @@ class JobGeneratorListenerTest extends PumukitTestCase
         $originalName = 'originalName'.random_int(0, mt_getrandmax());
         $description = i18nText::create($this->i18nService->generateI18nText('18nDescription'));
         $language = 'en';
-        $tags = Tags::create(['master', 'profile:master_copy', 'display']);
+        $tags = Tags::create(['master', 'profile:master_copy']);
         $views = 0;
         $url = StorageUrl::create('');
 
