@@ -105,7 +105,17 @@ abstract class Media implements MediaInterface
         return (string) $this->id;
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
     public function originalName(): string
+    {
+        return $this->originalName;
+    }
+
+    public function getOriginalName(): string
     {
         return $this->originalName;
     }
@@ -115,7 +125,17 @@ abstract class Media implements MediaInterface
         return i18nText::create($this->description);
     }
 
+    public function getDescription(): i18nText
+    {
+        return i18nText::create($this->description);
+    }
+
     public function language(): ?string
+    {
+        return $this->language;
+    }
+
+    public function getLanguage(): ?string
     {
         return $this->language;
     }
@@ -123,6 +143,11 @@ abstract class Media implements MediaInterface
     public function tags(): Tags
     {
         return Tags::create($this->tags);
+    }
+
+    public function getTags(): array
+    {
+        return $this->tags;
     }
 
     public function isHide(): bool
@@ -145,6 +170,11 @@ abstract class Media implements MediaInterface
         return $this->views;
     }
 
+    public function getViews(): int
+    {
+        return $this->views;
+    }
+
     public function storage(): Storage
     {
         if (null === $this->storage['path']) {
@@ -157,9 +187,23 @@ abstract class Media implements MediaInterface
         );
     }
 
+    public function getUrl(): ?string
+    {
+        if (null === $this->storage['path']) {
+            return $this->storage['url'];
+        }
+
+        return $this->storage['path'];
+    }
+
     public function metadata(): MediaMetadata
     {
         return VideoAudio::create($this->metadata);
+    }
+
+    public function getDuration(): int
+    {
+        return $this->metadata()->duration;
     }
 
     public function videoMetadata(): MediaMetadata

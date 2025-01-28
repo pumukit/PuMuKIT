@@ -192,7 +192,8 @@ class JobGeneratorListener
 
     private function hasEncodedJobForProfile(MediaInterface $master, Tag $pubChannel, array $profile): bool
     {
-        return $master->tags()->containsTag('ENCODED_'.$pubChannel->getCod()) && str_contains($profile['target'], $pubChannel->getCod());
+        return $master->tags()->containsTag('ENCODED_'.$pubChannel->getCod()) && isset($profile['target'])
+            && is_string($profile['target']) && str_contains($profile['target'], $pubChannel->getCod());
     }
 
     private function hasMediaWithProfileTarget(MultimediaObject $multimediaObject, Tag $pubChannel): bool
@@ -201,6 +202,10 @@ class JobGeneratorListener
         foreach ($multimediaObject->getTracks() as $track) {
             $profileName = $track->profileName();
             if (!$profileName || !isset($this->profiles[$profileName])) {
+                continue;
+            }
+
+            if (!isset($this->profiles[$profileName]['target']) || !is_string($this->profiles[$profileName]['target'])) {
                 continue;
             }
 

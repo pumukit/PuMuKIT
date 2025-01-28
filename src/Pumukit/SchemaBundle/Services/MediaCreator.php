@@ -107,8 +107,10 @@ final class MediaCreator implements MediaCreatorInterface
         if ($profile['display']) {
             $tags[] = 'display';
         }
-        foreach (array_filter(preg_split('/[,\s]+/', $profile['tags'])) as $tag) {
-            $tags[] = trim($tag);
+        if (!empty($profile['tags'])) {
+            foreach (array_filter(preg_split('/[,\s]+/', $profile['tags'])) as $tag) {
+                $tags[] = trim($tag);
+            }
         }
 
         return Tags::create($tags);

@@ -36,12 +36,15 @@ parameters:
   pumukit.uploads_pic_url:             "%env(string:PUMUKIT_UPLOADS_PIC_URL)%"
   pumukit.inbox:                       "%env(string:PUMUKIT_INBOX)%"
   pumukit.tmp:                         "%env(string:PUMUKIT_TMP)%"
-  pumukit.masters:                     "%env(string:PUMUKIT_MASTERS)%"
-  pumukit.downloads:                   "%env(string:PUMUKIT_DOWNLOADS)%"
+  pumukit.masters_dir:                 "%env(string:PUMUKIT_STORAGE_DIR)%/masters"
+  pumukit.downloads_dir:               "%env(string:PUMUKIT_STORAGE_DIR)%/downloads"
   pumukit.downloads_url:               "%env(string:PUMUKIT_SCHEME)%://%env(string:PUMUKIT_FRONTEND_HOST)%/storage/downloads"
   pumukit.delete_on_disk:              "%env(bool:PUMUKIT_DELETE_ON_DISK)%"
   pumukit.copyright_info_url:          "%env(PUMUKIT_COPYRIGHT_INFO_URL)%"
   pumukit.license_info_url:            "%env(PUMUKIT_LICENSE_INFO_URL)%"
+
+pumukit_core:
+  inboxUploadURL: "%env(string:PUMUKIT_SCHEME)%://%env(string:PUMUKIT_FRONTEND_HOST)%/tus"
 
 services:
   _defaults:

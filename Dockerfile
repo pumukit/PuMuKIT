@@ -2,7 +2,7 @@ ARG PHP_VERSION=8.2
 ARG SO_VERSION=bookworm
 ARG NGINX_VERSION=1.25
 
-FROM php:${PHP_VERSION}-fpm-${SO_VERSION} as base
+FROM php:${PHP_VERSION}-fpm-${SO_VERSION} AS base
 LABEL org.opencontainers.image.authors="Pablo Nieto, pnieto@teltek.es"
 
 ARG APCU_VERSION=5.1.22
@@ -122,7 +122,7 @@ USER www-data
 
 WORKDIR /srv/pumukit
 
-FROM base as production
+FROM base AS production
 
 # default build for production
 ARG APP_ENV=prod
@@ -151,7 +151,7 @@ RUN chmod +x /wait
 ENTRYPOINT ["docker-entrypoint"]
 CMD ["php-fpm"]
 
-FROM base as ssl
+FROM base AS ssl
 
 # Use this self-generated certificate only in dev, IT IS NOT SECURE!
 RUN openssl genrsa -des3 -passout pass:NotSecure -out cert.pass.key 2048
@@ -161,7 +161,7 @@ RUN openssl req -new -passout pass:NotSecure -key cert.key -out cert.csr \
     -subj '/C=ES/ST=PO/L=Vigo/O=PuMuKIT Dev/CN=localhost'
 RUN openssl x509 -req -sha256 -days 365 -in cert.csr -signkey cert.key -out cert.crt
 
-FROM nginx:$NGINX_VERSION-alpine as proxy
+FROM nginx:$NGINX_VERSION-alpine AS proxy
 
 RUN mkdir -p /etc/nginx/ssl/
 COPY --from=ssl /srv/pumukit/cert.key /etc/nginx/ssl/

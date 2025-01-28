@@ -183,6 +183,8 @@ final class VideoAudio implements MediaMetadata
 
     private function decodeMetadataInfo()
     {
-        return json_decode($this->metadata(), false, 512, JSON_THROW_ON_ERROR);
+        if ($this->metadata()) {
+            return json_decode($this->metadata(), false, 512, JSON_THROW_ON_ERROR);
+        }
     }
 }

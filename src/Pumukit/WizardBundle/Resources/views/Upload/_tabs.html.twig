@@ -2,12 +2,12 @@
 
 <div role="tabpanel">
     <ul class="nav nav-tabs" role="tablist" style="background:transparent; border: 0;">
-        <li>
+        <li class="nav-item active">
             <a class="btn" href="#local" aria-controls="home" role="tab" data-toggle="tab" style="color: black !important;">
                 {{ "Local"|trans }}
             </a>
         </li>
-        <li>
+        <li class="nav-item" style="display: {{ show_profiles ? 'block' : 'none' }}">
             <a class="btn" href="#server" aria-controls="home" role="tab" data-toggle="tab" style="color: black !important;">
                 {{ "Server"|trans }}
             </a>
