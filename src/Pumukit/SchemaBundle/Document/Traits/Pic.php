@@ -137,7 +137,8 @@ trait Pic
         }
 
         foreach ($this->getPics() as $pic) {
-            if (str_contains(pathinfo($pic->getPath(), PATHINFO_EXTENSION), 'webp')) {
+            $path = $pic->getPath() ?: $pic->getUrl();
+            if (str_contains(pathinfo($path, PATHINFO_EXTENSION), 'webp')) {
                 return true;
             }
         }

@@ -1,5 +1,3 @@
-version: '3.4'
-
 services:
   php:
     restart: unless-stopped
@@ -43,7 +41,7 @@ services:
       - "443:443"
 
   db:
-    image: mongo:4.0
+    image: mongo:5.0
     restart: unless-stopped
     volumes:
       - db-data:/data/db:rw

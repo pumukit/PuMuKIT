@@ -1,4 +1,4 @@
-<div class="table-responsive" style="overflow:visible;">
+<div class="table-responsive">
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
         <table class="table table-striped table-hover">
             <thead>
@@ -28,11 +28,7 @@
                             {{ mm.containsTagWithCod('PUDENEW')?'<i class="mdi-action-spellcheck">':'&nbsp;' }}
                         </td>
                     {% endif %}
-                    {% if is_naked() and mm.containsAnyTagWithCodes(['PUCHOPENEDX', 'PUCHMOODLE', 'PUCHLMS'])%}
-                    <td headers="th-icons" style="width: 1em;">
-                        <a class="moodlepr-add" href="#" title="{% trans %}Publish to LMS{% endtrans %}" onclick="parent.window.postMessage({'mmId': '{{ mm.id }}'}, '*'); return false;"><i class="mdi-editor-insert-photo"></i></a>
-                    </td>
-                    {% endif %}
+                    {% include '@PumukitNewAdmin/MultimediaObject/lms_options.html.twig' %}
                     {% include '@PumukitNewAdmin/MultimediaObject/sortingactions.html.twig' %}
                     <td headers="th-img" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')">
                         {% include "@PumukitNewAdmin/Misc/img_list.html.twig"  with {'object' : mm, 'type': 'mm' } %}
@@ -143,7 +139,7 @@
             <tfoot>
             <tr>
                 <td colspan="17" class="foot-td">
-                    <div class="row">
+                    <div class="row" style="margin-left: 0; margin-right: 0">
                         <div class="col-md-6">
                             {{ mms.getNbResults }} {% trans %}Mm. Obj.{% endtrans %}
                             {% if app.session.get('admin/mms/criteria')|length != 0 %}
