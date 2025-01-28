@@ -9,9 +9,9 @@
         <source>Select the folder or create a new one where you want to upload the videos. Once this is done, press continue to start uploading the corresponding files</source>
         <target state="translated">Selecciona a carpeta ou crea unha nova onde queira subir os videos. Unha vez feito, pulse continuar para comezar a subir os ficheiros correspondentes</target>
       </trans-unit>
-      <trans-unit id="6KJWgkr" resname="The folder name is not valid">
-        <source>The folder name is not valid</source>
-        <target state="translated">O nome da carpeta non é valido</target>
+      <trans-unit id="6KJWgkr" resname="The folder name is not valid. The allowed characters are: upper and lower case, numbers, space and _">
+        <source>The folder name is not valid. The allowed characters are: upper and lower case, numbers, space and _</source>
+        <target state="needs-translation">The folder name is not valid. The allowed characters are: upper and lower case, numbers, space and _</target>
       </trans-unit>
       <trans-unit id="WGK6Qnl" resname="Upload video to: %folder%">
         <source>Upload video to: %folder%</source>
