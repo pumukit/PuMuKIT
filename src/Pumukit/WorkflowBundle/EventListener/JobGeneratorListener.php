@@ -238,10 +238,13 @@ class JobGeneratorListener
 
             foreach ($pending_jobs as $job) {
                 $targetJob = $this->profiles[$job->getProfile()]['target'];
+                $tagsJob = $this->profiles[$job->getProfile()]['tags'];
                 if (str_contains($targetJob, $pubChannel->getCod())) {
-                    $hasMediaOrJob = true;
+                    if (!str_contains($tagsJob, 'dynamic')) {
+                        $hasMediaOrJob = true;
 
-                    break;
+                        break;
+                    }
                 }
             }
         }
