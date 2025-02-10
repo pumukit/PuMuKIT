@@ -5,7 +5,6 @@ return [
     Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle::class => ['all' => true],
     JMS\SerializerBundle\JMSSerializerBundle::class => ['all' => true],
     Knp\Bundle\MenuBundle\KnpMenuBundle::class => ['all' => true],
-    Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
     Pumukit\BaseLivePlayerBundle\PumukitBaseLivePlayerBundle::class => ['all' => true],
     Pumukit\BasePlayerBundle\PumukitBasePlayerBundle::class => ['all' => true],
     Pumukit\CoreBundle\PumukitCoreBundle::class => ['all' => true],
