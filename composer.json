@@ -22,7 +22,6 @@
         "jms/serializer-bundle": "^5.2",
         "knplabs/knp-menu-bundle": "^3.2",
         "mobiledetect/mobiledetectlib": "^2.8",
-        "nelmio/cors-bundle": "^2.2",
         "phpdocumentor/reflection-docblock": "^5.3",
         "sensio/framework-extra-bundle": "^6.2",
         "symfony/asset": "^5.0",
