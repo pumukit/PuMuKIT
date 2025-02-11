@@ -1,19 +1,21 @@
 monolog:
+  channels: [ 'deprecation' ]
   handlers:
-    main:
-      type:         fingers_crossed
-      path:         "%kernel.logs_dir%/%kernel.environment%.log"
-      action_level: error
-      handler:      nested
-      excluded_http_codes: [404, 405]
-      channels: ["!event"]
-    nested:
-      type:  stream
-      path:  "%kernel.logs_dir%/%kernel.environment%.log"
-      level: debug
+    deprecation:
+      type: stream
+      path: '%kernel.logs_dir%/deprecation.log'
+      bubble: false
+      channels: ['deprecation']
 
-    encoder:
-      type:          stream
-      path:          "%kernel.logs_dir%/encoder_%kernel.environment%.log"
-      action_level:  error
-      channels: [encoder]
+    main:
+      type: stream
+      path: "%kernel.logs_dir%/%kernel.environment%.log"
+      level: error
+      channels: ['!event', '!deprecation']
+
+    debug_log:
+      type: rotating_file
+      path: '%kernel.logs_dir%/%kernel.environment%_debug.log'
+      level: info
+      max_files: 20
+      channels: ['!event', '!deprecation']
