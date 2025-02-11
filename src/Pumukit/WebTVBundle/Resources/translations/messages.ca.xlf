@@ -571,7 +571,7 @@
       </trans-unit>
       <trans-unit id="iCgsLsi" resname="Most viewed on the last month">
         <source>Most viewed on the last month</source>
-        <target state="translated">Els més vistos del mes passat</target>
+        <target state="translated">Més vistos el darrer mes</target>
       </trans-unit>
       <trans-unit id="wodtiBE" resname="Hightlight">
         <source>Hightlight</source>
