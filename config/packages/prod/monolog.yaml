@@ -1,16 +1,15 @@
 monolog:
+  channels: [ 'deprecation' ]
   handlers:
     main:
-      type: fingers_crossed
-      action_level: error
-      handler: nested
-    nested:
       type: stream
       path: "%kernel.logs_dir%/%kernel.environment%.log"
-      level: debug
-      channels: ["!deprecation"]
-    console:
-      type: console
-      process_psr_3_messages: false
-      channels: [ "!deprecation", "!event" ]
       level: error
+      channels: ['!event', '!deprecation']
+
+    debug_log:
+      type: rotating_file
+      path: '%kernel.logs_dir%/%kernel.environment%_debug.log'
+      level: warning
+      max_files: 20
+      channels: ['!event', '!deprecation']
