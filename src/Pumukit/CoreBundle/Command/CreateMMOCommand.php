@@ -164,7 +164,11 @@ EOT
 
         $i18nTitle = $this->i18nService->generateI18nText($title);
         $multimediaObject->setI18nTitle($i18nTitle);
-        (null !== $status) ? $multimediaObject->setStatus($status) : $multimediaObject->setStatus(MultimediaObject::STATUS_BLOCKED);
+        if (null !== $status) {
+            $multimediaObject->setStatus($status);
+        } elseif (null === $multimediaObject->getStatus()) {
+            $multimediaObject->setStatus(MultimediaObject::STATUS_BLOCKED);
+        }
 
         $jobOptions = new JobOptions($profile, 2, $locale, [], []);
         $path = Path::create($path);
