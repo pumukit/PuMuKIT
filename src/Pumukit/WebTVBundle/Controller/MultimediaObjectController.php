@@ -230,7 +230,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
      */
     public function multimediaInfoAction(Request $request, MultimediaObject $multimediaObject): Response
     {
-        $requestRoute = $this->requestStack->getMasterRequest()->get('_route');
+        $requestRoute = $this->requestStack->getMainRequest()()->get('_route');
         $isMagicRoute = false;
         if (false !== strpos($requestRoute, 'magic')) {
             $isMagicRoute = true;
@@ -253,6 +253,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
                 'showDownloads' => $showDownloads,
                 'isMagicRoute' => $isMagicRoute,
                 'fullMagicUrl' => $fullMagicUrl,
+                'route' => $requestRoute,
                 'url' => $request->attributes->get('url') ?: null,
                 'urlIframe' => $request->attributes->get('urlIframe') ?: null,
             ]
