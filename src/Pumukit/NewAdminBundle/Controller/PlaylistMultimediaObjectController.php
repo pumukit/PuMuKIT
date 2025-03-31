@@ -477,7 +477,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         $page = $session->get('admin/playlistmms/page', 1);
         $limit = $session->get('admin/playlistmms/paginate', 10);
 
-        return $this->paginationService->createDoctrineCollectionAdapter($mmsList, $page, $limit);
+        return $this->paginationService->createDoctrineCollectionAdapter($mmsList, (int) $page, (int) $limit);
     }
 
     protected function moveAction(Series $playlist, $initPos, $endPos)
