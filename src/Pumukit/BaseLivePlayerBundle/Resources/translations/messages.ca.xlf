@@ -123,7 +123,7 @@
       </trans-unit>
       <trans-unit id="2SnrnwG" resname="Media Thumbnail">
         <source>Media Thumbnail</source>
-        <target state="translated">Miniatura de l’objecte multimèdia</target>
+        <target state="translated">Miniatura de l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="70fBjSz" resname="There aren't events at this moment">
         <source>There aren't events at this moment</source>
