@@ -155,7 +155,7 @@
       </trans-unit>
       <trans-unit id="pCwHVEo" resname="Sorry but there was an error">
         <source>Sorry but there was an error</source>
-        <target state="translated">S’ha produït un error</target>
+        <target state="translated">S'ha produït un error</target>
       </trans-unit>
       <trans-unit id="NvvDhQX" resname="Chat icon">
         <source>Chat icon</source>
