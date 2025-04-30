@@ -127,7 +127,7 @@
       </trans-unit>
       <trans-unit id="70fBjSz" resname="There aren't events at this moment">
         <source>There aren't events at this moment</source>
-        <target state="translated">No hi ha esdeveniments ara mateix</target>
+        <target state="translated">Ara mateix no hi ha cap esdeveniment</target>
       </trans-unit>
       <trans-unit id="kxQCXu4" resname="email send">
         <source>email send</source>
