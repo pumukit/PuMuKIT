@@ -135,7 +135,7 @@
       </trans-unit>
       <trans-unit id="s0f7i8q" resname="Please enable Javascript in your browser to see the full page.">
         <source>Please enable Javascript in your browser to see the full page.</source>
-        <target state="translated">Habiliteu el Javascript al navegador per veure la pàgina completa.</target>
+        <target state="translated">Habiliteu JavaScript al navegador per veure la pàgina completa.</target>
       </trans-unit>
       <trans-unit id="hWnvxO1" resname="Thank you.">
         <source>Thank you.</source>
@@ -163,11 +163,11 @@
       </trans-unit>
       <trans-unit id="o_n3FSn" resname="There are no live events with those values.">
         <source>There are no live events with those values.</source>
-        <target state="translated">No hi ha esdeveniments en directe amb aquests valors.</target>
+        <target state="translated">No hi ha cap esdeveniment en directe amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="mAV5Fuu" resname="Edit Event">
         <source>Edit Event</source>
-        <target state="translated">Edita l’esdeveniment</target>
+        <target state="translated">Edita l'esdeveniment</target>
       </trans-unit>
       <trans-unit id="Lw7oMZR" resname="{0} live events|{1} live event|]1,Inf] live events">
         <source>{0} live events|{1} live event|]1,Inf] live events</source>
@@ -255,15 +255,15 @@
       </trans-unit>
       <trans-unit id="W8OAz6R" resname="modify live event">
         <source>modify live event</source>
-        <target state="translated">modifica l’esdeveniment en directe</target>
+        <target state="translated">modifica l'esdeveniment en directe</target>
       </trans-unit>
       <trans-unit id="QjTYka2" resname="There was an error in updating the Live event.">
         <source>There was an error in updating the Live event.</source>
-        <target state="translated">S’ha produït un error en actualitzar l’esdeveniment en directe.</target>
+        <target state="translated">S'ha produït un error en actualitzar l'esdeveniment en directe.</target>
       </trans-unit>
       <trans-unit id="nvDSbvi" resname="Live event successfully updated.">
         <source>Live event successfully updated.</source>
-        <target state="translated">L’esdeveniment en directe s’ha actualitzat correctament.</target>
+        <target state="translated">L'esdeveniment en directe s'ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="LbUtKlv" resname="Add thumbnail">
         <source>Add thumbnail</source>
@@ -283,11 +283,11 @@
       </trans-unit>
       <trans-unit id="UCCzJKC" resname="Group successfully created.">
         <source>Group successfully created.</source>
-        <target state="translated">El grup s’ha creat correctament.</target>
+        <target state="translated">El grup s'ha creat correctament.</target>
       </trans-unit>
       <trans-unit id="ZNCH6.x" resname="External defined users and groups can not be edited here, contact your directory service administrator.">
         <source>External defined users and groups can not be edited here, contact your directory service administrator.</source>
-        <target state="translated">Els usuaris i els grups definits externament no es poden editar aquí. Poseu-vos en contacte amb l’administrador del servei del directori.</target>
+        <target state="translated">Els usuaris i els grups definits externament no es poden editar aquí. Contacteu amb l'administrador del servei del directori.</target>
       </trans-unit>
       <trans-unit id="VeFMGtf" resname="Video Template of Series">
         <source>Video Template of Series</source>
