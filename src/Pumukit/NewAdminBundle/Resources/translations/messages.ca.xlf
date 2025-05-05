@@ -319,11 +319,11 @@
       </trans-unit>
       <trans-unit id="74Wvobk" resname="Delete All">
         <source>Delete All</source>
-        <target state="translated">Elimina’ls tots</target>
+        <target state="translated">Elimina'ls tots</target>
       </trans-unit>
       <trans-unit id="pYlyTnf" resname="There are no groups with those values.">
         <source>There are no groups with those values.</source>
-        <target state="translated">No hi ha grups amb aquests valors.</target>
+        <target state="translated">No hi ha cap grup amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="3V8tns5" resname="Edit Group">
         <source>Edit Group</source>
@@ -331,7 +331,7 @@
       </trans-unit>
       <trans-unit id="qoForm6" resname="External defined groups can not be edited here, contact your directory service administrator.">
         <source>External defined groups can not be edited here, contact your directory service administrator.</source>
-        <target state="translated">Els grups definits externament no es poden editar aquí. Poseu-vos en contacte amb l’administrador del servei del directori.</target>
+        <target state="translated">Els grups definits externament no es poden editar aquí. Contacteu amb l'administrador del servei del directori.</target>
       </trans-unit>
       <trans-unit id="dK6GWQZ" resname="Delete Group or Group relations">
         <source>Delete Group or Group relations</source>
@@ -355,7 +355,7 @@
       </trans-unit>
       <trans-unit id="NYEYlC4" resname="Group successfully updated.">
         <source>Group successfully updated.</source>
-        <target state="translated">El grup s’ha actualitzat correctament.</target>
+        <target state="translated">El grup s'ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="63qEL.l" resname="Resource">
         <source>Resource</source>
@@ -363,11 +363,11 @@
       </trans-unit>
       <trans-unit id="dJaf54Z" resname="Select a file on the tree">
         <source>Select a file on the tree</source>
-        <target state="translated">Selecciona un fitxer de l’arbre</target>
+        <target state="translated">Selecciona un fitxer de l'arbre</target>
       </trans-unit>
       <trans-unit id="_XTjOlq" resname="To use the inbox mode define the inbox path as &lt;code&gt;pumukit.inbox&lt;/code&gt; parameter in your config file.">
         <source>To use the inbox mode define the inbox path as &lt;code&gt;pumukit.inbox&lt;/code&gt; parameter in your config file.</source>
-        <target state="translated"><![CDATA[Per utilitzar el mode de safata d’entrada, definiu la ruta de la safata d’entrada amb el paràmetre &lt;code&gt;pumukit.inbox&lt;/code&gt; al fitxer de configuració.]]></target>
+        <target state="translated"><![CDATA[Per utilitzar el mode de safata d'entrada, definiu la ruta de la safata d'entrada amb el paràmetre &lt;code&gt;pumukit.inbox&lt;/code&gt; al fitxer de configuració.]]></target>
       </trans-unit>
       <trans-unit id="5V8Ndup" resname="not exists">
         <source>not exists</source>
@@ -387,11 +387,11 @@
       </trans-unit>
       <trans-unit id="VlM5vE0" resname="OK">
         <source>OK</source>
-        <target state="translated">D’acord</target>
+        <target state="translated">D'acord</target>
       </trans-unit>
       <trans-unit id="8iT6pMv" resname="Edit file of multimedia object">
         <source>Edit file of multimedia object</source>
-        <target state="translated">Edita el fitxer de l’objecte multimèdia</target>
+        <target state="translated">Edita el fitxer de l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="5WS0CB1" resname="hidden">
         <source>hidden</source>
@@ -399,7 +399,7 @@
       </trans-unit>
       <trans-unit id="ysdP217" resname="Create Link">
         <source>Create Link</source>
-        <target state="translated">Crea l’enllaç</target>
+        <target state="translated">Crea l'enllaç</target>
       </trans-unit>
       <trans-unit id="X.OJzxg" resname="create new live channel">
         <source>create new live channel</source>
@@ -423,7 +423,7 @@
       </trans-unit>
       <trans-unit id="vM0vTZW" resname="There are no live channels with those values.">
         <source>There are no live channels with those values.</source>
-        <target state="translated">No hi ha canals en directe amb aquests valors.</target>
+        <target state="translated">No hi ha cap canal en directe amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="MSyxwji" resname="Edit live channel">
         <source>Edit live channel</source>
@@ -435,7 +435,7 @@
       </trans-unit>
       <trans-unit id="ijy5zeY" resname="Source IP">
         <source>Source IP</source>
-        <target state="translated">IP d’origen</target>
+        <target state="translated">IP d'origen</target>
       </trans-unit>
       <trans-unit id="kLbLRjR" resname="Show player at homepage">
         <source>Show player at homepage</source>
@@ -467,11 +467,11 @@
       </trans-unit>
       <trans-unit id="JUX_EPG" resname="There was an error in updating the Live channel.">
         <source>There was an error in updating the Live channel.</source>
-        <target state="translated">S’ha produït un error en actualitzar el canal en directe.</target>
+        <target state="translated">S'ha produït un error en actualitzar el canal en directe.</target>
       </trans-unit>
       <trans-unit id="O3hvK9j" resname="Live channel successfully updated.">
         <source>Live channel successfully updated.</source>
-        <target state="translated">El canal en directe s’ha actualitzat correctament.</target>
+        <target state="translated">El canal en directe s'ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="N28VjaR" resname="create new material">
         <source>create new material</source>
@@ -487,7 +487,7 @@
       </trans-unit>
       <trans-unit id="WJ1UGHV" resname="URL format not valid">
         <source>URL format not valid</source>
-        <target state="translated">El format de l’URL no és vàlid</target>
+        <target state="translated">El format de l'URL no és vàlid</target>
       </trans-unit>
       <trans-unit id="gOStBWv" resname="Under">
         <source>Under</source>
@@ -495,7 +495,7 @@
       </trans-unit>
       <trans-unit id="39B8U6X" resname="Empty file field">
         <source>Empty file field</source>
-        <target state="translated">El camp del fitxer està buit</target>
+        <target state="translated">El camp del fitxer és buit</target>
       </trans-unit>
       <trans-unit id="1DQ41HM" resname="Create Material">
         <source>Create Material</source>
@@ -507,11 +507,11 @@
       </trans-unit>
       <trans-unit id="DtnOHns" resname="Material successfully updated.">
         <source>Material successfully updated.</source>
-        <target state="translated">El material s’ha actualitzat correctament.</target>
+        <target state="translated">S'ha actualitzat el material correctament.</target>
       </trans-unit>
       <trans-unit id="XQtGDig" resname="New Material added.">
         <source>New Material added.</source>
-        <target state="translated">El material nou s’ha afegit.</target>
+        <target state="translated">El material nou s'ha afegit.</target>
       </trans-unit>
       <trans-unit id="tKBwotN" resname="loading">
         <source>loading</source>
