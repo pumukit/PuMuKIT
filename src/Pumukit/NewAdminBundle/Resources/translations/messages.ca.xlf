@@ -11,11 +11,11 @@
       </trans-unit>
       <trans-unit id="iYiIF7t" resname="There was an error in creating the Broadcast.">
         <source>There was an error in creating the Broadcast.</source>
-        <target state="translated">S’ha produït un error en crear l’emissió.</target>
+        <target state="translated">S’ha produït un error en crear l'emissió.</target>
       </trans-unit>
       <trans-unit id="sEghCMK" resname="Broadcast successfully created.">
         <source>Broadcast successfully created.</source>
-        <target state="translated">L’emissió s’ha creat correctament.</target>
+        <target state="translated">L'emissió s'ha creat correctament.</target>
       </trans-unit>
       <trans-unit id="fZ63rLE" resname="Close">
         <source>Close</source>
@@ -47,7 +47,7 @@
       </trans-unit>
       <trans-unit id="cv5nXnE" resname="Broadcast profiles">
         <source>Broadcast profiles</source>
-        <target state="translated">Perfils d’emissió</target>
+        <target state="translated">Perfils d'emissió</target>
       </trans-unit>
       <trans-unit id="YyyQsdx" resname="Actions on selected items">
         <source>Actions on selected items</source>
@@ -87,11 +87,11 @@
       </trans-unit>
       <trans-unit id="oK_.9dN" resname="There are no broadcasts with those values.">
         <source>There are no broadcasts with those values.</source>
-        <target state="translated">No hi ha emissions amb aquests valors.</target>
+        <target state="translated">No hi ha cap emissió amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="OEv5eU3" resname="Edit Broadcast">
         <source>Edit Broadcast</source>
-        <target state="translated">Edita l’emissió</target>
+        <target state="translated">Edita l'emissió</target>
       </trans-unit>
       <trans-unit id="26SyAGA" resname="Select this broadcast by default">
         <source>Select this broadcast by default</source>
@@ -99,7 +99,7 @@
       </trans-unit>
       <trans-unit id="dLyPzZK" resname="Default broadcast changed to">
         <source>Default broadcast changed to</source>
-        <target state="translated">L’emissió per defecte ha canviat a</target>
+        <target state="translated">L'emissió per defecte ha canviat a</target>
       </trans-unit>
       <trans-unit id="eQZz5nG" resname="{0} broadcasts|{1} broadcast|]1,Inf] broadcasts">
         <source>{0} broadcasts|{1} broadcast|]1,Inf] broadcasts</source>
@@ -115,15 +115,15 @@
       </trans-unit>
       <trans-unit id="HkcMWkl" resname="modify broadcast">
         <source>modify broadcast</source>
-        <target state="translated">modifica l’emissió</target>
+        <target state="translated">modifica l'emissió</target>
       </trans-unit>
       <trans-unit id="s_ycw1o" resname="There was an error in updating the Broadcast.">
         <source>There was an error in updating the Broadcast.</source>
-        <target state="translated">S’ha produït un error en actualitzar l’emissió.</target>
+        <target state="translated">S'ha produït un error en crear l'emissió.</target>
       </trans-unit>
       <trans-unit id="Be6F0F5" resname="Broadcast successfully updated.">
         <source>Broadcast successfully updated.</source>
-        <target state="translated">L’emissió s’ha actualitzat correctament.</target>
+        <target state="translated">L'emissió s'ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="Z7aWRoY" resname="Dashboard">
         <source>Dashboard</source>
@@ -131,7 +131,7 @@
       </trans-unit>
       <trans-unit id="ztC85.k" resname="This page uses Javascript to show you a Timeline.">
         <source>This page uses Javascript to show you a Timeline.</source>
-        <target state="translated">Aquesta pàgina fa servir el Javascript per mostrar-vos una cronologia.</target>
+        <target state="translated">Aquesta pàgina fa servir JavaScript per mostrar-vos una cronologia.</target>
       </trans-unit>
       <trans-unit id="s0f7i8q" resname="Please enable Javascript in your browser to see the full page.">
         <source>Please enable Javascript in your browser to see the full page.</source>
@@ -1972,7 +1972,7 @@
       </trans-unit>
       <trans-unit id="YUG7gTi" resname="If it corresponds to the one associated with the banner, the entire header will also be removed.">
         <source>If it corresponds to the one associated with the banner, the entire header will also be removed.</source>
-        <target state="translated">Si correspon a l’associat al banner, també s’eliminarà tota la capçalera.</target>
+        <target state="translated">Si correspon a l'associat al banner, també s'eliminarà tota la capçalera.</target>
       </trans-unit>
       <trans-unit id="Eru2JsX" resname="Thumbnail removed.">
         <source>Thumbnail removed.</source>
