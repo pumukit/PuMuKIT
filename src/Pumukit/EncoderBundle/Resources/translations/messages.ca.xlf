@@ -127,7 +127,7 @@
       </trans-unit>
       <trans-unit id="Dx6YFZM" resname="Timestart">
         <source>Timestart</source>
-        <target state="translated">Hora d’inici</target>
+        <target state="translated">Hora d'inici</target>
       </trans-unit>
       <trans-unit id="qJ4bJBH" resname="Timeend">
         <source>Timeend</source>
