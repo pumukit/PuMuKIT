@@ -63,7 +63,7 @@ final class CheckMigrationCommand extends Command
         foreach ($allMultimediaObjects as $multimediaObject) {
             $tracks = $multimediaObject['tracks'];
             foreach ($tracks as $track) {
-                if (!FinderUtils::isValidFile($track['path'])) {
+                if ($track['path'] !== null && !FinderUtils::isValidFile($track['path'])) {
                     $storageResult[] = [$multimediaObject['_id'], $track['path']];
                 }
             }
@@ -87,7 +87,7 @@ final class CheckMigrationCommand extends Command
         foreach ($allMultimediaObjects as $multimediaObject) {
             $materials = $multimediaObject['materials'];
             foreach ($materials as $element) {
-                if (!FinderUtils::isValidFile($element['path'])) {
+                if ($element['path'] !== null && !FinderUtils::isValidFile($element['path'])) {
                     $storageResult[] = [$multimediaObject['_id'], $element['path']];
                 }
             }
@@ -111,7 +111,7 @@ final class CheckMigrationCommand extends Command
         foreach ($allMultimediaObjects as $multimediaObject) {
             $pics = $multimediaObject['pics'];
             foreach ($pics as $element) {
-                if (!FinderUtils::isValidFile($element['path'])) {
+                if ($element['path'] !== null && !FinderUtils::isValidFile($element['path'])) {
                     $storageResult[] = [$multimediaObject['_id'], $element['path']];
                 }
             }
