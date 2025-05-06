@@ -259,6 +259,8 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
         return [
             'mm' => $multimediaObject,
             'track' => $track,
+            'thumbnail_width' => $this->getParameter('pumukitencode.thumbnail.width'),
+            'thumbnail_height' => $this->getParameter('pumukitencode.thumbnail.height'),
         ];
     }
 
