@@ -627,19 +627,19 @@
       </trans-unit>
       <trans-unit id="AxD4nlk" resname="List multimedia objects in descending order of recording date">
         <source>List multimedia objects in descending order of recording date</source>
-        <target state="translated">Llista els objectes multimèdia segons la data de gravació per ordre descendent</target>
+        <target state="translated">Enumera els objectes multimèdia segons la data de gravació per ordre descendent</target>
       </trans-unit>
       <trans-unit id="OIRTi8R" resname="List multimedia objects in ascending order of recording date">
         <source>List multimedia objects in ascending order of recording date</source>
-        <target state="translated">Llista els objectes multimèdia segons la data de gravació per ordre ascendent</target>
+        <target state="translated">Enumera els objectes multimèdia segons la data de gravació per ordre ascendent</target>
       </trans-unit>
       <trans-unit id="n8QxF8i" resname="Cut multimedia objects">
         <source>Cut multimedia objects</source>
-        <target state="translated">Talla els objectes multimèdia</target>
+        <target state="translated">Retalla els objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="4AWlJxV" resname="Cut multimedia object">
         <source>Cut multimedia object</source>
-        <target state="translated">Talla l’objecte multimèdia</target>
+        <target state="translated">Retalla l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="EIaPnXC" resname="Paste multimedia objects">
         <source>Paste multimedia objects</source>
@@ -667,15 +667,15 @@
       </trans-unit>
       <trans-unit id="x0qdFyr" resname="Warning: This link will give a 404 error until this multimedia object is correctly published.">
         <source>Warning: This link will give a 404 error until this multimedia object is correctly published.</source>
-        <target state="translated">Advertència: Aquest enllaç donarà un error 404 fins que l’objecte multimèdia no estigui publicat correctament.</target>
+        <target state="translated">Advertència: Aquest enllaç donarà un error 404 fins que l'objecte multimèdia no estigui publicat correctament.</target>
       </trans-unit>
       <trans-unit id="O8.cGGq" resname="This URL will give you access to the series without login.">
         <source>This URL will give you access to the series without login.</source>
-        <target state="translated">Aquest URL us donarà accés a la sèrie sense iniciar sessió.</target>
+        <target state="translated">Aquest URL us donarà accés a la sèrie sense iniciar la sessió.</target>
       </trans-unit>
       <trans-unit id="3PYR5qZ" resname="Warning: This link will show a player with no video until a display track is added.">
         <source>Warning: This link will show a player with no video until a display track is added.</source>
-        <target state="translated">Advertència: Aquest enllaç mostrarà un reproductor sense cap vídeo fins que no s’afegeixi una pista de visualització.</target>
+        <target state="translated">Advertència: Aquest enllaç mostrarà un reproductor sense cap vídeo fins que no s'afegeixi una pista de visualització.</target>
       </trans-unit>
       <trans-unit id="1IJ3MfG" resname="WARNING, this multimedia object is not yet published on WebTV, or does not have a playable resource.">
         <source>WARNING, this multimedia object is not yet published on WebTV, or does not have a playable resource.</source>
@@ -723,7 +723,7 @@
       </trans-unit>
       <trans-unit id="glRjWBo" resname="There are no multimedia objects with those values.">
         <source>There are no multimedia objects with those values.</source>
-        <target state="translated">No hi ha objectes multimèdia amb aquests valors.</target>
+        <target state="translated">No hi ha cap objecte multimèdia amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="t00dckA" resname="Mm. Obj.">
         <source>Mm. Obj.</source>
@@ -731,7 +731,7 @@
       </trans-unit>
       <trans-unit id="J4d1a9v" resname="Multimedia object properties">
         <source>Multimedia object properties</source>
-        <target state="translated">Propietats de l’objecte multimèdia</target>
+        <target state="translated">Propietats de l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="3JN7WYk" resname="None">
         <source>None</source>
@@ -739,7 +739,7 @@
       </trans-unit>
       <trans-unit id="QeAATX8" resname="Change broadcast profile">
         <source>Change broadcast profile</source>
-        <target state="translated">Canvia el perfil d’emissió</target>
+        <target state="translated">Canvia el perfil d'emissió</target>
       </trans-unit>
       <trans-unit id="wL91vXi" resname="Change">
         <source>Change</source>
@@ -799,11 +799,11 @@
       </trans-unit>
       <trans-unit id="T2WYFmC" resname="Modify broadcast profile of videos template">
         <source>Modify broadcast profile of videos template</source>
-        <target state="translated">Modifica el perfil d’emissió de la plantilla de vídeos</target>
+        <target state="translated">Modifica el perfil d'emissió de la plantilla de vídeos</target>
       </trans-unit>
       <trans-unit id="Srm_gIU" resname="Modify broadcast profile of multimedia object">
         <source>Modify broadcast profile of multimedia object</source>
-        <target state="translated">Modifica el perfil d’emissió de l’objecte multimèdia</target>
+        <target state="translated">Modifica el perfil d'emissió de l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="7hy0Oje" resname="Broadcast Profile">
         <source>Broadcast Profile</source>
