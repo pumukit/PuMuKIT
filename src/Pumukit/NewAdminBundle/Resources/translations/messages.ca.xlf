@@ -511,11 +511,11 @@
       </trans-unit>
       <trans-unit id="XQtGDig" resname="New Material added.">
         <source>New Material added.</source>
-        <target state="translated">El material nou s'ha afegit.</target>
+        <target state="translated">S'ha afegit el material nou.</target>
       </trans-unit>
       <trans-unit id="tKBwotN" resname="loading">
         <source>loading</source>
-        <target state="translated">s’està carregant</target>
+        <target state="translated">s'està carregant</target>
       </trans-unit>
       <trans-unit id="LF6Zcug" resname="WARNING: You do not have enough permissions to modify admin groups.">
         <source>WARNING: You do not have enough permissions to modify admin groups.</source>
@@ -523,7 +523,7 @@
       </trans-unit>
       <trans-unit id="6Rn7P12" resname="BROADCAST GROUPS">
         <source>BROADCAST GROUPS</source>
-        <target state="translated">GRUPS D’EMISSIÓ</target>
+        <target state="translated">GRUPS D'EMISSIÓ</target>
       </trans-unit>
       <trans-unit id="N6tLDY2" resname="Available Groups">
         <source>Available Groups</source>
@@ -535,7 +535,7 @@
       </trans-unit>
       <trans-unit id="_QRwabW" resname="BROADCAST PASSWORD">
         <source>BROADCAST PASSWORD</source>
-        <target state="translated">CONTRASENYA D’EMISSIÓ</target>
+        <target state="translated">CONTRASENYA D'EMISSIÓ</target>
       </trans-unit>
       <trans-unit id="AmXL6i2" resname="Introduce a password">
         <source>Introduce a password</source>
@@ -559,7 +559,7 @@
       </trans-unit>
       <trans-unit id="YYyqUmK" resname="Passwords can not be empty">
         <source>Passwords can not be empty</source>
-        <target state="translated">Les contrasenyes no poden estar buides</target>
+        <target state="translated">Les contrasenyes no poden ser buides</target>
       </trans-unit>
       <trans-unit id="FfxltpM" resname="Publication">
         <source>Publication</source>
@@ -603,7 +603,7 @@
       </trans-unit>
       <trans-unit id="XbYnTgi" resname="EDIT MODE">
         <source>EDIT MODE</source>
-        <target state="translated">MODE D’EDICIÓ</target>
+        <target state="translated">MODE D'EDICIÓ</target>
       </trans-unit>
       <trans-unit id="rOM2jcP" resname="Back to series list">
         <source>Back to series list</source>
