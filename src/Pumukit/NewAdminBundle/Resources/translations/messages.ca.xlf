@@ -851,11 +851,11 @@
       </trans-unit>
       <trans-unit id="H0nJyRa" resname="Multimedia Object saved ERROR">
         <source>Multimedia Object saved ERROR</source>
-        <target state="translated">S’ha produït un error en desar l’objecte multimèdia</target>
+        <target state="translated">S'ha produït un error en desar l’objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="omLkUZH" resname="Multimedia Object saved OK">
         <source>Multimedia Object saved OK</source>
-        <target state="translated">L’objecte multimèdia s’ha desat correctament</target>
+        <target state="translated">L'objecte multimèdia s'ha desat correctament</target>
       </trans-unit>
       <trans-unit id="S1TDJ_4" resname="Publication Channels">
         <source>Publication Channels</source>
@@ -867,11 +867,11 @@
       </trans-unit>
       <trans-unit id="O9PiM6P" resname="Broadcast profile">
         <source>Broadcast profile</source>
-        <target state="translated">Perfil d’emissió</target>
+        <target state="translated">Perfil d'emissió</target>
       </trans-unit>
       <trans-unit id="Gys6aaW" resname="Apply these tags to all multimedia objects of this series.">
         <source>Apply these tags to all multimedia objects of this series.</source>
-        <target state="translated">Aplica aquestes etiquetes a tots els objectes multimèdia d’aquesta sèrie.</target>
+        <target state="translated">Aplica aquestes etiquetes a tots els objectes multimèdia d'aquesta sèrie.</target>
       </trans-unit>
       <trans-unit id="vEDWyTG" resname="Sync in this series">
         <source>Sync in this series</source>
@@ -879,7 +879,7 @@
       </trans-unit>
       <trans-unit id="tCnBDqf" resname="Mutlimedia Object Template saved ERROR">
         <source>Mutlimedia Object Template saved ERROR</source>
-        <target state="translated">S’ha produït un error en desar la plantilla d’objecte multimèdia</target>
+        <target state="translated">S'ha produït un error en desar la plantilla de l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="vec.BdY" resname="Mutlimedia Object Template saved OK">
         <source>Mutlimedia Object Template saved OK</source>
