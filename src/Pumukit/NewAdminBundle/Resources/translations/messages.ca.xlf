@@ -807,7 +807,7 @@
       </trans-unit>
       <trans-unit id="7hy0Oje" resname="Broadcast Profile">
         <source>Broadcast Profile</source>
-        <target state="translated">Perfil d’emissió</target>
+        <target state="translated">Perfil d'emissió</target>
       </trans-unit>
       <trans-unit id="2u52BrM" resname="Reset">
         <source>Reset</source>
@@ -815,11 +815,11 @@
       </trans-unit>
       <trans-unit id="adcjyWa" resname="Press OK for changes to take effect">
         <source>Press OK for changes to take effect</source>
-        <target state="translated">Premeu D’acord per aplicar els canvis</target>
+        <target state="translated">Premeu «D’acord» per aplicar els canvis</target>
       </trans-unit>
       <trans-unit id="C9wCg62" resname="WARNING: If you press OK, you will no longer have access to this Multimedia Object">
         <source>WARNING: If you press OK, you will no longer have access to this Multimedia Object</source>
-        <target state="translated">ADVERTÈNCIA: Si premeu D’acord, deixareu de tenir accés a aquest objecte multimèdia</target>
+        <target state="translated">ADVERTÈNCIA: Si premeu «D’acord», deixareu de tenir accés a aquest objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="_C1kZmX" resname="Thumbnails">
         <source>Thumbnails</source>
@@ -831,7 +831,7 @@
       </trans-unit>
       <trans-unit id="Y03hFHd" resname="Attachments">
         <source>Attachments</source>
-        <target state="translated">Adjunts</target>
+        <target state="translated">Fitxers adjunts</target>
       </trans-unit>
       <trans-unit id="kCTBl9h" resname="Links">
         <source>Links</source>
@@ -839,11 +839,11 @@
       </trans-unit>
       <trans-unit id="45jpbzp" resname="Delete multimedia object">
         <source>Delete multimedia object</source>
-        <target state="translated">Elimina l’objecte multimèdia</target>
+        <target state="translated">Elimina l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="yUpGGKD" resname="Clone multimedia object">
         <source>Clone multimedia object</source>
-        <target state="translated">Clona l’objecte multimèdia</target>
+        <target state="translated">Clona l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="rkKT.Nd" resname="Show properties">
         <source>Show properties</source>
