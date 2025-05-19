@@ -391,7 +391,8 @@
       </trans-unit>
       <trans-unit id="8iT6pMv" resname="Edit file of multimedia object">
         <source>Edit file of multimedia object</source>
-        <target state="translated">Edita el fitxer de l'objecte multimèdia</target>
+        <target state="translated">Edita el fitxer de l'objecte multimèdia
+</target>
       </trans-unit>
       <trans-unit id="5WS0CB1" resname="hidden">
         <source>hidden</source>
@@ -883,15 +884,15 @@
       </trans-unit>
       <trans-unit id="vec.BdY" resname="Mutlimedia Object Template saved OK">
         <source>Mutlimedia Object Template saved OK</source>
-        <target state="translated">La plantilla d’objecte multimèdia s’ha desat correctament</target>
+        <target state="translated">La plantilla d'objecte multimèdia s'ha desat correctament</target>
       </trans-unit>
       <trans-unit id="vW36nMC" resname="Press OK for the change to take effect">
         <source>Press OK for the change to take effect</source>
-        <target state="translated">Premeu D’acord per aplicar el canvi</target>
+        <target state="translated">Premeu «D’acord» per aplicar el canvi</target>
       </trans-unit>
       <trans-unit id="bT15s09" resname="create new permission profile">
         <source>create new permission profile</source>
-        <target state="translated">crea un nou perfil de permisos</target>
+        <target state="translated">crea un perfil de permisos nou</target>
       </trans-unit>
       <trans-unit id="Ru3Y59V" resname="Permission Profiles">
         <source>Permission Profiles</source>
@@ -903,7 +904,7 @@
       </trans-unit>
       <trans-unit id="rNzT5AZ" resname="Press SAVE for changes to take effect">
         <source>Press SAVE for changes to take effect</source>
-        <target state="translated">Premeu DESA per aplicar els canvis</target>
+        <target state="translated">Premeu «DESA» per aplicar els canvis</target>
       </trans-unit>
       <trans-unit id="FQn1YfJ" resname="Save">
         <source>Save</source>
@@ -915,11 +916,11 @@
       </trans-unit>
       <trans-unit id="fC.pA4I" resname="There are no user permissions with those values.">
         <source>There are no user permissions with those values.</source>
-        <target state="translated">No hi ha permisos d’usuari amb aquests valors.</target>
+        <target state="translated">No hi ha cap permís d'usuari amb aquests valors.</target>
       </trans-unit>
       <trans-unit id=".8wCbaE" resname="There are no permissions with those values.">
         <source>There are no permissions with those values.</source>
-        <target state="translated">No hi ha permisos amb aquests valors.</target>
+        <target state="translated">No hi ha cap permís amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="IbERy.5" resname="Default">
         <source>Default</source>
@@ -947,7 +948,7 @@
       </trans-unit>
       <trans-unit id=".K2pjv2" resname="Person successfully created.">
         <source>Person successfully created.</source>
-        <target state="translated">La persona s’ha creat correctament.</target>
+        <target state="translated">La persona s'ha creat correctament.</target>
       </trans-unit>
       <trans-unit id="3L.aehR" resname="edit new person">
         <source>edit new person</source>
@@ -955,7 +956,7 @@
       </trans-unit>
       <trans-unit id="_1CkwZ6" resname="Person successfully associated to Multimedia Object">
         <source>Person successfully associated to Multimedia Object</source>
-        <target state="translated">La persona s’ha associat correctament a l’objecte multimèdia</target>
+        <target state="translated">La persona s'ha associat correctament a l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="LHnYFAj" resname="with role">
         <source>with role</source>
@@ -975,7 +976,7 @@
       </trans-unit>
       <trans-unit id="_4Y1aAq" resname="There are no people with those values.">
         <source>There are no people with those values.</source>
-        <target state="translated">No hi ha persones amb aquests valors.</target>
+        <target state="translated">No hi ha cap persona amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="jPj8I85" resname="Can't delete Person">
         <source>Can't delete Person</source>
