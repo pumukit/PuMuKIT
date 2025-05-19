@@ -988,11 +988,11 @@
       </trans-unit>
       <trans-unit id="aVux4sC" resname="Cannot delete the data of">
         <source>Cannot delete the data of</source>
-        <target state="translated">No es poden eliminar les dades dels</target>
+        <target state="translated">No es poden eliminar les dades de</target>
       </trans-unit>
       <trans-unit id="xmBMRRZ" resname="multimedia object(s) contain(s) this person">
         <source>multimedia object(s) contain(s) this person</source>
-        <target state="translated">objectes multimèdia que conté aquesta persona</target>
+        <target state="translated">l'objecte o els objectes multimèdia que contenen aquesta persona</target>
       </trans-unit>
       <trans-unit id="6EqFlw." resname="{0} people|{1} person|]1,Inf] people">
         <source>{0} people|{1} person|]1,Inf] people</source>
@@ -1024,11 +1024,11 @@
       </trans-unit>
       <trans-unit id="3VrOngG" resname="working">
         <source>working</source>
-        <target state="translated">treballant</target>
+        <target state="translated">s'està treballant</target>
       </trans-unit>
       <trans-unit id="rKtK0Co" resname="Select before a person">
         <source>Select before a person</source>
-        <target state="translated">Primerament heu de seleccionar una persona</target>
+        <target state="translated">Abans heu de seleccionar una persona</target>
       </trans-unit>
       <trans-unit id="w22Bnnv" resname="Use">
         <source>Use</source>
@@ -1060,7 +1060,7 @@
       </trans-unit>
       <trans-unit id="hLhQE86" resname="Person successfully updated.">
         <source>Person successfully updated.</source>
-        <target state="translated">La persona s’ha actualitzat correctament.</target>
+        <target state="translated">La persona s'ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="2IFBgFe" resname="edit person">
         <source>edit person</source>
@@ -1068,7 +1068,7 @@
       </trans-unit>
       <trans-unit id="gk9RU.y" resname="Person associated to Multimedia Object">
         <source>Person associated to Multimedia Object</source>
-        <target state="translated">La persona s’ha associat a l’objecte multimèdia</target>
+        <target state="translated">La persona s'ha associat a l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="czrDEMn" resname="successfully updated">
         <source>successfully updated</source>
@@ -1080,15 +1080,15 @@
       </trans-unit>
       <trans-unit id="z6ZAHt." resname="Banner from URL">
         <source>Banner from URL</source>
-        <target state="translated">Bàner des d’un URL</target>
+        <target state="translated">Bàner a partir d'un URL</target>
       </trans-unit>
       <trans-unit id="MDPZQgI" resname="Banner from local hard drive">
         <source>Banner from local hard drive</source>
-        <target state="translated">Bàner des d’un disc dur local</target>
+        <target state="translated">Bàner des d'un disc dur local</target>
       </trans-unit>
       <trans-unit id="ZTa3g8I" resname="New Pic added.">
         <source>New Pic added.</source>
-        <target state="translated">La imatge nova s’ha afegit.</target>
+        <target state="translated"> S'ha afegit la imatge nova.</target>
       </trans-unit>
       <trans-unit id="I5Ev4hB" resname="Banner URL">
         <source>Banner URL</source>
@@ -1096,7 +1096,7 @@
       </trans-unit>
       <trans-unit id="vtr0zkG" resname="Write the target URL">
         <source>Write the target URL</source>
-        <target state="translated">Escriviu l’URL de destinació</target>
+        <target state="translated">Escriviu l'URL de destinació</target>
       </trans-unit>
       <trans-unit id="n9coxmy" resname="Add">
         <source>Add</source>
@@ -1116,11 +1116,11 @@
       </trans-unit>
       <trans-unit id="j3heZP6" resname="New Thumbnail added.">
         <source>New Thumbnail added.</source>
-        <target state="translated">La miniatura nova s’ha afegit.</target>
+        <target state="translated">S'ha afegit la miniatura nova.</target>
       </trans-unit>
       <trans-unit id="cZ1T7qm" resname="Write the URL">
         <source>Write the URL</source>
-        <target state="translated">Escriviu l’URL</target>
+        <target state="translated">Escriviu l'URL</target>
       </trans-unit>
       <trans-unit id="v8MBqPt" resname="New thumbnail">
         <source>New thumbnail</source>
@@ -1132,7 +1132,7 @@
       </trans-unit>
       <trans-unit id="nsKa7x9" resname="There are no thumbnails in the database.">
         <source>There are no thumbnails in the database.</source>
-        <target state="translated">No hi ha miniatures a la base de dades.</target>
+        <target state="translated">No hi ha cap miniatura a la base de dades.</target>
       </trans-unit>
       <trans-unit id="KfQqMhe" resname="Update the video to show the thumbnails">
         <source>Update the video to show the thumbnails</source>
@@ -1140,11 +1140,11 @@
       </trans-unit>
       <trans-unit id="KoDzITI" resname="Update the event to show the thumbnail">
         <source>Update the event to show the thumbnail</source>
-        <target state="translated">Actualitza l’esdeveniment perquè mostri la miniatura</target>
+        <target state="translated">Actualitza l'esdeveniment perquè mostri la miniatura</target>
       </trans-unit>
       <trans-unit id="..vaOTK" resname="change broadcast status of multimedia objects inside the series">
         <source>change broadcast status of multimedia objects inside the series</source>
-        <target state="translated">canvia l’estat d’emissió dels objectes multimèdia de la sèrie</target>
+        <target state="translated">canvia l'estat d'emissió dels objectes multimèdia de la sèrie</target>
       </trans-unit>
       <trans-unit id="nSmw0o5" resname="Multimedia Objects">
         <source>Multimedia Objects</source>
@@ -1168,7 +1168,7 @@
       </trans-unit>
       <trans-unit id="WLO_NSp" resname="Published: is listed in the Series and can be played with published URL">
         <source>Published: is listed in the Series and can be played with published URL</source>
-        <target state="translated">Publicats: es troben llistats a la sèrie i es poden reproduir amb l’URL publicat</target>
+        <target state="translated">Publicats: es troben enumerats a la sèrie i es poden reproduir amb l'URL publicat</target>
       </trans-unit>
       <trans-unit id="pQVjZ29" resname="Hidden: is not listed in the Series but can be played with magic URL">
         <source>Hidden: is not listed in the Series but can be played with magic URL</source>
