@@ -1208,7 +1208,7 @@
       </trans-unit>
       <trans-unit id="ophuMd5" resname="There are no playlist with those values.">
         <source>There are no playlist with those values.</source>
-        <target state="translated">No hi ha llistes de reproducció amb aquests valors.</target>
+        <target state="translated">No hi ha cap llista de reproducció amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="7VO065x" resname="{0} playlist|{1} playlist|]1,Inf] playlists">
         <source>{0} playlist|{1} playlist|]1,Inf] playlists</source>
@@ -1240,15 +1240,15 @@
       </trans-unit>
       <trans-unit id="RNMotGg" resname="Series saved ERROR">
         <source>Series saved ERROR</source>
-        <target state="translated">S’ha produït un error en desar la sèrie</target>
+        <target state="translated">S'ha produït un error en desar la sèrie</target>
       </trans-unit>
       <trans-unit id="B7KZYS9" resname="Series saved OK">
         <source>Series saved OK</source>
-        <target state="translated">La sèrie s’ha desat correctament</target>
+        <target state="translated">La sèrie s'ha desat correctament</target>
       </trans-unit>
       <trans-unit id="fGESeZx" resname="Add the object &quot;%title%&quot; to the playlist">
         <source>Add the object "%title%" to the playlist</source>
-        <target state="translated">Afegeix l’objecte "%title%" a la llista de reproducció</target>
+        <target state="translated">Afegeix l'objecte "%title%" a la llista de reproducció</target>
       </trans-unit>
       <trans-unit id="OHxjNgO" resname="Add %num% multimedia objects to the playlist">
         <source>Add %num% multimedia objects to the playlist</source>
@@ -1256,7 +1256,7 @@
       </trans-unit>
       <trans-unit id="SQu79Mq" resname="There are no playlist, please create one.">
         <source>There are no playlist, please create one.</source>
-        <target state="translated">No hi ha llistes de reproducció. Creeu-ne una.</target>
+        <target state="translated">No hi ha cap llista de reproducció. Creeu-ne una.</target>
       </trans-unit>
       <trans-unit id="fwl.c15" resname="Create playlist">
         <source>Create playlist</source>
@@ -1264,11 +1264,11 @@
       </trans-unit>
       <trans-unit id="3uVb1Fp" resname="Error creating playlist">
         <source>Error creating playlist</source>
-        <target state="translated">S’ha produït un error en crear la llista de reproducció</target>
+        <target state="translated">S'ha produït un error en crear la llista de reproducció</target>
       </trans-unit>
       <trans-unit id="m2jGRFD" resname="Error adding object to playlist">
         <source>Error adding object to playlist</source>
-        <target state="translated">S’ha produït un error en afegir l’objecte a la llista de reproducció</target>
+        <target state="translated">S'ha produït un error en afegir l'objecte a la llista de reproducció</target>
       </trans-unit>
       <trans-unit id="k6LpCbD" resname="Back to playlist list">
         <source>Back to playlist list</source>
@@ -1276,7 +1276,7 @@
       </trans-unit>
       <trans-unit id="1xRaTyA" resname="Add multimedia object">
         <source>Add multimedia object</source>
-        <target state="translated">Afegeix l’objecte multimèdia</target>
+        <target state="translated">Afegeix l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="FwMioy8" resname="Info">
         <source>Info</source>
@@ -1288,7 +1288,7 @@
       </trans-unit>
       <trans-unit id="Ax5FB5U" resname="Add Multimedia Object to Playlist">
         <source>Add Multimedia Object to Playlist</source>
-        <target state="translated">Afegeix l’objecte multimèdia a la llista de reproducció</target>
+        <target state="translated">Afegeix l'objecte multimèdia a la llista de reproducció</target>
       </trans-unit>
       <trans-unit id="5BBGIIV" resname="Add videos">
         <source>Add videos</source>
@@ -1296,7 +1296,7 @@
       </trans-unit>
       <trans-unit id="Qq9oOdz" resname="The url does not have a valid format.">
         <source>The url does not have a valid format.</source>
-        <target state="translated">L’URL no té un format vàlid.</target>
+        <target state="translated">L'URL no té un format vàlid.</target>
       </trans-unit>
       <trans-unit id="7utrTpP" resname="Please, enter an url with the following format: &lt;b&gt;https://example.domain.org/video/XXXXXXXX&lt;/b&gt;">
         <source>Please, enter an url with the following format: &lt;b&gt;https://example.domain.org/video/XXXXXXXX&lt;/b&gt;</source>
@@ -1305,11 +1305,11 @@
       </trans-unit>
       <trans-unit id="Bpiop_k" resname="or enter the ID of the Multimedia Object.">
         <source>or enter the ID of the Multimedia Object.</source>
-        <target state="translated">o introduïu l’identificador de l’objecte multimèdia.</target>
+        <target state="translated">o introduïu l'identificador de l'objecte multimèdia.</target>
       </trans-unit>
       <trans-unit id="fzrFUrD" resname="There is no published Multimedia Object with the following id:">
         <source>There is no published Multimedia Object with the following id:</source>
-        <target state="translated">No hi ha objectes multimèdia publicats amb l’identificador següent:</target>
+        <target state="translated">No hi ha cap objecte multimèdia publicat amb l'identificador següent:</target>
       </trans-unit>
       <trans-unit id="7MVYspe" resname="create new role">
         <source>create new role</source>
@@ -1317,11 +1317,11 @@
       </trans-unit>
       <trans-unit id="aE2coLP" resname="There was an error in creating the Role.">
         <source>There was an error in creating the Role.</source>
-        <target state="translated">S’ha produït un error en crear el rol.</target>
+        <target state="translated">S'ha produït un error en crear el rol.</target>
       </trans-unit>
       <trans-unit id="NCn_oK5" resname="Role successfully created.">
         <source>Role successfully created.</source>
-        <target state="translated">El rol s’ha creat correctament.</target>
+        <target state="translated">El rol s'ha creat correctament.</target>
       </trans-unit>
       <trans-unit id=".Yjgpj8" resname="Cod">
         <source>Cod</source>
@@ -1341,7 +1341,7 @@
       </trans-unit>
       <trans-unit id="TVwd2v4" resname="There are no roles with those values.">
         <source>There are no roles with those values.</source>
-        <target state="translated">No hi ha rols amb aquests valors.</target>
+        <target state="translated">No hi ha cap rol amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="83tvNKQ" resname="Edit Role">
         <source>Edit Role</source>
@@ -1357,15 +1357,15 @@
       </trans-unit>
       <trans-unit id="gk1w9iU" resname="There was an error in updating the Role.">
         <source>There was an error in updating the Role.</source>
-        <target state="translated">S’ha produït un error en actualitzar el rol.</target>
+        <target state="translated">S'ha produït un error en actualitzar el rol.</target>
       </trans-unit>
       <trans-unit id="XWSPlxq" resname="Role successfully updated.">
         <source>Role successfully updated.</source>
-        <target state="translated">El rol s’ha actualitzat correctament.</target>
+        <target state="translated">El rol s'ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="69rZukx" resname="Others">
         <source>Others</source>
-        <target state="translated">D’altres</target>
+        <target state="translated">D'altres</target>
       </trans-unit>
       <trans-unit id="B9_rhh3" resname="Announced">
         <source>Announced</source>
@@ -1385,7 +1385,7 @@
       </trans-unit>
       <trans-unit id="gwCPg2E" resname="change status of multimedia objects inside the series">
         <source>change status of multimedia objects inside the series</source>
-        <target state="translated">canvia l’estat dels objectes multimèdia de la sèrie</target>
+        <target state="translated">canvia l'estat dels objectes multimèdia de la sèrie</target>
       </trans-unit>
       <trans-unit id=".GP.CrL" resname="Multimedia Series">
         <source>Multimedia Series</source>
@@ -1401,11 +1401,11 @@
       </trans-unit>
       <trans-unit id="pE9M1aR" resname="Click to modify status of all Multimedia Objects">
         <source>Click to modify status of all Multimedia Objects</source>
-        <target state="translated">Feu clic per modificar l’estat de tots els objectes multimèdia</target>
+        <target state="translated">Feu clic per modificar l'estat de tots els objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="qThPhrk" resname="Not enough privileges to modify status of all Multimedia Objects">
         <source>Not enough privileges to modify status of all Multimedia Objects</source>
-        <target state="translated">No teniu prou privilegis per modificar l’estat de tots els objectes multimèdia</target>
+        <target state="translated">No teniu prou privilegis per modificar l'estat de tots els objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="Wn.0eFr" resname="There are no series with those values.">
         <source>There are no series with those values.</source>
