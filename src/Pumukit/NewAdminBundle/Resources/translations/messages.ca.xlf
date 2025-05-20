@@ -1172,11 +1172,11 @@
       </trans-unit>
       <trans-unit id="pQVjZ29" resname="Hidden: is not listed in the Series but can be played with magic URL">
         <source>Hidden: is not listed in the Series but can be played with magic URL</source>
-        <target state="translated">Ocults: no es troben llistats a la sèrie, però es poden reproduir amb un URL màgic</target>
+        <target state="translated">Ocults: no es troben enumerats a la sèrie, però es poden reproduir amb un URL màgic</target>
       </trans-unit>
       <trans-unit id="xvUgIUN" resname="Blocked: cannot be accessed outside the back-end">
         <source>Blocked: cannot be accessed outside the back-end</source>
-        <target state="translated">Bloquejats: no s’hi pot accedir des de fora del back-end</target>
+        <target state="translated">Bloquejats: no s'hi pot accedir des de fora del rerefons</target>
       </trans-unit>
       <trans-unit id="KngCXea" resname="Select">
         <source>Select</source>
@@ -1192,7 +1192,7 @@
       </trans-unit>
       <trans-unit id="c5wyau1" resname="Moodle Playlists">
         <source>Moodle Playlists</source>
-        <target state="translated">Llistes de reproducció del Moodle</target>
+        <target state="translated">Llistes de reproducció de Moodle</target>
       </trans-unit>
       <trans-unit id="uTzzvzb" resname="Create new playlist">
         <source>Create new playlist</source>
