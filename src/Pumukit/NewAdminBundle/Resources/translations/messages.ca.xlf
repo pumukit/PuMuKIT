@@ -1409,7 +1409,7 @@
       </trans-unit>
       <trans-unit id="Wn.0eFr" resname="There are no series with those values.">
         <source>There are no series with those values.</source>
-        <target state="translated">No hi ha sèries amb aquests valors.</target>
+        <target state="translated">No hi ha cap sèrie amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="tza7GLI" resname="{0} series|{1} series|]1,Inf] series">
         <source>{0} series|{1} series|]1,Inf] series</source>
@@ -1433,7 +1433,7 @@
       </trans-unit>
       <trans-unit id="2Tb2ncR" resname="Only logged in Users">
         <source>Only logged in Users</source>
-        <target state="translated">Només els usuaris connectats</target>
+        <target state="translated">Només els usuaris que han iniciat la sessió</target>
       </trans-unit>
       <trans-unit id="AlWvBOc" resname="Only Users in Groups">
         <source>Only Users in Groups</source>
@@ -1441,15 +1441,15 @@
       </trans-unit>
       <trans-unit id="kN2qYZb" resname="Modify broadcast profile of all multimedia objects in this Series">
         <source>Modify broadcast profile of all multimedia objects in this Series</source>
-        <target state="translated">Modifica el perfil d’emissió de tots els objectes multimèdia d’aquesta sèrie</target>
+        <target state="translated">Modifica el perfil d'emissió de tots els objectes multimèdia d'aquesta sèrie</target>
       </trans-unit>
       <trans-unit id="9P1HJF6" resname="WARNING: All Multimedia Objects in this Series will be modified with the selected Broadcast.">
         <source>WARNING: All Multimedia Objects in this Series will be modified with the selected Broadcast.</source>
-        <target state="translated">ADVERTÈNCIA: Tots els objectes multimèdia d’aquesta sèrie es modificaran amb l’emissió seleccionada.</target>
+        <target state="translated">ADVERTÈNCIA: Tots els objectes multimèdia d'aquesta sèrie es modificaran amb l'emissió seleccionada.</target>
       </trans-unit>
       <trans-unit id="OVAa0Wz" resname="Any Internet user can play this multimedia object in the video portal">
         <source>Any Internet user can play this multimedia object in the video portal</source>
-        <target state="translated">Qualsevol usuari d’Internet pot reproduir aquest objecte multimèdia al portal de vídeo</target>
+        <target state="translated">Qualsevol usuari d'Internet pot reproduir aquest objecte multimèdia al portal de vídeo</target>
       </trans-unit>
       <trans-unit id="X9NzRJt" resname="Only users with the defined password can play this multimedia object in the video portal">
         <source>Only users with the defined password can play this multimedia object in the video portal</source>
@@ -1457,7 +1457,7 @@
       </trans-unit>
       <trans-unit id="xgeNGfj" resname="Only logged in users in the system can play this multimedia object in the video portal">
         <source>Only logged in users in the system can play this multimedia object in the video portal</source>
-        <target state="translated">Només els usuaris connectats al sistema poden reproduir aquest objecte multimèdia al portal de vídeo</target>
+        <target state="translated">Només els usuaris que han iniciat la sessió al sistema poden reproduir aquest objecte multimèdia al portal de vídeo</target>
       </trans-unit>
       <trans-unit id="yYoW5uR" resname="Only users in the selected Groups can play this multimedia object in the video portal">
         <source>Only users in the selected Groups can play this multimedia object in the video portal</source>
@@ -1489,7 +1489,7 @@
       </trans-unit>
       <trans-unit id=".eL1ZHl" resname="create new series type">
         <source>create new series type</source>
-        <target state="translated">crea un tipus nou de sèrie</target>
+        <target state="translated">crea un tipus de sèrie nou</target>
       </trans-unit>
       <trans-unit id="M5jGGMW" resname="Series types">
         <source>Series types</source>
@@ -1497,7 +1497,7 @@
       </trans-unit>
       <trans-unit id="QkQfYLR" resname="Create new series type">
         <source>Create new series type</source>
-        <target state="translated">Crea un tipus nou de sèrie</target>
+        <target state="translated">Crea un tipus de sèrie nou</target>
       </trans-unit>
       <trans-unit id="okzxY6S" resname="Select any type.">
         <source>Select any type.</source>
@@ -1509,7 +1509,7 @@
       </trans-unit>
       <trans-unit id="PEN92mY" resname="There are no series types with those values.">
         <source>There are no series types with those values.</source>
-        <target state="translated">No hi ha tipus de sèrie amb aquests valors.</target>
+        <target state="translated">No hi ha cap tipus de sèrie amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="KraI25G" resname="Edit seriestype channel">
         <source>Edit seriestype channel</source>
@@ -1525,11 +1525,11 @@
       </trans-unit>
       <trans-unit id="_RkIv_r" resname="There was an error in updating the series type.">
         <source>There was an error in updating the series type.</source>
-        <target state="translated">S’ha produït un error en actualitzar el tipus de sèrie.</target>
+        <target state="translated">S'ha produït un error en actualitzar el tipus de sèrie.</target>
       </trans-unit>
       <trans-unit id="A6G.vsM" resname="Series type successfully updated.">
         <source>Series type successfully updated.</source>
-        <target state="translated">El tipus de sèrie s’ha actualitzat correctament.</target>
+        <target state="translated">El tipus de sèrie s'ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="YZdZVQP" resname="delete">
         <source>delete</source>
@@ -1537,7 +1537,7 @@
       </trans-unit>
       <trans-unit id="i46dF4n" resname="Edit tag">
         <source>Edit tag</source>
-        <target state="translated">Edita l’etiqueta</target>
+        <target state="translated">Edita l'etiqueta</target>
       </trans-unit>
       <trans-unit id="J.i8Nti" resname="Create child tag for">
         <source>Create child tag for</source>
@@ -1549,7 +1549,7 @@
       </trans-unit>
       <trans-unit id="2v.Eiz3" resname="There was an error in creating the Tag.">
         <source>There was an error in creating the Tag.</source>
-        <target state="translated">S’ha produït un error en crear l’etiqueta.</target>
+        <target state="translated">S'ha produït un error en crear l'etiqueta.</target>
       </trans-unit>
       <trans-unit id="SWCeDsk" resname="Tag successfully created.">
         <source>Tag successfully created.</source>
@@ -1565,19 +1565,19 @@
       </trans-unit>
       <trans-unit id="NhtYAIW" resname="There are no tags with those values.">
         <source>There are no tags with those values.</source>
-        <target state="translated">No hi ha etiquetes amb aquests valors.</target>
+        <target state="translated">No hi ha cap etiqueta amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="1AkJyGH" resname="modify tag">
         <source>modify tag</source>
-        <target state="translated">modifica l’etiqueta</target>
+        <target state="translated">modifica l'etiqueta</target>
       </trans-unit>
       <trans-unit id="_ACvJJI" resname="There was an error in updating the Tag.">
         <source>There was an error in updating the Tag.</source>
-        <target state="translated">S’ha produït un error en actualitzar l’etiqueta.</target>
+        <target state="translated">S'ha produït un error en actualitzar l'etiqueta.</target>
       </trans-unit>
       <trans-unit id="p3MjPS9" resname="Tag successfully updated.">
         <source>Tag successfully updated.</source>
-        <target state="translated">L’etiqueta s’ha actualitzat correctament.</target>
+        <target state="translated">L'etiqueta s'ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="yjTGzd8" resname="Duration(min)">
         <source>Duration(min)</source>
@@ -1609,7 +1609,7 @@
       </trans-unit>
       <trans-unit id="e0jJK_e" resname="Inbox on server">
         <source>Inbox on server</source>
-        <target state="translated">Safata d’entrada al servidor</target>
+        <target state="translated">Safata d'entrada al servidor</target>
       </trans-unit>
       <trans-unit id="8vdBP_d" resname="Local hard drive">
         <source>Local hard drive</source>
@@ -1625,7 +1625,7 @@
       </trans-unit>
       <trans-unit id="liAqQOK" resname="&lt;span class=&quot;alert alert-dismissable alert-warning&quot;&gt;&lt;i&gt;Warning: This multimedia object is not correctly published on WebTV&lt;/i&gt;&lt;/span&gt;">
         <source>&lt;span class="alert alert-dismissable alert-warning"&gt;&lt;i&gt;Warning: This multimedia object is not correctly published on WebTV&lt;/i&gt;&lt;/span&gt;</source>
-        <target state="translated"><![CDATA[&lt;span class="alert alert-dismissable alert-warning"&gt;&lt;i&gt;Advertència: Aquest objecte multimèdia no està publicat correctament al portal WebTV&lt;/i&gt;&lt;/span&gt;]]></target>
+        <target state="translated"><![CDATA[&lt;span class="alert alert-dismissable alert-warning"&gt;&lt;i&gt;Advertència: Aquest objecte multimèdia no s'ha publicat al portal WebTV correctament &lt;/i&gt;&lt;/span&gt;]]></target>
       </trans-unit>
       <trans-unit id="6h4Em02" resname="Embedded Iframe">
         <source>Embedded Iframe</source>
@@ -1701,7 +1701,7 @@
       </trans-unit>
       <trans-unit id="JyToKKj" resname="File info of multimedia object">
         <source>File info of multimedia object</source>
-        <target state="translated">Informació de fitxer de l’objecte multimèdia</target>
+        <target state="translated">Informació de fitxer de l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="PJm7Cwi" resname="Delete track">
         <source>Delete track</source>
@@ -1709,7 +1709,7 @@
       </trans-unit>
       <trans-unit id="DbXaeNB" resname="Autocomplete technical metadata of track">
         <source>Autocomplete technical metadata of track</source>
-        <target state="translated">Autocompleta les metadades tècniques de la pista</target>
+        <target state="translated">Completa de manera automàtica les metadades tècniques de la pista</target>
       </trans-unit>
       <trans-unit id="EaAlxnm" resname="Capture frame from">
         <source>Capture frame from</source>
@@ -1741,7 +1741,7 @@
       </trans-unit>
       <trans-unit id="rSgp7EK" resname="Track successfully updated.">
         <source>Track successfully updated.</source>
-        <target state="translated">La pista s’ha actualitzat correctament.</target>
+        <target state="translated">La pista s'ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="HbDC1hM" resname="Update the web page to show master videos">
         <source>Update the web page to show master videos</source>
@@ -1749,11 +1749,11 @@
       </trans-unit>
       <trans-unit id="VZEQwqi" resname="New Track added.">
         <source>New Track added.</source>
-        <target state="translated">La pista nova s’ha afegit.</target>
+        <target state="translated">S'ha afegit una pista nova.</target>
       </trans-unit>
       <trans-unit id="dBYCcHI" resname="External defined user. User Groups cannot be edited. Contact your directory service administrator to change membership.">
         <source>External defined user. User Groups cannot be edited. Contact your directory service administrator to change membership.</source>
-        <target state="translated">Usuari definit externament. Els grups de l’usuari no es poden editar. Poseu-vos en contacte amb l’administrador del servei del directori per canviar-ne l’afiliació.</target>
+        <target state="translated">Usuari definit externament. Els grups de l'usuari no es poden editar. Contacteu amb l'administrador del servei del directori per canviar-ne l'afiliació.</target>
       </trans-unit>
       <trans-unit id="z_uoNon" resname="create new user">
         <source>create new user</source>
@@ -1761,7 +1761,7 @@
       </trans-unit>
       <trans-unit id="ejqjrR0" resname="edit groups for user">
         <source>edit groups for user</source>
-        <target state="translated">edita els grups de l’usuari</target>
+        <target state="translated">edita els grups de l'usuari</target>
       </trans-unit>
       <trans-unit id="GoS7oiB" resname="GROUPS">
         <source>GROUPS</source>
@@ -1769,11 +1769,11 @@
       </trans-unit>
       <trans-unit id="MBaNOCX" resname="User current Groups">
         <source>User current Groups</source>
-        <target state="translated">Grups actuals de l’usuari</target>
+        <target state="translated">Grups actuals de l'usuari</target>
       </trans-unit>
       <trans-unit id="47ienTP" resname="Username">
         <source>Username</source>
-        <target state="translated">Nom d’usuari</target>
+        <target state="translated">Nom d'usuari</target>
       </trans-unit>
       <trans-unit id="JjyR0Hl" resname="Permission Profile">
         <source>Permission Profile</source>
@@ -1797,23 +1797,23 @@
       </trans-unit>
       <trans-unit id="QiB_WnK" resname="There are no users with those values.">
         <source>There are no users with those values.</source>
-        <target state="translated">No hi ha usuaris amb aquests valors.</target>
+        <target state="translated">No hi ha cap usuari amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="6KiDUxl" resname="Edit User">
         <source>Edit User</source>
-        <target state="translated">Edita l’usuari</target>
+        <target state="translated">Edita l'usuari</target>
       </trans-unit>
       <trans-unit id="7rt_Xjw" resname="External defined users can not be edited here, contact your directory service administrator.">
         <source>External defined users can not be edited here, contact your directory service administrator.</source>
-        <target state="translated">Els usuaris definits externament no es poden editar aquí. Poseu-vos en contacte amb l’administrador del servei del directori.</target>
+        <target state="translated">Els usuaris definits externament no es poden editar aquí. Contacteu amb l'administrador del servei del directori.</target>
       </trans-unit>
       <trans-unit id="FOaEZZ0" resname="External defined users can not be deleted here, contact your directory service administrator.">
         <source>External defined users can not be deleted here, contact your directory service administrator.</source>
-        <target state="translated">Els usuaris definits externament no es poden eliminar aquí. Poseu-vos en contacte amb l’administrador del servei del directori.</target>
+        <target state="translated">Els usuaris definits externament no es poden eliminar aquí. Contacteu amb l'administrador del servei del directori.</target>
       </trans-unit>
       <trans-unit id="7CtpnxA" resname="User Groups">
         <source>User Groups</source>
-        <target state="translated">Grups de l’usuari</target>
+        <target state="translated">Grups de l'usuari</target>
       </trans-unit>
       <trans-unit id="7NWsJuk" resname="{0} users|{1} user|]1,Inf] users">
         <source>{0} users|{1} user|]1,Inf] users</source>
@@ -1821,7 +1821,7 @@
       </trans-unit>
       <trans-unit id="Nb_JDYF" resname="modify user">
         <source>modify user</source>
-        <target state="translated">modifica l’usuari</target>
+        <target state="translated">modifica l'usuari</target>
       </trans-unit>
       <trans-unit id="6qYkpgC" resname="Are you sure you want to delete this role?">
         <source>Are you sure you want to delete this role?</source>
@@ -1829,7 +1829,7 @@
       </trans-unit>
       <trans-unit id="Yp7Yoj7" resname="Role successfully deleted.">
         <source>Role successfully deleted.</source>
-        <target state="translated">El rol s’ha eliminat correctament.</target>
+        <target state="translated">El rol s'ha eliminat correctament.</target>
       </trans-unit>
       <trans-unit id="NMZAk89" resname="Impossible to delete, role with">
         <source>Impossible to delete, role with</source>
@@ -1841,19 +1841,19 @@
       </trans-unit>
       <trans-unit id="olRYImi" resname="Are you sure you want to delete the user">
         <source>Are you sure you want to delete the user</source>
-        <target state="translated">Confirmeu que voleu eliminar l’usuari</target>
+        <target state="translated">Confirmeu que voleu eliminar l'usuari?</target>
       </trans-unit>
       <trans-unit id="VyNTZyH" resname="Error deleting user">
         <source>Error deleting user</source>
-        <target state="translated">S’ha produït un error en eliminar l’usuari</target>
+        <target state="translated">S'ha produït un error en eliminar l'usuari</target>
       </trans-unit>
       <trans-unit id="tRLZfny" resname="User">
         <source>User</source>
-        <target state="translated">L’usuari</target>
+        <target state="translated">L'usuari</target>
       </trans-unit>
       <trans-unit id="ZrOB7xr" resname="successfully deleted.">
         <source>successfully deleted.</source>
-        <target state="translated">s’ha eliminat correctament.</target>
+        <target state="translated">s'ha eliminat correctament.</target>
       </trans-unit>
       <trans-unit id="vXs0SAh" resname="Are you sure you want to delete this broadcast?">
         <source>Are you sure you want to delete this broadcast?</source>
@@ -1861,7 +1861,7 @@
       </trans-unit>
       <trans-unit id="p50y7tV" resname="Broadcast successfully deleted.">
         <source>Broadcast successfully deleted.</source>
-        <target state="translated">L’emissió s’ha eliminat correctament.</target>
+        <target state="translated">L'emissió s'ha eliminat correctament.</target>
       </trans-unit>
       <trans-unit id="G27sbjQ" resname="Impossible to delete, broadcast with">
         <source>Impossible to delete, broadcast with</source>
@@ -1877,7 +1877,7 @@
       </trans-unit>
       <trans-unit id="oj2f5PI" resname="Live channel successfully deleted.">
         <source>Live channel successfully deleted.</source>
-        <target state="translated">El canal en directe s’ha eliminat correctament.</target>
+        <target state="translated">El canal en directe s'ha eliminat correctament.</target>
       </trans-unit>
       <trans-unit id="TrgM1tZ" resname="Are you sure you want to delete this series type?">
         <source>Are you sure you want to delete this series type?</source>
@@ -1885,7 +1885,7 @@
       </trans-unit>
       <trans-unit id="w6aKpss" resname="Series type successfully deleted.">
         <source>Series type successfully deleted.</source>
-        <target state="translated">El tipus de sèrie s’ha eliminat correctament.</target>
+        <target state="translated">El tipus de sèrie s'ha eliminat correctament.</target>
       </trans-unit>
       <trans-unit id="31mlu_f" resname="Are you sure you want to delete this live event?">
         <source>Are you sure you want to delete this live event?</source>
@@ -1893,11 +1893,11 @@
       </trans-unit>
       <trans-unit id="SSyB98E" resname="Live event successfully deleted.">
         <source>Live event successfully deleted.</source>
-        <target state="translated">L’esdeveniment en directe s’ha eliminat correctament.</target>
+        <target state="translated">L'esdeveniment en directe s'ha eliminat correctament.</target>
       </trans-unit>
       <trans-unit id="E7k1qxa" resname="Are you sure you want to sync this tags? The tags in other objects from this series will be lost.">
         <source>Are you sure you want to sync this tags? The tags in other objects from this series will be lost.</source>
-        <target state="translated">Confirmeu que voleu sincronitzar aquestes etiquetes? Es perdran les etiquetes d’altres objectes d’aquesta sèrie.</target>
+        <target state="translated">Confirmeu que voleu sincronitzar aquestes etiquetes? Es perdran les etiquetes d'altres objectes d'aquesta sèrie.</target>
       </trans-unit>
       <trans-unit id="ePSCF2q" resname="Are you sure you want to delete this multimedia object?">
         <source>Are you sure you want to delete this multimedia object?</source>
@@ -1905,19 +1905,19 @@
       </trans-unit>
       <trans-unit id="CeEjD2m" resname="Multimedia Object successfully deleted.">
         <source>Multimedia Object successfully deleted.</source>
-        <target state="translated">L’objecte multimèdia s’ha eliminat correctament.</target>
+        <target state="translated">L'objecte multimèdia s'ha eliminat correctament.</target>
       </trans-unit>
       <trans-unit id="7u81YwG" resname="Are you sure you want to regenerate the magic url for this multimedia object?">
         <source>Are you sure you want to regenerate the magic url for this multimedia object?</source>
-        <target state="translated">Confirmeu que voleu regenerar l’URL màgic d’aquest objecte multimèdia?</target>
+        <target state="translated">Confirmeu que voleu regenerar l'URL màgic d'aquest objecte multimèdia?</target>
       </trans-unit>
       <trans-unit id="gJHFxD7" resname="Magic Url successfully generated.">
         <source>Magic Url successfully generated.</source>
-        <target state="translated">L’URL màgic s’ha generat correctament.</target>
+        <target state="translated">L'URL màgic s'ha generat correctament.</target>
       </trans-unit>
       <trans-unit id="em6xvLB" resname="Are you sure you want to regenerate the magic url for the Series: &quot;+seriesTitle+&quot;?">
         <source>Are you sure you want to regenerate the magic url for the Series: "+seriesTitle+"?</source>
-        <target state="translated">Confirmeu que voleu regenerar l’URL màgic de la sèrie "+seriesTitle+"?</target>
+        <target state="translated">Confirmeu que voleu regenerar l'URL màgic de la sèrie "+seriesTitle+"?</target>
       </trans-unit>
       <trans-unit id="uVXqMVU" resname="Are you sure you want to clone this multimedia object?">
         <source>Are you sure you want to clone this multimedia object?</source>
