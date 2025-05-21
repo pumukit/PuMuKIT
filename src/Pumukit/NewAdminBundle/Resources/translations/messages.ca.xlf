@@ -1929,15 +1929,15 @@
       </trans-unit>
       <trans-unit id="JK9jnZq" resname="Are you sure you want to delete the series">
         <source>Are you sure you want to delete the series</source>
-        <target state="translated">Confirmeu que voleu eliminar la sèrie</target>
+        <target state="translated">Confirmeu que voleu eliminar la sèrie?</target>
       </trans-unit>
       <trans-unit id="wVqjGA4" resname="This series has">
         <source>This series has</source>
-        <target state="translated">Aquesta sèrie</target>
+        <target state="translated">Aquesta sèrie té</target>
       </trans-unit>
       <trans-unit id="68_0wqL" resname="multimedia object(s)">
         <source>multimedia object(s)</source>
-        <target state="translated">té objectes multimèdia</target>
+        <target state="translated">objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="68_0ssswqL" resname="live event(s)">
         <source>live event(s)</source>
@@ -1949,11 +1949,11 @@
       </trans-unit>
       <trans-unit id=".RXtNr9" resname="successfully deleted">
         <source>successfully deleted</source>
-        <target state="translated">s’ha eliminat correctament</target>
+        <target state="translated">s'ha eliminat correctament</target>
       </trans-unit>
       <trans-unit id="B8XoUzq" resname="Are you sure you want to delete the playlist">
         <source>Are you sure you want to delete the playlist</source>
-        <target state="translated">Confirmeu que voleu eliminar la llista de reproducció</target>
+        <target state="translated">Confirmeu que voleu eliminar la llista de reproducció?</target>
       </trans-unit>
       <trans-unit id="eqXGEIN" resname="This playlist has">
         <source>This playlist has</source>
@@ -1965,7 +1965,7 @@
       </trans-unit>
       <trans-unit id="CnuGXCW" resname="Are you sure you want to delete the Permission Profile">
         <source>Are you sure you want to delete the Permission Profile</source>
-        <target state="translated">Confirmeu que voleu eliminar el perfil de permisos</target>
+        <target state="translated">Confirmeu que voleu eliminar el perfil de permisos?</target>
       </trans-unit>
       <trans-unit id="YUT0gTi" resname="Are you sure you want to delete this thumbnail?">
         <source>Are you sure you want to delete this thumbnail?</source>
@@ -1973,23 +1973,23 @@
       </trans-unit>
       <trans-unit id="YUG7gTi" resname="If it corresponds to the one associated with the banner, the entire header will also be removed.">
         <source>If it corresponds to the one associated with the banner, the entire header will also be removed.</source>
-        <target state="translated">Si correspon a l'associat al banner, també s'eliminarà tota la capçalera.</target>
+        <target state="translated">Si correspon a l'associat al bàner, també s'eliminarà tota la capçalera.</target>
       </trans-unit>
       <trans-unit id="Eru2JsX" resname="Thumbnail removed.">
         <source>Thumbnail removed.</source>
-        <target state="translated">La miniatura s’ha eliminat.</target>
+        <target state="translated">S'ha eliminat la miniatura.</target>
       </trans-unit>
       <trans-unit id="cOI7VBt" resname="Are you sure you want to delete the relation of">
         <source>Are you sure you want to delete the relation of</source>
-        <target state="translated">Confirmeu que voleu eliminar la relació de</target>
+        <target state="translated">Confirmeu que voleu eliminar la relació de?</target>
       </trans-unit>
       <trans-unit id="93IwAVp" resname="Error deleting Person">
         <source>Error deleting Person</source>
-        <target state="translated">S’ha produït un error en eliminar la persona</target>
+        <target state="translated">S'ha produït un error en eliminar la persona</target>
       </trans-unit>
       <trans-unit id="dzQnHNH" resname="Person successfully removed from Multimedia Object">
         <source>Person successfully removed from Multimedia Object</source>
-        <target state="translated">La persona s’ha eliminat correctament de l’objecte multimèdia</target>
+        <target state="translated">La persona s'ha eliminat correctament de l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="BcN9q8y" resname="Are you sure you want to delete this link?">
         <source>Are you sure you want to delete this link?</source>
@@ -2001,7 +2001,7 @@
       </trans-unit>
       <trans-unit id="Bu3wtKv" resname="Material successfully deleted.">
         <source>Material successfully deleted.</source>
-        <target state="translated">El material s’ha eliminat correctament.</target>
+        <target state="translated">S'ha eliminat el material correctament.</target>
       </trans-unit>
       <trans-unit id="v7zlmez" resname="Are you sure you want to delete this track?">
         <source>Are you sure you want to delete this track?</source>
