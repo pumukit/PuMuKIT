@@ -2009,11 +2009,11 @@
       </trans-unit>
       <trans-unit id="nTMzQbi" resname="Error extracting thumbnail">
         <source>Error extracting thumbnail</source>
-        <target state="translated">S’ha produït un error en extreure la miniatura</target>
+        <target state="translated">S'ha produït un error en extreure la miniatura</target>
       </trans-unit>
       <trans-unit id="8Tf7CDw" resname="Are you sure you want to delete the data of">
         <source>Are you sure you want to delete the data of</source>
-        <target state="translated">Confirmeu que voleu eliminar les dades de</target>
+        <target state="translated">Confirmeu que voleu eliminar les dades de?</target>
       </trans-unit>
       <trans-unit id="YAfbY_G" resname="Person">
         <source>Person</source>
@@ -2021,7 +2021,7 @@
       </trans-unit>
       <trans-unit id="l17pdOk" resname="Error deleting Group">
         <source>Error deleting Group</source>
-        <target state="translated">S’ha produït un error en eliminar el grup</target>
+        <target state="translated">S'ha produït un error en eliminar el grup</target>
       </trans-unit>
       <trans-unit id="NMoOdmC" resname="Group">
         <source>Group</source>
@@ -2037,15 +2037,15 @@
       </trans-unit>
       <trans-unit id="8HdfsdYsTzv" resname="Are you sure you want to delete this/these series">
         <source>Are you sure you want to delete this/these series</source>
-        <target state="translated">Esteu segur que voleu suprimir aquesta o aquestes sèries</target>
+        <target state="translated">Confirmeu que voleu suprimir aquesta o aquestes sèries?</target>
       </trans-unit>
       <trans-unit id="8Hdfs44zv" resname="This/these series has/have">
         <source>This/these series has/have</source>
-        <target state="translated">Aquesta/aquestes sèries té/tenen</target>
+        <target state="translated">Aquesta o aquestes sèries tenen</target>
       </trans-unit>
       <trans-unit id="uw0Ge.Y" resname="Multimedia Object(s) successfully deleted.">
         <source>Multimedia Object(s) successfully deleted.</source>
-        <target state="translated">Els objectes multimèdia s’han eliminat correctament.</target>
+        <target state="translated">S'han eliminat els objectes multimèdia correctament.</target>
       </trans-unit>
       <trans-unit id="p5b_bOk" resname="Tags with children can not be deleted.">
         <source>Tags with children can not be deleted.</source>
@@ -2057,11 +2057,11 @@
       </trans-unit>
       <trans-unit id="VStEpQy" resname="Multimedia Object cut. Paste it in the desire Series.">
         <source>Multimedia Object cut. Paste it in the desire Series.</source>
-        <target state="translated">S’ha retallat l’objecte multimèdia. Enganxeu-lo a la sèrie que vulgueu.</target>
+        <target state="translated">S'ha retallat l'objecte multimèdia. Enganxeu-lo a la sèrie que vulgueu.</target>
       </trans-unit>
       <trans-unit id="d8PHX.C" resname="Multimedia Objects cut. Paste them in the desire Series.">
         <source>Multimedia Objects cut. Paste them in the desire Series.</source>
-        <target state="translated">S’han retallat els objectes multimèdia. Enganxeu-los a la sèrie que vulgueu.</target>
+        <target state="translated">S'han retallat els objectes multimèdia. Enganxeu-los a la sèrie que vulgueu.</target>
       </trans-unit>
       <trans-unit id="Tb1szZW" resname="Paste multimedia object(s) in this series?">
         <source>Paste multimedia object(s) in this series?</source>
