@@ -1917,7 +1917,7 @@
       </trans-unit>
       <trans-unit id="em6xvLB" resname="Are you sure you want to regenerate the magic url for the Series: &quot;+seriesTitle+&quot;?">
         <source>Are you sure you want to regenerate the magic url for the Series: "+seriesTitle+"?</source>
-        <target state="translated">Confirmeu que voleu regenerar l'URL màgic de la sèrie "+seriesTitle+"?</target>
+        <target state="translated">Confirmeu que voleu regenerar l'URL màgic de la sèrie «+seriesTitle+»?</target>
       </trans-unit>
       <trans-unit id="uVXqMVU" resname="Are you sure you want to clone this multimedia object?">
         <source>Are you sure you want to clone this multimedia object?</source>
