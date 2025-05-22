@@ -2069,7 +2069,7 @@
       </trans-unit>
       <trans-unit id="h7qAnp6" resname="Multimedia Object(s) pasted in the Series.">
         <source>Multimedia Object(s) pasted in the Series.</source>
-        <target state="translated">Els objectes multimèdia s’han enganxat a la sèrie.</target>
+        <target state="translated">S'han enganxat els objectes multimèdia a la sèrie.</target>
       </trans-unit>
       <trans-unit id="N6fBqyB" resname="Select any user.">
         <source>Select any user.</source>
@@ -2077,19 +2077,19 @@
       </trans-unit>
       <trans-unit id="DT.oOJ0" resname="Users updated.">
         <source>Users updated.</source>
-        <target state="translated">S’han actualitzat els usuaris.</target>
+        <target state="translated">S'han actualitzat els usuaris.</target>
       </trans-unit>
       <trans-unit id="hkEGkeo" resname="From date must be less than to date">
         <source>From date must be less than to date</source>
-        <target state="translated">La data d’inici ha de ser anterior a la data de finalització</target>
+        <target state="translated">La data d'inici ha de ser anterior a la data de finalització</target>
       </trans-unit>
       <trans-unit id="W2SAiJZ" resname="Multimedia Object successfully created.">
         <source>Multimedia Object successfully created.</source>
-        <target state="translated">L’objecte multimèdia s’ha creat correctament.</target>
+        <target state="translated">S'ha creat l'objecte multimèdia correctament.</target>
       </trans-unit>
       <trans-unit id="INEMKnf" resname="Series successfully created.">
         <source>Series successfully created.</source>
-        <target state="translated">La sèrie s’ha creat correctament.</target>
+        <target state="translated">La sèrie s'ha creat correctament.</target>
       </trans-unit>
       <trans-unit id="CD8V2jD" resname="Playlist successfully created.">
         <source>Playlist successfully created.</source>
