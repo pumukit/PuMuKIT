@@ -2089,7 +2089,7 @@
       </trans-unit>
       <trans-unit id="INEMKnf" resname="Series successfully created.">
         <source>Series successfully created.</source>
-        <target state="translated">La sèrie s'ha creat correctament.</target>
+        <target state="translated">S'ha creat la sèrie correctament.</target>
       </trans-unit>
       <trans-unit id="CD8V2jD" resname="Playlist successfully created.">
         <source>Playlist successfully created.</source>
