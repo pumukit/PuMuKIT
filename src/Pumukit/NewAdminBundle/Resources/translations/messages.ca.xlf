@@ -2093,11 +2093,11 @@
       </trans-unit>
       <trans-unit id="CD8V2jD" resname="Playlist successfully created.">
         <source>Playlist successfully created.</source>
-        <target state="translated">La llista de reproducció s’ha creat correctament.</target>
+        <target state="translated">S'ha creat la llista de reproducció correctament.</target>
       </trans-unit>
       <trans-unit id="g2VW76s" resname="The given URL is not valid">
         <source>The given URL is not valid</source>
-        <target state="translated">L’URL introduït no és vàlid</target>
+        <target state="translated">L'URL introduït no és vàlid</target>
       </trans-unit>
       <trans-unit id="yeEl78P" resname="This directory">
         <source>This directory</source>
@@ -2113,7 +2113,7 @@
       </trans-unit>
       <trans-unit id="1Pu5dTM" resname="Are you sure you want to delete the tag with code">
         <source>Are you sure you want to delete the tag with code</source>
-        <target state="translated">Confirmeu que voleu eliminar l’etiqueta amb codi</target>
+        <target state="translated">Confirmeu que voleu eliminar l'etiqueta amb codi?</target>
       </trans-unit>
       <trans-unit id="FQORaiq" resname="Tag">
         <source>Tag</source>
@@ -2121,23 +2121,23 @@
       </trans-unit>
       <trans-unit id="hJTTcFb" resname="ATTENTION: Are you sure you want to delete all User from this Group?">
         <source>ATTENTION: Are you sure you want to delete all User from this Group?</source>
-        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar tots els usuaris d’aquest grup?</target>
+        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar tots els usuaris d'aquest grup?</target>
       </trans-unit>
       <trans-unit id="9viBwjA" resname="ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?">
         <source>ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?</source>
-        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar tots els objectes multimèdia d’administració d’aquest grup?</target>
+        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar tots els objectes multimèdia d'administració d'aquest grup?</target>
       </trans-unit>
       <trans-unit id="rcNVqHI" resname="ATTENTION: Are you sure you want to delete all Play Multimedia Objects from this Group?">
         <source>ATTENTION: Are you sure you want to delete all Play Multimedia Objects from this Group?</source>
-        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar tots els objectes multimèdia de reproducció d’aquest grup?</target>
+        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar tots els objectes multimèdia de reproducció d'aquest grup?</target>
       </trans-unit>
       <trans-unit id="0WK8JjE" resname="There was an error in creating the Live event.">
         <source>There was an error in creating the Live event.</source>
-        <target state="translated">S’ha produït un error en crear l’esdeveniment en directe.</target>
+        <target state="translated">S'ha produït un error en crear l'esdeveniment en directe.</target>
       </trans-unit>
       <trans-unit id="i1NJEAu" resname="Live event successfully created.">
         <source>Live event successfully created.</source>
-        <target state="translated">L’esdeveniment en directe s’ha creat correctament.</target>
+        <target state="translated">S'ha creat l'esdeveniment en directe correctament.</target>
       </trans-unit>
       <trans-unit id="i1Nasa2JEAu" resname="Failed to update event, you need to create a channel first.">
         <source>Failed to update event, you need to create a channel first.</source>
@@ -2145,23 +2145,23 @@
       </trans-unit>
       <trans-unit id="5Z0ROY3" resname="There was an error in creating the Live channel.">
         <source>There was an error in creating the Live channel.</source>
-        <target state="translated">S’ha produït un error en crear el canal en directe.</target>
+        <target state="translated">S'ha produït un error en crear el canal en directe.</target>
       </trans-unit>
       <trans-unit id="mHcQkpB" resname="Live channel successfully created.">
         <source>Live channel successfully created.</source>
-        <target state="translated">El canal en directe s’ha creat correctament.</target>
+        <target state="translated">S'ha creat el canal en directe correctament.</target>
       </trans-unit>
       <trans-unit id="3GvYMAf" resname="Series type channel successfully created.">
         <source>Series type channel successfully created.</source>
-        <target state="translated">El canal de tipus de sèrie s’ha creat correctament.</target>
+        <target state="translated">S'ha creat el canal de tipus de sèrie correctament.</target>
       </trans-unit>
       <trans-unit id="zN9Po12" resname="Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.">
         <source>Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.</source>
-        <target state="translated">S’ha produït un error en desar l’objecte multimèdia: la data de publicació no pot ser anterior a la data de gravació.</target>
+        <target state="translated">S'ha produït un error en desar l'objecte multimèdia: la data de publicació no pot ser anterior a la data de gravació.</target>
       </trans-unit>
       <trans-unit id="y_HqDaU" resname="There was an error in updating the User.">
         <source>There was an error in updating the User.</source>
-        <target state="translated">S’ha produït un error en actualitzar l’usuari.</target>
+        <target state="translated">S'ha produït un error en actualitzar l'usuari.</target>
       </trans-unit>
       <trans-unit id="QXcI6C0" resname="User successfully updated.">
         <source>User successfully updated.</source>
