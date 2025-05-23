@@ -2165,11 +2165,11 @@
       </trans-unit>
       <trans-unit id="QXcI6C0" resname="User successfully updated.">
         <source>User successfully updated.</source>
-        <target state="translated">L’usuari s’ha actualitzat correctament.</target>
+        <target state="translated">S'ha actualitzat l'usuari correctament.</target>
       </trans-unit>
       <trans-unit id="4LRJfJP" resname="There was an error in creating the User.">
         <source>There was an error in creating the User.</source>
-        <target state="translated">S’ha produït un error en crear l’usuari.</target>
+        <target state="translated">S'ha produït un error en crear l'usuari.</target>
       </trans-unit>
       <trans-unit id="jL7JI3P" resname="User successfully created.">
         <source>User successfully created.</source>
