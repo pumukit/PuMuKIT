@@ -2193,7 +2193,7 @@
       </trans-unit>
       <trans-unit id="ZjZcDHe" resname="Permission Profiles successfully updated.">
         <source>Permission Profiles successfully updated.</source>
-        <target state="translated">Els perfils de permisos s’han actualitzat correctament.</target>
+        <target state="translated">S'han actualitzat els perfils de permisos correctament.</target>
       </trans-unit>
       <trans-unit id="nUGcFk_" resname="The permission">
         <source>The permission</source>
