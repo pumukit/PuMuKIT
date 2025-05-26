@@ -109,6 +109,7 @@ class TagCatalogueService
         $tag = [];
 
         $criteria = $request->request->get('criteria');
+        dump($criteria);
         if ($criteria) {
             foreach ($criteria as $key => $value) {
                 if (('id' === $key) && !empty($value)) {
@@ -186,10 +187,10 @@ class TagCatalogueService
         }
 
         if (count($tag) > 0) {
-            if ('all' === $tag[0]) {
-                array_shift($tag);
-            } else {
-                $newCriteria['tags.cod'] = ['$all' => $tag];
+            $tag = array_filter($tag, fn ($t) => 'all' !== $t);
+
+            if (count($tag) > 0) {
+                $newCriteria['tags.cod'] = ['$all' => array_values($tag)];
             }
         }
 
