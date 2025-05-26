@@ -2181,11 +2181,11 @@
       </trans-unit>
       <trans-unit id="4JQE_07" resname="Permission Profile successfully created.">
         <source>Permission Profile successfully created.</source>
-        <target state="translated">El perfil de permisos s’ha creat correctament.</target>
+        <target state="translated">S'ha creat el perfil de permisos correctament.</target>
       </trans-unit>
       <trans-unit id="igz0C_y" resname="There was an error in updating the Permission Profile.">
         <source>There was an error in updating the Permission Profile.</source>
-        <target state="translated">S’ha produït un error en actualitzar el perfil de permisos.</target>
+        <target state="translated">S'ha produït un error en actualitzar el perfil de permisos.</target>
       </trans-unit>
       <trans-unit id="q_SHmt8" resname="Permission Profile successfully updated.">
         <source>Permission Profile successfully updated.</source>
