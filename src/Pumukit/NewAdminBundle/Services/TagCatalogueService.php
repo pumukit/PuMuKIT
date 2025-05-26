@@ -109,7 +109,7 @@ class TagCatalogueService
         $tag = [];
 
         $criteria = $request->request->get('criteria');
-        dump($criteria);
+
         if ($criteria) {
             foreach ($criteria as $key => $value) {
                 if (('id' === $key) && !empty($value)) {
