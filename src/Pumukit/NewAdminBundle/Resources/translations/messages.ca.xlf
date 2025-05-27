@@ -2205,7 +2205,7 @@
       </trans-unit>
       <trans-unit id="sounSSe" resname="If you click OK you will uncheck all these permissions. Are you sure?">
         <source>If you click OK you will uncheck all these permissions. Are you sure?</source>
-        <target state="translated">Si feu clic a D’acord desactivareu tots aquests permisos. Voleu continuar?</target>
+        <target state="translated">Si feu clic a «D’acord» desactivareu tots aquests permisos. Voleu continuar?</target>
       </trans-unit>
       <trans-unit id="OsIT4lO" resname="ATTENTION: Are you sure you want to delete this User from this Group?">
         <source>ATTENTION: Are you sure you want to delete this User from this Group?</source>
