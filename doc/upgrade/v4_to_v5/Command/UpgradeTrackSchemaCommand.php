@@ -34,7 +34,7 @@ final class UpgradeTrackSchemaCommand extends Command
     private MediaUpdater $mediaUpdater;
     private $output;
 
-    private $errors;
+    private $errors = [];
 
     public function __construct(DocumentManager $documentManager, MediaUpdater $mediaUpdater)
     {
