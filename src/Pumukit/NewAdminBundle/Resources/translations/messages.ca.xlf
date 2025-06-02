@@ -2777,19 +2777,19 @@
       </trans-unit>
       <trans-unit id="YzJHJvk" resname="Update media">
         <source>Update media</source>
-        <target state="translated">Actualitza l’objecte multimèdia</target>
+        <target state="translated">Actualitza l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="0VgOpQk" resname="Filter Users">
         <source>Filter Users</source>
-        <target state="translated">Filtra usuaris</target>
+        <target state="translated">Filtra els usuaris</target>
       </trans-unit>
       <trans-unit id="fpFAdY1" resname="Filter Live Channels">
         <source>Filter Live Channels</source>
-        <target state="translated">Filtra canals en directe</target>
+        <target state="translated">Filtra els canals en directe</target>
       </trans-unit>
       <trans-unit id="PG3gj8j" resname="Filter Live Events">
         <source>Filter Live Events</source>
-        <target state="translated">Filtra esdeveniments en directe</target>
+        <target state="translated">Filtra els esdeveniments en directe</target>
       </trans-unit>
       <trans-unit id="8bdQWvp" resname="Social">
         <source>Social</source>
@@ -2801,15 +2801,15 @@
       </trans-unit>
       <trans-unit id="eDKk3wj" resname="New event session">
         <source>New event session</source>
-        <target state="translated">Nova sessió d’esdeveniments</target>
+        <target state="translated">Sessió d'esdeveniments nova</target>
       </trans-unit>
       <trans-unit id="2VCCou5" resname="Author">
         <source>Author</source>
-        <target state="translated">Autor</target>
+        <target state="translated">Autor o autora</target>
       </trans-unit>
       <trans-unit id="mO5AIcb" resname="Producer">
         <source>Producer</source>
-        <target state="translated">Productor</target>
+        <target state="translated">Productor o productora</target>
       </trans-unit>
       <trans-unit id="ikoRF.w" resname="External URL">
         <source>External URL</source>
@@ -2825,7 +2825,7 @@
       </trans-unit>
       <trans-unit id="Oz0ME2t" resname="Event successfully updated.">
         <source>Event successfully updated.</source>
-        <target state="translated">L’esdeveniment s’ha actualitzat correctament.</target>
+        <target state="translated">S'ha actualitzat l'esdeveniment correctament.</target>
       </trans-unit>
       <trans-unit id="FpAfuZM" resname="Select an&#10; action...">
         <source>Select an
@@ -2835,7 +2835,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="Fv0AJbm" resname="Create new series of live events">
         <source>Create new series of live events</source>
-        <target state="translated">Crea una sèrie nova d’esdeveniments en directe</target>
+        <target state="translated">Crea una sèrie nova d'esdeveniments en directe</target>
       </trans-unit>
       <trans-unit id="DbvDhEd" resname="New event and series">
         <source>New event and series</source>
@@ -2863,11 +2863,11 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="Jng1igs" resname="There was an error in updating the event session.">
         <source>There was an error in updating the event session.</source>
-        <target state="translated">S’ha produït un error en actualitzar la sessió de l’esdeveniment.</target>
+        <target state="translated">S'ha produït un error en actualitzar la sessió de l'esdeveniment.</target>
       </trans-unit>
       <trans-unit id="KyP9h0w" resname="Live session successfully updated.">
         <source>Live session successfully updated.</source>
-        <target state="translated">La sessió en directe s’ha actualitzat correctament.</target>
+        <target state="translated">S'ha actualitzat la sessió en directe correctament.</target>
       </trans-unit>
       <trans-unit id="5LufHs6" resname="Start">
         <source>Start</source>
@@ -2891,15 +2891,15 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="CbMOcUu" resname="Clone event">
         <source>Clone event</source>
-        <target state="translated">Clona l’esdeveniment</target>
+        <target state="translated">Clona l'esdeveniment</target>
       </trans-unit>
       <trans-unit id="uHKkLtT" resname="Delete event">
         <source>Delete event</source>
-        <target state="translated">Elimina l’esdeveniment</target>
+        <target state="translated">Elimina l'esdeveniment</target>
       </trans-unit>
       <trans-unit id="G2T.fcJ" resname="Delete event and series">
         <source>Delete event and series</source>
-        <target state="translated">Elimina l’esdeveniment i la sèrie</target>
+        <target state="translated">Elimina l'esdeveniment i la sèrie</target>
       </trans-unit>
       <trans-unit id="aVm0FZV" resname="Session">
         <source>Session</source>
@@ -2910,10 +2910,7 @@ una acció...</target>
                             In case this series already exists in the database, a pull-down list will be shown,
                             where you can select it and use it. If it doesn't exist in the database,
                             create a new entrance with the written name.</source>
-        <target state="translated">Introduïu el nom de la sèrie que voleu utilitzar.
-                            Si aquesta sèrie ja existeix a la base de dades, es mostrarà una llista desplegable
-                            des de la qual podreu seleccionar-la i utilitzar-la. Si no existeix a la base de dades,
-                            creeu una entrada nova amb el nom escrit.</target>
+        <target state="translated">Introduïu el nom de la sèrie que voleu utilitzar. Si aquesta sèrie ja existeix a la base de dades, es mostrarà una llista desplegable des de la qual podreu seleccionar-la i utilitzar-la. Si no existeix a la base de dades, creeu una entrada nova amb el nom escrit.</target>
       </trans-unit>
       <trans-unit id="8JSxSlF" resname="Video URL">
         <source>Video URL</source>
@@ -2921,7 +2918,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="u_zanwX" resname="List multimedia objects in a manual order">
         <source>List multimedia objects in a manual order</source>
-        <target state="translated">Llista els objectes multimèdia seguint un ordre manual</target>
+        <target state="translated">Enumera els objectes multimèdia seguint un ordre manual</target>
       </trans-unit>
       <trans-unit id=".27ti1B" resname="(active)">
         <source>(active)</source>
@@ -2929,15 +2926,15 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="GANpN0w" resname="List multimedia objects in ascending order of title">
         <source>List multimedia objects in ascending order of title</source>
-        <target state="translated">Llista els objectes multimèdia segons el títol per ordre ascendent</target>
+        <target state="translated">Enumera els objectes multimèdia segons el títol per ordre ascendent</target>
       </trans-unit>
       <trans-unit id="e3Prpu6" resname="Filter playlist">
         <source>Filter playlist</source>
-        <target state="translated">Filtra llistes de reproducció</target>
+        <target state="translated">Filtra les llistes de reproducció</target>
       </trans-unit>
       <trans-unit id=".UljpFW" resname="Multimedia Playlist metadata">
         <source>Multimedia Playlist metadata</source>
-        <target state="translated">Metadades de la llista de reproducció d’objectes multimèdia</target>
+        <target state="translated">Metadades de la llista de reproducció d'objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="vVZ4A_F" resname="Warning: This link will give a 404 error while this series is hidden.">
         <source>Warning: This link will give a 404 error while this series is hidden.</source>
@@ -2949,7 +2946,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="onnoCvE" resname="Generate a new magic series link">
         <source>Generate a new magic series link</source>
-        <target state="translated">Genera un nou enllaç màgic de sèries</target>
+        <target state="translated">Genera un enllaç màgic de sèries nou </target>
       </trans-unit>
       <trans-unit id="ygGVPNS" resname="Update Series Metadata">
         <source>Update Series Metadata</source>
