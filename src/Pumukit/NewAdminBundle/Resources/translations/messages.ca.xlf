@@ -2209,15 +2209,15 @@
       </trans-unit>
       <trans-unit id="OsIT4lO" resname="ATTENTION: Are you sure you want to delete this User from this Group?">
         <source>ATTENTION: Are you sure you want to delete this User from this Group?</source>
-        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar aquest usuari d’aquest grup?</target>
+        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar aquest usuari d'aquest grup?</target>
       </trans-unit>
       <trans-unit id="SOEdbzh" resname="ATTENTION: Are you sure you want to delete this Admin Multimedia Object from this Group?">
         <source>ATTENTION: Are you sure you want to delete this Admin Multimedia Object from this Group?</source>
-        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar aquest objecte multimèdia d’administració d’aquest grup?</target>
+        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar aquest objecte multimèdia d'administració d'aquest grup?</target>
       </trans-unit>
       <trans-unit id="uAtpvbf" resname="ATTENTION: Are you sure you want to delete this Play Multimedia Object from this Group?">
         <source>ATTENTION: Are you sure you want to delete this Play Multimedia Object from this Group?</source>
-        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar aquest objecte multimèdia de reproducció d’aquest grup?</target>
+        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar aquest objecte multimèdia de reproducció d'aquest grup?</target>
       </trans-unit>
       <trans-unit id="HQDtFM_" resname="WARNING: You will no longer have access to this Multimedia Object.">
         <source>WARNING: You will no longer have access to this Multimedia Object.</source>
@@ -2225,7 +2225,7 @@
       </trans-unit>
       <trans-unit id="w8EOstY" resname="Any Internet user can play this multimedia object">
         <source>Any Internet user can play this multimedia object</source>
-        <target state="translated">Qualsevol usuari d’Internet pot reproduir aquest objecte multimèdia</target>
+        <target state="translated">Qualsevol usuari d'Internet pot reproduir aquest objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="RBNtvVe" resname="Only users with the defined password can play this multimedia object">
         <source>Only users with the defined password can play this multimedia object</source>
@@ -2233,7 +2233,7 @@
       </trans-unit>
       <trans-unit id=".gDZQyh" resname="Only logged in users in the system can play this multimedia object">
         <source>Only logged in users in the system can play this multimedia object</source>
-        <target state="translated">Només els usuaris connectats al sistema poden reproduir aquest objecte multimèdia</target>
+        <target state="translated">Només els usuaris que han iniciat la sessió al sistema poden reproduir aquest objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="FxXP0wh" resname="Only users in the selected Groups can play this multimedia object">
         <source>Only users in the selected Groups can play this multimedia object</source>
@@ -2241,7 +2241,7 @@
       </trans-unit>
       <trans-unit id=".l7.lEI" resname="Media Manager">
         <source>Media Manager</source>
-        <target state="translated">Gestor d’objectes multimèdia</target>
+        <target state="translated">Gestor d'objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="tKc2V0D" resname="Stats">
         <source>Stats</source>
@@ -2285,7 +2285,7 @@
       </trans-unit>
       <trans-unit id="jESY9eH" resname="OC-Importer">
         <source>OC-Importer</source>
-        <target state="translated">Importador de l’Opencast</target>
+        <target state="translated">Importador de l'Opencast</target>
       </trans-unit>
       <trans-unit id="flsBov8" resname="My Multimedia Objects">
         <source>My Multimedia Objects</source>
@@ -2301,23 +2301,23 @@
       </trans-unit>
       <trans-unit id="RXjCcTt" resname="Multimedia object preview">
         <source>Multimedia object preview</source>
-        <target state="translated">Previsualització de l’objecte multimèdia</target>
+        <target state="translated">Previsualització de l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="99uIZSi" resname="The multimedia object '%title%' is not playable">
         <source>The multimedia object '%title%' is not playable</source>
-        <target state="translated">L’objecte multimèdia '%title%' no es pot reproduir</target>
+        <target state="translated">L'objecte multimèdia «%title%» no es pot reproduir</target>
       </trans-unit>
       <trans-unit id="8U1WTQ5" resname="The multimedia object '%title%' is not published">
         <source>The multimedia object '%title%' is not published</source>
-        <target state="translated">L’objecte multimèdia '%title%' no està publicat</target>
+        <target state="translated">L'objecte multimèdia «%title%» no està publicat</target>
       </trans-unit>
       <trans-unit id="B3BQNfz" resname="My Moodle Playlists">
         <source>My Moodle Playlists</source>
-        <target state="translated">Les meves llistes de reproducció del Moodle</target>
+        <target state="translated">Les meves llistes de reproducció de Moodle</target>
       </trans-unit>
       <trans-unit id="8Hl1wYi" resname="List multimedia objects of the playlist">
         <source>List multimedia objects of the playlist</source>
-        <target state="translated">Llista els objectes multimèdia de la llista de reproducció</target>
+        <target state="translated">Enumera els objectes multimèdia de la llista de reproducció</target>
       </trans-unit>
       <trans-unit id="YsLXZVx" resname="This object cannot be played on the playlist">
         <source>This object cannot be played on the playlist</source>
@@ -2329,11 +2329,11 @@
       </trans-unit>
       <trans-unit id="PWlKoNH" resname="Edit multimedia object">
         <source>Edit multimedia object</source>
-        <target state="translated">Edita l’objecte multimèdia</target>
+        <target state="translated">Edita l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="dtgXFGE" resname="Delete multimedia object from de playlist">
         <source>Delete multimedia object from de playlist</source>
-        <target state="translated">Elimina l’objecte multimèdia de la llista de reproducció</target>
+        <target state="translated">Elimina l'objecte multimèdia de la llista de reproducció</target>
       </trans-unit>
       <trans-unit id="NjI5RKZ" resname="My Multimedia Series">
         <source>My Multimedia Series</source>
@@ -2341,15 +2341,15 @@
       </trans-unit>
       <trans-unit id="zYbUi03" resname="List multimedia objects of the series">
         <source>List multimedia objects of the series</source>
-        <target state="translated">Llista els objectes multimèdia de la sèrie</target>
+        <target state="translated">Enumera els objectes multimèdia de la sèrie</target>
       </trans-unit>
       <trans-unit id="qI.EImz" resname="Go to series">
         <source>Go to series</source>
-        <target state="translated">Vés a les sèries</target>
+        <target state="translated">Ves a les sèries</target>
       </trans-unit>
       <trans-unit id="mgGCAQ." resname="Go to playlists">
         <source>Go to playlists</source>
-        <target state="translated">Vés a les llistes de reproducció</target>
+        <target state="translated">Ves a les llistes de reproducció</target>
       </trans-unit>
       <trans-unit id="9HA4HnV" resname="Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name">
         <source>Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name</source>
@@ -2361,7 +2361,7 @@
       </trans-unit>
       <trans-unit id="EtmhLYs" resname="Delete multimedia object from the playlist">
         <source>Delete multimedia object from the playlist</source>
-        <target state="translated">Elimina l’objecte multimèdia de la llista de reproducció</target>
+        <target state="translated">Elimina l'objecte multimèdia de la llista de reproducció</target>
       </trans-unit>
       <trans-unit id="eoflj3v" resname="My Series">
         <source>My Series</source>
