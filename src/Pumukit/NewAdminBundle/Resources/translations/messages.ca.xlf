@@ -2397,11 +2397,11 @@
       </trans-unit>
       <trans-unit id="XfFDvxx" resname="Header Text">
         <source>Header Text</source>
-        <target state="translated">Text de capçalera</target>
+        <target state="translated">Text de la capçalera</target>
       </trans-unit>
       <trans-unit id="ID4LME1" resname="Footer Text">
         <source>Footer Text</source>
-        <target state="translated">Text de peu de pàgina</target>
+        <target state="translated">Text del peu de pàgina</target>
       </trans-unit>
       <trans-unit id="BXXynfi" resname="Template">
         <source>Template</source>
@@ -2417,7 +2417,7 @@
       </trans-unit>
       <trans-unit id="xaNywP8" resname="ADMIN MULTIMEDIA OBJECTS">
         <source>ADMIN MULTIMEDIA OBJECTS</source>
-        <target state="translated">OBJECTES MULTIMÈDIA D’ADMINISTRACIÓ</target>
+        <target state="translated">OBJECTES MULTIMÈDIA D'ADMINISTRACIÓ</target>
       </trans-unit>
       <trans-unit id="0vQO3eJ" resname="PLAY MULTIMEDIA OBJECTS">
         <source>PLAY MULTIMEDIA OBJECTS</source>
@@ -2441,7 +2441,7 @@
       </trans-unit>
       <trans-unit id="0FJ_Sz1" resname="Logout">
         <source>Logout</source>
-        <target state="translated">Finalitza la sessió</target>
+        <target state="translated">Tanca la sessió</target>
       </trans-unit>
       <trans-unit id="dCz6rVt" resname="Published Multimedia Object(s)">
         <source>Published Multimedia Object(s)</source>
@@ -2457,7 +2457,7 @@
       </trans-unit>
       <trans-unit id="oY0wgNr" resname="No tags found with this criteria">
         <source>No tags found with this criteria</source>
-        <target state="translated">No s’han trobat etiquetes amb aquests criteris</target>
+        <target state="translated">No s'ha trobat cap etiqueta amb aquests criteris</target>
       </trans-unit>
       <trans-unit id="ttQS1uE" resname="Insert filter...">
         <source>Insert filter...</source>
@@ -2477,7 +2477,7 @@
       </trans-unit>
       <trans-unit id="OBiStub" resname="Error promoting user">
         <source>Error promoting user</source>
-        <target state="translated">S’ha produït un error en promocionar l’usuari</target>
+        <target state="translated">S'ha produït un error en promocionar l'usuari</target>
       </trans-unit>
       <trans-unit id="FbYZdLJ" resname="Location">
         <source>Location</source>
@@ -2509,7 +2509,7 @@
       </trans-unit>
       <trans-unit id="8xAM7F2" resname="IP source">
         <source>IP source</source>
-        <target state="translated">Font d’IP</target>
+        <target state="translated">IP d'origen</target>
       </trans-unit>
       <trans-unit id="DDhhg4r" resname="Last Added (Announced)">
         <source>Last Added (Announced)</source>
@@ -2577,7 +2577,7 @@
       </trans-unit>
       <trans-unit id="o6EiK8s" resname="dfxp - Distribution Format Exchange Profile">
         <source>dfxp - Distribution Format Exchange Profile</source>
-        <target state="translated">dfxp - Perfil d’intercanvi de format de distribució</target>
+        <target state="translated">dfxp - Perfil d'intercanvi de format de distribució</target>
       </trans-unit>
       <trans-unit id="SvMvKSS" resname="IFRAME">
         <source>IFRAME</source>
@@ -2585,35 +2585,35 @@
       </trans-unit>
       <trans-unit id="sXY1cJs" resname="Successfully updated groups in User.">
         <source>Successfully updated groups in User.</source>
-        <target state="translated">Els grups s’han actualitzat correctament a l’usuari.</target>
+        <target state="translated">S'han actualitzat els grups correctament a l'usuari.</target>
       </trans-unit>
       <trans-unit id="wbkd_cn" resname="Successfully updated groups in Mm.">
         <source>Successfully updated groups in Mm.</source>
-        <target state="translated">Els grups s’han actualitzat correctament a l’objecte multimèdia.</target>
+        <target state="translated">S'han actualitzat els grups correctament a l'objecte multimèdia.</target>
       </trans-unit>
       <trans-unit id="I.ufkSu" resname="Successfully updated Broadcast.">
         <source>Successfully updated Broadcast.</source>
-        <target state="translated">L’emissió s’ha actualitzat correctament.</target>
+        <target state="translated">S'ha actualitzat l'emissió correctament.</target>
       </trans-unit>
       <trans-unit id="haC6i.Q" resname="Successfully updated Broadcast in all Multimedia Objects.">
         <source>Successfully updated Broadcast in all Multimedia Objects.</source>
-        <target state="translated">L’emissió s’ha actualitzat correctament a tots els objectes multimèdia.</target>
+        <target state="translated">S'ha actualitzat l'emissió correctament a tots els objectes multimèdia.</target>
       </trans-unit>
       <trans-unit id="WmohFym" resname="Any Internet user can play the new multimedia objects created from this video template">
         <source>Any Internet user can play the new multimedia objects created from this video template</source>
-        <target state="translated">Qualsevol usuari d’Internet pot reproduir els objectes multimèdia nous creats a partir d’aquesta plantilla de vídeo</target>
+        <target state="translated">Qualsevol usuari d'Internet pot reproduir els objectes multimèdia nous creats a partir d'aquesta plantilla de vídeo</target>
       </trans-unit>
       <trans-unit id="Q_2cAok" resname="Only users with the defined password can play the new multimedia objects created from this video template">
         <source>Only users with the defined password can play the new multimedia objects created from this video template</source>
-        <target state="translated">Només els usuaris amb la contrasenya definida poden reproduir els objectes multimèdia nous creats a partir d’aquesta plantilla de vídeo</target>
+        <target state="translated">Només els usuaris amb la contrasenya definida poden reproduir els objectes multimèdia nous creats a partir d'aquesta plantilla de vídeo</target>
       </trans-unit>
       <trans-unit id=".DEPZTg" resname="Only logged in users in the system can play the new multimedia objects created from this video template">
         <source>Only logged in users in the system can play the new multimedia objects created from this video template</source>
-        <target state="translated">Només els usuaris connectats al sistema poden reproduir els objectes multimèdia nous creats a partir d’aquesta plantilla de vídeo</target>
+        <target state="translated">Només els usuaris que han iniciat la sessió al sistema poden reproduir els objectes multimèdia nous creats a partir d'aquesta plantilla de vídeo</target>
       </trans-unit>
       <trans-unit id="TpvD2pr" resname="Only users in the selected Groups can play the new multimedia objects created from this video template">
         <source>Only users in the selected Groups can play the new multimedia objects created from this video template</source>
-        <target state="translated">Només els usuaris dels grups seleccionats poden reproduir els objectes multimèdia nous creats a partir d’aquesta plantilla de vídeo</target>
+        <target state="translated">Només els usuaris dels grups seleccionats poden reproduir els objectes multimèdia nous creats a partir d'aquesta plantilla de vídeo</target>
       </trans-unit>
       <trans-unit id="lvSbcrz" resname="Upload new videos">
         <source>Upload new videos</source>
@@ -2621,7 +2621,7 @@
       </trans-unit>
       <trans-unit id="Zb_sy63" resname="Multimedia List">
         <source>Multimedia List</source>
-        <target state="translated">Llista d’objectes multimèdia</target>
+        <target state="translated">Llista d'objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="V9Ij7j0" resname="This Series is announced">
         <source>This Series is announced</source>
@@ -2629,7 +2629,7 @@
       </trans-unit>
       <trans-unit id="Mb.aDob" resname="No multimedia object selected">
         <source>No multimedia object selected</source>
-        <target state="translated">No s’ha seleccionat cap objecte multimèdia</target>
+        <target state="translated">No s'ha seleccionat cap objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="nSb516S" resname="Search by title, subtitle, description or id">
         <source>Search by title, subtitle, description or id</source>
@@ -2657,7 +2657,7 @@
       </trans-unit>
       <trans-unit id="3z1z_Hm" resname="Filter Series">
         <source>Filter Series</source>
-        <target state="translated">Filtra sèries</target>
+        <target state="translated">Filtra les sèries</target>
       </trans-unit>
       <trans-unit id="rhVmzSH" resname="Series publication status">
         <source>Series publication status</source>
@@ -2677,7 +2677,7 @@
       </trans-unit>
       <trans-unit id="2S2DRLh" resname="Select the number of multimedia objects to display per page.">
         <source>Select the number of multimedia objects to display per page.</source>
-        <target state="translated">Seleccioneu el nombre d’objectes multimèdia que voleu mostrar per pàgina.</target>
+        <target state="translated">Seleccioneu el nombre d'objectes multimèdia que voleu mostrar per pàgina.</target>
       </trans-unit>
       <trans-unit id="1c5E_XE" resname="External player">
         <source>External player</source>
@@ -2685,7 +2685,7 @@
       </trans-unit>
       <trans-unit id="EUXU0w." resname="'No external player set'">
         <source>'No external player set'</source>
-        <target state="translated">“No s’ha definit cap reproductor extern”</target>
+        <target state="translated">«No s'ha definit cap reproductor extern»</target>
       </trans-unit>
       <trans-unit id="qEU0HS8" resname="Add external player">
         <source>Add external player</source>
@@ -2693,7 +2693,7 @@
       </trans-unit>
       <trans-unit id="35cm9FL" resname="No external player set">
         <source>No external player set</source>
-        <target state="translated">No s’ha definit cap reproductor extern</target>
+        <target state="translated">No s'ha definit cap reproductor extern</target>
       </trans-unit>
       <trans-unit id="aSj8S.K" resname="External video">
         <source>External video</source>
@@ -2701,7 +2701,7 @@
       </trans-unit>
       <trans-unit id=".4nFv.R" resname="No external video set">
         <source>No external video set</source>
-        <target state="translated">No s’ha definit cap vídeo extern</target>
+        <target state="translated">No s'ha definit cap vídeo extern</target>
       </trans-unit>
       <trans-unit id="Xol1TtJ" resname="Are you sure you want to delete this external video?">
         <source>Are you sure you want to delete this external video?</source>
@@ -2709,7 +2709,7 @@
       </trans-unit>
       <trans-unit id="FNAjY35" resname="External video successfully deleted.">
         <source>External video successfully deleted.</source>
-        <target state="translated">El vídeo extern s’ha eliminat correctament.</target>
+        <target state="translated">S'ha eliminat el vídeo extern correctament.</target>
       </trans-unit>
       <trans-unit id="Q2UeY_7" resname="New video external">
         <source>New video external</source>
@@ -2721,11 +2721,11 @@
       </trans-unit>
       <trans-unit id="L7AIWVS" resname="Filter Roles">
         <source>Filter Roles</source>
-        <target state="translated">Filtra rols</target>
+        <target state="translated">Filtra els rols</target>
       </trans-unit>
       <trans-unit id="BOhY0PO" resname="Filter Groups">
         <source>Filter Groups</source>
-        <target state="translated">Filtra grups</target>
+        <target state="translated">Filtra els grups</target>
       </trans-unit>
       <trans-unit id="x2CEL.O" resname="Filter People">
         <source>Filter People</source>
@@ -2745,7 +2745,7 @@
       </trans-unit>
       <trans-unit id="cYbOzrI" resname="Modify broadcast profile">
         <source>Modify broadcast profile</source>
-        <target state="translated">Modifica el perfil d’emissió</target>
+        <target state="translated">Modifica el perfil d'emissió</target>
       </trans-unit>
       <trans-unit id="V_Ek1jl" resname="Person with Role list">
         <source>Person with Role list</source>
@@ -2765,7 +2765,7 @@
       </trans-unit>
       <trans-unit id="qQ9wlqQ" resname="Submit generate magic URL">
         <source>Submit generate magic URL</source>
-        <target state="translated">Tramet la generació d’URL màgic</target>
+        <target state="translated">Tramet la generació d'URL màgic</target>
       </trans-unit>
       <trans-unit id="aNPaCQq" resname="Read only form">
         <source>Read only form</source>
