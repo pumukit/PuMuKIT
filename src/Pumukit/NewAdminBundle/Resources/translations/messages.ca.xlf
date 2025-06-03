@@ -2990,7 +2990,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="Y9QAQRw" resname="Thumbnail generated.">
         <source>Thumbnail generated.</source>
-        <target state="translated">S’ha generat la miniatura.</target>
+        <target state="translated">S'ha generat la miniatura.</target>
       </trans-unit>
       <trans-unit id="mNfVhoI" resname="Move up thumbnail">
         <source>Move up thumbnail</source>
@@ -3010,7 +3010,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="TpIMycx" resname="Delete User">
         <source>Delete User</source>
-        <target state="translated">Elimina l’usuari</target>
+        <target state="translated">Elimina l'usuari</target>
       </trans-unit>
       <trans-unit id="rBjRGi8" resname="Delete role">
         <source>Delete role</source>
@@ -3018,7 +3018,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="reycesC" resname="Open URL">
         <source>Open URL</source>
-        <target state="translated">Obre l’URL</target>
+        <target state="translated">Obre l'URL</target>
       </trans-unit>
       <trans-unit id="yjLv71I" resname="Live channels">
         <source>Live channels</source>
@@ -3034,17 +3034,16 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="6awGg9J" resname="Show event on WebTV portal">
         <source>Show event on WebTV portal</source>
-        <target state="translated">Mostra l’esdeveniment al portal WebTV</target>
+        <target state="translated">Mostra l'esdeveniment al portal WebTV</target>
       </trans-unit>
       <trans-unit id="H5oCcEu" resname="No sessions defined.">
         <source>No sessions defined.</source>
-        <target state="translated">No s’han definit sessions.</target>
+        <target state="translated">No s'ha definit cap sessió.</target>
       </trans-unit>
       <trans-unit id="lKPkOKY" resname="Publishing&#10;                        Decisions">
         <source>Publishing
                         Decisions</source>
-        <target state="translated">Decisions
-                        de publicació</target>
+        <target state="translated">Decisions de publicació</target>
       </trans-unit>
       <trans-unit id="OEOXHc." resname="ID">
         <source>ID</source>
@@ -3052,7 +3051,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="uBc67J6" resname="Multimedia object ID">
         <source>Multimedia object ID</source>
-        <target state="translated">Identificador de l’objecte multimèdia</target>
+        <target state="translated">Identificador de l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="vhe1K.B" resname="Series ID">
         <source>Series ID</source>
@@ -3124,7 +3123,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="y9lpGXM" resname="Saving error">
         <source>Saving error</source>
-        <target state="translated">S’ha produït un error en desar</target>
+        <target state="translated">S'ha produït un error en desar</target>
       </trans-unit>
       <trans-unit id="tcEgsxb" resname="Saved">
         <source>Saved</source>
@@ -3240,7 +3239,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="Jbye.t_" resname="Event name">
         <source>Event name</source>
-        <target state="translated">Nom de l’esdeveniment</target>
+        <target state="translated">Nom de l'esdeveniment</target>
       </trans-unit>
       <trans-unit id="WOU_q8H" resname="Sessions number">
         <source>Sessions number</source>
@@ -3256,7 +3255,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="Do2jr40" resname="No future sessions">
         <source>No future sessions</source>
-        <target state="translated">No hi ha sessions previstes</target>
+        <target state="translated">No hi ha cap sessió prevista</target>
       </trans-unit>
       <trans-unit id="0A9SRUQ" resname="Filter by">
         <source>Filter by</source>
