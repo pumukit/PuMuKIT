@@ -3605,11 +3605,11 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="qXARYaB" resname="Autocomplete series">
         <source>Autocomplete series</source>
-        <target state="translated">Autocompleta la sèrie</target>
+        <target state="translated">Completa de manera automàtica la sèrie</target>
       </trans-unit>
       <trans-unit id="nU95LQY" resname="Series successfully updated.">
         <source>Series successfully updated.</source>
-        <target state="translated">La sèrie s’ha actualitzat correctament.</target>
+        <target state="translated">S'ha actualitzat la sèrie correctament.</target>
       </trans-unit>
       <trans-unit id="qsxJV33" resname="Error: Series have another owners on others events">
         <source>Error: Series have another owners on others events</source>
@@ -3621,19 +3621,19 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="otgkhCc" resname="Cloned event successfully">
         <source>Cloned event successfully</source>
-        <target state="translated">L’esdeveniment s’ha clonat correctament</target>
+        <target state="translated">S'ha clonat l'esdeveniment correctament</target>
       </trans-unit>
       <trans-unit id="ZKHf6Mw" resname="Deleted event successfully">
         <source>Deleted event successfully</source>
-        <target state="translated">L’esdeveniment s’ha eliminat correctament</target>
+        <target state="translated">S'ha eliminat l'esdeveniment correctament</target>
       </trans-unit>
       <trans-unit id="qmeq21W" resname="Delete event and series successfully">
         <source>Delete event and series successfully</source>
-        <target state="translated">L’esdeveniment i la sèrie s’han eliminat correctament</target>
+        <target state="translated">S'han eliminat l'esdeveniment i la sèrie correctament</target>
       </trans-unit>
       <trans-unit id="iDcYYvG" resname="Option not allowed">
         <source>Option not allowed</source>
-        <target state="translated">L’opció no està permesa</target>
+        <target state="translated">L'opció no està permesa</target>
       </trans-unit>
       <trans-unit id="5tk0wDe" resname="Sync metadata for all multimedia objects">
         <source>Sync metadata for all multimedia objects</source>
@@ -3641,7 +3641,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="nJ4TWrx" resname="Select metadata to sync on all multimedia objects of this series">
         <source>Select metadata to sync on all multimedia objects of this series</source>
-        <target state="translated">Selecciona les metadades per sincronitzar a tots els objectes multimèdia d’aquesta sèrie</target>
+        <target state="translated">Selecciona les metadades per sincronitzar a tots els objectes multimèdia d'aquesta sèrie</target>
       </trans-unit>
       <trans-unit id="jSYaNy." resname="Sync">
         <source>Sync</source>
@@ -3649,11 +3649,11 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="blSiCW2" resname="There was an error sync up metadata.">
         <source>There was an error sync up metadata.</source>
-        <target state="translated">S’ha produït un error en sincronitzar les metadades.</target>
+        <target state="translated">S'ha produït un error en sincronitzar les metadades.</target>
       </trans-unit>
       <trans-unit id="kYZr.e4" resname="Sync up metadata was successfully.">
         <source>Sync up metadata was successfully.</source>
-        <target state="translated">Les metadades s’han sincronitzat correctament.</target>
+        <target state="translated">S'han sincronitzat les metadades correctament.</target>
       </trans-unit>
       <trans-unit id="DfbxytN" resname="Show">
         <source>Show</source>
@@ -3661,11 +3661,11 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="BXaTJaC" resname="Show presenter">
         <source>Show presenter</source>
-        <target state="translated">Mostra el presentador</target>
+        <target state="translated">Mostra el presentador o la presentadora</target>
       </trans-unit>
       <trans-unit id="JaVio6g" resname="presenter">
         <source>presenter</source>
-        <target state="translated">presentador</target>
+        <target state="translated">presentador o presentadora</target>
       </trans-unit>
       <trans-unit id="9eMldhu" resname="Show presentation">
         <source>Show presentation</source>
@@ -3745,7 +3745,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="algu._j" resname="Iframe URL">
         <source>Iframe URL</source>
-        <target state="translated">URL de l’iframe</target>
+        <target state="translated">URL de l'iframe</target>
       </trans-unit>
       <trans-unit id="jyNk4Ru" resname="Day">
         <source>Day</source>
@@ -3777,7 +3777,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="DoL48E_" resname="Num objects">
         <source>Num objects</source>
-        <target state="translated">Nombre d’objectes</target>
+        <target state="translated">Nombre d'objectes</target>
       </trans-unit>
       <trans-unit id="22fF_E2" resname="Total hours">
         <source>Total hours</source>
@@ -3829,7 +3829,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="eQLp7Fl" resname="Go back to">
         <source>Go back to</source>
-        <target state="translated">Tornar a </target>
+        <target state="translated">Torna a </target>
       </trans-unit>
       <trans-unit id="YMfjw07" resname="my series">
         <source>my series</source>
@@ -3861,7 +3861,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="BpOx4v1" resname="Assigned videos by role">
         <source>Assigned videos by role</source>
-        <target state="translated">Vídeos assignats per el rol</target>
+        <target state="translated">Vídeos assignats pel rol</target>
       </trans-unit>
       <trans-unit id="DTlgLcO" resname="Last login">
         <source>Last login</source>
@@ -3873,11 +3873,11 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="Rj1ftLT" resname="No groups found">
         <source>No groups found</source>
-        <target state="translated">No s'ha trobat grups</target>
+        <target state="translated">No s'ha trobat cap grup</target>
       </trans-unit>
       <trans-unit id="Rj1lgLT" resname="No series found">
         <source>No series found</source>
-        <target state="translated">No s'ha trobat sèries</target>
+        <target state="translated">No s'ha trobat cap sèrie</target>
       </trans-unit>
       <trans-unit id="ITD9xUa" resname="Email already in use">
         <source>Email already in use</source>
@@ -3897,23 +3897,23 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="OQIpXE4" resname="You're not allowed to access this link. You're not the holder user.">
         <source>You're not allowed to access this link. You're not the holder user.</source>
-        <target state="translated">No tens permís per accedir a aquest enllaç. No ets l'usuari titular.</target>
+        <target state="translated">No teniu permís per accedir a aquest enllaç. No sou l'usuari titular.</target>
       </trans-unit>
       <trans-unit id="rkv41In" resname="This link was already used by co-owner.">
         <source>This link was already used by co-owner.</source>
-        <target state="translated">Aquest enllaç ja l'ha utilitzat el copropietari.</target>
+        <target state="translated">El copropietari ja ha utilitzat aquest enllaç.</target>
       </trans-unit>
       <trans-unit id="Dezy.jb" resname="You're not allowed to access this link. You're not the owner user of this multimedia object.">
         <source>You're not allowed to access this link. You're not the owner user of this multimedia object.</source>
-        <target state="translated">No tens permís per accedir a aquest enllaç. No sou l'usuari propietari d'aquest objecte multimèdia.</target>
+        <target state="translated">No teniu permís per accedir a aquest enllaç. No sou l'usuari propietari d'aquest objecte multimèdia.</target>
       </trans-unit>
       <trans-unit id="Oob_u0K" resname="The user '%user%' has added you as co-owner of the video:">
         <source>The user '%user%' has added you as co-owner of the video:</source>
-        <target state="translated">L'usuari '%user%' t'ha afegit com a copropietari del vídeo:</target>
+        <target state="translated">L'usuari «%user%» us ha afegit com a copropietari del vídeo:</target>
       </trans-unit>
       <trans-unit id="oSLy2_6" resname="You can reject being co-owner in the following URL link:">
         <source>You can reject being co-owner in the following URL link:</source>
-        <target state="translated">Pots rebutjar ser copropietari a l'enllaç URL següent:</target>
+        <target state="translated">Podeu rebutjar ser copropietari a l'enllaç URL següent:</target>
       </trans-unit>
       <trans-unit id="Dyk7WPz" resname="Error on reject of a publication">
         <source>Error on reject of a publication</source>
@@ -3925,7 +3925,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="G.l7GCV" resname="Back to index">
         <source>Back to index</source>
-        <target state="translated">Tornar a l'índex</target>
+        <target state="translated">Torna a l'índex</target>
       </trans-unit>
       <trans-unit id="qsBEVQq" resname="Reject/report of publication in my name">
         <source>Reject/report of publication in my name</source>
