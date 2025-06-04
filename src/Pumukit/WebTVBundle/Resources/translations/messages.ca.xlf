@@ -35,7 +35,7 @@
       </trans-unit>
       <trans-unit id="oByF8Cc" resname="PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.">
         <source>PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.</source>
-        <target state="translated">El PuMuKIT (PUblicador MUltimèdia en KIT) permet publicar a través d’Internet els continguts audiovisuals produïts en una institució, universitat, etc. El PuMuKIT publica els continguts multimèdia emmagatzemats a la vostra base de dades de dues maneres diferents: generant un portal web i un portal WebTV i creant fluxos RSS compatibles amb l’ARCA.</target>
+        <target state="translated">PuMuKIT (PUblicador MUltimèdia en KIT) permet publicar a través d'Internet els continguts audiovisuals produïts en una institució, universitat, etc. PuMuKIT publica els continguts multimèdia emmagatzemats a la vostra base de dades de dues maneres diferents: generant un portal web i un portal WebTV, i creant fluxos RSS compatibles amb l'ARCA.</target>
       </trans-unit>
       <trans-unit id="MKOwLL7" resname="No title">
         <source>No title</source>
@@ -87,7 +87,7 @@
       </trans-unit>
       <trans-unit id="wTlux3Y" resname="There are no videos with these specifications">
         <source>There are no videos with these specifications</source>
-        <target state="translated">No hi ha vídeos amb aquestes especificacions</target>
+        <target state="translated">No hi ha cap vídeo amb aquestes especificacions</target>
       </trans-unit>
       <trans-unit id="eNInDAJ" resname="Date of holding">
         <source>Date of holding</source>
@@ -103,7 +103,7 @@
       </trans-unit>
       <trans-unit id="xD9.Yx5" resname="401 Unauthorized">
         <source>401 Unauthorized</source>
-        <target state="translated">401 No s’ha autoritzat</target>
+        <target state="translated">401 No autoritzat</target>
       </trans-unit>
       <trans-unit id="fiKihOo" resname="No permission to access this video">
         <source>No permission to access this video</source>
@@ -111,7 +111,7 @@
       </trans-unit>
       <trans-unit id="NZUbbpz" resname="404 Not found">
         <source>404 Not found</source>
-        <target state="translated">404 No s’ha trobat</target>
+        <target state="translated">404 No s'ha trobat</target>
       </trans-unit>
       <trans-unit id="ScJmuqq" resname="Search">
         <source>Search</source>
@@ -155,7 +155,7 @@
       </trans-unit>
       <trans-unit id="gWlpMQG" resname="Start date">
         <source>Start date</source>
-        <target state="translated">Data d’inici</target>
+        <target state="translated">Data d'inici</target>
       </trans-unit>
       <trans-unit id="t57T9gT" resname="Finish date">
         <source>Finish date</source>
@@ -171,19 +171,19 @@
       </trans-unit>
       <trans-unit id="HrIRRTj" resname="Multimedia object search">
         <source>Multimedia object search</source>
-        <target state="translated">Cerca d’objectes multimèdia</target>
+        <target state="translated">Cerca d'objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="eO1Wgdc" resname="Not series found">
         <source>Not series found</source>
-        <target state="translated">No s’ha trobat cap sèrie</target>
+        <target state="translated">No s'ha trobat cap sèrie</target>
       </trans-unit>
       <trans-unit id="hjNS36v" resname="Not multimedia objects found.">
         <source>Not multimedia objects found.</source>
-        <target state="translated">No s’ha trobat cap objecte multimèdia.</target>
+        <target state="translated">No s'ha trobat cap objecte multimèdia.</target>
       </trans-unit>
       <trans-unit id="OrWf0.0" resname="Download master">
         <source>Download master</source>
-        <target state="translated">Baixa l’original</target>
+        <target state="translated">Baixa l'original</target>
       </trans-unit>
       <trans-unit id="WEBL323" resname="403 Forbidden">
         <source>403 Forbidden</source>
@@ -283,7 +283,7 @@
       </trans-unit>
       <trans-unit id="HirXZpT" resname="No resources available">
         <source>No resources available</source>
-        <target state="translated">No hi ha recursos disponibles</target>
+        <target state="translated">No hi ha cap recurs disponible</target>
       </trans-unit>
       <trans-unit id="OxlkZOz" resname="Private Video">
         <source>Private Video</source>
@@ -291,7 +291,7 @@
       </trans-unit>
       <trans-unit id="BcxKeUd" resname="This video is private with restricted access">
         <source>This video is private with restricted access</source>
-        <target state="translated">Aquest vídeo és privat i té l’accés restringit</target>
+        <target state="translated">Aquest vídeo és privat i té l'accés restringit</target>
       </trans-unit>
       <trans-unit id="Qr4xNv4" resname="Log in is required to watch it">
         <source>Log in is required to watch it</source>
@@ -299,7 +299,7 @@
       </trans-unit>
       <trans-unit id="s6ikH_i" resname="Go to back-office">
         <source>Go to back-office</source>
-        <target state="translated">Vés al back office</target>
+        <target state="translated">Ves al back-office</target>
       </trans-unit>
       <trans-unit id="ZWiU94y" resname="Manage my videos">
         <source>Manage my videos</source>
@@ -319,11 +319,11 @@
       </trans-unit>
       <trans-unit id="Y03hFHd" resname="Attachments">
         <source>Attachments</source>
-        <target state="translated">Adjunts</target>
+        <target state="translated">Fitxers adjunts</target>
       </trans-unit>
       <trans-unit id="qf8A9nZ" resname="There are no attachments">
         <source>There are no attachments</source>
-        <target state="translated">No hi ha adjunts</target>
+        <target state="translated">No hi ha cap fitxer adjunt</target>
       </trans-unit>
       <trans-unit id="JwZe7Lz" resname="Share on Facebook">
         <source>Share on Facebook</source>
@@ -375,7 +375,7 @@
       </trans-unit>
       <trans-unit id="9ZBS4FK" resname="Multimedia objects search">
         <source>Multimedia objects search</source>
-        <target state="translated">Cerca d’objectes multimèdia</target>
+        <target state="translated">Cerca d'objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="ILgQc9Q" resname="Total search results:">
         <source>Total search results:</source>
@@ -383,7 +383,7 @@
       </trans-unit>
       <trans-unit id="6r3q15n" resname="Not multimedia objects found">
         <source>Not multimedia objects found</source>
-        <target state="translated">No s’ha trobat cap objecte multimèdia</target>
+        <target state="translated">No s'ha trobat cap objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="CuFdbuE" resname="Private audio">
         <source>Private audio</source>
@@ -459,7 +459,7 @@
       </trans-unit>
       <trans-unit id="1w45Lxk" resname="Logo. Go to homepage">
         <source>Logo. Go to homepage</source>
-        <target state="translated">Logotip. Vés a la pàgina d'inici</target>
+        <target state="translated">Logotip. Ves a la pàgina d'inici</target>
       </trans-unit>
       <trans-unit id="9vRoj.I" resname="Send">
         <source>Send</source>
@@ -499,15 +499,15 @@
       </trans-unit>
       <trans-unit id="U25e1Sx" resname="No live events now.">
         <source>No live events now.</source>
-        <target state="translated">No hi ha esdeveniments en directe ara mateix.</target>
+        <target state="translated">No hi ha cap esdeveniment en directe ara mateix.</target>
       </trans-unit>
       <trans-unit id="swD5G4y" resname="There are no scheduled live events. You will find ended live events in the series catalogue or through the media portal search.">
         <source>There are no scheduled live events. You will find ended live events in the series catalogue or through the media portal search.</source>
-        <target state="translated">No hi ha esdeveniments en directe programats. Trobareu els esdeveniments en directe finalitzats al catàleg de sèries o a través de la cerca del portal d’objectes multimèdia.</target>
+        <target state="translated">No hi ha cap esdeveniment en directe programat. Trobareu els esdeveniments en directe finalitzats al catàleg de sèries o a través de la cerca del portal d'objectes multimèdia.</target>
       </trans-unit>
       <trans-unit id="JIfvQBZ" resname="This page isn't available. Sorry about that.">
         <source>This page isn't available. Sorry about that.</source>
-        <target state="translated">Aquesta pàgina no està disponible. Dispenseu les molèsties.</target>
+        <target state="translated">Aquesta pàgina no està disponible.</target>
       </trans-unit>
       <trans-unit id="kw0lAFO" resname="Try searching for something else:">
         <source>Try searching for something else:</source>
@@ -515,7 +515,7 @@
       </trans-unit>
       <trans-unit id="OnhpU4i" resname="Home">
         <source>Home</source>
-        <target state="translated">Pàgina d’inici</target>
+        <target state="translated">Pàgina d'inici</target>
       </trans-unit>
       <trans-unit id="pITMFRb" resname="By subject catalogue">
         <source>By subject catalogue</source>
@@ -527,7 +527,7 @@
       </trans-unit>
       <trans-unit id="dvaKdfA" resname="Business">
         <source>Business</source>
-        <target state="translated">Comerç</target>
+        <target state="translated">Empresa</target>
       </trans-unit>
       <trans-unit id="0NSg446" resname="Natural Sciences">
         <source>Natural Sciences</source>
@@ -555,7 +555,7 @@
       </trans-unit>
       <trans-unit id="u_Iqlyf" resname="Today events">
         <source>Today events</source>
-        <target state="translated">Esdeveniments d’avui</target>
+        <target state="translated">Esdeveniments d'avui</target>
       </trans-unit>
       <trans-unit id="8wIYotR" resname="Future events">
         <source>Future events</source>
@@ -563,7 +563,7 @@
       </trans-unit>
       <trans-unit id="2SnrnwG" resname="Media Thumbnail">
         <source>Media Thumbnail</source>
-        <target state="translated">Miniatura de l’objecte multimèdia</target>
+        <target state="translated">Miniatura de l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="56JB3rr" resname="URL">
         <source>URL</source>
@@ -579,7 +579,7 @@
       </trans-unit>
       <trans-unit id="tKBwotN" resname="loading">
         <source>loading</source>
-        <target state="translated">s’està carregant</target>
+        <target state="translated">s'està carregant</target>
       </trans-unit>
       <trans-unit id="iCgsLsi" resname="Most viewed on the last month">
         <source>Most viewed on the last month</source>
@@ -587,15 +587,15 @@
       </trans-unit>
       <trans-unit id="wodtiBE" resname="Hightlight">
         <source>Hightlight</source>
-        <target state="translated">Destaca</target>
+        <target state="translated">Ressalta</target>
       </trans-unit>
       <trans-unit id="9cm9ExS" resname="Show more">
         <source>Show more</source>
-        <target state="translated">Mostra’n més</target>
+        <target state="translated">Mostra'n més</target>
       </trans-unit>
       <trans-unit id="nJRvhul" resname="Event pic">
         <source>Event pic</source>
-        <target state="translated">Imatge de l’esdeveniment</target>
+        <target state="translated">Imatge de l'esdeveniment</target>
       </trans-unit>
       <trans-unit id="ma9mBv_" resname="Menu">
         <source>Menu</source>
