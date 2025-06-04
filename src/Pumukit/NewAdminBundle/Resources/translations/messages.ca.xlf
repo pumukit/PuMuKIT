@@ -3933,7 +3933,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="ge0Gbk8" resname="You've been deleted as owner of the following multimedia object">
         <source>You've been deleted as owner of the following multimedia object</source>
-        <target state="translated">Has estat suprimit com a propietari del següent objecte multimèdia</target>
+        <target state="translated">Heu estat suprimit com a propietari de l'objecte multimèdia següent</target>
       </trans-unit>
       <trans-unit id="gvpvekT" resname="NOTE: This is an URL of one single use, if you attempt to access it again, an error message will be shown.">
         <source>NOTE: This is an URL of one single use, if you attempt to access it again, an error message will be shown.</source>
@@ -3945,7 +3945,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="kMMeE3r" resname="Video head">
         <source>Video head</source>
-        <target state="translated">Cap de vídeo</target>
+        <target state="translated">Capçalera del vídeo</target>
       </trans-unit>
       <trans-unit id="ICtUyCV" resname="Video tail">
         <source>Video tail</source>
