@@ -7,7 +7,7 @@
     <body>
       <trans-unit id="EhVukhv" resname="Id">
         <source>Id</source>
-        <target state="translated">Id</target>
+        <target state="translated">ID</target>
       </trans-unit>
       <trans-unit id="kg5BPH1" resname="Status">
         <source>Status</source>
@@ -15,7 +15,7 @@
       </trans-unit>
       <trans-unit id="0tHgmzW" resname="Multimedia Object Id">
         <source>Multimedia Object Id</source>
-        <target state="translated">Identificador de l’objecte multimèdia</target>
+        <target state="translated">Identificador de l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="1pajW90" resname="Profile">
         <source>Profile</source>
@@ -43,7 +43,7 @@
       </trans-unit>
       <trans-unit id="JxGJrji" resname="Start Time">
         <source>Start Time</source>
-        <target state="translated">Hora d’inici</target>
+        <target state="translated">Hora d'inici</target>
       </trans-unit>
       <trans-unit id="SLzN3Ym" resname="End Time">
         <source>End Time</source>
@@ -59,7 +59,7 @@
       </trans-unit>
       <trans-unit id="QeYqvyp" resname="Multimedia Object Admin Link">
         <source>Multimedia Object Admin Link</source>
-        <target state="translated">Enllaç d’administració de l’objecte multimèdia</target>
+        <target state="translated">Enllaç d'administració de l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="QFUsnzv" resname="Technical info">
         <source>Technical info</source>
@@ -75,7 +75,7 @@
       </trans-unit>
       <trans-unit id="JAv3aP1" resname="Multimedia Object Title">
         <source>Multimedia Object Title</source>
-        <target state="translated">Títol de l’objecte multimèdia</target>
+        <target state="translated">Títol de l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="NfPDbcX" resname="Series Id">
         <source>Series Id</source>
