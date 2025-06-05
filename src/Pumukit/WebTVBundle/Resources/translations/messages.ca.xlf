@@ -607,7 +607,7 @@
       </trans-unit>
       <trans-unit id="OqwCASq" resname="Sort alphabetically">
         <source>Sort alphabetically</source>
-        <target state="translated">Ordena per alfabèticament</target>
+        <target state="translated">Ordena alfabèticament</target>
       </trans-unit>
       <trans-unit id=".cXS6UE" resname="Powered by">
         <source>Powered by</source>
@@ -623,15 +623,15 @@
       </trans-unit>
       <trans-unit id="J.EVWdm" resname="There are no multimedia objects">
         <source>There are no multimedia objects</source>
-        <target state="translated">No hi ha objectes multimèdia</target>
+        <target state="translated">No hi ha cap objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="5mpwcGU" resname="Url track">
         <source>Url track</source>
-        <target state="translated">Pista d’URL</target>
+        <target state="translated">Pista d'URL</target>
       </trans-unit>
       <trans-unit id="PWlKoNH" resname="Edit multimedia object">
         <source>Edit multimedia object</source>
-        <target state="translated">Edita l’objecte multimèdia</target>
+        <target state="translated">Edita l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="tkrAXxf" resname="Live">
         <source>Live</source>
@@ -639,11 +639,11 @@
       </trans-unit>
       <trans-unit id="Xypi4__" resname="The event has not been held yet">
         <source>The event has not been held yet</source>
-        <target state="translated">L’esdeveniment encara no s’ha celebrat</target>
+        <target state="translated">L'esdeveniment encara no s'ha celebrat</target>
       </trans-unit>
       <trans-unit id="i7YNXXs" resname="The event has already been held">
         <source>The event has already been held</source>
-        <target state="translated">L’esdeveniment ja s’ha celebrat</target>
+        <target state="translated">L'esdeveniment ja s'ha celebrat</target>
       </trans-unit>
       <trans-unit id="q1EATp1" resname="days">
         <source>days</source>
@@ -651,7 +651,7 @@
       </trans-unit>
       <trans-unit id="70fBjSz" resname="There aren't events at this moment">
         <source>There aren't events at this moment</source>
-        <target state="translated">No hi ha esdeveniments ara mateix</target>
+        <target state="translated">No hi ha cap esdeveniment ara mateix</target>
       </trans-unit>
       <trans-unit id="RoN3Re7" resname="Current live event">
         <source>Current live event</source>
@@ -683,7 +683,7 @@
       </trans-unit>
       <trans-unit id="wlNtjtj" resname="The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.">
         <source>The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</source>
-        <target state="translated">Cal que instal·leu el connector del Flash. El JWPlayer necessita almenys la versió 10.1.82.76 del Flash per poder fer la transmissió.</target>
+        <target state="translated">Cal que instal·leu el connector de Flash. El JWPlayer necessita almenys la versió 10.1.82.76 de Flash per poder fer la transmissió.</target>
       </trans-unit>
       <trans-unit id="HHzHKHy" resname="Live chat">
         <source>Live chat</source>
@@ -707,11 +707,11 @@
       </trans-unit>
       <trans-unit id="pCwHVEo" resname="Sorry but there was an error">
         <source>Sorry but there was an error</source>
-        <target state="translated">S’ha produït un error</target>
+        <target state="translated">S'ha produït un error</target>
       </trans-unit>
       <trans-unit id="nCmGYqT" resname="Event chat">
         <source>Event chat</source>
-        <target state="translated">Xat de l’esdeveniment</target>
+        <target state="translated">Xat de l'esdeveniment</target>
       </trans-unit>
       <trans-unit id="DKsclhd" resname="video">
         <source>video</source>
@@ -731,19 +731,19 @@
       </trans-unit>
       <trans-unit id="FBOV6zV" resname="Cookies">
         <source>Cookies</source>
-        <target state="translated">Cookies</target>
+        <target state="translated">Galetes</target>
       </trans-unit>
       <trans-unit id="iXE7nJw" resname="Accept">
         <source>Accept</source>
-        <target state="translated">Acceptar</target>
+        <target state="translated">Accepta</target>
       </trans-unit>
       <trans-unit id="GG_yIeU" resname="This website uses its own and third-party cookies to offer you a better experience and service. You can review our cookie policy at any time. If you agree, check the corresponding box.">
         <source>This website uses its own and third-party cookies to offer you a better experience and service. You can review our cookie policy at any time. If you agree, check the corresponding box.</source>
-        <target state="translated">Aquest lloc web utilitza cookies pròpies i de tercers per oferir-te una millor experiència i servei. Pot revisar la nostra política de cookies en qualsevol moment. Si hi esteu d'acord, marqueu la casella corresponent.</target>
+        <target state="translated">Aquest lloc web utilitza galetes pròpies i de tercers per oferir-vos una experiència i un servei millors. Podeu revisar la nostra política de galetes en qualsevol moment. Si hi esteu d'acord, marqueu la casella corresponent.</target>
       </trans-unit>
       <trans-unit id="7dWy.Z9" resname="Cookie policy">
         <source>Cookie policy</source>
-        <target state="translated">Política de cookies</target>
+        <target state="translated">Política de galetes</target>
       </trans-unit>
       <trans-unit id="1c5E_XE" resname="External player">
         <source>External player</source>
