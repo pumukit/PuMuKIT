@@ -133,7 +133,7 @@ class TagCatalogueService
                         $newCriteria['type'] = (int) $value;
                     }
                 } elseif ('duration' === $key && !empty($value)) {
-                    $newCriteria['tracks.duration'] = $value;
+                    $newCriteria['duration'] = $value;
                 } elseif ('year' === $key && !empty($value)) {
                     $newCriteria['year'] = $value;
                 } elseif ('text' === $key && !empty($value)) {
@@ -706,7 +706,6 @@ class TagCatalogueService
         $mappingFields = [
             '_id' => 'id',
             'tracks.originalName' => 'tracks.name',
-            'tracks.duration' => 'duration',
             'embeddedBroadcasType' => 'embeddedBroadcast',
         ];
 
