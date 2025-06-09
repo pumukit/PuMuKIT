@@ -42,8 +42,8 @@
         "symfony/twig-bundle": "^5.0",
         "symfony/validator": "^5.0",
         "symfony/yaml": "^5.0",
-        "teltek/pumukit-paella-player-bundle": "4.0.x-dev",
-        "teltek/pumukit-stats-ui-bundle": "^4.0.x-dev",
+        "teltek/pumukit-paella-player-bundle": "4.0.*",
+        "teltek/pumukit-stats-ui-bundle": "4.0.*",
         "twig/extra-bundle": "^3.19",
         "twig/intl-extra": "^3.19"
     },

@@ -37,7 +37,7 @@
             {% endif %}
         </div>
 
-        {% if not multimediaObject.getSeries().isHide() %}
+        {% if not multimediaObject.getSeries().isHide() and route not in ['pumukit_poddium_multimediaobject_index', 'pumukit_admin_multimediaobject_magicindex'] %}
             {% if isMagicRoute and fullMagicUrl %}
                 <div class="qa-player-series video-series">
                     {% trans %}i18n.one.Series{% endtrans %}:

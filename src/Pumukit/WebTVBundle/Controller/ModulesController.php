@@ -402,7 +402,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
 
     public function eventBlockAction()
     {
-        $events = $this->eventSessionService->findWidgetEvents(null, 3);
+        $events = $this->eventSessionService->findWidgetEvents(3);
 
         $limitEvents = 3;
 

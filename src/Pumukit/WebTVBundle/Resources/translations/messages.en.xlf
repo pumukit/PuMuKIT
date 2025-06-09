@@ -89,6 +89,10 @@
         <source>Videos</source>
         <target>Videos</target>
       </trans-unit>
+      <trans-unit id="yaljltrGP" resname="Resources">
+        <source>Resources</source>
+        <target>Resources</target>
+      </trans-unit>
       <trans-unit id="IehJKTi" resname="Hours">
         <source>Hours</source>
         <target>Hours</target>
