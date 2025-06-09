@@ -763,7 +763,7 @@
       </trans-unit>
       <trans-unit id="fgtr654" resname="News">
         <source>News</source>
-        <target state="needs-translation">News</target>
+        <target state="translated">Noticias</target>
       </trans-unit>
     </body>
   </file>

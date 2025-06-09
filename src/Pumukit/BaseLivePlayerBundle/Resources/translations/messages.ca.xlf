@@ -51,7 +51,7 @@
       </trans-unit>
       <trans-unit id="VXRvY92" resname="JWPlayer does not support your browser version">
         <source>JWPlayer does not support your browser version</source>
-        <target state="translated">El JWPlayer no és compatible amb la versió del vostre navegador</target>
+        <target state="translated">JWPlayer no és compatible amb la versió del vostre navegador</target>
       </trans-unit>
       <trans-unit id="e9X3KLs" resname="Please use 9.0 or higher version or use another browser.">
         <source>Please use 9.0 or higher version or use another browser.</source>
@@ -59,15 +59,15 @@
       </trans-unit>
       <trans-unit id="wlNtjtj" resname="The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.">
         <source>The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</source>
-        <target state="translated">Cal que instal·leu el connector del Flash. El JWPlayer necessita almenys la versió 10.1.82.76 del Flash per poder fer la transmissió.</target>
+        <target state="translated">Cal que instal·leu el connector de Flash. JWPlayer necessita almenys la versió 10.1.82.76 de Flash per poder fer la transmissió.</target>
       </trans-unit>
       <trans-unit id="Xypi4__" resname="The event has not been held yet">
         <source>The event has not been held yet</source>
-        <target state="translated">L’esdeveniment encara no s’ha celebrat</target>
+        <target state="translated">L'esdeveniment encara no s'ha celebrat</target>
       </trans-unit>
       <trans-unit id="i7YNXXs" resname="The event has already been held">
         <source>The event has already been held</source>
-        <target state="translated">L’esdeveniment ja s’ha celebrat</target>
+        <target state="translated">L'esdeveniment ja s'ha celebrat</target>
       </trans-unit>
       <trans-unit id="tkrAXxf" resname="Live">
         <source>Live</source>
@@ -79,7 +79,7 @@
       </trans-unit>
       <trans-unit id="BcxKeUd" resname="This video is private with restricted access">
         <source>This video is private with restricted access</source>
-        <target state="translated">Aquest vídeo és privat i té l’accés restringit</target>
+        <target state="translated">Aquest vídeo és privat i té l'accés restringit</target>
       </trans-unit>
       <trans-unit id="hrl4QaS" resname="Enter a valid password to watch it">
         <source>Enter a valid password to watch it</source>
@@ -103,7 +103,7 @@
       </trans-unit>
       <trans-unit id="7tKy0KB" resname="New contact from live event">
         <source>New contact from live event</source>
-        <target state="translated">Contacte nou de l’esdeveniment en directe</target>
+        <target state="translated">Contacte nou de l'esdeveniment en directe</target>
       </trans-unit>
       <trans-unit id="q1EATp1" resname="days">
         <source>days</source>
@@ -123,15 +123,15 @@
       </trans-unit>
       <trans-unit id="2SnrnwG" resname="Media Thumbnail">
         <source>Media Thumbnail</source>
-        <target state="translated">Miniatura de l’objecte multimèdia</target>
+        <target state="translated">Miniatura de l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="70fBjSz" resname="There aren't events at this moment">
         <source>There aren't events at this moment</source>
-        <target state="translated">No hi ha esdeveniments ara mateix</target>
+        <target state="translated">Ara mateix no hi ha cap esdeveniment</target>
       </trans-unit>
       <trans-unit id="kxQCXu4" resname="email send">
         <source>email send</source>
-        <target state="translated">el correu electrònic s’ha enviat</target>
+        <target state="translated">s'ha enviat el correu electrònic</target>
       </trans-unit>
       <trans-unit id="TPzY.dq" resname="please verify form data">
         <source>please verify form data</source>
@@ -139,7 +139,7 @@
       </trans-unit>
       <trans-unit id="nCmGYqT" resname="Event chat">
         <source>Event chat</source>
-        <target state="translated">Xat de l’esdeveniment</target>
+        <target state="translated">Xat de l'esdeveniment</target>
       </trans-unit>
       <trans-unit id="3NHVIj9" resname="Name">
         <source>Name</source>
@@ -155,7 +155,7 @@
       </trans-unit>
       <trans-unit id="pCwHVEo" resname="Sorry but there was an error">
         <source>Sorry but there was an error</source>
-        <target state="translated">S’ha produït un error</target>
+        <target state="translated">S'ha produït un error</target>
       </trans-unit>
       <trans-unit id="NvvDhQX" resname="Chat icon">
         <source>Chat icon</source>
