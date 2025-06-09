@@ -80,15 +80,18 @@ EOT
         $this->documentManager->clear();
 
         $output->writeln('');
-        $table = new Table($output);
-        $table->setHeaders(['MultimediaObject', 'Track', 'Path']);
-        foreach ($this->errors as $multimediaObjectId => $tracks) {
-            foreach ($tracks as $track) {
-                $table->addRow([$multimediaObjectId, $track->getId(), $track->storage()->path()]);
-            }
-        }
 
-        $table->render();
+        if ($this->errors) {
+            $table = new Table($output);
+            $table->setHeaders(['MultimediaObject', 'Track', 'Path']);
+            foreach ($this->errors as $multimediaObjectId => $tracks) {
+                foreach ($tracks as $track) {
+                    $table->addRow([$multimediaObjectId, $track->getId(), $track->storage()->path()]);
+                }
+            }
+
+            $table->render();
+        }
 
         return Command::SUCCESS;
     }

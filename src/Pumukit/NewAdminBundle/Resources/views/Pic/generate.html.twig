@@ -186,8 +186,8 @@
 
         function init_extractpic() {
             $('#gen_pic_buttons').show();
-            canvas_draw.width = video.videoWidth;
-            canvas_draw.height = video.videoHeight;
+            canvas_draw.width = {{ thumbnail_width }};
+            canvas_draw.height = {{ thumbnail_height }};
             img.height = video.clientHeight;
         }
 

@@ -81,6 +81,10 @@
         <source>Videos</source>
         <target state="translated">Vídeos</target>
       </trans-unit>
+      <trans-unit id="yaljltrGP" resname="Resources">
+        <source>Resources</source>
+        <target>Recursos</target>
+      </trans-unit>
       <trans-unit id="IehJKTi" resname="Hours">
         <source>Hours</source>
         <target state="translated">Horas</target>
