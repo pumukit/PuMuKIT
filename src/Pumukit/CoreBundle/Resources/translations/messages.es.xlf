@@ -11,7 +11,7 @@
       </trans-unit>
       <trans-unit id="6KJWgkr" resname="The folder name is not valid. The allowed characters are: upper and lower case, numbers, space and _">
         <source>The folder name is not valid. The allowed characters are: upper and lower case, numbers, space and _</source>
-        <target state="needs-translation">The folder name is not valid. The allowed characters are: upper and lower case, numbers, space and _</target>
+        <target state="translated">El nombre de la carpeta no es válido. Los caracteres permitidos son: mayúsculas y minúsculas, números, espacio y _</target>
       </trans-unit>
       <trans-unit id="WGK6Qnl" resname="Upload video to: %folder%">
         <source>Upload video to: %folder%</source>

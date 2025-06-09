@@ -11,11 +11,11 @@
       </trans-unit>
       <trans-unit id="iYiIF7t" resname="There was an error in creating the Broadcast.">
         <source>There was an error in creating the Broadcast.</source>
-        <target state="translated">S’ha produït un error en crear l’emissió.</target>
+        <target state="translated">S’ha produït un error en crear l'emissió.</target>
       </trans-unit>
       <trans-unit id="sEghCMK" resname="Broadcast successfully created.">
         <source>Broadcast successfully created.</source>
-        <target state="translated">L’emissió s’ha creat correctament.</target>
+        <target state="translated">L'emissió s'ha creat correctament.</target>
       </trans-unit>
       <trans-unit id="fZ63rLE" resname="Close">
         <source>Close</source>
@@ -47,7 +47,7 @@
       </trans-unit>
       <trans-unit id="cv5nXnE" resname="Broadcast profiles">
         <source>Broadcast profiles</source>
-        <target state="translated">Perfils d’emissió</target>
+        <target state="translated">Perfils d'emissió</target>
       </trans-unit>
       <trans-unit id="YyyQsdx" resname="Actions on selected items">
         <source>Actions on selected items</source>
@@ -87,11 +87,11 @@
       </trans-unit>
       <trans-unit id="oK_.9dN" resname="There are no broadcasts with those values.">
         <source>There are no broadcasts with those values.</source>
-        <target state="translated">No hi ha emissions amb aquests valors.</target>
+        <target state="translated">No hi ha cap emissió amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="OEv5eU3" resname="Edit Broadcast">
         <source>Edit Broadcast</source>
-        <target state="translated">Edita l’emissió</target>
+        <target state="translated">Edita l'emissió</target>
       </trans-unit>
       <trans-unit id="26SyAGA" resname="Select this broadcast by default">
         <source>Select this broadcast by default</source>
@@ -99,7 +99,7 @@
       </trans-unit>
       <trans-unit id="dLyPzZK" resname="Default broadcast changed to">
         <source>Default broadcast changed to</source>
-        <target state="translated">L’emissió per defecte ha canviat a</target>
+        <target state="translated">L'emissió per defecte ha canviat a</target>
       </trans-unit>
       <trans-unit id="eQZz5nG" resname="{0} broadcasts|{1} broadcast|]1,Inf] broadcasts">
         <source>{0} broadcasts|{1} broadcast|]1,Inf] broadcasts</source>
@@ -115,15 +115,15 @@
       </trans-unit>
       <trans-unit id="HkcMWkl" resname="modify broadcast">
         <source>modify broadcast</source>
-        <target state="translated">modifica l’emissió</target>
+        <target state="translated">modifica l'emissió</target>
       </trans-unit>
       <trans-unit id="s_ycw1o" resname="There was an error in updating the Broadcast.">
         <source>There was an error in updating the Broadcast.</source>
-        <target state="translated">S’ha produït un error en actualitzar l’emissió.</target>
+        <target state="translated">S'ha produït un error en crear l'emissió.</target>
       </trans-unit>
       <trans-unit id="Be6F0F5" resname="Broadcast successfully updated.">
         <source>Broadcast successfully updated.</source>
-        <target state="translated">L’emissió s’ha actualitzat correctament.</target>
+        <target state="translated">L'emissió s'ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="Z7aWRoY" resname="Dashboard">
         <source>Dashboard</source>
@@ -131,11 +131,11 @@
       </trans-unit>
       <trans-unit id="ztC85.k" resname="This page uses Javascript to show you a Timeline.">
         <source>This page uses Javascript to show you a Timeline.</source>
-        <target state="translated">Aquesta pàgina fa servir el Javascript per mostrar-vos una cronologia.</target>
+        <target state="translated">Aquesta pàgina fa servir JavaScript per mostrar-vos una cronologia.</target>
       </trans-unit>
       <trans-unit id="s0f7i8q" resname="Please enable Javascript in your browser to see the full page.">
         <source>Please enable Javascript in your browser to see the full page.</source>
-        <target state="translated">Habiliteu el Javascript al navegador per veure la pàgina completa.</target>
+        <target state="translated">Habiliteu JavaScript al navegador per veure la pàgina completa.</target>
       </trans-unit>
       <trans-unit id="hWnvxO1" resname="Thank you.">
         <source>Thank you.</source>
@@ -163,11 +163,11 @@
       </trans-unit>
       <trans-unit id="o_n3FSn" resname="There are no live events with those values.">
         <source>There are no live events with those values.</source>
-        <target state="translated">No hi ha esdeveniments en directe amb aquests valors.</target>
+        <target state="translated">No hi ha cap esdeveniment en directe amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="mAV5Fuu" resname="Edit Event">
         <source>Edit Event</source>
-        <target state="translated">Edita l’esdeveniment</target>
+        <target state="translated">Edita l'esdeveniment</target>
       </trans-unit>
       <trans-unit id="Lw7oMZR" resname="{0} live events|{1} live event|]1,Inf] live events">
         <source>{0} live events|{1} live event|]1,Inf] live events</source>
@@ -255,15 +255,15 @@
       </trans-unit>
       <trans-unit id="W8OAz6R" resname="modify live event">
         <source>modify live event</source>
-        <target state="translated">modifica l’esdeveniment en directe</target>
+        <target state="translated">modifica l'esdeveniment en directe</target>
       </trans-unit>
       <trans-unit id="QjTYka2" resname="There was an error in updating the Live event.">
         <source>There was an error in updating the Live event.</source>
-        <target state="translated">S’ha produït un error en actualitzar l’esdeveniment en directe.</target>
+        <target state="translated">S'ha produït un error en actualitzar l'esdeveniment en directe.</target>
       </trans-unit>
       <trans-unit id="nvDSbvi" resname="Live event successfully updated.">
         <source>Live event successfully updated.</source>
-        <target state="translated">L’esdeveniment en directe s’ha actualitzat correctament.</target>
+        <target state="translated">L'esdeveniment en directe s'ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="LbUtKlv" resname="Add thumbnail">
         <source>Add thumbnail</source>
@@ -283,11 +283,11 @@
       </trans-unit>
       <trans-unit id="UCCzJKC" resname="Group successfully created.">
         <source>Group successfully created.</source>
-        <target state="translated">El grup s’ha creat correctament.</target>
+        <target state="translated">El grup s'ha creat correctament.</target>
       </trans-unit>
       <trans-unit id="ZNCH6.x" resname="External defined users and groups can not be edited here, contact your directory service administrator.">
         <source>External defined users and groups can not be edited here, contact your directory service administrator.</source>
-        <target state="translated">Els usuaris i els grups definits externament no es poden editar aquí. Poseu-vos en contacte amb l’administrador del servei del directori.</target>
+        <target state="translated">Els usuaris i els grups definits externament no es poden editar aquí. Contacteu amb l'administrador del servei del directori.</target>
       </trans-unit>
       <trans-unit id="VeFMGtf" resname="Video Template of Series">
         <source>Video Template of Series</source>
@@ -319,11 +319,11 @@
       </trans-unit>
       <trans-unit id="74Wvobk" resname="Delete All">
         <source>Delete All</source>
-        <target state="translated">Elimina’ls tots</target>
+        <target state="translated">Elimina'ls tots</target>
       </trans-unit>
       <trans-unit id="pYlyTnf" resname="There are no groups with those values.">
         <source>There are no groups with those values.</source>
-        <target state="translated">No hi ha grups amb aquests valors.</target>
+        <target state="translated">No hi ha cap grup amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="3V8tns5" resname="Edit Group">
         <source>Edit Group</source>
@@ -331,7 +331,7 @@
       </trans-unit>
       <trans-unit id="qoForm6" resname="External defined groups can not be edited here, contact your directory service administrator.">
         <source>External defined groups can not be edited here, contact your directory service administrator.</source>
-        <target state="translated">Els grups definits externament no es poden editar aquí. Poseu-vos en contacte amb l’administrador del servei del directori.</target>
+        <target state="translated">Els grups definits externament no es poden editar aquí. Contacteu amb l'administrador del servei del directori.</target>
       </trans-unit>
       <trans-unit id="dK6GWQZ" resname="Delete Group or Group relations">
         <source>Delete Group or Group relations</source>
@@ -355,7 +355,7 @@
       </trans-unit>
       <trans-unit id="NYEYlC4" resname="Group successfully updated.">
         <source>Group successfully updated.</source>
-        <target state="translated">El grup s’ha actualitzat correctament.</target>
+        <target state="translated">El grup s'ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="63qEL.l" resname="Resource">
         <source>Resource</source>
@@ -363,11 +363,11 @@
       </trans-unit>
       <trans-unit id="dJaf54Z" resname="Select a file on the tree">
         <source>Select a file on the tree</source>
-        <target state="translated">Selecciona un fitxer de l’arbre</target>
+        <target state="translated">Selecciona un fitxer de l'arbre</target>
       </trans-unit>
       <trans-unit id="_XTjOlq" resname="To use the inbox mode define the inbox path as &lt;code&gt;pumukit.inbox&lt;/code&gt; parameter in your config file.">
         <source>To use the inbox mode define the inbox path as &lt;code&gt;pumukit.inbox&lt;/code&gt; parameter in your config file.</source>
-        <target state="translated"><![CDATA[Per utilitzar el mode de safata d’entrada, definiu la ruta de la safata d’entrada amb el paràmetre &lt;code&gt;pumukit.inbox&lt;/code&gt; al fitxer de configuració.]]></target>
+        <target state="translated"><![CDATA[Per utilitzar el mode de safata d'entrada, definiu la ruta de la safata d'entrada amb el paràmetre &lt;code&gt;pumukit.inbox&lt;/code&gt; al fitxer de configuració.]]></target>
       </trans-unit>
       <trans-unit id="5V8Ndup" resname="not exists">
         <source>not exists</source>
@@ -387,11 +387,12 @@
       </trans-unit>
       <trans-unit id="VlM5vE0" resname="OK">
         <source>OK</source>
-        <target state="translated">D’acord</target>
+        <target state="translated">D'acord</target>
       </trans-unit>
       <trans-unit id="8iT6pMv" resname="Edit file of multimedia object">
         <source>Edit file of multimedia object</source>
-        <target state="translated">Edita el fitxer de l’objecte multimèdia</target>
+        <target state="translated">Edita el fitxer de l'objecte multimèdia
+</target>
       </trans-unit>
       <trans-unit id="5WS0CB1" resname="hidden">
         <source>hidden</source>
@@ -399,7 +400,7 @@
       </trans-unit>
       <trans-unit id="ysdP217" resname="Create Link">
         <source>Create Link</source>
-        <target state="translated">Crea l’enllaç</target>
+        <target state="translated">Crea l'enllaç</target>
       </trans-unit>
       <trans-unit id="X.OJzxg" resname="create new live channel">
         <source>create new live channel</source>
@@ -423,7 +424,7 @@
       </trans-unit>
       <trans-unit id="vM0vTZW" resname="There are no live channels with those values.">
         <source>There are no live channels with those values.</source>
-        <target state="translated">No hi ha canals en directe amb aquests valors.</target>
+        <target state="translated">No hi ha cap canal en directe amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="MSyxwji" resname="Edit live channel">
         <source>Edit live channel</source>
@@ -435,7 +436,7 @@
       </trans-unit>
       <trans-unit id="ijy5zeY" resname="Source IP">
         <source>Source IP</source>
-        <target state="translated">IP d’origen</target>
+        <target state="translated">IP d'origen</target>
       </trans-unit>
       <trans-unit id="kLbLRjR" resname="Show player at homepage">
         <source>Show player at homepage</source>
@@ -467,11 +468,11 @@
       </trans-unit>
       <trans-unit id="JUX_EPG" resname="There was an error in updating the Live channel.">
         <source>There was an error in updating the Live channel.</source>
-        <target state="translated">S’ha produït un error en actualitzar el canal en directe.</target>
+        <target state="translated">S'ha produït un error en actualitzar el canal en directe.</target>
       </trans-unit>
       <trans-unit id="O3hvK9j" resname="Live channel successfully updated.">
         <source>Live channel successfully updated.</source>
-        <target state="translated">El canal en directe s’ha actualitzat correctament.</target>
+        <target state="translated">El canal en directe s'ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="N28VjaR" resname="create new material">
         <source>create new material</source>
@@ -487,7 +488,7 @@
       </trans-unit>
       <trans-unit id="WJ1UGHV" resname="URL format not valid">
         <source>URL format not valid</source>
-        <target state="translated">El format de l’URL no és vàlid</target>
+        <target state="translated">El format de l'URL no és vàlid</target>
       </trans-unit>
       <trans-unit id="gOStBWv" resname="Under">
         <source>Under</source>
@@ -495,7 +496,7 @@
       </trans-unit>
       <trans-unit id="39B8U6X" resname="Empty file field">
         <source>Empty file field</source>
-        <target state="translated">El camp del fitxer està buit</target>
+        <target state="translated">El camp del fitxer és buit</target>
       </trans-unit>
       <trans-unit id="1DQ41HM" resname="Create Material">
         <source>Create Material</source>
@@ -507,15 +508,15 @@
       </trans-unit>
       <trans-unit id="DtnOHns" resname="Material successfully updated.">
         <source>Material successfully updated.</source>
-        <target state="translated">El material s’ha actualitzat correctament.</target>
+        <target state="translated">S'ha actualitzat el material correctament.</target>
       </trans-unit>
       <trans-unit id="XQtGDig" resname="New Material added.">
         <source>New Material added.</source>
-        <target state="translated">El material nou s’ha afegit.</target>
+        <target state="translated">S'ha afegit el material nou.</target>
       </trans-unit>
       <trans-unit id="tKBwotN" resname="loading">
         <source>loading</source>
-        <target state="translated">s’està carregant</target>
+        <target state="translated">s'està carregant</target>
       </trans-unit>
       <trans-unit id="LF6Zcug" resname="WARNING: You do not have enough permissions to modify admin groups.">
         <source>WARNING: You do not have enough permissions to modify admin groups.</source>
@@ -523,7 +524,7 @@
       </trans-unit>
       <trans-unit id="6Rn7P12" resname="BROADCAST GROUPS">
         <source>BROADCAST GROUPS</source>
-        <target state="translated">GRUPS D’EMISSIÓ</target>
+        <target state="translated">GRUPS D'EMISSIÓ</target>
       </trans-unit>
       <trans-unit id="N6tLDY2" resname="Available Groups">
         <source>Available Groups</source>
@@ -535,7 +536,7 @@
       </trans-unit>
       <trans-unit id="_QRwabW" resname="BROADCAST PASSWORD">
         <source>BROADCAST PASSWORD</source>
-        <target state="translated">CONTRASENYA D’EMISSIÓ</target>
+        <target state="translated">CONTRASENYA D'EMISSIÓ</target>
       </trans-unit>
       <trans-unit id="AmXL6i2" resname="Introduce a password">
         <source>Introduce a password</source>
@@ -559,7 +560,7 @@
       </trans-unit>
       <trans-unit id="YYyqUmK" resname="Passwords can not be empty">
         <source>Passwords can not be empty</source>
-        <target state="translated">Les contrasenyes no poden estar buides</target>
+        <target state="translated">Les contrasenyes no poden ser buides</target>
       </trans-unit>
       <trans-unit id="FfxltpM" resname="Publication">
         <source>Publication</source>
@@ -603,7 +604,7 @@
       </trans-unit>
       <trans-unit id="XbYnTgi" resname="EDIT MODE">
         <source>EDIT MODE</source>
-        <target state="translated">MODE D’EDICIÓ</target>
+        <target state="translated">MODE D'EDICIÓ</target>
       </trans-unit>
       <trans-unit id="rOM2jcP" resname="Back to series list">
         <source>Back to series list</source>
@@ -619,7 +620,7 @@
       </trans-unit>
       <trans-unit id="7Er4EIv" resname="List multimedia objects in descending order of publication date">
         <source>List multimedia objects in descending order of publication date</source>
-        <target state="translated">Llista els objectes multimèdia segons la data de publicació per ordre descendent</target>
+        <target state="translated">Enumera els objectes multimèdia segons la data de publicació per ordre descendent</target>
       </trans-unit>
       <trans-unit id="tjhiDXt" resname="List multimedia objects in ascending order of publication date">
         <source>List multimedia objects in ascending order of publication date</source>
@@ -627,19 +628,19 @@
       </trans-unit>
       <trans-unit id="AxD4nlk" resname="List multimedia objects in descending order of recording date">
         <source>List multimedia objects in descending order of recording date</source>
-        <target state="translated">Llista els objectes multimèdia segons la data de gravació per ordre descendent</target>
+        <target state="translated">Enumera els objectes multimèdia segons la data de gravació per ordre descendent</target>
       </trans-unit>
       <trans-unit id="OIRTi8R" resname="List multimedia objects in ascending order of recording date">
         <source>List multimedia objects in ascending order of recording date</source>
-        <target state="translated">Llista els objectes multimèdia segons la data de gravació per ordre ascendent</target>
+        <target state="translated">Enumera els objectes multimèdia segons la data de gravació per ordre ascendent</target>
       </trans-unit>
       <trans-unit id="n8QxF8i" resname="Cut multimedia objects">
         <source>Cut multimedia objects</source>
-        <target state="translated">Talla els objectes multimèdia</target>
+        <target state="translated">Retalla els objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="4AWlJxV" resname="Cut multimedia object">
         <source>Cut multimedia object</source>
-        <target state="translated">Talla l’objecte multimèdia</target>
+        <target state="translated">Retalla l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="EIaPnXC" resname="Paste multimedia objects">
         <source>Paste multimedia objects</source>
@@ -667,15 +668,15 @@
       </trans-unit>
       <trans-unit id="x0qdFyr" resname="Warning: This link will give a 404 error until this multimedia object is correctly published.">
         <source>Warning: This link will give a 404 error until this multimedia object is correctly published.</source>
-        <target state="translated">Advertència: Aquest enllaç donarà un error 404 fins que l’objecte multimèdia no estigui publicat correctament.</target>
+        <target state="translated">Advertència: Aquest enllaç donarà un error 404 fins que l'objecte multimèdia no estigui publicat correctament.</target>
       </trans-unit>
       <trans-unit id="O8.cGGq" resname="This URL will give you access to the series without login.">
         <source>This URL will give you access to the series without login.</source>
-        <target state="translated">Aquest URL us donarà accés a la sèrie sense iniciar sessió.</target>
+        <target state="translated">Aquest URL us donarà accés a la sèrie sense iniciar la sessió.</target>
       </trans-unit>
       <trans-unit id="3PYR5qZ" resname="Warning: This link will show a player with no video until a display track is added.">
         <source>Warning: This link will show a player with no video until a display track is added.</source>
-        <target state="translated">Advertència: Aquest enllaç mostrarà un reproductor sense cap vídeo fins que no s’afegeixi una pista de visualització.</target>
+        <target state="translated">Advertència: Aquest enllaç mostrarà un reproductor sense cap vídeo fins que no s'afegeixi una pista de visualització.</target>
       </trans-unit>
       <trans-unit id="1IJ3MfG" resname="WARNING, this multimedia object is not yet published on WebTV, or does not have a playable resource.">
         <source>WARNING, this multimedia object is not yet published on WebTV, or does not have a playable resource.</source>
@@ -723,7 +724,7 @@
       </trans-unit>
       <trans-unit id="glRjWBo" resname="There are no multimedia objects with those values.">
         <source>There are no multimedia objects with those values.</source>
-        <target state="translated">No hi ha objectes multimèdia amb aquests valors.</target>
+        <target state="translated">No hi ha cap objecte multimèdia amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="t00dckA" resname="Mm. Obj.">
         <source>Mm. Obj.</source>
@@ -731,7 +732,7 @@
       </trans-unit>
       <trans-unit id="J4d1a9v" resname="Multimedia object properties">
         <source>Multimedia object properties</source>
-        <target state="translated">Propietats de l’objecte multimèdia</target>
+        <target state="translated">Propietats de l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="3JN7WYk" resname="None">
         <source>None</source>
@@ -739,7 +740,7 @@
       </trans-unit>
       <trans-unit id="QeAATX8" resname="Change broadcast profile">
         <source>Change broadcast profile</source>
-        <target state="translated">Canvia el perfil d’emissió</target>
+        <target state="translated">Canvia el perfil d'emissió</target>
       </trans-unit>
       <trans-unit id="wL91vXi" resname="Change">
         <source>Change</source>
@@ -799,15 +800,15 @@
       </trans-unit>
       <trans-unit id="T2WYFmC" resname="Modify broadcast profile of videos template">
         <source>Modify broadcast profile of videos template</source>
-        <target state="translated">Modifica el perfil d’emissió de la plantilla de vídeos</target>
+        <target state="translated">Modifica el perfil d'emissió de la plantilla de vídeos</target>
       </trans-unit>
       <trans-unit id="Srm_gIU" resname="Modify broadcast profile of multimedia object">
         <source>Modify broadcast profile of multimedia object</source>
-        <target state="translated">Modifica el perfil d’emissió de l’objecte multimèdia</target>
+        <target state="translated">Modifica el perfil d'emissió de l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="7hy0Oje" resname="Broadcast Profile">
         <source>Broadcast Profile</source>
-        <target state="translated">Perfil d’emissió</target>
+        <target state="translated">Perfil d'emissió</target>
       </trans-unit>
       <trans-unit id="2u52BrM" resname="Reset">
         <source>Reset</source>
@@ -815,11 +816,11 @@
       </trans-unit>
       <trans-unit id="adcjyWa" resname="Press OK for changes to take effect">
         <source>Press OK for changes to take effect</source>
-        <target state="translated">Premeu D’acord per aplicar els canvis</target>
+        <target state="translated">Premeu «D’acord» per aplicar els canvis</target>
       </trans-unit>
       <trans-unit id="C9wCg62" resname="WARNING: If you press OK, you will no longer have access to this Multimedia Object">
         <source>WARNING: If you press OK, you will no longer have access to this Multimedia Object</source>
-        <target state="translated">ADVERTÈNCIA: Si premeu D’acord, deixareu de tenir accés a aquest objecte multimèdia</target>
+        <target state="translated">ADVERTÈNCIA: Si premeu «D’acord», deixareu de tenir accés a aquest objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="_C1kZmX" resname="Thumbnails">
         <source>Thumbnails</source>
@@ -831,7 +832,7 @@
       </trans-unit>
       <trans-unit id="Y03hFHd" resname="Attachments">
         <source>Attachments</source>
-        <target state="translated">Adjunts</target>
+        <target state="translated">Fitxers adjunts</target>
       </trans-unit>
       <trans-unit id="kCTBl9h" resname="Links">
         <source>Links</source>
@@ -839,11 +840,11 @@
       </trans-unit>
       <trans-unit id="45jpbzp" resname="Delete multimedia object">
         <source>Delete multimedia object</source>
-        <target state="translated">Elimina l’objecte multimèdia</target>
+        <target state="translated">Elimina l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="yUpGGKD" resname="Clone multimedia object">
         <source>Clone multimedia object</source>
-        <target state="translated">Clona l’objecte multimèdia</target>
+        <target state="translated">Clona l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="rkKT.Nd" resname="Show properties">
         <source>Show properties</source>
@@ -851,11 +852,11 @@
       </trans-unit>
       <trans-unit id="H0nJyRa" resname="Multimedia Object saved ERROR">
         <source>Multimedia Object saved ERROR</source>
-        <target state="translated">S’ha produït un error en desar l’objecte multimèdia</target>
+        <target state="translated">S'ha produït un error en desar l’objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="omLkUZH" resname="Multimedia Object saved OK">
         <source>Multimedia Object saved OK</source>
-        <target state="translated">L’objecte multimèdia s’ha desat correctament</target>
+        <target state="translated">L'objecte multimèdia s'ha desat correctament</target>
       </trans-unit>
       <trans-unit id="S1TDJ_4" resname="Publication Channels">
         <source>Publication Channels</source>
@@ -867,11 +868,11 @@
       </trans-unit>
       <trans-unit id="O9PiM6P" resname="Broadcast profile">
         <source>Broadcast profile</source>
-        <target state="translated">Perfil d’emissió</target>
+        <target state="translated">Perfil d'emissió</target>
       </trans-unit>
       <trans-unit id="Gys6aaW" resname="Apply these tags to all multimedia objects of this series.">
         <source>Apply these tags to all multimedia objects of this series.</source>
-        <target state="translated">Aplica aquestes etiquetes a tots els objectes multimèdia d’aquesta sèrie.</target>
+        <target state="translated">Aplica aquestes etiquetes a tots els objectes multimèdia d'aquesta sèrie.</target>
       </trans-unit>
       <trans-unit id="vEDWyTG" resname="Sync in this series">
         <source>Sync in this series</source>
@@ -879,19 +880,19 @@
       </trans-unit>
       <trans-unit id="tCnBDqf" resname="Mutlimedia Object Template saved ERROR">
         <source>Mutlimedia Object Template saved ERROR</source>
-        <target state="translated">S’ha produït un error en desar la plantilla d’objecte multimèdia</target>
+        <target state="translated">S'ha produït un error en desar la plantilla de l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="vec.BdY" resname="Mutlimedia Object Template saved OK">
         <source>Mutlimedia Object Template saved OK</source>
-        <target state="translated">La plantilla d’objecte multimèdia s’ha desat correctament</target>
+        <target state="translated">La plantilla d'objecte multimèdia s'ha desat correctament</target>
       </trans-unit>
       <trans-unit id="vW36nMC" resname="Press OK for the change to take effect">
         <source>Press OK for the change to take effect</source>
-        <target state="translated">Premeu D’acord per aplicar el canvi</target>
+        <target state="translated">Premeu «D’acord» per aplicar el canvi</target>
       </trans-unit>
       <trans-unit id="bT15s09" resname="create new permission profile">
         <source>create new permission profile</source>
-        <target state="translated">crea un nou perfil de permisos</target>
+        <target state="translated">crea un perfil de permisos nou</target>
       </trans-unit>
       <trans-unit id="Ru3Y59V" resname="Permission Profiles">
         <source>Permission Profiles</source>
@@ -903,7 +904,7 @@
       </trans-unit>
       <trans-unit id="rNzT5AZ" resname="Press SAVE for changes to take effect">
         <source>Press SAVE for changes to take effect</source>
-        <target state="translated">Premeu DESA per aplicar els canvis</target>
+        <target state="translated">Premeu «DESA» per aplicar els canvis</target>
       </trans-unit>
       <trans-unit id="FQn1YfJ" resname="Save">
         <source>Save</source>
@@ -915,11 +916,11 @@
       </trans-unit>
       <trans-unit id="fC.pA4I" resname="There are no user permissions with those values.">
         <source>There are no user permissions with those values.</source>
-        <target state="translated">No hi ha permisos d’usuari amb aquests valors.</target>
+        <target state="translated">No hi ha cap permís d'usuari amb aquests valors.</target>
       </trans-unit>
       <trans-unit id=".8wCbaE" resname="There are no permissions with those values.">
         <source>There are no permissions with those values.</source>
-        <target state="translated">No hi ha permisos amb aquests valors.</target>
+        <target state="translated">No hi ha cap permís amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="IbERy.5" resname="Default">
         <source>Default</source>
@@ -947,7 +948,7 @@
       </trans-unit>
       <trans-unit id=".K2pjv2" resname="Person successfully created.">
         <source>Person successfully created.</source>
-        <target state="translated">La persona s’ha creat correctament.</target>
+        <target state="translated">La persona s'ha creat correctament.</target>
       </trans-unit>
       <trans-unit id="3L.aehR" resname="edit new person">
         <source>edit new person</source>
@@ -955,7 +956,7 @@
       </trans-unit>
       <trans-unit id="_1CkwZ6" resname="Person successfully associated to Multimedia Object">
         <source>Person successfully associated to Multimedia Object</source>
-        <target state="translated">La persona s’ha associat correctament a l’objecte multimèdia</target>
+        <target state="translated">La persona s'ha associat correctament a l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="LHnYFAj" resname="with role">
         <source>with role</source>
@@ -975,7 +976,7 @@
       </trans-unit>
       <trans-unit id="_4Y1aAq" resname="There are no people with those values.">
         <source>There are no people with those values.</source>
-        <target state="translated">No hi ha persones amb aquests valors.</target>
+        <target state="translated">No hi ha cap persona amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="jPj8I85" resname="Can't delete Person">
         <source>Can't delete Person</source>
@@ -987,11 +988,11 @@
       </trans-unit>
       <trans-unit id="aVux4sC" resname="Cannot delete the data of">
         <source>Cannot delete the data of</source>
-        <target state="translated">No es poden eliminar les dades dels</target>
+        <target state="translated">No es poden eliminar les dades de</target>
       </trans-unit>
       <trans-unit id="xmBMRRZ" resname="multimedia object(s) contain(s) this person">
         <source>multimedia object(s) contain(s) this person</source>
-        <target state="translated">objectes multimèdia que conté aquesta persona</target>
+        <target state="translated">l'objecte o els objectes multimèdia que contenen aquesta persona</target>
       </trans-unit>
       <trans-unit id="6EqFlw." resname="{0} people|{1} person|]1,Inf] people">
         <source>{0} people|{1} person|]1,Inf] people</source>
@@ -1023,11 +1024,11 @@
       </trans-unit>
       <trans-unit id="3VrOngG" resname="working">
         <source>working</source>
-        <target state="translated">treballant</target>
+        <target state="translated">s'està treballant</target>
       </trans-unit>
       <trans-unit id="rKtK0Co" resname="Select before a person">
         <source>Select before a person</source>
-        <target state="translated">Primerament heu de seleccionar una persona</target>
+        <target state="translated">Abans heu de seleccionar una persona</target>
       </trans-unit>
       <trans-unit id="w22Bnnv" resname="Use">
         <source>Use</source>
@@ -1059,7 +1060,7 @@
       </trans-unit>
       <trans-unit id="hLhQE86" resname="Person successfully updated.">
         <source>Person successfully updated.</source>
-        <target state="translated">La persona s’ha actualitzat correctament.</target>
+        <target state="translated">La persona s'ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="2IFBgFe" resname="edit person">
         <source>edit person</source>
@@ -1067,7 +1068,7 @@
       </trans-unit>
       <trans-unit id="gk9RU.y" resname="Person associated to Multimedia Object">
         <source>Person associated to Multimedia Object</source>
-        <target state="translated">La persona s’ha associat a l’objecte multimèdia</target>
+        <target state="translated">La persona s'ha associat a l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="czrDEMn" resname="successfully updated">
         <source>successfully updated</source>
@@ -1079,15 +1080,15 @@
       </trans-unit>
       <trans-unit id="z6ZAHt." resname="Banner from URL">
         <source>Banner from URL</source>
-        <target state="translated">Bàner des d’un URL</target>
+        <target state="translated">Bàner a partir d'un URL</target>
       </trans-unit>
       <trans-unit id="MDPZQgI" resname="Banner from local hard drive">
         <source>Banner from local hard drive</source>
-        <target state="translated">Bàner des d’un disc dur local</target>
+        <target state="translated">Bàner des d'un disc dur local</target>
       </trans-unit>
       <trans-unit id="ZTa3g8I" resname="New Pic added.">
         <source>New Pic added.</source>
-        <target state="translated">La imatge nova s’ha afegit.</target>
+        <target state="translated"> S'ha afegit la imatge nova.</target>
       </trans-unit>
       <trans-unit id="I5Ev4hB" resname="Banner URL">
         <source>Banner URL</source>
@@ -1095,7 +1096,7 @@
       </trans-unit>
       <trans-unit id="vtr0zkG" resname="Write the target URL">
         <source>Write the target URL</source>
-        <target state="translated">Escriviu l’URL de destinació</target>
+        <target state="translated">Escriviu l'URL de destinació</target>
       </trans-unit>
       <trans-unit id="n9coxmy" resname="Add">
         <source>Add</source>
@@ -1115,11 +1116,11 @@
       </trans-unit>
       <trans-unit id="j3heZP6" resname="New Thumbnail added.">
         <source>New Thumbnail added.</source>
-        <target state="translated">La miniatura nova s’ha afegit.</target>
+        <target state="translated">S'ha afegit la miniatura nova.</target>
       </trans-unit>
       <trans-unit id="cZ1T7qm" resname="Write the URL">
         <source>Write the URL</source>
-        <target state="translated">Escriviu l’URL</target>
+        <target state="translated">Escriviu l'URL</target>
       </trans-unit>
       <trans-unit id="v8MBqPt" resname="New thumbnail">
         <source>New thumbnail</source>
@@ -1131,7 +1132,7 @@
       </trans-unit>
       <trans-unit id="nsKa7x9" resname="There are no thumbnails in the database.">
         <source>There are no thumbnails in the database.</source>
-        <target state="translated">No hi ha miniatures a la base de dades.</target>
+        <target state="translated">No hi ha cap miniatura a la base de dades.</target>
       </trans-unit>
       <trans-unit id="KfQqMhe" resname="Update the video to show the thumbnails">
         <source>Update the video to show the thumbnails</source>
@@ -1139,11 +1140,11 @@
       </trans-unit>
       <trans-unit id="KoDzITI" resname="Update the event to show the thumbnail">
         <source>Update the event to show the thumbnail</source>
-        <target state="translated">Actualitza l’esdeveniment perquè mostri la miniatura</target>
+        <target state="translated">Actualitza l'esdeveniment perquè mostri la miniatura</target>
       </trans-unit>
       <trans-unit id="..vaOTK" resname="change broadcast status of multimedia objects inside the series">
         <source>change broadcast status of multimedia objects inside the series</source>
-        <target state="translated">canvia l’estat d’emissió dels objectes multimèdia de la sèrie</target>
+        <target state="translated">canvia l'estat d'emissió dels objectes multimèdia de la sèrie</target>
       </trans-unit>
       <trans-unit id="nSmw0o5" resname="Multimedia Objects">
         <source>Multimedia Objects</source>
@@ -1167,15 +1168,15 @@
       </trans-unit>
       <trans-unit id="WLO_NSp" resname="Published: is listed in the Series and can be played with published URL">
         <source>Published: is listed in the Series and can be played with published URL</source>
-        <target state="translated">Publicats: es troben llistats a la sèrie i es poden reproduir amb l’URL publicat</target>
+        <target state="translated">Publicats: es troben enumerats a la sèrie i es poden reproduir amb l'URL publicat</target>
       </trans-unit>
       <trans-unit id="pQVjZ29" resname="Hidden: is not listed in the Series but can be played with magic URL">
         <source>Hidden: is not listed in the Series but can be played with magic URL</source>
-        <target state="translated">Ocults: no es troben llistats a la sèrie, però es poden reproduir amb un URL màgic</target>
+        <target state="translated">Ocults: no es troben enumerats a la sèrie, però es poden reproduir amb un URL màgic</target>
       </trans-unit>
       <trans-unit id="xvUgIUN" resname="Blocked: cannot be accessed outside the back-end">
         <source>Blocked: cannot be accessed outside the back-end</source>
-        <target state="translated">Bloquejats: no s’hi pot accedir des de fora del back-end</target>
+        <target state="translated">Bloquejats: no s'hi pot accedir des de fora del rerefons</target>
       </trans-unit>
       <trans-unit id="KngCXea" resname="Select">
         <source>Select</source>
@@ -1191,7 +1192,7 @@
       </trans-unit>
       <trans-unit id="c5wyau1" resname="Moodle Playlists">
         <source>Moodle Playlists</source>
-        <target state="translated">Llistes de reproducció del Moodle</target>
+        <target state="translated">Llistes de reproducció de Moodle</target>
       </trans-unit>
       <trans-unit id="uTzzvzb" resname="Create new playlist">
         <source>Create new playlist</source>
@@ -1207,7 +1208,7 @@
       </trans-unit>
       <trans-unit id="ophuMd5" resname="There are no playlist with those values.">
         <source>There are no playlist with those values.</source>
-        <target state="translated">No hi ha llistes de reproducció amb aquests valors.</target>
+        <target state="translated">No hi ha cap llista de reproducció amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="7VO065x" resname="{0} playlist|{1} playlist|]1,Inf] playlists">
         <source>{0} playlist|{1} playlist|]1,Inf] playlists</source>
@@ -1239,15 +1240,15 @@
       </trans-unit>
       <trans-unit id="RNMotGg" resname="Series saved ERROR">
         <source>Series saved ERROR</source>
-        <target state="translated">S’ha produït un error en desar la sèrie</target>
+        <target state="translated">S'ha produït un error en desar la sèrie</target>
       </trans-unit>
       <trans-unit id="B7KZYS9" resname="Series saved OK">
         <source>Series saved OK</source>
-        <target state="translated">La sèrie s’ha desat correctament</target>
+        <target state="translated">La sèrie s'ha desat correctament</target>
       </trans-unit>
       <trans-unit id="fGESeZx" resname="Add the object &quot;%title%&quot; to the playlist">
         <source>Add the object "%title%" to the playlist</source>
-        <target state="translated">Afegeix l’objecte "%title%" a la llista de reproducció</target>
+        <target state="translated">Afegeix l'objecte "%title%" a la llista de reproducció</target>
       </trans-unit>
       <trans-unit id="OHxjNgO" resname="Add %num% multimedia objects to the playlist">
         <source>Add %num% multimedia objects to the playlist</source>
@@ -1255,7 +1256,7 @@
       </trans-unit>
       <trans-unit id="SQu79Mq" resname="There are no playlist, please create one.">
         <source>There are no playlist, please create one.</source>
-        <target state="translated">No hi ha llistes de reproducció. Creeu-ne una.</target>
+        <target state="translated">No hi ha cap llista de reproducció. Creeu-ne una.</target>
       </trans-unit>
       <trans-unit id="fwl.c15" resname="Create playlist">
         <source>Create playlist</source>
@@ -1263,11 +1264,11 @@
       </trans-unit>
       <trans-unit id="3uVb1Fp" resname="Error creating playlist">
         <source>Error creating playlist</source>
-        <target state="translated">S’ha produït un error en crear la llista de reproducció</target>
+        <target state="translated">S'ha produït un error en crear la llista de reproducció</target>
       </trans-unit>
       <trans-unit id="m2jGRFD" resname="Error adding object to playlist">
         <source>Error adding object to playlist</source>
-        <target state="translated">S’ha produït un error en afegir l’objecte a la llista de reproducció</target>
+        <target state="translated">S'ha produït un error en afegir l'objecte a la llista de reproducció</target>
       </trans-unit>
       <trans-unit id="k6LpCbD" resname="Back to playlist list">
         <source>Back to playlist list</source>
@@ -1275,7 +1276,7 @@
       </trans-unit>
       <trans-unit id="1xRaTyA" resname="Add multimedia object">
         <source>Add multimedia object</source>
-        <target state="translated">Afegeix l’objecte multimèdia</target>
+        <target state="translated">Afegeix l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="FwMioy8" resname="Info">
         <source>Info</source>
@@ -1287,7 +1288,7 @@
       </trans-unit>
       <trans-unit id="Ax5FB5U" resname="Add Multimedia Object to Playlist">
         <source>Add Multimedia Object to Playlist</source>
-        <target state="translated">Afegeix l’objecte multimèdia a la llista de reproducció</target>
+        <target state="translated">Afegeix l'objecte multimèdia a la llista de reproducció</target>
       </trans-unit>
       <trans-unit id="5BBGIIV" resname="Add videos">
         <source>Add videos</source>
@@ -1295,7 +1296,7 @@
       </trans-unit>
       <trans-unit id="Qq9oOdz" resname="The url does not have a valid format.">
         <source>The url does not have a valid format.</source>
-        <target state="translated">L’URL no té un format vàlid.</target>
+        <target state="translated">L'URL no té un format vàlid.</target>
       </trans-unit>
       <trans-unit id="7utrTpP" resname="Please, enter an url with the following format: &lt;b&gt;https://example.domain.org/video/XXXXXXXX&lt;/b&gt;">
         <source>Please, enter an url with the following format: &lt;b&gt;https://example.domain.org/video/XXXXXXXX&lt;/b&gt;</source>
@@ -1304,11 +1305,11 @@
       </trans-unit>
       <trans-unit id="Bpiop_k" resname="or enter the ID of the Multimedia Object.">
         <source>or enter the ID of the Multimedia Object.</source>
-        <target state="translated">o introduïu l’identificador de l’objecte multimèdia.</target>
+        <target state="translated">o introduïu l'identificador de l'objecte multimèdia.</target>
       </trans-unit>
       <trans-unit id="fzrFUrD" resname="There is no published Multimedia Object with the following id:">
         <source>There is no published Multimedia Object with the following id:</source>
-        <target state="translated">No hi ha objectes multimèdia publicats amb l’identificador següent:</target>
+        <target state="translated">No hi ha cap objecte multimèdia publicat amb l'identificador següent:</target>
       </trans-unit>
       <trans-unit id="7MVYspe" resname="create new role">
         <source>create new role</source>
@@ -1316,11 +1317,11 @@
       </trans-unit>
       <trans-unit id="aE2coLP" resname="There was an error in creating the Role.">
         <source>There was an error in creating the Role.</source>
-        <target state="translated">S’ha produït un error en crear el rol.</target>
+        <target state="translated">S'ha produït un error en crear el rol.</target>
       </trans-unit>
       <trans-unit id="NCn_oK5" resname="Role successfully created.">
         <source>Role successfully created.</source>
-        <target state="translated">El rol s’ha creat correctament.</target>
+        <target state="translated">El rol s'ha creat correctament.</target>
       </trans-unit>
       <trans-unit id=".Yjgpj8" resname="Cod">
         <source>Cod</source>
@@ -1340,7 +1341,7 @@
       </trans-unit>
       <trans-unit id="TVwd2v4" resname="There are no roles with those values.">
         <source>There are no roles with those values.</source>
-        <target state="translated">No hi ha rols amb aquests valors.</target>
+        <target state="translated">No hi ha cap rol amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="83tvNKQ" resname="Edit Role">
         <source>Edit Role</source>
@@ -1356,15 +1357,15 @@
       </trans-unit>
       <trans-unit id="gk1w9iU" resname="There was an error in updating the Role.">
         <source>There was an error in updating the Role.</source>
-        <target state="translated">S’ha produït un error en actualitzar el rol.</target>
+        <target state="translated">S'ha produït un error en actualitzar el rol.</target>
       </trans-unit>
       <trans-unit id="XWSPlxq" resname="Role successfully updated.">
         <source>Role successfully updated.</source>
-        <target state="translated">El rol s’ha actualitzat correctament.</target>
+        <target state="translated">El rol s'ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="69rZukx" resname="Others">
         <source>Others</source>
-        <target state="translated">D’altres</target>
+        <target state="translated">D'altres</target>
       </trans-unit>
       <trans-unit id="B9_rhh3" resname="Announced">
         <source>Announced</source>
@@ -1384,7 +1385,7 @@
       </trans-unit>
       <trans-unit id="gwCPg2E" resname="change status of multimedia objects inside the series">
         <source>change status of multimedia objects inside the series</source>
-        <target state="translated">canvia l’estat dels objectes multimèdia de la sèrie</target>
+        <target state="translated">canvia l'estat dels objectes multimèdia de la sèrie</target>
       </trans-unit>
       <trans-unit id=".GP.CrL" resname="Multimedia Series">
         <source>Multimedia Series</source>
@@ -1400,15 +1401,15 @@
       </trans-unit>
       <trans-unit id="pE9M1aR" resname="Click to modify status of all Multimedia Objects">
         <source>Click to modify status of all Multimedia Objects</source>
-        <target state="translated">Feu clic per modificar l’estat de tots els objectes multimèdia</target>
+        <target state="translated">Feu clic per modificar l'estat de tots els objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="qThPhrk" resname="Not enough privileges to modify status of all Multimedia Objects">
         <source>Not enough privileges to modify status of all Multimedia Objects</source>
-        <target state="translated">No teniu prou privilegis per modificar l’estat de tots els objectes multimèdia</target>
+        <target state="translated">No teniu prou privilegis per modificar l'estat de tots els objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="Wn.0eFr" resname="There are no series with those values.">
         <source>There are no series with those values.</source>
-        <target state="translated">No hi ha sèries amb aquests valors.</target>
+        <target state="translated">No hi ha cap sèrie amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="tza7GLI" resname="{0} series|{1} series|]1,Inf] series">
         <source>{0} series|{1} series|]1,Inf] series</source>
@@ -1432,7 +1433,7 @@
       </trans-unit>
       <trans-unit id="2Tb2ncR" resname="Only logged in Users">
         <source>Only logged in Users</source>
-        <target state="translated">Només els usuaris connectats</target>
+        <target state="translated">Només els usuaris que han iniciat la sessió</target>
       </trans-unit>
       <trans-unit id="AlWvBOc" resname="Only Users in Groups">
         <source>Only Users in Groups</source>
@@ -1440,15 +1441,15 @@
       </trans-unit>
       <trans-unit id="kN2qYZb" resname="Modify broadcast profile of all multimedia objects in this Series">
         <source>Modify broadcast profile of all multimedia objects in this Series</source>
-        <target state="translated">Modifica el perfil d’emissió de tots els objectes multimèdia d’aquesta sèrie</target>
+        <target state="translated">Modifica el perfil d'emissió de tots els objectes multimèdia d'aquesta sèrie</target>
       </trans-unit>
       <trans-unit id="9P1HJF6" resname="WARNING: All Multimedia Objects in this Series will be modified with the selected Broadcast.">
         <source>WARNING: All Multimedia Objects in this Series will be modified with the selected Broadcast.</source>
-        <target state="translated">ADVERTÈNCIA: Tots els objectes multimèdia d’aquesta sèrie es modificaran amb l’emissió seleccionada.</target>
+        <target state="translated">ADVERTÈNCIA: Tots els objectes multimèdia d'aquesta sèrie es modificaran amb l'emissió seleccionada.</target>
       </trans-unit>
       <trans-unit id="OVAa0Wz" resname="Any Internet user can play this multimedia object in the video portal">
         <source>Any Internet user can play this multimedia object in the video portal</source>
-        <target state="translated">Qualsevol usuari d’Internet pot reproduir aquest objecte multimèdia al portal de vídeo</target>
+        <target state="translated">Qualsevol usuari d'Internet pot reproduir aquest objecte multimèdia al portal de vídeo</target>
       </trans-unit>
       <trans-unit id="X9NzRJt" resname="Only users with the defined password can play this multimedia object in the video portal">
         <source>Only users with the defined password can play this multimedia object in the video portal</source>
@@ -1456,7 +1457,7 @@
       </trans-unit>
       <trans-unit id="xgeNGfj" resname="Only logged in users in the system can play this multimedia object in the video portal">
         <source>Only logged in users in the system can play this multimedia object in the video portal</source>
-        <target state="translated">Només els usuaris connectats al sistema poden reproduir aquest objecte multimèdia al portal de vídeo</target>
+        <target state="translated">Només els usuaris que han iniciat la sessió al sistema poden reproduir aquest objecte multimèdia al portal de vídeo</target>
       </trans-unit>
       <trans-unit id="yYoW5uR" resname="Only users in the selected Groups can play this multimedia object in the video portal">
         <source>Only users in the selected Groups can play this multimedia object in the video portal</source>
@@ -1488,7 +1489,7 @@
       </trans-unit>
       <trans-unit id=".eL1ZHl" resname="create new series type">
         <source>create new series type</source>
-        <target state="translated">crea un tipus nou de sèrie</target>
+        <target state="translated">crea un tipus de sèrie nou</target>
       </trans-unit>
       <trans-unit id="M5jGGMW" resname="Series types">
         <source>Series types</source>
@@ -1496,7 +1497,7 @@
       </trans-unit>
       <trans-unit id="QkQfYLR" resname="Create new series type">
         <source>Create new series type</source>
-        <target state="translated">Crea un tipus nou de sèrie</target>
+        <target state="translated">Crea un tipus de sèrie nou</target>
       </trans-unit>
       <trans-unit id="okzxY6S" resname="Select any type.">
         <source>Select any type.</source>
@@ -1508,7 +1509,7 @@
       </trans-unit>
       <trans-unit id="PEN92mY" resname="There are no series types with those values.">
         <source>There are no series types with those values.</source>
-        <target state="translated">No hi ha tipus de sèrie amb aquests valors.</target>
+        <target state="translated">No hi ha cap tipus de sèrie amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="KraI25G" resname="Edit seriestype channel">
         <source>Edit seriestype channel</source>
@@ -1524,11 +1525,11 @@
       </trans-unit>
       <trans-unit id="_RkIv_r" resname="There was an error in updating the series type.">
         <source>There was an error in updating the series type.</source>
-        <target state="translated">S’ha produït un error en actualitzar el tipus de sèrie.</target>
+        <target state="translated">S'ha produït un error en actualitzar el tipus de sèrie.</target>
       </trans-unit>
       <trans-unit id="A6G.vsM" resname="Series type successfully updated.">
         <source>Series type successfully updated.</source>
-        <target state="translated">El tipus de sèrie s’ha actualitzat correctament.</target>
+        <target state="translated">El tipus de sèrie s'ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="YZdZVQP" resname="delete">
         <source>delete</source>
@@ -1536,7 +1537,7 @@
       </trans-unit>
       <trans-unit id="i46dF4n" resname="Edit tag">
         <source>Edit tag</source>
-        <target state="translated">Edita l’etiqueta</target>
+        <target state="translated">Edita l'etiqueta</target>
       </trans-unit>
       <trans-unit id="J.i8Nti" resname="Create child tag for">
         <source>Create child tag for</source>
@@ -1548,7 +1549,7 @@
       </trans-unit>
       <trans-unit id="2v.Eiz3" resname="There was an error in creating the Tag.">
         <source>There was an error in creating the Tag.</source>
-        <target state="translated">S’ha produït un error en crear l’etiqueta.</target>
+        <target state="translated">S'ha produït un error en crear l'etiqueta.</target>
       </trans-unit>
       <trans-unit id="SWCeDsk" resname="Tag successfully created.">
         <source>Tag successfully created.</source>
@@ -1564,19 +1565,19 @@
       </trans-unit>
       <trans-unit id="NhtYAIW" resname="There are no tags with those values.">
         <source>There are no tags with those values.</source>
-        <target state="translated">No hi ha etiquetes amb aquests valors.</target>
+        <target state="translated">No hi ha cap etiqueta amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="1AkJyGH" resname="modify tag">
         <source>modify tag</source>
-        <target state="translated">modifica l’etiqueta</target>
+        <target state="translated">modifica l'etiqueta</target>
       </trans-unit>
       <trans-unit id="_ACvJJI" resname="There was an error in updating the Tag.">
         <source>There was an error in updating the Tag.</source>
-        <target state="translated">S’ha produït un error en actualitzar l’etiqueta.</target>
+        <target state="translated">S'ha produït un error en actualitzar l'etiqueta.</target>
       </trans-unit>
       <trans-unit id="p3MjPS9" resname="Tag successfully updated.">
         <source>Tag successfully updated.</source>
-        <target state="translated">L’etiqueta s’ha actualitzat correctament.</target>
+        <target state="translated">L'etiqueta s'ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="yjTGzd8" resname="Duration(min)">
         <source>Duration(min)</source>
@@ -1608,7 +1609,7 @@
       </trans-unit>
       <trans-unit id="e0jJK_e" resname="Inbox on server">
         <source>Inbox on server</source>
-        <target state="translated">Safata d’entrada al servidor</target>
+        <target state="translated">Safata d'entrada al servidor</target>
       </trans-unit>
       <trans-unit id="8vdBP_d" resname="Local hard drive">
         <source>Local hard drive</source>
@@ -1624,7 +1625,7 @@
       </trans-unit>
       <trans-unit id="liAqQOK" resname="&lt;span class=&quot;alert alert-dismissable alert-warning&quot;&gt;&lt;i&gt;Warning: This multimedia object is not correctly published on WebTV&lt;/i&gt;&lt;/span&gt;">
         <source>&lt;span class="alert alert-dismissable alert-warning"&gt;&lt;i&gt;Warning: This multimedia object is not correctly published on WebTV&lt;/i&gt;&lt;/span&gt;</source>
-        <target state="translated"><![CDATA[&lt;span class="alert alert-dismissable alert-warning"&gt;&lt;i&gt;Advertència: Aquest objecte multimèdia no està publicat correctament al portal WebTV&lt;/i&gt;&lt;/span&gt;]]></target>
+        <target state="translated"><![CDATA[&lt;span class="alert alert-dismissable alert-warning"&gt;&lt;i&gt;Advertència: Aquest objecte multimèdia no s'ha publicat al portal WebTV correctament &lt;/i&gt;&lt;/span&gt;]]></target>
       </trans-unit>
       <trans-unit id="6h4Em02" resname="Embedded Iframe">
         <source>Embedded Iframe</source>
@@ -1700,7 +1701,7 @@
       </trans-unit>
       <trans-unit id="JyToKKj" resname="File info of multimedia object">
         <source>File info of multimedia object</source>
-        <target state="translated">Informació de fitxer de l’objecte multimèdia</target>
+        <target state="translated">Informació de fitxer de l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="PJm7Cwi" resname="Delete track">
         <source>Delete track</source>
@@ -1708,7 +1709,7 @@
       </trans-unit>
       <trans-unit id="DbXaeNB" resname="Autocomplete technical metadata of track">
         <source>Autocomplete technical metadata of track</source>
-        <target state="translated">Autocompleta les metadades tècniques de la pista</target>
+        <target state="translated">Completa de manera automàtica les metadades tècniques de la pista</target>
       </trans-unit>
       <trans-unit id="EaAlxnm" resname="Capture frame from">
         <source>Capture frame from</source>
@@ -1740,7 +1741,7 @@
       </trans-unit>
       <trans-unit id="rSgp7EK" resname="Track successfully updated.">
         <source>Track successfully updated.</source>
-        <target state="translated">La pista s’ha actualitzat correctament.</target>
+        <target state="translated">La pista s'ha actualitzat correctament.</target>
       </trans-unit>
       <trans-unit id="HbDC1hM" resname="Update the web page to show master videos">
         <source>Update the web page to show master videos</source>
@@ -1748,11 +1749,11 @@
       </trans-unit>
       <trans-unit id="VZEQwqi" resname="New Track added.">
         <source>New Track added.</source>
-        <target state="translated">La pista nova s’ha afegit.</target>
+        <target state="translated">S'ha afegit una pista nova.</target>
       </trans-unit>
       <trans-unit id="dBYCcHI" resname="External defined user. User Groups cannot be edited. Contact your directory service administrator to change membership.">
         <source>External defined user. User Groups cannot be edited. Contact your directory service administrator to change membership.</source>
-        <target state="translated">Usuari definit externament. Els grups de l’usuari no es poden editar. Poseu-vos en contacte amb l’administrador del servei del directori per canviar-ne l’afiliació.</target>
+        <target state="translated">Usuari definit externament. Els grups de l'usuari no es poden editar. Contacteu amb l'administrador del servei del directori per canviar-ne l'afiliació.</target>
       </trans-unit>
       <trans-unit id="z_uoNon" resname="create new user">
         <source>create new user</source>
@@ -1760,7 +1761,7 @@
       </trans-unit>
       <trans-unit id="ejqjrR0" resname="edit groups for user">
         <source>edit groups for user</source>
-        <target state="translated">edita els grups de l’usuari</target>
+        <target state="translated">edita els grups de l'usuari</target>
       </trans-unit>
       <trans-unit id="GoS7oiB" resname="GROUPS">
         <source>GROUPS</source>
@@ -1768,11 +1769,11 @@
       </trans-unit>
       <trans-unit id="MBaNOCX" resname="User current Groups">
         <source>User current Groups</source>
-        <target state="translated">Grups actuals de l’usuari</target>
+        <target state="translated">Grups actuals de l'usuari</target>
       </trans-unit>
       <trans-unit id="47ienTP" resname="Username">
         <source>Username</source>
-        <target state="translated">Nom d’usuari</target>
+        <target state="translated">Nom d'usuari</target>
       </trans-unit>
       <trans-unit id="JjyR0Hl" resname="Permission Profile">
         <source>Permission Profile</source>
@@ -1796,23 +1797,23 @@
       </trans-unit>
       <trans-unit id="QiB_WnK" resname="There are no users with those values.">
         <source>There are no users with those values.</source>
-        <target state="translated">No hi ha usuaris amb aquests valors.</target>
+        <target state="translated">No hi ha cap usuari amb aquests valors.</target>
       </trans-unit>
       <trans-unit id="6KiDUxl" resname="Edit User">
         <source>Edit User</source>
-        <target state="translated">Edita l’usuari</target>
+        <target state="translated">Edita l'usuari</target>
       </trans-unit>
       <trans-unit id="7rt_Xjw" resname="External defined users can not be edited here, contact your directory service administrator.">
         <source>External defined users can not be edited here, contact your directory service administrator.</source>
-        <target state="translated">Els usuaris definits externament no es poden editar aquí. Poseu-vos en contacte amb l’administrador del servei del directori.</target>
+        <target state="translated">Els usuaris definits externament no es poden editar aquí. Contacteu amb l'administrador del servei del directori.</target>
       </trans-unit>
       <trans-unit id="FOaEZZ0" resname="External defined users can not be deleted here, contact your directory service administrator.">
         <source>External defined users can not be deleted here, contact your directory service administrator.</source>
-        <target state="translated">Els usuaris definits externament no es poden eliminar aquí. Poseu-vos en contacte amb l’administrador del servei del directori.</target>
+        <target state="translated">Els usuaris definits externament no es poden eliminar aquí. Contacteu amb l'administrador del servei del directori.</target>
       </trans-unit>
       <trans-unit id="7CtpnxA" resname="User Groups">
         <source>User Groups</source>
-        <target state="translated">Grups de l’usuari</target>
+        <target state="translated">Grups de l'usuari</target>
       </trans-unit>
       <trans-unit id="7NWsJuk" resname="{0} users|{1} user|]1,Inf] users">
         <source>{0} users|{1} user|]1,Inf] users</source>
@@ -1820,7 +1821,7 @@
       </trans-unit>
       <trans-unit id="Nb_JDYF" resname="modify user">
         <source>modify user</source>
-        <target state="translated">modifica l’usuari</target>
+        <target state="translated">modifica l'usuari</target>
       </trans-unit>
       <trans-unit id="6qYkpgC" resname="Are you sure you want to delete this role?">
         <source>Are you sure you want to delete this role?</source>
@@ -1828,7 +1829,7 @@
       </trans-unit>
       <trans-unit id="Yp7Yoj7" resname="Role successfully deleted.">
         <source>Role successfully deleted.</source>
-        <target state="translated">El rol s’ha eliminat correctament.</target>
+        <target state="translated">El rol s'ha eliminat correctament.</target>
       </trans-unit>
       <trans-unit id="NMZAk89" resname="Impossible to delete, role with">
         <source>Impossible to delete, role with</source>
@@ -1840,19 +1841,19 @@
       </trans-unit>
       <trans-unit id="olRYImi" resname="Are you sure you want to delete the user">
         <source>Are you sure you want to delete the user</source>
-        <target state="translated">Confirmeu que voleu eliminar l’usuari</target>
+        <target state="translated">Confirmeu que voleu eliminar l'usuari?</target>
       </trans-unit>
       <trans-unit id="VyNTZyH" resname="Error deleting user">
         <source>Error deleting user</source>
-        <target state="translated">S’ha produït un error en eliminar l’usuari</target>
+        <target state="translated">S'ha produït un error en eliminar l'usuari</target>
       </trans-unit>
       <trans-unit id="tRLZfny" resname="User">
         <source>User</source>
-        <target state="translated">L’usuari</target>
+        <target state="translated">L'usuari</target>
       </trans-unit>
       <trans-unit id="ZrOB7xr" resname="successfully deleted.">
         <source>successfully deleted.</source>
-        <target state="translated">s’ha eliminat correctament.</target>
+        <target state="translated">s'ha eliminat correctament.</target>
       </trans-unit>
       <trans-unit id="vXs0SAh" resname="Are you sure you want to delete this broadcast?">
         <source>Are you sure you want to delete this broadcast?</source>
@@ -1860,7 +1861,7 @@
       </trans-unit>
       <trans-unit id="p50y7tV" resname="Broadcast successfully deleted.">
         <source>Broadcast successfully deleted.</source>
-        <target state="translated">L’emissió s’ha eliminat correctament.</target>
+        <target state="translated">L'emissió s'ha eliminat correctament.</target>
       </trans-unit>
       <trans-unit id="G27sbjQ" resname="Impossible to delete, broadcast with">
         <source>Impossible to delete, broadcast with</source>
@@ -1876,7 +1877,7 @@
       </trans-unit>
       <trans-unit id="oj2f5PI" resname="Live channel successfully deleted.">
         <source>Live channel successfully deleted.</source>
-        <target state="translated">El canal en directe s’ha eliminat correctament.</target>
+        <target state="translated">El canal en directe s'ha eliminat correctament.</target>
       </trans-unit>
       <trans-unit id="TrgM1tZ" resname="Are you sure you want to delete this series type?">
         <source>Are you sure you want to delete this series type?</source>
@@ -1884,7 +1885,7 @@
       </trans-unit>
       <trans-unit id="w6aKpss" resname="Series type successfully deleted.">
         <source>Series type successfully deleted.</source>
-        <target state="translated">El tipus de sèrie s’ha eliminat correctament.</target>
+        <target state="translated">El tipus de sèrie s'ha eliminat correctament.</target>
       </trans-unit>
       <trans-unit id="31mlu_f" resname="Are you sure you want to delete this live event?">
         <source>Are you sure you want to delete this live event?</source>
@@ -1892,11 +1893,11 @@
       </trans-unit>
       <trans-unit id="SSyB98E" resname="Live event successfully deleted.">
         <source>Live event successfully deleted.</source>
-        <target state="translated">L’esdeveniment en directe s’ha eliminat correctament.</target>
+        <target state="translated">L'esdeveniment en directe s'ha eliminat correctament.</target>
       </trans-unit>
       <trans-unit id="E7k1qxa" resname="Are you sure you want to sync this tags? The tags in other objects from this series will be lost.">
         <source>Are you sure you want to sync this tags? The tags in other objects from this series will be lost.</source>
-        <target state="translated">Confirmeu que voleu sincronitzar aquestes etiquetes? Es perdran les etiquetes d’altres objectes d’aquesta sèrie.</target>
+        <target state="translated">Confirmeu que voleu sincronitzar aquestes etiquetes? Es perdran les etiquetes d'altres objectes d'aquesta sèrie.</target>
       </trans-unit>
       <trans-unit id="ePSCF2q" resname="Are you sure you want to delete this multimedia object?">
         <source>Are you sure you want to delete this multimedia object?</source>
@@ -1904,19 +1905,19 @@
       </trans-unit>
       <trans-unit id="CeEjD2m" resname="Multimedia Object successfully deleted.">
         <source>Multimedia Object successfully deleted.</source>
-        <target state="translated">L’objecte multimèdia s’ha eliminat correctament.</target>
+        <target state="translated">L'objecte multimèdia s'ha eliminat correctament.</target>
       </trans-unit>
       <trans-unit id="7u81YwG" resname="Are you sure you want to regenerate the magic url for this multimedia object?">
         <source>Are you sure you want to regenerate the magic url for this multimedia object?</source>
-        <target state="translated">Confirmeu que voleu regenerar l’URL màgic d’aquest objecte multimèdia?</target>
+        <target state="translated">Confirmeu que voleu regenerar l'URL màgic d'aquest objecte multimèdia?</target>
       </trans-unit>
       <trans-unit id="gJHFxD7" resname="Magic Url successfully generated.">
         <source>Magic Url successfully generated.</source>
-        <target state="translated">L’URL màgic s’ha generat correctament.</target>
+        <target state="translated">L'URL màgic s'ha generat correctament.</target>
       </trans-unit>
       <trans-unit id="em6xvLB" resname="Are you sure you want to regenerate the magic url for the Series: &quot;+seriesTitle+&quot;?">
         <source>Are you sure you want to regenerate the magic url for the Series: "+seriesTitle+"?</source>
-        <target state="translated">Confirmeu que voleu regenerar l’URL màgic de la sèrie "+seriesTitle+"?</target>
+        <target state="translated">Confirmeu que voleu regenerar l'URL màgic de la sèrie «+seriesTitle+»?</target>
       </trans-unit>
       <trans-unit id="uVXqMVU" resname="Are you sure you want to clone this multimedia object?">
         <source>Are you sure you want to clone this multimedia object?</source>
@@ -1924,19 +1925,19 @@
       </trans-unit>
       <trans-unit id="yqhzxI6" resname="Multimedia Object successfully cloned.">
         <source>Multimedia Object successfully cloned.</source>
-        <target state="translated">L’objecte multimèdia s’ha clonat correctament.</target>
+        <target state="translated">S'ha clonat correctament l'objecte multimèdia.</target>
       </trans-unit>
       <trans-unit id="JK9jnZq" resname="Are you sure you want to delete the series">
         <source>Are you sure you want to delete the series</source>
-        <target state="translated">Confirmeu que voleu eliminar la sèrie</target>
+        <target state="translated">Confirmeu que voleu eliminar la sèrie?</target>
       </trans-unit>
       <trans-unit id="wVqjGA4" resname="This series has">
         <source>This series has</source>
-        <target state="translated">Aquesta sèrie</target>
+        <target state="translated">Aquesta sèrie té</target>
       </trans-unit>
       <trans-unit id="68_0wqL" resname="multimedia object(s)">
         <source>multimedia object(s)</source>
-        <target state="translated">té objectes multimèdia</target>
+        <target state="translated">objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="68_0ssswqL" resname="live event(s)">
         <source>live event(s)</source>
@@ -1948,11 +1949,11 @@
       </trans-unit>
       <trans-unit id=".RXtNr9" resname="successfully deleted">
         <source>successfully deleted</source>
-        <target state="translated">s’ha eliminat correctament</target>
+        <target state="translated">s'ha eliminat correctament</target>
       </trans-unit>
       <trans-unit id="B8XoUzq" resname="Are you sure you want to delete the playlist">
         <source>Are you sure you want to delete the playlist</source>
-        <target state="translated">Confirmeu que voleu eliminar la llista de reproducció</target>
+        <target state="translated">Confirmeu que voleu eliminar la llista de reproducció?</target>
       </trans-unit>
       <trans-unit id="eqXGEIN" resname="This playlist has">
         <source>This playlist has</source>
@@ -1964,7 +1965,7 @@
       </trans-unit>
       <trans-unit id="CnuGXCW" resname="Are you sure you want to delete the Permission Profile">
         <source>Are you sure you want to delete the Permission Profile</source>
-        <target state="translated">Confirmeu que voleu eliminar el perfil de permisos</target>
+        <target state="translated">Confirmeu que voleu eliminar el perfil de permisos?</target>
       </trans-unit>
       <trans-unit id="YUT0gTi" resname="Are you sure you want to delete this thumbnail?">
         <source>Are you sure you want to delete this thumbnail?</source>
@@ -1972,23 +1973,23 @@
       </trans-unit>
       <trans-unit id="YUG7gTi" resname="If it corresponds to the one associated with the banner, the entire header will also be removed.">
         <source>If it corresponds to the one associated with the banner, the entire header will also be removed.</source>
-        <target state="translated">Si correspon a l’associat al banner, també s’eliminarà tota la capçalera.</target>
+        <target state="translated">Si correspon a l'associat al bàner, també s'eliminarà tota la capçalera.</target>
       </trans-unit>
       <trans-unit id="Eru2JsX" resname="Thumbnail removed.">
         <source>Thumbnail removed.</source>
-        <target state="translated">La miniatura s’ha eliminat.</target>
+        <target state="translated">S'ha eliminat la miniatura.</target>
       </trans-unit>
       <trans-unit id="cOI7VBt" resname="Are you sure you want to delete the relation of">
         <source>Are you sure you want to delete the relation of</source>
-        <target state="translated">Confirmeu que voleu eliminar la relació de</target>
+        <target state="translated">Confirmeu que voleu eliminar la relació de?</target>
       </trans-unit>
       <trans-unit id="93IwAVp" resname="Error deleting Person">
         <source>Error deleting Person</source>
-        <target state="translated">S’ha produït un error en eliminar la persona</target>
+        <target state="translated">S'ha produït un error en eliminar la persona</target>
       </trans-unit>
       <trans-unit id="dzQnHNH" resname="Person successfully removed from Multimedia Object">
         <source>Person successfully removed from Multimedia Object</source>
-        <target state="translated">La persona s’ha eliminat correctament de l’objecte multimèdia</target>
+        <target state="translated">La persona s'ha eliminat correctament de l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="BcN9q8y" resname="Are you sure you want to delete this link?">
         <source>Are you sure you want to delete this link?</source>
@@ -2000,7 +2001,7 @@
       </trans-unit>
       <trans-unit id="Bu3wtKv" resname="Material successfully deleted.">
         <source>Material successfully deleted.</source>
-        <target state="translated">El material s’ha eliminat correctament.</target>
+        <target state="translated">S'ha eliminat el material correctament.</target>
       </trans-unit>
       <trans-unit id="v7zlmez" resname="Are you sure you want to delete this track?">
         <source>Are you sure you want to delete this track?</source>
@@ -2008,11 +2009,11 @@
       </trans-unit>
       <trans-unit id="nTMzQbi" resname="Error extracting thumbnail">
         <source>Error extracting thumbnail</source>
-        <target state="translated">S’ha produït un error en extreure la miniatura</target>
+        <target state="translated">S'ha produït un error en extreure la miniatura</target>
       </trans-unit>
       <trans-unit id="8Tf7CDw" resname="Are you sure you want to delete the data of">
         <source>Are you sure you want to delete the data of</source>
-        <target state="translated">Confirmeu que voleu eliminar les dades de</target>
+        <target state="translated">Confirmeu que voleu eliminar les dades de?</target>
       </trans-unit>
       <trans-unit id="YAfbY_G" resname="Person">
         <source>Person</source>
@@ -2020,7 +2021,7 @@
       </trans-unit>
       <trans-unit id="l17pdOk" resname="Error deleting Group">
         <source>Error deleting Group</source>
-        <target state="translated">S’ha produït un error en eliminar el grup</target>
+        <target state="translated">S'ha produït un error en eliminar el grup</target>
       </trans-unit>
       <trans-unit id="NMoOdmC" resname="Group">
         <source>Group</source>
@@ -2036,15 +2037,15 @@
       </trans-unit>
       <trans-unit id="8HdfsdYsTzv" resname="Are you sure you want to delete this/these series">
         <source>Are you sure you want to delete this/these series</source>
-        <target state="translated">Esteu segur que voleu suprimir aquesta o aquestes sèries</target>
+        <target state="translated">Confirmeu que voleu suprimir aquesta o aquestes sèries?</target>
       </trans-unit>
       <trans-unit id="8Hdfs44zv" resname="This/these series has/have">
         <source>This/these series has/have</source>
-        <target state="translated">Aquesta/aquestes sèries té/tenen</target>
+        <target state="translated">Aquesta o aquestes sèries tenen</target>
       </trans-unit>
       <trans-unit id="uw0Ge.Y" resname="Multimedia Object(s) successfully deleted.">
         <source>Multimedia Object(s) successfully deleted.</source>
-        <target state="translated">Els objectes multimèdia s’han eliminat correctament.</target>
+        <target state="translated">S'han eliminat els objectes multimèdia correctament.</target>
       </trans-unit>
       <trans-unit id="p5b_bOk" resname="Tags with children can not be deleted.">
         <source>Tags with children can not be deleted.</source>
@@ -2056,11 +2057,11 @@
       </trans-unit>
       <trans-unit id="VStEpQy" resname="Multimedia Object cut. Paste it in the desire Series.">
         <source>Multimedia Object cut. Paste it in the desire Series.</source>
-        <target state="translated">S’ha retallat l’objecte multimèdia. Enganxeu-lo a la sèrie que vulgueu.</target>
+        <target state="translated">S'ha retallat l'objecte multimèdia. Enganxeu-lo a la sèrie que vulgueu.</target>
       </trans-unit>
       <trans-unit id="d8PHX.C" resname="Multimedia Objects cut. Paste them in the desire Series.">
         <source>Multimedia Objects cut. Paste them in the desire Series.</source>
-        <target state="translated">S’han retallat els objectes multimèdia. Enganxeu-los a la sèrie que vulgueu.</target>
+        <target state="translated">S'han retallat els objectes multimèdia. Enganxeu-los a la sèrie que vulgueu.</target>
       </trans-unit>
       <trans-unit id="Tb1szZW" resname="Paste multimedia object(s) in this series?">
         <source>Paste multimedia object(s) in this series?</source>
@@ -2068,7 +2069,7 @@
       </trans-unit>
       <trans-unit id="h7qAnp6" resname="Multimedia Object(s) pasted in the Series.">
         <source>Multimedia Object(s) pasted in the Series.</source>
-        <target state="translated">Els objectes multimèdia s’han enganxat a la sèrie.</target>
+        <target state="translated">S'han enganxat els objectes multimèdia a la sèrie.</target>
       </trans-unit>
       <trans-unit id="N6fBqyB" resname="Select any user.">
         <source>Select any user.</source>
@@ -2076,27 +2077,27 @@
       </trans-unit>
       <trans-unit id="DT.oOJ0" resname="Users updated.">
         <source>Users updated.</source>
-        <target state="translated">S’han actualitzat els usuaris.</target>
+        <target state="translated">S'han actualitzat els usuaris.</target>
       </trans-unit>
       <trans-unit id="hkEGkeo" resname="From date must be less than to date">
         <source>From date must be less than to date</source>
-        <target state="translated">La data d’inici ha de ser anterior a la data de finalització</target>
+        <target state="translated">La data d'inici ha de ser anterior a la data de finalització</target>
       </trans-unit>
       <trans-unit id="W2SAiJZ" resname="Multimedia Object successfully created.">
         <source>Multimedia Object successfully created.</source>
-        <target state="translated">L’objecte multimèdia s’ha creat correctament.</target>
+        <target state="translated">S'ha creat l'objecte multimèdia correctament.</target>
       </trans-unit>
       <trans-unit id="INEMKnf" resname="Series successfully created.">
         <source>Series successfully created.</source>
-        <target state="translated">La sèrie s’ha creat correctament.</target>
+        <target state="translated">S'ha creat la sèrie correctament.</target>
       </trans-unit>
       <trans-unit id="CD8V2jD" resname="Playlist successfully created.">
         <source>Playlist successfully created.</source>
-        <target state="translated">La llista de reproducció s’ha creat correctament.</target>
+        <target state="translated">S'ha creat la llista de reproducció correctament.</target>
       </trans-unit>
       <trans-unit id="g2VW76s" resname="The given URL is not valid">
         <source>The given URL is not valid</source>
-        <target state="translated">L’URL introduït no és vàlid</target>
+        <target state="translated">L'URL introduït no és vàlid</target>
       </trans-unit>
       <trans-unit id="yeEl78P" resname="This directory">
         <source>This directory</source>
@@ -2112,7 +2113,7 @@
       </trans-unit>
       <trans-unit id="1Pu5dTM" resname="Are you sure you want to delete the tag with code">
         <source>Are you sure you want to delete the tag with code</source>
-        <target state="translated">Confirmeu que voleu eliminar l’etiqueta amb codi</target>
+        <target state="translated">Confirmeu que voleu eliminar l'etiqueta amb codi?</target>
       </trans-unit>
       <trans-unit id="FQORaiq" resname="Tag">
         <source>Tag</source>
@@ -2120,23 +2121,23 @@
       </trans-unit>
       <trans-unit id="hJTTcFb" resname="ATTENTION: Are you sure you want to delete all User from this Group?">
         <source>ATTENTION: Are you sure you want to delete all User from this Group?</source>
-        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar tots els usuaris d’aquest grup?</target>
+        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar tots els usuaris d'aquest grup?</target>
       </trans-unit>
       <trans-unit id="9viBwjA" resname="ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?">
         <source>ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?</source>
-        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar tots els objectes multimèdia d’administració d’aquest grup?</target>
+        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar tots els objectes multimèdia d'administració d'aquest grup?</target>
       </trans-unit>
       <trans-unit id="rcNVqHI" resname="ATTENTION: Are you sure you want to delete all Play Multimedia Objects from this Group?">
         <source>ATTENTION: Are you sure you want to delete all Play Multimedia Objects from this Group?</source>
-        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar tots els objectes multimèdia de reproducció d’aquest grup?</target>
+        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar tots els objectes multimèdia de reproducció d'aquest grup?</target>
       </trans-unit>
       <trans-unit id="0WK8JjE" resname="There was an error in creating the Live event.">
         <source>There was an error in creating the Live event.</source>
-        <target state="translated">S’ha produït un error en crear l’esdeveniment en directe.</target>
+        <target state="translated">S'ha produït un error en crear l'esdeveniment en directe.</target>
       </trans-unit>
       <trans-unit id="i1NJEAu" resname="Live event successfully created.">
         <source>Live event successfully created.</source>
-        <target state="translated">L’esdeveniment en directe s’ha creat correctament.</target>
+        <target state="translated">S'ha creat l'esdeveniment en directe correctament.</target>
       </trans-unit>
       <trans-unit id="i1Nasa2JEAu" resname="Failed to update event, you need to create a channel first.">
         <source>Failed to update event, you need to create a channel first.</source>
@@ -2144,55 +2145,55 @@
       </trans-unit>
       <trans-unit id="5Z0ROY3" resname="There was an error in creating the Live channel.">
         <source>There was an error in creating the Live channel.</source>
-        <target state="translated">S’ha produït un error en crear el canal en directe.</target>
+        <target state="translated">S'ha produït un error en crear el canal en directe.</target>
       </trans-unit>
       <trans-unit id="mHcQkpB" resname="Live channel successfully created.">
         <source>Live channel successfully created.</source>
-        <target state="translated">El canal en directe s’ha creat correctament.</target>
+        <target state="translated">S'ha creat el canal en directe correctament.</target>
       </trans-unit>
       <trans-unit id="3GvYMAf" resname="Series type channel successfully created.">
         <source>Series type channel successfully created.</source>
-        <target state="translated">El canal de tipus de sèrie s’ha creat correctament.</target>
+        <target state="translated">S'ha creat el canal de tipus de sèrie correctament.</target>
       </trans-unit>
       <trans-unit id="zN9Po12" resname="Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.">
         <source>Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.</source>
-        <target state="translated">S’ha produït un error en desar l’objecte multimèdia: la data de publicació no pot ser anterior a la data de gravació.</target>
+        <target state="translated">S'ha produït un error en desar l'objecte multimèdia: la data de publicació no pot ser anterior a la data de gravació.</target>
       </trans-unit>
       <trans-unit id="y_HqDaU" resname="There was an error in updating the User.">
         <source>There was an error in updating the User.</source>
-        <target state="translated">S’ha produït un error en actualitzar l’usuari.</target>
+        <target state="translated">S'ha produït un error en actualitzar l'usuari.</target>
       </trans-unit>
       <trans-unit id="QXcI6C0" resname="User successfully updated.">
         <source>User successfully updated.</source>
-        <target state="translated">L’usuari s’ha actualitzat correctament.</target>
+        <target state="translated">S'ha actualitzat l'usuari correctament.</target>
       </trans-unit>
       <trans-unit id="4LRJfJP" resname="There was an error in creating the User.">
         <source>There was an error in creating the User.</source>
-        <target state="translated">S’ha produït un error en crear l’usuari.</target>
+        <target state="translated">S'ha produït un error en crear l'usuari.</target>
       </trans-unit>
       <trans-unit id="jL7JI3P" resname="User successfully created.">
         <source>User successfully created.</source>
-        <target state="translated">L’usuari s’ha creat correctament.</target>
+        <target state="translated">S'ha creat l'usuari correctament.</target>
       </trans-unit>
       <trans-unit id="ivE.rDK" resname="There was an error in creating the Permission Profile.">
         <source>There was an error in creating the Permission Profile.</source>
-        <target state="translated">S’ha produït un error en crear el perfil de permisos.</target>
+        <target state="translated">S'ha produït un error en crear el perfil de permisos.</target>
       </trans-unit>
       <trans-unit id="4JQE_07" resname="Permission Profile successfully created.">
         <source>Permission Profile successfully created.</source>
-        <target state="translated">El perfil de permisos s’ha creat correctament.</target>
+        <target state="translated">S'ha creat el perfil de permisos correctament.</target>
       </trans-unit>
       <trans-unit id="igz0C_y" resname="There was an error in updating the Permission Profile.">
         <source>There was an error in updating the Permission Profile.</source>
-        <target state="translated">S’ha produït un error en actualitzar el perfil de permisos.</target>
+        <target state="translated">S'ha produït un error en actualitzar el perfil de permisos.</target>
       </trans-unit>
       <trans-unit id="q_SHmt8" resname="Permission Profile successfully updated.">
         <source>Permission Profile successfully updated.</source>
-        <target state="translated">El perfil de permisos s’ha actualitzat correctament.</target>
+        <target state="translated">S'ha actualitzat el perfil de permisos correctament.</target>
       </trans-unit>
       <trans-unit id="ZjZcDHe" resname="Permission Profiles successfully updated.">
         <source>Permission Profiles successfully updated.</source>
-        <target state="translated">Els perfils de permisos s’han actualitzat correctament.</target>
+        <target state="translated">S'han actualitzat els perfils de permisos correctament.</target>
       </trans-unit>
       <trans-unit id="nUGcFk_" resname="The permission">
         <source>The permission</source>
@@ -2204,19 +2205,19 @@
       </trans-unit>
       <trans-unit id="sounSSe" resname="If you click OK you will uncheck all these permissions. Are you sure?">
         <source>If you click OK you will uncheck all these permissions. Are you sure?</source>
-        <target state="translated">Si feu clic a D’acord desactivareu tots aquests permisos. Voleu continuar?</target>
+        <target state="translated">Si feu clic a «D’acord» desactivareu tots aquests permisos. Voleu continuar?</target>
       </trans-unit>
       <trans-unit id="OsIT4lO" resname="ATTENTION: Are you sure you want to delete this User from this Group?">
         <source>ATTENTION: Are you sure you want to delete this User from this Group?</source>
-        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar aquest usuari d’aquest grup?</target>
+        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar aquest usuari d'aquest grup?</target>
       </trans-unit>
       <trans-unit id="SOEdbzh" resname="ATTENTION: Are you sure you want to delete this Admin Multimedia Object from this Group?">
         <source>ATTENTION: Are you sure you want to delete this Admin Multimedia Object from this Group?</source>
-        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar aquest objecte multimèdia d’administració d’aquest grup?</target>
+        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar aquest objecte multimèdia d'administració d'aquest grup?</target>
       </trans-unit>
       <trans-unit id="uAtpvbf" resname="ATTENTION: Are you sure you want to delete this Play Multimedia Object from this Group?">
         <source>ATTENTION: Are you sure you want to delete this Play Multimedia Object from this Group?</source>
-        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar aquest objecte multimèdia de reproducció d’aquest grup?</target>
+        <target state="translated">ATENCIÓ: Confirmeu que voleu eliminar aquest objecte multimèdia de reproducció d'aquest grup?</target>
       </trans-unit>
       <trans-unit id="HQDtFM_" resname="WARNING: You will no longer have access to this Multimedia Object.">
         <source>WARNING: You will no longer have access to this Multimedia Object.</source>
@@ -2224,7 +2225,7 @@
       </trans-unit>
       <trans-unit id="w8EOstY" resname="Any Internet user can play this multimedia object">
         <source>Any Internet user can play this multimedia object</source>
-        <target state="translated">Qualsevol usuari d’Internet pot reproduir aquest objecte multimèdia</target>
+        <target state="translated">Qualsevol usuari d'Internet pot reproduir aquest objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="RBNtvVe" resname="Only users with the defined password can play this multimedia object">
         <source>Only users with the defined password can play this multimedia object</source>
@@ -2232,7 +2233,7 @@
       </trans-unit>
       <trans-unit id=".gDZQyh" resname="Only logged in users in the system can play this multimedia object">
         <source>Only logged in users in the system can play this multimedia object</source>
-        <target state="translated">Només els usuaris connectats al sistema poden reproduir aquest objecte multimèdia</target>
+        <target state="translated">Només els usuaris que han iniciat la sessió al sistema poden reproduir aquest objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="FxXP0wh" resname="Only users in the selected Groups can play this multimedia object">
         <source>Only users in the selected Groups can play this multimedia object</source>
@@ -2240,7 +2241,7 @@
       </trans-unit>
       <trans-unit id=".l7.lEI" resname="Media Manager">
         <source>Media Manager</source>
-        <target state="translated">Gestor d’objectes multimèdia</target>
+        <target state="translated">Gestor d'objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="tKc2V0D" resname="Stats">
         <source>Stats</source>
@@ -2284,7 +2285,7 @@
       </trans-unit>
       <trans-unit id="jESY9eH" resname="OC-Importer">
         <source>OC-Importer</source>
-        <target state="translated">Importador de l’Opencast</target>
+        <target state="translated">Importador de l'Opencast</target>
       </trans-unit>
       <trans-unit id="flsBov8" resname="My Multimedia Objects">
         <source>My Multimedia Objects</source>
@@ -2300,23 +2301,23 @@
       </trans-unit>
       <trans-unit id="RXjCcTt" resname="Multimedia object preview">
         <source>Multimedia object preview</source>
-        <target state="translated">Previsualització de l’objecte multimèdia</target>
+        <target state="translated">Previsualització de l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="99uIZSi" resname="The multimedia object '%title%' is not playable">
         <source>The multimedia object '%title%' is not playable</source>
-        <target state="translated">L’objecte multimèdia '%title%' no es pot reproduir</target>
+        <target state="translated">L'objecte multimèdia «%title%» no es pot reproduir</target>
       </trans-unit>
       <trans-unit id="8U1WTQ5" resname="The multimedia object '%title%' is not published">
         <source>The multimedia object '%title%' is not published</source>
-        <target state="translated">L’objecte multimèdia '%title%' no està publicat</target>
+        <target state="translated">L'objecte multimèdia «%title%» no està publicat</target>
       </trans-unit>
       <trans-unit id="B3BQNfz" resname="My Moodle Playlists">
         <source>My Moodle Playlists</source>
-        <target state="translated">Les meves llistes de reproducció del Moodle</target>
+        <target state="translated">Les meves llistes de reproducció de Moodle</target>
       </trans-unit>
       <trans-unit id="8Hl1wYi" resname="List multimedia objects of the playlist">
         <source>List multimedia objects of the playlist</source>
-        <target state="translated">Llista els objectes multimèdia de la llista de reproducció</target>
+        <target state="translated">Enumera els objectes multimèdia de la llista de reproducció</target>
       </trans-unit>
       <trans-unit id="YsLXZVx" resname="This object cannot be played on the playlist">
         <source>This object cannot be played on the playlist</source>
@@ -2328,11 +2329,11 @@
       </trans-unit>
       <trans-unit id="PWlKoNH" resname="Edit multimedia object">
         <source>Edit multimedia object</source>
-        <target state="translated">Edita l’objecte multimèdia</target>
+        <target state="translated">Edita l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="dtgXFGE" resname="Delete multimedia object from de playlist">
         <source>Delete multimedia object from de playlist</source>
-        <target state="translated">Elimina l’objecte multimèdia de la llista de reproducció</target>
+        <target state="translated">Elimina l'objecte multimèdia de la llista de reproducció</target>
       </trans-unit>
       <trans-unit id="NjI5RKZ" resname="My Multimedia Series">
         <source>My Multimedia Series</source>
@@ -2340,15 +2341,15 @@
       </trans-unit>
       <trans-unit id="zYbUi03" resname="List multimedia objects of the series">
         <source>List multimedia objects of the series</source>
-        <target state="translated">Llista els objectes multimèdia de la sèrie</target>
+        <target state="translated">Enumera els objectes multimèdia de la sèrie</target>
       </trans-unit>
       <trans-unit id="qI.EImz" resname="Go to series">
         <source>Go to series</source>
-        <target state="translated">Vés a les sèries</target>
+        <target state="translated">Ves a les sèries</target>
       </trans-unit>
       <trans-unit id="mgGCAQ." resname="Go to playlists">
         <source>Go to playlists</source>
-        <target state="translated">Vés a les llistes de reproducció</target>
+        <target state="translated">Ves a les llistes de reproducció</target>
       </trans-unit>
       <trans-unit id="9HA4HnV" resname="Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name">
         <source>Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name</source>
@@ -2360,7 +2361,7 @@
       </trans-unit>
       <trans-unit id="EtmhLYs" resname="Delete multimedia object from the playlist">
         <source>Delete multimedia object from the playlist</source>
-        <target state="translated">Elimina l’objecte multimèdia de la llista de reproducció</target>
+        <target state="translated">Elimina l'objecte multimèdia de la llista de reproducció</target>
       </trans-unit>
       <trans-unit id="eoflj3v" resname="My Series">
         <source>My Series</source>
@@ -2396,11 +2397,11 @@
       </trans-unit>
       <trans-unit id="XfFDvxx" resname="Header Text">
         <source>Header Text</source>
-        <target state="translated">Text de capçalera</target>
+        <target state="translated">Text de la capçalera</target>
       </trans-unit>
       <trans-unit id="ID4LME1" resname="Footer Text">
         <source>Footer Text</source>
-        <target state="translated">Text de peu de pàgina</target>
+        <target state="translated">Text del peu de pàgina</target>
       </trans-unit>
       <trans-unit id="BXXynfi" resname="Template">
         <source>Template</source>
@@ -2416,7 +2417,7 @@
       </trans-unit>
       <trans-unit id="xaNywP8" resname="ADMIN MULTIMEDIA OBJECTS">
         <source>ADMIN MULTIMEDIA OBJECTS</source>
-        <target state="translated">OBJECTES MULTIMÈDIA D’ADMINISTRACIÓ</target>
+        <target state="translated">OBJECTES MULTIMÈDIA D'ADMINISTRACIÓ</target>
       </trans-unit>
       <trans-unit id="0vQO3eJ" resname="PLAY MULTIMEDIA OBJECTS">
         <source>PLAY MULTIMEDIA OBJECTS</source>
@@ -2440,7 +2441,7 @@
       </trans-unit>
       <trans-unit id="0FJ_Sz1" resname="Logout">
         <source>Logout</source>
-        <target state="translated">Finalitza la sessió</target>
+        <target state="translated">Tanca la sessió</target>
       </trans-unit>
       <trans-unit id="dCz6rVt" resname="Published Multimedia Object(s)">
         <source>Published Multimedia Object(s)</source>
@@ -2456,7 +2457,7 @@
       </trans-unit>
       <trans-unit id="oY0wgNr" resname="No tags found with this criteria">
         <source>No tags found with this criteria</source>
-        <target state="translated">No s’han trobat etiquetes amb aquests criteris</target>
+        <target state="translated">No s'ha trobat cap etiqueta amb aquests criteris</target>
       </trans-unit>
       <trans-unit id="ttQS1uE" resname="Insert filter...">
         <source>Insert filter...</source>
@@ -2476,7 +2477,7 @@
       </trans-unit>
       <trans-unit id="OBiStub" resname="Error promoting user">
         <source>Error promoting user</source>
-        <target state="translated">S’ha produït un error en promocionar l’usuari</target>
+        <target state="translated">S'ha produït un error en promocionar l'usuari</target>
       </trans-unit>
       <trans-unit id="FbYZdLJ" resname="Location">
         <source>Location</source>
@@ -2508,7 +2509,7 @@
       </trans-unit>
       <trans-unit id="8xAM7F2" resname="IP source">
         <source>IP source</source>
-        <target state="translated">Font d’IP</target>
+        <target state="translated">IP d'origen</target>
       </trans-unit>
       <trans-unit id="DDhhg4r" resname="Last Added (Announced)">
         <source>Last Added (Announced)</source>
@@ -2576,7 +2577,7 @@
       </trans-unit>
       <trans-unit id="o6EiK8s" resname="dfxp - Distribution Format Exchange Profile">
         <source>dfxp - Distribution Format Exchange Profile</source>
-        <target state="translated">dfxp - Perfil d’intercanvi de format de distribució</target>
+        <target state="translated">dfxp - Perfil d'intercanvi de format de distribució</target>
       </trans-unit>
       <trans-unit id="SvMvKSS" resname="IFRAME">
         <source>IFRAME</source>
@@ -2584,35 +2585,35 @@
       </trans-unit>
       <trans-unit id="sXY1cJs" resname="Successfully updated groups in User.">
         <source>Successfully updated groups in User.</source>
-        <target state="translated">Els grups s’han actualitzat correctament a l’usuari.</target>
+        <target state="translated">S'han actualitzat els grups correctament a l'usuari.</target>
       </trans-unit>
       <trans-unit id="wbkd_cn" resname="Successfully updated groups in Mm.">
         <source>Successfully updated groups in Mm.</source>
-        <target state="translated">Els grups s’han actualitzat correctament a l’objecte multimèdia.</target>
+        <target state="translated">S'han actualitzat els grups correctament a l'objecte multimèdia.</target>
       </trans-unit>
       <trans-unit id="I.ufkSu" resname="Successfully updated Broadcast.">
         <source>Successfully updated Broadcast.</source>
-        <target state="translated">L’emissió s’ha actualitzat correctament.</target>
+        <target state="translated">S'ha actualitzat l'emissió correctament.</target>
       </trans-unit>
       <trans-unit id="haC6i.Q" resname="Successfully updated Broadcast in all Multimedia Objects.">
         <source>Successfully updated Broadcast in all Multimedia Objects.</source>
-        <target state="translated">L’emissió s’ha actualitzat correctament a tots els objectes multimèdia.</target>
+        <target state="translated">S'ha actualitzat l'emissió correctament a tots els objectes multimèdia.</target>
       </trans-unit>
       <trans-unit id="WmohFym" resname="Any Internet user can play the new multimedia objects created from this video template">
         <source>Any Internet user can play the new multimedia objects created from this video template</source>
-        <target state="translated">Qualsevol usuari d’Internet pot reproduir els objectes multimèdia nous creats a partir d’aquesta plantilla de vídeo</target>
+        <target state="translated">Qualsevol usuari d'Internet pot reproduir els objectes multimèdia nous creats a partir d'aquesta plantilla de vídeo</target>
       </trans-unit>
       <trans-unit id="Q_2cAok" resname="Only users with the defined password can play the new multimedia objects created from this video template">
         <source>Only users with the defined password can play the new multimedia objects created from this video template</source>
-        <target state="translated">Només els usuaris amb la contrasenya definida poden reproduir els objectes multimèdia nous creats a partir d’aquesta plantilla de vídeo</target>
+        <target state="translated">Només els usuaris amb la contrasenya definida poden reproduir els objectes multimèdia nous creats a partir d'aquesta plantilla de vídeo</target>
       </trans-unit>
       <trans-unit id=".DEPZTg" resname="Only logged in users in the system can play the new multimedia objects created from this video template">
         <source>Only logged in users in the system can play the new multimedia objects created from this video template</source>
-        <target state="translated">Només els usuaris connectats al sistema poden reproduir els objectes multimèdia nous creats a partir d’aquesta plantilla de vídeo</target>
+        <target state="translated">Només els usuaris que han iniciat la sessió al sistema poden reproduir els objectes multimèdia nous creats a partir d'aquesta plantilla de vídeo</target>
       </trans-unit>
       <trans-unit id="TpvD2pr" resname="Only users in the selected Groups can play the new multimedia objects created from this video template">
         <source>Only users in the selected Groups can play the new multimedia objects created from this video template</source>
-        <target state="translated">Només els usuaris dels grups seleccionats poden reproduir els objectes multimèdia nous creats a partir d’aquesta plantilla de vídeo</target>
+        <target state="translated">Només els usuaris dels grups seleccionats poden reproduir els objectes multimèdia nous creats a partir d'aquesta plantilla de vídeo</target>
       </trans-unit>
       <trans-unit id="lvSbcrz" resname="Upload new videos">
         <source>Upload new videos</source>
@@ -2620,7 +2621,7 @@
       </trans-unit>
       <trans-unit id="Zb_sy63" resname="Multimedia List">
         <source>Multimedia List</source>
-        <target state="translated">Llista d’objectes multimèdia</target>
+        <target state="translated">Llista d'objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="V9Ij7j0" resname="This Series is announced">
         <source>This Series is announced</source>
@@ -2628,7 +2629,7 @@
       </trans-unit>
       <trans-unit id="Mb.aDob" resname="No multimedia object selected">
         <source>No multimedia object selected</source>
-        <target state="translated">No s’ha seleccionat cap objecte multimèdia</target>
+        <target state="translated">No s'ha seleccionat cap objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="nSb516S" resname="Search by title, subtitle, description or id">
         <source>Search by title, subtitle, description or id</source>
@@ -2656,7 +2657,7 @@
       </trans-unit>
       <trans-unit id="3z1z_Hm" resname="Filter Series">
         <source>Filter Series</source>
-        <target state="translated">Filtra sèries</target>
+        <target state="translated">Filtra les sèries</target>
       </trans-unit>
       <trans-unit id="rhVmzSH" resname="Series publication status">
         <source>Series publication status</source>
@@ -2676,7 +2677,7 @@
       </trans-unit>
       <trans-unit id="2S2DRLh" resname="Select the number of multimedia objects to display per page.">
         <source>Select the number of multimedia objects to display per page.</source>
-        <target state="translated">Seleccioneu el nombre d’objectes multimèdia que voleu mostrar per pàgina.</target>
+        <target state="translated">Seleccioneu el nombre d'objectes multimèdia que voleu mostrar per pàgina.</target>
       </trans-unit>
       <trans-unit id="1c5E_XE" resname="External player">
         <source>External player</source>
@@ -2684,7 +2685,7 @@
       </trans-unit>
       <trans-unit id="EUXU0w." resname="'No external player set'">
         <source>'No external player set'</source>
-        <target state="translated">“No s’ha definit cap reproductor extern”</target>
+        <target state="translated">«No s'ha definit cap reproductor extern»</target>
       </trans-unit>
       <trans-unit id="qEU0HS8" resname="Add external player">
         <source>Add external player</source>
@@ -2692,7 +2693,7 @@
       </trans-unit>
       <trans-unit id="35cm9FL" resname="No external player set">
         <source>No external player set</source>
-        <target state="translated">No s’ha definit cap reproductor extern</target>
+        <target state="translated">No s'ha definit cap reproductor extern</target>
       </trans-unit>
       <trans-unit id="aSj8S.K" resname="External video">
         <source>External video</source>
@@ -2700,7 +2701,7 @@
       </trans-unit>
       <trans-unit id=".4nFv.R" resname="No external video set">
         <source>No external video set</source>
-        <target state="translated">No s’ha definit cap vídeo extern</target>
+        <target state="translated">No s'ha definit cap vídeo extern</target>
       </trans-unit>
       <trans-unit id="Xol1TtJ" resname="Are you sure you want to delete this external video?">
         <source>Are you sure you want to delete this external video?</source>
@@ -2708,7 +2709,7 @@
       </trans-unit>
       <trans-unit id="FNAjY35" resname="External video successfully deleted.">
         <source>External video successfully deleted.</source>
-        <target state="translated">El vídeo extern s’ha eliminat correctament.</target>
+        <target state="translated">S'ha eliminat el vídeo extern correctament.</target>
       </trans-unit>
       <trans-unit id="Q2UeY_7" resname="New video external">
         <source>New video external</source>
@@ -2720,11 +2721,11 @@
       </trans-unit>
       <trans-unit id="L7AIWVS" resname="Filter Roles">
         <source>Filter Roles</source>
-        <target state="translated">Filtra rols</target>
+        <target state="translated">Filtra els rols</target>
       </trans-unit>
       <trans-unit id="BOhY0PO" resname="Filter Groups">
         <source>Filter Groups</source>
-        <target state="translated">Filtra grups</target>
+        <target state="translated">Filtra els grups</target>
       </trans-unit>
       <trans-unit id="x2CEL.O" resname="Filter People">
         <source>Filter People</source>
@@ -2744,7 +2745,7 @@
       </trans-unit>
       <trans-unit id="cYbOzrI" resname="Modify broadcast profile">
         <source>Modify broadcast profile</source>
-        <target state="translated">Modifica el perfil d’emissió</target>
+        <target state="translated">Modifica el perfil d'emissió</target>
       </trans-unit>
       <trans-unit id="V_Ek1jl" resname="Person with Role list">
         <source>Person with Role list</source>
@@ -2764,7 +2765,7 @@
       </trans-unit>
       <trans-unit id="qQ9wlqQ" resname="Submit generate magic URL">
         <source>Submit generate magic URL</source>
-        <target state="translated">Tramet la generació d’URL màgic</target>
+        <target state="translated">Tramet la generació d'URL màgic</target>
       </trans-unit>
       <trans-unit id="aNPaCQq" resname="Read only form">
         <source>Read only form</source>
@@ -2776,19 +2777,19 @@
       </trans-unit>
       <trans-unit id="YzJHJvk" resname="Update media">
         <source>Update media</source>
-        <target state="translated">Actualitza l’objecte multimèdia</target>
+        <target state="translated">Actualitza l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="0VgOpQk" resname="Filter Users">
         <source>Filter Users</source>
-        <target state="translated">Filtra usuaris</target>
+        <target state="translated">Filtra els usuaris</target>
       </trans-unit>
       <trans-unit id="fpFAdY1" resname="Filter Live Channels">
         <source>Filter Live Channels</source>
-        <target state="translated">Filtra canals en directe</target>
+        <target state="translated">Filtra els canals en directe</target>
       </trans-unit>
       <trans-unit id="PG3gj8j" resname="Filter Live Events">
         <source>Filter Live Events</source>
-        <target state="translated">Filtra esdeveniments en directe</target>
+        <target state="translated">Filtra els esdeveniments en directe</target>
       </trans-unit>
       <trans-unit id="8bdQWvp" resname="Social">
         <source>Social</source>
@@ -2800,15 +2801,15 @@
       </trans-unit>
       <trans-unit id="eDKk3wj" resname="New event session">
         <source>New event session</source>
-        <target state="translated">Nova sessió d’esdeveniments</target>
+        <target state="translated">Sessió d'esdeveniments nova</target>
       </trans-unit>
       <trans-unit id="2VCCou5" resname="Author">
         <source>Author</source>
-        <target state="translated">Autor</target>
+        <target state="translated">Autor o autora</target>
       </trans-unit>
       <trans-unit id="mO5AIcb" resname="Producer">
         <source>Producer</source>
-        <target state="translated">Productor</target>
+        <target state="translated">Productor o productora</target>
       </trans-unit>
       <trans-unit id="ikoRF.w" resname="External URL">
         <source>External URL</source>
@@ -2824,7 +2825,7 @@
       </trans-unit>
       <trans-unit id="Oz0ME2t" resname="Event successfully updated.">
         <source>Event successfully updated.</source>
-        <target state="translated">L’esdeveniment s’ha actualitzat correctament.</target>
+        <target state="translated">S'ha actualitzat l'esdeveniment correctament.</target>
       </trans-unit>
       <trans-unit id="FpAfuZM" resname="Select an&#10; action...">
         <source>Select an
@@ -2834,7 +2835,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="Fv0AJbm" resname="Create new series of live events">
         <source>Create new series of live events</source>
-        <target state="translated">Crea una sèrie nova d’esdeveniments en directe</target>
+        <target state="translated">Crea una sèrie nova d'esdeveniments en directe</target>
       </trans-unit>
       <trans-unit id="DbvDhEd" resname="New event and series">
         <source>New event and series</source>
@@ -2862,11 +2863,11 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="Jng1igs" resname="There was an error in updating the event session.">
         <source>There was an error in updating the event session.</source>
-        <target state="translated">S’ha produït un error en actualitzar la sessió de l’esdeveniment.</target>
+        <target state="translated">S'ha produït un error en actualitzar la sessió de l'esdeveniment.</target>
       </trans-unit>
       <trans-unit id="KyP9h0w" resname="Live session successfully updated.">
         <source>Live session successfully updated.</source>
-        <target state="translated">La sessió en directe s’ha actualitzat correctament.</target>
+        <target state="translated">S'ha actualitzat la sessió en directe correctament.</target>
       </trans-unit>
       <trans-unit id="5LufHs6" resname="Start">
         <source>Start</source>
@@ -2890,15 +2891,15 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="CbMOcUu" resname="Clone event">
         <source>Clone event</source>
-        <target state="translated">Clona l’esdeveniment</target>
+        <target state="translated">Clona l'esdeveniment</target>
       </trans-unit>
       <trans-unit id="uHKkLtT" resname="Delete event">
         <source>Delete event</source>
-        <target state="translated">Elimina l’esdeveniment</target>
+        <target state="translated">Elimina l'esdeveniment</target>
       </trans-unit>
       <trans-unit id="G2T.fcJ" resname="Delete event and series">
         <source>Delete event and series</source>
-        <target state="translated">Elimina l’esdeveniment i la sèrie</target>
+        <target state="translated">Elimina l'esdeveniment i la sèrie</target>
       </trans-unit>
       <trans-unit id="aVm0FZV" resname="Session">
         <source>Session</source>
@@ -2909,10 +2910,7 @@ una acció...</target>
                             In case this series already exists in the database, a pull-down list will be shown,
                             where you can select it and use it. If it doesn't exist in the database,
                             create a new entrance with the written name.</source>
-        <target state="translated">Introduïu el nom de la sèrie que voleu utilitzar.
-                            Si aquesta sèrie ja existeix a la base de dades, es mostrarà una llista desplegable
-                            des de la qual podreu seleccionar-la i utilitzar-la. Si no existeix a la base de dades,
-                            creeu una entrada nova amb el nom escrit.</target>
+        <target state="translated">Introduïu el nom de la sèrie que voleu utilitzar. Si aquesta sèrie ja existeix a la base de dades, es mostrarà una llista desplegable des de la qual podreu seleccionar-la i utilitzar-la. Si no existeix a la base de dades, creeu una entrada nova amb el nom escrit.</target>
       </trans-unit>
       <trans-unit id="8JSxSlF" resname="Video URL">
         <source>Video URL</source>
@@ -2920,7 +2918,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="u_zanwX" resname="List multimedia objects in a manual order">
         <source>List multimedia objects in a manual order</source>
-        <target state="translated">Llista els objectes multimèdia seguint un ordre manual</target>
+        <target state="translated">Enumera els objectes multimèdia seguint un ordre manual</target>
       </trans-unit>
       <trans-unit id=".27ti1B" resname="(active)">
         <source>(active)</source>
@@ -2928,15 +2926,15 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="GANpN0w" resname="List multimedia objects in ascending order of title">
         <source>List multimedia objects in ascending order of title</source>
-        <target state="translated">Llista els objectes multimèdia segons el títol per ordre ascendent</target>
+        <target state="translated">Enumera els objectes multimèdia segons el títol per ordre ascendent</target>
       </trans-unit>
       <trans-unit id="e3Prpu6" resname="Filter playlist">
         <source>Filter playlist</source>
-        <target state="translated">Filtra llistes de reproducció</target>
+        <target state="translated">Filtra les llistes de reproducció</target>
       </trans-unit>
       <trans-unit id=".UljpFW" resname="Multimedia Playlist metadata">
         <source>Multimedia Playlist metadata</source>
-        <target state="translated">Metadades de la llista de reproducció d’objectes multimèdia</target>
+        <target state="translated">Metadades de la llista de reproducció d'objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="vVZ4A_F" resname="Warning: This link will give a 404 error while this series is hidden.">
         <source>Warning: This link will give a 404 error while this series is hidden.</source>
@@ -2948,7 +2946,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="onnoCvE" resname="Generate a new magic series link">
         <source>Generate a new magic series link</source>
-        <target state="translated">Genera un nou enllaç màgic de sèries</target>
+        <target state="translated">Genera un enllaç màgic de sèries nou </target>
       </trans-unit>
       <trans-unit id="ygGVPNS" resname="Update Series Metadata">
         <source>Update Series Metadata</source>
@@ -2992,7 +2990,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="Y9QAQRw" resname="Thumbnail generated.">
         <source>Thumbnail generated.</source>
-        <target state="translated">S’ha generat la miniatura.</target>
+        <target state="translated">S'ha generat la miniatura.</target>
       </trans-unit>
       <trans-unit id="mNfVhoI" resname="Move up thumbnail">
         <source>Move up thumbnail</source>
@@ -3012,7 +3010,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="TpIMycx" resname="Delete User">
         <source>Delete User</source>
-        <target state="translated">Elimina l’usuari</target>
+        <target state="translated">Elimina l'usuari</target>
       </trans-unit>
       <trans-unit id="rBjRGi8" resname="Delete role">
         <source>Delete role</source>
@@ -3020,7 +3018,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="reycesC" resname="Open URL">
         <source>Open URL</source>
-        <target state="translated">Obre l’URL</target>
+        <target state="translated">Obre l'URL</target>
       </trans-unit>
       <trans-unit id="yjLv71I" resname="Live channels">
         <source>Live channels</source>
@@ -3036,17 +3034,16 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="6awGg9J" resname="Show event on WebTV portal">
         <source>Show event on WebTV portal</source>
-        <target state="translated">Mostra l’esdeveniment al portal WebTV</target>
+        <target state="translated">Mostra l'esdeveniment al portal WebTV</target>
       </trans-unit>
       <trans-unit id="H5oCcEu" resname="No sessions defined.">
         <source>No sessions defined.</source>
-        <target state="translated">No s’han definit sessions.</target>
+        <target state="translated">No s'ha definit cap sessió.</target>
       </trans-unit>
       <trans-unit id="lKPkOKY" resname="Publishing&#10;                        Decisions">
         <source>Publishing
                         Decisions</source>
-        <target state="translated">Decisions
-                        de publicació</target>
+        <target state="translated">Decisions de publicació</target>
       </trans-unit>
       <trans-unit id="OEOXHc." resname="ID">
         <source>ID</source>
@@ -3054,7 +3051,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="uBc67J6" resname="Multimedia object ID">
         <source>Multimedia object ID</source>
-        <target state="translated">Identificador de l’objecte multimèdia</target>
+        <target state="translated">Identificador de l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="vhe1K.B" resname="Series ID">
         <source>Series ID</source>
@@ -3126,7 +3123,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="y9lpGXM" resname="Saving error">
         <source>Saving error</source>
-        <target state="translated">S’ha produït un error en desar</target>
+        <target state="translated">S'ha produït un error en desar</target>
       </trans-unit>
       <trans-unit id="tcEgsxb" resname="Saved">
         <source>Saved</source>
@@ -3242,7 +3239,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="Jbye.t_" resname="Event name">
         <source>Event name</source>
-        <target state="translated">Nom de l’esdeveniment</target>
+        <target state="translated">Nom de l'esdeveniment</target>
       </trans-unit>
       <trans-unit id="WOU_q8H" resname="Sessions number">
         <source>Sessions number</source>
@@ -3258,7 +3255,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="Do2jr40" resname="No future sessions">
         <source>No future sessions</source>
-        <target state="translated">No hi ha sessions previstes</target>
+        <target state="translated">No hi ha cap sessió prevista</target>
       </trans-unit>
       <trans-unit id="0A9SRUQ" resname="Filter by">
         <source>Filter by</source>
@@ -3278,29 +3275,26 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="13YPWbA" resname="Session must start before ends">
         <source>Session must start before ends</source>
-        <target state="translated">L’inici de la sessió ha de ser anterior a la finalització</target>
+        <target state="translated">L'inici de la sessió ha de ser anterior a la finalització</target>
       </trans-unit>
       <trans-unit id="3ezDLKK" resname="Modify broadcast profile of videos&#10;            template">
         <source>Modify broadcast profile of videos
             template</source>
-        <target state="translated">Modifica el perfil d’emissió de la plantilla
-            de vídeos</target>
+        <target state="translated">Modifica el perfil d'emissió de la plantilla de vídeos</target>
       </trans-unit>
       <trans-unit id="XSCyDE4" resname="Modify broadcast profile of live&#10;                event">
         <source>Modify broadcast profile of live
                 event</source>
-        <target state="translated">Modifica el perfil d’emissió de l’esdeveniment
-                 en directe</target>
+        <target state="translated">Modifica el perfil d'emissió de l'esdeveniment en directe</target>
       </trans-unit>
       <trans-unit id="MYtL_2h" resname="Modify broadcast profile of multimedia&#10;                object">
         <source>Modify broadcast profile of multimedia
                 object</source>
-        <target state="translated">Modifica el perfil d’emissió de l’objecte
-                multimèdia</target>
+        <target state="translated">Modifica el perfil d'emissió de l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="pRKIi6a" resname="Delete error. Live channel channel is associated to live event.">
         <source>Delete error. Live channel channel is associated to live event.</source>
-        <target state="translated">S’ha produït un error en eliminar. El canal en directe té un esdeveniment en directe associat.</target>
+        <target state="translated">S'ha produït un error en eliminar. El canal en directe té un esdeveniment en directe associat.</target>
       </trans-unit>
       <trans-unit id="OAkgrj1" resname="No downloadable">
         <source>No downloadable</source>
@@ -3308,23 +3302,23 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="nlf3UXX" resname="Choose style">
         <source>Choose style</source>
-        <target state="translated">Tria l’estil</target>
+        <target state="translated">Tria l'estil</target>
       </trans-unit>
       <trans-unit id="CZ35h9X" resname="There aren't defined styles">
         <source>There aren't defined styles</source>
-        <target state="translated">No hi ha estils definits</target>
+        <target state="translated">No hi ha cap estil definit</target>
       </trans-unit>
       <trans-unit id="OEIShCi" resname="Style created ERROR">
         <source>Style created ERROR</source>
-        <target state="translated">S’ha produït un error en crear l’estil</target>
+        <target state="translated">S'ha produït un error en crear l'estil</target>
       </trans-unit>
       <trans-unit id="DW7tat2" resname="Style created OK">
         <source>Style created OK</source>
-        <target state="translated">L’estil s’ha creat correctament</target>
+        <target state="translated">L'estil s'ha creat correctament</target>
       </trans-unit>
       <trans-unit id="w_fEXUL" resname="Style edited ERROR">
         <source>Style edited ERROR</source>
-        <target state="translated">S’ha produït un error en editar l’estil</target>
+        <target state="translated">S'ha produït un error en editar l'estil</target>
       </trans-unit>
       <trans-unit id="VEtupgs" resname="Live event">
         <source>Live event</source>
@@ -3335,10 +3329,7 @@ una acció...</target>
             In case this series already exists in the database, a pull-down list will be shown,
             where you can select it and use it. If it doesn't exist in the database,
             create a new entrance with the written name.</source>
-        <target state="translated">Introduïu el nom de la sèrie que voleu utilitzar.
-            Si aquesta sèrie ja existeix a la base de dades, es mostrarà una llista desplegable
-            des de la qual podreu seleccionar-la i utilitzar-la. Si no existeix a la base de dades,
-            creeu una entrada nova amb el nom escrit.</target>
+        <target state="translated">Introduïu el nom de la sèrie que voleu utilitzar. Si aquesta sèrie ja existeix a la base de dades, es mostrarà una llista desplegable des de la qual podreu seleccionar-la i utilitzar-la. Si no existeix a la base de dades, creeu una entrada nova amb el nom escrit.</target>
       </trans-unit>
       <trans-unit id="aQYMdYn" resname="Create date">
         <source>Create date</source>
@@ -3370,23 +3361,23 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="5qRihdT" resname="Today events list">
         <source>Today events list</source>
-        <target state="translated">Llista d’esdeveniments d’avui</target>
+        <target state="translated">Llista d'esdeveniments d'avui</target>
       </trans-unit>
       <trans-unit id="zn8l2PA" resname="Select objects">
         <source>Select objects</source>
-        <target state="translated">Selecciona objectes</target>
+        <target state="translated">Selecciona els objectes</target>
       </trans-unit>
       <trans-unit id="CdEyLPz" resname="Modify all multimedia objects status">
         <source>Modify all multimedia objects status</source>
-        <target state="translated">Modifica l’estat de tots els objectes multimèdia</target>
+        <target state="translated">Modifica l'estat de tots els objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="mu9cynW" resname="Already held event message">
         <source>Already held event message</source>
-        <target state="translated">Missatge d’un esdeveniment ja celebrat</target>
+        <target state="translated">Missatge d'un esdeveniment ja celebrat</target>
       </trans-unit>
       <trans-unit id="FSGhq88" resname="Not yet held event message">
         <source>Not yet held event message</source>
-        <target state="translated">Missatge d’un esdeveniment no celebrat encara</target>
+        <target state="translated">Missatge d'un esdeveniment no celebrat encara</target>
       </trans-unit>
       <trans-unit id="p2OXRg4" resname="Default live screen image">
         <source>Default live screen image</source>
@@ -3402,7 +3393,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="X7wPySq" resname="Event poster">
         <source>Event poster</source>
-        <target state="translated">Cartell de l’esdeveniment</target>
+        <target state="translated">Cartell de l'esdeveniment</target>
       </trans-unit>
       <trans-unit id="WQydVj0" resname="Poster text color">
         <source>Poster text color</source>
@@ -3414,15 +3405,15 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="DWXTLFi" resname="Are you sure you want to delete this event poster?">
         <source>Are you sure you want to delete this event poster?</source>
-        <target state="translated">Confirmeu que voleu eliminar aquest cartell de l’esdeveniment?</target>
+        <target state="translated">Confirmeu que voleu eliminar aquest cartell de l'esdeveniment?</target>
       </trans-unit>
       <trans-unit id="YVvIcSO" resname="Event poster removed.">
         <source>Event poster removed.</source>
-        <target state="translated">El cartell de l’esdeveniment s’ha eliminat.</target>
+        <target state="translated">El cartell de l'esdeveniment s'ha eliminat.</target>
       </trans-unit>
       <trans-unit id="PGFKnNX" resname="Publish to Moodle">
         <source>Publish to Moodle</source>
-        <target state="translated">Publica al Moodle</target>
+        <target state="translated">Publica a Moodle</target>
       </trans-unit>
       <trans-unit id="pjllafE" resname="Show configuration for messages, poster image and color text.">
         <source>Show configuration for messages, poster image and color text.</source>
@@ -3442,31 +3433,31 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="k8lPtsu" resname="Show configuration for Twitter.">
         <source>Show configuration for Twitter.</source>
-        <target state="translated">Mostra la configuració del Twitter.</target>
+        <target state="translated">Mostra la configuració de Twitter.</target>
       </trans-unit>
       <trans-unit id="xdpjUyN" resname="Click to edit Twitter configuration">
         <source>Click to edit Twitter configuration</source>
-        <target state="translated">Feu clic per editar la configuració del Twitter</target>
+        <target state="translated">Feu clic per editar la configuració de Twitter</target>
       </trans-unit>
       <trans-unit id="vxAMoZK" resname="Twitter hashtag">
         <source>Twitter hashtag</source>
-        <target state="translated">Etiqueta del Twitter</target>
+        <target state="translated">Etiqueta de Twitter</target>
       </trans-unit>
       <trans-unit id="Fw.2IIO" resname="Twitter hashtag without #">
         <source>Twitter hashtag without #</source>
-        <target state="translated">Etiqueta del Twitter sense #</target>
+        <target state="translated">Etiqueta de Twitter sense #</target>
       </trans-unit>
       <trans-unit id="FQ6Rm8C" resname="Twitter widget id">
         <source>Twitter widget id</source>
-        <target state="translated">Identificador del giny del Twitter</target>
+        <target state="translated">Identificador del giny de Twitter</target>
       </trans-unit>
       <trans-unit id="Ckcd5Ax" resname="Create a search Widget in your Twitter account. Configure it with the defined hashtag and recommended color %twitterAccountsLinkColor% for link color. Place here the 'data-widget-id' of the HTML generated code.">
         <source>Create a search Widget in your Twitter account. Configure it with the defined hashtag and recommended color %twitterAccountsLinkColor% for link color. Place here the 'data-widget-id' of the HTML generated code.</source>
-        <target state="translated">Creeu un giny de cerca al vostre compte del Twitter. Configureu-lo amb l’etiqueta definida i el color recomanat %twitterAccountsLinkColor% com a color de l’enllaç. Introduïu-hi el valor 'data-widget-id' del codi HTML generat.</target>
+        <target state="translated">Creeu un giny de cerca al vostre compte de Twitter. Configureu-lo amb l'etiqueta definida i el color recomanat %twitterAccountsLinkColor% com a color de l'enllaç. Introduïu-hi el valor «data-widget-id» del codi HTML generat.</target>
       </trans-unit>
       <trans-unit id="0IXPFt9" resname="Publish to LMS">
         <source>Publish to LMS</source>
-        <target state="translated">Publica a l’LMS</target>
+        <target state="translated">Publica a l'LMS</target>
       </trans-unit>
       <trans-unit id="Vk6hwWC" resname="Enable Chat">
         <source>Enable Chat</source>
@@ -3478,7 +3469,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="hgHl3nd" resname="Show tag on WebTV portal and edit categories on multimedia objects">
         <source>Show tag on WebTV portal and edit categories on multimedia objects</source>
-        <target state="translated">Mostra l’etiqueta al portal WebTV i edita les categories als objectes multimèdia</target>
+        <target state="translated">Mostra l'etiqueta al portal WebTV i edita les categories als objectes multimèdia</target>
       </trans-unit>
       <trans-unit id="9A6g70f" resname="Not valid to tagged objets">
         <source>Not valid to tagged objets</source>
@@ -3494,15 +3485,15 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="xCcnCNf" resname="Series successfully cloned.">
         <source>Series successfully cloned.</source>
-        <target state="translated">La sèrie s’ha clonat correctament.</target>
+        <target state="translated">S'ha clonat la sèrie correctament.</target>
       </trans-unit>
       <trans-unit id="S1iJNW7" resname="No people.">
         <source>No people.</source>
-        <target state="translated">No hi ha persones.</target>
+        <target state="translated">No hi ha cap persona.</target>
       </trans-unit>
       <trans-unit id="ndCL6K3" resname="Multimedia object picture">
         <source>Multimedia object picture</source>
-        <target state="translated">Imatge de l’objecte multimèdia</target>
+        <target state="translated">Imatge de l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="t3844f0" resname="Playlist picture">
         <source>Playlist picture</source>
@@ -3510,7 +3501,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="ZyykMeP" resname="Event picture">
         <source>Event picture</source>
-        <target state="translated">Imatge de l’esdeveniment</target>
+        <target state="translated">Imatge de l'esdeveniment</target>
       </trans-unit>
       <trans-unit id="yObHKax" resname="Places and precinct">
         <source>Places and precinct</source>
@@ -3530,19 +3521,19 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="g64sGUF" resname="Error loading tag">
         <source>Error loading tag</source>
-        <target state="translated">S’ha produït un error en carregar l’etiqueta</target>
+        <target state="translated">S'ha produït un error en carregar l'etiqueta</target>
       </trans-unit>
       <trans-unit id="CwRzTyg" resname="Error deleting tag">
         <source>Error deleting tag</source>
-        <target state="translated">S’ha produït un error en eliminar l’etiqueta</target>
+        <target state="translated">S'ha produït un error en eliminar l'etiqueta</target>
       </trans-unit>
       <trans-unit id="Malnlhe" resname="Place successfully deleted.">
         <source>Place successfully deleted.</source>
-        <target state="translated">El lloc s’ha eliminat correctament.</target>
+        <target state="translated">S'ha eliminat el lloc correctament.</target>
       </trans-unit>
       <trans-unit id="X9SGs9L" resname="Places successfully deleted.">
         <source>Places successfully deleted.</source>
-        <target state="translated">Els llocs s’han eliminat correctament.</target>
+        <target state="translated">S'han eliminat els llocs correctament.</target>
       </trans-unit>
       <trans-unit id="uN1ADLZ" resname="Select one place to load data">
         <source>Select one place to load data</source>
@@ -3550,7 +3541,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="8wTEA9N" resname="Precinct successfully deleted.">
         <source>Precinct successfully deleted.</source>
-        <target state="translated">L’àmbit s’ha eliminat correctament.</target>
+        <target state="translated">S'ha eliminat l'àmbit correctament.</target>
       </trans-unit>
       <trans-unit id="Wjx11W8" resname="Select one precinct to load data">
         <source>Select one precinct to load data</source>
@@ -3590,7 +3581,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="O0G6nHy" resname="No data">
         <source>No data</source>
-        <target state="translated">No hi ha dades</target>
+        <target state="translated">No hi ha cap dada</target>
       </trans-unit>
       <trans-unit id="MKOwLL7" resname="No title">
         <source>No title</source>
@@ -3610,15 +3601,15 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="essa3WZ" resname="Place successfully created.">
         <source>Place successfully created.</source>
-        <target state="translated">El lloc s’ha creat correctament.</target>
+        <target state="translated">S'ha creat el lloc correctament.</target>
       </trans-unit>
       <trans-unit id="qXARYaB" resname="Autocomplete series">
         <source>Autocomplete series</source>
-        <target state="translated">Autocompleta la sèrie</target>
+        <target state="translated">Completa de manera automàtica la sèrie</target>
       </trans-unit>
       <trans-unit id="nU95LQY" resname="Series successfully updated.">
         <source>Series successfully updated.</source>
-        <target state="translated">La sèrie s’ha actualitzat correctament.</target>
+        <target state="translated">S'ha actualitzat la sèrie correctament.</target>
       </trans-unit>
       <trans-unit id="qsxJV33" resname="Error: Series have another owners on others events">
         <source>Error: Series have another owners on others events</source>
@@ -3630,19 +3621,19 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="otgkhCc" resname="Cloned event successfully">
         <source>Cloned event successfully</source>
-        <target state="translated">L’esdeveniment s’ha clonat correctament</target>
+        <target state="translated">S'ha clonat l'esdeveniment correctament</target>
       </trans-unit>
       <trans-unit id="ZKHf6Mw" resname="Deleted event successfully">
         <source>Deleted event successfully</source>
-        <target state="translated">L’esdeveniment s’ha eliminat correctament</target>
+        <target state="translated">S'ha eliminat l'esdeveniment correctament</target>
       </trans-unit>
       <trans-unit id="qmeq21W" resname="Delete event and series successfully">
         <source>Delete event and series successfully</source>
-        <target state="translated">L’esdeveniment i la sèrie s’han eliminat correctament</target>
+        <target state="translated">S'han eliminat l'esdeveniment i la sèrie correctament</target>
       </trans-unit>
       <trans-unit id="iDcYYvG" resname="Option not allowed">
         <source>Option not allowed</source>
-        <target state="translated">L’opció no està permesa</target>
+        <target state="translated">L'opció no està permesa</target>
       </trans-unit>
       <trans-unit id="5tk0wDe" resname="Sync metadata for all multimedia objects">
         <source>Sync metadata for all multimedia objects</source>
@@ -3650,7 +3641,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="nJ4TWrx" resname="Select metadata to sync on all multimedia objects of this series">
         <source>Select metadata to sync on all multimedia objects of this series</source>
-        <target state="translated">Selecciona les metadades per sincronitzar a tots els objectes multimèdia d’aquesta sèrie</target>
+        <target state="translated">Selecciona les metadades per sincronitzar a tots els objectes multimèdia d'aquesta sèrie</target>
       </trans-unit>
       <trans-unit id="jSYaNy." resname="Sync">
         <source>Sync</source>
@@ -3658,11 +3649,11 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="blSiCW2" resname="There was an error sync up metadata.">
         <source>There was an error sync up metadata.</source>
-        <target state="translated">S’ha produït un error en sincronitzar les metadades.</target>
+        <target state="translated">S'ha produït un error en sincronitzar les metadades.</target>
       </trans-unit>
       <trans-unit id="kYZr.e4" resname="Sync up metadata was successfully.">
         <source>Sync up metadata was successfully.</source>
-        <target state="translated">Les metadades s’han sincronitzat correctament.</target>
+        <target state="translated">S'han sincronitzat les metadades correctament.</target>
       </trans-unit>
       <trans-unit id="DfbxytN" resname="Show">
         <source>Show</source>
@@ -3670,11 +3661,11 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="BXaTJaC" resname="Show presenter">
         <source>Show presenter</source>
-        <target state="translated">Mostra el presentador</target>
+        <target state="translated">Mostra el presentador o la presentadora</target>
       </trans-unit>
       <trans-unit id="JaVio6g" resname="presenter">
         <source>presenter</source>
-        <target state="translated">presentador</target>
+        <target state="translated">presentador o presentadora</target>
       </trans-unit>
       <trans-unit id="9eMldhu" resname="Show presentation">
         <source>Show presentation</source>
@@ -3754,7 +3745,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="algu._j" resname="Iframe URL">
         <source>Iframe URL</source>
-        <target state="translated">URL de l’iframe</target>
+        <target state="translated">URL de l'iframe</target>
       </trans-unit>
       <trans-unit id="jyNk4Ru" resname="Day">
         <source>Day</source>
@@ -3786,7 +3777,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="DoL48E_" resname="Num objects">
         <source>Num objects</source>
-        <target state="translated">Nombre d’objectes</target>
+        <target state="translated">Nombre d'objectes</target>
       </trans-unit>
       <trans-unit id="22fF_E2" resname="Total hours">
         <source>Total hours</source>
@@ -3838,7 +3829,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="eQLp7Fl" resname="Go back to">
         <source>Go back to</source>
-        <target state="translated">Tornar a </target>
+        <target state="translated">Torna a </target>
       </trans-unit>
       <trans-unit id="YMfjw07" resname="my series">
         <source>my series</source>
@@ -3870,7 +3861,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="BpOx4v1" resname="Assigned videos by role">
         <source>Assigned videos by role</source>
-        <target state="translated">Vídeos assignats per el rol</target>
+        <target state="translated">Vídeos assignats pel rol</target>
       </trans-unit>
       <trans-unit id="DTlgLcO" resname="Last login">
         <source>Last login</source>
@@ -3882,11 +3873,11 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="Rj1ftLT" resname="No groups found">
         <source>No groups found</source>
-        <target state="translated">No s'ha trobat grups</target>
+        <target state="translated">No s'ha trobat cap grup</target>
       </trans-unit>
       <trans-unit id="Rj1lgLT" resname="No series found">
         <source>No series found</source>
-        <target state="translated">No s'ha trobat sèries</target>
+        <target state="translated">No s'ha trobat cap sèrie</target>
       </trans-unit>
       <trans-unit id="ITD9xUa" resname="Email already in use">
         <source>Email already in use</source>
@@ -3906,23 +3897,23 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="OQIpXE4" resname="You're not allowed to access this link. You're not the holder user.">
         <source>You're not allowed to access this link. You're not the holder user.</source>
-        <target state="translated">No tens permís per accedir a aquest enllaç. No ets l'usuari titular.</target>
+        <target state="translated">No teniu permís per accedir a aquest enllaç. No sou l'usuari titular.</target>
       </trans-unit>
       <trans-unit id="rkv41In" resname="This link was already used by co-owner.">
         <source>This link was already used by co-owner.</source>
-        <target state="translated">Aquest enllaç ja l'ha utilitzat el copropietari.</target>
+        <target state="translated">El copropietari ja ha utilitzat aquest enllaç.</target>
       </trans-unit>
       <trans-unit id="Dezy.jb" resname="You're not allowed to access this link. You're not the owner user of this multimedia object.">
         <source>You're not allowed to access this link. You're not the owner user of this multimedia object.</source>
-        <target state="translated">No tens permís per accedir a aquest enllaç. No sou l'usuari propietari d'aquest objecte multimèdia.</target>
+        <target state="translated">No teniu permís per accedir a aquest enllaç. No sou l'usuari propietari d'aquest objecte multimèdia.</target>
       </trans-unit>
       <trans-unit id="Oob_u0K" resname="The user '%user%' has added you as co-owner of the video:">
         <source>The user '%user%' has added you as co-owner of the video:</source>
-        <target state="translated">L'usuari '%user%' t'ha afegit com a copropietari del vídeo:</target>
+        <target state="translated">L'usuari «%user%» us ha afegit com a copropietari del vídeo:</target>
       </trans-unit>
       <trans-unit id="oSLy2_6" resname="You can reject being co-owner in the following URL link:">
         <source>You can reject being co-owner in the following URL link:</source>
-        <target state="translated">Pots rebutjar ser copropietari a l'enllaç URL següent:</target>
+        <target state="translated">Podeu rebutjar ser copropietari a l'enllaç URL següent:</target>
       </trans-unit>
       <trans-unit id="Dyk7WPz" resname="Error on reject of a publication">
         <source>Error on reject of a publication</source>
@@ -3934,7 +3925,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="G.l7GCV" resname="Back to index">
         <source>Back to index</source>
-        <target state="translated">Tornar a l'índex</target>
+        <target state="translated">Torna a l'índex</target>
       </trans-unit>
       <trans-unit id="qsBEVQq" resname="Reject/report of publication in my name">
         <source>Reject/report of publication in my name</source>
@@ -3942,7 +3933,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="ge0Gbk8" resname="You've been deleted as owner of the following multimedia object">
         <source>You've been deleted as owner of the following multimedia object</source>
-        <target state="translated">Has estat suprimit com a propietari del següent objecte multimèdia</target>
+        <target state="translated">Heu estat suprimit com a propietari de l'objecte multimèdia següent</target>
       </trans-unit>
       <trans-unit id="gvpvekT" resname="NOTE: This is an URL of one single use, if you attempt to access it again, an error message will be shown.">
         <source>NOTE: This is an URL of one single use, if you attempt to access it again, an error message will be shown.</source>
@@ -3954,15 +3945,15 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="kMMeE3r" resname="Video head">
         <source>Video head</source>
-        <target state="translated">Cap de vídeo</target>
+        <target state="translated">Capçalera del vídeo</target>
       </trans-unit>
       <trans-unit id="ICtUyCV" resname="Video tail">
         <source>Video tail</source>
-        <target state="translated">Cua de vídeo</target>
+        <target state="translated">Cua del vídeo</target>
       </trans-unit>
       <trans-unit id="0tHgmzW" resname="Multimedia Object Id">
         <source>Multimedia Object Id</source>
-        <target state="translated">Multimedia Object Id</target>
+        <target state="translated">Identificador de l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="CscPjL9" resname="i18n.one.Series">
         <source>i18n.one.Series</source>
@@ -3974,11 +3965,11 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="cS3R70y" resname="Head and tail video">
         <source>Head and tail video</source>
-        <target state="translated">Vídeo de cap i cua</target>
+        <target state="translated">Vídeo de capçalera i cua</target>
       </trans-unit>
       <trans-unit id="m7CqzG1" resname="Head">
         <source>Head</source>
-        <target state="translated">Cap</target>
+        <target state="translated">Capçalera</target>
       </trans-unit>
       <trans-unit id="rpw70R9" resname="Tail">
         <source>Tail</source>
@@ -4014,7 +4005,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="Ot22Fs0" resname="No video head configured">
         <source>No video head configured</source>
-        <target state="translated">No s'ha configurat cap capçal de vídeo</target>
+        <target state="translated">No s'ha configurat cap capçalera de vídeo</target>
       </trans-unit>
       <trans-unit id="izUTcEy" resname="Default system tail configuration">
         <source>Default system tail configuration</source>
@@ -4026,11 +4017,11 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="lYYIDRi" resname="Head and tail manager">
         <source>Head and tail manager</source>
-        <target state="translated">Gestor de cap i cua</target>
+        <target state="translated">Gestor de capçalera i cua</target>
       </trans-unit>
       <trans-unit id="1ZPHvob" resname="Video head list">
         <source>Video head list</source>
-        <target state="translated">Llista de capçals de vídeo</target>
+        <target state="translated">Llista de capçaleres de vídeo</target>
       </trans-unit>
       <trans-unit id="o.hlqWT" resname="Video tail list">
         <source>Video tail list</source>
@@ -4042,11 +4033,11 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="8ze7Pzt" resname="Multimedia Object title">
         <source>Multimedia Object title</source>
-        <target state="translated">Títol de l’objecte multimèdia</target>
+        <target state="translated">Títol de l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="0HAPAiZ" resname="Archiving a multimedia object implies that the object in question is archived and an editable clone is generated by the user to whom it belongs.">
         <source>Archiving a multimedia object implies that the object in question is archived and an editable clone is generated by the user to whom it belongs.</source>
-        <target state="translated">Arxivar un objecte multimèdia implica que l'objecte en qüestió s'arxiva i genera un clon editable per part de l'usuari a qui pertany.</target>
+        <target state="translated">L'arxivament d'un objecte multimèdia implica que l'objecte en qüestió s'arxiva, i que l'usuari o la usuària a qui pertany genera un clon editable.</target>
       </trans-unit>
       <trans-unit id="joG1t9V" resname="The characteristics of the archive are:">
         <source>The characteristics of the archive are:</source>
@@ -4054,11 +4045,11 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="smqMThr" resname="The media object will contain 'ARCHIVED {YEAR}' in the title of the media object">
         <source>The media object will contain 'ARCHIVED {YEAR}' in the title of the media object</source>
-        <target state="translated">L'objecte multimèdia contindrà "ARXIVAT {YEAR}" al títol de l'objecte multimèdia</target>
+        <target state="translated">L'objecte multimèdia contindrà «ARXIVAT {ANY}» al títol</target>
       </trans-unit>
       <trans-unit id=".A1duX3" resname="Ownership of the object is given to the administrator or user selected by configuration">
         <source>Ownership of the object is given to the administrator or user selected by configuration</source>
-        <target state="translated">La propietat de l'objecte es dóna a l'administrador o usuari seleccionat per configuració</target>
+        <target state="translated">La propietat de l'objecte es dona a les persones administradores o usuàries seleccionades per configuració</target>
       </trans-unit>
       <trans-unit id="biemlah" resname="The multimedia object will store who and when has locked it">
         <source>The multimedia object will store who and when has locked it</source>
@@ -4070,7 +4061,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="4Y8bLUu" resname="Are you sure you want to archive the object ?">
         <source>Are you sure you want to archive the object ?</source>
-        <target state="translated">Esteu segur que voleu arxivar l'objecte?</target>
+        <target state="translated">Confirmeu que voleu arxivar l'objecte?</target>
       </trans-unit>
       <trans-unit id="Nelyylv" resname="Multimedia Object archive ERROR">
         <source>Multimedia Object archive ERROR</source>
@@ -4082,7 +4073,7 @@ una acció...</target>
       </trans-unit>
       <trans-unit id="lU0EsYZ" resname="Archive multimedia object">
         <source>Archive multimedia object</source>
-        <target state="translated">Arxiu objecte multimèdia</target>
+        <target state="translated">Arxiva l'objecte multimèdia</target>
       </trans-unit>
       <trans-unit id="1" resname="ARCHIVED">
         <source>ARCHIVED</source>
