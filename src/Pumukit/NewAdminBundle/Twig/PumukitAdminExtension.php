@@ -7,6 +7,7 @@ namespace Pumukit\NewAdminBundle\Twig;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use Pumukit\EncoderBundle\Services\ProfileService;
+use Pumukit\EncoderBundle\Services\Repository\JobRepository;
 use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -39,8 +40,9 @@ class PumukitAdminExtension extends AbstractExtension
     private $specialTranslationService;
     private $eventService;
     private $enablePlaylist;
+    private JobRepository $jobRepository;
 
-    public function __construct(ProfileService $profileService, DocumentManager $documentManager, TranslatorInterface $translator, RouterInterface $router, MultimediaObjectService $mmobjService, SpecialTranslationService $specialTranslationService, EmbeddedEventSessionService $eventService, $enablePlaylist)
+    public function __construct(ProfileService $profileService, DocumentManager $documentManager, TranslatorInterface $translator, RouterInterface $router, MultimediaObjectService $mmobjService, SpecialTranslationService $specialTranslationService, EmbeddedEventSessionService $eventService, JobRepository $jobRepository, $enablePlaylist)
     {
         $this->dm = $documentManager;
         $this->languages = Languages::getNames();
@@ -50,6 +52,7 @@ class PumukitAdminExtension extends AbstractExtension
         $this->mmobjService = $mmobjService;
         $this->specialTranslationService = $specialTranslationService;
         $this->eventService = $eventService;
+        $this->jobRepository = $jobRepository;
         $this->enablePlaylist = $enablePlaylist;
     }
 
@@ -98,6 +101,7 @@ class PumukitAdminExtension extends AbstractExtension
             new TwigFunction('role_string_text_by_value', [$this, 'getRoleTextByValue']),
             new TwigFunction('is_immutable', [$this, 'isImmutable']),
             new TwigFunction('is_addon_language', [$this, 'isAddonLanguage']),
+            new TwigFunction('has_pending_jobs', [$this, 'hasPendingJobs']),
         ];
     }
 
@@ -525,6 +529,13 @@ class PumukitAdminExtension extends AbstractExtension
     public function unescapeLabel($value)
     {
         return html_entity_decode($value);
+    }
+
+    public function hasPendingJobs(MultimediaObject $multimediaObject): bool
+    {
+        $jobs = $this->jobRepository->getNotFinishedJobsByMultimediaObjectId($multimediaObject->getId());
+
+        return 0 !== (is_countable($jobs) ? count($jobs) : 0);
     }
 
     private function getProfileFromTags(array $tags): string

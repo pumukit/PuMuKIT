@@ -33,7 +33,11 @@ class CreateUserCommand extends Command
         $email = $input->getArgument('email');
         $password = $input->getArgument('password');
 
-        $userWasCreated = $this->createUserService->createSuperAdmin($username, $password, $email);
+        try {
+            $userWasCreated = $this->createUserService->createSuperAdmin($username, $password, $email);
+        } catch (\Exception $exception) {
+            $userWasCreated = false;
+        }
 
         if ($userWasCreated) {
             $message = '<info> User '.$username.' created </info>';
