@@ -103,7 +103,7 @@
       </trans-unit>
       <trans-unit id="wT565x3Y" resname="There are no content with these specifications">
         <source>There are no content with these specifications</source>
-        <target state="translated">No existen recursos de estas características</target>
+        <target state="translated">No existe contenido con estas características</target>
       </trans-unit>
       <trans-unit id="eNInDAJ" resname="Date of holding">
         <source>Date of holding</source>
