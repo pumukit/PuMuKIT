@@ -764,7 +764,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
                 if ('all' !== $field) {
                     $query->field('type')->equals($field);
                 }
-            } elseif ('tracks.duration' == $key && !empty($field)) {
+            } elseif ('duration' == $key && !empty($field)) {
                 $query = $this->findDuration($query, $key, $field);
             } elseif ('year' === $key && !empty($field)) {
                 $query = $this->findDuration($query, 'year', $field);
@@ -835,7 +835,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
     private function findDuration($query, $key, $field)
     {
-        if ('tracks.duration' === $key) {
+        if ('duration' === $key) {
             if ('-5' == $field) {
                 $query->field($key)->lte(300);
             }
