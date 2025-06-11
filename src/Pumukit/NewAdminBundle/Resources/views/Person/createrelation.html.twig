@@ -16,7 +16,7 @@
                         {% if template != '_template' %}
                             $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}');
                         {% endif %}
-                        success('{% trans %}Person successfully associated to Multimedia Object{% endtrans %} \'{{ mm.getTitle()|e('js') }}\' {% trans %}with role{% endtrans %} \'{{ role.getName()|e('js') }}\'');
+                        success('{{ "Person successfully associated to Multimedia Object"|trans|e("js") }} \'{{ mm.getTitle()|e('js') }}\' {% trans %}with role{% endtrans %} \'{{ role.getName()|e('js') }}\'');
                     },
                     error: function(jqXHR, textStatus, errorThrown){
                         var textError = jqXHR.responseText;

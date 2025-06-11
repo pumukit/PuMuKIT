@@ -14,11 +14,11 @@
                           data: $(this).serialize(),
                           success: function(response, textStatus, jqXHR){
                                                if (jqXHR.responseText.indexOf('modal-header') != -1){
-                                                     var message = '{% trans %}There was an error in creating the Role.{% endtrans %}';
+                                                     var message = '{{ "There was an error in creating the Role."|trans|e("js")}}';
                                                      no_success(message);
                                                }else{
                                                      $('#list_roles').html(response);
-                                                     var message = '{% trans %}Role successfully created.{% endtrans %}';
+                                                     var message = '{{ "Role successfully created."|trans|e("js")}}';
                                                      success(message);
                                                }
                           },

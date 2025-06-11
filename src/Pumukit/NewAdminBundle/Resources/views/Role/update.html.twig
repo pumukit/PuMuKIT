@@ -12,11 +12,11 @@
                           data: $(this).serialize(),
                           success: function(response, textStatus, jqXHR){
                                                if (jqXHR.responseText.indexOf('modal-header') != -1){
-                                                     var message = '{% trans %}There was an error in updating the Role.{% endtrans %}';
+                                                     var message = '{{ "There was an error in updating the Role."|trans|e("js")}}';
                                                      no_success(message);
                                                }else{
                                                      $('#list_roles').html(response);
-                                                     var message = '{% trans %}Role successfully updated.{% endtrans %}';
+                                                     var message = '{{ "Role successfully updated."|trans|e("js")}}';
                                                      success(message);
                                                }
                           },

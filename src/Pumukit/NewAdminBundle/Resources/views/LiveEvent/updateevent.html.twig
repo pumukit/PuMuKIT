@@ -232,7 +232,7 @@
 
                     $('#inputMMTitle').val($('#pumukitnewadmin_live_event_i18n_name_{{ app.request.getLocale() }}').val());
 
-                    var message = '{% trans %}Event successfully updated.{% endtrans %}';
+                    var message = '{{ "Event successfully updated."|trans|e("js") }}';
                     success(message);
                 }
             },
@@ -289,7 +289,7 @@
                 var url = "{{ path('pumukit_new_admin_live_event_edit', {'id': '__ID__'}) }}";
                 url = url.replace('__ID__', id);
                 $('#edit_events').load(url);
-                var message = '{% trans %}Series successfully updated.{% endtrans %}';
+                var message = '{{ "Series successfully updated."|trans|e("js") }}';
                 success(message);
             }
         });

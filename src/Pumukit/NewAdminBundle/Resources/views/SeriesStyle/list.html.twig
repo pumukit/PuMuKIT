@@ -38,7 +38,7 @@
             type: 'GET',
             data: $(this).serialize(),
             error: function (data) {
-                var message = '{% trans %}Style created ERROR{% endtrans %}';
+                var message = '{{ "Style created ERROR"|trans|e("js") }}';
                 no_success(message);
             },
             success: function (data) {
@@ -46,7 +46,7 @@
                 var path = "{{ path('pumukit_newadmin_series_styles_show',{'id': '__ID__'}) }}";
                 path = path.replace('__ID__', data.id);
                 $('#style_show').load(path);
-                var message = '{% trans %}Style created OK{% endtrans %}';
+                var message = '{{ "Style created OK"|trans|e("js") }}';
                 success(message);
             }
         });

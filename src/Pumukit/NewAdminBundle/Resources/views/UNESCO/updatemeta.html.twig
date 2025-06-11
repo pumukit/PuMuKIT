@@ -50,7 +50,7 @@
         var recordDate = new Date(recordDateVal);
 
         if (publicDate.getTime() < recordDate.getTime()){
-            var message = '{% trans %}Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.{% endtrans %}';
+            var message = '{{ "Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date."|trans|e("js") }}';
             no_success(message);
             return false;
         }
@@ -63,12 +63,12 @@
             url: route,
             type: 'POST',
             data: $(this).serialize(),
-            error: function(request, json){var message = '{% trans %}Multimedia Object saved ERROR{% endtrans %}'; no_success(message);},
+            error: function(request, json){var message = '{{ "Multimedia Object saved ERROR"|trans|e("js") }}'; no_success(message);},
             success: function(response){
                 $('#list_mms').load("{{ path('pumukitnewadmin_unesco_list') }}");
                 $('#preview_mms').load("{{ path('pumukitnewadmin_unesco_show', {'id' :mm.id }) }}");
                 $('#inputMMTitle').val($('#pumukitnewadmin_mms_meta_i18n_title_{{ app.request.getLocale() }}').val());
-                var message = '{% trans %}Multimedia Object saved OK{% endtrans %}';
+                var message = '{{ "Multimedia Object saved OK"|trans|e("js") }}';
                 success(message);
             }
         });

@@ -12,7 +12,7 @@
                               data: $(this).serialize(),
                               success: function(response, textStatus, jqXHR){
                                         $('#list_people').html(response);
-                                        var message = '{% trans %}Person successfully updated.{% endtrans %}';
+                                        var message = '{{ "Person successfully updated."|trans|e("js")}}';
                                         success(message);
                               },
                               error: function(jqXHR, textStatus, errorThrown){

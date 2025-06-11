@@ -16,7 +16,7 @@
                     $('#myModal').modal('hide');
                     var resource_name = '{{ resource_name }}';
                     $('#edit_series').html(response);
-                    success('{% trans %}New Pic added.{% endtrans %}');
+                    success('{{ "New Pic added."|trans|e("js")}}');
                     }
                     });
                     return false;"

@@ -25,7 +25,7 @@
                             var route = '{{ path('pumukitnewadmin_person_link', {'id': '__personId__', 'roleId': role.id, 'mmId': mm.id, 'owner': owner} ) }}';
                             var personId = $('#person_id').val();
                             $('#{{ role.id }}_person_mms{{ template }}').load(route.replace('__personId__', personId), {'_method':'POST'}, function(){
-                            success('{% trans %}Person successfully associated to Multimedia Object{% endtrans %} \'{{ mm.getTitle()|e('js') }}\' {% trans %}with role{% endtrans %} \'{{ role.getName()|e('js') }}\'');
+                            success('{{ "Person successfully associated to Multimedia Object"|trans|e("js") }} \'{{ mm.getTitle()|e('js') }}\' {% trans %}with role{% endtrans %} \'{{ role.getName()|e('js') }}\'');
                     {% if template != '_template' %} $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', {'_method':'POST'}); {% endif %}
                             });
                             $('#myAuxModal{{ template }}').modal('hide');

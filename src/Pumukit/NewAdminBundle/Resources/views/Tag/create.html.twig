@@ -15,11 +15,11 @@
                     data: $(this).serialize(),
                     success: function(response, textStatus, jqXHR){
                         if (jqXHR.responseText.indexOf('modal-header') != -1){
-                            var message = '{% trans %}There was an error in creating the Tag.{% endtrans %}';
+                            var message = '{{ "There was an error in creating the Tag."|trans|e("js")}}';
                             no_success(message);
                         } else {
                             $('#list_tags').html(response);
-                            var message = '{% trans %}Tag successfully created.{% endtrans %}';
+                            var message = '{{ "Tag successfully created."|trans|e("js")}}';
                             success(message);
                         }
                     },

@@ -13,11 +13,11 @@
                     data: $(this).serialize(),
                     success: function(response, textStatus, jqXHR){
                         if (jqXHR.responseText.indexOf('modal-header') != -1){
-                            var message = '{% trans %}There was an error in updating the Live channel.{% endtrans %}';
+                            var message = '{{ "There was an error in updating the Live channel."|trans|e("js")}}';
                             no_success(message);
                         }else{
                             $('#list_lives').html(response);
-                            var message = '{% trans %}Live channel successfully updated.{% endtrans %}';
+                            var message = '{{ "Live channel successfully updated."|trans|e("js")}}';
                             success(message);
                         }
                     },

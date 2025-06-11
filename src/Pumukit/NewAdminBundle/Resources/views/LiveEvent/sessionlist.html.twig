@@ -45,14 +45,14 @@
                 data: $('#event_session_form').serialize(),
                 success: function (response, textStatus, jqXHR) {
                     if (jqXHR.responseText.indexOf('modal-header') != -1) {
-                        var message = '{% trans %}There was an error in updating the event session.{% endtrans %}';
+                        var message = '{{ "There was an error in updating the event session."|trans|e("js") }}';
                         no_success(message);
                     } else {
                         var mm = "{{ path('pumukit_new_admin_live_event_session_list', {'id': multimediaObject.getId()}) }}";
                         $('#list_live_events').load(mm);
                         var pathList = "{{ path('pumukit_new_admin_live_event_list') }}";
                         $('#list_events').load(pathList);
-                        var message = '{% trans %}Live session successfully updated.{% endtrans %}';
+                        var message = '{{ "Live session successfully updated."|trans|e("js") }}';
                         success(message);
                     }
                 },
@@ -75,7 +75,7 @@
             method: 'POST',
             success: function (response, textStatus, jqXHR) {
                 if (jqXHR.responseText.indexOf('modal-header') != -1) {
-                    var message = '{% trans %}There was an error in updating the event session.{% endtrans %}';
+                    var message = '{{ "There was an error in updating the event session."|trans|e("js") }}';
                     no_success(message);
                 } else {
                     var mm = "{{ path('pumukit_new_admin_live_event_session_list', {'id': multimediaObject.getId()}) }}";
@@ -83,7 +83,7 @@
                     var pathList = "{{ path('pumukit_new_admin_live_event_list') }}";
                     $('#list_events').load(pathList);
 
-                    var message = '{% trans %}Live session successfully updated.{% endtrans %}';
+                    var message = '{{ "Live session successfully updated."|trans|e("js") }}';
                     success(message);
                 }
             },

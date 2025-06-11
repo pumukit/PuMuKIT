@@ -10,7 +10,7 @@ window.submit_delete_role = function(id, countMm)
     if (countMm == 0){
         if (window.confirm("{% trans %}Are you sure you want to delete this role?{% endtrans %}")){
             var url = "{{ path('pumukitnewadmin_role_delete', {'id': '__id__'})|raw }}";
-            var message = "{% trans %}Role successfully deleted.{% endtrans %}";
+            var message = "{{ "Role successfully deleted."|trans|e("js") }}";
             $('#list_roles').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message)});
         }
     }else{
@@ -20,13 +20,13 @@ window.submit_delete_role = function(id, countMm)
 
 window.submit_delete_user = function(id, userFullname)
 {
-    if (window.confirm("{% trans %}Are you sure you want to delete the user{% endtrans %} "+userFullname+"?")) {
+    if (window.confirm("{{ "Are you sure you want to delete the user"|trans|e("js") }} "+userFullname+"?")) {
         var url = "{{ path('pumukitnewadmin_user_delete', {'id': '__id__'})|raw }}";
         $('#list_users').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
           if(XMLHttpRequest.status >= 400){
-            no_success('{% trans %}Error deleting user{% endtrans %}: ' + responseText);
+            no_success('{{ "Error deleting user"|trans|e("js") }}: ' + responseText);
           }else{
-            success('{% trans %}User{% endtrans %} "'+userFullname+'" {% trans %}successfully deleted.{% endtrans %}');
+            success('{{ "User"|trans|e("js") }} "'+userFullname+'" {{ "successfully deleted."|trans|e("js") }}');
           }
         });
     }
@@ -42,16 +42,16 @@ window.submit_delete_live = function(id)
             method: 'DELETE',
             success: function (response) {
                 if(-1 !== response.indexOf('error')) {
-                    var message = '{% trans %}Delete error. Live channel channel is associated to live event.{% endtrans %}';
+                    var message = '{{ "Delete error. Live channel channel is associated to live event."|trans|e("js") }}';
                     no_success(message);
                 } else {
-                    var message = '{% trans %}Live channel successfully deleted.{% endtrans %}';
+                    var message = '{{ "Live channel successfully deleted."|trans|e("js") }}';
                     success(message);
                     $('#list_lives').load("{{ path('pumukitnewadmin_live_list') }}");
                 }
             },
             error: function() {
-                var message = '{% trans %}Delete error. Live channel channel is associated to live event.{% endtrans %}';
+                var message = '{{ "Delete error. Live channel channel is associated to live event."|trans|e("js") }}';
                 no_success(message);
             }
         });
@@ -65,7 +65,7 @@ window.submit_delete_seriestype = function(id)
 {
     if (window.confirm("{% trans %}Are you sure you want to delete this series type?{% endtrans %}")){
         var url = "{{ path('pumukitnewadmin_seriestype_delete', {'id': '__id__'})|raw }}";
-        var message = '{% trans %}Series type successfully deleted.{% endtrans %}';
+        var message = '{{ "Series type successfully deleted."|trans|e("js") }}';
         $('#list_seriestypes').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message)});
     }
 }
@@ -76,7 +76,7 @@ window.submit_delete_event = function(id)
 {
     if (window.confirm("{% trans %}Are you sure you want to delete this live event?{% endtrans %}")){
         var url = "{{ path('pumukitnewadmin_event_delete', {'id': '__id__'})|raw }}";
-        var message = '{% trans %}Live event successfully deleted.{% endtrans %}';
+        var message = '{{ "Live event successfully deleted."|trans|e("js") }}';
         $('#list_events').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message)});
     }
 }
@@ -101,7 +101,7 @@ window.submit_delete_mms = function(id)
 {
     if (window.confirm("{% trans %}Are you sure you want to delete this multimedia object?{% endtrans %}")){
         var url = "{{ path('pumukitnewadmin_mms_delete', {'id': '__id__'})|raw }}";
-        var message = '{% trans %}Multimedia Object successfully deleted.{% endtrans %}';
+        var message = '{{ "Multimedia Object successfully deleted."|trans|e("js") }}';
         var sessionId = $($('tr.success').find('input.mm_checkbox')[0]).attr('id');
         $('#list_mms').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
             if (textStatus !== "error") {
@@ -124,7 +124,7 @@ window.submit_generate_magic_mms = function(id)
     if (window.confirm("{% trans %}Are you sure you want to regenerate the magic url for this multimedia object?{% endtrans %}")){
         var url = "{{ path('pumukitnewadmin_mms_generate_magic_url', {'id': '__id__'})|raw }}";
         var magicUrl =    "{{ url('pumukit_webtv_multimediaobject_magicindex', {secret: '__secret__'})|raw }}";
-        var message = '{% trans %}Magic Url successfully generated.{% endtrans %}';
+        var message = '{{ "Magic Url successfully generated."|trans|e("js") }}';
         $('#inputROMagicUrl').load(url.replace('__id__', id), {'_method': 'POST'}, function(responseText, textStatus, XMLHttpRequest){
             if (textStatus !== "error") {
                 success(message);
@@ -143,7 +143,7 @@ window.submit_generate_magic_series = function(id, seriesTitle)
     if (window.confirm("{% trans %}Are you sure you want to regenerate the magic url for the Series: "+seriesTitle+"?{% endtrans %}")){
         var url = "{{ path('pumukitnewadmin_series_generate_magic_url', {'id': '__id__'})|raw }}";
         var magicUrl = "{{url('pumukit_webtv_series_magicindex', {secret: '__secret__'})}}"
-        var message = '{% trans %}Magic Url successfully generated.{% endtrans %}';
+        var message = '{{ "Magic Url successfully generated."|trans|e("js") }}';
         $('#inputROMagicUrl').load(url.replace('__id__', id), {'_method': 'POST'}, function(responseText, textStatus, XMLHttpRequest){
             if (textStatus !== "error") {
                 success(message);
@@ -161,7 +161,7 @@ window.submit_clone_mms = function(id)
 {
     if (window.confirm("{% trans %}Are you sure you want to clone this multimedia object?{% endtrans %}")){
         var url = "{{ path('pumukitnewadmin_mms_clone', {'id': '__id__'})|raw }}";
-        var message = '{% trans %}Multimedia Object successfully cloned.{% endtrans %}';
+        var message = '{{ "Multimedia Object successfully cloned."|trans|e("js") }}';
         $('#list_mms').load(url.replace('__id__', id), {'_method': 'POST'}, function(){
             success(message)
         });
@@ -172,7 +172,7 @@ window.submit_clone_series = function(id)
 {
     if (window.confirm("{% trans %}Are you sure you want to clone this series?{% endtrans %}")){
         var url = "{{ path('pumukitnewadmin_series_clone', {'id': '__id__'})|raw }}";
-        var message = '{% trans %}Series successfully cloned.{% endtrans %}';
+        var message = '{{ "Series successfully cloned."|trans|e("js") }}';
         $('#list_series').load(url.replace('__id__', id), {'_method': 'POST'}, function(){
             success(message);
         });
@@ -183,7 +183,7 @@ window.submit_delete_series = function(id, seriesTitle, countMm, countLives)
 {
     var url = "{{ path('pumukitnewadmin_series_delete', {'id': '__id__'})|raw }}";
     if (window.confirm('{% trans %}Are you sure you want to delete the series{% endtrans %} "'+seriesTitle+'"? {% trans %}This series has{% endtrans %} '+countMm+' {% trans %}multimedia object(s){% endtrans %} {% trans %}and{% endtrans %} '+countLives+' {% trans %}live event(s){% endtrans %}.')){
-        var message = '{% trans %}Series{% endtrans %} "'+seriesTitle+'" {% trans %}successfully deleted{% endtrans %}.';
+        var message = '{{ "Series"|trans|e("js") }} "'+seriesTitle+'" {{ "successfully deleted"|trans|e("js") }}.';
         var sessionId = $($('tr.success').find('input.series_checkbox')[0]).attr('id');
         $('#list_series').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
             if (textStatus !== "error") {
@@ -203,7 +203,7 @@ window.submit_delete_playlist = function(id, playlistTitle, countMm)
 {
     var url = "{{ path('pumukitnewadmin_playlist_delete', {'id': '__id__'})|raw }}";
     if (window.confirm('{% trans %}Are you sure you want to delete the playlist{% endtrans %} "'+playlistTitle+'"? {% trans %}This playlist has{% endtrans %} '+countMm+' {% trans %}multimedia object(s){% endtrans %}.')){
-        var message = '{% trans %}Playlist{% endtrans %} "'+playlistTitle+'" {% trans %}successfully deleted{% endtrans %}.';
+        var message = '{{ "Playlist"|trans|e("js") }} "'+playlistTitle+'" {{ "successfully deleted"|trans|e("js") }}.';
         var sessionId = $($('tr.success').find('input.playlist_checkbox')[0]).attr('id');
         $('#list_playlists').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
             if (textStatus !== "error") {
@@ -223,7 +223,7 @@ window.submit_delete_permissionprofile = function(id, permissionProfileName)
 {
     if (window.confirm('{% trans %}Are you sure you want to delete the Permission Profile{% endtrans %} "'+permissionProfileName+'"?.')){
         var url = "{{ path('pumukitnewadmin_permissionprofile_delete', {'id': '__id__'})|raw }}";
-        var message = '{% trans %}Permission Profile{% endtrans %} "'+permissionProfileName+'" {% trans %}successfully deleted{% endtrans %}.';
+        var message = '{{ "Permission Profile"|trans|e("js") }} "'+permissionProfileName+'" {{ "successfully deleted"|trans|e("js") }}.';
         $('#list_permissionprofiles').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
             $('[data-toggle="tooltip"]').tooltip();
             if (textStatus !== "error") {
@@ -264,15 +264,15 @@ window.delete_eventpic = function(eventId) {
         $('#list_events').load(url.replace('___id___', eventId), {'_method': 'DELETE'}, function(){
             var show_url = "{{ path('pumukitnewadmin_event_show', {'id': '___id___'})|raw }}";
             $('#preview_event').load(show_url.replace('___id___', eventId));
-            success('{% trans %}Thumbnail removed.{% endtrans %}');
+            success('{{ "Thumbnail removed."|trans|e("js") }}');
         });
     }
 }
 
 window.delete_seriespic = function(id, seriesId) {
-    if (window.confirm('{% trans %}Are you sure you want to delete this thumbnail?{% endtrans %} {% trans %}If it corresponds to the one associated with the banner, the entire header will also be removed.{% endtrans %}')) {
+    if (window.confirm('{{ "Are you sure you want to delete this thumbnail?"|trans|e("js") }} {{ "If it corresponds to the one associated with the banner, the entire header will also be removed."|trans|e("js") }}')) {
         var url = '{{ path('pumukitnewadmin_seriespic_delete', {'id': '___id___'})|raw }}';
-        $('#edit_series').load(url.replace('___id___', id), {'_method': 'DELETE'}, function(){success('{% trans %}Thumbnail removed.{% endtrans %}');});
+        $('#edit_series').load(url.replace('___id___', id), {'_method': 'DELETE'}, function(){success('{{ "Thumbnail removed."|trans|e("js") }}');});
     }
 }
 
@@ -282,7 +282,7 @@ window.delete_playlistpic = function(id, seriesId) {
         $.ajax(url.replace('___id___', id), {
             'method': 'DELETE',
             'success': function(){
-                       success('{% trans %}Thumbnail removed.{% endtrans %}');
+                       success('{{ "Thumbnail removed."|trans|e("js") }}');
                                url = '{{ path('pumukitnewadmin_playlist_update', {'id': '___id___'})|raw }}';
                                        $('#edit_playlist').load(url.replace('___id___', seriesId), {'_method': 'GET'});
                        }
@@ -335,8 +335,8 @@ window.submit_delete_person_relation = function(id, roleId, mmId, hName, templat
         url = url.replace('__roleId__', roleId);
         url = url.replace('__mmId__', mmId);
         url = url.replace('__owner__', owner);
-        var error_message = '{% trans %}Error deleting Person{% endtrans %} "'+hName+' from MultimediaObject": ';
-        var success_message = '{% trans %}Person successfully removed from Multimedia Object{% endtrans %}';
+        var error_message = '{{ "Error deleting Person"|trans|e("js") }} "'+hName+' from MultimediaObject": ';
+        var success_message = '{{ "Person successfully removed from Multimedia Object"|trans|e("js") }}';
         if ($.trim(message) == $.trim(default_message)) {
             $(role_id).load(url, {'_method': 'DELETE'});
             var url = "{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'})|raw }}";
@@ -395,16 +395,16 @@ window.delete_mmspic = function(id, resourceId) {
         var url = '{{ path('pumukitnewadmin_mmspic_delete', {'id': '___id___'})|raw }}';
         var div_id = '#pic_mms___resourceId__';
         div_id = div_id.replace('__resourceId__', resourceId);
-        $(div_id).load(url.replace('___id___', id), {'_method': 'DELETE'}, function(){success('{% trans %}Thumbnail removed.{% endtrans %}');});
+        $(div_id).load(url.replace('___id___', id), {'_method': 'DELETE'}, function(){success('{{ "Thumbnail removed."|trans|e("js") }}');});
     }
 }
 
 window.delete_eventspic = function(id, resourceId) {
-    if (window.confirm('{% trans %}Are you sure you want to delete this event poster?{% endtrans %}')) {
+    if (window.confirm('{{ "Are you sure you want to delete this event poster?"|trans|e("js") }}')) {
         var url = '{{ path('pumukitnewadmin_mmspic_delete', {'id': '___id___', 'is_event_poster': true})|raw }}';
         var div_id = '#pic_events___resourceId__';
         div_id = div_id.replace('__resourceId__', resourceId);
-        $(div_id).load(url.replace('___id___', id), {'_method': 'DELETE'}, function(){success('{% trans %}Event poster removed.{% endtrans %}');});
+        $(div_id).load(url.replace('___id___', id), {'_method': 'DELETE'}, function(){success('{{ "Event poster removed."|trans|e("js") }}');});
     }
 }
 
@@ -445,7 +445,7 @@ window.submit_delete_material = function(id, mmId)
         url = url.replace('__mmId__', mmId);
         var div_id = '#materials_mms___mmId__';
         div_id = div_id.replace('__mmId__', mmId);
-        $(div_id).load(url, {'_method': 'DELETE'}, function(){success('{% trans %}Material successfully deleted.{% endtrans %}')});
+        $(div_id).load(url, {'_method': 'DELETE'}, function(){success('{{ "Material successfully deleted."|trans|e("js") }}')});
     }
 }
 
@@ -488,7 +488,7 @@ window.extract_pic = function(trackId, mmId, numframe)
         },
         error: function(){
         $('#pic_mms_' + mmId +'_load').hide();
-            no_success('{% trans %}Error extracting thumbnail{% endtrans %}');
+            no_success('{{ "Error extracting thumbnail"|trans|e("js") }}');
         }
     });
 }
@@ -500,14 +500,14 @@ window.submit_delete_person = function(id, countMm, personHName)
             var url = "{{ path('pumukitnewadmin_person_delete', {'id': '__id__'})|raw }}";
             $('#list_people').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
                 if(XMLHttpRequest.status >= 400){
-                    no_success('{% trans %}Error deleting Person{% endtrans %} "'+personHName+'": ' + responseText);
+                    no_success('{{ "Error deleting Person"|trans|e("js") }} "'+personHName+'": ' + responseText);
                 }else{
-                    success('{% trans %}Person{% endtrans %} "'+personHName+'" {% trans %}successfully deleted.{% endtrans %}');
+                    success('{{ "Person"|trans|e("js") }} "'+personHName+'" {{ "successfully deleted."|trans|e("js") }}');
                 }
             });
     }
     }else{
-        window.alert('{% trans %}Cannot delete the data of{% endtrans %} '+personHName+'. '+ countMm+' {% trans %}multimedia object(s) contain(s) this person{% endtrans %}.');
+        window.alert('{{ "Cannot delete the data of"|trans|e("js") }} '+personHName+'. '+ countMm+' {{ "multimedia object(s) contain(s) this person"|trans|e("js") }}.');
     }
 }
 
@@ -520,9 +520,9 @@ window.submit_delete_group = function(id, groupName, deleteMessage, canBeDeleted
         var url = "{{ path('pumukitnewadmin_group_delete', {'id': '__id__'})|raw }}";
         $('#list_groups').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
             if(XMLHttpRequest.status >= 400){
-                no_success('{% trans %}Error deleting Group{% endtrans %} "'+groupName+'": ' + responseText);
+                no_success('{{ "Error deleting Group"|trans|e("js") }} "'+groupName+'": ' + responseText);
             }else{
-                success('{% trans %}Group{% endtrans %} "'+groupName+'" {% trans %}successfully deleted.{% endtrans %}');
+                success('{{ "Group"|trans|e("js") }} "'+groupName+'" {{ "successfully deleted."|trans|e("js") }}');
             }
         });
     }
@@ -697,7 +697,7 @@ window.change_select = function(element, selector, pluralName, seriesId)
                                     no_success(errorThrown + ': ' + jqXHR.responseText);
                                 },
                                 success: function(response){
-                                    var message = '{% trans %}Series{% endtrans %}&nbsp;{% trans %}successfully deleted{% endtrans %}.';
+                                    var message = '{{ "Series"|trans|e("js") }}&nbsp;{{ "successfully deleted"|trans|e("js") }}.';
                                     $('#list_'+pluralName).html(response);
                                     success(message);
                                 }
@@ -728,9 +728,9 @@ window.change_select = function(element, selector, pluralName, seriesId)
         if (confirm('{% trans %}Are you sure?{% endtrans %}')) {
             var route = get_batch_delete_route(element, ids);
             if (pluralName.indexOf('mms') != -1){
-                var message = '{% trans %}Multimedia Object(s) successfully deleted.{% endtrans %}';
+                var message = '{{ "Multimedia Object(s) successfully deleted."|trans|e("js") }}';
             }else{
-                var message = pluralName.charAt(0).toUpperCase()+pluralName.slice(1)+' {% trans %}successfully deleted.{% endtrans %}';
+                var message = pluralName.charAt(0).toUpperCase()+pluralName.slice(1)+' {{ "successfully deleted."|trans|e("js") }}';
             }
             $.ajax({
                     url: route,
@@ -832,7 +832,7 @@ window.change_select = function(element, selector, pluralName, seriesId)
             ids.push($this.attr("id"));
         });
         if (ids.length == 0) {
-            var message = '{% trans %}No multimedia object selected{% endtrans %}';
+            var message = '{{ "No multimedia object selected"|trans|e("js") }}';
             no_success(message);
             break;
         }
@@ -852,8 +852,8 @@ window.change_select = function(element, selector, pluralName, seriesId)
                                 var $this = $(this);
                                 $this[0].checked = false;
                             });
-                            if (ids.length == 1) var message = '{% trans %}Multimedia Object cut. Paste it in the desire Series.{% endtrans %}';
-                            else var message = '{% trans %}Multimedia Objects cut. Paste them in the desire Series.{% endtrans %}';
+                            if (ids.length == 1) var message = '{{ "Multimedia Object cut. Paste it in the desire Series."|trans|e("js") }}';
+                            else var message = '{{ "Multimedia Objects cut. Paste them in the desire Series."|trans|e("js") }}';
                             success(message);
                 }
         });
@@ -864,7 +864,7 @@ window.change_select = function(element, selector, pluralName, seriesId)
             $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId), {'_method':'POST'}, function(){
                 $('#options_mms #paste_mm').hide();
 
-                var message = '{% trans %}Multimedia Object(s) pasted in the Series.{% endtrans %}';
+                var message = '{{ "Multimedia Object(s) pasted in the Series."|trans|e("js") }}';
                 success(message);
             });
         }
@@ -876,7 +876,7 @@ window.change_select = function(element, selector, pluralName, seriesId)
             ids.push($this.attr("id"));
         });
         if (ids.length == 0) {
-            var message = '{% trans %}No multimedia object selected{% endtrans %}';
+            var message = '{{ "No multimedia object selected"|trans|e("js") }}';
             no_success(message);
           break;
         }
@@ -943,7 +943,7 @@ window.change_select = function(element, selector, pluralName, seriesId)
             type: 'POST',
             data: {'ids': ids, 'profile': profile},
             error: function(jqXHR, textStatus, errorThrown){
-                no_success('{% trans %}Error promoting user{% endtrans %}.');
+                no_success('{{ "Error promoting user"|trans|e("js") }}.');
             },
             success: function(response){
                 ids.forEach(function(e){$('#profile'+e).html(profilename)})
@@ -951,7 +951,7 @@ window.change_select = function(element, selector, pluralName, seriesId)
                     var $this = $(this);
                     $this[0].checked = false;
                 });
-                success('{% trans %}Users updated.{% endtrans %}');
+                success('{{ "Users updated."|trans|e("js") }}');
             },
         });
 
@@ -1267,7 +1267,7 @@ $(function() {
                     init_tabs();
                 });
             });
-            success('{% trans %}Multimedia Object successfully created.{% endtrans %}');
+            success('{{ "Multimedia Object successfully created."|trans|e("js") }}');
         }
     });
 
@@ -1297,7 +1297,7 @@ $(function() {
                         init_tabs();
                     });
                 });
-                success('{% trans %}Series successfully created.{% endtrans %}');
+                success('{{ "Series successfully created."|trans|e("js") }}');
             }
     });
     return false;
@@ -1325,7 +1325,7 @@ $(function() {
                         init_tabs();
                     });
                 });
-                success('{% trans %}Playlist successfully created.{% endtrans %}');
+                success('{{ "Playlist successfully created."|trans|e("js") }}');
             }
     });
     return false;
@@ -1700,7 +1700,7 @@ function init_event_tab()
  */
 test_form_url = function(url){
     if (test_url_generation(url)){
-        window.alert('{% trans %}The given URL is not valid{% endtrans %}.');
+        window.alert('{{ "The given URL is not valid"|trans|e("js") }}.');
         return false;
     }
     return true;
@@ -1879,7 +1879,7 @@ function toggle_section_tag(id, element, level, cod) {
 function tag_delete(id, cod, pid, numberMultimediaObjects) {
   if (0 < numberMultimediaObjects) {
     window.alert('{% trans %}Can not delete tag with code{% endtrans %} ' + cod + '. ' + numberMultimediaObjects + ' {% trans %}Multimedia Object(s) has/have this tag{% endtrans %}.');
-  } else  if (window.confirm('{% trans %}Are you sure you want to delete the tag with code{% endtrans %} ' + cod + '?')) {
+  } else  if (window.confirm('{{ "Are you sure you want to delete the tag with code"|trans|e("js") }} ' + cod + '?')) {
     var url = '{{ path('pumukitnewadmin_tag_delete', {'id': '___id___'}) }}';
     $.ajax(url.replace('___id___', id), {
       type: 'DELETE',
@@ -1892,7 +1892,7 @@ function tag_delete(id, cod, pid, numberMultimediaObjects) {
         if ($('.d_' + pid).length == 0) {
           $('#row_tag_' + pid + ' .expanded').removeClass("expanded").addClass("element");
         }
-        var message = '{% trans %}Tag{% endtrans %} "'+cod+'" {% trans %}successfully deleted{% endtrans %}.';
+        var message = '{{ "Tag"|trans|e("js") }} "'+cod+'" {{ "successfully deleted"|trans|e("js") }}.';
         success(message);
       }
     });
@@ -1904,7 +1904,7 @@ function tag_delete(id, cod, pid, numberMultimediaObjects) {
 
 $(document).ready(function(){
     $(document).on('click', '#pumukitnewadmin_group_delete_all_relation_user', function(event) {
-        if (window.confirm('{% trans %}ATTENTION: Are you sure you want to delete all User from this Group?{% endtrans %}')) {
+        if (window.confirm('{{ "ATTENTION: Are you sure you want to delete all User from this Group?"|trans|e("js") }}')) {
             var route = "{{ path('pumukitnewadmin_group_delete_all_users', {'id': '__groupId__'})|raw }}";
             var group_id = $('#pumukitnewadmin_group_id').val();
             route = route.replace('__groupId__', group_id);
@@ -1929,7 +1929,7 @@ $(document).ready(function(){
     });
 
     $(document).on('click', '#pumukitnewadmin_group_delete_all_relation_multimediaobject', function(event) {
-        if (window.confirm('{% trans %}ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?{% endtrans %}')) {
+        if (window.confirm('{{ "ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?"|trans|e("js") }}')) {
             var route = "{{ path('pumukitnewadmin_group_delete_all_multimediaobjects', {'id': '__groupId__'})|raw }}";
             var group_id = $('#pumukitnewadmin_group_id').val();
             route = route.replace('__groupId__', group_id);
@@ -1954,7 +1954,7 @@ $(document).ready(function(){
     });
 
     $(document).on('click', '#pumukitnewadmin_group_delete_all_relation_embeddedbroadcast', function(event) {
-        if (window.confirm('{% trans %}ATTENTION: Are you sure you want to delete all Play Multimedia Objects from this Group?{% endtrans %}')) {
+        if (window.confirm('{{ "ATTENTION: Are you sure you want to delete all Play Multimedia Objects from this Group?"|trans|e("js") }}')) {
             var route = "{{ path('pumukitnewadmin_group_delete_all_embeddedbroadcasts', {'id': '__groupId__'})|raw }}";
             var group_id = $('#pumukitnewadmin_group_id').val();
             route = route.replace('__groupId__', group_id);
@@ -2050,7 +2050,7 @@ $(document).on('submit', '#pumukitnewadmin_event_create_form', function() {
             data: $(this).serialize(),
             success: function(response, textStatus, jqXHR){
                 if (jqXHR.responseText.indexOf('modal-header') != -1){
-                    var message = '{% trans %}There was an error in creating the Live event.{% endtrans %}';
+                    var message = '{{ "There was an error in creating the Live event."|trans|e("js") }}';
                     no_success(message);
                 }else{
                     var eventId = response['eventId'];
@@ -2059,7 +2059,7 @@ $(document).on('submit', '#pumukitnewadmin_event_create_form', function() {
                         var routeShow = "{{ path('pumukitnewadmin_event_show', {'id': '__eventId__'})|raw }}";
                         $('#preview_event').load(routeShow.replace('__eventId__', eventId));
                     });
-                    var message = '{% trans %}Live event successfully created.{% endtrans %}';
+                    var message = '{{ "Live event successfully created."|trans|e("js") }}';
                     success(message);
                 }
             },
@@ -2079,7 +2079,7 @@ $(document).on('submit', '#pumukitnewadmin_live_create_form', function() {
             data: $(this).serialize(),
             success: function(response, textStatus, jqXHR){
                 if (jqXHR.responseText.indexOf('modal-header') != -1){
-                    var message = '{% trans %}There was an error in creating the Live channel.{% endtrans %}';
+                    var message = '{{ "There was an error in creating the Live channel."|trans|e("js") }}';
                     no_success(message);
                 }else{
                     var liveId = response['liveId'];
@@ -2088,7 +2088,7 @@ $(document).on('submit', '#pumukitnewadmin_live_create_form', function() {
                         var routeShow = "{{ path('pumukitnewadmin_live_show', {'id': '__liveId__'})|raw }}";
                         $('#preview_live').load(routeShow.replace('__liveId__', liveId));
                     });
-                    var message = '{% trans %}Live channel successfully created.{% endtrans %}';
+                    var message = '{{ "Live channel successfully created."|trans|e("js") }}';
                     success(message);
                 }
             },
@@ -2108,11 +2108,11 @@ $(document).on('submit', '#pumukitnewadmin_seriestype_create_form', function() {
             data: $(this).serialize(),
             success: function(response, textStatus, jqXHR){
                 if (jqXHR.responseText.indexOf('modal-header') != -1){
-                    var message = '{% trans %}There was an error in creating the Live channel.{% endtrans %}';
+                    var message = '{{ "There was an error in creating the Live channel."|trans|e("js") }}';
                     no_success(message);
                 }else{
                     $('#list_seriestypes').html(response);
-                    var message = '{% trans %}Series type channel successfully created.{% endtrans %}';
+                    var message = '{{ "Series type channel successfully created."|trans|e("js") }}';
                     success(message);
                 }
             },
@@ -2125,7 +2125,7 @@ $(document).on('submit', '#pumukitnewadmin_seriestype_create_form', function() {
 
 function checkRecordDateAndPublicDate(recordDate, publicDate) {
     if (publicDate.getTime() < recordDate.getTime()){
-        var message = '{% trans %}Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.{% endtrans %}';
+        var message = '{{ "Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date."|trans|e("js") }}';
         no_success(message);
         return false;
     }
@@ -2154,12 +2154,12 @@ $(document).on('submit', '#pumukitnewadmin_mms_updatemeta_form', function(event)
             url: route,
             type: 'POST',
             data: $(this).serialize(),
-            error: function(request, json){var message = '{% trans %}Multimedia Object saved ERROR{% endtrans %}'; no_success(message);},
+            error: function(request, json){var message = '{{ "Multimedia Object saved ERROR"|trans|e("js") }}'; no_success(message);},
             success: function(response){
                                         $('#list_mms').html(response);
                                         $('#preview_mm').load(showRoute);
                                         $('#inputMMTitle').val($('#pumukitnewadmin_mms_meta_i18n_title_{{ app.request.getLocale() }}').val());
-                                        var message = '{% trans %}Multimedia Object saved OK{% endtrans %}';
+                                        var message = '{{ "Multimedia Object saved OK"|trans|e("js") }}';
                                         success(message);
                                         }
             });
@@ -2223,11 +2223,11 @@ $(document).on('submit', '#pumukitnewadmin_user_form_update', function(event){
             data: $(this).serialize(),
             success: function(response, textStatus, jqXHR){
                         if (jqXHR.responseText.indexOf('modal-header') != -1){
-                            var message = '{% trans %}There was an error in updating the User.{% endtrans %}';
+                            var message = '{{ "There was an error in updating the User."|trans|e("js") }}';
                             no_success(message);
                         }else{
                             $('#list_users').html(response);
-                            var message = '{% trans %}User successfully updated.{% endtrans %}';
+                            var message = '{{ "User successfully updated."|trans|e("js") }}';
                             success(message);
                         }
             },
@@ -2251,11 +2251,11 @@ $(document).on('submit', '#pumukitnewadmin_user_form_create', function(event){
             data: $(this).serialize(),
             success: function(response, textStatus, jqXHR){
                 if (jqXHR.responseText.indexOf('modal-header') != -1){
-                    var message = '{% trans %}There was an error in creating the User.{% endtrans %}';
+                    var message = '{{ "There was an error in creating the User."|trans|e("js") }}';
                     no_success(message);
                 }else{
                     $('#list_users').html(response);
-                    var message = '{% trans %}User successfully created.{% endtrans %}';
+                    var message = '{{ "User successfully created."|trans|e("js") }}';
                     success(message);
                 }
             },
@@ -2279,12 +2279,12 @@ $(document).on('submit', '#pumukitnewadmin_permissionprofile_form_create', funct
             data: $(this).serialize(),
             success: function(response, textStatus, jqXHR){
                         if (jqXHR.responseText.indexOf('modal-header') != -1){
-                            var message = '{% trans %}There was an error in creating the Permission Profile.{% endtrans %}';
+                            var message = '{{ "There was an error in creating the Permission Profile."|trans|e("js") }}';
                             no_success(message);
                         }else{
                             $('#list_permissionprofiles').html(response);
                             $('[data-toggle="tooltip"]').tooltip()
-                            var message = '{% trans %}Permission Profile successfully created.{% endtrans %}';
+                            var message = '{{ "Permission Profile successfully created."|trans|e("js") }}';
                             success(message);
                         }
             },
@@ -2311,12 +2311,12 @@ $(document).on('submit', '#pumukitnewadmin_permissionprofile_form_update', funct
             data: $(this).serialize(),
             success: function(response, textStatus, jqXHR){
                         if (jqXHR.responseText.indexOf('modal-header') != -1){
-                            var message = '{% trans %}There was an error in updating the Permission Profile.{% endtrans %}';
+                            var message = '{{ "There was an error in updating the Permission Profile."|trans|e("js") }}';
                             no_success(message);
                         }else{
                             $('#list_permissionprofiles').html(response);
                             $('[data-toggle="tooltip"]').tooltip();
-                            var message = '{% trans %}Permission Profile successfully updated.{% endtrans %}';
+                            var message = '{{ "Permission Profile successfully updated."|trans|e("js") }}';
                             success(message);
                         }
             },
@@ -2356,7 +2356,7 @@ processPermissionProfilesOk = function(){
             checked_permissions.push($this.attr("id"));
     });
 
-    var message = '{% trans %}Permission Profiles successfully updated.{% endtrans %}';
+    var message = '{{ "Permission Profiles successfully updated."|trans|e("js") }}';
     var route = '{{ path('pumukitnewadmin_permissionprofile_batch_update')|raw }}';
     $.ajax({
             url: route,
@@ -2723,7 +2723,7 @@ $(document).on('click', '#pumukitnewadmin_user_groups_submit', function() {
         },
         success: function(response){
             $('#list_users').html(response);
-            var message = '{% trans %}Successfully updated groups in User.{% endtrans %}';
+            var message = '{{ "Successfully updated groups in User."|trans|e("js") }}';
             success(message);
         }
     });
@@ -2784,7 +2784,7 @@ function pumukitnewadmin_mm_updategroup_submit(mm_id, template) {
             if (response.redirect == 1) {
                 window.location.href = response.url;
             }
-            var message = '{% trans %}Successfully updated groups in Mm.{% endtrans %}';
+            var message = '{{ "Successfully updated groups in Mm."|trans|e("js") }}';
             success(message);
         }
     });
@@ -2914,7 +2914,7 @@ $(document).on('submit', '#pumukitnewadmin_mms_updatebroadcast_submit', function
             var template = response['template'];
             var div_id = '#pumukitnewadmin_mm' + template + '_broadcast_description';
             $(div_id).html(response['descriptioni18n']);
-            var message = '{% trans %}Successfully updated Broadcast.{% endtrans %}';
+            var message = '{{ "Successfully updated Broadcast."|trans|e("js") }}';
             success(message);
         }
     });
@@ -2961,7 +2961,7 @@ $(document).on('submit', '#pumukitnewadmin_series_updatebroadcast_submit', funct
         success: function (response, textStatus, jqXHR) {
             var div_id = '#pumukitnewadmin_mm_template_broadcast_description';
             $(div_id).html(response['descriptioni18n']);
-            var message = '{% trans %}Successfully updated Broadcast in all Multimedia Objects.{% endtrans %}';
+            var message = '{{ "Successfully updated Broadcast in all Multimedia Objects."|trans|e("js") }}';
             success(message);
         }
     });
@@ -2970,7 +2970,7 @@ $(document).on('submit', '#pumukitnewadmin_series_updatebroadcast_submit', funct
 
 delete_user_from_group = function(user_id, group_id, count, action)
 {
-    if (window.confirm('{% trans %}ATTENTION: Are you sure you want to delete this User from this Group?{% endtrans %}')) {
+    if (window.confirm('{{ "ATTENTION: Are you sure you want to delete this User from this Group?"|trans|e("js") }}')) {
         var route = "{{ path('pumukitnewadmin_group_delete_user', {'id': '__groupId__', 'userId': '__userId__'})|raw }}";
         route = route.replace('__groupId__', group_id);
         route = route.replace('__userId__', user_id);
@@ -2996,7 +2996,7 @@ delete_user_from_group = function(user_id, group_id, count, action)
 
 delete_multimediaobject_from_group = function(mm_id, group_id, count, action)
 {
-    if (window.confirm('{% trans %}ATTENTION: Are you sure you want to delete this Admin Multimedia Object from this Group?{% endtrans %}')) {
+    if (window.confirm('{{ "ATTENTION: Are you sure you want to delete this Admin Multimedia Object from this Group?"|trans|e("js") }}')) {
         var route = "{{ path('pumukitnewadmin_group_delete_multimediaobject', {'id': '__groupId__', 'mmId': '__mmId__'})|raw }}";
         route = route.replace('__groupId__', group_id);
         route = route.replace('__mmId__', mm_id);
@@ -3022,7 +3022,7 @@ delete_multimediaobject_from_group = function(mm_id, group_id, count, action)
 
 delete_embeddedbroadcast_from_group = function(mm_id, group_id, count, action)
 {
-    if (window.confirm('{% trans %}ATTENTION: Are you sure you want to delete this Play Multimedia Object from this Group?{% endtrans %}')) {
+    if (window.confirm('{{ "ATTENTION: Are you sure you want to delete this Play Multimedia Object from this Group?"|trans|e("js") }}')) {
         var route = "{{ path('pumukitnewadmin_group_delete_embeddedbroadcast', {'id': '__groupId__', 'mmId': '__mmId__'})|raw }}";
         route = route.replace('__groupId__', group_id);
         route = route.replace('__mmId__', mm_id);
