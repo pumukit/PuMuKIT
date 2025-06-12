@@ -90,7 +90,7 @@
               $('#add_playlist_form_none').hide();
           })
           .fail(function(){
-              no_success('{% trans %}Error creating playlist{% endtrans %}')
+              no_success('{{ "Error creating playlist"|trans|e("js")}}')
           });
      });
      $('#new_playlist_btn').on('click', function(e){
@@ -120,7 +120,7 @@
               $('#myModal').modal('hide');
           })
           .fail(function(){
-              no_success('{% trans %}Error adding object to playlist{% endtrans %}')
+              no_success('{{ "Error adding object to playlist"|trans|e("js")}}')
           });
      });
 

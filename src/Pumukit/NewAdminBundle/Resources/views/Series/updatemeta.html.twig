@@ -3,12 +3,12 @@
                     url: '{{ path('pumukitnewadmin_series_update', {'id': series.id}) }}',
                     type: 'POST',
                     data: $(this).serialize(),
-                    error: function(request, json){var message = '{% trans %}Series saved ERROR{% endtrans %}'; no_success(message);},
+                    error: function(request, json){var message = '{{ "Series saved ERROR"|trans|e("js") }}'; no_success(message);},
                     success: function(response){
                         $('#list_series').html(response);
                         $('#preview_series').load('{{ path('pumukitnewadmin_series_show', {'id': series.id}) }}');
                         $('#links_series_{{ series.id }}').load('{{ path('pumukitnewadmin_series_links', {'id': series.id}) }}');
-                        var message = '{% trans %}Series saved OK{% endtrans %}';
+                        var message = '{{ "Series saved OK"|trans|e("js") }}';
                         success(message);
                     }
                 });

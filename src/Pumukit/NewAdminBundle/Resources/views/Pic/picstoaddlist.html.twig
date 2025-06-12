@@ -14,7 +14,7 @@
               <div class="wrap1">
                 <div class="wrap2">
                   <div class="wrap3">
-                    <a href="#" data-dismiss="modal" onclick="$('#pic_{{ event_poster ? 'events' : resource_name }}_{{ resource.id }}').load('{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id, 'picUrl': pic_url, 'is_event_poster': event_poster}) }}', function(){success('{% trans %}New Thumbnail added.{% endtrans %}');}); return false;">
+                    <a href="#" data-dismiss="modal" onclick="$('#pic_{{ event_poster ? 'events' : resource_name }}_{{ resource.id }}').load('{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id, 'picUrl': pic_url, 'is_event_poster': event_poster}) }}', function(){success('{{ "New Thumbnail added."|trans|e("js") }}');}); return false;">
                       <img src="{{ pic_url }}" alt="{{ pic_url|split('/')|last }}" height="82" width="100"/>
                     </a>
                   </div>

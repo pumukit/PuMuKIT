@@ -48,12 +48,12 @@
             url: '{{ path('pumukit_multimedia_object_save_and_archive', {'id': multimediaObject.id}) }}',
             type: 'POST',
             error: function(request, json) {
-                var message = '{{ "Multimedia Object archive ERROR"|trans }}';
+                var message = '{{ "Multimedia Object archive ERROR"|trans|e("js") }}';
                 no_success(message);
             },
             success: function(response) {
                 location.reload();
-                var message = '{{ "Multimedia Object archive complete"|trans }}';
+                var message = '{{ "Multimedia Object archive complete"|trans|e("js") }}';
                 success(message);
             }
         });
