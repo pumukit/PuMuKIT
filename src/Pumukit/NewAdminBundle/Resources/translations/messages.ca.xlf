@@ -624,7 +624,7 @@
       </trans-unit>
       <trans-unit id="tjhiDXt" resname="List multimedia objects in ascending order of publication date">
         <source>List multimedia objects in ascending order of publication date</source>
-        <target state="translated">Llista els objectes multimèdia segons la data de publicació per ordre ascendent</target>
+        <target state="translated">Enumera els objectes multimèdia segons la data de publicació per ordre ascendent</target>
       </trans-unit>
       <trans-unit id="AxD4nlk" resname="List multimedia objects in descending order of recording date">
         <source>List multimedia objects in descending order of recording date</source>
