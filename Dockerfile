@@ -44,6 +44,8 @@ RUN apt-get update \
 		libzip-dev \
 		libicu-dev \
 		zlib1g-dev \
+		librabbitmq-dev \
+		libssh-dev \
 		libldap-dev \
 		libxml2-dev \
 		libxslt1-dev \
@@ -71,10 +73,12 @@ RUN apt-get update \
 		&& pecl install mongodb-${PHP_MONGODB_VERSION} \
 		&& pecl install xdebug-${XDEBUG_VERSION} \
 		&& pecl install redis-${PHP_REDIS_VERSION} \
+		&& pecl install amqp \
 		&& docker-php-ext-enable \
 		apcu \
 		opcache \
 		mongodb \
+		amqp \
 		redis \
 		&& pecl clear-cache
 

@@ -18,6 +18,19 @@ services:
       # Uncomment the next line for dev
       - ./:/srv/pumukit
 
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+      - MESSENGER_TRANSPORT_DSN=amqp+bunny://admin:admin@rabbitmq:5672/%2f/messages
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
   proxy:
     restart: unless-stopped
     env_file:
@@ -54,4 +67,5 @@ services:
 
 volumes:
   db-data: {}
+  rabbitmq_data: {}
 

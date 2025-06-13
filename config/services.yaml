@@ -72,3 +72,7 @@ services:
       - method: setAnnotationReader
         arguments:
           - '@annotation_reader'
+
+  App\Command\:
+    resource: '../src/Command/'
+    tags: ['console.command']
