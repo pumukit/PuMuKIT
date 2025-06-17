@@ -12,7 +12,7 @@
                           data: $(this).serialize(),
                           success: function(response, textStatus, jqXHR){
                                     $('#list_groups').html(response);
-                                    var message = '{% trans %}Group successfully updated.{% endtrans %}';
+                                    var message = '{{ "Group successfully updated."|trans|e("js")}}';
                                     success(message);
                           },
                           error: function(jqXHR, textStatus, errorThrown){

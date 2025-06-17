@@ -12,7 +12,7 @@
                           data: $(this).serialize(),
                           success: function(response){
                                                       $('#materials_mms_{{ mmId }}').html(response);
-                                                      success('{% trans %}Material successfully updated.{% endtrans %}');
+                                                      success('{{ "Material successfully updated."|trans|e("js")}}');
                                                       }
                   });
                   return false;"

@@ -7,7 +7,7 @@
 
   var uploaded = '{{ uploaded }}';
 
-  if ('success' == uploaded) parent.success('{% trans %}New Material added.{% endtrans %}');
+  if ('success' == uploaded) parent.success('{{ "New Material added."|trans|e("js") }}');
   else parent.no_success('{{ message }}');
 </script>
 {% endif %}

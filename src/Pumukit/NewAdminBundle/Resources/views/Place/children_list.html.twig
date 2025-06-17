@@ -81,7 +81,7 @@
             url: route,
             type: 'GET',
             error: function() {
-                var message = "{% trans %}Error loading tag{% endtrans %}";
+                var message = '{{ "Error loading tag"|trans|e("js") }}';
                 no_success(message);
             },
             success: function(response) {
@@ -108,13 +108,13 @@
                 url: route,
                 type: 'GET',
                 error: function () {
-                    var message = "{% trans %}Error deleting tag{% endtrans %}";
+                    var message = '{{ "Error deleting tag"|trans|e("js") }}';
                     no_success(message);
                 },
                 success: function (response) {
                     $('.children-list').load(route2);
                     $('.parent-list').load("{{ path('pumukitnewadmin_places_parent') }}");
-                    var message = '{% trans %}Precinct successfully deleted.{% endtrans %}';
+                    var message = '{{ "Precinct successfully deleted."|trans|e("js") }}';
                     success(message);
                 }
             });
@@ -152,7 +152,7 @@
                     success: function (response) {
                         $('.parent-list').load("{{ path('pumukitnewadmin_places_parent') }}");
                         $('.children-list').load("{{ path('pumukitnewadmin_places_children', {'id': parent.id }) }}");
-                        var message = '{% trans %}Precinct successfully deleted.{% endtrans %}';
+                        var message = '{{ "Precinct successfully deleted."|trans|e("js") }}';
                         success(message);
                     }
                 });

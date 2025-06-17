@@ -41,12 +41,12 @@
             type: 'POST',
             data: $(this).serialize(),
             error: function (request, json) {
-                var message = '{% trans %}Multimedia Object saved ERROR{% endtrans %}';
+                var message = '{{ "Multimedia Object saved ERROR"|trans|e("js") }}';
                 no_success(message);
             },
             success: function (response) {
                 $('#links_mm_{{ mm.id }}').load('{{ path('pumukitnewadmin_mms_links', {'id': mm.id}) }}');
-                var message = '{% trans %}Multimedia Object saved OK{% endtrans %}';
+                var message = '{{ "Multimedia Object saved OK"|trans|e("js") }}';
                 success(message);
             }
         });

@@ -65,7 +65,7 @@
                 },
                 success: function (response) {
                     $('.parent-list').load("{{ path('pumukitnewadmin_places_parent') }}");
-                    var message = '{% trans %}Places successfully deleted.{% endtrans %}';
+                    var message = '{{ "Places successfully deleted."|trans|e("js") }}';
                     success(message);
                 }
             });

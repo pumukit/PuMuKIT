@@ -71,7 +71,7 @@
                         $('#list_events').load(mm);
 
                         $('#seriesSuggestValidate').val("");
-                        var message = '{% trans %}Event successfully updated.{% endtrans %}';
+                        var message = '{{ "Event successfully updated."|trans|e("js") }}';
                         success(message);
                     }
                 },

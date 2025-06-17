@@ -38,7 +38,7 @@
             data: $(this).serialize(),
             success: function(response, textStatus, jqXHR){
                 if (jqXHR.responseText.indexOf('modal-header') != -1){
-                    var message = '{% trans %}There was an error in creating the Tag.{% endtrans %}';
+                    var message = '{{ "There was an error in creating the Tag."|trans|e("js")}}';
                     no_success(message);
                 } else {
                     $('.parent-list').load("{{ path('pumukitnewadmin_places_parent') }}", function() {
@@ -47,7 +47,7 @@
                     if(parent_cod != 'PLACES') {
                         $('.children-list').load("{{ path('pumukitnewadmin_places_children', {'id': parent.id }) }}");
                     }
-                    var message = '{% trans %}Place successfully created.{% endtrans %}';
+                    var message = '{{ "Place successfully created."|trans|e("js")}}';
                     success(message);
                 }
             },
