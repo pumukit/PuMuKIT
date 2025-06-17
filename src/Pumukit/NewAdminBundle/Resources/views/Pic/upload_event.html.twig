@@ -6,11 +6,11 @@
   parent.$('#list_events').load('{{ path('pumukitnewadmin_event_list') }}', function(){
             parent.$('#preview_event').load('{{ path('pumukitnewadmin_event_show', {'id': event.id})|raw }}');
   });
-  parent.$('#list_events').html('{% trans %}Update the event to show the thumbnail{% endtrans %}.');
+  parent.$('#list_events').html('{{ "Update the event to show the thumbnail"|trans|e("js") }}.');
 
   var uploaded = '{{ uploaded }}';
 
-  if ('success' == uploaded) parent.success('{% trans %}New Thumbnail added.{% endtrans %}');
+  if ('success' == uploaded) parent.success('{{ "New Thumbnail added."|trans|e("js") }}');
   else parent.no_success('{{ message }}');
 </script>
 {% else %}

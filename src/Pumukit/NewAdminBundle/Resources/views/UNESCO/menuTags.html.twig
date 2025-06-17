@@ -98,7 +98,7 @@
             url: path,
             type: 'GET',
             error: function (request, json) {
-                var message = '{% trans %}Saving error{% endtrans %}';
+                var message = '{{ "Saving error"|trans|e("js") }}';
                 no_success(message);
             },
             success: function (response) {
@@ -112,7 +112,7 @@
                     $('.success').removeClass('success');
                     $('#tr_' + mmoid).addClass('success');
 
-                    var message = '{% trans %}Saved{% endtrans %}';
+                    var message = '{{ "Saved"|trans|e("js") }}';
                     success(message);
                 }
             }
