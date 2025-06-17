@@ -44,9 +44,9 @@ services:
     image: rabbitmq:management
     container_name: rabbitmqAdd commentMore actions
     environment:
-      - RABBITMQ_DEFAULT_USER=admin
-      - RABBITMQ_DEFAULT_PASS=admin
-      - MESSENGER_TRANSPORT_DSN=amqp+bunny://admin:admin@rabbitmq:5672/%2f/messages
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+      - MESSENGER_TRANSPORT_DSN=${MESSENGER_TRANSPORT_DSN}
     ports:
       - "5672:5672"
       - "15672:15672"
