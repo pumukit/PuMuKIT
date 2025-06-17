@@ -40,6 +40,19 @@ services:
       - "80:80"
       - "443:443"
 
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmqAdd commentMore actions
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+      - MESSENGER_TRANSPORT_DSN=amqp+bunny://admin:admin@rabbitmq:5672/%2f/messages
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
   db:
     image: mongo:5.0
     restart: unless-stopped
@@ -54,4 +67,5 @@ services:
 
 volumes:
   db-data: {}
+  rabbitmq_data: {}
 
