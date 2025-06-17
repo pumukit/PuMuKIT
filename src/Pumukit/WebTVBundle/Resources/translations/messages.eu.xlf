@@ -45,9 +45,17 @@
         <source>Videos you may also be interested in</source>
         <target state="translated">Interesa dakizuke</target>
       </trans-unit>
+      <trans-unit id="6njl45RCj" resname="Content you may also be interested in">
+        <source>Content you may also be interested in</source>
+        <target state="needs-translation">Content you may also be interested in</target>
+      </trans-unit>
       <trans-unit id="maiyxjk" resname="Videos from same Series">
         <source>Videos from same Series</source>
         <target state="translated">Serie bereko bideoak</target>
+      </trans-unit>
+      <trans-unit id="maiydfgxjk" resname="Content from same Series">
+        <source>Content from same Series</source>
+        <target state="needs-translation">Content from same Series</target>
       </trans-unit>
       <trans-unit id="V6sZ0yf" resname="Record Date">
         <source>Record Date</source>
@@ -81,6 +89,10 @@
         <source>Videos</source>
         <target state="translated">Bideoak</target>
       </trans-unit>
+      <trans-unit id="yaljltrGP" resname="Resources">
+        <source>Resources</source>
+        <target state="needs-translation">Resources</target>
+      </trans-unit>
       <trans-unit id="IehJKTi" resname="Hours">
         <source>Hours</source>
         <target state="translated">Horas</target>
@@ -88,6 +100,10 @@
       <trans-unit id="wTlux3Y" resname="There are no videos with these specifications">
         <source>There are no videos with these specifications</source>
         <target state="translated">Ez da horrelako bideorik aurkitu</target>
+      </trans-unit>
+      <trans-unit id="wT565x3Y" resname="There are no content with these specifications">
+        <source>There are no content with these specifications</source>
+        <target state="needs-translation">There are no content with these specifications</target>
       </trans-unit>
       <trans-unit id="eNInDAJ" resname="Date of holding">
         <source>Date of holding</source>
@@ -152,6 +168,18 @@
       <trans-unit id="1aCgwUQ" resname="Video/Audio">
         <source>Video/Audio</source>
         <target state="translated">Bideo/Audio</target>
+      </trans-unit>
+      <trans-unit id="1aCg45wUQ" resname="Image">
+        <source>Image</source>
+        <target state="needs-translation">Image</target>
+      </trans-unit>
+      <trans-unit id="1aCgwU14Q" resname="Document">
+        <source>Document</source>
+        <target state="needs-translation">Document</target>
+      </trans-unit>
+      <trans-unit id="1aC554gwUQ" resname="External multimedia object">
+        <source>External multimedia object</source>
+        <target state="needs-translation">External multimedia object</target>
       </trans-unit>
       <trans-unit id="gWlpMQG" resname="Start date">
         <source>Start date</source>
@@ -257,6 +285,10 @@
         <source>Share this video</source>
         <target state="translated">Bideo hau partekatu</target>
       </trans-unit>
+      <trans-unit id="fl18765mLs" resname="Share this">
+        <source>Share this</source>
+        <target state="needs-translation">Share this</target>
+      </trans-unit>
       <trans-unit id="c0.XezY" resname="URL:">
         <source>URL:</source>
         <target state="needs-translation">URL:</target>
@@ -272,6 +304,10 @@
       <trans-unit id="8NXUTbx" resname="Private video">
         <source>Private video</source>
         <target state="translated">Bideo pribatua</target>
+      </trans-unit>
+      <trans-unit id="8NXU546Tbx" resname="Private content">
+        <source>Private content</source>
+        <target state="needs-translation">Private content</target>
       </trans-unit>
       <trans-unit id="zduNAuo" resname="{0}0 Videos|{1}%count% Video|]1,Inf[%count% Videos">
         <source>{0}0 Videos|{1}%count% Video|]1,Inf[%count% Videos</source>
@@ -292,6 +328,10 @@
       <trans-unit id="BcxKeUd" resname="This video is private with restricted access">
         <source>This video is private with restricted access</source>
         <target state="translated">Bideo hau pribatua da saio mugatuarekin</target>
+      </trans-unit>
+      <trans-unit id="BcdfdxKeUd" resname="This content is private with restricted access">
+        <source>This content is private with restricted access</source>
+        <target state="needs-translation">This content is private with restricted access</target>
       </trans-unit>
       <trans-unit id="Qr4xNv4" resname="Log in is required to watch it">
         <source>Log in is required to watch it</source>
