@@ -42,7 +42,6 @@ services:
 
   rabbitmq:
     image: rabbitmq:management
-    container_name: rabbitmqAdd commentMore actions
     environment:
       - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
       - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
