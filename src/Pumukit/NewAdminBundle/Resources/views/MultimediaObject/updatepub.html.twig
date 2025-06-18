@@ -6,12 +6,12 @@
                   url: '{{ path('pumukitnewadmin_mms_update_pub', {'id': mm.id}) }}',
                   type: 'POST',
                   data: $(this).serialize(),
-                  error: function(request, json){var message = '{% trans %}Multimedia Object saved ERROR{% endtrans %}'; no_success(message);},
+                  error: function(request, json){var message = '{{ "Multimedia Object saved ERROR"|trans|e("js") }}'; no_success(message);},
                   success: function(response){
                   $('#list_mms').html(response);
                   $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}');
                   $('#links_mm_{{ mm.id }}').load('{{ path('pumukitnewadmin_mms_links', {'id': mm.id}) }}');
-                  var message = '{% trans %}Multimedia Object saved OK{% endtrans %}';
+                  var message = '{{ "Multimedia Object saved OK"|trans|e("js") }}';
                   success(message);
                   }
                   });

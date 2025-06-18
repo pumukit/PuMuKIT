@@ -123,7 +123,7 @@
                     count = parseInt(count) - 1;
                     $('#count_tag_' + cod).text(count);
                     $('#preview_mms').load(preview);
-                    var message = '{% trans %}Saved{% endtrans %}';
+                    var message = '{{ "Saved"|trans|e("js") }}';
                     success(message);
                 }
             }
@@ -139,7 +139,7 @@
             url: path,
             type: 'GET',
             error: function (request, json) {
-                var message = '{% trans %}Saving error{% endtrans %}';
+                var message = '{{ "Saving error"|trans|e("js") }}';
                 no_success(message);
             },
             success: function (response) {
@@ -155,7 +155,7 @@
                 count = $('#count_tag_' + cod).text();
                 count = parseInt(count) + 1;
                 $('#count_tag_' + cod).text(count);
-                var message = '{% trans %}Saved{% endtrans %}';
+                var message = '{{ "Saved"|trans|e("js") }}';
                 success(message);
             }
         });

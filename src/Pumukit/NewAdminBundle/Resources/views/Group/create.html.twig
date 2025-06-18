@@ -14,7 +14,7 @@
                           data: $(this).serialize(),
                           success: function(response, textStatus, jqXHR){
                                     $('#list_groups').html(response);
-                                    var message = '{% trans %}Group successfully created.{% endtrans %}';
+                                    var message = '{{ "Group successfully created."|trans|e("js")}}';
                                     success(message);
                           },
                           error: function(jqXHR, textStatus, errorThrown){

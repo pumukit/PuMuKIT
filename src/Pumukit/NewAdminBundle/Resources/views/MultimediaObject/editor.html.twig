@@ -87,12 +87,12 @@
    {paellalayout : layout})
    .done(function() {
      paella.events.trigger(paella.events.setProfile, {profileName: layout});
-     var message = '{% trans %}Multimedia Object saved OK{% endtrans %}';
+     var message = '{{ "Multimedia Object saved OK"|trans|e("js") }}';
      $("#div_messages_span_info").attr("data-content", message);
      $("#div_messages_span_info").snackbar("show");
    })
    .fail(function() {
-     var message = '{% trans %}Multimedia Object saved ERROR{% endtrans %}'
+     var message = '{{ "Multimedia Object saved ERROR"|trans|e("js") }}'
      $("#div_messages_span_error").attr("data-content", message);
      $("#div_messages_span_error").snackbar("show");
    })

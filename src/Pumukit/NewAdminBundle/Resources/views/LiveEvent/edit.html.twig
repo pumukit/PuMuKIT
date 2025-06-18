@@ -34,7 +34,7 @@
         if (window.confirm('{% trans %}Are you sure you want to delete this thumbnail?{% endtrans %}')) {
             var url = '{{ path('pumukitnewadmin_seriespic_delete', {'id': '___id___'})|raw }}';
             $('#series').load(url.replace('___id___', id), {'_method': 'DELETE'}, function () {
-                success('{% trans %}Thumbnail removed.{% endtrans %}');
+                success('{{ "Thumbnail removed."|trans|e("js") }}');
             });
         }
     }

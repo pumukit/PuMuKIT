@@ -101,12 +101,12 @@
             method: 'POST',
             data: $('#sync_metadata_mmo').serialize(),
             success: function (response, textStatus, jqXHR) {
-                var message = '{% trans %}There was an error sync up metadata.{% endtrans %}';
+                var message = '{{ "There was an error sync up metadata."|trans|e("js") }}';
                 if (jqXHR.responseText.indexOf('modal-header') !== -1) {
                     no_success(message);
                 } else {
                     $('#list_mms').load(url_list);
-                    message = '{% trans %}Sync up metadata was successfully.{% endtrans %}';
+                    message = '{{ "Sync up metadata was successfully."|trans|e("js") }}';
                     success(message);
                 }
             },
