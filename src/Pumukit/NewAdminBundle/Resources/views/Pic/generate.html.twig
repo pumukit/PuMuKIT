@@ -220,11 +220,15 @@
             } else {
                 var size_text = Math.ceil(size / 1024) + " KB";
             }
-            pic_size.innerHTML = size_text;
+            pic_size.innerHTML = `${canvas_draw.width}x${canvas_draw.height} - ${size_text}`;
         }
 
         function take_pic() {
-            ctx_draw.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+            ctx_draw.drawImage(
+                video,
+                0, 0, video.videoWidth, video.videoHeight,
+                0, 0, canvas_draw.width, canvas_draw.height
+            );
             var new_img = new Image();
             new_img.classList.add("new_img");
             new_img.classList.add("btn");
