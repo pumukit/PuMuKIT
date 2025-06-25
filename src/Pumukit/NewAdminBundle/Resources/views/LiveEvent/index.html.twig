@@ -74,7 +74,7 @@
                             var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
                             $('#list_events').load(mm);
 
-                            var message = '{% trans %}Event{% endtrans %} ' + '{% trans %}successfully deleted.{% endtrans %}';
+                            var message = '{{ "Event"|trans|e("js") }} ' + '{{ "successfully deleted."|trans|e("js") }}';
                             success(message);
 
                             $("#options_events").val('default');
@@ -98,7 +98,7 @@
                         no_success(response.error);
                     }else{
                         $('#list_events').html(response);
-                        var message = '{% trans %}Live event successfully created.{% endtrans %}';
+                        var message = '{{ "Event"|trans|e("js") }} ' + '{{ "successfully deleted."|trans|e("js") }}';
                         success(message);
                     }
                 },

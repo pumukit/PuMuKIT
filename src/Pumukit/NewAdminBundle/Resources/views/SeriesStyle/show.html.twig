@@ -26,15 +26,15 @@
             type: 'POST',
             data: $(this).serialize(),
             error: function () {
-                var message = '{% trans %}Style edited ERROR{% endtrans %}';
+                var message = '{{ "Style edited ERROR"|trans|e("js") }}';
                 no_success(message);
             },
             success: function (data) {
                 if(data.error) {
-                    var message = '{% trans %}Style edited ERROR{% endtrans %}';
+                    var message = '{{ "Style edited ERROR"|trans|e("js") }}';
                     no_success(message);
                 } else {
-                    var message = '{% trans %}Style created OK{% endtrans %}';
+                    var message = '{{" Style created OK"|trans|e("js") }}';
                     success(message);
                 }
 

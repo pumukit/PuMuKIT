@@ -4,11 +4,11 @@
                   url: '{{ path('pumukitnewadmin_playlist_update', {'id': series.id}) }}',
                   type: 'POST',
                   data: $(this).serialize(),
-                  error: function(request, json){var message = '{% trans %}Series saved ERROR{% endtrans %}'; no_success(message);},
+                  error: function(request, json){var message = '{{ "Series saved ERROR"|trans|e("js") }}'; no_success(message);},
                   success: function(response){
                   $('#list_playlists').html(response);
                   $('#preview_playlist').load('{{ path('pumukitnewadmin_playlist_show', {'id': series.id}) }}');
-                  var message = '{% trans %}Series saved OK{% endtrans %}';
+                  var message = '{{ "Series saved OK"|trans|e("js") }}';
                   success(message);
                   }
                   });

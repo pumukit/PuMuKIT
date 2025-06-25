@@ -71,7 +71,7 @@
             },
             success: function(response){
                 $('#tracks_mms_{{ mm.id }}').html(response);
-                var message = '{% trans %}Track successfully updated.{% endtrans %}';
+                var message = '{{ "Track successfully updated."|trans|e("js") }}';
                 success(message);
             }
         });
