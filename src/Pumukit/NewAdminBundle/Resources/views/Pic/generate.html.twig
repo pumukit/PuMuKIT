@@ -224,11 +224,34 @@
         }
 
         function take_pic() {
+            ctx_draw.clearRect(0, 0, canvas_draw.width, canvas_draw.height);
+
+            ctx_draw.fillStyle = "black";
+            ctx_draw.fillRect(0, 0, canvas_draw.width, canvas_draw.height);
+
+            var videoAspect = video.videoWidth / video.videoHeight;
+            var canvasAspect = canvas_draw.width / canvas_draw.height;
+
+            let renderWidth, renderHeight, offsetX, offsetY;
+
+            if (videoAspect > canvasAspect) {
+                renderWidth = canvas_draw.width;
+                renderHeight = canvas_draw.width / videoAspect;
+                offsetX = 0;
+                offsetY = (canvas_draw.height - renderHeight) / 2;
+            } else {
+                renderHeight = canvas_draw.height;
+                renderWidth = canvas_draw.height * videoAspect;
+                offsetY = 0;
+                offsetX = (canvas_draw.width - renderWidth) / 2;
+            }
+
             ctx_draw.drawImage(
                 video,
                 0, 0, video.videoWidth, video.videoHeight,
-                0, 0, canvas_draw.width, canvas_draw.height
+                offsetX, offsetY, renderWidth, renderHeight
             );
+
             var new_img = new Image();
             new_img.classList.add("new_img");
             new_img.classList.add("btn");
