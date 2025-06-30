@@ -52,7 +52,7 @@
             <div class="col-md-5 text-center">
                 <span id="pic-size" class="label label-default" style="position: absolute;"></span>
                 <!-- PREVIEW -->
-                <img class="image" style="max-width: 100%; max-height:100%" id="gen_pic_img" src="{{ asset('/bundles/pumukitnewadmin/images/admin/arrows/redarrow.png') }}">
+                <img class="image" style="width: 100%; height: auto; aspect-ratio: {{ thumbnail_width }}/{{ thumbnail_height }}; object-fit: contain;" id="gen_pic_img" src="{{ asset('/bundles/pumukitnewadmin/images/admin/arrows/redarrow.png') }}">
             </div>
 
         </div>
