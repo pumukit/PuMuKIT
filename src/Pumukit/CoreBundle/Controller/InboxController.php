@@ -15,9 +15,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Security("is_granted('ROLE_UPLOAD_INBOX')")
- */
 class InboxController extends AbstractController
 {
     private $inboxService;
@@ -31,6 +28,8 @@ class InboxController extends AbstractController
 
     /**
      * @Route("/inbox", name="inbox")
+     *
+     * @Security("is_granted('ROLE_UPLOAD_INBOX')")
      *
      * @Template("@PumukitCore/Upload/uppy_folder.html.twig")
      */
