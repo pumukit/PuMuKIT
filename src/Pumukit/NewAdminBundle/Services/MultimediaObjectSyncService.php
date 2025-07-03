@@ -7,6 +7,7 @@ namespace Pumukit\NewAdminBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Tag;
 
@@ -211,9 +212,17 @@ class MultimediaObjectSyncService
             }
         }
 
-        foreach ($role->getPeople() as $person) {
-            $multimediaObject->addPersonWithRole($person, $roleOwner);
+        $ownerUserIds = [];
+        foreach ($role->getPeople() as $embeddedPerson) {
+            $multimediaObject->addPersonWithRole($embeddedPerson, $roleOwner);
+            $person = $this->dm->getRepository(Person::class)->findOneBy(['_id' => $embeddedPerson->getId()]);
+
+            if ($person->getUser()) {
+                $ownerUserIds[] = $person->getUser()->getId();
+            }
         }
+
+        $multimediaObject->setProperty('owners', $ownerUserIds);
     }
 
     /**
