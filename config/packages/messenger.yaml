@@ -1,22 +1,38 @@
 framework:
-    messenger:
-        # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
-        # failure_transport: failed
+  messenger:
+    transports:
+      pumukit.youtube.quota.waiting:
+        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+        options:
+          exchange:
+            name: pumukit.exchange
+            type: direct
+          queues:
+            pumukit.youtube.quota.waiting:
+              binding_keys: ['#']
 
-        transports:
-            # https://symfony.com/doc/current/messenger.html#transport-configuration
-            # async: '%env(MESSENGER_TRANSPORT_DSN)%'
-            # failed: 'doctrine://default?queue_name=failed'
-            # sync: 'sync://'
+      pumukit.youtube.events:
+        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+        options:
+          exchange:
+            name: pumukit.exchange
+            type: direct
+          queues:
+            pumukit.youtube.events:
+              binding_keys: ['#']
 
-        routing:
-            # Route your messages to the transports
-            # 'App\Message\YourMessage': async
+      pumukit.youtube.notifications:
+        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+        options:
+          exchange:
+            name: pumukit.exchange
+            type: direct
+          queues:
+            pumukit.youtube.notifications:
+              binding_keys: ['#']
 
-# when@test:
-#    framework:
-#        messenger:
-#            transports:
-#                # replace with your transport name here (e.g., my_transport: 'in-memory://')
-#                # For more Messenger testing tools, see https://github.com/zenstruck/messenger-test
-#                async: 'in-memory://'
+    routing:
+      App\Message\WaitingMessage: pumukit.youtube.quota.waiting
+      App\Message\EventMessage: pumukit.youtube.events
+      App\Message\NotificationMessage: pumukit.youtube.notifications
+
