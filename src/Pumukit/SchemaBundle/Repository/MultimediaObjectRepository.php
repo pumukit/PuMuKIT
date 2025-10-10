@@ -988,7 +988,7 @@ class MultimediaObjectRepository extends DocumentRepository
         return $this->createStandardQueryBuilder()->count()->getQuery()->execute();
     }
 
-    public function countDuration(): int
+    public function countDuration(): float
     {
         $aggregation = $this->createAggregationStandardQueryBuilder()
             ->group()

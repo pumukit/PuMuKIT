@@ -162,19 +162,19 @@ class SearchService
         }
 
         if ('-5' === $durationFound) {
-            $queryBuilder->field('tracks.duration')->lte(300);
+            $queryBuilder->field('duration')->lte(300);
         }
         if ('-10' === $durationFound) {
-            $queryBuilder->field('tracks.duration')->lte(600);
+            $queryBuilder->field('duration')->lte(600);
         }
         if ('-30' === $durationFound) {
-            $queryBuilder->field('tracks.duration')->lte(1800);
+            $queryBuilder->field('duration')->lte(1800);
         }
         if ('-60' === $durationFound) {
-            $queryBuilder->field('tracks.duration')->lte(3600);
+            $queryBuilder->field('duration')->lte(3600);
         }
         if ('+60' === $durationFound) {
-            $queryBuilder->field('tracks.duration')->gt(3600);
+            $queryBuilder->field('duration')->gt(3600);
         }
 
         return $queryBuilder;

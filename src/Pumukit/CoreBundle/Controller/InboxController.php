@@ -8,6 +8,7 @@ use Pumukit\CoreBundle\Services\InboxService;
 use Pumukit\CoreBundle\Services\UploadDispatcherService;
 use Pumukit\CoreBundle\Utils\FileSystemUtils;
 use Pumukit\CoreBundle\Utils\FinderUtils;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -27,6 +28,8 @@ class InboxController extends AbstractController
 
     /**
      * @Route("/inbox", name="inbox")
+     *
+     * @Security("is_granted('ROLE_UPLOAD_INBOX')")
      *
      * @Template("@PumukitCore/Upload/uppy_folder.html.twig")
      */

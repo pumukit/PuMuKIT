@@ -16,7 +16,7 @@
                     data: $(this).serialize(),
                     success: function(response, textStatus, jqXHR){
                         $('#list_people').html(response);
-                        var message = '{% trans %}Person successfully created.{% endtrans %}';
+                        var message = '{{ "Person successfully created."|trans|e("js")}}';
                         success(message);
                 },
                     error: function(jqXHR, textStatus, errorThrown){
