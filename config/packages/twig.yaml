@@ -2,6 +2,8 @@ twig:
   debug:            "%kernel.debug%"
   strict_variables: "%kernel.debug%"
   exception_controller: null
+  paths:
+    '%kernel.project_dir%/src/Shared': Shared
   globals:
     pumukit_info:  "%pumukit.info%"
     locales:       "%pumukit.locales%"

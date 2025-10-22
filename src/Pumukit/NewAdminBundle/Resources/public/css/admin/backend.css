@@ -128,3 +128,8 @@ body.layout-body {
     transform: rotate(180deg);
     color: #fff;
 }
+
+
+.border-left-success {
+    border-left: 3px solid #28a745 !important;
+}

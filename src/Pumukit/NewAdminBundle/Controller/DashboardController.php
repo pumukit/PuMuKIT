@@ -6,7 +6,11 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\EncoderBundle\Services\ProfileService;
+use Pumukit\SchemaBundle\Document\Live;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Repository\MultimediaObjectRepository;
 use Pumukit\SchemaBundle\Services\StatsService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -34,7 +38,12 @@ class DashboardController extends AbstractController implements NewAdminControll
     /** @var RouterInterface */
     private $router;
 
-    public function __construct(DocumentManager $documentManager, StatsService $statsService, ProfileService $profileService, RouterInterface $router)
+    public function __construct(
+        DocumentManager $documentManager,
+        StatsService $statsService,
+        ProfileService $profileService,
+        RouterInterface $router,
+    )
     {
         $this->documentManager = $documentManager;
         $this->statsService = $statsService;
@@ -52,51 +61,43 @@ class DashboardController extends AbstractController implements NewAdminControll
     {
         $data = ['stats' => false];
 
-            $groupBy = $request->get('group_by', 'year');
+        $groupBy = $request->get('group_by', 'year');
 
-            $stats = $this->statsService->getGlobalStats($groupBy);
+        $stats = $this->statsService->getGlobalStats($groupBy);
 
-            $data['stats'] = $stats;
+        $data['stats'] = $stats;
 
-            $storage = $this->profileService->getDirOutInfo();
-            $data['storage'] = $storage;
+        $storage = $this->profileService->getDirOutInfo();
+        $data['storage'] = $storage;
 
-            $seriesRepo = $this->documentManager->getRepository(Series::class);
+        $seriesRepo = $this->documentManager->getRepository(Series::class);
 
-            $data['num_series'] = $seriesRepo->count();
-            $data['num_mm'] = array_sum(array_map(function ($e) {
-                return $e['num'];
-            }, $stats));
-            $data['duration'] = array_sum(array_map(function ($e) {
-                return $e['duration'];
-            }, $stats));
-            $data['size'] = array_sum(array_map(function ($e) {
-                return $e['size'];
-            }, $stats));
+        $data['num_series'] = $seriesRepo->count();
+        $data['num_mm'] = array_sum(array_map(function ($e) {
+            return $e['num'];
+        }, $stats));
+        $data['duration'] = array_sum(array_map(function ($e) {
+            return $e['duration'];
+        }, $stats));
+        $data['size'] = array_sum(array_map(function ($e) {
+            return $e['size'];
+        }, $stats));
+
+        $data['num_users'] = count($this->documentManager->getRepository(User::class)->findAll());
+
+        $data['series'] = count($this->documentManager->getRepository(Series::class)->findAll());
+
+        $data['live'] = count($this->documentManager->getRepository(MultimediaObject::class)->findBy(['type' => MultimediaObject::TYPE_LIVE]));
+        $data['channels'] = count($this->documentManager->getRepository(Live::class)->findAll());
 
 
-        return $data;
-    }
+        $data['multimedia_object_audio'] = count($this->documentManager->getRepository(MultimediaObject::class)->findBy(['type' => MultimediaObject::TYPE_AUDIO]));
+        $data['multimedia_object_document'] = count($this->documentManager->getRepository(MultimediaObject::class)->findBy(['type' => MultimediaObject::TYPE_DOCUMENT]));
+        $data['multimedia_object_image'] = count($this->documentManager->getRepository(MultimediaObject::class)->findBy(['type' => MultimediaObject::TYPE_IMAGE]));
+        $data['multimedia_object_external'] = count($this->documentManager->getRepository(MultimediaObject::class)->findBy(['type' => MultimediaObject::TYPE_EXTERNAL]));
+        $data['multimedia_object_video'] = count($this->documentManager->getRepository(MultimediaObject::class)->findBy(['type' => MultimediaObject::TYPE_VIDEO, 'status' => ['$ne' => MultimediaObject::STATUS_PROTOTYPE]]));
+        $data['multimedia_object'] = $data['multimedia_object_audio'] + $data['multimedia_object_document'] + $data['multimedia_object_image'] + $data['multimedia_object_external'] +$data['multimedia_object_video'];
 
-    /**
-     * @Route("/dashboard/series/timeline.xml")
-     */
-    public function seriesTimelineAction(Request $request)
-    {
-        $repo = $this->documentManager->getRepository(Series::class);
-        $series = $repo->findAll();
-
-        $XML = new \SimpleXMLElement('<data></data>');
-        $XML->addAttribute('wiki-url', $request->getUri());
-        $XML->addAttribute('wiki-section', 'Pumukit time-line Feed');
-
-        foreach ($series as $s) {
-            $XMLSeries = $XML->addChild('event', htmlspecialchars($s->getTitle()));
-            $XMLSeries->addAttribute('start', $s->getPublicDate()->format('M j Y H:i:s \\G\\M\\TP'));
-            $XMLSeries->addAttribute('title', $s->getTitle());
-            $XMLSeries->addAttribute('link', $this->router->generate('pumukit_webtv_series_index', ['id' => $s->getId()], UrlGeneratorInterface::ABSOLUTE_URL));
-        }
-
-        return new Response($XML->asXML(), 200, ['Content-Type' => 'text/xml']);
+        return ['data' => $data];
     }
 }
