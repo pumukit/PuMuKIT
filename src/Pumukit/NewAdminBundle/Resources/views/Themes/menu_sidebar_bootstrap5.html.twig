@@ -1,0 +1,44 @@
+{% extends 'knp_menu_base.html.twig' %}
+
+{% block root %}
+    {{ block('list') }}
+{% endblock %}
+
+{% block list %}
+    {% import _self as knp_menu %}
+    <ul class="list-unstyled mb-0">
+        {% for item in item.children %}
+            {{ block('item') }}
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+{% block item %}
+    {% if item.displayed %}
+        {% set hasChildren = item.hasChildren and options.depth is not same as(0) %}
+        {% set itemId = 'submenu-' ~ item.name|replace({' ':'-'}) %}
+
+        <li class="sidebar-item {% if hasChildren %}mb-1{% else %}mb-2 mt-2{% endif %}">
+            {% if hasChildren %}
+                <a href="#" class="sidebar-link d-flex justify-content-between align-items-center"
+                   data-bs-toggle="collapse" data-bs-target="#{{ itemId }}" aria-expanded="false" aria-controls="{{ itemId }}">
+                    {{ item.label|trans|upper }}
+                    <i class="fas fa-chevron-down small"></i>
+                </a>
+                <ul class="collapse list-unstyled ps-3" id="{{ itemId }}">
+                    {% for child in item.children %}
+                        <li>
+                            <a href="{{ child.uri }}" class="sidebar-sublink d-block py-1">
+                                {{ child.label|trans|upper }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <a href="{{ item.uri }}" class="sidebar-link d-block py-1">
+                    {{ item.label|trans|upper }}
+                </a>
+            {% endif %}
+        </li>
+    {% endif %}
+{% endblock %}

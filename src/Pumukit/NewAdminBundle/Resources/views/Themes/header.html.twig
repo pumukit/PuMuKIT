@@ -1,0 +1,45 @@
+<header class="navbar navbar-light sticky-top flex-md-nowrap p-0 shadow" style="background-color: #FFF;">
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 text-center" href="{{ path('pumukit_webtv_index_index') }}">
+        <img src="{{ asset('/bundles/pumukitnewadmin/images/logo2.png') }}" alt="{{ 'Logo'|trans }}" class="img-fluid" style="max-height: 4em;"/>
+    </a>
+
+    <button class="navbar-toggler d-md-none ms-2" type="button"
+            data-bs-toggle="collapse" data-bs-target="#sidebarMenu"
+            aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <ul class="list-group list-group-horizontal pumukit-notification-list">
+        <li class="list-group-item" style="border: none;">
+            <a class="nav-link px-2" href="#">
+                <i class="fa-solid fa-bell"></i>
+            </a>
+        </li>
+        <li class="list-group-item" style="border: none;">
+            <a class="nav-link px-2" href="#">
+                <i class="fa-solid fa-user"></i>
+            </a>
+        </li>
+        <li class="list-group-item" style="border: none;">
+            <a class="nav-link dropdown-toggle d-flex align-items-center px-2" href="#" id="userDropdown"
+               role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="mdi-image-timer-auto me-1" style="font-size:18px;"></i>
+                {{ app.user.username }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                <li class="dropdown-header">
+                    {% trans %}Login since{% endtrans %}: {{ app.user.lastLogin|format_datetime('medium','medium',locale=app.request.getLocale()) }}
+                </li>
+                <li class="dropdown-header">{{ app.user.email }}</li>
+                {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\WidgetController::languageselectAction')) }}
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <a class="dropdown-item text-danger" href="{{ path('pumukit_logout') }}">
+                        {% trans %}Logout{% endtrans %}
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+</header>

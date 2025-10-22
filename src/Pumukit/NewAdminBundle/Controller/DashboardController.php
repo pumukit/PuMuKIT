@@ -51,7 +51,7 @@ class DashboardController extends AbstractController implements NewAdminControll
     public function indexAction(Request $request)
     {
         $data = ['stats' => false];
-        if ($request->get('show_stats')) {
+
             $groupBy = $request->get('group_by', 'year');
 
             $stats = $this->statsService->getGlobalStats($groupBy);
@@ -73,7 +73,7 @@ class DashboardController extends AbstractController implements NewAdminControll
             $data['size'] = array_sum(array_map(function ($e) {
                 return $e['size'];
             }, $stats));
-        }
+
 
         return $data;
     }
