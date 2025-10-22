@@ -1,5 +1,11 @@
-<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-    <div class="position-sticky">
+<nav id="sidebar" class="sidebar d-flex flex-column text-white">
+    <div class="sidebar-header py-3 border-bottom border-secondary">
+        <h4 class="d-flex justify-content-center align-items-center gap-2 m-0">
+            <img src="{{ asset('bundles/pumukitnewadmin/images/icon.png') }}" alt="Logo" height="30">
+            PuMuKIT
+        </h4>
+    </div>
+    <div class="sidebar-body flex-grow-1 overflow-auto">
         {{ knp_menu_render('PumukitNewAdminBundle:Builder:mainMenu', {
             'currentClass': 'active',
             'template': '@PumukitNewAdmin/Themes/menu_sidebar_bootstrap5.html.twig'
