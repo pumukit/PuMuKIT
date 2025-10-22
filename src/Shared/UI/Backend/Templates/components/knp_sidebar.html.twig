@@ -14,32 +14,28 @@
 {% endblock %}
 
 {% block item %}
-        {% set hasChildren = item.hasChildren and options.depth is not same as(0) %}
-        {% set itemId = 'submenu-' ~ item.name|replace({' ':'-'}) %}
-        <li class="nav-item">
-            {% if hasChildren %}
-                <button class="btn-toggle btn-pumukit-menu w-100 text-start collapsed"
-                        data-bs-toggle="collapse" data-bs-target="#{{ itemId }}"
-                        aria-expanded="false">
-                    <i class="fa-solid fa-folder me-2"></i>
-                    {{ item.label|trans|upper }}
-                </button>
+    {% set hasChildren = item.hasChildren and options.depth is not same as(0) %}
+    <li class="nav-item mb-2">
+        {% if hasChildren %}
+            <div class="nav-link py-2 nav-link-pumukit-group">
+                {{ item.label|trans }}
+            </div>
 
-                <div class="collapse submenu ps-3 show" id="{{ itemId }}">
-                    <ul class="mb-0 list-group list-group-flush list-unstyled">
-                        {% for child in item.children %}
-                            <li class="list-group-item list-group-item-pumukit">
-                                <a href="{{ child.uri }}" class="link-light d-block py-1 text-decoration-none">
-                                    {{ child.label|trans|upper }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% else %}
-                <a href="{{ item.uri }}" class="nav-link nav-link-pumukit-menu text-white px-3 py-2 d-flex align-items-center">
-                    <i class="fa-solid fa-folder me-2"></i>{{ item.label|trans|upper }}
-                </a>
-            {% endif %}
-        </li>
+            <ul class="list-group list-group-flush ps-3 mt-1 mb-2">
+                {% for child in item.children %}
+                    <li class="list-group-item list-group-item-pumukit">
+                        <a href="{{ child.uri }}" class="link-light d-block py-1 text-decoration-none d-flex align-items-center">
+                            <i class="fa-solid fa-circle me-2" style="font-size: 0.6rem;"></i>
+                            {{ child.label|trans|capitalize }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <a href="{{ item.uri }}" class="nav-link nav-link-pumukit-menu d-flex align-items-center px-3 py-2 mb-1">
+                <i class="fa-solid fa-circle me-2" style="font-size: 0.6rem;"></i>
+                {{ item.label|trans|capitalize }}
+            </a>
+        {% endif %}
+    </li>
 {% endblock %}

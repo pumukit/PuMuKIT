@@ -23,10 +23,10 @@ class Builder implements ContainerAwareInterface
         $this->authorizationChecker = $this->container->get('security.authorization_checker');
 
         $this->addDashboardMenu($menu);
+        $this->addJobMenu($menu);
         $this->addMediaManagerMenu($menu);
         $this->addStatsMenu($menu);
         $this->addLiveMenu($menu);
-        $this->addJobMenu($menu);
         $this->addTablesMenu($menu);
         $this->addManagementMenu($menu);
         $this->addToolsMenu($menu);

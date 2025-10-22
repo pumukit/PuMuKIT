@@ -7,7 +7,6 @@ body.layout-body {
     min-height: 100vh;
 }
 
-/* ===== Sidebar ===== */
 .sidebar {
     width: 260px;
     background-color: #2b2f36;
@@ -39,7 +38,7 @@ body.layout-body {
     transition: all 0.2s;
 }
 
-.sidebar-menu .nav-link:hover, .btn-toggle:hover {
+.list-group-item-pumukit:hover, .nav-link-pumukit-menu:hover {
     color: #fff !important;
     background-color: rgba(255, 255, 255, 0.08) !important;
 }
@@ -66,15 +65,6 @@ body.layout-body {
     background: transparent !important;
 }
 
-.submenu a {
-    font-size: 0.85rem;
-    color: #ccc;
-    padding-left: 1.25rem;
-}
-
-.submenu a:hover {
-    color: #fff;
-}
 
 @media (max-width: 991.98px) {
     .sidebar {
@@ -132,4 +122,28 @@ body.layout-body {
 
 .border-left-success {
     border-left: 3px solid #28a745 !important;
+}
+
+.nav-link-pumukit-group {
+    cursor: default;
+    color: #EAEAEA !important;
+    background: transparent !important;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    padding: 1em 1em !important;
+    font-style: italic;
+}
+
+.submenu a {
+    font-size: 0.85rem;
+    color: #ccc;
+    padding-left: 1.25rem;
+    transition: color 0.2s, background-color 0.2s;
+}
+
+.submenu a:hover {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-radius: 3px;
 }
