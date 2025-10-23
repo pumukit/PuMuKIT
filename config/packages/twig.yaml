@@ -4,6 +4,7 @@ twig:
   exception_controller: null
   paths:
     '%kernel.project_dir%/src/Shared': Shared
+    '%kernel.project_dir%/src/User': User
   globals:
     pumukit_info:  "%pumukit.info%"
     locales:       "%pumukit.locales%"

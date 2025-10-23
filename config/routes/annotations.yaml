@@ -2,6 +2,10 @@ controllers:
     resource: ../../src/Pumukit/*/Controller/*
     type: annotation
 
+controllers_hexagonal:
+  resource: ../../src/
+  type: annotation
+
 pumukit_stats_ui:
   resource: "@PumukitStatsUIBundle/Resources/config/routing.yml"
   prefix:   /
