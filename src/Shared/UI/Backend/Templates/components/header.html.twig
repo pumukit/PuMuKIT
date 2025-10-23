@@ -26,11 +26,16 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdown">
                 <li class="dropdown-header small text-muted">
-                    {% trans %}Login since{% endtrans %}: {{ app.user.lastLogin|format_datetime('medium','medium',locale=app.request.locale) }}
+                    {{ "Login since"|trans }}: {{ app.user.lastLogin|format_datetime('medium','medium',locale=app.request.locale) }}
                 </li>
                 <li class="dropdown-header small text-muted">{{ app.user.email }}</li>
+                {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\WidgetController::languageselectAction') ) }}
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item text-danger" href="{{ path('pumukit_logout') }}">{% trans %}Logout{% endtrans %}</a></li>
+                <li>
+                    <a class="dropdown-item text-danger" href="{{ path('pumukit_logout') }}">
+                        {{ "Logout"|trans }}
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
