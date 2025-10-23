@@ -1,0 +1,25 @@
+services:
+  App\MultimediaObject\Application\:
+    resource: '../../Application/*'
+    exclude:
+      - '../../Application/*/*Query.php'
+      - '../../Application/*/*Response.php'
+    autowire: true
+    autoconfigure: true
+
+  App\MultimediaObject\UI\Backend\Controller\:
+    resource: '../../UI/Backend/Controller'
+    tags: [ 'controller.service_arguments' ]
+    autowire: true
+    autoconfigure: true
+
+  App\MultimediaObject\Infrastructure\Persistence\DoctrineMultimediaObjectRepository:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  App\MultimediaObject\Domain\MultimediaObjectRepositoryInterface: '@App\MultimediaObject\Infrastructure\Persistence\DoctrineMultimediaObjectRepository'
+
+  App\MultimediaObject\Application\ViewMultimediaObject\ViewMultimediaObjectHandler:
+    arguments:
+      $repository: '@App\MultimediaObject\Domain\MultimediaObjectRepositoryInterface'

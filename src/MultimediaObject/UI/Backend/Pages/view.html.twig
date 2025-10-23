@@ -1,0 +1,15 @@
+{% extends '@Shared/UI/Backend/Templates/layout/layout.html.twig' %}
+{% block body %}
+    <div class="container mt-3">
+        <h2>{{ object.title }}</h2>
+        <p>{{ object.description }}</p>
+        {% if object.tracks is defined %}
+            <h4>Tracks</h4>
+            <ul>
+                {% for track in object.tracks %}
+                    <li>{{ track.language }} - {{ track.url }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,27 @@
+services:
+  App\Series\Application\:
+    resource: '../../Application/*'
+    exclude:
+      - '../../Application/*/*Query.php'
+      - '../../Application/*/*Response.php'
+    autowire: true
+    autoconfigure: true
+
+  App\Series\UI\Backend\Controller\:
+    resource: '../../UI/Backend/Controller'
+    tags: [ 'controller.service_arguments' ]
+    autowire: true
+    autoconfigure: true
+
+  App\Series\Application\ListSeries\ListSeriesHandler:
+    arguments:
+      $repository: '@App\Series\Domain\SeriesRepositoryInterface'
+
+  App\Series\Infrastructure\Persistence\DoctrineSeriesRepository:
+    autowire: true
+    autoconfigure: true
+    public: false
+    tags: [ 'doctrine.repository' ]
+
+  App\Series\Domain\SeriesRepositoryInterface: '@App\Series\Infrastructure\Persistence\DoctrineSeriesRepository'
+

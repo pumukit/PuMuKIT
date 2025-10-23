@@ -52,11 +52,6 @@ services:
     autoconfigure: true
     public:        true
 
-  App\User\Application\:
-    resource: '../src/User/Application/*'
-    autowire: true
-    autoconfigure: true
-
   doctrine:
     alias: doctrine_mongodb
 
@@ -78,12 +73,7 @@ services:
         arguments:
           - '@annotation_reader'
 
-  App\User\UI\Backend\Controller\UserListController:
-    tags: [ 'controller.service_arguments' ]
-
-  App\User\Infrastructure\Persistence\DoctrineUserRepository:
-    arguments:
-      $documentManager: '@doctrine_mongodb.odm.document_manager'
-
-  App\User\Domain\UserRepositoryInterface:
-    alias: App\User\Infrastructure\Persistence\DoctrineUserRepository
+imports:
+  - { resource: '../src/User/Resources/config/services.yaml' }
+  - { resource: '../src/Series/Resources/config/services.yaml' }
+  - { resource: '../src/MultimediaObject/Resources/config/services.yaml' }

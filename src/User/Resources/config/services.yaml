@@ -1,0 +1,21 @@
+services:
+  App\User\Application\:
+    resource: '../../Application/*'
+    exclude:
+      - '../../Application/*/*Query.php'
+      - '../../Application/*/*Response.php'
+    autowire: true
+    autoconfigure: true
+
+  App\User\UI\Backend\Controller\:
+    resource: '../../UI/Backend/Controller'
+    tags: [ 'controller.service_arguments' ]
+    autowire: true
+    autoconfigure: true
+
+  App\User\Infrastructure\Persistence\DoctrineUserRepository:
+    arguments:
+      $documentManager: '@doctrine_mongodb.odm.document_manager'
+
+  App\User\Domain\UserRepositoryInterface:
+    alias: App\User\Infrastructure\Persistence\DoctrineUserRepository

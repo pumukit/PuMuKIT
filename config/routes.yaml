@@ -1,3 +1,15 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+series_list:
+  path: /admin/backend/series
+  controller: App\Series\UI\Backend\Controller\ListSeriesController
+
+series_view:
+  path: /admin/backend/series/{id}
+  controller: App\Series\UI\Backend\Controller\ViewSeriesController
+
+multimediaobject_view:
+  path: /admin/backend/multimedia-object/{id}
+  controller: App\MultimediaObject\UI\Backend\Controller\ViewMultimediaObjectController

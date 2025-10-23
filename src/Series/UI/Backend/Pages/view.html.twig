@@ -1,0 +1,22 @@
+{% extends '@Shared/UI/Backend/Templates/layout/layout.html.twig' %}
+{% block body %}
+    <div class="container mt-3">
+        <h2>{{ series.title }}</h2>
+        <p>{{ series.description }}</p>
+        <hr>
+        <h4>Objects in this series</h4>
+        <table class="table table-striped">
+            <thead><tr><th>Title</th><th>Actions</th></tr></thead>
+            <tbody>
+            {% for om in multimediaObjects %}
+                <tr>
+                    <td>{{ om.title }}</td>
+                    <td>
+                        <a href="{{ path('multimediaobject_view', {id: om.id}) }}" class="btn btn-sm btn-outline-primary">View</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
