@@ -18,6 +18,9 @@ final class DoctrineMultimediaObjectRepository implements MultimediaObjectReposi
 
     public function findBySeriesId(string $seriesId): iterable
     {
-        return $this->documentManager->getRepository(MultimediaObject::class)->findBy(['series' => new ObjectId($seriesId)]);
+        return $this->documentManager->createQueryBuilder(MultimediaObject::class)
+            ->field('series')->equals(new ObjectId($seriesId))
+            ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
+            ->getQuery()->execute()->toArray();
     }
 }
