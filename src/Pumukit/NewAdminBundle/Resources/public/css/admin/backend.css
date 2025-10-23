@@ -18,10 +18,6 @@ body.layout-body {
     margin-left: -260px;
 }
 
-.sidebar-header img {
-    filter: brightness(0) invert(1);
-}
-
 .sidebar-menu {
     list-style: none;
 }

@@ -1,0 +1,6 @@
+<a href="{{ url|default('#') }}" class="btn btn-outline-secondary {{ extra_class|default('') }}">
+    {% if icon is defined %}
+        <i class="{{ icon }} me-2"></i>
+    {% endif %}
+    {{ label|default('Action')|trans }}
+</a>
