@@ -1,7 +1,7 @@
 {% extends '@Shared/UI/Backend/Templates/layout/layout.html.twig' %}
 {% block body %}
     <div class="container-fluid mt-3">
-        <h2>Series</h2>
+        {% include '@Shared/UI/Backend/Templates/partials/_title.html.twig' with {'page_title': "Series"} %}
         <table
             id="seriesTable"
             class="table table-striped"
