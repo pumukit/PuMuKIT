@@ -1,3 +1,7 @@
+series_create:
+  path: /admin/backend/series/new
+  controller: App\Series\UI\Backend\Controller\CreateSeriesController
+
 series_list:
   path: /admin/backend/series
   controller: App\Series\UI\Backend\Controller\ListSeriesController

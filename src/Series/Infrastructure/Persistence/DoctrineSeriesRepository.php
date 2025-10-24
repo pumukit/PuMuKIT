@@ -42,7 +42,8 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
             ->field('type')->notEqual(MultimediaObject::TYPE_LIVE)
             ->count()
             ->getQuery()
-            ->execute();
+            ->execute()
+        ;
     }
 
     public function countEventMultimediaObjects(string $serieId): int
@@ -54,6 +55,7 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
             ->field('type')->equals(MultimediaObject::TYPE_LIVE)
             ->count()
             ->getQuery()
-            ->execute();
+            ->execute()
+        ;
     }
 }

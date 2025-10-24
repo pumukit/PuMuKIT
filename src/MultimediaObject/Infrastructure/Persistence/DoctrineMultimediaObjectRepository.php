@@ -21,6 +21,7 @@ final class DoctrineMultimediaObjectRepository implements MultimediaObjectReposi
         return $this->documentManager->createQueryBuilder(MultimediaObject::class)
             ->field('series')->equals(new ObjectId($seriesId))
             ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
-            ->getQuery()->execute()->toArray();
+            ->getQuery()->execute()->toArray()
+        ;
     }
 }

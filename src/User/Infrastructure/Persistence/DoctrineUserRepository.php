@@ -4,13 +4,12 @@ namespace App\User\Infrastructure\Persistence;
 
 use App\User\Domain\UserRepositoryInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\User;
 
 class DoctrineUserRepository implements UserRepositoryInterface
 {
-    public function __construct(private DocumentManager $documentManager)
-    {
-    }
+    public function __construct(private DocumentManager $documentManager) {}
 
     public function findAllUsers(): array
     {
@@ -36,9 +35,14 @@ class DoctrineUserRepository implements UserRepositoryInterface
     {
         $searchIds = [];
         foreach ($ids as $id) {
-            $searchIds[] = new \MongoDB\BSON\ObjectId($id);
+            $searchIds[] = new ObjectId($id);
         }
 
         return $this->documentManager->getRepository(User::class)->findBy(['_id' => ['$in' => $searchIds]]);
+    }
+
+    public function find(string $id): ?object
+    {
+        return $this->documentManager->getRepository(User::class)->find(new ObjectId($id));
     }
 }

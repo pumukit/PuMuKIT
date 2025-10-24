@@ -31,3 +31,11 @@ services:
       $getSeriesOwnersHandler: '@App\Series\Application\SeriesOwners\GetSeriesOwnersHandler'
     tags:
       - { name: twig.extension }
+
+  App\Series\Domain\SeriesFactoryInterface:
+    alias: App\Series\Infrastructure\Factory\SeriesFactoryAdapter
+
+  App\Series\Infrastructure\Factory\SeriesFactoryAdapter:
+    arguments:
+      $factoryService: '@Pumukit\SchemaBundle\Services\FactoryService'
+      $userRepository: '@App\User\Domain\UserRepositoryInterface'

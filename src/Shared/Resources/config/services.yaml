@@ -1,0 +1,5 @@
+services:
+  App\Shared\Infrastructure\EventBus: ~
+
+  App\Shared\Domain\EventBusInterface:
+    alias: App\Shared\Infrastructure\EventBus

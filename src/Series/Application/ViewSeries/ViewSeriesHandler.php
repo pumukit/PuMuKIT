@@ -2,8 +2,8 @@
 
 namespace App\Series\Application\ViewSeries;
 
-use App\Series\Domain\SeriesRepositoryInterface;
 use App\MultimediaObject\Domain\MultimediaObjectRepositoryInterface;
+use App\Series\Domain\SeriesRepositoryInterface;
 
 final class ViewSeriesHandler
 {
