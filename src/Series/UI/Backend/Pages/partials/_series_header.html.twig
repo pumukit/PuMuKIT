@@ -1,0 +1,23 @@
+<div class="card mb-3 shadow-sm">
+    <div class="card-body d-flex align-items-center">
+        <img src="{{ series|image_filter }}" alt="{{ series.title }}" class="rounded me-3" width="100">
+
+        <div class="flex-grow-1">
+            <h4 class="mb-1">{{ series.title }}</h4>
+            <small>{{ series.subtitle }}</small>
+            <div class="text-muted small">
+                📅 {{ series.getPublicDate()|format_date('medium', locale=app.request.locale) }} |
+                {% for owner in series|owner_filter %}
+                    <span>&nbsp; 👤 {{ owner.fullName }}</span>
+                {% endfor %} |
+                🔒 {{ series.hide ? 'Hidden'|trans : 'Visible'|trans }}
+            </div>
+        </div>
+
+        <div>
+            <a href="{{ path('series_view', {id: series.id, tab: 'edit'}) }}" class="btn btn-sm">
+                <i class="fa fa-edit"></i> {{ "Edit"|trans }}
+            </a>
+        </div>
+    </div>
+</div>

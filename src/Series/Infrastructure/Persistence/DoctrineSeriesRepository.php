@@ -4,6 +4,8 @@ namespace App\Series\Infrastructure\Persistence;
 
 use App\Series\Domain\SeriesRepositoryInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\ObjectId;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 
 final class DoctrineSeriesRepository implements SeriesRepositoryInterface
@@ -18,5 +20,40 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
     public function find(string $id): ?Series
     {
         return $this->documentManager->getRepository(Series::class)->find($id);
+    }
+
+    public function findByFilters(array $filters = []): array
+    {
+        $qb = $this->documentManager->createQueryBuilder(Series::class);
+
+        if (!empty($filters['title'])) {
+            $qb->field('title.es')->equals($filters['title']);
+        }
+
+        return $qb->getQuery()->execute()->toArray();
+    }
+
+    public function countMultimediaObjects(string $serieId): int
+    {
+        return $this->documentManager->getRepository(MultimediaObject::class)
+            ->createQueryBuilder()
+            ->field('series')->equals(new ObjectId($serieId))
+            ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
+            ->field('type')->notEqual(MultimediaObject::TYPE_LIVE)
+            ->count()
+            ->getQuery()
+            ->execute();
+    }
+
+    public function countEventMultimediaObjects(string $serieId): int
+    {
+        return $this->documentManager->getRepository(MultimediaObject::class)
+            ->createQueryBuilder()
+            ->field('series')->equals(new ObjectId($serieId))
+            ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
+            ->field('type')->equals(MultimediaObject::TYPE_LIVE)
+            ->count()
+            ->getQuery()
+            ->execute();
     }
 }

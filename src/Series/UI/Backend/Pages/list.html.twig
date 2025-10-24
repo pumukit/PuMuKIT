@@ -1,17 +1,73 @@
 {% extends '@Shared/UI/Backend/Templates/layout/layout.html.twig' %}
 {% block body %}
-    <div class="container mt-3">
+    <div class="container-fluid mt-3">
         <h2>Series</h2>
-        <table class="table table-striped">
-            <thead><tr><th>Title</th><th>Actions</th></tr></thead>
+        <table
+            id="seriesTable"
+            class="table table-striped"
+            data-toggle="table"
+            data-search="true"
+            data-pagination="true"
+            data-page-size="20"
+            data-show-columns="true"
+            data-click-to-select="true"
+            data-sort-name="username"
+            data-sort-order="asc"
+        >
+            <thead class="table-light">
+            <tr>
+                <th data-field="id" data-checkbox="true"></th>
+                <th data-field="title" data-sortable="true" class="truncate-cell">{{ "Title"|trans }}</th>
+                <th data-field="date" data-sortable="true">{{ "Publication Date"|trans }}</th>
+                <th data-field="announce" data-sortable="true">{{ "Announce"|trans }}</th>
+                <th data-field="hide" data-sortable="true"> {{ "Hide"|trans }}</th>
+                <th data-field="copyright" data-sortable="true">{{ "Copyright"|trans }}</th>
+                <th data-field="multimediaObjects" data-sortable="true">{{ "Multimedia Objects"|trans }}</th>
+                <th data-field="events" data-sortable="true">{{ "Events"|trans }}</th>
+                <th data-align="right">{{ "Actions"|trans }}</th>
+            </tr>
+            </thead>
             <tbody>
-            {% for serie in series %}
+            {% for item in series %}
                 <tr>
-                    <td>{{ serie.title }}</td>
-                    <td><a href="{{ path('series_view', {id: serie.id}) }}" class="btn btn-sm btn-primary">View</a></td>
+                    <td></td>
+                    <td class="text-truncate" style="max-width: 15em;">{{ item.oneSeries.title }}</td>
+                    <td>{{ item.oneSeries.getPublicDate()| format_datetime('medium','none',locale=app.request.getLocale()) }}</td>
+                    <td>{% if item.oneSeries.announce  %}{{ "Yes"|trans }}{% else %}{{ "No"|trans }}{% endif %}</td>
+                    <td>{% if item.oneSeries.hide  %}{{ "Yes"|trans }}{% else %}{{ "No"|trans }}{% endif %}</td>
+                    <td>{{ item.oneSeries.copyright }}</td>
+                    <td>{{ item.objectCount }}</td>
+                    <td>{{ item.eventCount }}</td>
+                    <td class="right">
+                        <a href="{{ path('series_view', {id: item.oneSeries.id}) }}" class="text-decoration-none" style="color: #000;">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                        <i class="fa fa-edit"></i>
+                        <i class="fa fa-trash"></i>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+        <div style="float: right;">
+            {% include '@Shared/UI/Backend/Templates/components/button/_button_create.html.twig' with {
+                'url':'#',
+                'icon':'fa fa-plus',
+                'label':'Create',
+
+            } %}
+        </div>
     </div>
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.25.0/dist/bootstrap-table.min.css">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.25.0/dist/bootstrap-table.min.js"></script>
 {% endblock %}

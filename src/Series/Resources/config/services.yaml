@@ -25,3 +25,9 @@ services:
 
   App\Series\Domain\SeriesRepositoryInterface: '@App\Series\Infrastructure\Persistence\DoctrineSeriesRepository'
 
+  App\Series\UI\Backend\Twig\SeriesExtension:
+    arguments:
+      $picService: '@Pumukit\SchemaBundle\Services\PicService'
+      $getSeriesOwnersHandler: '@App\Series\Application\SeriesOwners\GetSeriesOwnersHandler'
+    tags:
+      - { name: twig.extension }

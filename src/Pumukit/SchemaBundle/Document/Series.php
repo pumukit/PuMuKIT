@@ -552,4 +552,9 @@ class Series
     {
         return $this->secondarytextindex;
     }
+
+    public function getOwnerIds(): array
+    {
+        return $this->properties['owners'] ?? [];
+    }
 }

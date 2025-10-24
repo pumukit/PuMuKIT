@@ -20,8 +20,8 @@ final class ViewSeriesHandler
             throw new \RuntimeException('Series not found');
         }
 
-        $oms = $this->multimediaObjectRepository->findBySeriesId($query->id());
+        $multimediaObjects = $this->multimediaObjectRepository->findBySeriesId($query->id());
 
-        return new ViewSeriesResponse($series, $oms);
+        return new ViewSeriesResponse($series, $multimediaObjects, $query->tab());
     }
 }

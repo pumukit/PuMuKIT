@@ -31,4 +31,14 @@ class DoctrineUserRepository implements UserRepositoryInterface
 
         return $qb->getQuery()->execute()->toArray();
     }
+
+    public function findByIds(array $ids): array
+    {
+        $searchIds = [];
+        foreach ($ids as $id) {
+            $searchIds[] = new \MongoDB\BSON\ObjectId($id);
+        }
+
+        return $this->documentManager->getRepository(User::class)->findBy(['_id' => ['$in' => $searchIds]]);
+    }
 }

@@ -12,9 +12,6 @@ class UserListController extends AbstractController
 {
     public function __construct(protected GetUserListHandler $handler) {}
 
-    /**
-     * @Route ("/admin/backend/users", name="admin_users_list")
-     */
     public function __invoke(Request $request): Response
     {
         $filters = [

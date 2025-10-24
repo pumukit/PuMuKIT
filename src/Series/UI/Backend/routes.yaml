@@ -1,0 +1,11 @@
+series_list:
+  path: /admin/backend/series
+  controller: App\Series\UI\Backend\Controller\ListSeriesController
+
+series_view:
+  path: /admin/backend/series/{id}/{tab}
+  controller: App\Series\UI\Backend\Controller\ViewSeriesController
+  defaults:
+    tab: 'objects'
+  requirements:
+    tab: objects|edit|template

@@ -1,0 +1,3 @@
+multimediaobject_view:
+  path: /admin/backend/multimedia-object/{id}
+  controller: App\MultimediaObject\UI\Backend\Controller\ViewMultimediaObjectController

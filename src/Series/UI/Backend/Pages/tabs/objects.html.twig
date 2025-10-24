@@ -1,0 +1,22 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Título</th>
+        <th>Tipo</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for om in multimediaObjects %}
+        <tr>
+            <td>{{ om.title }}</td>
+            <td>{{ om.type }}</td>
+            <td>{{ om.status }}</td>
+            <td><i class="fa fa-edit"></i></td>
+        </tr>
+    {% else %}
+        <tr><td colspan="4" class="text-center text-muted">No hay objetos multimedia</td></tr>
+    {% endfor %}
+    </tbody>
+</table>

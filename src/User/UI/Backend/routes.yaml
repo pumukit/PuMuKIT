@@ -1,0 +1,3 @@
+user_list:
+  path: /admin/backend/users
+  controller: App\User\UI\Backend\Controller\ListUserController

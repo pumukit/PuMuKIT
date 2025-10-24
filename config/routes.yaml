@@ -2,14 +2,11 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 
-series_list:
-  path: /admin/backend/series
-  controller: App\Series\UI\Backend\Controller\ListSeriesController
+user_routes:
+  resource: ../src/User/UI/Backend/routes.yaml
 
-series_view:
-  path: /admin/backend/series/{id}
-  controller: App\Series\UI\Backend\Controller\ViewSeriesController
+series_routes:
+  resource: ../src/Series/UI/Backend/routes.yaml
 
-multimediaobject_view:
-  path: /admin/backend/multimedia-object/{id}
-  controller: App\MultimediaObject\UI\Backend\Controller\ViewMultimediaObjectController
+multimedia_object_routes:
+  resource: ../src/MultimediaObject/UI/Backend/routes.yaml
