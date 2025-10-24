@@ -4,10 +4,18 @@ namespace App\MultimediaObject\Application\ViewMultimediaObject;
 
 final class ViewMultimediaObjectResponse
 {
-    public function __construct(private $object) {}
+    public function __construct(
+        private $object,
+        private string $tab
+    ) {}
 
     public function object()
     {
         return $this->object;
+    }
+
+    public function tab(): string
+    {
+        return $this->tab;
     }
 }

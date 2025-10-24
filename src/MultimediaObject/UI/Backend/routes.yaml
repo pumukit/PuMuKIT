@@ -1,3 +1,7 @@
 multimediaobject_view:
-  path: /admin/backend/multimedia-object/{id}
+  path: /admin/backend/multimedia-object/{id}/{tab}
   controller: App\MultimediaObject\UI\Backend\Controller\ViewMultimediaObjectController
+  defaults:
+    tab: 'general'
+  requirements:
+    tab: general|media|metadata|owners|people|publication|tags

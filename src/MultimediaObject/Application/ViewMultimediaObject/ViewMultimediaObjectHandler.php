@@ -15,6 +15,6 @@ final class ViewMultimediaObjectHandler
             throw new \RuntimeException('MultimediaObject not found');
         }
 
-        return new ViewMultimediaObjectResponse($object);
+        return new ViewMultimediaObjectResponse($object, $query->tab());
     }
 }
