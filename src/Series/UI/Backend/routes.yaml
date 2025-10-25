@@ -6,6 +6,10 @@ series_list:
   path: /admin/backend/series
   controller: App\Series\UI\Backend\Controller\ListSeriesController
 
+series_list_data:
+  path: /admin/backend/series/data
+  controller: App\Series\UI\Backend\Controller\ListSeriesDataController
+
 series_view:
   path: /admin/backend/series/{id}/{tab}
   controller: App\Series\UI\Backend\Controller\ViewSeriesController

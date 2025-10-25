@@ -7,12 +7,11 @@
     {% include '@Shared/UI/Backend/Templates/components/table/_table.html.twig' with {
         id: 'seriesTable',
         title: 'Series',
-        server_side: false,
-        data: series,
+        server_side: true,
+        ajax_url: path('series_list_data'),
         checkbox: true,
         columns: [
             {'field': 'oneSeries.title', 'label': 'Title', 'sortable': true, 'truncate': true},
-            {'field': 'oneSeries.subtitle', 'label': 'Subtitle', 'truncate': true},
             {'field': 'oneSeries.publicDate', 'label': 'Publication Date', 'sortable': true, 'formatter': 'date'},
             {'field': 'oneSeries.announce', 'label': 'Announce', 'formatter': 'boolean'},
             {'field': 'oneSeries.hide', 'label': 'Hide', 'formatter': 'boolean'},

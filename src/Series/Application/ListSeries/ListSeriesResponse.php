@@ -5,9 +5,11 @@ namespace App\Series\Application\ListSeries;
 class ListSeriesResponse
 {
     public array $series;
+    public int $total;
 
-    public function __construct(array $series)
+    public function __construct(array $series, int $total)
     {
         $this->series = $series;
+        $this->total = $total;
     }
 }

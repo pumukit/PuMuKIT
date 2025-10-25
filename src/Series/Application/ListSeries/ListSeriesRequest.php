@@ -7,11 +7,15 @@ class ListSeriesRequest
     public ?int $page;
     public ?int $limit;
     public array $filters;
+    public string $sort;
+    public string $order;
 
-    public function __construct(?int $page = 1, ?int $limit = 20, array $filters = [])
+    public function __construct(?int $page = 1, ?int $limit = 20, array $filters = [], string $sort = 'rank', string $order = 'asc')
     {
         $this->page = $page;
         $this->limit = $limit;
         $this->filters = $filters;
+        $this->sort = $sort;
+        $this->order = $order;
     }
 }

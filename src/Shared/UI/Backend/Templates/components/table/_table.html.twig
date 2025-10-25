@@ -1,3 +1,4 @@
+{# _table.html.twig #}
 {% set table_id = id ?? 'table-' ~ random() %}
 {% set enable_search = search is defined ? search : true %}
 {% set enable_pagination = pagination is defined ? pagination : true %}
@@ -9,17 +10,16 @@
 {% set server_side = server_side is defined ? server_side : false %}
 
 {% if show_help is defined %}
-<div id="{{ table_id }}-toolbar" class="d-flex justify-content-end">
-    <a href="#" data-bs-toggle="modal" data-bs-target="#{{ table_id }}-helpModal">
-        <i class="fa fa-question-circle"></i>
-    </a>
-</div>
+    <div id="{{ table_id }}-toolbar" class="d-flex justify-content-end">
+        <a href="#" data-bs-toggle="modal" data-bs-target="#{{ table_id }}-helpModal">
+            <i class="fa fa-question-circle"></i>
+        </a>
+    </div>
 {% endif %}
 
 <table
     id="{{ table_id }}"
     class="table table-striped"
-    data-toggle="table"
     data-toolbar="#{{ table_id }}-toolbar"
     data-search="{{ enable_search ? 'true' : 'false' }}"
     data-pagination="{{ enable_pagination ? 'true' : 'false' }}"
@@ -30,7 +30,7 @@
     data-sort-order="{{ sort_order }}"
     {% if server_side %}
         data-side-pagination="server"
-        data-url="{{ data_url ?? '' }}"
+        data-url="{{ ajax_url|default('') }}"
     {% else %}
         data-side-pagination="client"
     {% endif %}
@@ -89,7 +89,7 @@
                         <td class="{% if col.truncate|default(false) %}text-truncate{% endif %}" style="{% if col.truncate|default(false) %}max-width: 15em;{% endif %}">
                             {% set formatter = col.formatter|default(null) %}
                             {% if formatter == 'date' and value is not empty %}
-                                {{ value|date('Y-m-d H:i') }}
+                                {{ value|date('Y-m-d') }}
                             {% elseif formatter == 'boolean' %}
                                 {% if value %}
                                     <i class="fa fa-check"></i>
@@ -102,36 +102,59 @@
                         </td>
                     {% endif %}
                 {% endfor %}
-
             </tr>
         {% endfor %}
         </tbody>
     {% endif %}
 </table>
 
+{% if server_side %}
+    <script>
+        (function($){
+            // Evita doble inicialización
+            if (!$.fn.bootstrapTable.defaults.hasOwnProperty('{{ table_id }}_initialized')) {
+
+                $('#{{ table_id }}').bootstrapTable({
+                    queryParams: function (params) {
+                        // Aquí puedes añadir filtros adicionales si quieres
+                        return params;
+                    },
+                    responseHandler: function (res) {
+                        // El backend debe devolver { "total": ..., "rows": [...] }
+                        return res;
+                    }
+                });
+
+                // Marcamos como inicializada
+                $.fn.bootstrapTable.defaults['{{ table_id }}_initialized'] = true;
+            }
+        })(jQuery);
+    </script>
+{% endif %}
+
 {% if show_help is defined %}
-<div class="modal fade" id="{{ table_id }}-helpModal" tabindex="-1" aria-labelledby="{{ table_id }}-helpLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="{{ table_id }}-helpLabel">{{ 'Filter Help'|trans }}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'Close'|trans }}"></button>
-            </div>
-            <div class="modal-body">
-                <p>{{ 'You can filter by the following fields:'|trans }}</p>
-                <ul>
-                    {% for col in columns %}
-                        <li><strong>{{ col.label|trans }}:</strong> {{ 'example filter syntax or description'|trans }}</li>
-                    {% endfor %}
-                </ul>
-                <p>{{ 'Use syntax like author:Name title:Example for combined filters.'|trans }}</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Close'|trans }}</button>
+    <div class="modal fade" id="{{ table_id }}-helpModal" tabindex="-1" aria-labelledby="{{ table_id }}-helpLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="{{ table_id }}-helpLabel">{{ 'Filter Help'|trans }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'Close'|trans }}"></button>
+                </div>
+                <div class="modal-body">
+                    <p>{{ 'You can filter by the following fields:'|trans }}</p>
+                    <ul>
+                        {% for col in columns %}
+                            <li><strong>{{ col.label|trans }}:</strong> {{ 'example filter syntax or description'|trans }}</li>
+                        {% endfor %}
+                    </ul>
+                    <p>{{ 'Use syntax like author:Name title:Example for combined filters.'|trans }}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Close'|trans }}</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 {% endif %}
 
 {% if create_button is defined %}
@@ -142,21 +165,4 @@
             'label': create_button.label
         } %}
     </div>
-{% endif %}
-
-{% if server_side %}
-    <script>
-        $(function () {
-            $('#{{ table_id }}').bootstrapTable({
-                queryParams: function (params) {
-                    // Aquí puedes añadir filtros extra si quieres
-                    return params;
-                },
-                responseHandler: function (res) {
-                    // Backend debe devolver { "total": ..., "rows": [...] }
-                    return res;
-                }
-            });
-        });
-    </script>
 {% endif %}

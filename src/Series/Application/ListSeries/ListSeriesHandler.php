@@ -12,17 +12,16 @@ class ListSeriesHandler
     {
         ListSeriesValidator::validate($request);
 
-        $series = $this->repository->findByFilters($request->filters);
+        $series = $this->repository->findByFiltersPaginated(
+            $request->filters,
+            $request->page,
+            $request->limit,
+            $request->sort,
+            $request->order
+        );
 
-        $seriesWithCounts = [];
-        foreach ($series as $oneSeries) {
-            $seriesWithCounts[] = [
-                'oneSeries' => $oneSeries,
-                'objectCount' => $this->repository->countMultimediaObjects($oneSeries->getId()),
-                'eventCount' => $this->repository->countEventMultimediaObjects($oneSeries->getId()),
-            ];
-        }
+        $total = $this->repository->countByFilters($request->filters);
 
-        return new ListSeriesResponse($seriesWithCounts);
+        return new ListSeriesResponse($series, $total);
     }
 }

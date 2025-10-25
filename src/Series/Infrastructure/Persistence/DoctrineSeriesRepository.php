@@ -10,6 +10,11 @@ use Pumukit\SchemaBundle\Document\Series;
 
 final class DoctrineSeriesRepository implements SeriesRepositoryInterface
 {
+    CONST FIELD_MAPPING = [
+        'oneSeries.title'      => 'title',
+        'oneSeries.publicDate' => 'public_date',
+    ];
+
     public function __construct(private DocumentManager $documentManager) {}
 
     public function findAll(): iterable
@@ -71,5 +76,34 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
             ->getQuery()
             ->execute()
         ;
+    }
+
+    public function findByFiltersPaginated(array $filters, int $page, int $limit, ?string $sort = null, ?string $order = null): array
+    {
+        $qb = $this->documentManager->createQueryBuilder(Series::class);
+
+        foreach ($filters as $field => $value) {
+            $qb->field($field)->equals($value);
+        }
+
+        if ($sort && $order) {
+            $realSortField = self::FIELD_MAPPING[$sort] ?? $sort;
+            $qb->sort($realSortField, $order === 'asc' ? 'ASC' : 'DESC');
+        }
+
+        $qb->skip(($page - 1) * $limit)->limit($limit);
+
+        return $qb->getQuery()->execute()->toArray();
+    }
+
+    public function countByFilters(array $filters): int
+    {
+        $qb = $this->documentManager->createQueryBuilder(Series::class);
+
+        foreach ($filters as $field => $value) {
+            $qb->field($field)->equals($value);
+        }
+
+        return $qb->count()->getQuery()->execute();
     }
 }

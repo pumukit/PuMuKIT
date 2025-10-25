@@ -14,13 +14,10 @@ final class ListSeriesController extends AbstractController
 {
     public function __invoke(Request $request, SeriesRepositoryInterface $repository, RouterInterface $router): Response
     {
-        $filters = [
-            'title' => $request->query->get('title'),
-        ];
         $dto = new ListSeriesRequest(
             (int) $request->query->get('page', 1),
             (int) $request->query->get('limit', 20),
-            $filters,
+            [],
         );
 
         $handler = new ListSeriesHandler($repository);
@@ -28,11 +25,16 @@ final class ListSeriesController extends AbstractController
 
         $seriesWithActions = [];
         foreach ($seriesResponse->series as $item) {
-            $item['actions'] = [
-                'view' => $router->generate('series_view', ['id' => $item['oneSeries']->getId()]),
-                'delete' => '#', //$router->generate('series_delete', ['id' => $item['oneSeries']->getId()]),
+            $row = [
+                'oneSeries'   => $item,
+                'objectCount' => $repository->countMultimediaObjects($item->getId()),
+                'eventCount'  => $repository->countEventMultimediaObjects($item->getId()),
+                'actions'     => [
+                    'view'   => $router->generate('series_view', ['id' => $item->getId()]),
+                    'delete' => '#',
+                ],
             ];
-            $seriesWithActions[] = $item;
+            $seriesWithActions[] = $row;
         }
 
         return $this->render('@Series/UI/Backend/Pages/list.html.twig', [
