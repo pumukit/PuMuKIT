@@ -1,69 +1,22 @@
-{% block stylesheets %}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.25.0/dist/bootstrap-table.min.css">
-{% endblock %}
 
-{% block body %}
-    <div class="container-fluid mt-3">
-        <table
-            id="multimediaObjectsTable"
-            class="table table-striped"
-            data-toggle="table"
-            data-search="true"
-            data-pagination="true"
-            data-page-size="20"
-            data-show-columns="true"
-            data-click-to-select="true"
-            data-sort-name="username"
-            data-sort-order="asc"
-        >
-            <thead class="table-light">
-            <tr>
-                <th data-field="id" data-checkbox="true"></th>
-                <th data-field="title" data-sortable="true" class="truncate-cell">{{ "Title"|trans }}</th>
-                <th data-field="date" data-sortable="true">{{ "Publication Date"|trans }}</th>
-                <th data-field="announce" data-sortable="true">{{ "Announce"|trans }}</th>
-                <th data-field="hide" data-sortable="true"> {{ "Hide"|trans }}</th>
-                <th data-field="copyright" data-sortable="true">{{ "Copyright"|trans }}</th>
-                <th data-field="multimediaObjects" data-sortable="true">{{ "Type"|trans }}</th>
-                <th data-field="events" data-sortable="true">{{ "Last change"|trans }}</th>
-                <th data-align="right">{{ "Actions"|trans }}</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for item in multimediaObjects %}
-                <tr>
-                    <td></td>
-                    <td class="text-truncate" style="max-width: 15em;">{{ item.title }}</td>
-                    <td>{{ item.getPublicDate()| format_datetime('medium','none',locale=app.request.getLocale()) }}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="right">
-                        <a href="{{ path('multimediaobject_view', {id: item.id}) }}" class="text-decoration-none" style="color: #000;">
-                            <i class="fa fa-eye"></i>
-                        </a>
-                        <i class="fa fa-edit"></i>
-                        <i class="fa fa-trash"></i>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        <br />
-        <div style="float: right;">
-            {% include '@Shared/UI/Backend/Templates/components/button/_button_create.html.twig' with {
-                'url':'#',
-                'icon':'fa fa-plus',
-                'label':'Upload',
-
-            } %}
-        </div>
-    </div>
-{% endblock %}
-
-{% block javascripts %}
-    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.25.0/dist/bootstrap-table.min.js"></script>
-{% endblock %}
+    {% include '@Shared/UI/Backend/Templates/components/table/_table.html.twig' with {
+        id: 'multimediaTable',
+        title: 'Multimedia Objects',
+        server_side: false,
+        data: multimediaObjects,
+        checkbox: true,
+        columns: [
+            {'field': 'title', 'label': 'Title', 'sortable': true, 'truncate': true},
+            {'field': 'status', 'label': 'Status', 'sortable': true},
+            {'field': 'duration', 'label': 'Duration', 'sortable': true},
+            {'field': 'recordDate', 'label': 'Record Date', 'formatter': 'date', 'sortable': true},
+            {'field': 'publicDate', 'label': 'Public Date', 'formatter': 'date', 'sortable': true},
+            {'field': 'hide', 'label': 'Hide', 'formatter': 'boolean'},
+            {'field': 'actions', 'label': 'Actions', 'align': 'right'}
+        ],
+        create_button: {
+            'url': '#',
+            'icon': 'fa fa-plus',
+            'label': 'Upload'
+        }
+    } %}

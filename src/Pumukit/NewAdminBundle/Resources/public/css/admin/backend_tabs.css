@@ -1,0 +1,32 @@
+.modern-tabs .nav-link {
+    font-weight: 500;
+    color: #6c757d;
+    border: none;
+    position: relative;
+    transition: color 0.25s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.modern-tabs .nav-link:hover {
+    color: #0d6efd;
+    transform: translateY(-2px);
+}
+
+.modern-tabs .nav-link.active {
+    color: #0d6efd;
+    font-weight: 600;
+    border-bottom: 3px solid #0d6efd;
+    background-color: transparent;
+}
+
+.modern-tabs .nav-link i {
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+.modern-tabs .nav-link.active i {
+    opacity: 1;
+    color: #0d6efd;
+}

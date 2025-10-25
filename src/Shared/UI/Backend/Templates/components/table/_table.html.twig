@@ -8,11 +8,19 @@
 {% set sort_order = sort_order is defined ? sort_order : 'asc' %}
 {% set server_side = server_side is defined ? server_side : false %}
 
+{% if show_help is defined %}
+<div id="{{ table_id }}-toolbar" class="d-flex justify-content-end">
+    <a href="#" data-bs-toggle="modal" data-bs-target="#{{ table_id }}-helpModal">
+        <i class="fa fa-question-circle"></i>
+    </a>
+</div>
+{% endif %}
 
 <table
     id="{{ table_id }}"
     class="table table-striped"
     data-toggle="table"
+    data-toolbar="#{{ table_id }}-toolbar"
     data-search="{{ enable_search ? 'true' : 'false' }}"
     data-pagination="{{ enable_pagination ? 'true' : 'false' }}"
     data-page-size="{{ page_size }}"
@@ -82,9 +90,9 @@
                                 {{ value|date('Y-m-d H:i') }}
                             {% elseif formatter == 'boolean' %}
                                 {% if value %}
-                                    {{ 'Yes'|trans }}
+                                    <i class="fa fa-check"></i>
                                 {% else %}
-                                    {{ 'No'|trans }}
+                                    <i class="fa fa-times"></i>
                                 {% endif %}
                             {% else %}
                                 {{ value }}
@@ -98,6 +106,31 @@
         </tbody>
     {% endif %}
 </table>
+
+{% if show_help is defined %}
+<div class="modal fade" id="{{ table_id }}-helpModal" tabindex="-1" aria-labelledby="{{ table_id }}-helpLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="{{ table_id }}-helpLabel">{{ 'Filter Help'|trans }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'Close'|trans }}"></button>
+            </div>
+            <div class="modal-body">
+                <p>{{ 'You can filter by the following fields:'|trans }}</p>
+                <ul>
+                    {% for col in columns %}
+                        <li><strong>{{ col.label|trans }}:</strong> {{ 'example filter syntax or description'|trans }}</li>
+                    {% endfor %}
+                </ul>
+                <p>{{ 'Use syntax like author:Name title:Example for combined filters.'|trans }}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Close'|trans }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 
 {% if create_button is defined %}
     <div style="float: right;">

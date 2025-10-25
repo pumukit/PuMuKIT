@@ -8,7 +8,7 @@ final class ViewSeriesResponse
 {
     public function __construct(
         private Series $series,
-        private iterable $multimediaObjects,
+        private array $multimediaObjects,
         private string $tab
     ) {}
 
@@ -17,9 +17,21 @@ final class ViewSeriesResponse
         return $this->series;
     }
 
-    public function multimediaObjects(): iterable
+    public function multimediaObjects(): array
     {
-        return $this->multimediaObjects;
+        return array_map(function ($mmobj) {
+            return [
+                'id' => $mmobj->getId(),
+                'rank' => $mmobj->getRank(),
+                'title' => $mmobj->getTitle(),
+                'status' => $mmobj->getStringStatus($mmobj->getStatus()),
+                'duration' => $mmobj->getDurationString(),
+                'recordDate' => $mmobj->getRecordDate(),
+                'publicDate' => $mmobj->getPublicDate(),
+                'hide' => $mmobj->isHidden(),
+                'actions' => []
+            ];
+        }, $this->multimediaObjects);
     }
 
     public function tab(): string
