@@ -1,0 +1,127 @@
+{% set table_id = id ?? 'table-' ~ random() %}
+{% set enable_search = search is defined ? search : true %}
+{% set enable_pagination = pagination is defined ? pagination : true %}
+{% set page_size = page_size is defined ? page_size : 20 %}
+{% set show_columns = show_columns is defined ? show_columns : true %}
+{% set click_to_select = click_to_select is defined ? click_to_select : true %}
+{% set sort_name = sort_name is defined ? sort_name : (columns|first).field ?? '' %}
+{% set sort_order = sort_order is defined ? sort_order : 'asc' %}
+{% set server_side = server_side is defined ? server_side : false %}
+
+
+<table
+    id="{{ table_id }}"
+    class="table table-striped"
+    data-toggle="table"
+    data-search="{{ enable_search ? 'true' : 'false' }}"
+    data-pagination="{{ enable_pagination ? 'true' : 'false' }}"
+    data-page-size="{{ page_size }}"
+    data-show-columns="{{ show_columns ? 'true' : 'false' }}"
+    data-click-to-select="{{ click_to_select ? 'true' : 'false' }}"
+    data-sort-name="{{ sort_name }}"
+    data-sort-order="{{ sort_order }}"
+    {% if server_side %}
+        data-side-pagination="server"
+        data-url="{{ data_url ?? '' }}"
+    {% else %}
+        data-side-pagination="client"
+    {% endif %}
+>
+    <thead class="table-light">
+    <tr>
+        {% if checkbox is defined and checkbox %}
+            <th data-field="id" data-checkbox="true"></th>
+        {% endif %}
+        {% for col in columns %}
+            {% set truncate = col.truncate|default(false) %}
+            {% set align = col.align|default(null) %}
+            <th
+                data-field="{{ col.field }}"
+                {% if col.sortable|default(false) %}data-sortable="true"{% endif %}
+                {% if align %}data-align="{{ align }}"{% endif %}
+                class="{% if truncate %}text-truncate truncate-cell{% endif %}"
+            >
+                {{ col.label|trans }}
+            </th>
+        {% endfor %}
+    </tr>
+    </thead>
+
+    {% if not server_side %}
+        <tbody>
+        {% for row in data %}
+            <tr>
+                {% if checkbox is defined and checkbox %}
+                    <td></td>
+                {% endif %}
+
+                {% for col in columns %}
+                    {% if col.field == 'actions' %}
+                        <td class="text-end">
+                            {% if row.oneSeries is defined %}
+                                <a href="{{ path('series_view', {id: row.oneSeries.id}) }}" class="text-decoration-none text-dark me-2">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                <i class="fa fa-edit me-2"></i>
+                                <i class="fa fa-trash"></i>
+                            {% endif %}
+                        </td>
+                    {% else %}
+                        {% set fieldPath = col.field|split('.') %}
+                        {% set value = row %}
+                        {% for part in fieldPath %}
+                            {% if value is not empty %}
+                                {% set value = attribute(value, part)|default('') %}
+                            {% else %}
+                                {% set value = '' %}
+                            {% endif %}
+                        {% endfor %}
+                        <td class="{% if col.truncate|default(false) %}text-truncate{% endif %}" style="{% if col.truncate|default(false) %}max-width: 15em;{% endif %}">
+                            {% set formatter = col.formatter|default(null) %}
+                            {% if formatter == 'date' and value is not empty %}
+                                {{ value|date('Y-m-d H:i') }}
+                            {% elseif formatter == 'boolean' %}
+                                {% if value %}
+                                    {{ 'Yes'|trans }}
+                                {% else %}
+                                    {{ 'No'|trans }}
+                                {% endif %}
+                            {% else %}
+                                {{ value }}
+                            {% endif %}
+                        </td>
+                    {% endif %}
+                {% endfor %}
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    {% endif %}
+</table>
+
+{% if create_button is defined %}
+    <div style="float: right;">
+        {% include '@Shared/UI/Backend/Templates/components/button/_button_create.html.twig' with {
+            'url': create_button.url,
+            'icon': create_button.icon,
+            'label': create_button.label
+        } %}
+    </div>
+{% endif %}
+
+{% if server_side %}
+    <script>
+        $(function () {
+            $('#{{ table_id }}').bootstrapTable({
+                queryParams: function (params) {
+                    // Aquí puedes añadir filtros extra si quieres
+                    return params;
+                },
+                responseHandler: function (res) {
+                    // Backend debe devolver { "total": ..., "rows": [...] }
+                    return res;
+                }
+            });
+        });
+    </script>
+{% endif %}
