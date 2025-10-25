@@ -4,13 +4,15 @@ namespace App\Series\Application\ListSeries;
 
 use App\Series\Domain\SeriesRepositoryInterface;
 
-final class ListSeriesHandler
+class ListSeriesHandler
 {
     public function __construct(private SeriesRepositoryInterface $repository) {}
 
-    public function handle(array $filters): ListSeriesResponse
+    public function execute(ListSeriesRequest $request): ListSeriesResponse
     {
-        $series = $this->repository->findByFilters($filters);
+        ListSeriesValidator::validate($request);
+
+        $series = $this->repository->findByFilters($request->filters);
 
         $seriesWithCounts = [];
         foreach ($series as $oneSeries) {

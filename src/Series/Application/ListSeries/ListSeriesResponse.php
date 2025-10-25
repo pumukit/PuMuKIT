@@ -2,12 +2,12 @@
 
 namespace App\Series\Application\ListSeries;
 
-final class ListSeriesResponse
+class ListSeriesResponse
 {
-    public function __construct(private iterable $series) {}
+    public array $series;
 
-    public function series(): iterable
+    public function __construct(array $series)
     {
-        return $this->series;
+        $this->series = $series;
     }
 }

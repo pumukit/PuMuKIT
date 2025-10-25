@@ -33,6 +33,20 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
         return $qb->getQuery()->execute()->toArray();
     }
 
+    public function findAllPaginated(int $page, int $limit): array
+    {
+        $qb = $this->documentManager->createQueryBuilder(Series::class)
+            ->skip(($page - 1) * $limit)
+            ->limit($limit);
+
+        return $qb->getQuery()->execute()->toArray();
+    }
+
+    public function countAll(): int
+    {
+        return $this->documentManager->createQueryBuilder(Series::class)->count()->getQuery()->execute();
+    }
+
     public function countMultimediaObjects(string $serieId): int
     {
         return $this->documentManager->getRepository(MultimediaObject::class)

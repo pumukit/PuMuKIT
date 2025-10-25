@@ -1,7 +1,7 @@
 {% set table_id = id ?? 'table-' ~ random() %}
 {% set enable_search = search is defined ? search : true %}
 {% set enable_pagination = pagination is defined ? pagination : true %}
-{% set page_size = page_size is defined ? page_size : 20 %}
+{% set page_size = page_size is defined ? page_size : 10 %}
 {% set show_columns = show_columns is defined ? show_columns : true %}
 {% set click_to_select = click_to_select is defined ? click_to_select : true %}
 {% set sort_name = sort_name is defined ? sort_name : (columns|first).field ?? '' %}
@@ -66,13 +66,15 @@
                 {% for col in columns %}
                     {% if col.field == 'actions' %}
                         <td class="text-end">
-                            {% if row.oneSeries is defined %}
-                                <a href="{{ path('series_view', {id: row.oneSeries.id}) }}" class="text-decoration-none text-dark me-2">
-                                    <i class="fa fa-eye"></i>
-                                </a>
-                                <i class="fa fa-edit me-2"></i>
-                                <i class="fa fa-trash"></i>
-                            {% endif %}
+                            {% for key, url in row.actions %}
+                                {% if key == 'edit' %}
+                                    <a href="{{ url }}" class="btn btn-sm btn-warning">Edit</a>
+                                {% elseif key == 'view' %}
+                                    <a href="{{ url }}" class="btn btn-sm btn-primary">View</a>
+                                {% elseif key == 'delete' %}
+                                    <a href="{{ url }}" class="btn btn-sm btn-danger">Delete</a>
+                                {% endif %}
+                            {% endfor %}
                         </td>
                     {% else %}
                         {% set fieldPath = col.field|split('.') %}

@@ -2,10 +2,7 @@
 
 {% block body %}
 <div class="container-fluid mt-3">
-
-    {% if title is defined %}
-        {% include '@Shared/UI/Backend/Templates/partials/_title.html.twig' with {'page_title': title} %}
-    {% endif %}
+    {% include '@Shared/UI/Backend/Templates/partials/_title.html.twig' with {'page_title': 'Series'} %}
 
     {% include '@Shared/UI/Backend/Templates/components/table/_table.html.twig' with {
         id: 'seriesTable',
