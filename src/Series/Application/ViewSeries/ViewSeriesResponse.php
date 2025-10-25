@@ -29,7 +29,7 @@ final class ViewSeriesResponse
                 'recordDate' => $mmobj->getRecordDate(),
                 'publicDate' => $mmobj->getPublicDate(),
                 'hide' => $mmobj->isHidden(),
-                'actions' => []
+                'actions' => [],
             ];
         }, $this->multimediaObjects);
     }

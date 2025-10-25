@@ -22,14 +22,15 @@ final class ViewSeriesController extends AbstractController
                 [
                     'url' => $this->router->generate('multimediaobject_view', ['id' => $item['id']]),
                     'icon' => 'fa fa-eye',
-                    'label' => 'View'
+                    'label' => 'View',
                 ],
                 [
                     'url' => '#',
                     'icon' => 'fa fa-trash',
-                    'label' => 'Delete'
-                ]
+                    'label' => 'Delete',
+                ],
             ];
+
             return $item;
         }, $response->multimediaObjects());
 

@@ -10,8 +10,8 @@ use Pumukit\SchemaBundle\Document\Series;
 
 final class DoctrineSeriesRepository implements SeriesRepositoryInterface
 {
-    CONST FIELD_MAPPING = [
-        'oneSeries.title'      => 'title',
+    public const FIELD_MAPPING = [
+        'oneSeries.title' => 'title',
         'oneSeries.publicDate' => 'public_date',
     ];
 
@@ -42,7 +42,8 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
     {
         $qb = $this->documentManager->createQueryBuilder(Series::class)
             ->skip(($page - 1) * $limit)
-            ->limit($limit);
+            ->limit($limit)
+        ;
 
         return $qb->getQuery()->execute()->toArray();
     }
@@ -88,7 +89,7 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
 
         if ($sort && $order) {
             $realSortField = self::FIELD_MAPPING[$sort] ?? $sort;
-            $qb->sort($realSortField, $order === 'asc' ? 'ASC' : 'DESC');
+            $qb->sort($realSortField, 'asc' === $order ? 'ASC' : 'DESC');
         }
 
         $qb->skip(($page - 1) * $limit)->limit($limit);
