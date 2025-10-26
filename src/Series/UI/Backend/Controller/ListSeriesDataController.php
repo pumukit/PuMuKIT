@@ -27,8 +27,8 @@ final class ListSeriesDataController extends AbstractController
 
         $filters = [];
         if ($search) {
-            $filters['title'] = $search;
-            $filters['subtitle'] = $search;
+            $filters['title.'.$request->getLocale()] = $search;
+            $filters['subtitle.'.$request->getLocale()] = $search;
         }
 
         $dto = new ListSeriesRequest(
@@ -45,11 +45,13 @@ final class ListSeriesDataController extends AbstractController
         $rows = [];
         foreach ($seriesResponse->series as $item) {
             $actionsHtml = sprintf(
-                '<div class="d-flex gap-1 justify-content-end">
-        <a href="%s" class="btn btn-sm"><i class="fa fa-eye"></i></a>
-        <a href="%s" class="btn btn-sm"><i class="fa fa-times"></i></a>
-     </div>',
+        '<div class="d-flex gap-1 justify-content-end">
+                    <a href="%s" class="btn btn-sm"><i class="fa fa-eye"></i></a>
+                    <a href="%s" class="btn btn-sm"><i class="fa fa-copy"></i></a>
+                    <a href="%s" class="btn btn-sm"><i class="fa fa-trash"></i></a>
+                </div>',
                 $router->generate('series_view', ['id' => $item->getId()]),
+                '#',
                 '#'
             );
 

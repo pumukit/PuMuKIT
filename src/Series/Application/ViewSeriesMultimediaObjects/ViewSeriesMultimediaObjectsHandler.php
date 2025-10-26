@@ -11,22 +11,19 @@ final class ViewSeriesMultimediaObjectsHandler
 
     public function handle(ViewSeriesMultimediaObjectsRequest $request): ViewSeriesMultimediaObjectsResponse
     {
+        ViewSeriesMultimediaObjectsValidator::validate($request);
+
         $offset = ($request->page - 1) * $request->limit;
 
-        $filters = [];
-        if ($request->search) {
-            $filters['title'] = $request->search;
-        }
-
         $multimediaObjects = $this->repository->findMultimediaObjectsBySeries(
-            seriesId: $request->seriesId,
+            seriesId: $request->filters['series.id'],
             offset: $offset,
             limit: $request->limit,
             sort: $request->sort ?? 'title',
             order: $request->order ?? 'asc'
         );
 
-        $total = $this->repository->countMultimediaObjects($request->seriesId);
+        $total = $this->repository->countMultimediaObjects($request->filters['series.id']);
 
         return new ViewSeriesMultimediaObjectsResponse($multimediaObjects, $total);
     }
