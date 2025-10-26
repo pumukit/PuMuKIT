@@ -14,6 +14,11 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link {{ tab == 'events' ? 'active' : '' }}" href="{{ path('series_view', {id: series.id, tab: 'events'}) }}">
+                    <i class="fa-solid fa-circle"></i> {{ "Events"|trans }}
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link {{ tab == 'edit' ? 'active' : '' }}" href="{{ path('series_view', {id: series.id, tab: 'edit'}) }}">
                     <i class="fa-solid fa-edit"></i> {{ "Series"|trans }}
                 </a>

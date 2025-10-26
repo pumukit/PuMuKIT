@@ -16,7 +16,7 @@ series_view:
   defaults:
     tab: 'objects'
   requirements:
-    tab: objects|edit|template
+    tab: objects|events|edit|template
 
 series_multimedia_data:
   path: /admin/backend/series/{id}/multimedia/data
