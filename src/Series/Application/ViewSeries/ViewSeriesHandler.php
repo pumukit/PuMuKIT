@@ -2,26 +2,24 @@
 
 namespace App\Series\Application\ViewSeries;
 
-use App\MultimediaObject\Domain\MultimediaObjectRepositoryInterface;
 use App\Series\Domain\SeriesRepositoryInterface;
+use Pumukit\SchemaBundle\Document\Series;
+use App\Series\Application\ViewSeries\ViewSeriesResponse;
 
 final class ViewSeriesHandler
 {
-    public function __construct(
-        private SeriesRepositoryInterface $seriesRepository,
-        private MultimediaObjectRepositoryInterface $multimediaObjectRepository
-    ) {}
+    public function __construct(private SeriesRepositoryInterface $repository) {}
 
-    public function handle(ViewSeriesQuery $query): ViewSeriesResponse
+    public function execute(ViewSeriesRequest $request): ViewSeriesResponse
     {
-        $series = $this->seriesRepository->find($query->id());
+        ViewSeriesValidator::validate($request);
+
+        $series = $this->repository->find($request->id);
 
         if (!$series) {
-            throw new \RuntimeException('Series not found');
+            throw new \RuntimeException(sprintf('Series with ID "%s" not found', $request->id));
         }
 
-        $multimediaObjects = $this->multimediaObjectRepository->findBySeriesId($query->id());
-
-        return new ViewSeriesResponse($series, $multimediaObjects, $query->tab());
+        return new ViewSeriesResponse($series, [], []);
     }
 }

@@ -55,6 +55,7 @@ final class ListSeriesDataController extends AbstractController
 
             $rows[] = [
                 'oneSeries' => $item,
+                'thumbnail' => $item->getMainThumbnail($request->getScheme(), $request->getHost()),
                 'objectCount' => $repository->countMultimediaObjects($item->getId()),
                 'eventCount' => $repository->countEventMultimediaObjects($item->getId()),
                 'actions' => $actionsHtml,

@@ -3,41 +3,23 @@
 namespace App\Series\UI\Backend\Controller;
 
 use App\Series\Application\ViewSeries\ViewSeriesHandler;
-use App\Series\Application\ViewSeries\ViewSeriesQuery;
+use App\Series\Application\ViewSeries\ViewSeriesRequest;
+use App\Series\Domain\SeriesRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\RouterInterface;
 
 final class ViewSeriesController extends AbstractController
 {
-    public function __construct(private ViewSeriesHandler $handler, private RouterInterface $router) {}
-
-    public function __invoke(Request $request, string $id, string $tab = 'objects'): Response
+    public function __invoke(Request $request, SeriesRepositoryInterface $repository, string $id, string $tab = 'objects'): Response
     {
-        $response = $this->handler->handle(new ViewSeriesQuery($id, $tab));
-
-        $multimediaObjects = array_map(function ($item) {
-            $item['actions'] = [
-                [
-                    'url' => $this->router->generate('multimediaobject_view', ['id' => $item['id']]),
-                    'icon' => 'fa fa-eye',
-                    'label' => 'View',
-                ],
-                [
-                    'url' => '#',
-                    'icon' => 'fa fa-trash',
-                    'label' => 'Delete',
-                ],
-            ];
-
-            return $item;
-        }, $response->multimediaObjects());
+        $dto = new ViewSeriesRequest($id);
+        $handler = new ViewSeriesHandler($repository);
+        $seriesResponse = $handler->execute($dto);
 
         return $this->render('@Series/UI/Backend/Pages/view.html.twig', [
-            'series' => $response->series(),
-            'multimediaObjects' => $multimediaObjects,
-            'tab' => $response->tab(),
+            'series' => $seriesResponse->series,
+            'tab' => $tab,
         ]);
     }
 }

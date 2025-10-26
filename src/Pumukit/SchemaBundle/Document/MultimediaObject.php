@@ -1587,4 +1587,26 @@ class MultimediaObject
             $this->setDuration($trackMinDuration);
         }
     }
+
+    public function getMainThumbnail(string $scheme, string $host): string
+    {
+
+        foreach ($this->pics as $pic) {
+            if ($pic->getHide() === false) {
+                $url = $pic->getUrl();
+                return $this->makeAbsoluteUrl($url, $scheme, $host);
+            }
+        }
+
+        return $this->makeAbsoluteUrl('/bundles/pumukitnewadmin/images/none.jpg', $scheme, $host);
+    }
+
+    private function makeAbsoluteUrl(string $url, string $scheme, string $host): string
+    {
+        if (!$url || '/' !== $url[0]) {
+            return $url;
+        }
+
+        return $scheme.'://'.$host.$url;
+    }
 }

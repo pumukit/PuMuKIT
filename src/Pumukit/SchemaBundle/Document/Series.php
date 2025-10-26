@@ -557,4 +557,26 @@ class Series
     {
         return $this->properties['owners'] ?? [];
     }
+
+
+    public function getMainThumbnail(string $scheme, string $host): string
+    {
+        foreach ($this->pics as $pic) {
+            if ($pic->isHide() === false && !empty($pic->url)) {
+                $url = $pic->url;
+                return $this->makeAbsoluteUrl($url, $scheme, $host);
+            }
+        }
+
+        return $this->makeAbsoluteUrl('/bundles/pumukitschema/images/series_folder.png', $scheme, $host);
+    }
+
+    private function makeAbsoluteUrl(string $url, string $scheme, string $host): string
+    {
+        if (!$url || '/' !== $url[0]) {
+            return $url;
+        }
+
+        return $scheme.'://'.$host.$url;
+    }
 }

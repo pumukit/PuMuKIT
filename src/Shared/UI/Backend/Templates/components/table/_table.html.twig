@@ -1,4 +1,3 @@
-{# _table.html.twig #}
 {% set table_id = id ?? 'table-' ~ random() %}
 {% set enable_search = search is defined ? search : true %}
 {% set enable_pagination = pagination is defined ? pagination : true %}
@@ -111,21 +110,21 @@
 {% if server_side %}
     <script>
         (function($){
-            // Evita doble inicialización
             if (!$.fn.bootstrapTable.defaults.hasOwnProperty('{{ table_id }}_initialized')) {
 
                 $('#{{ table_id }}').bootstrapTable({
                     queryParams: function (params) {
-                        // Aquí puedes añadir filtros adicionales si quieres
                         return params;
                     },
                     responseHandler: function (res) {
-                        // El backend debe devolver { "total": ..., "rows": [...] }
+                        res.rows.forEach(function(row) {
+                            if (row.thumbnail) {
+                                row.thumbnail = '<img src="' + row.thumbnail + '" style="width:40px; height:auto;">';
+                            }
+                        });
                         return res;
                     }
                 });
-
-                // Marcamos como inicializada
                 $.fn.bootstrapTable.defaults['{{ table_id }}_initialized'] = true;
             }
         })(jQuery);

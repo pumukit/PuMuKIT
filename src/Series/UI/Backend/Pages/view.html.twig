@@ -4,8 +4,7 @@
     <div class="container-fluid mt-3">
 
         {% include '@Series/UI/Backend/Pages/partials/_series_header.html.twig' with {
-            series: series,
-            multimediaObjects: multimediaObjects
+            series: series
         } %}
 
         <ul class="nav nav-tabs modern-tabs text-uppercase small">
@@ -25,7 +24,6 @@
                 </a>
             </li>
         </ul>
-
 
         <div class="mt-3">
             {% include '@Series/UI/Backend/Pages/tabs/' ~ tab ~ '.html.twig' %}

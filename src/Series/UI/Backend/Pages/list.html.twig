@@ -11,6 +11,7 @@
         ajax_url: path('series_list_data'),
         checkbox: true,
         columns: [
+            {'field': 'thumbnail', 'label': 'Image', 'formatter': 'thumbnailFormatter', 'escape': false},
             {'field': 'oneSeries.title', 'label': 'Title', 'sortable': true, 'truncate': true},
             {'field': 'oneSeries.publicDate', 'label': 'Publication Date', 'sortable': true, 'formatter': 'date'},
             {'field': 'oneSeries.announce', 'label': 'Announce', 'formatter': 'boolean'},

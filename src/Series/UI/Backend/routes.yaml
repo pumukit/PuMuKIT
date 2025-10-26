@@ -17,3 +17,7 @@ series_view:
     tab: 'objects'
   requirements:
     tab: objects|edit|template
+
+series_multimedia_data:
+  path: /admin/backend/series/{id}/multimedia/data
+  controller: App\Series\UI\Backend\Controller\ViewSeriesMultimediaObjectsDataController

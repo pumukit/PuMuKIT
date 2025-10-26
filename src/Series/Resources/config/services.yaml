@@ -3,6 +3,7 @@ services:
     resource: '../../Application/*'
     exclude:
       - '../../Application/*/*Query.php'
+      - '../../Application/*/*Request.php'
       - '../../Application/*/*Response.php'
     autowire: true
     autoconfigure: true
