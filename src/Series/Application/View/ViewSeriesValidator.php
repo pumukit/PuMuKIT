@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Series\Application\ViewSeries;
+namespace App\Series\Application\View;
 
-use App\Series\Application\ViewSeries\Exception\InvalidSeriesIdException;
+use App\Series\Application\View\Exception\InvalidSeriesIdException;
 
 final class ViewSeriesValidator
 {

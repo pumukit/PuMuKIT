@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Series\Application\ViewSeries;
+namespace App\Series\Application\View;
 
 use App\Series\Domain\SeriesRepositoryInterface;
 use Pumukit\SchemaBundle\Document\Series;
-use App\Series\Application\ViewSeries\ViewSeriesResponse;
+use App\Series\Application\View\ViewSeriesResponse;
 
 final class ViewSeriesHandler
 {

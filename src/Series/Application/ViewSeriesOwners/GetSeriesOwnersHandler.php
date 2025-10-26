@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Series\Application\SeriesOwners;
+namespace App\Series\Application\ViewSeriesOwners;
 
 use App\User\Domain\UserRepositoryInterface;
 use Pumukit\SchemaBundle\Document\Series;

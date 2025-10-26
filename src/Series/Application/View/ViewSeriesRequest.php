@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Series\Application\ViewSeries;
+namespace App\Series\Application\View;
 
 final class ViewSeriesRequest
 {

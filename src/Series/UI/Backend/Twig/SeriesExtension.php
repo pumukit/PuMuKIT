@@ -2,7 +2,7 @@
 
 namespace App\Series\UI\Backend\Twig;
 
-use App\Series\Application\SeriesOwners\GetSeriesOwnersHandler;
+use App\Series\Application\ViewSeriesOwners\GetSeriesOwnersHandler;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Services\PicService;
 use Twig\Extension\AbstractExtension;

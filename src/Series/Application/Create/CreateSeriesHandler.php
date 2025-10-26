@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Series\Application\CreateSeries;
+namespace App\Series\Application\Create;
 
 use App\Series\Domain\Events\SeriesCreatedEvent;
 use App\Series\Domain\SeriesFactoryInterface;

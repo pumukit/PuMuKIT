@@ -2,8 +2,8 @@
 
 namespace App\Series\UI\Backend\Controller;
 
-use App\Series\Application\CreateSeries\CreateSeriesCommand;
-use App\Series\Application\CreateSeries\CreateSeriesHandler;
+use App\Series\Application\Create\CreateSeriesCommand;
+use App\Series\Application\Create\CreateSeriesHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 

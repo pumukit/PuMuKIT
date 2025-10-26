@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Series\Application\ListSeries;
+namespace App\Series\Application\List;
 
 class ListSeriesResponse
 {

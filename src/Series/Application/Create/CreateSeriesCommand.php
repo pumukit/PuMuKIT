@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Series\Application\CreateSeries;
+namespace App\Series\Application\Create;
 
 final class CreateSeriesCommand
 {
