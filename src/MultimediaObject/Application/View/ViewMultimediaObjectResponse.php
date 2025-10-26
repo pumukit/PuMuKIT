@@ -1,6 +1,6 @@
 <?php
 
-namespace App\MultimediaObject\Application\ViewMultimediaObject;
+namespace App\MultimediaObject\Application\View;
 
 final class ViewMultimediaObjectResponse
 {

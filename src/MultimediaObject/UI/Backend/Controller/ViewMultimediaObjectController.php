@@ -2,8 +2,8 @@
 
 namespace App\MultimediaObject\UI\Backend\Controller;
 
-use App\MultimediaObject\Application\ViewMultimediaObject\ViewMultimediaObjectHandler;
-use App\MultimediaObject\Application\ViewMultimediaObject\ViewMultimediaObjectQuery;
+use App\MultimediaObject\Application\View\ViewMultimediaObjectHandler;
+use App\MultimediaObject\Application\View\ViewMultimediaObjectQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

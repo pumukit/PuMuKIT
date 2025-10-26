@@ -20,6 +20,6 @@ services:
 
   App\MultimediaObject\Domain\MultimediaObjectRepositoryInterface: '@App\MultimediaObject\Infrastructure\Persistence\DoctrineMultimediaObjectRepository'
 
-  App\MultimediaObject\Application\ViewMultimediaObject\ViewMultimediaObjectHandler:
+  App\MultimediaObject\Application\View\ViewMultimediaObjectHandler:
     arguments:
       $repository: '@App\MultimediaObject\Domain\MultimediaObjectRepositoryInterface'
