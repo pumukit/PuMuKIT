@@ -133,4 +133,10 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
 
         return $qb->getQuery()->execute()->toArray();
     }
+
+    public function delete(Series $series): void
+    {
+        $this->documentManager->remove($series);
+        $this->documentManager->flush();
+    }
 }

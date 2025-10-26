@@ -2,8 +2,16 @@ controllers:
     resource: ../../src/Pumukit/*/Controller/*
     type: annotation
 
-controllers_hexagonal:
-  resource: ../../src/
+series_controllers:
+  resource: ../../src/Series/UI/Backend/Controller
+  type: annotation
+
+multimediaobject_controllers:
+  resource: ../../src/MultimediaObject/UI/Backend/Controller
+  type: annotation
+
+user_controllers:
+  resource: ../../src/User/UI/Backend/Controller
   type: annotation
 
 pumukit_stats_ui:

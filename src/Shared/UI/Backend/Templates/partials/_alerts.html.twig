@@ -1,2 +1,21 @@
-<span id="div_messages_span_error" data-toggle="snackbar" data-style="toast error" data-content="Error message" data-timeout="7000"></span>
-<span id="div_messages_span_info" data-toggle="snackbar" data-style="toast info" data-content="Information message" data-timeout="3000"></span>
+<div class="flash-container position-fixed bottom-0 start-0 p-3" style="z-index: 1080;">
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="custom-flash alert-dismissible fade show mb-2 shadow-lg rounded-3" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const alerts = document.querySelectorAll('.flash-container .custom-flash');
+        alerts.forEach(alert => {
+            setTimeout(() => {
+                const bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+                bsAlert.close();
+            }, 3000);
+        });
+    });
+</script>

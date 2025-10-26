@@ -24,4 +24,10 @@ final class DoctrineMultimediaObjectRepository implements MultimediaObjectReposi
             ->getQuery()->execute()->toArray()
         ;
     }
+
+    public function delete(MultimediaObject $multimediaObject): void
+    {
+        $this->documentManager->remove($multimediaObject);
+        $this->documentManager->flush();
+    }
 }

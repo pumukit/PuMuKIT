@@ -21,3 +21,9 @@ series_view:
 series_multimedia_data:
   path: /admin/backend/series/{id}/multimedia/data
   controller: App\Series\UI\Backend\Controller\ViewSeriesMultimediaObjectsDataController
+
+series_delete:
+  path: /admin/backend/series/{id}/delete
+  controller: App\Series\UI\Backend\Controller\DeleteSeriesController
+  methods: [POST]
+

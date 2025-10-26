@@ -2,7 +2,7 @@
 
 namespace App\Series\Application\Create;
 
-use App\Series\Domain\Events\SeriesCreatedEvent;
+use App\Series\Domain\Event\SeriesCreatedEvent;
 use App\Series\Domain\SeriesFactoryInterface;
 use App\Shared\Domain\EventBusInterface;
 use App\User\Domain\ValueObject\UserId;
@@ -22,7 +22,7 @@ final class CreateSeriesHandler
 
         $series = $this->seriesFactory->createForUser($userId, $title);
 
-        $this->eventBus->dispatch(new SeriesCreatedEvent($series->getId(), $userId));
+        $this->eventBus->dispatch(new SeriesCreatedEvent($series));
 
         return new CreateSeriesResponse($series->getId(), $title, $userId->toObjectId());
     }
