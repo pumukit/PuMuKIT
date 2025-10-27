@@ -39,26 +39,11 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
         return $qb->getQuery()->execute()->toArray();
     }
 
-    public function findAllPaginated(int $page, int $limit): array
-    {
-        $qb = $this->documentManager->createQueryBuilder(Series::class)
-            ->skip(($page - 1) * $limit)
-            ->limit($limit)
-        ;
-
-        return $qb->getQuery()->execute()->toArray();
-    }
-
-    public function countAll(): int
-    {
-        return $this->documentManager->createQueryBuilder(Series::class)->count()->getQuery()->execute();
-    }
-
-    public function countMultimediaObjects(string $serieId): int
+    public function countMultimediaObjects(string $seriesId): int
     {
         return $this->documentManager->getRepository(MultimediaObject::class)
             ->createQueryBuilder()
-            ->field('series')->equals(new ObjectId($serieId))
+            ->field('series')->equals(new ObjectId($seriesId))
             ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
             ->field('type')->notEqual(MultimediaObject::TYPE_LIVE)
             ->count()
@@ -67,11 +52,11 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
         ;
     }
 
-    public function countEventMultimediaObjects(string $serieId): int
+    public function countEventMultimediaObjects(string $seriesId): int
     {
         return $this->documentManager->getRepository(MultimediaObject::class)
             ->createQueryBuilder()
-            ->field('series')->equals(new ObjectId($serieId))
+            ->field('series')->equals(new ObjectId($seriesId))
             ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
             ->field('type')->equals(MultimediaObject::TYPE_LIVE)
             ->count()
@@ -134,9 +119,46 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
         return $qb->getQuery()->execute()->toArray();
     }
 
+    public function findEventsBySeries(string $seriesId, int $offset = 0, int $limit = 10, string $sort = 'title', string $order = 'asc'): array
+    {
+        $fieldMapping = [
+            'title' => 'title',
+            'status' => 'status',
+            'type' => 'type',
+        ];
+
+        $sortField = $fieldMapping[$sort] ?? 'title';
+        $sortDirection = strtolower($order) === 'asc' ? 1 : -1;
+
+        $qb = $this->documentManager
+            ->getRepository(MultimediaObject::class)
+            ->createQueryBuilder()
+            ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
+            ->field('type')->equals(MultimediaObject::TYPE_LIVE)
+            ->field('series')->equals(new ObjectId($seriesId))
+            ->skip($offset)
+            ->limit($limit)
+            ->sort($sortField, $sortDirection);
+
+        return $qb->getQuery()->execute()->toArray();
+    }
+
     public function delete(Series $series): void
     {
         $this->documentManager->remove($series);
         $this->documentManager->flush();
+    }
+
+    public function countEvents(string $seriesId): int
+    {
+        return $this->documentManager->getRepository(MultimediaObject::class)
+            ->createQueryBuilder()
+            ->field('series')->equals(new ObjectId($seriesId))
+            ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
+            ->field('type')->equals(MultimediaObject::TYPE_LIVE)
+            ->count()
+            ->getQuery()
+            ->execute()
+            ;
     }
 }

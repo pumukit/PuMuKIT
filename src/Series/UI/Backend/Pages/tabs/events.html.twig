@@ -1,1 +1,16 @@
-<p class="text-muted">Listado de eventos en esta serie.</p>
+{% include '@Shared/UI/Backend/Templates/components/table/_table.html.twig' with {
+    id: 'eventsTable',
+    server_side: true,
+    ajax_url: path('series_events_data', {id: series.id}),
+    checkbox: true,
+    columns: [
+        {'field': 'thumbnail', 'label': 'Image', 'formatter': 'thumbnailFormatter', 'escape': false},
+        {'field': 'title', 'label': 'Title', 'sortable': true, 'truncate': true},
+        {'field': 'actions', 'label': 'Actions', 'align': 'right'}
+    ],
+    create_button: {
+        'url': '#',
+        'icon': 'fa fa-plus',
+        'label': 'Create'
+    }
+} %}

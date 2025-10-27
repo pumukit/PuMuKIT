@@ -22,6 +22,10 @@ series_multimedia_data:
   path: /admin/backend/series/{id}/multimedia/data
   controller: App\Series\UI\Backend\Controller\ViewSeriesMultimediaObjectsDataController
 
+series_events_data:
+  path: /admin/backend/series/{id}/events/data
+  controller: App\Series\UI\Backend\Controller\ViewSeriesEventsDataController
+
 series_delete:
   path: /admin/backend/series/{id}/delete
   controller: App\Series\UI\Backend\Controller\DeleteSeriesController
