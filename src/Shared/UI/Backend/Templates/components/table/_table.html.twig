@@ -11,6 +11,9 @@
 <table
     id="{{ table_id }}"
     class="table table-striped"
+    data-locale="{{ app.request.getLocale() }}"
+    data-show-refresh="true"
+    data-icons-prefix="fa"
     data-toolbar="#{{ table_id }}-toolbar"
     data-search="{{ enable_search ? 'true' : 'false' }}"
     data-pagination="{{ enable_pagination ? 'true' : 'false' }}"
