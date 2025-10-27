@@ -27,8 +27,10 @@ final class CloneSeriesService
 
         $clonedSeries = $this->factoryService->cloneSeries($originalSeries);
 
+        $multimediaObjects = $this->repository->findMultimediaObjectsBySeries($originalSeries->getId());
+
         $multimediaObjectsCount = 0;
-        foreach ($originalSeries->getMultimediaObjects() as $multimediaObject) {
+        foreach ($multimediaObjects as $multimediaObject) {
             $this->factoryService->cloneMultimediaObject($multimediaObject, $clonedSeries);
             ++$multimediaObjectsCount;
         }
