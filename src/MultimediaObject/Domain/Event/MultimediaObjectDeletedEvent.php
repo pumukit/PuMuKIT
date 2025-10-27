@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Multimedia\Domain\Event;
+namespace App\MultimediaObject\Domain\Event;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Contracts\EventDispatcher\Event;

@@ -2,7 +2,7 @@
 
 namespace App\Series\Application\Delete;
 
-use App\Multimedia\Domain\Event\MultimediaObjectDeletedEvent;
+use App\MultimediaObject\Domain\Event\MultimediaObjectDeletedEvent;
 use App\MultimediaObject\Domain\MultimediaObjectRepositoryInterface;
 use App\Series\Domain\Event\SeriesDeletedEvent;
 use App\Series\Domain\SeriesRepositoryInterface;
